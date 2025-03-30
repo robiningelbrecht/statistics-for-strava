@@ -64,6 +64,9 @@ final readonly class CombinedActivityStream
         return $this->unitSystem;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getData(): array
     {
         return $this->data;
