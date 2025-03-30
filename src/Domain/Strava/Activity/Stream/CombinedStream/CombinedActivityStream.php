@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
 use App\Domain\Strava\Activity\ActivityId;
+use App\Domain\Strava\Activity\Stream\StreamTypes;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,6 +20,8 @@ final readonly class CombinedActivityStream
         private ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'string')]
         private UnitSystem $unitSystem,
+        #[ORM\Column(type: 'string')]
+        private StreamTypes $streamTypes,
         #[ORM\Column(type: 'json')]
         private array $data,
     ) {
@@ -30,11 +33,13 @@ final readonly class CombinedActivityStream
     public static function create(
         ActivityId $activityId,
         UnitSystem $unitSystem,
+        StreamTypes $streamTypes,
         array $data,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
+            streamTypes: $streamTypes,
             data: $data,
         );
     }
@@ -45,11 +50,13 @@ final readonly class CombinedActivityStream
     public static function fromState(
         ActivityId $activityId,
         UnitSystem $unitSystem,
+        StreamTypes $streamTypes,
         array $data,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
+            streamTypes: $streamTypes,
             data: $data,
         );
     }
@@ -62,6 +69,11 @@ final readonly class CombinedActivityStream
     public function getUnitSystem(): UnitSystem
     {
         return $this->unitSystem;
+    }
+
+    public function getStreamTypes(): StreamTypes
+    {
+        return $this->streamTypes;
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityIds;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\Stream\StreamType;
+use App\Domain\Strava\Activity\Stream\StreamTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
@@ -18,12 +19,13 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
 {
     public function add(CombinedActivityStream $combinedActivityStream): void
     {
-        $sql = 'INSERT INTO CombinedActivityStream (activityId, unitSystem, data)
-        VALUES (:activityId, :unitSystem, :data)';
+        $sql = 'INSERT INTO CombinedActivityStream (activityId, unitSystem, streamTypes, data)
+        VALUES (:activityId, :unitSystem, :streamTypes, :data)';
 
         $this->connection->executeStatement($sql, [
             'activityId' => $combinedActivityStream->getActivityId(),
             'unitSystem' => $combinedActivityStream->getUnitSystem()->value,
+            'streamTypes' => implode(',', $combinedActivityStream->getStreamTypes()->map(fn (StreamType $streamType) => $streamType->value)),
             'data' => Json::encode($combinedActivityStream->getData()),
         ]);
     }
@@ -44,6 +46,10 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
         return CombinedActivityStream::fromState(
             activityId: ActivityId::fromString($result['activityId']),
             unitSystem: UnitSystem::from($result['unitSystem']),
+            streamTypes: StreamTypes::fromArray(array_map(
+                fn (string $streamType) => StreamType::from($streamType),
+                explode(',', $result['streamTypes'])
+            )),
             data: Json::decode($result['data'])
         );
     }

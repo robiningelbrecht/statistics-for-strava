@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\BestEffort\CalculateBestActivityEfforts\Calculate
 use App\Domain\Strava\Activity\ImportActivities\ImportActivities;
 use App\Domain\Strava\Activity\Split\ImportActivitySplits\ImportActivitySplits;
 use App\Domain\Strava\Activity\Stream\CalculateBestStreamAverages\CalculateBestStreamAverages;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
 use App\Domain\Strava\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
 use App\Domain\Strava\Athlete\ImportAthlete\ImportAthlete;
 use App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\ImportAthleteWeight;
@@ -71,6 +72,7 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->commandBus->dispatch(new ImportFtp($output));
         $this->commandBus->dispatch(new ImportAthleteWeight($output));
         $this->commandBus->dispatch(new CalculateBestStreamAverages($output));
+        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
         $this->connection->executeStatement('VACUUM');
         $output->writeln('Database got vacuumed 🧹');
