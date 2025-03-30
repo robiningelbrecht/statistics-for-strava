@@ -4,28 +4,25 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity;
 
-use App\Domain\Strava\Activity\Stream\ActivityStream;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class ElevationProfileChart
 {
     private function __construct(
-        private ActivityStream $distanceStream,
-        private ActivityStream $altitudeStream,
+        private array $distances,
+        private array $altitudes,
         private UnitSystem $unitSystem,
     ) {
     }
 
     public static function create(
-        ActivityStream $distanceStream,
-        ActivityStream $altitudeStream,
+        array $distances,
+        array $altitudes,
         UnitSystem $unitSystem,
     ): self {
         return new self(
-            distanceStream: $distanceStream,
-            altitudeStream: $altitudeStream,
+            distances: $distances,
+            altitudes: $altitudes,
             unitSystem: $unitSystem,
         );
     }
@@ -54,14 +51,7 @@ final readonly class ElevationProfileChart
                 'axisLabel' => [
                     'formatter' => '{value} '.$distanceSymbol,
                 ],
-                'data' => array_map(
-                    function (int $distanceInMeter) {
-                        $distance = Kilometer::from($distanceInMeter / 1000)->toUnitSystem($this->unitSystem)->toFloat();
-
-                        return $distance < 1 ? round($distance, 1) : round($distance);
-                    },
-                    $this->distanceStream->getData()
-                ),
+                'data' => $this->distances,
                 'splitLine' => [
                     'show' => true,
                 ],
@@ -93,10 +83,7 @@ final readonly class ElevationProfileChart
                             ],
                         ],
                     ],
-                    'data' => array_map(
-                        fn (int $altitude) => round(Meter::from($altitude)->toUnitSystem($this->unitSystem)->toFloat()),
-                        $this->altitudeStream->getData()
-                    ),
+                    'data' => $this->altitudes,
                     'type' => 'line',
                     'name' => 'Elevation',
                     'symbol' => 'none',

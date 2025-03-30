@@ -22,7 +22,7 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
 
     private CommandBus $commandBus;
 
-    public function testHandle(): void
+    public function testHandleMetric(): void
     {
         $output = new SpyOutput();
 

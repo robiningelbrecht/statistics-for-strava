@@ -6,6 +6,7 @@ namespace App\Domain\App\BuildActivitiesHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
+use App\Domain\Strava\Activity\ElevationProfileChart;
 use App\Domain\Strava\Activity\HeartRateChart;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
 use App\Domain\Strava\Activity\PowerDistributionChart;
@@ -14,6 +15,7 @@ use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Gear\GearRepository;
@@ -36,6 +38,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private AthleteRepository $athleteRepository,
         private ActivityPowerRepository $activityPowerRepository,
         private ActivityStreamRepository $activityStreamRepository,
+        private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private SportTypeRepository $sportTypeRepository,
@@ -150,6 +153,22 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 }
             }
 
+            $elevationProfileChart = null;
+            if ($activityType->supportsCombinedStreamCalculation()) {
+                try {
+                    $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
+                        activityId: $activity->getId(),
+                        unitSystem: $this->unitSystem
+                    );
+                    $elevationProfileChart = ElevationProfileChart::create(
+                        distances: $combinedActivityStream->getDistances(),
+                        altitudes: $combinedActivityStream->getAltitudes(),
+                        unitSystem: $this->unitSystem
+                    );
+                } catch (EntityNotFound) {
+                }
+            }
+
             $leafletMap = $activity->getLeafletMap();
             $this->buildStorage->write(
                 'activity/'.$activity->getId().'.html',
@@ -164,6 +183,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
                     'heartRateChart' => $heartRateChart ? Json::encode($heartRateChart->build()) : null,
+                    'elevationProfileChart' => $elevationProfileChart ? Json::encode($elevationProfileChart->build()) : null,
                 ]),
             );
 

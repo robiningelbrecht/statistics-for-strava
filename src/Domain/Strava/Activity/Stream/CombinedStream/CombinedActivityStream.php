@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
 use App\Domain\Strava\Activity\ActivityId;
+use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Activity\Stream\StreamTypes;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Doctrine\ORM\Mapping as ORM;
@@ -82,5 +83,19 @@ final readonly class CombinedActivityStream
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function getDistances(): array
+    {
+        $distanceIndex = array_search(StreamType::DISTANCE, $this->streamTypes->toArray(), true);
+
+        return array_column($this->data, $distanceIndex);
+    }
+
+    public function getAltitudes(): array
+    {
+        $altitudeIndex = array_search(StreamType::ALTITUDE, $this->streamTypes->toArray(), true);
+
+        return array_column($this->data, $altitudeIndex);
     }
 }

@@ -54,12 +54,13 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
         );
     }
 
-    public function findActivityIdsThatNeedStreamCombining(): ActivityIds
+    public function findActivityIdsThatNeedStreamCombining(UnitSystem $unitSystem): ActivityIds
     {
         $sql = 'SELECT Activity.activityId FROM Activity 
                   WHERE sportType IN (:sportTypes)
                   AND NOT EXISTS (
-                    SELECT 1 FROM CombinedActivityStream WHERE CombinedActivityStream.activityId = Activity.activityId
+                    SELECT 1 FROM CombinedActivityStream WHERE CombinedActivityStream.activityId = Activity.activityId 
+                   AND CombinedActivityStream.unitSystem = :unitSystem
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream x
@@ -74,6 +75,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
             fn (string $activityId) => ActivityId::fromString($activityId),
             $this->connection->executeQuery($sql,
                 [
+                    'unitSystem' => $unitSystem->value,
                     'altitudeStreamType' => StreamType::ALTITUDE->value,
                     'distanceStreamType' => StreamType::DISTANCE->value,
                     'sportTypes' => array_map(

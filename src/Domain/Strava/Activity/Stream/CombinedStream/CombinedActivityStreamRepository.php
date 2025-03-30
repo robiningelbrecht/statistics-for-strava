@@ -17,5 +17,5 @@ interface CombinedActivityStreamRepository
         UnitSystem $unitSystem,
     ): CombinedActivityStream;
 
-    public function findActivityIdsThatNeedStreamCombining(): ActivityIds;
+    public function findActivityIdsThatNeedStreamCombining(UnitSystem $unitSystem): ActivityIds;
 }

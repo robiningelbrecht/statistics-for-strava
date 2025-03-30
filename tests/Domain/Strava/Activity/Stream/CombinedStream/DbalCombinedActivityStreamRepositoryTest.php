@@ -84,7 +84,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
         $this->combinedActivityStreamRepository->add(
             CombinedActivityStreamBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-2'))
-                ->withUnitSystem(UnitSystem::IMPERIAL)
+                ->withUnitSystem(UnitSystem::METRIC)
                 ->build()
         );
 
@@ -143,9 +143,41 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
                 ->build()
         );
 
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+            ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed('test-6'))
+                    ->build(),
+                []
+            )
+        );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-6'))
+                ->withStreamType(StreamType::DISTANCE)
+                ->withData([1])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-6'))
+                ->withStreamType(StreamType::ALTITUDE)
+                ->withData([2])
+                ->build()
+        );
+
+        $this->combinedActivityStreamRepository->add(
+            CombinedActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-6'))
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->build()
+        );
+
         $this->assertEquals(
             ActivityIds::fromArray([ActivityId::fromUnprefixed('test-5')]),
-            $this->combinedActivityStreamRepository->findActivityIdsThatNeedStreamCombining()
+            $this->combinedActivityStreamRepository->findActivityIdsThatNeedStreamCombining(
+                UnitSystem::METRIC
+            )
         );
     }
 
