@@ -167,7 +167,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     $elevationProfileChart = ElevationProfileChart::create(
                         distances: $distances,
                         altitudes: $combinedActivityStream->getAltitudes(),
-                        unitSystem: $this->unitSystem
+                        unitSystem: $this->unitSystem,
+                        translator: $this->translator
                     );
 
                     $streamTypes = $combinedActivityStream->getStreamTypes();
@@ -184,6 +185,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             distances: $distances,
                             yAxisData: $data,
                             yAxisStreamType: $streamType,
+                            translator: $this->translator
                         );
                         $otherProfileCharts[$streamType->value] = Json::encode($chart->build());
                     }

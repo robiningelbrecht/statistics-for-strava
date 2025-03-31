@@ -290,26 +290,48 @@
         </div>
     </div>
 {% endif %}
-<div>
-    {% for otherProfileChart in otherProfileCharts %}
-        <div class="h-[150px] mb-1" data-echarts-options='{{ otherProfileChart }}' data-echarts-connect></div>
-    {% endfor %}
-    <div class="h-[350px]" data-echarts-options='{{ elevationProfileChart }}' data-echarts-connect></div>
+{% if (powerDistributionChart or heartRateDistributionChart) and elevationProfileChart  %}
+<div class="mb-4 border-b border-gray-200">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
+        <li class="mr-2" role="presentation">
+            <a href="#" data-tabs-target="#chartsTabBasic" role="tab" aria-controls="chartsTabBasic" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                {{ "Basic"|trans }}
+            </a>
+        </li>
+        <li class="mr-2" role="presentation">
+            <a href="#" data-tabs-target="#chartsTabAdvanced" role="tab" aria-controls="chartsTabAdvanced" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                {{ "Advanced"|trans }}
+            </a>
+        </li>
+    </ul>
 </div>
-{% if powerDistributionChart or heartRateDistributionChart %}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {% if powerDistributionChart %}
-            <div>
-                <h3 class="font-bold mb-1 text-center">{{ "Power distribution"|trans }}</h3>
-                <div class="h-[350px]" data-echarts-options='{{ powerDistributionChart }}'></div>
-            </div>
-        {% endif %}
-        {% if heartRateDistributionChart %}
-            <div>
-                <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
-                <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
-            </div>
-        {% endif %}
-    </div>
 {% endif %}
+<div id="chartsTabContent">
+    {% if powerDistributionChart or heartRateDistributionChart %}
+        <div id="chartsTabBasic" role="tabpanel" aria-labelledby="chartsTabBasic-tab">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                {% if powerDistributionChart %}
+                    <div>
+                        <h3 class="font-bold mb-1 text-center">{{ "Power distribution"|trans }}</h3>
+                        <div class="h-[350px]" data-echarts-options='{{ powerDistributionChart }}'></div>
+                    </div>
+                {% endif %}
+                {% if heartRateDistributionChart %}
+                    <div>
+                        <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
+                        <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% if elevationProfileChart %}
+        <div id="chartsTabAdvanced" role="tabpanel" aria-labelledby="chartsTabAdvanced-tab">
+            {% for otherProfileChart in otherProfileCharts %}
+                <div class="h-[120px] mb-1" data-echarts-options='{{ otherProfileChart }}' data-echarts-connect></div>
+            {% endfor %}
+            <div class="h-[145px]" data-echarts-options='{{ elevationProfileChart }}' data-echarts-connect></div>
+        </div>
+    {% endif %}
+</div>
 {% endautoescape %}

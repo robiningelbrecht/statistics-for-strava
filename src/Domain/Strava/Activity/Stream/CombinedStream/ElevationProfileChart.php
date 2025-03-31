@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class ElevationProfileChart
 {
@@ -14,6 +15,7 @@ final readonly class ElevationProfileChart
         /** @var array<int, int|float> */
         private array $altitudes,
         private UnitSystem $unitSystem,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -25,11 +27,13 @@ final readonly class ElevationProfileChart
         array $distances,
         array $altitudes,
         UnitSystem $unitSystem,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             distances: $distances,
             altitudes: $altitudes,
             unitSystem: $unitSystem,
+            translator: $translator
         );
     }
 
@@ -45,19 +49,20 @@ final readonly class ElevationProfileChart
             return [];
         }
 
-        $maxYAxis = round(max($this->altitudes) * 1.5);
+        $maxYAxis = round(max($this->altitudes) * 1.2);
 
         return [
             'grid' => [
-                'left' => '55px',
+                'left' => '25px',
                 'right' => '0%',
-                'bottom' => '7%',
+                'bottom' => '20px',
                 'top' => '10px',
                 'containLabel' => false,
             ],
             'animation' => false,
             'tooltip' => [
                 'trigger' => 'axis',
+                'formatter' => '{c} '.$elevationSymbol,
             ],
             'xAxis' => [
                 'type' => 'category',
@@ -73,7 +78,7 @@ final readonly class ElevationProfileChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => 'Elevation',
+                    'name' => $this->translator->trans('Elevation'),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 10,
@@ -83,6 +88,7 @@ final readonly class ElevationProfileChart
                         'show' => true,
                     ],
                     'axisLabel' => [
+                        'show' => false,
                         'formatter' => '{value} '.$elevationSymbol,
                         'customValues' => [0, $maxYAxis],
                         'hideOverlap' => true,
@@ -107,7 +113,6 @@ final readonly class ElevationProfileChart
                     ],
                     'data' => $this->altitudes,
                     'type' => 'line',
-                    'name' => 'Elevation',
                     'symbol' => 'none',
                     'color' => '#D9D9D9',
                     'smooth' => true,

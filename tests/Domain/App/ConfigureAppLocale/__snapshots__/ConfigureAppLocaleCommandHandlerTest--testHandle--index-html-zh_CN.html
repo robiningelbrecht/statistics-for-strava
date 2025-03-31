@@ -406,6 +406,7 @@
         initModals(rootNode);
 
         // Render charts.
+        const connectedCharts = [];
         rootNode.querySelectorAll('[data-echarts-options]').forEach(function (chartNode) {
             const chart = echarts.init(chartNode);
             window.addEventListener('resize', function () {
@@ -417,7 +418,11 @@
 
             chart.setOption(chartOptions);
             renderedCharts.push(chart);
+            if (chartNode.hasAttribute('data-echarts-connect')) {
+                connectedCharts.push(chart);
+            }
         });
+        echarts.connect(connectedCharts);
 
         // Render Leaflet maps.
         rootNode.querySelectorAll('[data-leaflet]').forEach(function (mapNode) {
