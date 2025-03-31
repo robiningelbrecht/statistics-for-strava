@@ -6,7 +6,6 @@ namespace App\Domain\App\BuildActivitiesHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
-use App\Domain\Strava\Activity\ElevationProfileChart;
 use App\Domain\Strava\Activity\HeartRateChart;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
 use App\Domain\Strava\Activity\PowerDistributionChart;
@@ -16,6 +15,8 @@ use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
+use App\Domain\Strava\Activity\Stream\CombinedStream\ElevationProfileChart;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Gear\GearRepository;
@@ -154,17 +155,38 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $elevationProfileChart = null;
+            $otherProfileCharts = [];
             if ($activityType->supportsCombinedStreamCalculation()) {
                 try {
                     $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
                         activityId: $activity->getId(),
                         unitSystem: $this->unitSystem
                     );
+
+                    $distances = $combinedActivityStream->getDistances();
                     $elevationProfileChart = ElevationProfileChart::create(
-                        distances: $combinedActivityStream->getDistances(),
+                        distances: $distances,
                         altitudes: $combinedActivityStream->getAltitudes(),
                         unitSystem: $this->unitSystem
                     );
+
+                    $streamTypes = $combinedActivityStream->getStreamTypes();
+                    /** @var StreamType $streamType */
+                    foreach ($streamTypes as $streamType) {
+                        if (in_array($streamType, [StreamType::DISTANCE, StreamType::ALTITUDE])) {
+                            continue;
+                        }
+                        if (!$data = $combinedActivityStream->getOtherStreamData($streamType)) {
+                            continue;
+                        }
+
+                        $chart = CombinedStreamProfileChart::create(
+                            distances: $distances,
+                            yAxisData: $data,
+                            yAxisStreamType: $streamType,
+                        );
+                        $otherProfileCharts[$streamType->value] = Json::encode($chart->build());
+                    }
                 } catch (EntityNotFound) {
                 }
             }
@@ -184,6 +206,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'splits' => $activitySplits,
                     'heartRateChart' => $heartRateChart ? Json::encode($heartRateChart->build()) : null,
                     'elevationProfileChart' => $elevationProfileChart ? Json::encode($elevationProfileChart->build()) : null,
+                    'otherProfileCharts' => $otherProfileCharts,
                 ]),
             );
 

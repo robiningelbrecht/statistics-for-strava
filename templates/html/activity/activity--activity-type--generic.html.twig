@@ -290,6 +290,12 @@
         </div>
     </div>
 {% endif %}
+<div>
+    {% for otherProfileChart in otherProfileCharts %}
+        <div class="h-[150px] mb-1" data-echarts-options='{{ otherProfileChart }}' data-echarts-connect></div>
+    {% endfor %}
+    <div class="h-[350px]" data-echarts-options='{{ elevationProfileChart }}' data-echarts-connect></div>
+</div>
 {% if powerDistributionChart or heartRateDistributionChart %}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {% if powerDistributionChart %}

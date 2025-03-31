@@ -59,8 +59,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             }
 
             $otherStreams = ActivityStreams::empty();
-            foreach ([
-                StreamType::WATTS,
+            foreach ([StreamType::WATTS,
                 StreamType::HEART_RATE,
                 StreamType::CADENCE] as $streamType) {
                 if (!$stream = $streams->filterOnType($streamType)) {
@@ -91,7 +90,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
 
                 if (UnitSystem::IMPERIAL === $this->unitSystem) {
                     $row[$distanceIndex] = $distanceInKm->toMiles()->toFloat();
-                    $row[$altitudeIndex] = round(Meter::from($row[$altitudeIndex])->toFoot()->toFloat());
+                    $row[$altitudeIndex] = Meter::from($row[$altitudeIndex])->toFoot()->toFloat();
                 }
 
                 // Apply rounding rules.
@@ -99,6 +98,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     ActivityType::RIDE => $row[$distanceIndex] < 1 ? round($row[$distanceIndex], 1) : round($row[$distanceIndex]),
                     default => round($row[$distanceIndex], 1),
                 };
+                $row[$altitudeIndex] = round($row[$altitudeIndex]);
             }
 
             $this->combinedActivityStreamRepository->add(

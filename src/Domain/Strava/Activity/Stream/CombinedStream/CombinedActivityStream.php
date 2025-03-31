@@ -85,17 +85,42 @@ final readonly class CombinedActivityStream
         return $this->data;
     }
 
+    /**
+     * @return array<int, float>
+     */
     public function getDistances(): array
     {
         $distanceIndex = array_search(StreamType::DISTANCE, $this->streamTypes->toArray(), true);
+        if (false === $distanceIndex) {
+            return [];
+        }
 
         return array_column($this->data, $distanceIndex);
     }
 
+    /**
+     * @return array<int, float>
+     */
     public function getAltitudes(): array
     {
         $altitudeIndex = array_search(StreamType::ALTITUDE, $this->streamTypes->toArray(), true);
+        if (false === $altitudeIndex) {
+            return [];
+        }
 
         return array_column($this->data, $altitudeIndex);
+    }
+
+    /**
+     * @return array<int, float>
+     */
+    public function getOtherStreamData(StreamType $streamType): array
+    {
+        $index = array_search($streamType, $this->streamTypes->toArray(), true);
+        if (false === $index) {
+            return [];
+        }
+
+        return array_column($this->data, $index);
     }
 }
