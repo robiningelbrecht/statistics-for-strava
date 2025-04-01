@@ -23,7 +23,8 @@ Challenges: Desafios
 'Climb a total of 2000m': 'Escalar um total de 2000m'
 'Climb a total of 7500m': 'Escalar um total de 7500m'
 'Close modal': 'Fechar modal'
-Commute: Commute
+Commutes: Commutes
+'Commutes only': 'Commutes only'
 'Complete a 10 km run.': 'Completar uma corrida de 10 km'
 'Complete a 100km ride': 'Completar um passeio de 100 km'
 'Complete a 5 km run.': 'Completar uma corrida de 5 km'
@@ -55,7 +56,6 @@ Evening: 'Fim da tarde'
 Favourite: Favorito
 Feb: Fev
 'Filter on KOM segments': 'Filtrar por segmentos KOM'
-'Filter on commutes only': 'Filter on commutes only'
 'Filter on country': 'Filter on country'
 'Filter on gear': 'Filter on gear'
 'Filter on sport type': 'Filtrar por tipo de desporto'
@@ -97,6 +97,7 @@ Kayaking: Caiaque
 'Latest start time': 'Hora de início mais tardia'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'
+'Long run': 'Long run'
 'Longest workout': 'Treino mais longo'
 Low: Baixa
 Mar: Mar
@@ -116,7 +117,6 @@ Morning: Manhã
 'Mountain Bike Rides': 'Passeios de BTT'
 'Moving time': 'Tempo em movimento'
 Night: Noite
-'No': 'No'
 'No activities': 'Sem atividades'
 'Nordic Ski': 'Esqui Nórdico'
 Nov: Nov
@@ -132,6 +132,7 @@ Power: Potência
 'Power distribution': 'Distribuição da potência'
 'Powered by Strava': 'Desenvolvido por Strava'
 'Prev year': 'Ano anterior'
+Race: Race
 'Racing Score': 'Pontuação de Corrida'
 'Racquet & Paddle Sports': 'Desportos de Raquete e Padel'
 'Racquet Ball': Racquetball
@@ -214,9 +215,9 @@ Wheelchair: 'Cadeira de Rodas'
 'Wind Surf': Windsurf
 'Winter Sports': 'Desportos de Inverno'
 Workout: Treino
+'Workout type': 'Workout type'
 Year: Ano
 'Yearly distances': 'Distâncias anuais'
-'Yes': 'Yes'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'

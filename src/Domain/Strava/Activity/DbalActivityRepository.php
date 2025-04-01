@@ -151,6 +151,7 @@ final class DbalActivityRepository implements ActivityRepository
             gearId: GearId::fromOptionalString($result['gearId']),
             gearName: $result['gearName'],
             isCommute: (bool) $result['isCommute'],
+            workoutType: WorkoutType::tryFrom($result['workoutType'] ?? ''),
         );
     }
 }

@@ -23,7 +23,8 @@ Challenges: Challenges
 'Climb a total of 2000m': 'Climb a total of 2000m'
 'Climb a total of 7500m': 'Climb a total of 7500m'
 'Close modal': 'Close modal'
-Commute: Commute
+Commutes: Commutes
+'Commutes only': 'Commutes only'
 'Complete a 10 km run.': 'Complete a 10 km run.'
 'Complete a 100km ride': 'Complete a 100km ride'
 'Complete a 5 km run.': 'Complete a 5 km run.'
@@ -55,7 +56,6 @@ Evening: Evening
 Favourite: Favourite
 Feb: Feb
 'Filter on KOM segments': 'Filter on KOM segments'
-'Filter on commutes only': 'Filter on commutes only'
 'Filter on country': 'Filter on country'
 'Filter on gear': 'Filter on gear'
 'Filter on sport type': 'Filter on sport type'
@@ -97,6 +97,7 @@ Kayaking: Kayaking
 'Latest start time': 'Latest start time'
 'Loading data...': 'Loading data...'
 Loading...: Loading...
+'Long run': 'Long run'
 'Longest workout': 'Longest workout'
 Low: Low
 Mar: Mar
@@ -116,7 +117,6 @@ Morning: Morning
 'Mountain Bike Rides': 'Mountain Bike Rides'
 'Moving time': 'Moving time'
 Night: Night
-'No': 'No'
 'No activities': 'No activities'
 'Nordic Ski': 'Nordic Ski'
 Nov: Nov
@@ -132,6 +132,7 @@ Power: Power
 'Power distribution': 'Power distribution'
 'Powered by Strava': 'Powered by Strava'
 'Prev year': 'Prev year'
+Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
@@ -214,9 +215,9 @@ Wheelchair: Wheelchair
 'Wind Surf': 'Wind Surf'
 'Winter Sports': 'Winter Sports'
 Workout: Workout
+'Workout type': 'Workout type'
 Year: Year
 'Yearly distances': 'Yearly distances'
-'Yes': 'Yes'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'

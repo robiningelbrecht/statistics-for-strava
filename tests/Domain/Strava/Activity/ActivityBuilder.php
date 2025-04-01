@@ -7,6 +7,7 @@ namespace App\Tests\Domain\Strava\Activity;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\WorkoutType;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -45,6 +46,7 @@ final class ActivityBuilder
     private ?GearId $gearId;
     private readonly ?string $gearName;
     private readonly bool $isCommute;
+    private ?WorkoutType $workoutType;
 
     private function __construct()
     {
@@ -75,6 +77,7 @@ final class ActivityBuilder
         $this->location = null;
         $this->gearName = null;
         $this->isCommute = false;
+        $this->workoutType = null;
     }
 
     public static function fromDefaults(): self
@@ -112,6 +115,7 @@ final class ActivityBuilder
             gearId: $this->gearId,
             gearName: $this->gearName,
             isCommute: $this->isCommute,
+            workoutType: $this->workoutType,
         );
     }
 

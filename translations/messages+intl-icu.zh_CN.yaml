@@ -23,7 +23,8 @@ Challenges: 挑战
 'Climb a total of 2000m': 总共攀登2000米
 'Climb a total of 7500m': 总共攀登7500米
 'Close modal': 关闭模态框
-Commute: Commute
+Commutes: Commutes
+'Commutes only': 'Commutes only'
 'Complete a 10 km run.': 完成10公里跑步。
 'Complete a 100km ride': 完成100公里骑行
 'Complete a 5 km run.': 完成5公里跑步。
@@ -55,7 +56,6 @@ Evening: 晚上
 Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
-'Filter on commutes only': 'Filter on commutes only'
 'Filter on country': 'Filter on country'
 'Filter on gear': 'Filter on gear'
 'Filter on sport type': 按运动类型筛选
@@ -97,6 +97,7 @@ Kayaking: 皮划艇
 'Latest start time': 最晚开始时间
 'Loading data...': 加载数据中...
 Loading...: 加载中...
+'Long run': 'Long run'
 'Longest workout': 最长锻炼
 Low: 低
 Mar: 三月
@@ -116,7 +117,6 @@ Morning: 早晨
 'Mountain Bike Rides': 山地车骑行
 'Moving time': 移动时间
 Night: 夜晚
-'No': 'No'
 'No activities': 没有活动
 'Nordic Ski': 北欧滑雪
 Nov: 十一月
@@ -132,6 +132,7 @@ Power: 功率
 'Power distribution': 功率分布
 'Powered by Strava': 由Strava提供支持
 'Prev year': 去年
+Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
@@ -214,9 +215,9 @@ Wheelchair: 轮椅
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼
+'Workout type': 'Workout type'
 Year: 年
 'Yearly distances': 每年距离
-'Yes': 'Yes'
 Yoga: 瑜伽
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'

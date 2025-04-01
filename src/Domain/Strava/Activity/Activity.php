@@ -103,6 +103,8 @@ final class Activity
         private ?string $gearName,
         #[ORM\Column(type: 'boolean', nullable: true)]
         private readonly bool $isCommute,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private readonly ?WorkoutType $workoutType,
     ) {
     }
 
@@ -151,6 +153,7 @@ final class Activity
             gearId: $gearId,
             gearName: $gearName,
             isCommute: $rawData['commute'] ?? false,
+            workoutType: WorkoutType::fromStravaInt($rawData['workout_type'] ?? null),
         );
     }
 
@@ -185,6 +188,7 @@ final class Activity
         ?GearId $gearId,
         ?string $gearName,
         bool $isCommute,
+        ?WorkoutType $workoutType,
     ): self {
         return new self(
             activityId: $activityId,
@@ -214,6 +218,7 @@ final class Activity
             gearId: $gearId,
             gearName: $gearName,
             isCommute: $isCommute,
+            workoutType: $workoutType
         );
     }
 
@@ -497,6 +502,11 @@ final class Activity
         return $this->isCommute;
     }
 
+    public function getWorkoutType(): ?WorkoutType
+    {
+        return $this->workoutType;
+    }
+
     public function getCarbonSaved(): Kilogram
     {
         if (!$this->isCommute) {
@@ -562,6 +572,7 @@ final class Activity
             'countryCode' => $this->getLocation()?->getCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearId(),
+            'workoutType' => $this->getWorkoutType()?->value,
         ]);
     }
 

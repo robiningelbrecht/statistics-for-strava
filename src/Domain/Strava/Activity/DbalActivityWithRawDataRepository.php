@@ -38,13 +38,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
-            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported
+            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
-            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported
+            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
         $activity = $activityWithRawData->getActivity();
@@ -79,6 +79,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
             'isCommute' => (int) $activity->isCommute(),
             'streamsAreImported' => 0,
+            'workoutType' => $activity->getWorkoutType()?->value,
         ]);
     }
 

@@ -23,7 +23,8 @@ Challenges: Challenges
 'Climb a total of 2000m': 'Klim in totaal 2000m'
 'Climb a total of 7500m': 'Klim in totaal 7500m'
 'Close modal': Sluiten
-Commute: Commute
+Commutes: Commutes
+'Commutes only': 'Commutes only'
 'Complete a 10 km run.': 'Voltooi een 10 km loop workout.'
 'Complete a 100km ride': 'Voltooi een 100km rit'
 'Complete a 5 km run.': 'Voltooi een 5 km loop workout.'
@@ -55,7 +56,6 @@ Evening: Avond
 Favourite: Favoriet
 Feb: Feb
 'Filter on KOM segments': 'Filter on KOM segments'
-'Filter on commutes only': 'Filter on commutes only'
 'Filter on country': 'Filter on country'
 'Filter on gear': 'Filter on gear'
 'Filter on sport type': 'Filter on sport type'
@@ -97,6 +97,7 @@ Kayaking: Kajakken
 'Latest start time': 'Laatste starttijd'
 'Loading data...': 'Aan het laden...'
 Loading...: 'Aan het laden...'
+'Long run': 'Long run'
 'Longest workout': 'Longest workout'
 Low: Laag
 Mar: Mar
@@ -116,7 +117,6 @@ Morning: Ochtend
 'Mountain Bike Rides': 'Mountain Bike Ritten'
 'Moving time': Beweegtijd
 Night: Nacht
-'No': 'No'
 'No activities': 'Geen activiteiten'
 'Nordic Ski': 'Nordic Ski'
 Nov: Nov
@@ -132,6 +132,7 @@ Power: Kracht
 'Power distribution': Krachtverdeling
 'Powered by Strava': 'Powered by Strava'
 'Prev year': 'Vorig jaar'
+Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
@@ -214,9 +215,9 @@ Wheelchair: Rolstoel
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Workout
+'Workout type': 'Workout type'
 Year: Jaar
 'Yearly distances': 'Jaarlijkse afstanden'
-'Yes': 'Yes'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'

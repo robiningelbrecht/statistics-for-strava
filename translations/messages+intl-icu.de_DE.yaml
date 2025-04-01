@@ -23,7 +23,8 @@ Challenges: Herausforderungen
 'Climb a total of 2000m': 'Steige insgesamt 2000 m'
 'Climb a total of 7500m': 'Steige insgesamt 7500 m'
 'Close modal': 'Modal schließen'
-Commute: Commute
+Commutes: Commutes
+'Commutes only': 'Commutes only'
 'Complete a 10 km run.': 'Absolviere einen 10 km Lauf.'
 'Complete a 100km ride': 'Absolviere eine 100 km Fahrt'
 'Complete a 5 km run.': 'Absolviere einen 5 km Lauf.'
@@ -55,7 +56,6 @@ Evening: Abend
 Favourite: Favorit
 Feb: Feb
 'Filter on KOM segments': 'Filter für KOM-Segmente'
-'Filter on commutes only': 'Filter on commutes only'
 'Filter on country': 'Filter on country'
 'Filter on gear': 'Filter on gear'
 'Filter on sport type': 'Filter nach Sportart'
@@ -97,6 +97,7 @@ Kayaking: Kajakfahren
 'Latest start time': 'Späteste Startzeit'
 'Loading data...': 'Daten werden geladen...'
 Loading...: Lädt...
+'Long run': 'Long run'
 'Longest workout': 'Längstes Training'
 Low: Niedrig
 Mar: Mär
@@ -116,7 +117,6 @@ Morning: Morgen
 'Mountain Bike Rides': Mountainbike-Fahrten
 'Moving time': Bewegungszeit
 Night: Nacht
-'No': 'No'
 'No activities': 'Keine Aktivitäten'
 'Nordic Ski': 'Nordischer Ski'
 Nov: Nov
@@ -132,6 +132,7 @@ Power: Leistung
 'Power distribution': Leistungsverteilung
 'Powered by Strava': 'Powered by Strava'
 'Prev year': Vorjahr
+Race: Race
 'Racing Score': Rennpunktzahl
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
@@ -214,9 +215,9 @@ Wheelchair: Rollstuhl
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Training
+'Workout type': 'Workout type'
 Year: Jahr
 'Yearly distances': 'Jährliche Distanzen'
-'Yes': 'Yes'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'
