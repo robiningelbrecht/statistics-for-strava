@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear;
 
-use App\Domain\Strava\Activity\Activities;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
