@@ -290,25 +290,34 @@
         </div>
     </div>
 {% endif %}
-{% if (powerDistributionChart or heartRateDistributionChart) and elevationProfileChart  %}
+{% if (powerDistributionChart or heartRateDistributionChart) and profileCharts is not empty  %}
 <div class="mb-4 border-b border-gray-200">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
         <li class="mr-2" role="presentation">
-            <a href="#" data-tabs-target="#chartsTabBasic" role="tab" aria-controls="chartsTabBasic" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                {{ "Basic"|trans }}
+            <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                {{ "Metrics"|trans }}
             </a>
         </li>
         <li class="mr-2" role="presentation">
-            <a href="#" data-tabs-target="#chartsTabAdvanced" role="tab" aria-controls="chartsTabAdvanced" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                {{ "Advanced"|trans }}
+            <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                {{ "Distribution"|trans }}
             </a>
         </li>
     </ul>
 </div>
 {% endif %}
 <div id="chartsTabContent">
+    {% if profileCharts is not empty %}
+        <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
+            <div class="flex flex-col gap-y-1">
+                {% for chart in profileCharts %}
+                    <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
     {% if powerDistributionChart or heartRateDistributionChart %}
-        <div id="chartsTabBasic" role="tabpanel" aria-labelledby="chartsTabBasic-tab">
+        <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {% if powerDistributionChart %}
                     <div>
@@ -323,14 +332,6 @@
                     </div>
                 {% endif %}
             </div>
-        </div>
-    {% endif %}
-    {% if elevationProfileChart %}
-        <div id="chartsTabAdvanced" role="tabpanel" aria-labelledby="chartsTabAdvanced-tab">
-            {% for otherProfileChart in otherProfileCharts %}
-                <div class="h-[120px] mb-1" data-echarts-options='{{ otherProfileChart }}' data-echarts-connect></div>
-            {% endfor %}
-            <div class="h-[145px]" data-echarts-options='{{ elevationProfileChart }}' data-echarts-connect></div>
         </div>
     {% endif %}
 </div>

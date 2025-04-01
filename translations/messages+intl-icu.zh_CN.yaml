@@ -12,7 +12,6 @@ Aug: 八月
 Avg: 平均
 'Back Country Ski': 越野滑雪
 Badminton: 羽毛球
-Basic: Basic
 Best: 最佳
 'Best Efforts': 'Best Efforts'
 Cadence: 踏频
@@ -41,6 +40,7 @@ Distance: 距离
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
+Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
 'E-Bike Rides': 电动自行车骑行
 'E-Mountain Bike Rides': 电动山地车骑行
@@ -103,6 +103,7 @@ Mar: 三月
 Max: 最大
 May: 五月
 Medium: 中等
+Metrics: Metrics
 'Mind & Body Sports': 心灵与身体运动
 Mon: 周一
 Monday: 星期一

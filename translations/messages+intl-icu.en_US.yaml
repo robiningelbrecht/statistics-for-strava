@@ -12,7 +12,6 @@ Aug: Aug
 Avg: Avg
 'Back Country Ski': 'Back Country Ski'
 Badminton: Badminton
-Basic: Basic
 Best: Best
 'Best Efforts': 'Best Efforts'
 Cadence: Cadence
@@ -41,6 +40,7 @@ Distance: Distance
 'Distance in {unit}': 'Distance in {unit}'
 'Distance over time per gear': 'Distance over time per gear'
 'Distance per month per gear': 'Distance per month per gear'
+Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'E-Bike Rides'
 'E-Mountain Bike Rides': 'E-Mountain Bike Rides'
@@ -103,6 +103,7 @@ Mar: Mar
 Max: Max
 May: May
 Medium: Medium
+Metrics: Metrics
 'Mind & Body Sports': 'Mind & Body Sports'
 Mon: Mon
 Monday: Monday

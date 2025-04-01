@@ -99,19 +99,6 @@ final readonly class CombinedActivityStream
     /**
      * @return array<int, float>
      */
-    public function getAltitudes(): array
-    {
-        $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $this->streamTypes->toArray(), true);
-        if (false === $altitudeIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $altitudeIndex);
-    }
-
-    /**
-     * @return array<int, float>
-     */
     public function getOtherStreamData(CombinedStreamType $streamType): array
     {
         $index = array_search($streamType, $this->streamTypes->toArray(), true);

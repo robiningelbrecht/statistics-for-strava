@@ -12,7 +12,6 @@ Aug: Ago
 Avg: Média
 'Back Country Ski': 'Esqui Fora de Pista'
 Badminton: Badmínton
-Basic: Basic
 Best: Melhor
 'Best Efforts': 'Best Efforts'
 Cadence: Cadência
@@ -41,6 +40,7 @@ Distance: Distância
 'Distance in {unit}': 'Distância em {unit}'
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
+Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'Passeios de E-Bike'
 'E-Mountain Bike Rides': 'Passeios de E-MTB'
@@ -103,6 +103,7 @@ Mar: Mar
 Max: Máx
 May: Mai
 Medium: Média
+Metrics: Metrics
 'Mind & Body Sports': 'Desportos para Corpo e Mente'
 Mon: Seg
 Monday: Segunda-feira

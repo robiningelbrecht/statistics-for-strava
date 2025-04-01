@@ -12,7 +12,6 @@ Aug: Aug
 Avg: Gem
 'Back Country Ski': 'Back Country Ski'
 Badminton: Badminton
-Basic: Basic
 Best: Beste
 'Best Efforts': 'Best Efforts'
 Cadence: Cadans
@@ -41,6 +40,7 @@ Distance: Afstand
 'Distance in {unit}': 'Afstand in {unit}'
 'Distance over time per gear': 'Afstand in tijd per gear'
 'Distance per month per gear': 'Afstand per maand per gear'
+Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'E-Bike Ritten'
 'E-Mountain Bike Rides': 'E-Mountain Bike Ritten'
@@ -103,6 +103,7 @@ Mar: Mar
 Max: Max
 May: Mei
 Medium: Medium
+Metrics: Metrics
 'Mind & Body Sports': 'Mind & Body Sports'
 Mon: Ma
 Monday: Maandag

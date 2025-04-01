@@ -75,14 +75,6 @@ enum ActivityType: string implements TranslatableInterface
         return ActivityType::OTHER !== $this;
     }
 
-    public function supportsHeartRateOverTimeChart(): bool
-    {
-        return match ($this) {
-            self::RUN, self::WALK => true,
-            default => false,
-        };
-    }
-
     public function supportsPowerDistributionChart(): bool
     {
         return match ($this) {

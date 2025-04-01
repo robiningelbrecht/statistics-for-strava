@@ -6,6 +6,7 @@ namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityIds;
+use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
@@ -69,26 +70,32 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                     WHERE x.activityId = Activity.activityId AND x.streamType IN(:otherStreamTypes) AND json_array_length(x.data) > 0
                   )';
 
-        return ActivityIds::fromArray(array_map(
-            fn (string $activityId) => ActivityId::fromString($activityId),
-            $this->connection->executeQuery($sql,
+        $activityIds = [];
+        foreach (ActivityType::cases() as $activityType) {
+            if (!$activityType->supportsCombinedStreamCalculation()) {
+                continue;
+            }
+
+            $activityIds = array_merge($activityIds, $this->connection->executeQuery($sql,
                 [
                     'unitSystem' => $unitSystem->value,
                     'distanceStreamType' => CombinedStreamType::DISTANCE->value,
                     'otherStreamTypes' => array_map(
                         fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value,
-                        CombinedStreamType::others()
+                        CombinedStreamType::othersFor($activityType)
                     ),
-                    'sportTypes' => array_map(
-                        fn (SportType $sportType) => $sportType->value,
-                        array_filter(SportType::cases(), fn (SportType $sportType) => $sportType->getActivityType()->supportsCombinedStreamCalculation())
-                    ),
+                    'sportTypes' => $activityType->getSportTypes()->map(fn (SportType $sportType) => $sportType->value),
                 ],
                 [
                     'sportTypes' => ArrayParameterType::STRING,
                     'otherStreamTypes' => ArrayParameterType::STRING,
                 ]
-            )->fetchFirstColumn()
+            )->fetchFirstColumn());
+        }
+
+        return ActivityIds::fromArray(array_map(
+            fn (string $activityId) => ActivityId::fromString($activityId),
+            array_unique($activityIds),
         ));
     }
 }

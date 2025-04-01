@@ -6,7 +6,6 @@ namespace App\Domain\App\BuildActivitiesHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
-use App\Domain\Strava\Activity\HeartRateChart;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
 use App\Domain\Strava\Activity\PowerDistributionChart;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
@@ -17,7 +16,6 @@ use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
-use App\Domain\Strava\Activity\Stream\CombinedStream\ElevationProfileChart;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Gear\GearRepository;
@@ -109,14 +107,9 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $heartRateStream = null;
-            $heartRateChart = null;
             try {
                 $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
             } catch (EntityNotFound) {
-            }
-
-            if ($activityType->supportsHeartRateOverTimeChart() && $heartRateStream?->getData()) {
-                $heartRateChart = HeartRateChart::create($heartRateStream);
             }
 
             $timeInSecondsPerWattage = null;
@@ -155,8 +148,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 }
             }
 
-            $elevationProfileChart = null;
-            $otherProfileCharts = [];
+            $activityProfileCharts = [];
             if ($activityType->supportsCombinedStreamCalculation()) {
                 try {
                     $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
@@ -165,20 +157,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     );
 
                     $distances = $combinedActivityStream->getDistances();
-                    $elevationProfileChart = ElevationProfileChart::create(
-                        distances: $distances,
-                        altitudes: $combinedActivityStream->getAltitudes(),
-                        unitSystem: $this->unitSystem,
-                        translator: $this->translator
-                    );
 
                     $combinedStreamTypes = $combinedActivityStream->getStreamTypes();
                     /** @var CombinedStreamType $combinedStreamType */
+                    $firstIteration = true;
                     foreach ($combinedStreamTypes as $combinedStreamType) {
                         if (CombinedStreamType::DISTANCE === $combinedStreamType) {
-                            continue;
-                        }
-                        if (CombinedStreamType::ALTITUDE === $combinedStreamType) {
                             continue;
                         }
 
@@ -190,9 +174,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             distances: $distances,
                             yAxisData: $data,
                             yAxisStreamType: $combinedStreamType,
+                            unitSystem: $this->unitSystem,
+                            showXAxis: $firstIteration,
                             translator: $this->translator
                         );
-                        $otherProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
+                        $activityProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
+                        $firstIteration = false;
                     }
                 } catch (EntityNotFound) {
                 }
@@ -211,9 +198,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'powerDistributionChart' => $powerDistributionChart ? Json::encode($powerDistributionChart->build()) : null,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
-                    'heartRateChart' => $heartRateChart ? Json::encode($heartRateChart->build()) : null,
-                    'elevationProfileChart' => $elevationProfileChart ? Json::encode($elevationProfileChart->build()) : null,
-                    'otherProfileCharts' => $otherProfileCharts,
+                    'profileCharts' => array_reverse($activityProfileCharts),
                 ]),
             );
 

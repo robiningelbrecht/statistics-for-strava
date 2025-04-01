@@ -332,6 +332,14 @@
 
         return `${hours}:${minutes}:${seconds}`;
     };
+    window.statisticsForStrava.callbacks.formatPace = (secondsToFormat) => {
+        if (secondsToFormat < 60) {
+            return `${secondsToFormat}s`;
+        }
+        const minutes = Math.floor(secondsToFormat / 60);
+        const secs = secondsToFormat % 60;
+        return `${minutes}:${secs.toString().padStart(2, '0')}`;
+    };
 </script>
 <script src="/assets/echarts/echarts.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
 <script src="/assets/lazyload.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class CombinedStreamProfileChart
@@ -14,6 +15,8 @@ final readonly class CombinedStreamProfileChart
         /** @var array<int, int|float> */
         private array $yAxisData,
         private CombinedStreamType $yAxisStreamType,
+        private UnitSystem $unitSystem,
+        private bool $showXAxis,
         private TranslatorInterface $translator,
     ) {
     }
@@ -26,12 +29,16 @@ final readonly class CombinedStreamProfileChart
         array $distances,
         array $yAxisData,
         CombinedStreamType $yAxisStreamType,
+        UnitSystem $unitSystem,
+        bool $showXAxis,
         TranslatorInterface $translator,
     ): self {
         return new self(
             distances: $distances,
             yAxisData: $yAxisData,
             yAxisStreamType: $yAxisStreamType,
+            unitSystem: $unitSystem,
+            showXAxis: $showXAxis,
             translator: $translator
         );
     }
@@ -41,29 +48,33 @@ final readonly class CombinedStreamProfileChart
      */
     public function build(): array
     {
+        if (empty($this->yAxisData)) {
+            throw new \RuntimeException('yAxisData data cannot be empty');
+        }
+        $distanceSymbol = $this->unitSystem->distanceSymbol();
+        $maxYAxis = ceil(max($this->yAxisData) * 1.1);
+
         return [
             'grid' => [
                 'left' => '25px',
                 'right' => '0%',
-                'bottom' => '0%',
+                'bottom' => $this->showXAxis ? '20px' : '0%',
                 'top' => '0%',
                 'containLabel' => false,
             ],
             'animation' => false,
             'tooltip' => [
                 'trigger' => 'axis',
-                'formatter' => '{c} '.$this->yAxisStreamType->getSuffix(),
+                'formatter' => '<strong>{c}</strong> '.$this->yAxisStreamType->getSuffix($this->unitSystem),
             ],
             'xAxis' => [
                 'type' => 'category',
                 'boundaryGap' => false,
                 'axisLabel' => [
-                    'show' => false,
+                    'show' => $this->showXAxis,
+                    'formatter' => '{value} '.$distanceSymbol,
                 ],
                 'data' => $this->distances,
-                'splitLine' => [
-                    'show' => true,
-                ],
                 'min' => 0,
                 'axisTick' => [
                     'show' => false,
@@ -77,8 +88,9 @@ final readonly class CombinedStreamProfileChart
                     'nameLocation' => 'middle',
                     'nameGap' => 10,
                     'min' => 0,
+                    'max' => $maxYAxis,
                     'splitLine' => [
-                        'show' => true,
+                        'show' => false,
                     ],
                     'axisLabel' => [
                         'show' => false,

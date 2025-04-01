@@ -2,7 +2,7 @@
     {
         "activityId": "activity-test-5",
         "unitSystem": "metric",
-        "streamTypes": "distance,altitude,cadence,pace",
-        "data": "[[0,2,3,333]]"
+        "streamTypes": "distance,altitude,pace",
+        "data": "[[0,2,333]]"
     }
 ]

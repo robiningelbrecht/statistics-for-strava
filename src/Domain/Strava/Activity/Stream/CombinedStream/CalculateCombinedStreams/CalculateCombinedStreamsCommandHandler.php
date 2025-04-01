@@ -60,15 +60,11 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             }
 
             $otherStreams = ActivityStreams::empty();
-            foreach (CombinedStreamType::others() as $combinedStreamType) {
+            foreach (CombinedStreamType::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
                 if (!$stream = $streams->filterOnType($combinedStreamType->getStreamType())) {
                     continue;
                 }
                 if (!$stream->getData()) {
-                    continue;
-                }
-                if (CombinedStreamType::PACE === $combinedStreamType && ActivityType::RIDE === $activityType) {
-                    // Only import PACE for runs and walks.
                     continue;
                 }
                 $streamTypes->add($combinedStreamType);
