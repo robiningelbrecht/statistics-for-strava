@@ -7,8 +7,6 @@ namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityIds;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Domain\Strava\Activity\Stream\StreamTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
@@ -25,7 +23,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
         $this->connection->executeStatement($sql, [
             'activityId' => $combinedActivityStream->getActivityId(),
             'unitSystem' => $combinedActivityStream->getUnitSystem()->value,
-            'streamTypes' => implode(',', $combinedActivityStream->getStreamTypes()->map(fn (StreamType $streamType) => $streamType->value)),
+            'streamTypes' => implode(',', $combinedActivityStream->getStreamTypes()->map(fn (CombinedStreamType $streamType) => $streamType->value)),
             'data' => Json::encode($combinedActivityStream->getData()),
         ]);
     }
@@ -46,8 +44,8 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
         return CombinedActivityStream::fromState(
             activityId: ActivityId::fromString($result['activityId']),
             unitSystem: UnitSystem::from($result['unitSystem']),
-            streamTypes: StreamTypes::fromArray(array_map(
-                fn (string $streamType) => StreamType::from($streamType),
+            streamTypes: CombinedStreamTypes::fromArray(array_map(
+                fn (string $streamType) => CombinedStreamType::from($streamType),
                 explode(',', $result['streamTypes'])
             )),
             data: Json::decode($result['data'])
@@ -60,15 +58,15 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                   WHERE sportType IN (:sportTypes)
                   AND NOT EXISTS (
                     SELECT 1 FROM CombinedActivityStream WHERE CombinedActivityStream.activityId = Activity.activityId 
-                   AND CombinedActivityStream.unitSystem = :unitSystem
-                  )
-                  AND EXISTS (
-                    SELECT 1 FROM ActivityStream x
-                    WHERE x.activityId = Activity.activityId AND x.streamType = :altitudeStreamType AND json_array_length(x.data) > 0
+                    AND CombinedActivityStream.unitSystem = :unitSystem
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream y
                     WHERE y.activityId = Activity.activityId AND y.streamType = :distanceStreamType AND json_array_length(y.data) > 0
+                  )
+                  AND EXISTS (
+                    SELECT 1 FROM ActivityStream x
+                    WHERE x.activityId = Activity.activityId AND x.streamType IN(:otherStreamTypes) AND json_array_length(x.data) > 0
                   )';
 
         return ActivityIds::fromArray(array_map(
@@ -76,8 +74,11 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
             $this->connection->executeQuery($sql,
                 [
                     'unitSystem' => $unitSystem->value,
-                    'altitudeStreamType' => StreamType::ALTITUDE->value,
-                    'distanceStreamType' => StreamType::DISTANCE->value,
+                    'distanceStreamType' => CombinedStreamType::DISTANCE->value,
+                    'otherStreamTypes' => array_map(
+                        fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value,
+                        CombinedStreamType::others()
+                    ),
                     'sportTypes' => array_map(
                         fn (SportType $sportType) => $sportType->value,
                         array_filter(SportType::cases(), fn (SportType $sportType) => $sportType->getActivityType()->supportsCombinedStreamCalculation())
@@ -85,6 +86,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 ],
                 [
                     'sportTypes' => ArrayParameterType::STRING,
+                    'otherStreamTypes' => ArrayParameterType::STRING,
                 ]
             )->fetchFirstColumn()
         ));

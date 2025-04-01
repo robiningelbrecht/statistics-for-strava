@@ -13,7 +13,7 @@ final readonly class RamerDouglasPeucker
     public function __construct(
         private ActivityType $activityType,
         private ActivityStream $distanceStream,
-        private ActivityStream $altitudeStream,
+        private ?ActivityStream $altitudeStream,
         private ActivityStreams $otherStreams,
     ) {
     }
@@ -27,11 +27,10 @@ final readonly class RamerDouglasPeucker
         if (!$distances = $this->distanceStream->getData()) {
             throw new \InvalidArgumentException('Distance stream is empty');
         }
-        if (!$altitudes = $this->altitudeStream->getData()) {
-            throw new \InvalidArgumentException('Altitude stream is empty');
-        }
+        $altitudes = $this->altitudeStream?->getData() ?? [];
+
         $totalDistance = end($distances);
-        $elevationVariance = max($altitudes) - min($altitudes);
+        $elevationVariance = !empty($altitudes) ? max($altitudes) - min($altitudes) : 0;
 
         $baseEpsilon = match ($this->activityType) {
             ActivityType::RUN => 0.7,

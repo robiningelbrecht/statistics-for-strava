@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
-use App\Domain\Strava\Activity\Stream\StreamType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class CombinedStreamProfileChart
@@ -14,7 +13,7 @@ final readonly class CombinedStreamProfileChart
         private array $distances,
         /** @var array<int, int|float> */
         private array $yAxisData,
-        private StreamType $yAxisStreamType,
+        private CombinedStreamType $yAxisStreamType,
         private TranslatorInterface $translator,
     ) {
     }
@@ -26,7 +25,7 @@ final readonly class CombinedStreamProfileChart
     public static function create(
         array $distances,
         array $yAxisData,
-        StreamType $yAxisStreamType,
+        CombinedStreamType $yAxisStreamType,
         TranslatorInterface $translator,
     ): self {
         return new self(
@@ -42,28 +41,6 @@ final readonly class CombinedStreamProfileChart
      */
     public function build(): array
     {
-        $yAxisLabel = match ($this->yAxisStreamType) {
-            StreamType::HEART_RATE => $this->translator->trans('Heart rate'),
-            StreamType::CADENCE => $this->translator->trans('Cadence'),
-            StreamType::WATTS => $this->translator->trans('Power'),
-            StreamType::VELOCITY => $this->translator->trans('Pace'),
-            default => $this->yAxisStreamType->value,
-        };
-        $tooltipSuffix = match ($this->yAxisStreamType) {
-            StreamType::HEART_RATE => ' bpm',
-            StreamType::CADENCE => ' rpm',
-            StreamType::WATTS => ' watt',
-            StreamType::VELOCITY => ' min/km',
-            default => '',
-        };
-        $seriesColor = match ($this->yAxisStreamType) {
-            StreamType::HEART_RATE => '#ee6666',
-            StreamType::CADENCE => '#91cc75',
-            StreamType::WATTS => '#73c0de',
-            StreamType::VELOCITY => '#fac858',
-            default => '#000000',
-        };
-
         return [
             'grid' => [
                 'left' => '25px',
@@ -75,7 +52,7 @@ final readonly class CombinedStreamProfileChart
             'animation' => false,
             'tooltip' => [
                 'trigger' => 'axis',
-                'formatter' => '{c} '.$tooltipSuffix,
+                'formatter' => '{c} '.$this->yAxisStreamType->getSuffix(),
             ],
             'xAxis' => [
                 'type' => 'category',
@@ -95,7 +72,7 @@ final readonly class CombinedStreamProfileChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => $yAxisLabel,
+                    'name' => $this->yAxisStreamType->trans($this->translator),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 10,
@@ -127,7 +104,7 @@ final readonly class CombinedStreamProfileChart
                     'data' => $this->yAxisData,
                     'type' => 'line',
                     'symbol' => 'none',
-                    'color' => $seriesColor,
+                    'color' => $this->yAxisStreamType->getSeriesColor(),
                     'smooth' => true,
                     'lineStyle' => [
                         'width' => 0,

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Domain\Strava\Activity\Stream\StreamTypes;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,7 +20,7 @@ final readonly class CombinedActivityStream
         #[ORM\Id, ORM\Column(type: 'string')]
         private UnitSystem $unitSystem,
         #[ORM\Column(type: 'string')]
-        private StreamTypes $streamTypes,
+        private CombinedStreamTypes $streamTypes,
         #[ORM\Column(type: 'json')]
         private array $data,
     ) {
@@ -34,7 +32,7 @@ final readonly class CombinedActivityStream
     public static function create(
         ActivityId $activityId,
         UnitSystem $unitSystem,
-        StreamTypes $streamTypes,
+        CombinedStreamTypes $streamTypes,
         array $data,
     ): self {
         return new self(
@@ -51,7 +49,7 @@ final readonly class CombinedActivityStream
     public static function fromState(
         ActivityId $activityId,
         UnitSystem $unitSystem,
-        StreamTypes $streamTypes,
+        CombinedStreamTypes $streamTypes,
         array $data,
     ): self {
         return new self(
@@ -72,7 +70,7 @@ final readonly class CombinedActivityStream
         return $this->unitSystem;
     }
 
-    public function getStreamTypes(): StreamTypes
+    public function getStreamTypes(): CombinedStreamTypes
     {
         return $this->streamTypes;
     }
@@ -90,7 +88,7 @@ final readonly class CombinedActivityStream
      */
     public function getDistances(): array
     {
-        $distanceIndex = array_search(StreamType::DISTANCE, $this->streamTypes->toArray(), true);
+        $distanceIndex = array_search(CombinedStreamType::DISTANCE, $this->streamTypes->toArray(), true);
         if (false === $distanceIndex) {
             return [];
         }
@@ -103,7 +101,7 @@ final readonly class CombinedActivityStream
      */
     public function getAltitudes(): array
     {
-        $altitudeIndex = array_search(StreamType::ALTITUDE, $this->streamTypes->toArray(), true);
+        $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $this->streamTypes->toArray(), true);
         if (false === $altitudeIndex) {
             return [];
         }
@@ -114,7 +112,7 @@ final readonly class CombinedActivityStream
     /**
      * @return array<int, float>
      */
-    public function getOtherStreamData(StreamType $streamType): array
+    public function getOtherStreamData(CombinedStreamType $streamType): array
     {
         $index = array_search($streamType, $this->streamTypes->toArray(), true);
         if (false === $index) {

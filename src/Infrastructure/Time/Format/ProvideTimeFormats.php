@@ -8,7 +8,7 @@ use Carbon\CarbonInterval;
 
 trait ProvideTimeFormats
 {
-    public function formatDurationForHumans(int $timeInSeconds, bool $trimLeadingZeros = true): string
+    public function formatDurationForHumans(int $timeInSeconds): string
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 

@@ -16,6 +16,7 @@ use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Strava\Activity\Stream\CombinedStream\ElevationProfileChart;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
@@ -171,23 +172,27 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         translator: $this->translator
                     );
 
-                    $streamTypes = $combinedActivityStream->getStreamTypes();
-                    /** @var StreamType $streamType */
-                    foreach ($streamTypes as $streamType) {
-                        if (in_array($streamType, [StreamType::DISTANCE, StreamType::ALTITUDE])) {
+                    $combinedStreamTypes = $combinedActivityStream->getStreamTypes();
+                    /** @var CombinedStreamType $combinedStreamType */
+                    foreach ($combinedStreamTypes as $combinedStreamType) {
+                        if (CombinedStreamType::DISTANCE === $combinedStreamType) {
                             continue;
                         }
-                        if (!$data = $combinedActivityStream->getOtherStreamData($streamType)) {
+                        if (CombinedStreamType::ALTITUDE === $combinedStreamType) {
+                            continue;
+                        }
+
+                        if (!$data = $combinedActivityStream->getOtherStreamData($combinedStreamType)) {
                             continue;
                         }
 
                         $chart = CombinedStreamProfileChart::create(
                             distances: $distances,
                             yAxisData: $data,
-                            yAxisStreamType: $streamType,
+                            yAxisStreamType: $combinedStreamType,
                             translator: $this->translator
                         );
-                        $otherProfileCharts[$streamType->value] = Json::encode($chart->build());
+                        $otherProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
                     }
                 } catch (EntityNotFound) {
                 }
