@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear;
 
-class GearStatsRepository
+interface GearStatsRepository
 {
-
+    public function findStatsPerGearIdPerDay(): GearStats;
 }

@@ -10,6 +10,7 @@ use App\Domain\Strava\Gear\DistanceOverTimePerGearChart;
 use App\Domain\Strava\Gear\DistancePerMonthPerGearChart;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\GearStatistics;
+use App\Domain\Strava\Gear\GearStatsRepository;
 use App\Infrastructure\CQRS\Command;
 use App\Infrastructure\CQRS\CommandHandler;
 use App\Infrastructure\Serialization\Json;
@@ -22,6 +23,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private GearRepository $gearRepository,
+        private GearStatsRepository $gearStatsRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -37,6 +39,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         $now = $command->getCurrentDateTime();
         $activities = $this->activitiesEnricher->getEnrichedActivities();
         $allGear = $this->gearRepository->findAll();
+        $gearStats = $this->gearStatsRepository->findStatsPerGearIdPerDay();
         $allMonths = Months::create(
             startDate: $activities->getFirstActivityStartDate(),
             now: $now
@@ -59,8 +62,9 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
                 ),
                 'distanceOverTimePerGear' => Json::encode(
                     DistanceOverTimePerGearChart::create(
-                        gearCollection: $allGear,
-                        activityCollection: $activities,
+                        gears: $allGear,
+                        gearStats: $gearStats,
+                        startDate: $activities->getFirstActivityStartDate(),
                         unitSystem: $this->unitSystem,
                         translator: $this->translator,
                         now: $now,
