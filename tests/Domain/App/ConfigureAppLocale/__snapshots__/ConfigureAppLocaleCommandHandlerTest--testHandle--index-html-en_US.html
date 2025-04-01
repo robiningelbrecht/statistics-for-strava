@@ -332,7 +332,8 @@
 
         return `${hours}:${minutes}:${seconds}`;
     };
-    window.statisticsForStrava.callbacks.formatPace = (secondsToFormat) => {
+    window.statisticsForStrava.callbacks.formatPace = (params) => {
+        const secondsToFormat = params[0].value;
         if (secondsToFormat < 60) {
             return `${secondsToFormat}s`;
         }
@@ -421,6 +422,7 @@
                 chart.resize();
             });
             const chartOptions = JSON.parse(chartNode.getAttribute('data-echarts-options'));
+            resolveEchartsCallbacks(chartOptions, 'tooltip.formatter');
             resolveEchartsCallbacks(chartOptions, 'tooltip.valueFormatter');
             resolveEchartsCallbacks(chartOptions, 'yAxis.axisLabel.formatter');
 

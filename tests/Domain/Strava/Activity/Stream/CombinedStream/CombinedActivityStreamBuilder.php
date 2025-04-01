@@ -55,6 +55,13 @@ final class CombinedActivityStreamBuilder
         return $this;
     }
 
+    public function withStreamTypes(CombinedStreamTypes $streamTypes): self
+    {
+        $this->streamTypes = $streamTypes;
+
+        return $this;
+    }
+
     public function withData(array $data): self
     {
         $this->data = $data;

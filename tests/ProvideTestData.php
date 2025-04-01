@@ -13,6 +13,9 @@ use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\Athlete;
 use App\Domain\Strava\Athlete\AthleteRepository;
@@ -39,6 +42,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Domain\Strava\Activity\BestEffort\ActivityBestEffortBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamBuilder;
 use App\Tests\Domain\Strava\Athlete\Weight\AthleteWeightBuilder;
 use App\Tests\Domain\Strava\Challenge\ChallengeBuilder;
 use App\Tests\Domain\Strava\Ftp\FtpBuilder;
@@ -327,6 +331,20 @@ trait ProvideTestData
                     ->build()
             );
         }
+
+        /** @var CombinedActivityStreamRepository $combinedActivityStreamRepository */
+        $combinedActivityStreamRepository = $this->getContainer()->get(CombinedActivityStreamRepository::class);
+        $combinedActivityStreamRepository->add(
+            CombinedActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('9756441741'))
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->withStreamTypes(CombinedStreamTypes::fromArray([
+                    CombinedStreamType::DISTANCE,
+                    CombinedStreamType::ALTITUDE,
+                    CombinedStreamType::HEART_RATE]))
+                ->withData([[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]])
+                ->build()
+        );
 
         /** @var SegmentRepository $segmentRepository */
         $segmentRepository = $this->getContainer()->get(SegmentRepository::class);

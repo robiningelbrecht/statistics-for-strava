@@ -195,7 +195,27 @@
             <img class="h-auto max-w-full rounded-lg lazy" src="assets/placeholder.webp" data-src="assets/images/maps/not-found.jpg" alt="No map">
         </div>
     </div>
+<div class="mb-4 border-b border-gray-200">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
+        <li class="mr-2" role="presentation">
+            <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                Metrics
+            </a>
+        </li>
+        <li class="mr-2" role="presentation">
+            <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                Distribution
+            </a>
+        </li>
+    </ul>
+</div>
 <div id="chartsTabContent">
+            <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
+            <div class="flex flex-col gap-y-1">
+                                    <div class="h-[120px]" data-echarts-options='{"grid":{"left":"25px","right":"0%","bottom":"0%","top":"0%","containLabel":false},"animation":false,"tooltip":{"trigger":"axis","formatter":"&lt;strong&gt;{c}&lt;\/strong&gt; bpm"},"xAxis":{"type":"category","boundaryGap":false,"axisLabel":{"show":false,"formatter":"{value} km"},"data":[1,1,1,1,1],"min":0,"axisTick":{"show":false}},"yAxis":[{"type":"value","name":"Heart rate","nameRotate":90,"nameLocation":"middle","nameGap":10,"min":0,"max":4,"splitLine":{"show":false},"axisLabel":{"show":false}}],"series":[{"markArea":{"data":[[{"itemStyle":{"color":"#303030"}},{"x":"100%"}]]},"data":[3,3,3,3,3],"type":"line","symbol":"none","color":"#ee6666","smooth":true,"lineStyle":{"width":0},"emphasis":{"disabled":true},"areaStyle":{"opacity":1}}]}' data-echarts-connect></div>
+                                    <div class="h-[145px]" data-echarts-options='{"grid":{"left":"25px","right":"0%","bottom":"20px","top":"0%","containLabel":false},"animation":false,"tooltip":{"trigger":"axis","formatter":"&lt;strong&gt;{c}&lt;\/strong&gt; m"},"xAxis":{"type":"category","boundaryGap":false,"axisLabel":{"show":true,"formatter":"{value} km"},"data":[1,1,1,1,1],"min":0,"axisTick":{"show":false}},"yAxis":[{"type":"value","name":"Elevation","nameRotate":90,"nameLocation":"middle","nameGap":10,"min":0,"max":3,"splitLine":{"show":false},"axisLabel":{"show":false}}],"series":[{"markArea":{"data":[[{"itemStyle":{"color":"#303030"}},{"x":"100%"}]]},"data":[2,2,2,2,2],"type":"line","symbol":"none","color":"#a6a6a6","smooth":true,"lineStyle":{"width":0},"emphasis":{"disabled":true},"areaStyle":{"opacity":1}}]}' data-echarts-connect></div>
+                            </div>
+        </div>
                 <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                     <div>

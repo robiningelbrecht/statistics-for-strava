@@ -65,7 +65,8 @@ final readonly class CombinedStreamProfileChart
             'animation' => false,
             'tooltip' => [
                 'trigger' => 'axis',
-                'formatter' => '<strong>{c}</strong> '.$this->yAxisStreamType->getSuffix($this->unitSystem),
+                'formatter' => CombinedStreamType::PACE !== $this->yAxisStreamType ?
+                    '<strong>{c}</strong> '.$this->yAxisStreamType->getSuffix($this->unitSystem) : 'formatPace',
             ],
             'xAxis' => [
                 'type' => 'category',
