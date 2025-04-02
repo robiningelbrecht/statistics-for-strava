@@ -102,7 +102,7 @@ final class Activity
         #[ORM\Column(type: 'string', nullable: true)]
         private ?string $gearName,
         #[ORM\Column(type: 'boolean', nullable: true)]
-        private readonly bool $isCommute,
+        private bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?WorkoutType $workoutType,
     ) {
@@ -500,6 +500,13 @@ final class Activity
     public function isCommute(): bool
     {
         return $this->isCommute;
+    }
+
+    public function updateCommute(bool $isCommute): self
+    {
+        $this->isCommute = $isCommute;
+
+        return $this;
     }
 
     public function getWorkoutType(): ?WorkoutType

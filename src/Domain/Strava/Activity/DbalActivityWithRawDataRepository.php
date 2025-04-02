@@ -101,7 +101,8 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
                     gearName = :gearName,
                     totalImageCount = :totalImageCount,
                     localImagePaths = :localImagePaths,
-                    data = :data
+                    data = :data,
+                    isCommute = :isCommute
                     WHERE activityId = :activityId';
 
         $activity = $activityWithRawData->getActivity();
@@ -122,6 +123,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'gearName' => $activity->getGearName(),
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
+            'isCommute' => (int) $activity->isCommute(),
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
         ]);
     }

@@ -124,6 +124,10 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         $gearId ? $allGears->getByGearId($gearId)?->getName() : null
                     );
 
+                if (array_key_exists('commute', $stravaActivity)) {
+                    $activity->updateCommute($stravaActivity['commute']);
+                }
+
                 if (!$activity->getLocation() && $sportType->supportsReverseGeocoding()
                     && $activity->getStartingCoordinate()) {
                     $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
