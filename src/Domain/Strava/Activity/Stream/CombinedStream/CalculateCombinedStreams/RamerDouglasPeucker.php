@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams;
 
-use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\Stream\ActivityStream;
 use App\Domain\Strava\Activity\Stream\ActivityStreams;
 
 final readonly class RamerDouglasPeucker
 {
     public function __construct(
-        private ActivityType $activityType,
         private ActivityStream $distanceStream,
-        private ?ActivityStream $altitudeStream,
         private ActivityStreams $otherStreams,
     ) {
     }
@@ -21,25 +18,11 @@ final readonly class RamerDouglasPeucker
     /**
      * @return array<mixed>
      */
-    public function apply(): array
+    public function apply(Epsilon $epsilon): array
     {
-        // Calculate epsilon to determine level of simplification we want to apply.
         if (!$distances = $this->distanceStream->getData()) {
             throw new \InvalidArgumentException('Distance stream is empty');
         }
-        $altitudes = $this->altitudeStream?->getData() ?? [];
-
-        $totalDistance = end($distances);
-        $elevationVariance = !empty($altitudes) ? max($altitudes) - min($altitudes) : 0;
-
-        $baseEpsilon = match ($this->activityType) {
-            ActivityType::RUN => 0.7,
-            ActivityType::WALK => 0.5,
-            default => 1.0,
-        };
-
-        // Adjust based on distance, elevation and activity type.
-        $epsilon = min(3.0, max(0.5, $baseEpsilon + ($totalDistance / 1000) + ($elevationVariance / 1000)));
 
         $rawPoints = [];
         foreach ($distances as $i => $distance) {
@@ -50,12 +33,11 @@ final readonly class RamerDouglasPeucker
 
             $rawPoints[] = [
                 $distance,
-                $altitudes[$i] ?? 0,
                 ...$otherPoints,
             ];
         }
 
-        return $this->simplify($rawPoints, $epsilon);
+        return $this->simplify($rawPoints, $epsilon->toFloat());
     }
 
     /**

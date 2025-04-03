@@ -60,6 +60,8 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             }
 
             $otherStreams = ActivityStreams::empty();
+            $elevationVariance = Meter::zero();
+            $speedVariance = MetersPerSecond::zero();
             foreach (CombinedStreamType::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
                 if (!$stream = $streams->filterOnType($combinedStreamType->getStreamType())) {
                     continue;
@@ -67,22 +69,29 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 if (!$stream->getData()) {
                     continue;
                 }
-                $streamTypes->add($combinedStreamType);
 
-                if (CombinedStreamType::ALTITUDE === $combinedStreamType) {
-                    // We already pass altitude stream separately to the algorithm.
-                    // No need to add it to the "otherStreams" again.
-                    continue;
+                if (StreamType::ALTITUDE === $stream->getStreamType()) {
+                    $data = $stream->getData();
+                    $elevationVariance = Meter::from(max($data) - min($data));
                 }
+                if (StreamType::VELOCITY === $stream->getStreamType()) {
+                    $data = $stream->getData();
+                    $speedVariance = MetersPerSecond::from(max($data) - min($data));
+                }
+                $streamTypes->add($combinedStreamType);
                 $otherStreams->add($stream);
             }
 
             $combinedData = new RamerDouglasPeucker(
-                activityType: $activityType,
                 distanceStream: $distanceStream,
-                altitudeStream: $streams->filterOnType(StreamType::ALTITUDE),
                 otherStreams: $otherStreams
-            )->apply();
+            )->apply(Epsilon::create(
+                totalDistance: $activity->getDistance()->toMeter(),
+                elevationVariance: $elevationVariance,
+                averageSpeed: $activity->getAverageSpeed()->toMetersPerSecond(),
+                speedVariance: $speedVariance,
+                activityType: $activityType
+            ));
 
             // Make sure necessary streams are converted before saving,
             // so we do not need to convert it when reading the data.
