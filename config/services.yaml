@@ -152,6 +152,10 @@ services:
         factory: [ 'App\Domain\Strava\Ftp\ImportFtp\FtpHistoryFromEnvFile', fromString ]
         arguments: [ '%env(string:fallback:FTP_HISTORY:FTP_VALUES)%' ]
 
+    App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
+        factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
+        arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
+
     App\Domain\Zwift\ZwiftLevel:
         factory: [ 'App\Domain\Zwift\ZwiftLevel', fromOptionalString ]
         arguments: [ '%env(string:ZWIFT_LEVEL)%' ]

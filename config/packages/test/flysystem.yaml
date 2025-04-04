@@ -1,5 +1,8 @@
 flysystem:
     storages:
+        default.storage:
+            adapter: 'memory'
+
         public.storage:
             adapter: 'memory'
 
