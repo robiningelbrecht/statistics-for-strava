@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\BestEffort;
 
 use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -13,6 +15,7 @@ final readonly class BestEffortChart
     private function __construct(
         private ActivityType $activityType,
         private ActivityBestEfforts $bestEfforts,
+        private SportTypes $sportTypes,
         private TranslatorInterface $translator,
     ) {
     }
@@ -20,11 +23,13 @@ final readonly class BestEffortChart
     public static function create(
         ActivityType $activityType,
         ActivityBestEfforts $bestEfforts,
+        SportTypes $sportTypes,
         TranslatorInterface $translator,
     ): self {
         return new self(
             activityType: $activityType,
             bestEfforts: $bestEfforts,
+            sportTypes: $sportTypes,
             translator: $translator
         );
     }
@@ -36,8 +41,12 @@ final readonly class BestEffortChart
     {
         $series = [];
 
-        /** @var \App\Domain\Strava\Activity\SportType\SportType $sportType */
-        foreach ($this->bestEfforts->getUniqueSportTypes() as $sportType) {
+        $uniqueSportTypesInBestEfforts = $this->bestEfforts->getUniqueSportTypes();
+        /** @var SportType $sportType */
+        foreach ($this->sportTypes as $sportType) {
+            if (!$uniqueSportTypesInBestEfforts->has($sportType)) {
+                continue;
+            }
             $series[] = [
                 'name' => $sportType->trans($this->translator),
                 'type' => 'bar',

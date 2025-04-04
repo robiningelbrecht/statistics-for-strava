@@ -15,6 +15,7 @@ use App\Domain\Strava\Activity\BestEffort\BestEffortChart;
 use App\Domain\Strava\Activity\DaytimeStats\DaytimeStats;
 use App\Domain\Strava\Activity\DaytimeStats\DaytimeStatsCharts;
 use App\Domain\Strava\Activity\DistanceBreakdown;
+use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
@@ -53,6 +54,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         private FtpRepository $ftpRepository,
         private AthleteWeightRepository $athleteWeightRepository,
         private ActivityTypeRepository $activityTypeRepository,
+        private SportTypeRepository $sportTypeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private ActivityIntensity $activityIntensity,
@@ -69,6 +71,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 
         $now = $command->getCurrentDateTime();
         $importedActivityTypes = $this->activityTypeRepository->findAll();
+        $importedSportTypes = $this->sportTypeRepository->findAll();
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
         $allFtps = $this->ftpRepository->findAll();
@@ -168,6 +171,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 BestEffortChart::create(
                     activityType: $activityType,
                     bestEfforts: $bestEffortsForActivityType,
+                    sportTypes: $importedSportTypes,
                     translator: $this->translator,
                 )->build()
             );
