@@ -53,6 +53,7 @@ final readonly class CombinedStreamProfileChart
         }
         $distanceSymbol = $this->unitSystem->distanceSymbol();
         $maxYAxis = ceil(max($this->yAxisData) * 1.1);
+        $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
 
         return [
             'grid' => [
@@ -66,7 +67,7 @@ final readonly class CombinedStreamProfileChart
             'tooltip' => [
                 'trigger' => 'axis',
                 'formatter' => CombinedStreamType::PACE !== $this->yAxisStreamType ?
-                    '<strong>{c}</strong> '.$this->yAxisStreamType->getSuffix($this->unitSystem) : 'formatPace',
+                    '<strong>{c}</strong> '.$yAxisSuffix : 'formatPace',
             ],
             'xAxis' => [
                 'type' => 'category',
@@ -84,7 +85,7 @@ final readonly class CombinedStreamProfileChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => $this->yAxisStreamType->trans($this->translator),
+                    'name' => sprintf('%s (%s)', $this->yAxisStreamType->trans($this->translator), $yAxisSuffix),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 10,

@@ -423,13 +423,14 @@
         return `${hours}:${minutes}:${seconds}`;
     };
     window.statisticsForStrava.callbacks.formatPace = (params) => {
+        const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
         const secondsToFormat = params[0].value;
         if (secondsToFormat < 60) {
-            return `${secondsToFormat}s`;
+            return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
         }
         const minutes = Math.floor(secondsToFormat / 60);
         const secs = secondsToFormat % 60;
-        return `${minutes}:${secs.toString().padStart(2, '0')}`;
+        return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
     };
 </script>
 <script src="{{ asset('assets/echarts/echarts.min.js') }}"></script>

@@ -76,6 +76,9 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
                 'profilePictureUrl' => $this->profilePictureUrl,
                 'javascriptWindowConstants' => Json::encode([
                     'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
+                    'unitSystem' => [
+                        'paceSymbol' => $this->unitSystem->paceSymbol(),
+                    ],
                 ]),
             ]),
         );
