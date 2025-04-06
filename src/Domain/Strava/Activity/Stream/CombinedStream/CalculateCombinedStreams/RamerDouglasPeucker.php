@@ -6,11 +6,13 @@ namespace App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStre
 
 use App\Domain\Strava\Activity\Stream\ActivityStream;
 use App\Domain\Strava\Activity\Stream\ActivityStreams;
+use App\Domain\Strava\Activity\Stream\StreamType;
 
 final readonly class RamerDouglasPeucker
 {
     public function __construct(
         private ActivityStream $distanceStream,
+        private ?ActivityStream $movingStream,
         private ActivityStreams $otherStreams,
     ) {
     }
@@ -25,7 +27,21 @@ final readonly class RamerDouglasPeucker
         }
 
         $rawPoints = [];
+
+        $movingIndexes = $this->movingStream?->getData();
+        $velocityData = $this->otherStreams->filterOnType(StreamType::VELOCITY)?->getData() ?? [];
         foreach ($distances as $i => $distance) {
+            if (!empty($movingIndexes) && false === $movingIndexes[$i]) {
+                // Athlete was not moving.
+                continue;
+            }
+
+            if (!empty($velocityData) && $velocityData[$i] < 0.5) {
+                // VERY slow velocity data, athlete was probably not moving.
+                // Consider this invalid data.
+                continue;
+            }
+
             $otherPoints = [];
             foreach ($this->otherStreams as $otherStream) {
                 $otherPoints[] = $otherStream->getData()[$i] ?? 0;
@@ -41,7 +57,7 @@ final readonly class RamerDouglasPeucker
     }
 
     /**
-     * @param array<int, array<int, int|float>> $points,
+     * @param array<int, array<int, int|float>> $points ,
      *
      * @return array<mixed>
      */

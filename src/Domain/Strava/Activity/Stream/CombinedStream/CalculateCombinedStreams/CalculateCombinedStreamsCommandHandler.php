@@ -84,6 +84,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
 
             $combinedData = new RamerDouglasPeucker(
                 distanceStream: $distanceStream,
+                movingStream: $streams->filterOnType(StreamType::MOVING),
                 otherStreams: $otherStreams
             )->apply(Epsilon::create(
                 totalDistance: $activity->getDistance()->toMeter(),
