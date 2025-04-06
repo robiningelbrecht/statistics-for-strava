@@ -479,6 +479,7 @@
             DataTable($dataTableWrapperNode).render()
         });
 
+        renderedCharts = [];
         initElements(document);
 
         if (e.detail && e.detail.modalId) {
@@ -495,10 +496,9 @@
     });
 
     const initElements = (rootNode) => {
-        renderedCharts = [];
         lazyLoad.update();
 
-        initTabs();
+        initTabs(rootNode);
         initPopovers();
         initTooltips();
         initDropdowns();
@@ -518,9 +518,15 @@
             resolveEchartsCallbacks(chartOptions, 'yAxis.axisLabel.formatter');
 
             chart.setOption(chartOptions);
-            renderedCharts.push(chart);
             if (chartNode.hasAttribute('data-echarts-connect')) {
                 connectedCharts.push(chart);
+            }
+
+            const $tabPanel = chartNode.closest('div[role="tabpanel"]');
+            if ($tabPanel) {
+                const tabPanelId = $tabPanel.getAttribute('id');
+                renderedCharts[tabPanelId] = renderedCharts[tabPanelId] || [];
+                renderedCharts[tabPanelId].push(chart);
             }
         });
         echarts.connect(connectedCharts);
@@ -563,16 +569,18 @@
         });
     };
 
-    const initTabs = () => {
-        document.querySelectorAll('[data-tabs]').forEach(function ($triggerEl) {
+    const initTabs = (rootNode) => {
+        rootNode.querySelectorAll('[data-tabs]').forEach(function ($triggerEl) {
             const tabItems = [];
+
             $triggerEl
                 .querySelectorAll('[role="tab"]')
                 .forEach(function ($triggerEl) {
+                    const dataTabsTarget = $triggerEl.getAttribute('data-tabs-target');
                     tabItems.push({
-                        id: $triggerEl.getAttribute('data-tabs-target'),
+                        id: dataTabsTarget,
                         triggerEl: $triggerEl,
-                        targetEl: document.querySelector($triggerEl.getAttribute('data-tabs-target')),
+                        targetEl: document.querySelector(dataTabsTarget),
                     });
                 });
 
@@ -580,9 +588,13 @@
                 defaultTabId: null,
                 activeClasses: 'text-strava-orange border-strava-orange hover:text-gray-600 hover:border-gray-300',
                 inactiveClasses: 'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
-                onShow: () => {
-                    // Trigger a chart resize to make sure charts are displayed.
-                    renderedCharts.forEach((chart) => chart.resize());
+                onShow: (tabs, activeTab) => {
+                    const activeTabId = activeTab.id.replace('#', '');
+                    if (activeTabId in renderedCharts) {
+                        // Trigger a chart resize to make sure charts are rendered and displayed.
+                        renderedCharts[activeTabId].forEach((chart) => chart.resize());
+                    }
+
                 },
             });
         });
