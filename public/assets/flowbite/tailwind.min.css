@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.2 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -1559,8 +1559,8 @@
   .h-\[20rem\] {
     height: 20rem;
   }
-  .h-\[32rem\] {
-    height: 32rem;
+  .h-\[24rem\] {
+    height: 24rem;
   }
   .h-\[120px\] {
     height: 120px;
