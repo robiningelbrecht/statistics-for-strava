@@ -47,10 +47,6 @@ class RamerDouglasPeuckerTest extends TestCase
                     ->withStreamType(StreamType::HEART_RATE)
                     ->withData([150, 152, 155, 157, 160, 162, 165, 168, 170, 172, 175, 178])
                     ->build(),
-                ActivityStreamBuilder::fromDefaults()
-                    ->withStreamType(StreamType::VELOCITY)
-                    ->withData([150, 152, 155, 157, 160, 162, 165, 168, 170, 172, 175, 178, 0.499])
-                    ->build(),
             ])
         );
 
@@ -67,7 +63,7 @@ class RamerDouglasPeuckerTest extends TestCase
     {
         $distanceStream = ActivityStreamBuilder::fromDefaults()
             ->withStreamType(StreamType::DISTANCE)
-            ->withData([0, 5, 10, 15, 20, 25, 30, 50, 75, 100, 125, 150])
+            ->withData([0, 5, 10, 15, 20, 25, 30, 50, 75, 100, 125, 150, 180])
             ->build();
         $altitudeStream = ActivityStreamBuilder::fromDefaults()
             ->withStreamType(StreamType::ALTITUDE)
@@ -89,6 +85,10 @@ class RamerDouglasPeuckerTest extends TestCase
                 ActivityStreamBuilder::fromDefaults()
                     ->withStreamType(StreamType::HEART_RATE)
                     ->withData([150, 152, 155, 157, 160, 162, 165, 168, 170, 172, 175, 178])
+                    ->build(),
+                ActivityStreamBuilder::fromDefaults()
+                    ->withStreamType(StreamType::VELOCITY)
+                    ->withData([150, 152, 155, 157, 160, 162, 165, 168, 170, 172, 175, 178, 0.499])
                     ->build(),
             ])
         );
