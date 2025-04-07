@@ -175,6 +175,27 @@ final readonly class GearMaintenanceConfig implements \Stringable
         return $this->gearOptions;
     }
 
+    public function getAllReferencedGearIds(): GearIds
+    {
+        /** @var GearIds $gearIds */
+        $gearIds = $this->getGearComponents()->getAllReferencedGearIds()->mergeWith(
+            $this->getGearOptions()->getAllReferencedGearIds()
+        )->unique();
+
+        return $gearIds;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllReferencedImages(): array
+    {
+        return array_values(array_unique([
+            ...$this->getGearComponents()->getAllReferencedImages(),
+            ...$this->getGearOptions()->getAllReferencedImages(),
+        ]));
+    }
+
     public function isFeatureEnabled(): bool
     {
         return $this->isFeatureEnabled;

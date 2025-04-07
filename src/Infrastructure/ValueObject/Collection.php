@@ -211,6 +211,11 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
         );
     }
 
+    public function unique(): static
+    {
+        return static::fromArray(array_unique($this->items));
+    }
+
     /**
      * @return array<T>
      */

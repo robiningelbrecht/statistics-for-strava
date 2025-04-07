@@ -54,4 +54,12 @@ class CollectionTest extends TestCase
 
         ATestCollection::empty()->add('wrong');
     }
+
+    public function testUnique(): void
+    {
+        $this->assertEquals(
+            ATestCollection::fromArray([Name::fromString(10)]),
+            ATestCollection::fromArray([Name::fromString(10), Name::fromString(10)])->unique()
+        );
+    }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear\Maintenance;
 
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 
 final class GearOptions
 {
@@ -36,5 +37,18 @@ final class GearOptions
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function getAllReferencedGearIds(): GearIds
+    {
+        return GearIds::fromArray(array_column($this->getOptions(), 0));
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllReferencedImages(): array
+    {
+        return array_column($this->getOptions(), 1);
     }
 }
