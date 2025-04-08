@@ -13,7 +13,6 @@ use App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\ImportAthleteWeight;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
 use App\Domain\Strava\Ftp\ImportFtp\ImportFtp;
 use App\Domain\Strava\Gear\ImportGear\ImportGear;
-use App\Domain\Strava\Gear\Maintenance\ValidateGearMaintenanceConfig\ValidateGearMaintenanceConfig;
 use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Infrastructure\CQRS\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
@@ -64,7 +63,6 @@ final class ImportStravaDataConsoleCommand extends Command
 
         $this->commandBus->dispatch(new ImportAthlete($output));
         $this->commandBus->dispatch(new ImportGear($output));
-        $this->commandBus->dispatch(new ValidateGearMaintenanceConfig($output));
         $this->commandBus->dispatch(new ImportActivities($output));
         $this->commandBus->dispatch(new ImportActivitySplits($output));
         $this->commandBus->dispatch(new ImportActivityStreams($output));

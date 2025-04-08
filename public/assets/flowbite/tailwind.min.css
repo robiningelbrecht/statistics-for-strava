@@ -1083,8 +1083,14 @@
   .ms-auto {
     margin-inline-start: auto;
   }
+  .me-3 {
+    margin-inline-end: calc(var(--spacing) * 3);
+  }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
+  }
+  .mt-1\.5 {
+    margin-top: calc(var(--spacing) * 1.5);
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -1094,6 +1100,9 @@
   }
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
+  }
+  .mt-\[2px\] {
+    margin-top: 2px;
   }
   .apexcharts-canvas {
     & .apexcharts-tooltip {
@@ -1913,6 +1922,12 @@
   .resize {
     resize: both;
   }
+  .list-inside {
+    list-style-position: inside;
+  }
+  .list-disc {
+    list-style-type: disc;
+  }
   .list-none {
     list-style-type: none;
   }
@@ -2313,6 +2328,9 @@
       color: white;
     }
   }
+  .border-blue-300 {
+    border-color: var(--color-blue-300);
+  }
   .border-blue-600 {
     border-color: var(--color-blue-600);
   }
@@ -2328,8 +2346,14 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-red-300 {
+    border-color: var(--color-red-300);
+  }
   .border-strava-orange {
     border-color: var(--color-strava-orange);
+  }
+  .border-yellow-300 {
+    border-color: var(--color-yellow-300);
   }
   .border-yellow-800 {
     border-color: var(--color-yellow-800);
@@ -2385,6 +2409,9 @@
       background-color: var(--color-gray-700);
     }
   }
+  .bg-blue-50 {
+    background-color: var(--color-blue-50);
+  }
   .bg-blue-600\/\[\.1\] {
     background-color: color-mix(in srgb, #2563EB 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2429,6 +2456,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-orange-500) 10%, transparent);
     }
+  }
+  .bg-red-50 {
+    background-color: var(--color-red-50);
   }
   .bg-red-600\/\[\.1\] {
     background-color: color-mix(in srgb, #DC2626 10%, transparent);
@@ -2839,6 +2869,9 @@
   .text-blue-600 {
     color: var(--color-blue-600);
   }
+  .text-blue-800 {
+    color: var(--color-blue-800);
+  }
   .text-gray-200 {
     color: var(--color-gray-200);
   }
@@ -2869,6 +2902,9 @@
   .text-red-600 {
     color: var(--color-red-600);
   }
+  .text-red-800 {
+    color: var(--color-red-800);
+  }
   .text-strava-orange {
     color: var(--color-strava-orange);
   }
@@ -2877,6 +2913,9 @@
   }
   .text-yellow-800 {
     color: var(--color-yellow-800);
+  }
+  .lowercase {
+    text-transform: lowercase;
   }
   .normal-case {
     text-transform: none;
@@ -3153,6 +3192,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-strava-orange);
+      }
+    }
+  }
+  .hover\:no-underline {
+    &:hover {
+      @media (hover: hover) {
+        text-decoration-line: none;
       }
     }
   }

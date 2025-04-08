@@ -6,6 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance;
 
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Infrastructure\ValueObject\String\Name;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -58,9 +59,10 @@ final readonly class GearMaintenanceConfig implements \Stringable
             throw new InvalidGearMaintenanceConfig('You must configure at least one component');
         }
 
+        $hashtagPrefix = HashtagPrefix::fromString($config['hashtagPrefix']);
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
-            hashtagPrefix: HashtagPrefix::fromString($config['hashtagPrefix']),
+            hashtagPrefix: $hashtagPrefix,
         );
 
         foreach ($config['components'] as $component) {
@@ -84,8 +86,9 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 throw new InvalidGearMaintenanceConfig('"imgSrc" property must be a string');
             }
 
+            $gearComponentTag = Tag::fromTags((string) $hashtagPrefix, $component['tag']);
             $gearComponent = GearComponent::create(
-                tag: Tag::fromString($component['tag']),
+                tag: $gearComponentTag,
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
                     fn (string $gearId) => GearId::fromUnprefixed($gearId),
@@ -110,7 +113,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 }
 
                 $gearComponent->addMaintenanceTask(MaintenanceTask::create(
-                    tag: Tag::fromString($task['tag']),
+                    tag: Tag::fromTags((string) $gearComponentTag, $task['tag']),
                     label: Name::fromString($task['label']),
                     intervalValue: $task['interval']['value'],
                     intervalUnit: $intervalUnit
@@ -211,13 +214,13 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $string[] = sprintf('Hashtag prefix: %s', $this->getHashtagPrefix());
         $string[] = sprintf('You added %d components:', count($this->getGearComponents()));
         foreach ($this->getGearComponents() as $gearComponent) {
-            $string[] = sprintf('  - Tag: %s%s', $this->getHashtagPrefix(), $gearComponent->getTag());
+            $string[] = sprintf('  - Tag: %s', $gearComponent->getTag());
             $string[] = sprintf('    Label: %s', $gearComponent->getLabel());
             $string[] = sprintf('    Attached to: %s', implode(', ', $gearComponent->getAttachedTo()->map(fn (GearId $gearId) => $gearId->toUnprefixedString())));
             $string[] = sprintf('    Image: %s', $gearComponent->getImgSrc());
             $string[] = '    Maintenance tasks:';
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                $string[] = sprintf('      - Tag: %s%s-%s', $this->getHashtagPrefix(), $gearComponent->getTag(), $maintenanceTask->getTag());
+                $string[] = sprintf('      - Tag: %s', $maintenanceTask->getTag());
                 $string[] = sprintf('        Label: %s', $maintenanceTask->getLabel());
                 $string[] = sprintf('        Interval: %d %s', $maintenanceTask->getIntervalValue(), $maintenanceTask->getIntervalUnit()->value);
             }

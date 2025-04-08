@@ -12,7 +12,7 @@ class HashtagPrefixTest extends TestCase
         $hashtagPrefix = HashtagPrefix::fromString('test');
 
         $this->assertEquals(
-            '#test-',
+            '#test',
             (string) $hashtagPrefix
         );
     }

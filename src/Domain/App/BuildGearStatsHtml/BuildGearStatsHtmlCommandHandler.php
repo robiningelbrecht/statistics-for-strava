@@ -47,7 +47,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 
         $this->buildStorage->write(
             'gear-stats.html',
-            $this->twig->load('html/gear-stats.html.twig')->render([
+            $this->twig->load('html/gear/gear-stats.html.twig')->render([
                 'gearStatistics' => GearStatistics::fromActivitiesAndGear(
                     activities: $activities,
                     bikes: $allGear

@@ -1,5 +1,5 @@
 You enabled the gear maintenance feature with the following configuration:
-Hashtag prefix: #sfs-
+Hashtag prefix: #sfs
 You added 2 components:
   - Tag: #sfs-chain
     Label: Some cool chain
