@@ -50,7 +50,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             $this->twig->load('html/gear/gear-stats.html.twig')->render([
                 'gearStatistics' => GearStatistics::fromActivitiesAndGear(
                     activities: $activities,
-                    bikes: $allGear
+                    gears: $allGear
                 ),
                 'distancePerMonthPerGearChart' => Json::encode(
                     DistancePerMonthPerGearChart::create(
