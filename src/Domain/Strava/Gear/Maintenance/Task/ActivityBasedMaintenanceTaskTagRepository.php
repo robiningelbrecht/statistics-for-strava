@@ -20,15 +20,18 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
         $activities = $this->activityRepository->findAll();
         $tasks = MaintenanceTaskTags::empty();
 
+        /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $task) {
                 foreach ($activities as $activity) {
                     if (!str_contains($activity->getName(), (string) $task->getTag())) {
                         continue;
                     }
+
                     $tasks->add(MaintenanceTaskTag::for(
                         maintenanceTaskTag: $task->getTag(),
-                        activityId: $activity->getId()
+                        activityId: $activity->getId(),
+                        isValid: $gearComponent->getAttachedTo()->has($activity->getGearId())
                     ));
                 }
             }

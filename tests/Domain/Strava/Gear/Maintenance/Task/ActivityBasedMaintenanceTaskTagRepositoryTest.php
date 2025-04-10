@@ -2,11 +2,20 @@
 
 namespace App\Tests\Domain\Strava\Gear\Maintenance\Task;
 
+use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Strava\Activity\ActivityWithRawData;
+use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
+use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
+use App\Domain\Strava\Gear\Maintenance\Tag;
 use App\Domain\Strava\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
+use App\Infrastructure\ValueObject\String\Name;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
 class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 {
@@ -14,6 +23,45 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 
     public function testFindAll(): void
     {
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(1))
+                ->withName(Name::fromString('#sfs-chain-lubed'))
+                ->withGearId(GearId::fromUnprefixed('g12337767'))
+                ->build(), []
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(2))
+                ->withName(Name::fromString('#sfs-chain-two-lubed'))
+                ->withGearId(GearId::fromUnprefixed('g12337767'))
+                ->build(), []
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(3))
+                ->withName(Name::fromString('#sfs-chain-random'))
+                ->withGearId(GearId::fromUnprefixed('g12337767'))
+                ->build(), []
+        ));
+
+        $this->assertEquals(
+            MaintenanceTaskTags::fromArray([
+                MaintenanceTaskTag::for(
+                    maintenanceTaskTag: Tag::fromString('#sfs-chain-lubed'),
+                    activityId: ActivityId::fromUnprefixed(1),
+                    isValid: true
+                ),
+                MaintenanceTaskTag::for(
+                    maintenanceTaskTag: Tag::fromString('#sfs-chain-two-lubed'),
+                    activityId: ActivityId::fromUnprefixed(2),
+                    isValid: false
+                ),
+            ]),
+            $this->maintenanceTaskTagRepository->findAll()
+        );
     }
 
     protected function setUp(): void

@@ -12,16 +12,19 @@ final readonly class MaintenanceTaskTag
     private function __construct(
         private Tag $maintenanceTaskTag,
         private ActivityId $activityId,
+        private bool $isValid,
     ) {
     }
 
     public static function for(
         Tag $maintenanceTaskTag,
         ActivityId $activityId,
+        bool $isValid,
     ): self {
         return new self(
             maintenanceTaskTag: $maintenanceTaskTag,
-            activityId: $activityId
+            activityId: $activityId,
+            isValid: $isValid,
         );
     }
 
@@ -33,5 +36,10 @@ final readonly class MaintenanceTaskTag
     public function getActivityId(): ActivityId
     {
         return $this->activityId;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->isValid;
     }
 }
