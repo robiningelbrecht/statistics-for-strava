@@ -1,0 +1,31 @@
+<!-- Modal header --><html><body>
+<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+        <h3 class="text-lg font-semibold text-gray-900">
+            Gear maintenance
+        </h3>
+        <div class="flex items-center">
+            <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+    </div>
+    <!-- Modal body -->
+    <div class="p-4 md:p-5 space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+            <div class="flex items-center p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50" role="alert">
+                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                                        <span class="font-medium">This feature is currently disabled.</span>
+                    To enable it, configure <span class="italic">storage/gear-maintenance/config.yml</span> and rebuild the files for the changes to take effect.
+                    Detailed instructions are available in the documentation on <a href="https://github.com/robiningelbrecht/statistics-for-strava/wiki" class="font-semibold underline hover:no-underline">the wiki</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</body></html>
