@@ -13,18 +13,18 @@ Avg: Moy
 'Back Country Ski': 'Ski de randonnée'
 Badminton: Badminton
 Best: Meilleur
-'Best Efforts': 'Best Efforts'
+'Best Efforts': 'Meilleurs efforts'
 Cadence: Cadence
 Calories: Calories
 Canoeing: Canoë
-'Carbon emission comparisons': 'Carbon emission comparisons'
+'Carbon emission comparisons': 'Comparaison des émissions de carbone'
 'Challenge consistency': 'Challenge sur la régularité'
 Challenges: Challenges
 'Climb a total of 2000m': 'Grimpez un total de 2000m'
 'Climb a total of 7500m': 'Grimpez un total de 7500m'
 'Close modal': 'Fermer la fenêtre'
-Commutes: Commutes
-'Commutes only': 'Commutes only'
+Commutes: Trajets domicile-travail
+'Commutes only': 'Trajets domicile-travail uniquement'
 'Complete a 10 km run.': 'Complétez une course à pied de 10km.'
 'Complete a 100km ride': 'Complétez une sortie vélo de 100km'
 'Complete a 5 km run.': 'Complétez une course à pied de 5km.'
@@ -43,7 +43,7 @@ Distance: Distance
 'Distance over time per gear': 'Distance de tout temps par matériel'
 'Distance per month per gear': 'Distance mensuelle par matériel'
 Distribution: Distribution
-'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
+'Driving your car for {amountOfKmDrivingACar} km': 'Conduire votre voiture pendant {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'Sorties en vélo électrique'
 'E-Mountain Bike Rides': 'Sorties en VTT électrique'
 'Earliest start time': 'Départ le plus tôt'
@@ -52,13 +52,13 @@ Elev: Elev
 Elevation: Élévation
 Elliptical: Elliptique
 Evening: Soirée
-'Excludes commutes': 'Excludes commutes'
+'Excludes commutes': 'Trajets domicile-travail exclus'
 'FTP history': 'Historique FTP'
 Favourite: Favori
 Feb: Fév
 'Filter on KOM segments': 'Filtrer sur les segments KOM'
-'Filter on country': 'Filter on country'
-'Filter on gear': 'Filter on gear'
+'Filter on country': 'Filtrer par pays'
+'Filter on gear': 'Filtrer par matériel'
 'Filter on sport type': 'Filtrer sur le type de sport'
 'Filter on starred segments': 'Filtrer sur les segments favoris'
 'First workout': 'Première séance'
@@ -101,7 +101,7 @@ Kayaking: Kayak
 'Latest start time': 'Départ le plus tardif'
 'Loading data...': 'Chargement des données...'
 Loading...: Chargement...
-'Long run': 'Long run'
+'Long run': 'Course longue'
 'Longest workout': 'Entraînement le plus long'
 Low: Bas
 Maintenance: Maintenance
@@ -109,7 +109,7 @@ Mar: Mar
 Max: Max
 May: Mai
 Medium: Moyen
-Metrics: Metrics
+Metrics: Mesures
 'Mind & Body Sports': "Sports du corps et de l'esprit"
 Mon: Lun
 Monday: Lundi
@@ -128,7 +128,7 @@ Nov: Nov
 Oct: Oct
 Other: Autre
 'Outdoor Sports': "Sports d'extérieur"
-Pace: Pace
+Pace: Allure
 'Peak power outputs': 'Puissances maximales'
 Photos: Photos
 'Pickle Ball': Pickleball
@@ -138,8 +138,8 @@ Power: Puissance
 'Power distribution': 'Répartition de la puissance'
 'Powered by Strava': 'Propulsé par Strava'
 'Prev year': 'Année précédente'
-Race: Race
-'Racing Score': 'Racing Score'
+Race: Course
+'Racing Score': 'Score de course'
 'Racquet & Paddle Sports': 'Sports de raquette & paddle'
 'Racquet Ball': Racquetball
 'Ride a total of 1250km': 'Effectuer un total de 1250km'
@@ -160,7 +160,7 @@ Search: Rechercher
 Segments: Segments
 Sep: Sep
 'Show information': 'Afficher les informations'
-Simplified: Simplified
+Simplified: Simplifié
 'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': "Depuis que j'ai commencé à m'entraîner il y a {numberOfDaysAgo} jours le {startDate}, j'ai eu {totalDaysOfWorkingOut} jours actifs d'entraînement."
 Skateboard: Skateboard
 Skating: Patinage
@@ -172,7 +172,7 @@ Speed: Vitesse
 Squash: Squash
 'Stair Stepper': Steppeur
 'Stand Up Paddling': 'Stand Up Paddle'
-'Start slideshow': 'Start slideshow'
+'Start slideshow': 'Démarrer le diaporama'
 'Statistics for Strava': 'Statistiques Strava'
 'Stats per weekday': 'Statistiques par jour de la semaine'
 Sun: Dim
@@ -184,7 +184,7 @@ TOTAL: TOTAL
 Tennis: Tennis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Cela représente une moyenne journalière de {dailyAverage}, une moyenne hebdomadaire de {weeklyAverage} et une moyenne mensuelle de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Le nombre d'Eddington dans le contexte du cyclisme ou de la course est défini comme le nombre maximum E tel que l'athlète ait parcouru au moins E km lors d'au moins E jours."
-'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
+'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'La quantité de CO₂ absorbée chaque année par {amountOfTrees} arbres'
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': "Ce badge est créé dynamiquement. Vous pouvez l'utiliser dans n'importe quelle balise &lt;img&gt;"
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Cette formule signifie que rouler pendant une heure à votre fréquence cardiaque maximale correspond à un score de 100, ce que nous considérons comme une "intensité élevée".'
@@ -216,19 +216,19 @@ Walks: Marches
 'We detected following issues': 'We detected following issues'
 Wed: Mer
 Wednesday: Mercredi
-'Weekly stats': 'Weekly stats'
+'Weekly stats': 'Statistiques hebdomadaires'
 'Weight Training': 'Entraînement avec poids'
 Wheelchair: 'Fauteuil roulant'
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Lorsque des métriques de puissance et de FTP sont disponibles, elles sont utilisées à la place. Cette formule signifie que rouler pendant une heure à votre FTP correspond à un score de 100, ce que nous considérons comme une "intensité élevée".'
 'Wind Surf': 'Planche à voile'
 'Winter Sports': "Sports d'hiver"
 Workout: Entraînement
-'Workout type': 'Workout type'
+'Workout type': "Type d'entraînement"
 Year: Année
 'Yearly distances': 'Distances annuelles'
 Yoga: Yoga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
-'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "Vous avez enregistré des entraînements dans {numberOfCountriesWithWorkouts} pays différents, soit {percentage} de tous les pays 🌍"
+'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Vous avez réduit vos émissions de carbone de {amountOfCarbonSaved} en utilisant votre trajet domicile-travail 🥳. Cela équivaut à'
 'Your Strava badge': 'Votre badge Strava'
 'Your Zwift badge': 'Votre badge Zwift'
 'Your badge(s)': 'Vos badge(s)'
@@ -238,24 +238,24 @@ Yoga: Yoga
 'Zone 4 (anaerobic)': 'Zone 4 (anaérobie)'
 'Zone 5 (maximal)': 'Zone 5 (maximal)'
 'Zwift Statistics': 'Statistiques Zwift'
-age: age
-and: and
+age: âge
+and: et
 bpm: bpm
 clear: réinitialiser
 intensity: intensité
 intensityFactor: "facteur d'intensité"
 'max gradient': 'pente maximale'
 maxHeartRate: 'fréquence cardiaque max'
-'more info': 'more info'
+'more info': "plus d'infos"
 n/a: n/a
 workouts: entrainements
-'{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} aluminium cans for soft drinks produced'
-'{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} caps for PET bottles produced'
-'{amountOfFlights} single Economy flight(s) between Zurich and London': '{amountOfFlights} single Economy flight(s) between Zurich and London'
-'{amountOfGlassBottles} one liter reusable glass bottles produced': '{amountOfGlassBottles} one liter reusable glass bottles produced'
-'{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} Google searches'
-'{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} one liter PET bottles produced'
-'{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} manufactured smartphones'
+'{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} canettes en aluminium produites pour des boissons gazeuses'
+'{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} bouchons de bouteilles PET produits'
+'{amountOfFlights} single Economy flight(s) between Zurich and London': '{amountOfFlights} vol(s) en classe Économie entre Zurich et Londres'
+'{amountOfGlassBottles} one liter reusable glass bottles produced': "{amountOfGlassBottles} bouteilles en verre réutilisables d'un litre produites"
+'{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} recherches Google'
+'{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} bouteilles PET d’un litre produites'
+'{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} smartphones fabriqués'
 '{numberOfResults} results based on your active filters': '{numberOfResults} résultats basés sur vos filtres actifs'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes basées sur vos filtres actifs'
-'{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared'
+'{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions de spaghettis à la sauce tomate préparées'
