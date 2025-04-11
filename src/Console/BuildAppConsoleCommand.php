@@ -7,6 +7,7 @@ use App\Domain\App\BuildBadgeSvg\BuildBadgeSvg;
 use App\Domain\App\BuildChallengesHtml\BuildChallengesHtml;
 use App\Domain\App\BuildDashboardHtml\BuildDashboardHtml;
 use App\Domain\App\BuildEddingtonHtml\BuildEddingtonHtml;
+use App\Domain\App\BuildGearMaintenanceHtml\BuildGearMaintenanceHtml;
 use App\Domain\App\BuildGearStatsHtml\BuildGearStatsHtml;
 use App\Domain\App\BuildGpxFiles\BuildGpxFiles;
 use App\Domain\App\BuildHeatmapHtml\BuildHeatmapHtml;
@@ -80,6 +81,8 @@ final class BuildAppConsoleCommand extends Command
         $this->commandBus->dispatch(new BuildMonthlyStatsHtml($now));
         $output->writeln('  => Building gear-stats.html');
         $this->commandBus->dispatch(new BuildGearStatsHtml($now));
+        $output->writeln('  => Building gear-maintenance.html');
+        $this->commandBus->dispatch(new BuildGearMaintenanceHtml());
         $output->writeln('  => Building eddington.html');
         $this->commandBus->dispatch(new BuildEddingtonHtml($now));
         $output->writeln('  => Building segments.html');

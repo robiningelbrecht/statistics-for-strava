@@ -34,6 +34,7 @@ Dashboard: Dashboard
 'Days needed': 'Benötigte Tage'
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
+'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Device: Gerät
 Distance: Distanz
 'Distance / week': 'Distanz / Woche'
@@ -67,6 +68,8 @@ Fri: Fr
 Friday: Freitag
 From: Von
 Gear: Ausrüstung
+'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear maintenance': 'Gear maintenance'
 'Gear stats': Ausrüstungsstatistiken
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Ausrüstung, die in den letzten drei Monaten nicht verwendet wurde, ist standardmäßig deaktiviert.'
 'Gear that is retired is disabled by default.': 'Ausgemusterte Ausrüstung ist standardmäßig deaktiviert.'
@@ -85,6 +88,7 @@ History: Verlauf
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Ich habe dabei {caloriesBurned} Kalorien verbrannt, das entspricht etwa {numberOfPizzaSlices} Pizzastücken 🍕.'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Ich habe eine Gesamtdistanz von {totalDistance} aufgezeichnet ({numberOfTripsAroundTheWorld} Reisen um die Welt 🌍 und {numberOfTripsToTheMoon} Reisen zum Mond 🌕), eine Höhe von {totalElevation} ({timesMountEverest} mal Mount Everest 🏔) und eine Gesamtzeit von {totalTimeRecorded} 🎉.'
 'Ice Skate': Eislaufen
+'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': Inlineskaten
 Jan: Jan
 Jul: Jul
@@ -100,6 +104,7 @@ Loading...: Lädt...
 'Long run': 'Long run'
 'Longest workout': 'Längstes Training'
 Low: Niedrig
+Maintenance: Maintenance
 Mar: Mär
 Max: Max
 May: Mai
@@ -128,6 +133,7 @@ Pace: Tempo
 Photos: Fotos
 'Pickle Ball': Pickleball
 Pilates: Pilates
+'Please address these issues': 'Please address these issues'
 Power: Leistung
 'Power distribution': Leistungsverteilung
 'Powered by Strava': 'Powered by Strava'
@@ -168,7 +174,6 @@ Squash: Squash
 'Stand Up Paddling': 'Stand-Up Paddeln'
 'Start slideshow': 'Start slideshow'
 'Statistics for Strava': 'Statistiken für Strava'
-'Stats per gear': 'Statistiken pro Ausrüstung'
 'Stats per weekday': 'Statistiken pro Wochentag'
 Sun: So
 Sunday: Sonntag
@@ -181,6 +186,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Die Eddington-Zahl im Kontext des Radfahrens oder Laufens ist definiert als die maximale Zahl E, bei der der Sportler an mindestens E Tagen jeweils mindestens E km zurückgelegt hat.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': 'Dieses Abzeichen wird dynamisch erstellt. Sie können es in jedem &lt;img&gt;-Tag verwenden'
+'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Diese Formel bedeutet, dass eine Stunde Fahren mit maximaler Herzfrequenz zu einer Punktzahl von 100 führt, was wir als "hohe Intensität" betrachten'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Diese Karte zeigt die tägliche Trainingsintensität für das letzte Jahr. Die Trainingsintensität für eine Aktivität wird auf Basis mehrerer Metriken berechnet.'
 Thu: Do
@@ -188,6 +194,7 @@ Thursday: Donnerstag
 'Time / week': 'Zeit / Woche'
 'Times completed': 'Male abgeschlossen'
 To: Bis
+'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
 'Total carbon saved': 'Insgesamt eingesparter CO2-Ausstoß'
@@ -206,6 +213,7 @@ Tuesday: Dienstag
 'Virtual Runs': 'Virtuelle Läufe'
 Walks: Spaziergänge
 'Water Sports': Wassersport
+'We detected following issues': 'We detected following issues'
 Wed: Mi
 Wednesday: Mittwoch
 'Weekly stats': 'Weekly stats'

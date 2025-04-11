@@ -6,6 +6,9 @@ flysystem:
         public.storage:
             adapter: 'memory'
 
+        gear-maintenance.storage:
+            adapter: 'memory'
+
         file.storage:
             adapter: 'memory'
 

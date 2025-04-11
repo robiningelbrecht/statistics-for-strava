@@ -34,6 +34,7 @@ Dashboard: Painel
 'Days needed': 'Dias necessários'
 'Daytime stats': 'Estatísticas por períodos do dia'
 Dec: Dez
+'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Device: Dispositivo
 Distance: Distância
 'Distance / week': 'Distância / semana'
@@ -67,6 +68,8 @@ Fri: Sex
 Friday: Sexta-feira
 From: De
 Gear: Equipamento
+'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear maintenance': 'Gear maintenance'
 'Gear stats': 'Estatísticas do equipamento'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Equipamento não utilizado nos últimos três meses é desativado por defeito.'
 'Gear that is retired is disabled by default.': 'Equipamento reformado é desativado por defeito.'
@@ -85,6 +88,7 @@ History: Histórico
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Queimei {caloriesBurned} calorias ao fazê-lo, o que equivale a cerca de {numberOfPizzaSlices} fatias de pizza 🍕.'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Registei uma distância total de {totalDistance} ({numberOfTripsAroundTheWorld} voltas ao mundo 🌍 e {numberOfTripsToTheMoon} viagens até à lua 🌕), uma elevação total de {totalElevation} ({timesMountEverest} vezes o Monte Everest 🏔) e um tempo total de {totalTimeRecorded} 🎉.'
 'Ice Skate': 'Patinagem no Gelo'
+'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 'Patinagem em Linha'
 Jan: Jan
 Jul: Jul
@@ -100,6 +104,7 @@ Loading...: 'A carregar...'
 'Long run': 'Long run'
 'Longest workout': 'Treino mais longo'
 Low: Baixa
+Maintenance: Maintenance
 Mar: Mar
 Max: Máx
 May: Mai
@@ -128,6 +133,7 @@ Pace: Ritmo
 Photos: Fotos
 'Pickle Ball': Pickleball
 Pilates: Pilates
+'Please address these issues': 'Please address these issues'
 Power: Potência
 'Power distribution': 'Distribuição da potência'
 'Powered by Strava': 'Desenvolvido por Strava'
@@ -168,7 +174,6 @@ Squash: Squash
 'Stand Up Paddling': 'Stand Up Paddle'
 'Start slideshow': 'Start slideshow'
 'Statistics for Strava': 'Estatísticas para o Strava'
-'Stats per gear': 'Estatísticas por equipamento'
 'Stats per weekday': 'Estatísticas por dia da semana'
 Sun: Dom
 Sunday: Domingo
@@ -181,6 +186,7 @@ Tennis: Ténis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': 'Este emblema é criado dinamicamente. Pode usá-lo em qualquer tag <img>.'
+'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
 Thu: Qui
@@ -188,6 +194,7 @@ Thursday: Quinta-feira
 'Time / week': 'Tempo / semana'
 'Times completed': 'Vezes concluído'
 To: Até
+'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
 'Toggle sidebar': 'Ativar/desativar barra lateral'
 'Top 10': 'Top 10'
 'Total carbon saved': 'Carbono total poupado'
@@ -206,6 +213,7 @@ Tuesday: Terça-feira
 'Virtual Runs': 'Corridas Virtuais'
 Walks: Caminhadas
 'Water Sports': 'Desportos Aquáticos'
+'We detected following issues': 'We detected following issues'
 Wed: Qua
 Wednesday: Quarta-feira
 'Weekly stats': 'Estatísticas semanais'

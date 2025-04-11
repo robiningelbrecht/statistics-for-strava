@@ -40,3 +40,7 @@ services:
 
     App\Infrastructure\FileSystem\PermissionChecker:
         class: App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker
+
+    App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
+        factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
+        arguments: ['{enabled: true, hashtagPrefix: sfs, components: [{tag: chain, label: Some cool chain, imgSrc: chain.png, attachedTo: [bike-one-gear-id, bike-two-gear-id], maintenance: [{tag: lubed, label: Lube, interval: {value: 500, unit: km}}, {label: Clean, tag: cleaned, interval: {value: 200, unit: hours}}, {label: Replace, tag: replaced, interval: {value: 500, unit: days}}]}, {tag: chain-two, label: Some cool chain, imgSrc: chain.png, attachedTo: [bike-one-gear-id, bike-two-gear-id], maintenance: [{tag: lubed, label: Lube, interval: {value: 500, unit: km}}]}], gears: [{gearId: g12337767, imgSrc: gear1.png}]}']

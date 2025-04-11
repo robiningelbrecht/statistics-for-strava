@@ -16,4 +16,9 @@ final readonly class Tag extends NonEmptyStringLiteral
             throw new InvalidGearMaintenanceConfig(sprintf('Invalid component tag "%s", no spaces allowed.', $value));
         }
     }
+
+    public static function fromTags(string ...$tags): self
+    {
+        return self::fromString(implode('-', $tags));
+    }
 }

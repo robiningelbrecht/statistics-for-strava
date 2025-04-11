@@ -22,6 +22,6 @@ final readonly class HashtagPrefix extends NonEmptyStringLiteral
 
     public function __toString(): string
     {
-        return sprintf('#%s-', parent::__toString());
+        return sprintf('#%s', parent::__toString());
     }
 }

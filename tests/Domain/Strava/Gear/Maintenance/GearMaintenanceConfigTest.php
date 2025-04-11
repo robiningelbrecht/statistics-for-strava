@@ -2,6 +2,8 @@
 
 namespace App\Tests\Domain\Strava\Gear\Maintenance;
 
+use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\InvalidGearMaintenanceConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -31,6 +33,33 @@ class GearMaintenanceConfigTest extends TestCase
         $yml = Yaml::dump(self::getValidYmlString());
         $this->assertMatchesTextSnapshot(
             (string) GearMaintenanceConfig::fromYmlString($yml)
+        );
+    }
+
+    public function testGetAllReferencedGearIds(): void
+    {
+        $yml = $this->getValidYmlString();
+
+        $this->assertEquals(
+            GearIds::fromArray([
+                GearId::fromUnprefixed('bike-one-gear-id'),
+                GearId::fromUnprefixed('bike-two-gear-id'),
+                GearId::fromUnprefixed('g12337767'),
+            ]),
+            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllReferencedGearIds()
+        );
+    }
+
+    public function testGetAllReferencedImages(): void
+    {
+        $yml = $this->getValidYmlString();
+
+        $this->assertEquals(
+            [
+                'chain.png',
+                'gear1.png',
+            ],
+            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllReferencedImages()
         );
     }
 
