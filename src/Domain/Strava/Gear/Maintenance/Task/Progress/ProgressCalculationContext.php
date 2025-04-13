@@ -6,7 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Gear\Maintenance\IntervalUnit;
+use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class ProgressCalculationContext

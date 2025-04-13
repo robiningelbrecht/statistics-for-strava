@@ -6,6 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance;
 
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
+use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Infrastructure\ValueObject\String\Name;
 use Symfony\Component\Yaml\Exception\ParseException;

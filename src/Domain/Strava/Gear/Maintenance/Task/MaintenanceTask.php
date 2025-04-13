@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task;
 
-use App\Domain\Strava\Gear\Maintenance\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Tag;
 use App\Infrastructure\ValueObject\String\Name;
 

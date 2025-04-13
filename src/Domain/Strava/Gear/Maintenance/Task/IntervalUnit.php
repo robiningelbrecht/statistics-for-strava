@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Gear\Maintenance;
+namespace App\Domain\Strava\Gear\Maintenance\Task;
 
 enum IntervalUnit: string
 {

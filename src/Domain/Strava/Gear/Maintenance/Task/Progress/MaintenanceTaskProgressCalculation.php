@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
-use App\Domain\Strava\Gear\Maintenance\IntervalUnit;
+use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 
 interface MaintenanceTaskProgressCalculation
 {
