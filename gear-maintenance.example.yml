@@ -28,7 +28,11 @@ components:
         # Interval for the maintenance task
         interval:
           value: 500
-          # Possible values: km, mi, hours, days, weeks, months
+          # Possible values:
+          # - km (every x km used),
+          # - mi (every x miles used),
+          # - hours (every x hours used),
+          # - days (every x days),
           unit: km
 gears:
   # Optional reference to an image. Will be used in the UI.

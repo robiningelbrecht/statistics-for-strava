@@ -199,6 +199,11 @@ final readonly class GearMaintenanceConfig implements \Stringable
         ]));
     }
 
+    public function getImageReferenceForGear(GearId $gearId): ?string
+    {
+        return $this->getGearOptions()->getImageReferenceForGear($gearId);
+    }
+
     public function isFeatureEnabled(): bool
     {
         return $this->isFeatureEnabled;

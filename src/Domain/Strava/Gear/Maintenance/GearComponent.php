@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance;
 
+use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTasks;
@@ -54,6 +55,11 @@ final readonly class GearComponent
     public function getAttachedTo(): GearIds
     {
         return $this->attachedTo;
+    }
+
+    public function isAttachedTo(GearId $gearId): bool
+    {
+        return $this->getAttachedTo()->has($gearId);
     }
 
     public function getImgSrc(): ?string

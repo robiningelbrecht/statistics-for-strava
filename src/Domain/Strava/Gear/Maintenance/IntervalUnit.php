@@ -6,10 +6,8 @@ namespace App\Domain\Strava\Gear\Maintenance;
 
 enum IntervalUnit: string
 {
-    case KILOMETERS = 'km';
-    case MILES = 'mi';
-    case HOURS = 'hours';
-    case DAYS = 'days';
-    case WEEKS = 'weeks';
-    case MONTHS = 'months';
+    case EVERY_X_KILOMETERS_USED = 'km';
+    case EVERY_X_MILES_USED = 'mi';
+    case EVERY_X_HOURS_USED = 'hours';
+    case EVERY_X_DAYS = 'days';
 }

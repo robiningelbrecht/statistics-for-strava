@@ -69,6 +69,19 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             );
         }
 
+        // Check if there are any invalid tags.
+        $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll();
+        /** @var \App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTag $maintenanceTaskTag */
+        foreach ($maintenanceTaskTags->filterOnInvalid() as $maintenanceTaskTag) {
+            $warnings[] = $this->translator->trans(
+                'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.',
+                [
+                    '{maintenanceTaskTag}' => $maintenanceTaskTag->getTag(),
+                    '{activityName}' => $maintenanceTaskTag->getActivityName(),
+                ]
+            );
+        }
+
         $gearsAttachedToComponents = Gears::empty();
         /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
@@ -79,6 +92,12 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 if ($gearsAttachedToComponents->has($gear)) {
                     continue;
                 }
+
+                if (($imageSrc = $this->gearMaintenanceConfig->getImageReferenceForGear($gear->getId()))
+                    && $this->gearMaintenanceStorage->fileExists($imageSrc)) {
+                    $gear->enrichWithImageSrc('/gear-maintenance/'.$imageSrc);
+                }
+
                 $gearsAttachedToComponents->add($gear);
             }
         }
@@ -90,7 +109,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'warnings' => $warnings,
                 'gearsAttachedToComponents' => $gearsAttachedToComponents,
                 'gearComponents' => $this->gearMaintenanceConfig->getGearComponents(),
-                'maintenanceTaskTags' => $this->maintenanceTaskTagRepository->findAll(),
+                'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid(),
             ])
         );
     }

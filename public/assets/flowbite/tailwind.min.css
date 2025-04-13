@@ -1083,6 +1083,9 @@
   .ms-auto {
     margin-inline-start: auto;
   }
+  .me-2 {
+    margin-inline-end: calc(var(--spacing) * 2);
+  }
   .me-3 {
     margin-inline-end: calc(var(--spacing) * 3);
   }
@@ -1565,6 +1568,9 @@
   .h-80 {
     height: calc(var(--spacing) * 80);
   }
+  .h-96 {
+    height: calc(var(--spacing) * 96);
+  }
   .h-\[20rem\] {
     height: 20rem;
   }
@@ -1744,6 +1750,9 @@
   .w-64 {
     width: calc(var(--spacing) * 64);
   }
+  .w-\[1rem\] {
+    width: 1rem;
+  }
   .w-\[2rem\] {
     width: 2rem;
   }
@@ -1773,6 +1782,9 @@
   }
   .w-\[rem\] {
     width: rem;
+  }
+  .w-auto {
+    width: auto;
   }
   .w-fit {
     width: fit-content;
@@ -1939,6 +1951,9 @@
   }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2445,6 +2460,9 @@
       background-color: color-mix(in oklab, var(--color-gray-900) 50%, transparent);
     }
   }
+  .bg-green-300 {
+    background-color: var(--color-green-300);
+  }
   .bg-orange-400\/40 {
     background-color: color-mix(in srgb, #ED8936 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2459,6 +2477,9 @@
   }
   .bg-red-50 {
     background-color: var(--color-red-50);
+  }
+  .bg-red-300 {
+    background-color: var(--color-red-300);
   }
   .bg-red-600\/\[\.1\] {
     background-color: color-mix(in srgb, #DC2626 10%, transparent);
@@ -2489,6 +2510,9 @@
   }
   .bg-yellow-50 {
     background-color: var(--color-yellow-50);
+  }
+  .bg-yellow-300 {
+    background-color: var(--color-yellow-300);
   }
   .bg-yellow-300\/\[\.1\] {
     background-color: color-mix(in srgb, #FCD34D 10%, transparent);
@@ -2548,6 +2572,9 @@
       stroke: var(--color-gray-700) !important;
     }
   }
+  .object-cover {
+    object-fit: cover;
+  }
   .apexcharts-legend {
     .apexcharts-canvas & {
       padding: 0 !important;
@@ -2557,6 +2584,9 @@
     .apexcharts-canvas .apexcharts-tooltip-series-group.apexcharts-active & {
       padding: 0 !important;
     }
+  }
+  .p-0\.5 {
+    padding: calc(var(--spacing) * 0.5);
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
@@ -2578,6 +2608,9 @@
   }
   .p-6 {
     padding: calc(var(--spacing) * 6);
+  }
+  .p-\[1rem\] {
+    padding: 1rem;
   }
   .px-1 {
     padding-inline: calc(var(--spacing) * 1);
@@ -2792,6 +2825,14 @@
     --tw-leading: calc(var(--spacing) * 9);
     line-height: calc(var(--spacing) * 9);
   }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
+  }
+  .leading-normal {
+    --tw-leading: var(--leading-normal);
+    line-height: var(--leading-normal);
+  }
   .leading-relaxed {
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
@@ -2896,6 +2937,9 @@
   .text-green-500 {
     color: var(--color-green-500);
   }
+  .text-green-800 {
+    color: var(--color-green-800);
+  }
   .text-orange-800 {
     color: var(--color-orange-800);
   }
@@ -2913,9 +2957,6 @@
   }
   .text-yellow-800 {
     color: var(--color-yellow-800);
-  }
-  .lowercase {
-    text-transform: lowercase;
   }
   .normal-case {
     text-transform: none;
@@ -3282,6 +3323,20 @@
       outline-style: none;
     }
   }
+  .aria-expanded\:bg-gray-100 {
+    &[aria-expanded="true"] {
+      background-color: var(--color-gray-100);
+    }
+  }
+  .hover\:aria-expanded\:bg-gray-200 {
+    &:hover {
+      @media (hover: hover) {
+        &[aria-expanded="true"] {
+          background-color: var(--color-gray-200);
+        }
+      }
+    }
+  }
   .aria-selected\:bg-gray-100 {
     &[aria-selected="true"] {
       background-color: var(--color-gray-100);
@@ -3332,9 +3387,24 @@
       display: none;
     }
   }
+  .md\:h-auto {
+    @media (width >= 48rem) {
+      height: auto;
+    }
+  }
+  .md\:w-48 {
+    @media (width >= 48rem) {
+      width: calc(var(--spacing) * 48);
+    }
+  }
   .md\:max-w-\[100\%\] {
     @media (width >= 48rem) {
       max-width: 100%;
+    }
+  }
+  .md\:max-w-xl {
+    @media (width >= 48rem) {
+      max-width: var(--container-xl);
     }
   }
   .md\:translate-x-0 {
@@ -3353,6 +3423,11 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  .md\:flex-row {
+    @media (width >= 48rem) {
+      flex-direction: row;
+    }
+  }
   .md\:space-x-2 {
     @media (width >= 48rem) {
       :where(& > :not(:last-child)) {
@@ -3360,6 +3435,17 @@
         margin-inline-start: calc(calc(var(--spacing) * 2) * var(--tw-space-x-reverse));
         margin-inline-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-x-reverse)));
       }
+    }
+  }
+  .md\:rounded-none {
+    @media (width >= 48rem) {
+      border-radius: 0;
+    }
+  }
+  .md\:rounded-s-lg {
+    @media (width >= 48rem) {
+      border-start-start-radius: var(--radius-lg);
+      border-end-start-radius: var(--radius-lg);
     }
   }
   .md\:p-5 {

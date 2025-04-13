@@ -31,6 +31,8 @@ services:
     _instanceof:
         App\Infrastructure\CQRS\CommandHandler:
             tags: ['app.command_handler']
+        App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculation:
+            tags: ['app.maintenance_progress_calculation']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -155,6 +157,9 @@ services:
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
         arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
+
+    App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceProgressCalculator:
+        arguments: [!tagged_iterator app.maintenance_progress_calculation]
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ 'App\Domain\Zwift\ZwiftLevel', fromOptionalString ]

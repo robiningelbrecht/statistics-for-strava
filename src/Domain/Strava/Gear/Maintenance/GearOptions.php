@@ -44,6 +44,17 @@ final class GearOptions
         return GearIds::fromArray(array_column($this->getOptions(), 0));
     }
 
+    public function getImageReferenceForGear(GearId $gearId): ?string
+    {
+        foreach ($this->options as $option) {
+            if ($option[0] == $gearId) {
+                return $option[1];
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @return string[]
      */

@@ -1,6 +1,6 @@
 {
-  "id": "[APP_HOST]",
-  "name": "[APP_NAME]",
+  "id": "http://localhost:8080/",
+  "name": "Statistics for Strava | Alexandre Costa",
   "short_name": "Statistics for Strava",
   "description": "Statistics for Strava is a self-hosted web app designed to provide you with better stats.",
   "categories": [
@@ -9,7 +9,7 @@
     "utilities"
   ],
   "start_url": "/",
-  "scope": "[APP_HOST]",
+  "scope": "http://localhost:8080/",
   "display": "standalone",
   "display_override": [
     "fullscreen",
