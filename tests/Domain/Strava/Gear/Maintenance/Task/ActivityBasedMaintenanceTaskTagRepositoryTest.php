@@ -14,6 +14,7 @@ use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -51,12 +52,16 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
             MaintenanceTaskTags::fromArray([
                 MaintenanceTaskTag::for(
                     maintenanceTaskTag: Tag::fromString('#sfs-chain-lubed'),
-                    activityId: ActivityId::fromUnprefixed(1),
+                    taggedOnActivityId: ActivityId::fromUnprefixed(1),
+                    taggedOn: SerializableDateTime::fromString('2023-10-10'),
+                    activityName: '#sfs-chain-lubed',
                     isValid: true
                 ),
                 MaintenanceTaskTag::for(
                     maintenanceTaskTag: Tag::fromString('#sfs-chain-two-lubed'),
-                    activityId: ActivityId::fromUnprefixed(2),
+                    taggedOnActivityId: ActivityId::fromUnprefixed(2),
+                    taggedOn: SerializableDateTime::fromString('2023-10-10'),
+                    activityName: '#sfs-chain-two-lubed',
                     isValid: false
                 ),
             ]),

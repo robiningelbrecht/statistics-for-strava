@@ -11,7 +11,6 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -126,7 +125,7 @@ final class DbalActivityRepository implements ActivityRepository
             sportType: SportType::from($result['sportType']),
             name: $result['name'],
             description: $result['description'] ?: '',
-            distance: Kilometer::from($result['distance'] / 1000),
+            distance: Meter::from($result['distance'])->toKilometer(),
             elevation: Meter::from($result['elevation'] ?: 0),
             startingCoordinate: Coordinate::createFromOptionalLatAndLng(
                 Latitude::fromOptionalString((string) $result['startingCoordinateLatitude']),

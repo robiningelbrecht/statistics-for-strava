@@ -87,7 +87,7 @@ class Gear
 
     public function getDistance(): Kilometer
     {
-        return Kilometer::from($this->distanceInMeter->toInt() / 1000);
+        return $this->distanceInMeter->toKilometer();
     }
 
     public function isRetired(): bool

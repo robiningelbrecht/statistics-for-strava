@@ -32,4 +32,24 @@ final readonly class MaintenanceTaskProgress
     {
         return $this->description;
     }
+
+    public function isZero(): bool
+    {
+        return 0 === $this->percentage;
+    }
+
+    public function isLow(): bool
+    {
+        return $this->percentage < 70;
+    }
+
+    public function isMedium(): bool
+    {
+        return $this->percentage >= 70 && $this->percentage < 90;
+    }
+
+    public function isHigh(): bool
+    {
+        return $this->percentage >= 90;
+    }
 }

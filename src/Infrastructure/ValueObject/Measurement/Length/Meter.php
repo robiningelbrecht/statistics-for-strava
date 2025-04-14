@@ -23,6 +23,11 @@ final readonly class Meter implements ConvertableToMeter, Metric
         return Foot::from($this->value * 3.2805);
     }
 
+    public function toKilometer(): Kilometer
+    {
+        return Kilometer::from($this->value / 1000);
+    }
+
     public function toUnitSystem(UnitSystem $unitSystem): Meter|Foot
     {
         if (UnitSystem::METRIC === $unitSystem) {

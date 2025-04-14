@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear;
 
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class DbalGearStatsRepository extends DbalRepository implements GearStatsRepository
@@ -35,7 +35,7 @@ final readonly class DbalGearStatsRepository extends DbalRepository implements G
             $gearStats->addStat(
                 gearId: GearId::fromString($result['gearId']),
                 date: SerializableDateTime::fromString($result['startDate']),
-                distance: Kilometer::from($result['cumulativeDistance'] / 1000)
+                distance: Meter::from($result['cumulativeDistance'])->toKilometer()
             );
         }
 

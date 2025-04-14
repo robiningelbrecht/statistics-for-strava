@@ -158,7 +158,8 @@ services:
         factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
         arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
 
-    App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceProgressCalculator:
+    App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
+        class: App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator
         arguments: [!tagged_iterator app.maintenance_progress_calculation]
 
     App\Domain\Zwift\ZwiftLevel:

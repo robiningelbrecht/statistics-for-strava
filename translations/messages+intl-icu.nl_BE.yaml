@@ -99,6 +99,7 @@ Kayaking: Kajakken
 'Kite Surf': 'Kite Surf'
 'Last 45 days': 'Last 45 days'
 'Last 90 days': 'Last 90 days'
+'Last maintenance': 'Last maintenance'
 'Latest start time': 'Laatste starttijd'
 'Loading data...': 'Aan het laden...'
 Loading...: 'Aan het laden...'
@@ -182,6 +183,7 @@ Surfing: Surfen
 Swim: Zwemmen
 TOTAL: TOTAAL
 'Table Tennis': Tafeltennis
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 Tennis: Tennis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Dat is een dagelijks gemiddelde van {dailyAverage}, een wekelijks gemiddelde van {weeklyAverage} en een maandelijks gemiddelde van {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Het Eddington-getal in de context van fietsen of hardlopen is gedefinieerd als het maximale aantal E zodanig dat de atleet ten minste E km heeft afgelegd op ten minste E dagen.'
@@ -249,6 +251,7 @@ intensityFactor: intensityFactor
 maxHeartRate: maxHeartRate
 'more info': 'more info'
 n/a: n/a
+never: never
 workouts: workouts
 '{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} aluminium cans for soft drinks produced'
 '{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} caps for PET bottles produced'
@@ -257,6 +260,9 @@ workouts: workouts
 '{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} Google searches'
 '{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} one liter PET bottles produced'
 '{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} manufactured smartphones'
+'{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
+'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
+'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfResults} results based on your active filters': '{numberOfResults} results based on your active filters'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes based on your active filters'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared'

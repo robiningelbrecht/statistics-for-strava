@@ -23,7 +23,7 @@ Challenges: Challenges
 'Climb a total of 2000m': 'Grimpez un total de 2000m'
 'Climb a total of 7500m': 'Grimpez un total de 7500m'
 'Close modal': 'Fermer la fenêtre'
-Commutes: Trajets domicile-travail
+Commutes: 'Trajets domicile-travail'
 'Commutes only': 'Trajets domicile-travail uniquement'
 'Complete a 10 km run.': 'Complétez une course à pied de 10km.'
 'Complete a 100km ride': 'Complétez une sortie vélo de 100km'
@@ -99,6 +99,7 @@ Kayaking: Kayak
 'Kite Surf': 'Kite Surf'
 'Last 45 days': 'Derniers 45 jours'
 'Last 90 days': 'Derniers 90 jours'
+'Last maintenance': 'Last maintenance'
 'Latest start time': 'Départ le plus tardif'
 'Loading data...': 'Chargement des données...'
 Loading...: Chargement...
@@ -182,6 +183,7 @@ Surfing: Surf
 Swim: Natation
 TOTAL: TOTAL
 'Table Tennis': 'Tennis de table'
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 Tennis: Tennis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Cela représente une moyenne journalière de {dailyAverage}, une moyenne hebdomadaire de {weeklyAverage} et une moyenne mensuelle de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Le nombre d'Eddington dans le contexte du cyclisme ou de la course est défini comme le nombre maximum E tel que l'athlète ait parcouru au moins E km lors d'au moins E jours."
@@ -228,7 +230,7 @@ Workout: Entraînement
 Year: Année
 'Yearly distances': 'Distances annuelles'
 Yoga: Yoga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "Vous avez enregistré des entraînements dans {numberOfCountriesWithWorkouts} pays différents, soit {percentage} de tous les pays 🌍"
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Vous avez enregistré des entraînements dans {numberOfCountriesWithWorkouts} pays différents, soit {percentage} de tous les pays 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Vous avez réduit vos émissions de carbone de {amountOfCarbonSaved} en utilisant votre trajet domicile-travail 🥳. Cela équivaut à'
 'Your Strava badge': 'Votre badge Strava'
 'Your Zwift badge': 'Votre badge Zwift'
@@ -249,6 +251,7 @@ intensityFactor: "facteur d'intensité"
 maxHeartRate: 'fréquence cardiaque max'
 'more info': "plus d'infos"
 n/a: n/a
+never: never
 workouts: entrainements
 '{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} canettes en aluminium produites pour des boissons gazeuses'
 '{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} bouchons de bouteilles PET produits'
@@ -257,6 +260,9 @@ workouts: entrainements
 '{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} recherches Google'
 '{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} bouteilles PET d’un litre produites'
 '{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} smartphones fabriqués'
+'{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
+'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
+'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfResults} results based on your active filters': '{numberOfResults} résultats basés sur vos filtres actifs'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes basées sur vos filtres actifs'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions de spaghettis à la sauce tomate préparées'

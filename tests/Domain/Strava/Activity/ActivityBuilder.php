@@ -23,7 +23,7 @@ final class ActivityBuilder
     private SportType $sportType;
     private string $name;
     private readonly string $description;
-    private readonly Kilometer $distance;
+    private Kilometer $distance;
     private readonly Meter $elevation;
     private ?Coordinate $startingCoordinate;
     private readonly int $calories;
@@ -213,6 +213,13 @@ final class ActivityBuilder
     public function withTotalImageCount(int $totalImageCount): self
     {
         $this->totalImageCount = $totalImageCount;
+
+        return $this;
+    }
+
+    public function withDistance(Kilometer $distance): self
+    {
+        $this->distance = $distance;
 
         return $this;
     }

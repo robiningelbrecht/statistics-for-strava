@@ -79,20 +79,24 @@
                                    data-active-classes="text-gray-700"
                                    data-inactive-classes="text-gray-700">
                             {% for gear in gearsAttachedToComponents %}
-                                {%  set componentsAttachedToGear = gearComponents|filter(component => component.isAttachedTo(gear.getId())) %}
+                                {% set componentsAttachedToGear = gearComponents|filter(component => component.isAttachedTo(gear.getId())) %}
                                 <tr class="border-b aria-expanded:bg-gray-100 hover:aria-expanded:bg-gray-200 hover:bg-gray-200 cursor-pointer"
-                                    id="table-gears-header-{{ loop.index0 }}" data-accordion-target="#table-gears-content-{{ loop.index0 }}"
+                                    id="table-gears-header-{{ loop.index0 }}"
+                                    data-accordion-target="#table-gears-content-{{ loop.index0 }}"
                                     aria-expanded="false" aria-controls="table-gears-content-{{ loop.index0 }}">
                                     <td class="w-[1rem] p-2 text-gray-900">
                                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                                              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                  stroke-width="2"
                                                   d="M9 5 5 1 1 5"/>
                                         </svg>
                                     </td>
-                                    <th scope="row" class="flex items-center px-2 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                    <th scope="row"
+                                        class="flex items-center px-2 py-2 font-medium text-gray-900 whitespace-nowrap">
                                         <img class="w-auto h-8 mr-3 rounded-sm lazy"
-                                             src="{{ renderComponent('placeholder-image') }}" data-src="{{ gear.getImageSrc() }}"
+                                             src="{{ renderComponent('placeholder-image') }}"
+                                             data-src="{{ gear.getImageSrc() }}"
                                              alt="{{ gear.getName() }}"/>
                                         {{ gear.getName() }}
                                     </th>
@@ -100,45 +104,72 @@
                                         {{ renderComponent('measurement', {'measurement': gear.getDistance(), 'precision': 0}) }}
                                     </td>
                                     <td class="px-6 py-2 truncate">
-                                       {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
+                                        {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
                                     </td>
                                 </tr>
-                                <tr class="border-b hidden overflow-x-auto w-full" id="table-gears-content-{{ loop.index0 }}" aria-labelledby="table-gears-header-{{ loop.index0 }}">
+                                <tr class="border-b hidden overflow-x-auto w-full"
+                                    id="table-gears-content-{{ loop.index0 }}"
+                                    aria-labelledby="table-gears-header-{{ loop.index0 }}">
                                     <td colspan="4" class="p-[1rem] text-left">
-                                        <div class="grid grid-cols-2 gap-2">
-                                            {% for gearComponent in componentsAttachedToGear  %}
-                                                <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row md:max-w-xl">
-                                                    <img class="lazy object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="{{ renderComponent('placeholder-image') }}" data-src="{{ gearComponent.getImgSrc() }}" alt="{{ gearComponent.getLabel() }}">
-                                                    <div class="flex flex-col justify-between p-4 leading-normal">
-                                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
-                                                        <div class="font-normal text-gray-700">
+                                        <div class="grid gap-2">
+                                            {% for gearComponent in componentsAttachedToGear %}
+                                                <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row">
+                                                    <div class="w-full md:w-48 h-full">
+                                                        <img class="lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
+                                                             src="{{ renderComponent('placeholder-image') }}"
+                                                             data-src="{{ gearComponent.getImgSrc() }}"
+                                                             alt="{{ gearComponent.getLabel() }}">
+                                                    </div>
+                                                    <div class="w-full flex flex-col justify-between p-4 leading-normal">
+                                                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
+                                                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 font-normal text-gray-700">
                                                             {% for maintenanceTask in gearComponent.getMaintenanceTasks() %}
                                                                 {% set mostRecentTaskTag = maintenanceTaskTags.getMostRecentFor(maintenanceTask.getTag()) %}
-                                                                <div>
-                                                                    {{ "{maintenanceTaskLabel} every {interval}"|trans({
-                                                                        '{maintenanceTaskLabel}': maintenanceTask.getLabel(),
-                                                                        '{interval}': maintenanceTask.getIntervalValue() ~ ' ' ~ maintenanceTask.getIntervalUnit().value
-                                                                    }) }}
-                                                                </div>
-                                                                <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
-                                                                    {{ maintenanceTask.getTag() }}
-                                                                </span>
-                                                                <span class="text-sm">
-                                                                    {{ "Last maintenance"|trans }}:
-                                                                    {% if mostRecentTaskTag is not null %}
-                                                                        {{ mostRecentTaskTag.getTaggedOn()|formatDate('normal') }}
-                                                                    {% else %}
-                                                                        {{ "never"|trans }}
+                                                                <div class="flex flex-col">
+                                                                    <div class="flex justify-between">
+                                                                        <div>
+                                                                            {{ "{maintenanceTaskLabel} every {interval}"|trans({
+                                                                                '{maintenanceTaskLabel}': maintenanceTask.getLabel(),
+                                                                                '{interval}': maintenanceTask.getIntervalValue() ~ ' ' ~ maintenanceTask.getIntervalUnit().value
+                                                                            }) }}
+                                                                        </div>
+                                                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                                                            {{ maintenanceTask.getTag() }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="text-xs">
+                                                                        {{ "Last maintenance"|trans }}:
+                                                                        {% if mostRecentTaskTag is not null %}
+                                                                            {{ mostRecentTaskTag.getTaggedOn()|formatDate('normal') }}
+                                                                        {% else %}
+                                                                            {{ "never"|trans }}
+                                                                        {% endif %}
+                                                                    </span>
+                                                                    {% set progress = calculateMaintenanceTaskProgress(
+                                                                        gear.getId(),
+                                                                        mostRecentTaskTag.getTaggedOnActivityId(),
+                                                                        mostRecentTaskTag.getTaggedOn(),
+                                                                        maintenanceTask.getIntervalUnit(),
+                                                                        maintenanceTask.getIntervalValue()
+                                                                    ) %}
+                                                                    {% if progress.isZero() %}
+                                                                        {% set colors = {'bg':'bg-gray-200','text':'text-gray-700'} %}
+                                                                    {% elseif progress.isLow() %}
+                                                                        {% set colors = {'bg':'bg-green-600','text':'text-green-700'} %}
+                                                                    {% elseif progress.isMedium() %}
+                                                                        {% set colors = { 'bg':'bg-yellow-400','text':'text-yellow-700'} %}
+                                                                    {% elseif progress.isHigh() %}
+                                                                        {% set colors = {'bg':'bg-red-600', 'text':'text-red-700'} %}
                                                                     {% endif %}
-                                                                </span>
-                                                                <div class="w-full bg-gray-200 rounded-full">
-                                                                    <div class="bg-green-300 text-xs font-medium text-green-800 text-center p-0.5 leading-none rounded-full" style="width: 35%"> 175km</div>
-                                                                </div>
-                                                                <div class="w-full bg-gray-200 rounded-full">
-                                                                    <div class="bg-yellow-300 text-xs font-medium text-yellow-800 text-center p-0.5 leading-none rounded-full" style="width: 73%"> 365km</div>
-                                                                </div>
-                                                                <div class="w-full bg-gray-200 rounded-full">
-                                                                    <div class="bg-red-300 text-xs font-medium text-red-800 text-center p-0.5 leading-none rounded-full" style="width: 89%"> 445km</div>
+                                                                    <div class="mt-2">
+                                                                        <div class="mb-1">
+                                                                            <span class="{{ colors.text }} text-sm font-medium">{{ progress.getDescription() }}</span>
+                                                                        </div>
+                                                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                            <div class="{{ colors.bg }} h-2.5 rounded-full"
+                                                                                 style="width: {{ progress.getPercentage() }}%"></div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             {% endfor %}
                                                         </div>

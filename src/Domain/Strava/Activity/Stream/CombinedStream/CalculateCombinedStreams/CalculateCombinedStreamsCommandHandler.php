@@ -16,7 +16,6 @@ use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command;
 use App\Infrastructure\CQRS\CommandHandler;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
@@ -101,7 +100,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
 
             foreach ($combinedData as &$row) {
-                $distanceInKm = Kilometer::from($row[$distanceIndex] / 1000);
+                $distanceInKm = Meter::from($row[$distanceIndex])->toKilometer();
                 $row[$distanceIndex] = $distanceInKm->toFloat();
 
                 if (false !== $paceIndex) {

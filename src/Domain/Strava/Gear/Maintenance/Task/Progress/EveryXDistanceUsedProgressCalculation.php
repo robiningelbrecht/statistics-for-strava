@@ -5,26 +5,28 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\Connection;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTaskProgressCalculation
+final readonly class EveryXDistanceUsedProgressCalculation implements MaintenanceTaskProgressCalculation
 {
     public function __construct(
         private Connection $connection,
-        private TranslatorInterface $translator,
     ) {
     }
 
     public function supports(IntervalUnit $intervalUnit): bool
     {
-        return IntervalUnit::EVERY_X_HOURS_USED === $intervalUnit;
+        return in_array($intervalUnit, [
+            IntervalUnit::EVERY_X_KILOMETERS_USED,
+            IntervalUnit::EVERY_X_MILES_USED,
+        ]);
     }
 
     public function calculate(ProgressCalculationContext $context): MaintenanceTaskProgress
     {
         $query = '
-                SELECT SUM(movingTimeInSeconds) AS movingTimeInSeconds
+                SELECT SUM(distance) AS distance
                 FROM Activity
                 WHERE gearId = :gearId
                 AND startDateTime > (
@@ -33,17 +35,18 @@ final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTa
                   WHERE activityId = :activityId
               )';
 
-        $movingTimeInSecondsSinceLastTagged = $this->connection->fetchOne($query, [
+        $distanceSinceLastTagged = Meter::from($this->connection->fetchOne($query, [
             'gearId' => $context->getGearId(),
             'activityId' => $context->getLastTaggedOnActivityId(),
-        ]);
-        $movingTimeInHoursSinceLastTagged = $movingTimeInSecondsSinceLastTagged / 3600;
+        ]))->toKilometer();
+
+        if (IntervalUnit::EVERY_X_MILES_USED === $context->getIntervalUnit()) {
+            $distanceSinceLastTagged = $distanceSinceLastTagged->toMiles();
+        }
 
         return MaintenanceTaskProgress::from(
-            percentage: (int) round(($movingTimeInHoursSinceLastTagged / $context->getIntervalValue()) * 100),
-            description: $this->translator->trans('{hoursSinceLastTagged} hours', [
-                '{hoursSinceLastTagged}' => round($movingTimeInHoursSinceLastTagged),
-            ]),
+            percentage: (int) round(($distanceSinceLastTagged->toFloat() / $context->getIntervalValue()) * 100),
+            description: sprintf('%s %s', $distanceSinceLastTagged->toInt(), $distanceSinceLastTagged->getSymbol()),
         );
     }
 }

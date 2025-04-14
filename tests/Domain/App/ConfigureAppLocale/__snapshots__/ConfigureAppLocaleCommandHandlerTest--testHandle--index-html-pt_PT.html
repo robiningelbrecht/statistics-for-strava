@@ -369,6 +369,9 @@
     // Enable image lazy load.
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
+        callback_error: (img) => {
+            img.setAttribute("src", "assets/placeholder.webp");
+        }
     });
 
     const modalSkeletonNode = document.getElementById('modal-skeleton');

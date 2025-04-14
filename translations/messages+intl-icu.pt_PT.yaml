@@ -99,6 +99,7 @@ Kayaking: Caiaque
 'Kite Surf': Kitesurf
 'Last 45 days': 'Últimos 45 dias'
 'Last 90 days': 'Últimos 90 dias'
+'Last maintenance': 'Last maintenance'
 'Latest start time': 'Hora de início mais tardia'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'
@@ -182,6 +183,7 @@ Surfing: Surf
 Swim: Natação
 TOTAL: TOTAL
 'Table Tennis': 'Ténis de Mesa'
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 Tennis: Ténis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Isso dá uma média diária de {dailyAverage}, uma média semanal de {weeklyAverage} e uma média mensal de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
@@ -249,6 +251,7 @@ intensityFactor: 'fator de intensidade'
 maxHeartRate: 'frequência cardíaca máxima'
 'more info': 'more info'
 n/a: n/d
+never: never
 workouts: treinos
 '{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} aluminium cans for soft drinks produced'
 '{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} caps for PET bottles produced'
@@ -257,6 +260,9 @@ workouts: treinos
 '{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} Google searches'
 '{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} one liter PET bottles produced'
 '{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} manufactured smartphones'
+'{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
+'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
+'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared'
