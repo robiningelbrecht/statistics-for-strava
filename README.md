@@ -46,7 +46,7 @@ https://github.com/user-attachments/assets/9aaaafd9-bc8f-4e1d-bb9d-45d3c661a080
 * Detailed list of all your activities
 * Monthly stats with calendar view
 * Gear stats
-* Gear (component) maintenance tracking
+* Gear (component) maintenance tracking ([instructions](https://github.com/robiningelbrecht/statistics-for-strava/wiki/Gear-maintenance))
 * Eddington for biking and running activities
 * Detailed list of your segments and corresponding efforts
 * Heatmap
