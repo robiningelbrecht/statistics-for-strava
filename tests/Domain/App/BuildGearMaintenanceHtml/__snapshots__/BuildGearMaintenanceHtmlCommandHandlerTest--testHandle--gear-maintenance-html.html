@@ -23,9 +23,7 @@
                     <div>
                         <span class="font-medium">We detected following issues:</span>
                         <ul class="mt-1.5 list-disc list-inside">
-                                                            <li>Gear "bike-one-id" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
-                                                            <li>Gear "bike-two-id" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
-                                                            <li>Gear "g12337767" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
+                                                            <li>Gear "g1233776" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
                                                     </ul>
                     </div>
                 </div>
@@ -38,10 +36,170 @@
                         <span class="font-medium">Please address these issues:</span>
                         <ul class="mt-1.5 list-disc list-inside">
                                                             <li>Image "chain.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
-                                                            <li>Image "gear1.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                            <li>Image "battery.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                            <li>Image "bike.webp" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                            <li>Tag "#sfs-chain-lubed" was used on "#sfs-chain-lubed wrong", but the gear referenced on that activity is not attached to this component.</li>
                                                     </ul>
                     </div>
                 </div>
-                                </div>
+                                        <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-center text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th class="px-2"></th>
+                                <th scope="col" class="text-left px-2 py-3">
+                                    Gear
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    <div class="flex items-center justify-center">
+                                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 64 64" stroke-width="3" stroke="#F26722" fill="none"><path d="M17.94,54.81a.1.1,0,0,1-.14,0c-1-1.11-11.69-13.23-11.69-21.26,0-9.94,6.5-12.24,11.76-12.24,4.84,0,11.06,2.6,11.06,12.24C28.93,41.84,18.87,53.72,17.94,54.81Z"></path><circle cx="17.52" cy="31.38" r="4.75"></circle><path d="M49.58,34.77a.11.11,0,0,1-.15,0c-.87-1-9.19-10.45-9.19-16.74,0-7.84,5.12-9.65,9.27-9.65,3.81,0,8.71,2,8.71,9.65C58.22,24.52,50.4,33.81,49.58,34.77Z"></path><circle cx="49.23" cy="17.32" r="3.75"></circle><path d="M17.87,54.89a28.73,28.73,0,0,0,3.9.89"></path><path d="M24.68,56.07c2.79.12,5.85-.28,7.9-2.08,5.8-5.09,2.89-11.25,6.75-14.71a16.72,16.72,0,0,1,4.93-3" stroke-dasharray="7.8 2.92"></path><path d="M45.63,35.8a23,23,0,0,1,3.88-.95"></path></svg>
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Components
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody data-accordion="table-gears" data-active-classes="text-gray-700" data-inactive-classes="text-gray-700">
+                                                                                            <tr class="border-b aria-expanded:bg-gray-100 hover:aria-expanded:bg-gray-200 hover:bg-gray-200 cursor-pointer" id="table-gears-header-0" data-accordion-target="#table-gears-content-0" aria-expanded="false" aria-controls="table-gears-content-0">
+                                    <td class="w-[1rem] p-2 text-gray-900">
+                                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"></path>
+                                        </svg>
+                                    </td>
+                                    <th scope="row" class="truncate px-2 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img class="w-auto h-8 mr-3 rounded-sm lazy" src="assets/placeholder.webp" data-src="" alt="Existing gear">
+                                            Existing gear
+                                        </div>
+                                    </th>
+                                    <td class="px-6 py-2 truncate">
+                                        10<span class="text-xs">km</span>
+
+                                    </td>
+                                    <td class="px-6 py-2 truncate">
+                                        Some cool chain, DI2 Battery
+                                    </td>
+                                </tr>
+                                <tr class="border-b hidden overflow-x-auto w-full" id="table-gears-content-0" aria-labelledby="table-gears-header-0">
+                                    <td colspan="4" class="p-[1rem] text-left">
+                                        <div class="grid gap-2">
+                                                                                            <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row">
+                                                    <div class="w-full md:w-48 h-full">
+                                                        <img class="lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src="assets/placeholder.webp" data-src="chain.png" alt="Some cool chain">
+                                                    </div>
+                                                    <div class="w-full flex flex-col justify-between p-4 leading-normal">
+                                                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">Some cool chain</h5>
+                                                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-y-4 divide-x *:px-4 -mx-4 font-normal text-gray-700">
+                                                                                                                                                                                            <div class="flex flex-col">
+                                                                    <div class="flex justify-between">
+                                                                        <div>
+                                                                            Lube every 500 km
+                                                                        </div>
+                                                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                                                            #sfs-chain-lubed
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="text-xs">
+                                                                        Last maintenance:
+                                                                                                                                                    01-01-2025
+                                                                                                                                            </span>
+                                                                                                                                                                                                                                                                                                                                                        <div class="mt-2">
+                                                                        <div class="mb-1">
+                                                                            <span class="text-green-700 text-sm font-medium">20 km</span>
+                                                                        </div>
+                                                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                            <div class="bg-green-600 h-2.5 rounded-full" style="width: 4%"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                                                                                                                                            <div class="flex flex-col">
+                                                                    <div class="flex justify-between">
+                                                                        <div>
+                                                                            Replace every 1000 km
+                                                                        </div>
+                                                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                                                            #sfs-chain-replaced
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="text-xs">
+                                                                        Last maintenance:
+                                                                                                                                                    never
+                                                                                                                                            </span>
+                                                                                                                                                                                                                                                                                                                                                        <div class="mt-2">
+                                                                        <div class="mb-1">
+                                                                            <span class="text-gray-700 text-sm font-medium">0</span>
+                                                                        </div>
+                                                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                            <div class="bg-gray-200 h-2.5 rounded-full" style="width: 0%"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                                                                                                                                            <div class="flex flex-col">
+                                                                    <div class="flex justify-between">
+                                                                        <div>
+                                                                            Clean every 1000 km
+                                                                        </div>
+                                                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                                                            #sfs-chain-cleaned
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="text-xs">
+                                                                        Last maintenance:
+                                                                                                                                                    never
+                                                                                                                                            </span>
+                                                                                                                                                                                                                                                                                                                                                        <div class="mt-2">
+                                                                        <div class="mb-1">
+                                                                            <span class="text-gray-700 text-sm font-medium">0</span>
+                                                                        </div>
+                                                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                            <div class="bg-gray-200 h-2.5 rounded-full" style="width: 0%"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                                                                    </div>
+                                                    </div>
+                                                </div>
+                                                                                            <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row">
+                                                    <div class="w-full md:w-48 h-full">
+                                                        <img class="lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg" src="assets/placeholder.webp" data-src="battery.png" alt="DI2 Battery">
+                                                    </div>
+                                                    <div class="w-full flex flex-col justify-between p-4 leading-normal">
+                                                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">DI2 Battery</h5>
+                                                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-y-4 divide-x *:px-4 -mx-4 font-normal text-gray-700">
+                                                                                                                                                                                            <div class="flex flex-col">
+                                                                    <div class="flex justify-between">
+                                                                        <div>
+                                                                            Charge every 11 hours
+                                                                        </div>
+                                                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm">
+                                                                            #sfs-di-2-charged
+                                                                        </span>
+                                                                    </div>
+                                                                    <span class="text-xs">
+                                                                        Last maintenance:
+                                                                                                                                                    never
+                                                                                                                                            </span>
+                                                                                                                                                                                                                                                                                                                                                        <div class="mt-2">
+                                                                        <div class="mb-1">
+                                                                            <span class="text-gray-700 text-sm font-medium">0</span>
+                                                                        </div>
+                                                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                            <div class="bg-gray-200 h-2.5 rounded-full" style="width: 0%"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                                                                    </div>
+                                                    </div>
+                                                </div>
+                                                                                    </div>
+                                    </td>
+                                </tr>
+                                                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                    </div>
     </div>
 </body></html>

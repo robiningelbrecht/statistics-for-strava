@@ -1062,6 +1062,9 @@
       max-width: 96rem;
     }
   }
+  .-mx-4 {
+    margin-inline: calc(var(--spacing) * -4);
+  }
   .mx-1 {
     margin-inline: calc(var(--spacing) * 1);
   }
@@ -1106,9 +1109,6 @@
   }
   .mt-\[2px\] {
     margin-top: 2px;
-  }
-  .mt-auto {
-    margin-top: auto;
   }
   .apexcharts-canvas {
     & .apexcharts-tooltip {
@@ -2065,6 +2065,9 @@
   }
   .gap-y-3 {
     row-gap: calc(var(--spacing) * 3);
+  }
+  .gap-y-4 {
+    row-gap: calc(var(--spacing) * 4);
   }
   .divide-x {
     :where(& > :not(:last-child)) {
@@ -3036,6 +3039,11 @@
   }
   .\[writing-mode\:vertical-lr\] {
     writing-mode: vertical-lr;
+  }
+  .\*\:px-4 {
+    :is(& > *) {
+      padding-inline: calc(var(--spacing) * 4);
+    }
   }
   .group-odd\:bg-white {
     &:is(:where(.group):nth-child(odd) *) {
