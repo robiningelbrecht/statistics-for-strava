@@ -38,7 +38,7 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
         $distanceSinceLastTagged = Meter::from($this->connection->fetchOne($query, [
             'gearId' => $context->getGearId(),
             'activityId' => $context->getLastTaggedOnActivityId(),
-        ]))->toKilometer();
+        ]) ?? 0)->toKilometer();
 
         if (IntervalUnit::EVERY_X_MILES_USED === $context->getIntervalUnit()) {
             $distanceSinceLastTagged = $distanceSinceLastTagged->toMiles();
