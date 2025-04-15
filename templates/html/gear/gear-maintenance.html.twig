@@ -62,8 +62,11 @@
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th class="px-2"></th>
-                                <th scope="col" class="text-left px-2 py-3">
+                                <th scope="col" class="py-3">
                                     {{ "Gear"|trans }}
+                                </th>
+                                <th scope="col" class="text-left px-2 py-3">
+
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <div class="flex items-center justify-center">
@@ -92,14 +95,14 @@
                                                   d="M9 5 5 1 1 5"/>
                                         </svg>
                                     </td>
-                                    <th scope="row" class="truncate px-2 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <img class="w-auto h-8 mr-3 rounded-sm lazy"
-                                                 src="{{ renderComponent('placeholder-image') }}"
-                                                 data-src="{{ gear.getImageSrc() }}"
-                                                 alt="{{ gear.getName() }}"/>
-                                            {{ gear.getName() }}
-                                        </div>
+                                    <td class="py-2">
+                                        <img class="w-auto h-8 rounded-sm lazy"
+                                             src="{{ renderComponent('placeholder-image') }}"
+                                             data-src="{{ gear.getImageSrc() }}"
+                                             alt="{{ gear.getName() }}"/>
+                                    </td>
+                                    <th scope="row" class="text-left truncate px-2 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ gear.getName() }}
                                     </th>
                                     <td class="px-6 py-2 truncate">
                                         {{ renderComponent('measurement', {'measurement': gear.getDistance(), 'precision': 0}) }}
@@ -111,7 +114,7 @@
                                 <tr class="border-b hidden overflow-x-auto w-full"
                                     id="table-gears-content-{{ loop.index0 }}"
                                     aria-labelledby="table-gears-header-{{ loop.index0 }}">
-                                    <td colspan="4" class="p-[1rem] text-left">
+                                    <td colspan="5" class="p-[1rem] text-left">
                                         <div class="grid gap-2">
                                             {% for gearComponent in componentsAttachedToGear %}
                                                 <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row">
