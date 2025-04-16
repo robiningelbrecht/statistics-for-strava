@@ -578,7 +578,7 @@ final class Activity
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
             'countryCode' => $this->getLocation()?->getCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
-            'gear' => $this->getGearId(),
+            'gear' => $this->getGearId() ?? 'gear-none',
             'workoutType' => $this->getWorkoutType()?->value,
         ]);
     }

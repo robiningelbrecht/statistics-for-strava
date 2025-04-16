@@ -5,7 +5,8 @@
         "filterables": {
             "sportType": "Ride",
             "start-date": 1694552738000,
-            "isCommute": "false"
+            "isCommute": "false",
+            "gear": "gear-none"
         },
         "summables": {
             "distance": 6.11,
@@ -31,7 +32,8 @@
         "filterables": {
             "sportType": "Ride",
             "start-date": 1694466338000,
-            "isCommute": "false"
+            "isCommute": "false",
+            "gear": "gear-none"
         },
         "summables": {
             "distance": 6.11,
@@ -58,7 +60,8 @@
             "sportType": "Ride",
             "start-date": 1693947938000,
             "countryCode": "be",
-            "isCommute": "false"
+            "isCommute": "false",
+            "gear": "gear-none"
         },
         "summables": {
             "distance": 6.11,
@@ -84,7 +87,8 @@
         "filterables": {
             "sportType": "Ride",
             "start-date": 1693861538000,
-            "isCommute": "false"
+            "isCommute": "false",
+            "gear": "gear-none"
         },
         "summables": {
             "distance": 6.11,

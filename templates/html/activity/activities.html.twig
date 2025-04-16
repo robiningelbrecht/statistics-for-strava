@@ -137,6 +137,15 @@
                                                     </div>
                                                 </li>
                                             {% endfor %}
+                                            <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="gear-none" data-dataTable-filter="gear" name="gear" value="gear-none" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                    <label for="gear-none" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        <span>{{ "Unspecified"|trans }}</span>
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="gear">{{ "clear"|trans }}</a>
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
