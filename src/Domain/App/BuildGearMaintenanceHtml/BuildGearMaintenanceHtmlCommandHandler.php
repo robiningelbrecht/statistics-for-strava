@@ -102,6 +102,10 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             }
         }
 
+        if ($gearsAttachedToComponents->isEmpty()) {
+            $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
+        }
+
         $this->buildStorage->write(
             'gear-maintenance.html',
             $this->twig->load('html/gear/gear-maintenance.html.twig')->render([

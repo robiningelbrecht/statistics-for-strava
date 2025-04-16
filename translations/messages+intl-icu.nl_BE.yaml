@@ -91,6 +91,7 @@ History: Historiek
 'Ice Skate': 'Ice Skate'
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 'Inline Skate'
+'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
 Jan: Jan
 Jul: Jul
 Jun: Jun
