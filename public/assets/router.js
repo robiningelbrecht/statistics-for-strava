@@ -42,6 +42,10 @@ export default function Router(app) {
         const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + page + '"]');
         if ($activeMenuLink) {
             $activeMenuLink.setAttribute('aria-selected', 'true');
+            if ($activeMenuLink.hasAttribute('data-router-sub-menu')) {
+                // Make sure the sub menu is opened.
+                $activeMenuLink.closest('ul').classList.remove('hidden');
+            }
         }
 
         // There might be other nav links on the newly loaded page, make sure they are registered.
@@ -107,7 +111,7 @@ export default function Router(app) {
         return location.pathname.replace('/', '') || defaultRoute;
     };
 
-    const boot = ()=> {
+    const boot = () => {
         const route = currentRoute();
         const modal = location.hash.replace('#', '');
 

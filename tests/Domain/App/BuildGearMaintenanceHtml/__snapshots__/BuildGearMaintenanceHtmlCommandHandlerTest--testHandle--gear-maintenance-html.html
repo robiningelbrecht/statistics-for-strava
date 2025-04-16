@@ -1,49 +1,59 @@
-<!-- Modal header --><html><body>
-<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-        <h3 class="text-lg font-semibold text-gray-900">
-            Gear maintenance
-        </h3>
+<html><body>
+<nav class="flex mb-5" aria-label="Breadcrumb">
+    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+        <li class="inline-flex items-center">
+            <a href="#" data-router-navigate="dashboard" class="inline-flex items-center text-gray-700 hover:text-primary-600 hover:underline">
+                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                Dashboard
+            </a>
+        </li>
+            <li>
         <div class="flex items-center">
-            <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
-                </svg>
-                <span class="sr-only">Close modal</span>
-            </button>
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            <a href="#" data-router-navigate="gear-stats" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">Gear</a>
         </div>
-    </div>
-    <!-- Modal body -->
-    <div class="p-4 md:p-5 space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-                            <div class="flex p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
-                    <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <div>
-                        <span class="font-medium">We detected following issues:</span>
-                        <ul class="mt-1.5 list-disc list-inside">
-                                                            <li>Gear "g1233776" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
-                                                    </ul>
-                    </div>
-                </div>
-                                        <div class="flex p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50" role="alert">
-                    <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <div>
-                        <span class="font-medium">Please address these issues:</span>
-                        <ul class="mt-1.5 list-disc list-inside">
-                                                            <li>Image "chain.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
-                                                            <li>Image "battery.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
-                                                            <li>Image "bike.webp" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
-                                                            <li>Tag "#sfs-chain-lubed" was used on "#sfs-chain-lubed wrong", but the gear referenced on that activity is not attached to this component.</li>
-                                                    </ul>
-                    </div>
-                </div>
-                                        <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-                    <div class="relative overflow-x-auto">
+    </li>
+    <li>
+        <div class="flex items-center">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            <a href="#" data-router-navigate="gear-maintenance" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">Maintenance</a>
+        </div>
+    </li>
+    </ol>
+</nav>
+            <div class="grid grid-cols-1 gap-4">
+                            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                    <h3 class="mb-4 text-lg font-semibold">
+                        Gear maintenance
+                    </h3>
+                                            <div class="flex mb-4 p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                            <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                            </svg>
+                            <span class="sr-only">Info</span>
+                            <div>
+                                <span class="font-medium">We detected following issues:</span>
+                                <ul class="mt-1.5 list-disc list-inside">
+                                                                            <li>Gear "g1233776" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.</li>
+                                                                    </ul>
+                            </div>
+                        </div>
+                                                                <div class="flex mb-4 p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50" role="alert">
+                            <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                            </svg>
+                            <span class="sr-only">Info</span>
+                            <div>
+                                <span class="font-medium">Please address these issues:</span>
+                                <ul class="mt-1.5 list-disc list-inside">
+                                                                            <li>Image "chain.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                                            <li>Image "battery.png" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                                            <li>Image "bike.webp" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"</li>
+                                                                            <li>Tag "#sfs-chain-lubed" was used on "#sfs-chain-lubed wrong", but the gear referenced on that activity is not attached to this component.</li>
+                                                                    </ul>
+                            </div>
+                        </div>
+                                        <div class="relative overflow-x-auto">
                         <table class="w-full text-sm text-center text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
@@ -204,5 +214,5 @@
                     </div>
                 </div>
                     </div>
-    </div>
+    
 </body></html>
