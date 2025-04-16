@@ -6,6 +6,18 @@ export default function Router(app) {
     const mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
     const defaultRoute = 'dashboard';
 
+    const showLoader = () => {
+        spinner.classList.remove('hidden');
+        spinner.classList.add('flex');
+        appContent.classList.add('hidden');
+    };
+
+    const hideLoader = () => {
+        spinner.classList.remove('flex');
+        spinner.classList.add('hidden');
+        appContent.classList.remove('hidden');
+    };
+
     const renderContent = async (page, modalId) => {
         if (!menu.hasAttribute('aria-hidden')) {
             // Trigger click event to close mobile nav.
@@ -19,9 +31,7 @@ export default function Router(app) {
         }
 
         // Show loader.
-        spinner.classList.remove('hidden');
-        spinner.classList.add('flex');
-        appContent.classList.add('hidden');
+        showLoader();
 
         // Load content.
         const response = await fetch(page + '.html', {cache: 'no-store'});
@@ -29,9 +39,7 @@ export default function Router(app) {
         window.scrollTo(0, 0);
 
         // Hide loader.
-        spinner.classList.remove('flex');
-        spinner.classList.add('hidden');
-        appContent.classList.remove('hidden');
+        hideLoader();
 
         app.setAttribute('data-router-current', page);
         app.setAttribute('data-modal-current', modalId);
@@ -40,12 +48,10 @@ export default function Router(app) {
             node.setAttribute('aria-selected', 'false')
         });
         const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + page + '"]');
-        if ($activeMenuLink) {
-            $activeMenuLink.setAttribute('aria-selected', 'true');
-            if ($activeMenuLink.hasAttribute('data-router-sub-menu')) {
-                // Make sure the sub menu is opened.
-                $activeMenuLink.closest('ul').classList.remove('hidden');
-            }
+        $activeMenuLink?.setAttribute('aria-selected', 'true')
+        if ($activeMenuLink && $activeMenuLink.hasAttribute('data-router-sub-menu')) {
+            // Make sure the sub menu is opened.
+            $activeMenuLink.closest('ul')?.classList.remove('hidden');
         }
 
         // There might be other nav links on the newly loaded page, make sure they are registered.
