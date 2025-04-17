@@ -40,7 +40,7 @@ final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTa
         $movingTimeInHoursSinceLastTagged = $movingTimeInSecondsSinceLastTagged / 3600;
 
         return MaintenanceTaskProgress::from(
-            percentage: (int) round(($movingTimeInHoursSinceLastTagged / $context->getIntervalValue()) * 100),
+            percentage: min((int) round(($movingTimeInHoursSinceLastTagged / $context->getIntervalValue()) * 100), 100),
             description: $this->translator->trans('{hoursSinceLastTagged} hours', [
                 '{hoursSinceLastTagged}' => round($movingTimeInHoursSinceLastTagged),
             ]),

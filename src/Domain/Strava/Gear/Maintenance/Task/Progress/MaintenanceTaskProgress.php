@@ -33,6 +33,11 @@ final readonly class MaintenanceTaskProgress
         return $this->description;
     }
 
+    public function isDue(): bool
+    {
+        return $this->percentage >= 98;
+    }
+
     public function isZero(): bool
     {
         return 0 === $this->percentage;

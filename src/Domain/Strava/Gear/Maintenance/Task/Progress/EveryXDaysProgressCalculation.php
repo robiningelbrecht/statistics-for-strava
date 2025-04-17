@@ -27,7 +27,7 @@ final readonly class EveryXDaysProgressCalculation implements MaintenanceTaskPro
         $daysSinceLastTagged = $today->diff($context->getLastTaggedOn())->days;
 
         return MaintenanceTaskProgress::from(
-            percentage: (int) round(($daysSinceLastTagged / $context->getIntervalValue()) * 100),
+            percentage: min((int) round(($daysSinceLastTagged / $context->getIntervalValue()) * 100), 100),
             description: $this->translator->trans('{daysSinceLastTagged} days', [
                 '{daysSinceLastTagged}' => $daysSinceLastTagged,
             ]),

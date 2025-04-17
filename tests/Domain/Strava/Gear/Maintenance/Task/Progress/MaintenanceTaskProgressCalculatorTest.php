@@ -4,14 +4,16 @@ namespace App\Tests\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use PHPUnit\Framework\TestCase;
+use App\Tests\ContainerTestCase;
 
-class MaintenanceTaskProgressCalculatorTest extends TestCase
+class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
 {
     public function testCalculateProgress()
     {
@@ -20,7 +22,10 @@ class MaintenanceTaskProgressCalculatorTest extends TestCase
             new MaintenanceTaskProgressCalculator([
                 new ProgressCalculationOne(),
                 new ProgressCalculationTwo(),
-            ])->calculateProgressFor(
+            ],
+                $this->getContainer()->get(GearMaintenanceConfig::class),
+                $this->getContainer()->get(MaintenanceTaskTagRepository::class),
+            )->calculateProgressFor(
                 ProgressCalculationContext::from(
                     gearId: GearId::fromUnprefixed('test'),
                     lastTaggedOnActivityId: ActivityId::fromUnprefixed('test'),
@@ -36,7 +41,11 @@ class MaintenanceTaskProgressCalculatorTest extends TestCase
     {
         $this->expectExceptionObject(new \RuntimeException('No progress calculation found for interval unit: days'));
 
-        new MaintenanceTaskProgressCalculator([])->calculateProgressFor(
+        new MaintenanceTaskProgressCalculator(
+            [],
+            $this->getContainer()->get(GearMaintenanceConfig::class),
+            $this->getContainer()->get(MaintenanceTaskTagRepository::class),
+        )->calculateProgressFor(
             ProgressCalculationContext::from(
                 gearId: GearId::fromUnprefixed('test'),
                 lastTaggedOnActivityId: ActivityId::fromUnprefixed('test'),

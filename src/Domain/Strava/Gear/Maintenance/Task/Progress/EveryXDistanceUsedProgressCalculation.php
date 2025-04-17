@@ -45,7 +45,7 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
         }
 
         return MaintenanceTaskProgress::from(
-            percentage: (int) round(($distanceSinceLastTagged->toFloat() / $context->getIntervalValue()) * 100),
+            percentage: min((int) round(($distanceSinceLastTagged->toFloat() / $context->getIntervalValue()) * 100), 100),
             description: sprintf('%s %s', $distanceSinceLastTagged->toInt(), $distanceSinceLastTagged->getSymbol()),
         );
     }

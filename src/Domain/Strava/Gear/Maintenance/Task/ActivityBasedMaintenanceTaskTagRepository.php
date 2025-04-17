@@ -31,6 +31,7 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
                     $tasks->add(MaintenanceTaskTag::for(
                         maintenanceTaskTag: $task->getTag(),
                         taggedOnActivityId: $activity->getId(),
+                        taggedForGearId: $activity->getGearId(),
                         taggedOn: $activity->getStartDate(),
                         activityName: $activity->getName(),
                         isValid: is_null($activity->getGearId()) || $gearComponent->isAttachedTo($activity->getGearId())

@@ -12,6 +12,7 @@ use App\Domain\Strava\Activity\Eddington\Eddington;
 use App\Domain\Strava\Activity\Image\ImageRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Challenge\ChallengeRepository;
+use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\CQRS\Command;
 use App\Infrastructure\CQRS\CommandHandler;
 use App\Infrastructure\Serialization\Json;
@@ -29,6 +30,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
         private ChallengeRepository $challengeRepository,
         private ImageRepository $imageRepository,
         private ActivitiesEnricher $activitiesEnricher,
+        private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -74,6 +76,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
                 'lastUpdate' => $command->getCurrentDateTime(),
                 'athlete' => $athlete,
                 'profilePictureUrl' => $this->profilePictureUrl,
+                'maintenanceTaskIsDue' => $this->maintenanceTaskProgressCalculator->calculateIfATaskIsDue(),
                 'javascriptWindowConstants' => Json::encode([
                     'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
                     'unitSystem' => [

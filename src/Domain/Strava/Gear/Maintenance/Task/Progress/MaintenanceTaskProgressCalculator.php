@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
+use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+
 final readonly class MaintenanceTaskProgressCalculator
 {
     /**
@@ -11,6 +14,8 @@ final readonly class MaintenanceTaskProgressCalculator
      */
     public function __construct(
         private iterable $maintenanceTaskProgressCalculations,
+        private GearMaintenanceConfig $gearMaintenanceConfig,
+        private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
     ) {
     }
 
@@ -27,5 +32,38 @@ final readonly class MaintenanceTaskProgressCalculator
         }
 
         throw new \RuntimeException(sprintf('No progress calculation found for interval unit: %s', $intervalUnit->value));
+    }
+
+    public function calculateIfATaskIsDue(): bool
+    {
+        $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
+
+        /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
+        foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
+            /** @var \App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask $maintenanceTask */
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                foreach ($gearComponent->getAttachedTo() as $gearId) {
+                    if (!$mostRecentTag = $maintenanceTaskTags->getMostRecentFor($maintenanceTask->getTag(), $gearId)) {
+                        continue;
+                    }
+
+                    $maintenanceTaskProgress = $this->calculateProgressFor(
+                        ProgressCalculationContext::from(
+                            gearId: $gearId,
+                            lastTaggedOnActivityId: $mostRecentTag->getTaggedOnActivityId(),
+                            lastTaggedOn: $mostRecentTag->getTaggedOn(),
+                            intervalUnit: $maintenanceTask->getIntervalUnit(),
+                            intervalValue: $maintenanceTask->getIntervalValue(),
+                        )
+                    );
+
+                    if ($maintenanceTaskProgress->isDue()) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
