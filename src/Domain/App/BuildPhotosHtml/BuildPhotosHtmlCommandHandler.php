@@ -28,16 +28,6 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $images = $this->imageRepository->findAll();
 
-        $lightGalleryElements = [];
-        foreach ($images as $image) {
-            $activity = $image->getActivity();
-            $lightGalleryElements[] = [
-                'src' => $image->getImageUrl(),
-                'subHtml' => '<p>'.$activity->getSanitizedName().'</p>',
-                'alt' => $activity->getSanitizedName(),
-            ];
-        }
-
         $this->buildStorage->write(
             'photos.html',
             $this->twig->load('html/photos.html.twig')->render([

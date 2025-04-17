@@ -1,6 +1,9 @@
 '2 days of activity for 4 weeks': 4周内2天的活动
 Activities: 活动
+'Activity count': 'Activity count'
 'Activity intensity': 活动强度
+'Activity locations': 'Activity locations'
+'Activity start times': 'Activity start times'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
 Advanced: 高级
 Afternoon: 下午
@@ -14,6 +17,7 @@ Avg: 平均
 Badminton: 羽毛球
 Best: 最佳
 'Best Efforts': 最大努力
+'Biggest activity': 'Biggest activity'
 Cadence: 踏频
 Calories: 卡路里
 Canoeing: 划独木舟
@@ -31,6 +35,7 @@ Commutes: 通勤
 'Complete a half marathon run.': 完成半马。
 Components: Components
 Crossfit: 交叉健身
+'Daily activities': 'Daily activities'
 Dashboard: 仪表板
 'Days needed': 所需天数
 'Daytime stats': 白天统计
@@ -43,6 +48,7 @@ Distance: 距离
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
+'Distance ranges': 'Distance ranges'
 Distribution: 分布
 'Driving your car for {amountOfKmDrivingACar} km': '驾车行驶{amountOfKmDrivingACar}公里'
 'E-Bike Rides': 电动自行车骑行
@@ -104,7 +110,9 @@ Kayaking: 皮划艇
 'Latest start time': 最晚开始时间
 'Loading data...': 加载数据中...
 Loading...: 加载中...
+'Locations over the globe': 'Locations over the globe'
 'Long run': 'Long run'
+'Longest streaks': 'Longest streaks'
 'Longest workout': 最长锻炼
 Low: 低
 Maintenance: Maintenance
@@ -128,12 +136,17 @@ Night: 夜晚
 'No activities': 没有活动
 'Nordic Ski': 北欧滑雪
 Nov: 十一月
+'Number of activities per month': 'Number of activities per month'
+'Number of activities within a distance range': 'Number of activities within a distance range'
 Oct: 十月
 'One of your gear maitenance tasks is due': 'One of your gear maitenance tasks is due'
 Other: 其他
 'Outdoor Sports': 户外运动
+PRs: PRs
+'PRs achieved per month': 'PRs achieved per month'
 Pace: 步速
 'Peak power outputs': 峰值功率输出
+Photo: Photo
 Photos: 照片
 'Pickle Ball': 匹克球
 Pilates: 普拉提
@@ -146,6 +159,9 @@ Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
+'Rest days': 'Rest days'
+'Rest days vs. active days': 'Rest days vs. active days'
+Rewind: Rewind
 'Ride a total of 1250km': 骑行总计1250公里
 'Ride a total of 200km': 骑行总计200公里
 'Ride a total of 600km': 骑行总计600公里
@@ -171,15 +187,18 @@ Skating: 滑冰
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
+Socials: Socials
 Source: 来源
 Speed: 速度
 Squash: 壁球
 'Stair Stepper': 楼梯机
 'Stand Up Paddling': 站立划桨
 'Start slideshow': 播放幻灯片
+'Start times': 'Start times'
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Stats
 'Stats per weekday': 按工作日统计
+Streaks: Streaks
 Sun: 周日
 Sunday: 星期日
 Surfing: 冲浪
@@ -204,7 +223,13 @@ To: 到
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
 'Total carbon saved': 总节约碳排放
+'Total distance per month': 'Total distance per month'
+'Total elevation per month': 'Total elevation per month'
+'Total hours': 'Total hours'
+'Total hours spent per sport type': 'Total hours spent per sport type'
+'Total hours spent using gear': 'Total hours spent using gear'
 'Total kudos': 总点赞
+'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 越野跑
 Trivia: 琐事
 Tue: 周二
@@ -237,6 +262,7 @@ Yoga: 瑜伽
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': '你的通勤减少了{amountOfCarbonSaved}的碳排放 🥳。这相当于'
 'Your Strava badge': Strava徽章
+'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': Zwift徽章
 'Your badge(s)': 徽章
 'Zone 1 (recovery)': 区域1（恢复）

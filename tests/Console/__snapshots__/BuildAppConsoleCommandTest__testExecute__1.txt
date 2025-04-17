@@ -11,6 +11,7 @@ Building App...
   => Building eddington.html
   => Building segments.html
   => Building heatmap.html
+  => Building rewind.html
   => Building challenges.html
   => Building photos.html
   => Building badge.svg

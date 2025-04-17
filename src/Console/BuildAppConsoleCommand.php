@@ -14,6 +14,7 @@ use App\Domain\App\BuildHeatmapHtml\BuildHeatmapHtml;
 use App\Domain\App\BuildIndexHtml\BuildIndexHtml;
 use App\Domain\App\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
 use App\Domain\App\BuildPhotosHtml\BuildPhotosHtml;
+use App\Domain\App\BuildRewindHtml\BuildRewindHtml;
 use App\Domain\App\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Domain\App\ConfigureAppLocale\ConfigureAppLocale;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
@@ -89,6 +90,8 @@ final class BuildAppConsoleCommand extends Command
         $this->commandBus->dispatch(new BuildSegmentsHtml($now));
         $output->writeln('  => Building heatmap.html');
         $this->commandBus->dispatch(new BuildHeatmapHtml($now));
+        $output->writeln('  => Building rewind.html');
+        $this->commandBus->dispatch(new BuildRewindHtml($now));
         $output->writeln('  => Building challenges.html');
         $this->commandBus->dispatch(new BuildChallengesHtml($now));
         $output->writeln('  => Building photos.html');

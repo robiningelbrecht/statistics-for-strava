@@ -77,7 +77,14 @@ final class Challenge
 
     public function getLocalLogoUrl(): ?string
     {
-        return $this->localLogoUrl;
+        if (null === $this->localLogoUrl) {
+            return null;
+        }
+        if (str_starts_with($this->localLogoUrl, '/')) {
+            return $this->localLogoUrl;
+        }
+
+        return '/'.$this->localLogoUrl;
     }
 
     public function getSlug(): string

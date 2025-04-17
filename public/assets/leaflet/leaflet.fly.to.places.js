@@ -6,7 +6,6 @@ L.Control.FlyToPlaces = L.Control.extend({
     onAdd: function (map) {
         const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--fly-to-places');
         this.options.places.forEach((place) => {
-            console.log(place);
             const countryCode = place.countryCode.toLowerCase();
             const item = L.DomUtil.create('li', '', container);
 

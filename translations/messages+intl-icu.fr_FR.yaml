@@ -1,6 +1,9 @@
 '2 days of activity for 4 weeks': "2 jours d'activité par semaine pendant 4 semaines"
 Activities: Activités
+'Activity count': 'Activity count'
 'Activity intensity': "Intensité d'activité"
+'Activity locations': 'Activity locations'
+'Activity start times': 'Activity start times'
 'Adaptive & Inclusive Sports': 'Sports adaptés & inclusifs'
 Advanced: Avancé
 Afternoon: Après-midi
@@ -14,6 +17,7 @@ Avg: Moy
 Badminton: Badminton
 Best: Meilleur
 'Best Efforts': 'Meilleurs efforts'
+'Biggest activity': 'Biggest activity'
 Cadence: Cadence
 Calories: Calories
 Canoeing: Canoë
@@ -31,6 +35,7 @@ Commutes: 'Trajets domicile-travail'
 'Complete a half marathon run.': 'Complétez un semi-marathon.'
 Components: Components
 Crossfit: Crossfit
+'Daily activities': 'Daily activities'
 Dashboard: 'Tableau de bord'
 'Days needed': 'Jours nécessaires'
 'Daytime stats': 'Statistiques quotidiennes'
@@ -43,6 +48,7 @@ Distance: Distance
 'Distance in {unit}': 'Distance en {unit}'
 'Distance over time per gear': 'Distance de tout temps par matériel'
 'Distance per month per gear': 'Distance mensuelle par matériel'
+'Distance ranges': 'Distance ranges'
 Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Conduire votre voiture pendant {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'Sorties en vélo électrique'
@@ -104,7 +110,9 @@ Kayaking: Kayak
 'Latest start time': 'Départ le plus tardif'
 'Loading data...': 'Chargement des données...'
 Loading...: Chargement...
+'Locations over the globe': 'Locations over the globe'
 'Long run': 'Course longue'
+'Longest streaks': 'Longest streaks'
 'Longest workout': 'Entraînement le plus long'
 Low: Bas
 Maintenance: Maintenance
@@ -128,12 +136,17 @@ Night: Nuit
 'No activities': 'Aucune activité'
 'Nordic Ski': 'Ski nordique'
 Nov: Nov
+'Number of activities per month': 'Number of activities per month'
+'Number of activities within a distance range': 'Number of activities within a distance range'
 Oct: Oct
 'One of your gear maitenance tasks is due': 'One of your gear maitenance tasks is due'
 Other: Autre
 'Outdoor Sports': "Sports d'extérieur"
+PRs: PRs
+'PRs achieved per month': 'PRs achieved per month'
 Pace: Allure
 'Peak power outputs': 'Puissances maximales'
+Photo: Photo
 Photos: Photos
 'Pickle Ball': Pickleball
 Pilates: Pilates
@@ -146,6 +159,9 @@ Race: Course
 'Racing Score': 'Score de course'
 'Racquet & Paddle Sports': 'Sports de raquette & paddle'
 'Racquet Ball': Racquetball
+'Rest days': 'Rest days'
+'Rest days vs. active days': 'Rest days vs. active days'
+Rewind: Rewind
 'Ride a total of 1250km': 'Effectuer un total de 1250km'
 'Ride a total of 200km': 'Effectuer un total de 200km'
 'Ride a total of 600km': 'Effectuer un total de 600km'
@@ -171,15 +187,18 @@ Skating: Patinage
 Snowboard: Snowboard
 Snowshoe: Raquettes
 Soccer: Football
+Socials: Socials
 Source: Source
 Speed: Vitesse
 Squash: Squash
 'Stair Stepper': Steppeur
 'Stand Up Paddling': 'Stand Up Paddle'
 'Start slideshow': 'Démarrer le diaporama'
+'Start times': 'Start times'
 'Statistics for Strava': 'Statistiques Strava'
 Stats: Stats
 'Stats per weekday': 'Statistiques par jour de la semaine'
+Streaks: Streaks
 Sun: Dim
 Sunday: Dimanche
 Surfing: Surf
@@ -204,7 +223,13 @@ To: Au
 'Toggle sidebar': 'Basculer la barre latérale'
 'Top 10': 'Top 10'
 'Total carbon saved': 'Total de carbone économisé'
+'Total distance per month': 'Total distance per month'
+'Total elevation per month': 'Total elevation per month'
+'Total hours': 'Total hours'
+'Total hours spent per sport type': 'Total hours spent per sport type'
+'Total hours spent using gear': 'Total hours spent using gear'
 'Total kudos': 'Total des kudos'
+'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': Trail
 Trivia: Trivial
 Tue: Mar
@@ -237,6 +262,7 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Vous avez enregistré des entraînements dans {numberOfCountriesWithWorkouts} pays différents, soit {percentage} de tous les pays 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Vous avez réduit vos émissions de carbone de {amountOfCarbonSaved} en utilisant votre trajet domicile-travail 🥳. Cela équivaut à'
 'Your Strava badge': 'Votre badge Strava'
+'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Votre badge Zwift'
 'Your badge(s)': 'Vos badge(s)'
 'Zone 1 (recovery)': 'Zone 1 (récupération)'

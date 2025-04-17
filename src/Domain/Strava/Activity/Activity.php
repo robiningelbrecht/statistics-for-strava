@@ -326,7 +326,10 @@ final class Activity
      */
     public function getLocalImagePaths(): array
     {
-        return $this->localImagePaths;
+        return array_map(
+            fn (string $path) => str_starts_with($path, '/') ? $path : '/'.$path,
+            $this->localImagePaths
+        );
     }
 
     /**

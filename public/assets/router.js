@@ -4,7 +4,7 @@ export default function Router(app) {
     const menu = document.querySelector('aside');
     const menuItems = document.querySelectorAll("aside li a[data-router-navigate]");
     const mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
-    const defaultRoute = 'dashboard';
+    const defaultRoute = '/dashboard';
 
     const showLoader = () => {
         spinner.classList.remove('hidden');
@@ -65,7 +65,7 @@ export default function Router(app) {
                 modalId: modalId
             }
         }));
-        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + page, {
+        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + page.replace(/^\/+/, '').replace('/', '-'), {
             bubbles: true,
             cancelable: false,
             detail: {
@@ -114,7 +114,7 @@ export default function Router(app) {
     }
 
     const currentRoute = () => {
-        return location.pathname.replace('/', '') || defaultRoute;
+        return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
     };
 
     const boot = () => {

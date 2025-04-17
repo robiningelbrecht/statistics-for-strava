@@ -50,15 +50,6 @@
             <div class="mb-4 grid grid-cols-6 gap-2">
                 {% for imagePath in activity.getLocalImagePaths() %}
                     <div>
-                        <a href="#" data-popover-target="popover-image-{{ loop.index }}"
-                           data-popover-placement="bottom" data-popover-trigger="click">
-                            <img class="h-auto max-w-full rounded-lg lazy"
-                                 src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
-                                 alt="Activity image"/>
-                        </a>
-                    </div>
-                    <div data-popover id="popover-image-{{ loop.index }}" role="tooltip"
-                         class="z-1000 w-[35rem] absolute invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
                         <img class="h-auto max-w-full rounded-lg lazy"
                              src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
                              alt="Activity image"/>

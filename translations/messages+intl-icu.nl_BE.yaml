@@ -1,6 +1,9 @@
 '2 days of activity for 4 weeks': '2 actieve dagen gedurende 4 weken'
 Activities: Activiteiten
+'Activity count': 'Activity count'
 'Activity intensity': Activiteitsintensiteit
+'Activity locations': 'Activity locations'
+'Activity start times': 'Activity start times'
 'Adaptive & Inclusive Sports': 'Adaptive & Inclusive Sports'
 Advanced: Gevorderd
 Afternoon: Namiddag
@@ -14,6 +17,7 @@ Avg: Gem
 Badminton: Badminton
 Best: Beste
 'Best Efforts': 'Best Efforts'
+'Biggest activity': 'Biggest activity'
 Cadence: Cadans
 Calories: Calorieën
 Canoeing: Kanoën
@@ -31,6 +35,7 @@ Commutes: Commutes
 'Complete a half marathon run.': 'Loop een halve marathon.'
 Components: Components
 Crossfit: Crossfit
+'Daily activities': 'Daily activities'
 Dashboard: Dashboard
 'Days needed': 'Dagen nodig'
 'Daytime stats': 'Daytime statistieken'
@@ -43,6 +48,7 @@ Distance: Afstand
 'Distance in {unit}': 'Afstand in {unit}'
 'Distance over time per gear': 'Afstand in tijd per gear'
 'Distance per month per gear': 'Afstand per maand per gear'
+'Distance ranges': 'Distance ranges'
 Distribution: Distribution
 'Driving your car for {amountOfKmDrivingACar} km': 'Driving your car for {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'E-Bike Ritten'
@@ -104,7 +110,9 @@ Kayaking: Kajakken
 'Latest start time': 'Laatste starttijd'
 'Loading data...': 'Aan het laden...'
 Loading...: 'Aan het laden...'
+'Locations over the globe': 'Locations over the globe'
 'Long run': 'Long run'
+'Longest streaks': 'Longest streaks'
 'Longest workout': 'Longest workout'
 Low: Laag
 Maintenance: Maintenance
@@ -128,12 +136,17 @@ Night: Nacht
 'No activities': 'Geen activiteiten'
 'Nordic Ski': 'Nordic Ski'
 Nov: Nov
+'Number of activities per month': 'Number of activities per month'
+'Number of activities within a distance range': 'Number of activities within a distance range'
 Oct: Okt
 'One of your gear maitenance tasks is due': 'One of your gear maitenance tasks is due'
 Other: Other
 'Outdoor Sports': 'Outdoor Sports'
+PRs: PRs
+'PRs achieved per month': 'PRs achieved per month'
 Pace: Pace
 'Peak power outputs': 'Peak power outputs'
+Photo: Photo
 Photos: Photos
 'Pickle Ball': 'Pickle Ball'
 Pilates: Pilates
@@ -146,6 +159,9 @@ Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
+'Rest days': 'Rest days'
+'Rest days vs. active days': 'Rest days vs. active days'
+Rewind: Rewind
 'Ride a total of 1250km': 'Rijd in totaal 1250km'
 'Ride a total of 200km': 'Rijd in totaal 200km'
 'Ride a total of 600km': 'Rijd in totaal 600km'
@@ -171,15 +187,18 @@ Skating: Skating
 Snowboard: Snowboard
 Snowshoe: Snowshoe
 Soccer: Voetbal
+Socials: Socials
 Source: Source
 Speed: Snelheid
 Squash: Squash
 'Stair Stepper': 'Stair Stepper'
 'Stand Up Paddling': 'Stand Up Paddling'
 'Start slideshow': 'Start slideshow'
+'Start times': 'Start times'
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Stats
 'Stats per weekday': 'Stats per weekdag'
+Streaks: Streaks
 Sun: Zon
 Sunday: Zondag
 Surfing: Surfen
@@ -204,7 +223,13 @@ To: Tot
 'Toggle sidebar': 'Toggle sidebar'
 'Top 10': 'Top 10'
 'Total carbon saved': 'Total carbon saved'
+'Total distance per month': 'Total distance per month'
+'Total elevation per month': 'Total elevation per month'
+'Total hours': 'Total hours'
+'Total hours spent per sport type': 'Total hours spent per sport type'
+'Total hours spent using gear': 'Total hours spent using gear'
 'Total kudos': 'Totaal aantal kudos'
+'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 'Trail Runs'
 Trivia: Trivia
 Tue: Di
@@ -237,6 +262,7 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'
 'Your Strava badge': 'Your Strava badge'
+'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Your Zwift badge'
 'Your badge(s)': 'Your badge(s)'
 'Zone 1 (recovery)': 'Zone 1 (recovery)'

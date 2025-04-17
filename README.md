@@ -50,6 +50,7 @@ https://github.com/user-attachments/assets/9aaaafd9-bc8f-4e1d-bb9d-45d3c661a080
 * Eddington for biking and running activities
 * Detailed list of your segments and corresponding efforts
 * Heatmap
+* Strava Rewind, a fun way to see your year in review
 * History of completed Strava challenges
 * History of activity photos
 * User badges
