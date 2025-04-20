@@ -75,6 +75,26 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
     }
 
     /**
+     * @param T $itemToReplace
+     * @param T $itemTobeReplacedWith
+     *
+     * @return Collection<T>
+     */
+    public function replace(mixed $itemToReplace, mixed $itemTobeReplacedWith): self
+    {
+        $this->guardItemIsInstanceOfItemClassName($itemTobeReplacedWith);
+
+        $index = array_search($itemToReplace, $this->items);
+        if (false === $index) {
+            throw new \InvalidArgumentException('Could not replace item, item not found in collection');
+        }
+
+        $this->items[$index] = $itemTobeReplacedWith;
+
+        return $this;
+    }
+
+    /**
      * @param Collection<T> $collection
      *
      * @return Collection<T>

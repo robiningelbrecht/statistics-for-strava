@@ -10,15 +10,15 @@ use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\ValueObject\String\Name;
 
-final readonly class GearComponent
+final class GearComponent
 {
     private MaintenanceTasks $maintenanceTasks;
 
     private function __construct(
-        private Tag $tag,
-        private Name $label,
+        private readonly Tag $tag,
+        private readonly Name $label,
         private GearIds $attachedTo,
-        private ?string $imgSrc,
+        private readonly ?string $imgSrc,
     ) {
         $this->maintenanceTasks = MaintenanceTasks::empty();
     }
@@ -70,5 +70,25 @@ final readonly class GearComponent
     public function getMaintenanceTasks(): MaintenanceTasks
     {
         return $this->maintenanceTasks;
+    }
+
+    public function normalizeGearIds(GearIds $normalizedGearIds): void
+    {
+        /** @var GearId $gearId */
+        foreach ($this->getAttachedTo() as $gearId) {
+            if ($gearId->isPrefixedWithStravaPrefix()) {
+                continue;
+            }
+
+            foreach ($normalizedGearIds as $normalizedGearId) {
+                // Try to match the gear id with the prefix.
+                if (!$gearId->matches($normalizedGearId)) {
+                    continue;
+                }
+
+                // If we found a match, we can replace it.
+                $this->attachedTo->replace($gearId, $normalizedGearId);
+            }
+        }
     }
 }

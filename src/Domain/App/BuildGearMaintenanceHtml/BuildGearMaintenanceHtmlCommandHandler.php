@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildGearMaintenanceHtml;
 
 use App\Domain\Strava\Gear\Gear;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\Gears;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
@@ -43,12 +44,18 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         $gears = $this->gearRepository->findAll();
 
         // Validate that all gear ids are in the DB.
-        $gearIdsInDb = $gears->map(fn (Gear $gear) => $gear->getId());
+        $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear) => $gear->getId()));
+        // By default, gear ids are prefixed with "b" or "g" in the Strava API.
+        // But these prefixes are not exposed in the URL of the gear, so users might
+        // copy-paste the gear id from the URL without these prefixes.
+        // We need to account for this.
+        $this->gearMaintenanceConfig->normalizeGearIds($gearIdsInDb);
         $gearIdsInConfig = $this->gearMaintenanceConfig->getAllReferencedGearIds();
+
         $errors = [];
         /** @var \App\Domain\Strava\Gear\GearId $gearIdInConfig */
         foreach ($gearIdsInConfig as $gearIdInConfig) {
-            if (in_array($gearIdInConfig, $gearIdsInDb)) {
+            if ($gearIdsInDb->has($gearIdInConfig)) {
                 continue;
             }
 
