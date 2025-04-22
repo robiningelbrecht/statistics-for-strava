@@ -244,7 +244,7 @@ Currently, the app is translated to:
 * 🇫🇷 French (thanks to [@llaumgui](https://github.com/llaumgui) and [@Ahmosys](https://github.com/llaumgui))
 * 🇩🇪 German (thanks to [@daydreamer77](https://github.com/daydreamer77))
 * 🇧🇪 Dutch
-* 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg))
+* 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg) & [@davisenra](https://github.com/davisenra))
 * 🇨🇳 Simplified Chinese (thanks to [@c0j0s](https://github.com/c0j0s))
 
 If you want to see a new locale added, please  [open a new issue](https://github.com/robiningelbrecht/statistics-for-strava/issues/new?template=translations-and-localisation.md). 
@@ -268,6 +268,6 @@ Run the following commands to setup the project on your local machine
 Everytime you make changes to the app, you need to build the html files again
 
 ```bash
-> make console arg=“app:strava:build-files
+> make console arg="app:strava:build-files"
 ```
 
