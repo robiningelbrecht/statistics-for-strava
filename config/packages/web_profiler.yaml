@@ -1,6 +1,6 @@
 when@dev:
     web_profiler:
-        toolbar: true
+        toolbar: false
 
     framework:
         profiler:
