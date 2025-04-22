@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Activity;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
+use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Infrastructure\Exception\EntityNotFound;
 
 final class ActivitiesEnricher
@@ -20,6 +21,7 @@ final class ActivitiesEnricher
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
+        private readonly GearMaintenanceConfig $gearMaintenanceConfig,
     ) {
         $this->enrichedActivities = Activities::empty();
         $this->activitiesPerActivityType = [];
@@ -27,12 +29,14 @@ final class ActivitiesEnricher
 
     private function enrichAll(): Activities
     {
+        $maintenanceTags = $this->gearMaintenanceConfig->getAllMaintenanceTags();
         $activities = $this->activityRepository->findAll();
 
         foreach ($activities as $activity) {
             $activity->enrichWithBestPowerOutputs(
                 $this->activityPowerRepository->findBestForActivity($activity->getId())
             );
+            $activity->enrichWithMaintenanceTags($maintenanceTags);
 
             try {
                 $cadenceStream = $this->activityStreamRepository->findOneByActivityAndStreamType(

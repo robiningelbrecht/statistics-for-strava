@@ -24,7 +24,7 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $task) {
                 foreach ($activities as $activity) {
-                    if (!str_contains($activity->getName(), (string) $task->getTag())) {
+                    if (!str_contains($activity->getOriginalName(), (string) $task->getTag())) {
                         continue;
                     }
 
@@ -33,7 +33,7 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
                         taggedOnActivityId: $activity->getId(),
                         taggedForGearId: $activity->getGearId(),
                         taggedOn: $activity->getStartDate(),
-                        activityName: $activity->getName(),
+                        activityName: $activity->getOriginalName(),
                         isValid: is_null($activity->getGearId()) || $gearComponent->isAttachedTo($activity->getGearId())
                     ));
                 }

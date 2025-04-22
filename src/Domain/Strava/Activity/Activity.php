@@ -37,6 +37,8 @@ final class Activity
 
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
+    /** @var string[] */
+    private array $maintenanceTags = [];
 
     #[ORM\Column(type: 'json', nullable: true)]
     // @phpstan-ignore-next-line
@@ -343,9 +345,18 @@ final class Activity
         return $this->totalImageCount;
     }
 
-    public function getName(): string
+    public function getOriginalName(): string
     {
         return trim(str_replace('Zwift - ', '', $this->name));
+    }
+
+    public function getName(): string
+    {
+        if (empty($this->maintenanceTags)) {
+            return $this->getOriginalName();
+        }
+
+        return trim(str_replace($this->maintenanceTags, '', $this->getOriginalName()));
     }
 
     public function getSanitizedName(): string
@@ -558,6 +569,14 @@ final class Activity
         $this->location = $location;
 
         return $this;
+    }
+
+    /**
+     * @param string[] $tags
+     */
+    public function enrichWithMaintenanceTags(array $tags): void
+    {
+        $this->maintenanceTags = $tags;
     }
 
     /**

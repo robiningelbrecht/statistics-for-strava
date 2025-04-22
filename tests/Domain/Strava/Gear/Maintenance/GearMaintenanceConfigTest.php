@@ -36,6 +36,16 @@ class GearMaintenanceConfigTest extends TestCase
         );
     }
 
+    public function testGetAllMaintenanceTags(): void
+    {
+        $yml = $this->getValidYmlString();
+
+        $this->assertEquals(
+            ['#sfs-chain-lubed', '#sfs-chain-cleaned', '#sfs-chain-replaced', '#sfs-chain-two-lubed'],
+            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllMaintenanceTags()
+        );
+    }
+
     public function testGetAllReferencedGearIds(): void
     {
         $yml = $this->getValidYmlString();

@@ -188,6 +188,14 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $this->getGearOptions()->normalizeGearIds($normalizedGearIds);
     }
 
+    /**
+     * @return string[]
+     */
+    public function getAllMaintenanceTags(): array
+    {
+        return $this->getGearComponents()->getAllMaintenanceTags();
+    }
+
     public function getAllReferencedGearIds(): GearIds
     {
         /** @var GearIds $gearIds */

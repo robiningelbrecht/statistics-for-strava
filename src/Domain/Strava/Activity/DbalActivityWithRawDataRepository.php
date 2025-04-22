@@ -52,7 +52,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'activityId' => $activity->getId(),
             'startDateTime' => $activity->getStartDate(),
             'sportType' => $activity->getSportType()->value,
-            'name' => $activity->getName(),
+            'name' => $activity->getOriginalName(),
             'description' => $activity->getDescription(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
@@ -108,7 +108,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         $activity = $activityWithRawData->getActivity();
         $this->connection->executeStatement($sql, [
             'activityId' => $activity->getId(),
-            'name' => $activity->getName(),
+            'name' => $activity->getOriginalName(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
             'averageSpeed' => $activity->getAverageSpeed()->toFloat(),

@@ -14,6 +14,22 @@ final class GearComponents extends Collection
         return GearComponent::class;
     }
 
+    /**
+     * @return string[]
+     */
+    public function getAllMaintenanceTags(): array
+    {
+        $tags = [];
+        /** @var GearComponent $gearComponent */
+        foreach ($this as $gearComponent) {
+            foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
+                $tags[] = (string) $maintenanceTask->getTag();
+            }
+        }
+
+        return $tags;
+    }
+
     public function getAllReferencedGearIds(): GearIds
     {
         $gearIds = GearIds::empty();
