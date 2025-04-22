@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task;
 
-use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\Maintenance\Tag;
 use App\Infrastructure\ValueObject\Collection;
 
@@ -20,7 +19,7 @@ final class MaintenanceTaskTags extends Collection
         return $this->filter(fn (MaintenanceTaskTag $tag) => $tag->isValid());
     }
 
-    public function getMostRecentFor(Tag $taskMaintenanceTag, GearId $gearId): ?MaintenanceTaskTag
+    public function getMostRecentFor(Tag $taskMaintenanceTag): ?MaintenanceTaskTag
     {
         $mostRecentTask = null;
 
@@ -29,9 +28,7 @@ final class MaintenanceTaskTags extends Collection
             if ($maintenanceTaskTag->getTag() != $taskMaintenanceTag) {
                 continue;
             }
-            if ($maintenanceTaskTag->getTaggedForGearId() != $gearId) {
-                continue;
-            }
+
             if ($mostRecentTask
                 && $maintenanceTaskTag->getTaggedOn()->isBeforeOrOn($mostRecentTask->getTaggedOn())
             ) {

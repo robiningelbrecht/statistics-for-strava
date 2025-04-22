@@ -63,6 +63,15 @@ class GearMaintenanceConfigTest extends TestCase
         );
     }
 
+    public function testNormalizeGearIds(): void
+    {
+        $yml = Yaml::dump($this->getYmlStringThatNeedsNormalization());
+        $config = GearMaintenanceConfig::fromYmlString($yml);
+        $config->normalizeGearIds(GearIds::fromArray([GearId::fromUnprefixed('b123456')]));
+
+        $this->assertMatchesTextSnapshot((string) $config);
+    }
+
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testFromYmlStringItShouldThrow(string $yml, string $expectedException): void
     {
@@ -221,6 +230,52 @@ components:
 gears:
   - gearId: 'g12337767'
     imgSrc: 'gear1.png'
-YML);
+YML
+        );
+    }
+
+    private static function getYmlStringThatNeedsNormalization(): array
+    {
+        return Yaml::parse(<<<YML
+enabled: true
+hashtagPrefix: 'sfs'
+components:
+  - tag: 'chain'
+    label: 'Some cool chain'
+    imgSrc: 'chain.png'
+    attachedTo:
+      - 'b123456'
+    maintenance:
+      - tag: lubed
+        label: Lube
+        interval:
+          value: 500
+          unit: km
+      - label: Clean
+        tag: cleaned
+        interval:
+          value: 200
+          unit: hours
+      - label: Replace
+        tag: replaced
+        interval:
+          value: 500
+          unit: days
+  - tag: 'chain-two'
+    label: 'Some cool chain'
+    imgSrc: 'chain.png'
+    attachedTo:
+      - '123456'
+    maintenance:
+      - tag: lubed
+        label: Lube
+        interval:
+          value: 500
+          unit: km
+gears:
+  - gearId: '123456'
+    imgSrc: 'gear1.png'
+YML
+        );
     }
 }

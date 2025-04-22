@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\EveryXHoursUsedProgressCalculation;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
@@ -76,7 +77,7 @@ class EveryXHoursUsedProgressCalculationTest extends ContainerTestCase
             ),
             $this->calculation->calculate(
                 ProgressCalculationContext::from(
-                    gearId: GearId::fromUnprefixed('test'),
+                    gearIds: GearIds::fromArray([GearId::fromUnprefixed('test')]),
                     lastTaggedOnActivityId: ActivityId::fromUnprefixed('last-tagged'),
                     lastTaggedOn: SerializableDateTime::fromString('01-01-2025'),
                     intervalUnit: IntervalUnit::EVERY_X_HOURS_USED,

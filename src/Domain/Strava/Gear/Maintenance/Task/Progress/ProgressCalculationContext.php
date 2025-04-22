@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class ProgressCalculationContext
 {
     private function __construct(
-        private GearId $gearId,
+        private GearIds $gearIds,
         private ActivityId $lastTaggedOnActivityId,
         private SerializableDateTime $lastTaggedOn,
         private IntervalUnit $intervalUnit,
@@ -21,14 +21,14 @@ final readonly class ProgressCalculationContext
     }
 
     public static function from(
-        GearId $gearId,
+        GearIds $gearIds,
         ActivityId $lastTaggedOnActivityId,
         SerializableDateTime $lastTaggedOn,
         IntervalUnit $intervalUnit,
         int $intervalValue,
     ): self {
         return new self(
-            gearId: $gearId,
+            gearIds: $gearIds,
             lastTaggedOnActivityId: $lastTaggedOnActivityId,
             lastTaggedOn: $lastTaggedOn,
             intervalUnit: $intervalUnit,
@@ -36,9 +36,9 @@ final readonly class ProgressCalculationContext
         );
     }
 
-    public function getGearId(): GearId
+    public function getGearIds(): GearIds
     {
-        return $this->gearId;
+        return $this->gearIds;
     }
 
     public function getLastTaggedOnActivityId(): ActivityId

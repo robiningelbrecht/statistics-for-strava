@@ -4,6 +4,7 @@ namespace App\Tests\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\EveryXDaysProgressCalculation;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
@@ -26,7 +27,7 @@ class EveryXDaysProgressCalculationTest extends ContainerTestCase
             ),
             $this->calculation->calculate(
                 ProgressCalculationContext::from(
-                    gearId: GearId::fromUnprefixed('test'),
+                    gearIds: GearIds::fromArray([GearId::fromUnprefixed('test')]),
                     lastTaggedOnActivityId: ActivityId::fromUnprefixed('test'),
                     lastTaggedOn: SerializableDateTime::fromString('2025-01-03'),
                     intervalUnit: IntervalUnit::EVERY_X_DAYS,

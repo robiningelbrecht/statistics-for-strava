@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Twig;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
@@ -20,7 +20,7 @@ final readonly class MaintenanceTaskTwigExtension
     }
 
     public function calculateProgress(
-        GearId $gearId,
+        GearIds $gearIds,
         ?ActivityId $lastTaggedOnActivityId,
         ?SerializableDateTime $lastTaggedOn,
         IntervalUnit $intervalUnit,
@@ -31,7 +31,7 @@ final readonly class MaintenanceTaskTwigExtension
         }
 
         $context = ProgressCalculationContext::from(
-            gearId: $gearId,
+            gearIds: $gearIds,
             lastTaggedOnActivityId: $lastTaggedOnActivityId,
             lastTaggedOn: $lastTaggedOn,
             intervalUnit: $intervalUnit,

@@ -74,7 +74,7 @@ You'll need a `Strava client ID`, `Strava client Secret` and a `refresh token`
     * Navigate to https://developers.strava.com/docs/getting-started/#d-how-to-authenticate
       and scroll down to "_For demonstration purposes only, here is how to reproduce the graph above with cURL:_"
     * Follow the 11 steps explained there
-    * Make sure you change the `&scope=read` to `&scope=activity:read_all` to make sure your refresh token has access to all activities
+    * In step 2, change the `&scope=read` to `&scope=activity:read_all` to make sure your refresh token has access to all activities
 
 ## 🛠️ Installation 
 

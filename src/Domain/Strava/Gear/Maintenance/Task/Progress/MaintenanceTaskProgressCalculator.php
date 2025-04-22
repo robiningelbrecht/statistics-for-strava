@@ -42,24 +42,22 @@ final readonly class MaintenanceTaskProgressCalculator
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             /** @var \App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask $maintenanceTask */
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
-                foreach ($gearComponent->getAttachedTo() as $gearId) {
-                    if (!$mostRecentTag = $maintenanceTaskTags->getMostRecentFor($maintenanceTask->getTag(), $gearId)) {
-                        continue;
-                    }
+                if (!$mostRecentTag = $maintenanceTaskTags->getMostRecentFor($maintenanceTask->getTag())) {
+                    continue;
+                }
 
-                    $maintenanceTaskProgress = $this->calculateProgressFor(
-                        ProgressCalculationContext::from(
-                            gearId: $gearId,
-                            lastTaggedOnActivityId: $mostRecentTag->getTaggedOnActivityId(),
-                            lastTaggedOn: $mostRecentTag->getTaggedOn(),
-                            intervalUnit: $maintenanceTask->getIntervalUnit(),
-                            intervalValue: $maintenanceTask->getIntervalValue(),
-                        )
-                    );
+                $maintenanceTaskProgress = $this->calculateProgressFor(
+                    ProgressCalculationContext::from(
+                        gearIds: $gearComponent->getAttachedTo(),
+                        lastTaggedOnActivityId: $mostRecentTag->getTaggedOnActivityId(),
+                        lastTaggedOn: $mostRecentTag->getTaggedOn(),
+                        intervalUnit: $maintenanceTask->getIntervalUnit(),
+                        intervalValue: $maintenanceTask->getIntervalValue(),
+                    )
+                );
 
-                    if ($maintenanceTaskProgress->isDue()) {
-                        return true;
-                    }
+                if ($maintenanceTaskProgress->isDue()) {
+                    return true;
                 }
             }
         }

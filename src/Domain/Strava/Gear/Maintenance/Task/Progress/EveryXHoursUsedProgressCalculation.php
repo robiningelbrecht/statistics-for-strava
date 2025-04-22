@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,7 +27,7 @@ final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTa
         $query = '
                 SELECT SUM(movingTimeInSeconds) AS movingTimeInSeconds
                 FROM Activity
-                WHERE gearId = :gearId
+                WHERE gearId IN(:gearIds)
                 AND startDateTime > (
                   SELECT startDateTime
                   FROM Activity
@@ -34,8 +35,10 @@ final readonly class EveryXHoursUsedProgressCalculation implements MaintenanceTa
               )';
 
         $movingTimeInSecondsSinceLastTagged = $this->connection->fetchOne($query, [
-            'gearId' => $context->getGearId(),
+            'gearIds' => $context->getGearIds()->toArray(),
             'activityId' => $context->getLastTaggedOnActivityId(),
+        ], [
+            'gearIds' => ArrayParameterType::STRING,
         ]);
         $movingTimeInHoursSinceLastTagged = $movingTimeInSecondsSinceLastTagged / 3600;
 

@@ -6,6 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class EveryXDistanceUsedProgressCalculation implements MaintenanceTaskProgressCalculation
@@ -28,7 +29,7 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
         $query = '
                 SELECT SUM(distance) AS distance
                 FROM Activity
-                WHERE gearId = :gearId
+                WHERE gearId IN (:gearIds)
                 AND startDateTime > (
                   SELECT startDateTime
                   FROM Activity
@@ -36,8 +37,10 @@ final readonly class EveryXDistanceUsedProgressCalculation implements Maintenanc
               )';
 
         $distanceSinceLastTagged = Meter::from($this->connection->fetchOne($query, [
-            'gearId' => $context->getGearId(),
+            'gearIds' => $context->getGearIds()->toArray(),
             'activityId' => $context->getLastTaggedOnActivityId(),
+        ], [
+            'gearIds' => ArrayParameterType::STRING,
         ]) ?? 0)->toKilometer();
 
         if (IntervalUnit::EVERY_X_MILES_USED === $context->getIntervalUnit()) {
