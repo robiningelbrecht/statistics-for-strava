@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CQRS;
+namespace App\Infrastructure\CQRS\Command;
 
 abstract readonly class DomainCommand implements Command
 {

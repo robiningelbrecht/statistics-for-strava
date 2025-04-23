@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CQRS;
+namespace App\Infrastructure\CQRS\Command;
 
-use App\Infrastructure\CQRS\Bus\CanNotRegisterCommandHandler;
+use App\Infrastructure\CQRS\Command\Bus\CanNotRegisterCommandHandler;
 
 final readonly class CommandHandlerBuilder
 {

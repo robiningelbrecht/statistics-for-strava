@@ -29,7 +29,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     _instanceof:
-        App\Infrastructure\CQRS\CommandHandler:
+        App\Infrastructure\CQRS\Command\CommandHandler:
             tags: ['app.command_handler']
         App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculation:
             tags: ['app.maintenance_progress_calculation']
@@ -59,8 +59,8 @@ services:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
 
-    App\Infrastructure\CQRS\Bus\CommandBus:
-        class: App\Infrastructure\CQRS\Bus\InMemoryCommandBus
+    App\Infrastructure\CQRS\Command\Bus\CommandBus:
+        class: App\Infrastructure\CQRS\Command\Bus\InMemoryCommandBus
         arguments: [!tagged_iterator app.command_handler]
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:

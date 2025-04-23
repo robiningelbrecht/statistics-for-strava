@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\Notification\SendNotification;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
 final readonly class SendNotification extends DomainCommand
 {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\App\ConfigureAppLocale;
 
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Localisation\Locale;
 use Carbon\Carbon;
 use Symfony\Component\Translation\LocaleSwitcher;

@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CQRS\Bus;
+namespace App\Infrastructure\CQRS\Command\Bus;
 
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
-use App\Infrastructure\CQRS\CommandHandlerBuilder;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\CQRS\Command\CommandHandlerBuilder;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
-// https://dev.to/adgaray/cqrs-with-symfony-messenger-2h3g
 final readonly class InMemoryCommandBus implements CommandBus
 {
     private MessageBus $bus;

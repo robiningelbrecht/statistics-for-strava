@@ -6,7 +6,7 @@ namespace App\Domain\Strava\Activity\Split;
 
 use App\Domain\Strava\Activity\ActivityWasDeleted;
 use App\Domain\Strava\Activity\Split\DeleteActivitySplits\DeleteActivitySplits;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 final readonly class StreamSplitManager

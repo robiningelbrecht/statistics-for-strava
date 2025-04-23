@@ -14,7 +14,7 @@ use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
 use App\Domain\Strava\Ftp\ImportFtp\ImportFtp;
 use App\Domain\Strava\Gear\ImportGear\ImportGear;
 use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\Logging\LoggableConsoleOutput;

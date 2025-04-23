@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Integration\Notification\SendNotification;
 
 use App\Domain\Integration\Notification\Ntfy\Ntfy;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\ValueObject\String\Url;
 
 final readonly class SendNotificationCommandHandler implements CommandHandler

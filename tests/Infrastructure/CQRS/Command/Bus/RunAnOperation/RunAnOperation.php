@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Infrastructure\CQRS\Bus\RunAnOperation;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
 final readonly class RunAnOperation extends DomainCommand
 {

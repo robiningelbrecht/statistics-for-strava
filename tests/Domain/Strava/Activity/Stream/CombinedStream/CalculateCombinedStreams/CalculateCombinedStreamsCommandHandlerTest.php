@@ -12,7 +12,7 @@ use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\Ca
 use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreamsCommandHandler;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;

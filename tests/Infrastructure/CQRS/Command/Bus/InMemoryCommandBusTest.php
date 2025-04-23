@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests\Infrastructure\CQRS\Bus;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus;
 
-use App\Infrastructure\CQRS\Bus\CanNotRegisterCommandHandler;
-use App\Infrastructure\CQRS\Bus\InMemoryCommandBus;
-use App\Tests\Infrastructure\CQRS\Bus\RunAnOperation\RunAnOperation;
-use App\Tests\Infrastructure\CQRS\Bus\RunAnOperation\RunAnOperationCommandHandler;
-use App\Tests\Infrastructure\CQRS\Bus\RunAnOperationCommand\RunAnOperationCommandCommandHandler;
+use App\Infrastructure\CQRS\Command\Bus\CanNotRegisterCommandHandler;
+use App\Infrastructure\CQRS\Command\Bus\InMemoryCommandBus;
+use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation;
+use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperationCommandHandler;
+use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperationCommand\RunAnOperationCommandCommandHandler;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class InMemoryCommandBusTest extends KernelTestCase
@@ -33,7 +33,7 @@ class InMemoryCommandBusTest extends KernelTestCase
         $commandBus = new InMemoryCommandBus([]);
 
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The command has not a valid handler: App\Tests\Infrastructure\CQRS\Bus\RunAnOperation\RunAnOperation');
+        $this->expectExceptionMessage('The command has not a valid handler: App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation');
 
         $commandBus->dispatch(new RunAnOperation('test'));
     }
@@ -41,7 +41,7 @@ class InMemoryCommandBusTest extends KernelTestCase
     public function testDispatchWithoutCorrespondingCommand(): void
     {
         $this->expectException(CanNotRegisterCommandHandler::class);
-        $this->expectExceptionMessage('No corresponding command for commandHandler "App\Tests\Infrastructure\CQRS\Bus\RunOperationWithoutACommandCommandHandler" found');
+        $this->expectExceptionMessage('No corresponding command for commandHandler "App\Tests\Infrastructure\CQRS\Command\Bus\RunOperationWithoutACommandCommandHandler" found');
 
         new InMemoryCommandBus([
             new RunOperationWithoutACommandCommandHandler(),
@@ -61,7 +61,7 @@ class InMemoryCommandBusTest extends KernelTestCase
     public function testDispatchWithInvalidCommandHandlerName(): void
     {
         $this->expectException(CanNotRegisterCommandHandler::class);
-        $this->expectExceptionMessage('Fqcn "App\Tests\Infrastructure\CQRS\Bus\RunOperationWithInvalidNameHandler" does not end with "CommandHandler"');
+        $this->expectExceptionMessage('Fqcn "App\Tests\Infrastructure\CQRS\Command\Bus\RunOperationWithInvalidNameHandler" does not end with "CommandHandler"');
 
         new InMemoryCommandBus([
             new RunOperationWithInvalidNameHandler(),

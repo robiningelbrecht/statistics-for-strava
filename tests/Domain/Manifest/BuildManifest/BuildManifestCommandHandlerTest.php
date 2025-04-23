@@ -5,7 +5,7 @@ namespace App\Tests\Domain\Manifest\BuildManifest;
 use App\Domain\Manifest\BuildManifest\BuildManifest;
 use App\Domain\Strava\Athlete\Athlete;
 use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\FileSystem\provideAssertFileSystem;

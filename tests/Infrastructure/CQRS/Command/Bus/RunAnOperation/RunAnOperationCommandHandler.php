@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Infrastructure\CQRS\Bus\RunAnOperation;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation;
 
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 
 final readonly class RunAnOperationCommandHandler implements CommandHandler
 {

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Strava\Activity\Stream\ImportActivityStreams;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class ImportActivityStreams extends DomainCommand

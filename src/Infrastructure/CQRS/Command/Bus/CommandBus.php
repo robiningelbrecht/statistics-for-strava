@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CQRS\Bus;
+namespace App\Infrastructure\CQRS\Command\Bus;
 
-use App\Infrastructure\CQRS\Command;
+use App\Infrastructure\CQRS\Command\Command;
 
 interface CommandBus
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Infrastructure\CQRS\Bus;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\ValueObject\String\Url;
 
 class TestCommandWithValueObject extends DomainCommand

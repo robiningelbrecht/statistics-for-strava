@@ -13,8 +13,8 @@ use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepos
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;

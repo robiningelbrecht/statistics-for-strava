@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Infrastructure\CQRS\Bus;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus;
 
 use App\Infrastructure\Serialization\Json;
-use App\Tests\Infrastructure\CQRS\Bus\RunAnOperation\RunAnOperation;
+use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 

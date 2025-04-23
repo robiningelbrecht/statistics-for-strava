@@ -19,7 +19,7 @@ use App\Domain\App\ConfigureAppLocale\ConfigureAppLocale;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Manifest\BuildManifest\BuildManifest;
 use App\Domain\Strava\StravaDataImportStatus;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;

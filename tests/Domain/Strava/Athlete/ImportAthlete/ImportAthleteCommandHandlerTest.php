@@ -4,7 +4,7 @@ namespace App\Tests\Domain\Strava\Athlete\ImportAthlete;
 
 use App\Domain\Strava\Athlete\ImportAthlete\ImportAthlete;
 use App\Domain\Strava\Strava;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\SpyOutput;

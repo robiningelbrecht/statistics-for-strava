@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\CQRS\Bus;
+namespace App\Tests\Infrastructure\CQRS\Command\Bus;
 
-use App\Infrastructure\CQRS\Bus\CommandBus;
-use App\Infrastructure\CQRS\Command;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Command;
 
 class SpyCommandBus implements CommandBus
 {
-    /** @var \App\Infrastructure\CQRS\DomainCommand[] */
+    /** @var \App\Infrastructure\CQRS\Command\DomainCommand[] */
     private array $commandsToDispatch = [];
 
     public function dispatch(Command $command): void
@@ -18,7 +18,7 @@ class SpyCommandBus implements CommandBus
     }
 
     /**
-     * @return \App\Infrastructure\CQRS\DomainCommand[]
+     * @return \App\Infrastructure\CQRS\Command\DomainCommand[]
      */
     public function getDispatchedCommands(): array
     {
