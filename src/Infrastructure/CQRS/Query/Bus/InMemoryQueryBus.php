@@ -2,43 +2,43 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\CQRS\Command\Bus;
+namespace App\Infrastructure\CQRS\Query\Bus;
 
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\HandlerBuilder;
+use App\Infrastructure\CQRS\Query\Query;
+use App\Infrastructure\CQRS\Query\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
+use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final readonly class InMemoryCommandBus implements CommandBus
+final readonly class InMemoryQueryBus implements QueryBus
 {
     private MessageBusInterface $bus;
 
-    /**
-     * @param iterable<CommandHandler> $commandHandlers
-     */
-    public function __construct(
-        iterable $commandHandlers,
-    ) {
+    public function __construct(iterable $queryHandlers)
+    {
         $this->bus = new MessageBus([
             new HandleMessageMiddleware(
                 new HandlersLocator(
-                    new HandlerBuilder('CommandHandler')->fromCallables($commandHandlers),
+                    new HandlerBuilder('QueryHandler')->fromCallables($queryHandlers),
                 ),
             ),
         ]);
     }
 
-    public function dispatch(Command $command): void
+    public function ask(Query $query): Response
     {
         try {
-            $this->bus->dispatch($command);
+            /** @var HandledStamp $stamp */
+            $stamp = $this->bus->dispatch($query)->last(HandledStamp::class);
+
+            return $stamp->getResult();
         } catch (NoHandlerForMessageException) {
-            throw new \InvalidArgumentException(sprintf('The command has not a valid handler: %s', $command::class));
+            throw new \InvalidArgumentException(sprintf('The query has not a valid handler: %s', $query::class));
         } catch (HandlerFailedException $e) {
             if (!is_null($e->getPrevious())) {
                 throw $e->getPrevious();

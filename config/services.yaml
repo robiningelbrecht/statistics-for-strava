@@ -31,6 +31,8 @@ services:
     _instanceof:
         App\Infrastructure\CQRS\Command\CommandHandler:
             tags: ['app.command_handler']
+        App\Infrastructure\CQRS\Query\QueryHandler:
+            tags: ['app.query_handler']
         App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculation:
             tags: ['app.maintenance_progress_calculation']
 
@@ -62,6 +64,10 @@ services:
     App\Infrastructure\CQRS\Command\Bus\CommandBus:
         class: App\Infrastructure\CQRS\Command\Bus\InMemoryCommandBus
         arguments: [!tagged_iterator app.command_handler]
+
+    App\Infrastructure\CQRS\Query\Bus\QueryBus:
+        class: App\Infrastructure\CQRS\Query\Bus\InMemoryQueryBus
+        arguments: [!tagged_iterator app.query_handler]
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         factory: [ App\Infrastructure\ValueObject\String\KernelProjectDir, 'fromString' ]

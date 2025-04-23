@@ -8,10 +8,5 @@ use App\Infrastructure\CQRS\Command\Command;
 
 interface CommandBus
 {
-    /**
-     * @return string[]
-     */
-    public function getAvailableCommands(): array;
-
     public function dispatch(Command $command): void;
 }
