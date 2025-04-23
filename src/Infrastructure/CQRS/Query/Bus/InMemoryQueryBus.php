@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Infrastructure\CQRS\Query\Bus;
 
 use App\Infrastructure\CQRS\HandlerBuilder;
+use App\Infrastructure\CQRS\HandlerBuilderType;
 use App\Infrastructure\CQRS\Query\Query;
+use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
@@ -19,12 +21,16 @@ final readonly class InMemoryQueryBus implements QueryBus
 {
     private MessageBusInterface $bus;
 
+    /**
+     * @param iterable<QueryHandler> $queryHandlers
+     */
     public function __construct(iterable $queryHandlers)
     {
         $this->bus = new MessageBus([
             new HandleMessageMiddleware(
                 new HandlersLocator(
-                    new HandlerBuilder('QueryHandler')->fromCallables($queryHandlers),
+                    new HandlerBuilder(HandlerBuilderType::QUERY_HANDLER)
+                        ->fromCallables($queryHandlers),
                 ),
             ),
         ]);
@@ -43,6 +49,7 @@ final readonly class InMemoryQueryBus implements QueryBus
             if (!is_null($e->getPrevious())) {
                 throw $e->getPrevious();
             }
+            throw $e;
         }
     }
 }

@@ -10,13 +10,12 @@ use App\Infrastructure\CQRS\Query\QueryHandler;
 final readonly class HandlerBuilder
 {
     private string $disallowedObjectSuffix;
+    private string $handlerSuffix;
 
     public function __construct(
-        private string $handlerSuffix,
+        private HandlerBuilderType $handlerBuilderType,
     ) {
-        if (!str_ends_with($this->handlerSuffix, 'Handler')) {
-            throw new \InvalidArgumentException('Handler suffix needs to end with "Handler"');
-        }
+        $this->handlerSuffix = $this->handlerBuilderType->value;
         $this->disallowedObjectSuffix = str_replace('Handler', '', $this->handlerSuffix);
     }
 

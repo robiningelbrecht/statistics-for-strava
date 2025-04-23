@@ -7,6 +7,7 @@ namespace App\Infrastructure\CQRS\Command\Bus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\HandlerBuilder;
+use App\Infrastructure\CQRS\HandlerBuilderType;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
@@ -27,7 +28,8 @@ final readonly class InMemoryCommandBus implements CommandBus
         $this->bus = new MessageBus([
             new HandleMessageMiddleware(
                 new HandlersLocator(
-                    new HandlerBuilder('CommandHandler')->fromCallables($commandHandlers),
+                    new HandlerBuilder(HandlerBuilderType::COMMAND_HANDLER)
+                        ->fromCallables($commandHandlers),
                 ),
             ),
         ]);
