@@ -1,0 +1,48 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ "Statistics for Strava"|trans }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
+    <link href="{{ asset('assets/flowbite/tailwind.min.css') }}" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 h-screen flex justify-center items-center">
+{{ renderComponent('top-nav-bar') }}
+<div class="p-4 text-center">
+    {% if mode == 'startAuthorization' %}
+        {% if error %}
+            <div class="flex mb-4 p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
+                 role="alert">
+                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">Hmmm, something went wrong, please try again:</span>
+                    <p>{{ error }}</p>
+                </div>
+            </div>
+        {% endif %}
+        <p class="text-2xl font-semibold pb-5">It looks like you haven't successfully completed the Strava authorization process yet.</p>
+        <p class="text-gray-500 mb-4">You will be redirected to Strava. When you see the authorization page, click "Authorize"</p>
+        <a href="http://www.strava.com/oauth/authorize?client_id={{ stravaClientId }}&response_type=code&redirect_uri={{ returnUrl }}&approval_prompt=force&scope=activity:read_all"
+           class="rounded-sm py-2 px-8 text-white bg-strava-orange">
+            Start Strava authorization flow
+        </a>
+    {% endif %}
+    {% if mode == 'showRefreshToken' %}
+        <p class="text-2xl font-semibold">Authorization successful 🎉!</p>
+        <p class="text-2xl font-semibold pb-5">Copy/paste the refresh token and override `STRAVA_REFRESH_TOKEN` in your `.env` file.</p>
+        <p class="text-gray-500 mb-4">After restarting your container, navigate to {{ url }}</p>
+        <code>{{ refreshToken }}</code>
+    {% endif %}
+</div>
+</body>
+</html>
+{% endautoescape %}

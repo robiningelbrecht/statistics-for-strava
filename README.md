@@ -67,15 +67,10 @@ Read [the wiki](https://github.com/robiningelbrecht/statistics-for-strava/wiki) 
 
 ## 🪄 Prerequisites
 
-You'll need a `Strava client ID`, `Strava client Secret` and a `refresh token`
+You'll need a `Strava client ID` and `Strava client Secret`
 
 * Navigate to your [Strava API settings page](https://www.strava.com/settings/api).
-  Copy the `client ID` and `client secret`
-* Next you need to obtain a `Strava API refresh token`. 
-    * Navigate to https://developers.strava.com/docs/getting-started/#d-how-to-authenticate
-      and scroll down to "_For demonstration purposes only, here is how to reproduce the graph above with cURL:_"
-    * Follow the 11 steps explained there
-    * In step 2, change the `&scope=read` to `&scope=activity:read_all` to make sure your refresh token has access to all activities
+* Copy the `client ID` and `client secret`, you'll need these during the [installation](#%EF%B8%8F-installation)
 
 ## 🛠️ Installation 
 
@@ -129,7 +124,7 @@ MANIFEST_APP_URL=http://localhost:8080/
 STRAVA_CLIENT_ID=YOUR_CLIENT_ID
 # The client secret of your Strava app.
 STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
-# The refresh of your Strava app.
+# The refresh of your Strava app. You will need to obtain this token the first time you launch the app.
 STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN
 # Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
 # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
@@ -209,6 +204,16 @@ NTFY_URL=''
 #PUID=
 #PGID=
 ```
+
+### Obtaining a Strava refresh token
+
+The first time you launch the app, you will need to obtain a `Strava refresh token`.
+The app needs this token to be able to access your data and import it into your local database.
+
+Navigate to http://localhost:8080/. 
+You should see this page—just follow the steps to complete the setup.
+
+![Strava Authorization](public/assets/images/readme/strava-oauth.png)
 
 ### Importing challenges and trophies
 
