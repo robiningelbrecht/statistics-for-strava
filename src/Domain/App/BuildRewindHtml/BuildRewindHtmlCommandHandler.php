@@ -278,6 +278,11 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
 
             $this->buildStorage->write(
+                sprintf('rewind/%s/compare.html', $availableRewindYear),
+                $this->twig->load('html/rewind/rewind-compare.html.twig')->render($render),
+            );
+
+            $this->buildStorage->write(
                 sprintf('rewind/%s.html', $availableRewindYear),
                 $this->twig->load('html/rewind/rewind.html.twig')->render($render),
             );

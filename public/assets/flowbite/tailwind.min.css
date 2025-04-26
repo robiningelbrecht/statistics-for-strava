@@ -990,6 +990,9 @@
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
+  .top-\[66px\] {
+    top: 66px;
+  }
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
@@ -3509,6 +3512,16 @@
   .lg\:flex {
     @media (width >= 64rem) {
       display: flex;
+    }
+  }
+  .lg\:grid {
+    @media (width >= 64rem) {
+      display: grid;
+    }
+  }
+  .lg\:hidden {
+    @media (width >= 64rem) {
+      display: none;
     }
   }
   .lg\:w-\[450px\] {
