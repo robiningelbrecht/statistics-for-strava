@@ -126,6 +126,7 @@ STRAVA_CLIENT_ID=YOUR_CLIENT_ID
 STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
 # You will need to obtain this token the first time you launch the app. 
 # Leave this unchanged for now until the app tells you otherwise.
+# Do not use the refresh token displayed on your Strava API settings page, it will not work.
 STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
 # Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
 # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
