@@ -124,8 +124,9 @@ MANIFEST_APP_URL=http://localhost:8080/
 STRAVA_CLIENT_ID=YOUR_CLIENT_ID
 # The client secret of your Strava app.
 STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
-# The refresh of your Strava app. You will need to obtain this token the first time you launch the app.
-STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN
+# You will need to obtain this token the first time you launch the app. 
+# Leave this unchanged for now until the app tells you otherwise.
+STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
 # Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
 # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
 # per import. Considering there's a 1000 request per day limit and importing one new activity can

@@ -19,16 +19,17 @@ export default function Router(app) {
     };
 
     const determineActiveMenuLink = (url) => {
-        do {
-            const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + url + '"]');
-            if ($activeMenuLink) {
-                return $activeMenuLink;
-            }
+        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + url + '"]');
+        if ($activeMenuLink) {
+            return $activeMenuLink;
+        }
 
-            url = url.replace(/\/[^\/]*$/, ''); // removes the last path segment
-        } while (url !== '');
+        const newUrl = url.replace(/\/[^\/]*$/, '');
+        if (newUrl === url || newUrl === '') {
+            return null;
+        }
 
-        return null;
+        return determineActiveMenuLink(newUrl);
     };
 
     const renderContent = async (page, modalId) => {
