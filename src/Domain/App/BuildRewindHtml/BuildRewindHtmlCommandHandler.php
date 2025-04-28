@@ -61,8 +61,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildRewindHtml);
 
         $now = $command->getCurrentDateTime();
-        $response = $this->queryBus->ask(new FindAvailableRewindYears($now));
-        $availableRewindYears = $response->getAvailableRewindYears();
+        $findAvailableRewindYearsresponse = $this->queryBus->ask(new FindAvailableRewindYears($now));
+        $availableRewindYears = $findAvailableRewindYearsresponse->getAvailableRewindYears();
 
         $gears = $this->gearRepository->findAll();
 
