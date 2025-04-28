@@ -47,7 +47,7 @@ final readonly class MovingTimePerGearChart
 
         return [
             'backgroundColor' => null,
-            'animation' => true,
+            'animation' => false,
             'grid' => [
                 'left' => '0%',
                 'right' => '0%',

@@ -29,6 +29,7 @@ Challenges: 挑战
 'Close modal': 关闭模态框
 Commutes: 通勤
 'Commutes only': 仅通勤
+Compare: Compare
 'Complete a 10 km run.': 完成10公里跑步。
 'Complete a 100km ride': 完成100公里骑行
 'Complete a 5 km run.': 完成5公里跑步。
@@ -135,6 +136,7 @@ Morning: 早晨
 'Moving time': 移动时间
 Night: 夜晚
 'No activities': 没有活动
+'No other years to compare with': 'No other years to compare with'
 'Nordic Ski': 北欧滑雪
 Nov: 十一月
 'Number of activities per month': 'Number of activities per month'
@@ -163,6 +165,7 @@ Race: 比赛
 'Rest days': 'Rest days'
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
+'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 'Ride a total of 1250km': 骑行总计1250公里
 'Ride a total of 200km': 骑行总计200公里
 'Ride a total of 600km': 骑行总计600公里
@@ -279,6 +282,7 @@ and: 和
 bpm: 拍子数
 clear: 清除
 comments: comments
+compare: compare
 days: days
 hours: hours
 hrs: hrs
@@ -292,6 +296,7 @@ more: more
 'more info': 更多信息
 n/a: 不适用
 never: never
+to: to
 weeks: weeks
 workouts: 锻炼
 '{amountOfAluminiumCans} aluminium cans for soft drinks produced': '生产了{amountOfAluminiumCans}个软饮料铝罐'

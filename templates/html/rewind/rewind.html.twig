@@ -67,32 +67,7 @@
         </div>
         <div class="grid lg:grid-cols-2 gap-4">
             {% for item in rewindItems %}
-                <div class="{{ loop.first ? 'lg:col-span-2': '' }} flex flex-col gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h5 class="flex items-center gap-x-0.5 text-lg font-medium text-gray-900">
-                                {% include 'html/rewind/svg/svg-' ~ item.getIcon() ~ '.html.twig' %}
-                                <span class="block">{{ item.getTitle() }}</span>
-                            </h5>
-                            {% if item.getSubTitle() %}
-                                <div class="ml-0.5 text-sm text-gray-500">
-                                    {{ item.getSubTitle() }}
-                                </div>
-                            {% endif %}
-                        </div>
-                        {% if item.hasTotalMetric() %}
-                            <div class="text-right">
-                                <div class="main">{{ item.getTotalMetric()|formatNumber(0) }}</div>
-                                <div class="text-sm text-gray-500">
-                                    {{ item.getTotalMetricLabel() }}
-                                </div>
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div class="flex h-full">
-                        {{ item.getContent() }}
-                    </div>
-                </div>
+                {% include 'html/rewind/rewind-item.html.twig' with {'item': item, 'extraClass': loop.first ? 'lg:col-span-2': '' } %}
             {% endfor %}
         </div>
         <div class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">

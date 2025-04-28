@@ -99,12 +99,12 @@
                             {% if availableRewindYearsToCompareWith is not empty %}
                                 {% for rewindYear in availableRewindYearsToCompareWith %}
                                     <li>
-                                        <a href="#" data-router-navigate="/rewind/{{ rewindYear }}/compare" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
+                                        <a href="#" data-router-navigate="/rewind/{{ activeRewindYearLeft }}/compare/{{ rewindYear }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
                                     </li>
                                 {% endfor %}
                             {% else %}
                                 <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">{{ "No other years to compare with"|trans }} {{ rewindYear }}</a>
+                                    <span class="block px-4 py-2 hover:bg-gray-100 ">{{ "No other years to compare with"|trans }}</span>
                                 </li>
                             {% endif %}
                         </ul>
@@ -115,62 +115,12 @@
         <div class="hidden lg:grid lg:grid-cols-2 gap-4">
             <div class="flex flex-col gap-4">
                 {% for item in rewindItemsLeft %}
-                    <div class="flex flex-col gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h5 class="flex items-center gap-x-0.5 text-lg font-medium text-gray-900">
-                                    {% include 'html/rewind/svg/svg-' ~ item.getIcon() ~ '.html.twig' %}
-                                    <span class="block">{{ item.getTitle() }}</span>
-                                </h5>
-                                {% if item.getSubTitle() %}
-                                    <div class="ml-0.5 text-sm text-gray-500">
-                                        {{ item.getSubTitle() }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                            {% if item.hasTotalMetric() %}
-                                <div class="text-right">
-                                    <div class="main">{{ item.getTotalMetric()|formatNumber(0) }}</div>
-                                    <div class="text-sm text-gray-500">
-                                        {{ item.getTotalMetricLabel() }}
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="flex h-full">
-                            {{ item.getContent() }}
-                        </div>
-                    </div>
+                    {% include 'html/rewind/rewind-item.html.twig' with {'item': item } %}
                 {% endfor %}
             </div>
-            <div class="flex flex-col gap-4">
+            <div id="rewind-compare-to" class="flex flex-col gap-4">
                 {% for item in rewindItemsRight %}
-                    <div class="flex flex-col gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h5 class="flex items-center gap-x-0.5 text-lg font-medium text-gray-900">
-                                    {% include 'html/rewind/svg/svg-' ~ item.getIcon() ~ '.html.twig' %}
-                                    <span class="block">{{ item.getTitle() }}</span>
-                                </h5>
-                                {% if item.getSubTitle() %}
-                                    <div class="ml-0.5 text-sm text-gray-500">
-                                        {{ item.getSubTitle() }}
-                                    </div>
-                                {% endif %}
-                            </div>
-                            {% if item.hasTotalMetric() %}
-                                <div class="text-right">
-                                    <div class="main">{{ item.getTotalMetric()|formatNumber(0) }}</div>
-                                    <div class="text-sm text-gray-500">
-                                        {{ item.getTotalMetricLabel() }}
-                                    </div>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="flex h-full">
-                            {{ item.getContent() }}
-                        </div>
-                    </div>
+                    {% include 'html/rewind/rewind-item.html.twig' with {'item': item } %}
                 {% endfor %}
             </div>
         </div>

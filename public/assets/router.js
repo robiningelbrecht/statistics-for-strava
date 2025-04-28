@@ -69,13 +69,16 @@ export default function Router(app) {
         const nav = document.querySelectorAll("nav a[data-router-navigate], main a[data-router-navigate]");
         registerNavItems(nav);
 
+        const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true, cancelable: false, detail: {
+                page: fullPageName,
                 modalId: modalId
             }
         }));
-        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + page.replace(/^\/+/, '').replace('/', '-'), {
+        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + fullPageName, {
             bubbles: true, cancelable: false, detail: {
+                page: fullPageName,
                 modalId: modalId
             }
         }));

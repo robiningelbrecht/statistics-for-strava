@@ -29,6 +29,7 @@ Challenges: Challenges
 'Close modal': 'Close modal'
 Commutes: Commutes
 'Commutes only': 'Commutes only'
+Compare: Compare
 'Complete a 10 km run.': 'Complete a 10 km run.'
 'Complete a 100km ride': 'Complete a 100km ride'
 'Complete a 5 km run.': 'Complete a 5 km run.'
@@ -135,6 +136,7 @@ Morning: Morning
 'Moving time': 'Moving time'
 Night: Night
 'No activities': 'No activities'
+'No other years to compare with': 'No other years to compare with'
 'Nordic Ski': 'Nordic Ski'
 Nov: Nov
 'Number of activities per month': 'Number of activities per month'
@@ -163,6 +165,7 @@ Race: Race
 'Rest days': 'Rest days'
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
+'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 'Ride a total of 1250km': 'Ride a total of 1250km'
 'Ride a total of 200km': 'Ride a total of 200km'
 'Ride a total of 600km': 'Ride a total of 600km'
@@ -279,6 +282,7 @@ and: and
 bpm: bpm
 clear: clear
 comments: comments
+compare: compare
 days: days
 hours: hours
 hrs: hrs
@@ -292,6 +296,7 @@ more: more
 'more info': 'more info'
 n/a: n/a
 never: never
+to: to
 weeks: weeks
 workouts: workouts
 '{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} aluminium cans for soft drinks produced'
