@@ -318,7 +318,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                         sprintf('rewind/%s/compare.html', $availableRewindYearLeft),
                         $render
                     );
-                    continue;
                 }
 
                 $this->buildStorage->write(
