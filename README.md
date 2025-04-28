@@ -99,6 +99,8 @@ Start off by showing some ❤️ and give this repo a star. Then from your comma
 services:
   app:
     image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava
+    restart: unless-stopped
     volumes:
       - ./build:/var/www/build
       - ./storage/database:/var/www/storage/database

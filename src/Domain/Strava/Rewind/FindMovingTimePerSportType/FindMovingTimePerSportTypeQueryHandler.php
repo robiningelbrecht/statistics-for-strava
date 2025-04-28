@@ -38,6 +38,7 @@ final readonly class FindMovingTimePerSportTypeQueryHandler implements QueryHand
                 FROM Activity
                 WHERE strftime('%Y',startDateTime) = :year
                 GROUP BY sportType
+                ORDER BY sportType ASC
                 SQL,
                 [
                     'year' => (string) $query->getYear(),

@@ -237,6 +237,16 @@ final class Segment
             21747822,
             21747891,
             18389384,
+            21705871,
+            19975123,
+            19975123,
+            19610530,
+            19976280,
+            19631579,
+            1269095,
+            19974951,
+            20023906,
+            19631565,
         ];
 
         return in_array((int) $this->getId()->toUnprefixedString(), $komSegmentIds);

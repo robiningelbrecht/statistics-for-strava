@@ -29,7 +29,7 @@ final readonly class FindActivityCountPerMonthQueryHandler implements QueryHandl
                 FROM Activity
                 WHERE strftime('%Y',startDateTime) = :year
                 GROUP BY sportType, yearAndMonth
-                ORDER BY yearAndMonth ASC, sportType ASC 
+                ORDER BY sportType ASC, yearAndMonth ASC
             SQL,
             [
                 'year' => (string) $query->getYear(),
