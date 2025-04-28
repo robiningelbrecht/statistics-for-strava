@@ -25,56 +25,47 @@
         </li>
         </ol>
 </nav>
-            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-            <div class="flex items-center p-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
-                </svg>
-                <span class="sr-only">Info</span>
+                    <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="flex gap-x-2">
                 <div>
-                     Your Strava 2025 rewind will be available on the 24th of December.
+                    <button id="dropdownRewindYearButton" data-dropdown-toggle="dropdownRewindYear" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                        Rewind 2022
+                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                        </svg>
+                    </button>
+                    <div id="dropdownRewindYear" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
+                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearButton">
+                                                            <li>
+                                    <a href="#" data-router-navigate="/rewind/2023" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
+                                </li>
+                                                            <li>
+                                    <a href="#" data-router-navigate="/rewind/2021" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
+                                </li>
+                                                    </ul>
+                    </div>
+                </div>
+                <div>
+                    <button id="dropdownRewindYearCompareToButton" data-dropdown-toggle="dropdownRewindYearCompareTo" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                        Compare to
+                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                        </svg>
+                    </button>
+                    <div id="dropdownRewindYearCompareTo" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
+                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearCompareToButton">
+                                                            <li>
+                                    <a href="#" data-router-navigate="/rewind/2022/compare/2023" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
+                                </li>
+                                                            <li>
+                                    <a href="#" data-router-navigate="/rewind/2022/compare/2021" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
+                                </li>
+                                                    </ul>
+                    </div>
                 </div>
             </div>
-                            <div class="mt-4 flex gap-x-2">
-                    <div>
-                        <button id="dropdownRewindYearButton" data-dropdown-toggle="dropdownRewindYear" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                            Rewind 2022
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
-                            </svg>
-                        </button>
-                        <div id="dropdownRewindYear" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
-                            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearButton">
-                                                                    <li>
-                                        <a href="#" data-router-navigate="/rewind/2023" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
-                                    </li>
-                                                                    <li>
-                                        <a href="#" data-router-navigate="/rewind/2021" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
-                                    </li>
-                                                            </ul>
-                        </div>
-                    </div>
-                    <div>
-                        <button id="dropdownRewindYearCompareToButton" data-dropdown-toggle="dropdownRewindYearCompareTo" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                            Compare to
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
-                            </svg>
-                        </button>
-                        <div id="dropdownRewindYearCompareTo" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
-                            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearCompareToButton">
-                                                                    <li>
-                                        <a href="#" data-router-navigate="/rewind/2022/compare/2023" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
-                                    </li>
-                                                                    <li>
-                                        <a href="#" data-router-navigate="/rewind/2022/compare/2021" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
-                                    </li>
-                                                            </ul>
-                        </div>
-                    </div>
-                </div>
-                    </div>
-        <div class="grid lg:grid-cols-2 gap-4">
+        </div>
+                <div class="grid lg:grid-cols-2 gap-4">
                             <div class="lg:col-span-2 flex flex-col gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center justify-between">
         <div>
@@ -386,11 +377,20 @@
 
     </div>
 </div>                    </div>
-        <div class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-            <p class="text-xs">
+        <div class="mt-4 p-4 bg-white text-xs border border-gray-200 rounded-lg shadow-xs">
+            <p>
                 These charts are based on <a href="https://github.com/atefkbenothman" class="underline" target="_blank">Kai's</a> work,
                 go <a href="https://github.com/atefkbenothman/strava-recap" class="underline" target="_blank">check it out</a>
             </p>
+            <div class="mt-4 flex items-center p-2 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50" role="alert">
+                <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div class="text-xs">
+                    Your Strava 2025 rewind will be available on the 24th of December.
+                </div>
+            </div>
         </div>
     
 </body></html>
