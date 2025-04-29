@@ -31,19 +31,4 @@ final readonly class OllamaConfig
     {
         return $this->url;
     }
-
-    public function toLLPhant(): \LLPhant\OllamaConfig
-    {
-        $config = new \LLPhant\OllamaConfig();
-        $config->model = $this->getModel();
-        $config->url = (string) $this->getUrl();
-        $config->modelOptions = [
-            'options' => [
-                // Increasing the temperature will make the model answer more creatively. (Default: 0.8)
-                'temperature' => 0,
-            ],
-        ];
-
-        return $config;
-    }
 }

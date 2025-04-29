@@ -38,6 +38,18 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "inspector-apm/inspector-symfony": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.4",
+            "ref": "60ac12d92b25c43830fdf25922e53467058feab1"
+        },
+        "files": [
+            "config/packages/inspector.yaml"
+        ]
+    },
     "league/flysystem-bundle": {
         "version": "3.3",
         "recipe": {
@@ -218,6 +230,18 @@
         "files": [
             "config/packages/twig.yaml",
             "templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "7.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "7.0",
+            "ref": "8c1c4e28d26a124b0bb273f537ca8ce443472bfd"
+        },
+        "files": [
+            "config/packages/validator.yaml"
         ]
     },
     "symfony/web-profiler-bundle": {

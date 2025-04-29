@@ -30,6 +30,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^3.3",
         "guzzlehttp/guzzle": "*",
+        "inspector-apm/inspector-symfony": "^1.8",
+        "inspector-apm/neuron-ai": "^1.9",
         "league/flysystem-bundle": "^3.3",
         "league/flysystem-memory": "^3.29",
         "moneyphp/money": "^4.5",
@@ -51,7 +53,6 @@
         "symfony/translation": "7.2.*",
         "symfony/twig-bundle": "7.2.*",
         "symfony/yaml": "7.2.*",
-        "theodo-group/llphant": "^0.9.5",
         "twig/twig": "*"
     },
     "require-dev": {
