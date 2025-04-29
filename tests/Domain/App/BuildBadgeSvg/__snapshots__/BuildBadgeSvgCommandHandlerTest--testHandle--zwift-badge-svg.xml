@@ -17,7 +17,7 @@
     <g transform="translate(12, 25)" fill="#111111" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', Sans-Serif" font-size="64px" font-weight="800">
       <svg width="120px" height="120px" viewBox="-25 -25 400 400">
         <circle stroke="#FC5201" stroke-opacity="0.2" cx="175" cy="175" r="175" stroke-width="30" fill="none"/>
-        <circle class="dashed" stroke="#FC5201" stroke-opacity="0.9" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" stroke-dasharray="1100" stroke-width="30" stroke-dashoffset="220.5" stroke-linecap="round" fill="none"/>
+        <circle class="dashed" stroke="#FC5201" stroke-opacity="0.9" transform="rotate(-90 175 175)" cx="175" cy="175" r="175" stroke-dasharray="1100" stroke-width="30" stroke-dashoffset="372.97575" stroke-linecap="round" fill="none"/>
         <text xmlns="http://www.w3.org/2000/svg" x="50%" y="50%" dx="-25" dy="-25" alignment-baseline="central" dominant-baseline="central" text-anchor="middle">
                     Level 80
                 </text>

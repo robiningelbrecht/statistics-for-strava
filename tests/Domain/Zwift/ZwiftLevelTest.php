@@ -16,11 +16,19 @@ class ZwiftLevelTest extends TestCase
     public function testGetProgress(): void
     {
         $this->assertEquals(
+            1.0,
+            ZwiftLevel::fromInt(1)->getProgressPercentage()
+        );
+        $this->assertEquals(
             100,
             ZwiftLevel::fromInt(100)->getProgressPercentage()
         );
         $this->assertEquals(
-            80,
+            96,
+            ZwiftLevel::fromInt(99)->getProgressPercentage()
+        );
+        $this->assertEquals(
+            66.17,
             ZwiftLevel::fromInt(80)->getProgressPercentage()
         );
     }
