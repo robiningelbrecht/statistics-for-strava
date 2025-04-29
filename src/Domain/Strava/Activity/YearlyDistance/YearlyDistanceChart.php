@@ -101,7 +101,7 @@ final readonly class YearlyDistanceChart
             'grid' => [
                 'left' => '40px',
                 'right' => '4%',
-                'bottom' => '3%',
+                'bottom' => '50px',
                 'containLabel' => true,
             ],
             'xAxis' => [
@@ -130,6 +130,30 @@ final readonly class YearlyDistanceChart
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 50,
+                ],
+            ],
+            'toolbox' => [
+                'show' => true,
+                'feature' => [
+                    'dataZoom' => [
+                        'show' => true,
+                        'yAxisIndex' => 'none',
+                    ],
+                    'restore' => [
+                        'show' => true,
+                    ],
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'inside',
+                    'start' => 0,
+                    'end' => 100,
+                    'brushSelect' => true,
+                    'zoomLock' => false,
+                    'zoomOnMouseWheel' => false,
+                ],
+                [
                 ],
             ],
             'series' => array_values($series),

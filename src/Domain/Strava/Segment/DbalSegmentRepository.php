@@ -8,7 +8,7 @@ use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Repository\Pagination;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class DbalSegmentRepository extends DbalRepository implements SegmentRepository
@@ -73,7 +73,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             segmentId: SegmentId::fromString($result['segmentId']),
             name: Name::fromString($result['name']),
             sportType: SportType::from($result['sportType']),
-            distance: Kilometer::from($result['distance'] / 1000),
+            distance: Meter::from($result['distance'])->toKilometer(),
             maxGradient: $result['maxGradient'],
             isFavourite: (bool) $result['isFavourite'],
             deviceName: $result['deviceName']

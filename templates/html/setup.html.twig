@@ -1,8 +1,18 @@
+{% autoescape false %}
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link href="assets/flowbite/tailwind.min.css" rel="stylesheet"/>
+    <title>{{ "Statistics for Strava"|trans }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
+    <link href="{{ asset('assets/flowbite/tailwind.min.css') }}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-50 h-screen flex justify-center items-center">
+{{ renderComponent('top-nav-bar') }}
 <div>
     <p class="text-2xl font-semibold pb-5">Looks like you still need to import your Strava data</p>
 
@@ -15,10 +25,11 @@
             <dt class="mb-1 text-gray-500 md:text-lg">Build static HTML files</dt>
             <dd class="font-semibold"><code>docker compose exec app bin/console app:strava:build-files</code></dd>
             <dd class="mt-4 p-4 border border-yellow-800 text-sm text-yellow-800 rounded-lg bg-yellow-50">
-                <span class="font-medium">⚠️</span>You can only build these files if all your Strava data has been imported
+                <span class="font-medium">⚠️</span>You can only build these files if at least one Strava activity has been imported
             </dd>
         </div>
     </dl>
 </div>
 </body>
 </html>
+{% endautoescape %}

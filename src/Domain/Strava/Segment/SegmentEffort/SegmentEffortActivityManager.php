@@ -8,7 +8,7 @@ use App\Domain\Strava\Activity\ActivityWasDeleted;
 use App\Domain\Strava\Segment\DeleteOrphanedSegments\DeleteOrphanedSegments;
 use App\Domain\Strava\Segment\SegmentEffort\DeleteActivitySegmentEfforts\DeleteActivitySegmentEfforts;
 use App\Domain\Strava\Segment\SegmentEffort\DeleteActivitySegmentEfforts\SegmentEffortsWereDeleted;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 final readonly class SegmentEffortActivityManager

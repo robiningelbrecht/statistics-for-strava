@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Strava;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 class SportTypeTest extends ContainerTestCase
@@ -28,6 +29,15 @@ class SportTypeTest extends ContainerTestCase
         $snapshot = [];
         foreach (SportType::cases() as $sportType) {
             $snapshot[] = $sportType->getTemplateName();
+        }
+        $this->assertMatchesJsonSnapshot($snapshot);
+    }
+
+    public function testGetTranslations(): void
+    {
+        $snapshot = [];
+        foreach (SportType::cases() as $sportType) {
+            $snapshot[] = $sportType->trans($this->getContainer()->get(TranslatorInterface::class));
         }
         $this->assertMatchesJsonSnapshot($snapshot);
     }

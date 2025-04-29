@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear;
 
-use App\Domain\Strava\Activity\Activities;
-use App\Domain\Strava\Activity\Activity;
+use App\Domain\Strava\Gear\FindGearStatsPerDay\FindGearStatsPerDayResponse;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -15,7 +14,8 @@ final readonly class DistanceOverTimePerGearChart
 {
     private function __construct(
         private Gears $gears,
-        private Activities $activities,
+        private FindGearStatsPerDayResponse $gearStats,
+        private SerializableDateTime $startDate,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
@@ -23,15 +23,17 @@ final readonly class DistanceOverTimePerGearChart
     }
 
     public static function create(
-        Gears $gearCollection,
-        Activities $activityCollection,
+        Gears $gears,
+        FindGearStatsPerDayResponse $gearStats,
+        SerializableDateTime $startDate,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
         SerializableDateTime $now,
     ): self {
         return new self(
-            gears: $gearCollection,
-            activities: $activityCollection,
+            gears: $gears,
+            gearStats: $gearStats,
+            startDate: $startDate,
             unitSystem: $unitSystem,
             translator: $translator,
             now: $now
@@ -39,7 +41,7 @@ final readonly class DistanceOverTimePerGearChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
@@ -47,21 +49,21 @@ final readonly class DistanceOverTimePerGearChart
         $gears = $this->gears->sortByIsRetired();
 
         $period = new \DatePeriod(
-            start: $this->activities->getFirstActivityStartDate(),
+            start: $this->startDate,
             interval: new \DateInterval('P1D'),
             end: $this->now
         );
 
         foreach ($gears as $gear) {
-            $runningTotal = 0;
+            $previousDistance = Kilometer::zero();
             foreach ($period as $date) {
                 $date = SerializableDateTime::fromDateTimeImmutable($date);
-                $activitiesOnThisDay = $this->activities->filterOnDate($date)->filter(fn (Activity $activity) => $activity->getGearId() == $gear->getId());
 
-                $runningTotal += $activitiesOnThisDay->sum(
-                    fn (Activity $activity) => $activity->getDistance()->toUnitSystem($this->unitSystem)->toFloat()
-                );
-                $distanceOverTimePerGear[(string) $gear->getId()][] = [$date->format('Y-m-d'), round($runningTotal)];
+                if (!$distance = $this->gearStats->getDistanceFor($gear->getId(), $date)) {
+                    $distance = $previousDistance;
+                }
+                $previousDistance = $distance;
+                $distanceOverTimePerGear[(string) $gear->getId()][] = [$date->format('Y-m-d'), round($distance->toInt())];
             }
         }
 
@@ -69,16 +71,19 @@ final readonly class DistanceOverTimePerGearChart
         $selectedSeries = [];
         /** @var Gear $gear */
         foreach ($gears as $gear) {
-            $selectedSeries[$gear->getName()] = !$gear->isRetired();
+            $gearName = $gear->getSanitizedName();
+            $selectedSeries[$gearName] = !$gear->isRetired();
 
             $series[] = [
-                'name' => $gear->getName(),
+                'name' => $gearName,
                 'type' => 'line',
                 'smooth' => true,
                 'showSymbol' => false,
                 'data' => $distanceOverTimePerGear[(string) $gear->getId()],
             ];
         }
+
+        arsort($selectedSeries, SORT_NUMERIC);
 
         return [
             'backgroundColor' => '#ffffff',
@@ -95,6 +100,27 @@ final readonly class DistanceOverTimePerGearChart
             ],
             'legend' => [
                 'selected' => $selectedSeries,
+                'data' => array_map(
+                    fn (string $gearName) => [
+                        'name' => $gearName,
+                    ],
+                    array_keys($selectedSeries),
+                ),
+                'type' => 'scroll',
+                'pageButtonItemGap' => 2,
+                'pageIconSize' => 10,
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'inside',
+                    'start' => 0,
+                    'end' => 100,
+                    'brushSelect' => true,
+                    'zoomLock' => false,
+                    'zoomOnMouseWheel' => false,
+                ],
+                [
+                ],
             ],
             'xAxis' => [
                 [

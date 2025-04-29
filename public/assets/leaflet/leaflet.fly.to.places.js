@@ -3,11 +3,13 @@ L.Control.FlyToPlaces = L.Control.extend({
         position: 'topright',
         places: {}
     },
-    onAdd: function(map) {
+    onAdd: function (map) {
         const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--fly-to-places');
         this.options.places.forEach((place) => {
+            const countryCode = place.countryCode.toLowerCase();
             const item = L.DomUtil.create('li', '', container);
-            item.innerHTML = '<img src="assets/images/flags/'+place.name.toLowerCase()+'.svg" width="20" title="'+place.name+'" />'
+
+            item.innerHTML = '<img src="assets/images/flags/' + countryCode + '.svg" width="20" title="' + window.statisticsForStrava.countries[countryCode.toUpperCase()] + '" />'
             // Prevent click events propagation to map.
             L.DomEvent.disableClickPropagation(item);
             L.DomEvent.on(item, 'click', function () {
@@ -16,8 +18,7 @@ L.Control.FlyToPlaces = L.Control.extend({
         });
 
         // Prevent right click event propagation to map.
-        L.DomEvent.on(container, 'contextmenu', function (ev)
-        {
+        L.DomEvent.on(container, 'contextmenu', function (ev) {
             L.DomEvent.stopPropagation(ev);
         });
 
@@ -26,11 +27,11 @@ L.Control.FlyToPlaces = L.Control.extend({
 
         return container;
     },
-    onRemove: function() {
+    onRemove: function () {
 
     }
 });
 
-L.control.flyToPlaces = function(opts) {
+L.control.flyToPlaces = function (opts) {
     return new L.Control.FlyToPlaces(opts);
 }

@@ -40,3 +40,15 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
 
     return s.join(dec)
 }
+
+export const resolveEchartsCallbacks = (chartOptions, path) => {
+    const keys = path.split('.');
+    let obj = chartOptions;
+    for (let i = 0; i < keys.length - 1; i++) {
+        obj = obj?.[keys[i]];
+    }
+    const lastKey = keys[keys.length - 1];
+    if (obj?.[lastKey] && obj[lastKey] in window.statisticsForStrava.callbacks) {
+        obj[lastKey] = window.statisticsForStrava.callbacks[obj[lastKey]];
+    }
+}

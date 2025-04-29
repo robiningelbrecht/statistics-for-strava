@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigration;
 use App\Infrastructure\Doctrine\Migrations\MigrateToVersion20250118164026\MigrateToVersion20250118164026;
 use Doctrine\DBAL\Schema\Schema;

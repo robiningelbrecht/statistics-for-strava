@@ -1,0 +1,28 @@
+You enabled the gear maintenance feature with the following configuration:
+Hashtag prefix: #sfs
+You added 2 components:
+  - Tag: #sfs-chain
+    Label: Some cool chain
+    Attached to: b123456
+    Image: chain.png
+    Maintenance tasks:
+      - Tag: #sfs-chain-lubed
+        Label: Lube
+        Interval: 500 km
+      - Tag: #sfs-chain-cleaned
+        Label: Clean
+        Interval: 200 hours
+      - Tag: #sfs-chain-replaced
+        Label: Replace
+        Interval: 500 days
+  - Tag: #sfs-chain-two
+    Label: Some cool chain
+    Attached to: b123456
+    Image: chain.png
+    Maintenance tasks:
+      - Tag: #sfs-chain-two-lubed
+        Label: Lube
+        Interval: 500 km
+You configured following gear:
+  - Gear ID: b123456
+    Image: gear1.png

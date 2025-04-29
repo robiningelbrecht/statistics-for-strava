@@ -9,7 +9,7 @@ use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;

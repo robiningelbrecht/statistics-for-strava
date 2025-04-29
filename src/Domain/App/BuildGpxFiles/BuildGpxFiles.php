@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildGpxFiles;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
-final class BuildGpxFiles extends DomainCommand
+final readonly class BuildGpxFiles extends DomainCommand
 {
 }

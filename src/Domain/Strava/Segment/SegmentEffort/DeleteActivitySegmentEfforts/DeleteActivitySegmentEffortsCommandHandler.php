@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Segment\SegmentEffort\DeleteActivitySegmentEfforts;
 
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 
 final readonly class DeleteActivitySegmentEffortsCommandHandler implements CommandHandler
 {

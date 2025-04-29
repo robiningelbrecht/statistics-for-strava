@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\Split\DeleteActivitySplits;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
-final class DeleteActivitySplits extends DomainCommand
+final readonly class DeleteActivitySplits extends DomainCommand
 {
     public function __construct(
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
     ) {
     }
 

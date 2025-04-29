@@ -2,13 +2,13 @@
 
 namespace App\Domain\Strava\Gear\ImportGear;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class ImportGear extends DomainCommand
+final readonly class ImportGear extends DomainCommand
 {
     public function __construct(
-        private readonly OutputInterface $output,
+        private OutputInterface $output,
     ) {
     }
 

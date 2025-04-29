@@ -11,10 +11,10 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\Year;
 use Doctrine\DBAL\Connection;
 
 final class DbalActivityRepository implements ActivityRepository
@@ -38,6 +38,26 @@ final class DbalActivityRepository implements ActivityRepository
 
         if (!$result = $queryBuilder->executeQuery()->fetchAssociative()) {
             throw new EntityNotFound(sprintf('Activity "%s" not found', $activityId));
+        }
+
+        return $this->hydrate($result);
+    }
+
+    public function findLongestActivityForYear(Year $year): Activity
+    {
+        if (!$result = $this->connection->executeQuery(
+            <<<SQL
+                SELECT *
+                FROM Activity
+                WHERE strftime('%Y',startDateTime) = :year
+                ORDER BY movingTimeInSeconds DESC
+                LIMIT 1
+            SQL,
+            [
+                'year' => (string) $year,
+            ]
+        )->fetchAssociative()) {
+            throw new EntityNotFound('Could not determine longest activity');
         }
 
         return $this->hydrate($result);
@@ -126,7 +146,7 @@ final class DbalActivityRepository implements ActivityRepository
             sportType: SportType::from($result['sportType']),
             name: $result['name'],
             description: $result['description'] ?: '',
-            distance: Kilometer::from($result['distance'] / 1000),
+            distance: Meter::from($result['distance'])->toKilometer(),
             elevation: Meter::from($result['elevation'] ?: 0),
             startingCoordinate: Coordinate::createFromOptionalLatAndLng(
                 Latitude::fromOptionalString((string) $result['startingCoordinateLatitude']),
@@ -151,6 +171,7 @@ final class DbalActivityRepository implements ActivityRepository
             gearId: GearId::fromOptionalString($result['gearId']),
             gearName: $result['gearName'],
             isCommute: (bool) $result['isCommute'],
+            workoutType: WorkoutType::tryFrom($result['workoutType'] ?? ''),
         );
     }
 }

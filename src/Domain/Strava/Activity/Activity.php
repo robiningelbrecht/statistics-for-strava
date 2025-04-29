@@ -37,6 +37,8 @@ final class Activity
 
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
+    /** @var string[] */
+    private array $maintenanceTags = [];
 
     #[ORM\Column(type: 'json', nullable: true)]
     // @phpstan-ignore-next-line
@@ -88,7 +90,7 @@ final class Activity
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
         #[ORM\Column(type: 'integer')]
-        private readonly int $totalImageCount,
+        private int $totalImageCount,
         #[ORM\Column(type: 'text', nullable: true)]
         private array $localImagePaths,
         #[ORM\Column(type: 'text', nullable: true)]
@@ -102,7 +104,9 @@ final class Activity
         #[ORM\Column(type: 'string', nullable: true)]
         private ?string $gearName,
         #[ORM\Column(type: 'boolean', nullable: true)]
-        private readonly bool $isCommute,
+        private bool $isCommute,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private readonly ?WorkoutType $workoutType,
     ) {
     }
 
@@ -151,6 +155,7 @@ final class Activity
             gearId: $gearId,
             gearName: $gearName,
             isCommute: $rawData['commute'] ?? false,
+            workoutType: WorkoutType::fromStravaInt($rawData['workout_type'] ?? null),
         );
     }
 
@@ -185,6 +190,7 @@ final class Activity
         ?GearId $gearId,
         ?string $gearName,
         bool $isCommute,
+        ?WorkoutType $workoutType,
     ): self {
         return new self(
             activityId: $activityId,
@@ -214,6 +220,7 @@ final class Activity
             gearId: $gearId,
             gearName: $gearName,
             isCommute: $isCommute,
+            workoutType: $workoutType
         );
     }
 
@@ -321,7 +328,10 @@ final class Activity
      */
     public function getLocalImagePaths(): array
     {
-        return $this->localImagePaths;
+        return array_map(
+            fn (string $path) => str_starts_with($path, '/') ? $path : '/'.$path,
+            $this->localImagePaths
+        );
     }
 
     /**
@@ -330,6 +340,7 @@ final class Activity
     public function updateLocalImagePaths(array $localImagePaths): void
     {
         $this->localImagePaths = $localImagePaths;
+        $this->totalImageCount = count($this->localImagePaths);
     }
 
     public function getTotalImageCount(): int
@@ -337,9 +348,23 @@ final class Activity
         return $this->totalImageCount;
     }
 
-    public function getName(): string
+    public function getOriginalName(): string
     {
         return trim(str_replace('Zwift - ', '', $this->name));
+    }
+
+    public function getName(): string
+    {
+        if (empty($this->maintenanceTags)) {
+            return $this->getOriginalName();
+        }
+
+        return trim(str_replace($this->maintenanceTags, '', $this->getOriginalName()));
+    }
+
+    public function getSanitizedName(): string
+    {
+        return htmlspecialchars($this->getName());
     }
 
     public function updateName(string $name): self
@@ -452,6 +477,11 @@ final class Activity
         return $this->movingTimeInSeconds;
     }
 
+    public function getMovingTimeInHours(): float
+    {
+        return round($this->movingTimeInSeconds / 3600, 1);
+    }
+
     public function updateMovingTimeInSeconds(int $movingTimeInSeconds): self
     {
         $this->movingTimeInSeconds = $movingTimeInSeconds;
@@ -489,6 +519,18 @@ final class Activity
     public function isCommute(): bool
     {
         return $this->isCommute;
+    }
+
+    public function updateCommute(bool $isCommute): self
+    {
+        $this->isCommute = $isCommute;
+
+        return $this;
+    }
+
+    public function getWorkoutType(): ?WorkoutType
+    {
+        return $this->workoutType;
     }
 
     public function getCarbonSaved(): Kilogram
@@ -538,6 +580,14 @@ final class Activity
     }
 
     /**
+     * @param string[] $tags
+     */
+    public function enrichWithMaintenanceTags(array $tags): void
+    {
+        $this->maintenanceTags = $tags;
+    }
+
+    /**
      * @return string[]
      */
     public function getSearchables(): array
@@ -550,10 +600,14 @@ final class Activity
      */
     public function getFilterables(): array
     {
-        return [
+        return array_filter([
             'sportType' => $this->getSportType()->value,
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
-        ];
+            'countryCode' => $this->getLocation()?->getCountryCode(),
+            'isCommute' => $this->isCommute() ? 'true' : 'false',
+            'gear' => $this->getGearId() ?? 'gear-none',
+            'workoutType' => $this->getWorkoutType()?->value,
+        ]);
     }
 
     /**

@@ -16,7 +16,7 @@ use League\Flysystem\FilesystemOperator;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 
-#[WithMonologChannel('strava-app')]
+#[WithMonologChannel('strava-api')]
 class Strava
 {
     private static ?string $cachedAccessToken = null;
@@ -267,7 +267,7 @@ class Strava
         $challenges = [];
         foreach ($matches['matches'] as $match) {
             $match = str_replace(["\r", "\n"], '', $match);
-            if (!preg_match('/<a[\s\S]*>(?<match>.*?)<\/a><\/h6>/', $match, $challengeName)) {
+            if (!preg_match('/<a[\s\S]*>(?<match>.*?)<\/a>[\s\S]*<\/h6>/', $match, $challengeName)) {
                 throw new \RuntimeException('Could not fetch Strava challenge name');
             }
             if (!preg_match('/class=\'centered\'[\s\S]*title=\'(?<match>.*?)\'>/', $match, $teaser)) {
@@ -279,7 +279,7 @@ class Strava
             if (!preg_match('/<a str-on="click" [\s\S]*href="\/challenges\/(?<match>.*?)"[\s\S]*<\/a>/', $match, $url)) {
                 throw new \RuntimeException('Could not fetch Strava challenge url');
             }
-            if (!preg_match('/<img[\s\S]*data-trophy-challenge-id="(?<match>.*?)" src="[\s\S]*"[\s\S]*\/>/', $match, $challengeId)) {
+            if (!preg_match('/<img[\s\S]*data-trophy-challenge-id="(?<match>.*?)"[\s\S]*src="[\s\S]*"[\s\S]*\/>/', $match, $challengeId)) {
                 throw new \RuntimeException('Could not fetch Strava challenge challengeId');
             }
             if (!preg_match('/<time class=\'timestamp\'>(?<match>.*?)<\/time>/', $match, $completedOn)) {
@@ -304,7 +304,9 @@ class Strava
 
     public function downloadImage(string $uri): string
     {
-        $response = $this->client->request('GET', $uri);
+        $response = $this->client->request('GET', $uri, [
+            RequestOptions::DECODE_CONTENT => false,
+        ]);
 
         return $response->getBody()->getContents();
     }

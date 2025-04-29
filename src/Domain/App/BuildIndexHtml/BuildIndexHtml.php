@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildIndexHtml;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class BuildIndexHtml extends DomainCommand
+final readonly class BuildIndexHtml extends DomainCommand
 {
     public function __construct(
-        private readonly SerializableDateTime $now,
+        private SerializableDateTime $now,
     ) {
     }
 

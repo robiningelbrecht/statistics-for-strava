@@ -1,0 +1,40 @@
+{% autoescape false %}
+<div class="h-62 w-full">
+    {% if leaflet %}
+        {% set leafletOptions = {
+            'routes': leaflet.routes,
+            'tileLayer': leaflet.map.getTileLayer(),
+            'minZoom': leaflet.map.getMinZoom(),
+            'maxZoom': leaflet.map.getMaxZoom(),
+            'imageOverlay': leaflet.map.getOverlayImageUrl(),
+            'bounds': leaflet.map.getBounds(),
+        } %}
+        <div class="h-48" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+             data-leaflet='{{ leafletOptions|json_encode }}'></div>
+    {% else %}
+        <div class="flex h-48 justify-center">
+            <img class="w-full object-cover rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
+                 data-src="assets/images/maps/not-found.jpg"
+                 alt="No map"/>
+        </div>
+    {% endif %}
+    <div class="mt-4 flex justify-around text-center">
+        <div>
+            <div class="text-xs">{{ "Distance"|trans }}</div>
+            <div class="font-medium">
+                {{ renderComponent('measurement', {'measurement': activity.getDistance(), 'precision': activity.getSportType().getActivityType().getDistancePrecision()}) }}
+            </div>
+        </div>
+        <div>
+            <div class="text-xs">{{ "Elevation"|trans }}</div>
+            {{ renderComponent('measurement', {'measurement': activity.getElevation(), 'precision': 0}) }}
+        </div>
+        <div>
+            <div class="text-xs">{{ "Time"|trans }}</div>
+            <div class="font-medium">
+                {{ activity.getMovingTimeInHours() }}<span class="text-xs">{{ "hrs"|trans }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endautoescape %}

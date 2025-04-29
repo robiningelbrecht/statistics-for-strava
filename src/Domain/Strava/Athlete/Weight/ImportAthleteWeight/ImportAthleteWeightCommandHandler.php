@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Athlete\Weight\ImportAthleteWeight;
 
 use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class ImportAthleteWeightCommandHandler implements CommandHandler
 {
     public function __construct(
-        private AthleteWeightsFromEnvFile $athleteWeightsFromEnvFile,
+        private AthleteWeightHistoryFromEnvFile $athleteWeightHistoryFromEnvFile,
         private AthleteWeightRepository $athleteWeightRepository,
         private UnitSystem $unitSystem,
     ) {
@@ -25,9 +25,9 @@ final readonly class ImportAthleteWeightCommandHandler implements CommandHandler
 
         $this->athleteWeightRepository->removeAll();
 
-        $athleteWeights = $this->athleteWeightsFromEnvFile->getAll();
+        $athleteWeights = $this->athleteWeightHistoryFromEnvFile->getAll();
         if ($athleteWeights->isEmpty()) {
-            $command->getOutput()->writeln('No athlete weights found. Will not be able to calculate relative power outputs');
+            $command->getOutput()->writeln('No athlete weight history found. Will not be able to calculate relative power outputs');
 
             return;
         }

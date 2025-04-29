@@ -4,7 +4,7 @@ export default function Heatmap($heatmapWrapper) {
     const mainFeatureGroup = L.featureGroup();
     let placesControl = null;
     const map = L.map($heatmap, {
-        scrollWheelZoom: false,
+        scrollWheelZoom: true,
         minZoom: 1,
         maxZoom: 21,
     });
@@ -17,7 +17,8 @@ export default function Heatmap($heatmapWrapper) {
             return counts;
         }, {});
 
-        return Object.keys(stateCounts).reduce((a, b) => stateCounts[a] > stateCounts[b] ? a : b, '');
+        const mostActiveState = Object.keys(stateCounts).reduce((a, b) => stateCounts[a] > stateCounts[b] ? a : b, '');
+        return mostActiveState ? mostActiveState : null;
     };
 
     const filterOnActiveRoutes = function (routes) {
@@ -155,7 +156,7 @@ export default function Heatmap($heatmapWrapper) {
         countryFeatureGroups.forEach((featureGroup, countryCode) => {
             featureGroup.addTo(mainFeatureGroup);
             places.push({
-                name: countryCode,
+                countryCode: countryCode,
                 bounds: featureGroup.getBounds()
             });
         });

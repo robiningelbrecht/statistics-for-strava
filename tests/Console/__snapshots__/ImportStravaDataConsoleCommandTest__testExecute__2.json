@@ -30,6 +30,12 @@
         }
     },
     {
+        "commandName": "App\\Domain\\Strava\\Activity\\BestEffort\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Domain\\Strava\\Segment\\ImportSegments\\ImportSegments",
         "payload": {
             "output": {}
@@ -55,6 +61,12 @@
     },
     {
         "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CombinedStream\\CalculateCombinedStreams\\CalculateCombinedStreams",
         "payload": {
             "output": {}
         }

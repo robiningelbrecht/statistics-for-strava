@@ -191,6 +191,19 @@ enum SportType: string implements TranslatableInterface
         };
     }
 
+    public function supportsBestEffortsStats(): bool
+    {
+        return in_array($this, [
+            self::RIDE,
+            self::MOUNTAIN_BIKE_RIDE,
+            self::GRAVEL_RIDE,
+            self::VIRTUAL_RIDE,
+            self::RUN,
+            self::TRAIL_RUN,
+            self::VIRTUAL_RUN,
+        ]);
+    }
+
     public function supportsReverseGeocoding(): bool
     {
         return !in_array($this, [
@@ -212,7 +225,6 @@ enum SportType: string implements TranslatableInterface
             self::ICE_SKATE,
             self::YOGA,
             self::STAIR_STEPPER,
-            self::STAND_UP_PADDLING,
         ]);
     }
 

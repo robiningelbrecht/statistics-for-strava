@@ -1,0 +1,8 @@
+[
+    {
+        "activityId": "activity-test-5",
+        "unitSystem": "metric",
+        "streamTypes": "distance,altitude,cadence",
+        "data": "[[0,2,3]]"
+    }
+]

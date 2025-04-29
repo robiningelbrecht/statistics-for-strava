@@ -9,7 +9,7 @@ use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
-final readonly class Kilometer implements Unit, Metric
+final readonly class Kilometer implements ConvertableToMeter, Metric
 {
     use MeasurementFromFloat;
     public const float FACTOR_TO_MILES = 0.621371;

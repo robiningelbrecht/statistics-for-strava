@@ -8,8 +8,8 @@ use App\Domain\Strava\Athlete\Athlete;
 use App\Domain\Strava\Athlete\AthleteBirthDate;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Strava;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 
 final readonly class ImportAthleteCommandHandler implements CommandHandler
 {

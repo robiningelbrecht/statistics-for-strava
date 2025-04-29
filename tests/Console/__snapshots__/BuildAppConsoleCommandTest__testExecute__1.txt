@@ -7,9 +7,11 @@ Building App...
   => Building gpx files
   => Building monthly-stats.html
   => Building gear-stats.html
+  => Building gear-maintenance.html
   => Building eddington.html
   => Building segments.html
   => Building heatmap.html
+  => Building rewind.html
   => Building challenges.html
   => Building photos.html
   => Building badge.svg

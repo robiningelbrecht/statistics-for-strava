@@ -17,4 +17,20 @@ class ActivityTest extends TestCase
 
         $this->assertMatchesJsonSnapshot(Json::encode($activity->getRecordedEvents()));
     }
+
+    public function testGetName(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withName('Test Activity #hashtag')
+            ->build();
+
+        $this->assertEquals('Test Activity #hashtag', $activity->getName());
+
+        $activity = ActivityBuilder::fromDefaults()
+            ->withName('Test Activity #hashtag #another-one')
+            ->build();
+        $activity->enrichWithMaintenanceTags(['#hashtag', '#another-one']);
+
+        $this->assertEquals('Test Activity', $activity->getName());
+    }
 }

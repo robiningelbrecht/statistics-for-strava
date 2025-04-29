@@ -39,8 +39,10 @@
         "symfony/asset": "7.2.*",
         "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
+        "symfony/expression-language": "7.2.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.2.*",
+        "symfony/intl": "7.2.*",
         "symfony/lock": "7.2.*",
         "symfony/messenger": "7.2.*",
         "symfony/monolog-bundle": "*",
@@ -55,11 +57,13 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpstan/phpstan": "^2.0",
-        "phpunit/phpunit": "^11.4",
+        "phpunit/phpunit": "^12",
         "robiningelbrecht/phpunit-coverage-tools": "^1.8",
         "robiningelbrecht/phpunit-pretty-print": "^1.3",
         "spatie/phpunit-snapshot-assertions": "^5.1",
         "symfony/phpunit-bridge": "^7.1",
+        "symfony/stopwatch": "7.2.*",
+        "symfony/web-profiler-bundle": "7.2.*",
         "tomasvotruba/type-coverage": "^2.0"
     },
     "config": {
@@ -96,11 +100,14 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@compress-intl"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
-        ]
+            "@auto-scripts",
+            "@compress-intl"
+        ],
+        "compress-intl": "php ./vendor/symfony/intl/Resources/bin/compress"
     },
     "conflict": {
         "symfony/symfony": "*"

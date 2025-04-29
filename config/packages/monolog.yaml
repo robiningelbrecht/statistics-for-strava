@@ -1,14 +1,20 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
-        - strava-app
+        - strava-api
     handlers:
-        strava-app:
+        strava-api:
             type:  rotating_file
-            max_files: 1
-            path: "%kernel.project_dir%/storage/files/strava-app.log"
+            max_files: 5
+            path: "%kernel.project_dir%/storage/files/logs/strava-api.log"
             level: debug
-            channels: ["strava-app"]
+            channels: ["strava-api"]
+        console-output:
+            type: rotating_file
+            max_files: 5
+            path: "%kernel.project_dir%/storage/files/logs/console-output.log"
+            level: debug
+            channels: ["console-output"]
 
 when@dev:
     monolog:
@@ -17,11 +23,11 @@ when@dev:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event", "!strava-app"]
+                channels: ["!event", "!strava-api"]
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: ["!event", "!doctrine", "!console", "!strava-app"]
+                channels: ["!event", "!doctrine", "!console", "!strava-api"]
 
 when@test:
     monolog:
@@ -31,7 +37,7 @@ when@test:
                 action_level: error
                 handler: nested
                 excluded_http_codes: [404, 405]
-                channels: ["!event", "!strava-app"]
+                channels: ["!event", "!strava-api"]
             nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
@@ -54,7 +60,7 @@ when@prod:
             console:
                 type: console
                 process_psr_3_messages: false
-                channels: ["!event", "!doctrine","!strava-app"]
+                channels: ["!event", "!doctrine","!strava-api"]
             deprecation:
                 type: stream
                 channels: [deprecation]

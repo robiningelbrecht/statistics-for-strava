@@ -5,7 +5,7 @@ namespace App\Tests\Domain\App\ConfigureAppLocale;
 use App\Domain\App\BuildIndexHtml\BuildIndexHtml;
 use App\Domain\App\ConfigureAppLocale\ConfigureAppLocale;
 use App\Domain\App\ConfigureAppLocale\ConfigureAppLocaleCommandHandler;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Localisation\Locale;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;

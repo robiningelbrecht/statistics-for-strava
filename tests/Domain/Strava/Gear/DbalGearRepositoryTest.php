@@ -51,9 +51,15 @@ class DbalGearRepositoryTest extends ContainerTestCase
             ->withDistanceInMeter(Meter::from(230))
             ->build();
         $this->gearRepository->save($gearThree);
+        $gearFour = GearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed(4))
+            ->withDistanceInMeter(Meter::from(100230))
+            ->withIsRetired(true)
+            ->build();
+        $this->gearRepository->save($gearFour);
 
         $this->assertEquals(
-            Gears::fromArray([$gearTwo, $gearOne, $gearThree]),
+            Gears::fromArray([$gearTwo, $gearOne, $gearThree, $gearFour]),
             $this->gearRepository->findAll()
         );
     }

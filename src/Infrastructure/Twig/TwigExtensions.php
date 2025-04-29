@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Twig;
 
+use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Twig\Environment;
@@ -15,6 +16,7 @@ final class TwigExtensions extends AbstractExtension
         private readonly Environment $twig,
         private readonly UnitSystem $unitSystem,
         private readonly DateAndTimeFormat $dateAndTimeFormat,
+        private readonly MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
     ) {
     }
 
@@ -30,6 +32,7 @@ final class TwigExtensions extends AbstractExtension
             new TwigFilter('formatTime', [new FormatDateAndTimeTwigExtension($this->dateAndTimeFormat), 'formatTime']),
             new TwigFilter('convertMeasurement', [new MeasurementTwigExtension($this->unitSystem), 'doConversion']),
             new TwigFilter('formatPace', [new MeasurementTwigExtension($this->unitSystem), 'formatPace']),
+            new TwigFilter('array_values', ArrayTwigExtension::doArrayValues(...)),
         ];
     }
 
@@ -37,10 +40,13 @@ final class TwigExtensions extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('render', [new RenderTemplateTwigExtension($this->twig), 'render']),
             new TwigFunction('renderComponent', [new RenderTemplateTwigExtension($this->twig), 'renderComponent']),
             new TwigFunction('renderSvg', [new RenderTemplateTwigExtension($this->twig), 'renderSvg']),
             new TwigFunction('renderUnitSymbol', [new MeasurementTwigExtension($this->unitSystem), 'getUnitSymbol']),
+            new TwigFunction('calculateMaintenanceTaskProgress', [
+                new MaintenanceTaskTwigExtension($this->maintenanceTaskProgressCalculator),
+                'calculateProgress',
+            ]),
         ];
     }
 }

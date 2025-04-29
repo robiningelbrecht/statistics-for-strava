@@ -6,7 +6,7 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\ImportGear\ImportGear;
 use App\Domain\Strava\Strava;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Gear\GearBuilder;
 use App\Tests\Domain\Strava\SpyStrava;

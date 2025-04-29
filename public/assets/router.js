@@ -4,24 +4,44 @@ export default function Router(app) {
     const menu = document.querySelector('aside');
     const menuItems = document.querySelectorAll("aside li a[data-router-navigate]");
     const mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
-    const defaultRoute = 'dashboard';
+    const defaultRoute = '/dashboard';
+
+    const showLoader = () => {
+        spinner.classList.remove('hidden');
+        spinner.classList.add('flex');
+        appContent.classList.add('hidden');
+    };
+
+    const hideLoader = () => {
+        spinner.classList.remove('flex');
+        spinner.classList.add('hidden');
+        appContent.classList.remove('hidden');
+    };
+
+    const determineActiveMenuLink = (url) => {
+        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + url + '"]');
+        if ($activeMenuLink) {
+            return $activeMenuLink;
+        }
+
+        const newUrl = url.replace(/\/[^\/]*$/, '');
+        if (newUrl === url || newUrl === '') {
+            return null;
+        }
+
+        return determineActiveMenuLink(newUrl);
+    };
 
     const renderContent = async (page, modalId) => {
         if (!menu.hasAttribute('aria-hidden')) {
             // Trigger click event to close mobile nav.
-            mobileNavTriggerEl.dispatchEvent(
-                new MouseEvent('click', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window
-                })
-            );
+            mobileNavTriggerEl.dispatchEvent(new MouseEvent('click', {
+                bubbles: true, cancelable: true, view: window
+            }));
         }
 
         // Show loader.
-        spinner.classList.remove('hidden');
-        spinner.classList.add('flex');
-        appContent.classList.add('hidden');
+        showLoader();
 
         // Load content.
         const response = await fetch(page + '.html', {cache: 'no-store'});
@@ -29,9 +49,7 @@ export default function Router(app) {
         window.scrollTo(0, 0);
 
         // Hide loader.
-        spinner.classList.remove('flex');
-        spinner.classList.add('hidden');
-        appContent.classList.remove('hidden');
+        hideLoader();
 
         app.setAttribute('data-router-current', page);
         app.setAttribute('data-modal-current', modalId);
@@ -39,26 +57,28 @@ export default function Router(app) {
         menuItems.forEach(node => {
             node.setAttribute('aria-selected', 'false')
         });
-        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + page + '"]');
-        if ($activeMenuLink) {
-            $activeMenuLink.setAttribute('aria-selected', 'true');
+
+        const $activeMenuLink = determineActiveMenuLink(page);
+        $activeMenuLink?.setAttribute('aria-selected', 'true')
+        if ($activeMenuLink && $activeMenuLink.hasAttribute('data-router-sub-menu')) {
+            // Make sure the sub menu is opened.
+            $activeMenuLink.closest('ul')?.classList.remove('hidden');
         }
 
         // There might be other nav links on the newly loaded page, make sure they are registered.
         const nav = document.querySelectorAll("nav a[data-router-navigate], main a[data-router-navigate]");
         registerNavItems(nav);
 
+        const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
-            bubbles: true,
-            cancelable: false,
-            detail: {
+            bubbles: true, cancelable: false, detail: {
+                page: fullPageName,
                 modalId: modalId
             }
         }));
-        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + page, {
-            bubbles: true,
-            cancelable: false,
-            detail: {
+        document.dispatchEvent(new CustomEvent('pageWasLoaded.' + fullPageName, {
+            bubbles: true, cancelable: false, detail: {
+                page: fullPageName,
                 modalId: modalId
             }
         }));
@@ -94,8 +114,7 @@ export default function Router(app) {
         const fullRouteWithModal = modal ? route + '#' + modal : route;
 
         window.history.pushState({
-            route: route,
-            modal: modal
+            route: route, modal: modal
         }, "", fullRouteWithModal);
     };
 
@@ -104,10 +123,10 @@ export default function Router(app) {
     }
 
     const currentRoute = () => {
-        return location.pathname.replace('/', '') || defaultRoute;
+        return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
     };
 
-    const boot = ()=> {
+    const boot = () => {
         const route = currentRoute();
         const modal = location.hash.replace('#', '');
 
@@ -115,13 +134,11 @@ export default function Router(app) {
         registerBrowserBackAndForth();
         renderContent(route, modal);
         window.history.replaceState({
-            route: route,
-            modal: modal
+            route: route, modal: modal
         }, "", route + location.hash);
     }
 
     return {
-        boot,
-        pushCurrentRouteToHistoryState
+        boot, pushCurrentRouteToHistoryState
     };
 }

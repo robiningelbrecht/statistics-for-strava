@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\App;
 
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\FileSystem\provideAssertFileSystem;
 use App\Tests\ProvideTestData;

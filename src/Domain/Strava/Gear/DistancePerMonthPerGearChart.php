@@ -67,12 +67,14 @@ final readonly class DistancePerMonthPerGearChart
         $selectedSeries = [];
 
         $unitSymbol = $this->unitSystem->distanceSymbol();
-        foreach ($gears as $gear) {
-            $distanceInLastThreeMonths = array_sum(array_slice($distancePerGearAndMonth[(string) $gear->getId()], -3, 3));
 
-            $selectedSeries[$gear->getName()] = $distanceInLastThreeMonths > 0;
+        foreach ($gears as $gear) {
+            $gearName = $gear->getSanitizedName();
+            $distanceInLastThreeMonths = array_sum(array_slice($distancePerGearAndMonth[(string) $gear->getId()], -3, 3));
+            $selectedSeries[$gearName] = $distanceInLastThreeMonths > 0;
+
             $series[] = [
-                'name' => $gear->getName(),
+                'name' => $gearName,
                 'type' => 'bar',
                 'barGap' => 0,
                 'emphasis' => [
@@ -98,6 +100,8 @@ final readonly class DistancePerMonthPerGearChart
             ];
         }
 
+        arsort($selectedSeries, SORT_NUMERIC);
+
         return [
             'backgroundColor' => '#ffffff',
             'animation' => true,
@@ -116,6 +120,15 @@ final readonly class DistancePerMonthPerGearChart
             ],
             'legend' => [
                 'selected' => $selectedSeries,
+                'data' => array_map(
+                    fn (string $gearName) => [
+                        'name' => $gearName,
+                    ],
+                    array_keys($selectedSeries),
+                ),
+                'type' => 'scroll',
+                'pageButtonItemGap' => 2,
+                'pageIconSize' => 10,
             ],
             'xAxis' => [
                 [

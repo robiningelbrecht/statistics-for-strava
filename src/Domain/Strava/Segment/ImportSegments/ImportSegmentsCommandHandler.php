@@ -13,10 +13,10 @@ use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Segment\SegmentRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
@@ -56,7 +56,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                     segmentId: $segmentId,
                     name: Name::fromString($activitySegment['name']),
                     sportType: $activity->getSportType(),
-                    distance: Kilometer::from($activitySegment['distance'] / 1000),
+                    distance: Meter::from($activitySegment['distance'])->toKilometer(),
                     maxGradient: $activitySegment['maximum_grade'],
                     isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
                     deviceName: $activity->getDeviceName(),
@@ -88,7 +88,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                         ),
                         name: $activitySegmentEffort['name'],
                         elapsedTimeInSeconds: (float) $activitySegmentEffort['elapsed_time'],
-                        distance: Kilometer::from($activitySegment['distance'] / 1000),
+                        distance: Meter::from($activitySegment['distance'])->toKilometer(),
                         averageWatts: isset($activitySegmentEffort['average_watts']) ? (float) $activitySegmentEffort['average_watts'] : null,
                     ));
                     ++$countSegmentEffortsAdded;

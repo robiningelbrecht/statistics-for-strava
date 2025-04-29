@@ -22,7 +22,7 @@ class ExtractTranslationsConsoleCommand extends Command
                     '/var/www/bin/console',
                     'translation:extract',
                     '--force',
-                    '--prefix=""',
+                    '--prefix=',
                     '--format=yaml',
                     '--sort=ASC',
                     $locale->value,

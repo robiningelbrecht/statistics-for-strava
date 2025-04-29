@@ -1,5 +1,6 @@
 @import "tailwindcss" source(none);
 @import "flowbite/src/themes/default";
+
 @source "../../../templates/**/*.html.twig";
 @source "../../../public/app.php";
 @source "../../../public/*.html";
@@ -9,35 +10,49 @@
 @source "../../../node_modules/flowbite";
 
 @theme {
-  --text-xxs: 0.625rem;
-  --color-strava-orange: #F26722;
-  --color-grey-yo: #cccccc;
+    --text-xxs: 0.625rem;
+    --color-strava-orange: #F26722;
+    --color-grey-yo: #cccccc;
 }
 
 @custom-variant aria-asc (&[aria-sort="ascending"]);
 @custom-variant aria-desc (&[aria-sort="descending"]);
 
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
 }
 
 @layer utilities {
-  .leaflet-tile-pane {
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
-  }
+    body .lg-outer {
+        z-index: 1500 !important;
+    }
 
-  .leaflet-control--fly-to-places  {
-     @apply rounded-sm border-2 border-black/[.3] bg-white bg-clip-padding divide-y divide-grey-yo;
+    body .lg-backdrop {
+        z-index: 1490 !important;
+        opacity: 0.9 !important;
+    }
 
-     & li {
-       @apply p-1 cursor-pointer hover:bg-[#f4f4f4];
-     }
-   }
+    .leaflet-tile-pane {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+    }
+
+    #heatmap .leaflet-tile-pane {
+        -webkit-filter: grayscale(100%) brightness(75%);
+        filter: grayscale(100%) brightness(75%);
+    }
+
+    .leaflet-control--fly-to-places {
+        @apply rounded-sm border-2 border-black/[.3] bg-white bg-clip-padding divide-y divide-grey-yo;
+
+        & li {
+            @apply p-1 cursor-pointer hover:bg-[#f4f4f4];
+        }
+    }
 }

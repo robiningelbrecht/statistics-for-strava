@@ -8,11 +8,15 @@ parameters:
     env(SPORT_TYPES_TO_IMPORT): '[]'
     env(ACTIVITY_VISIBILITIES_TO_IMPORT): '[]'
     env(ACTIVITIES_TO_SKIP_DURING_IMPORT): '[]'
+    env(SKIP_ACTIVITIES_RECORDED_BEFORE): ''
     env(NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT): 250
+    env(FTP_HISTORY):
+    env(ATHLETE_WEIGHT_HISTORY):
+    env(MAX_HEART_RATE_FORMULA): 'fox'
+    env(LOCALE): 'en_US'
     env(UNIT_SYSTEM): 'metric'
     env(TIME_FORMAT): 24
     env(DATE_FORMAT): 'DAY-MONTH-YEAR'
-    env(LOCALE): 'en_US'
     env(PROFILE_PICTURE_URL): ''
     env(ZWIFT_LEVEL):
     env(ZWIFT_RACING_SCORE):
@@ -27,8 +31,12 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     _instanceof:
-        App\Infrastructure\CQRS\CommandHandler:
+        App\Infrastructure\CQRS\Command\CommandHandler:
             tags: ['app.command_handler']
+        App\Infrastructure\CQRS\Query\QueryHandler:
+            tags: ['app.query_handler']
+        App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculation:
+            tags: ['app.maintenance_progress_calculation']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -55,9 +63,13 @@ services:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
 
-    App\Infrastructure\CQRS\Bus\CommandBus:
-        class: App\Infrastructure\CQRS\Bus\InMemoryCommandBus
+    App\Infrastructure\CQRS\Command\Bus\CommandBus:
+        class: App\Infrastructure\CQRS\Command\Bus\InMemoryCommandBus
         arguments: [!tagged_iterator app.command_handler]
+
+    App\Infrastructure\CQRS\Query\Bus\QueryBus:
+        class: App\Infrastructure\CQRS\Query\Bus\InMemoryQueryBus
+        arguments: [!tagged_iterator app.query_handler]
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         factory: [ App\Infrastructure\ValueObject\String\KernelProjectDir, 'fromString' ]
@@ -125,29 +137,47 @@ services:
         factory: [ App\Domain\Strava\Athlete\AthleteBirthDate, 'fromString' ]
         arguments: ['%env(string:ATHLETE_BIRTHDAY)%']
 
+    App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
+        class: App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula
+        factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
+        arguments: ['%env(string:MAX_HEART_RATE_FORMULA)%']
+
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
         factory: [ 'App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport', from ]
         arguments: [ '%env(json:ACTIVITY_VISIBILITIES_TO_IMPORT)%' ]
+
+    App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
+        factory: [ 'App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport', fromInt ]
+        arguments: [ '%env(int:NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT)%' ]
+
+    App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport:
+        factory: [ 'App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport', from ]
+        arguments: [ '%env(json:ACTIVITIES_TO_SKIP_DURING_IMPORT)%' ]
+
+    App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
+        class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
+        factory: [ 'App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore', fromOptionalString ]
+        arguments: ['%env(string:SKIP_ACTIVITIES_RECORDED_BEFORE)%']
 
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
         factory: [ 'App\Domain\Strava\Activity\SportType\SportTypesToImport', from ]
         arguments: [ '%env(json:SPORT_TYPES_TO_IMPORT)%' ]
 
-    App\Domain\Strava\Activity\NumberOfNewActivitiesToProcessPerImport:
-        factory: [ 'App\Domain\Strava\Activity\NumberOfNewActivitiesToProcessPerImport', fromInt ]
-        arguments: [ '%env(int:NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT)%' ]
+    App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightHistoryFromEnvFile:
+        factory: [ 'App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightHistoryFromEnvFile', fromString ]
+        arguments: [ '%env(string:fallback:ATHLETE_WEIGHT_HISTORY:ATHLETE_WEIGHTS)%', '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
 
-    App\Domain\Strava\Activity\ActivitiesToSkipDuringImport:
-        factory: [ 'App\Domain\Strava\Activity\ActivitiesToSkipDuringImport', from ]
-        arguments: [ '%env(json:ACTIVITIES_TO_SKIP_DURING_IMPORT)%' ]
+    App\Domain\Strava\Ftp\ImportFtp\FtpHistoryFromEnvFile:
+        factory: [ 'App\Domain\Strava\Ftp\ImportFtp\FtpHistoryFromEnvFile', fromString ]
+        arguments: [ '%env(string:fallback:FTP_HISTORY:FTP_VALUES)%' ]
 
-    App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightsFromEnvFile:
-        factory: [ 'App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightsFromEnvFile', fromString ]
-        arguments: [ '%env(string:ATHLETE_WEIGHTS)%',  '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
+    App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
+        factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
+        arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
 
-    App\Domain\Strava\Ftp\ImportFtp\FtpValuesFromEnvFile:
-        factory: [ 'App\Domain\Strava\Ftp\ImportFtp\FtpValuesFromEnvFile', fromString ]
-        arguments: [ '%env(string:FTP_VALUES)%' ]
+    App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
+        class: App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator
+        arguments: [!tagged_iterator app.maintenance_progress_calculation]
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ 'App\Domain\Zwift\ZwiftLevel', fromOptionalString ]

@@ -11,8 +11,8 @@ use App\Domain\Strava\Calendar\Month;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Domain\Strava\MonthlyStatistics;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
 
@@ -48,7 +48,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
 
         $this->buildStorage->write(
             'monthly-stats.html',
-            $this->twig->load('html/monthly-stats.html.twig')->render([
+            $this->twig->load('html/calendar/monthly-stats.html.twig')->render([
                 'monthlyStatistics' => $monthlyStatistics,
                 'sportTypes' => $this->sportTypeRepository->findAll(),
             ]),
@@ -58,7 +58,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         foreach ($allMonths as $month) {
             $this->buildStorage->write(
                 'month/month-'.$month->getId().'.html',
-                $this->twig->load('html/month.html.twig')->render([
+                $this->twig->load('html/calendar/month.html.twig')->render([
                     'hasPreviousMonth' => $month->getId() != $allActivities->getFirstActivityStartDate()->format(Month::MONTH_ID_FORMAT),
                     'hasNextMonth' => $month->getId() != $now->format(Month::MONTH_ID_FORMAT),
                     'statistics' => $monthlyStatistics->getStatisticsForMonth($month),

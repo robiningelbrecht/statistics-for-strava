@@ -14,14 +14,6 @@ final readonly class RenderTemplateTwigExtension
     /**
      * @param array<mixed> $context
      */
-    public function render(string $template, array $context = []): string
-    {
-        return $this->twig->render($template, $context);
-    }
-
-    /**
-     * @param array<mixed> $context
-     */
     public function renderComponent(string $template, array $context = []): string
     {
         return $this->render(sprintf('html/component/%s.html.twig', $template), $context);
@@ -37,5 +29,13 @@ final readonly class RenderTemplateTwigExtension
         }
 
         return $this->render(sprintf('%s/svg-%s.html.twig', $context['customPath'], $template), $context);
+    }
+
+    /**
+     * @param array<mixed> $context
+     */
+    private function render(string $template, array $context = []): string
+    {
+        return $this->twig->render($template, $context);
     }
 }

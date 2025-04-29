@@ -1,6 +1,10 @@
 '2 days of activity for 4 weeks': 4周内2天的活动
+'Active days': 'Active days'
 Activities: 活动
+'Activity count': 'Activity count'
 'Activity intensity': 活动强度
+'Activity locations': 'Activity locations'
+'Activity start times': 'Activity start times'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
 Advanced: 高级
 Afternoon: 下午
@@ -13,23 +17,32 @@ Avg: 平均
 'Back Country Ski': 越野滑雪
 Badminton: 羽毛球
 Best: 最佳
+'Best Efforts': 最大努力
 Cadence: 踏频
 Calories: 卡路里
 Canoeing: 划独木舟
+'Carbon emission comparisons': 碳排放比较
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Climb a total of 2000m': 总共攀登2000米
 'Climb a total of 7500m': 总共攀登7500米
 'Close modal': 关闭模态框
+Commutes: 通勤
+'Commutes only': 仅通勤
+Compare: Compare
+'Compare to': 'Compare to'
 'Complete a 10 km run.': 完成10公里跑步。
 'Complete a 100km ride': 完成100公里骑行
 'Complete a 5 km run.': 完成5公里跑步。
-'Complete a half marathon run.': 完成半程马拉松跑步。
+'Complete a half marathon run.': 完成半马。
+Components: Components
 Crossfit: 交叉健身
+'Daily activities': 'Daily activities'
 Dashboard: 仪表板
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
+'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Device: 设备
 Distance: 距离
 'Distance / week': 每周距离
@@ -37,19 +50,24 @@ Distance: 距离
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
+Distribution: 分布
+'Driving your car for {amountOfKmDrivingACar} km': '驾车行驶{amountOfKmDrivingACar}公里'
 'E-Bike Rides': 电动自行车骑行
 'E-Mountain Bike Rides': 电动山地车骑行
 'Earliest start time': 最早开始时间
 Eddington: 愛丁頓數
 Elev: 海拔
 Elevation: 海拔高度
+'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: 椭圆机
 Evening: 晚上
+'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
-'Fastest ride': 最快骑行
 Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
+'Filter on country': 按国家筛选
+'Filter on gear': 按装备筛选
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
 'First workout': 第一次锻炼
@@ -59,6 +77,8 @@ Fri: 周五
 Friday: 星期五
 From: 从
 Gear: 装备
+'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear maintenance': 'Gear maintenance'
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
 'Gear that is retired is disabled by default.': 退役的装备默认禁用。
@@ -77,7 +97,9 @@ History: 历史
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": '我总共消耗了{caloriesBurned}卡路里，相当于{numberOfPizzaSlices}片披萨🍕。'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': '我的总锻炼距离为{totalDistance}（相当于{numberOfTripsAroundTheWorld}次环游世界🌍和{numberOfTripsToTheMoon}次到月球🌕），总海拔{totalElevation}（相当于{timesMountEverest}次珠穆朗玛峰🏔），总锻炼时间为{totalTimeRecorded} 🎉。'
 'Ice Skate': 冰刀
+'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 直排轮滑
+'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
 Jan: 一月
 Jul: 七月
 Jun: 六月
@@ -86,15 +108,22 @@ Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
 'Last 45 days': 最近45天
 'Last 90 days': 最近90天
+'Last maintenance': 'Last maintenance'
 'Latest start time': 最晚开始时间
 'Loading data...': 加载数据中...
 Loading...: 加载中...
+'Locations over the globe': 'Locations over the globe'
+'Long run': 'Long run'
+'Longest activity (h)': 'Longest activity (h)'
+'Longest streaks': 'Longest streaks'
 'Longest workout': 最长锻炼
 Low: 低
+Maintenance: Maintenance
 Mar: 三月
 Max: 最大
 May: 五月
 Medium: 中等
+Metrics: Metrics
 'Mind & Body Sports': 心灵与身体运动
 Mon: 周一
 Monday: 星期一
@@ -108,23 +137,36 @@ Morning: 早晨
 'Moving time': 移动时间
 Night: 夜晚
 'No activities': 没有活动
+'No other years to compare with': 'No other years to compare with'
 'Nordic Ski': 北欧滑雪
 Nov: 十一月
+'Number of activities per month': 'Number of activities per month'
 Oct: 十月
+'One of your gear maitenance tasks is due': 'One of your gear maitenance tasks is due'
 Other: 其他
 'Outdoor Sports': 户外运动
+PRs: PRs
+'PRs achieved per month': 'PRs achieved per month'
 Pace: 步速
 'Peak power outputs': 峰值功率输出
+'Personal Records': 'Personal Records'
+Photo: Photo
 Photos: 照片
 'Pickle Ball': 匹克球
 Pilates: 普拉提
+'Please address these issues': 'Please address these issues'
 Power: 功率
 'Power distribution': 功率分布
 'Powered by Strava': 由Strava提供支持
 'Prev year': 去年
-'Racing Score': 'Racing Score'
+Race: 比赛
+'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
+'Rest days': 'Rest days'
+'Rest days vs. active days': 'Rest days vs. active days'
+Rewind: Rewind
+'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 'Ride a total of 1250km': 骑行总计1250公里
 'Ride a total of 200km': 骑行总计200公里
 'Ride a total of 600km': 骑行总计600公里
@@ -143,44 +185,62 @@ Search: 搜索
 Segments: 路段
 Sep: 九月
 'Show information': 显示信息
-'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': '自从我在{startDate}开始锻炼{numberOfDaysAgo}以来，我已经锻炼了{totalDaysOfWorkingOut}天。'
+Simplified: 简化
+'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': '从{startDate}至今，{numberOfDaysAgo}多天以来，我已经锻炼了{totalDaysOfWorkingOut}天。'
 Skateboard: 滑板
 Skating: 滑冰
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
+Socials: Socials
+Source: 来源
 Speed: 速度
 Squash: 壁球
 'Stair Stepper': 楼梯机
 'Stand Up Paddling': 站立划桨
+'Start slideshow': 播放幻灯片
+'Start times': 'Start times'
 'Statistics for Strava': 'Statistics for Strava'
-'Stats per gear': 按装备统计
+Stats: Stats
 'Stats per weekday': 按工作日统计
+Streaks: Streaks
 Sun: 周日
 Sunday: 星期日
 Surfing: 冲浪
 Swim: 游泳
 TOTAL: 总计
 'Table Tennis': 乒乓球
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 Tennis: 网球
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": '我的日均锻炼距离为{dailyAverage}，周均为{weeklyAverage}，月均为{monthlyAverage} 🐣。'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
+'The amount of CO₂ that {amountOfTrees} trees absorb annually': '{amountOfTrees}棵树每年吸收的二氧化碳量'
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': '此徽章是动态创建的。你可以在任何&lt;img&gt;标签中使用它'
+'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是“高强度”
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
 Thu: 周四
 Thursday: 星期四
+Time: Time
 'Time / week': 每周时间
 'Times completed': 完成次数
 To: 到
+'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
 'Total carbon saved': 总节约碳排放
+'Total distance per month': 'Total distance per month'
+'Total elevation per month': 'Total elevation per month'
+'Total hours': 'Total hours'
+'Total hours spent per gear': 'Total hours spent per gear'
+'Total hours spent per sport type': 'Total hours spent per sport type'
 'Total kudos': 总点赞
+'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 越野跑
 Trivia: 琐事
 Tue: 周二
 Tuesday: 星期二
+Unspecified: Unspecified
 'Updated on': 更新于
 'Velo Mobiles': 躺车
 'Very high': 非常高
@@ -191,36 +251,66 @@ Tuesday: 星期二
 'Virtual Runs': 虚拟跑步
 Walks: 步行
 'Water Sports': 水上运动
+'We detected following issues': 'We detected following issues'
 Wed: 周三
 Wednesday: 星期三
-'Weekly distances': 每周距离
+'Weekly stats': 每周统计
 'Weight Training': 重量训练
 Wheelchair: 轮椅
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 当功率指标和FTP可用时，将使用这些指标。这个公式意味着以FTP骑行一小时的得分为100，我们认为这是“高强度”
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼
+'Workout type': 'Workout type'
 Year: 年
 'Yearly distances': 每年距离
 Yoga: 瑜伽
-'Your Strava badge': 'Your Strava badge'
-'Your Zwift badge': 'Your Zwift badge'
-'Your badge(s)': 'Your badge(s)'
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
+'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': '你的通勤减少了{amountOfCarbonSaved}的碳排放 🥳。这相当于'
+'Your Strava badge': Strava徽章
+'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
+'Your Zwift badge': Zwift徽章
+'Your badge(s)': 徽章
 'Zone 1 (recovery)': 区域1（恢复）
 'Zone 2 (aerobic)': 区域2（有氧）
 'Zone 3 (aerobic/anaerobic)': 区域3（有氧/无氧）
 'Zone 4 (anaerobic)': 区域4（无氧）
 'Zone 5 (maximal)': 区域5（最大）
-'Zwift Statistics': 'Zwift Statistics'
+'Zwift Statistics': Zwift统计
+activities: activities
 age: 年龄
-and: and
+and: 和
 bpm: 拍子数
 clear: 清除
+comments: comments
+compare: compare
+days: days
+hours: hours
+hrs: hrs
 intensity: 强度
 intensityFactor: 强度因子
+kudos: kudos
 'max gradient': 最大坡度
 maxHeartRate: 最大心率
+months: months
+more: more
+'more info': 更多信息
 n/a: 不适用
+never: never
+to: to
+weeks: weeks
 workouts: 锻炼
+'{amountOfAluminiumCans} aluminium cans for soft drinks produced': '生产了{amountOfAluminiumCans}个软饮料铝罐'
+'{amountOfCapsForPetBottles} caps for PET bottles produced': '生产了{amountOfCapsForPetBottles}个PET瓶盖'
+'{amountOfFlights} single Economy flight(s) between Zurich and London': '{amountOfFlights}躺苏黎世至伦敦的单程经济舱航班'
+'{amountOfGlassBottles} one liter reusable glass bottles produced': '生产了{amountOfGlassBottles}个可重复使用的玻璃瓶'
+'{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} 谷歌搜索'
+'{amountOfPetBottles} one liter PET bottles produced': '生产了{amountOfPetBottles}个PET瓶'
+'{amountOfSmartphonesManufactured} manufactured smartphones': '生产了{amountOfSmartphonesManufactured}部手机'
+'{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
+'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
+'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
+'{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
+'{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade}份意大利面条'

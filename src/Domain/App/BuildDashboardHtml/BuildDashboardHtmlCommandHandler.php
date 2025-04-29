@@ -5,32 +5,38 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildDashboardHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
-use App\Domain\Strava\Activity\ActivityHeatmapChart;
 use App\Domain\Strava\Activity\ActivityIntensity;
+use App\Domain\Strava\Activity\ActivityIntensityChart;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\ActivityTypeRepository;
+use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Strava\Activity\BestEffort\BestEffortChart;
 use App\Domain\Strava\Activity\DaytimeStats\DaytimeStats;
 use App\Domain\Strava\Activity\DaytimeStats\DaytimeStatsCharts;
 use App\Domain\Strava\Activity\DistanceBreakdown;
+use App\Domain\Strava\Activity\SportType\SportTypeRepository;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\BestPowerOutputs;
 use App\Domain\Strava\Activity\Stream\PowerOutputChart;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
-use App\Domain\Strava\Activity\WeeklyDistanceChart;
+use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone;
 use App\Domain\Strava\Athlete\TimeInHeartRateZoneChart;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
 use App\Domain\Strava\Calendar\Months;
+use App\Domain\Strava\CarbonSavedComparison;
 use App\Domain\Strava\Challenge\Consistency\ChallengeConsistency;
 use App\Domain\Strava\Ftp\FtpHistoryChart;
 use App\Domain\Strava\Ftp\FtpRepository;
 use App\Domain\Strava\Trivia;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -47,6 +53,9 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         private ActivityPowerRepository $activityPowerRepository,
         private FtpRepository $ftpRepository,
         private AthleteWeightRepository $athleteWeightRepository,
+        private ActivityTypeRepository $activityTypeRepository,
+        private SportTypeRepository $sportTypeRepository,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private ActivityIntensity $activityIntensity,
         private UnitSystem $unitSystem,
@@ -61,6 +70,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildDashboardHtml);
 
         $now = $command->getCurrentDateTime();
+        $importedActivityTypes = $this->activityTypeRepository->findAll();
+        $importedSportTypes = $this->sportTypeRepository->findAll();
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
         $allFtps = $this->ftpRepository->findAll();
@@ -78,7 +89,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $dayTimeStats = DaytimeStats::create($allActivities);
 
-        $weeklyDistanceCharts = [];
+        $weeklyDistanceTimeCharts = [];
         $distanceBreakdowns = [];
         $yearlyDistanceCharts = [];
         $yearlyStatistics = [];
@@ -89,13 +100,13 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             }
 
             $activityType = ActivityType::from($activityType);
-            if ($activityType->supportsWeeklyDistanceStats() && $chartData = WeeklyDistanceChart::create(
+            if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
                 translator: $this->translator,
                 now: $now,
             )->build()) {
-                $weeklyDistanceCharts[$activityType->value] = Json::encode($chartData);
+                $weeklyDistanceTimeCharts[$activityType->value] = Json::encode($chartData);
             }
 
             if ($activityType->supportsDistanceBreakdownStats()) {
@@ -142,18 +153,40 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             translator: $this->translator,
         );
         $trivia = Trivia::getInstance($allActivities);
-        $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForActivityType(ActivityType::RIDE);
+        $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
+
+        $bestEffortsCharts = [];
+        /** @var ActivityType $activityType */
+        foreach ($importedActivityTypes as $activityType) {
+            if (!$activityType->supportsBestEffortsStats()) {
+                continue;
+            }
+
+            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
+            if ($bestEffortsForActivityType->isEmpty()) {
+                continue;
+            }
+
+            $bestEffortsCharts[$activityType->value] = Json::encode(
+                BestEffortChart::create(
+                    activityType: $activityType,
+                    bestEfforts: $bestEffortsForActivityType,
+                    sportTypes: $importedSportTypes,
+                    translator: $this->translator,
+                )->build()
+            );
+        }
 
         $this->buildStorage->write(
             'dashboard.html',
-            $this->twig->load('html/dashboard.html.twig')->render([
+            $this->twig->load('html/dashboard/dashboard.html.twig')->render([
                 'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
                 'mostRecentActivities' => $allActivities->slice(0, 5),
                 'intro' => $activityTotals,
-                'weeklyDistanceCharts' => $weeklyDistanceCharts,
+                'weeklyDistanceCharts' => $weeklyDistanceTimeCharts,
                 'powerOutputs' => $bestAllTimePowerOutputs,
-                'activityHeatmapChart' => Json::encode(
-                    ActivityHeatmapChart::create(
+                'activityIntensityChart' => Json::encode(
+                    ActivityIntensityChart::create(
                         activities: $allActivities,
                         activityIntensity: $this->activityIntensity,
                         translator: $this->translator,
@@ -195,6 +228,15 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'yearlyDistanceCharts' => $yearlyDistanceCharts,
                 'yearlyStatistics' => $yearlyStatistics,
+                'bestEffortsCharts' => $bestEffortsCharts,
+            ]),
+        );
+
+        $this->buildStorage->write(
+            'carbon-comparison.html',
+            $this->twig->load('html/dashboard/carbon-comparison.html.twig')->render([
+                'carbonSavedComparison' => CarbonSavedComparison::create($trivia->getTotalCarbonSaved()),
+                'carbonSavedInKg' => $trivia->getTotalCarbonSaved(),
             ]),
         );
 
@@ -209,23 +251,23 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $bestPowerOutputs->add(
             description: $this->translator->trans('Last 45 days'),
-            powerOutputs: $this->activityPowerRepository->findBestForActivityTypeInDateRange(
-                activityType: ActivityType::RIDE,
+            powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
+                sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
                 dateRange: DateRange::lastXDays($now, 45)
             )
         );
         $bestPowerOutputs->add(
             description: $this->translator->trans('Last 90 days'),
-            powerOutputs: $this->activityPowerRepository->findBestForActivityTypeInDateRange(
-                activityType: ActivityType::RIDE,
+            powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
+                sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
                 dateRange: DateRange::lastXDays($now, 90)
             )
         );
         foreach ($allYears->reverse() as $year) {
             $bestPowerOutputs->add(
                 description: (string) $year,
-                powerOutputs: $this->activityPowerRepository->findBestForActivityTypeInDateRange(
-                    activityType: ActivityType::RIDE,
+                powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
+                    sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
                     dateRange: $year->getRange(),
                 )
             );
@@ -233,7 +275,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 
         $this->buildStorage->write(
             'power-output.html',
-            $this->twig->load('html/power-output.html.twig')->render([
+            $this->twig->load('html/dashboard/power-output.html.twig')->render([
                 'powerOutputChart' => Json::encode(
                     PowerOutputChart::create($bestPowerOutputs)->build()
                 ),

@@ -3,8 +3,8 @@
 namespace App\Tests\Console;
 
 use App\Console\ImportStravaDataConsoleCommand;
-use App\Infrastructure\CQRS\Bus\CommandBus;
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -13,6 +13,7 @@ use App\Tests\Infrastructure\FileSystem\UnwritablePermissionChecker;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Log\LoggerInterface;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -26,6 +27,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
     private MockObject $migrationRunner;
     private MockObject $connection;
     private ResourceUsage $resourceUsage;
+    private MockObject $logger;
 
     public function testExecute(): void
     {
@@ -45,6 +47,10 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             ->expects($this->once())
             ->method('executeStatement')
             ->with('VACUUM');
+
+        $this->logger
+            ->expects($this->atLeastOnce())
+            ->method('info');
 
         $command = $this->getCommandInApplication('app:strava:import-data');
         $commandTester = new CommandTester($command);
@@ -71,6 +77,10 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             ->method('executeStatement')
             ->with('VACUUM');
 
+        $this->logger
+            ->expects($this->atLeastOnce())
+            ->method('info');
+
         $command = $this->getCommandInApplication('app:strava:import-data');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
@@ -86,6 +96,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             $this->migrationRunner,
             $this->resourceUsage,
             $this->connection,
+            $this->logger
         );
 
         $this->migrationRunner
@@ -100,6 +111,10 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             ->expects($this->never())
             ->method('executeStatement')
             ->with('VACUUM');
+
+        $this->logger
+            ->expects($this->atLeastOnce())
+            ->method('info');
 
         $command = $this->getCommandInApplication('app:strava:import-data');
         $commandTester = new CommandTester($command);
@@ -121,6 +136,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
             $this->resourceUsage = new FixedResourceUsage(),
             $this->connection = $this->createMock(Connection::class),
+            $this->logger = $this->createMock(LoggerInterface::class),
         );
     }
 

@@ -21,6 +21,11 @@ trait MeasurementFromFloat
         return $this->value <= 0;
     }
 
+    public function isLowerThanOne(): bool
+    {
+        return $this->value < 1;
+    }
+
     public static function zero(): self
     {
         return self::from(0);

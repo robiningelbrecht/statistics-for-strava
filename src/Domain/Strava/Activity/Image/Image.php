@@ -24,7 +24,11 @@ final readonly class Image
 
     public function getImageUrl(): string
     {
-        return $this->imageLocation;
+        if (str_starts_with($this->imageLocation, '/')) {
+            return $this->imageLocation;
+        }
+
+        return '/'.$this->imageLocation;
     }
 
     public function getActivity(): Activity

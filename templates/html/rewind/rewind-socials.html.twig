@@ -1,0 +1,17 @@
+{% autoescape false %}
+<div class="w-full flex flex-col justify-center items-center gap-y-6 text-center">
+    <div>
+        <div class="text-3xl font-extrabold">
+            {{ kudoCount }}
+        </div>
+        <div class="text-sm">{{ "kudos"|trans }}</div>
+    </div>
+    <hr class="w-[200px]" />
+    <div>
+        <div class="text-3xl font-extrabold">
+            {{ commentCount }}
+        </div>
+        <div class="text-sm">{{ "comments"|trans }}</div>
+    </div>
+</div>
+{% endautoescape %}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Athlete;
 
+use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -14,6 +15,7 @@ final readonly class KeyValueBasedAthleteRepository implements AthleteRepository
 {
     public function __construct(
         private KeyValueStore $keyValueStore,
+        private MaxHeartRateFormula $maxHeartRateFormula,
     ) {
     }
 
@@ -29,6 +31,9 @@ final readonly class KeyValueBasedAthleteRepository implements AthleteRepository
     {
         $data = $this->keyValueStore->find(Key::ATHLETE);
 
-        return Athlete::create(Json::decode((string) $data));
+        $athlete = Athlete::create(Json::decode((string) $data));
+        $athlete->setMaxHeartRateFormula($this->maxHeartRateFormula);
+
+        return $athlete;
     }
 }

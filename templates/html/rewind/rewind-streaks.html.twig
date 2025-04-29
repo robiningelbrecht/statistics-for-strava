@@ -1,0 +1,24 @@
+{% autoescape false %}
+<div class="w-full flex flex-col justify-center items-center gap-y-2 text-center">
+    <div>
+        <div class="text-3xl font-extrabold">
+            {{ dayStreak }}
+        </div>
+        <div class="text-sm">{{ "days"|trans }}</div>
+    </div>
+    <hr class="w-[200px]" />
+    <div>
+        <div class="text-3xl font-extrabold">
+            {{ weekStreak }}
+        </div>
+        <div class="text-sm">{{ "weeks"|trans }}</div>
+    </div>
+    <hr class="w-[200px]" />
+    <div>
+        <div class="text-3xl font-extrabold">
+            {{ monthStreak }}
+        </div>
+        <div class="text-sm">{{ "months"|trans }}</div>
+    </div>
+</div>
+{% endautoescape %}

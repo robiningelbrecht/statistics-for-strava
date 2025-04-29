@@ -42,6 +42,10 @@
         }
     },
     {
+        "commandName": "App\\Domain\\App\\BuildGearMaintenanceHtml\\BuildGearMaintenanceHtml",
+        "payload": []
+    },
+    {
         "commandName": "App\\Domain\\App\\BuildEddingtonHtml\\BuildEddingtonHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
@@ -55,6 +59,12 @@
     },
     {
         "commandName": "App\\Domain\\App\\BuildHeatmapHtml\\BuildHeatmapHtml",
+        "payload": {
+            "now": "2023-10-17 16:15:04"
+        }
+    },
+    {
+        "commandName": "App\\Domain\\App\\BuildRewindHtml\\BuildRewindHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }

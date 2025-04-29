@@ -4,7 +4,7 @@ namespace App\Tests\Domain\Integration\Notification\SendNotification;
 
 use App\Domain\Integration\Notification\Ntfy\Ntfy;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;

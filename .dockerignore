@@ -19,6 +19,7 @@ public/assets/images/readme
 .php-cs-fixer.dist.php
 .phpunit.result.cache
 docker-compose.yml
+gear-maintenance.example.yml
 Makefile
 min-coverage-rules.php
 phpstan.dist.neon

@@ -1,0 +1,136 @@
+{% extends "html/base.html.twig" %}
+
+{% block breadcrumbs %}
+    <li>
+        <div class="flex items-center">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            <a href="#" data-router-navigate="/monthly-stats" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Monthly stats"|trans }}</a>
+        </div>
+    </li>
+{% endblock %}
+{% block content %}
+    {% autoescape false %}
+        <!-- MONTHLY STATS -->
+        <div class="grid grid-cols-1 mb-4">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                <div class="overflow-auto max-h-[calc(100vh-200px)] relative">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                # {{ "workouts"|trans }}
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('distance') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('elevation') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('time') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('calories') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('challenge') }}
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for statistic in monthlyStatistics.getStatistics() %}
+                            <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                <th scope="row" class="sticky left-0 w-36 px-2 py-2 text-right font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                    <a href="#" data-model-content-url="month/month-{{ statistic.id }}.html" class="text-blue-600 hover:underline">
+                                        {{ statistic.month }}
+                                    </a>
+                                </th>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statistic.numberOfWorkouts }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0}) }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statistic.movingTime }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statistic.challengesCompleted }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        {% for sportType in sportTypes %}
+                            {% set totalsForSportType = monthlyStatistics.getTotalsForSportType(sportType) %}
+                            <tr class="font-semibold text-gray-900 {{ loop.first ? 'border-t-4' : '' }}">
+                                <td class="px-2 py-2 text-right sticky left-0 bg-white">
+                                    {{ sportType|trans }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ totalsForSportType.numberOfWorkouts }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement':  totalsForSportType.totalDistance, 'precision': 0}) }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement':  totalsForSportType.totalElevation, 'precision': 0}) }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ totalsForSportType.movingTime }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ totalsForSportType.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                </td>
+                                <td class="px-2 py-2">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="font-semibold text-gray-900">
+                            <td class="px-2 py-2 text-right sticky left-0 bg-white">
+                                {{ "TOTAL"|trans }}
+                            </td>
+                            <td class="px-2 py-2">
+                                {{ monthlyStatistics.getTotals().numberOfWorkouts }}
+                            </td>
+                            <td class="px-2 py-2">
+                                {{ renderComponent('measurement', {'measurement':  monthlyStatistics.getTotals().totalDistance, 'precision': 0}) }}
+                            </td>
+                            <td class="px-2 py-2">
+                                {{ renderComponent('measurement', {'measurement':  monthlyStatistics.getTotals().totalElevation, 'precision': 0}) }}
+                            </td>
+                            <td class="px-2 py-2">
+                                {{ monthlyStatistics.getTotals().movingTime }}
+                            </td>
+                            <td class="px-2 py-2">
+                                {{ monthlyStatistics.getTotals().totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                            </td>
+                            <td class="px-2 py-2">
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endautoescape %}
+{% endblock %}

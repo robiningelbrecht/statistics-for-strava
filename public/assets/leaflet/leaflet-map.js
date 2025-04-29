@@ -17,8 +17,8 @@ export default function LeafletMap($mapNode, data){
                 L.Polyline.fromEncoded(route).getLatLngs(),
                 {
                     color: '#fc6719',
-                    weight: 3,
-                    opacity: 1,
+                    weight: 2,
+                    opacity: 0.9,
                     lineJoin: 'round'
                 }
             ).addTo(featureGroup);

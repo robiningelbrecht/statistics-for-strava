@@ -4,7 +4,6 @@ namespace App\Domain\Strava;
 
 use App\Domain\Strava\Activity\Activities;
 use App\Domain\Strava\Activity\Activity;
-use App\Domain\Strava\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Time\Dates;
 
@@ -17,7 +16,6 @@ final class Trivia
     private readonly Activity $earliestActivity;
     private readonly Activity $latestActivity;
     private readonly Activity $longestActivity;
-    private readonly ?Activity $fastestRide;
     private readonly Activity $activityWithMostElevation;
     private readonly Activity $mostKudotedActivity;
     private readonly Dates $mostConsecutiveDaysOfWorkingOut;
@@ -31,7 +29,6 @@ final class Trivia
         $this->earliestActivity = $this->determineEarliestActivity();
         $this->latestActivity = $this->determineLatestActivity();
         $this->longestActivity = $this->determineLongestWorkout();
-        $this->fastestRide = $this->determineFastestRide();
         $this->activityWithMostElevation = $this->determineActivityWithHighestElevation();
         $this->mostKudotedActivity = $this->determineMostKudotedActivity();
         $this->mostConsecutiveDaysOfWorkingOut = Dates::fromDates($this->activities->map(
@@ -82,11 +79,6 @@ final class Trivia
     public function getLongestWorkout(): Activity
     {
         return $this->longestActivity;
-    }
-
-    public function getFastestRide(): ?Activity
-    {
-        return $this->fastestRide;
     }
 
     public function getActivityWithMostElevation(): Activity
@@ -153,25 +145,6 @@ final class Trivia
         }
 
         return $longestActivity;
-    }
-
-    private function determineFastestRide(): ?Activity
-    {
-        $bikeActivities = $this->activities->filterOnActivityType(ActivityType::RIDE);
-
-        if (!$fastestActivity = $bikeActivities->getFirst()) {
-            return null;
-        }
-
-        /** @var Activity $activity */
-        foreach ($bikeActivities as $activity) {
-            if ($activity->getAverageSpeed()->toFloat() < $fastestActivity->getAverageSpeed()->toFloat()) {
-                continue;
-            }
-            $fastestActivity = $activity;
-        }
-
-        return $fastestActivity;
     }
 
     private function determineActivityWithHighestElevation(): Activity

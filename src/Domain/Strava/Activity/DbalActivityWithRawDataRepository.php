@@ -38,13 +38,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
-            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported
+            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
-            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported
+            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
         $activity = $activityWithRawData->getActivity();
@@ -52,7 +52,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'activityId' => $activity->getId(),
             'startDateTime' => $activity->getStartDate(),
             'sportType' => $activity->getSportType()->value,
-            'name' => $activity->getName(),
+            'name' => $activity->getOriginalName(),
             'description' => $activity->getDescription(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
@@ -79,6 +79,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
             'isCommute' => (int) $activity->isCommute(),
             'streamsAreImported' => 0,
+            'workoutType' => $activity->getWorkoutType()?->value,
         ]);
     }
 
@@ -98,13 +99,16 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
                     location = :location,
                     gearId = :gearId, 
                     gearName = :gearName,
-                    data = :data
+                    totalImageCount = :totalImageCount,
+                    localImagePaths = :localImagePaths,
+                    data = :data,
+                    isCommute = :isCommute
                     WHERE activityId = :activityId';
 
         $activity = $activityWithRawData->getActivity();
         $this->connection->executeStatement($sql, [
             'activityId' => $activity->getId(),
-            'name' => $activity->getName(),
+            'name' => $activity->getOriginalName(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
             'averageSpeed' => $activity->getAverageSpeed()->toFloat(),
@@ -117,6 +121,9 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'location' => $activity->getLocation() ? Json::encode($activity->getLocation()) : null,
             'gearId' => $activity->getGearId(),
             'gearName' => $activity->getGearName(),
+            'totalImageCount' => $activity->getTotalImageCount(),
+            'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
+            'isCommute' => (int) $activity->isCommute(),
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
         ]);
     }

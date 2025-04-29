@@ -49,6 +49,11 @@ final readonly class Month
         return $this->firstDay->translatedFormat('M Y');
     }
 
+    public function getShortLabelWithoutYear(): string
+    {
+        return $this->firstDay->translatedFormat('M');
+    }
+
     public function getId(): string
     {
         return $this->firstDay->format(self::MONTH_ID_FORMAT);

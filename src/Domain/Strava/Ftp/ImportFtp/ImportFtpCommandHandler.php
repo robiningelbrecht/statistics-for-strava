@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Ftp\ImportFtp;
 
 use App\Domain\Strava\Ftp\FtpRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 
 final readonly class ImportFtpCommandHandler implements CommandHandler
 {
     public function __construct(
-        private FtpValuesFromEnvFile $ftpValuesFromEnvFile,
+        private FtpHistoryFromEnvFile $ftpHistoryFromEnvFile,
         private FtpRepository $ftpRepository,
     ) {
     }
@@ -24,7 +24,7 @@ final readonly class ImportFtpCommandHandler implements CommandHandler
         $this->ftpRepository->removeAll();
 
         /** @var \App\Domain\Strava\Ftp\Ftp $ftp */
-        foreach ($this->ftpValuesFromEnvFile->getAll() as $ftp) {
+        foreach ($this->ftpHistoryFromEnvFile->getAll() as $ftp) {
             $this->ftpRepository->save($ftp);
             $command->getOutput()->writeln(sprintf(
                 '  => Imported FTP set on %s (%s)...',

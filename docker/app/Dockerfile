@@ -48,6 +48,10 @@ COPY docker/root /
 COPY . /var/www/
 RUN touch /var/www/.env
 RUN rm -Rf docker
+RUN mkdir -p /var/www/var/cache/dev
+RUN mkdir -p /var/www/var/log
+RUN chown -R abc:abc /var/www/var/cache/dev
+RUN chown -R abc:abc /var/www/var/log
 
 # Keep uid/gid same as pre-lsio for backwards compatibility
 ENV PUID=65534

@@ -2,7 +2,7 @@
 <nav class="flex mb-5" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
         <li class="inline-flex items-center">
-            <a href="#" data-router-navigate="dashboard" class="inline-flex items-center text-gray-700 hover:text-primary-600 hover:underline">
+            <a href="#" data-router-navigate="/dashboard" class="inline-flex items-center text-gray-700 hover:text-primary-600 hover:underline">
                 <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                 Dashboard
             </a>
@@ -16,7 +16,7 @@
                     <h3 class="text-lg font-semibold">
                         Most recent activities
                     </h3>
-                    <a href="#" data-router-navigate="activities" class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                    <a href="#" data-router-navigate="/activities" class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                         View all
                     </a>
                 </div>
@@ -264,20 +264,20 @@
                                                             I burned <kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">5 006</kbd> calories doing so, that's about <kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">19</kbd> pizza slices &eth;&#159;&#141;&#149;.                </p>
             </div>
         </div>
-        <!-- WEEKLY DISTANCES -->
+        <!-- WEEKLY STATS -->
         <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
             <h3 class="mb-4 text-lg font-semibold">
-                Weekly distances
+                Weekly stats
             </h3>
                             <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="weeklyDistancesActivityTypeTab" data-tabs-toggle="#weeklyDistancesActivityTypeTabContent" role="tablist">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent" role="tablist">
                                                     <li class="mr-2" role="presentation">
-                                <a href="#dashboard" data-tabs-target="#weeklyDistancesRide" role="tab" aria-controls="weeklyDistancesRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                <a href="#" data-tabs-target="#weeklyDistancesRide" role="tab" aria-controls="weeklyDistancesRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                     Rides
                                 </a>
                             </li>
                                                     <li class="mr-2" role="presentation">
-                                <a href="#dashboard" data-tabs-target="#weeklyDistancesRun" role="tab" aria-controls="weeklyDistancesRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                <a href="#" data-tabs-target="#weeklyDistancesRun" role="tab" aria-controls="weeklyDistancesRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                     Runs
                                 </a>
                             </li>
@@ -474,7 +474,7 @@
                 <h3 class="mb-4 text-lg font-semibold">
                     Heart rate zones
                 </h3>
-                <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":0,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":0,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":65,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":4198,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+                <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":15,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":7,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":38,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":983,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":4866,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
             </div>
         </div>
         <!-- ACTIVITY HEATMAP -->
@@ -822,14 +822,14 @@
                     Distance breakdown
                 </h3>
                                     <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="distanceBreakdownActivityTypeTab" data-tabs-toggle="#distanceBreakdownActivityTypeTabContent" role="tablist">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="distanceBreakdownActivityTypeTab" data-tabs="#distanceBreakdownActivityTypeTabContent" role="tablist">
                                                             <li class="mr-2" role="presentation">
-                                    <a href="#dashboard" data-tabs-target="#distanceBreakdownRide" role="tab" aria-controls="distanceBreakdownRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#distanceBreakdownRide" role="tab" aria-controls="distanceBreakdownRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         Rides
                                     </a>
                                 </li>
                                                             <li class="mr-2" role="presentation">
-                                    <a href="#dashboard" data-tabs-target="#distanceBreakdownRun" role="tab" aria-controls="distanceBreakdownRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#distanceBreakdownRun" role="tab" aria-controls="distanceBreakdownRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         Runs
                                     </a>
                                 </li>
@@ -1415,23 +1415,7 @@
 
                             </td>
                         </tr>
-                                                                            <tr class="bg-white border-b">
-                                <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                    Fastest ride
-                                </th>
-                                <td class="px-2 py-2">
-                                    31.9<span class="text-xs">km/h</span>
-
-                                </td>
-                                <td class="px-2 py-2 truncate">
-                                        <a href="#" data-model-content-url="activity/activity-87726441741.html" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">
-                                    <svg class="w-3 shrink-0" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#F26722"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><defs><style>.cls-1{fill:none;stroke:#F26722;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><circle class="cls-1" cx="6.27" cy="13.91" r="4.77"></circle><circle class="cls-1" cx="18.2" cy="16.3" r="2.39"></circle><polyline class="cls-1" points="6.27 13.91 8.18 13.91 18.68 13.91"></polyline><line class="cls-1" x1="6.27" y1="18.68" x2="18.68" y2="18.68"></line><line class="cls-1" x1="18.68" y1="6.27" x2="18.68" y2="13.91"></line><line class="cls-1" x1="6.27" y1="2.45" x2="6.27" y2="9.14"></line><polyline class="cls-1" points="0.55 1.5 2.46 1.5 10.09 4.36"></polyline><line class="cls-1" x1="6.27" y1="18.68" x2="4.36" y2="22.5"></line><line class="cls-1" x1="18.68" y1="18.68" x2="18.68" y2="22.5"></line><line class="cls-1" x1="23.45" y1="22.5" x2="0.55" y2="22.5"></line><path class="cls-1" d="M21.55,5.32h0a3.28,3.28,0,0,1-2.31.95H15.82"></path><circle class="cls-1" cx="6.27" cy="13.91" r="0.95"></circle></g></svg>
-                                        <span>Virtual ride non Zwift</span>
-            </a>
-
-                                </td>
-                            </tr>
-                                                <tr class="bg-white border-b">
+                        <tr class="bg-white border-b">
                                                         <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 Most kudos
                             </th>
@@ -1447,20 +1431,25 @@
                             </td>
                         </tr>
                         <tr class="bg-white border-b">
+                                                        <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                Total carbon saved
+                            </th>
+                            <td class="px-2 py-2">
+                                2.70<span class="text-xs">kg CO&acirc;&#130;&#130;</span>
+                            </td>
+                            <td class="px-2 py-2 truncate">
+                                <a href="#" data-model-content-url="carbon-comparison.html" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline">
+                                    <svg class="ml-[-3px] w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                                    <span>more info</span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b">
                             <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 Total kudos
                             </th>
                             <td class="px-2 py-2">
                                 35
-                            </td>
-                            <td class="px-2 py-2 truncate"></td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                                                        <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                Total carbon saved
-                            </th>
-                            <td class="px-2 py-2">
-                                2.70<span class="text-xs">kg CO2</span>
                             </td>
                             <td class="px-2 py-2 truncate"></td>
                         </tr>
@@ -1483,21 +1472,35 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div class="grid grid-cols-1 gap-4 mb-4">
+                <!-- BEST EFFORTS -->
+                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                    <h3 class="mb-4 text-lg font-semibold">
+                        Best Efforts
+                    </h3>
+                                        <div id="bestEffortsActivityTypeTabContent">
+                                                    <div id="bestEffortsRide" role="tabpanel" aria-labelledby="bestEffortsRide-tab">
+                                <div class="h-[20rem]" data-echarts-options='{"backgroundColor":"#ffffff","animation":true,"color":["#91cc75","#fac858","#ee6666","#73c0de","#3ba272","#fc8452","#9a60b4","#ea7ccc"],"grid":{"top":"30px","left":"0","right":"0","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","axisPointer":{"type":"none"},"valueFormatter":"formatSeconds"},"legend":{"show":true},"xAxis":[{"type":"category","axisTick":{"show":false},"data":["5mi","10km","10mi","20km","30km","40km","50km","80km","50mi","90km","100km","100mi"]}],"yAxis":{"type":"log","axisLabel":{"formatter":"formatSeconds","showMaxLabel":false}},"series":[{"name":"Rides","type":"bar","barGap":0,"emphasis":{"focus":"none"},"label":{"show":false},"data":[5,10,10,20,30,40,50,80,50,90,100,100]},{"name":"Virtual Rides","type":"bar","barGap":0,"emphasis":{"focus":"none"},"label":{"show":false},"data":[5,10,10,20,30,40,50,80,50,90,100,100]}]}'></div>
+                            </div>
+                                            </div>
+
+                </div>
+            </div>
+                <div class="grid grid-cols-1 gap-4 mb-4">
             <!-- YEARLY DISTANCE STATS -->
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
                 <h3 class="mb-4 text-lg font-semibold">
                     Yearly distances
                 </h3>
                                     <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="yearlyDistancesActivityTypeTab" data-tabs-toggle="#yearlyDistancesActivityTypeTabContent" role="tablist">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="yearlyDistancesActivityTypeTab" data-tabs="#yearlyDistancesActivityTypeTabContent" role="tablist">
                                                             <li class="mr-2" role="presentation">
-                                    <a href="#dashboard" data-tabs-target="#yearlyDistancesRide" role="tab" aria-controls="yearlyDistancesRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#yearlyDistancesRide" role="tab" aria-controls="yearlyDistancesRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         Rides
                                     </a>
                                 </li>
                                                             <li class="mr-2" role="presentation">
-                                    <a href="#dashboard" data-tabs-target="#yearlyDistancesRun" role="tab" aria-controls="yearlyDistancesRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#yearlyDistancesRun" role="tab" aria-controls="yearlyDistancesRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         Runs
                                     </a>
                                 </li>
@@ -1505,7 +1508,7 @@
                     </div>
                                 <div id="yearlyDistancesActivityTypeTabContent">
                                             <div id="yearlyDistancesRide" role="tabpanel" aria-labelledby="yearlyDistancesRide-tab">
-                            <div class="mb-4 h-[20rem]" data-echarts-options='{"animation":true,"backgroundColor":null,"grid":{"left":"40px","right":"4%","bottom":"3%","containLabel":true},"xAxis":[{"type":"category","axisTick":{"show":false},"axisLabel":{"interval":31},"data":["Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec"]}],"legend":{"show":true},"tooltip":{"show":true,"trigger":"axis"},"yAxis":[{"type":"value","name":"Distance in km","nameRotate":90,"nameLocation":"middle","nameGap":50}],"series":[{"name":"2023","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,137,137,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,204,204,204,204,210,217,217,217,217,217,217,223,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229]},{"name":"2022","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]}'></div>
+                            <div class="mb-4 h-[20rem]" data-echarts-options='{"animation":true,"backgroundColor":null,"grid":{"left":"40px","right":"4%","bottom":"50px","containLabel":true},"xAxis":[{"type":"category","axisTick":{"show":false},"axisLabel":{"interval":31},"data":["Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec"]}],"legend":{"show":true},"tooltip":{"show":true,"trigger":"axis"},"yAxis":[{"type":"value","name":"Distance in km","nameRotate":90,"nameLocation":"middle","nameGap":50}],"toolbox":{"show":true,"feature":{"dataZoom":{"show":true,"yAxisIndex":"none"},"restore":{"show":true}}},"dataZoom":[{"type":"inside","start":0,"end":100,"brushSelect":true,"zoomLock":false,"zoomOnMouseWheel":false},[]],"series":[{"name":"2023","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,137,137,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,171,204,204,204,204,210,217,217,217,217,217,217,223,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229,229]},{"name":"2022","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}]}'></div>
                             <div class="relative overflow-x-scroll">
                                 <table class="w-full text-sm text-center text-gray-500">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1600,7 +1603,7 @@
                             </div>
                         </div>
                                             <div id="yearlyDistancesRun" role="tabpanel" aria-labelledby="yearlyDistancesRun-tab">
-                            <div class="mb-4 h-[20rem]" data-echarts-options='{"animation":true,"backgroundColor":null,"grid":{"left":"40px","right":"4%","bottom":"3%","containLabel":true},"xAxis":[{"type":"category","axisTick":{"show":false},"axisLabel":{"interval":31},"data":["Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec"]}],"legend":{"show":true},"tooltip":{"show":true,"trigger":"axis"},"yAxis":[{"type":"value","name":"Distance in km","nameRotate":90,"nameLocation":"middle","nameGap":50}],"series":[{"name":"2022","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]}'></div>
+                            <div class="mb-4 h-[20rem]" data-echarts-options='{"animation":true,"backgroundColor":null,"grid":{"left":"40px","right":"4%","bottom":"50px","containLabel":true},"xAxis":[{"type":"category","axisTick":{"show":false},"axisLabel":{"interval":31},"data":["Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Jan","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Feb","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Mar","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","Apr","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","May","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jun","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Jul","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Aug","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Sep","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Oct","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Nov","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec","Dec"]}],"legend":{"show":true},"tooltip":{"show":true,"trigger":"axis"},"yAxis":[{"type":"value","name":"Distance in km","nameRotate":90,"nameLocation":"middle","nameGap":50}],"toolbox":{"show":true,"feature":{"dataZoom":{"show":true,"yAxisIndex":"none"},"restore":{"show":true}}},"dataZoom":[{"type":"inside","start":0,"end":100,"brushSelect":true,"zoomLock":false,"zoomOnMouseWheel":false},[]],"series":[{"name":"2022","type":"line","smooth":true,"showSymbol":false,"data":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]}]}'></div>
                             <div class="relative overflow-x-scroll">
                                 <table class="w-full text-sm text-center text-gray-500">
                                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">

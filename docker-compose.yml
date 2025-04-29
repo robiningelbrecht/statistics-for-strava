@@ -22,6 +22,7 @@ services:
             - ./build:/var/www/build
             - ./storage/database:/var/www/storage/database
             - ./storage/files:/var/www/storage/files
+            - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
             #- ./cron:/config/crontabs
         env_file: ".env.local"
         ports:

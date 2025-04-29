@@ -7,8 +7,8 @@ namespace App\Domain\App\BuildGpxFiles;
 use App\Domain\Strava\Activity\GpxSerializer;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
 
 final readonly class BuildGpxFilesCommandHandler implements CommandHandler

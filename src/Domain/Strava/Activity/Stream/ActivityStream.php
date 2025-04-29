@@ -92,6 +92,11 @@ final class ActivityStream
      */
     public function getData(): array
     {
+        if (StreamType::HEART_RATE === $this->getStreamType() && !empty($this->data) && max($this->data) > 300) {
+            // Max BPM of 300, WTF? Must be faulty data.
+            return [];
+        }
+
         return $this->data;
     }
 
@@ -113,38 +118,22 @@ final class ActivityStream
 
     public function calculateBestAverageForTimeInterval(int $timeIntervalInSeconds): ?int
     {
-        if (!$bestSequence = $this->getBestSequence($timeIntervalInSeconds)) {
+        $data = $this->getData();
+        $n = count($data);
+        if ($n < $timeIntervalInSeconds) {
+            // Not enough data.
             return null;
         }
+        // Compute initial sum for the first X seconds.
+        $currentSum = array_sum(array_slice($data, 0, $timeIntervalInSeconds));
+        $maxSum = $currentSum;
 
-        return (int) round(array_sum($bestSequence) / $timeIntervalInSeconds);
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    private function getBestSequence(int $sequenceLength): array
-    {
-        $best = 0;
-        $bestSequence = [];
-
-        $sequence = $this->getData();
-
-        if (count($sequence) < $sequenceLength) {
-            return [];
+        // Sliding window approach.
+        for ($i = $timeIntervalInSeconds; $i < $n; ++$i) {
+            $currentSum += $data[$i] - $data[$i - $timeIntervalInSeconds];
+            $maxSum = max($maxSum, $currentSum);
         }
 
-        for ($i = 0; $i < count($sequence) - $sequenceLength; ++$i) {
-            $copySequence = $sequence;
-            $sequenceToCheck = array_slice($copySequence, $i, $sequenceLength);
-            $total = array_sum($sequenceToCheck);
-
-            if ($total > $best) {
-                $best = $total;
-                $bestSequence = $sequenceToCheck;
-            }
-        }
-
-        return $bestSequence;
+        return (int) round($maxSum / $timeIntervalInSeconds);
     }
 }

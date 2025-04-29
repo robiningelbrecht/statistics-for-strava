@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Athlete\Athlete;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Athlete\KeyValueBasedAthleteRepository;
+use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Domain\Strava\Ftp\DbalFtpRepository;
 use App\Domain\Strava\Ftp\FtpRepository;
 use App\Domain\Strava\Ftp\FtpValue;
@@ -84,7 +85,8 @@ class ActivityIntensityTest extends ContainerTestCase
             $this->getConnection()
         );
         $this->athleteRepository = new KeyValueBasedAthleteRepository(
-            $this->getContainer()->get(KeyValueStore::class)
+            $this->getContainer()->get(KeyValueStore::class),
+            $this->getContainer()->get(MaxHeartRateFormula::class),
         );
 
         $this->activityIntensity = new ActivityIntensity(

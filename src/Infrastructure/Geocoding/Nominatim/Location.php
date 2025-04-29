@@ -29,7 +29,7 @@ final readonly class Location implements \JsonSerializable
 
     public function getState(): ?string
     {
-        return $this->data['state'] ?? null;
+        return $this->data['state'] ?? $this->data['county'] ?? null;
     }
 
     /**

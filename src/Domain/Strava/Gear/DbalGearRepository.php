@@ -28,7 +28,8 @@ final readonly class DbalGearRepository extends DbalRepository implements GearRe
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')
             ->from('Gear')
-            ->orderBy('distanceInMeter', 'DESC');
+            ->addOrderBy('isRetired', 'ASC')
+            ->addOrderBy('distanceInMeter', 'DESC');
 
         return Gears::fromArray(array_map(
             fn (array $result) => $this->hydrate($result),

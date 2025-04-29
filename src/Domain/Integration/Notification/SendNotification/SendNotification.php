@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\Notification\SendNotification;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
-final class SendNotification extends DomainCommand
+final readonly class SendNotification extends DomainCommand
 {
     public function __construct(
-        private readonly string $title,
-        private readonly string $message,
+        private string $title,
+        private string $message,
         /** @var array<string> */
-        private readonly array $tags,
+        private array $tags,
     ) {
     }
 

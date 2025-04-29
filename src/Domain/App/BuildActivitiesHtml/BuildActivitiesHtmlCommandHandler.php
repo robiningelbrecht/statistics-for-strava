@@ -6,7 +6,6 @@ namespace App\Domain\App\BuildActivitiesHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
-use App\Domain\Strava\Activity\HeartRateChart;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
 use App\Domain\Strava\Activity\PowerDistributionChart;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
@@ -14,16 +13,22 @@ use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
+use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
+use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\DataTableRow;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Translation\LocaleSwitcher;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -33,15 +38,18 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private AthleteRepository $athleteRepository,
         private ActivityPowerRepository $activityPowerRepository,
         private ActivityStreamRepository $activityStreamRepository,
+        private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private SportTypeRepository $sportTypeRepository,
         private SegmentEffortRepository $segmentEffortRepository,
+        private GearRepository $gearRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
         private TranslatorInterface $translator,
+        private LocaleSwitcher $localeSwitcher,
     ) {
     }
 
@@ -60,28 +68,58 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             translator: $this->translator
         );
 
+        $countriesWithWorkouts = [];
+        foreach ($activities as $activity) {
+            if (!$countryCode = $activity->getLocation()?->getCountryCode()) {
+                continue;
+            }
+            if (isset($countriesWithWorkouts[$countryCode])) {
+                continue;
+            }
+
+            $countriesWithWorkouts[$countryCode] = Countries::getName(
+                country: strtoupper($countryCode),
+                displayLocale: $this->localeSwitcher->getLocale()
+            );
+        }
+
         $this->buildStorage->write(
             'activities.html',
             $this->twig->load('html/activity/activities.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
                 'activityTotals' => $activityTotals,
+                'countries' => $countriesWithWorkouts,
+                'gears' => $this->gearRepository->findAll(),
             ]),
         );
 
         $dataDatableRows = [];
         foreach ($activities as $activity) {
-            $timeInSecondsPerHeartRate = $this->activityHeartRateRepository->findTimeInSecondsPerHeartRateForActivity($activity->getId());
+            $activityType = $activity->getSportType()->getActivityType();
+            $heartRateDistributionChart = null;
+            if ($activity->getAverageHeartRate()
+                && ($timeInSecondsPerHeartRate = $this->activityHeartRateRepository->findTimeInSecondsPerHeartRateForActivity($activity->getId()))) {
+                $heartRateDistributionChart = HeartRateDistributionChart::fromHeartRateData(
+                    heartRateData: $timeInSecondsPerHeartRate,
+                    averageHeartRate: $activity->getAverageHeartRate(),
+                    athleteMaxHeartRate: $athlete->getMaxHeartRate($activity->getStartDate())
+                );
+            }
+
             $heartRateStream = null;
-            if ($activity->getSportType()->getActivityType()->supportsHeartRateOverTimeChart()) {
-                try {
-                    $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
-                } catch (EntityNotFound) {
-                }
+            try {
+                $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
+            } catch (EntityNotFound) {
             }
 
             $timeInSecondsPerWattage = null;
-            if ($activity->getSportType()->getActivityType()->supportsPowerDistributionChart()) {
-                $timeInSecondsPerWattage = $this->activityPowerRepository->findTimeInSecondsPerWattageForActivity($activity->getId());
+            $powerDistributionChart = null;
+            if ($activityType->supportsPowerDistributionChart() && $activity->getAveragePower()
+                && ($timeInSecondsPerWattage = $this->activityPowerRepository->findTimeInSecondsPerWattageForActivity($activity->getId()))) {
+                $powerDistributionChart = PowerDistributionChart::create(
+                    powerData: $timeInSecondsPerWattage,
+                    averagePower: $activity->getAveragePower(),
+                );
             }
 
             $activitySplits = $this->activitySplitRepository->findBy(
@@ -110,6 +148,43 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 }
             }
 
+            $activityProfileCharts = [];
+            if ($activityType->supportsCombinedStreamCalculation()) {
+                try {
+                    $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
+                        activityId: $activity->getId(),
+                        unitSystem: $this->unitSystem
+                    );
+
+                    $distances = $combinedActivityStream->getDistances();
+
+                    $combinedStreamTypes = $combinedActivityStream->getStreamTypes();
+                    /** @var CombinedStreamType $combinedStreamType */
+                    $firstIteration = true;
+                    foreach ($combinedStreamTypes as $combinedStreamType) {
+                        if (CombinedStreamType::DISTANCE === $combinedStreamType) {
+                            continue;
+                        }
+
+                        if (!$data = $combinedActivityStream->getOtherStreamData($combinedStreamType)) {
+                            continue;
+                        }
+
+                        $chart = CombinedStreamProfileChart::create(
+                            distances: $distances,
+                            yAxisData: $data,
+                            yAxisStreamType: $combinedStreamType,
+                            unitSystem: $this->unitSystem,
+                            showXAxis: $firstIteration,
+                            translator: $this->translator
+                        );
+                        $activityProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
+                        $firstIteration = false;
+                    }
+                } catch (EntityNotFound) {
+                }
+            }
+
             $leafletMap = $activity->getLeafletMap();
             $this->buildStorage->write(
                 'activity/'.$activity->getId().'.html',
@@ -119,24 +194,11 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         'routes' => [$activity->getPolyline()],
                         'map' => $leafletMap,
                     ] : null,
-                    'heartRateDistributionChart' => $timeInSecondsPerHeartRate && $activity->getAverageHeartRate() ? Json::encode(
-                        HeartRateDistributionChart::fromHeartRateData(
-                            heartRateData: $timeInSecondsPerHeartRate,
-                            averageHeartRate: $activity->getAverageHeartRate(),
-                            athleteMaxHeartRate: $athlete->getMaxHeartRate($activity->getStartDate())
-                        )->build(),
-                    ) : null,
-                    'powerDistributionChart' => $timeInSecondsPerWattage && $activity->getAveragePower() ? Json::encode(
-                        PowerDistributionChart::create(
-                            powerData: $timeInSecondsPerWattage,
-                            averagePower: $activity->getAveragePower(),
-                        )->build(),
-                    ) : null,
+                    'heartRateDistributionChart' => $heartRateDistributionChart ? Json::encode($heartRateDistributionChart->build()) : null,
+                    'powerDistributionChart' => $powerDistributionChart ? Json::encode($powerDistributionChart->build()) : null,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
-                    'heartRateChart' => $heartRateStream?->getData() ? Json::encode(
-                        HeartRateChart::create($heartRateStream)->build(),
-                    ) : null,
+                    'profileCharts' => array_reverse($activityProfileCharts),
                 ]),
             );
 

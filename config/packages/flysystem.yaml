@@ -21,6 +21,11 @@ flysystem:
             options:
                 directory: '%kernel.project_dir%/storage/database'
                 lock: 0
+        gear-maintenance.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/storage/gear-maintenance'
+                lock: 0
         build.storage:
             adapter: 'local'
             options:

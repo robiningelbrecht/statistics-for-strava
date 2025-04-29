@@ -29,4 +29,5 @@ phpstan.neon
 /storage
 /cron
 /ollama
+/tests/strava.db
 ###> app-build ###

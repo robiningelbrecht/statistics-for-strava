@@ -7,6 +7,7 @@ namespace App\Tests\Domain\Strava\Activity;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\WorkoutType;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -22,8 +23,8 @@ final class ActivityBuilder
     private SportType $sportType;
     private string $name;
     private readonly string $description;
-    private readonly Kilometer $distance;
-    private readonly Meter $elevation;
+    private Kilometer $distance;
+    private Meter $elevation;
     private ?Coordinate $startingCoordinate;
     private readonly int $calories;
     private ?int $averagePower;
@@ -35,16 +36,17 @@ final class ActivityBuilder
     private readonly ?int $averageCadence;
     private int $movingTimeInSeconds;
     private int $kudoCount;
-    private readonly int $totalImageCount;
+    private int $totalImageCount;
     private ?string $deviceName;
     /** @var array<string> */
-    private readonly array $localImagePaths;
+    private array $localImagePaths;
     private ?string $polyline;
     private ?Location $location;
     private readonly string $weather;
     private ?GearId $gearId;
     private readonly ?string $gearName;
     private readonly bool $isCommute;
+    private ?WorkoutType $workoutType;
 
     private function __construct()
     {
@@ -75,6 +77,7 @@ final class ActivityBuilder
         $this->location = null;
         $this->gearName = null;
         $this->isCommute = false;
+        $this->workoutType = null;
     }
 
     public static function fromDefaults(): self
@@ -112,6 +115,7 @@ final class ActivityBuilder
             gearId: $this->gearId,
             gearName: $this->gearName,
             isCommute: $this->isCommute,
+            workoutType: $this->workoutType,
         );
     }
 
@@ -202,6 +206,41 @@ final class ActivityBuilder
     public function withPolyline(?string $polyline): self
     {
         $this->polyline = $polyline;
+
+        return $this;
+    }
+
+    public function withTotalImageCount(int $totalImageCount): self
+    {
+        $this->totalImageCount = $totalImageCount;
+
+        return $this;
+    }
+
+    public function withDistance(Kilometer $distance): self
+    {
+        $this->distance = $distance;
+
+        return $this;
+    }
+
+    public function withElevation(Meter $elevation): self
+    {
+        $this->elevation = $elevation;
+
+        return $this;
+    }
+
+    public function withLocalImagePaths(string ...$localImagePaths): self
+    {
+        $this->localImagePaths = $localImagePaths;
+
+        return $this;
+    }
+
+    public function withoutLocalImagePaths(): self
+    {
+        $this->localImagePaths = [];
 
         return $this;
     }

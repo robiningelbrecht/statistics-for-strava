@@ -10,6 +10,7 @@ enum Locale: string
     case en_US = 'en_US';
     case fr_FR = 'fr_FR';
     case nl_BE = 'nl_BE';
+    case pt_BR = 'pt_BR';
     case pt_PT = 'pt_PT';
     case zh_CN = 'zh_CN';
 }

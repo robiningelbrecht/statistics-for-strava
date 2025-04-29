@@ -1,0 +1,8 @@
+[
+    {
+        "activityId": "activity-test-5",
+        "unitSystem": "imperial",
+        "streamTypes": "distance,altitude,pace",
+        "data": "[[0,7,536]]"
+    }
+]

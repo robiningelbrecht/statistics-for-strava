@@ -2,14 +2,12 @@
 
 namespace App\Domain\Strava\Activity\ImportActivities;
 
-use App\Domain\Strava\Activity\ActivitiesToSkipDuringImport;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityVisibility;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
-use App\Domain\Strava\Activity\NumberOfNewActivitiesToProcessPerImport;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypesToImport;
 use App\Domain\Strava\Gear\GearId;
@@ -18,20 +16,20 @@ use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Domain\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Weather\OpenMeteo\Weather;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
-use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use League\Flysystem\FilesystemOperator;
 
 final readonly class ImportActivitiesCommandHandler implements CommandHandler
 {
@@ -42,13 +40,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private GearRepository $gearRepository,
-        private FilesystemOperator $fileStorage,
         private SportTypesToImport $sportTypesToImport,
         private ActivityVisibilitiesToImport $activityVisibilitiesToImport,
         private ActivitiesToSkipDuringImport $activitiesToSkipDuringImport,
+        private ?SkipActivitiesRecordedBefore $skipActivitiesRecordedBefore,
         private StravaDataImportStatus $stravaDataImportStatus,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
-        private UuidFactory $uuidFactory,
+        private ActivityImageDownloader $activityImageDownloader,
     ) {
     }
 
@@ -78,7 +76,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         foreach ($stravaActivities as $stravaActivity) {
             if (!$sportType = SportType::tryFrom($stravaActivity['sport_type'])) {
                 $command->getOutput()->writeln(sprintf(
-                    '  => Sport type "%s" not supported yet. <a href="https://github.com/robiningelbrecht/strava-statistics/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+%s>Open a new GitHub issue</a> to if you want support for this sport type',
+                    '  => Sport type "%s" not supported yet. <a href="https://github.com/robiningelbrecht/statistics-for-strava/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+%s>Open a new GitHub issue</a> to if you want support for this sport type',
                     $stravaActivity['sport_type'],
                     $stravaActivity['sport_type']));
                 continue;
@@ -88,6 +86,14 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             }
             $activityVisibility = ActivityVisibility::from($stravaActivity['visibility']);
             if (!$this->activityVisibilitiesToImport->has($activityVisibility)) {
+                continue;
+            }
+
+            if ($this->skipActivitiesRecordedBefore?->isAfterOrOn(SerializableDateTime::createFromFormat(
+                format: Activity::DATE_TIME_FORMAT,
+                datetime: $stravaActivity['start_date_local'],
+                timezone: SerializableTimezone::default(),
+            ))) {
                 continue;
             }
 
@@ -118,10 +124,27 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         $gearId ? $allGears->getByGearId($gearId)?->getName() : null
                     );
 
+                if (array_key_exists('commute', $stravaActivity)) {
+                    $activity->updateCommute($stravaActivity['commute']);
+                }
+
                 if (!$activity->getLocation() && $sportType->supportsReverseGeocoding()
                     && $activity->getStartingCoordinate()) {
                     $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
                     $activity->updateLocation($reverseGeocodedAddress);
+                }
+
+                try {
+                    if (0 === $activity->getTotalImageCount() && ($stravaActivity['total_photo_count'] ?? 0) > 0) {
+                        // Activity got updated and images were uploaded, import them.
+                        if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
+                            $activity->updateLocalImagePaths(array_map(
+                                fn (string $fileSystemPath) => 'files/'.$fileSystemPath,
+                                $fileSystemPaths
+                            ));
+                        }
+                    }
+                } catch (ClientException|RequestException) {
                 }
 
                 $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
@@ -147,26 +170,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         gearName: $gearId ? $allGears->getByGearId($gearId)?->getName() : null
                     );
 
-                    $localImagePaths = [];
-                    if ($activity->getTotalImageCount() > 0) {
-                        $photos = $this->strava->getActivityPhotos($activity->getId());
-                        foreach ($photos as $photo) {
-                            if (empty($photo['urls'][5000])) {
-                                continue;
-                            }
-
-                            /** @var string $urlPath */
-                            $urlPath = parse_url((string) $photo['urls'][5000], PHP_URL_PATH);
-                            $extension = pathinfo($urlPath, PATHINFO_EXTENSION);
-                            $fileSystemPath = sprintf('activities/%s.%s', $this->uuidFactory->random(), $extension);
-                            $this->fileStorage->write(
-                                $fileSystemPath,
-                                $this->strava->downloadImage($photo['urls'][5000])
-                            );
-
-                            $localImagePaths[] = 'files/'.$fileSystemPath;
+                    if (($rawStravaData['total_photo_count'] ?? 0) > 0) {
+                        if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
+                            $activity->updateLocalImagePaths(array_map(
+                                fn (string $fileSystemPath) => 'files/'.$fileSystemPath,
+                                $fileSystemPaths
+                            ));
                         }
-                        $activity->updateLocalImagePaths($localImagePaths);
                     }
 
                     if ($sportType->supportsWeather() && $activity->getStartingCoordinate()) {
@@ -203,8 +213,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         break;
                     }
                 } catch (ClientException|RequestException $exception) {
-                    $this->stravaDataImportStatus->markActivityImportAsUncompleted();
-
                     if (!$exception->getResponse()) {
                         // Re-throw, we only want to catch supported error codes.
                         throw $exception;
@@ -225,7 +233,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             }
         }
 
-        $this->stravaDataImportStatus->markActivityImportAsCompleted();
         if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {
             // Shortcut the process here to make sure no activities are deleted yet.
             return;

@@ -3,7 +3,7 @@
 namespace App\Domain\Strava\Activity\Stream;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Time\DateRange;
 
 interface ActivityPowerRepository
@@ -13,9 +13,9 @@ interface ActivityPowerRepository
 
     public function findBestForActivity(ActivityId $activityId): PowerOutputs;
 
-    public function findBestForActivityType(ActivityType $activityType): PowerOutputs;
+    public function findBestForSportTypes(SportTypes $sportTypes): PowerOutputs;
 
-    public function findBestForActivityTypeInDateRange(ActivityType $activityType, DateRange $dateRange): PowerOutputs;
+    public function findBestForSportTypesInDateRange(SportTypes $sportTypes, DateRange $dateRange): PowerOutputs;
 
     /**
      * @return array<int, int>

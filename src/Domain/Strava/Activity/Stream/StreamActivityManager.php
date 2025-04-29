@@ -6,7 +6,7 @@ namespace App\Domain\Strava\Activity\Stream;
 
 use App\Domain\Strava\Activity\ActivityWasDeleted;
 use App\Domain\Strava\Activity\Stream\DeleteActivityStreams\DeleteActivityStreams;
-use App\Infrastructure\CQRS\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 final readonly class StreamActivityManager

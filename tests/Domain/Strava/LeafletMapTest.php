@@ -42,6 +42,46 @@ class LeafletMapTest extends TestCase
         ));
     }
 
+    public function testGetTileLayer(): void
+    {
+        $this->assertEquals(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            LeafletMap::REAL_WORLD->getTileLayer()
+        );
+
+        $this->assertNull(LeafletMap::ZWIFT_LONDON->getTileLayer());
+    }
+
+    public function testGetMinAndMaxZoom(): void
+    {
+        $this->assertEquals(
+            14,
+            LeafletMap::REAL_WORLD->getMaxZoom()
+        );
+        $this->assertEquals(
+            1,
+            LeafletMap::REAL_WORLD->getMinZoom()
+        );
+        $this->assertEquals(
+            18,
+            LeafletMap::ZWIFT_LONDON->getMaxZoom()
+        );
+        $this->assertEquals(
+            12,
+            LeafletMap::ZWIFT_LONDON->getMinZoom()
+        );
+    }
+
+    public function testGetOverlayImageUrl(): void
+    {
+        $this->assertEquals(
+            '/assets/images/maps/zwift-london.jpg',
+            LeafletMap::ZWIFT_LONDON->getOverlayImageUrl()
+        );
+
+        $this->assertNull(LeafletMap::REAL_WORLD->getOverlayImageUrl());
+    }
+
     public static function provideStartingCoordinates(): array
     {
         return [

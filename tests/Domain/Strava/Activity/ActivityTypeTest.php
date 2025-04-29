@@ -3,10 +3,11 @@
 namespace App\Tests\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\ActivityType;
-use PHPUnit\Framework\TestCase;
+use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ActivityTypeTest extends TestCase
+class ActivityTypeTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
@@ -24,6 +25,24 @@ class ActivityTypeTest extends TestCase
         $snapshot = [];
         foreach (ActivityType::cases() as $activityType) {
             $snapshot[] = $activityType->getSportTypes();
+        }
+        $this->assertMatchesJsonSnapshot($snapshot);
+    }
+
+    public function testGetColor(): void
+    {
+        $snapshot = [];
+        foreach (ActivityType::cases() as $activityType) {
+            $snapshot[] = $activityType->getColor();
+        }
+        $this->assertMatchesJsonSnapshot($snapshot);
+    }
+
+    public function testGetTranslations(): void
+    {
+        $snapshot = [];
+        foreach (ActivityType::cases() as $activityType) {
+            $snapshot[] = $activityType->trans($this->getContainer()->get(TranslatorInterface::class));
         }
         $this->assertMatchesJsonSnapshot($snapshot);
     }

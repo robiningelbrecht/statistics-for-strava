@@ -40,7 +40,7 @@ enum LeafletMap: string
             return null;
         }
 
-        return 'assets/images/maps/'.$this->value.'.jpg';
+        return '/assets/images/maps/'.$this->value.'.jpg';
     }
 
     /**

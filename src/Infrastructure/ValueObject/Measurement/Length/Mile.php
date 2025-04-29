@@ -8,7 +8,7 @@ use App\Infrastructure\ValueObject\Measurement\Imperial;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
-final readonly class Mile implements Unit, Imperial
+final readonly class Mile implements ConvertableToMeter, Imperial
 {
     use MeasurementFromFloat;
 
@@ -27,5 +27,10 @@ final readonly class Mile implements Unit, Imperial
     public function toMetric(): Unit
     {
         return $this->toKilometer();
+    }
+
+    public function toMeter(): Meter
+    {
+        return $this->toKilometer()->toMeter();
     }
 }

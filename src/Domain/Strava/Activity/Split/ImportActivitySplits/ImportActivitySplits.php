@@ -2,13 +2,13 @@
 
 namespace App\Domain\Strava\Activity\Split\ImportActivitySplits;
 
-use App\Infrastructure\CQRS\DomainCommand;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class ImportActivitySplits extends DomainCommand
+final readonly class ImportActivitySplits extends DomainCommand
 {
     public function __construct(
-        private readonly OutputInterface $output,
+        private OutputInterface $output,
     ) {
     }
 

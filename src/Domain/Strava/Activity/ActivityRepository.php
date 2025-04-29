@@ -2,9 +2,13 @@
 
 namespace App\Domain\Strava\Activity;
 
+use App\Infrastructure\ValueObject\Time\Year;
+
 interface ActivityRepository
 {
     public function find(ActivityId $activityId): Activity;
+
+    public function findLongestActivityForYear(Year $year): Activity;
 
     public function count(): int;
 

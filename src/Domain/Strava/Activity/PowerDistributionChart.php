@@ -81,7 +81,6 @@ final readonly class PowerDistributionChart
                 'axisLabel' => [
                     'interval' => 2,
                     'showMinLabel' => true,
-                    // 'showMaxLabel' => true,
                 ],
             ],
             'yAxis' => [

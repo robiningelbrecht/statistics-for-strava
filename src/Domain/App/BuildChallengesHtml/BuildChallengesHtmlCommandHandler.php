@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildChallengesHtml;
 
 use App\Domain\Strava\Challenge\ChallengeRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
 

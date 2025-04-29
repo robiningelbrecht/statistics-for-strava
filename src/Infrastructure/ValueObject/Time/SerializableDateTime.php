@@ -13,6 +13,9 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         return self::fromString($date->format('Y-m-d H:i:s'));
     }
 
+    /**
+     * @throws \DateMalformedStringException
+     */
     public static function fromString(string $string): self
     {
         return new self($string);
@@ -139,11 +142,11 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
 
     public function isBefore(SerializableDateTime $that): bool
     {
-        return !$this->isAfterOrOn($that);
+        return $this < $that;
     }
 
     public function isAfter(SerializableDateTime $that): bool
     {
-        return !$this->isBeforeOrOn($that);
+        return $this > $that;
     }
 }

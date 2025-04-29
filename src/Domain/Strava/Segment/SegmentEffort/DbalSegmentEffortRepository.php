@@ -10,7 +10,7 @@ use App\Domain\Strava\Segment\SegmentId;
 use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -128,7 +128,7 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             startDateTime: SerializableDateTime::fromString($result['startDateTime']),
             name: $result['name'],
             elapsedTimeInSeconds: $result['elapsedTimeInSeconds'],
-            distance: Kilometer::from($result['distance'] / 1000),
+            distance: Meter::from($result['distance'])->toKilometer(),
             averageWatts: $result['averageWatts'],
             rank: $this->segmentEffortRankingMap->getRankFor($segmentEffortId)
         );

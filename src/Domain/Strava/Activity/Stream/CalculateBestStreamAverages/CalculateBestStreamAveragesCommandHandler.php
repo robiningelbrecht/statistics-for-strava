@@ -6,8 +6,8 @@ namespace App\Domain\Strava\Activity\Stream\CalculateBestStreamAverages;
 
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
-use App\Infrastructure\CQRS\Command;
-use App\Infrastructure\CQRS\CommandHandler;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 
 final readonly class CalculateBestStreamAveragesCommandHandler implements CommandHandler
 {

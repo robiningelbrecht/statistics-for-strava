@@ -4,6 +4,9 @@ namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypes;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -67,17 +70,9 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
-    public function supportsWeeklyDistanceStats(): bool
+    public function supportsWeeklyStats(): bool
     {
         return ActivityType::OTHER !== $this;
-    }
-
-    public function supportsHeartRateOverTimeChart(): bool
-    {
-        return match ($this) {
-            self::RUN, self::WALK => true,
-            default => false,
-        };
     }
 
     public function supportsPowerDistributionChart(): bool
@@ -101,6 +96,58 @@ enum ActivityType: string implements TranslatableInterface
         return match ($this) {
             self::RUN, self::RIDE, self::WALK, self::WATER_SPORTS, self::SKATING => true,
             default => false,
+        };
+    }
+
+    public function supportsCombinedStreamCalculation(): bool
+    {
+        return match ($this) {
+            self::RIDE, self::RUN, self::WALK => true,
+            default => false,
+        };
+    }
+
+    public function supportsBestEffortsStats(): bool
+    {
+        return !empty($this->getDistancesForBestEffortCalculation());
+    }
+
+    /**
+     * @return \App\Infrastructure\ValueObject\Measurement\Length\ConvertableToMeter[]
+     */
+    public function getDistancesForBestEffortCalculation(): array
+    {
+        return match ($this) {
+            self::RIDE => [
+                Mile::from(5),
+                Kilometer::from(10),
+                Mile::from(10),
+                Kilometer::from(20),
+                Kilometer::from(30),
+                Kilometer::from(40),
+                Kilometer::from(50),
+                Kilometer::from(80),
+                Mile::from(50),
+                Kilometer::from(90),
+                Kilometer::from(100),
+                Mile::from(100),
+            ],
+            self::RUN => [
+                Meter::from(400),
+                Mile::from(0.5),
+                Kilometer::from(1),
+                Mile::from(1),
+                Mile::from(2),
+                Kilometer::from(5),
+                Kilometer::from(10),
+                Kilometer::from(15),
+                Mile::from(10),
+                Kilometer::from(20),
+                Kilometer::from(21.097),
+                Kilometer::from(30),
+                Kilometer::from(42.194),
+            ],
+            default => [],
         };
     }
 

@@ -5,8 +5,8 @@ namespace App\Domain\Strava\Activity\Stream;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
-use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
@@ -100,23 +100,23 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         return $powerStreamForActivity;
     }
 
-    public function findBestForActivityType(ActivityType $activityType): PowerOutputs
+    public function findBestForSportTypes(SportTypes $sportTypes): PowerOutputs
     {
         return $this->buildBestFor(
-            activityType: $activityType,
+            sportTypes: $sportTypes,
             dateRange: null
         );
     }
 
-    public function findBestForActivityTypeInDateRange(ActivityType $activityType, DateRange $dateRange): PowerOutputs
+    public function findBestForSportTypesInDateRange(SportTypes $sportTypes, DateRange $dateRange): PowerOutputs
     {
         return $this->buildBestFor(
-            activityType: $activityType,
+            sportTypes: $sportTypes,
             dateRange: $dateRange
         );
     }
 
-    private function buildBestFor(ActivityType $activityType, ?DateRange $dateRange): PowerOutputs
+    private function buildBestFor(SportTypes $sportTypes, ?DateRange $dateRange): PowerOutputs
     {
         $powerOutputs = PowerOutputs::empty();
 
@@ -140,7 +140,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 $query,
                 [
                     'streamType' => StreamType::WATTS->value,
-                    'sportType' => $activityType->getSportTypes()->map(fn (SportType $sportType) => $sportType->value),
+                    'sportType' => $sportTypes->map(fn (SportType $sportType) => $sportType->value),
                     'dateFrom' => $dateRange->getFrom()->format('Y-m-d 00:00:00'),
                     'dateTill' => $dateRange->getTill()->format('Y-m-d 23:59:59'),
                 ],

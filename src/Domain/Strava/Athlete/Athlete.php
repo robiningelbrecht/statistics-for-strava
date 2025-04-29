@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Athlete;
 
+use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class Athlete implements \JsonSerializable
+final class Athlete implements \JsonSerializable
 {
+    private ?MaxHeartRateFormula $maxHeartRateFormula = null;
+
     private function __construct(
         /** @var array<string, mixed> */
-        private array $data,
+        private readonly array $data,
     ) {
     }
 
@@ -24,6 +27,11 @@ final readonly class Athlete implements \JsonSerializable
         return new self(
             data: $data,
         );
+    }
+
+    public function setMaxHeartRateFormula(MaxHeartRateFormula $maxHeartRateFormula): void
+    {
+        $this->maxHeartRateFormula = $maxHeartRateFormula;
     }
 
     public function getAthleteId(): string
@@ -43,7 +51,14 @@ final readonly class Athlete implements \JsonSerializable
 
     public function getMaxHeartRate(SerializableDateTime $on): int
     {
-        return 220 - $this->getAgeInYears($on);
+        if (is_null($this->maxHeartRateFormula)) {
+            throw new \RuntimeException('Max heart rate formula not set');
+        }
+
+        return $this->maxHeartRateFormula->calculate(
+            age: $this->getAgeInYears($on),
+            on: $on
+        );
     }
 
     public function getName(): Name

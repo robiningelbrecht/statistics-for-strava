@@ -50,15 +50,6 @@
             <div class="mb-4 grid grid-cols-6 gap-2">
                 {% for imagePath in activity.getLocalImagePaths() %}
                     <div>
-                        <a href="#" data-popover-target="popover-image-{{ loop.index }}"
-                           data-popover-placement="bottom" data-popover-trigger="click">
-                            <img class="h-auto max-w-full rounded-lg lazy"
-                                 src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
-                                 alt="Activity image"/>
-                        </a>
-                    </div>
-                    <div data-popover id="popover-image-{{ loop.index }}" role="tooltip"
-                         class="z-1000 w-[35rem] absolute invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
                         <img class="h-auto max-w-full rounded-lg lazy"
                              src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
                              alt="Activity image"/>
@@ -135,8 +126,8 @@
             <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
                aria-controls="accordion-segments-body"
                class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full px-2 py-3 font-medium rtl:text-right text-gray-900">
-                <span>Segments ({{ segmentEfforts|length }})</span>
-                <svg data-accordion-icon class="w-3 h-3 shrink-0" aria-hidden="true"
+                <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
                      xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M9 5 5 1 1 5"/>
@@ -202,20 +193,41 @@
         </div>
     </div>
 {% endif %}
-{% if heartRateDistributionChart or heartRateChart %}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {% if heartRateChart %}
-            <div>
-                <h3 class="font-bold mb-1 text-center">{{ "Heart rate"|trans }}</h3>
-                <div class="h-[350px]" data-echarts-options='{{ heartRateChart }}'></div>
-            </div>
-        {% endif %}
-        {% if heartRateDistributionChart %}
-            <div>
-                <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
-                <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
-            </div>
-        {% endif %}
+{% if heartRateDistributionChart and profileCharts is not empty  %}
+    <div class="mb-4 border-b border-gray-200">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
+            <li class="mr-2" role="presentation">
+                <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                    {{ "Metrics"|trans }}
+                </a>
+            </li>
+            <li class="mr-2" role="presentation">
+                <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                    {{ "Distribution"|trans }}
+                </a>
+            </li>
+        </ul>
     </div>
 {% endif %}
+<div id="chartsTabContent">
+    {% if profileCharts is not empty %}
+        <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
+            <div class="flex flex-col gap-y-1">
+                {% for chart in profileCharts %}
+                    <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if heartRateDistributionChart %}
+        <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
+                    <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
 {% endautoescape %}
