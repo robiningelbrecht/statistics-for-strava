@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear;
 
+use App\Domain\Strava\Gear\FindGearStatsPerDay\FindGearStatsPerDayResponse;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -13,7 +14,7 @@ final readonly class DistanceOverTimePerGearChart
 {
     private function __construct(
         private Gears $gears,
-        private GearStats $gearStats,
+        private FindGearStatsPerDayResponse $gearStats,
         private SerializableDateTime $startDate,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -23,7 +24,7 @@ final readonly class DistanceOverTimePerGearChart
 
     public static function create(
         Gears $gears,
-        GearStats $gearStats,
+        FindGearStatsPerDayResponse $gearStats,
         SerializableDateTime $startDate,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,

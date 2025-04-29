@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Gear;
+namespace App\Domain\Strava\Gear\FindGearStatsPerDay;
 
+use App\Domain\Strava\Gear\GearId;
+use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class GearStats
+final class FindGearStatsPerDayResponse implements Response
 {
     /** @var array<mixed> */
     private array $stats = [];

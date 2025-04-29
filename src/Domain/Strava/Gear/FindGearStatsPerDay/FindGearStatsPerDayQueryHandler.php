@@ -2,16 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Gear;
+namespace App\Domain\Strava\Gear\FindGearStatsPerDay;
 
-use App\Infrastructure\Repository\DbalRepository;
+use App\Domain\Strava\Gear\GearId;
+use App\Infrastructure\CQRS\Query\Query;
+use App\Infrastructure\CQRS\Query\QueryHandler;
+use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\DBAL\Connection;
 
-final readonly class DbalGearStatsRepository extends DbalRepository implements GearStatsRepository
+final readonly class FindGearStatsPerDayQueryHandler implements QueryHandler
 {
-    public function findStatsPerGearIdPerDay(): GearStats
+    public function __construct(
+        private Connection $connection,
+    ) {
+    }
+
+    public function handle(Query $query): Response
     {
+        assert($query instanceof FindGearStatsPerDay);
+
         $sql = <<<'SQL'
                 SELECT
                     gearId, DATE(startDateTime) AS startDate,
@@ -26,19 +37,19 @@ final readonly class DbalGearStatsRepository extends DbalRepository implements G
                 ORDER BY gearId, startDate;
                 SQL;
 
-        $gearStats = GearStats::empty();
+        $response = FindGearStatsPerDayResponse::empty();
         if (!$results = $this->connection->executeQuery($sql)->fetchAllAssociative()) {
-            return $gearStats;
+            return $response;
         }
 
         foreach ($results as $result) {
-            $gearStats->addStat(
+            $response->addStat(
                 gearId: GearId::fromString($result['gearId']),
                 date: SerializableDateTime::fromString($result['startDate']),
                 distance: Meter::from($result['cumulativeDistance'])->toKilometer()
             );
         }
 
-        return $gearStats;
+        return $response;
     }
 }
