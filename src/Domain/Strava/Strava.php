@@ -65,7 +65,7 @@ class Strava
         return $response->getBody()->getContents();
     }
 
-    private function getAccessToken(): string
+    public function getAccessToken(): string
     {
         if (!is_null(Strava::$cachedAccessToken)) {
             return Strava::$cachedAccessToken;
@@ -80,9 +80,14 @@ class Strava
             ],
         ]);
 
-        Strava::$cachedAccessToken = Json::decode($response)['access_token'] ?? throw new \RuntimeException('Could not fetch Strava accessToken');
+        $decodedResponse = Json::decode($response);
+        if (empty($decodedResponse['access_token'])) {
+            throw new \RuntimeException('Could not fetch Strava accessToken');
+        }
 
-        return Strava::$cachedAccessToken;
+        Strava::$cachedAccessToken = $decodedResponse['access_token'];
+
+        return $decodedResponse['access_token'];
     }
 
     /**
