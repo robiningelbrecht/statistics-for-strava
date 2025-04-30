@@ -14,6 +14,11 @@ return [
         exitOnLowCoverage: true
     ),
     new MinCoverageRule(
+        pattern: 'App\Controller\*',
+        minCoverage: 100,
+        exitOnLowCoverage: true
+    ),
+    new MinCoverageRule(
         pattern: 'App\Infrastructure\*',
         minCoverage: 91,
         exitOnLowCoverage: true
