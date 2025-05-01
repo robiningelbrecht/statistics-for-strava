@@ -45,5 +45,33 @@ services:
             - '11434:11434'
         networks:
             - statistics-for-strava-network
+
+    mercure:
+      image: dunglas/mercure
+      container_name: 'statistics-for-strava-mercure'
+      restart: unless-stopped
+      environment:
+        # Uncomment the following line to disable HTTPS,
+        SERVER_NAME: ':80'
+        MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+        MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+        # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
+        MERCURE_EXTRA_DIRECTIVES: |
+          cors_origins http://localhost:8081
+      # Comment the following line to disable the development mode
+      command: /usr/bin/caddy run --config /etc/caddy/dev.Caddyfile
+      ports:
+        - "8082:80"
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8082/healthz"]
+        timeout: 5s
+        retries: 5
+        start_period: 60s
+      volumes:
+        - ./mercure/data:/data
+        - ./mercure/config:/config
+      networks:
+        - statistics-for-strava-network
+
 networks:
     statistics-for-strava-network: {}

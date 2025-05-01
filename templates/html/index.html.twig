@@ -372,7 +372,12 @@
         </div>
     </main>
 </div>
-
+<script>
+    const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
+    eventSource.onmessage = event => {
+        console.log(JSON.parse(event.data));
+    };
+</script>
 <script>
     window.statisticsForStrava = {{ javascriptWindowConstants|raw }};
     window.statisticsForStrava.callbacks = {};

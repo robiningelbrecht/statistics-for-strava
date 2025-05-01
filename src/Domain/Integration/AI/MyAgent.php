@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Integration\AI;
 
 use App\Domain\Integration\AI\Ollama\OllamaConfig;
-use NeuronAI\Agent;
 use NeuronAI\Chat\History\AbstractChatHistory;
 use NeuronAI\Chat\History\FileChatHistory;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Ollama\Ollama;
+use NeuronAI\RAG\RAG;
 use NeuronAI\SystemPrompt;
 
-class MyAgent extends Agent
+final class MyAgent extends RAG
 {
     public function __construct(
         private OllamaConfig $config,
@@ -43,12 +43,12 @@ class MyAgent extends Agent
         );
     }
 
-    protected function chatHistory(): AbstractChatHistory
+    /*protected function chatHistory(): AbstractChatHistory
     {
         return new FileChatHistory(
             directory: '/home/app/storage/neuron',
             key: '[user-id]',
             contextWindow: 50000
         );
-    }
+    }*/
 }
