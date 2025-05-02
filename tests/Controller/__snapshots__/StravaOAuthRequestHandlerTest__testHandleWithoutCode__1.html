@@ -25,11 +25,7 @@
             </button>
             <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
                 <img src="/assets/images/logo.svg" class="rounded-full mr-3 h-8" alt="Statistics for Strava Logo">
-                <div>
-                    <div class="text-lg md:text-2xl font-semibold whitespace-nowrap">Statistics for Strava</div>
-                    <div class="text-xs font-normal leading-3 whitespace-nowrap">Powered by Strava</div>
-                </div>
-
+                <div class="text-lg md:text-2xl font-semibold whitespace-nowrap">Statistics for Strava</div>
             </a>
         </div>
         <div class="hidden md:flex items-center text-gray-500 lg:order-2 gap-x-2">
@@ -54,12 +50,13 @@
                     </div>
     </div>
 </nav>
-<div class="p-4 text-center">
+<div class="flex flex-col items-center p-4 text-center">
                     <p class="text-2xl font-semibold pb-5">It looks like you haven't successfully completed the Strava authorization process yet.</p>
         <p class="text-gray-500 mb-4">You will be redirected to Strava. When you see the authorization page, click "Authorize"</p>
-        <a href="http://www.strava.com/oauth/authorize?client_id=client&amp;response_type=code&amp;redirect_uri=http://:/strava-oauth&amp;approval_prompt=force&amp;scope=activity:read_all" class="rounded-sm py-2 px-8 text-white bg-strava-orange">
-            Start Strava authorization flow
+        <a href="http://www.strava.com/oauth/authorize?client_id=client&amp;response_type=code&amp;redirect_uri=http://:/strava-oauth&amp;approval_prompt=force&amp;scope=activity:read_all" class="block w-[200px]">
+            <img src="/assets/images/strava/strava-oauth.svg?0025176c-5652-11ee-923d-02424dd627d5" alt="Start Strava authorization flow">
         </a>
+
         </div>
 </body>
 </html>
