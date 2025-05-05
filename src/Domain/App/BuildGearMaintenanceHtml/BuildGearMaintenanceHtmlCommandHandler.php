@@ -10,6 +10,7 @@ use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\Gears;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
@@ -22,6 +23,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         private GearMaintenanceConfig $gearMaintenanceConfig,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
         private GearRepository $gearRepository,
+        private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private FilesystemOperator $gearMaintenanceStorage,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -121,6 +123,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'gearsAttachedToComponents' => $gearsAttachedToComponents,
                 'gearComponents' => $this->gearMaintenanceConfig->getGearComponents(),
                 'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid(),
+                'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
     }

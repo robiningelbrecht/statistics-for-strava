@@ -76,7 +76,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
                 'lastUpdate' => $command->getCurrentDateTime(),
                 'athlete' => $athlete,
                 'profilePictureUrl' => $this->profilePictureUrl,
-                'maintenanceTaskIsDue' => $this->maintenanceTaskProgressCalculator->calculateIfATaskIsDue(),
+                'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
                 'javascriptWindowConstants' => Json::encode([
                     'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
                     'unitSystem' => [
