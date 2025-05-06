@@ -19,6 +19,7 @@ final class SegmentBuilder
     private float $maxGradient;
     private bool $isFavourite;
     private ?string $deviceName;
+    private ?int $climbCategory;
 
     private function __construct()
     {
@@ -29,6 +30,7 @@ final class SegmentBuilder
         $this->maxGradient = 5.3;
         $this->isFavourite = false;
         $this->deviceName = 'Polar';
+        $this->climbCategory = null;
     }
 
     public static function fromDefaults(): self
@@ -45,7 +47,8 @@ final class SegmentBuilder
             distance: $this->distance,
             maxGradient: $this->maxGradient,
             isFavourite: $this->isFavourite,
-            deviceName: $this->deviceName
+            climbCategory: $this->climbCategory,
+            deviceName: $this->deviceName,
         );
     }
 

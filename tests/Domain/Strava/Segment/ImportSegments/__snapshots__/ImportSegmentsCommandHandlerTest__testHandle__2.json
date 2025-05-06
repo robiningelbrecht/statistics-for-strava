@@ -6,6 +6,7 @@
         "distance": 1000,
         "maxGradient": 5.3,
         "isFavourite": 0,
+        "climbCategory": null,
         "deviceName": "Zwift"
     }
 ]
