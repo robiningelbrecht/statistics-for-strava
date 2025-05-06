@@ -7,7 +7,7 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypes;
-use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
+use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\DateRange;
@@ -24,7 +24,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
     public function __construct(
         private readonly Connection $connection,
         private readonly ActivityRepository $activityRepository,
-        private readonly AthleteWeightRepository $athleteWeightRepository,
+        private readonly AthleteWeightHistory $athleteWeightHistory,
         private readonly ActivityStreamRepository $activityStreamRepository,
     ) {
     }
@@ -59,10 +59,10 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 $bestAverageForTimeInterval = $bestAverages[$timeIntervalInSeconds];
 
                 try {
-                    $athleteWeight = $this->athleteWeightRepository->find($activity->getStartDate())->getWeightInKg();
+                    $athleteWeight = $this->athleteWeightHistory->find($activity->getStartDate())->getWeightInKg();
                 } catch (EntityNotFound) {
                     throw new EntityNotFound(sprintf('Trying to calculate the relative power for activity "%s" on %s, but no corresponding athleteWeight was found. 
-                    Make sure you configure the proper weights in your .env file. Do not forgot to run the app:strava:import-data command after changing the weights', $activity->getName(), $activity->getStartDate()->format('Y-m-d')));
+                    Make sure you configure the proper weights in your .env file. Do not forgot to restart your container after changing the weights', $activity->getName(), $activity->getStartDate()->format('Y-m-d')));
                 }
 
                 $relativePower = $athleteWeight->toFloat() > 0 ? round($bestAverageForTimeInterval / $athleteWeight->toFloat(), 2) : 0;
@@ -164,10 +164,10 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
             $bestAverageForTimeInterval = $stream->getBestAverages()[$timeIntervalInSeconds];
 
             try {
-                $athleteWeight = $this->athleteWeightRepository->find($activity->getStartDate())->getWeightInKg();
+                $athleteWeight = $this->athleteWeightHistory->find($activity->getStartDate())->getWeightInKg();
             } catch (EntityNotFound) {
                 throw new EntityNotFound(sprintf('Trying to calculate the relative power for activity "%s" on %s, but no corresponding athleteWeight was found. 
-                    Make sure you configure the proper weights in your .env file. Do not forgot to run the app:strava:import-data command after changing the weights', $activity->getName(), $activity->getStartDate()->format('Y-m-d')));
+                    Make sure you configure the proper weights in your .env file. Do not forgot to restart your container after changing the weights', $activity->getName(), $activity->getStartDate()->format('Y-m-d')));
             }
 
             $relativePower = $athleteWeight->toFloat() > 0 ? round($bestAverageForTimeInterval / $athleteWeight->toFloat(), 2) : 0;

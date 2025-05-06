@@ -48,18 +48,6 @@
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Ftp\\ImportFtp\\ImportFtp",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Strava\\Athlete\\Weight\\ImportAthleteWeight\\ImportAthleteWeight",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
         "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
         "payload": {
             "output": {}

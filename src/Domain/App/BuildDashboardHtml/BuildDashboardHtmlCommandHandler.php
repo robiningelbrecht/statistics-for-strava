@@ -28,12 +28,12 @@ use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone;
 use App\Domain\Strava\Athlete\TimeInHeartRateZoneChart;
-use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
+use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\CarbonSavedComparison;
 use App\Domain\Strava\Challenge\Consistency\ChallengeConsistency;
+use App\Domain\Strava\Ftp\FtpHistory;
 use App\Domain\Strava\Ftp\FtpHistoryChart;
-use App\Domain\Strava\Ftp\FtpRepository;
 use App\Domain\Strava\Trivia;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -51,8 +51,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
     public function __construct(
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private ActivityPowerRepository $activityPowerRepository,
-        private FtpRepository $ftpRepository,
-        private AthleteWeightRepository $athleteWeightRepository,
+        private FtpHistory $ftpHistory,
+        private AthleteWeightHistory $athleteWeightHistory,
         private ActivityTypeRepository $activityTypeRepository,
         private SportTypeRepository $sportTypeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
@@ -74,7 +74,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
-        $allFtps = $this->ftpRepository->findAll();
+        $allFtps = $this->ftpHistory->findAll();
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
             endDate: $now
@@ -141,7 +141,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         foreach ($allFtps as $ftp) {
             try {
                 $ftp->enrichWithAthleteWeight(
-                    $this->athleteWeightRepository->find($ftp->getSetOn())->getWeightInKg()
+                    $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
                 );
             } catch (EntityNotFound) {
             }

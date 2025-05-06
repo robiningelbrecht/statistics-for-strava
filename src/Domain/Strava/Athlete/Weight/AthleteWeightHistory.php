@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Athlete\Weight\ImportAthleteWeight;
+namespace App\Domain\Strava\Athlete\Weight;
 
-use App\Domain\Strava\Athlete\Weight\AthleteWeight;
-use App\Domain\Strava\Athlete\Weight\AthleteWeights;
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class AthleteWeightHistoryFromEnvFile
+final class AthleteWeightHistory
 {
-    private AthleteWeights $weights;
+    /** @var AthleteWeight[] */
+    private array $weights;
 
     /**
      * @param array<string, float> $weightsFromEnv
      */
     private function __construct(
         array $weightsFromEnv,
-        private UnitSystem $unitSystem,
+        private readonly UnitSystem $unitSystem,
     ) {
-        $this->weights = AthleteWeights::empty();
+        $this->weights = [];
 
         foreach ($weightsFromEnv as $on => $weight) {
             $weightInGrams = Kilogram::from($weight)->toGram();
@@ -32,19 +32,30 @@ final readonly class AthleteWeightHistoryFromEnvFile
             }
 
             try {
-                $this->weights->add(AthleteWeight::fromState(
-                    on: SerializableDateTime::fromString($on),
+                $onDate = SerializableDateTime::fromString($on);
+                $this->weights[$onDate->getTimestamp()] = AthleteWeight::fromState(
+                    on: $onDate,
                     weightInGrams: $weightInGrams,
-                ));
+                );
             } catch (\DateMalformedStringException) {
                 throw new \InvalidArgumentException(sprintf('Invalid date "%s" set in ATHLETE_WEIGHT_HISTORY in .env file', $on));
             }
         }
+
+        krsort($this->weights);
     }
 
-    public function getAll(): AthleteWeights
+    public function find(SerializableDateTime $on): AthleteWeight
     {
-        return $this->weights;
+        $on = SerializableDateTime::fromString($on->format('Y-m-d'));
+        /** @var AthleteWeight $athleteWeight */
+        foreach ($this->weights as $athleteWeight) {
+            if ($on->isAfterOrOn($athleteWeight->getOn())) {
+                return $athleteWeight;
+            }
+        }
+
+        throw new EntityNotFound(sprintf('AthleteWeight for date "%s" not found', $on));
     }
 
     public static function fromString(string $values, UnitSystem $unitSystem): self

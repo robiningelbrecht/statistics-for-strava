@@ -19,11 +19,8 @@ use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\Athlete;
 use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Domain\Strava\Athlete\Weight\AthleteWeightRepository;
 use App\Domain\Strava\Challenge\ChallengeId;
 use App\Domain\Strava\Challenge\ChallengeRepository;
-use App\Domain\Strava\Ftp\FtpRepository;
-use App\Domain\Strava\Ftp\FtpValue;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
@@ -35,7 +32,6 @@ use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Mass\Gram;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -43,9 +39,7 @@ use App\Tests\Domain\Strava\Activity\BestEffort\ActivityBestEffortBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\CombinedStream\CombinedActivityStreamBuilder;
-use App\Tests\Domain\Strava\Athlete\Weight\AthleteWeightBuilder;
 use App\Tests\Domain\Strava\Challenge\ChallengeBuilder;
-use App\Tests\Domain\Strava\Ftp\FtpBuilder;
 use App\Tests\Domain\Strava\Gear\GearBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentEffort\SegmentEffortBuilder;
@@ -452,42 +446,6 @@ trait ProvideTestData
                 ->build()
         );
 
-        /** @var AthleteWeightRepository $athleteWeightRepository */
-        $athleteWeightRepository = $this->getContainer()->get(AthleteWeightRepository::class);
-        $athleteWeightRepository->save(
-            AthleteWeightBuilder::fromDefaults()
-                ->withOn(SerializableDateTime::fromString('2020-01-01'))
-                ->withWeightInGrams(Gram::from(68000))
-                ->build()
-        );
-
-        /** @var FtpRepository $ftpRepository */
-        $ftpRepository = $this->getContainer()->get(FtpRepository::class);
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-01-01'))
-                ->withFtp(FtpValue::fromInt(198))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-03-22'))
-                ->withFtp(FtpValue::fromInt(220))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-03-29'))
-                ->withFtp(FtpValue::fromInt(238))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-04-01'))
-                ->withFtp(FtpValue::fromInt(240))
-                ->build()
-        );
-
         /** @var AthleteRepository $athleteRepository */
         $athleteRepository = $this->getContainer()->get(AthleteRepository::class);
         $athleteRepository->save(Athlete::create([
@@ -596,42 +554,6 @@ trait ProvideTestData
                 ->withDistanceInMeter(Meter::from(145014))
                 ->withName('Zwift hub')
                 ->withIsRetired(false)
-                ->build()
-        );
-
-        /** @var AthleteWeightRepository $athleteWeightRepository */
-        $athleteWeightRepository = $this->getContainer()->get(AthleteWeightRepository::class);
-        $athleteWeightRepository->save(
-            AthleteWeightBuilder::fromDefaults()
-                ->withOn(SerializableDateTime::fromString('2020-01-01'))
-                ->withWeightInGrams(Gram::from(68000))
-                ->build()
-        );
-
-        /** @var FtpRepository $ftpRepository */
-        $ftpRepository = $this->getContainer()->get(FtpRepository::class);
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-01-01'))
-                ->withFtp(FtpValue::fromInt(198))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-03-22'))
-                ->withFtp(FtpValue::fromInt(220))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-03-29'))
-                ->withFtp(FtpValue::fromInt(238))
-                ->build()
-        );
-        $ftpRepository->save(
-            FtpBuilder::fromDefaults()
-                ->withSetOn(SerializableDateTime::fromString('2023-04-01'))
-                ->withFtp(FtpValue::fromInt(240))
                 ->build()
         );
 

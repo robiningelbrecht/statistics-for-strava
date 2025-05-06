@@ -9,9 +9,7 @@ use App\Domain\Strava\Activity\Stream\CalculateBestStreamAverages\CalculateBestS
 use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
 use App\Domain\Strava\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
 use App\Domain\Strava\Athlete\ImportAthlete\ImportAthlete;
-use App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\ImportAthleteWeight;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
-use App\Domain\Strava\Ftp\ImportFtp\ImportFtp;
 use App\Domain\Strava\Gear\ImportGear\ImportGear;
 use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -69,8 +67,6 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->commandBus->dispatch(new CalculateBestActivityEfforts($output));
         $this->commandBus->dispatch(new ImportSegments($output));
         $this->commandBus->dispatch(new ImportChallenges($output));
-        $this->commandBus->dispatch(new ImportFtp($output));
-        $this->commandBus->dispatch(new ImportAthleteWeight($output));
         $this->commandBus->dispatch(new CalculateBestStreamAverages($output));
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
