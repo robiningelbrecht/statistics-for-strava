@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 
+use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 
@@ -34,8 +35,9 @@ final readonly class MaintenanceTaskProgressCalculator
         throw new \RuntimeException(sprintf('No progress calculation found for interval unit: %s', $intervalUnit->value));
     }
 
-    public function calculateIfATaskIsDue(): bool
+    public function getGearIdsThatHaveDueTasks(): GearIds
     {
+        $gearIdsThatHaveDueTasks = GearIds::empty();
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
 
         /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
@@ -57,11 +59,13 @@ final readonly class MaintenanceTaskProgressCalculator
                 );
 
                 if ($maintenanceTaskProgress->isDue()) {
-                    return true;
+                    foreach ($gearComponent->getAttachedTo() as $gearId) {
+                        $gearIdsThatHaveDueTasks->add($gearId);
+                    }
                 }
             }
         }
 
-        return false;
+        return $gearIdsThatHaveDueTasks;
     }
 }

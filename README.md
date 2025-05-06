@@ -54,6 +54,7 @@ https://github.com/user-attachments/assets/b7d447b1-0212-49c8-ac67-62d737c66922
 * History of completed Strava challenges
 * History of activity photos
 * User badges
+* PWA support
 
 ## ⚠️ Disclaimer
 

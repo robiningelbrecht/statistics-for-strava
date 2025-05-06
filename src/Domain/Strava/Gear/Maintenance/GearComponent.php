@@ -17,7 +17,7 @@ final class GearComponent
     private function __construct(
         private readonly Tag $tag,
         private readonly Name $label,
-        private GearIds $attachedTo,
+        private readonly GearIds $attachedTo,
         private readonly ?string $imgSrc,
     ) {
         $this->maintenanceTasks = MaintenanceTasks::empty();

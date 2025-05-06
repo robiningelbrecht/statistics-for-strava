@@ -11,6 +11,7 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Domain\App\BuildAppFilesTestCase;
@@ -80,6 +81,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             gearMaintenanceConfig: GearMaintenanceConfig::fromYmlString(''),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
+            maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
             gearMaintenanceStorage: $fileStorage,
             twig: $this->getContainer()->get(Environment::class),
             buildStorage: $fileStorage,

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Domain\Strava\Ftp\FtpRepository;
+use App\Domain\Strava\Ftp\FtpHistory;
 use App\Infrastructure\Exception\EntityNotFound;
 
 final readonly class ActivityIntensity
 {
     public function __construct(
         private AthleteRepository $athleteRepository,
-        private FtpRepository $ftpRepository,
+        private FtpHistory $ftpHistory,
     ) {
     }
 
@@ -24,7 +24,7 @@ final readonly class ActivityIntensity
             // 1) Max and average heart rate
             // OR
             // 2) FTP and average power
-            $ftp = $this->ftpRepository->find($activity->getStartDate())->getFtp();
+            $ftp = $this->ftpHistory->find($activity->getStartDate())->getFtp();
             if ($averagePower = $activity->getAveragePower()) {
                 // Use more complicated and more accurate calculation.
                 // intensityFactor = averagePower / FTP

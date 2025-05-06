@@ -7,15 +7,11 @@ namespace App\Domain\Strava\Athlete\Weight;
 use App\Infrastructure\ValueObject\Measurement\Mass\Gram;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 final readonly class AthleteWeight
 {
     private function __construct(
-        #[ORM\Id, ORM\Column(type: 'date_immutable')]
         private SerializableDateTime $on,
-        #[ORM\Column(type: 'integer')]
         private Gram $weightInGrams,
     ) {
     }

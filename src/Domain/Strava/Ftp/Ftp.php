@@ -6,17 +6,13 @@ namespace App\Domain\Strava\Ftp;
 
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
 final class Ftp
 {
     private ?Kilogram $athleteWeightInKg = null;
 
     private function __construct(
-        #[ORM\Id, ORM\Column(type: 'date_immutable')]
         private readonly SerializableDateTime $setOn,
-        #[ORM\Column(type: 'integer')]
         private readonly FtpValue $ftp,
     ) {
     }

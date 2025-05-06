@@ -15,8 +15,8 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
 {
     public function add(Segment $segment): void
     {
-        $sql = 'INSERT INTO Segment (segmentId, name, sportType, distance, maxGradient, isFavourite, deviceName) 
-                VALUES (:segmentId, :name, :sportType, :distance, :maxGradient, :isFavourite, :deviceName)';
+        $sql = 'INSERT INTO Segment (segmentId, name, sportType, distance, maxGradient, isFavourite, deviceName, climbCategory) 
+                VALUES (:segmentId, :name, :sportType, :distance, :maxGradient, :isFavourite, :deviceName, :climbCategory)';
 
         $this->connection->executeStatement($sql, [
             'segmentId' => $segment->getId(),
@@ -26,6 +26,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             'maxGradient' => $segment->getMaxGradient(),
             'isFavourite' => (int) $segment->isFavourite(),
             'deviceName' => $segment->getDeviceName(),
+            'climbCategory' => $segment->getClimbCategory(),
         ]);
     }
 
@@ -76,7 +77,8 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             distance: Meter::from($result['distance'])->toKilometer(),
             maxGradient: $result['maxGradient'],
             isFavourite: (bool) $result['isFavourite'],
-            deviceName: $result['deviceName']
+            climbCategory: $result['climbCategory'],
+            deviceName: $result['deviceName'],
         );
     }
 

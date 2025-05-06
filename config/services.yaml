@@ -163,12 +163,12 @@ services:
         factory: [ 'App\Domain\Strava\Activity\SportType\SportTypesToImport', from ]
         arguments: [ '%env(json:SPORT_TYPES_TO_IMPORT)%' ]
 
-    App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightHistoryFromEnvFile:
-        factory: [ 'App\Domain\Strava\Athlete\Weight\ImportAthleteWeight\AthleteWeightHistoryFromEnvFile', fromString ]
+    App\Domain\Strava\Athlete\Weight\AthleteWeightHistory:
+        factory: [ 'App\Domain\Strava\Athlete\Weight\AthleteWeightHistory', fromString ]
         arguments: [ '%env(string:fallback:ATHLETE_WEIGHT_HISTORY:ATHLETE_WEIGHTS)%', '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
 
-    App\Domain\Strava\Ftp\ImportFtp\FtpHistoryFromEnvFile:
-        factory: [ 'App\Domain\Strava\Ftp\ImportFtp\FtpHistoryFromEnvFile', fromString ]
+    App\Domain\Strava\Ftp\FtpHistory:
+        factory: [ 'App\Domain\Strava\Ftp\FtpHistory', fromString ]
         arguments: [ '%env(string:fallback:FTP_HISTORY:FTP_VALUES)%' ]
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
