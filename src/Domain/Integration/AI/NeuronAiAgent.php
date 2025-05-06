@@ -11,8 +11,10 @@ use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\RAG\RAG;
 use NeuronAI\SystemPrompt;
+use NeuronAI\Tools\Tool;
+use NeuronAI\Tools\ToolProperty;
 
-final class MyAgent extends RAG
+final class NeuronAiAgent extends RAG
 {
     public function __construct(
         private OllamaConfig $config,
@@ -30,17 +32,34 @@ final class MyAgent extends RAG
     public function instructions(): string
     {
         return (string) new SystemPrompt(
-            background: ['You are an AI Agent specialized in writing YouTube video summaries.'],
+            background: ['You are an AI Agent specialized analyzing workout results and providing workout tips.'],
             steps: [
-                'Get the url of a YouTube video, or ask the user to provide one.',
-                'Use the tools you have available to retrieve the transcription of the video.',
+                'Retrieve the workout data from the database.',
+                'Use the tools you have available to retrieve the database data.',
                 'Write the summary.',
             ],
             output: [
                 'Write a summary in a paragraph without using lists. Use just fluent text.',
-                'After the summary add a list of three sentences as the three most important takeaways from the video.',
+                'After the summary add a list of three sentences as the three most important takeaways from your feedback.',
             ]
         );
+    }
+
+    protected function tools(): array
+    {
+        return [
+            Tool::make(
+                'get_user_workout',
+                'Retrieve the user workout status from the database.',
+            )->addProperty(
+                new ToolProperty(
+                    name: 'user_id',
+                    type: 'integer',
+                    description: 'The ID of the user.',
+                    required: true
+                )
+            )->setCallable([$this, 'getUserWorkout']),
+        ];
     }
 
     /*protected function chatHistory(): AbstractChatHistory

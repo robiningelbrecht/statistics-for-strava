@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Domain\Integration\AI\MyAgent;
+use App\Domain\Integration\AI\NeuronAiAgent;
 use App\Domain\Integration\AI\Ollama\OllamaConfig;
 use Inspector\Inspector;
 use NeuronAI\Chat\Messages\UserMessage;
@@ -29,7 +29,7 @@ class TestOllamaChatConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $response = MyAgent::make($this->config)
+        $response = NeuronAiAgent::make($this->config)
             ->observe(
                 new AgentMonitoring($this->inspector)
             )
