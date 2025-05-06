@@ -59,6 +59,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                     distance: Meter::from($activitySegment['distance'])->toKilometer(),
                     maxGradient: $activitySegment['maximum_grade'],
                     isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
+                    climbCategory: $activitySegment['climb_category'] ?? null,
                     deviceName: $activity->getDeviceName(),
                 );
 
