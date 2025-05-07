@@ -126,5 +126,12 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
+
+        $this->buildStorage->write(
+            'gear/info.html',
+            $this->twig->load('html/gear/gear-info.html.twig')->render([
+                'gears' => $gears,
+            ])
+        );
     }
 }

@@ -78,6 +78,7 @@ Friday: Sexta-feira
 From: De
 Gear: Equipamento
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear details': 'Gear details'
 'Gear maintenance': 'Gear maintenance'
 'Gear stats': 'Estatísticas do equipamento'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Equipamento não utilizado nos últimos três meses é desativado por defeito.'
@@ -97,6 +98,7 @@ History: Histórico
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Queimei {caloriesBurned} calorias ao fazê-lo, o que equivale a cerca de {numberOfPizzaSlices} fatias de pizza 🍕.'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Registei uma distância total de {totalDistance} ({numberOfTripsAroundTheWorld} voltas ao mundo 🌍 e {numberOfTripsToTheMoon} viagens até à lua 🌕), uma elevação total de {totalElevation} ({timesMountEverest} vezes o Monte Everest 🏔) e um tempo total de {totalTimeRecorded} 🎉.'
 'Ice Skate': 'Patinagem no Gelo'
+Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 'Patinagem em Linha'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -135,6 +137,7 @@ Morning: Manhã
 'Most recent activities': 'Atividades mais recentes'
 'Mountain Bike Rides': 'Passeios de BTT'
 'Moving time': 'Tempo em movimento'
+Name: Name
 Night: Noite
 'No activities': 'Sem atividades'
 'No other years to compare with': 'No other years to compare with'

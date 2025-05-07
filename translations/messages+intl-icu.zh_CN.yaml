@@ -78,6 +78,7 @@ Friday: 星期五
 From: 从
 Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear details': 'Gear details'
 'Gear maintenance': 'Gear maintenance'
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
@@ -97,6 +98,7 @@ History: 历史
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": '我总共消耗了{caloriesBurned}卡路里，相当于{numberOfPizzaSlices}片披萨🍕。'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': '我的总锻炼距离为{totalDistance}（相当于{numberOfTripsAroundTheWorld}次环游世界🌍和{numberOfTripsToTheMoon}次到月球🌕），总海拔{totalElevation}（相当于{timesMountEverest}次珠穆朗玛峰🏔），总锻炼时间为{totalTimeRecorded} 🎉。'
 'Ice Skate': 冰刀
+Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 直排轮滑
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -135,6 +137,7 @@ Morning: 早晨
 'Most recent activities': 最近的活动
 'Mountain Bike Rides': 山地车骑行
 'Moving time': 移动时间
+Name: Name
 Night: 夜晚
 'No activities': 没有活动
 'No other years to compare with': 'No other years to compare with'
