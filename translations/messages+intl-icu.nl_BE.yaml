@@ -78,6 +78,7 @@ Friday: Vrijdag
 From: From
 Gear: Uitrusting
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
+'Gear details': 'Gear details'
 'Gear maintenance': 'Gear maintenance'
 'Gear stats': Uitrustingsstatistieken
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Uitrusting die de afgelopen drie maanden niet is gebruikt, wordt standaard uitgeschakeld.'
@@ -97,6 +98,7 @@ History: Historiek
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Ik heb {caloriesBurned} calorieën verbrand door dit te doen, dat is ongeveer {numberOfPizzaSlices} pizza slices 🍕.'
 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Ik registreerde een totale afstand van {totalDistance} ({numberOfTripsAroundTheWorld} reizen rond de wereld 🌍 en {numberOfTripsToTheMoon} reizen naar de maan 🌕), een hoogteverschil van {totalElevation} ({timesMountEverest} keer Mount Everest 🏔) en een totale tijd van {totalTimeRecorded} 🎉.'
 'Ice Skate': 'Ice Skate'
+Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
 'Inline Skate': 'Inline Skate'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -135,6 +137,7 @@ Morning: Ochtend
 'Most recent activities': 'Meest recent activiteiten'
 'Mountain Bike Rides': 'Mountain Bike Ritten'
 'Moving time': Beweegtijd
+Name: Name
 Night: Nacht
 'No activities': 'Geen activiteiten'
 'No other years to compare with': 'No other years to compare with'
