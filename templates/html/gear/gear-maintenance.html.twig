@@ -62,7 +62,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th class="px-2"></th>
-                            <th scope="col" class="py-3">
+                            <th scope="col" class="px-2 py-3">
                                 {{ "Gear"|trans }}
                             </th>
                             <th scope="col" class="text-left px-2 py-3">
@@ -96,7 +96,7 @@
                                     </svg>
                                 </td>
                                 <td class="py-2">
-                                    <img class="w-auto h-8 rounded-sm lazy"
+                                    <img class="w-auto h-8 rounded-sm object-cover lazy"
                                          src="{{ renderComponent('placeholder-image') }}"
                                          data-src="{{ gear.getImageSrc() }}"
                                          alt="{{ gear.getName() }}"/>
