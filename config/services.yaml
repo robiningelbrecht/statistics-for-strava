@@ -18,9 +18,11 @@ parameters:
     env(TIME_FORMAT): 24
     env(DATE_FORMAT): 'DAY-MONTH-YEAR'
     env(PROFILE_PICTURE_URL): ''
-    env(NTFY_URL): ''
     env(ZWIFT_LEVEL):
     env(ZWIFT_RACING_SCORE):
+    env(NTFY_URL): ''
+    env(OLLAMA_MODEL):
+    env(OLLAMA_URL):
 
 services:
     # default configuration for services in *this* file
@@ -104,6 +106,15 @@ services:
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ App\Domain\Integration\Notification\Ntfy\NtfyUrl, 'fromOptionalString' ]
         arguments: ['%env(string:NTFY_URL)%']
+
+    ollamaUrl:
+        class: App\Infrastructure\ValueObject\String\Url
+        factory: [ App\Infrastructure\ValueObject\String\Url, 'fromOptionalString' ]
+        arguments: ['%env(string:OLLAMA_URL)%']
+
+    App\Domain\Integration\AI\Ollama\OllamaConfig:
+        factory: [ App\Domain\Integration\AI\Ollama\OllamaConfig, 'create' ]
+        arguments: ['%env(OLLAMA_MODEL)%', '@ollamaUrl']
 
     App\Domain\Manifest\ManifestAppUrl:
         factory: [ App\Domain\Manifest\ManifestAppUrl, 'fromString' ]
