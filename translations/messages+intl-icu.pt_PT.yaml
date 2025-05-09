@@ -1,10 +1,24 @@
+'+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”; >+25 ⇒ possible detraining': '+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”; >+25 ⇒ possible detraining'
+'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
+'0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
 '2 days of activity for 4 weeks': '2 dias de atividade durante 4 semanas'
+'42-day fitness trend': '42-day fitness trend'
+'7-day fatigue level': '7-day fatigue level'
+'< 0.8: Potential detraining': '< 0.8: Potential detraining'
+'< 1.5: Good variety in training': '< 1.5: Good variety in training'
+'< –30: Over-fatigued. Risk of injuiry; require extra recovery': '< –30: Over-fatigued. Risk of injuiry; require extra recovery'
+'> 1.3: Increased injury risk': '> 1.3: Increased injury risk'
+'> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
+'A:C Ratio': 'A:C Ratio'
+'ATL (Fatigue)': 'ATL (Fatigue)'
 'Active days': 'Active days'
 Activities: Atividades
 'Activity count': 'Activity count'
 'Activity intensity': 'Intensidade da atividade'
 'Activity locations': 'Activity locations'
 'Activity start times': 'Activity start times'
+'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
+'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
 'Adaptive & Inclusive Sports': 'Desportos Adaptativos e Inclusivos'
 Advanced: Avançado
 Afternoon: Tarde
@@ -18,12 +32,15 @@ Avg: Média
 Badminton: Badmínton
 Best: Melhor
 'Best Efforts': 'Best Efforts'
+'Build zone (–10)': 'Build zone (–10)'
+'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Cadência
 Calories: Calorias
 Canoeing: Canoagem
 'Carbon emission comparisons': 'Carbon emission comparisons'
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
+'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
 'Climb a total of 2000m': 'Escalar um total de 2000m'
 'Climb a total of 7500m': 'Escalar um total de 7500m'
 'Close modal': 'Fechar modal'
@@ -37,6 +54,7 @@ Compare: Compare
 'Complete a half marathon run.': 'Completar uma meia maratona'
 Components: Components
 Crossfit: Crossfit
+'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: Painel
 'Days needed': 'Dias necessários'
@@ -63,6 +81,7 @@ Elliptical: Elíptica
 Evening: 'Fim da tarde'
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'Histórico de FTP'
+'Fatigued – productive heavy-training range': 'Fatigued – productive heavy-training range'
 Favourite: Favorito
 Feb: Fev
 'Filter on KOM segments': 'Filtrar por segmentos KOM'
@@ -73,6 +92,8 @@ Feb: Fev
 'First workout': 'Primeiro treino'
 Fitness: Fitness
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Por exemplo, um número de Eddington de 70 implica que um ciclista percorreu pelo menos 70 km num dia em pelo menos 70 ocasiões. Atingir um número elevado de Eddington é difícil, pois passar de 70 para 75 exigirá (provavelmente) mais de cinco novos treinos de longa distância, uma vez que qualquer treino inferior a 75 km deixará de ser incluído no cálculo.'
+'Form (TSB)': 'Form (TSB)'
+'Fresh – reduced training load': 'Fresh – reduced training load'
 Fri: Sex
 Friday: Sexta-feira
 From: De
@@ -84,6 +105,7 @@ Gear: Equipamento
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Equipamento não utilizado nos últimos três meses é desativado por defeito.'
 'Gear that is retired is disabled by default.': 'Equipamento reformado é desativado por defeito.'
 Golf: Golfe
+'Good training variety': 'Good training variety'
 'Gravel Rides': 'Passeios de Gravel'
 HIIT: HIIT
 HR: FC
@@ -93,6 +115,8 @@ HR: FC
 'Heart rate zones': 'Zonas de frequência cardíaca'
 Heatmap: 'Mapa de calor'
 High: Alta
+'High monotony - increase variety': 'High monotony - increase variety'
+'High risk - reduce volume': 'High risk - reduce volume'
 Hikes: Caminhadas
 History: Histórico
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Queimei {caloriesBurned} calorias ao fazê-lo, o que equivale a cerca de {numberOfPizzaSlices} fatias de pizza 🍕.'
@@ -100,6 +124,7 @@ History: Histórico
 'Ice Skate': 'Patinagem no Gelo'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
+'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 'Patinagem em Linha'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
 Jan: Jan
@@ -109,9 +134,11 @@ KOM: KOM
 Kayaking: Caiaque
 'Kite Surf': Kitesurf
 'Last 45 days': 'Últimos 45 dias'
+'Last 7 days training load': 'Last 7 days training load'
 'Last 90 days': 'Últimos 90 dias'
 'Last maintenance': 'Last maintenance'
 'Latest start time': 'Hora de início mais tardia'
+'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'
 'Locations over the globe': 'Locations over the globe'
@@ -120,6 +147,7 @@ Loading...: 'A carregar...'
 'Longest streaks': 'Longest streaks'
 'Longest workout': 'Treino mais longo'
 Low: Baixa
+'Low stress - potential detraining': 'Low stress - potential detraining'
 Maintenance: Maintenance
 Mar: Mar
 Max: Máx
@@ -127,8 +155,10 @@ May: Mai
 Medium: Média
 Metrics: Metrics
 'Mind & Body Sports': 'Desportos para Corpo e Mente'
+'Moderate monotony': 'Moderate monotony'
 Mon: Seg
 Monday: Segunda-feira
+Monotony: Monotony
 'Monthly stats': 'Estatísticas mensais'
 Morning: Manhã
 'Most consecutive days': 'Mais dias consecutivos'
@@ -138,6 +168,7 @@ Morning: Manhã
 'Mountain Bike Rides': 'Passeios de BTT'
 'Moving time': 'Tempo em movimento'
 Name: Name
+'Neutral – short-term sustainable': 'Neutral – short-term sustainable'
 Night: Noite
 'No activities': 'Sem atividades'
 'No other years to compare with': 'No other years to compare with'
@@ -146,12 +177,17 @@ Nov: Nov
 'Number of activities per month': 'Number of activities per month'
 Oct: Out
 'One of your gear maitenance tasks is due': 'One of your gear maitenance tasks is due'
+'Optimal training range': 'Optimal training range'
 Other: Outro
 'Outdoor Sports': 'Desportos ao Ar Livre'
+'Over-fatigued (–30)': 'Over-fatigued (–30)'
+'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
+'Overall weekly training stress': 'Overall weekly training stress'
 PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: Ritmo
 'Peak power outputs': 'Picos de potência'
+'Peak-fresh, race-ready – ideal taper sweet spot': 'Peak-fresh, race-ready – ideal taper sweet spot'
 'Personal Records': 'Personal Records'
 Photo: Photo
 Photos: Fotos
@@ -165,7 +201,9 @@ Race: Race
 'Racing Score': 'Pontuação de Corrida'
 'Racquet & Paddle Sports': 'Desportos de Raquete e Padel'
 'Racquet Ball': Racquetball
+'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
+'Rest days in last 7 days': 'Rest days in last 7 days'
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
@@ -191,6 +229,7 @@ Simplified: Simplified
 'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Desde que comecei a treinar há {numberOfDaysAgo}, em {startDate}, tive {totalDaysOfWorkingOut} dias ativos de treino.'
 Skateboard: Skateboard
 Skating: Patinagem
+'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
 Snowboard: Snowboard
 Snowshoe: 'Raquetes de Neve'
 Soccer: Futebol
@@ -211,8 +250,10 @@ Sunday: Domingo
 Surfing: Surf
 Swim: Natação
 TOTAL: TOTAL
+'TSB (Form)': 'TSB (Form)'
 'Table Tennis': 'Ténis de Mesa'
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
+'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: Ténis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Isso dá uma média diária de {dailyAverage}, uma média semanal de {weeklyAverage} e uma média mensal de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
@@ -239,12 +280,18 @@ To: Até
 'Total kudos': 'Total de kudos'
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 'Corridas de Trilho'
+'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
+'Training Load Analysis': 'Training Load Analysis'
+'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
+'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
+'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
 Trivia: Trivia
 Tue: Ter
 Tuesday: Terça-feira
 Unspecified: Unspecified
 'Updated on': 'Atualizado em'
 'Velo Mobiles': 'Velo Móveis'
+'Very fresh – possible detraining': 'Very fresh – possible detraining'
 'Very high': 'Muito alta'
 'View all': 'Ver tudo'
 'View details': 'Ver detalhes'
@@ -256,6 +303,9 @@ Walks: Caminhadas
 'We detected following issues': 'We detected following issues'
 Wed: Qua
 Wednesday: Quarta-feira
+'Weekly Strain': 'Weekly Strain'
+'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
+'Weekly TRIMP': 'Weekly TRIMP'
 'Weekly stats': 'Estatísticas semanais'
 'Weight Training': 'Treino de Força'
 Wheelchair: 'Cadeira de Rodas'
@@ -316,3 +366,4 @@ workouts: treinos
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared'
+"–10 to –30: \tBuild/fatigue zone. Productive heavy-training range": "–10 to –30: \tBuild/fatigue zone. Productive heavy-training range"

@@ -41,14 +41,36 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     return s.join(dec)
 }
 
-export const resolveEchartsCallbacks = (chartOptions, path) => {
-    const keys = path.split('.');
-    let obj = chartOptions;
-    for (let i = 0; i < keys.length - 1; i++) {
-        obj = obj?.[keys[i]];
-    }
-    const lastKey = keys[keys.length - 1];
-    if (obj?.[lastKey] && obj[lastKey] in window.statisticsForStrava.callbacks) {
-        obj[lastKey] = window.statisticsForStrava.callbacks[obj[lastKey]];
-    }
-}
+export const resolveEchartsCallbacks = (obj, path) => {
+    const parts = path.split('.');
+
+    const resolvePath = (currentObj, remainingParts) => {
+        if (!currentObj || remainingParts.length === 0) return;
+
+        const key = remainingParts[0];
+        const rest = remainingParts.slice(1);
+
+        const isArrayKey = key.endsWith('[]');
+        const rawKey = isArrayKey ? key.slice(0, -2) : key;
+
+        if (isArrayKey) {
+            const arr = currentObj?.[rawKey];
+            if (Array.isArray(arr)) {
+                arr.forEach(item => resolvePath(item, rest));
+            }
+        } else if (rest.length === 0) {
+            // final key, do callback replacement
+            if (
+                currentObj?.[rawKey] &&
+                currentObj[rawKey] in window.statisticsForStrava.callbacks
+            ) {
+                currentObj[rawKey] = window.statisticsForStrava.callbacks[currentObj[rawKey]];
+            }
+        } else {
+            resolvePath(currentObj?.[rawKey], rest);
+        }
+    };
+
+    resolvePath(obj, parts);
+};
+

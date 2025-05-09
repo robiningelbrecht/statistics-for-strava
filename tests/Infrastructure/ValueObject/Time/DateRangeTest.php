@@ -34,4 +34,15 @@ class DateRangeTest extends TestCase
 
         DateRange::fromDates($till, $from);
     }
+
+    public function testGetNumberOfDays(): void
+    {
+        $this->assertEquals(
+            5,
+            DateRange::fromDates(
+                SerializableDateTime::fromString('15-02-1982'),
+                SerializableDateTime::fromString('19-02-1982')
+            )->getNumberOfDays(),
+        );
+    }
 }

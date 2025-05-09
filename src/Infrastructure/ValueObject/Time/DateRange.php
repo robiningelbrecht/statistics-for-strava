@@ -43,4 +43,9 @@ final readonly class DateRange
     {
         return $this->till;
     }
+
+    public function getNumberOfDays(): int
+    {
+        return (int) $this->from->diff($this->till)->format('%a') + 1;
+    }
 }
