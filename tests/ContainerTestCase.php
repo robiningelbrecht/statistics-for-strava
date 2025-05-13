@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\Eddington\Eddington;
@@ -34,6 +35,7 @@ abstract class ContainerTestCase extends KernelTestCase
 
         // Empty the static cache between tests.
         $this->getContainer()->get(ActivityRepository::class)::$cachedActivities = [];
+        $this->getContainer()->get(ActivityIntensity::class)::$cachedIntensities = [];
         Eddington::$instances = [];
         ActivityTotals::$instance = null;
         Trivia::$instance = null;

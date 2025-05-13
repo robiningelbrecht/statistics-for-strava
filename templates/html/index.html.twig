@@ -317,6 +317,9 @@
     window.statisticsForStrava.callbacks.symbolSize = function (params) {
         return (params[2] / 100) * 15 + 5;
     };
+    window.statisticsForStrava.callbacks.toInteger = function (value) {
+        return value.toFixed(0);
+    };
 </script>
 <script src="{{ asset('assets/echarts/echarts.min.js') }}"></script>
 <script src="{{ asset('assets/echarts/echarts.world.min.js') }}"></script>
@@ -405,6 +408,7 @@
             resolveEchartsCallbacks(chartOptions, 'tooltip.formatter');
             resolveEchartsCallbacks(chartOptions, 'tooltip.valueFormatter');
             resolveEchartsCallbacks(chartOptions, 'yAxis.axisLabel.formatter');
+            resolveEchartsCallbacks(chartOptions, 'yAxis[].axisLabel.formatter');
             resolveEchartsCallbacks(chartOptions, 'series.symbolSize');
 
             chart.setOption(chartOptions);

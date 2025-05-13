@@ -4,12 +4,13 @@
     {% autoescape false %}
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
             <!-- MOST RECENT ACTIVITIES -->
-            <div class="col-span-2 p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold">
                         {{ "Most recent activities"|trans }}
                     </h3>
-                    <a href="#" data-router-navigate="/activities" class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                    <a href="#" data-router-navigate="/activities"
+                       class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                         {{ "View all"|trans }}
                     </a>
                 </div>
@@ -81,7 +82,8 @@
                                 </td>
                                 <td class="px-6 py-2">
                                     {% if activityType.prefersPaceOverSpeed() %}
-                                        {{ activity.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
+                                        {{ activity.getPaceInSecPerKm()|formatPace }}<span
+                                            class="text-xs">{{ renderUnitSymbol('pace') }}</span>
                                     {% else %}
                                         {{ renderComponent('measurement', {'measurement': activity.getAverageSpeed(), 'precision': 1}) }}
                                     {% endif %}
@@ -102,7 +104,7 @@
                 </div>
             </div>
             <!-- INTRO -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {% set kbdTagOpen = '<kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">' %}
                 {% set kdbTagClose = '</kbd>' %}
                 <p class="mb-3">
@@ -121,7 +123,7 @@
                     {% set numberOfTripsToTheMoon = kbdTagOpen ~ (intro.getDistance().toFloat() / 384400)|formatNumber(3) ~ kdbTagClose %}
                     {% set totalElevation = kbdTagOpen ~ convertedIntroElevation.toFloat()|formatNumber(0) ~ ' ' ~ convertedIntroElevation.getSymbol() ~ kdbTagClose %}
                     {% set timesMountEverest = kbdTagOpen ~ (intro.getElevation().toFloat() / 8849)|formatNumber(1) ~ kdbTagClose %}
-                    {% set totalTimeRecorded = kbdTagOpen ~ intro.getMovingTimeFormatted() ~ kdbTagClose  %}
+                    {% set totalTimeRecorded = kbdTagOpen ~ intro.getMovingTimeFormatted() ~ kdbTagClose %}
                     {% trans with {
                         '{totalDistance}': totalDistance,
                         '{numberOfTripsAroundTheWorld}': numberOfTripsAroundTheWorld,
@@ -153,133 +155,164 @@
                 </p>
             </div>
         </div>
-        <!-- WEEKLY STATS -->
-        <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-            <h3 class="mb-4 text-lg font-semibold">
-                {{ "Weekly stats"|trans }}
-            </h3>
-            {% if weeklyDistanceCharts|length > 1 %}
-                <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent" role="tablist">
-                        {% for activityType,chart in weeklyDistanceCharts %}
-                            <li class="mr-2" role="presentation">
-                                <a href="#" data-tabs-target="#weeklyDistances{{ activityType }}" role="tab" aria-controls="weeklyDistances{{ activityType }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <div id="weeklyDistancesActivityTypeTabContent">
-                {% for activityType,chart in weeklyDistanceCharts %}
-                    <div id="weeklyDistances{{ activityType }}" role="tabpanel" aria-labelledby="weeklyDistances{{ activityType }}-tab">
-                        <div class="h-80" data-echarts-options='{{ chart }}'></div>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+            <!-- WEEKLY STATS -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <h3 class="mb-4 text-lg font-semibold">
+                    {{ "Weekly stats"|trans }}
+                </h3>
+                {% if weeklyDistanceCharts|length > 1 %}
+                    <div class="mb-4 border-b border-gray-200">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                            id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent"
+                            role="tablist">
+                            {% for activityType,chart in weeklyDistanceCharts %}
+                                <li class="mr-2" role="presentation">
+                                    <a href="#" data-tabs-target="#weeklyDistances{{ activityType }}" role="tab"
+                                       aria-controls="weeklyDistances{{ activityType }}"
+                                       class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                        {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                {% endfor %}
+                {% endif %}
+                <div id="weeklyDistancesActivityTypeTabContent">
+                    {% for activityType,chart in weeklyDistanceCharts %}
+                        <div id="weeklyDistances{{ activityType }}" role="tabpanel"
+                             aria-labelledby="weeklyDistances{{ activityType }}-tab">
+                            <div class="h-80" data-echarts-options='{{ chart }}'></div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-            {% if powerOutputs is not empty %}
             <!-- PEAK POWER OUTPUTS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">{{ "Peak power outputs"|trans }}</h3>
-                    <a href="#" data-model-content-url="power-output.html" class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-                        {{ "View details"|trans }}
-                    </a>
-                </div>
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-center text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 sticky left-0 bg-gray-50">
-                                <div class="flex items-center justify-center">
-                                    {{ renderSvg('time') }}
-                                </div>
-                            </th>
-                            <th scope="col" colspan="2" class="px-2 py-3">
-                                <div class="flex items-center justify-center">
-                                    {{ renderSvg('power') }}
-                                </div>
-                            </th>
-                            <th>
+            {% if powerOutputs is not empty %}
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">{{ "Peak power outputs"|trans }}</h3>
+                        <a href="#" data-model-content-url="power-output.html"
+                           class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                            {{ "View details"|trans }}
+                        </a>
+                    </div>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-center text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 sticky left-0 bg-gray-50">
+                                    <div class="flex items-center justify-center">
+                                        {{ renderSvg('time') }}
+                                    </div>
+                                </th>
+                                <th scope="col" colspan="2" class="px-2 py-3">
+                                    <div class="flex items-center justify-center">
+                                        {{ renderSvg('power') }}
+                                    </div>
+                                </th>
+                                <th>
 
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for powerOutput in powerOutputs %}
-                            {% if powerOutput.getTimeIntervalInSeconds() in timeIntervals %}
-                                <tr class="bg-white border-b">
-                                    <td class="px-6 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                        {{ powerOutput.getFormattedTimeInterval() }}
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {{ powerOutput.getPower() }}<span class="text-xs">w</span>
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
-                                    </td>
-                                    <td class="px-6 py-2 text-left truncate">
-                                        {{ renderComponent('activity-title', {'activity': powerOutput.getActivity()}) }}
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for powerOutput in powerOutputs %}
+                                {% if powerOutput.getTimeIntervalInSeconds() in timeIntervals %}
+                                    <tr class="bg-white border-b">
+                                        <td class="px-6 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                            {{ powerOutput.getFormattedTimeInterval() }}
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                        </td>
+                                        <td class="px-6 py-2 text-left truncate">
+                                            {{ renderComponent('activity-title', {'activity': powerOutput.getActivity()}) }}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             {% endif %}
             <!-- HEART RATE ZONES -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Heart rate zones"|trans }}
                 </h3>
                 <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
             </div>
-        </div>
-        <!-- ACTIVITY HEATMAP -->
-        <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-            <div class="mb-4 flex items-center">
-                <h3 class="font-semibold text-lg">{{ "Activity intensity"|trans }}</h3>
-                <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right" type="button">
-                    <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-                    <span class="sr-only">{{ "Show information"|trans }}</span>
-                </button>
-                <div data-popover id="popover-description" role="tooltip" class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
-                    <div class="p-3 space-y-2">
-                        <p>
-                            {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
-                        </p>
-                        <h3 class="font-semibold text-gray-900">{{ "Simplified"|trans }}</h3>
-                        <p>
-                            {% trans %}This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"{% endtrans %}:
-                        </p>
-                        <blockquote class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                            <span class="font-bold">{{ "maxHeartRate"|trans }} </span>= (220 - {{ "age"|trans }}) x 0.92<br />
-                            <span class="font-bold">{{ "intensityFactor"|trans }} </span>= averageHeartRate / maxHeartRate<br />
-                            <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-                        </blockquote>
-                        <h3 class="font-semibold text-gray-900">{{ "Advanced"|trans }}</h3>
-                        <p>
-                            {% trans %}When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"{% endtrans %}:
-                        </p>
-                        <blockquote class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                            <span class="font-bold">{{ "intensityFactor"|trans }} </span>= (averagePower / FTP)<br />
-                            <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averagePower x intensityFactor) / (FTP x 3600) x 100
-                        </blockquote>
+            <!-- ACTIVITY HEATMAP -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center">
+                    <h3 class="font-semibold text-lg">{{ "Activity intensity"|trans }}</h3>
+                    <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right"
+                            type="button">
+                        <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
+                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">{{ "Show information"|trans }}</span>
+                    </button>
+                    <div data-popover id="popover-description" role="tooltip"
+                         class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+                        <div class="p-3 space-y-2">
+                            <p>
+                                {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
+                            </p>
+                            <h3 class="font-semibold text-gray-900">{{ "Simplified"|trans }}</h3>
+                            <p>
+                                {% trans %}This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"{% endtrans %}
+                                :
+                            </p>
+                            <blockquote
+                                    class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
+                                <span class="font-bold">{{ "maxHeartRate"|trans }} </span>= (220 - {{ "age"|trans }}) x 0.92<br/>
+                                <span class="font-bold">{{ "intensityFactor"|trans }} </span>= averageHeartRate /
+                                maxHeartRate<br/>
+                                <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x
+                                averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
+                            </blockquote>
+                            <h3 class="font-semibold text-gray-900">{{ "Advanced"|trans }}</h3>
+                            <p>
+                                {% trans %}When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"{% endtrans %}
+                                :
+                            </p>
+                            <blockquote
+                                    class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
+                                <span class="font-bold">{{ "intensityFactor"|trans }} </span>= (averagePower / FTP)<br/>
+                                <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averagePower x
+                                intensityFactor) / (FTP x 3600) x 100
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
+                <div class="relative overflow-x-auto">
+                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ activityIntensityChart }}'></div>
+                </div>
             </div>
-            <div class="relative overflow-x-auto">
-                <div class="h-52 min-w-[800px]" data-echarts-options='{{ activityIntensityChart }}'></div>
+            <!-- TRAINING LOAD METRICS -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">{{ "Training Load Analysis"|trans }}</h3>
+                    <a href="#" data-model-content-url="/training-load.html"
+                       class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                        {{ "View details"|trans }}
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'page' } %}
+                </div>
             </div>
-        </div>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
             <!-- WEEKDAY STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Stats per weekday"|trans }}
                 </h3>
@@ -314,7 +347,8 @@
                         <tbody>
                         {% for weekday, statistic in weekdayStats.getData() %}
                             <tr class="bg-white border-b">
-                                <th scope="row" class="px-2 py-2 sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
+                                <th scope="row"
+                                    class="px-2 py-2 sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
                                     {{ weekday }}
                                 </th>
                                 <td class="px-6 py-2">
@@ -341,7 +375,7 @@
                 </div>
             </div>
             <!-- DAYTIME STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Daytime stats"|trans }}
                 </h3>
@@ -376,9 +410,12 @@
                         <tbody>
                         {% for statistic in daytimeStats.getData() %}
                             <tr class="bg-white border-b">
-                                <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                    <div>{{ statistic.daytime|trans}}</div>
-                                    <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h - {{ statistic.daytime.getHours()[1] }}h</div>
+                                <th scope="row"
+                                    class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                    <div>{{ statistic.daytime|trans }}</div>
+                                    <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
+                                        - {{ statistic.daytime.getHours()[1] }}h
+                                    </div>
                                 </th>
                                 <td class="px-6 py-2">
                                     {{ statistic.numberOfWorkouts }}
@@ -404,16 +441,20 @@
                 </div>
             </div>
             <!-- DISTANCE BREAKDOWN -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Distance breakdown"|trans }}
                 </h3>
                 {% if distanceBreakdowns|length > 1 %}
                     <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="distanceBreakdownActivityTypeTab" data-tabs="#distanceBreakdownActivityTypeTabContent" role="tablist">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                            id="distanceBreakdownActivityTypeTab" data-tabs="#distanceBreakdownActivityTypeTabContent"
+                            role="tablist">
                             {% for activityType,distanceBreakdown in distanceBreakdowns %}
                                 <li class="mr-2" role="presentation">
-                                    <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}" role="tab" aria-controls="distanceBreakdown{{ activityType }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}" role="tab"
+                                       aria-controls="distanceBreakdown{{ activityType }}"
+                                       class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                                     </a>
                                 </li>
@@ -423,74 +464,76 @@
                 {% endif %}
                 <div id="distanceBreakdownActivityTypeTabContent">
                     {% for activityType,distanceBreakdown in distanceBreakdowns %}
-                        <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}" role="tabpanel" aria-labelledby="distanceBreakdown{{ activityType }}-tab">
-                                <table class="w-full text-sm text-center text-gray-500">
-                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                    <tr>
-                                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                        <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}" role="tabpanel"
+                             aria-labelledby="distanceBreakdown{{ activityType }}-tab">
+                            <table class="w-full text-sm text-center text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
 
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        # {{ "workouts"|trans }}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ renderSvg('distance') }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ renderSvg('elevation') }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ renderSvg('time') }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ renderSvg('speed') }}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for statistic in distanceBreakdown %}
+                                    <tr class="bg-white border-b">
+                                        <th scope="row"
+                                            class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                            <div>{{ statistic.label }}</div>
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            # {{ "workouts"|trans }}
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center justify-center">
-                                                {{ renderSvg('distance') }}
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center justify-center">
-                                                {{ renderSvg('elevation') }}
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center justify-center">
-                                                {{ renderSvg('time') }}
-                                            </div>
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            <div class="flex items-center justify-center">
-                                                {{ renderSvg('speed') }}
-                                            </div>
-                                        </th>
+                                        <td class="px-6 py-2">
+                                            {{ statistic.numberOfWorkouts }}
+                                        </td>
+                                        <td class="px-6 py-2 truncate">
+                                            {% if statistic.totalDistance.toFloat() > 0 %}
+                                                {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
+                                                {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0, 'symbolSuffix': 'total'}) }}
+                                            {% else %}
+                                                0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-2 truncate">
+                                            {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                        </td>
+                                        <td class="px-6 py-2 truncate">
+                                            {{ statistic.movingTimeForHumans }}
+                                        </td>
+                                        <td class="px-6 py-2 truncate">
+                                            {{ renderComponent('measurement', {'measurement': statistic.averageSpeed, 'precision': 1}) }}
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for statistic in distanceBreakdown %}
-                                        <tr class="bg-white border-b">
-                                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                                <div>{{ statistic.label }}</div>
-                                            </th>
-                                            <td class="px-6 py-2">
-                                                {{ statistic.numberOfWorkouts }}
-                                            </td>
-                                            <td class="px-6 py-2 truncate">
-                                                {% if statistic.totalDistance.toFloat() > 0 %}
-                                                    {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
-                                                    {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0, 'symbolSuffix': 'total'}) }}
-                                                {% else %}
-                                                    0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
-                                                {% endif %}
-                                            </td>
-                                            <td class="px-6 py-2 truncate">
-                                                {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
-                                            </td>
-                                            <td class="px-6 py-2 truncate">
-                                                {{ statistic.movingTimeForHumans }}
-                                            </td>
-                                            <td class="px-6 py-2 truncate">
-                                                {{ renderComponent('measurement', {'measurement': statistic.averageSpeed, 'precision': 1}) }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
             <!-- TRIVIA -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Trivia"|trans }}
                 </h3>
@@ -512,7 +555,8 @@
                         <tbody>
                         <tr class="bg-white border-b">
                             {% set firstActivity = trivia.getFirstActivity() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "First workout"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -524,7 +568,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set earliestActivity = trivia.getEarliestActivity() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Earliest start time"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -536,7 +581,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set latestActivity = trivia.getLatestActivity() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Latest start time"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -548,7 +594,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set longestWorkout = trivia.getLongestWorkout() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Longest workout"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -560,7 +607,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set highestElevationActivity = trivia.getActivityWithMostElevation() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Most elevation"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -572,7 +620,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set mostKudosActivity = trivia.getMostKudotedActivity() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Most kudos"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -584,21 +633,30 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set totalCarbonSaved = trivia.getTotalCarbonSaved()|convertMeasurement %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Total carbon saved"|trans }}
                             </th>
                             <td class="px-2 py-2">
-                                {{ trivia.getTotalCarbonSaved().toFloat()|formatNumber(2) }}<span class="text-xs">{{ renderUnitSymbol('carbon-saved') }}</span>
+                                {{ trivia.getTotalCarbonSaved().toFloat()|formatNumber(2) }}<span
+                                        class="text-xs">{{ renderUnitSymbol('carbon-saved') }}</span>
                             </td>
                             <td class="px-2 py-2 truncate">
-                                <a href="#" data-model-content-url="carbon-comparison.html" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline">
-                                    <svg class="ml-[-3px] w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                                <a href="#" data-model-content-url="carbon-comparison.html"
+                                   class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline">
+                                    <svg class="ml-[-3px] w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor"
+                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                              clip-rule="evenodd"></path>
+                                    </svg>
                                     <span>{{ "more info"|trans }}</span>
                                 </a>
                             </td>
                         </tr>
                         <tr class="bg-white border-b">
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Total kudos"|trans }}
                             </th>
                             <td class="px-2 py-2">
@@ -608,7 +666,8 @@
                         </tr>
                         <tr class="bg-white border-b">
                             {% set mostConsecutiveDaysOfWorkingOut = trivia.getMostConsecutiveDaysOfWorkingOut() %}
-                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ "Most consecutive days"|trans }}
                             </th>
                             <td class="px-2 py-2 truncate">
@@ -625,20 +684,22 @@
                     </table>
                 </div>
             </div>
-        </div>
-        {% if bestEffortsCharts|length > 0 %}
-            <div class="grid grid-cols-1 gap-4 mb-4">
-                <!-- BEST EFFORTS -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <!-- BEST EFFORTS -->
+            {% if bestEffortsCharts|length > 0 %}
+                <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "Best Efforts"|trans }}
                     </h3>
                     {% if bestEffortsCharts|length > 1 %}
                         <div class="mb-4 border-b border-gray-200">
-                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent" role="tablist">
+                            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                                id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
+                                role="tablist">
                                 {% for activityType,chart in bestEffortsCharts %}
                                     <li class="mr-2" role="presentation">
-                                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab" aria-controls="bestEfforts{{ activityType }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
+                                           aria-controls="bestEfforts{{ activityType }}"
+                                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                             {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                                         </a>
                                     </li>
@@ -648,27 +709,29 @@
                     {% endif %}
                     <div id="bestEffortsActivityTypeTabContent">
                         {% for activityType,bestEffortsChart in bestEffortsCharts %}
-                            <div id="bestEfforts{{ activityType }}" role="tabpanel" aria-labelledby="bestEfforts{{ activityType }}-tab">
+                            <div id="bestEfforts{{ activityType }}" role="tabpanel"
+                                 aria-labelledby="bestEfforts{{ activityType }}-tab">
                                 <div class="h-[20rem]" data-echarts-options='{{ bestEffortsChart }}'></div>
                             </div>
                         {% endfor %}
                     </div>
-
                 </div>
-            </div>
-        {% endif %}
-        <div class="grid grid-cols-1 gap-4 mb-4">
+            {% endif %}
             <!-- YEARLY DISTANCE STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Yearly distances"|trans }}
                 </h3>
                 {% if yearlyDistanceCharts|length > 1 %}
                     <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="yearlyDistancesActivityTypeTab" data-tabs="#yearlyDistancesActivityTypeTabContent" role="tablist">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                            id="yearlyDistancesActivityTypeTab" data-tabs="#yearlyDistancesActivityTypeTabContent"
+                            role="tablist">
                             {% for activityType,chart in yearlyDistanceCharts %}
                                 <li class="mr-2" role="presentation">
-                                    <a href="#" data-tabs-target="#yearlyDistances{{ activityType }}" role="tab" aria-controls="yearlyDistances{{ activityType }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    <a href="#" data-tabs-target="#yearlyDistances{{ activityType }}" role="tab"
+                                       aria-controls="yearlyDistances{{ activityType }}"
+                                       class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                         {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                                     </a>
                                 </li>
@@ -678,7 +741,8 @@
                 {% endif %}
                 <div id="yearlyDistancesActivityTypeTabContent">
                     {% for activityType,chart in yearlyDistanceCharts %}
-                        <div id="yearlyDistances{{ activityType }}" role="tabpanel" aria-labelledby="yearlyDistances{{ activityType }}-tab">
+                        <div id="yearlyDistances{{ activityType }}" role="tabpanel"
+                             aria-labelledby="yearlyDistances{{ activityType }}-tab">
                             <div class="mb-4 h-[20rem]" data-echarts-options='{{ chart }}'></div>
                             <div class="relative overflow-x-scroll">
                                 <table class="w-full text-sm text-center text-gray-500">
@@ -718,7 +782,8 @@
                                     <tbody>
                                     {% for statistic in yearlyStatistics[activityType].getStatistics() %}
                                         <tr class="bg-white border-b">
-                                            <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                            <th scope="row"
+                                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                                 <div>{{ statistic.year }}</div>
                                             </th>
                                             <td class="px-6 py-2">
@@ -728,12 +793,16 @@
                                                 <div class="flex items-center justify-center {{ statistic.differenceInDistanceYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
                                                     {% if statistic.differenceInDistanceYearBefore is not null %}
                                                         {% if statistic.differenceInDistanceYearBefore.toFloat() >= 0 %}
-                                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                      d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
                                                             </svg>
                                                         {% else %}
-                                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                      d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
                                                             </svg>
                                                         {% endif %}
                                                         <div>
@@ -749,7 +818,8 @@
                                                 {{ statistic.movingTime }}
                                             </td>
                                             <td>
-                                                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                                {{ statistic.totalCalories|formatNumber(0) }}<span
+                                                        class="text-xs">kcal</span>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -760,10 +830,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
             <!-- CHALLENGE CONSISTENCY -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Challenge consistency"|trans }}
                 </h3>
@@ -784,15 +852,20 @@
                         <tbody>
                         {% for challenge, achievements in challengeConsistency.getConsistencies() %}
                             <tr class="bg-white border-b">
-                                <th scope="row" class="px-2 py-2 sticky left-0 text-left bg-white border font-medium text-gray-900 whitespace-nowrap">
+                                <th scope="row"
+                                    class="px-2 py-2 sticky left-0 text-left bg-white border font-medium text-gray-900 whitespace-nowrap">
                                     {{ enum('App\\Domain\\Strava\\Challenge\\Consistency\\ConsistencyChallenge').from(challenge)|trans }}
                                 </th>
                                 {% for achieved in achievements %}
                                     <td class="px-3 py-2 border">
                                         {% if achieved %}
-                                            <svg class="w-4 h-4 text-green-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill="currentColor" d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"/>
-                                                <path fill="#fff" d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"/>
+                                            <svg class="w-4 h-4 text-green-500" aria-hidden="true"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                 viewBox="0 0 20 20">
+                                                <path fill="currentColor"
+                                                      d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"/>
+                                                <path fill="#fff"
+                                                      d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"/>
                                             </svg>
                                         {% endif %}
                                     </td>
@@ -803,9 +876,9 @@
                     </table>
                 </div>
             </div>
+            <!-- FTP HISTORY -->
             {% if ftpHistoryChart is not empty %}
-                <!-- FTP HISTORY -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "FTP history"|trans }}
                     </h3>
