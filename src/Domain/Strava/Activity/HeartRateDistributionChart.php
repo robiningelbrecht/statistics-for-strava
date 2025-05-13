@@ -40,6 +40,7 @@ final readonly class HeartRateDistributionChart
         $heartRates = array_keys($heartRateData);
         $minHeartRate = (int) min(60, floor(min($heartRates) / 10) * 10);
         $maxHeartRate = (int) max(200, ceil(max($heartRates) / 10) * 10);
+        $needsDebugging = 92 === $this->averageHeartRate && 50 === $minHeartRate;
 
         foreach (range($minHeartRate, $maxHeartRate) as $heartRate) {
             if (array_key_exists($heartRate, $this->heartRateData)) {
@@ -62,8 +63,12 @@ final readonly class HeartRateDistributionChart
             $data[] = array_sum(array_splice($heartRateData, 0, $step)) / $totalTimeInSeconds * 100;
         }
         $yAxisMax = max($data) * 1.40;
-        $xAxisValueAverageHeartRate = array_search(floor($this->averageHeartRate / $step) * $step, $xAxisValues);
-
+        $xAxisValueAverageHeartRate = array_search($this->findClosestSteppedValue(
+            min: $minHeartRate,
+            max: $maxHeartRate,
+            step: $step,
+            target: $this->averageHeartRate
+        ), $xAxisValues);
         // Calculate the mark areas to display the zones.
         $oneHeartBeatPercentage = 100 / ($maxHeartRate - $minHeartRate);
         $beforeZoneOne = (($this->athleteMaxHeartRate / 2) - $minHeartRate) * $oneHeartBeatPercentage;
@@ -268,5 +273,20 @@ final readonly class HeartRateDistributionChart
                 ],
             ],
         ];
+    }
+
+    private function findClosestSteppedValue(int $min, int $max, int $step, int $target): int
+    {
+        $stepsFromMin = round(($target - $min) / $step);
+        $closest = (int) round($min + ($stepsFromMin * $step));
+
+        if ($closest < $min) {
+            return $min;
+        }
+        if ($closest > $max) {
+            return $max;
+        }
+
+        return $closest;
     }
 }
