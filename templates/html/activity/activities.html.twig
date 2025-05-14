@@ -9,7 +9,7 @@
                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                       clip-rule="evenodd"></path>
             </svg>
-            <a href="#" data-router-navigate="/activities"
+            <a href="#" data-router-navigate="{{ absoluteUrl('activities') }}"
                class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Activities"|trans }}</a>
         </div>
     </li>
@@ -103,7 +103,7 @@
                                                     <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
                                                         <input type="radio" id="{{ countryCode }}" data-dataTable-filter="countryCode" name="countryCode" value="{{ countryCode }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
                                                         <label for="{{ countryCode }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
-                                                            <img src="assets/images/flags/{{ countryCode|lower }}.svg" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
+                                                            <img src="{{ absoluteUrl('assets/images/flags/' ~ countryCode|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
                                                             <span>{{ countryName }}</span>
                                                         </label>
                                                         <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="countryCode">{{ "clear"|trans }}</a>

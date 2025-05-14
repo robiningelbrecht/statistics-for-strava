@@ -9,7 +9,7 @@
                     <h3 class="text-lg font-semibold">
                         {{ "Most recent activities"|trans }}
                     </h3>
-                    <a href="#" data-router-navigate="/activities"
+                    <a href="#" data-router-navigate="{{ absoluteUrl('activities') }}"
                        class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                         {{ "View all"|trans }}
                     </a>
@@ -192,7 +192,7 @@
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">{{ "Peak power outputs"|trans }}</h3>
-                        <a href="#" data-model-content-url="power-output.html"
+                        <a href="#" data-model-content-url="{{ absoluteUrl('power-output.html') }}"
                            class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                             {{ "View details"|trans }}
                         </a>
@@ -302,7 +302,7 @@
             <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold">{{ "Training Load Analysis"|trans }}</h3>
-                    <a href="#" data-model-content-url="/training-load.html"
+                    <a href="#" data-model-content-url="{{ absoluteUrl('training-load.html') }}"
                        class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                         {{ "View details"|trans }}
                     </a>
@@ -642,7 +642,7 @@
                                         class="text-xs">{{ renderUnitSymbol('carbon-saved') }}</span>
                             </td>
                             <td class="px-2 py-2 truncate">
-                                <a href="#" data-model-content-url="carbon-comparison.html"
+                                <a href="#" data-model-content-url="{{ absoluteUrl('carbon-comparison.html') }}"
                                    class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline">
                                     <svg class="ml-[-3px] w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor"
                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

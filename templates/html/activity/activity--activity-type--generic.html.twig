@@ -199,7 +199,7 @@
     {% else %}
         <div>
             <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
-                 data-src="assets/images/maps/not-found.jpg"
+                 data-src="{{ absoluteUrl('assets/images/maps/not-found.jpg') }}"
                  alt="No map"/>
         </div>
     {% endif %}
@@ -261,7 +261,7 @@
                                 {{ segmentEffort.getRank() }}
                             </td>
                             <td class="px-2 py-2 text-left">
-                                <a href="#" data-model-content-url="segment/{{ segmentEffort.getSegmentId() }}.html"
+                                <a href="#" data-model-content-url="{{ absoluteUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
                                    class="font-medium text-blue-600 hover:underline" rel="nofollow">
                                     <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
                                 </a>
