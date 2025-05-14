@@ -4,13 +4,13 @@
     <li>
         <div class="flex items-center">
             <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="/gear-stats" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Gear"|trans }}</a>
+            <a href="#" data-router-navigate="{{ absoluteUrl('gear-stats') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Gear"|trans }}</a>
         </div>
     </li>
     <li>
         <div class="flex items-center">
             <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="/gear/maintenance" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Maintenance"|trans }}</a>
+            <a href="#" data-router-navigate="{{ absoluteUrl('gear/maintenance') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Maintenance"|trans }}</a>
         </div>
     </li>
 {% endblock %}
@@ -22,7 +22,7 @@
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "Gear maintenance"|trans }}
                     </h3>
-                    <a href="#" data-model-content-url="/gear/info.html">
+                    <a href="#" data-model-content-url="{{ absoluteUrl('gear/info.html') }}">
                         <svg class="w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
                     </a>
                 </div>
@@ -131,7 +131,7 @@
                                                 <div class="w-48 h-full">
                                                     <img class="lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
                                                          src="{{ renderComponent('placeholder-image') }}"
-                                                         data-src="/gear-maintenance/{{ gearComponent.getImgSrc() }}"
+                                                         data-src="{{ absoluteUrl('/gear-maintenance/' ~ gearComponent.getImgSrc()) }}"
                                                          alt="{{ gearComponent.getLabel() }}">
                                                 </div>
                                                 <div class="w-full flex flex-col justify-between p-4 leading-normal">
