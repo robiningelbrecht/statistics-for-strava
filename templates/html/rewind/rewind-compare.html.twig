@@ -9,7 +9,7 @@
                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                       clip-rule="evenodd"></path>
             </svg>
-            <a href="#" data-router-navigate="/rewind"
+            <a href="#" data-router-navigate="{{ absoluteUrl('rewind') }}"
                class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Rewind"|trans }}</a>
         </div>
     </li>
@@ -22,7 +22,7 @@
                           d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                           clip-rule="evenodd"></path>
                 </svg>
-                <a href="#" data-router-navigate="/rewind/{{ activeRewindYearLeft }}"
+                <a href="#" data-router-navigate="{{ absoluteUrl('rewind/' ~ activeRewindYearLeft) }}"
                    class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ activeRewindYearLeft }}</a>
             </div>
         </li>
@@ -35,7 +35,7 @@
                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                       clip-rule="evenodd"></path>
             </svg>
-            <a href="#" data-router-navigate="/rewind/{{ activeRewindYearLeft }}/compare"
+            <a href="#" data-router-navigate="{{ absoluteUrl('rewind/' ~ activeRewindYearLeft ~ '/compare') }}"
                class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Compare"|trans }}</a>
         </div>
     </li>
@@ -74,7 +74,7 @@
                         <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearButton">
                             {% for rewindYear in availableRewindYears|filter(rewindYear => rewindYear != activeRewindYearLeft) %}
                                 <li>
-                                    <a href="#" data-router-navigate="/rewind/{{ rewindYear }}/compare" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
+                                    <a href="#" data-router-navigate="{{ absoluteUrl('rewind/' ~ rewindYear ~ '/compare') }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -99,7 +99,7 @@
                             {% if availableRewindYearsToCompareWith is not empty %}
                                 {% for rewindYear in availableRewindYearsToCompareWith %}
                                     <li>
-                                        <a href="#" data-router-navigate="/rewind/{{ activeRewindYearLeft }}/compare/{{ rewindYear }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
+                                        <a href="#" data-router-navigate="{{ absoluteUrl('rewind/' ~ activeRewindYearLeft ~ '/compare/' ~ rewindYear) }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
                                     </li>
                                 {% endfor %}
                             {% else %}

@@ -4,12 +4,12 @@
     {% autoescape false %}
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
             <!-- MOST RECENT ACTIVITIES -->
-            <div class="col-span-2 p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold">
                         {{ "Most recent activities"|trans }}
                     </h3>
-                    <a href="#" data-router-navigate="/activities"
+                    <a href="#" data-router-navigate="{{ absoluteUrl('activities') }}"
                        class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                         {{ "View all"|trans }}
                     </a>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <!-- INTRO -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {% set kbdTagOpen = '<kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">' %}
                 {% set kdbTagClose = '</kbd>' %}
                 <p class="mb-3">
@@ -155,44 +155,44 @@
                 </p>
             </div>
         </div>
-        <!-- WEEKLY STATS -->
-        <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-            <h3 class="mb-4 text-lg font-semibold">
-                {{ "Weekly stats"|trans }}
-            </h3>
-            {% if weeklyDistanceCharts|length > 1 %}
-                <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-                        id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent"
-                        role="tablist">
-                        {% for activityType,chart in weeklyDistanceCharts %}
-                            <li class="mr-2" role="presentation">
-                                <a href="#" data-tabs-target="#weeklyDistances{{ activityType }}" role="tab"
-                                   aria-controls="weeklyDistances{{ activityType }}"
-                                   class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <div id="weeklyDistancesActivityTypeTabContent">
-                {% for activityType,chart in weeklyDistanceCharts %}
-                    <div id="weeklyDistances{{ activityType }}" role="tabpanel"
-                         aria-labelledby="weeklyDistances{{ activityType }}-tab">
-                        <div class="h-80" data-echarts-options='{{ chart }}'></div>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+            <!-- WEEKLY STATS -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <h3 class="mb-4 text-lg font-semibold">
+                    {{ "Weekly stats"|trans }}
+                </h3>
+                {% if weeklyDistanceCharts|length > 1 %}
+                    <div class="mb-4 border-b border-gray-200">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                            id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent"
+                            role="tablist">
+                            {% for activityType,chart in weeklyDistanceCharts %}
+                                <li class="mr-2" role="presentation">
+                                    <a href="#" data-tabs-target="#weeklyDistances{{ activityType }}" role="tab"
+                                       aria-controls="weeklyDistances{{ activityType }}"
+                                       class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                        {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                {% endfor %}
+                {% endif %}
+                <div id="weeklyDistancesActivityTypeTabContent">
+                    {% for activityType,chart in weeklyDistanceCharts %}
+                        <div id="weeklyDistances{{ activityType }}" role="tabpanel"
+                             aria-labelledby="weeklyDistances{{ activityType }}-tab">
+                            <div class="h-80" data-echarts-options='{{ chart }}'></div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+            <!-- PEAK POWER OUTPUTS -->
             {% if powerOutputs is not empty %}
-                <!-- PEAK POWER OUTPUTS -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-semibold">{{ "Peak power outputs"|trans }}</h3>
-                        <a href="#" data-model-content-url="power-output.html"
+                        <a href="#" data-model-content-url="{{ absoluteUrl('power-output.html') }}"
                            class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                             {{ "View details"|trans }}
                         </a>
@@ -241,80 +241,78 @@
                 </div>
             {% endif %}
             <!-- HEART RATE ZONES -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Heart rate zones"|trans }}
                 </h3>
                 <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
             </div>
-        </div>
-        <!-- ACTIVITY HEATMAP -->
-        <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-            <div class="flex items-center">
-                <h3 class="font-semibold text-lg">{{ "Activity intensity"|trans }}</h3>
-                <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right"
-                        type="button">
-                    <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
-                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                              clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="sr-only">{{ "Show information"|trans }}</span>
-                </button>
-                <div data-popover id="popover-description" role="tooltip"
-                     class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
-                    <div class="p-3 space-y-2">
-                        <p>
-                            {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
-                        </p>
-                        <h3 class="font-semibold text-gray-900">{{ "Simplified"|trans }}</h3>
-                        <p>
-                            {% trans %}This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"{% endtrans %}
-                            :
-                        </p>
-                        <blockquote
-                                class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                            <span class="font-bold">{{ "maxHeartRate"|trans }} </span>= (220 - {{ "age"|trans }}) x 0.92<br/>
-                            <span class="font-bold">{{ "intensityFactor"|trans }} </span>= averageHeartRate /
-                            maxHeartRate<br/>
-                            <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x
-                            averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-                        </blockquote>
-                        <h3 class="font-semibold text-gray-900">{{ "Advanced"|trans }}</h3>
-                        <p>
-                            {% trans %}When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"{% endtrans %}
-                            :
-                        </p>
-                        <blockquote
-                                class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                            <span class="font-bold">{{ "intensityFactor"|trans }} </span>= (averagePower / FTP)<br/>
-                            <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averagePower x
-                            intensityFactor) / (FTP x 3600) x 100
-                        </blockquote>
+            <!-- ACTIVITY HEATMAP -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center">
+                    <h3 class="font-semibold text-lg">{{ "Activity intensity"|trans }}</h3>
+                    <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right"
+                            type="button">
+                        <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
+                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                  clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">{{ "Show information"|trans }}</span>
+                    </button>
+                    <div data-popover id="popover-description" role="tooltip"
+                         class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+                        <div class="p-3 space-y-2">
+                            <p>
+                                {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
+                            </p>
+                            <h3 class="font-semibold text-gray-900">{{ "Simplified"|trans }}</h3>
+                            <p>
+                                {% trans %}This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"{% endtrans %}
+                                :
+                            </p>
+                            <blockquote
+                                    class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
+                                <span class="font-bold">{{ "maxHeartRate"|trans }} </span>= (220 - {{ "age"|trans }}) x 0.92<br/>
+                                <span class="font-bold">{{ "intensityFactor"|trans }} </span>= averageHeartRate /
+                                maxHeartRate<br/>
+                                <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x
+                                averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
+                            </blockquote>
+                            <h3 class="font-semibold text-gray-900">{{ "Advanced"|trans }}</h3>
+                            <p>
+                                {% trans %}When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"{% endtrans %}
+                                :
+                            </p>
+                            <blockquote
+                                    class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
+                                <span class="font-bold">{{ "intensityFactor"|trans }} </span>= (averagePower / FTP)<br/>
+                                <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averagePower x
+                                intensityFactor) / (FTP x 3600) x 100
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
+                <div class="relative overflow-x-auto">
+                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ activityIntensityChart }}'></div>
+                </div>
             </div>
-            <div class="relative overflow-x-auto">
-                <div class="h-52 min-w-[800px]" data-echarts-options='{{ activityIntensityChart }}'></div>
+            <!-- TRAINING LOAD METRICS -->
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">{{ "Training Load Analysis"|trans }}</h3>
+                    <a href="#" data-model-content-url="{{ absoluteUrl('training-load.html') }}"
+                       class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                        {{ "View details"|trans }}
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'page' } %}
+                </div>
             </div>
-        </div>
-        <!-- TRAINING LOAD METRICS -->
-        <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">{{ "Training Load Analysis"|trans }}</h3>
-                <a href="#" data-model-content-url="/training-load.html"
-                   class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-                    {{ "View details"|trans }}
-                </a>
-            </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'page' } %}
-            </div>
-        </div>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
             <!-- WEEKDAY STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Stats per weekday"|trans }}
                 </h3>
@@ -377,7 +375,7 @@
                 </div>
             </div>
             <!-- DAYTIME STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Daytime stats"|trans }}
                 </h3>
@@ -443,7 +441,7 @@
                 </div>
             </div>
             <!-- DISTANCE BREAKDOWN -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Distance breakdown"|trans }}
                 </h3>
@@ -535,7 +533,7 @@
                 </div>
             </div>
             <!-- TRIVIA -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Trivia"|trans }}
                 </h3>
@@ -644,7 +642,7 @@
                                         class="text-xs">{{ renderUnitSymbol('carbon-saved') }}</span>
                             </td>
                             <td class="px-2 py-2 truncate">
-                                <a href="#" data-model-content-url="carbon-comparison.html"
+                                <a href="#" data-model-content-url="{{ absoluteUrl('carbon-comparison.html') }}"
                                    class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline">
                                     <svg class="ml-[-3px] w-5 h-5 text-gray-400" aria-hidden="true" fill="currentColor"
                                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -686,11 +684,9 @@
                     </table>
                 </div>
             </div>
-        </div>
-        {% if bestEffortsCharts|length > 0 %}
-            <div class="grid grid-cols-1 gap-4 mb-4">
-                <!-- BEST EFFORTS -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <!-- BEST EFFORTS -->
+            {% if bestEffortsCharts|length > 0 %}
+                <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "Best Efforts"|trans }}
                     </h3>
@@ -719,13 +715,10 @@
                             </div>
                         {% endfor %}
                     </div>
-
                 </div>
-            </div>
-        {% endif %}
-        <div class="grid grid-cols-1 gap-4 mb-4">
+            {% endif %}
             <!-- YEARLY DISTANCE STATS -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Yearly distances"|trans }}
                 </h3>
@@ -837,10 +830,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
             <!-- CHALLENGE CONSISTENCY -->
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <h3 class="mb-4 text-lg font-semibold">
                     {{ "Challenge consistency"|trans }}
                 </h3>
@@ -885,9 +876,9 @@
                     </table>
                 </div>
             </div>
+            <!-- FTP HISTORY -->
             {% if ftpHistoryChart is not empty %}
-                <!-- FTP HISTORY -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "FTP history"|trans }}
                     </h3>
