@@ -10,6 +10,7 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypesToImport;
+use App\Domain\Strava\Activity\WorkoutType;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Strava;
@@ -122,7 +123,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     ->updateGear(
                         $gearId,
                         $gearId ? $allGears->getByGearId($gearId)?->getName() : null
-                    );
+                    )
+                    ->updateWorkoutType(WorkoutType::fromStravaInt($stravaActivity['workout_type'] ?? null));
 
                 if (array_key_exists('commute', $stravaActivity)) {
                     $activity->updateCommute($stravaActivity['commute']);

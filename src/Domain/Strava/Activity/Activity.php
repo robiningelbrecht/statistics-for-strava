@@ -106,7 +106,7 @@ final class Activity
         #[ORM\Column(type: 'boolean', nullable: true)]
         private bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
-        private readonly ?WorkoutType $workoutType,
+        private ?WorkoutType $workoutType,
     ) {
     }
 
@@ -531,6 +531,13 @@ final class Activity
     public function getWorkoutType(): ?WorkoutType
     {
         return $this->workoutType;
+    }
+
+    public function updateWorkoutType(?WorkoutType $workoutType): self
+    {
+        $this->workoutType = $workoutType;
+
+        return $this;
     }
 
     public function getCarbonSaved(): Kilogram
