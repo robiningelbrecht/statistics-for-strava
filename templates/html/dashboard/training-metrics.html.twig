@@ -37,10 +37,14 @@
         <div data-popover id="popover-tsb-{{ context }}" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
             <div class="p-2 space-y-2">
                 <p>{{ "Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform."|trans }}</p>
-                <p>{{ "+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”; >+25 ⇒ possible detraining"|trans }}</p>
+                <p>{{ ">+25: Possible detraining"|trans }}</p>
+                <p>{{ "+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”"|trans }}</p>
+                <p>{{ "+10 to +15: Moderately fresh. Good balance of fitness and recovery.”"|trans }}</p>
                 <p>{{ "0 to +10: Slightly fresh. Transitional; brief is best"|trans }}</p>
-                <p>{{ "–10 to –30: 	Build/fatigue zone. Productive heavy-training range"|trans }}</p>
+                <p>{{ "-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training."|trans }}</p>
+                <p>{{ "–10 to –30: Build/fatigue zone. Productive heavy-training range"|trans }}</p>
                 <p>{{ "< –30: Over-fatigued. Risk of injuiry; require extra recovery"|trans }}</p>
+                <p class="text-xs italic mt-2">{{ "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."|trans }}</p>
             </div>
         </div>
     </div>

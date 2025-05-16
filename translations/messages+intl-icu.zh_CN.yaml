@@ -1,4 +1,6 @@
-'+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”; >+25 ⇒ possible detraining': '+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”; >+25 ⇒ possible detraining'
+'+10 to +15: Moderately fresh. Good balance of fitness and recovery.”': '+10 to +15: Moderately fresh. Good balance of fitness and recovery.”'
+'+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”': '+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”'
+'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
 '2 days of activity for 4 weeks': 4周内2天的活动
@@ -9,6 +11,7 @@
 '< –30: Over-fatigued. Risk of injuiry; require extra recovery': '< –30: Over-fatigued. Risk of injuiry; require extra recovery'
 '> 1.3: Increased injury risk': '> 1.3: Increased injury risk'
 '> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
+'>+25: Possible detraining': '>+25: Possible detraining'
 'A:C Ratio': 'A:C Ratio'
 'ATL (Fatigue)': 'ATL (Fatigue)'
 'Active days': 'Active days'
@@ -107,6 +110,7 @@ Gear: 装备
 Golf: 高尔夫
 'Good training variety': 'Good training variety'
 'Gravel Rides': 砾石骑行
+"Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."
 HIIT: 高强度间歇训练
 HR: 心率
 'Hand Cycle': 手动自行车
@@ -366,4 +370,4 @@ workouts: 锻炼
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade}份意大利面条'
-"–10 to –30: \tBuild/fatigue zone. Productive heavy-training range": "–10 to –30: \tBuild/fatigue zone. Productive heavy-training range"
+'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'

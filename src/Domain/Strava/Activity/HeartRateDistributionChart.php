@@ -105,6 +105,7 @@ final readonly class HeartRateDistributionChart
                 [
                     'data' => $data,
                     'type' => 'bar',
+                    'cursor' => 'default',
                     'barCategoryGap' => 1,
                     'itemStyle' => [
                         'color' => '#fff',
