@@ -41,6 +41,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 use Twig\Environment;
 
 #[AsController]
@@ -49,18 +51,30 @@ final readonly class SettingsRequestHandler
     public function __construct(
         private FormFactoryInterface $formFactory,
         private Environment $twig,
-    ) {
+    )
+    {
     }
 
     #[Route(path: '/settings', methods: ['GET', 'POST'], priority: 2)]
     public function handle(Request $request): Response
     {
-        $formBuilder = $this->formFactory->createBuilder(
-            options: ['attr' => ['class' => 'grid-cols-2']]
-        );
+        $formBuilder = $this->formFactory->createBuilder();
 
         $form = $formBuilder
-            ->add('BirthdayType', BirthdayType::class, [
+            ->add('AppUrl', UrlType::class, [
+                'label' => 'App URL',
+                'attr' => [
+                    'placeholder' => 'http://localhost:8080/',
+                ],
+                'help' => 'The URL on which the app will be hosted. This URL will be used in the manifest file. This will allow you to install the web app as a native app on your device.',
+                'required' => false,
+                'default_protocol' => 'http',
+                'constraints' => [
+                    new Url(),
+                    new NotBlank()
+                ],
+            ])
+            /*->add('BirthdayType', BirthdayType::class, [
                 'label' => 'BirthdayType',
                 'help' => 'We’ll never share your details. Read our Privacy Policy.',
                 'required' => true,
@@ -225,16 +239,11 @@ final readonly class SettingsRequestHandler
                 'help' => 'We’ll RangeType share your details. Read our Privacy Policy.',
                 'required' => true,
             ])
-            ->add('UrlType', UrlType::class, [
-                'label' => 'UrlType',
-                'help' => 'We’ll RangeType share your details. Read our Privacy Policy.',
-                'required' => true,
-            ])
             ->add('WeekType', WeekType::class, [
                 'label' => 'WeekType',
                 'help' => 'We’ll RangeType share your details. Read our Privacy Policy.',
                 'required' => true,
-            ])
+            ])*/
             ->add('submit', SubmitType::class)
             ->getForm();
 

@@ -1,6 +1,16 @@
 {% use 'form_div_layout.html.twig' %}
 
 {# General #}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul class="mt-1 text-sm text-red-600">
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
 {%- block form_widget_compound -%}
     {%- set attr = attr|merge({ class: ('grid grid-cols-1 gap-6 ' ~ attr.class|default(''))|trim }) -%}
     {{- parent() -}}
@@ -33,6 +43,7 @@
     {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-2 text-sm text-gray-500')) }) -%}
     {{- parent() -}}
 {%- endblock form_help -%}
+
 
 {# Checkbox #}
 {%- block checkbox_row -%}
