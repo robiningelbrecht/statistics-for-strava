@@ -1,0 +1,92 @@
+{% use 'form_div_layout.html.twig' %}
+
+{# General #}
+{%- block form_widget_compound -%}
+    {%- set attr = attr|merge({ class: ('grid grid-cols-1 gap-6 ' ~ attr.class|default(''))|trim }) -%}
+    {{- parent() -}}
+{%- endblock form_widget_compound -%}
+
+{%- block form_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block widget_attributes -%}
+    {%- set attr = attr|merge({ class: attr.class|default(widget_class|default('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5')) ~ (disabled ? ' ' ~ widget_disabled_class|default('cursor-not-allowed bg-gray-100')) ~ (errors|length ? ' ' ~ widget_errors_class|default('bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500')) }) -%}
+    {{- parent() -}}
+{%- endblock widget_attributes -%}
+
+{%- block form_label -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block mb-2 text-sm font-medium text-gray-900')) }) -%}
+    {{- parent() -}}
+{%- endblock form_label -%}
+
+{%- block form_help -%}
+    {%- set help_attr = help_attr|merge({ class: help_attr.class|default(help_class|default('mt-2 text-sm text-gray-500')) }) -%}
+    {{- parent() -}}
+{%- endblock form_help -%}
+
+{# Checkbox #}
+{%- block checkbox_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <div {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+        <div class="flex items-center">
+            {{- form_widget(form, widget_attr) -}}
+            {{- form_label(form) -}}
+        </div>
+        {{- form_help(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock checkbox_row -%}
+
+{% block checkbox_label -%}
+    {%- set label_attr = label_attr|merge({ class: label_attr.class|default(label_class|default('block text-sm font-medium text-gray-900')) }) -%}
+    {{- block('form_label') -}}
+{%- endblock checkbox_label %}
+
+{%- block checkbox_widget -%}
+    {%- set widget_class = widget_class|default('mr-2 rounded-sm') -%}
+    {{- parent() -}}
+{%- endblock checkbox_widget -%}
+
+{# Radio #}
+{%- block radio_widget -%}
+    {%- set widget_class = widget_class|default('mr-2') -%}
+    {{- parent() -}}
+{%- endblock radio_widget -%}
+
+{# Choice #}
+{%- block choice_widget_expanded -%}
+    {%- set attr = attr|merge({ class: ('space-y-2 ' ~ attr.class|default(''))|trim }) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+        <div class="flex items-center">
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{# File #}
+{%- block file_widget -%}
+    {%- set attr = attr|merge({ class: attr.class|default(widget_class|default('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full')) ~ (disabled ? ' ' ~ widget_disabled_class|default('cursor-not-allowed bg-gray-100')) ~ (errors|length ? ' ' ~ widget_errors_class|default('bg-red-50 border border-red-500 text-red-900 placeholder-red-700 focus:ring-red-500 focus:border-red-500')) }) -%}
+    {{- block('form_widget_simple') -}}
+{%- endblock file_widget -%}
+
+{# Submit #}
+{%- block submit_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'))}) -%}
+    {{- parent() -}}
+{%- endblock submit_widget %}

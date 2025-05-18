@@ -41,6 +41,7 @@
         "symfony/dotenv": "7.2.*",
         "symfony/expression-language": "7.2.*",
         "symfony/flex": "^2",
+        "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/intl": "7.2.*",
         "symfony/lock": "7.2.*",
@@ -50,6 +51,7 @@
         "symfony/runtime": "7.2.*",
         "symfony/translation": "7.2.*",
         "symfony/twig-bundle": "7.2.*",
+        "symfony/validator": "7.2.*",
         "symfony/yaml": "7.2.*",
         "twig/twig": "*"
     },

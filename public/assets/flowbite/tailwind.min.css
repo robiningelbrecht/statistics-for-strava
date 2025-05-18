@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.6 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.7 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -2009,6 +2009,9 @@
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
   .gap-px {
     gap: 1px;
   }
@@ -2372,6 +2375,9 @@
   }
   .border-red-300 {
     border-color: var(--color-red-300);
+  }
+  .border-red-500 {
+    border-color: var(--color-red-500);
   }
   .border-strava-orange {
     border-color: var(--color-strava-orange);
@@ -2956,6 +2962,9 @@
   .text-red-800 {
     color: var(--color-red-800);
   }
+  .text-red-900 {
+    color: var(--color-red-900);
+  }
   .text-strava-orange {
     color: var(--color-strava-orange);
   }
@@ -2986,6 +2995,11 @@
   .antialiased {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  .placeholder-red-700 {
+    &::placeholder {
+      color: var(--color-red-700);
+    }
   }
   .opacity-0 {
     opacity: 0%;
@@ -3274,6 +3288,11 @@
       border-color: var(--color-blue-500);
     }
   }
+  .focus\:border-red-500 {
+    &:focus {
+      border-color: var(--color-red-500);
+    }
+  }
   .focus\:bg-gray-100 {
     &:focus {
       background-color: var(--color-gray-100);
@@ -3321,6 +3340,11 @@
       --tw-ring-color: var(--color-orange-500);
     }
   }
+  .focus\:ring-red-500 {
+    &:focus {
+      --tw-ring-color: var(--color-red-500);
+    }
+  }
   .focus\:outline-hidden {
     &:focus {
       --tw-outline-style: none;
@@ -3354,6 +3378,11 @@
   .aria-selected\:bg-gray-100 {
     &[aria-selected="true"] {
       background-color: var(--color-gray-100);
+    }
+  }
+  .sm\:w-auto {
+    @media (width >= 40rem) {
+      width: auto;
     }
   }
   .sm\:max-w-\[50\%\] {
