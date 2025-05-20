@@ -137,7 +137,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 }
 
                 try {
-                    if (0 === $activity->getTotalImageCount() && ($stravaActivity['total_photo_count'] ?? 0) > 0) {
+                    if ($activity->getTotalImageCount() !== ($stravaActivity['total_photo_count'] ?? 0)) {
                         // Activity got updated and images were uploaded, import them.
                         if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
                             $activity->updateLocalImagePaths(array_map(
