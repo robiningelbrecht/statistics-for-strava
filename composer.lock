@@ -1736,16 +1736,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.12.0",
+            "version": "3.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "a9a00d78b1bba249ad02a15f3d25fc85b4157830"
+                "reference": "3b363bca7a9c3a876324f4ca0e5fd6762b60b622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/a9a00d78b1bba249ad02a15f3d25fc85b4157830",
-                "reference": "a9a00d78b1bba249ad02a15f3d25fc85b4157830",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/3b363bca7a9c3a876324f4ca0e5fd6762b60b622",
+                "reference": "3b363bca7a9c3a876324f4ca0e5fd6762b60b622",
                 "shasum": ""
             },
             "require": {
@@ -1779,9 +1779,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.12.0"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.12.1"
             },
-            "time": "2025-03-07T10:14:49+00:00"
+            "time": "2025-05-06T16:25:30+00:00"
         },
         {
             "name": "inspector-apm/inspector-symfony",
@@ -1853,16 +1853,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.9.26",
+            "version": "1.9.37",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "4598fd6b456bb929760350d6b27ffc63bb77e4c4"
+                "reference": "c06a38b9dfa87af1d34a025d8a0b1aeec8af579a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/4598fd6b456bb929760350d6b27ffc63bb77e4c4",
-                "reference": "4598fd6b456bb929760350d6b27ffc63bb77e4c4",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/c06a38b9dfa87af1d34a025d8a0b1aeec8af579a",
+                "reference": "c06a38b9dfa87af1d34a025d8a0b1aeec8af579a",
                 "shasum": ""
             },
             "require": {
@@ -1910,9 +1910,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.9.26"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.9.37"
             },
-            "time": "2025-05-02T12:43:17+00:00"
+            "time": "2025-05-19T16:24:46+00:00"
         },
         {
             "name": "lcobucci/jwt",
@@ -3548,16 +3548,16 @@
         },
         {
             "name": "respect/validation",
-            "version": "2.4.1",
+            "version": "2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Respect/Validation.git",
-                "reference": "d1575eb4dde7b06f8dbc5e8d84dffb87931a40bd"
+                "reference": "7f4b3b3ec3ccdf330dfc4567bb43698018f3562a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/d1575eb4dde7b06f8dbc5e8d84dffb87931a40bd",
-                "reference": "d1575eb4dde7b06f8dbc5e8d84dffb87931a40bd",
+                "url": "https://api.github.com/repos/Respect/Validation/zipball/7f4b3b3ec3ccdf330dfc4567bb43698018f3562a",
+                "reference": "7f4b3b3ec3ccdf330dfc4567bb43698018f3562a",
                 "shasum": ""
             },
             "require": {
@@ -3567,7 +3567,7 @@
             },
             "require-dev": {
                 "egulias/email-validator": "^3.0",
-                "giggsey/libphonenumber-for-php-lite": "^8.13",
+                "giggsey/libphonenumber-for-php-lite": "^8.13 || ^9.0",
                 "malukenho/docheader": "^1.0",
                 "mikey179/vfsstream": "^1.6",
                 "phpstan/phpstan": "^1.9",
@@ -3610,9 +3610,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Respect/Validation/issues",
-                "source": "https://github.com/Respect/Validation/tree/2.4.1"
+                "source": "https://github.com/Respect/Validation/tree/2.4.3"
             },
-            "time": "2025-01-11T00:06:34+00:00"
+            "time": "2025-05-14T12:14:59+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9260,16 +9260,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.14",
+            "version": "2.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "8f2e03099cac24ff3b379864d171c5acbfc6b9a2"
+                "reference": "b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8f2e03099cac24ff3b379864d171c5acbfc6b9a2",
-                "reference": "8f2e03099cac24ff3b379864d171c5acbfc6b9a2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9",
+                "reference": "b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9",
                 "shasum": ""
             },
             "require": {
@@ -9314,7 +9314,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-02T15:32:28+00:00"
+            "time": "2025-05-16T09:40:10+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10338,16 +10338,16 @@
         },
         {
             "name": "robiningelbrecht/phpunit-pretty-print",
-            "version": "v1.4.0",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robiningelbrecht/phpunit-pretty-print.git",
-                "reference": "e32ca0f1ec7a95b41d65d42cce7767d4c4e2ac02"
+                "reference": "1faaf1b078674ef448e6ab24721db539d3cfca72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-pretty-print/zipball/e32ca0f1ec7a95b41d65d42cce7767d4c4e2ac02",
-                "reference": "e32ca0f1ec7a95b41d65d42cce7767d4c4e2ac02",
+                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-pretty-print/zipball/1faaf1b078674ef448e6ab24721db539d3cfca72",
+                "reference": "1faaf1b078674ef448e6ab24721db539d3cfca72",
                 "shasum": ""
             },
             "require": {
@@ -10384,7 +10384,7 @@
             ],
             "support": {
                 "issues": "https://github.com/robiningelbrecht/phpunit-pretty-print/issues",
-                "source": "https://github.com/robiningelbrecht/phpunit-pretty-print/tree/v1.4.0"
+                "source": "https://github.com/robiningelbrecht/phpunit-pretty-print/tree/v1.4.1"
             },
             "funding": [
                 {
@@ -10396,7 +10396,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-15T09:55:17+00:00"
+            "time": "2025-05-20T07:38:51+00:00"
         },
         {
             "name": "sebastian/cli-parser",
