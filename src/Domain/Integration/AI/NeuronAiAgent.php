@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Domain\Integration\AI;
 
 use App\Domain\Integration\AI\Ollama\OllamaConfig;
+use Inspector\Inspector;
 use NeuronAI\Chat\History\AbstractChatHistory;
 use NeuronAI\Chat\History\FileChatHistory;
+use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\RAG\RAG;
@@ -16,9 +18,19 @@ use NeuronAI\Tools\ToolProperty;
 
 final class NeuronAiAgent extends RAG
 {
-    public function __construct(
-        private OllamaConfig $config,
+    private function __construct(
+        private readonly OllamaConfig $config,
     ) {
+    }
+
+    public static function create(
+        OllamaConfig $config,
+        Inspector $inspector,
+    ): self {
+        return new self($config)
+            ->observe(
+                new AgentMonitoring($inspector)
+            );
     }
 
     protected function provider(): AIProviderInterface
@@ -48,7 +60,7 @@ final class NeuronAiAgent extends RAG
     protected function tools(): array
     {
         return [
-            Tool::make(
+            /*Tool::make(
                 'get_user_workout',
                 'Retrieve the user workout status from the database.',
             )->addProperty(
@@ -58,16 +70,16 @@ final class NeuronAiAgent extends RAG
                     description: 'The ID of the user.',
                     required: true
                 )
-            )->setCallable([$this, 'getUserWorkout']),
+            )->setCallable(fn () => call_user_func([$this, 'getUserWorkout'])),*/
         ];
     }
 
-    /*protected function chatHistory(): AbstractChatHistory
+    protected function chatHistory(): AbstractChatHistory
     {
         return new FileChatHistory(
-            directory: '/home/app/storage/neuron',
-            key: '[user-id]',
+            directory: '/var/www/storage',
+            key: 'agent',
             contextWindow: 50000
         );
-    }*/
+    }
 }

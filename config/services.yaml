@@ -64,26 +64,26 @@ services:
         arguments: [!tagged_iterator app.query_handler]
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:
-        factory: [ App\Infrastructure\ValueObject\String\KernelProjectDir, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
 
     App\Infrastructure\ValueObject\String\PlatformEnvironment:
-        factory: [ App\Infrastructure\ValueObject\String\PlatformEnvironment, 'from' ]
+        factory: [ null, 'from' ]
         arguments: ['%env(string:APP_ENV)%']
 
     App\Infrastructure\Time\Format\DateAndTimeFormat:
-        factory: [ App\Infrastructure\Time\Format\DateAndTimeFormat, 'create' ]
+        factory: [ null, 'create' ]
         arguments: [
             '%env(enum:App\Infrastructure\Time\Format\DateFormat:DATE_FORMAT)%',
             '%env(enum:App\Infrastructure\Time\Format\TimeFormat:TIME_FORMAT)%',
         ]
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
-        factory: [ 'App\Infrastructure\ValueObject\Measurement\UnitSystem', from ]
+        factory: [ null, from ]
         arguments: [ '%env(string:UNIT_SYSTEM)%' ]
 
     App\Infrastructure\Localisation\Locale:
-        factory: [ App\Infrastructure\Localisation\Locale, 'from' ]
+        factory: [ null, 'from' ]
         arguments: ['%env(string:LOCALE)%']
 
     League\Flysystem\FilesystemOperator: '@default.storage'
@@ -92,41 +92,47 @@ services:
         class: GuzzleHttp\Client
 
     App\Domain\App\ProfilePictureUrl:
-        factory: [ App\Domain\App\ProfilePictureUrl, 'fromOptionalString' ]
+        factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:PROFILE_PICTURE_URL)%']
 
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
-        factory: [ App\Domain\Integration\Notification\Ntfy\NtfyUrl, 'fromOptionalString' ]
+        factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:NTFY_URL)%']
 
     ollamaUrl:
         class: App\Infrastructure\ValueObject\String\Url
-        factory: [ App\Infrastructure\ValueObject\String\Url, 'fromOptionalString' ]
+        factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:OLLAMA_URL)%']
 
     App\Domain\Integration\AI\Ollama\OllamaConfig:
-        factory: [ App\Domain\Integration\AI\Ollama\OllamaConfig, 'create' ]
+        factory: [ null, 'create' ]
         arguments: ['%env(OLLAMA_MODEL)%', '@ollamaUrl']
 
+    App\Domain\Integration\AI\NeuronAiAgent:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@App\Domain\Integration\AI\Ollama\OllamaConfig',
+            '@Inspector\Inspector',
+        ]
+
     App\Domain\Manifest\ManifestAppUrl:
-        factory: [ App\Domain\Manifest\ManifestAppUrl, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%env(string:MANIFEST_APP_URL)%']
 
     App\Domain\Strava\StravaClientId:
-        factory: [ App\Domain\Strava\StravaClientId, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%env(string:STRAVA_CLIENT_ID)%']
 
     App\Domain\Strava\StravaClientSecret:
-        factory: [ App\Domain\Strava\StravaClientSecret, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%env(string:STRAVA_CLIENT_SECRET)%']
 
     App\Domain\Strava\StravaRefreshToken:
-        factory: [ App\Domain\Strava\StravaRefreshToken, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%env(string:STRAVA_REFRESH_TOKEN)%']
 
     App\Domain\Strava\Athlete\AthleteBirthDate:
-        class: App\Domain\Strava\Athlete\AthleteBirthDate
-        factory: [ App\Domain\Strava\Athlete\AthleteBirthDate, 'fromString' ]
+        factory: [ null, 'fromString' ]
         arguments: ['%env(string:ATHLETE_BIRTHDAY)%']
 
     App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
@@ -135,36 +141,36 @@ services:
         arguments: ['%env(string:MAX_HEART_RATE_FORMULA)%']
 
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
-        factory: [ 'App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport', from ]
+        factory: [ null, from ]
         arguments: [ '%env(json:ACTIVITY_VISIBILITIES_TO_IMPORT)%' ]
 
     App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
-        factory: [ 'App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport', fromInt ]
+        factory: [ null, fromInt ]
         arguments: [ '%env(int:NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT)%' ]
 
     App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport:
-        factory: [ 'App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport', from ]
+        factory: [ null, from ]
         arguments: [ '%env(json:ACTIVITIES_TO_SKIP_DURING_IMPORT)%' ]
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
         class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
-        factory: [ 'App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore', fromOptionalString ]
+        factory: [ null, fromOptionalString ]
         arguments: ['%env(string:SKIP_ACTIVITIES_RECORDED_BEFORE)%']
 
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
-        factory: [ 'App\Domain\Strava\Activity\SportType\SportTypesToImport', from ]
+        factory: [ null, from ]
         arguments: [ '%env(json:SPORT_TYPES_TO_IMPORT)%' ]
 
     App\Domain\Strava\Athlete\Weight\AthleteWeightHistory:
-        factory: [ 'App\Domain\Strava\Athlete\Weight\AthleteWeightHistory', fromString ]
+        factory: [ null, fromString ]
         arguments: [ '%env(string:fallback:ATHLETE_WEIGHT_HISTORY:ATHLETE_WEIGHTS)%', '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
 
     App\Domain\Strava\Ftp\FtpHistory:
-        factory: [ 'App\Domain\Strava\Ftp\FtpHistory', fromString ]
+        factory: [ null, fromString ]
         arguments: [ '%env(string:fallback:FTP_HISTORY:FTP_VALUES)%' ]
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
-        factory: [ 'App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig', fromYmlString ]
+        factory: [ null, fromYmlString ]
         arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
 
     App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
@@ -172,9 +178,9 @@ services:
         arguments: [!tagged_iterator app.maintenance_progress_calculation]
 
     App\Domain\Zwift\ZwiftLevel:
-        factory: [ 'App\Domain\Zwift\ZwiftLevel', fromOptionalString ]
+        factory: [ null, fromOptionalString ]
         arguments: [ '%env(string:ZWIFT_LEVEL)%' ]
 
     App\Domain\Zwift\ZwiftRacingScore:
-        factory: [ 'App\Domain\Zwift\ZwiftRacingScore', fromOptionalString ]
+        factory: [ null, fromOptionalString ]
         arguments: [ '%env(string:ZWIFT_RACING_SCORE)%' ]
