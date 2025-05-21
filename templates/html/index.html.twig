@@ -8,7 +8,7 @@
     <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }} | {{ athlete.getName() }}">
     <meta name="mobile-web-app-capable" content="yes">
     <link href="{{ asset('manifest.json') }}" rel="manifest" crossorigin="">
-    <link rel="icon" type="image/x-icon" href="{{ absoluteUrl('assets/images/logo.svg') }}">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
     <link href="{{ asset('assets/flowbite/tailwind.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/leaflet/leaflet.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/data-table/clusterize.min.css') }}" rel="stylesheet">
@@ -26,7 +26,7 @@
         <div class="max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-100">
             <ul class="space-y-2 mb-2">
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('dashboard') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('dashboard') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg aria-hidden="true"
                              class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('activities') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('activities') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('monthly-stats') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('monthly-stats') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -77,19 +77,19 @@
                     </button>
                     <ul id="dropdown-gear-menu" class="hidden py-2 space-y-2">
                         <li>
-                            <a href="#" data-router-navigate="{{ absoluteUrl('gear-stats') }}" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
+                            <a href="#" data-router-navigate="{{ relativeUrl('gear-stats') }}" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
                                 {{ "Stats"|trans }}
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-router-navigate="{{ absoluteUrl('gear/maintenance') }}" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
+                            <a href="#" data-router-navigate="{{ relativeUrl('gear/maintenance') }}" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
                                 {{ "Maintenance"|trans }}
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('eddington') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('eddington') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('segments') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('segments') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
@@ -117,7 +117,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('heatmap') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('heatmap') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +134,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('rewind') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('rewind') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  xml:space="preserve"><g><path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
 		C512,114.838,397.163,0,256,0z M256,466.052c-115.998,0-210.052-94.054-210.052-210.052S140.002,45.94,256,45.94
@@ -147,7 +147,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('challenges') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('challenges') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -162,7 +162,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="{{ absoluteUrl('photos') }}"
+                    <a href="#" data-router-navigate="{{ relativeUrl('photos') }}"
                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
                              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -188,7 +188,7 @@
                             </g>
                         </svg>
                     </a>
-                    <a href="#" data-model-content-url="{{ absoluteUrl('badge.html') }}" title="Show badge"
+                    <a href="#" data-model-content-url="{{ relativeUrl('badge.html') }}" title="Show badge"
                        class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
                         <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                              xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 507.9 507.9" xml:space="preserve">
@@ -242,7 +242,7 @@
                 </div>
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
-                <img class="h-[12px]" src="{{ absoluteUrl('assets/images/strava/powered-by-strava.svg') }}" alt="Powered by Strava" />
+                <img class="h-[12px]" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}" alt="Powered by Strava" />
                 <div>& ☕</div>
            </div>
         </div>
