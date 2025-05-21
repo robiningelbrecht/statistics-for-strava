@@ -210,6 +210,23 @@ NTFY_URL=''
 #PGID=
 ```
 
+### Running the Application
+To run the application run the following command:
+
+```bash
+> docker compose up
+```
+
+The docker container is now running; navigate to http://localhost:8080/ to access the app.
+
+> [!IMPORTANT]
+> Make sure to edit the .env file to include your `Strava client ID` and `Strava client Secret`
+> in the follwing fields:
+> ``` bash
+> STRAVA_CLIENT_ID=YOUR_CLIENT_ID
+> STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
+> ```
+
 ### Obtaining a Strava refresh token
 
 The first time you launch the app, you will need to obtain a `Strava refresh token`.
