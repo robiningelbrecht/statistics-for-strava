@@ -4,8 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    env(MANIFEST_APP_URL): 'http://localhost:8080/'
-    env(BASE_PATH): ''
+    env(APP_URL): 'http://localhost:8080/'
     env(SPORT_TYPES_TO_IMPORT): '[]'
     env(ACTIVITY_VISIBILITIES_TO_IMPORT): '[]'
     env(ACTIVITIES_TO_SKIP_DURING_IMPORT): '[]'
@@ -62,10 +61,6 @@ services:
         class: App\Infrastructure\CQRS\Query\Bus\InMemoryQueryBus
         arguments: [!tagged_iterator app.query_handler]
 
-    App\Infrastructure\ValueObject\String\BasePath:
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['%env(string:BASE_PATH)%']
-
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
@@ -94,6 +89,10 @@ services:
     GuzzleHttp\Client:
         class: GuzzleHttp\Client
 
+    App\Domain\App\AppUrl:
+        factory: [ null, 'fromString' ]
+        arguments: [ '%env(string:fallback:APP_URL:MANIFEST_APP_URL)%' ]
+
     App\Domain\App\ProfilePictureUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:PROFILE_PICTURE_URL)%']
@@ -101,10 +100,6 @@ services:
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:NTFY_URL)%']
-
-    App\Domain\Manifest\ManifestAppUrl:
-        factory: [ null, 'fromString' ]
-        arguments: ['%env(string:MANIFEST_APP_URL)%']
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]

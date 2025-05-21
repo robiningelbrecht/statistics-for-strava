@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Manifest\BuildManifest;
 
-use App\Domain\Manifest\ManifestAppUrl;
+use App\Domain\App\AppUrl;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -14,7 +14,7 @@ final readonly class BuildManifestCommandHandler implements CommandHandler
 {
     public function __construct(
         private AthleteRepository $athleteRepository,
-        private ManifestAppUrl $manifestAppUrl,
+        private AppUrl $manifestAppUrl,
         private FilesystemOperator $publicStorage,
     ) {
     }

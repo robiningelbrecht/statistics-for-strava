@@ -2,8 +2,8 @@
 
 namespace App\Tests\Infrastructure\Twig;
 
+use App\Domain\App\AppUrl;
 use App\Infrastructure\Twig\UrlTwigExtension;
-use App\Infrastructure\ValueObject\String\BasePath;
 use PHPUnit\Framework\TestCase;
 
 class UrlTwigExtensionTest extends TestCase
@@ -12,19 +12,19 @@ class UrlTwigExtensionTest extends TestCase
     {
         $this->assertEquals(
             '/test/path',
-            new UrlTwigExtension(null)->toRelativeUrl('test/path')
+            new UrlTwigExtension(AppUrl::fromString('http://localhost:8081'))->toRelativeUrl('test/path')
         );
         $this->assertEquals(
             '/test/path',
-            new UrlTwigExtension(null)->toRelativeUrl('/test/path')
+            new UrlTwigExtension(AppUrl::fromString('http://localhost:8081'))->toRelativeUrl('/test/path')
         );
         $this->assertEquals(
             '/base/test/path',
-            new UrlTwigExtension(BasePath::fromString('base'))->toRelativeUrl('test/path')
+            new UrlTwigExtension(AppUrl::fromString('http://localhost:8081/base/'))->toRelativeUrl('test/path')
         );
         $this->assertEquals(
             '/base/test/path',
-            new UrlTwigExtension(BasePath::fromString('/base/'))->toRelativeUrl('/test/path')
+            new UrlTwigExtension(AppUrl::fromString('http://localhost:8081/base/'))->toRelativeUrl('/test/path')
         );
     }
 }
