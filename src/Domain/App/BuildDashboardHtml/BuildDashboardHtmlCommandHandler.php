@@ -52,6 +52,9 @@ use Twig\Environment;
 
 final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 {
+    private const EMA_WARMUP_DAYS = 210;
+    private const DISPLAY_BUFFER_DAYS = 8;
+
     public function __construct(
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private ActivityPowerRepository $activityPowerRepository,
@@ -182,11 +185,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             );
         }
 
-        $intensities = [];
-        for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 8); $i >= 0; --$i) {
-            $calculateForDate = $now->modify('- '.$i.' days');
-            $intensities[$calculateForDate->format('Y-m-d')] = $this->activityIntensity->calculateForDate($calculateForDate);
-        }
+        $intensities = $this->calculateIntensitiesWithWarmup($now);
 
         $trainingMetrics = TrainingMetrics::create($intensities);
         $numberOfRestDays = $this->queryBus->ask(new FindNumberOfRestDays(DateRange::fromDates(
@@ -315,5 +314,50 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'bestPowerOutputs' => $bestPowerOutputs,
             ]),
         );
+    }
+
+    private function calculateIntensitiesWithWarmup(\DateTimeImmutable $now): array
+    {
+        $displayDays = TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + self::DISPLAY_BUFFER_DAYS;
+        
+        // Calculate all intensities including warmup period
+        $allIntensities = $this->calculateIntensitiesForPeriod(
+            $now, 
+            self::EMA_WARMUP_DAYS + $displayDays
+        );
+        
+        // Extract only the display period
+        return $this->extractDisplayPeriodIntensities($allIntensities, $now, $displayDays);
+    }
+
+    private function calculateIntensitiesForPeriod(\DateTimeImmutable $now, int $totalDays): array
+    {
+        $intensities = [];
+        
+        for ($i = $totalDays; $i >= 0; --$i) {
+            $date = $now->modify("- {$i} days");
+            $intensities[$date->format('Y-m-d')] = $this->activityIntensity->calculateForDate($date);
+        }
+        
+        return $intensities;
+    }
+
+    private function extractDisplayPeriodIntensities(
+        array $allIntensities, 
+        \DateTimeImmutable $now, 
+        int $displayDays
+    ): array {
+        $displayIntensities = [];
+        
+        for ($i = $displayDays; $i >= 0; --$i) {
+            $date = $now->modify("- {$i} days");
+            $dateKey = $date->format('Y-m-d');
+            
+            if (array_key_exists($dateKey, $allIntensities)) {
+                $displayIntensities[$dateKey] = $allIntensities[$dateKey];
+            }
+        }
+        
+        return $displayIntensities;
     }
 }
