@@ -333,11 +333,11 @@
 <script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
 
 <script type="module">
-    import LeafletMap from "/assets/leaflet/leaflet-map.js";
-    import Heatmap from "/assets/leaflet/heatmap.js";
-    import DataTable from "/assets/data-table/data-table.js";
-    import Router from "/assets/router.js";
-    import {resolveEchartsCallbacks} from "/assets/utils.js";
+    import LeafletMap from "{{ relativeUrl('/assets/leaflet/leaflet-map.js') }}";
+    import Heatmap from "{{ relativeUrl('/assets/leaflet/heatmap.js') }}";
+    import DataTable from "{{ relativeUrl('/assets/data-table/data-table.js') }}";
+    import Router from "{{ relativeUrl('/assets/router.js') }}";
+    import {resolveEchartsCallbacks} from "{{ relativeUrl('/assets/utils.js') }}";
 
     // Boot router.
     const router = Router(document.querySelector("main"));
@@ -347,7 +347,7 @@
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
         callback_error: (img) => {
-            img.setAttribute("src", "/assets/placeholder.webp");
+            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder.webp') }}");
         }
     });
 
