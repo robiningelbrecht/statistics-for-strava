@@ -30,7 +30,7 @@
             {% for sportType in sportTypes %}
                 {% set imagesForSportType = images|filter(image => image.getActivity().getSportType() == sportType) %}
                 {% set lightGalleryElements = imagesForSportType|map(image => {
-                    'src': image.getImageUrl(),
+                    'src': relativeUrl(image.getImageUrl()),
                     'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
                     'alt':  image.getActivity().getSanitizedName(),
                 })|array_values() %}
@@ -44,7 +44,7 @@
                     {% for image in imagesForSportType %}
                         <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
                             <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ image.getImageUrl() }}" alt="{{ image.getActivity().getName() }}" src="{{ renderComponent('placeholder-image') }}" />
+                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ renderComponent('placeholder-image') }}" />
                             </a>
                             <div class="p-2 text-center">
                                 <a href="{{ image.getActivity().getUrl() }}" target="_blank">
