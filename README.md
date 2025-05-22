@@ -141,7 +141,6 @@ NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT=250
 # The default schedule runs once a day at 04:05. If you do not know what cron expressions are, please leave this unchanged
 # Make sure you don't run the imports too much to avoid hitting the Strava API rate limit. Once a day should be enough.
 IMPORT_AND_BUILD_SCHEDULE="5 4 * * *"
-# Set the timezone used for the schedule
 # Valid timezones can found under TZ Identifier column here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 TZ=Etc/GMT
 
