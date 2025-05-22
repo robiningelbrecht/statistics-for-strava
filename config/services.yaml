@@ -17,6 +17,7 @@ parameters:
     env(UNIT_SYSTEM): 'metric'
     env(TIME_FORMAT): 24
     env(DATE_FORMAT): 'DAY-MONTH-YEAR'
+    env(TZ): ''
     env(PROFILE_PICTURE_URL): ''
     env(NTFY_URL): ''
     env(ZWIFT_LEVEL):
@@ -75,6 +76,10 @@ services:
             '%env(enum:App\Infrastructure\Time\Format\DateFormat:DATE_FORMAT)%',
             '%env(enum:App\Infrastructure\Time\Format\TimeFormat:TIME_FORMAT)%',
         ]
+
+    App\Infrastructure\ValueObject\Time\SerializableTimezone:
+        factory: [ null, 'fromOptionalString' ]
+        arguments: ['%env(string:TZ)%']
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
         factory: [ null, from ]

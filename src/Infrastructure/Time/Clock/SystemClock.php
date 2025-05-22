@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace App\Infrastructure\Time\Clock;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 
-class SystemClock implements Clock
+readonly class SystemClock implements Clock
 {
+    public function __construct(
+        private ?SerializableTimezone $timezone,
+    ) {
+    }
+
     public function getCurrentDateTimeImmutable(): SerializableDateTime
     {
-        return SerializableDateTime::fromString('now');
+        return new SerializableDateTime('now', $this->timezone);
     }
 }

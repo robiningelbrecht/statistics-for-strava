@@ -72,6 +72,7 @@ You'll need a `Strava client ID` and `Strava client Secret`
 
 * Navigate to your [Strava API settings page](https://www.strava.com/settings/api).
 * Copy the `client ID` and `client secret`, you'll need these during the [installation](#%EF%B8%8F-installation)
+* Make sure the `Authorization App Domain` is set to the url you will host your app on. By default this should be `http://localhost:8080`
 
 ## 🛠️ Installation 
 
@@ -140,7 +141,6 @@ NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT=250
 # The default schedule runs once a day at 04:05. If you do not know what cron expressions are, please leave this unchanged
 # Make sure you don't run the imports too much to avoid hitting the Strava API rate limit. Once a day should be enough.
 IMPORT_AND_BUILD_SCHEDULE="5 4 * * *"
-# Set the timezone used for the schedule
 # Valid timezones can found under TZ Identifier column here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 TZ=Etc/GMT
 
