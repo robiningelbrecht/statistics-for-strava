@@ -13,12 +13,12 @@ final readonly class DateAndTimeFormat
     }
 
     public static function create(
-        DateFormat $dateFormat,
-        TimeFormat $timeFormat,
+        string $dateFormat,
+        int $timeFormat,
     ): self {
         return new self(
-            dateFormat: $dateFormat,
-            timeFormat: $timeFormat
+            dateFormat: DateFormat::from($dateFormat),
+            timeFormat: TimeFormat::from($timeFormat)
         );
     }
 

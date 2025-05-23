@@ -19,6 +19,7 @@ services:
             dockerfile: docker/app/Dockerfile
         container_name: 'statistics-for-strava-app'
         volumes:
+            - ./config/app:/var/www/config/app
             - ./build:/var/www/build
             - ./storage/database:/var/www/storage/database
             - ./storage/files:/var/www/storage/files

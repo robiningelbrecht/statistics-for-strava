@@ -9,8 +9,6 @@ use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Infrastructure\ValueObject\String\Name;
-use Symfony\Component\Yaml\Exception\ParseException;
-use Symfony\Component\Yaml\Yaml;
 
 final readonly class GearMaintenanceConfig implements \Stringable
 {
@@ -25,24 +23,14 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $this->gearOptions = GearOptions::empty();
     }
 
-    public static function fromYmlString(
-        ?string $ymlContent,
+    public static function fromArray(
+        ?array $config,
     ): self {
-        if (is_null($ymlContent) || '' === trim($ymlContent)) {
+        if (empty($config)) {
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),
             );
-        }
-
-        try {
-            $config = Yaml::parse($ymlContent);
-        } catch (ParseException $e) {
-            throw new InvalidGearMaintenanceConfig($e->getMessage());
-        }
-
-        if (!is_array($config)) {
-            throw new InvalidGearMaintenanceConfig('YML expected to be an array');
         }
 
         foreach (['enabled', 'hashtagPrefix', 'components', 'gears'] as $requiredKey) {

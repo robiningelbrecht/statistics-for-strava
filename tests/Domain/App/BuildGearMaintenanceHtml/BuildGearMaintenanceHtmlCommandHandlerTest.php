@@ -78,7 +78,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            gearMaintenanceConfig: GearMaintenanceConfig::fromYmlString(''),
+            gearMaintenanceConfig: GearMaintenanceConfig::fromArray(''),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),

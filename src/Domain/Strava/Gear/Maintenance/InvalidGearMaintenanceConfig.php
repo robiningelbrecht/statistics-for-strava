@@ -9,8 +9,7 @@ final class InvalidGearMaintenanceConfig extends \RuntimeException
     public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
         $message = sprintf(
-            'storage/gear-maintenance/%s: %s',
-            GearMaintenanceConfigFileReader::CONFIG_FILE_NAME,
+            'config/app/gear-maintenance.yaml: %s',
             $message,
         );
         parent::__construct($message, $code, $previous);

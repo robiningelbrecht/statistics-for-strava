@@ -4,24 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    env(APP_URL): 'http://localhost:8080/'
-    env(SPORT_TYPES_TO_IMPORT): '[]'
-    env(ACTIVITY_VISIBILITIES_TO_IMPORT): '[]'
-    env(ACTIVITIES_TO_SKIP_DURING_IMPORT): '[]'
-    env(SKIP_ACTIVITIES_RECORDED_BEFORE): ''
-    env(NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT): 250
-    env(FTP_HISTORY):
-    env(ATHLETE_WEIGHT_HISTORY):
-    env(MAX_HEART_RATE_FORMULA): 'fox'
-    env(LOCALE): 'en_US'
-    env(UNIT_SYSTEM): 'metric'
-    env(TIME_FORMAT): 24
-    env(DATE_FORMAT): 'DAY-MONTH-YEAR'
+    env(APP_ENV): 'dev'
+    env(APP_DEBUG): 1
+    env(LOCK_DSN): 'flock'
     env(TZ): ''
-    env(PROFILE_PICTURE_URL): ''
-    env(NTFY_URL): ''
-    env(ZWIFT_LEVEL):
-    env(ZWIFT_RACING_SCORE):
+    app.gear_maintenance: []
 
 services:
     # default configuration for services in *this* file
@@ -73,8 +60,8 @@ services:
     App\Infrastructure\Time\Format\DateAndTimeFormat:
         factory: [ null, 'create' ]
         arguments: [
-            '%env(enum:App\Infrastructure\Time\Format\DateFormat:DATE_FORMAT)%',
-            '%env(enum:App\Infrastructure\Time\Format\TimeFormat:TIME_FORMAT)%',
+            '%app.config.appearance.date_format%',
+            '%app.config.appearance.time_format%',
         ]
 
     App\Infrastructure\ValueObject\Time\SerializableTimezone:
@@ -83,11 +70,11 @@ services:
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
         factory: [ null, from ]
-        arguments: [ '%env(string:UNIT_SYSTEM)%' ]
+        arguments: [ '%app.config.appearance.unit_system%' ]
 
     App\Infrastructure\Localisation\Locale:
         factory: [ null, 'from' ]
-        arguments: ['%env(string:LOCALE)%']
+        arguments: [ '%app.config.appearance.locale%' ]
 
     League\Flysystem\FilesystemOperator: '@default.storage'
 
@@ -96,69 +83,69 @@ services:
 
     App\Domain\App\AppUrl:
         factory: [ null, 'fromString' ]
-        arguments: [ '%env(string:fallback:APP_URL:MANIFEST_APP_URL)%' ]
+        arguments: [ '%app.config.general.app_url%' ]
 
     App\Domain\App\ProfilePictureUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['%env(string:PROFILE_PICTURE_URL)%']
+        arguments: [ '%app.config.general.profile_picture_url%' ]
 
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['%env(string:NTFY_URL)%']
+        arguments: ['%app.config.general.ntfy_url%']
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:STRAVA_CLIENT_ID)%']
+        arguments: ['%app.config.strava.client_id%']
 
     App\Domain\Strava\StravaClientSecret:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:STRAVA_CLIENT_SECRET)%']
+        arguments: ['%app.config.strava.client_secret%']
 
     App\Domain\Strava\StravaRefreshToken:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:STRAVA_REFRESH_TOKEN)%']
+        arguments: ['%app.config.strava.refresh_token%']
 
     App\Domain\Strava\Athlete\AthleteBirthDate:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:ATHLETE_BIRTHDAY)%']
+        arguments: ['%app.config.general.athlete.birthday%']
 
     App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
         class: App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
-        arguments: ['%env(string:MAX_HEART_RATE_FORMULA)%']
+        arguments: ['%app.config.general.athlete.max_heart_rate_formula%']
 
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
         factory: [ null, from ]
-        arguments: [ '%env(json:ACTIVITY_VISIBILITIES_TO_IMPORT)%' ]
+        arguments:  ['%app.config.import.activity_visibilities_to_import%']
 
     App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
         factory: [ null, fromInt ]
-        arguments: [ '%env(int:NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT)%' ]
+        arguments:  ['%app.config.import.number_of_new_activities_to_process_per_import%']
 
     App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport:
         factory: [ null, from ]
-        arguments: [ '%env(json:ACTIVITIES_TO_SKIP_DURING_IMPORT)%' ]
+        arguments:  ['%app.config.import.activities_to_skip_during_import%']
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
         class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
         factory: [ null, fromOptionalString ]
-        arguments: ['%env(string:SKIP_ACTIVITIES_RECORDED_BEFORE)%']
+        arguments:  ['%app.config.import.skip_activities_recorded_before%']
 
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
         factory: [ null, from ]
-        arguments: [ '%env(json:SPORT_TYPES_TO_IMPORT)%' ]
+        arguments:  ['%app.config.import.sport_types_to_import%']
 
     App\Domain\Strava\Athlete\Weight\AthleteWeightHistory:
-        factory: [ null, fromString ]
-        arguments: [ '%env(string:fallback:ATHLETE_WEIGHT_HISTORY:ATHLETE_WEIGHTS)%', '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
+        factory: [ null, fromArray ]
+        arguments: [ '%app.config.general.athlete.weight_history%', '@App\Infrastructure\ValueObject\Measurement\UnitSystem']
 
     App\Domain\Strava\Ftp\FtpHistory:
-        factory: [ null, fromString ]
-        arguments: [ '%env(string:fallback:FTP_HISTORY:FTP_VALUES)%' ]
+        factory: [ null, fromArray ]
+        arguments: [ '%app.config.general.athlete.ftp_history%' ]
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
-        factory: [ null, fromYmlString ]
-        arguments: ['@=service("App\\Domain\\Strava\\Gear\\Maintenance\\GearMaintenanceConfigFileReader").read()']
+        factory: [ null, fromArray ]
+        arguments: ['%app.gear_maintenance%']
 
     App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
         class: App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator
@@ -166,8 +153,8 @@ services:
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, fromOptionalString ]
-        arguments: [ '%env(string:ZWIFT_LEVEL)%' ]
+        arguments: [ '%app.config.zwift.level%' ]
 
     App\Domain\Zwift\ZwiftRacingScore:
         factory: [ null, fromOptionalString ]
-        arguments: [ '%env(string:ZWIFT_RACING_SCORE)%' ]
+        arguments: [ '%app.config.zwift.racing_score%']

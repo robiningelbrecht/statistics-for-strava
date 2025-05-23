@@ -31,7 +31,7 @@ class DebugGearMaintenanceConsoleCommandTest extends ConsoleCommandTestCase
         parent::setUp();
 
         $this->debugGearMaintenanceConsoleCommand = new DebugGearMaintenanceConsoleCommand(
-            GearMaintenanceConfig::fromYmlString(
+            GearMaintenanceConfig::fromArray(
                 file_get_contents(__DIR__.'/../../gear-maintenance.example.yml')
             )
         );
