@@ -64,8 +64,20 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildRewindHtml);
 
         $now = $command->getCurrentDateTime();
-        $findAvailableRewindYearsresponse = $this->queryBus->ask(new FindAvailableRewindYears($now));
-        $availableRewindYears = $findAvailableRewindYearsresponse->getAvailableRewindYears();
+        $findAvailableRewindYearsResponse = $this->queryBus->ask(new FindAvailableRewindYears($now));
+        $availableRewindYears = $findAvailableRewindYearsResponse->getAvailableRewindYears();
+
+        if (count($availableRewindYears) <= 1) {
+            // No years to compare with.
+            $this->buildStorage->write(
+                'rewind.html',
+                $this->twig->load('html/rewind/rewind-empty.html.twig')->render([
+                    'now' => $now,
+                ]),
+            );
+
+            return;
+        }
 
         $gears = $this->gearRepository->findAll();
 
@@ -288,11 +300,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     $this->twig->load('html/rewind/rewind.html.twig')->render($render),
                 );
             }
-        }
-
-        if (count($availableRewindYears) <= 1) {
-            // No years to compare with.
-            return;
         }
 
         $years = $availableRewindYears->toArray();

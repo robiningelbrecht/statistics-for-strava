@@ -4,10 +4,22 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
+use App\Domain\App\AppUrl;
+
 final readonly class UrlTwigExtension
 {
-    public function toAbsoluteUrl(string $url): string
+    public function __construct(
+        private AppUrl $appUrl,
+    ) {
+    }
+
+    public function toRelativeUrl(string $path): string
     {
-        return '/'.ltrim($url, '/');
+        $path = '/'.ltrim($path, '/');
+        if (null === $this->appUrl->getBasePath()) {
+            return $path;
+        }
+
+        return '/'.trim($this->appUrl->getBasePath(), '/').$path;
     }
 }
