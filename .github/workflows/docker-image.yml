@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create temp config.yaml
-        run: touch config/app/config.yaml
+        run: echo "{}" > config/app/config.yaml
 
       - name: Install dependencies
         run: composer install --prefer-dist
