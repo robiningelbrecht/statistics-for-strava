@@ -24,8 +24,14 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      - name: Create temp config.yaml
+        run: touch config/app/config.yaml
+
       - name: Install dependencies
         run: composer install --prefer-dist
+
+      - name: Remove temp config.yaml
+        run: rm config/app/config.yaml
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3.3.0
