@@ -32,7 +32,7 @@ class Kernel extends BaseKernel
     public function getCacheDir(): string
     {
         $fileSystem = new Filesystem();
-        $configContents = null;
+        $configContents = '';
 
         foreach ($this->getYamlFilesToProcess() as $yamlFile) {
             try {
