@@ -8,8 +8,8 @@
     <meta name="theme-color" content="#F26822">
     <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/x-icon" href="{{ absoluteUrl('assets/images/logo.svg') }}">
-    <link href="{{ asset('assets/flowbite/tailwind.min.css') }}" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-50 h-screen flex justify-center items-center">
 {{ renderComponent('top-nav-bar') }}
@@ -33,7 +33,7 @@
         <p class="text-gray-500 mb-4">You will be redirected to Strava. When you see the authorization page, click "Authorize"</p>
         <a href="http://www.strava.com/oauth/authorize?client_id={{ stravaClientId }}&response_type=code&redirect_uri={{ returnUrl }}&approval_prompt=force&scope=activity:read_all"
             class="block w-[200px]">
-            <img src="{{ asset('assets/images/strava/strava-oauth.svg') }}"  alt="Start Strava authorization flow"/>
+            <img src="{{ relativeUrl(asset('assets/images/strava/strava-oauth.svg')) }}"  alt="Start Strava authorization flow"/>
         </a>
 
     {% endif %}

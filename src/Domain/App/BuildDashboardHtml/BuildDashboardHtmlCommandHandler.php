@@ -183,7 +183,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         }
 
         $intensities = [];
-        for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 8); $i >= 0; --$i) {
+        for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 210); $i >= 0; --$i) {
             $calculateForDate = $now->modify('- '.$i.' days');
             $intensities[$calculateForDate->format('Y-m-d')] = $this->activityIntensity->calculateForDate($calculateForDate);
         }

@@ -321,6 +321,7 @@ Workout: 锻炼
 Year: 年
 'Yearly distances': 每年距离
 Yoga: 瑜伽
+'You have not recorded any activities in the previous years.': 'You have not recorded any activities in the previous years.'
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': '你的通勤减少了{amountOfCarbonSaved}的碳排放 🥳。这相当于'
 'Your Strava badge': Strava徽章

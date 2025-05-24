@@ -4,7 +4,7 @@
     <li>
         <div class="flex items-center">
             <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="{{ absoluteUrl('photos') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Photos"|trans }}</a>
+            <a href="#" data-router-navigate="{{ relativeUrl('photos') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Photos"|trans }}</a>
         </div>
     </li>
 {% endblock %}
@@ -30,7 +30,7 @@
             {% for sportType in sportTypes %}
                 {% set imagesForSportType = images|filter(image => image.getActivity().getSportType() == sportType) %}
                 {% set lightGalleryElements = imagesForSportType|map(image => {
-                    'src': image.getImageUrl(),
+                    'src': relativeUrl(image.getImageUrl()),
                     'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
                     'alt':  image.getActivity().getSanitizedName(),
                 })|array_values() %}
@@ -44,7 +44,7 @@
                     {% for image in imagesForSportType %}
                         <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
                             <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ image.getImageUrl() }}" alt="{{ image.getActivity().getName() }}" src="{{ renderComponent('placeholder-image') }}" />
+                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ renderComponent('placeholder-image') }}" />
                             </a>
                             <div class="p-2 text-center">
                                 <a href="{{ image.getActivity().getUrl() }}" target="_blank">

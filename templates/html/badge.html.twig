@@ -23,14 +23,14 @@
         <div class="grid grid-cols-1 {{ zwiftLevel ? 'md:grid-cols-2' : ''  }} gap-4">
             <div class="flex flex-col gap-y-3 items-center justify-between">
                 <div class="min-h-40 max-h-80">
-                    <img class="max-h-full" src="{{ absoluteUrl('files/strava-badge.svg') }}"  alt="{{ "Your Strava badge"|trans }}"/>
+                    <img class="max-h-full" src="{{ relativeUrl('files/strava-badge.svg') }}"  alt="{{ "Your Strava badge"|trans }}"/>
                 </div>
                 <code class="text-xs text-center">&lt;img src="https://absolute-url/files/strava-badge.svg" alt="Your Strava badge"/&gt;</code>
             </div>
             {% if zwiftLevel %}
                 <div class="flex flex-col gap-y-3 items-center justify-between">
                     <div class="min-h-40 max-h-80">
-                        <img class="max-h-full" src="{{ absoluteUrl('files/zwift-badge.svg') }}"  alt="{{ "Your Zwift badge"|trans }}"/>
+                        <img class="max-h-full" src="{{ relativeUrl('files/zwift-badge.svg') }}"  alt="{{ "Your Zwift badge"|trans }}"/>
                     </div>
                     <code class="text-xs text-center">&lt;img src="https://absolute-url/files/zwift-badge.svg" alt="Your Zwift badge"/&gt;</code>
                 </div>

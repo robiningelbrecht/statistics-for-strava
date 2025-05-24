@@ -20,6 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Copy .env file
+        run: cp .env.test .env
+
       - name: Install dependencies
         run: composer install --prefer-dist
 

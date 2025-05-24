@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Ftp;
 
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class FtpHistory
@@ -58,14 +57,11 @@ final class FtpHistory
         throw new EntityNotFound(sprintf('Ftp for date "%s" not found', $on));
     }
 
-    public static function fromString(string $values): self
+    /**
+     * @param array<string, int> $values
+     */
+    public static function fromArray(array $values): self
     {
-        try {
-            return new self(
-                Json::decode($values)
-            );
-        } catch (\JsonException) {
-            throw new \InvalidArgumentException('Invalid FTP_HISTORY detected in .env file. Make sure the string is valid JSON');
-        }
+        return new self($values);
     }
 }

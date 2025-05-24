@@ -16,8 +16,8 @@ class FormatDateAndTimeTwigExtensionTest extends TestCase
     public function testFormatDate(string $expectedFormattedDateString, SerializableDateTime $date, string $formatType, DateFormat $dateFormat): void
     {
         $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: $dateFormat,
-            timeFormat: TimeFormat::AM_PM,
+            dateFormat: $dateFormat->value,
+            timeFormat: TimeFormat::AM_PM->value,
         ));
 
         $this->assertEquals(
@@ -30,8 +30,8 @@ class FormatDateAndTimeTwigExtensionTest extends TestCase
     public function testFormatTime(string $expectedFormattedTimeString, SerializableDateTime $date, TimeFormat $timeFormat): void
     {
         $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: DateFormat::DAY_MONTH_YEAR,
-            timeFormat: $timeFormat,
+            dateFormat: DateFormat::DAY_MONTH_YEAR->value,
+            timeFormat: $timeFormat->value,
         ));
 
         $this->assertEquals(
@@ -43,8 +43,8 @@ class FormatDateAndTimeTwigExtensionTest extends TestCase
     public function testFormatDateItShouldThrow(): void
     {
         $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: DateFormat::DAY_MONTH_YEAR,
-            timeFormat: TimeFormat::AM_PM,
+            dateFormat: DateFormat::DAY_MONTH_YEAR->value,
+            timeFormat: TimeFormat::AM_PM->value,
         ));
 
         $this->expectExceptionObject(new \InvalidArgumentException('invalid'));

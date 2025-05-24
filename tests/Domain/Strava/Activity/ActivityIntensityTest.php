@@ -12,7 +12,6 @@ use App\Domain\Strava\Athlete\KeyValueBasedAthleteRepository;
 use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Domain\Strava\Ftp\FtpHistory;
 use App\Infrastructure\KeyValue\KeyValueStore;
-use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 
@@ -96,7 +95,7 @@ class ActivityIntensityTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->ftpHistory = FtpHistory::fromString(Json::encode(['2023-04-01' => 250]));
+        $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]);
         $this->athleteRepository = new KeyValueBasedAthleteRepository(
             $this->getContainer()->get(KeyValueStore::class),
             $this->getContainer()->get(MaxHeartRateFormula::class),

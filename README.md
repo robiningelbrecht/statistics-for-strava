@@ -90,9 +90,13 @@ Start off by showing some ❤️ and give this repo a star. Then from your comma
 > touch docker-compose.yml
 > nano docker-compose.yml
 
-# Create .env and copy the example contents into it. Configure as you like
+# Create .env and copy the example contents into it. Configure as you see fit
 > touch .env
 > nano .env
+
+# Create config.yaml and copy the example contents into it. Configure as you see fit
+> touch config/config.yaml
+> nano config/config.yaml
 ```
 
 ### docker-compose.yml
@@ -104,6 +108,7 @@ services:
     container_name: statistics-for-strava
     restart: unless-stopped
     volumes:
+      - ./config:/var/www/config/app
       - ./build:/var/www/build
       - ./storage/database:/var/www/storage/database
       - ./storage/files:/var/www/storage/files
@@ -119,11 +124,8 @@ services:
 > Every time you change the .env file, you need to restart your container for the changes to take effect.
 
 ```bash
-# ⚠ ️Every time you change the .env file, you need to restart your container for the changes to take effect.
+# Every time you change the .env file, you need to restart your container for the changes to take effect.
 
-# The URL on which the app will be hosted. This URL will be used in the manifest file. 
-# This will allow you to install the web app as a native app on your device.
-MANIFEST_APP_URL=http://localhost:8080/
 # The client id of your Strava app.
 STRAVA_CLIENT_ID=YOUR_CLIENT_ID
 # The client secret of your Strava app.
@@ -132,11 +134,6 @@ STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
 # Leave this unchanged for now until the app tells you otherwise.
 # Do not use the refresh token displayed on your Strava API settings page, it will not work.
 STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
-# Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
-# to make sure we don't hit the rate limit, we want to cap the number of new activities processed
-# per import. Considering there's a 1000 request per day limit and importing one new activity can
-# take up to 3 API calls, 250 should be a safe number.
-NUMBER_OF_NEW_ACTIVITIES_TO_PROCESS_PER_IMPORT=250
 # The schedule to periodically run the import and HTML builds. Leave empty to disable periodic imports.
 # The default schedule runs once a day at 04:05. If you do not know what cron expressions are, please leave this unchanged
 # Make sure you don't run the imports too much to avoid hitting the Strava API rate limit. Once a day should be enough.
@@ -144,70 +141,85 @@ IMPORT_AND_BUILD_SCHEDULE="5 4 * * *"
 # Valid timezones can found under TZ Identifier column here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 TZ=Etc/GMT
 
-# Allowed options: en_US, fr_FR, nl_BE, de_DE, pt_BR, pt_PT or zh_CN
-LOCALE=en_US
-# Allowed options: metric or imperial
-UNIT_SYSTEM=metric
-# Time format to use when rendering the app
-# Allowed formats: 24 or 12 (includes AM and PM)
-TIME_FORMAT=24
-# Date format to use when rendering the app
-# Allowed formats: DAY-MONTH-YEAR or MONTH-DAY-YEAR
-DATE_FORMAT=DAY-MONTH-YEAR
-# Sport types to import. Leave empty to import all sport types
-# With this list you can also decide the order the sport types will be rendered in.
-# A full list of allowed options is available on https://github.com/robiningelbrecht/statistics-for-strava/wiki/Supported-sport-types/
-SPORT_TYPES_TO_IMPORT='[]'
-# Activity visibilities to import. Leave empty to import all visibilities
-# This list can be combined with SPORT_TYPES_TO_IMPORT.
-# Allowed values: ACTIVITY_VISIBILITIES_TO_IMPORT='["everyone", "followers_only", "only_me"]', 
-ACTIVITY_VISIBILITIES_TO_IMPORT='[]'
-# Optional, the date (YYYY-MM-DD) from which you want to start importing activities. 
-# Any activity recorded before this date, will not be imported.
-# This can be used if you want to skip the import of older activities. Leave empty to disable.
-SKIP_ACTIVITIES_RECORDED_BEFORE=''
-# An array of activity ids to skip during import. 
-# This allows you to skip specific activities during import.
-# ACTIVITIES_TO_SKIP_DURING_IMPORT='["123456789", "987654321"]'
-ACTIVITIES_TO_SKIP_DURING_IMPORT='[]'
-# Your birthday. Needed to calculate heart rate zones.
-ATHLETE_BIRTHDAY=YYYY-MM-DD
-# History of weight (in kg or pounds, depending on UNIT_SYSTEM). Needed to calculate relative w/kg.
-# Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info.
-ATHLETE_WEIGHT_HISTORY='{
-    "YYYY-MM-DD": 100,
-    "YYYY-MM-DD": 200
-}'
-# The formula used to calculate your max heart rate. The default is Fox (220 - age).
-# Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
-# Or you can set a fixed number for any given date range.  
-MAX_HEART_RATE_FORMULA='fox'
-# MAX_HEART_RATE_FORMULA='{
-#    "2020-01-01": 198,
-#    "2025-01-10": 193
-# }'
-# Optional, history of FTP. Needed to calculate activity stress level.
-# Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info. Example:
-# FTP_HISTORY='{
-#    "2024-10-03": 198,
-#    "2025-01-10": 220
-#}'
-FTP_HISTORY='[]'
-# Optional, a link to your profile picture. Will be used to display in the nav bar and link to your Strava profile.
-# Leave empty to disable this feature.
-PROFILE_PICTURE_URL=''
-# Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
-ZWIFT_LEVEL=
-# Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if ZWIFT_LEVEL is filled out.
-ZWIFT_RACING_SCORE=
-# Optional, full URL with ntfy topic included. This topic will be used to notify you when a new HTML build has run.
-# Leave empty to disable notifications.
-NTFY_URL=''
-
 # The UID and GID to create/own files managed by statistics-for-strava
 # May only be necessary on Linux hosts, see File Permissions in Wiki
 #PUID=
 #PGID=
+```
+
+### config.yaml
+
+```yaml
+general:
+  # The URL on which the app will be hosted. This URL will be used in the manifest file. 
+  # This will allow you to install the web app as a native app on your device.
+  app_url: 'http://localhost:8080/'
+  # Optional, a link to your profile picture. Will be used to display in the nav bar and link to your Strava profile.
+  # Leave empty to disable this feature.
+  profile_picture_url: null
+  # Optional, full URL with ntfy topic included. This topic will be used to notify you when a new HTML build has run.
+  # Leave empty to disable notifications.
+  ntfy_url: null
+  athlete:
+    # Your birthday. Needed to calculate heart rate zones.
+    birthday: 'YYYY-MM-DD'
+    # The formula used to calculate your max heart rate. The default is Fox (220 - age).
+    # Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
+    # Or you can set a fixed number for any given date range.  
+    max_heart_rate_formula: 'fox'
+    # max_heart_rate_formula:
+    #    "2020-01-01": 198
+    #    "2025-01-10": 193
+    # History of weight (in kg or pounds, depending on UNIT_SYSTEM). Needed to calculate relative w/kg.
+    # Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info.
+    weight_history:
+      "YYYY-MM-DD": 100
+      "YYYY-MM-DD": 200
+    # Optional, history of FTP. Needed to calculate activity stress level.
+    # Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info. Example:
+    # ftp_history
+    #    "2024-10-03": 198
+    #    "2025-01-10": 220
+    #
+    ftp_history: []
+appearance:
+  # Allowed options: en_US, fr_FR, nl_BE, de_DE, pt_BR, pt_PT or zh_CN
+  locale: 'en_US'
+  # Allowed options: metric or imperial
+  unit_system: 'metric'
+  # Time format to use when rendering the app
+  # Allowed formats: 24 or 12 (includes AM and PM)
+  time_format: 24
+  # Date format to use when rendering the app
+  # Allowed formats: DAY-MONTH-YEAR or MONTH-DAY-YEAR
+  date_format: 'DAY-MONTH-YEAR'
+import:
+  # Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
+  # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
+  # per import. Considering there's a 1000 request per day limit and importing one new activity can
+  # take up to 3 API calls, 250 should be a safe number.
+  number_of_new_activities_to_process_per_import: 250
+  # Sport types to import. Leave empty to import all sport types
+  # With this list you can also decide the order the sport types will be rendered in.
+  # A full list of allowed options is available on https://github.com/robiningelbrecht/statistics-for-strava/wiki/Supported-sport-types/
+  sport_types_to_import: []
+  # Activity visibilities to import. Leave empty to import all visibilities
+  # This list can be combined with SPORT_TYPES_TO_IMPORT.
+  # Allowed values: ["everyone", "followers_only", "only_me"]
+  activity_visibilities_to_import: []
+  # Optional, the date (YYYY-MM-DD) from which you want to start importing activities. 
+  # Any activity recorded before this date, will not be imported.
+  # This can be used if you want to skip the import of older activities. Leave empty to disable.
+  skip_activities_recorded_before: null
+  # An array of activity ids to skip during import. 
+  # This allows you to skip specific activities during import.
+  # ["123456789", "987654321"]
+  activities_to_skip_during_import: []
+zwift:
+  # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
+  level: null
+  # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if ZWIFT_LEVEL is filled out.
+  racing_score: null
 ```
 
 ### Running the Application
@@ -285,7 +297,7 @@ Run the following commands to setup the project on your local machine
 
 ```bash
 > git clone git@github.com:your-name/your-fork.git
-> make composer arg="install"
+> make composer arg="install --no-scripts"
 > make up
 ```
 
