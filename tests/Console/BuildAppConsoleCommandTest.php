@@ -9,7 +9,6 @@ use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
-use App\Infrastructure\DependencyInjection\YamlConfigFiles;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
@@ -136,9 +135,8 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
             stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             resourceUsage: new FixedResourceUsage(),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
-            yamlConfigFiles: $this->getContainer()->get(YamlConfigFiles::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
-            logger: $this->logger,
+            logger: $this->logger
         );
     }
 

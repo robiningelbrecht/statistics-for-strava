@@ -5,7 +5,6 @@ namespace App\Tests\Console;
 use App\Console\ImportStravaDataConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
-use App\Infrastructure\DependencyInjection\YamlConfigFiles;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -95,7 +94,6 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             $this->commandBus,
             new UnwritablePermissionChecker(),
             $this->migrationRunner,
-            $this->getContainer()->get(YamlConfigFiles::class),
             $this->resourceUsage,
             $this->connection,
             $this->logger
@@ -136,7 +134,6 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             $this->commandBus = $this->createMock(CommandBus::class),
             new SuccessfulPermissionChecker(),
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
-            $this->getContainer()->get(YamlConfigFiles::class),
             $this->resourceUsage = new FixedResourceUsage(),
             $this->connection = $this->createMock(Connection::class),
             $this->logger = $this->createMock(LoggerInterface::class),

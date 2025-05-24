@@ -1,9 +1,9 @@
 {
-    "app.config.nesting": [
+    "prefix.nesting": [
         "value"
     ],
-    "app.config.nesting.0": "value",
-    "app.gear_maintenance": {
+    "prefix.nesting.0": "value",
+    "prefix": {
         "no-nesting": [
             "value"
         ]

@@ -12,13 +12,18 @@ use Symfony\Component\Yaml\Yaml;
 final readonly class RegisterYamlConfig implements CompilerPassInterface
 {
     public function __construct(
-        private YamlConfigFiles $yamlFilesToProcess,
+        /** @var YamlConfigFile[] */
+        private array $yamlFilesToProcess,
     ) {
     }
 
     public function process(ContainerBuilder $container): void
     {
-        foreach ($this->yamlFilesToProcess->getFiles() as $yamlFile) {
+        foreach ($this->yamlFilesToProcess as $yamlFile) {
+            if ($yamlFile->isRequired() && !file_exists($yamlFile->getFilePath())) {
+                throw CouldNotParseYamlConfig::configFileNotFound();
+            }
+
             if (!file_exists($yamlFile->getFilePath())) {
                 continue;
             }
