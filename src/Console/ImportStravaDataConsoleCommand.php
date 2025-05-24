@@ -13,6 +13,7 @@ use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
 use App\Domain\Strava\Gear\ImportGear\ImportGear;
 use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\DependencyInjection\YamlConfigFiles;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
@@ -35,6 +36,7 @@ final class ImportStravaDataConsoleCommand extends Command
         private readonly CommandBus $commandBus,
         private readonly PermissionChecker $fileSystemPermissionChecker,
         private readonly MigrationRunner $migrationRunner,
+        private readonly YamlConfigFiles $yamlConfigFiles,
         private readonly ResourceUsage $resourceUsage,
         private readonly Connection $connection,
         private readonly LoggerInterface $logger,
@@ -45,6 +47,8 @@ final class ImportStravaDataConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new LoggableConsoleOutput($output, $this->logger);
+
+        $this->yamlConfigFiles->ensureYamlFilesExist();
 
         try {
             $this->fileSystemPermissionChecker->ensureWriteAccess();

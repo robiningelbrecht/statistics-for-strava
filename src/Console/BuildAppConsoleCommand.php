@@ -21,6 +21,7 @@ use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Manifest\BuildManifest\BuildManifest;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\DependencyInjection\YamlConfigFiles;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;
@@ -41,6 +42,7 @@ final class BuildAppConsoleCommand extends Command
         private readonly StravaDataImportStatus $stravaDataImportStatus,
         private readonly ResourceUsage $resourceUsage,
         private readonly MigrationRunner $migrationRunner,
+        private readonly YamlConfigFiles $yamlConfigFiles,
         private readonly Clock $clock,
         private readonly LoggerInterface $logger,
     ) {
@@ -50,6 +52,8 @@ final class BuildAppConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new LoggableConsoleOutput($output, $this->logger);
+
+        $this->yamlConfigFiles->ensureYamlFilesExist();
 
         if (!$this->migrationRunner->isAtLatestVersion()) {
             $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');

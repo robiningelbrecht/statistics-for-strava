@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Infrastructure\DependencyInjection\RegisterYamlConfig;
-use App\Infrastructure\DependencyInjection\YamlConfigFile;
+use App\Infrastructure\DependencyInjection\YamlConfigFiles;
+use App\Infrastructure\ValueObject\String\KernelProjectDir;
+use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -34,7 +36,7 @@ class Kernel extends BaseKernel
         $fileSystem = new Filesystem();
         $configContents = '';
 
-        foreach ($this->getYamlFilesToProcess() as $yamlFile) {
+        foreach ($this->getYamlFilesToProcess()->getFiles() as $yamlFile) {
             try {
                 $configContents .= $fileSystem->readFile($yamlFile->getFilePath());
             } catch (IOException) {
@@ -45,27 +47,11 @@ class Kernel extends BaseKernel
         return parent::getCacheDir().'/'.sha1($configContents);
     }
 
-    /**
-     * @return YamlConfigFile[]
-     */
-    private function getYamlFilesToProcess(): array
+    private function getYamlFilesToProcess(): YamlConfigFiles
     {
-        $basePath = $this->getProjectDir().'/config/app/';
-        $isTest = 'test' === $this->getEnvironment();
-
-        return [
-            new YamlConfigFile(
-                filePath: $basePath.($isTest ? 'config_test.yaml' : 'config.yaml'),
-                isRequired: true,
-                needsNestedProcessing: true,
-                prefix: 'app.config',
-            ),
-            new YamlConfigFile(
-                filePath: $basePath.($isTest ? 'gear-maintenance_test.yaml' : 'gear-maintenance.yaml'),
-                isRequired: false,
-                needsNestedProcessing: false,
-                prefix: 'app.gear_maintenance',
-            ),
-        ];
+        return new YamlConfigFiles(
+            kernelProjectDir: KernelProjectDir::fromString($this->getProjectDir()),
+            platformEnvironment: PlatformEnvironment::from($this->getEnvironment())
+        );
     }
 }
