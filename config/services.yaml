@@ -91,6 +91,22 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=service("app.config").get("general.profile_picture_url")']
 
+    ollamaUrl:
+        class: App\Infrastructure\ValueObject\String\Url
+        factory: [ null, 'fromOptionalString' ]
+        arguments: ['%env(string:OLLAMA_URL)%']
+
+    App\Domain\Integration\AI\Ollama\OllamaConfig:
+        factory: [ null, 'create' ]
+        arguments: ['%env(OLLAMA_MODEL)%', '@ollamaUrl']
+
+    App\Domain\Integration\AI\NeuronAiAgent:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@App\Domain\Integration\AI\Ollama\OllamaConfig',
+            '@Inspector\Inspector',
+        ]
+
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=service("app.config").get("general.ntfy_url")']
@@ -129,13 +145,11 @@ services:
         arguments: ['@=service("app.config").get("import.activities_to_skip_during_import")']
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
-        class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
         factory: [ null, fromOptionalString ]
         arguments: ['@=service("app.config").get("import.skip_activities_recorded_before")']
 
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
         factory: [ null, from ]
-
         arguments: ['@=service("app.config").get("import.sport_types_to_import")']
 
     App\Domain\Strava\Athlete\Weight\AthleteWeightHistory:

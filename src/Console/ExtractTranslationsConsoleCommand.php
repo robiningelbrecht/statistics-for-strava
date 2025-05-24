@@ -25,6 +25,7 @@ class ExtractTranslationsConsoleCommand extends Command
                     '--prefix=',
                     '--format=yaml',
                     '--sort=ASC',
+                    '--domain=messages',
                     $locale->value,
                 ],
                 timeout: null
