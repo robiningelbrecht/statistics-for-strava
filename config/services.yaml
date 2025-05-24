@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     env(APP_ENV): 'dev'
-    env(APP_DEBUG): 1
+    env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
     app.gear_maintenance: []
