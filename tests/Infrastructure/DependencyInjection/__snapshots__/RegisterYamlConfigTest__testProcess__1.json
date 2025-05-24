@@ -1,0 +1,11 @@
+{
+    "prefix.nesting": [
+        "value"
+    ],
+    "prefix.nesting.0": "value",
+    "prefix": {
+        "no-nesting": [
+            "value"
+        ]
+    }
+}
