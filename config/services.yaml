@@ -8,7 +8,6 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
-    app.gear_maintenance: []
 
 services:
     # default configuration for services in *this* file

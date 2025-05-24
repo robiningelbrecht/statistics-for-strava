@@ -48,6 +48,7 @@ final class AppConfig
             }
 
             if (!file_exists($yamlFile->getFilePath())) {
+                $this->config[$yamlFile->getPrefix()] = null;
                 continue;
             }
 
