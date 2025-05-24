@@ -126,6 +126,14 @@ services:
 ```bash
 # Every time you change the .env file, you need to restart your container for the changes to take effect.
 
+# The client id of your Strava app.
+STRAVA_CLIENT_ID=YOUR_CLIENT_ID
+# The client secret of your Strava app.
+STRAVA_CLIENT_SECRET=YOUR_CLIENT_SECRET
+# You will need to obtain this token the first time you launch the app. 
+# Leave this unchanged for now until the app tells you otherwise.
+# Do not use the refresh token displayed on your Strava API settings page, it will not work.
+STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
 # The schedule to periodically run the import and HTML builds. Leave empty to disable periodic imports.
 # The default schedule runs once a day at 04:05. If you do not know what cron expressions are, please leave this unchanged
 # Make sure you don't run the imports too much to avoid hitting the Strava API rate limit. Once a day should be enough.
@@ -142,15 +150,6 @@ TZ=Etc/GMT
 ### config.yml
 
 ```yaml
-strava:
-  # The client id of your Strava app.
-  client_id: 'replace-me'
-  # The client secret of your Strava app.
-  client_secret: 'replace-me'
-  # You will need to obtain this token the first time you launch the app. 
-  # Leave this unchanged for now until the app tells you otherwise.
-  # Do not use the refresh token displayed on your Strava API settings page, it will not work.
-  refresh_token: 'replace-me'
 general:
   # The URL on which the app will be hosted. This URL will be used in the manifest file. 
   # This will allow you to install the web app as a native app on your device.

@@ -95,15 +95,15 @@ services:
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
-        arguments: ['%app.config.strava.client_id%']
+        arguments: ['%env(string:STRAVA_CLIENT_ID)%']
 
     App\Domain\Strava\StravaClientSecret:
         factory: [ null, 'fromString' ]
-        arguments: ['%app.config.strava.client_secret%']
+        arguments: ['%env(string:STRAVA_CLIENT_SECRET)%']
 
     App\Domain\Strava\StravaRefreshToken:
         factory: [ null, 'fromString' ]
-        arguments: ['%app.config.strava.refresh_token%']
+        arguments: ['%env(string:STRAVA_REFRESH_TOKEN)%']
 
     App\Domain\Strava\Athlete\AthleteBirthDate:
         factory: [ null, 'fromString' ]
