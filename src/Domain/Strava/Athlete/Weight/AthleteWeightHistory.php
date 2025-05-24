@@ -57,6 +57,9 @@ final class AthleteWeightHistory
         throw new EntityNotFound(sprintf('AthleteWeight for date "%s" not found', $on));
     }
 
+    /**
+     * @param array<string, float> $values
+     */
     public static function fromArray(array $values, UnitSystem $unitSystem): self
     {
         return new self(

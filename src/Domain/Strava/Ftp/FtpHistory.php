@@ -57,6 +57,9 @@ final class FtpHistory
         throw new EntityNotFound(sprintf('Ftp for date "%s" not found', $on));
     }
 
+    /**
+     * @param array<string, int> $values
+     */
     public static function fromArray(array $values): self
     {
         return new self($values);

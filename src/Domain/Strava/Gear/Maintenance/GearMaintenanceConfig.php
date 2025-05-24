@@ -23,6 +23,9 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $this->gearOptions = GearOptions::empty();
     }
 
+    /**
+     * @param array<string, mixed>|null $config
+     */
     public static function fromArray(
         ?array $config,
     ): self {

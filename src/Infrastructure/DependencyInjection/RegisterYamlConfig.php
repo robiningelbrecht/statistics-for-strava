@@ -41,6 +41,9 @@ final readonly class RegisterYamlConfig implements CompilerPassInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $ymlConfig
+     */
     private function processYamlConfig(ContainerBuilder $container, array $ymlConfig, string $prefix, bool $needsNestedProcessing): void
     {
         if (!$needsNestedProcessing) {
