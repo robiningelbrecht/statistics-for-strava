@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\DependencyInjection;
+namespace App\Domain\App\Config;
 
 final readonly class YamlConfigFile
 {
@@ -10,7 +10,7 @@ final readonly class YamlConfigFile
         private string $filePath,
         private bool $isRequired,
         private bool $needsNestedProcessing,
-        private string $prefix,
+        private ?string $prefix,
     ) {
     }
 
@@ -29,7 +29,7 @@ final readonly class YamlConfigFile
         return $this->needsNestedProcessing;
     }
 
-    public function getPrefix(): string
+    public function getPrefix(): ?string
     {
         return $this->prefix;
     }

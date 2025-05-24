@@ -94,9 +94,9 @@ Start off by showing some ❤️ and give this repo a star. Then from your comma
 > touch .env
 > nano .env
 
-# Create config.yml and copy the example contents into it. Configure as you see fit
-> touch config/config.yml
-> nano config/config.yml
+# Create config.yaml and copy the example contents into it. Configure as you see fit
+> touch config/config.yaml
+> nano config/config.yaml
 ```
 
 ### docker-compose.yml
@@ -147,7 +147,7 @@ TZ=Etc/GMT
 #PGID=
 ```
 
-### config.yml
+### config.yaml
 
 ```yaml
 general:
@@ -178,7 +178,7 @@ general:
     # Optional, history of FTP. Needed to calculate activity stress level.
     # Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info. Example:
     # ftp_history
-    #    "2024-10-03": 198,
+    #    "2024-10-03": 198
     #    "2025-01-10": 220
     #
     ftp_history: []
