@@ -29,6 +29,18 @@ class AppConfigTest extends TestCase
         );
     }
 
+    public function testGetWithDefaultValue(): void
+    {
+        $default = [];
+        $this->assertEquals(
+            $default,
+            new AppConfig(
+                kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
+                platformEnvironment: PlatformEnvironment::DEV
+            )->get('non.existent.key', $default)
+        );
+    }
+
     public function testItThrowsExceptionWhenConfigFileNotFound(): void
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());

@@ -48,7 +48,6 @@ final class AppConfig
             }
 
             if (!file_exists($yamlFile->getFilePath())) {
-                $this->config[$yamlFile->getPrefix()] = null;
                 continue;
             }
 
@@ -98,9 +97,13 @@ final class AppConfig
     /**
      * @return string|int|float|array<string,mixed>|null
      */
-    public function get(string $key): string|int|float|array|null
+    public function get(string $key, mixed $default = null): string|int|float|array|null
     {
         if (!array_key_exists($key, $this->config)) {
+            if (null !== $default) {
+                return $default;
+            }
+
             throw new \RuntimeException(sprintf('Unknown configuration key "%s"', $key));
         }
 

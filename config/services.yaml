@@ -151,7 +151,7 @@ services:
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, fromArray ]
-        arguments: ['@=service("app.config").get("gear_maintenance")']
+        arguments: ['@=service("app.config").get("gear_maintenance", [])']
 
     App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
         class: App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator
