@@ -34,6 +34,7 @@ Statistics for Strava
 |                           |         }                                                  |
 |                           |     }                                                      |
 |                           | }                                                          |
++---------------------------+------------------------------------------------------------+
 | APP_CONFIG_IMPORT         | {                                                          |
 |                           |     "number_of_new_activities_to_process_per_import": 250, |
 |                           |     "sport_types_to_import": [],                           |
@@ -43,12 +44,14 @@ Statistics for Strava
 |                           |         "skip"                                             |
 |                           |     ]                                                      |
 |                           | }                                                          |
++---------------------------+------------------------------------------------------------+
 | APP_CONFIG_APPEARANCE     | {                                                          |
 |                           |     "locale": "en_US",                                     |
 |                           |     "unit_system": "metric",                               |
 |                           |     "time_format": 24,                                     |
 |                           |     "date_format": "DAY-MONTH-YEAR"                        |
 |                           | }                                                          |
++---------------------------+------------------------------------------------------------+
 | APP_CONFIG_ZWIFT          | {                                                          |
 |                           |     "level": 80,                                           |
 |                           |     "racing_score": 495                                    |

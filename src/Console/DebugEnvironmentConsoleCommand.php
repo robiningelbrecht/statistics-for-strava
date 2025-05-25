@@ -43,8 +43,11 @@ final class DebugEnvironmentConsoleCommand extends Command
                 ['TZ', getenv('TZ')],
                 new TableSeparator(),
                 ['APP_CONFIG_GENERAL', Json::encodePretty($this->appConfig->get('general'))],
+                new TableSeparator(),
                 ['APP_CONFIG_IMPORT', Json::encodePretty($this->appConfig->get('import'))],
+                new TableSeparator(),
                 ['APP_CONFIG_APPEARANCE', Json::encodePretty($this->appConfig->get('appearance'))],
+                new TableSeparator(),
                 ['APP_CONFIG_ZWIFT', Json::encodePretty($this->appConfig->get('zwift'))],
             ]);
         $table->render();
