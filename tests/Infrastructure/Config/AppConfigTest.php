@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Domain\App\Config;
+namespace App\Tests\Infrastructure\Config;
 
-use App\Domain\App\Config\AppConfig;
-use App\Domain\App\Config\CouldNotParseYamlConfig;
+use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\Config\CouldNotParseYamlConfig;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use PHPUnit\Framework\Attributes\DataProvider;

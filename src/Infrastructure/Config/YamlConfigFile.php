@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\Config;
+namespace App\Infrastructure\Config;
 
 final readonly class YamlConfigFile
 {

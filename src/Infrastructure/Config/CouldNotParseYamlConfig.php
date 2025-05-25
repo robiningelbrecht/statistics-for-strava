@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\Config;
+namespace App\Infrastructure\Config;
 
 final class CouldNotParseYamlConfig extends \RuntimeException
 {
