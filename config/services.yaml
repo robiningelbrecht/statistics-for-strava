@@ -81,7 +81,7 @@ services:
         class: GuzzleHttp\Client
 
     app.config:
-        public: true
+        public: true # We need to access this service from the container in expressions
         class: App\Infrastructure\Config\AppConfig
 
     App\Domain\App\AppUrl:
