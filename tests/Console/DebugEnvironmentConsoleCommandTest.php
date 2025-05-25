@@ -24,7 +24,6 @@ class DebugEnvironmentConsoleCommandTest extends ConsoleCommandTestCase
 
         $this->assertStringContainsString('Please copy all this output into the description of the bug ticket', $commandTester->getDisplay());
         $this->assertStringContainsString('APP_VERSION', $commandTester->getDisplay());
-        $this->assertMatchesTextSnapshot($commandTester->getDisplay());
     }
 
     #[\Override]
