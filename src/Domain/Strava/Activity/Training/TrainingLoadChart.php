@@ -30,6 +30,8 @@ final readonly class TrainingLoadChart
         );
     }
 
+
+
     /**
      * @return array<string, mixed>
      */
@@ -48,6 +50,176 @@ final readonly class TrainingLoadChart
             $formattedDates[] = SerializableDateTime::fromDateTimeImmutable($date)->translatedFormat('M d');
         }
         $tsbValues = $this->trainingMetrics->getTsbValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY);
+
+        return [
+            'tooltip' => [
+                'trigger' => 'axis',
+                'axisPointer' => [
+                    'link' => [['xAxisIndex' => 'all']],
+                    'label' => ['backgroundColor' => '#6a7985'],
+                ],
+            ],
+            'legend' => [
+                'show' => true,
+            ],
+            'axisPointer' => [
+                'link' => ['xAxisIndex' => 'all'],
+            ],
+            'visualMap' => [
+                'type' => 'piecewise',
+                'show' => false,
+                'dimension' => 1, // Map by y-axis value
+                'seriesIndex' => 2, // Apply to TSB series (index 2)
+                'pieces' => [
+                    ['lt' => -30, 'color' => '#FF0000'], // Red: < -30
+                    ['gte' => -30, 'lt' => -10, 'color' => '#00AA00'], // Green: -30 to -10
+                    ['gte' => -10, 'lt' => 5, 'color' => '#888888'], // Grey: -10 to 5
+                    ['gte' => 5, 'lt' => 15, 'color' => '#0066CC'], // Blue: 5 to 15
+                    ['gte' => 15, 'color' => '#FFAA00'], // Yellow: > 15
+                ],
+            ],
+            'grid' => [
+                [
+                    'left' => '50px',
+                    'right' => '50px',
+                    'top' => '40px',
+                    'height' => '63%',
+                    'containLabel' => false,
+                ],
+                [
+                    'left' => '50px',
+                    'right' => '50px',
+                    'top' => '75%',
+                    'height' => '20%',
+                    'bottom' => '0px',
+                    'containLabel' => false,
+                ],
+            ],
+            'xAxis' => [
+                [
+                    'type' => 'category',
+                    'gridIndex' => 0,
+                    'data' => $formattedDates,
+                    'boundaryGap' => true,
+                    'axisLine' => ['onZero' => false],
+                    'axisLabel' => ['show' => false],
+                    'axisTick' => ['show' => false],
+                ],
+                [
+                    'type' => 'category',
+                    'gridIndex' => 1,
+                    'data' => $formattedDates,
+                    'boundaryGap' => true,
+                    'position' => 'bottom',
+                    'axisLabel' => ['show' => true],
+                    'axisTick' => ['show' => true],
+                ],
+            ],
+            'yAxis' => [
+                [
+                    'type' => 'value',
+                    'name' => $this->translator->trans('Daily TRIMP'),
+                    'nameLocation' => 'middle',
+                    'nameGap' => 35,
+                    'gridIndex' => 1,
+                    'position' => 'left',
+                    'splitLine' => ['show' => true],
+                    'axisLine' => ['show' => true, 'lineStyle' => ['color' => '#cccccc']],
+                    'minInterval' => 1,
+                    'axisLabel',
+                ],
+                [
+                    'type' => 'value',
+                    'name' => $this->translator->trans('Load (CTL/ATL)'),
+                    'nameLocation' => 'middle',
+                    'nameGap' => 35,
+                    'gridIndex' => 0,
+                    'position' => 'left',
+                    'alignTicks' => true,
+                    'axisLine' => ['show' => true, 'lineStyle' => ['color' => '#cccccc']],
+                    'axisLabel' => ['formatter' => 'toInteger'],
+                    'splitLine' => ['show' => true],
+                    'minInterval' => 1,
+                ],
+                [
+                    'type' => 'value',
+                    'name' => $this->translator->trans('Form (TSB)'),
+                    'nameLocation' => 'middle',
+                    'nameGap' => 35,
+                    'gridIndex' => 0,
+                    'position' => 'right',
+                    'alignTicks' => true,
+                    'max' => (int) ceil(max(25, ...$tsbValues)),
+                    'min' => (int) floor(min(-35, ...$tsbValues)),
+                    'minInterval' => 1,
+                    'axisLine' => ['show' => true, 'lineStyle' => ['color' => '#cccccc']],
+                    'axisLabel' => ['formatter' => 'toInteger'],
+                    'splitLine' => ['show' => false],
+                ],
+            ],
+            'series' => [
+                [
+                    'name' => $this->translator->trans('CTL (Fitness)'),
+                    'type' => 'line',
+                    'data' => $this->trainingMetrics->getCtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
+                    'smooth' => true,
+                    'symbol' => 'none',
+                    'xAxisIndex' => 0,
+                    'yAxisIndex' => 1,
+                    'lineStyle' => ['color' => '#4682B4'],
+                ],
+                [
+                    'name' => $this->translator->trans('ATL (Fatigue)'),
+                    'type' => 'line',
+                    'data' => $this->trainingMetrics->getAtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
+                    'smooth' => true,
+                    'symbol' => 'none',
+                    'xAxisIndex' => 0,
+                    'yAxisIndex' => 1,
+                    'lineStyle' => ['color' => '#FF4500'], // Orange red
+                ],
+                [
+                    'name' => $this->translator->trans('TSB (Form)'),
+                    'type' => 'line',
+                    'data' => $tsbValues,
+                    'smooth' => true,
+                    'symbol' => 'none',
+                    'xAxisIndex' => 0,
+                    'yAxisIndex' => 2,
+                    'markLine' => [
+                        'silent' => true,
+                        'lineStyle' => ['color' => '#333', 'type' => 'dashed'],
+                        'label' => [
+                            'position' => 'insideEndTop',
+                        ],
+                        'data' => [
+                            [
+                                'yAxis' => 15,
+                                'label' => ['formatter' => $this->translator->trans('Taper sweet-spot (+15)')],
+                            ],
+                            [
+                                'yAxis' => -10,
+                                'label' => ['formatter' => $this->translator->trans('Build zone (–10)')],
+                            ],
+                            [
+                                'yAxis' => -30,
+                                'label' => ['formatter' => $this->translator->trans('Over-fatigued (–30)')],
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'name' => $this->translator->trans('Daily TRIMP'),
+                    'type' => 'bar',
+                    'data' => $this->trainingMetrics->getTrimpValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
+                    'itemStyle' => ['color' => '#FC4C02'],
+                    'barWidth' => '60%',
+                    'xAxisIndex' => 1,
+                    'yAxisIndex' => 0,
+                    'emphasis' => ['itemStyle' => ['opacity' => 0.8]],
+                ],
+            ],
+        ];
 
         return [
             'tooltip' => [
@@ -142,66 +314,7 @@ final readonly class TrainingLoadChart
                     'splitLine' => ['show' => false],
                 ],
             ],
-            'series' => [
-                [
-                    'name' => $this->translator->trans('CTL (Fitness)'),
-                    'type' => 'line',
-                    'data' => $this->trainingMetrics->getCtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
-                    'smooth' => true,
-                    'symbol' => 'none',
-                    'xAxisIndex' => 0,
-                    'yAxisIndex' => 1,
-                ],
-                [
-                    'name' => $this->translator->trans('ATL (Fatigue)'),
-                    'type' => 'line',
-                    'data' => $this->trainingMetrics->getAtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
-                    'smooth' => true,
-                    'symbol' => 'none',
-                    'xAxisIndex' => 0,
-                    'yAxisIndex' => 1,
-                ],
-                [
-                    'name' => $this->translator->trans('TSB (Form)'),
-                    'type' => 'line',
-                    'data' => $tsbValues,
-                    'smooth' => true,
-                    'symbol' => 'none',
-                    'xAxisIndex' => 0,
-                    'yAxisIndex' => 2,
-                    'markLine' => [
-                        'silent' => true,
-                        'lineStyle' => ['color' => '#333', 'type' => 'dashed'],
-                        'label' => [
-                            'position' => 'insideEndTop',
-                        ],
-                        'data' => [
-                            [
-                                'yAxis' => 15,
-                                'label' => ['formatter' => $this->translator->trans('Taper sweet-spot (+15)')],
-                            ],
-                            [
-                                'yAxis' => -10,
-                                'label' => ['formatter' => $this->translator->trans('Build zone (–10)')],
-                            ],
-                            [
-                                'yAxis' => -30,
-                                'label' => ['formatter' => $this->translator->trans('Over-fatigued (–30)')],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'name' => $this->translator->trans('Daily TRIMP'),
-                    'type' => 'bar',
-                    'data' => $this->trainingMetrics->getTrimpValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
-                    'itemStyle' => ['color' => '#FC4C02'],
-                    'barWidth' => '60%',
-                    'xAxisIndex' => 1,
-                    'yAxisIndex' => 0,
-                    'emphasis' => ['itemStyle' => ['opacity' => 0.8]],
-                ],
-            ],
+            'series' => $allSeries,
         ];
     }
 }
