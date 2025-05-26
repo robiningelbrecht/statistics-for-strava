@@ -51,23 +51,19 @@ final readonly class CombinedStreamProfileChart
         if (empty($this->yAxisData)) {
             throw new \RuntimeException('yAxisData data cannot be empty');
         }
-        $yData = $this->yAxisData;
-        if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
-            $yData = $this->smoothData($yData);
-        }
         $distanceSymbol = $this->unitSystem->distanceSymbol();
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
 
         if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
-            $actualMin = min($yData);
-            $actualMax = max($yData);
+            $actualMin = min($this->yAxisData);
+            $actualMax = max($this->yAxisData);
             $range = $actualMax - $actualMin;
             $margin = $range * 0.1;
             $minYAxis = (int) floor($actualMin - $margin);
             $maxYAxis = (int) ceil($actualMax + $margin);
         } else {
             $minYAxis = 0;
-            $maxYAxis = (int) ceil(max($yData) * 1.1);
+            $maxYAxis = (int) ceil(max($this->yAxisData) * 1.1);
         }
 
         return [
@@ -130,7 +126,7 @@ final readonly class CombinedStreamProfileChart
                             ],
                         ],
                     ],
-                    'data' => $yData,
+                    'data' => $this->yAxisData,
                     'type' => 'line',
                     'symbol' => 'none',
                     'color' => $this->yAxisStreamType->getSeriesColor(),
@@ -147,33 +143,5 @@ final readonly class CombinedStreamProfileChart
                 ],
             ],
         ];
-    }
-
-    /**
-     * Smooths the given data array with a simple moving average.
-     *
-     * @param array<int, int|float> $data
-     * @param int $window  Number of points in the moving average window (odd number)
-     * @return array<float>
-     */
-    private function smoothData(array $data, int $window = 5): array
-    {
-        $count = count($data);
-        if ($count === 0 || $window < 1) {
-            return $data;
-        }
-        $half = intdiv($window, 2);
-        $smoothed = [];
-        for ($i = 0; $i < $count; ++$i) {
-            $start = max(0, $i - $half);
-            $end = min($count - 1, $i + $half);
-            $sum = 0;
-            $n = $end - $start + 1;
-            for ($j = $start; $j <= $end; ++$j) {
-                $sum += $data[$j];
-            }
-            $smoothed[] = $sum / $n;
-        }
-        return $smoothed;
     }
 }

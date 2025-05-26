@@ -98,6 +98,15 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $distanceIndex = array_search(CombinedStreamType::DISTANCE, $streamTypes->toArray(), true);
             $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $streamTypes->toArray(), true);
             $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
+            // Smooth altitude values (moving average) before unit conversion
+            if (false !== $altitudeIndex) {
+                $altitudes = array_column($combinedData, $altitudeIndex);
+                $smoothedAlts = $this->smoothSeries($altitudes, 5);
+                foreach ($combinedData as $i => &$row) {
+                    $row[$altitudeIndex] = $smoothedAlts[$i];
+                }
+                unset($row);
+            }
 
             foreach ($combinedData as &$row) {
                 $distanceInKm = Meter::from($row[$distanceIndex])->toKilometer();
@@ -141,5 +150,32 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             ++$activityWithCombinedStreamCalculatedCount;
         }
         $command->getOutput()->writeln(sprintf('  => Calculated combined streams for %d activities', $activityWithCombinedStreamCalculatedCount));
+    }
+
+    /**
+     * Simple moving average smoother for altitude data.
+     *
+     * @param array<int, float|int> $data
+     * @param int $window Number of points in the moving average window (odd number)
+     * @return array<float>
+     */
+    private function smoothSeries(array $data, int $window = 5): array
+    {
+        $count = count($data);
+        if ($count === 0 || $window < 1) {
+            return $data;
+        }
+        $half = intdiv($window, 2);
+        $smoothed = [];
+        for ($i = 0; $i < $count; ++$i) {
+            $start = max(0, $i - $half);
+            $end = min($count - 1, $i + $half);
+            $sum = 0.0;
+            for ($j = $start; $j <= $end; ++$j) {
+                $sum += $data[$j];
+            }
+            $smoothed[] = $sum / ($end - $start + 1);
+        }
+        return $smoothed;
     }
 }
