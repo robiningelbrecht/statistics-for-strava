@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Infrastructure\DependencyInjection\AppConfigExpressionLanguageProvider;
+use App\Infrastructure\DependencyInjection\AppExpressionLanguageProvider;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -14,6 +14,6 @@ class Kernel extends BaseKernel
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
-        $container->addExpressionLanguageProvider(new AppConfigExpressionLanguageProvider());
+        $container->addExpressionLanguageProvider(new AppExpressionLanguageProvider());
     }
 }

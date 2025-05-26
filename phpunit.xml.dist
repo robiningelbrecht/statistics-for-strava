@@ -42,8 +42,7 @@
         <exclude>
             <file>src/Kernel.php</file>
             <file>src/Console/ExtractTranslationsConsoleCommand.php</file>
-            <file>src/Infrastructure/DependencyInjection/AppConfigExpressionLanguageProvider.php</file>
-            <file>src/Infrastructure/DependencyInjection/ExpressionFunction/AppConfigExpressionFunction.php</file>
+            <file>src/Infrastructure/DependencyInjection/AppExpressionLanguageProvider.php</file>
             <file>src/Infrastructure/Logging/LoggableConsoleOutput.php</file>
             <file>src/Infrastructure/Time/Clock/SystemClock.php</file>
             <file>src/Infrastructure/Time/ResourceUsage/SystemResourceUsage.php</file>
