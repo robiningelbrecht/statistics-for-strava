@@ -347,7 +347,7 @@
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
         callback_error: (img) => {
-            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder.webp') }}");
+            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder-broken.webp') }}");
         }
     });
 
