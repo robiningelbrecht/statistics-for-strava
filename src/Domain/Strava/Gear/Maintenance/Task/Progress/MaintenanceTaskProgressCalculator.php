@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Gear\Maintenance\Task\Progress;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class MaintenanceTaskProgressCalculator
 {
@@ -14,6 +15,7 @@ final readonly class MaintenanceTaskProgressCalculator
      * @param iterable<MaintenanceTaskProgressCalculation> $maintenanceTaskProgressCalculations
      */
     public function __construct(
+        #[AutowireIterator('app.maintenance_progress_calculation')]
         private iterable $maintenanceTaskProgressCalculations,
         private GearMaintenanceConfig $gearMaintenanceConfig,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,

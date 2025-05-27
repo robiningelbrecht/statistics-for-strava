@@ -9,6 +9,7 @@ use App\Infrastructure\CQRS\HandlerBuilderType;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
@@ -24,8 +25,10 @@ final readonly class InMemoryQueryBus implements QueryBus
     /**
      * @param iterable<QueryHandler> $queryHandlers
      */
-    public function __construct(iterable $queryHandlers)
-    {
+    public function __construct(
+        #[AutowireIterator('app.query_handler')]
+        iterable $queryHandlers,
+    ) {
         $this->bus = new MessageBus([
             new HandleMessageMiddleware(
                 new HandlersLocator(

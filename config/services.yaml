@@ -40,14 +40,6 @@ services:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
 
-    App\Infrastructure\CQRS\Command\Bus\CommandBus:
-        class: App\Infrastructure\CQRS\Command\Bus\InMemoryCommandBus
-        arguments: [!tagged_iterator app.command_handler]
-
-    App\Infrastructure\CQRS\Query\Bus\QueryBus:
-        class: App\Infrastructure\CQRS\Query\Bus\InMemoryQueryBus
-        arguments: [!tagged_iterator app.query_handler]
-
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
@@ -152,10 +144,6 @@ services:
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, fromArray ]
         arguments: ['@=app_config("gear_maintenance", [])']
-
-    App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator:
-        class: App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator
-        arguments: [!tagged_iterator app.maintenance_progress_calculation]
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, fromOptionalString ]
