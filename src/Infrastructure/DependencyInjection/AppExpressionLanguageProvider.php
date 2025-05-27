@@ -15,10 +15,10 @@ final readonly class AppExpressionLanguageProvider implements ExpressionFunction
     public function getFunctions(): array
     {
         return [
-            new ExpressionFunction('app_config', function (string $appConfigKey): string {
-                return sprintf('$container->get("app.config")->get(%s)', $appConfigKey);
-            }, function (array $variables, string $appConfigKey): string {
-                return $variables['container']->get('app.config')->get($appConfigKey);
+            new ExpressionFunction('app_config', function (string $appConfigKey, mixed $defaultValue = null): string {
+                return sprintf('$container->get("app.config")->get(%s, %s)', $appConfigKey, $defaultValue);
+            }, function (array $variables, string $appConfigKey, mixed $defaultValue = null): string {
+                return $variables['container']->get('app.config')->get($appConfigKey, $defaultValue);
             }),
         ];
     }
