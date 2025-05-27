@@ -87,6 +87,33 @@ final class ActivityStream
         return $this->streamType;
     }
 
+    public function applySimpleMovingAverage(int $windowSize): self
+    {
+        $count = count($this->data);
+        if (0 === $count || $windowSize < 1) {
+            return $this;
+        }
+        $half = intdiv($windowSize, 2);
+        $smoothed = [];
+        for ($i = 0; $i < $count; ++$i) {
+            $start = max(0, $i - $half);
+            $end = min($count - 1, $i + $half);
+            $sum = 0.0;
+            for ($j = $start; $j <= $end; ++$j) {
+                $sum += $this->data[$j];
+            }
+            $smoothed[] = $sum / ($end - $start + 1);
+        }
+
+        return ActivityStream::fromState(
+            activityId: $this->getActivityId(),
+            streamType: $this->getStreamType(),
+            streamData: $smoothed,
+            createdOn: $this->getCreatedOn(),
+            bestAverages: $this->getBestAverages()
+        );
+    }
+
     /**
      * @return array<mixed>
      */
