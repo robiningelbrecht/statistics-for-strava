@@ -5,12 +5,16 @@ services:
         volumes:
             - './:/var/www/'
         working_dir: /var/www
+        env_file:
+            - path: ./.env
+              required: true
+            - path: ./.env.local
+              required: false
         environment:
             - PHP_CS_FIXER_IGNORE_ENV=true
             - IMPORT_AND_BUILD_SCHEDULE=* * * * *
             - PHP_IDE_CONFIG=phpstorm
-        profiles:
-            - on-demand
+        profiles: [on-demand]
         networks:
             - statistics-for-strava-network
     app:
