@@ -8840,16 +8840,16 @@
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",
-            "version": "v1.9.0",
+            "version": "v1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robiningelbrecht/phpunit-coverage-tools.git",
-                "reference": "6499cd58e472695cde08047fa7415685ed5750c9"
+                "reference": "7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-coverage-tools/zipball/6499cd58e472695cde08047fa7415685ed5750c9",
-                "reference": "6499cd58e472695cde08047fa7415685ed5750c9",
+                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-coverage-tools/zipball/7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec",
+                "reference": "7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec",
                 "shasum": ""
             },
             "require": {
@@ -8889,9 +8889,9 @@
             ],
             "support": {
                 "issues": "https://github.com/robiningelbrecht/phpunit-coverage-tools/issues",
-                "source": "https://github.com/robiningelbrecht/phpunit-coverage-tools/tree/v1.9.0"
+                "source": "https://github.com/robiningelbrecht/phpunit-coverage-tools/tree/v1.9.1"
             },
-            "time": "2025-03-15T09:42:41+00:00"
+            "time": "2025-05-28T06:28:42+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-pretty-print",

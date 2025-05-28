@@ -306,3 +306,9 @@ Everytime you make changes to the app, you need to build the html files again
 > make console arg="app:strava:build-files"
 ```
 
+## ❤️ Sponsors
+
+This project is sponsored by [Blackfire.io](https://www.blackfire.io).
+
+![Blackfire logo](public/assets/images/readme/blackfire-logo.png)
+
