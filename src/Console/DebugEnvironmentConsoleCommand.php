@@ -35,7 +35,6 @@ final class DebugEnvironmentConsoleCommand extends Command
         $table
             ->setHeaders(['ENV variable', 'Value'])
             ->setRows([
-                ['BLACKFIRE', getenv('BLACKFIRE_CLIENT_ID')],
                 ['APP_VERSION', AppVersion::getSemanticVersion()],
                 ['STRAVA_CLIENT_ID', getenv('STRAVA_CLIENT_ID')],
                 ['STRAVA_CLIENT_SECRET', getenv('STRAVA_CLIENT_SECRET')],
