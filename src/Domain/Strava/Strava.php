@@ -19,9 +19,9 @@ use Psr\Log\LoggerInterface;
 #[WithMonologChannel('strava-api')]
 class Strava
 {
-    private static ?string $cachedAccessToken = null;
+    public static ?string $cachedAccessToken = null;
     /** @var array<mixed>|null */
-    private static ?array $cachedActivitiesResponse = null;
+    public static ?array $cachedActivitiesResponse = null;
 
     public function __construct(
         private readonly Client $client,
