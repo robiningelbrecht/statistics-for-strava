@@ -6,7 +6,7 @@
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Gear\\ImportGear\\ImportGear",
+        "commandName": "App\\Domain\\Strava\\Gear\\ImportedGear\\ImportGear\\ImportGear",
         "payload": {
             "output": {}
         }

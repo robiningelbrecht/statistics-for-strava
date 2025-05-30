@@ -10,7 +10,7 @@ use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\Ca
 use App\Domain\Strava\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
 use App\Domain\Strava\Athlete\ImportAthlete\ImportAthlete;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
-use App\Domain\Strava\Gear\ImportGear\ImportGear;
+use App\Domain\Strava\Gear\ImportedGear\ImportGear\ImportGear;
 use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;

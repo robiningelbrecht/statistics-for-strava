@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Gear\ImportGear;
+namespace App\Tests\Domain\Strava\Gear\ImportedGear\ImportGear;
 
 use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Gear\GearRepository;
-use App\Domain\Strava\Gear\ImportGear\ImportGear;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Strava\Gear\ImportedGear\ImportGear\ImportGear;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\ContainerTestCase;
-use App\Tests\Domain\Strava\Gear\GearBuilder;
+use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -25,8 +25,8 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(4);
 
-        $this->getContainer()->get(GearRepository::class)->save(
-            GearBuilder::fromDefaults()
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
@@ -45,8 +45,8 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(10000);
 
-        $this->getContainer()->get(GearRepository::class)->save(
-            GearBuilder::fromDefaults()
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );

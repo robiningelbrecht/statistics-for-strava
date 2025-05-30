@@ -1,0 +1,9 @@
+enabled: true
+hashtagPrefix: sfs
+customGears:
+  - tag: peddle-board
+    label: Peddle Board
+    isRetired: false
+  - tag: workout-shoes
+    label: Fancy workout shoes
+    isRetired: true

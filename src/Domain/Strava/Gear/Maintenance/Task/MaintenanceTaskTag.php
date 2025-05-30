@@ -6,7 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance\Task;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Gear\Maintenance\Tag;
+use App\Infrastructure\ValueObject\String\Tag;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class MaintenanceTaskTag

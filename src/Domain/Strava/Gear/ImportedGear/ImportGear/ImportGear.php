@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Strava\Gear\ImportGear;
+namespace App\Domain\Strava\Gear\ImportedGear\ImportGear;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;

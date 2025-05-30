@@ -65,11 +65,6 @@ services:
         factory: [ App\Infrastructure\Localisation\Locale, 'from' ]
         arguments: ['@=app_config("appearance.locale")']
 
-    League\Flysystem\FilesystemOperator: '@default.storage'
-
-    GuzzleHttp\Client:
-        class: GuzzleHttp\Client
-
     app.config:
         public: true # We need to access this service from the container in expressions
         class: App\Infrastructure\Config\AppConfig
@@ -139,6 +134,10 @@ services:
         factory: [ null, fromArray ]
         arguments: ['@=app_config("general.athlete.ftp_history")']
 
+    App\Domain\Strava\Gear\CustomGear\CustomGearConfig:
+        factory: [ null, fromArray ]
+        arguments: ['@=app_config("custom_gear", [])']
+
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, fromArray ]
         arguments: ['@=app_config("gear_maintenance", [])']
@@ -150,3 +149,8 @@ services:
     App\Domain\Zwift\ZwiftRacingScore:
         factory: [ null, fromOptionalString ]
         arguments: ['@=app_config("zwift.racing_score")']
+
+    League\Flysystem\FilesystemOperator: '@default.storage'
+
+    GuzzleHttp\Client:
+        class: GuzzleHttp\Client

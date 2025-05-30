@@ -9,6 +9,7 @@ use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTasks;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\String\Tag;
 
 final class GearComponent
 {

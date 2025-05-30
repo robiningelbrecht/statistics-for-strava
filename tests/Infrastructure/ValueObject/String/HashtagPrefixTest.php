@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Gear\Maintenance;
+namespace App\Tests\Infrastructure\ValueObject\String;
 
-use App\Domain\Strava\Gear\Maintenance\HashtagPrefix;
+use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use PHPUnit\Framework\TestCase;
 
 class HashtagPrefixTest extends TestCase

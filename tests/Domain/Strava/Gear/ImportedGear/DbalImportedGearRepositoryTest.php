@@ -1,76 +1,76 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Gear;
+namespace App\Tests\Domain\Strava\Gear\ImportedGear;
 
-use App\Domain\Strava\Gear\DbalGearRepository;
 use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\Gears;
+use App\Domain\Strava\Gear\ImportedGear\DbalImportedGearRepository;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Tests\ContainerTestCase;
 
-class DbalGearRepositoryTest extends ContainerTestCase
+class DbalImportedGearRepositoryTest extends ContainerTestCase
 {
-    private GearRepository $gearRepository;
+    private ImportedGearRepository $importedGearRepository;
 
     public function testFindAndSave(): void
     {
-        $gear = GearBuilder::fromDefaults()
+        $gear = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->gearRepository->save($gear);
+        $this->importedGearRepository->save($gear);
 
         $this->assertEquals(
             $gear,
-            $this->gearRepository->find($gear->getId())
+            $this->importedGearRepository->find($gear->getId())
         );
     }
 
     public function testItShouldThrowWhenNotFound(): void
     {
         $this->expectException(EntityNotFound::class);
-        $this->gearRepository->find(GearId::fromUnprefixed('1'));
+        $this->importedGearRepository->find(GearId::fromUnprefixed('1'));
     }
 
     public function testFindAll(): void
     {
-        $gearOne = GearBuilder::fromDefaults()
+        $gearOne = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
             ->build();
-        $this->gearRepository->save($gearOne);
-        $gearTwo = GearBuilder::fromDefaults()
+        $this->importedGearRepository->save($gearOne);
+        $gearTwo = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(2))
             ->withDistanceInMeter(Meter::from(10230))
             ->build();
-        $this->gearRepository->save($gearTwo);
-        $gearThree = GearBuilder::fromDefaults()
+        $this->importedGearRepository->save($gearTwo);
+        $gearThree = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(3))
             ->withDistanceInMeter(Meter::from(230))
             ->build();
-        $this->gearRepository->save($gearThree);
-        $gearFour = GearBuilder::fromDefaults()
+        $this->importedGearRepository->save($gearThree);
+        $gearFour = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(4))
             ->withDistanceInMeter(Meter::from(100230))
             ->withIsRetired(true)
             ->build();
-        $this->gearRepository->save($gearFour);
+        $this->importedGearRepository->save($gearFour);
 
         $this->assertEquals(
             Gears::fromArray([$gearTwo, $gearOne, $gearThree, $gearFour]),
-            $this->gearRepository->findAll()
+            $this->importedGearRepository->findAll()
         );
     }
 
     public function testUpdate(): void
     {
-        $gear = GearBuilder::fromDefaults()
+        $gear = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1000))
             ->build();
-        $this->gearRepository->save($gear);
+        $this->importedGearRepository->save($gear);
 
         $this->assertEquals(
             1000,
@@ -78,11 +78,11 @@ class DbalGearRepositoryTest extends ContainerTestCase
         );
 
         $gear->updateDistance(Meter::from(30000));
-        $this->gearRepository->save($gear);
+        $this->importedGearRepository->save($gear);
 
         $this->assertEquals(
             30000,
-            $this->gearRepository->find(GearId::fromUnprefixed(1))->getDistance()->toMeter()->toFloat()
+            $this->importedGearRepository->find(GearId::fromUnprefixed(1))->getDistance()->toMeter()->toFloat()
         );
     }
 
@@ -91,7 +91,7 @@ class DbalGearRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->gearRepository = new DbalGearRepository(
+        $this->importedGearRepository = new DbalImportedGearRepository(
             $this->getConnection()
         );
     }

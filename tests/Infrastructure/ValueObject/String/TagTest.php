@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Gear\Maintenance;
+namespace App\Tests\Infrastructure\ValueObject\String;
 
 use App\Domain\Strava\Gear\Maintenance\InvalidGearMaintenanceConfig;
-use App\Domain\Strava\Gear\Maintenance\Tag;
+use App\Infrastructure\ValueObject\String\Tag;
 use PHPUnit\Framework\TestCase;
 
 class TagTest extends TestCase

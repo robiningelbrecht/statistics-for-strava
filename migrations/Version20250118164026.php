@@ -6,7 +6,6 @@ namespace DoctrineMigrations;
 
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigration;
-use App\Infrastructure\Doctrine\Migrations\MigrateToVersion20250118164026\MigrateToVersion20250118164026;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
@@ -100,6 +99,5 @@ final class Version20250118164026 extends AbstractMigration implements CommandBu
 
     public function postUp(Schema $schema): void
     {
-        $this->commandBus->dispatch(new MigrateToVersion20250118164026());
     }
 }

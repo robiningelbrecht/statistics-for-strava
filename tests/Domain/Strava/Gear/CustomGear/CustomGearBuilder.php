@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Domain\Strava\Gear;
+namespace App\Tests\Domain\Strava\Gear\CustomGear;
 
-use App\Domain\Strava\Gear\Gear;
+use App\Domain\Strava\Gear\CustomGear\CustomGear;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class GearBuilder
+final class CustomGearBuilder
 {
     private GearId $gearId;
     private SerializableDateTime $createdOn;
@@ -31,9 +31,9 @@ final class GearBuilder
         return new self();
     }
 
-    public function build(): Gear
+    public function build(): CustomGear
     {
-        return Gear::fromState(
+        return CustomGear::fromState(
             gearId: $this->gearId,
             distanceInMeter: $this->distanceInMeter,
             createdOn: $this->createdOn,

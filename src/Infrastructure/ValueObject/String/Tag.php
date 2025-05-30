@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Gear\Maintenance;
+namespace App\Infrastructure\ValueObject\String;
 
-use App\Infrastructure\ValueObject\String\NonEmptyStringLiteral;
+use App\Domain\Strava\Gear\Maintenance\InvalidGearMaintenanceConfig;
 
 final readonly class Tag extends NonEmptyStringLiteral
 {
