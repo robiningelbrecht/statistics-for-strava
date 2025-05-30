@@ -12,4 +12,9 @@ enum PlatformEnvironment: string
     {
         return self::TEST === $this;
     }
+
+    public static function fromEnvironment(): self
+    {
+        return self::from(getenv('APP_ENV'));
+    }
 }

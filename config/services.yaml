@@ -4,7 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    env(APP_ENV): 'dev'
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
@@ -45,8 +44,7 @@ services:
         arguments: ['%kernel.project_dir%']
 
     App\Infrastructure\ValueObject\String\PlatformEnvironment:
-        factory: [ App\Infrastructure\ValueObject\String\PlatformEnvironment, 'from' ]
-        arguments: ['%env(APP_ENV)%']
+        factory: [ App\Infrastructure\ValueObject\String\PlatformEnvironment, 'fromEnvironment' ]
 
     App\Infrastructure\Time\Format\DateAndTimeFormat:
         factory: [ null, 'create' ]

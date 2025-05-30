@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f65bd51d79fc0a959ca2f254c5fdba3",
+    "content-hash": "5ffc8874b53026c2995d77d750a7bd65",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",

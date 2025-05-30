@@ -60,7 +60,7 @@
         "robiningelbrecht/phpunit-coverage-tools": "^1.8",
         "robiningelbrecht/phpunit-pretty-print": "^1.3",
         "spatie/phpunit-snapshot-assertions": "^5.1",
-        "symfony/phpunit-bridge": "^7.1",
+        "symfony/phpunit-bridge": "7.3.*",
         "symfony/stopwatch": "7.3.*",
         "symfony/web-profiler-bundle": "7.3.*",
         "tomasvotruba/type-coverage": "^2.0"
