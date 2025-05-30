@@ -45,8 +45,8 @@ services:
         arguments: ['%kernel.project_dir%']
 
     App\Infrastructure\ValueObject\String\PlatformEnvironment:
-        factory: [ null, 'from' ]
-        arguments: ['%env(string:APP_ENV)%']
+        factory: [ App\Infrastructure\ValueObject\String\PlatformEnvironment, 'from' ]
+        arguments: ['%env(APP_ENV)%']
 
     App\Infrastructure\Time\Format\DateAndTimeFormat:
         factory: [ null, 'create' ]
@@ -60,11 +60,11 @@ services:
         arguments: ['%env(string:TZ)%']
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
-        factory: [ null, from ]
+        factory: [ App\Infrastructure\ValueObject\Measurement\UnitSystem, from ]
         arguments: ['@=app_config("appearance.unit_system")']
 
     App\Infrastructure\Localisation\Locale:
-        factory: [ null, 'from' ]
+        factory: [ App\Infrastructure\Localisation\Locale, 'from' ]
         arguments: ['@=app_config("appearance.locale")']
 
     League\Flysystem\FilesystemOperator: '@default.storage'
