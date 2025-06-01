@@ -1390,6 +1390,9 @@
       color: white;
     }
   }
+  .mr-0\.5 {
+    margin-right: calc(var(--spacing) * 0.5);
+  }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
