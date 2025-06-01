@@ -22,7 +22,7 @@ import:
   sport_types_to_import: []
   activity_visibilities_to_import: []
   skip_activities_recorded_before: null
-  activities_to_skip_during_import: ['skip']
+  activitiesToSkipDuringImport: ['skip']
 zwift:
   level: 80
   racing_score: 495

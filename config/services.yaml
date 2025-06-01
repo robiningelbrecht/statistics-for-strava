@@ -49,8 +49,8 @@ services:
     App\Infrastructure\Time\Format\DateAndTimeFormat:
         factory: [ null, 'create' ]
         arguments: [
-            '@=app_config("appearance.date_format")',
-            '@=app_config("appearance.time_format")',
+            '@=app_config("appearance.dateFormat")',
+            '@=app_config("appearance.timeFormat")',
         ]
 
     App\Infrastructure\ValueObject\Time\SerializableTimezone:
@@ -59,7 +59,7 @@ services:
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
         factory: [ App\Infrastructure\ValueObject\Measurement\UnitSystem, from ]
-        arguments: ['@=app_config("appearance.unit_system")']
+        arguments: ['@=app_config("appearance.unitSystem")']
 
     App\Infrastructure\Localisation\Locale:
         factory: [ App\Infrastructure\Localisation\Locale, 'from' ]
@@ -76,15 +76,15 @@ services:
 
     App\Domain\App\AppUrl:
         factory: [ null, 'fromString' ]
-        arguments: ['@=app_config("general.app_url")']
+        arguments: ['@=app_config("general.appUrl")']
 
     App\Domain\App\ProfilePictureUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("general.profile_picture_url")']
+        arguments: ['@=app_config("general.profilePictureUrl")']
 
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("general.ntfy_url")']
+        arguments: ['@=app_config("general.ntfyUrl")']
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
@@ -105,43 +105,43 @@ services:
     App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
         class: App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
-        arguments: ['@=app_config("general.athlete.max_heart_rate_formula")']
+        arguments: ['@=app_config("general.athlete.maxHeartRateFormula")']
 
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
         factory: [ null, from ]
-        arguments: ['@=app_config("import.activity_visibilities_to_import")']
+        arguments: ['@=app_config("import.activityVisibilitiesToImport")']
 
     App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
         factory: [ null, fromInt ]
-        arguments: ['@=app_config("import.number_of_new_activities_to_process_per_import")']
+        arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
 
     App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport:
         factory: [ null, from ]
-        arguments: ['@=app_config("import.activities_to_skip_during_import")']
+        arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
         class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
         factory: [ null, fromOptionalString ]
-        arguments: ['@=app_config("import.skip_activities_recorded_before")']
+        arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
         factory: [ null, from ]
-        arguments: ['@=app_config("import.sport_types_to_import")']
+        arguments: ['@=app_config("import.sportTypesToImport")']
 
     App\Domain\Strava\Athlete\Weight\AthleteWeightHistory:
         factory: [ null, fromArray ]
         arguments: [
-            '@=app_config("general.athlete.weight_history")',
+            '@=app_config("general.athlete.weightHistory")',
             '@App\Infrastructure\ValueObject\Measurement\UnitSystem'
         ]
 
     App\Domain\Strava\Ftp\FtpHistory:
         factory: [ null, fromArray ]
-        arguments: ['@=app_config("general.athlete.ftp_history")']
+        arguments: ['@=app_config("general.athlete.ftpHistory")']
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, fromArray ]
-        arguments: ['@=app_config("gear_maintenance", [])']
+        arguments: ['@=app_config("gearMaintenance", [])']
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, fromOptionalString ]
@@ -149,4 +149,4 @@ services:
 
     App\Domain\Zwift\ZwiftRacingScore:
         factory: [ null, fromOptionalString ]
-        arguments: ['@=app_config("zwift.racing_score")']
+        arguments: ['@=app_config("zwift.racingScore")']

@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 
 final class AppConfig
 {
-    /** @var array<string, string|int|float|array<string,mixed>|null> */
+    /** @var array<string|int, string|int|float|array<string|int,mixed>|null> */
     private array $config = [];
 
     public function __construct(
@@ -37,7 +37,7 @@ final class AppConfig
                 filePath: $basePath.($isTest ? 'gear-maintenance_test.yaml' : 'gear-maintenance.yaml'),
                 isRequired: false,
                 needsNestedProcessing: false,
-                prefix: 'gear_maintenance',
+                prefix: 'gearMaintenance',
             ),
         ];
 
@@ -64,7 +64,7 @@ final class AppConfig
     }
 
     /**
-     * @param array<string, mixed> $ymlConfig
+     * @param array<string|int, mixed> $ymlConfig
      */
     private function processYamlConfig(
         array $ymlConfig,
@@ -78,7 +78,12 @@ final class AppConfig
         }
 
         foreach ($ymlConfig as $key => $value) {
-            $fullKey = null === $prefix ? $key : "$prefix.$key";
+            if (is_string($key) && str_contains($key, '_')) {
+                // This key is in snake_case, convert it to camelCase to make sure this stays backwards compatible
+                $key = lcfirst(\str_replace('_', '', \ucwords($key, '_')));
+            }
+
+            $fullKey = (string) (null === $prefix ? $key : "$prefix.$key");
             if (array_key_exists($fullKey, $this->config)) {
                 throw new CouldNotParseYamlConfig(sprintf('Duplicate config key: %s', $fullKey));
             }
@@ -95,7 +100,7 @@ final class AppConfig
     }
 
     /**
-     * @return string|int|float|array<string,mixed>|null
+     * @return string|int|float|array<string|int,mixed>|null
      */
     public function get(string $key, mixed $default = null): string|int|float|array|null
     {

@@ -66,6 +66,7 @@ class AppConfigTest extends TestCase
         return [
             ['general.athlete.birthday', '1989-08-14', __DIR__.'/valid-config', PlatformEnvironment::DEV],
             ['zwift', ['level' => 80, 'racing_score' => 495], __DIR__.'/valid-config', PlatformEnvironment::DEV],
+            ['zwift.racingScore', 495, __DIR__.'/valid-config', PlatformEnvironment::DEV],
         ];
     }
 }
