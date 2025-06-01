@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 class MaxHeartRateFormulasTest extends TestCase
 {
     #[DataProvider(methodName: 'provideDetermineFormulaData')]
-    public function testDetermineFormula(MaxHeartRateFormula $expectedFormula, string $formula): void
+    public function testDetermineFormula(MaxHeartRateFormula $expectedFormula, string|array $formula): void
     {
         $this->assertEquals(
             $expectedFormula,
@@ -39,28 +39,16 @@ class MaxHeartRateFormulasTest extends TestCase
         new MaxHeartRateFormulas()->determineFormula('invalid');
     }
 
-    public function testItShouldThrowWhenMaxHeartRateFormulaIsInvalidJson(): void
-    {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('Invalid MAX_HEART_RATE_FORMULA "{lala" detected'));
-        new MaxHeartRateFormulas()->determineFormula('{lala');
-    }
-
-    public function testItShouldThrowWhenMaxHeartRateFormulaJsonIsNotAnArray(): void
-    {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA invalid date range'));
-        new MaxHeartRateFormulas()->determineFormula('"a string"');
-    }
-
     public function testItShouldThrowWhenMaxHeartRateFormulaJsonContainsInvalidDates(): void
     {
         $this->expectExceptionObject(new InvalidMaxHeartRateFormula('Invalid date "lol" set in MAX_HEART_RATE_FORMULA'));
-        new MaxHeartRateFormulas()->determineFormula('{"lol": 200}');
+        new MaxHeartRateFormulas()->determineFormula(['lol' => 200]);
     }
 
     public function testItShouldThrowWhenMaxHeartRateFormulaJsonIsEmpty(): void
     {
         $this->expectExceptionObject(new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty'));
-        new MaxHeartRateFormulas()->determineFormula('{}');
+        new MaxHeartRateFormulas()->determineFormula([]);
     }
 
     public static function provideDetermineFormulaData(): array
@@ -73,7 +61,7 @@ class MaxHeartRateFormulasTest extends TestCase
                     on: SerializableDateTime::fromString('2025-01-01'),
                     maxHeartRate: 100
                 ),
-                '{"2025-01-01": 100}',
+                ['2025-01-01' => 100],
             ],
             [new Fox(), 'fox'],
             [new Gellish(), 'gellish'],
