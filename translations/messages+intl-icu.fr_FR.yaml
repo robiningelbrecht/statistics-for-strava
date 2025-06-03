@@ -1,5 +1,5 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.”': '+10 à +15 : Modérément frais. Bon équilibre entre forme et récupération.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper “sweet spot”': '+15 à +25 : Fraîcheur optimale, prêt pour la course. Zone idéale d''affûtage'
+'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 à +15 : Modérément frais. Bon équilibre entre forme et récupération.'
+'+15 to +25: Peak-fresh, race-ready. Ideal taper "sweet spot"': '+15 à +25 : Fraîcheur optimale, prêt pour la course. Zone idéale d''affûtage'
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 à 0 : Fatigue accumulée. Récupération en cours. Convient pour un entraînement léger/technique.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 à +10 : Légèrement frais. Phase de transition ; entraînements courts recommandés'
 '0.8-1.3: Safe training zone': '0,8-1,3 : Zone d''entraînement sécurisée'
@@ -8,7 +8,7 @@
 '7-day fatigue level': 'Niveau de fatigue sur 7 jours'
 '< 0.8: Potential detraining': '< 0,8 : Désentraînement potentiel'
 '< 1.5: Good variety in training': '< 1,5 : Bonne variété d''entraînement'
-'< –30: Over-fatigued. Risk of injuiry; require extra recovery': '< –30 : Surentraîné. Risque de blessure ; récupération supplémentaire nécessaire'
+'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30 : Surentraîné. Risque de blessure ; récupération supplémentaire nécessaire'
 '> 1.3: Increased injury risk': '> 1,3 : Risque de blessure accru'
 '> 2.0: High monotony, increased risk': '> 2,0 : Monotonie élevée, risque accru'
 '>+25: Possible detraining': '>+25 : Désentraînement possible'
@@ -181,7 +181,7 @@ Night: Nuit
 Nov: Nov
 'Number of activities per month': 'Nombre d''activités par mois'
 Oct: Oct
-'One of your gear maitenance tasks is due': 'Une de vos tâches de maintenance de matériel est à effectuer'
+'One of your gear maintenance tasks is due': 'Une de vos tâches de maintenance de matériel est à effectuer'
 'Optimal training range': 'Zone d''entraînement optimale'
 Other: Autre
 'Outdoor Sports': 'Sports d''extérieur'
