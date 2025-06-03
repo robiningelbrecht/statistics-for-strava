@@ -12,7 +12,11 @@ abstract readonly class Identifier extends NonEmptyStringLiteral implements \Jso
 
     public function toUnprefixedString(): string
     {
-        return str_replace($this::getPrefix(), '', (string) $this);
+        if (!str_starts_with((string) $this, static::getPrefix())) {
+            return (string) $this;
+        }
+
+        return substr_replace((string) $this, '', 0, strlen(static::getPrefix()));
     }
 
     #[\Override]

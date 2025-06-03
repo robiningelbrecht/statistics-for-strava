@@ -3,7 +3,7 @@ Hashtag prefix: #sfs
 You added 2 components:
   - Tag: #sfs-chain
     Label: Some cool chain
-    Attached to: bike-one-id, bike-two-id
+    Attached to: bike-one-gear-id, bike-two-gear-id
     Image: chain.png
     Maintenance tasks:
       - Tag: #sfs-chain-lubed
@@ -17,7 +17,7 @@ You added 2 components:
         Interval: 500 days
   - Tag: #sfs-chain-two
     Label: Some cool chain
-    Attached to: bike-one-id, bike-two-id
+    Attached to: bike-one-gear-id, bike-two-gear-id
     Image: chain.png
     Maintenance tasks:
       - Tag: #sfs-chain-two-lubed
