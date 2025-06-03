@@ -7,8 +7,6 @@ use App\Domain\Strava\Activity\Stream\ActivityStreams;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\Epsilon;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\RamerDouglasPeucker;
 use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -50,11 +48,7 @@ class RamerDouglasPeuckerTest extends TestCase
             ])
         );
 
-        $this->assertMatchesJsonSnapshot($rdp->apply(Epsilon::create(
-            totalDistance: Meter::from(150),
-            elevationVariance: Meter::from(5),
-            averageSpeed: MetersPerSecond::from(4.5),
-            speedVariance: MetersPerSecond::from(1.5),
+        $this->assertMatchesJsonSnapshot($rdp->applyWith(Epsilon::create(
             activityType: ActivityType::RIDE,
         )));
     }
@@ -93,11 +87,7 @@ class RamerDouglasPeuckerTest extends TestCase
             ])
         );
 
-        $this->assertMatchesJsonSnapshot($rdp->apply(Epsilon::create(
-            totalDistance: Meter::from(150),
-            elevationVariance: Meter::from(5),
-            averageSpeed: MetersPerSecond::from(4.5),
-            speedVariance: MetersPerSecond::from(1.5),
+        $this->assertMatchesJsonSnapshot($rdp->applyWith(Epsilon::create(
             activityType: ActivityType::RIDE,
         )));
     }
@@ -133,11 +123,7 @@ class RamerDouglasPeuckerTest extends TestCase
         );
 
         $this->expectExceptionObject(new \InvalidArgumentException('Distance stream is empty'));
-        $rdp->apply(Epsilon::create(
-            totalDistance: Meter::from(0),
-            elevationVariance: Meter::from(5),
-            averageSpeed: MetersPerSecond::from(4.5),
-            speedVariance: MetersPerSecond::from(1.5),
+        $rdp->applyWith(Epsilon::create(
             activityType: ActivityType::RIDE,
         ));
     }

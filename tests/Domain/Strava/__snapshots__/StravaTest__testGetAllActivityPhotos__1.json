@@ -1,9 +1,9 @@
 {
     "base_uri": "https://www.strava.com/",
-    "headers": {
-        "Authorization": "Bearer theAccessToken"
-    },
-    "query": {
-        "size": 5000
+    "form_params": {
+        "client_id": "clientId",
+        "client_secret": "clientSecret",
+        "grant_type": "refresh_token",
+        "refresh_token": "refreshToken"
     }
 }

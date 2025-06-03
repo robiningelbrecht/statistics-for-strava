@@ -65,7 +65,7 @@ enum ActivityType: string implements TranslatableInterface
     public function supportsEddington(): bool
     {
         return match ($this) {
-            self::RUN, self::RIDE, => true,
+            self::RUN, self::RIDE, self::WALK => true,
             default => false,
         };
     }

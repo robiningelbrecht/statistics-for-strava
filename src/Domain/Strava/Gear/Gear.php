@@ -1,132 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Strava\Gear;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
-class Gear
+interface Gear
 {
-    private string $imageSrc;
+    public function getId(): GearId;
 
-    private function __construct(
-        #[ORM\Id, ORM\Column(type: 'string', unique: true)]
-        private readonly GearId $gearId,
-        #[ORM\Column(type: 'datetime_immutable')]
-        private readonly SerializableDateTime $createdOn,
-        #[ORM\Column(type: 'integer')]
-        private Meter $distanceInMeter,
-        #[ORM\Column(type: 'string')]
-        private string $name,
-        #[ORM\Column(type: 'boolean')]
-        private bool $isRetired,
-    ) {
-    }
+    public function updateName(string $name): self;
 
-    public static function create(
-        GearId $gearId,
-        Meter $distanceInMeter,
-        SerializableDateTime $createdOn,
-        string $name,
-        bool $isRetired,
-    ): self {
-        return new self(
-            gearId: $gearId,
-            createdOn: $createdOn,
-            distanceInMeter: $distanceInMeter,
-            name: $name,
-            isRetired: $isRetired,
-        );
-    }
+    public function getOriginalName(): string;
 
-    public static function fromState(
-        GearId $gearId,
-        Meter $distanceInMeter,
-        SerializableDateTime $createdOn,
-        string $name,
-        bool $isRetired,
-    ): self {
-        return new self(
-            gearId: $gearId,
-            createdOn: $createdOn,
-            distanceInMeter: $distanceInMeter,
-            name: $name,
-            isRetired: $isRetired,
-        );
-    }
+    public function getName(): string;
 
-    public function getId(): GearId
-    {
-        return $this->gearId;
-    }
+    public function getSanitizedName(): string;
 
-    public function updateName(string $name): self
-    {
-        $this->name = $name;
+    public function getDistance(): Kilometer;
 
-        return $this;
-    }
+    public function isRetired(): bool;
 
-    public function getOriginalName(): string
-    {
-        return $this->name;
-    }
+    public function updateIsRetired(bool $isRetired): self;
 
-    public function getName(): string
-    {
-        return sprintf('%s%s', $this->name, $this->isRetired() ? ' ☠️' : '');
-    }
+    public function updateDistance(Meter $distance): self;
 
-    public function getSanitizedName(): string
-    {
-        return htmlspecialchars($this->getName());
-    }
+    public function getCreatedOn(): SerializableDateTime;
 
-    public function getDistance(): Kilometer
-    {
-        return $this->distanceInMeter->toKilometer();
-    }
+    public function getImageSrc(): ?string;
 
-    public function isRetired(): bool
-    {
-        return $this->isRetired;
-    }
-
-    public function updateIsRetired(bool $isRetired): self
-    {
-        $this->isRetired = $isRetired;
-
-        return $this;
-    }
-
-    public function updateDistance(Meter $distance): self
-    {
-        $this->distanceInMeter = $distance;
-
-        return $this;
-    }
-
-    public function getCreatedOn(): SerializableDateTime
-    {
-        return $this->createdOn;
-    }
-
-    public function getImageSrc(): ?string
-    {
-        if (!isset($this->imageSrc)) {
-            return null;
-        }
-
-        return $this->imageSrc;
-    }
-
-    public function enrichWithImageSrc(string $imageSrc): self
-    {
-        $this->imageSrc = $imageSrc;
-
-        return $this;
-    }
+    public function enrichWithImageSrc(string $imageSrc): self;
 }

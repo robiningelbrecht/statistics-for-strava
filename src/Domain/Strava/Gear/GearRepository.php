@@ -1,12 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Strava\Gear;
 
 interface GearRepository
 {
-    public function save(Gear $gear): void;
-
     public function findAll(): Gears;
-
-    public function find(GearId $gearId): Gear;
 }

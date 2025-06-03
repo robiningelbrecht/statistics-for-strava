@@ -19,6 +19,7 @@ use App\Domain\Strava\Activity\SportType\SportTypesToImport;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
@@ -41,7 +42,7 @@ use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
-use App\Tests\Domain\Strava\Gear\GearBuilder;
+use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentEffort\SegmentEffortBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
@@ -92,7 +93,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             Value::fromString('20205-01_18'),
         ));
 
-        $this->getContainer()->get(GearRepository::class)->save(GearBuilder::fromDefaults()
+        $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromString('gear-b12659861'))
             ->build()
         );

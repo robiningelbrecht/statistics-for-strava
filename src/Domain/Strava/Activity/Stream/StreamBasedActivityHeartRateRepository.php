@@ -12,7 +12,7 @@ use App\Domain\Strava\Athlete\HeartRateZone;
 final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateRepository
 {
     /** @var array<mixed> */
-    private static array $cachedHeartRateZonesPerActivity = [];
+    public static array $cachedHeartRateZonesPerActivity = [];
 
     public function __construct(
         private readonly ActivityRepository $activityRepository,

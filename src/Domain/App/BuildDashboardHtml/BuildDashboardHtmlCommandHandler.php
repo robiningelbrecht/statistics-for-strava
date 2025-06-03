@@ -108,6 +108,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
+                activityType: $activityType,
                 translator: $this->translator,
                 now: $now,
             )->build()) {

@@ -175,6 +175,13 @@ final class ActivityBuilder
         return $this;
     }
 
+    public function withoutGearId(): self
+    {
+        $this->gearId = null;
+
+        return $this;
+    }
+
     public function withLocation(?Location $location): self
     {
         $this->location = $location;

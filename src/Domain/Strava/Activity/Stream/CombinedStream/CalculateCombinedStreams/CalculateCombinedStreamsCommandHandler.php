@@ -50,18 +50,15 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             }
 
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
+            if (!$distanceStream = $streams->filterOnType(StreamType::DISTANCE)) {
+                continue;
+            }
             $streamTypes = CombinedStreamTypes::fromArray([
                 CombinedStreamType::DISTANCE,
             ]);
 
-            if (!$distanceStream = $streams->filterOnType(StreamType::DISTANCE)) {
-                continue;
-            }
-
             $otherStreams = ActivityStreams::empty();
-            $elevationVariance = Meter::zero();
-            $speedVariance = MetersPerSecond::zero();
-            foreach (CombinedStreamType::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
+            foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
                 if (!$stream = $streams->filterOnType($combinedStreamType->getStreamType())) {
                     continue;
                 }
@@ -70,13 +67,10 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 }
 
                 if (StreamType::ALTITUDE === $stream->getStreamType()) {
-                    $data = $stream->getData();
-                    $elevationVariance = Meter::from(max($data) - min($data));
+                    // Smoothen the altitude stream to remove noise and have a smooth line.
+                    $stream = $stream->applySimpleMovingAverage(5);
                 }
-                if (StreamType::VELOCITY === $stream->getStreamType()) {
-                    $data = $stream->getData();
-                    $speedVariance = MetersPerSecond::from(max($data) - min($data));
-                }
+
                 $streamTypes->add($combinedStreamType);
                 $otherStreams->add($stream);
             }
@@ -85,20 +79,14 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 distanceStream: $distanceStream,
                 movingStream: $streams->filterOnType(StreamType::MOVING),
                 otherStreams: $otherStreams
-            )->apply(Epsilon::create(
-                totalDistance: $activity->getDistance()->toMeter(),
-                elevationVariance: $elevationVariance,
-                averageSpeed: $activity->getAverageSpeed()->toMetersPerSecond(),
-                speedVariance: $speedVariance,
-                activityType: $activityType
-            ));
+            )->applyWith(Epsilon::create($activityType));
 
-            // Make sure necessary streams are converted before saving,
-            // so we do not need to convert it when reading the data.
             $distanceIndex = array_search(CombinedStreamType::DISTANCE, $streamTypes->toArray(), true);
             $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $streamTypes->toArray(), true);
             $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
 
+            // Make sure necessary streams are converted before saving,
+            // So we do not need to convert it when reading the data.
             foreach ($combinedData as &$row) {
                 $distanceInKm = Meter::from($row[$distanceIndex])->toKilometer();
                 $row[$distanceIndex] = $distanceInKm->toFloat();
@@ -126,7 +114,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     default => round($row[$distanceIndex], 1),
                 };
                 if (false !== $altitudeIndex) {
-                    $row[$altitudeIndex] = round($row[$altitudeIndex]);
+                    $row[$altitudeIndex] = round($row[$altitudeIndex], 2);
                 }
             }
 

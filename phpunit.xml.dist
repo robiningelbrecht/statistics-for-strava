@@ -20,7 +20,7 @@
         <server name="APP_ENV" value="test" force="true" />
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
-        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="12.1" />
     </php>
     <extensions>
         <bootstrap class="RobinIngelbrecht\PHPUnitPrettyPrint\PhpUnitExtension">
@@ -42,6 +42,7 @@
         <exclude>
             <file>src/Kernel.php</file>
             <file>src/Console/ExtractTranslationsConsoleCommand.php</file>
+            <file>src/Infrastructure/DependencyInjection/AppExpressionLanguageProvider.php</file>
             <file>src/Infrastructure/Logging/LoggableConsoleOutput.php</file>
             <file>src/Infrastructure/Time/Clock/SystemClock.php</file>
             <file>src/Infrastructure/Time/ResourceUsage/SystemResourceUsage.php</file>

@@ -8,6 +8,7 @@ use App\Infrastructure\Time\Format\DateAndTimeFormat;
 use App\Infrastructure\Time\Format\DateFormat;
 use App\Infrastructure\Time\Format\TimeFormat;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Twig\Attribute\AsTwigFilter;
 
 final readonly class FormatDateAndTimeTwigExtension
 {
@@ -16,6 +17,7 @@ final readonly class FormatDateAndTimeTwigExtension
     ) {
     }
 
+    #[AsTwigFilter('formatDate')]
     public function formatDate(SerializableDateTime $date, string $formatType = 'short'): string
     {
         $dateFormat = $this->dateAndTimeFormat->getDateFormat();
@@ -34,6 +36,7 @@ final readonly class FormatDateAndTimeTwigExtension
         };
     }
 
+    #[AsTwigFilter('formatTime')]
     public function formatTime(SerializableDateTime $date): string
     {
         $timeFormat = $this->dateAndTimeFormat->getTimeFormat();

@@ -10,6 +10,8 @@ use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use Twig\Attribute\AsTwigFilter;
+use Twig\Attribute\AsTwigFunction;
 
 final readonly class MeasurementTwigExtension
 {
@@ -20,6 +22,7 @@ final readonly class MeasurementTwigExtension
     ) {
     }
 
+    #[AsTwigFilter('convertMeasurement')]
     public function doConversion(Unit $measurement): Unit
     {
         if (UnitSystem::IMPERIAL === $this->unitSystem && $measurement instanceof Metric) {
@@ -32,6 +35,7 @@ final readonly class MeasurementTwigExtension
         return $measurement;
     }
 
+    #[AsTwigFilter('formatPace')]
     public function formatPace(SecPerKm $pace): string
     {
         $pace = $pace->toUnitSystem($this->unitSystem);
@@ -39,6 +43,7 @@ final readonly class MeasurementTwigExtension
         return $this->formatDurationForHumans($pace->toInt());
     }
 
+    #[AsTwigFunction('renderUnitSymbol')]
     public function getUnitSymbol(string $unitName): string
     {
         return match ($unitName) {

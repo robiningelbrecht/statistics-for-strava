@@ -1,0 +1,10 @@
+[
+    {
+        "gearId": "gear-3",
+        "createdOn": "2023-10-10 00:00:00",
+        "distanceInMeter": 230,
+        "name": "Existing gear",
+        "isRetired": 0,
+        "type": "imported"
+    }
+]

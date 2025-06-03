@@ -98,7 +98,7 @@
                         </svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Eddington</span>
                         {% for eddingtonNumber in eddingtonNumbers %}
-                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full {{ loop.last and not loop.first ? 'ml-0.5' : '' }}">{{ eddingtonNumber }}</span>
+                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full {{ eddingtonNumbers|length > 1 and not loop.last ? 'mr-0.5' : '' }}">{{ eddingtonNumber }}</span>
                         {% endfor %}
                     </a>
                 </li>
@@ -352,7 +352,7 @@
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
         callback_error: (img) => {
-            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder.webp') }}");
+            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder-broken.webp') }}");
         }
     });
 

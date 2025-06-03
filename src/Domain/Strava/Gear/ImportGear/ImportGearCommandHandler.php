@@ -2,10 +2,12 @@
 
 namespace App\Domain\Strava\Gear\ImportGear;
 
-use App\Domain\Strava\Gear\Gear;
+use App\Domain\Strava\Gear\CustomGear\CustomGearConfig;
+use App\Domain\Strava\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
-use App\Domain\Strava\Gear\GearRepository;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGear;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -20,7 +22,9 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 {
     public function __construct(
         private Strava $strava,
-        private GearRepository $gearRepository,
+        private ImportedGearRepository $importedGearRepository,
+        private CustomGearRepository $customGearRepository,
+        private CustomGearConfig $customGearConfig,
         private StravaDataImportStatus $stravaDataImportStatus,
         private Clock $clock,
     ) {
@@ -31,12 +35,29 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         assert($command instanceof ImportGear);
         $command->getOutput()->writeln('Importing gear...');
 
-        $gearIds = GearIds::fromArray(array_unique(array_filter(array_map(
+        $stravaGearIds = GearIds::fromArray(array_unique(array_filter(array_map(
             fn (array $activity) => GearId::fromOptionalUnprefixed($activity['gear_id']),
             $this->strava->getActivities(),
         ))));
 
-        foreach ($gearIds as $gearId) {
+        if ($this->customGearConfig->isFeatureEnabled()) {
+            /** @var GearId $customGearId */
+            foreach ($this->customGearConfig->getGearIds() as $customGearId) {
+                if (!$stravaGearIds->has($customGearId)) {
+                    continue;
+                }
+
+                $command->getOutput()->writeln(sprintf(
+                    '<error>Custom gear id "%s" conflicts with Strava gear id, please change the custom gear id.</error>',
+                    $customGearId
+                ));
+                $this->stravaDataImportStatus->markGearImportAsUncompleted();
+
+                return;
+            }
+        }
+
+        foreach ($stravaGearIds as $gearId) {
             try {
                 $stravaGear = $this->strava->getGear($gearId);
             } catch (ClientException|RequestException $exception) {
@@ -61,13 +82,13 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             }
 
             try {
-                $gear = $this->gearRepository->find($gearId);
+                $gear = $this->importedGearRepository->find($gearId);
                 $gear
                     ->updateName($stravaGear['name'])
                     ->updateDistance(Meter::from($stravaGear['distance']))
                     ->updateIsRetired($stravaGear['retired'] ?? false);
             } catch (EntityNotFound) {
-                $gear = Gear::create(
+                $gear = ImportedGear::create(
                     gearId: $gearId,
                     distanceInMeter: Meter::from($stravaGear['distance']),
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
@@ -75,9 +96,23 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                     isRetired: $stravaGear['retired'] ?? false
                 );
             }
-            $this->gearRepository->save($gear);
+            $this->importedGearRepository->save($gear);
             $command->getOutput()->writeln(sprintf('  => Imported/updated gear "%s"', $gear->getName()));
         }
+
+        if ($this->customGearConfig->isFeatureEnabled()) {
+            // Remove all existing custom gears before importing new ones.
+            // This is to ensure that if a custom gear is removed from the config, it will also be removed from the database.
+            // It's the lazy approach, but it works for now.
+            $this->customGearRepository->removeAll();
+            $customGearsDefinedInConfig = $this->customGearConfig->getCustomGears();
+
+            foreach ($customGearsDefinedInConfig as $customGear) {
+                $this->customGearRepository->save($customGear);
+                $command->getOutput()->writeln(sprintf('  => Imported/updated custom gear "%s"', $customGear->getName()));
+            }
+        }
+
         $this->stravaDataImportStatus->markGearImportAsCompleted();
     }
 }

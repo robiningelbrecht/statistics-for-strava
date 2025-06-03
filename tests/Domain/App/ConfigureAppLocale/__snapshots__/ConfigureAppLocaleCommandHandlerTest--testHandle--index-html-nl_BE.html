@@ -115,8 +115,8 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"></path>
                         </svg>
                         <span class="flex-1 ml-3 whitespace-nowrap">Eddington</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ">6</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-0.5">1</span>
+                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-0.5">6</span>
+                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ">1</span>
                                             </a>
                 </li>
                 <li>
@@ -230,8 +230,8 @@
                     </a>
                 </div>
                 <div class="flex justify-center gap-x-1">
-                    <span>v2.0.0</span>
-                    <span class="hidden" data-latest-version data-current-version="v2.0.0">
+                    <span>v2.1.0</span>
+                    <span class="hidden" data-latest-version data-current-version="v2.1.0">
                     (latest: <a class="underline" href="https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/%5BLATEST_VERSION%5D">[LATEST_VERSION]</a>)
                 </span>
                 </div>
@@ -336,7 +336,7 @@
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
         callback_error: (img) => {
-            img.setAttribute("src", "/assets/placeholder.webp");
+            img.setAttribute("src", "/assets/placeholder-broken.webp");
         }
     });
 

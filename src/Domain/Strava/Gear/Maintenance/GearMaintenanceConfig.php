@@ -8,7 +8,9 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
+use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\String\Tag;
 
 final readonly class GearMaintenanceConfig implements \Stringable
 {

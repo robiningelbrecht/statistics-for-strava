@@ -6,6 +6,7 @@ namespace App\Domain\App\BuildGearStatsHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Calendar\Months;
+use App\Domain\Strava\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Strava\Gear\DistanceOverTimePerGearChart;
 use App\Domain\Strava\Gear\DistancePerMonthPerGearChart;
 use App\Domain\Strava\Gear\FindGearStatsPerDay\FindGearStatsPerDay;
@@ -24,6 +25,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private GearRepository $gearRepository,
+        private CustomGearConfig $customGearConfig,
         private ActivitiesEnricher $activitiesEnricher,
         private UnitSystem $unitSystem,
         private QueryBus $queryBus,
@@ -49,6 +51,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         $this->buildStorage->write(
             'gear-stats.html',
             $this->twig->load('html/gear/gear-stats.html.twig')->render([
+                'customGearConfig' => $this->customGearConfig,
                 'gearStatistics' => GearStatistics::fromActivitiesAndGear(
                     activities: $activities,
                     gears: $allGear

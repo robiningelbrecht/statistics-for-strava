@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Stream\CombinedStream;
 
-use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Symfony\Contracts\Translation\TranslatableInterface;
@@ -61,26 +60,5 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::PACE => '#fac858',
             default => '#cccccc',
         };
-    }
-
-    /**
-     * @return array<CombinedStreamType>
-     */
-    public static function othersFor(ActivityType $activityType): array
-    {
-        if (ActivityType::RIDE === $activityType) {
-            return [
-                self::ALTITUDE,
-                self::HEART_RATE,
-                self::WATTS,
-                self::CADENCE,
-            ];
-        }
-
-        return [
-            self::ALTITUDE,
-            self::HEART_RATE,
-            self::PACE,
-        ];
     }
 }

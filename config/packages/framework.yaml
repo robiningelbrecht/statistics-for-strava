@@ -4,6 +4,8 @@ framework:
     session: true
     assets:
         version_strategy: 'App\Infrastructure\Twig\UuidAssetVersioningStrategy'
+    profiler:
+        collect_serializer_data: true
 
 when@test:
     framework:

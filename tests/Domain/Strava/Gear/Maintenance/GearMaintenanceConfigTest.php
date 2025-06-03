@@ -15,7 +15,7 @@ class GearMaintenanceConfigTest extends TestCase
 {
     use MatchesSnapshots;
 
-    public function testFromYmlStringWhenEmpty(): void
+    public function testFromArrayWhenEmpty(): void
     {
         $this->assertEquals(
             'The gear maintenance feature is disabled.',

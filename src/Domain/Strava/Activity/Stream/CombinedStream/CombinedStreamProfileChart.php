@@ -52,8 +52,17 @@ final readonly class CombinedStreamProfileChart
             throw new \RuntimeException('yAxisData data cannot be empty');
         }
         $distanceSymbol = $this->unitSystem->distanceSymbol();
-        $maxYAxis = ceil(max($this->yAxisData) * 1.1);
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
+
+        if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
+            [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
+            $margin = ($max - $min) * 0.1;
+            $minYAxis = max(0, (int) floor($min - $margin));
+            $maxYAxis = (int) ceil($max + $margin);
+        } else {
+            $minYAxis = 0;
+            $maxYAxis = (int) ceil(max($this->yAxisData) * 1.1);
+        }
 
         return [
             'grid' => [
@@ -89,7 +98,7 @@ final readonly class CombinedStreamProfileChart
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 10,
-                    'min' => 0,
+                    'min' => $minYAxis,
                     'max' => $maxYAxis,
                     'splitLine' => [
                         'show' => false,

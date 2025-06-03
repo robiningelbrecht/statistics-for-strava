@@ -34,6 +34,15 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
     public function handle(Command $command): void
     {
         assert($command instanceof BuildGearMaintenanceHtml);
+
+        $gears = $this->gearRepository->findAll();
+        $this->buildStorage->write(
+            'gear/info.html',
+            $this->twig->load('html/gear/gear-info.html.twig')->render([
+                'gears' => $gears,
+            ])
+        );
+
         if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
             $this->buildStorage->write(
                 'gear/maintenance.html',
@@ -42,8 +51,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 
             return;
         }
-
-        $gears = $this->gearRepository->findAll();
 
         // Validate that all gear ids are in the DB.
         $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear) => $gear->getId()));
@@ -124,13 +131,6 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'gearComponents' => $this->gearMaintenanceConfig->getGearComponents(),
                 'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid(),
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
-            ])
-        );
-
-        $this->buildStorage->write(
-            'gear/info.html',
-            $this->twig->load('html/gear/gear-info.html.twig')->render([
-                'gears' => $gears,
             ])
         );
     }

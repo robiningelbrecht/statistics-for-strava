@@ -20,7 +20,7 @@ final readonly class RamerDouglasPeucker
     /**
      * @return array<mixed>
      */
-    public function apply(Epsilon $epsilon): array
+    public function applyWith(Epsilon $epsilon): array
     {
         if (!$distances = $this->distanceStream->getData()) {
             throw new \InvalidArgumentException('Distance stream is empty');

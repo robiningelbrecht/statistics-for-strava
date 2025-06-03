@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\Maintenance\Task;
 
-use App\Domain\Strava\Gear\Maintenance\Tag;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\String\Tag;
 
 final readonly class MaintenanceTask
 {

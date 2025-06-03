@@ -46,6 +46,11 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         );
     }
 
+    public static function some(): self
+    {
+        return self::fromString('2025-01-01 00:00:00');
+    }
+
     public function __toString(): string
     {
         return $this->iso();

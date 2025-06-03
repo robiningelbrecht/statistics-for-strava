@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Twig;
 
 use App\Domain\App\AppUrl;
+use Twig\Attribute\AsTwigFunction;
 
 final readonly class UrlTwigExtension
 {
@@ -13,6 +14,7 @@ final readonly class UrlTwigExtension
     ) {
     }
 
+    #[AsTwigFunction('relativeUrl')]
     public function toRelativeUrl(string $path): string
     {
         $path = '/'.ltrim($path, '/');
