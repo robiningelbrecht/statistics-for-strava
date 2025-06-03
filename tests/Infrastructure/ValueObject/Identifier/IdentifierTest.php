@@ -22,4 +22,13 @@ class IdentifierTest extends TestCase
 
         DummyIdentifier::fromString('invalid');
     }
+
+    public function testToUnprefixedString(): void
+    {
+        $identifier = DummyIdentifier::fromString('dummy-test');
+        $this->assertEquals('test', $identifier->toUnprefixedString());
+
+        $identifier = DummyIdentifier::fromString('dummy-dummy-test');
+        $this->assertEquals('dummy-test', $identifier->toUnprefixedString());
+    }
 }
