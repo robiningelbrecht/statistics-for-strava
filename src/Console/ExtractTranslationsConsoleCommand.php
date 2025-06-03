@@ -23,6 +23,7 @@ class ExtractTranslationsConsoleCommand extends Command
                     'translation:extract',
                     '--force',
                     '--prefix=',
+                    '--domain=messages',
                     '--format=yaml',
                     '--sort=ASC',
                     '--domain=messages',
