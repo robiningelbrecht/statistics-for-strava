@@ -54,27 +54,14 @@ final readonly class CombinedStreamProfileChart
         $distanceSymbol = $this->unitSystem->distanceSymbol();
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
 
-        $yaxisData = $this->yAxisData;
-        $minYAxisData = min($yaxisData);
-
         if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
-            if ($minYAxisData < -100000) {
-                // If the minimum value is negative, we need to offset all values to make the minimum zero
-                // so we don't end up with a crooked chart.
-                $offset = abs($minYAxisData) + 1;
-                $yaxisData = array_map(
-                    static fn (int|float $value) => round($value + $offset, 2),
-                    $yaxisData
-                );
-            }
-
-            $maxYAxisData = max($yaxisData);
-            $margin = ($maxYAxisData - $minYAxisData) * 0.1;
-            $minYAxis = (int) floor($minYAxisData - $margin);
-            $maxYAxis = (int) ceil($maxYAxisData + $margin);
+            [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
+            $margin = ($max - $min) * 0.1;
+            $minYAxis = max(0, (int) floor($min - $margin));
+            $maxYAxis = (int) ceil($max + $margin);
         } else {
             $minYAxis = 0;
-            $maxYAxis = (int) ceil(max($yaxisData) * 1.1);
+            $maxYAxis = (int) ceil(max($this->yAxisData) * 1.1);
         }
 
         return [
@@ -137,7 +124,7 @@ final readonly class CombinedStreamProfileChart
                             ],
                         ],
                     ],
-                    'data' => $yaxisData,
+                    'data' => $this->yAxisData,
                     'type' => 'line',
                     'symbol' => 'none',
                     'color' => $this->yAxisStreamType->getSeriesColor(),
