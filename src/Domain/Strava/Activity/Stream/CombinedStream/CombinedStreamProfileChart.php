@@ -137,6 +137,7 @@ final readonly class CombinedStreamProfileChart
                     ],
                     'areaStyle' => [
                         'opacity' => 1,
+                        'origin' => 'start',
                     ],
                 ],
             ],
