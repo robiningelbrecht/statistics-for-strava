@@ -83,6 +83,9 @@ app-build-all:
 	@make app-build-flowbite
 	@make build-containers
 
+app-run-docs:
+	docsify serve docs
+
 # Helpers for forks and PRs
 fork-fetch-remote:
 	git remote add $(remote-name) $(fork-url)
