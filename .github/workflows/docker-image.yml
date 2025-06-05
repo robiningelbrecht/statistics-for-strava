@@ -65,6 +65,7 @@ jobs:
 
       - name: Update CHANGELOG.md
         uses: rhysd/changelog-from-release/action@v3
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
         with:
           file: CHANGELOG.md
           pull_request: true
