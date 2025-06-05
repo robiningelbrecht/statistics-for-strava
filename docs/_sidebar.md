@@ -21,4 +21,4 @@
 - [Locales and translations](awesome.md)
 - [Local development](awesome.md)
 - [Sponsors](awesome.md)
-- [Releases](https://github.com/robiningelbrecht/statistics-for-strava/releases)
+- [Changelog](changelog.md)

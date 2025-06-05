@@ -9,3 +9,8 @@
 .justify-center{
     justify-content: center;
 }
+
+/* Nasty hack to hide the changelog 2nd level sub menu items without hiding them for other pages.  */
+ul.app-sub-sidebar > ul.app-sub-sidebar{
+    display: none;
+}
