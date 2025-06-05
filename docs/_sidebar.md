@@ -1,8 +1,8 @@
 - Getting Started
 
-  - [Prerequisites](quickstart.md)
-  - [Installation](more-pages.md)
-  - [Challenges and trophies](cover.md)
+  - [Prerequisites](prerequisites.md)
+  - [Installation](installation.md)
+  - [Challenges and trophies](challenges-and-trophies.md)
 
 - Configuration
 
@@ -21,4 +21,4 @@
 - [Locales and translations](awesome.md)
 - [Local development](awesome.md)
 - [Sponsors](awesome.md)
-- [Releases](changelog.md)
+- [Releases](https://github.com/robiningelbrecht/statistics-for-strava/releases)
