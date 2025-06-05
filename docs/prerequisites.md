@@ -1,4 +1,4 @@
-# 🪄 Prerequisites
+# Prerequisites
 
 You'll need a `Strava client ID` and `Strava client Secret`
 
