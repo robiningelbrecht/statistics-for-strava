@@ -216,6 +216,18 @@ import:
   # This allows you to skip specific activities during import.
   # ["123456789", "987654321"]
   activitiesToSkipDuringImport: []
+ai:
+  # Optional, enable AI features. This will allow you to use all AI features.
+  enabled: false
+  # The AI provider to use. 
+  # Supported providers are: 'anthropic', 'gemini', 'ollama', 'openAI', 'deepseek', 'mistral'
+  provider: 'ollama'
+  # Configuration for the AI provider. This will be different for each provider.
+  # For ollama, you need to have the ollama server running and the model downloaded.
+  # You can find more information on how to set this up and configure the providers in the wiki.
+  configuration:
+    url: 'http://host.docker.internal:11434/api'
+    model: 'llama3.2'
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null

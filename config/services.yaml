@@ -78,19 +78,10 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
-    ollamaUrl:
-        class: App\Infrastructure\ValueObject\String\Url
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['%env(string:OLLAMA_URL)%']
-
-    App\Domain\Integration\AI\Ollama\OllamaConfig:
-        factory: [ null, 'create' ]
-        arguments: ['%env(OLLAMA_MODEL)%', '@ollamaUrl']
-
-    App\Domain\Integration\AI\NeuronAiAgent:
+    App\Domain\Integration\AI\NeuronAIAgent:
         factory: [ null, 'create' ]
         arguments: [
-            '@App\Domain\Integration\AI\Ollama\OllamaConfig',
+            '@=service("App\\Domain\\Integration\\AI\\AIProviderFactory").create()',
             '@Inspector\Inspector',
         ]
 

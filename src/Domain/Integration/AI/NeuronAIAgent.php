@@ -4,41 +4,30 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI;
 
-use App\Domain\Integration\AI\Ollama\OllamaConfig;
 use Inspector\Inspector;
 use NeuronAI\Chat\History\AbstractChatHistory;
 use NeuronAI\Chat\History\FileChatHistory;
 use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
-use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\RAG\RAG;
 use NeuronAI\SystemPrompt;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class NeuronAiAgent extends RAG
+final class NeuronAIAgent extends RAG
 {
-    private function __construct(
-        private readonly OllamaConfig $config,
-    ) {
-    }
-
     public static function create(
-        OllamaConfig $config,
+        AIProviderInterface $provider,
         Inspector $inspector,
     ): self {
-        return new self($config)
+        /** @var NeuronAIAgent $agent */
+        $agent = new self()
+            ->withProvider($provider)
             ->observe(
                 new AgentMonitoring($inspector)
             );
-    }
 
-    protected function provider(): AIProviderInterface
-    {
-        return new Ollama(
-            url: (string) $this->config->getUrl(),
-            model: $this->config->getModel(),
-        );
+        return $agent;
     }
 
     public function instructions(): string

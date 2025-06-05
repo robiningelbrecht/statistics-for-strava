@@ -289,7 +289,7 @@
     </main>
 </div>
 <script>
-    const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
+    const eventSource = new EventSource("{{ mercure('ai-chat')|escape('js') }}");
     eventSource.onmessage = event => {
         console.log(JSON.parse(event.data));
     };

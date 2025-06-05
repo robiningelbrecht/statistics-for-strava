@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Domain\Integration\AI\NeuronAiAgent;
+use App\Domain\Integration\AI\NeuronAIAgent;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +17,7 @@ use Symfony\Component\Mercure\Update;
 class TestOllamaChatConsoleCommand extends Command
 {
     public function __construct(
-        private readonly NeuronAiAgent $agent,
+        private readonly NeuronAIAgent $agent,
         private readonly HubInterface $hub,
     ) {
         parent::__construct();
@@ -28,7 +28,7 @@ class TestOllamaChatConsoleCommand extends Command
         $response = $this->agent->chat(new UserMessage('Hi! What can you do?'));
 
         $update = new Update(
-            'https://example.com/books/1',
+            'ai-chat',
             json_encode(['answer' => $response->getContent()])
         );
 
