@@ -2,7 +2,7 @@
     "type": "project",
     "license": "GPL-3.0-or-later",
     "name": "robiningelbrecht/statistics-for-strava",
-    "description": "SStatistics for Strava is a self-hosted, open-source dashboard for your Strava data.",
+    "description": "Statistics for Strava is a self-hosted, open-source dashboard for your Strava data.",
     "authors": [
         {
             "name": "Robin Ingelbrecht",
