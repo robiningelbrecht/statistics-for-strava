@@ -18,7 +18,9 @@
 
 # 📸 Showcase
 
-?> This app is in no way affiliated with or part of the official Strava software suite.
+<div class="alert info">
+    This app is in no way affiliated with or part of the official Strava software suite.
+</div>
 
 [include](assets/showcase.mp4 ':include :type=video controls width=100%')
 
