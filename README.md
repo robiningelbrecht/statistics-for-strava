@@ -55,7 +55,8 @@ https://statistics-for-strava-docs.robiningelbrecht.be/assets/showcase.mp4
 
 ## 📖 Documentation
 
-The documentation is available at [statistics-for-strava-docs.robiningelbrecht.be](https://statistics-for-strava-docs.robiningelbrecht.be/#/).
+Start off by showing some ❤️ and give this repo a star. 
+When you are done, head over to the [documentation](https://statistics-for-strava-docs.robiningelbrecht.be) to get started with the installation and configuration of Statistics for Strava.
 
 ## ❤️ Sponsors
 
