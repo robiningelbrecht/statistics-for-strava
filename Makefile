@@ -83,6 +83,9 @@ app-build-all:
 	@make app-build-flowbite
 	@make build-containers
 
+app-run-docs:
+	docsify serve docs
+
 # Ollama models
 ollama-run-llama32:
 	docker compose exec ollama ollama run llama3.2

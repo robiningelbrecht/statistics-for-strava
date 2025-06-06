@@ -15,7 +15,7 @@ final class CouldNotParseYamlConfig extends \RuntimeException
 2) A file named "config.yaml" exists in the expected location.
 
 Refer to the README for detailed setup instructions.
-If you are upgrading from v1.x.x to v2.x.x, please consult the Wiki for additional guidance.'
+If you are upgrading from v1.x.x to v2.x.x, please consult the docs for additional guidance.'
         );
     }
 

@@ -1,0 +1,119 @@
+.text-center {
+    text-align: center;
+}
+
+.flex{
+    display: flex;
+}
+
+.items-center{
+    align-items: center;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+h1 a span{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* SIDEBAR */
+.sidebar-nav ul li a{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* NAVBAR */
+.app-nav ul{
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+}
+
+.app-nav ul li{
+    margin: 0;
+}
+
+.app-nav ul li a{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* ALERTS */
+div.alert{
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    border-bottom-right-radius: 2px;
+    border-left: 4px solid;
+    border-top-right-radius: 2px;
+    margin: 2em 0;
+    padding: 30px 20px 12px 20px;
+    position: relative;
+    background-color: #f8f8f8;
+}
+
+div.alert ul{
+    margin: 0;
+}
+
+div.alert:before{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    top: 10px;
+    left: 20px;
+    line-height: 20px;
+    position: absolute;
+    text-align: center;
+}
+
+div.alert.info{
+    border-color: #3b82f6;
+}
+
+div.alert.info:before{
+    content: "Note";
+    color: #3b82f6;
+}
+
+div.alert.success{
+    border-color: rgba(66,185,131);
+}
+
+div.alert.success:before{
+    content: "Success";
+    color: rgba(66,185,131);
+}
+
+div.alert.important{
+    border-color: #8256d0;
+}
+
+div.alert.important:before{
+    content: "Important";
+    color: #8256d0;
+}
+
+div.alert.warning{
+    border-color: #fbbf24;
+}
+
+div.alert.warning:before{
+    content: "Warning";
+    color: #fbbf24;
+}
+
+div.alert.error{
+    border-color: #f66f66;
+}
+
+div.alert.error:before{
+    content: "Be cautious";
+    color: #f66f66;
+}

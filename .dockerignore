@@ -4,6 +4,7 @@
 build
 config/app
 cron
+docs
 tests
 var
 storage
@@ -28,6 +29,7 @@ phpunit.xml.dist
 package-lock.json
 package.json
 README.md
+CHANGELOG.md
 symfony.lock
 tailwind.config.js
 logo.xcf
