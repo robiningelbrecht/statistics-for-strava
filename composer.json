@@ -46,7 +46,6 @@
         "symfony/framework-bundle": "7.3.*",
         "symfony/intl": "7.3.*",
         "symfony/lock": "7.3.*",
-        "symfony/mercure-bundle": "^0.3.9",
         "symfony/messenger": "7.3.*",
         "symfony/monolog-bundle": "*",
         "symfony/process": "7.3.*",

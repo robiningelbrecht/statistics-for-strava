@@ -163,18 +163,6 @@
             "config/packages/lock.yaml"
         ]
     },
-    "symfony/mercure-bundle": {
-        "version": "0.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "0.3",
-            "ref": "528285147494380298f8f991ee8c47abebaf79db"
-        },
-        "files": [
-            "config/packages/mercure.yaml"
-        ]
-    },
     "symfony/messenger": {
         "version": "7.1",
         "recipe": {

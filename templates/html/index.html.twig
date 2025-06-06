@@ -289,12 +289,6 @@
     </main>
 </div>
 <script>
-    const eventSource = new EventSource("{{ mercure('ai-chat')|escape('js') }}");
-    eventSource.onmessage = event => {
-        console.log(JSON.parse(event.data));
-    };
-</script>
-<script>
     window.statisticsForStrava = {{ javascriptWindowConstants|raw }};
     window.statisticsForStrava.callbacks = {};
     window.statisticsForStrava.callbacks.formatSeconds = (secondsToFormat) => {
