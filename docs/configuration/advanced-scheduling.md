@@ -25,4 +25,4 @@ To check if your schedule was applied in the container crontab, you can run
 docker compose exec app crontab -u abc -l
 ```
 
-After making changes to `abc` you will need to restart the container for the changes to take effect. You may want to also [set correct file permissions](/robiningelbrecht/statistics-for-strava/wiki/File-Permissions) for the crontab file.
+After making changes to `abc` you will need to restart the container for the changes to take effect. You may want to also [set correct file permissions](configuration/file-permissions.md) for the crontab file.

@@ -1,5 +1,7 @@
 # config.yaml
 
+The main configuration yaml file contains all the settings for you to customize the app and set it up to your liking.
+
 [include](config-yaml-example.md ':include')
 
 ## Athlete weight history
