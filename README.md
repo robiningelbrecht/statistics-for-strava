@@ -34,7 +34,7 @@
 > [!NOTE]
 > This app is in no way affiliated with or part of the official Strava software suite.
 
-https://statistics-for-strava-docs.robiningelbrecht.be/assets/showcase.mp4
+https://github.com/user-attachments/assets/b7d447b1-0212-49c8-ac67-62d737c66922
 
 ### Key Features
 
@@ -58,7 +58,7 @@ https://statistics-for-strava-docs.robiningelbrecht.be/assets/showcase.mp4
 Start off by showing some ❤️ and give this repo a star. 
 When you are done, head over to the [documentation](https://statistics-for-strava-docs.robiningelbrecht.be) to get started with the installation and configuration of Statistics for Strava.
 
-## ❤️ Sponsors
+## 🫶 Sponsors
 
 This project is sponsored by [Blackfire.io](https://www.blackfire.io).
 
