@@ -26,6 +26,11 @@
 .app-nav ul{
     display: flex;
     align-items: center;
+    column-gap: 1rem;
+}
+
+.app-nav ul li{
+    margin: 0;
 }
 
 .app-nav ul li a{
