@@ -92,7 +92,7 @@ The app needs this token to be able to access your data and import it into your 
 Navigate to http://localhost:8080/.
 You should see this page—just follow the steps to complete the setup.
 
-![Strava Authorization](../assets/strava-oauth.png)
+![Strava Authorization](../assets/images/strava-oauth.png)
 
 ## Import and build statistics
 
