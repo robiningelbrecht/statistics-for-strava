@@ -4,7 +4,7 @@
     To run this application, you'll need <a href="https://docs.docker.com/engine/install/">Docker</a> with <a href="https://docs.docker.com/compose/install/">docker-compose</a>.
 </div>
 
-Start off by showing some ❤️ and give this repo a star. Then from your command line:
+Start off by showing some :heart: and give this repo a star. Then from your command line:
 
 ```bash
 # Create a new directory
@@ -65,7 +65,6 @@ IMPORT_AND_BUILD_SCHEDULE="5 4 * * *"
 TZ=Etc/GMT
 
 # The UID and GID to create/own files managed by statistics-for-strava
-# May only be necessary on Linux hosts, see File Permissions in Wiki
 #PUID=
 #PGID=
 ```

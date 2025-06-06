@@ -1,5 +1,3 @@
-The main configuration yaml file contains all the settings for you to customize the app and set it up to your liking.
-
 ```yaml
 general:
   # The URL on which the app will be hosted. This URL will be used in the manifest file. 
@@ -43,14 +41,14 @@ appearance:
   # Allowed formats: DAY-MONTH-YEAR or MONTH-DAY-YEAR
   dateFormat: 'DAY-MONTH-YEAR'
 import:
-  # Strava API has rate limits (https://github.com/robiningelbrecht/statistics-for-strava/wiki),
+  # Strava API has rate limits (https://docs.statistics-for-strava.robiningelbrecht.be/#/troubleshooting/faq?id=why-does-it-take-so-long-to-import-my-data),
   # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
   # per import. Considering there's a 1000 request per day limit and importing one new activity can
   # take up to 3 API calls, 250 should be a safe number.
   numberOfNewActivitiesToProcessPerImport: 250
   # Sport types to import. Leave empty to import all sport types
   # With this list you can also decide the order the sport types will be rendered in.
-  # A full list of allowed options is available on https://docs.statistics-for-strava.robiningelbrecht.be/configuration/main-configuration?id=supported-sport-types 
+  # A full list of allowed options is available on https://docs.statistics-for-strava.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
   sportTypesToImport: []
   # Activity visibilities to import. Leave empty to import all visibilities
   # This list can be combined with sportTypesToImport.
