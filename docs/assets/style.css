@@ -14,7 +14,27 @@
     justify-content: center;
 }
 
-/* Alerts */
+/* SIDEBAR */
+.sidebar-nav ul li a{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* NAVBAR */
+
+.app-nav ul{
+    display: flex;
+    align-items: center;
+}
+
+.app-nav ul li a{
+    display: flex;
+    align-items: center;
+    column-gap: 3px;
+}
+
+/* ALERTS */
 
 div.alert{
     border-bottom-right-radius: 2px;
@@ -75,9 +95,4 @@ div.alert.error{
 div.alert.error:before{
     content: "Be cautious";
     color: #f66f66;
-}
-
-/* Nasty hack to hide the changelog 2nd level sub menu items without hiding them for other pages.  */
-ul.app-sub-sidebar > ul.app-sub-sidebar{
-    display: none;
 }
