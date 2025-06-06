@@ -16,7 +16,7 @@
 
 ---
 
-# 📸 Showcase
+# :camera_flash: Showcase
 
 <div class="alert info">
     This app is in no way affiliated with or part of the official Strava software suite.
