@@ -20,7 +20,7 @@
 
 <p align="center">
   <a href="#-showcase">Showcase</a> •
-  <a href="http://docs.statistics-for-strava.robiningelbrecht.be/">Docs</a> •
+  <a href="https://statistics-for-strava-docs.robiningelbrecht.be">Docs</a> •
   <a href="https://discord.gg/p4zpZyCHNc">Discord</a> •
   <a href="#%EF%B8%8F-sponsors">Sponsors</a>
 </p>
@@ -34,7 +34,7 @@
 > [!NOTE]
 > This app is in no way affiliated with or part of the official Strava software suite.
 
-http://docs.statistics-for-strava.robiningelbrecht.be/assets/showcase.mp4
+https://statistics-for-strava-docs.robiningelbrecht.be/assets/showcase.mp4
 
 ### Key Features
 
@@ -42,8 +42,8 @@ http://docs.statistics-for-strava.robiningelbrecht.be/assets/showcase.mp4
 * Detailed list of all your activities
 * Monthly stats with calendar view
 * Gear stats
-* Custom gears ([instructions](https://docs.statistics-for-strava.robiningelbrecht.be/#/configuration/custom-gear))
-* Gear (component) maintenance tracking ([instructions](https://docs.statistics-for-strava.robiningelbrecht.be/#/configuration/gear-maintenance))
+* Custom gears ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear))
+* Gear (component) maintenance tracking ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance))
 * Eddington for biking and running activities
 * Detailed list of your segments and corresponding efforts
 * Heatmap
@@ -55,7 +55,7 @@ http://docs.statistics-for-strava.robiningelbrecht.be/assets/showcase.mp4
 
 ## 📖 Documentation
 
-The documentation is available at [docs.statistics-for-strava.robiningelbrecht.be](http://docs.statistics-for-strava.robiningelbrecht.be/).
+The documentation is available at [statistics-for-strava-docs.robiningelbrecht.be](https://statistics-for-strava-docs.robiningelbrecht.be/#/).
 
 ## ❤️ Sponsors
 
