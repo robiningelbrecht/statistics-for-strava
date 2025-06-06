@@ -16,6 +16,7 @@
 
   - [Data import](deploy.md "Statistics for Strava | Data import")
   - [Crontab](helpers.md "Statistics for Strava | Crontab")
+  - [:warning: v2.0.0 breaking change](migration.md "Statistics for Strava | v2.0.0 Migration Notice: Breaking change")
 
 - Development
 

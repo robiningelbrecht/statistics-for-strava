@@ -12,9 +12,6 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<nav class="flex items-center">
-    <a href="https://statistics-for-strava.robiningelbrecht.be/dashboard" target="_blank">🔥Live demo</a>
-</nav>
 <div id="app">Please wait...</div>
 <script>
     window.$docsify = {
@@ -22,10 +19,12 @@
         repo: 'robiningelbrecht/statistics-for-strava',
         homepage: 'home.md',
         loadSidebar: true,
+        loadNavbar: true,
         alias: {
             '/.*/_sidebar.md': '/_sidebar.md'
         },
         subMaxLevel: 2,
+        routerMode: 'history',
         auto2top: true,
         formatUpdated: '{DD}/{MM} {HH}:{mm}',
         search: 'auto',

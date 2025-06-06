@@ -22,12 +22,10 @@ general:
     #    "2020-01-01": 198
     #    "2025-01-10": 193
     # History of weight (in kg or pounds, depending on appearance.unitSystem). Needed to calculate relative w/kg.
-    # Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info.
     weightHistory:
       "YYYY-MM-DD": 100
       "YYYY-MM-DD": 200
     # Optional, history of FTP. Needed to calculate activity stress level.
-    # Check https://github.com/robiningelbrecht/statistics-for-strava/wiki for more info. Example:
     # ftpHistory
     #    "2024-10-03": 198
     #    "2025-01-10": 220
@@ -52,7 +50,7 @@ import:
   numberOfNewActivitiesToProcessPerImport: 250
   # Sport types to import. Leave empty to import all sport types
   # With this list you can also decide the order the sport types will be rendered in.
-  # A full list of allowed options is available on https://github.com/robiningelbrecht/statistics-for-strava/wiki/Supported-sport-types/
+  # A full list of allowed options is available on https://docs.statistics-for-strava.robiningelbrecht.be/configuration/main-configuration?id=supported-sport-types 
   sportTypesToImport: []
   # Activity visibilities to import. Leave empty to import all visibilities
   # This list can be combined with sportTypesToImport.
