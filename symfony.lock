@@ -47,6 +47,18 @@
             ".php-cs-fixer.dist.php"
         ]
     },
+    "inspector-apm/inspector-symfony": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.4",
+            "ref": "60ac12d92b25c43830fdf25922e53467058feab1"
+        },
+        "files": [
+            "config/packages/inspector.yaml"
+        ]
+    },
     "league/flysystem-bundle": {
         "version": "3.3",
         "recipe": {
@@ -58,6 +70,18 @@
         "files": [
             "config/packages/flysystem.yaml",
             "var/storage/.gitignore"
+        ]
+    },
+    "php-http/discovery": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "config/packages/http_discovery.yaml"
         ]
     },
     "phpstan/phpstan": {

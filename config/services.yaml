@@ -78,6 +78,13 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
+    App\Domain\Integration\AI\NeuronAIAgent:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@=service("App\\Domain\\Integration\\AI\\AIProviderFactory").create()',
+            '@Inspector\Inspector',
+        ]
+
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.ntfyUrl")']
@@ -116,7 +123,6 @@ services:
         arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
-        class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
