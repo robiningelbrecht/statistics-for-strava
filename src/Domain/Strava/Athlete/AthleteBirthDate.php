@@ -14,7 +14,7 @@ final class AthleteBirthDate extends SerializableDateTime
         try {
             $birthDate = new self($string);
         } catch (\DateMalformedStringException) {
-            throw new \InvalidArgumentException(sprintf('Invalid date "%s" set in ATHLETE_BIRTHDAY in .env file', $string));
+            throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete birthday in config.yaml file', $string));
         }
 
         return $birthDate;
