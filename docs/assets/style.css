@@ -46,9 +46,6 @@ h1 a span{
 
 /* ALERTS */
 div.alert{
-    display: flex;
-    align-items: center;
-    column-gap: 5px;
     border-bottom-right-radius: 2px;
     border-left: 4px solid;
     border-top-right-radius: 2px;
