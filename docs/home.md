@@ -40,3 +40,11 @@
 * History of activity photos
 * User badges
 * PWA support
+
+<div class="alert warning">
+    <ul>
+        <li><strong>Backup before updates</strong>: Always backup your Docker volumes before upgrading.</li>
+        <li><strong>Stay up-to-date</strong>: Make sure you're running the latest version for the best experience.</li>
+        <li><strong>Check the release notes</strong>: Always check the release notes to verify if there are any breaking changes.</li>
+    </ul>
+</div>

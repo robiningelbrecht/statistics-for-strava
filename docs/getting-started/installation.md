@@ -103,10 +103,7 @@ after which you can view your statistics.
 > docker compose exec app bin/console app:strava:build-files
 ```
 
-<div class="alert warning">
-    <ul>
-        <li><strong>Backup before updates</strong>: Always backup your Docker volumes before upgrading.</li>
-        <li><strong>Stay up-to-date</strong>: Make sure you're running the latest version for the best experience.</li>
-        <li><strong>Check the release notes</strong>: Always check the release notes to verify if there are any breaking changes.</li>
-    </ul>
+<div class="alert important">
+Everytime you import data, you need to rebuild the HTML files to see the changes. 
+By default the import and build commands are run periodically based on the schedule defined in your <strong>.env</strong> file.
 </div>
