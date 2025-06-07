@@ -37,7 +37,7 @@ final class AthleteWeightHistory
                     weightInGrams: $weightInGrams,
                 );
             } catch (\DateMalformedStringException) {
-                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set in ATHLETE_WEIGHT_HISTORY in .env file', $on));
+                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete weightHistory in config.yaml file', $on));
             }
         }
 

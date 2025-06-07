@@ -28,7 +28,7 @@ final class FtpHistory
                     ftp: FtpValue::fromInt($ftpValue)
                 );
             } catch (\DateMalformedStringException) {
-                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set in FTP_HISTORY in .env file', $setOn));
+                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete ftpHistory in config.yaml file', $setOn));
             }
         }
 
