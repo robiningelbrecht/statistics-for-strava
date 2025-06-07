@@ -15,7 +15,7 @@
 </p>
 
 ---
-https://github.com/robiningelbrecht/statistics-for-strava?tab=readme-ov-file#-documentation
+<h4 align="center">Statistics for Strava is a self-hosted, open-source dashboard for your Strava data.</h4>
 
 <p align="center">
   <a href="#-showcase">Showcase</a> •
