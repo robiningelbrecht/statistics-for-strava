@@ -6,6 +6,6 @@ Most importantly, you'll need a `Strava client ID` and `Strava client Secret`
 
 * Navigate to your [Strava API settings page](https://www.strava.com/settings/api).
 * Copy the `client ID` and `client secret`, you'll need these during the [installation](/getting-started/installation.md)
-* Make sure the `Authorization App Domain` is set to the url you will host your app on. Or you can leave it empty if you are running the app locally.
+* Make sure the `Website` and `Authorization Callback Domain` are set to the url you will host your app on
 
 ![Strava API settings page](../assets/images/strava-api-settings.png) 

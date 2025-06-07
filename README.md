@@ -15,14 +15,13 @@
 </p>
 
 ---
-
-<h4 align="center">Statistics for Strava is a self-hosted, open-source dashboard for your Strava data.</h4>
+https://github.com/robiningelbrecht/statistics-for-strava?tab=readme-ov-file#-documentation
 
 <p align="center">
   <a href="#-showcase">Showcase</a> •
-  <a href="https://statistics-for-strava-docs.robiningelbrecht.be">Docs</a> •
+  <a href="#-documentation">Docs</a> •
   <a href="https://discord.gg/p4zpZyCHNc">Discord</a> •
-  <a href="#%EF%B8%8F-sponsors">Sponsors</a>
+  <a href="#-sponsors">Sponsors</a>
 </p>
 
 <p align="center">
