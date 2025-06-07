@@ -63,7 +63,7 @@ final readonly class StravaOAuthRequestHandler
             } catch (ClientException|RequestException $e) {
                 $error = $e->getMessage();
                 if ($response = $e->getResponse()) {
-                    $error = Json::encodePretty(Json::decode($response->getBody()->getContents()));
+                    $error = $response->getBody()->getContents();
                 }
             }
         }
