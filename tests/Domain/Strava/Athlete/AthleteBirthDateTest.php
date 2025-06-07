@@ -9,7 +9,7 @@ class AthleteBirthDateTest extends TestCase
 {
     public function testFromStringWhenInvalid(): void
     {
-        $this->expectExceptionObject(new \InvalidArgumentException('Invalid date "invalid" set in ATHLETE_BIRTHDAY in .env file'));
+        $this->expectExceptionObject(new \InvalidArgumentException('Invalid date "invalid" set for athlete birthday in config.yaml file'));
         AthleteBirthDate::fromString('invalid');
     }
 }

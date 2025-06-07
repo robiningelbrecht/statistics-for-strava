@@ -20,9 +20,9 @@
 
 <p align="center">
   <a href="#-showcase">Showcase</a> •
-  <a href="https://statistics-for-strava-docs.robiningelbrecht.be">Docs</a> •
+  <a href="#-documentation">Docs</a> •
   <a href="https://discord.gg/p4zpZyCHNc">Discord</a> •
-  <a href="#%EF%B8%8F-sponsors">Sponsors</a>
+  <a href="#-sponsors">Sponsors</a>
 </p>
 
 <p align="center">

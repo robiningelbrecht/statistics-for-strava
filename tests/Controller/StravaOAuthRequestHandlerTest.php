@@ -101,10 +101,15 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
                     'code' => 'the-code',
                 ],
             ])
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException('The error')
-            ));
+            ->willThrowException(new RequestException(
+                message: 'The error',
+                request: new \GuzzleHttp\Psr7\Request('GET', 'uri'),
+                response: new Response(
+                    404,
+                    [],
+                    Json::encode(['error' => 'The error']
+                    )
+                )));
 
         $this->assertMatchesHtmlSnapshot($this->stravaOAuthRequestHandler->handle(new Request(
             query: ['code' => 'the-code'],

@@ -38,7 +38,7 @@ class AthleteWeightHistoryTest extends TestCase
 
     public function testItShouldThrowOnInvalidDate(): void
     {
-        $this->expectExceptionObject(new \InvalidArgumentException('Invalid date "YYYY-MM-DD" set in ATHLETE_WEIGHT_HISTORY in .env file'));
+        $this->expectExceptionObject(new \InvalidArgumentException('Invalid date "YYYY-MM-DD" set for athlete weightHistory in config.yaml file'));
         AthleteWeightHistory::fromArray(['YYYY-MM-DD' => 220], UnitSystem::METRIC);
     }
 }
