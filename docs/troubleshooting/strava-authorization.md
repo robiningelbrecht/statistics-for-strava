@@ -48,6 +48,10 @@ Make sure that you have done both of these steps correctly.
 
 ## Invalid redirect_uri
 
+If you receive an error regarding the `redirect_uri`, this probably means that you misconfigured 
+the `Website` and `Authorization Callback Domain` in your Strava application settings. 
+Ensure that the `Website` and `Authorization Callback Domain` match the URL/domain you are using to access your application.
+
 ```json
 {
   "message": "Bad Request",
