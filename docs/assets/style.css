@@ -53,6 +53,8 @@ div.alert{
     padding: 30px 20px 12px 20px;
     position: relative;
     background-color: #f8f8f8;
+    line-height: 1.6rem;
+    word-spacing: .05rem;
 }
 
 div.alert ul{
@@ -113,4 +115,14 @@ div.alert.error{
 div.alert.error:before{
     content: "Be cautious";
     color: #f66f66;
+}
+
+/* CHANGELOG */
+body[data-page="changelog.md"] h1:nth-child(n+3){
+    border-top: 1px solid rgba(66,185,131);
+    padding-top: 0.5rem;
+}
+
+body[data-page="changelog.md"] h2{
+    margin: 15px 0 .8rem;
 }

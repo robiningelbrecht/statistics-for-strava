@@ -62,12 +62,3 @@ jobs:
           subject-name: index.docker.io/robiningelbrecht/strava-statistics
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: false
-
-      - name: Update CHANGELOG.md
-        uses: rhysd/changelog-from-release/action@v3
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
-        with:
-          file: CHANGELOG.md
-          pull_request: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_summary_template: 'update changelog for %s changes'
