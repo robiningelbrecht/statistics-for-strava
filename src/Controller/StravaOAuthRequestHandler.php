@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\App\AppUrl;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -26,6 +27,7 @@ final readonly class StravaOAuthRequestHandler
         private StravaClientId $stravaClientId,
         private StravaClientSecret $stravaClientSecret,
         private Strava $strava,
+        private AppUrl $appUrl,
         private Client $client,
         private Environment $twig,
     ) {
@@ -71,7 +73,7 @@ final readonly class StravaOAuthRequestHandler
         return new Response($this->twig->render('html/strava-oauth.html.twig', [
             'mode' => 'startAuthorization',
             'stravaClientId' => $this->stravaClientId,
-            'returnUrl' => $request->getSchemeAndHttpHost().'/strava-oauth',
+            'returnUrl' => $this->appUrl.'/strava-oauth',
             'error' => $error ?? null,
         ]), Response::HTTP_OK);
     }

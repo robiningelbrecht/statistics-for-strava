@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Controller\StravaOAuthRequestHandler;
+use App\Domain\App\AppUrl;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -153,6 +154,7 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
             StravaClientId::fromString('client'),
             StravaClientSecret::fromString('secret'),
             $this->strava = $this->createMock(Strava::class),
+            AppUrl::fromString('https://www.da-bomb.com'),
             $this->client = $this->createMock(Client::class),
             $this->getContainer()->get(Environment::class),
         );
