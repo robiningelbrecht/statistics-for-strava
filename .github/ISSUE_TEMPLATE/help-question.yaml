@@ -1,0 +1,19 @@
+name: Help / question
+description: Ask for help
+labels: ["question / help"]
+assignees:
+  - robiningelbrecht
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before opening an issue
+        
+        * Be sure to check the [documentation](https://statistics-for-strava-docs.robiningelbrecht.be/). A lot of common issues are already addressed in the troubleshooting section.
+        * Join our [Discord server](https://discord.gg/p4zpZyCHNc) to ask for help if you have trouble setting up the app
+  - type: textarea
+    id: the-question
+    attributes:
+      label: Your question
+    validations:
+      required: true
