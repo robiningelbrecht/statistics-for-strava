@@ -1,3 +1,16 @@
+<a id="v2.1.2"></a>
+# [v2.1.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.2) - 2025-06-08
+
+## What's Changed
+* ISSUE #641: Elevation below sea level is not shown on the plot by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/642
+* ISSUE #646: Setup docsify by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/647
+* ISSUE #657: Remove references to old .env config by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/660
+* ISSUE #654: Improve the documentation and add Strava authorization troubleshooting by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/661
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.1.1...v2.1.2
+
+[Changes][v2.1.2]
+
 <a id="v2.1.1"></a>
 # [v2.1.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.1) - 2025-06-03
 
