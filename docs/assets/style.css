@@ -53,6 +53,7 @@ div.alert{
     padding: 30px 20px 12px 20px;
     position: relative;
     background-color: #f8f8f8;
+    line-height: 1.6rem;
 }
 
 div.alert ul{
