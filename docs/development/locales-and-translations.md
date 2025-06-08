@@ -3,7 +3,7 @@
 Currently, the app is translated to:
 
 * 🇬🇧 English
-* 🇫🇷 French (thanks to [@llaumgui](https://github.com/llaumgui) and [@Ahmosys](https://github.com/llaumgui))
+* 🇫🇷 French (thanks to [@llaumgui](https://github.com/llaumgui), [@Ahmosys](https://github.com/llaumgui) and [@Snoopfr](https://github.com/Snoopfr))
 * 🇩🇪 German (thanks to [@daydreamer77](https://github.com/daydreamer77))
 * 🇧🇪 Dutch
 * 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg) & [@davisenra](https://github.com/davisenra))
