@@ -54,6 +54,7 @@ div.alert{
     position: relative;
     background-color: #f8f8f8;
     line-height: 1.6rem;
+    word-spacing: .05rem;
 }
 
 div.alert ul{
