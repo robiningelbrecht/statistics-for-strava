@@ -22,7 +22,7 @@ general:
 * For activities registered on or after `2024-11-21` the weight `69.2` will be used
 
 <div class="alert warning">
-After each change to these values, you need to run the <i>app:strava:import-data</i> command again
+After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
 </div>
 
 ## Athlete FTP history
@@ -45,7 +45,7 @@ general:
 If you do not know what FTP is, or you don't need it, leave this value empty:
 
 <div class="alert warning">
-After each change to these values, you need to run the <i>app:strava:import-data</i> command again
+After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
 </div>
 
 ## Supported sport types
