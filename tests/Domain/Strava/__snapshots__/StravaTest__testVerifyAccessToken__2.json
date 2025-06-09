@@ -1,4 +1,5 @@
 {
+    "base_uri": "https://www.strava.com/",
     "headers": {
         "Authorization": "Bearer theAccessToken"
     },
