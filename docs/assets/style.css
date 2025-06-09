@@ -108,11 +108,11 @@ div.alert.warning:before{
     color: #fbbf24;
 }
 
-div.alert.error{
+div.alert.danger{
     border-color: #f66f66;
 }
 
-div.alert.error:before{
+div.alert.danger:before{
     content: "Be cautious";
     color: #f66f66;
 }

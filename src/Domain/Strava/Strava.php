@@ -11,6 +11,8 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Sleep;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use League\Flysystem\FilesystemOperator;
 use Monolog\Attribute\WithMonologChannel;
@@ -63,6 +65,37 @@ class Strava
         ));
 
         return $response->getBody()->getContents();
+    }
+
+    public function verifyAccessToken(): void
+    {
+        try {
+            $accessToken = $this->getAccessToken();
+        } catch (ClientException|RequestException $e) {
+            throw new InvalidStravaAccessToken(message: $e->getMessage(), code: $e->getCode(), previous: $e);
+        }
+
+        try {
+            // Check if the access token has the required scopes.
+            $this->client->request(
+                'GET',
+                'api/v3/athlete/activities',
+                [
+                    RequestOptions::HEADERS => [
+                        'Authorization' => 'Bearer '.$accessToken,
+                    ],
+                    RequestOptions::QUERY => [
+                        'per_page' => 1,
+                    ],
+                ]
+            );
+        } catch (ClientException|RequestException $e) {
+            if (401 === $e->getResponse()?->getStatusCode()) {
+                throw new InsufficientStravaAccessTokenScopes();
+            }
+
+            throw $e;
+        }
     }
 
     public function getAccessToken(): string

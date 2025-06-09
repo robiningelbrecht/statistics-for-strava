@@ -5,6 +5,8 @@ namespace App\Tests\Domain\Strava;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
+use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -12,6 +14,8 @@ use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -28,6 +32,96 @@ class StravaTest extends TestCase
     private MockObject $client;
     private MockObject $filesystemOperator;
     private LoggerInterface $logger;
+
+    public function testVerifyAccessToken(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+                $this->assertMatchesJsonSnapshot($options);
+
+                return new Response(200, [], Json::encode([]));
+            });
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenTheTokenIsInvalid(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(RequestException::wrapException(
+                new Request('GET', 'uri'),
+                new \RuntimeException()
+            ));
+
+        $this->expectExceptionObject(new InvalidStravaAccessToken());
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenTheTokenHasInsufficientScopes(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(401, [], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->expectExceptionObject(new InsufficientStravaAccessTokenScopes());
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenARandomErrorIsThrown(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+
+                throw new \RuntimeException('Oh no');
+            });
+
+        $this->expectExceptionObject(new \RuntimeException('Oh no'));
+
+        $this->strava->verifyAccessToken();
+    }
 
     public function testGetAthlete(): void
     {
