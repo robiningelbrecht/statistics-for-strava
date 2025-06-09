@@ -53,14 +53,13 @@ customGears:
     isRetired: true
 ```
 
+<div class="alert important">
+After each change to these values, you need to run the both <i>app:strava:import-data</i> 
+and <i>app:strava:build-files</i> commands again for the changes to take effect
+</div>
+
 ## Tips
 
 * Use unique tag values. Avoid spaces or special characters.
 * Keep the hashtagPrefix short and memorable.
 * Set isRetired to true for gear you no longer use
-
-## Troubleshooting
-
-* Make sure your hashtags are exact and start with #<hashtagPrefix>-<tag>.
-* YAML syntax is indentation-sensitive, use spaces, not tabs.
-* You need to run the import command after making changes to `custom-gear.yaml`.
