@@ -72,6 +72,11 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
+    public function verifyAccessToken(): void
+    {
+    }
+
+    #[\Override]
     public function getAthlete(): array
     {
         ++$this->numberOfCallsExecuted;

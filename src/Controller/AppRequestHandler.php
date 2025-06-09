@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
+use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\RequestException;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +33,9 @@ final readonly class AppRequestHandler
         }
 
         try {
-            $this->strava->getAccessToken();
-        } catch (ClientException|RequestException) {
-            // Refresh token has not been set up properly, initialize authorization flow.
+            $this->strava->verifyAccessToken();
+        } catch (InvalidStravaAccessToken|InsufficientStravaAccessTokenScopes) {
+            // Refresh token has not been set up properly or does not have the required scopes, initialize authorization flow.
             return new RedirectResponse('/strava-oauth', Response::HTTP_FOUND);
         }
 
