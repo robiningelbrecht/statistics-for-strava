@@ -1,7 +1,7 @@
 # Installation
 
 <div class="alert info">
-    To run this application, you'll need <a href="https://docs.docker.com/engine/install/">Docker</a> with <a href="https://docs.docker.com/compose/install/">docker-compose</a>.
+    Make sure to read the <a href="/#/getting-started/prerequisites">prerequisites</a> before you start installing the app.
 </div>
 
 Start off by showing some :heart: and give this repo a star. Then from your command line:
