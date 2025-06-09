@@ -45,7 +45,7 @@ services:
 ## .env
 
 <div class="alert important">
-    Every time you change the .env file, you need to restart your container for the changes to take effect.
+    Every time you change the .env file, you need to recreate (for example; docker compose up -d) your container for the changes to take effect (restarting does not update the .env).
 </div>
 
 ```bash
