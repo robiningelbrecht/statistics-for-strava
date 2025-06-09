@@ -30,7 +30,7 @@ When you have done so, restart your Docker container to apply the changes.
 
 When you encounter an error related to the `client_id`, 
 it usually means that the client ID provided in your `.env` file is incorrect, 
-or you did not restart your Docker container after updating the `.env` file. 
+or you did not recreate your Docker container after updating the `.env` file. 
 Make sure that you have done both of these steps correctly.
 
 ```json
