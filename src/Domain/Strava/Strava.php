@@ -81,6 +81,7 @@ class Strava
                 'GET',
                 'api/v3/athlete/activities',
                 [
+                    'base_uri' => 'https://www.strava.com/',
                     RequestOptions::HEADERS => [
                         'Authorization' => 'Bearer '.$accessToken,
                     ],
