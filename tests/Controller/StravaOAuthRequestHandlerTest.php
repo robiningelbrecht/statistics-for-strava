@@ -162,6 +162,28 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
+    public function testHandleItShouldOnRandomError(): void
+    {
+        $this->strava
+            ->expects($this->once())
+            ->method('verifyAccessToken')
+            ->willThrowException(new \RuntimeException('OH NOWZ'));
+
+        $this->client
+            ->expects($this->never())
+            ->method('post');
+
+        $this->assertMatchesHtmlSnapshot($this->stravaOAuthRequestHandler->handle(new Request(
+            query: [],
+            request: [],
+            attributes: [],
+            cookies: [],
+            files: [],
+            server: [],
+            content: [],
+        ))->getContent());
+    }
+
     protected function setUp(): void
     {
         $this->stravaOAuthRequestHandler = new StravaOAuthRequestHandler(
