@@ -144,7 +144,9 @@ To do this, you need to add a new cron job to your crontab:
 If you have no access to the host system's crontab, 
 you can use a Docker cron container to run the import and build commands at regular intervals.
 
-* https://github.com/mcuadros/ofelia
+#### Ofelia
+
+https://github.com/mcuadros/ofelia
 
 ```yml
 services:
@@ -164,3 +166,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 ```
+
+#### Docker Cron
+
+If you want to have more control over the scheduling, check out [this repository](https://github.com/AnalogJ/docker-cron). 
+It contains cron base images for various distros.
