@@ -28,7 +28,7 @@ Start off by showing some :heart: and give this repo a star. Then from your comm
 
 ```yml
 services:
-  app:
+  statistics-for-strava:
     image: robiningelbrecht/strava-statistics:latest
     container_name: statistics-for-strava
     restart: unless-stopped
@@ -144,5 +144,23 @@ To do this, you need to add a new cron job to your crontab:
 If you have no access to the host system's crontab, 
 you can use a Docker cron container to run the import and build commands at regular intervals.
 
-* https://github.com/willfarrell/docker-crontab
 * https://github.com/mcuadros/ofelia
+
+```yml
+services:
+  statistics-for-strava:
+    image: robiningelbrecht/strava-statistics:latest
+    # ... other configuration options
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.datecron.schedule: "0 19 * * *"
+      ofelia.job-exec.datecron.command: "bin/console app:strava:import-data && bin/console app:strava:build-files"
+      
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - statistics-for-strava
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+```
