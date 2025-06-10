@@ -8,7 +8,6 @@
   - [Main configuration](configuration/main-configuration.md "Statistics for Strava | Main configuration")
   - [Custom gear](configuration/custom-gear.md "Statistics for Strava | Custom gear")
   - [Gear maintenance](configuration/gear-maintenance.md "Statistics for Strava | Gear maintenance")
-  - [Advanced scheduling](configuration/advanced-scheduling.md "Statistics for Strava | Advanced scheduling")
   - [File permissions](configuration/file-permissions.md "Statistics for Strava | File permissions")
   
 - Troubleshooting
