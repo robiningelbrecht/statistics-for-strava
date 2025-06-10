@@ -75,7 +75,7 @@ components:
 # If you don't want to reference images, set gears to an empty array: `gears: []`       
 gears:
   # Optional reference to an image. Will be used in the UI.
-  # The image must be in the same directory as this config file.
+  # The image must be located in the `storage/gear-maintenance` volume.
   - gearId: 'gxxxxxxxx'
     imgSrc: 'gear1.png'
 ```
