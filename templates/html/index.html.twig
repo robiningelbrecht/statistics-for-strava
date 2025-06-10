@@ -18,7 +18,7 @@
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
     {% autoescape false %}
-    {{ renderComponent('top-nav-bar', {'profilePictureUrl': profilePictureUrl, 'athlete': athlete}) }}
+        {{ renderComponent('top-nav-bar', {'profilePictureUrl': profilePictureUrl, 'athlete': athlete}) }}
     {% endautoescape %}
     <!-- SIDEBAR -->
     <aside class="group fixed top-0 left-0 w-64 [&.is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001"
@@ -73,7 +73,8 @@
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Gear"|trans|ellipses(23) }}</span>
                         {% if maintenanceTaskIsDue %}
-                            <span class="group-[.is-collapsed]:hidden flex w-3 h-3 me-3 bg-red-500 rounded-full animate-pulse" title="{{ "One of your gear maintenance tasks is due"|trans }}"></span>
+                            <span class="group-[.is-collapsed]:hidden flex w-3 h-3 me-3 bg-red-500 rounded-full animate-pulse"
+                                  title="{{ "One of your gear maintenance tasks is due"|trans }}"></span>
                         {% endif %}
                     </a>
                 </li>
@@ -125,13 +126,17 @@
                 <li>
                     <a href="#" data-router-navigate="{{ relativeUrl('rewind') }}"
                        class="{{ menuLinkClasses }} {{ collapsedMenuLinkClasses }}">
-                        <svg class="{{ menulinkSvgIconClasses }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"  xml:space="preserve"><g><path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
+                        <svg class="{{ menulinkSvgIconClasses }}" xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 512 512" xml:space="preserve"><g>
+                                <path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
 		C512,114.838,397.163,0,256,0z M256,466.052c-115.998,0-210.052-94.054-210.052-210.052S140.002,45.94,256,45.94
-		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"/><path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
+		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"/>
+                                <path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
 		c0-0.905-0.492-1.731-1.246-2.158c-0.783-0.456-1.745-0.427-2.5,0.014l-81.077,48.405v-43.533h-35v122.53h35V272.83l81.077,48.406
 		c0.755,0.448,1.716,0.477,2.5,0.021c0.755-0.428,1.246-1.268,1.246-2.151v-40.044l70.642,42.174
 		c0.755,0.448,1.716,0.477,2.499,0.021c0.756-0.428,1.24-1.268,1.24-2.151v-63.113v-63.092
-		C353.102,191.996,352.618,191.171,351.862,190.743z"/></g></svg>
+		C353.102,191.996,352.618,191.171,351.862,190.743z"/>
+                            </g></svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Rewind"|trans|ellipses(23) }}</span>
                     </a>
                 </li>
@@ -231,9 +236,10 @@
                 </div>
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
-                <img class="h-[12px]" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}" alt="Powered by Strava" />
+                <img class="h-[12px]" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}"
+                     alt="Powered by Strava"/>
                 <div>& ☕</div>
-           </div>
+            </div>
         </div>
     </aside>
     <!-- MAIN -->
@@ -332,6 +338,23 @@
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
 
+    // Toggle sidebar collapsed state.
+    const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
+    if (sideNavCollapsed === 'true') {
+        $main.classList.add('is-collapsed');
+        $sideNav.classList.add('is-collapsed');
+    }
+
+    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
+        $main.classList.toggle('is-collapsed');
+        $sideNav.classList.toggle('is-collapsed');
+
+        localStorage.setItem('sideNavCollapsed', 'false');
+        if ($main.classList.contains('is-collapsed')) {
+            localStorage.setItem('sideNavCollapsed', 'true');
+        }
+    });
+
     // Boot router.
     const router = Router($main);
     router.boot();
@@ -342,12 +365,6 @@
         callback_error: (img) => {
             img.setAttribute("src", "{{ relativeUrl('/assets/placeholder-broken.webp') }}");
         }
-    });
-
-    // Toggle sidebar collapsed state.
-    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
-        $main.classList.toggle('is-collapsed');
-        $sideNav.classList.toggle('is-collapsed');
     });
 
     const modalSkeletonNode = document.getElementById('modal-skeleton');

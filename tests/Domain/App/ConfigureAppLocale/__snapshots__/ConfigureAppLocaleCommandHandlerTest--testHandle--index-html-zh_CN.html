@@ -17,7 +17,7 @@
 <body>
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
-        <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100">
+            <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
             <a id="toggle-sidebar-collapsed-state" class="p-2 mr-1 text-gray-600 rounded-lg cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100">
@@ -141,13 +141,16 @@
                 </li>
                 <li>
                     <a href="#" data-router-navigate="/rewind" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xml:space="preserve"><g><path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xml:space="preserve"><g>
+                                <path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
 		C512,114.838,397.163,0,256,0z M256,466.052c-115.998,0-210.052-94.054-210.052-210.052S140.002,45.94,256,45.94
-		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"></path><path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
+		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"></path>
+                                <path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
 		c0-0.905-0.492-1.731-1.246-2.158c-0.783-0.456-1.745-0.427-2.5,0.014l-81.077,48.405v-43.533h-35v122.53h35V272.83l81.077,48.406
 		c0.755,0.448,1.716,0.477,2.5,0.021c0.755-0.428,1.246-1.268,1.246-2.151v-40.044l70.642,42.174
 		c0.755,0.448,1.716,0.477,2.499,0.021c0.756-0.428,1.24-1.268,1.24-2.151v-63.113v-63.092
-		C353.102,191.996,352.618,191.171,351.862,190.743z"></path></g></svg>
+		C353.102,191.996,352.618,191.171,351.862,190.743z"></path>
+                            </g></svg>
                         <span class="flex-1 whitespace-nowrap">Rewind</span>
                     </a>
                 </li>
@@ -236,7 +239,7 @@
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
                 <img class="h-[12px]" src="/assets/images/strava/powered-by-strava.svg" alt="Powered by Strava">
                 <div>&amp; &#9749;</div>
-           </div>
+            </div>
         </div>
     </aside>
     <!-- MAIN -->
@@ -326,6 +329,23 @@
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
 
+    // Toggle sidebar collapsed state.
+    const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
+    if (sideNavCollapsed === 'true') {
+        $main.classList.add('is-collapsed');
+        $sideNav.classList.add('is-collapsed');
+    }
+
+    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
+        $main.classList.toggle('is-collapsed');
+        $sideNav.classList.toggle('is-collapsed');
+
+        localStorage.setItem('sideNavCollapsed', 'false');
+        if ($main.classList.contains('is-collapsed')) {
+            localStorage.setItem('sideNavCollapsed', 'true');
+        }
+    });
+
     // Boot router.
     const router = Router($main);
     router.boot();
@@ -336,12 +356,6 @@
         callback_error: (img) => {
             img.setAttribute("src", "/assets/placeholder-broken.webp");
         }
-    });
-
-    // Toggle sidebar collapsed state.
-    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
-        $main.classList.toggle('is-collapsed');
-        $sideNav.classList.toggle('is-collapsed');
     });
 
     const modalSkeletonNode = document.getElementById('modal-skeleton');
