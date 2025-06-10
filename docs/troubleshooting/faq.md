@@ -9,9 +9,13 @@ The app makes sure there is enough time between each request to not hit the 15-m
 
 By default, the app will only import `250 new activities per run` to avoid hitting rate limits. 
 You can change this number in the `.env` file. 
-If you still hit the daily rate limit, the app will automatically import the remaining activities the next day(s). 
+If you still hit the daily rate limit, the app will automatically import the remaining activities the next day(s).
 
 ## Why is my crontab job not running?
+
+<div class="alert info">
+This feature is deprecated and only applies to versions <= v3.0.0
+</div>
 
 ### Verify crontab is correctly copied
 
