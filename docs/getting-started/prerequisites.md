@@ -1,7 +1,7 @@
 # Prerequisites
 
 <div class="alert info">
-    To run this application, you'll need <a href="https://docs.docker.com/engine/install/">Docker</a> with <a href="https://docs.docker.com/compose/install/">docker-compose</a>.
+    To run this application, you'll need <a href="https://docs.docker.com/engine/install/">Docker</a> with <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.
 </div>
 
 Since this app is called <i>Statistics for Strava</i>, it obviously requires a Strava account.

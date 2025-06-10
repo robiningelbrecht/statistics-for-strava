@@ -1,8 +1,8 @@
 Importing activities...
 Status: 1 out of 7 activities imported
   => Sport type "Wrong" not supported yet. <a href="https://github.com/robiningelbrecht/statistics-for-strava/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+Wrong>Open a new GitHub issue</a> to if you want support for this sport type
-  => Imported activity "Night Ride1 - 11-09-2023"
-  => Imported activity "Watopia Flat Forward in London - 31-08-2023"
-  => Updated activity "Night Ride3 - 10-10-2023"
-  => Imported activity "Night Ride4 - 11-09-2023"
+  => [1/7] Imported activity: "Night Ride1 - 11-09-2023"
+  => [2/7] Imported activity: "Watopia Flat Forward in London - 31-08-2023"
+  => [3/7] Updated activity: "Night Ride3 - 10-10-2023"
+  => [4/7] Imported activity: "Night Ride4 - 11-09-2023"
 <error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>

@@ -69,11 +69,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             $allActivityIds->toArray(),
         );
         $stravaActivities = $this->strava->getActivities();
+        $countTotalStravaActivities = count($stravaActivities);
 
         $command->getOutput()->writeln(
-            sprintf('Status: %d out of %d activities imported', count($allActivityIds), count($stravaActivities))
+            sprintf('Status: %d out of %d activities imported', count($allActivityIds), $countTotalStravaActivities)
         );
 
+        $delta = 1;
         foreach ($stravaActivities as $stravaActivity) {
             if (!$sportType = SportType::tryFrom($stravaActivity['sport_type'])) {
                 $command->getOutput()->writeln(sprintf(
@@ -161,8 +163,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     ]
                 ));
                 unset($activityIdsToDelete[(string) $activity->getId()]);
+
                 $command->getOutput()->writeln(sprintf(
-                    '  => Updated activity "%s - %s"',
+                    '  => [%d/%d] Updated activity: "%s - %s"',
+                    $delta,
+                    $countTotalStravaActivities,
                     $activity->getName(),
                     $activity->getStartDate()->format('d-m-Y'))
                 );
@@ -208,7 +213,9 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     unset($activityIdsToDelete[(string) $activity->getId()]);
 
                     $command->getOutput()->writeln(sprintf(
-                        '  => Imported activity "%s - %s"',
+                        '  => [%d/%d] Imported activity: "%s - %s"',
+                        $delta,
+                        $countTotalStravaActivities,
                         $activity->getName(),
                         $activity->getStartDate()->format('d-m-Y'))
                     );
@@ -237,6 +244,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     return;
                 }
             }
+            ++$delta;
         }
 
         if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {
