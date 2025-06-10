@@ -1393,6 +1393,9 @@
   .mr-0\.5 {
     margin-right: calc(var(--spacing) * 0.5);
   }
+  .mr-1 {
+    margin-right: calc(var(--spacing) * 1);
+  }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
   }
@@ -1487,9 +1490,6 @@
   }
   .ml-1\.5 {
     margin-left: calc(var(--spacing) * 1.5);
-  }
-  .ml-3 {
-    margin-left: calc(var(--spacing) * 3);
   }
   .ml-\[-3px\] {
     margin-left: -3px;
@@ -2051,6 +2051,9 @@
   }
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
+  }
+  .gap-x-3 {
+    column-gap: calc(var(--spacing) * 3);
   }
   .gap-x-\[2rem\] {
     column-gap: 2rem;
@@ -2724,9 +2727,6 @@
   .pl-2 {
     padding-left: calc(var(--spacing) * 2);
   }
-  .pl-11 {
-    padding-left: calc(var(--spacing) * 11);
-  }
   .datatable-empty {
     .datatable-wrapper .datatable-table & {
       text-align: center;
@@ -3082,8 +3082,8 @@
       }
     }
   }
-  .group-hover\:text-gray-900 {
-    &:is(:where(.group):hover *) {
+  .group-hover\/menu-item\:text-gray-900 {
+    &:is(:where(.group\/menu-item):hover *) {
       @media (hover: hover) {
         color: var(--color-gray-900);
       }
@@ -3097,6 +3097,32 @@
   .group-aria-\[sort\=descending\]\:text-strava-orange {
     &:is(:where(.group)[aria-sort="descending"] *) {
       color: var(--color-strava-orange);
+    }
+  }
+  .group-\[\.is-collapsed\]\:hidden {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      display: none;
+    }
+  }
+  .group-\[\.is-collapsed\]\:max-h-full {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      max-height: 100%;
+    }
+  }
+  .group-\[\.is-collapsed\]\:flex-col {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      flex-direction: column;
+    }
+  }
+  .group-\[\.is-collapsed\]\:gap-y-0\.5 {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      row-gap: calc(var(--spacing) * 0.5);
+    }
+  }
+  .group-\[\.is-collapsed\]\:text-xs {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
     }
   }
   .peer-checked\:visible {
@@ -3387,6 +3413,11 @@
   .md\:ml-64 {
     @media (width >= 48rem) {
       margin-left: calc(var(--spacing) * 64);
+    }
+  }
+  .md\:block {
+    @media (width >= 48rem) {
+      display: block;
     }
   }
   .md\:flex {
@@ -3732,6 +3763,18 @@
     @media (prefers-color-scheme: dark) {
       &:focus {
         --tw-ring-color: var(--color-gray-600);
+      }
+    }
+  }
+  .\[\&\.is-collapsed\]\:w-32 {
+    &.is-collapsed {
+      width: calc(var(--spacing) * 32);
+    }
+  }
+  .\[\&\.is-collapsed\]\:md\:ml-32 {
+    &.is-collapsed {
+      @media (width >= 48rem) {
+        margin-left: calc(var(--spacing) * 32);
       }
     }
   }
