@@ -10,6 +10,18 @@
 {% endblock %}
 {% block content %}
     {% autoescape false %}
+        <ul class="flex flex-wrap gap-x-2 py-2 text-sm font-medium text-center text-gray-500">
+            <li>
+                <a href="#" data-router-navigate="{{ relativeUrl('gear-stats') }}" class="inline-block px-3 py-2 rounded-lg text-gray-900 bg-gray-100">
+                    {{ "Stats"|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="#" data-router-navigate="{{ relativeUrl('gear/maintenance') }}" class="inline-block px-3 py-2 rounded-lg hover:text-gray-900 hover:bg-gray-100">
+                    {{ "Maintenance"|trans }}
+                </a>
+            </li>
+        </ul>
         <!-- GEAR STATS -->
         <div class="grid grid-cols-1 mb-4">
             <!-- STATS PER GEAR -->
