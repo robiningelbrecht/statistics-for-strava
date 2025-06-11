@@ -175,8 +175,8 @@
                 </li>
             </ul>
         </div>
-        <div class="group-[.is-collapsed]:hidden absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
-            <div class="py-2 px-4 text-xs text-center text-gray-500">
+        <div class="absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
+            <div class="group-[.is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
                 <div class="flex justify-center gap-px">
                     <a href="https://www.strava.com/athletes/100" target="_blank" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
                         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -238,9 +238,10 @@
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
                 <img class="h-[12px]" src="/assets/images/strava/powered-by-strava.svg" alt="Powered by Strava">
-                <div>&amp; &#9749;</div>
+                <div class="group-[.is-collapsed]:hidden">&amp; &#9749;</div>
             </div>
         </div>
+
     </aside>
     <!-- MAIN -->
     <main class="p-4 md:ml-64 [&amp;.is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
