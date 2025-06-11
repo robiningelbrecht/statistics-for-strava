@@ -21,7 +21,7 @@ general:
     #    "2025-01-10": 193
     # History of weight (in kg or pounds, depending on appearance.unitSystem). Needed to calculate relative w/kg.
     # Make sure to replace the YYYY-MM-DD examples with your own weight history.
-    # Read more about the weight history on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/athlete-weight-history
+    # Read more about the weight history on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-weight-history
     weightHistory:
       "YYYY-MM-DD": 100
     # Optional, history of FTP. Needed to calculate activity stress level.

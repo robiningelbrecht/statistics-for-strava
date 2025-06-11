@@ -59,28 +59,21 @@
                     </div>
     </div>
 </nav>
-<div>
-    <p class="text-2xl font-semibold pb-5">Looks like you still need to import your Strava data</p>
-
-    <dl class="text-gray-900 divide-y divide-gray-200">
-        <div class="flex flex-col pb-3">
-            <dt class="mb-1 text-gray-500 md:text-lg">Import Strava data</dt>
-            <dd class="font-semibold"><code>docker compose exec app bin/console app:strava:import-data</code></dd>
-        </div>
-        <div class="flex flex-col py-3">
-            <dt class="mb-1 text-gray-500 md:text-lg">Build static HTML files</dt>
-            <dd class="font-semibold"><code>docker compose exec app bin/console app:strava:build-files</code></dd>
-            <div class="mt-4 flex w-full p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50" role="alert">
-                <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    You can only build these files if at least one Strava activity has been imported
-                </div>
-            </div>
-        </div>
-    </dl>
+<div class="flex flex-col items-center p-4 text-center">
+    <p class="text-2xl font-semibold pb-5">It looks like you are using a refresh token that doesn't have the required <i>activity:read_all</i> scope.</p>
+    <p class="text-gray-500 mb-4">
+        This is likely because you're using the refresh token provided on the Strava API settings page.
+        As noted in <a class="text-blue-600 hover:underline" href="https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=env">the documentation</a>,
+        that token does not include all necessary scopes and won't work. To restart the authorization flow:
+    </p>
+    <ul class="text-gray-500 text-left list-disc list-inside mb-4">
+        <li>Remove the existing refresh token from your <i>.env</i> file and replace it with YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW</li>
+        <li>Restart your container</li>
+        <li>Navigate to the URL below to begin the authorization process again.</li>
+    </ul>
+    <a href="http://www.strava.com/oauth/authorize?client_id=client&amp;response_type=code&amp;redirect_uri=http://:/strava-oauth&amp;approval_prompt=force&amp;scope=activity:read_all" class="block w-[200px] mb-4">
+        <img src="/assets/images/strava/strava-oauth.svg?0025176c-5652-11ee-923d-02424dd627d5" alt="Start Strava authorization flow">
+    </a>
 </div>
 </body>
 </html>

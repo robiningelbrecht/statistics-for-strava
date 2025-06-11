@@ -1,5 +1,9 @@
 # Prerequisites
 
+<div class="alert info">
+    To run this application, you'll need <a href="https://docs.docker.com/engine/install/">Docker</a> with <a href="https://docs.docker.com/compose/install/">Docker Compose</a>.
+</div>
+
 Since this app is called <i>Statistics for Strava</i>, it obviously requires a Strava account.
 In addition, there are a few other things you'll need to set up before you can start using the app.
 Most importantly, you'll need a `Strava client ID` and `Strava client Secret`

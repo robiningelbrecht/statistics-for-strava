@@ -17,9 +17,18 @@
 <body>
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
-        <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100">
+            <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
+            <a id="toggle-sidebar-collapsed-state" class="p-2 mr-1 text-gray-600 rounded-lg cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <svg aria-hidden="true" class="hidden w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Collapse sidebar</span>
+            </a>
             <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation" class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100">
                 <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -57,83 +66,70 @@
     </div>
 </nav>
         <!-- SIDEBAR -->
-    <aside class="fixed top-0 left-0 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001" aria-label="Sidenav" id="drawer-navigation">
-        <div class="max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-100">
+    <aside class="group fixed top-0 left-0 w-64 [&amp;.is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001" aria-label="Sidenav" id="drawer-navigation">
+        <div class="group-[.is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-100">
             <ul class="space-y-1 mb-2">
-                <li>
-                    <a href="#" data-router-navigate="/dashboard" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg aria-hidden="true" class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                <li>
+                    <a href="#" data-router-navigate="/dashboard" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg aria-hidden="true" class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                             <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                         </svg>
-                        <span class="ml-3">Dashboard</span>
+                        <span class="flex-1 whitespace-nowrap">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/activities" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 16">
+                    <a href="#" data-router-navigate="/activities" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 16">
                             <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM5 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm10 6H9a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-3H9a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-3H9a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Alle activiteiten</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
+                        <span class="flex-1 whitespace-nowrap">Alle activiteiten</span>
+                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
                             <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Maandelijkste stats</span>
+                        <span class="flex-1 whitespace-nowrap">Maandelijkste stats</span>
                     </a>
                 </li>
                 <li>
-                    <button type="button" class="cursor-pointer flex items-center w-full p-2 text-base font-medium text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-gear-menu" data-collapse-toggle="dropdown-gear-menu">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                    <a href="#" data-router-navigate="/gear" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
                             <path d="m7.164 3.805-4.475.38L.327 6.546a1.114 1.114 0 0 0 .63 1.89l3.2.375 3.007-5.006ZM11.092 15.9l.472 3.14a1.114 1.114 0 0 0 1.89.63l2.36-2.362.38-4.475-5.102 3.067Zm8.617-14.283A1.613 1.613 0 0 0 18.383.291c-1.913-.33-5.811-.736-7.556 1.01-1.98 1.98-6.172 9.491-7.477 11.869a1.1 1.1 0 0 0 .193 1.316l.986.985.985.986a1.1 1.1 0 0 0 1.316.193c2.378-1.3 9.889-5.5 11.869-7.477 1.746-1.745 1.34-5.643 1.01-7.556Zm-3.873 6.268a2.63 2.63 0 1 1-3.72-3.72 2.63 2.63 0 0 1 3.72 3.72Z"></path>
                         </svg>
-                        <span class="flex-1 ms-3 text-left whitespace-nowrap">Uitrusting</span>
-                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
-                        </svg>
-                    </button>
-                    <ul id="dropdown-gear-menu" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href="#" data-router-navigate="/gear-stats" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
-                                Stats
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" data-router-navigate="/gear/maintenance" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
-                                Maintenance
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" data-router-navigate="/eddington" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 16">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"></path>
-                        </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Eddington</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full mr-0.5">6</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ">1</span>
+                        <span class="flex-1 whitespace-nowrap">Uitrusting</span>
                                             </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/segments" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                    <a href="#" data-router-navigate="/eddington" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Eddington</span>
+                        <div class="group-[.is-collapsed]:hidden flex gap-x-0.5">
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">6</span>
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">1</span>
+                                                    </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-router-navigate="/segments" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
                             <g stroke-width="0"></g>
                             <g stroke-linecap="round" stroke-linejoin="round"></g>
                             <g>
                                 <path d="M217.45557,38.544a35.9967,35.9967,0,0,0-57.937,40.96679L79.5105,159.51855a36.05906,36.05906,0,0,0-40.96607,7.0254H38.544a36.00029,36.00029,0,1,0,57.93737,9.94531L176.4895,96.48145A35.99663,35.99663,0,0,0,217.45557,38.544ZM72.48584,200.48535a12.00027,12.00027,0,0,1-16.97119-16.9707h-.00049a12.00044,12.00044,0,0,1,16.97168,16.9707Zm128-128a12.01673,12.01673,0,0,1-16.969.00244l-.0022-.00244a12.0001,12.0001,0,1,1,16.97119,0Z"></path>
                             </g>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Segmenten</span>
+                        <span class="flex-1 whitespace-nowrap">Segmenten</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/heatmap" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <a href="#" data-router-navigate="/heatmap" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g stroke-width="0"></g>
                             <g stroke-linecap="round" stroke-linejoin="round"></g>
                             <g>
@@ -142,44 +138,47 @@
                                 <path d="M15 3V17" stroke="currentColor" stroke-width="2"></path>
                             </g>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Heatmap</span>
+                        <span class="flex-1 whitespace-nowrap">Heatmap</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/rewind" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xml:space="preserve"><g><path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
+                    <a href="#" data-router-navigate="/rewind" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xml:space="preserve"><g>
+                                <path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
 		C512,114.838,397.163,0,256,0z M256,466.052c-115.998,0-210.052-94.054-210.052-210.052S140.002,45.94,256,45.94
-		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"></path><path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
+		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"></path>
+                                <path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
 		c0-0.905-0.492-1.731-1.246-2.158c-0.783-0.456-1.745-0.427-2.5,0.014l-81.077,48.405v-43.533h-35v122.53h35V272.83l81.077,48.406
 		c0.755,0.448,1.716,0.477,2.5,0.021c0.755-0.428,1.246-1.268,1.246-2.151v-40.044l70.642,42.174
 		c0.755,0.448,1.716,0.477,2.499,0.021c0.756-0.428,1.24-1.268,1.24-2.151v-63.113v-63.092
-		C353.102,191.996,352.618,191.171,351.862,190.743z"></path></g></svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Rewind</span>
+		C353.102,191.996,352.618,191.171,351.862,190.743z"></path>
+                            </g></svg>
+                        <span class="flex-1 whitespace-nowrap">Rewind</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/challenges" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
+                    <a href="#" data-router-navigate="/challenges" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
                             <path fill="currentColor" d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"></path>
                             <path fill="#fff" d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Challenges</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">2</span>
+                        <span class="flex-1 whitespace-nowrap">Challenges</span>
+                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">2</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/photos" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24">
+                    <a href="#" data-router-navigate="/photos" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24">
                             <path d="M19 5h-1.382l-.171-.342A2.985 2.985 0 0 0 14.764 3H9.236a2.984 2.984 0 0 0-2.683 1.658L6.382 5H5a3 3 0 0 0-3 3v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a3 3 0 0 0-3-3Zm-3.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Photos</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">20</span>
+                        <span class="flex-1 whitespace-nowrap">Photos</span>
+                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">20</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
-            <div class="py-2 px-4 text-xs text-center text-gray-500">
+            <div class="group-[.is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
                 <div class="flex justify-center gap-px">
                     <a href="https://www.strava.com/athletes/100" target="_blank" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
                         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -230,8 +229,8 @@
                     </a>
                 </div>
                 <div class="flex justify-center gap-x-1">
-                    <span>v2.1.2</span>
-                    <span class="hidden" data-latest-version data-current-version="v2.1.2">
+                    <span>v2.1.4</span>
+                    <span class="hidden" data-latest-version data-current-version="v2.1.4">
                     (latest: <a class="underline" href="https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/%5BLATEST_VERSION%5D">[LATEST_VERSION]</a>)
                 </span>
                 </div>
@@ -241,11 +240,13 @@
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
                 <img class="h-[12px]" src="/assets/images/strava/powered-by-strava.svg" alt="Powered by Strava">
-                <div>&amp; &#9749;</div>
-           </div>
+                <div class="group-[.is-collapsed]:hidden">&amp; &#9749;</div>
+            </div>
         </div>
+
     </aside>
-    <main class="p-4 md:ml-64 h-auto min-h-screen pt-20 text-gray-900">
+    <!-- MAIN -->
+    <main class="p-4 md:ml-64 [&amp;.is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
         <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
             <div role="status">
                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -328,8 +329,28 @@
     import Router from "/assets/router.js";
     import {resolveEchartsCallbacks} from "/assets/utils.js";
 
+    const $main = document.querySelector("main");
+    const $sideNav = document.querySelector("aside");
+
+    // Toggle sidebar collapsed state.
+    const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
+    if (sideNavCollapsed === 'true') {
+        $main.classList.add('is-collapsed');
+        $sideNav.classList.add('is-collapsed');
+    }
+
+    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
+        $main.classList.toggle('is-collapsed');
+        $sideNav.classList.toggle('is-collapsed');
+
+        localStorage.setItem('sideNavCollapsed', 'false');
+        if ($main.classList.contains('is-collapsed')) {
+            localStorage.setItem('sideNavCollapsed', 'true');
+        }
+    });
+
     // Boot router.
-    const router = Router(document.querySelector("main"));
+    const router = Router($main);
     router.boot();
 
     // Enable image lazy load.

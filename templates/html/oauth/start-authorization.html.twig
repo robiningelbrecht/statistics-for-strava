@@ -1,0 +1,43 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ "Statistics for Strava"|trans }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
+</head>
+<body class="bg-gray-50 h-screen flex justify-center items-center">
+{{ renderComponent('top-nav-bar') }}
+<div class="flex flex-col items-center p-4 text-center">
+    <p class="text-2xl font-semibold pb-5">It looks like you haven't successfully completed the Strava authorization process yet.</p>
+    <p class="text-gray-500 mb-4">You will be redirected to Strava. When you see the authorization page, click "Authorize"</p>
+    <a href="http://www.strava.com/oauth/authorize?client_id={{ stravaClientId }}&response_type=code&redirect_uri={{ returnUrl }}&approval_prompt=force&scope=activity:read_all"
+        class="block w-[200px] mb-4">
+        <img src="{{ relativeUrl(asset('assets/images/strava/strava-oauth.svg')) }}"  alt="Start Strava authorization flow"/>
+    </a>
+    {% if error %}
+        <div class="flex mb-2 p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
+             role="alert">
+            <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <span class="font-medium">Hmmm, something went wrong:</span>
+                <p>{{ error }}</p>
+            </div>
+        </div>
+        <p class="text-gray-500">
+            Please check the <a class="text-blue-600 hover:underline" href="https://statistics-for-strava-docs.robiningelbrecht.be/#/troubleshooting/strava-authorization">troubleshooting guide</a> for more information on how to resolve this issue.
+        </p>
+    {% endif %}
+</div>
+</body>
+</html>
+{% endautoescape %}
