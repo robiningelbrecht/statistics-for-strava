@@ -63,6 +63,27 @@ import:
   # This allows you to skip specific activities during import.
   # ["123456789", "987654321"]
   activitiesToSkipDuringImport: []
+metrics:
+  # By default, the app calculates your Eddington score for Rides, Runs, and Walks.
+  # Each category includes a list of sport types used in the calculation.
+  # This setting lets you customize which sport types are grouped together and how the Eddington score is calculated.
+  # If you're not familiar with the Eddington score, it's best to leave this as is for now and explore it once the app is running.
+  eddington:
+      # The label to be used for the tabs on the Eddington page.
+    - label: 'Ride'
+      # A boolean to indicate if this score should be displayed in the side navigation.
+      # You can only enable two of these at the same time.
+      showInNavBar: true
+      # The sport types to include in the Eddington score for this tab.
+      # Only sport types that belong to the same activity type (category) can be combined.
+      # For a complete list of supported sport and activity types, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+      sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+    - label: 'Run'
+      showInNavBar: true
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    - label: 'Walk'
+      showInNavBar: false
+      sportTypesToInclude: ['Walk', 'Hike']
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
