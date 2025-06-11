@@ -1,3 +1,10 @@
+# [v2.1.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.4) - 2025-06-11
+
+## What's Changed
+* ISSUE #702: Eddington spacing in navbar is too large by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/703
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.1.3...v2.1.4
+
 # [v2.1.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.3) - 2025-06-11
 
 ## What's Changed
@@ -7,7 +14,6 @@
 * ISSUE #693: Convert DistanceOverTimePerGearChart to imperial if needed by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/695
 * ISSUE #696: Move Gear submenu to tabs in preparation of collapsed sidebar by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/697
 * ISSUE #698: Collapsible sidenav by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/699
-
 
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.1.2...v2.1.3
 
