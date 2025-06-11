@@ -39,5 +39,26 @@
 <script src="//cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-json.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+<script defer src="https://analytics.robiningelbrecht.be/script.js" data-website-id="0e95e9f5-70b1-46cd-ab8e-5d4e411a13f4" data-auto-track="false"></script>
+<script type="text/javascript">
+    (function () {
+        const myPlugin = function (hook, vm) {
+            // Invoked on each page load after new HTML has been appended to the DOM
+            hook.doneEach(function () {
+                umami.track(props => ({ ...props, url: vm.route.path }));
+
+                document.querySelectorAll('a').forEach(a => {
+                    if (a.host !== window.location.host && !a.hasAttribute('data-umami-event')) {
+                        a.setAttribute('data-umami-event', 'outbound-link-click');
+                        a.setAttribute('data-umami-event-url', a.href);
+                    }
+                });
+            });
+        };
+
+        $docsify = $docsify || {};
+        $docsify.plugins = [].concat(myPlugin, $docsify.plugins || []);
+    })();
+</script>
 </body>
 </html>
