@@ -87,9 +87,11 @@
                                   d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">Eddington</span>
-                        {% for eddingtonNumber in eddingtonNumbers %}
-                            <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full {{ eddingtonNumbers|length > 1 and not loop.last ? 'mr-0.5' : '' }}">{{ eddingtonNumber }}</span>
-                        {% endfor %}
+                        <div class="group-[.is-collapsed]:hidden flex gap-x-0.5">
+                            {% for eddingtonNumber in eddingtonNumbers|slice(0, 2) %}
+                                <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ eddingtonNumber }}</span>
+                            {% endfor %}
+                        </div>
                     </a>
                 </li>
                 <li>
