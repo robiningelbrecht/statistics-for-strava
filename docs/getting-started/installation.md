@@ -171,3 +171,22 @@ services:
 
 If you want to have more control over the scheduling, check out [this repository](https://github.com/AnalogJ/docker-cron). 
 It contains cron base images for various distros.
+
+### Using Synology NAS Task Scheduler
+
+If you are running the app on a Synology NAS, 
+you can use the Task Scheduler to run the import and build commands at regular intervals.
+
+1. Open Control Panel -> Task Scheduler
+2. Then Create -> Scheduled Task -> User Defined Script. 
+3. Set the name to `SFS Sync` and define the User as root. Ensure it is enabled. 
+4. On the schedule, choose the desired frequency. 
+5. In the Task Settings, in the Run command textbox, enter:
+
+```bash
+docker exec statistics-for-strava bin/console app:strava:import-data && docker exec statistics-for-strava bin/console app:strava:build-files
+```
+
+<div class="alert important">
+Make sure to replace the "statistics-for-strava" with the container name you have defined in the container.
+</div>
