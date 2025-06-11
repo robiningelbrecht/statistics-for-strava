@@ -140,8 +140,8 @@
                                     <div class="grid gap-2">
                                         {% for gearComponent in componentsAttachedToGear %}
                                             <div class="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm">
-                                                <div class="w-48 h-full">
-                                                    <img class="lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
+                                                <div class="relative w-48 h-full">
+                                                    <img class="absolute inset-0 lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
                                                          src="{{ renderComponent('placeholder-image') }}"
                                                          data-src="{{ relativeUrl('/gear-maintenance/' ~ gearComponent.getImgSrc()) }}"
                                                          alt="{{ gearComponent.getLabel() }}">
