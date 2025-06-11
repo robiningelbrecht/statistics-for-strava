@@ -103,6 +103,10 @@ services:
         factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
         arguments: ['@=app_config("general.athlete.maxHeartRateFormula")']
 
+    App\Domain\Strava\Activity\Eddington\EddingtonConfiguration:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("metrics.eddington", [])']
+
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("import.activityVisibilitiesToImport")']
