@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildEddingtonHtml;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
-use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration;
 use App\Domain\Strava\Activity\Eddington\Eddington;
 use App\Domain\Strava\Activity\Eddington\EddingtonChart;
 use App\Domain\Strava\Activity\Eddington\EddingtonHistoryChart;
@@ -21,7 +21,8 @@ use Twig\Environment;
 final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
+        private EddingtonConfiguration $eddingtonConfiguration,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -33,39 +34,36 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildEddingtonHtml);
 
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
-
-        $eddingtonPerActivityType = [];
-        foreach ($activitiesPerActivityType as $activityType => $activities) {
-            $activityType = ActivityType::from($activityType);
-            if (!$activityType->supportsEddington()) {
-                continue;
-            }
+        $eddingtons = [];
+        /** @var \App\Domain\Strava\Activity\Eddington\Config\EddingtonConfigItem $eddingtonConfigItem */
+        foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
+            $activities = $this->activityRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
             if ($activities->isEmpty()) {
                 continue;
             }
+
             $eddington = Eddington::getInstance(
                 activities: $activities,
-                activityType: $activityType,
+                config: $eddingtonConfigItem,
                 unitSystem: $this->unitSystem
             );
             if ($eddington->getNumber() <= 0) {
                 continue;
             }
-            $eddingtonPerActivityType[$activityType->value] = $eddington;
+            $eddingtons[$eddingtonConfigItem->getId()] = $eddington;
         }
 
-        $eddingtonChartsPerActivityType = [];
-        $eddingtonHistoryChartsPerActivityType = [];
-        foreach ($eddingtonPerActivityType as $activityType => $eddington) {
-            $eddingtonChartsPerActivityType[$activityType] = Json::encode(
+        $eddingtonCharts = [];
+        $eddingtonHistoryCharts = [];
+        foreach ($eddingtons as $id => $eddington) {
+            $eddingtonCharts[$id] = Json::encode(
                 EddingtonChart::create(
                     eddington: $eddington,
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
                 )->build()
             );
-            $eddingtonHistoryChartsPerActivityType[$activityType] = Json::encode(
+            $eddingtonHistoryCharts[$id] = Json::encode(
                 EddingtonHistoryChart::create(
                     eddington: $eddington,
                 )->build()
@@ -75,9 +73,9 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
         $this->buildStorage->write(
             'eddington.html',
             $this->twig->load('html/eddington.html.twig')->render([
-                'eddingtons' => $eddingtonPerActivityType,
-                'eddingtonCharts' => $eddingtonChartsPerActivityType,
-                'eddingtonHistoryCharts' => $eddingtonHistoryChartsPerActivityType,
+                'eddingtons' => $eddingtons,
+                'eddingtonCharts' => $eddingtonCharts,
+                'eddingtonHistoryCharts' => $eddingtonHistoryCharts,
                 'distanceUnit' => Kilometer::from(1)->toUnitSystem($this->unitSystem)->getSymbol(),
             ]),
         );

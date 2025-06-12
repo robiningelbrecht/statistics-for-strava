@@ -20,25 +20,25 @@
             <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {% if eddingtons|length > 1 %}
                     <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="activityTypeTab" data-tabs="#activityTypeTabContent" role="tablist">
-                            {% for activityType,eddington in eddingtons %}
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
+                            {% for eddingtonId,eddington in eddingtons %}
                                 <li class="mr-2" role="presentation">
-                                    <a href="#" data-tabs-target="#{{ activityType }}" role="tab" aria-controls="{{ activityType }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                        {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }} ({{ eddington.getNumber() }})
+                                    <a href="#" data-tabs-target="#{{ eddingtonId }}" role="tab" aria-controls="{{ eddingtonId }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                        {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
                 {% endif %}
-                <div id="activityTypeTabContent">
-                    {% for activityType,eddington in eddingtons %}
-                        <div id="{{ activityType }}" role="tabpanel" aria-labelledby="{{ activityType }}-tab">
+                <div id="eddingtonTabContent">
+                    {% for eddingtonId,eddington in eddingtons %}
+                        <div id="{{ eddingtonId }}" role="tabpanel" aria-labelledby="{{ eddingtonId }}-tab">
                             <!-- EDDINGTON CHART -->
-                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[activityType] }}'></div>
+                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddingtonId] }}'></div>
                             <!-- HISTORY -->
                             <h3 class="font-bold mt-6 mb-2">{{ "History"|trans }}</h3>
-                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[activityType] }}'></div>
+                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddingtonId] }}'></div>
                             <!-- DAYS NEEDED -->
                             <h3 class="font-bold mt-6 mb-2">{{ "Days needed"|trans }}</h3>
                             <div class="relative overflow-x-auto">
