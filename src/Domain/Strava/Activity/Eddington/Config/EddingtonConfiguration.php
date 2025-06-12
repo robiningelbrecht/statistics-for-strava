@@ -2,17 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Activity\Eddington;
+namespace App\Domain\Strava\Activity\Eddington\Config;
 
+use App\Domain\Strava\Activity\Eddington\InvalidEddingtonConfiguration;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
+use App\Infrastructure\ValueObject\Collection;
 
-final readonly class EddingtonConfiguration
+final class EddingtonConfiguration extends Collection
 {
-    private function __construct(
-        private array $config,
-    ) {
+    public function getItemClassName(): string
+    {
+        return EddingtonConfigItem::class;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     private static function getDefaultConfig(): array
     {
         return [
@@ -34,15 +40,21 @@ final readonly class EddingtonConfiguration
         ];
     }
 
-    public static function fromArray(array $config): self
+    /**
+     * @param array<int, mixed> $items
+     */
+    public static function fromScalarArray(array $items): self
     {
-        if (empty($config)) {
+        if (empty($items)) {
             // Make sure this new feature is backwards compatible.
-            // Return the old default configuration.
-            $config = self::getDefaultConfig();
+            // Use the old default configuration.
+            $items = self::getDefaultConfig();
         }
 
-        foreach ($config as $eddingtonConfig) {
+        $eddingtonConfigItems = [];
+        foreach ($items as $eddingtonConfig) {
+            $sportTypesToInclude = SportTypes::empty();
+
             if (!is_array($eddingtonConfig)) {
                 throw new InvalidEddingtonConfiguration('Invalid Eddington configuration provided');
             }
@@ -71,9 +83,10 @@ final readonly class EddingtonConfiguration
             }
 
             foreach ($eddingtonConfig['sportTypesToInclude'] as $sportTypeToInclude) {
-                if (!SportType::tryFrom($sportTypeToInclude)) {
+                if (!$sportType = SportType::tryFrom($sportTypeToInclude)) {
                     throw new InvalidEddingtonConfiguration(sprintf('"%s" is not a valid sport type', $sportTypeToInclude));
                 }
+                $sportTypesToInclude->add($sportType);
             }
 
             $uniqueActivityTypes = array_unique(array_map(
@@ -84,12 +97,18 @@ final readonly class EddingtonConfiguration
             if (1 !== count($uniqueActivityTypes)) {
                 throw new InvalidEddingtonConfiguration(sprintf('Eddington "%s" contains sport types with different activity types', $eddingtonConfig['label']));
             }
+
+            $eddingtonConfigItems[] = EddingtonConfigItem::create(
+                label: $eddingtonConfig['label'],
+                showInNavBar: $eddingtonConfig['showInNavBar'],
+                sportTypesToInclude: $sportTypesToInclude,
+            );
         }
 
-        if (count(array_filter($config, fn (array $eddingtonConfig) => $eddingtonConfig['showInNavBar'])) > 2) {
-            throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInNavBar" set to true.');
+        if (count(array_filter($items, fn (array $eddingtonConfig) => $eddingtonConfig['showInNavBar'])) > 2) {
+            throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInNavBar" set to true');
         }
 
-        return new self($config);
+        return parent::fromArray($eddingtonConfigItems);
     }
 }
