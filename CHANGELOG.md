@@ -1,3 +1,17 @@
+# [v2.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.0) - 2025-06-12
+
+🔥 Be the master of your Eddington. 
+Read up on how to configure your Eddington numbers: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* ISSUE #692: Fix bug in Safari while rendering gear maintenance by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/704
+* ISSUE #707: Fixed weekday label in calendar view by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/708
+* ISSUE #709: Replace all sidenav icons by outlined ones by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/710
+* ISSUE #711: Consistency in icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/712
+* ISSUE #658: Allow users to configure Eddington by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/714
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.1.4...v2.2.0
+
 # [v2.1.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.4) - 2025-06-11
 
 ## What's Changed
