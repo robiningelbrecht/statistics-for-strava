@@ -104,8 +104,7 @@ after which you can view your statistics.
 ```
 
 <div class="alert important">
-Everytime you import data, you need to rebuild the HTML files to see the changes. 
-By default the import and build commands are run periodically based on the schedule defined in your <strong>.env</strong> file.
+Everytime you import data, you need to rebuild the HTML files to see the changes.
 </div>
 
 ## Scheduling
