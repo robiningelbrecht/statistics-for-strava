@@ -42,7 +42,7 @@ final readonly class EddingtonConfigItem
         return $this->label;
     }
 
-    public function isShowInNavBar(): bool
+    public function showInNavBar(): bool
     {
         return $this->showInNavBar;
     }

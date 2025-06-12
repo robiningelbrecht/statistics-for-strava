@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildIndexHtml;
 
 use App\Domain\App\ProfilePictureUrl;
-use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityRepository;
-use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration;
 use App\Domain\Strava\Activity\Eddington\Eddington;
 use App\Domain\Strava\Activity\Image\ImageRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
@@ -29,7 +28,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
         private ActivityRepository $activityRepository,
         private ChallengeRepository $challengeRepository,
         private ImageRepository $imageRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private EddingtonConfiguration $eddingtonConfiguration,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
         private UnitSystem $unitSystem,
@@ -44,23 +43,23 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildIndexHtml);
 
         $athlete = $this->athleteRepository->find();
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
 
         $eddingtonNumbers = [];
-        foreach ($activitiesPerActivityType as $activityType => $activities) {
-            $activityType = ActivityType::from($activityType);
-            if (!$activityType->supportsEddington()) {
-                continue;
-            }
+        /** @var \App\Domain\Strava\Activity\Eddington\Config\EddingtonConfigItem $eddingtonConfigItem */
+        foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
+            $activities = $this->activityRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
             if ($activities->isEmpty()) {
                 continue;
             }
             $eddington = Eddington::getInstance(
                 activities: $activities,
-                activityType: $activityType,
+                config: $eddingtonConfigItem,
                 unitSystem: $this->unitSystem
             );
             if ($eddington->getNumber() <= 0) {
+                continue;
+            }
+            if (!$eddingtonConfigItem->showInNavBar()) {
                 continue;
             }
             $eddingtonNumbers[] = $eddington->getNumber();

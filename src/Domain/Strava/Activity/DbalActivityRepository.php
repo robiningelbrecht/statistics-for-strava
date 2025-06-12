@@ -3,6 +3,7 @@
 namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -15,6 +16,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final class DbalActivityRepository implements ActivityRepository
@@ -92,6 +94,25 @@ final class DbalActivityRepository implements ActivityRepository
         DbalActivityRepository::$cachedActivities[$cacheKey] = Activities::fromArray($activities);
 
         return DbalActivityRepository::$cachedActivities[$cacheKey];
+    }
+
+    public function findBySportTypes(SportTypes $sportTypes): Activities
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('*')
+            ->from('Activity')
+            ->andWhere('sportType IN (:sportTypes)')
+            ->setParameter(
+                key: 'sportTypes',
+                value: $sportTypes->map(fn (SportType $sportType) => $sportType->value),
+                type: ArrayParameterType::STRING
+            )
+            ->orderBy('startDateTime', 'DESC');
+
+        return Activities::fromArray(array_map(
+            fn (array $result) => $this->hydrate($result),
+            $queryBuilder->executeQuery()->fetchAllAssociative()
+        ));
     }
 
     public function delete(Activity $activity): void

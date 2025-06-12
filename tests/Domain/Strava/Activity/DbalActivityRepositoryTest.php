@@ -10,6 +10,8 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\DbalActivityRepository;
 use App\Domain\Strava\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -79,6 +81,44 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()],
             $this->activityRepository->findAll()->map(fn (Activity $activity) => $activity->getId())
+        );
+    }
+
+    public function testFindBySportTypes(): void
+    {
+        $activityOne = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
+            ->withSportType(SportType::BADMINTON)
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityOne,
+            ['raw' => 'data']
+        ));
+        $activityTwo = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(2))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
+            ->withSportType(SportType::RUN)
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityTwo,
+            ['raw' => 'data']
+        ));
+        $activityThree = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(3))
+            ->withSportType(SportType::MOUNTAIN_BIKE_RIDE)
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityThree,
+            ['raw' => 'data']
+        ));
+
+        $this->assertEquals(
+            [$activityTwo->getId(), $activityThree->getId()],
+            $this->activityRepository->findBySportTypes(SportTypes::fromArray(
+                [SportType::RUN, SportType::MOUNTAIN_BIKE_RIDE]
+            ))->map(fn (Activity $activity) => $activity->getId())
         );
     }
 
