@@ -26,7 +26,6 @@
         },
         subMaxLevel: 2,
         auto2top: true,
-        formatUpdated: '{DD}/{MM} {HH}:{mm}',
         search: 'auto',
     }
 </script>
@@ -46,7 +45,7 @@
         data-domains="statistics-for-strava-docs.robiningelbrecht.be"></script>
 <script type="text/javascript">
     (function () {
-        const myPlugin = function (hook, vm) {
+        const umamiAnalytics = function (hook, vm) {
             // Invoked on each page load after new HTML has been appended to the DOM
             hook.doneEach(function () {
                 umami.track(props => ({ ...props, url: vm.route.path }));
@@ -61,7 +60,7 @@
         };
 
         $docsify = $docsify || {};
-        $docsify.plugins = [].concat(myPlugin, $docsify.plugins || []);
+        $docsify.plugins = [].concat(umamiAnalytics, $docsify.plugins || []);
     })();
 </script>
 </body>

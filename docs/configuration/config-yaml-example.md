@@ -68,6 +68,7 @@ metrics:
   # Each category includes a list of sport types used in the calculation.
   # This setting lets you customize which sport types are grouped together and how the Eddington score is calculated.
   # If you're not familiar with the Eddington score, it's best to leave this as is for now and explore it once the app is running.
+  # 🔥 PRO tip: it's possible to use the same sport type over multiple eddington numbers.
   eddington:
       # The label to be used for the tabs on the Eddington page.
     - label: 'Ride'
