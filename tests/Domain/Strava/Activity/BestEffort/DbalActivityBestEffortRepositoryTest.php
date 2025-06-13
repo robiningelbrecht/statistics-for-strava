@@ -4,6 +4,7 @@ namespace App\Tests\Domain\Strava\Activity\BestEffort;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityIds;
+use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
@@ -156,7 +157,8 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
         $this->activityBestEffortRepository = new DbalActivityBestEffortRepository(
-            $this->getConnection()
+            $this->getConnection(),
+            $this->getContainer()->get(ActivityRepository::class)
         );
     }
 }

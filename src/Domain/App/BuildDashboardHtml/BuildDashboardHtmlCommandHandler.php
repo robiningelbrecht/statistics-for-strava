@@ -161,7 +161,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $trivia = Trivia::getInstance($allActivities);
         $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
 
-        $bestEffortsCharts = [];
+        $bestEfforts = $bestEffortsCharts = [];
         /** @var ActivityType $activityType */
         foreach ($importedActivityTypes as $activityType) {
             if (!$activityType->supportsBestEffortsStats()) {
@@ -173,6 +173,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 continue;
             }
 
+            $bestEfforts[$activityType->value] = $bestEffortsForActivityType;
             $bestEffortsCharts[$activityType->value] = Json::encode(
                 BestEffortChart::create(
                     activityType: $activityType,
@@ -245,6 +246,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'yearlyDistanceCharts' => $yearlyDistanceCharts,
                 'yearlyStatistics' => $yearlyStatistics,
+                'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
                 'trainingMetrics' => $trainingMetrics,
                 'restDaysInLast7Days' => $numberOfRestDays,

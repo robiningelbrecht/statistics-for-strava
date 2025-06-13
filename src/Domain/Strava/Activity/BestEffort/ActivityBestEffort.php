@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\BestEffort;
 
+use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -11,17 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivityBestEffort_sportTypeIndex', columns: ['sportType'])]
-final readonly class ActivityBestEffort
+final class ActivityBestEffort
 {
+    private ?Activity $activity = null;
+
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private ActivityId $activityId,
+        private readonly ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'integer')]
-        private Meter $distanceInMeter,
+        private readonly Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
-        private SportType $sportType,
+        private readonly SportType $sportType,
         #[ORM\Column(type: 'integer')]
-        private int $timeInSeconds,
+        private readonly int $timeInSeconds,
     ) {
     }
 
@@ -71,5 +74,15 @@ final readonly class ActivityBestEffort
     public function getTimeInSeconds(): int
     {
         return $this->timeInSeconds;
+    }
+
+    public function getActivity(): ?Activity
+    {
+        return $this->activity;
+    }
+
+    public function enrichWithActivity(Activity $activity): void
+    {
+        $this->activity = $activity;
     }
 }
