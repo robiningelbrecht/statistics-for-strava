@@ -3,7 +3,8 @@
 When a new version of the app is released, you need to pull the latest Docker image:
 
 ```bash
-> docker compose pull
+> docker compose pull # if available pull a new image
+> docker compose up -d # start a new container using the compose config and the new pulled image.
 ```
 
 After that, run the import and build commands again to apply the changes:
