@@ -67,9 +67,9 @@
 </nav>
         <!-- SIDEBAR -->
     <aside class="group fixed top-0 left-0 w-64 [&amp;.is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001" aria-label="Sidenav" id="drawer-navigation">
-        <div class="group-[.is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-100">
-            <ul class="space-y-1 mb-2">
-                                                                <li>
+                                <div class="group-[.is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
+            <ul class="space-y-1 pb-2">
+                <li>
                     <a href="#" data-router-navigate="/dashboard" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
                         <svg aria-hidden="true" class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"></path>
@@ -78,21 +78,15 @@
                         <span class="flex-1 whitespace-nowrap">Dashboard</span>
                     </a>
                 </li>
+            </ul>
+            <ul class="space-y-1 py-2">
                 <li>
                     <a href="#" data-router-navigate="/activities" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"></path>
                         </svg>
-                        <span class="flex-1 whitespace-nowrap">Alle activiteiten</span>
+                        <span class="flex-1 whitespace-nowrap">Activiteiten</span>
                         <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path>
-                        </svg>
-                        <span class="flex-1 whitespace-nowrap">Maandelijkste stats</span>
                     </a>
                 </li>
                 <li>
@@ -104,18 +98,6 @@
                                             </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/eddington" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"></path>
-                        </svg>
-                        <span class="flex-1 whitespace-nowrap">Eddington</span>
-                        <div class="group-[.is-collapsed]:hidden flex gap-x-0.5">
-                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">6</span>
-                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">1</span>
-                                                    </div>
-                    </a>
-                </li>
-                <li>
                     <a href="#" data-router-navigate="/segments" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
                             <g stroke-width="0"></g>
@@ -125,6 +107,28 @@
                             </g>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">Segmenten</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 py-2">
+                <li>
+                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Maandelijkste stats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-router-navigate="/eddington" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Eddington</span>
+                        <div class="group-[.is-collapsed]:hidden flex gap-x-0.5">
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">6</span>
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">1</span>
+                                                    </div>
                     </a>
                 </li>
                 <li>
@@ -149,6 +153,8 @@
                         <span class="flex-1 whitespace-nowrap">Rewind</span>
                     </a>
                 </li>
+            </ul>
+            <ul class="space-y-1 pt-2">
                 <li>
                     <a href="#" data-router-navigate="/challenges" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs">
                         <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
@@ -222,8 +228,8 @@
                     </a>
                 </div>
                 <div class="flex justify-center gap-x-1">
-                    <span>v2.2.0</span>
-                    <span class="hidden" data-latest-version data-current-version="v2.2.0">
+                    <span>v2.2.1</span>
+                    <span class="hidden" data-latest-version data-current-version="v2.2.1">
                     (latest: <a class="underline" href="https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/%5BLATEST_VERSION%5D">[LATEST_VERSION]</a>)
                 </span>
                 </div>

@@ -1,0 +1,22 @@
+{% autoescape false %}
+    {% set activeMenuClasses = 'flex items-center px-3 py-2 rounded-lg text-gray-900 bg-gray-100' %}
+    {% set inactiveMenuClasses = 'flex items-center px-3 py-2 rounded-lg hover:text-gray-900 hover:bg-gray-100' %}
+    <ul class="flex flex-wrap gap-x-2 py-2 text-sm font-medium text-center text-gray-500">
+        <li>
+            <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
+               class="{{ activeMenuItem == 'gear' ? activeMenuClasses : inactiveMenuClasses }}">
+                {{ "Stats"|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="#" data-router-navigate="{{ relativeUrl('gear/maintenance') }}"
+               class="{{ activeMenuItem == 'gearMaintenance' ? activeMenuClasses : inactiveMenuClasses }}">
+                {% if maintenanceTaskIsDue %}
+                    <span class="flex w-3 h-3 me-2 bg-red-500 rounded-full animate-pulse"
+                          title="{{ "One of your gear maintenance tasks is due"|trans }}"></span>
+                {% endif %}
+                {{ "Maintenance"|trans }}
+            </a>
+        </li>
+    </ul>
+{% endautoescape %}

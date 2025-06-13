@@ -1,3 +1,12 @@
+# [v2.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.1) - 2025-06-13
+
+## What's Changed
+* ISSUE #728: Add dividers to side navbar by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/729
+* ISSUE #730: Render maintenance is due indicator on gear submenu by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/731
+* ISSUE #734: Error when import : Warning: Undefined array key address by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/735
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.2.0...v2.2.1
+
 # [v2.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.0) - 2025-06-12
 
 🔥 Be the master of your Eddington. 
