@@ -1,7 +1,9 @@
 - Getting Started
   - [Prerequisites](getting-started/prerequisites.md "Statistics for Strava | Prerequisites")
   - [Installation](getting-started/installation.md "Statistics for Strava | Installation")
+  - [Scheduling](getting-started/scheduling.md "Statistics for Strava | Scheduling")
   - [Challenges and trophies](getting-started/challenges-and-trophies.md "Statistics for Strava | Challenges and trophies")
+  - [Updates](getting-started/updates.md "Statistics for Strava | Updates")
 
 - Configuration
 
