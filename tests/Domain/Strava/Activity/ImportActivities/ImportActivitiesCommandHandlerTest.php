@@ -123,6 +123,26 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         ));
     }
 
+    public function testHandleWithUnexpectedError(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->triggerExceptionOnNextActivityCall();
+
+        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
+            Key::STRAVA_GEAR_IMPORT,
+            Value::fromString('20205-01_18'),
+        ));
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromString('gear-b12659861'))
+            ->build()
+        );
+
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->assertMatchesTextSnapshot((string) $output);
+    }
+
     public function testHandleWithActivityDelete(): void
     {
         $output = new SpyOutput();

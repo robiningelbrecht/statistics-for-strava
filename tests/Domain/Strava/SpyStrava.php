@@ -18,6 +18,7 @@ use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use App\Tests\NullLogger;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use League\Flysystem\Filesystem;
@@ -28,7 +29,8 @@ class SpyStrava extends Strava
     private int $numberOfCallsExecuted = 0;
     private int $maxNumberOfCallsBeforeTriggering429 = 0;
     private readonly array $activities;
-    private bool $triggerExceptionOnNextCall = false;
+    private bool $triggerExceptionOnNextImageDownload = false;
+    private bool $triggerExceptionOnNextActivityCall = false;
 
     public function __construct(
         private readonly KernelProjectDir $kernelProjectDir,
@@ -61,7 +63,12 @@ class SpyStrava extends Strava
 
     public function triggerExceptionOnNextCall(): void
     {
-        $this->triggerExceptionOnNextCall = true;
+        $this->triggerExceptionOnNextImageDownload = true;
+    }
+
+    public function triggerExceptionOnNextActivityCall(): void
+    {
+        $this->triggerExceptionOnNextActivityCall = true;
     }
 
     private function throw429IfMaxNumberOfCallsIsExceeded(): void
@@ -101,6 +108,11 @@ class SpyStrava extends Strava
     {
         ++$this->numberOfCallsExecuted;
         $this->throw429IfMaxNumberOfCallsIsExceeded();
+
+        if ($this->triggerExceptionOnNextActivityCall) {
+            $this->triggerExceptionOnNextActivityCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
 
         return $this->activities[(string) $activityId];
     }
@@ -210,7 +222,7 @@ class SpyStrava extends Strava
     #[\Override]
     public function downloadImage(string $uri): string
     {
-        if ($this->triggerExceptionOnNextCall) {
+        if ($this->triggerExceptionOnNextImageDownload) {
             throw new \RuntimeException('WAW ERROR');
         }
         ++$this->numberOfCallsExecuted;
