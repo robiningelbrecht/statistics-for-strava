@@ -46,7 +46,52 @@ general:
 * For activities registered between `2023-04-03` and `2024-11-20` the FTP value `209` will be used
 * For activities registered on or after `2024-11-21` the FTP value `243` will be used
 
-If you do not know what FTP is, or you don't need it, leave this value empty:
+If you do not know what FTP is, or you don't need it, leave this value empty.
+
+## Athlete heart rate zones
+
+```yaml
+  athlete:
+    # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
+    heartRateZones:
+      # Relative or absolute. 
+      # Relative will treat the zone numbers as percentages based on your max heart rate, while absolute will treat them as actual heartbeats per minute.
+      # This mode will apply to all heart rate zones you define.
+      mode: relative
+      # The default zones for all activities.
+      # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
+      default:
+        zone1:
+          - from: 0
+          - to: 60
+        zone2:
+          - from: 61
+          - to: 70
+        zone3:
+          - from: 71
+          - to: 80
+        zone4:
+          - from: 81
+          - to: 90
+        zone5:
+          - from: 81
+          - to: null # Infinity and beyond.
+      # You can further refine your zones by specifying date ranges.
+      # This works the same way as weight and FTP history: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-weight-historys
+      dateRanges:
+        "2025-01-01": ...
+        "2024-11-08": ...
+        # You can also override your heart rate zones for specific sport types.    
+        # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types      
+        sportTypes:
+          GravelRide:
+            # The default heart rate zones for all GravelRide activities.
+            # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
+            default: ...
+            dateRanges:
+              "2025-01-01": ...
+              "2024-11-08": ...
+```
 
 ## Supported sport types
 
