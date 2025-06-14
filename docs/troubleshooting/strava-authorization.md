@@ -64,3 +64,16 @@ Ensure that the `Website` and `Authorization Callback Domain` match the URL/doma
   ]
 }
 ```
+
+## 500 Internal Server Error
+
+If you receive an error stating something like:
+```
+Strava API threw error: Server Error: 'GET https://www.strava.com/api/v3/activities/[activityid]' restulted in a `500 Internal Server Error` response: 
+{"message":"error"}
+```
+
+Please try to acces the activity in a browser by copieing the id from the error massage and navigatae to https://www.strava.com/activities/[ACTIVITY-ID]
+If the activity is accasable by the url from step 1, then the activity is corrupted on Strava's end, and you have 2 options:
+1. Update the activity by changing the private note or title of the activity and try to import again.
+2. Skip the activity from importing by setting the `activitiesToSkipDuringImport` in your `config.yaml`. 
