@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Athlete;
+namespace App\Tests\Domain\Strava\Athlete\HeartRateZone;
 
-use App\Domain\Strava\Athlete\HeartRateZone;
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

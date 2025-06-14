@@ -40,7 +40,6 @@ final readonly class HeartRateDistributionChart
         $heartRates = array_keys($heartRateData);
         $minHeartRate = (int) min(60, floor(min($heartRates) / 10) * 10);
         $maxHeartRate = (int) max(200, ceil(max($heartRates) / 10) * 10);
-        $needsDebugging = 92 === $this->averageHeartRate && 50 === $minHeartRate;
 
         foreach (range($minHeartRate, $maxHeartRate) as $heartRate) {
             if (array_key_exists($heartRate, $this->heartRateData)) {
