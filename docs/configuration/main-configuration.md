@@ -50,6 +50,9 @@ If you do not know what FTP is, or you don't need it, leave this value empty.
 
 ## Athlete heart rate zones
 
+If one default heart rate zone doesn’t quite work for you, you can fine-tune your setup by adding date ranges and sport types. 
+This lets you create very specific zones for different scenarios.
+
 ```yaml
   athlete:
     heartRateZones:
