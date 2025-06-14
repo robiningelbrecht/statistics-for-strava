@@ -15,7 +15,7 @@ Keep track of your gear and stay on top of maintenance tasks with our **Gear Mai
 * It then calculates the usage of each attached component and updates the progress automatically.
 * If the Strava activity title contains one of the configured hashtags, the app will reset the maintenance task and counters from the next activity onwards and will start re-tracking from 0 again.
 
-[include](../assets/gear-maintenance.mp4 ':include :type=video controls width=100%')
+[Gear maintenance](https://www.youtube.com/embed/mYFmIFgUIYU ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ## Setup
 
