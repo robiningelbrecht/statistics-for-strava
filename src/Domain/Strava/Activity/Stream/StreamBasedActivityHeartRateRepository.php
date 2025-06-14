@@ -7,7 +7,7 @@ namespace App\Domain\Strava\Activity\Stream;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Domain\Strava\Athlete\HeartRateZone;
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 
 final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateRepository
 {
