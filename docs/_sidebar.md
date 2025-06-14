@@ -14,7 +14,7 @@
   
 - Troubleshooting
 
-  - [Strava authorization](troubleshooting/strava-authorization.md "Statistics for Strava | Strava authorization")
+  - [Strava API errors](troubleshooting/strava-api-errors.md "Statistics for Strava | Strava API errors")
   - [FAQ](troubleshooting/faq.md "Statistics for Strava | FAQ")
   - [Logs](troubleshooting/logs.md "Statistics for Strava | Logs")
   - [:warning: v2.0.0 breaking change](troubleshooting/v2-breaking-change.md "Statistics for Strava | v2.0.0 Breaking change")
