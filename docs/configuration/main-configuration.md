@@ -52,7 +52,6 @@ If you do not know what FTP is, or you don't need it, leave this value empty.
 
 ```yaml
   athlete:
-    # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
     heartRateZones:
       # Relative or absolute. 
       # Relative will treat the zone numbers as percentages based on your max heart rate, while absolute will treat them as actual heartbeats per minute.

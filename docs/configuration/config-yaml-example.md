@@ -16,11 +16,11 @@ general:
     # Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
     # Or you can set a fixed number for any given date range.  
     maxHeartRateFormula: 'fox'
+    # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
     heartRateZones:
       # Relative or absolute. 
       # Relative will treat the zone numbers as percentages based on your max heart rate, while absolute will treat them as actual heartbeats per minute.
       # This mode will apply to all heart rate zones you define.
-      # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
       mode: relative
       # The default zones for all activities.
       default:
