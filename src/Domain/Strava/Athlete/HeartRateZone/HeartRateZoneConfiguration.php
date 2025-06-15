@@ -233,6 +233,9 @@ final class HeartRateZoneConfiguration
         return $heartRateConfig;
     }
 
+    /**
+     * @param non-empty-array<string, mixed> $config
+     */
     private static function guardValidZoneConfig(array &$config, HeartRateZoneMode $mode): void
     {
         self::sortZones($config['default']);
@@ -275,7 +278,7 @@ final class HeartRateZoneConfiguration
     }
 
     /**
-     * @param array<string, array{from: int, to: int|null}> $zones
+     * @param array<string, array{from: mixed, to: mixed|null}> $zones
      */
     private static function guardValidAndSequentialZones(array $zones, HeartRateZoneMode $mode): void
     {
