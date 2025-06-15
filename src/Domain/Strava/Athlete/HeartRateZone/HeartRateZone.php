@@ -2,26 +2,46 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Athlete;
+namespace App\Domain\Strava\Athlete\HeartRateZone;
 
-enum HeartRateZone: int
+final readonly class HeartRateZone
 {
-    case ONE = 1;
-    case TWO = 2;
-    case THREE = 3;
-    case FOUR = 4;
-    case FIVE = 5;
+    public const string ONE = 'zone1';
+    public const string TWO = 'zone2';
+    public const string THREE = 'zone3';
+    public const string FOUR = 'zone4';
+    public const string FIVE = 'zone5';
+
+    public function __construct(
+        private string $name,
+        private int $from,
+        private ?int $to,
+    ) {
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getFrom(): int
+    {
+        return $this->from;
+    }
+
+    public function getTo(): ?int
+    {
+        return $this->to;
+    }
 
     /**
      * @return array<int, int>
      */
-    public function getMinMaxRange(int $athleteMaxHeartRate): array
+    public function getRange(int $athleteMaxHeartRate, HeartRateZoneMode $mode): array
     {
-        // Zone 1 (Recovery or very light intensity): 50-60% of MHR
-        // Zone 2 (Aerobic or light intensity): 60-70% of MHR
-        // Zone 3 (Aerobic/anaerobic or moderate intensity): 70-80% of MHR
-        // Zone 4 (Anaerobic or hard intensity): 80-90% of MHR
-        // Zone 5 (Maximal or very hard intensity): 90-100% of MHR
+        if (HeartRateZoneMode::ABSOLUTE === $mode) {
+            return [$this->getFrom(), $this->getTo() ?? 10000];
+        }
 
         if (0 === $athleteMaxHeartRate % 10) {
             return match ($this) {
