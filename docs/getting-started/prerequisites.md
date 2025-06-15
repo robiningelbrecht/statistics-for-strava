@@ -12,5 +12,6 @@ Most importantly, you'll need a `Strava client ID` and `Strava client Secret`
 * Copy the `client ID` and `client secret`, you'll need these during the [installation](/getting-started/installation.md)
 * Make sure the `Website` and `Authorization Callback Domain` are set to the url you will host your app on.
   You can configure these by clicking the __Edit__ button on the top right-hand side of the page.
+* Strava will also give an error when no App Icon is set. You can find this setting at the bottom of the API settings page. 
 
 ![Strava API settings page](../assets/images/strava-api-settings.png) 
