@@ -7,13 +7,93 @@ namespace App\Domain\Strava\Athlete\HeartRateZone;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class HeartRateZoneConfiguration
+final class HeartRateZoneConfiguration
 {
+    private const string DEFAULT_KEY = 'default';
+    private const string DATE_RANGES_KEY = 'dateRanges';
+
+    /** @var array<string, mixed> */
+    private array $hearRateZones;
+
     private function __construct(
-        private HeartRateZoneMode $mode,
-        /** @var array<string, HeartRateZones> */
-        private array $hearRateZonesConfig,
+        private readonly HeartRateZoneMode $mode,
     ) {
+    }
+
+    public function getMode(): HeartRateZoneMode
+    {
+        return $this->mode;
+    }
+
+    public function getHeartRateZonesFor(SportType $sportType, SerializableDateTime $on): HeartRateZones
+    {
+        $on = SerializableDateTime::fromString($on->format('Y-m-d'));
+        if (array_key_exists($sportType->value, $this->hearRateZones)) {
+            // There's a heart rate zone set for this sport specifically.
+            // Check if we can use a date specific one or if we have to use the default.
+            if (!array_key_exists(self::DATE_RANGES_KEY, $this->hearRateZones[$sportType->value])) {
+                // No date ranges defined, use default.
+                return $this->hearRateZones[$sportType->value][self::DEFAULT_KEY];
+            }
+
+            foreach ($this->hearRateZones[$sportType->value][self::DATE_RANGES_KEY] as $timestamp => $heartRateZones) {
+                $currentDate = SerializableDateTime::fromTimestamp($timestamp);
+                if ($on->isAfterOrOn($currentDate)) {
+                    return $heartRateZones;
+                }
+            }
+
+            // No matching date range found, use default.
+            return $this->hearRateZones[$sportType->value][self::DEFAULT_KEY];
+        }
+
+        // No heart rate zone set for this sport type.
+        // Check if we can use a date specific one or if we have to use the default.
+        if (!array_key_exists(self::DATE_RANGES_KEY, $this->hearRateZones['defaults'])) {
+            // No date ranges defined, use default.
+            return $this->hearRateZones['defaults'][self::DEFAULT_KEY];
+        }
+
+        foreach ($this->hearRateZones['defaults'][self::DATE_RANGES_KEY] as $timestamp => $heartRateZones) {
+            $currentDate = SerializableDateTime::fromTimestamp($timestamp);
+            if ($on->isAfterOrOn($currentDate)) {
+                return $heartRateZones;
+            }
+        }
+
+        // No matching date range found, use default.
+        return $this->hearRateZones['defaults'][self::DEFAULT_KEY];
+    }
+
+    private function addHeartRateZones(
+        HeartRateZones $heartRateZones,
+        ?SportType $sportType,
+        ?SerializableDateTime $on,
+    ): void {
+        if ($on) {
+            $on = SerializableDateTime::fromString($on->format('Y-m-d'));
+        }
+        if ($sportType && $on) {
+            $this->hearRateZones[$sportType->value][self::DATE_RANGES_KEY][$on->getTimestamp()] = $heartRateZones;
+            // Make sure dates are sorted from new => old
+            krsort($this->hearRateZones[$sportType->value][self::DATE_RANGES_KEY]);
+
+            return;
+        }
+        if ($sportType) {
+            $this->hearRateZones[$sportType->value][self::DEFAULT_KEY] = $heartRateZones;
+
+            return;
+        }
+        if ($on) {
+            $this->hearRateZones['defaults'][self::DATE_RANGES_KEY][$on->getTimestamp()] = $heartRateZones;
+            // Make sure dates are sorted from new => old
+            krsort($this->hearRateZones['defaults'][self::DATE_RANGES_KEY]);
+
+            return;
+        }
+
+        $this->hearRateZones['defaults'][self::DEFAULT_KEY] = $heartRateZones;
     }
 
     /**
@@ -38,7 +118,7 @@ final readonly class HeartRateZoneConfiguration
                 ],
                 'zone4' => [
                     'from' => 81,
-                    'to' => 80,
+                    'to' => 90,
                 ],
                 'zone5' => [
                     'from' => 91,
@@ -74,28 +154,17 @@ final readonly class HeartRateZoneConfiguration
             throw new InvalidHeartZoneConfiguration('"default" property must be an array');
         }
 
-        self::sortZones($config['default']);
-        self::guardValidAndSequentialZones($config['default']);
-
         if (array_key_exists('dateRanges', $config) && !is_array($config['dateRanges'])) {
             throw new InvalidHeartZoneConfiguration('"dateRanges" property must be an array');
         }
 
-        foreach ($config['dateRanges'] as $date => &$zones) {
-            try {
-                $on = SerializableDateTime::fromString($date);
-                self::sortZones($zones);
-                self::guardValidAndSequentialZones($zones);
-            } catch (\DateMalformedStringException) {
-                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete heartRateZone', $date));
-            }
-        }
+        self::guardValidZoneConfig($config, $mode);
 
         if (array_key_exists('sportTypes', $config) && !is_array($config['sportTypes'])) {
             throw new InvalidHeartZoneConfiguration('"sportTypes" property must be an array');
         }
 
-        foreach ($config['sportTypes'] as $sportTypeValue => &$sportTypeConfig) {
+        foreach ($config['sportTypes'] ?? [] as $sportTypeValue => &$sportTypeConfig) {
             if (!$sportType = SportType::tryFrom($sportTypeValue)) {
                 throw new InvalidHeartZoneConfiguration(sprintf('"%s" is not a valid sport type', $sportTypeValue));
             }
@@ -108,28 +177,80 @@ final readonly class HeartRateZoneConfiguration
                 throw new InvalidHeartZoneConfiguration(sprintf('"default" property must be an array for sportType %s', $sportType->value));
             }
 
-            self::sortZones($sportTypeConfig['default']);
-            self::guardValidAndSequentialZones($sportTypeConfig['default']);
-
             if (array_key_exists('dateRanges', $sportTypeConfig) && !is_array($sportTypeConfig['dateRanges'])) {
                 throw new InvalidHeartZoneConfiguration(sprintf('"dateRanges" property must be an array for sportType %s', $sportType->value));
             }
 
-            foreach ($sportTypeConfig['dateRanges'] as $date => &$zones) {
-                try {
-                    $on = SerializableDateTime::fromString($date);
-                    self::sortZones($zones);
-                    self::guardValidAndSequentialZones($zones);
-                } catch (\DateMalformedStringException) {
-                    throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete heartRateZone', $date));
-                }
+            self::guardValidZoneConfig($sportTypeConfig, $mode);
+        }
+
+        $heartRateConfig = new self($mode);
+
+        // Now that everything has been validated, add the zones to the config.
+        $heartRateConfig->addHeartRateZones(
+            heartRateZones: HeartRateZones::fromScalarValues(
+                mode: $mode,
+                zones: $config['default']
+            ),
+            sportType: null,
+            on: null
+        );
+
+        foreach ($config['dateRanges'] ?? [] as $date => $zones) {
+            $heartRateConfig->addHeartRateZones(
+                heartRateZones: HeartRateZones::fromScalarValues(
+                    mode: $mode,
+                    zones: $zones
+                ),
+                sportType: null,
+                on: SerializableDateTime::fromString($date)
+            );
+        }
+
+        foreach ($config['sportTypes'] ?? [] as $sportTypeValue => $sportTypeConfiguration) {
+            $sportType = SportType::tryFrom($sportTypeValue);
+            $heartRateConfig->addHeartRateZones(
+                heartRateZones: HeartRateZones::fromScalarValues(
+                    mode: $mode,
+                    zones: $sportTypeConfiguration['default']
+                ),
+                sportType: $sportType,
+                on: null
+            );
+
+            foreach ($sportTypeConfiguration['dateRanges'] ?? [] as $date => $zones) {
+                $heartRateConfig->addHeartRateZones(
+                    heartRateZones: HeartRateZones::fromScalarValues(
+                        mode: $mode,
+                        zones: $zones
+                    ),
+                    sportType: $sportType,
+                    on: SerializableDateTime::fromString($date)
+                );
             }
         }
 
-        return new self(
-            mode: $mode,
-            hearRateZonesConfig: []
-        );
+        return $heartRateConfig;
+    }
+
+    private static function guardValidZoneConfig(array &$config, HeartRateZoneMode $mode): void
+    {
+        self::sortZones($config['default']);
+        self::guardValidAndSequentialZones($config['default'], $mode);
+
+        if (!array_key_exists('dateRanges', $config)) {
+            return;
+        }
+
+        foreach ($config['dateRanges'] ?? [] as $date => &$zones) {
+            try {
+                SerializableDateTime::fromString($date);
+                self::sortZones($zones);
+                self::guardValidAndSequentialZones($zones, $mode);
+            } catch (\DateMalformedStringException) {
+                throw new InvalidHeartZoneConfiguration(sprintf('Invalid date "%s" set for athlete heartRateZone', $date));
+            }
+        }
     }
 
     /**
@@ -156,35 +277,56 @@ final readonly class HeartRateZoneConfiguration
     /**
      * @param array<string, array{from: int, to: int|null}> $zones
      */
-    private static function guardValidAndSequentialZones(array $zones): void
+    private static function guardValidAndSequentialZones(array $zones, HeartRateZoneMode $mode): void
     {
+        if (0 !== $zones['zone1']['from']) {
+            throw new InvalidHeartZoneConfiguration(sprintf('zone1 "from" value needs to be 0, got %s', $zones['zone1']['from']));
+        }
+        if (null !== $zones['zone5']['to']) {
+            throw new InvalidHeartZoneConfiguration(sprintf('zone5 "to" value needs to be null, got %s', $zones['zone5']['to']));
+        }
+
         $expectedFrom = null;
         foreach ($zones as $key => $zone) {
-            $from = $zone['from'];
-            $to = $zone['to'];
+            $zoneFrom = $zone['from'];
+            $zoneTo = $zone['to'];
+
+            if (!is_int($zoneFrom)) {
+                throw new InvalidHeartZoneConfiguration(sprintf('%s "from" value needs to a positive integer, got %s', $key, $zoneFrom));
+            }
+            if ($zoneFrom < 0) {
+                throw new InvalidHeartZoneConfiguration(sprintf('%s "from" value needs to a positive integer, got %s', $key, $zoneFrom));
+            }
+            if (!is_int($zoneTo) && !is_null($zoneTo)) {
+                throw new InvalidHeartZoneConfiguration(sprintf('%s "to" value needs to a valid integer, got %s', $key, $zoneTo));
+            }
+
+            if (HeartRateZoneMode::RELATIVE === $mode && $zoneTo > 99) {
+                throw new InvalidHeartZoneConfiguration(sprintf('%s "to" value cannot be higher than 99, got %s', $key, $zoneTo));
+            }
 
             // First zone sets the baseline
             if (null === $expectedFrom) {
-                $expectedFrom = $from;
+                $expectedFrom = $zoneFrom;
             }
 
             // Validate the 'from' matches expected
-            if ($from !== $expectedFrom) {
-                throw new InvalidHeartZoneConfiguration(sprintf("Gap detected before %s: expected 'from' to be %s, got %s", $key, $expectedFrom, $from));
+            if ($zoneFrom !== $expectedFrom) {
+                throw new InvalidHeartZoneConfiguration(sprintf('Gap detected before %s: expected "from" to be %s, got %s', $key, $expectedFrom, $zoneFrom));
             }
 
             // If 'to' is null, we're at the end
-            if (null === $to) {
+            if (null === $zoneTo) {
                 return;
             }
 
             // If 'from' > 'to', it's invalid
-            if ($from > $to) {
-                throw new InvalidHeartZoneConfiguration(sprintf("%s has 'from' (%s) greater than 'to' (%s), which is invalid", $key, $expectedFrom, $from));
+            if ($zoneFrom > $zoneTo) {
+                throw new InvalidHeartZoneConfiguration(sprintf('%s has "from" (%s) greater than "to" (%s), which is invalid', $key, $zoneFrom, $zoneTo));
             }
 
             // Set next expected 'from'
-            $expectedFrom = $to + 1;
+            $expectedFrom = $zoneTo + 1;
         }
     }
 }

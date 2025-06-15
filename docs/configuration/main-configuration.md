@@ -64,35 +64,35 @@ This lets you create very specific zones for different scenarios.
       # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
       default:
         zone1:
-          - from: 0
-          - to: 60
+          from: 0
+          to: 60
         zone2:
-          - from: 61
-          - to: 70
+          from: 61
+          to: 70
         zone3:
-          - from: 71
-          - to: 80
+          from: 71
+          to: 80
         zone4:
-          - from: 81
-          - to: 90
+          from: 81
+          to: 90
         zone5:
-          - from: 81
-          - to: null # Infinity and beyond.
+          from: 91
+          to: null # Infinity and beyond.
       # You can further refine your zones by specifying date ranges.
       # This works the same way as weight and FTP history: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-weight-historys
       dateRanges:
         "2025-01-01": ...
         "2024-11-08": ...
-        # You can also override your heart rate zones for specific sport types.    
-        # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types      
-        sportTypes:
-          GravelRide:
-            # The default heart rate zones for all GravelRide activities.
-            # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
-            default: ...
-            dateRanges:
-              "2025-01-01": ...
-              "2024-11-08": ...
+      # You can also override your heart rate zones for specific sport types.    
+      # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types      
+      sportTypes:
+        GravelRide:
+          # The default heart rate zones for all GravelRide activities.
+          # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
+          default: ...
+          dateRanges:
+            "2025-01-01": ...
+            "2024-11-08": ...
 ```
 
 ## Supported sport types
