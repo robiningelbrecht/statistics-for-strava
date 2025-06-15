@@ -17,7 +17,7 @@ final readonly class HeartRateDistributionChart
     /**
      * @param array<int, int> $heartRateData
      */
-    public static function fromHeartRateData(
+    public static function create(
         array $heartRateData,
         int $averageHeartRate,
         int $athleteMaxHeartRate,
@@ -30,7 +30,7 @@ final readonly class HeartRateDistributionChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
