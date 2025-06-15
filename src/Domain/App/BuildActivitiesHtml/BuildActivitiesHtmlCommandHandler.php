@@ -99,7 +99,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $heartRateDistributionChart = null;
             if ($activity->getAverageHeartRate()
                 && ($timeInSecondsPerHeartRate = $this->activityHeartRateRepository->findTimeInSecondsPerHeartRateForActivity($activity->getId()))) {
-                $heartRateDistributionChart = HeartRateDistributionChart::fromHeartRateData(
+                $heartRateDistributionChart = HeartRateDistributionChart::create(
                     heartRateData: $timeInSecondsPerHeartRate,
                     averageHeartRate: $activity->getAverageHeartRate(),
                     athleteMaxHeartRate: $athlete->getMaxHeartRate($activity->getStartDate())
