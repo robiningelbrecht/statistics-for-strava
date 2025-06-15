@@ -4,12 +4,74 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Athlete\HeartRateZone;
 
-use App\Infrastructure\ValueObject\Collection;
-
-final class HeartRateZones extends Collection
+final readonly class HeartRateZones
 {
-    public function getItemClassName(): string
+    private function __construct(
+        private HeartRateZoneMode $mode,
+        private HeartRateZone $zoneOne,
+        private HeartRateZone $zoneTwo,
+        private HeartRateZone $zoneThree,
+        private HeartRateZone $zoneFour,
+        private HeartRateZone $zoneFive,
+    ) {
+    }
+
+    public static function fromScalarValues(
+        HeartRateZoneMode $mode,
+        array $zones,
+    ): self {
+        return new self(
+            mode: $mode,
+            zoneOne: new HeartRateZone(
+                from: $zones['zone1']['from'],
+                to: $zones['zone1']['to'],
+            ),
+            zoneTwo: new HeartRateZone(
+                from: $zones['zone2']['from'],
+                to: $zones['zone2']['to'],
+            ),
+            zoneThree: new HeartRateZone(
+                from: $zones['zone3']['from'],
+                to: $zones['zone3']['to'],
+            ),
+            zoneFour: new HeartRateZone(
+                from: $zones['zone4']['from'],
+                to: $zones['zone4']['to'],
+            ),
+            zoneFive: new HeartRateZone(
+                from: $zones['zone5']['from'],
+                to: $zones['zone5']['to'],
+            )
+        );
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getMinMaxRange(int $athleteMaxHeartRate): array
     {
-        return HeartRateZone::class;
+        // Zone 1 (Recovery or very light intensity): 50-60% of MHR
+        // Zone 2 (Aerobic or light intensity): 60-70% of MHR
+        // Zone 3 (Aerobic/anaerobic or moderate intensity): 70-80% of MHR
+        // Zone 4 (Anaerobic or hard intensity): 80-90% of MHR
+        // Zone 5 (Maximal or very hard intensity): 90-100% of MHR
+
+        if (0 === $athleteMaxHeartRate % 10) {
+            return match ($this) {
+                self::ONE => [0, (int) ($athleteMaxHeartRate * 0.6)],
+                self::TWO => [(int) ($athleteMaxHeartRate * 0.6) + 1, (int) ($athleteMaxHeartRate * 0.7)],
+                self::THREE => [(int) ($athleteMaxHeartRate * 0.7) + 1, (int) ($athleteMaxHeartRate * 0.8)],
+                self::FOUR => [(int) ($athleteMaxHeartRate * 0.8) + 1, (int) ($athleteMaxHeartRate * 0.9)],
+                self::FIVE => [(int) ($athleteMaxHeartRate * 0.9) + 1, 10000],
+            };
+        }
+
+        return match ($this) {
+            self::ONE => [0, (int) floor($athleteMaxHeartRate * 0.6)],
+            self::TWO => [(int) ceil($athleteMaxHeartRate * 0.6), (int) floor($athleteMaxHeartRate * 0.7)],
+            self::THREE => [(int) ceil($athleteMaxHeartRate * 0.7), (int) floor($athleteMaxHeartRate * 0.8)],
+            self::FOUR => [(int) ceil($athleteMaxHeartRate * 0.8), (int) floor($athleteMaxHeartRate * 0.9)],
+            self::FIVE => [(int) ceil($athleteMaxHeartRate * 0.9), 10000],
+        };
     }
 }

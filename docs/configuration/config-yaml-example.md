@@ -25,20 +25,20 @@ general:
       # The default zones for all activities.
       default:
         zone1:
-          - from: 0
-          - to: 60
+          from: 0
+          to: 60
         zone2:
-          - from: 61
-          - to: 70
+          from: 61
+          to: 70
         zone3:
-          - from: 71
-          - to: 80
+          from: 71
+          to: 80
         zone4:
-          - from: 81
-          - to: 90
+          from: 81
+          to: 90
         zone5:
-          - from: 81
-          - to: null # Infinity and beyond.
+          from: 91
+          to: null # Infinity and beyond.
       # 🔥 PRO tip: You can further refine your heart rate zones by specifying date ranges and sport types.
       #    Read more about the possibilities on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-heart-rate-zones
     # maxHeartRateFormula:
