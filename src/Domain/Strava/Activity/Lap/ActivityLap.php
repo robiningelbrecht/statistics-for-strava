@@ -6,8 +6,10 @@ namespace App\Domain\Strava\Activity\Lap;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -128,9 +130,24 @@ final readonly class ActivityLap
         return $this->movingTimeInSeconds;
     }
 
+    public function getMovingTimeFormatted(): string
+    {
+        return $this->formatDurationForHumans($this->getMovingTimeInSeconds());
+    }
+
     public function getDistance(): Meter
     {
         return $this->distance;
+    }
+
+    public function getDistanceInKilometer(): Kilometer
+    {
+        return $this->getDistance()->toKilometer();
+    }
+
+    public function getPaceInSecPerKm(): SecPerKm
+    {
+        return $this->getAverageSpeed()->toSecPerKm();
     }
 
     public function getAverageSpeed(): MetersPerSecond
