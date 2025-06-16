@@ -1,3 +1,15 @@
+# [v2.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.0) - 2025-06-16
+
+🚀 New: Fine-tune your heart rate zones with advanced configuration options!
+📖 Learn how to set them up: [Configuration Guide](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration)
+
+## What's Changed
+* ISSUE #677: Show activity where PB was set by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/720
+* ISSUE #680: Allow custom heart rate zones by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/737
+
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.2.1...v2.3.0
+
 # [v2.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.1) - 2025-06-13
 
 ## What's Changed
