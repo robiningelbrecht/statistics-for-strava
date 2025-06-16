@@ -57,7 +57,7 @@ final readonly class ActivityWithRawData
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getSplits(): array
     {
@@ -84,5 +84,18 @@ final readonly class ActivityWithRawData
                 $this->rawData['splits_standard'] ?? [],
             )
         );
+    }
+
+    public function hasLaps(): bool
+    {
+        return !empty($this->rawData['laps']);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getLaps(): array
+    {
+        return $this->rawData['laps'];
     }
 }
