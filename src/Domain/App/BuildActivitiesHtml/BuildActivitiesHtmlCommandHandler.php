@@ -18,6 +18,7 @@ use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Athlete\AthleteRepository;
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Infrastructure\CQRS\Command\Command;
@@ -45,6 +46,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private SegmentEffortRepository $segmentEffortRepository,
         private GearRepository $gearRepository,
         private ActivitiesEnricher $activitiesEnricher,
+        private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -99,10 +101,14 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $heartRateDistributionChart = null;
             if ($activity->getAverageHeartRate()
                 && ($timeInSecondsPerHeartRate = $this->activityHeartRateRepository->findTimeInSecondsPerHeartRateForActivity($activity->getId()))) {
-                $heartRateDistributionChart = HeartRateDistributionChart::fromHeartRateData(
+                $heartRateDistributionChart = HeartRateDistributionChart::create(
                     heartRateData: $timeInSecondsPerHeartRate,
                     averageHeartRate: $activity->getAverageHeartRate(),
-                    athleteMaxHeartRate: $athlete->getMaxHeartRate($activity->getStartDate())
+                    athleteMaxHeartRate: $athlete->getMaxHeartRate($activity->getStartDate()),
+                    heartRateZones: $this->heartRateZoneConfiguration->getHeartRateZonesFor(
+                        sportType: $activity->getSportType(),
+                        on: $activity->getStartDate()
+                    )
                 );
             }
 

@@ -16,6 +16,31 @@ general:
     # Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
     # Or you can set a fixed number for any given date range.  
     maxHeartRateFormula: 'fox'
+    # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
+    heartRateZones:
+      # Relative or absolute. 
+      # Relative will treat the zone numbers as percentages based on your max heart rate, while absolute will treat them as actual heartbeats per minute.
+      # This mode will apply to all heart rate zones you define.
+      mode: relative
+      # The default zones for all activities.
+      default:
+        zone1:
+          from: 50
+          to: 60
+        zone2:
+          from: 61
+          to: 70
+        zone3:
+          from: 71
+          to: 80
+        zone4:
+          from: 81
+          to: 90
+        zone5:
+          from: 91
+          to: null # Infinity and beyond.
+      # 🔥 PRO tip: You can further refine your heart rate zones by specifying date ranges and sport types.
+      #    Read more about the possibilities on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-heart-rate-zones
     # maxHeartRateFormula:
     #    "2020-01-01": 198
     #    "2025-01-10": 193
