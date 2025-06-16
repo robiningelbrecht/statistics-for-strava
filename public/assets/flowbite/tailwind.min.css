@@ -3065,15 +3065,15 @@
       background-color: var(--color-gray-50);
     }
   }
-  .group-hover\:fill-\[\#111827\] {
-    &:is(:where(.group):hover *) {
+  .group-hover\/menu-item\:fill-\[\#111827\] {
+    &:is(:where(.group\/menu-item):hover *) {
       @media (hover: hover) {
         fill: #111827;
       }
     }
   }
-  .group-hover\:fill-\[\#FFDD04\] {
-    &:is(:where(.group):hover *) {
+  .group-hover\/menu-item\:fill-\[\#FFDD04\] {
+    &:is(:where(.group\/menu-item):hover *) {
       @media (hover: hover) {
         fill: #FFDD04;
       }
@@ -3094,6 +3094,11 @@
   .group-aria-\[sort\=descending\]\:text-strava-orange {
     &:is(:where(.group)[aria-sort="descending"] *) {
       color: var(--color-strava-orange);
+    }
+  }
+  .group-\[\.is-collapsed\]\:block {
+    &:is(:where(.group):is(.is-collapsed) *) {
+      display: block;
     }
   }
   .group-\[\.is-collapsed\]\:hidden {

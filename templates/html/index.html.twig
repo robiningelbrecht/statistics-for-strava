@@ -324,17 +324,20 @@
 
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
+    const $topNav = document.querySelector("nav");
 
     // Toggle sidebar collapsed state.
     const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
     if (sideNavCollapsed === 'true') {
         $main.classList.add('is-collapsed');
         $sideNav.classList.add('is-collapsed');
+        $topNav.classList.add('is-collapsed');
     }
 
     document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
         $main.classList.toggle('is-collapsed');
         $sideNav.classList.toggle('is-collapsed');
+        $topNav.classList.toggle('is-collapsed');
 
         localStorage.setItem('sideNavCollapsed', 'false');
         if ($main.classList.contains('is-collapsed')) {
