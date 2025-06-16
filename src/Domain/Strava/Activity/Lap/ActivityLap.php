@@ -17,7 +17,7 @@ final readonly class ActivityLap
     use ProvideTimeFormats;
 
     private function __construct(
-        #[ORM\Id, ORM\Column(type: 'integer')]
+        #[ORM\Id, ORM\Column(type: 'string', unique: true)]
         private ActivityLapId $lapId,
         #[ORM\Column(type: 'string')]
         private ActivityId $activityId,

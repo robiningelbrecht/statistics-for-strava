@@ -10,7 +10,7 @@ interface ActivityLapRepository
 {
     public function findBy(ActivityId $activityId): ActivityLaps;
 
-    public function add(ActivityLap $lab): void;
+    public function add(ActivityLap $lap): void;
 
     public function isImportedForActivity(ActivityId $activityId): bool;
 
