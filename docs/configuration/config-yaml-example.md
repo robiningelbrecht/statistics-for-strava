@@ -3,6 +3,10 @@ general:
   # The URL on which the app will be hosted. This URL will be used in the manifest file. 
   # This will allow you to install the web app as a native app on your device.
   appUrl: 'http://localhost:8080/'
+  # Optional subtitle to display in the navbar.
+  # Useful for distinguishing between multiple instances of the app.
+  # Leave empty to disable.
+  appSubTitle: null
   # Optional, a link to your profile picture. Will be used to display in the nav bar and link to your Strava profile.
   # Leave empty to disable this feature.
   profilePictureUrl: null

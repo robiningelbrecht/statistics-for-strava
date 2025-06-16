@@ -108,7 +108,7 @@ final class AppConfig
     /**
      * @return string|int|float|array<string|int,mixed>|null
      */
-    public function get(string $key, mixed $default = null): string|int|float|array|null
+    public function get(string $key, mixed $default = null): string|int|float|array|bool|null
     {
         if (!array_key_exists($key, $this->config)) {
             if (null !== $default) {
