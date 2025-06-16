@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Activity\Stream;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 
 final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateRepository
@@ -68,11 +69,11 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
         /** @var \App\Domain\Strava\Activity\Activity $activity */
         foreach ($activities as $activity) {
             StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesPerActivity[(string) $activity->getId()] = [
-                1 => 0,
-                2 => 0,
-                3 => 0,
-                4 => 0,
-                5 => 0,
+                HeartRateZone::ONE => 0,
+                HeartRateZone::TWO => 0,
+                HeartRateZone::THREE => 0,
+                HeartRateZone::FOUR => 0,
+                HeartRateZone::FIVE => 0,
             ];
             $heartRateStreamsForActivity = $heartRateStreams->filter(fn (ActivityStream $stream) => $stream->getActivityId() == $activity->getId());
 
@@ -90,10 +91,7 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
             );
 
             foreach ($athleteHeartRateZones->getZones() as $heartRateZone) {
-                [$minHeartRate, $maxHeartRate] = $heartRateZone->getRange(
-                    athleteMaxHeartRate: $athleteMaxHeartRate,
-                    mode: $athleteHeartRateZones->getMode()
-                );
+                [$minHeartRate, $maxHeartRate] = $heartRateZone->getRangeInBpm($athleteMaxHeartRate);
                 $secondsInZone = count(array_filter($stream->getData(), fn (int $heartRate) => $heartRate >= $minHeartRate && $heartRate <= $maxHeartRate));
                 StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesPerActivity[(string) $activity->getId()][$heartRateZone->getName()] = $secondsInZone;
             }

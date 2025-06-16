@@ -16,13 +16,7 @@ final class HeartRateZoneConfiguration
     private array $hearRateZones;
 
     private function __construct(
-        private readonly HeartRateZoneMode $mode,
     ) {
-    }
-
-    public function getMode(): HeartRateZoneMode
-    {
-        return $this->mode;
     }
 
     public function getHeartRateZonesFor(SportType $sportType, SerializableDateTime $on): HeartRateZones
@@ -105,7 +99,7 @@ final class HeartRateZoneConfiguration
             'mode' => 'relative',
             'default' => [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -184,7 +178,7 @@ final class HeartRateZoneConfiguration
             self::guardValidZoneConfig($sportTypeConfig, $mode);
         }
 
-        $heartRateConfig = new self($mode);
+        $heartRateConfig = new self();
 
         // Now that everything has been validated, add the zones to the config.
         $heartRateConfig->addHeartRateZones(
@@ -282,9 +276,6 @@ final class HeartRateZoneConfiguration
      */
     private static function guardValidAndSequentialZones(array $zones, HeartRateZoneMode $mode): void
     {
-        if (0 !== $zones['zone1']['from']) {
-            throw new InvalidHeartZoneConfiguration(sprintf('zone1 "from" value needs to be 0, got %s', $zones['zone1']['from']));
-        }
         if (null !== $zones['zone5']['to']) {
             throw new InvalidHeartZoneConfiguration(sprintf('zone5 "to" value needs to be null, got %s', $zones['zone5']['to']));
         }

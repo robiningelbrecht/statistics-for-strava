@@ -98,6 +98,10 @@ services:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.athlete.birthday")']
 
+    App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("general.athlete.heartRateZones", [])']
+
     App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
         class: App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]

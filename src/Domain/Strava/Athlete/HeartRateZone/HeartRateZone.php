@@ -14,6 +14,7 @@ final readonly class HeartRateZone
 
     public function __construct(
         private string $name,
+        private HeartRateZoneMode $mode,
         private int $from,
         private ?int $to,
     ) {
@@ -34,31 +35,45 @@ final readonly class HeartRateZone
         return $this->to;
     }
 
+    public function getDifferenceBetweenFromAndToPercentage(int $athleteMaxHeartRate): int
+    {
+        return abs($this->getToPercentage($athleteMaxHeartRate) - $this->getFromPercentage($athleteMaxHeartRate));
+    }
+
+    public function getFromPercentage(int $athleteMaxHeartRate): int
+    {
+        if (HeartRateZoneMode::RELATIVE === $this->mode) {
+            return $this->getFrom();
+        }
+
+        return (int) round($this->getFrom() / $athleteMaxHeartRate * 100);
+    }
+
+    public function getToPercentage(int $athleteMaxHeartRate): int
+    {
+        if (!$this->getTo()) {
+            return 10000;
+        }
+
+        if (HeartRateZoneMode::RELATIVE === $this->mode) {
+            return $this->getTo();
+        }
+
+        return (int) round($this->getTo() / $athleteMaxHeartRate * 100);
+    }
+
     /**
      * @return array<int, int>
      */
-    public function getRange(int $athleteMaxHeartRate, HeartRateZoneMode $mode): array
+    public function getRangeInBpm(int $athleteMaxHeartRate): array
     {
-        if (HeartRateZoneMode::ABSOLUTE === $mode) {
+        if (HeartRateZoneMode::ABSOLUTE === $this->mode) {
             return [$this->getFrom(), $this->getTo() ?? 10000];
         }
 
-        if (0 === $athleteMaxHeartRate % 10) {
-            return match ($this) {
-                self::ONE => [0, (int) ($athleteMaxHeartRate * 0.6)],
-                self::TWO => [(int) ($athleteMaxHeartRate * 0.6) + 1, (int) ($athleteMaxHeartRate * 0.7)],
-                self::THREE => [(int) ($athleteMaxHeartRate * 0.7) + 1, (int) ($athleteMaxHeartRate * 0.8)],
-                self::FOUR => [(int) ($athleteMaxHeartRate * 0.8) + 1, (int) ($athleteMaxHeartRate * 0.9)],
-                self::FIVE => [(int) ($athleteMaxHeartRate * 0.9) + 1, 10000],
-            };
-        }
+        $percentageFrom = $this->getFrom() / 100;
+        $percentageTo = $this->getTo() ? $this->getTo() / 100 : 100;
 
-        return match ($this) {
-            self::ONE => [0, (int) floor($athleteMaxHeartRate * 0.6)],
-            self::TWO => [(int) ceil($athleteMaxHeartRate * 0.6), (int) floor($athleteMaxHeartRate * 0.7)],
-            self::THREE => [(int) ceil($athleteMaxHeartRate * 0.7), (int) floor($athleteMaxHeartRate * 0.8)],
-            self::FOUR => [(int) ceil($athleteMaxHeartRate * 0.8), (int) floor($athleteMaxHeartRate * 0.9)],
-            self::FIVE => [(int) ceil($athleteMaxHeartRate * 0.9), 10000],
-        };
+        return [(int) floor($athleteMaxHeartRate * $percentageFrom), (int) ceil($athleteMaxHeartRate * $percentageTo)];
     }
 }
