@@ -25,7 +25,7 @@ general:
       # The default zones for all activities.
       default:
         zone1:
-          from: 0
+          from: 50
           to: 60
         zone2:
           from: 61

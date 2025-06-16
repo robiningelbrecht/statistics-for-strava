@@ -23,11 +23,6 @@ class HeartRateZoneConfigurationTest extends TestCase
         $config = HeartRateZoneConfiguration::fromArray($config);
 
         $this->assertEquals(
-            $expectedMode,
-            $config->getMode(),
-        );
-
-        $this->assertEquals(
             $expectedHeartRateZones,
             $config->getHeartRateZonesFor($sportType, $on),
         );
@@ -40,7 +35,7 @@ class HeartRateZoneConfigurationTest extends TestCase
                 'mode' => 'relative',
                 'default' => [
                     'zone1' => [
-                        'from' => 0,
+                        'from' => 50,
                         'to' => 60,
                     ],
                     'zone2' => [
@@ -81,7 +76,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::RELATIVE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::RELATIVE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -113,7 +108,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::ABSOLUTE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::ABSOLUTE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -143,7 +138,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::ABSOLUTE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::ABSOLUTE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -174,7 +169,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::ABSOLUTE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::ABSOLUTE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -203,7 +198,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::ABSOLUTE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::ABSOLUTE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -233,7 +228,7 @@ class HeartRateZoneConfigurationTest extends TestCase
             HeartRateZoneMode::ABSOLUTE,
             HeartRateZones::fromScalarValues(HeartRateZoneMode::ABSOLUTE, [
                 'zone1' => [
-                    'from' => 0,
+                    'from' => 50,
                     'to' => 60,
                 ],
                 'zone2' => [
@@ -309,10 +304,6 @@ class HeartRateZoneConfigurationTest extends TestCase
         yield 'missing "zone1"' => [$yml, '"zone1" property is required for each range of heart zones'];
 
         $yml = self::getValidYml();
-        $yml['default']['zone1']['from'] = 1;
-        yield 'invalid "zone1" from value' => [$yml, 'zone1 "from" value needs to be 0, got 1'];
-
-        $yml = self::getValidYml();
         $yml['default']['zone5']['to'] = 1;
         yield 'invalid "zone5" to value' => [$yml, 'zone5 "to" value needs to be null, got 1'];
 
@@ -350,7 +341,7 @@ default:
     from: 61
     to: 70
   zone1:
-    from: 0
+    from: 50
     to: 60
   zone3:
     from: 71
@@ -364,7 +355,7 @@ default:
 dateRanges:
   "2025-01-01":
     zone1:
-      from: 0
+      from: 50
       to: 60
     zone2:
       from: 61
@@ -380,7 +371,7 @@ dateRanges:
       to: null
   "2024-11-08":
     zone1:
-      from: 0
+      from: 50
       to: 60
     zone2:
       from: 61
@@ -398,7 +389,7 @@ sportTypes:
   GravelRide:
     default:
       zone1:
-        from: 0
+        from: 50
         to: 60
       zone2:
         from: 61
@@ -415,7 +406,7 @@ sportTypes:
     dateRanges:
       "2025-01-01":
         zone1:
-          from: 0
+          from: 50
           to: 60
         zone2:
           from: 61
@@ -431,7 +422,7 @@ sportTypes:
           to: null
       "2024-11-08":
         zone1:
-          from: 0
+          from: 50
           to: 60
         zone2:
           from: 61

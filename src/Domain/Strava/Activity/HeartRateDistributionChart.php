@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity;
 
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZones;
+
 final readonly class HeartRateDistributionChart
 {
     private function __construct(
@@ -11,6 +13,7 @@ final readonly class HeartRateDistributionChart
         private array $heartRateData,
         private int $averageHeartRate,
         private int $athleteMaxHeartRate,
+        private HeartRateZones $heartRateZones,
     ) {
     }
 
@@ -21,11 +24,13 @@ final readonly class HeartRateDistributionChart
         array $heartRateData,
         int $averageHeartRate,
         int $athleteMaxHeartRate,
+        HeartRateZones $heartRateZones,
     ): self {
         return new self(
             heartRateData: $heartRateData,
             averageHeartRate: $averageHeartRate,
             athleteMaxHeartRate: $athleteMaxHeartRate,
+            heartRateZones: $heartRateZones
         );
     }
 
@@ -70,8 +75,27 @@ final readonly class HeartRateDistributionChart
         ), $xAxisValues);
         // Calculate the mark areas to display the zones.
         $oneHeartBeatPercentage = 100 / ($maxHeartRate - $minHeartRate);
-        $beforeZoneOne = (($this->athleteMaxHeartRate / 2) - $minHeartRate) * $oneHeartBeatPercentage;
-        $percentagePerZone = (100 - $beforeZoneOne - (($maxHeartRate - $this->athleteMaxHeartRate) * $oneHeartBeatPercentage)) / 5;
+
+        $zoneOneFromPercentage = $this->heartRateZones->getZoneOne()->getFromPercentage($this->athleteMaxHeartRate);
+        $beforeZoneOne = (($this->athleteMaxHeartRate * ($zoneOneFromPercentage / 100)) - $minHeartRate) * $oneHeartBeatPercentage;
+
+        $markAreaStep = (100 - $beforeZoneOne - (($maxHeartRate - $this->athleteMaxHeartRate) * $oneHeartBeatPercentage)) / (100 - $zoneOneFromPercentage);
+
+        $zoneRanges = [];
+        $zones = [
+            $this->heartRateZones->getZoneOne(),
+            $this->heartRateZones->getZoneTwo(),
+            $this->heartRateZones->getZoneThree(),
+            $this->heartRateZones->getZoneFour(),
+        ];
+
+        $cumulative = 0;
+        foreach ($zones as $zone) {
+            $cumulative += $zone->getDifferenceBetweenFromAndToPercentage($this->athleteMaxHeartRate);
+            $zoneRanges[] = $cumulative;
+        }
+
+        [$zone1Range, $zone2Range, $zone3Range, $zone4Range] = $zoneRanges;
 
         return [
             'grid' => [
@@ -170,7 +194,11 @@ final readonly class HeartRateDistributionChart
                             ],
                             [
                                 [
-                                    'name' => "Zone 1\n50% - 60%",
+                                    'name' => sprintf(
+                                        "Zone 1\n%s%% - %s%%",
+                                        $this->heartRateZones->getZoneOne()->getFromPercentage($this->athleteMaxHeartRate),
+                                        $this->heartRateZones->getZoneOne()->getToPercentage($this->athleteMaxHeartRate)
+                                    ),
                                     'label' => [
                                         'position' => 'insideTop',
                                         'fontWeight' => 'bold',
@@ -185,12 +213,16 @@ final readonly class HeartRateDistributionChart
                                     'x' => $beforeZoneOne.'%',
                                 ],
                                 [
-                                    'x' => ($beforeZoneOne + $percentagePerZone).'%',
+                                    'x' => ($beforeZoneOne + ($zone1Range * $markAreaStep)).'%',
                                 ],
                             ],
                             [
                                 [
-                                    'name' => "Zone 2\n60% - 70%",
+                                    'name' => sprintf(
+                                        "Zone 2\n%s%% - %s%%",
+                                        $this->heartRateZones->getZoneTwo()->getFromPercentage($this->athleteMaxHeartRate),
+                                        $this->heartRateZones->getZoneTwo()->getToPercentage($this->athleteMaxHeartRate)
+                                    ),
                                     'label' => [
                                         'position' => 'insideTop',
                                         'fontWeight' => 'bold',
@@ -202,15 +234,19 @@ final readonly class HeartRateDistributionChart
                                     'itemStyle' => [
                                         'color' => '#D63522',
                                     ],
-                                    'x' => ($beforeZoneOne + $percentagePerZone).'%',
+                                    'x' => ($beforeZoneOne + ($zone1Range * $markAreaStep)).'%',
                                 ],
                                 [
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 2)).'%',
+                                    'x' => ($beforeZoneOne + ($zone2Range * $markAreaStep)).'%',
                                 ],
                             ],
                             [
                                 [
-                                    'name' => "Zone 3\n70% - 80%",
+                                    'name' => sprintf(
+                                        "Zone 3\n%s%% - %s%%",
+                                        $this->heartRateZones->getZoneThree()->getFromPercentage($this->athleteMaxHeartRate),
+                                        $this->heartRateZones->getZoneThree()->getToPercentage($this->athleteMaxHeartRate)
+                                    ),
                                     'label' => [
                                         'position' => 'insideTop',
                                         'fontWeight' => 'bold',
@@ -222,15 +258,19 @@ final readonly class HeartRateDistributionChart
                                     'itemStyle' => [
                                         'color' => '#BD2D22',
                                     ],
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 2)).'%',
+                                    'x' => ($beforeZoneOne + ($zone2Range * $markAreaStep)).'%',
                                 ],
                                 [
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 3)).'%',
+                                    'x' => ($beforeZoneOne + ($zone3Range * $markAreaStep)).'%',
                                 ],
                             ],
                             [
                                 [
-                                    'name' => "Zone 4\n80% - 90%",
+                                    'name' => sprintf(
+                                        "Zone 4\n%s%% - %s%%",
+                                        $this->heartRateZones->getZoneFour()->getFromPercentage($this->athleteMaxHeartRate),
+                                        $this->heartRateZones->getZoneFour()->getToPercentage($this->athleteMaxHeartRate)
+                                    ),
                                     'label' => [
                                         'position' => 'insideTop',
                                         'fontWeight' => 'bold',
@@ -242,15 +282,18 @@ final readonly class HeartRateDistributionChart
                                     'itemStyle' => [
                                         'color' => '#942319',
                                     ],
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 3)).'%',
+                                    'x' => ($beforeZoneOne + ($zone3Range * $markAreaStep)).'%',
                                 ],
                                 [
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 4)).'%',
+                                    'x' => ($beforeZoneOne + ($zone4Range * $markAreaStep)).'%',
                                 ],
                             ],
                             [
                                 [
-                                    'name' => "Zone 5\n> 90%",
+                                    'name' => sprintf(
+                                        "Zone 5\n> %s%%",
+                                        $this->heartRateZones->getZoneFive()->getFromPercentage($this->athleteMaxHeartRate)
+                                    ),
                                     'label' => [
                                         'position' => 'insideTop',
                                         'fontWeight' => 'bold',
@@ -262,7 +305,7 @@ final readonly class HeartRateDistributionChart
                                     'itemStyle' => [
                                         'color' => '#6A1009',
                                     ],
-                                    'x' => ($beforeZoneOne + ($percentagePerZone * 4)).'%',
+                                    'x' => ($beforeZoneOne + ($zone4Range * $markAreaStep)).'%',
                                 ],
                                 [
                                 ],

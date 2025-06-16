@@ -64,7 +64,7 @@ This lets you create very specific zones for different scenarios.
       # If you have specified date ranges, this one will be used when there's no exact match for the activity date.
       default:
         zone1:
-          from: 0
+          from: 50
           to: 60
         zone2:
           from: 61
