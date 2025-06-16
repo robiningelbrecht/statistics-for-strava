@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildIndexHtml;
 
+use App\Domain\App\AppSubTitle;
 use App\Domain\App\ProfilePictureUrl;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration;
@@ -31,6 +32,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
         private EddingtonConfiguration $eddingtonConfiguration,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
+        private ?AppSubTitle $appSubTitle,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private LocaleSwitcher $localeSwitcher,
@@ -75,6 +77,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
                 'lastUpdate' => $command->getCurrentDateTime(),
                 'athlete' => $athlete,
                 'profilePictureUrl' => $this->profilePictureUrl,
+                'subTitle' => $this->appSubTitle,
                 'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
                 'javascriptWindowConstants' => Json::encode([
                     'countries' => Countries::getNames($this->localeSwitcher->getLocale()),

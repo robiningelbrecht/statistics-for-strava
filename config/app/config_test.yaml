@@ -1,6 +1,7 @@
 general:
   app_url: 'http://localhost:8080/'
   profile_picture_url: null
+  appSubTitle: 'Robin The King 👑'
   ntfy_url: null
   athlete:
     birthday: '1989-08-14'
