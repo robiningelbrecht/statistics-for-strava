@@ -1,4 +1,7 @@
 {
+    "App\\Domain\\Strava\\Activity\\Lap\\ActivityLapManager": [
+        "reactToActivityWasDeleted"
+    ],
     "App\\Domain\\Strava\\Activity\\Split\\ActivitySplitManager": [
         "reactToActivityWasDeleted"
     ],

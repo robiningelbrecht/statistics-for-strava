@@ -14,6 +14,7 @@ use App\Domain\Strava\Activity\ImportActivities\ImportActivities;
 use App\Domain\Strava\Activity\ImportActivities\ImportActivitiesCommandHandler;
 use App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport;
 use App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore;
+use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
 use App\Domain\Strava\Activity\SportType\SportTypesToImport;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
@@ -40,6 +41,7 @@ use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use App\Tests\Domain\Strava\Activity\Lap\ActivityLapBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
@@ -217,6 +219,10 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ->withSplitNumber(3)
             ->build());
 
+        $this->getContainer()->get(ActivityLapRepository::class)->add(ActivityLapBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1000))
+            ->build());
+
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
 
         $this->assertMatchesTextSnapshot($output);
@@ -246,6 +252,12 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(ActivitySplitRepository::class)->findBy(
                 ActivityId::fromUnprefixed(1001),
                 UnitSystem::IMPERIAL
+            )
+        );
+        $this->assertCount(
+            0,
+            $this->getContainer()->get(ActivityLapRepository::class)->findBy(
+                ActivityId::fromUnprefixed(1001),
             )
         );
     }
