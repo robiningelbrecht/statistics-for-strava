@@ -7,6 +7,7 @@ namespace App\Domain\App\BuildActivitiesHtml;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
+use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
 use App\Domain\Strava\Activity\PowerDistributionChart;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
@@ -41,6 +42,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private ActivityStreamRepository $activityStreamRepository,
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
+        private ActivityLapRepository $activityLapRepository,
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private SportTypeRepository $sportTypeRepository,
         private SegmentEffortRepository $segmentEffortRepository,
@@ -204,6 +206,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'powerDistributionChart' => $powerDistributionChart ? Json::encode($powerDistributionChart->build()) : null,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
+                    'laps' => $this->activityLapRepository->findBy($activity->getId()),
                     'profileCharts' => array_reverse($activityProfileCharts),
                 ]),
             );

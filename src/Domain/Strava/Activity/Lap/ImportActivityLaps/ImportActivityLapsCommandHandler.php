@@ -53,8 +53,8 @@ final readonly class ImportActivityLapsCommandHandler implements CommandHandler
                     distance: Meter::from($lab['distance']),
                     averageSpeed: MetersPerSecond::from($lab['average_speed']),
                     maxSpeed: MetersPerSecond::from($lab['max_speed']),
-                    elevationDifference: Meter::from($lab['elevation_difference'] ?? 0),
-                    averageHeartRate: $lab['average_heartrate'] ? (int) round($lab['average_heartrate']) : null,
+                    elevationDifference: Meter::from($lab['total_elevation_gain'] ?? 0),
+                    averageHeartRate: !empty($lab['average_heartrate']) ? (int) round($lab['average_heartrate']) : null,
                 ));
                 ++$countLapsAdded;
             }
