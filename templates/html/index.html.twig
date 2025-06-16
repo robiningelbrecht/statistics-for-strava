@@ -21,12 +21,12 @@
         {{ renderComponent('top-nav-bar', {'profilePictureUrl': profilePictureUrl, 'athlete': athlete}) }}
     {% endautoescape %}
     <!-- SIDEBAR -->
-    <aside class="group fixed top-0 left-0 w-64 [&.is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001"
+    <aside class="group fixed top-0 left-0 w-64 [&.sidebar-is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001"
            aria-label="Sidenav" id="drawer-navigation">
         {% set menuLinkClasses = 'flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100' %}
-        {% set collapsedMenuLinkClasses = 'group-[.is-collapsed]:flex-col group-[.is-collapsed]:gap-y-0.5 group-[.is-collapsed]:text-xs' %}
+        {% set collapsedMenuLinkClasses = 'group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs' %}
         {% set menulinkSvgIconClasses = 'shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900' %}
-        <div class="group-[.is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
+        <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
             <ul class="space-y-1 pb-2">
                 <li>
                     <a href="#" data-router-navigate="{{ relativeUrl('dashboard') }}"
@@ -49,7 +49,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Activities"|trans|ellipses(19) }}</span>
-                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalActivityCount }}</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalActivityCount }}</span>
                     </a>
                 </li>
                 <li>
@@ -60,7 +60,7 @@
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Gear"|trans|ellipses(23) }}</span>
                         {% if maintenanceTaskIsDue %}
-                            <span class="group-[.is-collapsed]:hidden flex w-3 h-3 me-3 bg-red-500 rounded-full animate-pulse"
+                            <span class="group-[.sidebar-is-collapsed]:hidden flex w-3 h-3 me-3 bg-red-500 rounded-full animate-pulse"
                                   title="{{ "One of your gear maintenance tasks is due"|trans }}"></span>
                         {% endif %}
                     </a>
@@ -97,7 +97,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">Eddington</span>
-                        <div class="group-[.is-collapsed]:hidden flex gap-x-0.5">
+                        <div class="group-[.sidebar-is-collapsed]:hidden flex gap-x-0.5">
                             {% for eddingtonNumber in eddingtonNumbers|slice(0, 2) %}
                                 <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ eddingtonNumber }}</span>
                             {% endfor %}
@@ -139,7 +139,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Challenges"|trans|ellipses(19) }}</span>
-                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ completedChallenges }}</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ completedChallenges }}</span>
                     </a>
                 </li>
                 <li>
@@ -150,13 +150,13 @@
                             <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Photos"|trans|ellipses(19) }}</span>
-                        <span class="group-[.is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalPhotoCount }}</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalPhotoCount }}</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
-            <div class="group-[.is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
+            <div class="group-[.sidebar-is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
                 <div class="flex justify-center gap-px">
                     <a href="https://www.strava.com/athletes/{{ athlete.getAthleteId() }}" target="_blank"
                        class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
@@ -224,13 +224,13 @@
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
                 <img class="h-[12px]" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}"
                      alt="Powered by Strava"/>
-                <div class="group-[.is-collapsed]:hidden">& ☕</div>
+                <div class="group-[.sidebar-is-collapsed]:hidden">& ☕</div>
             </div>
         </div>
 
     </aside>
     <!-- MAIN -->
-    <main class="p-4 md:ml-64 [&.is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
+    <main class="p-4 md:ml-64 [&.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
         <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
             <div role="status">
                 <svg aria-hidden="true"
@@ -329,18 +329,18 @@
     // Toggle sidebar collapsed state.
     const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
     if (sideNavCollapsed === 'true') {
-        $main.classList.add('is-collapsed');
-        $sideNav.classList.add('is-collapsed');
-        $topNav.classList.add('is-collapsed');
+        $main.classList.add('sidebar-is-collapsed');
+        $sideNav.classList.add('sidebar-is-collapsed');
+        $topNav.classList.add('sidebar-is-collapsed');
     }
 
     document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
-        $main.classList.toggle('is-collapsed');
-        $sideNav.classList.toggle('is-collapsed');
-        $topNav.classList.toggle('is-collapsed');
+        $main.classList.toggle('sidebar-is-collapsed');
+        $sideNav.classList.toggle('sidebar-is-collapsed');
+        $topNav.classList.toggle('sidebar-is-collapsed');
 
         localStorage.setItem('sideNavCollapsed', 'false');
-        if ($main.classList.contains('is-collapsed')) {
+        if ($main.classList.contains('sidebar-is-collapsed')) {
             localStorage.setItem('sideNavCollapsed', 'true');
         }
     });

@@ -3096,33 +3096,33 @@
       color: var(--color-strava-orange);
     }
   }
-  .group-\[\.is-collapsed\]\:block {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:block {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       display: block;
     }
   }
-  .group-\[\.is-collapsed\]\:hidden {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:hidden {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       display: none;
     }
   }
-  .group-\[\.is-collapsed\]\:max-h-full {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:max-h-full {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       max-height: 100%;
     }
   }
-  .group-\[\.is-collapsed\]\:flex-col {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:flex-col {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       flex-direction: column;
     }
   }
-  .group-\[\.is-collapsed\]\:gap-y-0\.5 {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:gap-y-0\.5 {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       row-gap: calc(var(--spacing) * 0.5);
     }
   }
-  .group-\[\.is-collapsed\]\:text-xs {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:text-xs {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
     }
@@ -3768,13 +3768,13 @@
       }
     }
   }
-  .\[\&\.is-collapsed\]\:w-32 {
-    &.is-collapsed {
+  .\[\&\.sidebar-is-collapsed\]\:w-32 {
+    &.sidebar-is-collapsed {
       width: calc(var(--spacing) * 32);
     }
   }
-  .\[\&\.is-collapsed\]\:md\:ml-32 {
-    &.is-collapsed {
+  .\[\&\.sidebar-is-collapsed\]\:md\:ml-32 {
+    &.sidebar-is-collapsed {
       @media (width >= 48rem) {
         margin-left: calc(var(--spacing) * 32);
       }
