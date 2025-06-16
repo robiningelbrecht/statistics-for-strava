@@ -267,7 +267,7 @@ Tennis: Tennis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣."
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
-'This badge is dynamically created. You can use it in any &lt;img&gt; tag': 'This badge is dynamically created. You can use it in any &lt;img&gt; tag'
+'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.'
@@ -299,6 +299,7 @@ Tue: Tue
 Tuesday: Tuesday
 Unspecified: Unspecified
 'Updated on': 'Updated on'
+'User badge': 'User badge'
 'Velo Mobiles': 'Velo Mobiles'
 'Very fresh – possible detraining': 'Very fresh – possible detraining'
 'Very high': 'Very high'
@@ -339,6 +340,7 @@ Yoga: Yoga
 'Zone 4 (anaerobic)': 'Zone 4 (anaerobic)'
 'Zone 5 (maximal)': 'Zone 5 (maximal)'
 'Zwift Statistics': 'Zwift Statistics'
+'Zwift badge': 'Zwift badge'
 activities: activities
 age: age
 and: and

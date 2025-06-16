@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildBadgeSvg;
 
+use App\Domain\App\AppUrl;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Athlete\AthleteRepository;
@@ -23,6 +24,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private AthleteRepository $athleteRepository,
         private ChallengeRepository $challengeRepository,
         private ActivitiesEnricher $activitiesEnricher,
+        private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
         private Environment $twig,
@@ -72,6 +74,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             'badge.html',
             $this->twig->load('html/badge.html.twig')->render([
                 'zwiftLevel' => $this->zwiftLevel,
+                'appUrl' => rtrim((string) $this->appUrl, '/'),
             ]),
         );
     }

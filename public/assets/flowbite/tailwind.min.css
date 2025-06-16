@@ -2055,6 +2055,9 @@
   .gap-x-3 {
     column-gap: calc(var(--spacing) * 3);
   }
+  .gap-x-4 {
+    column-gap: calc(var(--spacing) * 4);
+  }
   .gap-x-\[2rem\] {
     column-gap: 2rem;
   }
