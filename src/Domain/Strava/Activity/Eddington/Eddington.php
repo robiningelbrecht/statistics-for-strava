@@ -3,7 +3,7 @@
 namespace App\Domain\Strava\Activity\Eddington;
 
 use App\Domain\Strava\Activity\Activities;
-use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfigItem;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
@@ -18,11 +18,17 @@ final class Eddington
     private readonly int $eddingtonNumber;
 
     private function __construct(
+        private readonly string $label,
         private readonly Activities $activities,
         private readonly UnitSystem $unitSystem,
     ) {
         $this->distancesPerDay = $this->buildDistancesPerDay();
         $this->eddingtonNumber = $this->calculateEddingtonNumber();
+    }
+
+    public function getLabel(): string
+    {
+        return $this->label;
     }
 
     /**
@@ -138,18 +144,21 @@ final class Eddington
 
     public static function getInstance(
         Activities $activities,
-        ActivityType $activityType,
+        EddingtonConfigItem $config,
         UnitSystem $unitSystem,
     ): self {
-        if (array_key_exists($activityType->value, self::$instances)) {
-            return self::$instances[$activityType->value];
+        $eddingtonId = $config->getId();
+
+        if (array_key_exists($eddingtonId, self::$instances)) {
+            return self::$instances[$eddingtonId];
         }
 
-        self::$instances[$activityType->value] = new self(
+        self::$instances[$eddingtonId] = new self(
+            label: $config->getLabel(),
             activities: $activities,
             unitSystem: $unitSystem
         );
 
-        return self::$instances[$activityType->value];
+        return self::$instances[$eddingtonId];
     }
 }

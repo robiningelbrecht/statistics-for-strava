@@ -14,6 +14,7 @@ use App\Domain\Strava\Activity\ImportActivities\ImportActivities;
 use App\Domain\Strava\Activity\ImportActivities\ImportActivitiesCommandHandler;
 use App\Domain\Strava\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport;
 use App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore;
+use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
 use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
 use App\Domain\Strava\Activity\SportType\SportTypesToImport;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
@@ -40,6 +41,7 @@ use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use App\Tests\Domain\Strava\Activity\Lap\ActivityLapBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
@@ -123,6 +125,26 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         ));
     }
 
+    public function testHandleWithUnexpectedError(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->triggerExceptionOnNextActivityCall();
+
+        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
+            Key::STRAVA_GEAR_IMPORT,
+            Value::fromString('20205-01_18'),
+        ));
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromString('gear-b12659861'))
+            ->build()
+        );
+
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->assertMatchesTextSnapshot((string) $output);
+    }
+
     public function testHandleWithActivityDelete(): void
     {
         $output = new SpyOutput();
@@ -197,6 +219,10 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ->withSplitNumber(3)
             ->build());
 
+        $this->getContainer()->get(ActivityLapRepository::class)->add(ActivityLapBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1000))
+            ->build());
+
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
 
         $this->assertMatchesTextSnapshot($output);
@@ -226,6 +252,12 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(ActivitySplitRepository::class)->findBy(
                 ActivityId::fromUnprefixed(1001),
                 UnitSystem::IMPERIAL
+            )
+        );
+        $this->assertCount(
+            0,
+            $this->getContainer()->get(ActivityLapRepository::class)->findBy(
+                ActivityId::fromUnprefixed(1001),
             )
         );
     }

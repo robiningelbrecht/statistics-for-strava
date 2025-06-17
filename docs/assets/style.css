@@ -20,6 +20,10 @@ h1 a span{
     column-gap: 3px;
 }
 
+.markdown-section iframe{
+    margin: 0;
+}
+
 /* SIDEBAR */
 .sidebar-nav ul li a{
     display: flex;

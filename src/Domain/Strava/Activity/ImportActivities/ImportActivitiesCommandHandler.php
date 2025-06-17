@@ -20,6 +20,7 @@ use App\Domain\Weather\OpenMeteo\Weather;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -134,8 +135,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
                 if (!$activity->getLocation() && $sportType->supportsReverseGeocoding()
                     && $activity->getStartingCoordinate()) {
-                    $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                    $activity->updateLocation($reverseGeocodedAddress);
+                    try {
+                        $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                        $activity->updateLocation($reverseGeocodedAddress);
+                    } catch (CouldNotReverseGeocodeAddress) {
+                    }
                 }
 
                 try {
@@ -202,8 +206,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     }
 
                     if ($sportType->supportsReverseGeocoding() && $activity->getStartingCoordinate()) {
-                        $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                        $activity->updateLocation($reverseGeocodedAddress);
+                        try {
+                            $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                            $activity->updateLocation($reverseGeocodedAddress);
+                        } catch (CouldNotReverseGeocodeAddress) {
+                        }
                     }
 
                     $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
@@ -226,12 +233,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         break;
                     }
                 } catch (ClientException|RequestException $exception) {
-                    if (!$exception->getResponse()) {
-                        // Re-throw, we only want to catch supported error codes.
-                        throw $exception;
-                    }
-
-                    if (429 === $exception->getResponse()->getStatusCode()) {
+                    if (429 === $exception->getResponse()?->getStatusCode()) {
                         // This will allow initial imports with a lot of activities to proceed the next day.
                         // This occurs when we exceed Strava API rate limits or throws an unexpected error.
                         $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>');

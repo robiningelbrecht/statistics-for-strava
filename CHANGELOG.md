@@ -1,3 +1,48 @@
+# [v2.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.1) - 2025-06-17
+
+## What's Changed
+* ISSUE #748: Indicate navbar collapsed state with icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/749
+* ISSUE #740: Activity laps by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/750
+* ISSUE #744: Allow to configure an app subtitle by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/753
+* ISSUE #755: ISSUE #755: Fix division by zero bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/758
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.0...v2.3.1
+
+# [v2.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.0) - 2025-06-16
+
+🚀 New: Fine-tune your heart rate zones with advanced configuration options!
+📖 Learn how to set them up: [Configuration Guide](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration)
+
+## What's Changed
+* ISSUE #677: Show activity where PB was set by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/720
+* ISSUE #680: Allow custom heart rate zones by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/737
+
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.2.1...v2.3.0
+
+# [v2.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.1) - 2025-06-13
+
+## What's Changed
+* ISSUE #728: Add dividers to side navbar by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/729
+* ISSUE #730: Render maintenance is due indicator on gear submenu by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/731
+* ISSUE #734: Error when import : Warning: Undefined array key address by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/735
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.2.0...v2.2.1
+
+# [v2.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.2.0) - 2025-06-12
+
+🔥 Be the master of your Eddington. 
+Read up on how to configure your Eddington numbers: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* ISSUE #692: Fix bug in Safari while rendering gear maintenance by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/704
+* ISSUE #707: Fixed weekday label in calendar view by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/708
+* ISSUE #709: Replace all sidenav icons by outlined ones by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/710
+* ISSUE #711: Consistency in icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/712
+* ISSUE #658: Allow users to configure Eddington by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/714
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.1.4...v2.2.0
+
 # [v2.1.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.1.4) - 2025-06-11
 
 ## What's Changed

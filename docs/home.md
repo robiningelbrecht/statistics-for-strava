@@ -22,24 +22,24 @@
     This app is in no way affiliated with or part of the official Strava software suite.
 </div>
 
-[include](assets/showcase.mp4 ':include :type=video controls width=100%')
+[Showcase](https://www.youtube.com/embed/UfVLXqAtlX8 ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ## Key Features
 
-* Dashboard with various stats and charts
-* Detailed list of all your activities
-* Monthly stats with calendar view
-* Gear stats
-* Custom gears ([instructions](configuration/custom-gear.md))
-* Gear (component) maintenance tracking ([instructions](configuration/gear-maintenance.md))
-* Eddington for biking and running activities
-* Detailed list of your segments and corresponding efforts
-* Heatmap
-* Strava Rewind, a fun way to look back on your year in motion
-* History of completed Strava challenges
-* History of activity photos
-* User badges
-* PWA support
+* **Dashboard** – See all your stats and charts at a glance
+* **Activities** -  Browse a detailed list of everything you've done
+* **Monthly View** - Monthly stats with an interactive calendar
+* **Gear stats** - Track how much you've used each bike, shoe, etc.
+* **Custom gear** - Add custom gear setups  ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear))
+* **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance))
+* **Eddington** - For your distance milestones
+* **Segments & Efforts** - Dive into your segment history and times
+* **Heatmap** - Visualize where you’ve been active the most
+* **Strava Rewind** - A fun way to look back on your year in motion
+* **Challenges** - See which Strava challenges you've conquered
+* **Activity Photos** - Relive your moments with a photo archive
+* **User badges** - Shareable badges you can embed on your website, blog, or forum profiles
+* **PWA support** - Use it like a native app on your phone
 
 <div class="alert warning">
     <ul>

@@ -6,6 +6,7 @@ config/app
 cron
 docs
 tests
+ollama
 var
 storage
 node_modules

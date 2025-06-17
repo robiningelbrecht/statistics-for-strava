@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.8 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.10 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -1771,6 +1771,9 @@
   .w-\[6rem\] {
     width: 6rem;
   }
+  .w-\[8rem\] {
+    width: 8rem;
+  }
   .w-\[13rem\] {
     width: 13rem;
   }
@@ -2051,6 +2054,9 @@
   }
   .gap-x-3 {
     column-gap: calc(var(--spacing) * 3);
+  }
+  .gap-x-4 {
+    column-gap: calc(var(--spacing) * 4);
   }
   .gap-x-\[2rem\] {
     column-gap: 2rem;
@@ -3065,15 +3071,15 @@
       background-color: var(--color-gray-50);
     }
   }
-  .group-hover\:fill-\[\#111827\] {
-    &:is(:where(.group):hover *) {
+  .group-hover\/menu-item\:fill-\[\#111827\] {
+    &:is(:where(.group\/menu-item):hover *) {
       @media (hover: hover) {
         fill: #111827;
       }
     }
   }
-  .group-hover\:fill-\[\#FFDD04\] {
-    &:is(:where(.group):hover *) {
+  .group-hover\/menu-item\:fill-\[\#FFDD04\] {
+    &:is(:where(.group\/menu-item):hover *) {
       @media (hover: hover) {
         fill: #FFDD04;
       }
@@ -3096,28 +3102,33 @@
       color: var(--color-strava-orange);
     }
   }
-  .group-\[\.is-collapsed\]\:hidden {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:block {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
+      display: block;
+    }
+  }
+  .group-\[\.sidebar-is-collapsed\]\:hidden {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       display: none;
     }
   }
-  .group-\[\.is-collapsed\]\:max-h-full {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:max-h-full {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       max-height: 100%;
     }
   }
-  .group-\[\.is-collapsed\]\:flex-col {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:flex-col {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       flex-direction: column;
     }
   }
-  .group-\[\.is-collapsed\]\:gap-y-0\.5 {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:gap-y-0\.5 {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       row-gap: calc(var(--spacing) * 0.5);
     }
   }
-  .group-\[\.is-collapsed\]\:text-xs {
-    &:is(:where(.group):is(.is-collapsed) *) {
+  .group-\[\.sidebar-is-collapsed\]\:text-xs {
+    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
     }
@@ -3516,6 +3527,11 @@
       margin-top: calc(var(--spacing) * 0);
     }
   }
+  .lg\:mt-\[54px\] {
+    @media (width >= 64rem) {
+      margin-top: 54px;
+    }
+  }
   .lg\:block {
     @media (width >= 64rem) {
       display: block;
@@ -3763,13 +3779,13 @@
       }
     }
   }
-  .\[\&\.is-collapsed\]\:w-32 {
-    &.is-collapsed {
+  .\[\&\.sidebar-is-collapsed\]\:w-32 {
+    &.sidebar-is-collapsed {
       width: calc(var(--spacing) * 32);
     }
   }
-  .\[\&\.is-collapsed\]\:md\:ml-32 {
-    &.is-collapsed {
+  .\[\&\.sidebar-is-collapsed\]\:md\:ml-32 {
+    &.sidebar-is-collapsed {
       @media (width >= 48rem) {
         margin-left: calc(var(--spacing) * 32);
       }

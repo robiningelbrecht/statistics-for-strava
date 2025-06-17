@@ -2,6 +2,7 @@
 
 namespace App\Tests\Infrastructure\Geocoding\Nominatim;
 
+use App\Infrastructure\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Infrastructure\Geocoding\Nominatim\LiveNominatim;
 use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\Serialization\Json;
@@ -34,6 +35,30 @@ class LiveNominatimTest extends TestCase
 
                 return new Response(200, [], Json::encode([
                     'address' => [],
+                ]));
+            });
+
+        $this->nominatim->reverseGeocode(
+            Coordinate::createFromLatAndLng(
+                latitude: Latitude::fromString('80'),
+                longitude: Longitude::fromString('100'),
+            )
+        );
+    }
+
+    public function testReverseGeocodeWhenError(): void
+    {
+        $this->expectExceptionObject(new CouldNotReverseGeocodeAddress());
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path, array $options) {
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('https://nominatim.openstreetmap.org/reverse', $path);
+
+                return new Response(200, [], Json::encode([
+                    'error' => ['lollolo'],
                 ]));
             });
 

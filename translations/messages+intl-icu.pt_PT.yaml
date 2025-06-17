@@ -25,7 +25,6 @@ Activities: Atividades
 'Adaptive & Inclusive Sports': 'Desportos Adaptativos e Inclusivos'
 Advanced: Avançado
 Afternoon: Tarde
-'All activities': 'Todas as atividades'
 'All time': 'Desde sempre'
 'Alpine Ski': 'Esqui Alpino'
 Apr: Abr
@@ -35,6 +34,7 @@ Avg: Média
 Badminton: Badmínton
 Best: Melhor
 'Best Efforts': 'Best Efforts'
+'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Cadência
@@ -66,6 +66,7 @@ Dashboard: Painel
 'Daytime stats': 'Estatísticas por períodos do dia'
 Dec: Dez
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
+Details: Details
 Device: Dispositivo
 Distance: Distância
 'Distance / week': 'Distância / semana'
@@ -139,6 +140,8 @@ Jun: Jun
 KOM: KOM
 Kayaking: Caiaque
 'Kite Surf': Kitesurf
+Lap: Lap
+Laps: Laps
 'Last 45 days': 'Últimos 45 dias'
 'Last 7 days training load': 'Last 7 days training load'
 'Last 90 days': 'Últimos 90 dias'
@@ -189,6 +192,7 @@ Other: Outro
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
 'Overall weekly training stress': 'Overall weekly training stress'
+'PB badges': 'PB badges'
 PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: Ritmo
@@ -242,6 +246,7 @@ Soccer: Futebol
 Socials: Socials
 Source: Source
 Speed: Velocidade
+Splits: Splits
 Squash: Squash
 'Stair Stepper': 'Subida de Escadas'
 'Stand Up Paddling': 'Stand Up Paddle'
@@ -264,7 +269,7 @@ Tennis: Ténis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Isso dá uma média diária de {dailyAverage}, uma média semanal de {weeklyAverage} e uma média mensal de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
-'This badge is dynamically created. You can use it in any &lt;img&gt; tag': 'Este emblema é criado dinamicamente. Pode usá-lo em qualquer tag <img>.'
+'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
@@ -296,6 +301,7 @@ Tue: Ter
 Tuesday: Terça-feira
 Unspecified: Unspecified
 'Updated on': 'Atualizado em'
+'User badge': 'User badge'
 'Velo Mobiles': 'Velo Móveis'
 'Very fresh – possible detraining': 'Very fresh – possible detraining'
 'Very high': 'Muito alta'
@@ -326,6 +332,7 @@ Yoga: Yoga
 'You have not recorded any activities in the previous years.': 'You have not recorded any activities in the previous years.'
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'
+'Your PB badge': 'Your PB badge'
 'Your Strava badge': 'O teu emblema do Strava'
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'O teu emblema do Zwift'
@@ -336,6 +343,7 @@ Yoga: Yoga
 'Zone 4 (anaerobic)': 'Zona 4 (anaeróbica)'
 'Zone 5 (maximal)': 'Zona 5 (máxima)'
 'Zwift Statistics': 'Estatísticas do Zwift'
+'Zwift badge': 'Zwift badge'
 activities: activities
 age: idade
 and: e

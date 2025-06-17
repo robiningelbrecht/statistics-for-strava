@@ -30,6 +30,12 @@
         }
     },
     {
+        "commandName": "App\\Domain\\Strava\\Activity\\Lap\\ImportActivityLaps\\ImportActivityLaps",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Domain\\Strava\\Activity\\Stream\\ImportActivityStreams\\ImportActivityStreams",
         "payload": {
             "output": {}

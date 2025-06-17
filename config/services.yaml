@@ -70,6 +70,10 @@ services:
         public: true # We need to access this service from the container in expressions
         class: App\Infrastructure\Config\AppConfig
 
+    App\Domain\App\AppSubTitle:
+        factory: [ null, 'fromOptionalString' ]
+        arguments: [ '@=app_config("general.appSubTitle", "")' ]
+
     App\Domain\App\AppUrl:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.appUrl")']
@@ -105,10 +109,18 @@ services:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.athlete.birthday")']
 
+    App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("general.athlete.heartRateZones", [])']
+
     App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula:
         class: App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
         arguments: ['@=app_config("general.athlete.maxHeartRateFormula")']
+
+    App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration:
+        factory: [ null, 'fromScalarArray' ]
+        arguments: ['@=app_config("metrics.eddington", [])']
 
     App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport:
         factory: [ null, 'from' ]

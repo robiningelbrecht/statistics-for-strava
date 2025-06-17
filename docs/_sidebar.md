@@ -1,7 +1,9 @@
 - Getting Started
   - [Prerequisites](getting-started/prerequisites.md "Statistics for Strava | Prerequisites")
   - [Installation](getting-started/installation.md "Statistics for Strava | Installation")
+  - [Scheduling](getting-started/scheduling.md "Statistics for Strava | Scheduling")
   - [Challenges and trophies](getting-started/challenges-and-trophies.md "Statistics for Strava | Challenges and trophies")
+  - [Updates](getting-started/updates.md "Statistics for Strava | Updates")
 
 - Configuration
 
@@ -12,8 +14,9 @@
   
 - Troubleshooting
 
-  - [Strava authorization](troubleshooting/strava-authorization.md "Statistics for Strava | Strava authorization")
+  - [Strava API errors](troubleshooting/strava-api-errors.md "Statistics for Strava | Strava API errors")
   - [FAQ](troubleshooting/faq.md "Statistics for Strava | FAQ")
+  - [Logs](troubleshooting/logs.md "Statistics for Strava | Logs")
   - [:warning: v2.0.0 breaking change](troubleshooting/v2-breaking-change.md "Statistics for Strava | v2.0.0 Breaking change")
 
 - Development

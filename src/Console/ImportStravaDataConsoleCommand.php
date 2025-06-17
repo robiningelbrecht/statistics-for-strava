@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Domain\Strava\Activity\BestEffort\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
 use App\Domain\Strava\Activity\ImportActivities\ImportActivities;
+use App\Domain\Strava\Activity\Lap\ImportActivityLaps\ImportActivityLaps;
 use App\Domain\Strava\Activity\Split\ImportActivitySplits\ImportActivitySplits;
 use App\Domain\Strava\Activity\Stream\CalculateBestStreamAverages\CalculateBestStreamAverages;
 use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
@@ -65,6 +66,7 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->commandBus->dispatch(new ImportActivities($output));
         $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
         $this->commandBus->dispatch(new ImportActivitySplits($output));
+        $this->commandBus->dispatch(new ImportActivityLaps($output));
         $this->commandBus->dispatch(new ImportActivityStreams($output));
         $this->commandBus->dispatch(new CalculateBestActivityEfforts($output));
         $this->commandBus->dispatch(new ImportSegments($output));

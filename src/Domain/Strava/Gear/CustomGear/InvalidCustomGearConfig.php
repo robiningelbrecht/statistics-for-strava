@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear\CustomGear;
 
-class InvalidCustomGearConfig extends \RuntimeException
+final class InvalidCustomGearConfig extends \RuntimeException
 {
     public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
