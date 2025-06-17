@@ -48,7 +48,9 @@ services:
     App\Infrastructure\Time\Format\DateAndTimeFormat:
         factory: [ null, 'create' ]
         arguments: [
-            '@=app_config("appearance.dateFormat")',
+            '@=app_config("appearance.dateFormat.short", "d-m-y")',
+            '@=app_config("appearance.dateFormat.normal", "d-m-Y")',
+            '@=app_config("appearance.dateFormat", "")',
             '@=app_config("appearance.timeFormat")',
         ]
 
