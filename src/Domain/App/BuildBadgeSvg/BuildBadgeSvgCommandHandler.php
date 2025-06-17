@@ -7,6 +7,9 @@ namespace App\Domain\App\BuildBadgeSvg;
 use App\Domain\App\AppUrl;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
+use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\ActivityTypeRepository;
+use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Domain\Strava\Trivia;
@@ -23,6 +26,8 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
     public function __construct(
         private AthleteRepository $athleteRepository,
         private ChallengeRepository $challengeRepository,
+        private ActivityTypeRepository $activityTypeRepository,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
@@ -70,11 +75,44 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 ])
             );
         }
+
+        $sportTypesThatHaveBestEfforts = [];
+        $importedActivityTypes = $this->activityTypeRepository->findAll();
+        /** @var ActivityType $activityType */
+        foreach ($importedActivityTypes as $activityType) {
+            if (!$activityType->supportsBestEffortsStats()) {
+                continue;
+            }
+
+            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
+            if ($bestEffortsForActivityType->isEmpty()) {
+                continue;
+            }
+
+            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getUniqueSportTypes();
+            foreach ($uniqueSportTypesInBestEfforts as $sportType) {
+                $bestEffortsForSportType = $bestEffortsForActivityType->getBySportType($sportType);
+                if ($bestEffortsForSportType->isEmpty()) {
+                    continue;
+                }
+                $sportTypesThatHaveBestEfforts[] = $sportType;
+
+                $this->fileStorage->write(
+                    strtolower(sprintf('pb-%s-badge.svg', $sportType->value)),
+                    $this->twig->load('svg/badge/svg-pb-badge.html.twig')->render([
+                        'sportType' => $sportType,
+                        'bestEfforts' => $bestEffortsForSportType,
+                    ])
+                );
+            }
+        }
+
         $this->buildStorage->write(
             'badge.html',
             $this->twig->load('html/badge.html.twig')->render([
                 'zwiftLevel' => $this->zwiftLevel,
                 'appUrl' => rtrim((string) $this->appUrl, '/'),
+                'sportTypesThatHaveBestEfforts' => $sportTypesThatHaveBestEfforts,
             ]),
         );
     }

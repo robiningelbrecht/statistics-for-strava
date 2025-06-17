@@ -34,6 +34,7 @@ Avg: Moy
 Badminton: Badminton
 Best: Meilleur
 'Best Efforts': 'Meilleurs efforts'
+'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Zone de progression (–10)'
 'CTL (Fitness)': 'CTL (Forme à long terme)'
 Cadence: Cadence
@@ -191,6 +192,7 @@ Other: Autre
 'Over-fatigued (–30)': 'Surentraîné (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': "Surentraîné – risque de blessure ou d'épuisement, récupération supplémentaire nécessaire"
 'Overall weekly training stress': "Stress d'entraînement hebdomadaire global"
+'PB badges': 'PB badges'
 PRs: Records
 'PRs achieved per month': 'Records personnels atteints par mois'
 Pace: Allure
@@ -330,6 +332,7 @@ Yoga: Yoga
 'You have not recorded any activities in the previous years.': "Vous n'avez enregistré aucune activité les années précédentes."
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Vous avez enregistré des entraînements dans {numberOfCountriesWithWorkouts} pays différents, soit {percentage} de tous les pays 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Vous avez réduit les émissions de carbone de {amountOfCarbonSaved} en utilisant vos trajets domicile-travail 🥳. Cela équivaut à'
+'Your PB badge': 'Your PB badge'
 'Your Strava badge': 'Votre badge Strava'
 'Your Strava {year} rewind will be available on the 24th of December.': 'Votre récapitulatif Strava {year} sera disponible le 24 décembre.'
 'Your Zwift badge': 'Votre badge Zwift'
