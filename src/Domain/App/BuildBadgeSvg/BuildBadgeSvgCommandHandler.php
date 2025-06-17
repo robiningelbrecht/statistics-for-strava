@@ -89,11 +89,21 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 continue;
             }
 
-            /** @var \App\Domain\Strava\Activity\BestEffort\ActivityBestEffort $bestEffort */
-            foreach ($bestEffortsForActivityType as $bestEffort) {
-                $sportTypesThatHaveBestEfforts[$bestEffort->getSportType()->value] = $bestEffort->getSportType();
+            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getUniqueSportTypes();
+            foreach ($uniqueSportTypesInBestEfforts as $sportType) {
+                $bestEffortsForSportType = $bestEffortsForActivityType->getBySportType($sportType);
+                if ($bestEffortsForSportType->isEmpty()) {
+                    continue;
+                }
+                $sportTypesThatHaveBestEfforts[] = $sportType;
 
-                // @TODO: generate le badge.
+                $this->fileStorage->write(
+                    strtolower(sprintf('pb-%s-badge.svg', $sportType->value)),
+                    $this->twig->load('svg/badge/svg-pb-badge.html.twig')->render([
+                        'sportType' => $sportType,
+                        'bestEfforts' => $bestEffortsForSportType,
+                    ])
+                );
             }
         }
 
@@ -102,7 +112,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             $this->twig->load('html/badge.html.twig')->render([
                 'zwiftLevel' => $this->zwiftLevel,
                 'appUrl' => rtrim((string) $this->appUrl, '/'),
-                'sportTypesThatHaveBestEfforts' => array_values($sportTypesThatHaveBestEfforts),
+                'sportTypesThatHaveBestEfforts' => $sportTypesThatHaveBestEfforts,
             ]),
         );
     }

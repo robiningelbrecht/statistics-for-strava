@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Activity\BestEffort;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(name: 'ActivityBestEffort_sportTypeIndex', columns: ['sportType'])]
 final class ActivityBestEffort
 {
+    use ProvideTimeFormats;
+
     private ?Activity $activity = null;
 
     private function __construct(
@@ -74,6 +77,11 @@ final class ActivityBestEffort
     public function getTimeInSeconds(): int
     {
         return $this->timeInSeconds;
+    }
+
+    public function getFormattedTimeInSeconds(): string
+    {
+        return $this->formatDurationForChartLabel($this->getTimeInSeconds());
     }
 
     public function getActivity(): ?Activity
