@@ -133,7 +133,7 @@ final class SegmentEffort
 
     public function getAverageSpeed(): KmPerHour
     {
-        if($this->getElapsedTimeInSeconds() <= 0){
+        if ($this->getElapsedTimeInSeconds() <= 0) {
             return KmPerHour::zero();
         }
         $averageSpeed = $this->getDistance()->toMeter()->toFloat() / $this->getElapsedTimeInSeconds();
