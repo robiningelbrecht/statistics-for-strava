@@ -34,6 +34,7 @@ Avg: Média
 Badminton: Badmínton
 Best: Melhor
 'Best Efforts': 'Best Efforts'
+'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Cadência
@@ -191,6 +192,7 @@ Other: Outro
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
 'Overall weekly training stress': 'Overall weekly training stress'
+'PB badges': 'PB badges'
 PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: Ritmo
@@ -330,6 +332,7 @@ Yoga: Yoga
 'You have not recorded any activities in the previous years.': 'You have not recorded any activities in the previous years.'
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to'
+'Your PB badge': 'Your PB badge'
 'Your Strava badge': 'O teu emblema do Strava'
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'O teu emblema do Zwift'

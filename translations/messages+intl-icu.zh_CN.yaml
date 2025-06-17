@@ -34,6 +34,7 @@ Avg: 平均
 Badminton: 羽毛球
 Best: 最佳
 'Best Efforts': 最大努力
+'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: 踏频
@@ -191,6 +192,7 @@ Other: 其他
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
 'Overall weekly training stress': 'Overall weekly training stress'
+'PB badges': 'PB badges'
 PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: 步速
@@ -330,6 +332,7 @@ Yoga: 瑜伽
 'You have not recorded any activities in the previous years.': 'You have not recorded any activities in the previous years.'
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': '你的通勤减少了{amountOfCarbonSaved}的碳排放 🥳。这相当于'
+'Your PB badge': 'Your PB badge'
 'Your Strava badge': Strava徽章
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': Zwift徽章
