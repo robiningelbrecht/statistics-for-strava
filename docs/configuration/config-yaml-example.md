@@ -8,6 +8,7 @@ general:
   # Leave empty to disable.
   appSubTitle: null
   # Optional, a link to your profile picture. Will be used to display in the nav bar and link to your Strava profile.
+  # Any image can be used; a square format is recommended.
   # Leave empty to disable this feature.
   profilePictureUrl: null
   # Optional, full URL with ntfy topic included. This topic will be used to notify you when a new HTML build has run.
