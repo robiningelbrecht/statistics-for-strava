@@ -1,3 +1,13 @@
+# [v2.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.1) - 2025-06-17
+
+## What's Changed
+* ISSUE #748: Indicate navbar collapsed state with icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/749
+* ISSUE #740: Activity laps by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/750
+* ISSUE #744: Allow to configure an app subtitle by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/753
+* ISSUE #755: ISSUE #755: Fix division by zero bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/758
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.0...v2.3.1
+
 # [v2.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.0) - 2025-06-16
 
 🚀 New: Fine-tune your heart rate zones with advanced configuration options!
