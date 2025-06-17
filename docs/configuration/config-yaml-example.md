@@ -69,8 +69,11 @@ appearance:
   # Allowed formats: 24 or 12 (includes AM and PM)
   timeFormat: 24
   # Date format to use when rendering the app
-  # Allowed formats: DAY-MONTH-YEAR or MONTH-DAY-YEAR
-  dateFormat: 'DAY-MONTH-YEAR'
+  # For valid PHP date formats: https://www.php.net/manual/en/datetime.format.php
+  # If you don't know how to use these formats, leave this unchanged — the defaults are sensible.
+  dateFormat:
+    short: 'd-m-y' # This renders to 01-01-25
+    normal: 'd-m-Y' # This renders to 01-01-2025
 import:
   # Strava API has rate limits (https://statistics-for-strava-docs.robiningelbrecht.be/#/troubleshooting/faq?id=why-does-it-take-so-long-to-import-my-data),
   # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
