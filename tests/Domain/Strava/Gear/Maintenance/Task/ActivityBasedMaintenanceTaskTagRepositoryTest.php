@@ -8,15 +8,16 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
-use App\Domain\Strava\Gear\Maintenance\Tag;
 use App\Domain\Strava\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\String\Tag;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use Symfony\Component\Yaml\Yaml;
 
 class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 {
@@ -77,13 +78,13 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 
         $this->maintenanceTaskTagRepository = new ActivityBasedMaintenanceTaskTagRepository(
             $this->getContainer()->get(ActivityRepository::class),
-            GearMaintenanceConfig::fromYmlString($this->getValidYmlString()),
+            GearMaintenanceConfig::fromArray($this->getValidYml()),
         );
     }
 
-    private static function getValidYmlString(): string
+    private static function getValidYml(): array
     {
-        return <<<YML
+        return Yaml::parse(<<<YML
 enabled: true
 hashtagPrefix: 'sfs'
 components:
@@ -123,6 +124,6 @@ components:
 gears:
   - gearId: 'g12337767'
     imgSrc: 'gear1.png'
-YML;
+YML);
     }
 }

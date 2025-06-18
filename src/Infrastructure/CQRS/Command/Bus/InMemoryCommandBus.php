@@ -8,6 +8,7 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\HandlerBuilder;
 use App\Infrastructure\CQRS\HandlerBuilderType;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
@@ -23,6 +24,7 @@ final readonly class InMemoryCommandBus implements CommandBus
      * @param iterable<CommandHandler> $commandHandlers
      */
     public function __construct(
+        #[AutowireIterator('app.command_handler')]
         iterable $commandHandlers,
     ) {
         $this->bus = new MessageBus([

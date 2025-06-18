@@ -18,7 +18,19 @@
         }
     },
     {
+        "commandName": "App\\Domain\\Strava\\Gear\\CustomGear\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Domain\\Strava\\Activity\\Split\\ImportActivitySplits\\ImportActivitySplits",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Domain\\Strava\\Activity\\Lap\\ImportActivityLaps\\ImportActivityLaps",
         "payload": {
             "output": {}
         }

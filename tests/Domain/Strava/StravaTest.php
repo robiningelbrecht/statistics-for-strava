@@ -5,6 +5,8 @@ namespace App\Tests\Domain\Strava;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
+use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -12,6 +14,8 @@ use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -26,11 +30,98 @@ class StravaTest extends TestCase
     private Strava $strava;
 
     private MockObject $client;
-    private StravaClientId $stravaClientId;
-    private StravaClientSecret $stravaClientSecret;
-    private StravaRefreshToken $stravaRefreshToken;
     private MockObject $filesystemOperator;
     private LoggerInterface $logger;
+
+    public function testVerifyAccessToken(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+                $this->assertMatchesJsonSnapshot($options);
+
+                return new Response(200, [], Json::encode([]));
+            });
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenTheTokenIsInvalid(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(RequestException::wrapException(
+                new Request('GET', 'uri'),
+                new \RuntimeException()
+            ));
+
+        $this->expectExceptionObject(new InvalidStravaAccessToken());
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenTheTokenHasInsufficientScopes(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(401, [], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->expectExceptionObject(new InsufficientStravaAccessTokenScopes());
+
+        $this->strava->verifyAccessToken();
+    }
+
+    public function testVerifyAccessTokenWhenARandomErrorIsThrown(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('GET', $method);
+                $this->assertEquals('api/v3/athlete/activities', $path);
+
+                throw new \RuntimeException('Oh no');
+            });
+
+        $this->expectExceptionObject(new \RuntimeException('Oh no'));
+
+        $this->strava->verifyAccessToken();
+    }
 
     public function testGetAthlete(): void
     {
@@ -63,10 +154,19 @@ class StravaTest extends TestCase
 
     public function testGetActivities(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/athlete/activities', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -75,7 +175,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getActivities();
@@ -85,10 +185,19 @@ class StravaTest extends TestCase
 
     public function testGetActivity(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/activities/3', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -97,7 +206,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getActivity(ActivityId::fromUnprefixed(3));
@@ -105,10 +214,19 @@ class StravaTest extends TestCase
 
     public function testGetActivityZones(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/activities/3/zones', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -117,7 +235,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getActivityZones(ActivityId::fromUnprefixed(3));
@@ -125,10 +243,19 @@ class StravaTest extends TestCase
 
     public function testGetAllActivityStreams(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/activities/3/streams', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -137,7 +264,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getAllActivityStreams(ActivityId::fromUnprefixed(3));
@@ -145,10 +272,19 @@ class StravaTest extends TestCase
 
     public function testGetAllActivityPhotos(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/activities/3/photos', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -157,7 +293,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getActivityPhotos(ActivityId::fromUnprefixed(3));
@@ -165,10 +301,19 @@ class StravaTest extends TestCase
 
     public function testGetGear(): void
     {
+        $matcher = $this->exactly(2);
         $this->client
-            ->expects($this->once())
+            ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('api/v3/gear/3', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -177,7 +322,7 @@ class StravaTest extends TestCase
             });
 
         $this->logger
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('info');
 
         $this->strava->getGear(GearId::fromUnprefixed(3));
@@ -652,20 +797,19 @@ class StravaTest extends TestCase
         parent::setUp();
 
         $this->client = $this->createMock(Client::class);
-        $this->stravaClientId = StravaClientId::fromString('clientId');
-        $this->stravaClientSecret = StravaClientSecret::fromString('clientSecret');
-        $this->stravaRefreshToken = StravaRefreshToken::fromString('refreshToken');
         $this->filesystemOperator = $this->createMock(FilesystemOperator::class);
         $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->strava = new Strava(
             client: $this->client,
-            stravaClientId: $this->stravaClientId,
-            stravaClientSecret: $this->stravaClientSecret,
-            stravaRefreshToken: $this->stravaRefreshToken,
+            stravaClientId: StravaClientId::fromString('clientId'),
+            stravaClientSecret: StravaClientSecret::fromString('clientSecret'),
+            stravaRefreshToken: StravaRefreshToken::fromString('refreshToken'),
             filesystemOperator: $this->filesystemOperator,
             sleep: new NullSleep(),
             logger: $this->logger
         );
+        $this->strava::$cachedAccessToken = null;
+        $this->strava::$cachedActivitiesResponse = null;
     }
 }

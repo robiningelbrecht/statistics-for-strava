@@ -1,5 +1,8 @@
 {
-    "App\\Domain\\Strava\\Activity\\Split\\StreamSplitManager": [
+    "App\\Domain\\Strava\\Activity\\Lap\\ActivityLapManager": [
+        "reactToActivityWasDeleted"
+    ],
+    "App\\Domain\\Strava\\Activity\\Split\\ActivitySplitManager": [
         "reactToActivityWasDeleted"
     ],
     "App\\Domain\\Strava\\Activity\\Stream\\StreamActivityManager": [

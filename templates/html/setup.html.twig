@@ -8,8 +8,8 @@
     <meta name="theme-color" content="#F26822">
     <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
-    <link href="{{ asset('assets/flowbite/tailwind.min.css') }}" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-50 h-screen flex justify-center items-center">
 {{ renderComponent('top-nav-bar') }}

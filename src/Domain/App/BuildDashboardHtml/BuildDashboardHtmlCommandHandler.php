@@ -21,13 +21,16 @@ use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\BestPowerOutputs;
 use App\Domain\Strava\Activity\Stream\PowerOutputChart;
+use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDays;
+use App\Domain\Strava\Activity\Training\TrainingLoadChart;
+use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
-use App\Domain\Strava\Athlete\HeartRateZone;
-use App\Domain\Strava\Athlete\TimeInHeartRateZoneChart;
+use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
+use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\CarbonSavedComparison;
@@ -37,6 +40,7 @@ use App\Domain\Strava\Ftp\FtpHistoryChart;
 use App\Domain\Strava\Trivia;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -58,6 +62,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private ActivityIntensity $activityIntensity,
+        private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -103,6 +108,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
+                activityType: $activityType,
                 translator: $this->translator,
                 now: $now,
             )->build()) {
@@ -155,7 +161,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $trivia = Trivia::getInstance($allActivities);
         $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
 
-        $bestEffortsCharts = [];
+        $bestEfforts = $bestEffortsCharts = [];
         /** @var ActivityType $activityType */
         foreach ($importedActivityTypes as $activityType) {
             if (!$activityType->supportsBestEffortsStats()) {
@@ -167,6 +173,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 continue;
             }
 
+            $bestEfforts[$activityType->value] = $bestEffortsForActivityType;
             $bestEffortsCharts[$activityType->value] = Json::encode(
                 BestEffortChart::create(
                     activityType: $activityType,
@@ -176,6 +183,18 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 )->build()
             );
         }
+
+        $intensities = [];
+        for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 210); $i >= 0; --$i) {
+            $calculateForDate = $now->modify('- '.$i.' days');
+            $intensities[$calculateForDate->format('Y-m-d')] = $this->activityIntensity->calculateForDate($calculateForDate);
+        }
+
+        $trainingMetrics = TrainingMetrics::create($intensities);
+        $numberOfRestDays = $this->queryBus->ask(new FindNumberOfRestDays(DateRange::fromDates(
+            from: $now->modify('-6 days'),
+            till: $now,
+        )))->getNumberOfRestDays();
 
         $this->buildStorage->write(
             'dashboard.html',
@@ -187,7 +206,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'powerOutputs' => $bestAllTimePowerOutputs,
                 'activityIntensityChart' => Json::encode(
                     ActivityIntensityChart::create(
-                        activities: $allActivities,
                         activityIntensity: $this->activityIntensity,
                         translator: $this->translator,
                         now: $now,
@@ -228,8 +246,26 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'yearlyDistanceCharts' => $yearlyDistanceCharts,
                 'yearlyStatistics' => $yearlyStatistics,
+                'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
+                'trainingMetrics' => $trainingMetrics,
+                'restDaysInLast7Days' => $numberOfRestDays,
             ]),
+        );
+
+        $this->buildStorage->write(
+            'training-load.html',
+            $this->twig->render('html/dashboard/training-load.html.twig', [
+                'trainingLoadChart' => Json::encode(
+                    TrainingLoadChart::create(
+                        trainingMetrics: $trainingMetrics,
+                        translator: $this->translator,
+                        now: $now
+                    )->build()
+                ),
+                'trainingMetrics' => $trainingMetrics,
+                'restDaysInLast7Days' => $numberOfRestDays,
+            ])
         );
 
         $this->buildStorage->write(

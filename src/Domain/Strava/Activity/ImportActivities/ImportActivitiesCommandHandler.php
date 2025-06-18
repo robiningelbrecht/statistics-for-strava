@@ -10,6 +10,7 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypesToImport;
+use App\Domain\Strava\Activity\WorkoutType;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Strava;
@@ -19,6 +20,7 @@ use App\Domain\Weather\OpenMeteo\Weather;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -68,11 +70,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             $allActivityIds->toArray(),
         );
         $stravaActivities = $this->strava->getActivities();
+        $countTotalStravaActivities = count($stravaActivities);
 
         $command->getOutput()->writeln(
-            sprintf('Status: %d out of %d activities imported', count($allActivityIds), count($stravaActivities))
+            sprintf('Status: %d out of %d activities imported', count($allActivityIds), $countTotalStravaActivities)
         );
 
+        $delta = 1;
         foreach ($stravaActivities as $stravaActivity) {
             if (!$sportType = SportType::tryFrom($stravaActivity['sport_type'])) {
                 $command->getOutput()->writeln(sprintf(
@@ -122,7 +126,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     ->updateGear(
                         $gearId,
                         $gearId ? $allGears->getByGearId($gearId)?->getName() : null
-                    );
+                    )
+                    ->updateWorkoutType(WorkoutType::fromStravaInt($stravaActivity['workout_type'] ?? null));
 
                 if (array_key_exists('commute', $stravaActivity)) {
                     $activity->updateCommute($stravaActivity['commute']);
@@ -130,12 +135,19 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
                 if (!$activity->getLocation() && $sportType->supportsReverseGeocoding()
                     && $activity->getStartingCoordinate()) {
-                    $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                    $activity->updateLocation($reverseGeocodedAddress);
+                    try {
+                        $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                        $activity->updateLocation($reverseGeocodedAddress);
+                    } catch (CouldNotReverseGeocodeAddress) {
+                    }
                 }
 
                 try {
-                    if (0 === $activity->getTotalImageCount() && ($stravaActivity['total_photo_count'] ?? 0) > 0) {
+                    if (!$newTotalImageCount = ($stravaActivity['total_photo_count'] ?? 0)) {
+                        // New image count is 0, remove all images.
+                        $activity->updateLocalImagePaths([]);
+                    }
+                    if ($activity->getTotalImageCount() !== $newTotalImageCount && $newTotalImageCount > 0) {
                         // Activity got updated and images were uploaded, import them.
                         if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
                             $activity->updateLocalImagePaths(array_map(
@@ -155,8 +167,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     ]
                 ));
                 unset($activityIdsToDelete[(string) $activity->getId()]);
+
                 $command->getOutput()->writeln(sprintf(
-                    '  => Updated activity "%s - %s"',
+                    '  => [%d/%d] Updated activity: "%s - %s"',
+                    $delta,
+                    $countTotalStravaActivities,
                     $activity->getName(),
                     $activity->getStartDate()->format('d-m-Y'))
                 );
@@ -191,8 +206,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     }
 
                     if ($sportType->supportsReverseGeocoding() && $activity->getStartingCoordinate()) {
-                        $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                        $activity->updateLocation($reverseGeocodedAddress);
+                        try {
+                            $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                            $activity->updateLocation($reverseGeocodedAddress);
+                        } catch (CouldNotReverseGeocodeAddress) {
+                        }
                     }
 
                     $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
@@ -202,7 +220,9 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     unset($activityIdsToDelete[(string) $activity->getId()]);
 
                     $command->getOutput()->writeln(sprintf(
-                        '  => Imported activity "%s - %s"',
+                        '  => [%d/%d] Imported activity: "%s - %s"',
+                        $delta,
+                        $countTotalStravaActivities,
                         $activity->getName(),
                         $activity->getStartDate()->format('d-m-Y'))
                     );
@@ -213,12 +233,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         break;
                     }
                 } catch (ClientException|RequestException $exception) {
-                    if (!$exception->getResponse()) {
-                        // Re-throw, we only want to catch supported error codes.
-                        throw $exception;
-                    }
-
-                    if (429 === $exception->getResponse()->getStatusCode()) {
+                    if (429 === $exception->getResponse()?->getStatusCode()) {
                         // This will allow initial imports with a lot of activities to proceed the next day.
                         // This occurs when we exceed Strava API rate limits or throws an unexpected error.
                         $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>');
@@ -231,6 +246,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     return;
                 }
             }
+            ++$delta;
         }
 
         if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {

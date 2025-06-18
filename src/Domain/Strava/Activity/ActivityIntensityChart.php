@@ -11,7 +11,6 @@ final readonly class ActivityIntensityChart
     private SerializableDateTime $toDate;
 
     private function __construct(
-        private Activities $activities,
         private ActivityIntensity $activityIntensity,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
@@ -23,13 +22,11 @@ final readonly class ActivityIntensityChart
     }
 
     public static function create(
-        Activities $activities,
         ActivityIntensity $activityIntensity,
         TranslatorInterface $translator,
         SerializableDateTime $now,
     ): self {
         return new self(
-            activities: $activities,
             activityIntensity: $activityIntensity,
             translator: $translator,
             now: $now,
@@ -37,7 +34,7 @@ final readonly class ActivityIntensityChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
@@ -50,6 +47,10 @@ final readonly class ActivityIntensityChart
             'title' => [
                 'left' => 'center',
                 'text' => sprintf('%s - %s', $this->fromDate->translatedFormat('M Y'), $this->toDate->translatedFormat('M Y')),
+                'textStyle' => [
+                    'color' => '#111827',
+                    'fontSize' => 14,
+                ],
             ],
             'tooltip' => [
                 'trigger' => 'item',
@@ -133,30 +134,11 @@ final readonly class ActivityIntensityChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, array{0: string, 1: int}>
      */
     private function getData(): array
     {
-        $activities = $this->activities->filterOnDateRange(
-            fromDate: $this->fromDate,
-            toDate: $this->toDate
-        );
-
-        $data = $rawData = [];
-        /** @var Activity $activity */
-        foreach ($activities as $activity) {
-            if (!$intensity = $this->activityIntensity->calculate($activity)) {
-                continue;
-            }
-
-            $day = $activity->getStartDate()->format('Y-m-d');
-            if (!array_key_exists($day, $rawData)) {
-                $rawData[$day] = 0;
-            }
-
-            $rawData[$day] += $intensity;
-        }
-
+        $data = [];
         $interval = \DateInterval::createFromDateString('1 day');
         $period = new \DatePeriod(
             $this->fromDate,
@@ -165,14 +147,10 @@ final readonly class ActivityIntensityChart
         );
 
         foreach ($period as $dt) {
-            $day = $dt->format('Y-m-d');
-            if (!array_key_exists($day, $rawData)) {
-                $data[] = [$day, 0];
-
-                continue;
-            }
-
-            $data[] = [$day, $rawData[$day]];
+            $data[] = [
+                $dt->format('Y-m-d'),
+                $this->activityIntensity->calculateForDate(SerializableDateTime::fromDateTimeImmutable($dt)),
+            ];
         }
 
         return $data;

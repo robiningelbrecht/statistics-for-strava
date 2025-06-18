@@ -2,8 +2,11 @@
 
 namespace App\Infrastructure\Twig;
 
+use Twig\Attribute\AsTwigFilter;
+
 final readonly class FormatNumberTwigExtension
 {
+    #[AsTwigFilter('formatNumber')]
     public static function doFormat(?float $number, int $precision): string
     {
         if (is_null($number)) {

@@ -50,6 +50,7 @@ final readonly class BestEffortChart
             $series[] = [
                 'name' => $sportType->trans($this->translator),
                 'type' => 'bar',
+                'cursor' => 'default',
                 'barGap' => 0,
                 'emphasis' => [
                     'focus' => 'none',

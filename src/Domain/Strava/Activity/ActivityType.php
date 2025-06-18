@@ -62,14 +62,6 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
-    public function supportsEddington(): bool
-    {
-        return match ($this) {
-            self::RUN, self::RIDE, => true,
-            default => false,
-        };
-    }
-
     public function supportsWeeklyStats(): bool
     {
         return ActivityType::OTHER !== $this;

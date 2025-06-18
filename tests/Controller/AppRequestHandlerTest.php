@@ -3,13 +3,14 @@
 namespace App\Tests\Controller;
 
 use App\Controller\AppRequestHandler;
+use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use App\Tests\ContainerTestCase;
-use GuzzleHttp\Exception\RequestException;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class AppRequestHandlerTest extends ContainerTestCase
@@ -40,11 +41,8 @@ class AppRequestHandlerTest extends ContainerTestCase
     {
         $this->strava
             ->expects($this->once())
-            ->method('getAccessToken')
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException()
-            ));
+            ->method('verifyAccessToken')
+            ->willThrowException(new InvalidStravaAccessToken());
 
         $response = $this->appRequestHandler->handle(new Request(
             query: [],
@@ -57,7 +55,7 @@ class AppRequestHandlerTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            new RedirectResponse('/strava-oauth', \Symfony\Component\HttpFoundation\Response::HTTP_FOUND),
+            new RedirectResponse('/strava-oauth', Response::HTTP_FOUND),
             $response,
         );
     }

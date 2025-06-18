@@ -3,6 +3,8 @@
 namespace App\Tests\Controller;
 
 use App\Controller\StravaOAuthRequestHandler;
+use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
+use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -30,7 +32,7 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
     {
         $this->strava
             ->expects($this->once())
-            ->method('getAccessToken');
+            ->method('verifyAccessToken');
 
         $this->assertEquals(
             new RedirectResponse('/', \Symfony\Component\HttpFoundation\Response::HTTP_FOUND),
@@ -50,11 +52,8 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
     {
         $this->strava
             ->expects($this->once())
-            ->method('getAccessToken')
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException()
-            ));
+            ->method('verifyAccessToken')
+            ->willThrowException(new InvalidStravaAccessToken());
 
         $this->client
             ->expects($this->once())
@@ -84,11 +83,8 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
     {
         $this->strava
             ->expects($this->once())
-            ->method('getAccessToken')
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException()
-            ));
+            ->method('verifyAccessToken')
+            ->willThrowException(new InvalidStravaAccessToken());
 
         $this->client
             ->expects($this->once())
@@ -101,10 +97,15 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
                     'code' => 'the-code',
                 ],
             ])
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException('The error')
-            ));
+            ->willThrowException(new RequestException(
+                message: 'The error',
+                request: new \GuzzleHttp\Psr7\Request('GET', 'uri'),
+                response: new Response(
+                    404,
+                    [],
+                    Json::encode(['error' => 'The error']
+                    )
+                )));
 
         $this->assertMatchesHtmlSnapshot($this->stravaOAuthRequestHandler->handle(new Request(
             query: ['code' => 'the-code'],
@@ -117,15 +118,56 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
-    public function testHandleWithoutCode(): void
+    public function testHandleItShouldStartAuthorization(): void
     {
         $this->strava
             ->expects($this->once())
-            ->method('getAccessToken')
-            ->willThrowException(RequestException::wrapException(
-                new \GuzzleHttp\Psr7\Request('GET', 'uri'),
-                new \RuntimeException()
-            ));
+            ->method('verifyAccessToken')
+            ->willThrowException(new InvalidStravaAccessToken());
+
+        $this->client
+            ->expects($this->never())
+            ->method('post');
+
+        $this->assertMatchesHtmlSnapshot($this->stravaOAuthRequestHandler->handle(new Request(
+            query: [],
+            request: [],
+            attributes: [],
+            cookies: [],
+            files: [],
+            server: [],
+            content: [],
+        ))->getContent());
+    }
+
+    public function testHandleItShouldWhenInsufficientScopes(): void
+    {
+        $this->strava
+            ->expects($this->once())
+            ->method('verifyAccessToken')
+            ->willThrowException(new InsufficientStravaAccessTokenScopes());
+
+        $this->client
+            ->expects($this->never())
+            ->method('post');
+
+        $this->assertMatchesHtmlSnapshot($this->stravaOAuthRequestHandler->handle(new Request(
+            query: [],
+            request: [],
+            attributes: [],
+            cookies: [],
+            files: [],
+            server: [],
+            content: [],
+        ))->getContent());
+    }
+
+    public function testHandleItShouldOnRandomError(): void
+    {
+        $this->strava
+            ->expects($this->once())
+            ->method('verifyAccessToken')
+            ->willThrowException(new \RuntimeException('OH NOWZ'));
 
         $this->client
             ->expects($this->never())

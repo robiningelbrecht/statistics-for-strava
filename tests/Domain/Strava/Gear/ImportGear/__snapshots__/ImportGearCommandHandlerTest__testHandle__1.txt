@@ -2,3 +2,5 @@ Importing gear...
   => Imported/updated gear "Retro Race Bike"
   => Imported/updated gear "Zwift Hub"
   => Imported/updated gear "Elite Direto XR-T ☠️"
+  => Imported/updated custom gear "Peddle Board"
+  => Imported/updated custom gear "Fancy workout shoes ☠️"

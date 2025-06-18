@@ -1,0 +1,82 @@
+# Scheduling
+
+By default, for your data to be updated, you need to run the import and build commands manually.
+However, there are several ways to automate this process.
+
+## Using the built-in crontab on your host system
+
+You can use the built-in crontab on your host system to run the import and build commands at regular intervals.
+To do this, you need to add a new cron job to your crontab:
+
+```bash
+> crontab -e
+```
+
+### Example
+
+```bash
+> 0 19 * * * cd /path/to/compose.yaml && docker compose exec app bin/console app:strava:import-data && docker compose exec app bin/console app:strava:build-files
+```
+
+```bash
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+```
+
+## Using a Docker cron container
+
+If you have no access to the host system's crontab,
+you can use a Docker cron container to run the import and build commands at regular intervals.
+
+### Ofelia
+
+https://github.com/mcuadros/ofelia
+
+```yml
+services:
+  app:
+    image: robiningelbrecht/strava-statistics:latest
+    # ... other configuration options
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.datecron.schedule: "0 19 * * *"
+      ofelia.job-exec.datecron.command: "bin/console app:strava:import-data && bin/console app:strava:build-files"
+      
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - statistics-for-strava
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+```
+
+### Docker Cron
+
+If you want to have more control over the scheduling, check out [this repository](https://github.com/AnalogJ/docker-cron).
+It contains cron base images for various distros.
+
+## Using Synology NAS Task Scheduler
+
+If you are running the app on a Synology NAS,
+you can use the Task Scheduler to run the import and build commands at regular intervals.
+
+1. Open Control Panel -> Task Scheduler
+2. Then Create -> Scheduled Task -> User Defined Script.
+3. Set the name to `SFS Sync` and define the User as root. Ensure it is enabled.
+4. On the schedule, choose the desired frequency.
+5. In the Task Settings, in the Run command textbox, enter:
+
+```bash
+docker exec statistics-for-strava bin/console app:strava:import-data && docker exec statistics-for-strava bin/console app:strava:build-files
+```
+
+<div class="alert important">
+Make sure to replace the "statistics-for-strava" with the container name you have defined in the container.
+</div>

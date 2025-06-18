@@ -21,6 +21,9 @@ down:
 console:
 	@make dcr cmd="bin/console $(arg)"
 
+console-blackfire:
+	@make dcr cmd="blackfire run bin/console $(arg)"
+
 console-profiler:
 	# We need to use the app container here, otherwise the profiler can't access the files through web requests.
 	docker compose exec app bin/console --profile -v $(arg)
@@ -47,7 +50,7 @@ translation-debug:
 
 # Code quality tools.
 phpunit:
-	@make dcr cmd="vendor/bin/phpunit -d --enable-pretty-print -d --compact $(arg)"
+	@make dcr cmd="vendor/bin/phpunit --order-by=random -d --enable-pretty-print -d --compact $(arg)"
 
 phpunit-with-coverage-report:
 	@make phpunit arg="--coverage-clover=clover.xml -d --min-coverage=min-coverage-rules.php"
@@ -79,6 +82,9 @@ app-build-all:
 	@make app-build-files
 	@make app-build-flowbite
 	@make build-containers
+
+app-run-docs:
+	docsify serve docs
 
 # Helpers for forks and PRs
 fork-fetch-remote:

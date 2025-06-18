@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
+use App\Domain\Strava\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
@@ -16,7 +17,7 @@ use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Domain\App\BuildAppFilesTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
-use App\Tests\Domain\Strava\Gear\GearBuilder;
+use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -24,10 +25,10 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
 {
     public function testHandle(): void
     {
-        $gear = GearBuilder::fromDefaults()
+        $gear = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('g10130856'))
             ->build();
-        $this->getContainer()->get(GearRepository::class)->save($gear);
+        $this->getContainer()->get(ImportedGearRepository::class)->save($gear);
 
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -78,7 +79,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $fileStorage = $this->getContainer()->get('build.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
-            gearMaintenanceConfig: GearMaintenanceConfig::fromYmlString(''),
+            gearMaintenanceConfig: GearMaintenanceConfig::fromArray([]),
             maintenanceTaskTagRepository: $this->getContainer()->get(MaintenanceTaskTagRepository::class),
             gearRepository: $this->getContainer()->get(GearRepository::class),
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),

@@ -59,43 +59,107 @@
         {% endif %}
     </div>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    {% if not splits.isEmpty() %}
+    {% if not splits.isEmpty() or not laps.isEmpty() %}
         <div>
-            <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
-                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
-                    <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
-                    <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
-                    <div class="grow min-w-[10rem] px-2 py-2"></div>
-                    <div class="w-[5rem] px-2 py-2">{{ "Elev"|trans }}</div>
-                    <div  class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
+            {% if not splits.isEmpty() and not laps.isEmpty() %}
+                <div class="mb-4 border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                {{ "Splits"|trans }}
+                            </a>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                {{ "Laps"|trans }}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                {% for split in splits %}
-                    <div class="flex items-center border-b last:border-b-0">
-                        <div class="w-[2rem] px-2 py-2 font-bold">
-                            {{ split.getSplitNumber() }}
-                        </div>
-                        <div class="w-[5rem] px-2 py-2">
-                            {{ split.getPaceInSecPerKm()|formatPace }}
-                        </div>
-                        <div class="grow min-w-[10rem] px-2 py-2">
-                            <div class=" bg-gray-200 rounded-full h-2.5">
-                                <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+            {% endif %}
+            <div id="splitsLapsTabContent">
+                {% if not splits.isEmpty() %}
+                    <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
+                        <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
+                                <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                <div class="grow min-w-[10rem] px-2 py-2"></div>
+                                <div class="w-[5rem] px-2 py-2">{{ "Elev"|trans }}</div>
+                                <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
                             </div>
+                            {% for split in splits %}
+                                <div class="flex items-center border-b last:border-b-0">
+                                    <div class="w-[2rem] px-2 py-2 font-bold">
+                                        {{ split.getSplitNumber() }}
+                                    </div>
+                                    <div class="w-[5rem] px-2 py-2">
+                                        {{ split.getPaceInSecPerKm()|formatPace }}
+                                    </div>
+                                    <div class="grow min-w-[10rem] px-2 py-2">
+                                        <div class=" bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="w-[5rem] px-2 py-2">
+                                        {{ renderComponent('measurement', {'measurement': split.getElevationDifference(), 'precision': 0}) }}
+                                    </div>
+                                    {% if split.getAverageHeartRate() %}
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ split.getAverageHeartRate() }}
+                                        </div>
+                                    {% else %}
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ "n/a"|trans }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                         </div>
-                        <div class="w-[5rem] px-2 py-2">
-                            {{ renderComponent('measurement', {'measurement': split.getElevationDifference(), 'precision': 0}) }}
-                        </div>
-                        {% if split.getAverageHeartRate() %}
-                            <div class="w-[5rem] px-2 py-2">
-                                {{ split.getAverageHeartRate() }}
-                            </div>
-                        {% else %}
-                        <div class="w-[5rem] px-2 py-2">
-                            {{ "n/a"|trans }}
-                        </div>
-                        {% endif %}
                     </div>
-                {% endfor %}
+                {% endif %}
+                {% if not laps.isEmpty() %}
+                    <div id="splitsLapsTabLaps" role="tabpanel" aria-labelledby="splitsLapsTabLaps-tab">
+                        <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                <div class="w-[2rem] px-2 py-2">{{ "Lap"|trans }}</div>
+                                <div class="w-[8rem] px-2 py-2">{{ "Distance"|trans }}</div>
+                                <div class="w-[8rem] px-2 py-2">{{ "Time"|trans }}</div>
+                                <div class="w-[8rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                <div class="w-[8rem] px-2 py-2">{{ "Elev"|trans }}</div>
+                                <div class="w-[8rem] px-2 py-2">{{ "HR"|trans }}</div>
+                            </div>
+                            {% for lab in laps %}
+                                <div class="flex items-center border-b last:border-b-0">
+                                    <div class="w-[2rem] px-2 py-2 font-bold">
+                                        {{ lab.getLapNumber() }}
+                                    </div>
+                                    <div class="w-[8rem] px-2 py-2">
+                                        {{ renderComponent('measurement', {'measurement': lab.getDistanceInKilometer(), 'precision': 1}) }}
+                                    </div>
+                                    <div class="w-[8rem] px-2 py-2">
+                                        {{ lab.getMovingTimeFormatted() }}
+                                    </div>
+                                    <div class="w-[8rem] px-2 py-2">
+                                        {{ lab.getPaceInSecPerKm()|formatPace }}
+                                    </div>
+                                    <div class="w-[8rem] px-2 py-2">
+                                        {{ renderComponent('measurement', {'measurement': lab.getElevationDifference(), 'precision': 0}) }}
+                                    </div>
+                                    {% if lab.getAverageHeartRate() %}
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lab.getAverageHeartRate() }}
+                                        </div>
+                                    {% else %}
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ "n/a"|trans }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endif %}
@@ -108,12 +172,13 @@
             'imageOverlay': leaflet.map.getOverlayImageUrl(),
             'bounds': leaflet.map.getBounds(),
         } %}
-        <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+        {% set leafletMargin = splits.isEmpty() or laps.isEmpty() ? '': 'lg:mt-[54px]' %}
+        <div class="h-[350px] {{ leafletMargin }}" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
              data-leaflet='{{ leafletOptions|json_encode }}'></div>
     {% else %}
         <div>
             <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
-                 data-src="assets/images/maps/not-found.jpg"
+                 data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
                  alt="No map"/>
         </div>
     {% endif %}
@@ -170,7 +235,7 @@
                                 {{ segmentEffort.getRank() }}
                             </td>
                             <td class="px-2 py-2 text-left">
-                                <a href="#" data-model-content-url="segment/{{ segmentEffort.getSegmentId() }}.html"
+                                <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
                                    class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline"
                                    rel="nofollow">
                                     <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>

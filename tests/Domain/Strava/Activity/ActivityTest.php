@@ -29,7 +29,7 @@ class ActivityTest extends TestCase
         $activity = ActivityBuilder::fromDefaults()
             ->withName('Test Activity #hashtag #another-one')
             ->build();
-        $activity->enrichWithMaintenanceTags(['#hashtag', '#another-one']);
+        $activity->enrichWithTags(['#hashtag', '#another-one']);
 
         $this->assertEquals('Test Activity', $activity->getName());
     }

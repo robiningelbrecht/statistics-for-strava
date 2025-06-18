@@ -17,9 +17,14 @@
 <body>
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
-        <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100">
+            <nav class="bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100 group">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
+            <a id="toggle-sidebar-collapsed-state" class="p-2 mr-1 text-gray-600 rounded-lg cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100">
+                <svg class="group-[.sidebar-is-collapsed]:hidden w-5 h-5" viewbox="0 -960 960 960" fill="currentColor"><path d="M660-368v-224q0-14-12-19t-22 5l-98 98q-12 12-12 28t12 28l98 98q10 10 22 5t12-19ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm120-80v-560H200v560h120Zm80 0h360v-560H400v560Zm-80 0H200h120Z"></path></svg>
+                <svg class="group-[.sidebar-is-collapsed]:block hidden w-5 h-5" viewbox="0 -960 960 960" fill="currentColor"><path d="M500-592v224q0 14 12 19t22-5l98-98q12-12 12-28t-12-28l-98-98q-10-10-22-5t-12 19ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm120-80v-560H200v560h120Zm80 0h360v-560H400v560Zm-80 0H200h120Z"></path></svg>
+                <span class="sr-only">Collapse sidebar</span>
+            </a>
             <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation" class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100">
                 <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
@@ -31,15 +36,18 @@
             </button>
             <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
                 <img src="/assets/images/logo.svg" class="rounded-full mr-3 h-8" alt="Statistics for Strava Logo">
-                <div class="text-lg md:text-2xl font-semibold whitespace-nowrap">Statistiken f&Atilde;&frac14;r Strava</div>
+                <div class="text-lg md:text-2xl font-semibold whitespace-nowrap">
+                    Statistiken f&Atilde;&frac14;r Strava
+                                            | Robin The King &eth;&#159;&#145;&#145;
+                                    </div>
             </a>
         </div>
         <div class="hidden md:flex items-center text-gray-500 lg:order-2 gap-x-2">
             <div class="flex items-center">
-                <a href="https://buymeacoffee.com/ingelbrecht" target="_blank" title="Buy me a coffee" class="p-1 rounded-sm hover:bg-gray-100 group">
+                <a href="https://buymeacoffee.com/ingelbrecht" target="_blank" title="Buy me a coffee" class="p-1 rounded-sm hover:bg-gray-100 group/menu-item">
                     <svg class="w-7 h-6" viewbox="0 0 884 1279" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="y-path group-hover:fill-[#FFDD04]" d="M472.623 590.836C426.682 610.503 374.546 632.802 306.976 632.802C278.71 632.746 250.58 628.868 223.353 621.274L270.086 1101.08C271.74 1121.13 280.876 1139.83 295.679 1153.46C310.482 1167.09 329.87 1174.65 349.992 1174.65C349.992 1174.65 416.254 1178.09 438.365 1178.09C462.161 1178.09 533.516 1174.65 533.516 1174.65C553.636 1174.65 573.019 1167.08 587.819 1153.45C602.619 1139.82 611.752 1121.13 613.406 1101.08L663.459 570.876C641.091 563.237 618.516 558.161 593.068 558.161C549.054 558.144 513.591 573.303 472.623 590.836Z" fill="currentColor"></path>
-                        <path fill="currentColor" class="group-hover:fill-[#111827]" d="M879.567 341.849L872.53 306.352C866.215 274.503 851.882 244.409 819.19 232.898C808.711 229.215 796.821 227.633 788.786 220.01C780.751 212.388 778.376 200.55 776.518 189.572C773.076 169.423 769.842 149.257 766.314 129.143C763.269 111.85 760.86 92.4243 752.928 76.56C742.604 55.2584 721.182 42.8009 699.88 34.559C688.965 30.4844 677.826 27.0375 666.517 24.2352C613.297 10.1947 557.342 5.03277 502.591 2.09047C436.875 -1.53577 370.983 -0.443234 305.422 5.35968C256.625 9.79894 205.229 15.1674 158.858 32.0469C141.91 38.224 124.445 45.6399 111.558 58.7341C95.7448 74.8221 90.5829 99.7026 102.128 119.765C110.336 134.012 124.239 144.078 138.985 150.737C158.192 159.317 178.251 165.846 198.829 170.215C256.126 182.879 315.471 187.851 374.007 189.968C438.887 192.586 503.87 190.464 568.44 183.618C584.408 181.863 600.347 179.758 616.257 177.304C634.995 174.43 647.022 149.928 641.499 132.859C634.891 112.453 617.134 104.538 597.055 107.618C594.095 108.082 591.153 108.512 588.193 108.942L586.06 109.252C579.257 110.113 572.455 110.915 565.653 111.661C551.601 113.175 537.515 114.414 523.394 115.378C491.768 117.58 460.057 118.595 428.363 118.647C397.219 118.647 366.058 117.769 334.983 115.722C320.805 114.793 306.661 113.611 292.552 112.177C286.134 111.506 279.733 110.801 273.333 110.009L267.241 109.235L265.917 109.046L259.602 108.134C246.697 106.189 233.792 103.953 221.025 101.251C219.737 100.965 218.584 100.249 217.758 99.2193C216.932 98.1901 216.482 96.9099 216.482 95.5903C216.482 94.2706 216.932 92.9904 217.758 91.9612C218.584 90.9319 219.737 90.2152 221.025 89.9293H221.266C232.33 87.5721 243.479 85.5589 254.663 83.8038C258.392 83.2188 262.131 82.6453 265.882 82.0832H265.985C272.988 81.6186 280.026 80.3625 286.994 79.5366C347.624 73.2301 408.614 71.0801 469.538 73.1014C499.115 73.9618 528.676 75.6996 558.116 78.6935C564.448 79.3474 570.746 80.0357 577.043 80.8099C579.452 81.1025 581.878 81.4465 584.305 81.7391L589.191 82.4445C603.438 84.5667 617.61 87.1419 631.708 90.1703C652.597 94.7128 679.422 96.1925 688.713 119.077C691.673 126.338 693.015 134.408 694.649 142.03L696.732 151.752C696.786 151.926 696.826 152.105 696.852 152.285C701.773 175.227 706.7 198.169 711.632 221.111C711.994 222.806 712.002 224.557 711.657 226.255C711.312 227.954 710.621 229.562 709.626 230.982C708.632 232.401 707.355 233.6 705.877 234.504C704.398 235.408 702.75 235.997 701.033 236.236H700.895L697.884 236.649L694.908 237.044C685.478 238.272 676.038 239.419 666.586 240.486C647.968 242.608 629.322 244.443 610.648 245.992C573.539 249.077 536.356 251.102 499.098 252.066C480.114 252.57 461.135 252.806 442.162 252.771C366.643 252.712 291.189 248.322 216.173 239.625C208.051 238.662 199.93 237.629 191.808 236.58C198.106 237.389 187.231 235.96 185.029 235.651C179.867 234.928 174.705 234.177 169.543 233.397C152.216 230.798 134.993 227.598 117.7 224.793C96.7944 221.352 76.8005 223.073 57.8906 233.397C42.3685 241.891 29.8055 254.916 21.8776 270.735C13.7217 287.597 11.2956 305.956 7.64786 324.075C4.00009 342.193 -1.67805 361.688 0.472751 380.288C5.10128 420.431 33.165 453.054 73.5313 460.35C111.506 467.232 149.687 472.807 187.971 477.556C338.361 495.975 490.294 498.178 641.155 484.129C653.44 482.982 665.708 481.732 677.959 480.378C681.786 479.958 685.658 480.398 689.292 481.668C692.926 482.938 696.23 485.005 698.962 487.717C701.694 490.429 703.784 493.718 705.08 497.342C706.377 500.967 706.846 504.836 706.453 508.665L702.633 545.797C694.936 620.828 687.239 695.854 679.542 770.874C671.513 849.657 663.431 928.434 655.298 1007.2C653.004 1029.39 650.71 1051.57 648.416 1073.74C646.213 1095.58 645.904 1118.1 641.757 1139.68C635.218 1173.61 612.248 1194.45 578.73 1202.07C548.022 1209.06 516.652 1212.73 485.161 1213.01C450.249 1213.2 415.355 1211.65 380.443 1211.84C343.173 1212.05 297.525 1208.61 268.756 1180.87C243.479 1156.51 239.986 1118.36 236.545 1085.37C231.957 1041.7 227.409 998.039 222.9 954.381L197.607 711.615L181.244 554.538C180.968 551.94 180.693 549.376 180.435 546.76C178.473 528.023 165.207 509.681 144.301 510.627C126.407 511.418 106.069 526.629 108.168 546.76L120.298 663.214L145.385 904.104C152.532 972.528 159.661 1040.96 166.773 1109.41C168.15 1122.52 169.44 1135.67 170.885 1148.78C178.749 1220.43 233.465 1259.04 301.224 1269.91C340.799 1276.28 381.337 1277.59 421.497 1278.24C472.979 1279.07 524.977 1281.05 575.615 1271.72C650.653 1257.95 706.952 1207.85 714.987 1130.13C717.282 1107.69 719.576 1085.25 721.87 1062.8C729.498 988.559 737.115 914.313 744.72 840.061L769.601 597.451L781.009 486.263C781.577 480.749 783.905 475.565 787.649 471.478C791.392 467.391 796.352 464.617 801.794 463.567C823.25 459.386 843.761 452.245 859.023 435.916C883.318 409.918 888.153 376.021 879.567 341.849ZM72.4301 365.835C72.757 365.68 72.1548 368.484 71.8967 369.792C71.8451 367.813 71.9483 366.058 72.4301 365.835ZM74.5121 381.94C74.6842 381.819 75.2003 382.508 75.7337 383.334C74.925 382.576 74.4089 382.009 74.4949 381.94H74.5121ZM76.5597 384.641C77.2996 385.897 77.6953 386.689 76.5597 384.641V384.641ZM80.672 387.979H80.7752C80.7752 388.1 80.9645 388.22 81.0333 388.341C80.9192 388.208 80.7925 388.087 80.6548 387.979H80.672ZM800.796 382.989C793.088 390.319 781.473 393.726 769.996 395.43C641.292 414.529 510.713 424.199 380.597 419.932C287.476 416.749 195.336 406.407 103.144 393.382C94.1102 392.109 84.3197 390.457 78.1082 383.798C66.4078 371.237 72.1548 345.944 75.2003 330.768C77.9878 316.865 83.3218 298.334 99.8572 296.355C125.667 293.327 155.64 304.218 181.175 308.09C211.917 312.781 242.774 316.538 273.745 319.36C405.925 331.405 540.325 329.529 671.92 311.91C695.906 308.686 719.805 304.941 743.619 300.674C764.835 296.871 788.356 289.731 801.175 311.703C809.967 326.673 811.137 346.701 809.778 363.615C809.359 370.984 806.139 377.915 800.779 382.989H800.796Z"></path>
+                        <path class="y-path group-hover/menu-item:fill-[#FFDD04]" d="M472.623 590.836C426.682 610.503 374.546 632.802 306.976 632.802C278.71 632.746 250.58 628.868 223.353 621.274L270.086 1101.08C271.74 1121.13 280.876 1139.83 295.679 1153.46C310.482 1167.09 329.87 1174.65 349.992 1174.65C349.992 1174.65 416.254 1178.09 438.365 1178.09C462.161 1178.09 533.516 1174.65 533.516 1174.65C553.636 1174.65 573.019 1167.08 587.819 1153.45C602.619 1139.82 611.752 1121.13 613.406 1101.08L663.459 570.876C641.091 563.237 618.516 558.161 593.068 558.161C549.054 558.144 513.591 573.303 472.623 590.836Z" fill="currentColor"></path>
+                        <path fill="currentColor" class="group-hover/menu-item:fill-[#111827]" d="M879.567 341.849L872.53 306.352C866.215 274.503 851.882 244.409 819.19 232.898C808.711 229.215 796.821 227.633 788.786 220.01C780.751 212.388 778.376 200.55 776.518 189.572C773.076 169.423 769.842 149.257 766.314 129.143C763.269 111.85 760.86 92.4243 752.928 76.56C742.604 55.2584 721.182 42.8009 699.88 34.559C688.965 30.4844 677.826 27.0375 666.517 24.2352C613.297 10.1947 557.342 5.03277 502.591 2.09047C436.875 -1.53577 370.983 -0.443234 305.422 5.35968C256.625 9.79894 205.229 15.1674 158.858 32.0469C141.91 38.224 124.445 45.6399 111.558 58.7341C95.7448 74.8221 90.5829 99.7026 102.128 119.765C110.336 134.012 124.239 144.078 138.985 150.737C158.192 159.317 178.251 165.846 198.829 170.215C256.126 182.879 315.471 187.851 374.007 189.968C438.887 192.586 503.87 190.464 568.44 183.618C584.408 181.863 600.347 179.758 616.257 177.304C634.995 174.43 647.022 149.928 641.499 132.859C634.891 112.453 617.134 104.538 597.055 107.618C594.095 108.082 591.153 108.512 588.193 108.942L586.06 109.252C579.257 110.113 572.455 110.915 565.653 111.661C551.601 113.175 537.515 114.414 523.394 115.378C491.768 117.58 460.057 118.595 428.363 118.647C397.219 118.647 366.058 117.769 334.983 115.722C320.805 114.793 306.661 113.611 292.552 112.177C286.134 111.506 279.733 110.801 273.333 110.009L267.241 109.235L265.917 109.046L259.602 108.134C246.697 106.189 233.792 103.953 221.025 101.251C219.737 100.965 218.584 100.249 217.758 99.2193C216.932 98.1901 216.482 96.9099 216.482 95.5903C216.482 94.2706 216.932 92.9904 217.758 91.9612C218.584 90.9319 219.737 90.2152 221.025 89.9293H221.266C232.33 87.5721 243.479 85.5589 254.663 83.8038C258.392 83.2188 262.131 82.6453 265.882 82.0832H265.985C272.988 81.6186 280.026 80.3625 286.994 79.5366C347.624 73.2301 408.614 71.0801 469.538 73.1014C499.115 73.9618 528.676 75.6996 558.116 78.6935C564.448 79.3474 570.746 80.0357 577.043 80.8099C579.452 81.1025 581.878 81.4465 584.305 81.7391L589.191 82.4445C603.438 84.5667 617.61 87.1419 631.708 90.1703C652.597 94.7128 679.422 96.1925 688.713 119.077C691.673 126.338 693.015 134.408 694.649 142.03L696.732 151.752C696.786 151.926 696.826 152.105 696.852 152.285C701.773 175.227 706.7 198.169 711.632 221.111C711.994 222.806 712.002 224.557 711.657 226.255C711.312 227.954 710.621 229.562 709.626 230.982C708.632 232.401 707.355 233.6 705.877 234.504C704.398 235.408 702.75 235.997 701.033 236.236H700.895L697.884 236.649L694.908 237.044C685.478 238.272 676.038 239.419 666.586 240.486C647.968 242.608 629.322 244.443 610.648 245.992C573.539 249.077 536.356 251.102 499.098 252.066C480.114 252.57 461.135 252.806 442.162 252.771C366.643 252.712 291.189 248.322 216.173 239.625C208.051 238.662 199.93 237.629 191.808 236.58C198.106 237.389 187.231 235.96 185.029 235.651C179.867 234.928 174.705 234.177 169.543 233.397C152.216 230.798 134.993 227.598 117.7 224.793C96.7944 221.352 76.8005 223.073 57.8906 233.397C42.3685 241.891 29.8055 254.916 21.8776 270.735C13.7217 287.597 11.2956 305.956 7.64786 324.075C4.00009 342.193 -1.67805 361.688 0.472751 380.288C5.10128 420.431 33.165 453.054 73.5313 460.35C111.506 467.232 149.687 472.807 187.971 477.556C338.361 495.975 490.294 498.178 641.155 484.129C653.44 482.982 665.708 481.732 677.959 480.378C681.786 479.958 685.658 480.398 689.292 481.668C692.926 482.938 696.23 485.005 698.962 487.717C701.694 490.429 703.784 493.718 705.08 497.342C706.377 500.967 706.846 504.836 706.453 508.665L702.633 545.797C694.936 620.828 687.239 695.854 679.542 770.874C671.513 849.657 663.431 928.434 655.298 1007.2C653.004 1029.39 650.71 1051.57 648.416 1073.74C646.213 1095.58 645.904 1118.1 641.757 1139.68C635.218 1173.61 612.248 1194.45 578.73 1202.07C548.022 1209.06 516.652 1212.73 485.161 1213.01C450.249 1213.2 415.355 1211.65 380.443 1211.84C343.173 1212.05 297.525 1208.61 268.756 1180.87C243.479 1156.51 239.986 1118.36 236.545 1085.37C231.957 1041.7 227.409 998.039 222.9 954.381L197.607 711.615L181.244 554.538C180.968 551.94 180.693 549.376 180.435 546.76C178.473 528.023 165.207 509.681 144.301 510.627C126.407 511.418 106.069 526.629 108.168 546.76L120.298 663.214L145.385 904.104C152.532 972.528 159.661 1040.96 166.773 1109.41C168.15 1122.52 169.44 1135.67 170.885 1148.78C178.749 1220.43 233.465 1259.04 301.224 1269.91C340.799 1276.28 381.337 1277.59 421.497 1278.24C472.979 1279.07 524.977 1281.05 575.615 1271.72C650.653 1257.95 706.952 1207.85 714.987 1130.13C717.282 1107.69 719.576 1085.25 721.87 1062.8C729.498 988.559 737.115 914.313 744.72 840.061L769.601 597.451L781.009 486.263C781.577 480.749 783.905 475.565 787.649 471.478C791.392 467.391 796.352 464.617 801.794 463.567C823.25 459.386 843.761 452.245 859.023 435.916C883.318 409.918 888.153 376.021 879.567 341.849ZM72.4301 365.835C72.757 365.68 72.1548 368.484 71.8967 369.792C71.8451 367.813 71.9483 366.058 72.4301 365.835ZM74.5121 381.94C74.6842 381.819 75.2003 382.508 75.7337 383.334C74.925 382.576 74.4089 382.009 74.4949 381.94H74.5121ZM76.5597 384.641C77.2996 385.897 77.6953 386.689 76.5597 384.641V384.641ZM80.672 387.979H80.7752C80.7752 388.1 80.9645 388.22 81.0333 388.341C80.9192 388.208 80.7925 388.087 80.6548 387.979H80.672ZM800.796 382.989C793.088 390.319 781.473 393.726 769.996 395.43C641.292 414.529 510.713 424.199 380.597 419.932C287.476 416.749 195.336 406.407 103.144 393.382C94.1102 392.109 84.3197 390.457 78.1082 383.798C66.4078 371.237 72.1548 345.944 75.2003 330.768C77.9878 316.865 83.3218 298.334 99.8572 296.355C125.667 293.327 155.64 304.218 181.175 308.09C211.917 312.781 242.774 316.538 273.745 319.36C405.925 331.405 540.325 329.529 671.92 311.91C695.906 308.686 719.805 304.941 743.619 300.674C764.835 296.871 788.356 289.731 801.175 311.703C809.967 326.673 811.137 346.701 809.778 363.615C809.359 370.984 806.139 377.915 800.779 382.989H800.796Z"></path>
                     </svg>
                 </a>
                 <a target="_blank" title="Discord" href="https://discord.gg/p4zpZyCHNc" class="p-1 rounded-sm hover:bg-gray-100 hover:text-[#5865F4]">
@@ -57,83 +65,74 @@
     </div>
 </nav>
         <!-- SIDEBAR -->
-    <aside class="fixed top-0 left-0 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001" aria-label="Sidenav" id="drawer-navigation">
-        <div class="max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-100">
-            <ul class="space-y-2 mb-2">
+    <aside class="group fixed top-0 left-0 w-64 [&amp;.sidebar-is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001" aria-label="Sidenav" id="drawer-navigation">
+                                <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
+            <ul class="space-y-1 pb-2">
                 <li>
-                    <a href="#" data-router-navigate="/dashboard" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg aria-hidden="true" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                    <a href="#" data-router-navigate="/dashboard" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg aria-hidden="true" class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"></path>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z"></path>
                         </svg>
-                        <span class="ml-3">Dashboard</span>
+                        <span class="flex-1 whitespace-nowrap">Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 py-2">
+                <li>
+                    <a href="#" data-router-navigate="/activities" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Aktivit&Atilde;&curren;ten</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/activities" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 16">
-                            <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM5 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm0-3a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm10 6H9a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Zm0-3H9a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Zm0-3H9a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z"></path>
+                    <a href="#" data-router-navigate="/gear" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Alle Aktivit&Atilde;&curren;ten</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">12</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                            <path d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z"></path>
-                        </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Monatliche Statistiken</span>
-                    </a>
-                </li>
-                <li>
-                    <button type="button" class="cursor-pointer flex items-center w-full p-2 text-base font-medium text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100" aria-controls="dropdown-gear-menu" data-collapse-toggle="dropdown-gear-menu">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                            <path d="m7.164 3.805-4.475.38L.327 6.546a1.114 1.114 0 0 0 .63 1.89l3.2.375 3.007-5.006ZM11.092 15.9l.472 3.14a1.114 1.114 0 0 0 1.89.63l2.36-2.362.38-4.475-5.102 3.067Zm8.617-14.283A1.613 1.613 0 0 0 18.383.291c-1.913-.33-5.811-.736-7.556 1.01-1.98 1.98-6.172 9.491-7.477 11.869a1.1 1.1 0 0 0 .193 1.316l.986.985.985.986a1.1 1.1 0 0 0 1.316.193c2.378-1.3 9.889-5.5 11.869-7.477 1.746-1.745 1.34-5.643 1.01-7.556Zm-3.873 6.268a2.63 2.63 0 1 1-3.72-3.72 2.63 2.63 0 0 1 3.72 3.72Z"></path>
-                        </svg>
-                        <span class="flex-1 ms-3 text-left whitespace-nowrap">Ausr&Atilde;&frac14;stung</span>
-                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
-                        </svg>
-                    </button>
-                    <ul id="dropdown-gear-menu" class="hidden py-2 space-y-2">
-                        <li>
-                            <a href="#" data-router-navigate="/gear-stats" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
-                                Stats
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" data-router-navigate="/gear/maintenance" data-router-sub-menu class="flex items-center w-full p-2 text-gray-900 font-medium transition duration-75 rounded-lg pl-11 hover:bg-gray-100 aria-selected:bg-gray-100">
-                                Maintenance
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" data-router-navigate="/eddington" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 16">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1v14h16m0-9-3-2-3 5-3-2-3 4"></path>
-                        </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Eddington</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ">6</span>
-                                                    <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full ml-0.5">1</span>
+                        <span class="flex-1 whitespace-nowrap">Ausr&Atilde;&frac14;stung</span>
                                             </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/segments" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                    <a href="#" data-router-navigate="/segments" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" fill="currentColor" viewbox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
                             <g stroke-width="0"></g>
                             <g stroke-linecap="round" stroke-linejoin="round"></g>
                             <g>
                                 <path d="M217.45557,38.544a35.9967,35.9967,0,0,0-57.937,40.96679L79.5105,159.51855a36.05906,36.05906,0,0,0-40.96607,7.0254H38.544a36.00029,36.00029,0,1,0,57.93737,9.94531L176.4895,96.48145A35.99663,35.99663,0,0,0,217.45557,38.544ZM72.48584,200.48535a12.00027,12.00027,0,0,1-16.97119-16.9707h-.00049a12.00044,12.00044,0,0,1,16.97168,16.9707Zm128-128a12.01673,12.01673,0,0,1-16.969.00244l-.0022-.00244a12.0001,12.0001,0,1,1,16.97119,0Z"></path>
                             </g>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Segmente</span>
+                        <span class="flex-1 whitespace-nowrap">Segmente</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 py-2">
+                <li>
+                    <a href="#" data-router-navigate="/monthly-stats" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Monatliche Statistiken</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/heatmap" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <a href="#" data-router-navigate="/eddington" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Eddington</span>
+                        <div class="group-[.sidebar-is-collapsed]:hidden flex gap-x-0.5">
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">6</span>
+                                                            <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">1</span>
+                                                    </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-router-navigate="/heatmap" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g stroke-width="0"></g>
                             <g stroke-linecap="round" stroke-linejoin="round"></g>
                             <g>
@@ -142,44 +141,42 @@
                                 <path d="M15 3V17" stroke="currentColor" stroke-width="2"></path>
                             </g>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Heatmap</span>
+                        <span class="flex-1 whitespace-nowrap">Heatmap</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/rewind" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" xml:space="preserve"><g><path fill="currentColor" d="M256,0C114.838,0,0,114.838,0,256c0,141.155,114.838,256,256,256c141.163,0,256-114.845,256-256
-		C512,114.838,397.163,0,256,0z M256,466.052c-115.998,0-210.052-94.054-210.052-210.052S140.002,45.94,256,45.94
-		S466.052,140.002,466.052,256S371.998,466.052,256,466.052z"></path><path fill="currentColor" d="M351.862,190.743c-0.783-0.456-1.744-0.427-2.499,0.014l-70.642,42.173v-40.028
-		c0-0.905-0.492-1.731-1.246-2.158c-0.783-0.456-1.745-0.427-2.5,0.014l-81.077,48.405v-43.533h-35v122.53h35V272.83l81.077,48.406
-		c0.755,0.448,1.716,0.477,2.5,0.021c0.755-0.428,1.246-1.268,1.246-2.151v-40.044l70.642,42.174
-		c0.755,0.448,1.716,0.477,2.499,0.021c0.756-0.428,1.24-1.268,1.24-2.151v-63.113v-63.092
-		C353.102,191.996,352.618,191.171,351.862,190.743z"></path></g></svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Rewind</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-router-navigate="/challenges" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                            <path fill="currentColor" d="m18.774 8.245-.892-.893a1.5 1.5 0 0 1-.437-1.052V5.036a2.484 2.484 0 0 0-2.48-2.48H13.7a1.5 1.5 0 0 1-1.052-.438l-.893-.892a2.484 2.484 0 0 0-3.51 0l-.893.892a1.5 1.5 0 0 1-1.052.437H5.036a2.484 2.484 0 0 0-2.48 2.481V6.3a1.5 1.5 0 0 1-.438 1.052l-.892.893a2.484 2.484 0 0 0 0 3.51l.892.893a1.5 1.5 0 0 1 .437 1.052v1.264a2.484 2.484 0 0 0 2.481 2.481H6.3a1.5 1.5 0 0 1 1.052.437l.893.892a2.484 2.484 0 0 0 3.51 0l.893-.892a1.5 1.5 0 0 1 1.052-.437h1.264a2.484 2.484 0 0 0 2.481-2.48V13.7a1.5 1.5 0 0 1 .437-1.052l.892-.893a2.484 2.484 0 0 0 0-3.51Z"></path>
-                            <path fill="#fff" d="M8 13a1 1 0 0 1-.707-.293l-2-2a1 1 0 1 1 1.414-1.414l1.42 1.42 5.318-3.545a1 1 0 0 1 1.11 1.664l-6 4A1 1 0 0 1 8 13Z"></path>
+                    <a href="#" data-router-navigate="/rewind" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M3.22302 14C4.13247 18.008 7.71683 21 12 21c4.9706 0 9-4.0294 9-9 0-4.97056-4.0294-9-9-9-3.72916 0-6.92858 2.26806-8.29409 5.5M7 9H3V5"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Herausforderungen</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">2</span>
+                        <span class="flex-1 whitespace-nowrap">Rewind</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="space-y-1 pt-2">
+                <li>
+                    <a href="#" data-router-navigate="/challenges" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"></path>
+                        </svg>
+                        <span class="flex-1 whitespace-nowrap">Herausforderungen</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">2</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" data-router-navigate="/photos" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group">
-                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 24 24">
-                            <path d="M19 5h-1.382l-.171-.342A2.985 2.985 0 0 0 14.764 3H9.236a2.984 2.984 0 0 0-2.683 1.658L6.382 5H5a3 3 0 0 0-3 3v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a3 3 0 0 0-3-3Zm-3.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"></path>
+                    <a href="#" data-router-navigate="/photos" class="flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100 group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs">
+                        <svg class="shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 18V8a1 1 0 0 1 1-1h1.5l1.707-1.707A1 1 0 0 1 8.914 5h6.172a1 1 0 0 1 .707.293L17.5 7H19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"></path>
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
                         </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap">Fotos</span>
-                        <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">20</span>
+                        <span class="flex-1 whitespace-nowrap">Fotos</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">20</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
-            <div class="py-2 px-4 text-xs text-center text-gray-500">
+            <div class="group-[.sidebar-is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
                 <div class="flex justify-center gap-px">
                     <a href="https://www.strava.com/athletes/100" target="_blank" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
                         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -230,8 +227,8 @@
                     </a>
                 </div>
                 <div class="flex justify-center gap-x-1">
-                    <span>v1.3.3</span>
-                    <span class="hidden" data-latest-version data-current-version="v1.3.3">
+                    <span>v2.3.2</span>
+                    <span class="hidden" data-latest-version data-current-version="v2.3.2">
                     (latest: <a class="underline" href="https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/%5BLATEST_VERSION%5D">[LATEST_VERSION]</a>)
                 </span>
                 </div>
@@ -241,11 +238,13 @@
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
                 <img class="h-[12px]" src="/assets/images/strava/powered-by-strava.svg" alt="Powered by Strava">
-                <div>&amp; &acirc;&#152;&#149;</div>
-           </div>
+                <div class="group-[.sidebar-is-collapsed]:hidden">&amp; &acirc;&#152;&#149;</div>
+            </div>
         </div>
+
     </aside>
-    <main class="p-4 md:ml-64 h-auto min-h-screen pt-20 text-gray-900">
+    <!-- MAIN -->
+    <main class="p-4 md:ml-64 [&amp;.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
         <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
             <div role="status">
                 <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -301,6 +300,9 @@
     window.statisticsForStrava.callbacks.symbolSize = function (params) {
         return (params[2] / 100) * 15 + 5;
     };
+    window.statisticsForStrava.callbacks.toInteger = function (value) {
+        return value.toFixed(0);
+    };
 </script>
 <script src="/assets/echarts/echarts.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
 <script src="/assets/echarts/echarts.world.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
@@ -325,15 +327,38 @@
     import Router from "/assets/router.js";
     import {resolveEchartsCallbacks} from "/assets/utils.js";
 
+    const $main = document.querySelector("main");
+    const $sideNav = document.querySelector("aside");
+    const $topNav = document.querySelector("nav");
+
+    // Toggle sidebar collapsed state.
+    const sideNavCollapsed = localStorage.getItem('sideNavCollapsed');
+    if (sideNavCollapsed === 'true') {
+        $main.classList.add('sidebar-is-collapsed');
+        $sideNav.classList.add('sidebar-is-collapsed');
+        $topNav.classList.add('sidebar-is-collapsed');
+    }
+
+    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
+        $main.classList.toggle('sidebar-is-collapsed');
+        $sideNav.classList.toggle('sidebar-is-collapsed');
+        $topNav.classList.toggle('sidebar-is-collapsed');
+
+        localStorage.setItem('sideNavCollapsed', 'false');
+        if ($main.classList.contains('sidebar-is-collapsed')) {
+            localStorage.setItem('sideNavCollapsed', 'true');
+        }
+    });
+
     // Boot router.
-    const router = Router(document.querySelector("main"));
+    const router = Router($main);
     router.boot();
 
     // Enable image lazy load.
     const lazyLoad = new LazyLoad({
         thresholds: "50px",
         callback_error: (img) => {
-            img.setAttribute("src", "/assets/placeholder.webp");
+            img.setAttribute("src", "/assets/placeholder-broken.webp");
         }
     });
 
@@ -389,6 +414,7 @@
             resolveEchartsCallbacks(chartOptions, 'tooltip.formatter');
             resolveEchartsCallbacks(chartOptions, 'tooltip.valueFormatter');
             resolveEchartsCallbacks(chartOptions, 'yAxis.axisLabel.formatter');
+            resolveEchartsCallbacks(chartOptions, 'yAxis[].axisLabel.formatter');
             resolveEchartsCallbacks(chartOptions, 'series.symbolSize');
 
             chart.setOption(chartOptions);

@@ -20,6 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Copy .env file
+        run: cp .env.test .env
+
       - name: Install dependencies
         run: composer install --prefer-dist
 
@@ -30,4 +33,4 @@ jobs:
         run: vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation --config=.php-cs-fixer.dist.php
 
       - name: Run test suite
-        run: vendor/bin/phpunit --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml -d --min-coverage="min-coverage-rules.php"
+        run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml -d --min-coverage="min-coverage-rules.php"

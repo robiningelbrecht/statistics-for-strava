@@ -1,0 +1,45 @@
+name: Bug Report
+description: Create a report to help us improve
+labels: ["bug"]
+assignees:
+  - robiningelbrecht
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before creating a bug report
+  
+        * Make sure you are running the latest version of the app
+        * Check the [documentation](https://statistics-for-strava-docs.robiningelbrecht.be/) to see if your issue is already addressed in the troubleshooting section
+        * Search the [existing GitHub issues](https://github.com/robiningelbrecht/statistics-for-strava/issues?q=is:issue) to verify that your issue has not been addressed yet
+        * Join our [Discord server](https://discord.gg/p4zpZyCHNc) to ask for help if you have trouble setting up the app
+  - type: textarea
+    id: the-bug
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: docker-compose-config
+    attributes:
+      label: Provide your docker compose config
+      description: Be sure to redact sensitive information
+      render: yml
+    validations:
+      required: true
+  - type: textarea
+    id: environment-config
+    attributes:
+      label: Environment configuration
+      description: Please run `docker compose exec app bin/console app:debug:environment` on your host machine and copy/paste the output here
+      render: yml
+    validations:
+      required: true

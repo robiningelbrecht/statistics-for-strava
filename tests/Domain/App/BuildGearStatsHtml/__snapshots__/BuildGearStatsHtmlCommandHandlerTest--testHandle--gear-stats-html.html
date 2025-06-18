@@ -15,13 +15,27 @@
     </li>
     </ol>
 </nav>
-            <!-- GEAR STATS -->
+            <ul class="flex flex-wrap gap-x-2 py-2 text-sm font-medium text-center text-gray-500">
+            <li>
+                <a href="#" data-router-navigate="/gear-stats" class="inline-block px-3 py-2 rounded-lg text-gray-900 bg-gray-100">
+                    Stats
+                </a>
+            </li>
+            <li>
+                <a href="#" data-router-navigate="/gear/maintenance" class="inline-block px-3 py-2 rounded-lg hover:text-gray-900 hover:bg-gray-100">
+                    Maintenance
+                </a>
+            </li>
+        </ul>
+        <!-- GEAR STATS -->
         <div class="grid grid-cols-1 mb-4">
             <!-- STATS PER GEAR -->
-            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
-                <h3 class="mb-4 text-lg font-semibold">
-                    Gear stats
-                </h3>
+            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="mb-4 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold">
+                        Gear stats
+                    </h3>
+                                    </div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -149,7 +163,7 @@
                 </div>
             </div>
             <!-- DISTANCE PER MONTH PER GEAR -->
-            <div class="mb-4  p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="mb-4  p-4 bg-white border border-gray-200 rounded-lg shadow-xs ">
                 <div class="mb-4 flex items-center">
                     <h3 class="text-lg font-semibold">
                         Distance per month per gear
@@ -169,7 +183,7 @@
                 </div>
             </div>
             <!-- DISTANCE OVER TIME PER GEAR -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs sm:p-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <div class="mb-4 flex items-center">
                     <h3 class="text-lg font-semibold">
                         Distance over time per gear

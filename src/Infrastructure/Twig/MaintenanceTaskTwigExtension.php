@@ -11,6 +11,7 @@ use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Twig\Attribute\AsTwigFunction;
 
 final readonly class MaintenanceTaskTwigExtension
 {
@@ -19,6 +20,7 @@ final readonly class MaintenanceTaskTwigExtension
     ) {
     }
 
+    #[AsTwigFunction('calculateMaintenanceTaskProgress')]
     public function calculateProgress(
         GearIds $gearIds,
         ?ActivityId $lastTaggedOnActivityId,

@@ -2,8 +2,11 @@
 .github
 .idea
 build
+config/app
 cron
+docs
 tests
+ollama
 var
 storage
 node_modules
@@ -27,6 +30,7 @@ phpunit.xml.dist
 package-lock.json
 package.json
 README.md
+CHANGELOG.md
 symfony.lock
 tailwind.config.js
 logo.xcf

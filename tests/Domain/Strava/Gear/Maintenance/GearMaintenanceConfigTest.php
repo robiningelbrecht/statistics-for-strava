@@ -15,40 +15,34 @@ class GearMaintenanceConfigTest extends TestCase
 {
     use MatchesSnapshots;
 
-    public function testFromYmlStringWhenEmpty(): void
+    public function testFromArrayWhenEmpty(): void
     {
         $this->assertEquals(
             'The gear maintenance feature is disabled.',
-            (string) GearMaintenanceConfig::fromYmlString(null),
-        );
-
-        $this->assertEquals(
-            'The gear maintenance feature is disabled.',
-            (string) GearMaintenanceConfig::fromYmlString(''),
+            (string) GearMaintenanceConfig::fromArray([]),
         );
     }
 
     public function testToString(): void
     {
-        $yml = Yaml::dump(self::getValidYmlString());
         $this->assertMatchesTextSnapshot(
-            (string) GearMaintenanceConfig::fromYmlString($yml)
+            (string) GearMaintenanceConfig::fromArray(self::getValidYml())
         );
     }
 
     public function testGetAllMaintenanceTags(): void
     {
-        $yml = $this->getValidYmlString();
+        $yml = $this->getValidYml();
 
         $this->assertEquals(
             ['#sfs-chain-lubed', '#sfs-chain-cleaned', '#sfs-chain-replaced', '#sfs-chain-two-lubed'],
-            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllMaintenanceTags()
+            GearMaintenanceConfig::fromArray($yml)->getAllMaintenanceTags()
         );
     }
 
     public function testGetAllReferencedGearIds(): void
     {
-        $yml = $this->getValidYmlString();
+        $yml = $this->getValidYml();
 
         $this->assertEquals(
             GearIds::fromArray([
@@ -56,148 +50,144 @@ class GearMaintenanceConfigTest extends TestCase
                 GearId::fromUnprefixed('bike-two-gear-id'),
                 GearId::fromUnprefixed('g12337767'),
             ]),
-            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllReferencedGearIds()
+            GearMaintenanceConfig::fromArray($yml)->getAllReferencedGearIds()
         );
     }
 
     public function testGetAllReferencedImages(): void
     {
-        $yml = $this->getValidYmlString();
+        $yml = $this->getValidYml();
 
         $this->assertEquals(
             [
                 'chain.png',
                 'gear1.png',
             ],
-            GearMaintenanceConfig::fromYmlString(Yaml::dump($yml))->getAllReferencedImages()
+            GearMaintenanceConfig::fromArray($yml)->getAllReferencedImages()
         );
     }
 
     public function testNormalizeGearIds(): void
     {
-        $yml = Yaml::dump($this->getYmlStringThatNeedsNormalization());
-        $config = GearMaintenanceConfig::fromYmlString($yml);
+        $config = GearMaintenanceConfig::fromArray($this->getYmlStringThatNeedsNormalization());
         $config->normalizeGearIds(GearIds::fromArray([GearId::fromUnprefixed('b123456')]));
 
         $this->assertMatchesTextSnapshot((string) $config);
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
-    public function testFromYmlStringItShouldThrow(string $yml, string $expectedException): void
+    public function testFromYmlStringItShouldThrow(array $yml, string $expectedException): void
     {
         $this->expectExceptionObject(new InvalidGearMaintenanceConfig($expectedException));
-        GearMaintenanceConfig::fromYmlString($yml);
+        GearMaintenanceConfig::fromArray($yml);
     }
 
     public static function provideInvalidConfig(): iterable
     {
-        yield 'could not parse' => ['[string[', 'Malformed inline YAML string at line 1 (near "[string[").'];
-        yield 'invalid yml' => ['string', 'YML expected to be an array'];
-
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['enabled']);
-        yield 'missing "enabled" key' => [Yaml::dump($yml), '"enabled" property is required'];
+        yield 'missing "enabled" key' => [$yml, '"enabled" property is required'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['hashtagPrefix']);
-        yield 'missing "hashtagPrefix" key' => [Yaml::dump($yml), '"hashtagPrefix" property is required'];
+        yield 'missing "hashtagPrefix" key' => [$yml, '"hashtagPrefix" property is required'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components']);
-        yield 'missing "components" key' => [Yaml::dump($yml), '"components" property is required'];
+        yield 'missing "components" key' => [$yml, '"components" property is required'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['gears']);
-        yield 'missing "gears" key' => [Yaml::dump($yml), '"gears" property is required'];
+        yield 'missing "gears" key' => [$yml, '"gears" property is required'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'] = 'string';
-        yield '"components" is not an array' => [Yaml::dump($yml), '"components" property must be an array'];
+        yield '"components" is not an array' => [$yml, '"components" property must be an array'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'] = [];
-        yield '"components" is empty' => [Yaml::dump($yml), 'You must configure at least one component'];
+        yield '"components" is empty' => [$yml, 'You must configure at least one component'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['tag']);
-        yield 'missing "components[tag]" key' => [Yaml::dump($yml), '"tag" property is required for each component'];
+        yield 'missing "components[tag]" key' => [$yml, '"tag" property is required for each component'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['label']);
-        yield 'missing "components[label]" key' => [Yaml::dump($yml), '"label" property is required for each component'];
+        yield 'missing "components[label]" key' => [$yml, '"label" property is required for each component'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['attachedTo']);
-        yield 'missing "components[attachedTo]" key' => [Yaml::dump($yml), '"attachedTo" property is required for each component'];
+        yield 'missing "components[attachedTo]" key' => [$yml, '"attachedTo" property is required for each component'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance']);
-        yield 'missing "components[maintenance]" key' => [Yaml::dump($yml), '"maintenance" property is required for each component'];
+        yield 'missing "components[maintenance]" key' => [$yml, '"maintenance" property is required for each component'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['attachedTo'] = 'string';
-        yield '"components[attachedTo]" is not an array' => [Yaml::dump($yml), '"attachedTo" property must be an array'];
+        yield '"components[attachedTo]" is not an array' => [$yml, '"attachedTo" property must be an array'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['maintenance'] = 'string';
-        yield '"components[maintenance]" is not an array' => [Yaml::dump($yml), '"maintenance" property must be an array'];
+        yield '"components[maintenance]" is not an array' => [$yml, '"maintenance" property must be an array'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['maintenance'] = [];
-        yield '"components[maintenance]" is empty' => [Yaml::dump($yml), 'No maintenance tasks configured for component "chain"'];
+        yield '"components[maintenance]" is empty' => [$yml, 'No maintenance tasks configured for component "chain"'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['imgSrc'] = [];
-        yield '"components[imgSrc]" is not an string' => [Yaml::dump($yml), '"imgSrc" property must be a string'];
+        yield '"components[imgSrc]" is not an string' => [$yml, '"imgSrc" property must be a string'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['tag']);
-        yield 'missing "components[maintenance][tag]" key' => [Yaml::dump($yml), '"tag" property is required for each maintenance task'];
+        yield 'missing "components[maintenance][tag]" key' => [$yml, '"tag" property is required for each maintenance task'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['label']);
-        yield 'missing "components[maintenance][label]" key' => [Yaml::dump($yml), '"label" property is required for each maintenance task'];
+        yield 'missing "components[maintenance][label]" key' => [$yml, '"label" property is required for each maintenance task'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['interval']);
-        yield 'missing "components[maintenance][interval]" key' => [Yaml::dump($yml), '"interval" property is required for each maintenance task'];
+        yield 'missing "components[maintenance][interval]" key' => [$yml, '"interval" property is required for each maintenance task'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['interval']['value']);
-        yield 'missing "components[maintenance][interval][value]" key' => [Yaml::dump($yml), '"interval" property must have "value" and "unit" properties'];
+        yield 'missing "components[maintenance][interval][value]" key' => [$yml, '"interval" property must have "value" and "unit" properties'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         unset($yml['components'][0]['maintenance'][0]['interval']['unit']);
-        yield 'missing "components[maintenance][interval][unit]" key' => [Yaml::dump($yml), '"interval" property must have "value" and "unit" properties'];
+        yield 'missing "components[maintenance][interval][unit]" key' => [$yml, '"interval" property must have "value" and "unit" properties'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['maintenance'][0]['interval']['unit'] = 'lol';
-        yield 'invalid "components[maintenance][interval][unit]"' => [Yaml::dump($yml), 'invalid interval unit "lol"'];
+        yield 'invalid "components[maintenance][interval][unit]"' => [$yml, 'invalid interval unit "lol"'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['maintenance'][0]['tag'] = 'lubed';
         $yml['components'][0]['maintenance'][1]['tag'] = 'lubed';
-        yield 'duplicate maintenance tags' => [Yaml::dump($yml), 'duplicate maintenance tags found for component "Some cool chain:" lubed'];
+        yield 'duplicate maintenance tags' => [$yml, 'duplicate maintenance tags found for component "Some cool chain:" lubed'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['components'][0]['tag'] = 'chain';
         $yml['components'][1]['tag'] = 'chain';
-        yield 'duplicate component tags' => [Yaml::dump($yml), 'duplicate component tags found: chain'];
+        yield 'duplicate component tags' => [$yml, 'duplicate component tags found: chain'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['gears'] = 'string';
-        yield '"gears" is not an array' => [Yaml::dump($yml), '"gears" property must be an array'];
+        yield '"gears" is not an array' => [$yml, '"gears" property must be an array'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['gears'][0]['gearId'] = '';
-        yield '"gears[gearId]" is empty' => [Yaml::dump($yml), '"gearId" property is required for each gear'];
+        yield '"gears[gearId]" is empty' => [$yml, '"gearId" property is required for each gear'];
 
-        $yml = self::getValidYmlString();
+        $yml = self::getValidYml();
         $yml['gears'][0]['imgSrc'] = '';
-        yield '"gears[imgSrc]" is empty' => [Yaml::dump($yml), '"imgSrc" property is required for each gear'];
+        yield '"gears[imgSrc]" is empty' => [$yml, '"imgSrc" property is required for each gear'];
     }
 
-    private static function getValidYmlString(): array
+    private static function getValidYml(): array
     {
         return Yaml::parse(<<<YML
 enabled: true

@@ -1,0 +1,26 @@
+[
+    {
+        "gearId": "gear-b12659861",
+        "createdOn": "2023-10-10 00:00:00",
+        "distanceInMeter": 10023,
+        "name": "Existing gear",
+        "isRetired": 0,
+        "type": "imported"
+    },
+    {
+        "gearId": "gear-custom",
+        "createdOn": "2023-10-10 00:00:00",
+        "distanceInMeter": 20000,
+        "name": "Existing gear",
+        "isRetired": 0,
+        "type": "custom"
+    },
+    {
+        "gearId": "gear-custom-two",
+        "createdOn": "2023-10-10 00:00:00",
+        "distanceInMeter": 10000,
+        "name": "Existing gear",
+        "isRetired": 0,
+        "type": "custom"
+    }
+]

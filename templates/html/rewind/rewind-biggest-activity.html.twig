@@ -14,7 +14,7 @@
     {% else %}
         <div class="flex h-48 justify-center">
             <img class="w-full object-cover rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
-                 data-src="assets/images/maps/not-found.jpg"
+                 data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
                  alt="No map"/>
         </div>
     {% endif %}

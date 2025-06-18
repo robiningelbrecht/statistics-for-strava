@@ -55,11 +55,11 @@ final readonly class DistanceOverTimePerGearChart
         );
 
         foreach ($gears as $gear) {
-            $previousDistance = Kilometer::zero();
+            $previousDistance = Kilometer::zero()->toUnitSystem($this->unitSystem);
             foreach ($period as $date) {
                 $date = SerializableDateTime::fromDateTimeImmutable($date);
 
-                if (!$distance = $this->gearStats->getDistanceFor($gear->getId(), $date)) {
+                if (!$distance = $this->gearStats->getDistanceFor($gear->getId(), $date)?->toUnitSystem($this->unitSystem)) {
                     $distance = $previousDistance;
                 }
                 $previousDistance = $distance;

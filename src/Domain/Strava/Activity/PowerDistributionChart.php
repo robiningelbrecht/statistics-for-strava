@@ -92,6 +92,7 @@ final readonly class PowerDistributionChart
                 [
                     'data' => $data,
                     'type' => 'bar',
+                    'cursor' => 'default',
                     'barCategoryGap' => 1,
                     'itemStyle' => [
                         'color' => '#fff',

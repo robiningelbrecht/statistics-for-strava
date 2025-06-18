@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
+use Twig\Attribute\AsTwigFilter;
+
 final readonly class ArrayTwigExtension
 {
     /**
@@ -11,6 +13,7 @@ final readonly class ArrayTwigExtension
      *
      * @return array<mixed,mixed>
      */
+    #[AsTwigFilter('array_values')]
     public static function doArrayValues(array $values): array
     {
         return array_values($values);

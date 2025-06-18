@@ -13,11 +13,13 @@ use PHPUnit\Framework\TestCase;
 class FormatDateAndTimeTwigExtensionTest extends TestCase
 {
     #[DataProvider(methodName: 'provideDates')]
-    public function testFormatDate(string $expectedFormattedDateString, SerializableDateTime $date, string $formatType, DateFormat $dateFormat): void
+    public function testFormatDate(string $expectedFormattedDateString, SerializableDateTime $date, string $formatType, string $shortDateFormat, string $normalDateFormat, string|array $legacyDateFormat): void
     {
         $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: $dateFormat,
-            timeFormat: TimeFormat::AM_PM,
+            dateFormatShort: $shortDateFormat,
+            dateFormatNormal: $normalDateFormat,
+            legacyDateFormat: $legacyDateFormat,
+            timeFormat: TimeFormat::AM_PM->value,
         ));
 
         $this->assertEquals(
@@ -26,12 +28,27 @@ class FormatDateAndTimeTwigExtensionTest extends TestCase
         );
     }
 
+    public function testFormatDateItShouldThrow(): void
+    {
+        $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
+            dateFormatShort: 'd-m-y',
+            dateFormatNormal: 'd-m-Y',
+            legacyDateFormat: [],
+            timeFormat: TimeFormat::AM_PM->value,
+        ));
+
+        $this->expectExceptionObject(new \InvalidArgumentException('Invalid date formatType "invalid"'));
+        $extension->formatDate(SerializableDateTime::fromString('2025-01-01'), 'invalid');
+    }
+
     #[DataProvider(methodName: 'provideTimes')]
     public function testFormatTime(string $expectedFormattedTimeString, SerializableDateTime $date, TimeFormat $timeFormat): void
     {
         $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: DateFormat::DAY_MONTH_YEAR,
-            timeFormat: $timeFormat,
+            dateFormatShort: 'd-m-y',
+            dateFormatNormal: 'd-m-Y',
+            legacyDateFormat: [],
+            timeFormat: $timeFormat->value,
         ));
 
         $this->assertEquals(
@@ -40,24 +57,18 @@ class FormatDateAndTimeTwigExtensionTest extends TestCase
         );
     }
 
-    public function testFormatDateItShouldThrow(): void
-    {
-        $extension = new FormatDateAndTimeTwigExtension(DateAndTimeFormat::create(
-            dateFormat: DateFormat::DAY_MONTH_YEAR,
-            timeFormat: TimeFormat::AM_PM,
-        ));
-
-        $this->expectExceptionObject(new \InvalidArgumentException('invalid'));
-        $extension->formatDate(SerializableDateTime::fromString('31-01-2025'), 'invalid');
-    }
-
     public static function provideDates(): array
     {
         return [
-            ['31-01-25', SerializableDateTime::fromString('31-01-2025'), 'short', DateFormat::DAY_MONTH_YEAR],
-            ['31-01-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', DateFormat::DAY_MONTH_YEAR],
-            ['01-31-25', SerializableDateTime::fromString('31-01-2025'), 'short', DateFormat::MONTH_DAY_YEAR],
-            ['01-31-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', DateFormat::MONTH_DAY_YEAR],
+            ['31-01-25', SerializableDateTime::fromString('31-01-2025'), 'short', 'd-m-y', 'd-m-Y', []],
+            ['31-01-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', 'd-m-y', 'd-m-Y', []],
+            ['01-31-25', SerializableDateTime::fromString('31-01-2025'), 'short', 'm-d-y', 'm-d-Y', []],
+            ['01-31-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', 'm-d-y', 'm-d-Y', []],
+            ['Fri., 31.01.25', SerializableDateTime::fromString('31-01-2025'), 'normal', 'D., d.m.y', 'D., d.m.y', []],
+            ['31-01-25', SerializableDateTime::fromString('31-01-2025'), 'short', 'D., d.m.y', 'D., d.m.y', DateFormat::LEGACY_FORMAT_DAY_MONTH_YEAR],
+            ['31-01-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', 'D., d.m.y', 'D., d.m.y', DateFormat::LEGACY_FORMAT_DAY_MONTH_YEAR],
+            ['01-31-25', SerializableDateTime::fromString('31-01-2025'), 'short', 'D., d.m.y', 'D., d.m.y', DateFormat::LEGACY_FORMAT_MONTH_DAY_YEAR],
+            ['01-31-2025', SerializableDateTime::fromString('31-01-2025'), 'normal', 'D., d.m.y', 'D., d.m.y', DateFormat::LEGACY_FORMAT_MONTH_DAY_YEAR],
         ];
     }
 

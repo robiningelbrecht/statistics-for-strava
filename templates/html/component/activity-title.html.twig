@@ -1,5 +1,5 @@
 {% autoescape false %}
-    <a href="#" data-model-content-url="activity/{{ activity.getId() }}.html" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">
+    <a href="#" data-model-content-url="{{ relativeUrl('activity/' ~ activity.getId() ~ '.html') }}" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">
         {% if activity.getSportType().isVirtualRide() %}
             {% if activity.isZwiftRide() %}
                 {{ renderSvg('zwift-logo') }}

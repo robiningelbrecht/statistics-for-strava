@@ -21,11 +21,11 @@
             {% for activity in activities|slice(0, 5) %}
                 {% set translateY = 12.5 + (loop.index0 * 25) %}
                 {% set convertedDistance = activity.getDistance()|convertMeasurement %}
-                {% set maxTitleLength = 40 - (activity.getName()|slice(0, 40)|countUppercaseChars // 7 * 3) %}
+                {% set maxTitleLength = 38 - (activity.getName()|slice(0, 38)|countUppercaseChars // 7 * 3) %}
                 <g transform="translate(5, {{ translateY }})">
                     <text x="0" y="0" text-anchor="start">
                         <tspan x="0">{{ activity.getStartDate()|formatDate() }}</tspan>
-                        <tspan x="65">{{ activity.getName()|ellipses(maxTitleLength) }}</tspan>
+                        <tspan x="65">{{ activity.getName()|ellipses(maxTitleLength)|escape('html') }}</tspan>
                         <tspan x="305" text-anchor="middle">
                             {{ convertedDistance.toFloat()|formatNumber(0) }}<tspan font-size="10px">{{ renderUnitSymbol('distance') }}</tspan>
                         </tspan>

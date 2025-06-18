@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Athlete\Weight;
 
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -38,7 +37,7 @@ final class AthleteWeightHistory
                     weightInGrams: $weightInGrams,
                 );
             } catch (\DateMalformedStringException) {
-                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set in ATHLETE_WEIGHT_HISTORY in .env file', $on));
+                throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete weightHistory in config.yaml file', $on));
             }
         }
 
@@ -58,15 +57,14 @@ final class AthleteWeightHistory
         throw new EntityNotFound(sprintf('AthleteWeight for date "%s" not found', $on));
     }
 
-    public static function fromString(string $values, UnitSystem $unitSystem): self
+    /**
+     * @param array<string, float> $values
+     */
+    public static function fromArray(array $values, UnitSystem $unitSystem): self
     {
-        try {
-            return new self(
-                weightsFromEnv: Json::decode($values),
-                unitSystem: $unitSystem
-            );
-        } catch (\JsonException) {
-            throw new \InvalidArgumentException('Invalid ATHLETE_WEIGHT_HISTORY detected in .env file. Make sure the string is valid JSON');
-        }
+        return new self(
+            weightsFromEnv: $values,
+            unitSystem: $unitSystem
+        );
     }
 }

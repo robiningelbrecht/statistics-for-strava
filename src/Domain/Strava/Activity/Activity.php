@@ -38,7 +38,7 @@ final class Activity
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
     /** @var string[] */
-    private array $maintenanceTags = [];
+    private array $tags = [];
 
     #[ORM\Column(type: 'json', nullable: true)]
     // @phpstan-ignore-next-line
@@ -106,7 +106,7 @@ final class Activity
         #[ORM\Column(type: 'boolean', nullable: true)]
         private bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
-        private readonly ?WorkoutType $workoutType,
+        private ?WorkoutType $workoutType,
     ) {
     }
 
@@ -278,6 +278,11 @@ final class Activity
         return $this;
     }
 
+    public function emptyGear(): self
+    {
+        return $this->updateGear();
+    }
+
     public function getGearName(): ?string
     {
         return $this->gearName;
@@ -355,11 +360,11 @@ final class Activity
 
     public function getName(): string
     {
-        if (empty($this->maintenanceTags)) {
+        if (empty($this->tags)) {
             return $this->getOriginalName();
         }
 
-        return trim(str_replace($this->maintenanceTags, '', $this->getOriginalName()));
+        return trim(str_replace($this->tags, '', $this->getOriginalName()));
     }
 
     public function getSanitizedName(): string
@@ -533,6 +538,13 @@ final class Activity
         return $this->workoutType;
     }
 
+    public function updateWorkoutType(?WorkoutType $workoutType): self
+    {
+        $this->workoutType = $workoutType;
+
+        return $this;
+    }
+
     public function getCarbonSaved(): Kilogram
     {
         if (!$this->isCommute) {
@@ -582,9 +594,9 @@ final class Activity
     /**
      * @param string[] $tags
      */
-    public function enrichWithMaintenanceTags(array $tags): void
+    public function enrichWithTags(array $tags): void
     {
-        $this->maintenanceTags = $tags;
+        $this->tags = $tags;
     }
 
     /**

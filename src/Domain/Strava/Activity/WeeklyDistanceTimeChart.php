@@ -13,6 +13,7 @@ final readonly class WeeklyDistanceTimeChart
     private function __construct(
         private Activities $activities,
         private UnitSystem $unitSystem,
+        private ActivityType $activityType,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
     ) {
@@ -21,12 +22,14 @@ final readonly class WeeklyDistanceTimeChart
     public static function create(
         Activities $activities,
         UnitSystem $unitSystem,
+        ActivityType $activityType,
         TranslatorInterface $translator,
         SerializableDateTime $now,
     ): self {
         return new self(
             activities: $activities,
             unitSystem: $unitSystem,
+            activityType: $activityType,
             translator: $translator,
             now: $now
         );
@@ -207,7 +210,10 @@ final readonly class WeeklyDistanceTimeChart
             $timePerWeek[$week] += $activity->getMovingTimeInSeconds();
         }
 
-        $distancePerWeek = array_map('round', $distancePerWeek);
+        $distancePerWeek = array_map(
+            fn (float|int $distance) => round($distance, $this->activityType->getDistancePrecision()),
+            $distancePerWeek
+        );
         $timePerWeek = array_map(fn (int $time) => round($time / 3600, 1), $timePerWeek);
 
         return [array_values($distancePerWeek), array_values($timePerWeek)];
