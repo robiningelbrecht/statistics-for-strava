@@ -38,15 +38,29 @@ you can use a Docker cron container to run the import and build commands at regu
 
 https://github.com/mcuadros/ofelia
 
+There are some problems with Ofelia when chaining commands. To get around this, a shell script can be used.
+
+Create a file called *refresh.sh* (or a name of your choosing) with the contents shown below:
+```shell
+#!/bin/sh
+bin/console app:strava:import-data
+bin/console app:strava:build-files
+```
+
+Edit *docker-compose.yml* to include the shell script as well as the Ofelia image. 
+Make sure the path to the shell script matches its location on your system.
 ```yml
 services:
   app:
     image: robiningelbrecht/strava-statistics:latest
+    volumes:
+      - ./refresh.sh:/bin/refresh.sh
+      - # ... other volumes
     # ... other configuration options
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.datecron.schedule: "0 19 * * *"
-      ofelia.job-exec.datecron.command: "bin/console app:strava:import-data && bin/console app:strava:build-files"
+      ofelia.job-exec.datecron.command: "sh /bin/refresh.sh"
       
   ofelia:
     image: mcuadros/ofelia:latest
