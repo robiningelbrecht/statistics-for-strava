@@ -1,9 +1,11 @@
 {% set rectangleWidth = 80 %}
 {% set rectangleHeight = 60 %}
 {% set gapBetweenRectangles = 12.5 %}
-{% set itemsPerRow = 4 %}
+{% set totalItems = sportType.getActivityType().getDistancesForBestEffortCalculation()|length %}
+{% set itemsPerRow = 5 %}
+{% set totalRows = (totalItems / itemsPerRow)|round(0, 'ceil') %}
 {% set svgWidth = (itemsPerRow * (rectangleWidth + gapBetweenRectangles)) + 30 - gapBetweenRectangles  %}
-{% set svgHeight = (12 / itemsPerRow) * (rectangleHeight + gapBetweenRectangles) + 80 %}
+{% set svgHeight = totalRows * (rectangleHeight + gapBetweenRectangles) + 80 %}
 <svg xmlns="http://www.w3.org/2000/svg" width="{{ svgWidth }}" height="{{ svgHeight }}" viewBox="0 0 {{ svgWidth }} {{ svgHeight }}" fill="none" role="img">
     <rect x="0.5" y="0.5" rx="4.5" height="99%" stroke="#e4e2e2" width="{{ svgWidth - 1 }}" fill="#fffefe" stroke-opacity="1"/>
     <g transform="translate(15, 35)">
@@ -23,16 +25,26 @@
         </g>
         <g transform="translate(0, 25)" fill="#434d58" font-family="'Segoe UI', Ubuntu, 'Helvetica Neue', Sans-Serif"
            font-size="12px" font-weight="normal">
+            {% set lastRowIndex = (totalItems / itemsPerRow)|round(0, 'ceil') - 1 %}
             {% for distance in sportType.getActivityType().getDistancesForBestEffortCalculation() %}
                 {% set bestEffort = bestEfforts.getBySportTypeAndDistance(sportType, distance) %}
-                {% set translateX = ((loop.index0 % itemsPerRow) * (rectangleWidth + gapBetweenRectangles)) %}
-                {% set translateY = ((loop.index0 // itemsPerRow) * (rectangleHeight + gapBetweenRectangles)) %}
+                {% set currentRow = loop.index0 // itemsPerRow %}
+                {% set numberOfItemsOnThisRow = currentRow == lastRowIndex
+                    ? (totalItems % itemsPerRow == 0
+                    ? itemsPerRow
+                    : totalItems % itemsPerRow)
+                    : itemsPerRow
+                %}
+                {% if currentRow == lastRowIndex and numberOfItemsOnThisRow != itemsPerRow %}
+                    {% set translateX = ((itemsPerRow - numberOfItemsOnThisRow) / 2) * (rectangleWidth + gapBetweenRectangles) + ((loop.index0 % itemsPerRow) * (rectangleWidth + gapBetweenRectangles)) %}
+                {% else %}
+                    {% set translateX = (loop.index0 % itemsPerRow) * (rectangleWidth + gapBetweenRectangles) %}
+                {% endif %}
+                {% set translateY = (currentRow * (rectangleHeight + gapBetweenRectangles)) %}
                 <g transform="translate({{ translateX }}, {{ translateY }})">
-                    {% set rectangleX = 0 %}
-                    {% set rectangleY = 0 %}
-                    {% set textX = rectangleX + (rectangleWidth / 2) %}
-                    {% set textY = rectangleY + (rectangleHeight / 2) %}
-                    <rect width="{{ rectangleWidth }}px" height="{{ rectangleHeight }}px" x="{{ rectangleX }}" y="{{ rectangleY }}" rx="10" ry="10" fill="#F4F7F9"/>
+                    {% set textX = (rectangleWidth / 2) %}
+                    {% set textY = (rectangleHeight / 2) %}
+                    <rect width="{{ rectangleWidth }}px" height="{{ rectangleHeight }}px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
                     <text x="{{ textX }}" y="{{ textY }}" text-anchor="middle">
                         <tspan x="{{ textX }}" font-size="15.5px" font-weight="600">{{ bestEffort ? bestEffort.getFormattedTimeInSeconds() : 'n/a' }}</tspan>
                         <tspan x="{{ textX }}" dy="1.2em">{{ distance.toInt() }} {{ distance.getSymbol() }}</tspan>
