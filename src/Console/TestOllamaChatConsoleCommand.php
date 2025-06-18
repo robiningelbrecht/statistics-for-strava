@@ -47,7 +47,7 @@ final class TestOllamaChatConsoleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
 
-        $io->success('Welcome to the chat CLI. Press CTRL+C to exit.');
+        $io->success('Welcome to the chat CLI. Press CTRL+C and ENTER to exit.');
 
         while (true) {
             if ($this->forceExit) {
@@ -59,8 +59,6 @@ final class TestOllamaChatConsoleCommand extends Command
             if (null === $userInput) {
                 continue; // if the user just presses Enter
             }
-
-            $output->write(' thinking... ');
 
             $response = $this->agent->chat(new UserMessage($userInput));
             $output->writeln('<Bot> :'.$response->getContent());

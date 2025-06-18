@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ade65609e862cc115f4dd305b8a03517",
+    "content-hash": "c4bd79e7c85dfe8ef4fe1ba71d045d7c",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -1736,16 +1736,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.12.2",
+            "version": "3.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "24c8c12b79c8c4d0019f85ebe861ab47c11ec637"
+                "reference": "3b680e6c12f58a0c135f86e1a5dbd3abb89db621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/24c8c12b79c8c4d0019f85ebe861ab47c11ec637",
-                "reference": "24c8c12b79c8c4d0019f85ebe861ab47c11ec637",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/3b680e6c12f58a0c135f86e1a5dbd3abb89db621",
+                "reference": "3b680e6c12f58a0c135f86e1a5dbd3abb89db621",
                 "shasum": ""
             },
             "require": {
@@ -1779,9 +1779,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.12.2"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.12.3"
             },
-            "time": "2025-05-26T20:35:15+00:00"
+            "time": "2025-06-05T08:16:24+00:00"
         },
         {
             "name": "inspector-apm/inspector-symfony",
@@ -1853,16 +1853,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.11.3",
+            "version": "1.12.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "a440b986262d61913c8f725587a9cbecd46652ab"
+                "reference": "13125ab1abf1a7ed905859e41c1394ffe743bf68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/a440b986262d61913c8f725587a9cbecd46652ab",
-                "reference": "a440b986262d61913c8f725587a9cbecd46652ab",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/13125ab1abf1a7ed905859e41c1394ffe743bf68",
+                "reference": "13125ab1abf1a7ed905859e41c1394ffe743bf68",
                 "shasum": ""
             },
             "require": {
@@ -1914,9 +1914,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.11.3"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.12.18"
             },
-            "time": "2025-06-04T12:22:24+00:00"
+            "time": "2025-06-17T14:03:05+00:00"
         },
         {
             "name": "league/flysystem",
@@ -10731,6 +10731,7 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-libxml": "*",
+        "ext-pcntl": "*",
         "ext-simplexml": "*"
     },
     "platform-dev": {},

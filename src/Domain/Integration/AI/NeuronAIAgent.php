@@ -35,13 +35,12 @@ final class NeuronAIAgent extends RAG
         return (string) new SystemPrompt(
             background: ['You are an AI Agent specialized analyzing workout results and providing workout tips.'],
             steps: [
-                'Retrieve the workout data from the database.',
-                'Use the tools you have available to retrieve the database data.',
-                'Write the summary.',
+                "Answer the user's question.",
             ],
             output: [
                 'Write a summary in a paragraph without using lists. Use just fluent text.',
-                'After the summary add a list of three sentences as the three most important takeaways from your feedback.',
+                'Do not add any markdown',
+                'Make sure the response is fluent text'
             ]
         );
     }
