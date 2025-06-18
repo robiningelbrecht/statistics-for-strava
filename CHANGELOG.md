@@ -1,3 +1,20 @@
+# [v2.3.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.2) - 2025-06-18
+
+This release introduces more user badges and the ability to use custom date formats:
+
+```yaml
+appearance:
+  dateFormat:
+    short: 'd-m-y' # This renders to 01-01-25
+    normal: 'd-m-Y' # This renders to 01-01-2025
+```
+
+## What's Changed
+* ISSUE #752: Badge that includes Best Efforts times by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/757
+* ISSUE #760: Allow for custom date formats by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/761
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.1...v2.3.2
+
 # [v2.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.1) - 2025-06-17
 
 ## What's Changed
