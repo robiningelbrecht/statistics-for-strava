@@ -39,16 +39,17 @@ you can use a Docker cron container to run the import and build commands at regu
 https://github.com/mcuadros/ofelia
 
 There are some problems with Ofelia when chaining commands. To get around this, a shell script can be used.
+Create a file called `refresh.sh` (or a name of your choosing) with the contents shown below:
 
-Create a file called *refresh.sh* (or a name of your choosing) with the contents shown below:
-```shell
+```bash
 #!/bin/sh
 bin/console app:strava:import-data
 bin/console app:strava:build-files
 ```
 
-Edit *docker-compose.yml* to include the shell script as well as the Ofelia image. 
+Edit `docker-compose.yml` to include the shell script as well as the Ofelia image. 
 Make sure the path to the shell script matches its location on your system.
+
 ```yml
 services:
   app:
@@ -76,7 +77,7 @@ services:
 If you want to have more control over the scheduling, check out [this repository](https://github.com/AnalogJ/docker-cron).
 It contains cron base images for various distros.
 
-## Using Synology NAS Task Scheduler
+## Using Synology NAS task scheduler
 
 If you are running the app on a Synology NAS,
 you can use the Task Scheduler to run the import and build commands at regular intervals.
