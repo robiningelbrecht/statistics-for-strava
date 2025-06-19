@@ -748,7 +748,7 @@
                                                     <tr class="bg-white border-b">
                                                         <th scope="row"
                                                             class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                                            <div>{{ distance.toInt() }} {{ distance.getSymbol() }}</div>
+                                                            <div>{{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}</div>
                                                         </th>
                                                         {% for sportType in bestEffortsForActivityType.getUniqueSportTypes() %}
                                                             <td class="px-2 py-2 truncate">
