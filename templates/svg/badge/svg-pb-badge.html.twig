@@ -2,7 +2,7 @@
 {% set rectangleHeight = 60 %}
 {% set gapBetweenRectangles = 12.5 %}
 {% set totalItems = sportType.getActivityType().getDistancesForBestEffortCalculation()|length %}
-{% set itemsPerRow = 5 %}
+{% set itemsPerRow = totalItems == 12 ? 4 : 5 %}
 {% set totalRows = (totalItems / itemsPerRow)|round(0, 'ceil') %}
 {% set svgWidth = (itemsPerRow * (rectangleWidth + gapBetweenRectangles)) + 30 - gapBetweenRectangles  %}
 {% set svgHeight = totalRows * (rectangleHeight + gapBetweenRectangles) + 80 %}
