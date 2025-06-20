@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Strava;
 
+use App\Domain\Strava\CouldNotDetermineLeafletMap;
 use App\Domain\Strava\LeafletMap;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -35,7 +36,7 @@ class LeafletMapTest extends TestCase
 
     public function testFromStartingCoordinateItShouldThrow(): void
     {
-        $this->expectExceptionObject(new \RuntimeException('No map found for starting coordinate [1,1]'));
+        $this->expectExceptionObject(new CouldNotDetermineLeafletMap('No map found for starting coordinate [1,1]'));
 
         LeafletMap::forZwiftStartingCoordinate(Coordinate::createFromLatAndLng(
             Latitude::fromString('1'), Longitude::fromString('1')
