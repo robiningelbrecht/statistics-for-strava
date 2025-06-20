@@ -153,6 +153,36 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testDeleteForActivity(): void
+    {
+        $this->activityBestEffortRepository->add(ActivityBestEffortBuilder::fromDefaults()
+            ->withDistanceInMeter(Meter::from(10000))
+            ->withActivityId(ActivityId::fromUnprefixed('test'))
+            ->build());
+
+        $this->activityBestEffortRepository->add(ActivityBestEffortBuilder::fromDefaults()
+            ->withDistanceInMeter(Meter::from(1000))
+            ->withActivityId(ActivityId::fromUnprefixed('test'))
+            ->build());
+
+        $this->activityBestEffortRepository->add(ActivityBestEffortBuilder::fromDefaults()
+            ->withDistanceInMeter(Meter::from(000))
+            ->withActivityId(ActivityId::fromUnprefixed('test'))
+            ->build());
+
+        $this->activityBestEffortRepository->add(ActivityBestEffortBuilder::fromDefaults()
+            ->withDistanceInMeter(Meter::from(10000))
+            ->withActivityId(ActivityId::fromUnprefixed('test2'))
+            ->build());
+
+        $this->activityBestEffortRepository->deleteForActivity(ActivityId::fromUnprefixed('test'));
+
+        $this->assertEquals(
+            1,
+            $this->getConnection()->executeQuery('SELECT COUNT(*) FROM ActivityBestEffort')->fetchOne()
+        );
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

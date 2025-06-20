@@ -1,4 +1,7 @@
 {
+    "App\\Domain\\Strava\\Activity\\BestEffort\\ActivityBestEffortManager": [
+        "reactToActivityWasDeleted"
+    ],
     "App\\Domain\\Strava\\Activity\\Lap\\ActivityLapManager": [
         "reactToActivityWasDeleted"
     ],
