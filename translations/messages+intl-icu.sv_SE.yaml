@@ -72,19 +72,12 @@ Feb: ''
 'Filter on starred segments': ''
 'First workout': ''
 Fitness: ''
-? 'For example, an Eddington number of 70 would imply that a cyclist has cycled at
-  least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington
-  number is difficult, since moving from, say, 70 to 75 will (probably) require more
-  than five new long-distance workouts, since any workout shorter than 75 km or miles
-  will no longer be included in the reckoning.'
-: ''
+'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': ''
 Fri: ''
 Friday: ''
 From: ''
 Gear: ''
-? 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported
-  from Strava. Please check that the gear exists and is correctly synced.'
-: ''
+'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': ''
 'Gear details': ''
 'Gear maintenance': ''
 'Gear stats': ''
@@ -103,11 +96,7 @@ High: ''
 Hikes: ''
 History: ''
 "I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": ""
-? 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips
-  around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation
-  of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time
-  of {totalTimeRecorded} 🎉.'
-: ''
+'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': ''
 'Ice Skate': ''
 Id: ''
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': ''
@@ -223,23 +212,15 @@ Surfing: ''
 Swim: ''
 TOTAL: ''
 'Table Tennis': ''
-? 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced
-  on that activity is not attached to this component.'
-: ''
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': ''
 Tennis: ''
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": ""
-? 'The Eddington number in the context of cycling or running is defined as the maximum
-  number E such that the athlete has covered at least E km on at least E days.'
-: ''
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': ''
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': ''
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': ''
 'This feature is currently disabled': ''
-? 'This formula means that riding for an hour at your max heart rate results in a
-  score of 100, which we consider "high intensity"'
-: ''
-? 'This map shows the daily training intensity for the last year. The training intensity
-  for an activity is calculated based on several metrics.'
-: ''
+'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': ''
+'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': ''
 Thu: ''
 Thursday: ''
 Time: ''
@@ -278,10 +259,7 @@ Wednesday: ''
 'Weekly stats': ''
 'Weight Training': ''
 Wheelchair: ''
-? 'When power metrics and FTP are available, these metrics are used instead. This
-  formula means that riding for an hour at your FTP results in a score of 100, which
-  we consider "high intensity"'
-: ''
+'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': ''
 'Wind Surf': ''
 'Winter Sports': ''
 Workout: ''
