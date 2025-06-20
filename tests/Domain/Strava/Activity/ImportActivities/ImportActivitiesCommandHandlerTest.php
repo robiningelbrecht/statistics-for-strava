@@ -7,6 +7,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityVisibility;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
+use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Strava\Activity\ImportActivities\ActivitiesToSkipDuringImport;
 use App\Domain\Strava\Activity\ImportActivities\ActivityImageDownloader;
 use App\Domain\Strava\Activity\ImportActivities\ActivityVisibilitiesToImport;
@@ -41,6 +42,7 @@ use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use App\Tests\Domain\Strava\Activity\BestEffort\ActivityBestEffortBuilder;
 use App\Tests\Domain\Strava\Activity\Lap\ActivityLapBuilder;
 use App\Tests\Domain\Strava\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
@@ -220,7 +222,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ->build());
 
         $this->getContainer()->get(ActivityLapRepository::class)->add(ActivityLapBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1000))
+            ->withActivityId(ActivityId::fromUnprefixed(1001))
+            ->build());
+
+        $this->getContainer()->get(ActivityBestEffortRepository::class)->add(ActivityBestEffortBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1001))
             ->build());
 
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
@@ -259,6 +265,10 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(ActivityLapRepository::class)->findBy(
                 ActivityId::fromUnprefixed(1001),
             )
+        );
+        $this->assertEquals(
+            0,
+            $this->getConnection()->executeQuery('SELECT COUNT(*) FROM ActivityBestEffort WHERE activityId = "activity-1001"')->fetchOne()
         );
     }
 
