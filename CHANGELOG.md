@@ -1,3 +1,35 @@
+# [v2.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.3) - 2025-06-20
+
+## What's Changed
+* ISSUE #763: PB user badges are wrong for running activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/766
+* ISSUE #767: update rounding in best effort accordion table by @oddish3 in https://github.com/robiningelbrecht/statistics-for-strava/pull/768
+* Italian and Portuguese translations by @milleruk in https://github.com/robiningelbrecht/statistics-for-strava/pull/773
+* ISSUE #765: Remove best efforts for activities that get deleted by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/774
+* ISSUE #771: Fix rendering of map for every old Zwift activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/775
+
+## New Contributors
+* @kyearb made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/769
+* @milleruk made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/773
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.2...v2.3.3
+
+# [v2.3.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.2) - 2025-06-18
+
+This release introduces more user badges and the ability to use custom date formats:
+
+```yaml
+appearance:
+  dateFormat:
+    short: 'd-m-y' # This renders to 01-01-25
+    normal: 'd-m-Y' # This renders to 01-01-2025
+```
+
+## What's Changed
+* ISSUE #752: Badge that includes Best Efforts times by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/757
+* ISSUE #760: Allow for custom date formats by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/761
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.1...v2.3.2
+
 # [v2.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.1) - 2025-06-17
 
 ## What's Changed

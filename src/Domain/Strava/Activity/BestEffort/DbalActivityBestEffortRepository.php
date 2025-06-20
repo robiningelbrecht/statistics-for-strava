@@ -131,4 +131,13 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
             )->fetchFirstColumn()
         ));
     }
+
+    public function deleteForActivity(ActivityId $activityId): void
+    {
+        $sql = 'DELETE FROM ActivityBestEffort WHERE activityId = :activityId';
+
+        $this->connection->executeStatement($sql, [
+            'activityId' => $activityId,
+        ]);
+    }
 }

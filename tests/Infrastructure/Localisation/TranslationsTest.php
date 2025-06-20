@@ -34,6 +34,7 @@ class TranslationsTest extends ContainerTestCase
             }
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
+
             $this->assertEqualsCanonicalizing(
                 $translatableKeys,
                 array_keys($parsedTranslations),
