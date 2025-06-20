@@ -96,26 +96,13 @@ Heatmap: ''
 High: 'Alto'
 Hikes: 'Escursioni'
 History: 'Cronologia'
-"I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Così
-  facendo ho bruciato {caloriesBurned} calorie, ovvero circa {numberOfPizzaSlices}
-  fette di pizza 🍕.'
-? 'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips
-  around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation
-  of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time
-  of {totalTimeRecorded} 🎉.'
-: 'Ho registrato una distanza totale di {totalDistance} ({numberOfTripsAroundTheWorld}
-  viaggi intorno al mondo 🌍 e {numberOfTripsToTheMoon} viaggi sulla luna 🌕), un dislivello
-  di {totalElevation} ({timesMountEverest} volte il Monte Everest 🏔) e un tempo totale
-  di {totalTimeRecorded} 🎉.'
+"I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Così facendo ho bruciato {caloriesBurned} calorie, ovvero circa {numberOfPizzaSlices} fette di pizza 🍕.'
+'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Ho registrato una distanza totale di {totalDistance} ({numberOfTripsAroundTheWorld} viaggi intorno al mondo 🌍 e {numberOfTripsToTheMoon} viaggi sulla luna 🌕), un dislivello di {totalElevation} ({timesMountEverest} volte il Monte Everest 🏔) e un tempo totale di {totalTimeRecorded} 🎉.'
 'Ice Skate': ''
 Id: ''
-'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine
-  "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma
-  non è stata trovata in "storage/gear-maintenance"'
+'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma non è stata trovata in "storage/gear-maintenance"'
 'Inline Skate': ''
-'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Sembra
-  che nessuna attrezzatura valida sia collegata a un componente. Per favore controlla
-  il tuo file di configurazione.'
+'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Sembra che nessuna attrezzatura valida sia collegata a un componente. Per favore controlla il tuo file di configurazione.'
 Jan: 'Gen'
 Jul: 'Lug'
 Jun: 'Giu'
@@ -159,8 +146,7 @@ Night: 'Notte'
 Nov: 'Nov'
 'Number of activities per month': 'Numero di attività al mese'
 Oct: 'Ott'
-'One of your gear maitenance tasks is due': 'Uno dei tuoi compiti di manutenzione
-  dell''attrezzatura è in scadenza'
+'One of your gear maitenance tasks is due': 'Uno dei tuoi compiti di manutenzione dell''attrezzatura è in scadenza'
 Other: 'Altro'
 'Outdoor Sports': 'Sport all''aperto'
 PRs: ''
@@ -227,23 +213,15 @@ Surfing: ''
 Swim: 'Nuoto'
 TOTAL: 'TOTALE'
 'Table Tennis': ''
-? 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced
-  on that activity is not attached to this component.'
-: ''
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': ''
 Tennis: 'Tennis'
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": ''
-? 'The Eddington number in the context of cycling or running is defined as the maximum
-  number E such that the athlete has covered at least E km on at least E days.'
-: ''
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': ''
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': ''
 'This badge is dynamically created. You can use it in any &lt;img&gt; tag': ''
 'This feature is currently disabled': ''
-? 'This formula means that riding for an hour at your max heart rate results in a
-  score of 100, which we consider "high intensity"'
-: ''
-? 'This map shows the daily training intensity for the last year. The training intensity
-  for an activity is calculated based on several metrics.'
-: ''
+'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': ''
+'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': ''
 Thu: ''
 Thursday: ''
 Time: ''
@@ -282,10 +260,7 @@ Wednesday: ''
 'Weekly stats': ''
 'Weight Training': ''
 Wheelchair: ''
-? 'When power metrics and FTP are available, these metrics are used instead. This
-  formula means that riding for an hour at your FTP results in a score of 100, which
-  we consider "high intensity"'
-: ''
+'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': ''
 'Wind Surf': ''
 'Winter Sports': ''
 Workout: ''
