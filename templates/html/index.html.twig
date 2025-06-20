@@ -360,7 +360,8 @@
     const modalContent = modalSkeletonNode.querySelector('#modal-content');
     const modalSpinner = modalSkeletonNode.querySelector('.spinner');
     let modal = null;
-    let renderedCharts = [];
+    let renderedChartsPerTab = [];
+    let allRenderedCharts = [];
     document.addEventListener('pageWasLoaded', (e) => {
         if (modal) {
             // Close any old modals when a new page is loaded.
@@ -371,7 +372,8 @@
             DataTable($dataTableWrapperNode).render()
         });
 
-        renderedCharts = [];
+        renderedChartsPerTab = [];
+        allRenderedCharts= [];
         initElements(document);
 
         if (e.detail && e.detail.modalId) {
@@ -385,6 +387,18 @@
     });
     document.addEventListener('dataTableClusterWasChanged', () => {
         initModals(document);
+    });
+
+    document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
+        allRenderedCharts.forEach(chart => {
+            chart.resize();
+        });
+    })
+
+    window.addEventListener('resize', function () {
+        allRenderedCharts.forEach(chart => {
+            chart.resize();
+        });
     });
 
     const initElements = (rootNode) => {
@@ -401,9 +415,6 @@
         const connectedCharts = [];
         rootNode.querySelectorAll('[data-echarts-options]').forEach(function (chartNode) {
             const chart = echarts.init(chartNode);
-            window.addEventListener('resize', function () {
-                chart.resize();
-            });
             const chartOptions = JSON.parse(chartNode.getAttribute('data-echarts-options'));
             resolveEchartsCallbacks(chartOptions, 'tooltip.formatter');
             resolveEchartsCallbacks(chartOptions, 'tooltip.valueFormatter');
@@ -416,11 +427,13 @@
                 connectedCharts.push(chart);
             }
 
+            allRenderedCharts.push(chart);
+
             const $tabPanel = chartNode.closest('div[role="tabpanel"]');
             if ($tabPanel) {
                 const tabPanelId = $tabPanel.getAttribute('id');
-                renderedCharts[tabPanelId] = renderedCharts[tabPanelId] || [];
-                renderedCharts[tabPanelId].push(chart);
+                renderedChartsPerTab[tabPanelId] = renderedChartsPerTab[tabPanelId] || [];
+                renderedChartsPerTab[tabPanelId].push(chart);
             }
         });
         echarts.connect(connectedCharts);
@@ -484,9 +497,9 @@
                 inactiveClasses: 'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
                 onShow: (tabs, activeTab) => {
                     const activeTabId = activeTab.id.replace('#', '');
-                    if (activeTabId in renderedCharts) {
+                    if (activeTabId in renderedChartsPerTab) {
                         // Trigger a chart resize to make sure charts are rendered and displayed.
-                        renderedCharts[activeTabId].forEach((chart) => chart.resize());
+                        renderedChartsPerTab[activeTabId].forEach((chart) => chart.resize());
                     }
 
                 },

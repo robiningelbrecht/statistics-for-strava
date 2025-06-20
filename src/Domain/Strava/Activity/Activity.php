@@ -57,7 +57,7 @@ final class Activity
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly SerializableDateTime $startDateTime,
         #[ORM\Column(type: 'string')]
-        private readonly SportType $sportType,
+        private SportType $sportType,
         #[ORM\Column(type: 'string')]
         private string $name,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -238,6 +238,13 @@ final class Activity
     public function getSportType(): SportType
     {
         return $this->sportType;
+    }
+
+    public function updateSportType(SportType $sportType): self
+    {
+        $this->sportType = $sportType;
+
+        return $this;
     }
 
     public function getStartingCoordinate(): ?Coordinate
