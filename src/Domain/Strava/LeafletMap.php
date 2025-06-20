@@ -145,6 +145,6 @@ enum LeafletMap: string
             }
         }
 
-        throw new \RuntimeException('No map found for starting coordinate '.Json::encode($coordinate));
+        throw new CouldNotDetermineLeafletMap('No map found for starting coordinate '.Json::encode($coordinate));
     }
 }
