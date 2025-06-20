@@ -1,4 +1,4 @@
-# [v2.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.3) - 2025-06-20~~~~
+# [v2.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.3) - 2025-06-20
 
 ## What's Changed
 * ISSUE #763: PB user badges are wrong for running activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/766
