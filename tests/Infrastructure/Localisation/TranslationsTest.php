@@ -34,6 +34,7 @@ class TranslationsTest extends ContainerTestCase
             }
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
+
             $this->assertEqualsCanonicalizing(
                 $translatableKeys,
                 array_keys($parsedTranslations),
@@ -52,9 +53,6 @@ class TranslationsTest extends ContainerTestCase
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
             foreach ($parsedTranslations as $key => $translation) {
-                if(empty($translation)){
-                    // Not translated yet, ignore.
-                }
                 if (!preg_match_all('/[\s\S]*\{(?<matches>[\S]*)\}[\s\S]*/U', $key, $translationPlaceholdersInKeys)) {
                     continue;
                 }
