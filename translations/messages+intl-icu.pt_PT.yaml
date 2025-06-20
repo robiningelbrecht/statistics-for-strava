@@ -48,7 +48,7 @@ Challenges: Desafios
 'Climb a total of 7500m': 'Escalar um total de 7500m'
 'Close modal': 'Fechar modal'
 'Collapse sidebar': 'Fechar barra lateral'
-Commutes: Viagens Escritório
+Commutes: 'Viagens Escritório'
 'Commutes only': 'Apenas viagens Escritório'
 Compare: Comparar
 'Compare to': 'Comparar com'
@@ -193,12 +193,12 @@ Other: Outro
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Sobre-fatigado – risco de lesão ou esgotamento, recuperação extra necessária'
 'Overall weekly training stress': 'Stress de treino geral semanal'
 'PB badges': 'Emblemas de Recordes'
-PRs: Recordes Pessoais
+PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
 'Peak power outputs': 'Picos de potência'
 'Peak-fresh, race-ready – ideal taper sweet spot': 'Pico de descanso, pronto para competir– ponto de foco ideal'
-'Personal Records': 'Recordes'
+'Personal Records': Recordes
 Photo: Foto
 Photos: Fotos
 'Pickle Ball': Pickleball
@@ -299,7 +299,7 @@ To: Até
 Trivia: Trivia
 Tue: Ter
 Tuesday: Terça-feira
-Unspecified: Não especificado
+Unspecified: 'Não especificado'
 'Updated on': 'Atualizado em'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Móveis'
@@ -330,7 +330,7 @@ Year: Ano
 'Yearly distances': 'Distâncias anuais'
 Yoga: Yoga
 'You have not recorded any activities in the previous years.': 'Não registou quaisquer actividades nos anos anteriores.'
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "Registou actividades em {numberOfCountriesWithWorkouts} países diferentes, o que dá {percentage} de todos os países🌍"
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Registou actividades em {numberOfCountriesWithWorkouts} países diferentes, o que dá {percentage} de todos os países🌍'
 'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Reduziu emissões de carbono em {amountOfCarbonSaved} por se deslocar de bicicleta para o trabalho🥳. Isto equivale a'
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
