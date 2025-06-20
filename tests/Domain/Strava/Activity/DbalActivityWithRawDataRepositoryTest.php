@@ -7,6 +7,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Gear\GearId;
 use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
@@ -71,6 +72,7 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
 
         $activity
             ->updateName('Updated name')
+            ->updateSportType(SportType::BADMINTON)
             ->updateDistance(Kilometer::from(9.99))
             ->updateAverageSpeed(MetersPerSecond::from(19.99)->toKmPerHour())
             ->updateMaxSpeed(MetersPerSecond::from(99.99)->toKmPerHour())
@@ -151,6 +153,10 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
                 longitude: Longitude::fromString('20'),
             ),
             $persistedActivity->getStartingCoordinate(),
+        );
+        $this->assertEquals(
+            SportType::BADMINTON,
+            $persistedActivity->getSportType()
         );
     }
 

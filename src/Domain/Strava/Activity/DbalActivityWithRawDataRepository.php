@@ -87,6 +87,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
     {
         $sql = 'UPDATE Activity SET 
                     name = :name, 
+                    sportType = :sportType, 
                     distance = :distance, 
                     averageSpeed = :averageSpeed,
                     maxSpeed = :maxSpeed,
@@ -109,6 +110,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         $activity = $activityWithRawData->getActivity();
         $this->connection->executeStatement($sql, [
             'activityId' => $activity->getId(),
+            'sportType' => $activity->getSportType()->value,
             'name' => $activity->getOriginalName(),
             'distance' => $activity->getDistance()->toMeter()->toInt(),
             'elevation' => $activity->getElevation()->toInt(),
