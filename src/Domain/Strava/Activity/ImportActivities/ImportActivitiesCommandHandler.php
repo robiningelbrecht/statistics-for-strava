@@ -112,6 +112,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
                 $activity
                     ->updateName($stravaActivity['name'])
+                    ->updateSportType($sportType)
                     ->updateDistance(Kilometer::from(round($stravaActivity['distance'] / 1000, 3)))
                     ->updateAverageSpeed(MetersPerSecond::from($stravaActivity['average_speed'])->toKmPerHour())
                     ->updateMaxSpeed(MetersPerSecond::from($stravaActivity['max_speed'])->toKmPerHour())
