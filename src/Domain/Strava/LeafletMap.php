@@ -53,6 +53,7 @@ enum LeafletMap: string
         }
 
         // https://zwiftinsider.com/hilly-kom-bypass/
+        // https://cf.veloviewer.com/js/vv.lmap.61.js
         return match ($this) {
             self::ZWIFT_BOLOGNA => [
                 Coordinate::createFromLatAndLng(Latitude::fromString('44.5308037'), Longitude::fromString('11.26261748')),
