@@ -1,3 +1,12 @@
+# [v2.3.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.4) - 2025-06-21
+
+## What's Changed
+* ISSUE #778: Re-draw charts when side navbar is collapsed by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/779
+* ISSUE #780: Update sportType when importing activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/781
+* ISSUE #782: Fix bug while combining filters on the heatmap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/784
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.3...v2.3.4
+
 # [v2.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.3) - 2025-06-20
 
 ## What's Changed
