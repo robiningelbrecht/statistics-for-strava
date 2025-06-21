@@ -13,8 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(name: 'app:ollama:test', description: 'Test Ollama')]
-final class TestOllamaChatConsoleCommand extends Command
+#[AsCommand(name: 'app:ai:agent-chat', description: 'Start a new AI agent chat')]
+final class AIAgentChatConsoleCommand extends Command
 {
     private bool $forceExit = false;
 

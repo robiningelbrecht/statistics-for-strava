@@ -40,7 +40,7 @@ final class NeuronAIAgent extends RAG
             output: [
                 'Write a summary in a paragraph without using lists. Use just fluent text.',
                 'Do not add any markdown',
-                'Make sure the response is fluent text'
+                'Make sure the response is fluent text',
             ]
         );
     }
