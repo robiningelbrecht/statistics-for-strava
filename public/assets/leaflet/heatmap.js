@@ -109,9 +109,9 @@ export default function Heatmap($heatmapWrapper) {
                 const filterValue = filters[filter];
                 if (Array.isArray(filterValue)) {
                     // This is range filter.
-                    routes[i].active = filter in routeFilterables && filterValue[0] <= routeFilterables[filter] && routeFilterables[filter] <= filterValue[1]
+                    routes[i].active = routes[i].active && filter in routeFilterables && filterValue[0] <= routeFilterables[filter] && routeFilterables[filter] <= filterValue[1]
                 } else {
-                    routes[i].active = filter in routeFilterables && routeFilterables[filter].toLowerCase() === filterValue
+                    routes[i].active = routes[i].active && filter in routeFilterables && routeFilterables[filter].toLowerCase() === filterValue
                 }
             }
         }
