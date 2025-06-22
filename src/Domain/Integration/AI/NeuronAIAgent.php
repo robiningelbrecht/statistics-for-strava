@@ -40,6 +40,7 @@ final class NeuronAIAgent extends RAG
             ],
             steps: [
                 "Answer the user's question.",
+                'Ask the user for a Strava activity if you think you need it.',
             ],
             output: [
                 'Make sure the response is fluent text. Do not add any code or markdown.',
