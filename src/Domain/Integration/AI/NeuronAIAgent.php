@@ -34,7 +34,10 @@ final class NeuronAIAgent extends RAG
     public function instructions(): string
     {
         return (string) new SystemPrompt(
-            background: ['You are an AI Agent specialized analyzing workout results and providing workout tips.'],
+            background: [
+                'You are an AI Agent specialized analyzing workout results and providing workout tips.',
+                "Always take into account the athlete's heart rate zones and FTP whenever you need to give feedback related to intensity",
+            ],
             steps: [
                 "Answer the user's question.",
             ],

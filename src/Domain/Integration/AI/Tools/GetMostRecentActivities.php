@@ -15,7 +15,7 @@ final class GetMostRecentActivities extends Tool
         private readonly ActivitiesEnricher $activitiesEnricher,
     ) {
         parent::__construct(
-            'get_user_workout_history',
+            'get_user_recent_activities',
             'Retrieves the workout history of the user from the database',
         );
     }
@@ -27,6 +27,6 @@ final class GetMostRecentActivities extends Tool
     {
         $activities = $this->activitiesEnricher->getEnrichedActivities()->slice(0, 10);
 
-        return $activities->map(fn (Activity $activity) => Json::encode($activity));
+        return $activities->map(fn (Activity $activity) => Json::encodeAndDecode($activity));
     }
 }

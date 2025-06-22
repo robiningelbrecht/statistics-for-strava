@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console;
 
 use App\Domain\Integration\AI\NeuronAIAgent;
+use GuzzleHttp\Exception\ClientException;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -63,8 +64,21 @@ final class AIAgentChatConsoleCommand extends Command
                 continue; // if the user just presses Enter
             }
 
-            $response = $this->agent->chat(new UserMessage($userInput));
-            $output->writeln('<comment><Mark></comment> '.$response->getContent());
+            try {
+                $response = $this->agent->chat(new UserMessage($userInput));
+                $output->writeln('<comment><Mark></comment> '.$response->getContent());
+            } catch (\Exception $e) {
+                $message = $e->getMessage();
+                if ($e instanceof ClientException) {
+                    $message = $e->getResponse()?->getBody();
+                }
+
+                $output->writeln('<comment><Mark></comment> Oh no, I made a booboo...');
+                $output->writeln(sprintf(
+                    '<error>%s</error>',
+                    $message
+                ));
+            }
         }
 
         return Command::SUCCESS;

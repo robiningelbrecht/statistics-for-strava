@@ -8,7 +8,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-interface Gear
+interface Gear extends \JsonSerializable
 {
     public function getId(): GearId;
 

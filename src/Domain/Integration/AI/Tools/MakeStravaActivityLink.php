@@ -8,7 +8,7 @@ use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class MakeStravaLink extends Tool
+final class MakeStravaActivityLink extends Tool
 {
     public function __construct(
     ) {

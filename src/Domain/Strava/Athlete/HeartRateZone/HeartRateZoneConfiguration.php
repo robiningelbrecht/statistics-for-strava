@@ -19,6 +19,15 @@ final class HeartRateZoneConfiguration
     ) {
     }
 
+    public function getDefaultHearRateZones(?SportType $sportType): HeartRateZones
+    {
+        if ($sportType && array_key_exists($sportType->value, $this->hearRateZones)) {
+            return $this->hearRateZones[$sportType->value][self::DEFAULT_KEY];
+        }
+
+        return $this->hearRateZones['defaults'][self::DEFAULT_KEY];
+    }
+
     public function getHeartRateZonesFor(SportType $sportType, SerializableDateTime $on): HeartRateZones
     {
         $on = SerializableDateTime::fromString($on->format('Y-m-d'));
