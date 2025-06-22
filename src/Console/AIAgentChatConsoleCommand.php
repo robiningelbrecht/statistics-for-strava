@@ -47,13 +47,16 @@ final class AIAgentChatConsoleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
 
-        $io->success('Welcome to the chat CLI. Press CTRL+C and ENTER to exit.');
+        $io->success([
+            "Hi 👋, I'm Mark, your personal workout assistant. Ask me anything about your workout history.",
+            'Press CTRL+C and ENTER to exit',
+        ]);
 
         while (true) {
             if ($this->forceExit) {
                 break;
             }
-            $question = new Question('<You> ');
+            $question = new Question('<info><You></info> ');
             $userInput = $helper->ask($input, $output, $question);
 
             if (null === $userInput) {
@@ -61,7 +64,7 @@ final class AIAgentChatConsoleCommand extends Command
             }
 
             $response = $this->agent->chat(new UserMessage($userInput));
-            $output->writeln('<Bot> :'.$response->getContent());
+            $output->writeln('<comment><Mark></comment> '.$response->getContent());
         }
 
         return Command::SUCCESS;
