@@ -23,7 +23,8 @@ final readonly class AIProviderFactory
     public function create(): AIProviderInterface
     {
         /** @var string $providerName */
-        if (!$providerName = $this->appConfig->get('integrations.ai.provider', '')) {
+        $providerName = $this->appConfig->get('integrations.ai.provider', '');
+        if (!$providerName) {
             throw new InvalidAIConfiguration('integrations.ai.provider', 'cannot be empty');
         }
         /** @var non-empty-array<string, mixed> $config */
