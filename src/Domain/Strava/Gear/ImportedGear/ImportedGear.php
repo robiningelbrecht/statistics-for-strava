@@ -139,7 +139,7 @@ class ImportedGear implements Gear
     /**
      * @return array<string, mixed>
      */
-    public function jsonSerialize(): array
+    public function exportForAITooling(): array
     {
         return [
             'id' => $this->getId()->toUnprefixedString(),

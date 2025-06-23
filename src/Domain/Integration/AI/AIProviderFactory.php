@@ -22,7 +22,10 @@ final readonly class AIProviderFactory
 
     public function create(): AIProviderInterface
     {
+        // @TODO: CHECK IF FEATURE IS ENABLED.
+        /** @var non-empty-string $providerName */
         $providerName = $this->appConfig->get('ai.provider');
+        /** @var non-empty-array<string, mixed> $config */
         $config = $this->appConfig->get('ai.configuration');
 
         return match ($providerName) {

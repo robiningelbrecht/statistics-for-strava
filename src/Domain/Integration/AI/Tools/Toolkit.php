@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class Toolkit extends AbstractToolkit
 {
+    /**
+     * @param iterable<\NeuronAI\Tools\ToolInterface> $tools
+     */
     public function __construct(
         #[AutowireIterator('app.ai_tool')]
         private readonly iterable $tools,

@@ -48,7 +48,7 @@ final class GetDefaultHeartRateZone extends Tool
     public function __invoke(?string $sportType): array
     {
         $now = $this->clock->getCurrentDateTimeImmutable();
-        $sportType = SportType::tryFrom($sportType);
+        $sportType = SportType::tryFrom($sportType ?? '');
         $heartRateZones = $this->configuration->getDefaultHearRateZones($sportType);
 
         $athlete = $this->athleteRepository->find();

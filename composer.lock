@@ -1858,16 +1858,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.14.2",
+            "version": "1.14.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "aa36b4966c99a85e82f495d1dc7310de78fb03d9"
+                "reference": "84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/aa36b4966c99a85e82f495d1dc7310de78fb03d9",
-                "reference": "aa36b4966c99a85e82f495d1dc7310de78fb03d9",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c",
+                "reference": "84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c",
                 "shasum": ""
             },
             "require": {
@@ -1915,9 +1915,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.2"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.4"
             },
-            "time": "2025-06-20T17:11:16+00:00"
+            "time": "2025-06-20T20:34:25+00:00"
         },
         {
             "name": "league/flysystem",

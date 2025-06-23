@@ -6,7 +6,6 @@ namespace App\Domain\Integration\AI\Tools;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\Activity;
-use App\Infrastructure\Serialization\Json;
 use NeuronAI\Tools\Tool;
 
 final class GetMostRecentActivities extends Tool
@@ -27,6 +26,6 @@ final class GetMostRecentActivities extends Tool
     {
         $activities = $this->activitiesEnricher->getEnrichedActivities()->slice(0, 10);
 
-        return $activities->map(fn (Activity $activity) => Json::encodeAndDecode($activity));
+        return $activities->map(fn (Activity $activity) => $activity->exportForAITooling());
     }
 }

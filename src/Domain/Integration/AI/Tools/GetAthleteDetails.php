@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Integration\AI\Tools;
 
 use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Infrastructure\Serialization\Json;
 use NeuronAI\Tools\Tool;
 
 final class GetAthleteDetails extends Tool
@@ -20,10 +19,10 @@ final class GetAthleteDetails extends Tool
     }
 
     /**
-     * @return array<int, mixed>
+     * @return array<string, mixed>
      */
     public function __invoke(): array
     {
-        return Json::encodeAndDecode($this->athleteRepository->find());
+        return $this->athleteRepository->find()->exportForAITooling();
     }
 }

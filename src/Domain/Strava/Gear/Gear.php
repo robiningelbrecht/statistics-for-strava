@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Gear;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-interface Gear extends \JsonSerializable
+interface Gear extends SupportsAITooling
 {
     public function getId(): GearId;
 

@@ -6,7 +6,6 @@ namespace App\Domain\Integration\AI\Tools;
 
 use App\Domain\Strava\Gear\Gear;
 use App\Domain\Strava\Gear\GearRepository;
-use App\Infrastructure\Serialization\Json;
 use NeuronAI\Tools\Tool;
 
 final class GetGear extends Tool
@@ -27,6 +26,6 @@ final class GetGear extends Tool
     {
         $gears = $this->gearRepository->findAll();
 
-        return $gears->map(fn (Gear $gear) => Json::encodeAndDecode($gear));
+        return $gears->map(fn (Gear $gear) => $gear->exportForAITooling());
     }
 }

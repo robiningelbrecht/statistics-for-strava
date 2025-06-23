@@ -2,6 +2,7 @@
 
 namespace App\Domain\Strava\Activity;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\Stream\PowerOutput;
 use App\Domain\Strava\Activity\Stream\PowerOutputs;
@@ -29,7 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'Activity_startDateTimeIndex', columns: ['startDateTime'])]
-final class Activity implements \JsonSerializable
+final class Activity implements SupportsAITooling
 {
     use RecordsEvents;
     use ProvideTimeFormats;
@@ -674,7 +675,7 @@ final class Activity implements \JsonSerializable
     /**
      * @return array<string, mixed>
      */
-    public function jsonSerialize(): array
+    public function exportForAITooling(): array
     {
         return [
             'id' => $this->getId()->toUnprefixedString(),
@@ -697,7 +698,7 @@ final class Activity implements \JsonSerializable
             'kudoCount' => $this->getKudoCount(),
             'recordedOnDevice' => $this->getDeviceName(),
             'totalImageCount' => $this->getTotalImageCount(),
-            'location' => $this->getLocation(),
+            'location' => $this->getLocation()?->jsonSerialize(),
             'weather' => $this->getWeather(),
             'gearId' => $this->getGearId()?->toUnprefixedString(),
             'gearName' => $this->getGearName(),

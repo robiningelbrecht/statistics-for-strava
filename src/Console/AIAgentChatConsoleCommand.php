@@ -36,7 +36,7 @@ final class AIAgentChatConsoleCommand extends Command
         ];
     }
 
-    public function handleSignal(int $signal, int|false $previousExitCode = 0): int|false
+    public function handleSignal(int $signal, int|false $previousExitCode = 0): int
     {
         $this->forceExit = true;
 
@@ -45,7 +45,9 @@ final class AIAgentChatConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // @TODO: CHECK IF FEATURE IS ENABLED.
         $io = new SymfonyStyle($input, $output);
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         $io->success([
@@ -70,7 +72,7 @@ final class AIAgentChatConsoleCommand extends Command
             } catch (\Exception $e) {
                 $message = $e->getMessage();
                 if ($e instanceof ClientException) {
-                    $message = $e->getResponse()?->getBody();
+                    $message = $e->getResponse()->getBody();
                 }
 
                 $output->writeln('<comment><Mark></comment> Oh no, I made a booboo...');

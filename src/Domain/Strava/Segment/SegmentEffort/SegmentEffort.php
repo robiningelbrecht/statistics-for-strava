@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Segment\SegmentEffort;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Segment\SegmentId;
@@ -17,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(name: 'SegmentEffort_segmentIndex', columns: ['segmentId'])]
 #[ORM\Index(name: 'SegmentEffort_activityIndex', columns: ['activityId'])]
-final class SegmentEffort
+final class SegmentEffort implements SupportsAITooling
 {
     use ProvideTimeFormats;
 
@@ -159,5 +160,22 @@ final class SegmentEffort
     public function enrichWithActivity(Activity $activity): void
     {
         $this->activity = $activity;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'segmentId' => $this->getSegmentId()->toUnprefixedString(),
+            'activityId' => $this->getActivityId()->toUnprefixedString(),
+            'startDateTime' => $this->getStartDateTime()->format('Y-m-d'),
+            'name' => $this->getName(),
+            'distanceInKilometer' => $this->getDistance(),
+            'averageWatts' => $this->getAverageWatts(),
+            'rank' => $this->getRank(),
+        ];
     }
 }

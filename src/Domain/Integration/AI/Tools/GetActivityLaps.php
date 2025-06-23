@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tools;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityId;
+use App\Domain\Strava\Activity\Lap\ActivityLap;
+use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetActivity extends Tool
+final class GetActivityLaps extends Tool
 {
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivityLapRepository $activityLapRepository,
     ) {
         parent::__construct(
-            'get_activity_by_id',
-            'Retrieves an activity from the database by a given id',
+            'get_activity_laps',
+            'Retrieves detailed lap data from the database for a specific activity',
         );
     }
 
@@ -42,8 +43,8 @@ final class GetActivity extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $laps = $this->activityLapRepository->findBy($activityId);
 
-        return $activities->getByActivityId($activityId)->exportForAITooling();
+        return $laps->map(static fn (ActivityLap $lap) => $lap->exportForAITooling());
     }
 }
