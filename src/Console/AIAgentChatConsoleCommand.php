@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console;
 
 use App\Domain\Integration\AI\NeuronAIAgent;
+use App\Infrastructure\Config\AppConfig;
 use GuzzleHttp\Exception\ClientException;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -17,48 +18,35 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:ai:agent-chat', description: 'Start a new AI agent chat')]
 final class AIAgentChatConsoleCommand extends Command
 {
-    private bool $forceExit = false;
-
     public function __construct(
+        private readonly AppConfig $appConfig,
         private readonly NeuronAIAgent $agent,
     ) {
         parent::__construct();
     }
 
-    /**
-     * @return int[]
-     */
-    public function getSubscribedSignals(): array
-    {
-        return [
-            SIGINT, // Ctrl+C
-            SIGTERM, // Termination signal
-        ];
-    }
-
-    public function handleSignal(int $signal, int|false $previousExitCode = 0): int
-    {
-        $this->forceExit = true;
-
-        return Command::SUCCESS;
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // @TODO: CHECK IF FEATURE IS ENABLED.
         $io = new SymfonyStyle($input, $output);
+        if (!$this->appConfig->get('integrations.ai.enabled', false)) {
+            $io->error('The AI feature is not enabled.');
+
+            return Command::SUCCESS;
+        }
+
         /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
-        $io->success([
-            "Hi 👋, I'm Mark, your personal workout assistant. Ask me anything about your workout history.",
-            'Press CTRL+C and ENTER to exit',
-        ]);
+        $io->block(
+            messages: [
+                "Hi 👋, I'm Mark, your personal workout assistant. Ask me anything about your workout history.",
+                'Type "exit" to close the conversation.',
+            ],
+            style: 'fg=black;bg=green',
+            padding: true
+        );
 
         while (true) {
-            if ($this->forceExit) {
-                break;
-            }
             $question = new Question('<info><You></info> ');
             $userInput = $helper->ask($input, $output, $question);
 
@@ -66,9 +54,22 @@ final class AIAgentChatConsoleCommand extends Command
                 continue; // if the user just presses Enter
             }
 
+            if ('exit' === $userInput) {
+                $output->writeln('<comment><Mark></comment> Mkey, bye 👋');
+                break;
+            }
+
             try {
-                $response = $this->agent->chat(new UserMessage($userInput));
-                $output->writeln('<comment><Mark></comment> '.$response->getContent());
+                $stream = $this->agent->stream(new UserMessage($userInput));
+                $first = true;
+                foreach ($stream as $text) {
+                    if ($first) {
+                        $output->write('<comment><Mark></comment> ');
+                        $first = false;
+                    }
+                    $output->write($text);
+                }
+                $output->writeln('');
             } catch (\Exception $e) {
                 $message = $e->getMessage();
                 if ($e instanceof ClientException) {

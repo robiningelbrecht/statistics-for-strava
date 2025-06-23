@@ -1858,16 +1858,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.14.4",
+            "version": "1.14.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c"
+                "reference": "09823cb2cd887c4b7459e86b925f27256fdf91bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c",
-                "reference": "84d1fc1513f5b1d7eb2236fb12a6351adc0f0b7c",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/09823cb2cd887c4b7459e86b925f27256fdf91bb",
+                "reference": "09823cb2cd887c4b7459e86b925f27256fdf91bb",
                 "shasum": ""
             },
             "require": {
@@ -1878,6 +1878,7 @@
                 "psr/log": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
+                "aws/aws-sdk-php": "^3.209",
                 "doctrine/orm": "^2.20",
                 "elasticsearch/elasticsearch": "^8.0",
                 "ext-pdo": "*",
@@ -1893,6 +1894,7 @@
                 "typesense/typesense-php": "^5.0"
             },
             "suggest": {
+                "aws/aws-sdk-php": "^3.209",
                 "doctrine/orm": "^2.20",
                 "elasticsearch/elasticsearch": "^7.0|^8.0",
                 "php-http/curl-client": "^2.3",
@@ -1915,9 +1917,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.4"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.8"
             },
-            "time": "2025-06-20T20:34:25+00:00"
+            "time": "2025-06-23T17:11:59+00:00"
         },
         {
             "name": "league/flysystem",

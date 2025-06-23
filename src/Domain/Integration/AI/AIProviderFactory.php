@@ -22,11 +22,23 @@ final readonly class AIProviderFactory
 
     public function create(): AIProviderInterface
     {
-        // @TODO: CHECK IF FEATURE IS ENABLED.
-        /** @var non-empty-string $providerName */
-        $providerName = $this->appConfig->get('ai.provider');
+        /** @var string $providerName */
+        if (!$providerName = $this->appConfig->get('integrations.ai.provider', '')) {
+            throw new InvalidAIConfiguration('integrations.ai.provider', 'cannot be empty');
+        }
         /** @var non-empty-array<string, mixed> $config */
-        $config = $this->appConfig->get('ai.configuration');
+        $config = $this->appConfig->get('integrations.ai.configuration', []);
+
+        $requiredConfigKeys = [
+            'model',
+            'ollama' === $providerName ? 'url' : 'key',
+        ];
+
+        foreach ($requiredConfigKeys as $key) {
+            if (!array_key_exists($key, $config)) {
+                throw new InvalidAIConfiguration('integrations.ai.configuration.'.$key, 'cannot be empty');
+            }
+        }
 
         return match ($providerName) {
             'anthropic' => new Anthropic(
@@ -53,7 +65,7 @@ final readonly class AIProviderFactory
                 key: $config['key'],
                 model: $config['model'],
             ),
-            default => throw new \InvalidArgumentException(sprintf('AI provider "%s" is not supported', $providerName)),
+            default => throw new InvalidAIConfiguration(key: 'integrations.ai.provider', message: sprintf('AI provider "%s" is not supported', $providerName)),
         };
     }
 }

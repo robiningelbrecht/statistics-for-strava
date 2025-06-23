@@ -87,14 +87,6 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
-    App\Domain\Integration\AI\NeuronAIAgent:
-        factory: [ null, 'create' ]
-        arguments: [
-            '@=service("App\\Domain\\Integration\\AI\\AIProviderFactory").create()',
-            '@App\Domain\Integration\AI\Tools\Toolkit',
-            '@Inspector\Inspector',
-        ]
-
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.ntfyUrl")']
@@ -179,3 +171,6 @@ services:
 
     GuzzleHttp\Client:
         class: GuzzleHttp\Client
+
+    Inspector\Inspector:
+        class: Inspector\Inspector

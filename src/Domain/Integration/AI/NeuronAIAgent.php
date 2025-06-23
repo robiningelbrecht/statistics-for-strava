@@ -6,29 +6,33 @@ namespace App\Domain\Integration\AI;
 
 use App\Domain\Integration\AI\Tools\Toolkit;
 use Inspector\Inspector;
+use NeuronAI\Agent;
 use NeuronAI\Chat\History\AbstractChatHistory;
 use NeuronAI\Chat\History\FileChatHistory;
 use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
-use NeuronAI\RAG\RAG;
 use NeuronAI\SystemPrompt;
 
-final class NeuronAIAgent extends RAG
+final class NeuronAIAgent extends Agent
 {
-    public static function create(
-        AIProviderInterface $provider,
-        Toolkit $toolkit,
+    public function __construct(
+        private readonly AIProviderFactory $AIProviderFactory,
+        private readonly Toolkit $toolkit,
         Inspector $inspector,
-    ): self {
-        /** @var NeuronAIAgent $agent */
-        $agent = new self()
-            ->withProvider($provider)
-            ->addTool($toolkit)
-            ->observe(
-                new AgentMonitoring($inspector)
-            );
+    ) {
+        $this->observe(new AgentMonitoring($inspector));
+    }
 
-        return $agent;
+    protected function provider(): AIProviderInterface
+    {
+        return $this->AIProviderFactory->create();
+    }
+
+    protected function tools(): array
+    {
+        return [
+            $this->toolkit,
+        ];
     }
 
     public function instructions(): string
@@ -41,6 +45,7 @@ final class NeuronAIAgent extends RAG
             steps: [
                 "Answer the user's question.",
                 'Ask the user for a Strava activity if you think you need it.',
+                'Ask the user for a Strava segment or segment effort if you think you need it.',
             ],
             output: [
                 'Make sure the response is fluent text. Do not add any code or markdown.',
