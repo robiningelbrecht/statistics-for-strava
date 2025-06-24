@@ -15,7 +15,7 @@ To do this, you need to add a new cron job to your crontab:
 ### Example
 
 ```bash
-> 0 19 * * * cd /path/to/compose.yaml && docker compose exec app bin/console app:strava:import-data && docker compose exec app bin/console app:strava:build-files
+>  0 19 * * * cd /path/to/compose.yaml && docker exec --user abc statistics-for-strava bin/console app:strava:import-data && docker exec --user abc statistics-for-strava bin/console app:strava:build-files
 ```
 
 ```bash
