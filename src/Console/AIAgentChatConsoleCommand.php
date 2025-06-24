@@ -73,7 +73,7 @@ final class AIAgentChatConsoleCommand extends Command
             } catch (\Exception $e) {
                 $message = $e->getMessage();
                 if ($e instanceof ClientException) {
-                    $message = $e->getResponse()->getBody();
+                    $message = $e->getResponse()->getBody()->getContents();
                 }
 
                 $output->writeln('<comment><Mark></comment> Oh no, I made a booboo...');

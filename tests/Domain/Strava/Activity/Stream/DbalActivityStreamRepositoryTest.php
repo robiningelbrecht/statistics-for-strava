@@ -198,6 +198,32 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindWithoutNormalizedPower(): void
+    {
+        $streamOne = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStreamType(StreamType::WATTS)
+            ->build();
+        $this->activityStreamRepository->add($streamOne);
+        $streamTwo = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(2))
+            ->withStreamType(StreamType::WATTS)
+            ->withNormalizedPower(3)
+            ->build();
+        $this->activityStreamRepository->add($streamTwo);
+
+        $streamThree = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(3))
+            ->withStreamType(StreamType::CADENCE)
+            ->build();
+        $this->activityStreamRepository->add($streamThree);
+
+        $this->assertEquals(
+            ActivityStreams::fromArray([$streamOne]),
+            $this->activityStreamRepository->findWithoutNormalizedPower(10)
+        );
+    }
+
     #[\Override]
     protected function setUp(): void
     {

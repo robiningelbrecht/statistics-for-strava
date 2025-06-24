@@ -157,6 +157,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 streamData: Json::decode($result['data']),
                 createdOn: SerializableDateTime::fromString($result['createdOn']),
                 bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
+                normalizedPower: $result['normalizedPower'] ?? null
             );
 
             $activity = $this->activityRepository->find($stream->getActivityId());

@@ -2,6 +2,7 @@
 
 namespace App\Domain\Strava\Activity\Stream;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'ActivityStream')]
 #[ORM\Index(name: 'ActivityStream_activityIndex', columns: ['activityId'])]
 #[ORM\Index(name: 'ActivityStream_streamTypeIndex', columns: ['streamType'])]
-final class ActivityStream
+final class ActivityStream implements SupportsAITooling
 {
     /**
      * @param array<mixed>    $data
@@ -25,6 +26,8 @@ final class ActivityStream
         private readonly SerializableDateTime $createdOn,
         #[ORM\Column(type: 'json')]
         private readonly array $data,
+        #[ORM\Column(type: 'integer', nullable: true)]
+        private ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
         private array $bestAverages = [],
     ) {
@@ -44,6 +47,7 @@ final class ActivityStream
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
+            normalizedPower: null
         );
     }
 
@@ -57,13 +61,15 @@ final class ActivityStream
         array $streamData,
         SerializableDateTime $createdOn,
         array $bestAverages,
+        ?int $normalizedPower,
     ): self {
         return new self(
             activityId: $activityId,
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
-            bestAverages: $bestAverages
+            normalizedPower: $normalizedPower,
+            bestAverages: $bestAverages,
         );
     }
 
@@ -110,7 +116,8 @@ final class ActivityStream
             streamType: $this->getStreamType(),
             streamData: $smoothed,
             createdOn: $this->getCreatedOn(),
-            bestAverages: $this->getBestAverages()
+            bestAverages: $this->getBestAverages(),
+            normalizedPower: $this->getNormalizedPower(),
         );
     }
 
@@ -162,5 +169,52 @@ final class ActivityStream
         }
 
         return (int) round($maxSum / $timeIntervalInSeconds);
+    }
+
+    public function getNormalizedPower(): ?int
+    {
+        return $this->normalizedPower;
+    }
+
+    public function updateNormalizedPower(int $normalizedPower): self
+    {
+        $this->normalizedPower = $normalizedPower;
+
+        return $this;
+    }
+
+    public function exportForAITooling(): array
+    {
+        if (!$data = $this->getData()) {
+            return [];
+        }
+
+        $streamTypeSpecificStats = match ($this->getStreamType()) {
+            StreamType::HEART_RATE => [
+                'maxHeartRate' => max($data),
+                'minHeartRate' => min($data),
+                'avgHeartRate' => round(array_sum($data) / count($data)),
+            ],
+            StreamType::WATTS => [
+                'maxPower' => max($data),
+                'minPower' => min($data),
+                'avgPower' => round(array_sum($data) / count($data)),
+                'normalizedPower' => $this->getNormalizedPower(),
+            ],
+            StreamType::VELOCITY => [
+                'maxMeterPerSecond' => max($data),
+                'minMeterPerSecond' => min($data),
+                'avgMeterPerSecond' => round(array_sum($data) / count($data)),
+            ],
+            default => [],
+        };
+
+        return [
+            'activityId' => $this->getActivityId()->toUnprefixedString(),
+            'steamType' => $this->getStreamType()->value,
+            'totalPoints' => count($data),
+            'bestAverages' => $this->getBestAverages(),
+            ...$streamTypeSpecificStats,
+        ];
     }
 }
