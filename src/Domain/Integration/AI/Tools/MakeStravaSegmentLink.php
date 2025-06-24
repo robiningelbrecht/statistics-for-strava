@@ -8,13 +8,13 @@ use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class MakeStravaActivityLink extends Tool
+final class MakeStravaSegmentLink extends Tool
 {
     public function __construct(
     ) {
         parent::__construct(
-            'make_strava_activity_link',
-            'Creates a link to the strava activity by a given activity id',
+            'make_strava_segment_link',
+            'Creates a link to the strava segment by a given activity id',
         );
     }
 
@@ -25,16 +25,16 @@ final class MakeStravaActivityLink extends Tool
     {
         return [
             new ToolProperty(
-                name: 'activityId',
+                name: 'segmentId',
                 type: PropertyType::STRING,
-                description: 'The id of the activity.',
+                description: 'The id of the segment.',
                 required: true
             ),
         ];
     }
 
-    public function __invoke(string $activityId): string
+    public function __invoke(string $segmentId): string
     {
-        return sprintf('https://www.strava.com/activities/%s', $activityId);
+        return sprintf('https://www.strava.com/segments/%s', $segmentId);
     }
 }
