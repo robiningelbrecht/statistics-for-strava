@@ -30,7 +30,7 @@ final class NeuronAIAgent extends Agent
 
     protected function tools(): array
     {
-        return $this->toolkit->tools();
+        return [$this->toolkit];
     }
 
     public function instructions(): string
