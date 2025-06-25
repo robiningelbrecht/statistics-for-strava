@@ -61,7 +61,7 @@ final class NeuronAIAgent extends Agent
         );
     }
 
-    protected function chatHistory(): AbstractChatHistory
+    protected function chatHistory(): ChatHistoryInterface
     {
         return $this->history;
     }
