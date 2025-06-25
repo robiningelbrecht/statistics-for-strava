@@ -6,7 +6,6 @@ namespace App\Domain\Integration\AI;
 
 use Inspector\Inspector;
 use NeuronAI\Agent;
-use NeuronAI\Chat\History\AbstractChatHistory;
 use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
