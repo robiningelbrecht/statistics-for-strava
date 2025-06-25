@@ -1858,16 +1858,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.14.9",
+            "version": "1.14.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec"
+                "reference": "c4cfdc842efead25bd195ff89f074122fe28f7dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/70a07976e1ad516fe2bc9d174c36520a67172eec",
-                "reference": "70a07976e1ad516fe2bc9d174c36520a67172eec",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/c4cfdc842efead25bd195ff89f074122fe28f7dd",
+                "reference": "c4cfdc842efead25bd195ff89f074122fe28f7dd",
                 "shasum": ""
             },
             "require": {
@@ -1917,9 +1917,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.9"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.14.13"
             },
-            "time": "2025-06-23T18:31:08+00:00"
+            "time": "2025-06-24T19:44:57+00:00"
         },
         {
             "name": "league/flysystem",
@@ -7700,16 +7700,16 @@
         },
         {
             "name": "nunomaduro/collision",
-            "version": "v8.8.1",
+            "version": "v8.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/collision.git",
-                "reference": "44ccb82e3e21efb5446748d2a3c81a030ac22bd5"
+                "reference": "60207965f9b7b7a4ce15a0f75d57f9dadb105bdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/44ccb82e3e21efb5446748d2a3c81a030ac22bd5",
-                "reference": "44ccb82e3e21efb5446748d2a3c81a030ac22bd5",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/60207965f9b7b7a4ce15a0f75d57f9dadb105bdb",
+                "reference": "60207965f9b7b7a4ce15a0f75d57f9dadb105bdb",
                 "shasum": ""
             },
             "require": {
@@ -7795,7 +7795,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2025-06-11T01:04:21+00:00"
+            "time": "2025-06-25T02:12:12+00:00"
         },
         {
             "name": "nunomaduro/termwind",

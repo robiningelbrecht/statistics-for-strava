@@ -15,6 +15,7 @@ use NeuronAI\Providers\OpenAI\OpenAI;
 final readonly class AIProviderFactory
 {
     public function __construct(
+        /** @var array<string, mixed> */
         private array $AIConfig,
     ) {
     }

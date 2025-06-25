@@ -15,6 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * @codeCoverageIgnore
+ */
 #[AsCommand(name: 'app:ai:agent-chat', description: 'Start a new AI agent chat')]
 final class AIAgentChatConsoleCommand extends Command
 {

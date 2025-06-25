@@ -7,7 +7,7 @@ namespace App\Domain\Integration\AI;
 use Inspector\Inspector;
 use NeuronAI\Agent;
 use NeuronAI\Chat\History\AbstractChatHistory;
-use NeuronAI\Chat\History\FileChatHistory;
+use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\SystemPrompt;
@@ -21,6 +21,7 @@ final class NeuronAIAgent extends Agent
     public function __construct(
         private readonly AIProviderFactory $AIProviderFactory,
         private readonly ToolkitInterface $toolkit,
+        private readonly ChatHistoryInterface $history,
         Inspector $inspector,
     ) {
         $this->observe(new AgentMonitoring($inspector));
@@ -62,10 +63,6 @@ final class NeuronAIAgent extends Agent
 
     protected function chatHistory(): AbstractChatHistory
     {
-        return new FileChatHistory(
-            directory: '/var/www/storage',
-            key: 'agent',
-            contextWindow: 50000
-        );
+        return $this->history;
     }
 }
