@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI;
 
-use App\Infrastructure\Config\AppConfig;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
 use NeuronAI\Providers\Deepseek;
@@ -16,19 +15,15 @@ use NeuronAI\Providers\OpenAI\OpenAI;
 final readonly class AIProviderFactory
 {
     public function __construct(
-        private AppConfig $appConfig,
+        private array $AIConfig,
     ) {
     }
 
     public function create(): AIProviderInterface
     {
-        /** @var string $providerName */
-        $providerName = $this->appConfig->get('integrations.ai.provider', '');
-        if (!$providerName) {
-            throw new InvalidAIConfiguration('integrations.ai.provider', 'cannot be empty');
-        }
+        $providerName = $this->AIConfig['provider'] ?? throw new InvalidAIConfiguration('integrations.ai.provider', 'cannot be empty');
         /** @var non-empty-array<string, mixed> $config */
-        $config = $this->appConfig->get('integrations.ai.configuration', []);
+        $config = $this->AIConfig['configuration'] ?? throw new InvalidAIConfiguration('integrations.ai.configuration', 'cannot be empty');
 
         $requiredConfigKeys = [
             'model',

@@ -90,6 +90,9 @@ services:
     NeuronAI\Tools\Toolkits\ToolkitInterface:
         class: App\Domain\Integration\AI\Tool\Toolkit
 
+    App\Domain\Integration\AI\AIProviderFactory:
+        arguments: ['@=app_config("integrations.ai", [])']
+
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.ntfyUrl")']

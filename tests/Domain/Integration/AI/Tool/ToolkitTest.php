@@ -50,6 +50,7 @@ use App\Tests\Domain\Strava\Challenge\ChallengeBuilder;
 use App\Tests\Domain\Strava\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentEffort\SegmentEffortBuilder;
+use NeuronAI\Tools\Toolkits\ToolkitInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -62,6 +63,14 @@ class ToolkitTest extends ContainerTestCase
     {
         $tool = $this->getContainer()->get($className);
         $this->assertMatchesJsonSnapshot(Json::encode($tool->__invoke(...$invokeParams)));
+    }
+
+    public function testItRegistersAllTools(): void
+    {
+        $this->assertCount(
+            15,
+            $this->getContainer()->get(ToolkitInterface::class)->tools(),
+        );
     }
 
     public static function provideTools(): iterable

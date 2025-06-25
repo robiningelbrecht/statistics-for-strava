@@ -13,6 +13,9 @@ use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\SystemPrompt;
 use NeuronAI\Tools\Toolkits\ToolkitInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class NeuronAIAgent extends Agent
 {
     public function __construct(
@@ -51,6 +54,7 @@ final class NeuronAIAgent extends Agent
                 'You can use lists and bullet points, but this is not required if it does not add value to the response.',
                 'Add links to the strava activity whenever you can',
                 'Add links to the strava segments whenever you can',
+                'Add links to the strava challenges whenever you can',
                 'If you do not know the answer to a question, just tell so, do not make things up.',
             ]
         );
