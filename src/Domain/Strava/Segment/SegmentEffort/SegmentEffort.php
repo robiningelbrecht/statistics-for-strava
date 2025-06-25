@@ -168,7 +168,7 @@ final class SegmentEffort implements SupportsAITooling
     public function exportForAITooling(): array
     {
         return [
-            'id' => $this->getId(),
+            'id' => $this->getId()->toUnprefixedString(),
             'segmentId' => $this->getSegmentId()->toUnprefixedString(),
             'activityId' => $this->getActivityId()->toUnprefixedString(),
             'startDateTime' => $this->getStartDateTime()->format('Y-m-d'),

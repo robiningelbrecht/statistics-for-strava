@@ -2,27 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Segment\SegmentId;
-use App\Domain\Strava\Segment\SegmentRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetSegment extends Tool
+final class MakeStravaSegmentLink extends Tool
 {
     public function __construct(
-        private readonly SegmentRepository $segmentRepository,
     ) {
         parent::__construct(
-            'get_segment_by_id',
-            'Retrieves a segment from the database by a given id',
+            'make_strava_segment_link',
+            'Creates a link to the strava segment by a given activity id',
         );
     }
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {
@@ -36,13 +35,8 @@ final class GetSegment extends Tool
         ];
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function __invoke(string $segmentId): array
+    public function __invoke(string $segmentId): string
     {
-        $segmentId = SegmentId::fromUnprefixed($segmentId);
-
-        return $this->segmentRepository->find($segmentId)->exportForAITooling();
+        return sprintf('https://www.strava.com/segments/%s', $segmentId);
     }
 }

@@ -2,27 +2,32 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityId;
+use App\Domain\Strava\Activity\Split\ActivitySplit;
+use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetActivity extends Tool
+final class GetActivitySplits extends Tool
 {
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivitySplitRepository $activitySplitRepository,
+        private readonly UnitSystem $unitSystem,
     ) {
         parent::__construct(
-            'get_activity_by_id',
-            'Retrieves an activity from the database by a given id',
+            'get_activity_splits',
+            'Retrieves detailed split data from the database for a specific activity',
         );
     }
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {
@@ -42,8 +47,11 @@ final class GetActivity extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $splits = $this->activitySplitRepository->findBy(
+            activityId: $activityId,
+            unitSystem: $this->unitSystem
+        );
 
-        return $activities->getByActivityId($activityId)->exportForAITooling();
+        return $splits->map(static fn (ActivitySplit $split) => $split->exportForAITooling());
     }
 }

@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Split\ActivitySplit;
-use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
-use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
+use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetActivitySplits extends Tool
+final class GetActivitySegmentEfforts extends Tool
 {
     public function __construct(
-        private readonly ActivitySplitRepository $activitySplitRepository,
-        private readonly UnitSystem $unitSystem,
+        private readonly SegmentEffortRepository $segmentEffortRepository,
     ) {
         parent::__construct(
-            'get_activity_splits',
-            'Retrieves detailed split data from the database for a specific activity',
+            'get_activity_segments_efforts',
+            'Retrieves detailed segment effort data from the database for a specific activity',
         );
     }
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {
@@ -45,11 +45,10 @@ final class GetActivitySplits extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $splits = $this->activitySplitRepository->findBy(
-            activityId: $activityId,
-            unitSystem: $this->unitSystem
-        );
+        $segmentEfforts = $this->segmentEffortRepository->findByActivityId($activityId);
 
-        return $splits->map(static fn (ActivitySplit $split) => $split->exportForAITooling());
+        return $segmentEfforts->map(
+            fn (SegmentEffort $segmentEffort) => $segmentEffort->exportForAITooling()
+        );
     }
 }

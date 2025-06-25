@@ -2,28 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
+use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
-use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetActivitySegmentEfforts extends Tool
+final class GetActivity extends Tool
 {
     public function __construct(
-        private readonly SegmentEffortRepository $segmentEffortRepository,
+        private readonly ActivitiesEnricher $activitiesEnricher,
     ) {
         parent::__construct(
-            'get_activity_segments_efforts',
-            'Retrieves detailed segment effort data from the database for a specific activity',
+            'get_activity_by_id',
+            'Retrieves an activity from the database by a given id',
         );
     }
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {
@@ -43,10 +44,8 @@ final class GetActivitySegmentEfforts extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $segmentEfforts = $this->segmentEffortRepository->findByActivityId($activityId);
+        $activities = $this->activitiesEnricher->getEnrichedActivities();
 
-        return $segmentEfforts->map(
-            fn (SegmentEffort $segmentEffort) => $segmentEffort->exportForAITooling()
-        );
+        return $activities->getByActivityId($activityId)->exportForAITooling();
     }
 }

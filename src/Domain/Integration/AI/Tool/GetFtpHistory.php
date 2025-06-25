@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
 use App\Domain\Strava\Ftp\FtpHistory;
 use NeuronAI\Tools\Tool;

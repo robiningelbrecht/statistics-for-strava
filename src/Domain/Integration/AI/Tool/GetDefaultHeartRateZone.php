@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Athlete\AthleteRepository;
@@ -29,6 +29,8 @@ final class GetDefaultHeartRateZone extends Tool
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {

@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
 use NeuronAI\Tools\Toolkits\AbstractToolkit;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class Toolkit extends AbstractToolkit
 {
     /**

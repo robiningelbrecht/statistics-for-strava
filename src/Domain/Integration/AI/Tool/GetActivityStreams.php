@@ -2,28 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Integration\AI\Tools;
+namespace App\Domain\Integration\AI\Tool;
 
 use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Lap\ActivityLap;
-use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
+use App\Domain\Strava\Activity\Stream\ActivityStream;
+use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
 
-final class GetActivityLaps extends Tool
+final class GetActivityStreams extends Tool
 {
     public function __construct(
-        private readonly ActivityLapRepository $activityLapRepository,
+        private readonly ActivityStreamRepository $activityStreamRepository,
     ) {
         parent::__construct(
-            'get_activity_laps',
-            'Retrieves detailed lap data from the database for a specific activity',
+            'get_activity_streams',
+            'Retrieves detailed stream data from the database for a specific activity',
         );
     }
 
     /**
      * @return \NeuronAI\Tools\ToolPropertyInterface[]
+     *
+     * @codeCoverageIgnore
      */
     protected function properties(): array
     {
@@ -43,8 +45,8 @@ final class GetActivityLaps extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $laps = $this->activityLapRepository->findBy($activityId);
+        $streams = $this->activityStreamRepository->findByActivityId($activityId);
 
-        return $laps->map(static fn (ActivityLap $lap) => $lap->exportForAITooling());
+        return $streams->map(static fn (ActivityStream $stream) => $stream->exportForAITooling());
     }
 }
