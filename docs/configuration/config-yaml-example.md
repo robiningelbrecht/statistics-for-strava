@@ -123,4 +123,20 @@ zwift:
   level: null
   # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if zwift.level is filled out.
   racingScore: null
+integrations:
+  # All configuration options related to AI integrations.
+  # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
+  ai:
+    # Enable or disable AI features.
+    # ⚠️ Use caution when enabling this feature if your app is publicly accessible!
+    enabled: false
+    # The provider you want to use. 
+    # Allowed values: ["anthropic", "gemini", "ollama", "openAI", "deepseek", "mistral"]
+    provider: 'PROVIDER-YOU-CHOOSE'
+    configuration:
+      key: 'YOUR-API-KEY'
+      model: 'MODEL-NAME'
+      # This option is only required when using provider "ollama"
+      # The url to your hosted Ollama instance.
+      url: 'http://host.docker.internal:11434/api'
 ```
