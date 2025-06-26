@@ -7,6 +7,7 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
+    env(INSPECTOR_INGESTION_KEY): ''
 
 services:
     # default configuration for services in *this* file
