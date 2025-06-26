@@ -112,7 +112,7 @@ consistencyChallenges:
       # Alternatively, you can remove the entire entry to exclude it completely.
       enabled: true
       # The challenge type.
-      # Allowed values: ["distance", "distanceInOneActivity", "altitude", "altitudeInOneActivity", "movingTime", "numberOfActivities"]
+      # Allowed values: ["distance", "distanceInOneActivity", "elevation", "elevationInOneActivity", "movingTime", "numberOfActivities"]
       type: 'distance'
       # The unit to use for measuring this challenge. This setting not apply to type "numberOfActivities"
       # Allowed values: ["km", "m", "mi", "ft", "hours", "minutes"]
@@ -156,7 +156,7 @@ consistencyChallenges:
       sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
     - label: 'Climb a total of 7500m'
       enabled: true
-      type: 'altitude'
+      type: 'elevation'
       unit: 'm'
       goal: 7500
       sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
@@ -186,7 +186,7 @@ consistencyChallenges:
       sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
     - label: 'Climb a total of 2000m'
       enabled: true
-      type: 'altitude'
+      type: 'elevation'
       unit: 'm'
       goal: 2000
       sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
