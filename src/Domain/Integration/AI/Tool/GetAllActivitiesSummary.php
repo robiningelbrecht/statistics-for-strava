@@ -27,8 +27,8 @@ final class GetAllActivitiesSummary extends Tool
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $summary = $allActivities
             ->map(fn (Activity $activity) => [
-                'activityId' => $activity->getId()->toUnprefixedString(),
-                'on' => $activity->getStartDate()->format('Y-m-d H:i:s'),
+                'id' => $activity->getId()->toUnprefixedString(),
+                'on' => $activity->getStartDate()->format('Y-m-d'),
             ]);
 
         return [
