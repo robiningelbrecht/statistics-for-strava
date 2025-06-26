@@ -79,11 +79,14 @@ final class AIAgentChatConsoleCommand extends Command
                     $message = $e->getResponse()->getBody()->getContents();
                 }
 
+                $output->writeln('');
                 $output->writeln('<comment><Mark></comment> Oh no, I made a booboo...');
                 $output->writeln(sprintf(
                     '<error>%s</error>',
                     $message
                 ));
+
+                break;
             }
         }
 

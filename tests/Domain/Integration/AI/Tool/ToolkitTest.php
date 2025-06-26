@@ -7,12 +7,12 @@ use App\Domain\Integration\AI\Tool\GetActivityLaps;
 use App\Domain\Integration\AI\Tool\GetActivitySegmentEfforts;
 use App\Domain\Integration\AI\Tool\GetActivitySplits;
 use App\Domain\Integration\AI\Tool\GetActivityStreams;
+use App\Domain\Integration\AI\Tool\GetAllActivitiesSummary;
 use App\Domain\Integration\AI\Tool\GetAthleteDetails;
 use App\Domain\Integration\AI\Tool\GetChallenges;
 use App\Domain\Integration\AI\Tool\GetDefaultHeartRateZone;
 use App\Domain\Integration\AI\Tool\GetFtpHistory;
 use App\Domain\Integration\AI\Tool\GetGear;
-use App\Domain\Integration\AI\Tool\GetMostRecentActivities;
 use App\Domain\Integration\AI\Tool\GetSegment;
 use App\Domain\Integration\AI\Tool\MakeStravaActivityLink;
 use App\Domain\Integration\AI\Tool\MakeStravaChallengeLink;
@@ -126,7 +126,7 @@ class ToolkitTest extends ContainerTestCase
         ];
 
         yield 'GetMostRecentActivities Tool' => [
-            GetMostRecentActivities::class,
+            GetAllActivitiesSummary::class,
             [],
         ];
 
