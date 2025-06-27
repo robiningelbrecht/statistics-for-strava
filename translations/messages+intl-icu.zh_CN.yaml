@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'2 days of activity for 4 weeks': 4周内2天的活动
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 0.8: Potential detraining': '< 0.8: Potential detraining'
@@ -44,18 +43,12 @@ Canoeing: 划独木舟
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Climb a total of 2000m': 总共攀登2000米
-'Climb a total of 7500m': 总共攀登7500米
 'Close modal': 关闭模态框
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: 通勤
 'Commutes only': 仅通勤
 Compare: Compare
 'Compare to': 'Compare to'
-'Complete a 10 km run.': 完成10公里跑步。
-'Complete a 100km ride': 完成100公里骑行
-'Complete a 5 km run.': 完成5公里跑步。
-'Complete a half marathon run.': 完成半马。
 Components: Components
 Crossfit: 交叉健身
 'Custom gear disabled': 'Custom gear disabled'
@@ -217,14 +210,10 @@ Race: 比赛
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
-'Ride a total of 1250km': 骑行总计1250公里
-'Ride a total of 200km': 骑行总计200公里
-'Ride a total of 600km': 骑行总计600公里
 Rides: 骑行
 'Rock Climbing': 攀岩
 'Roller Ski': 轮滑
 Rowing: 划船
-'Run a total of 100km.': 跑步总计100公里。
 Runs: 跑步
 Sail: 帆船
 Sat: 周六

@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 à 0 : Fatigue accumulée. Récupération en cours. Convient pour un entraînement léger/technique.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 à +10 : Légèrement frais. Phase de transition ; entraînements courts recommandés'
 '0.8-1.3: Safe training zone': "0,8-1,3 : Zone d'entraînement sécurisée"
-'2 days of activity for 4 weeks': "2 jours d'activité par semaine pendant 4 semaines"
 '42-day fitness trend': 'Tendance forme sur 42 jours'
 '7-day fatigue level': 'Niveau de fatigue sur 7 jours'
 '< 0.8: Potential detraining': '< 0,8 : Désentraînement potentiel'
@@ -44,18 +43,12 @@ Canoeing: Canoë
 'Challenge consistency': 'Défi de régularité'
 Challenges: Défis
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': "Charge d'Entraînement Chronique (Forme) - Moyenne pondérée exponentiellement sur 42 jours de votre charge d'entraînement quotidienne. Représente l'adaptation d'entraînement à long terme."
-'Climb a total of 2000m': 'Gravir un total de 2000m'
-'Climb a total of 7500m': 'Gravir un total de 7500m'
 'Close modal': 'Fermer la fenêtre modale'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: 'Trajets domicile-travail'
 'Commutes only': 'Trajets domicile-travail uniquement'
 Compare: Comparer
 'Compare to': 'Comparer à'
-'Complete a 10 km run.': 'Complétez une course à pied de 10 km'
-'Complete a 100km ride': 'Complétez une sortie vélo de 100 km'
-'Complete a 5 km run.': 'Complétez une course à pied de 5 km'
-'Complete a half marathon run.': 'Complétez un semi-marathon'
 Components: Composants
 Crossfit: Crossfit
 'Custom gear disabled': 'Matériel personnalisé désactivé'
@@ -217,14 +210,10 @@ Race: Course
 'Rest days vs. active days': 'Jours de repos vs. jours actifs'
 Rewind: Bilan
 'Rewind comparisons are only available on larger screens.': 'Les comparaisons de récapitulatif ne sont disponibles que sur les grands écrans.'
-'Ride a total of 1250km': 'Parcourir un total de 1250 km'
-'Ride a total of 200km': 'Parcourir un total de 200 km'
-'Ride a total of 600km': 'Parcourir un total de 600 km'
 Rides: 'Sorties vélo'
 'Rock Climbing': Escalade
 'Roller Ski': 'Ski à roulettes'
 Rowing: Aviron
-'Run a total of 100km.': 'Courir un total de 100 km'
 Runs: 'Courses à pied'
 Sail: Voile
 Sat: Sam

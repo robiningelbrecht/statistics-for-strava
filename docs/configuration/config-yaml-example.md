@@ -118,6 +118,10 @@ metrics:
     - label: 'Walk'
       showInNavBar: false
       sportTypesToInclude: ['Walk', 'Hike']
+  # The app uses sensible defaults for the monthly consistency challenges. 
+  # Leave this setting unchanged to use the defaults.
+  # For a detailed guide on how to override these defaults, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges 
+  consistencyChallenges: []
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
