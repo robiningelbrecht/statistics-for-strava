@@ -11,7 +11,7 @@ class CelsiusTest extends TestCase
     public function testToImperial(): void
     {
         $this->assertEquals(
-            Fahrenheit::zero(),
+            Fahrenheit::from(32),
             Celsius::zero()->toImperial()
         );
     }
