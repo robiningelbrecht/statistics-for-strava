@@ -11,7 +11,7 @@ class FahrenheitTest extends TestCase
     public function testToMetric(): void
     {
         $this->assertEquals(
-            Celsius::zero(),
+            Celsius::from(-17.78),
             Fahrenheit::zero()->toMetric()
         );
     }
