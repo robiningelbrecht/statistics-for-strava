@@ -16,20 +16,19 @@ final readonly class ConsistencyChallengeCalculator
 {
     public function __construct(
         private ActivityRepository $activityRepository,
-        private ConsistencyChallenges $consistencyChallenges,
     ) {
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function calculateFor(Months $months): array
+    public function calculateFor(Months $months, ConsistencyChallenges $challenges): array
     {
         $months = $months->reverse();
 
         $consistency = [];
         /** @var ConsistencyChallenge $challenge */
-        foreach ($this->consistencyChallenges as $challenge) {
+        foreach ($challenges as $challenge) {
             if (!$challenge->isEnabled()) {
                 continue;
             }
@@ -41,7 +40,7 @@ final readonly class ConsistencyChallengeCalculator
             foreach ($months as $month) {
                 $activitiesInCurrentMonth = $activities->filterOnMonth($month);
                 if ($activitiesInCurrentMonth->isEmpty()) {
-                    $consistency[$challenge->getId()][] = 0;
+                    $consistency[$challenge->getId()][$month->getId()] = 0;
                     continue;
                 }
 
@@ -91,7 +90,7 @@ final readonly class ConsistencyChallengeCalculator
                     ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => count($activitiesInCurrentMonth) >= $challengeGoal->toInt(),
                 };
 
-                $consistency[$challenge->getId()][] = $challengeCompleted;
+                $consistency[$challenge->getId()][$month->getId()] = $challengeCompleted;
             }
         }
 
