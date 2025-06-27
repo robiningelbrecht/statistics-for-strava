@@ -1,3 +1,12 @@
+# [v2.3.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.5) - 2025-06-27
+
+Configure your own consistency challenges: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges
+
+## What's Changed
+* ISSUE #786: Allow to configure consistency challenges by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/790
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.4...v2.3.5
+
 # [v2.3.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.4) - 2025-06-21
 
 ## What's Changed
