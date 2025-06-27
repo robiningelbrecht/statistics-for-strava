@@ -98,7 +98,7 @@ final class ConsistencyChallenges extends Collection
                 'enabled' => true,
                 'type' => 'elevation',
                 'unit' => 'm',
-                'goal' => 200,
+                'goal' => 2000,
                 'sportTypesToInclude' => ['Run', 'TrailRun', 'VirtualRun'],
             ],
         ];
@@ -160,17 +160,36 @@ final class ConsistencyChallenges extends Collection
                 $sportTypesToInclude->add($sportType);
             }
 
-            // @TODO validate that unit and type make sense.
+            if (in_array($type, ChallengeConsistencyType::lengthRelated()) && !in_array($challengeConfig['unit'], [
+                ChallengeConsistencyGoal::KILOMETER,
+                ChallengeConsistencyGoal::METER,
+                ChallengeConsistencyGoal::MILES,
+                ChallengeConsistencyGoal::FOOT,
+            ])) {
+                throw new InvalidConsistencyChallengeConfiguration(sprintf('The unit "%s" is not valid for challenge type "%s"', $challengeConfig['unit'], $type->value));
+            }
 
-            $consistencyChallenges[] = ConsistencyChallenge::from(
+            if (ChallengeConsistencyType::MOVING_TIME === $type && !in_array($challengeConfig['unit'], [
+                ChallengeConsistencyGoal::HOUR,
+                ChallengeConsistencyGoal::MINUTE,
+            ])) {
+                throw new InvalidConsistencyChallengeConfiguration(sprintf('The unit "%s" is not valid for challenge type "%s"', $challengeConfig['unit'], $type->value));
+            }
+
+            if (ChallengeConsistencyType::NUMBER_OF_ACTIVITIES === $type) {
+                // Hardcode the unit to a random value, it won't be used anyway.
+                $challengeConfig['unit'] = 'km';
+            }
+
+            $consistencyChallenges[] = ConsistencyChallenge::create(
                 label: $challengeConfig['label'],
                 isEnabled: $challengeConfig['enabled'],
                 type: $type,
                 goal: ChallengeConsistencyGoal::from(
-                    (float) $challengeConfig['goal'],
-                    $challengeConfig['unit']
+                    value: (float) $challengeConfig['goal'],
+                    unit: $challengeConfig['unit']
                 ),
-                sportsTypesToInclude: $sportTypesToInclude
+                sportTypesToInclude: $sportTypesToInclude
             );
         }
 

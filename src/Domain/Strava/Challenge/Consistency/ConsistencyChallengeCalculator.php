@@ -32,7 +32,7 @@ final readonly class ConsistencyChallengeCalculator
             if (!$challenge->isEnabled()) {
                 continue;
             }
-            $activities = $this->activityRepository->findBySportTypes($challenge->getSportsTypesToInclude());
+            $activities = $this->activityRepository->findBySportTypes($challenge->getSportTypesToInclude());
             if ($activities->isEmpty()) {
                 continue;
             }
@@ -47,7 +47,7 @@ final readonly class ConsistencyChallengeCalculator
                 $challengeGoal = $challenge->getGoal();
 
                 $challengeCompleted = match ($challenge->getType()) {
-                    ChallengeConsistencyType::DISTANCE => $this->checkGoalReached(
+                    ChallengeConsistencyType::DISTANCE => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
                         $challengeGoal->convertKilometerToUnit(
                             Kilometer::from(
@@ -55,7 +55,7 @@ final readonly class ConsistencyChallengeCalculator
                             )
                         )
                     ),
-                    ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => $this->checkGoalReached(
+                    ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
                         $challengeGoal->convertKilometerToUnit(
                             Kilometer::from(
@@ -63,7 +63,7 @@ final readonly class ConsistencyChallengeCalculator
                             )
                         )
                     ),
-                    ChallengeConsistencyType::ELEVATION => $this->checkGoalReached(
+                    ChallengeConsistencyType::ELEVATION => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
                         $challengeGoal->convertMeterToUnit(
                             Meter::from(
@@ -71,7 +71,7 @@ final readonly class ConsistencyChallengeCalculator
                             )
                         )
                     ),
-                    ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => $this->checkGoalReached(
+                    ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
                         $challengeGoal->convertMeterToUnit(
                             Meter::from(
@@ -79,7 +79,7 @@ final readonly class ConsistencyChallengeCalculator
                             )
                         )
                     ),
-                    ChallengeConsistencyType::MOVING_TIME => $this->checkGoalReached(
+                    ChallengeConsistencyType::MOVING_TIME => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
                         $challengeGoal->convertSecondsToUnit(
                             Seconds::from(
@@ -105,7 +105,7 @@ final readonly class ConsistencyChallengeCalculator
         return $consistency;
     }
 
-    private function checkGoalReached(ChallengeConsistencyGoal $goal, Unit $actualValue): bool
+    private function checkIfGoalHasBeenReached(ChallengeConsistencyGoal $goal, Unit $actualValue): bool
     {
         return $actualValue->toFloat() >= $goal->toFloat();
     }
