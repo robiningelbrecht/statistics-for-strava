@@ -13,23 +13,23 @@ final readonly class ConsistencyChallenge
         private bool $isEnabled,
         private ChallengeConsistencyType $type,
         private ChallengeConsistencyGoal $goal,
-        private SportTypes $sportsTypesToInclude,
+        private SportTypes $sportTypesToInclude,
     ) {
     }
 
-    public static function from(
+    public static function create(
         string $label,
         bool $isEnabled,
         ChallengeConsistencyType $type,
         ChallengeConsistencyGoal $goal,
-        SportTypes $sportsTypesToInclude,
+        SportTypes $sportTypesToInclude,
     ): self {
         return new self(
             label: $label,
             isEnabled: $isEnabled,
             type: $type,
             goal: $goal,
-            sportsTypesToInclude: $sportsTypesToInclude,
+            sportTypesToInclude: $sportTypesToInclude,
         );
     }
 
@@ -63,8 +63,8 @@ final readonly class ConsistencyChallenge
         return $this->goal;
     }
 
-    public function getSportsTypesToInclude(): SportTypes
+    public function getSportTypesToInclude(): SportTypes
     {
-        return $this->sportsTypesToInclude;
+        return $this->sportTypesToInclude;
     }
 }

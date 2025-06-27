@@ -15,6 +15,13 @@ use App\Infrastructure\ValueObject\Measurement\Unit;
 
 final readonly class ChallengeConsistencyGoal implements Unit
 {
+    public const string KILOMETER = 'km';
+    public const string METER = 'm';
+    public const string MILES = 'mi';
+    public const string FOOT = 'ft';
+    public const string HOUR = 'hour';
+    public const string MINUTE = 'minute';
+
     private function __construct(
         private Unit $unit,
     ) {
@@ -23,12 +30,12 @@ final readonly class ChallengeConsistencyGoal implements Unit
     public static function from(float $value, ?string $unit = null): self
     {
         return match ($unit) {
-            'km' => new self(Kilometer::from($value)),
-            'm' => new self(Meter::from($value)),
-            'mi' => new self(Mile::from($value)),
-            'ft' => new self(Foot::from($value)),
-            'hour' => new self(Hour::from($value)),
-            'minute' => new self(Minute::from($value)),
+            self::KILOMETER => new self(Kilometer::from($value)),
+            self::METER => new self(Meter::from($value)),
+            self::MILES => new self(Mile::from($value)),
+            self::FOOT => new self(Foot::from($value)),
+            self::HOUR => new self(Hour::from($value)),
+            self::MINUTE => new self(Minute::from($value)),
             null => throw new \InvalidArgumentException('$unit cannot be empty'),
             default => throw new \InvalidArgumentException('Invalid unit '.$unit),
         };
