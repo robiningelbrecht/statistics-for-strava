@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'2 days of activity for 4 weeks': '2 Tage Aktivität für 4 Wochen'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 0.8: Potential detraining': '< 0.8: Potential detraining'
@@ -44,18 +43,12 @@ Canoeing: Kanufahren
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Climb a total of 2000m': 'Steige insgesamt 2000 m'
-'Climb a total of 7500m': 'Steige insgesamt 7500 m'
 'Close modal': 'Modal schließen'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Compare
 'Compare to': 'Compare to'
-'Complete a 10 km run.': 'Absolviere einen 10 km Lauf.'
-'Complete a 100km ride': 'Absolviere eine 100 km Fahrt'
-'Complete a 5 km run.': 'Absolviere einen 5 km Lauf.'
-'Complete a half marathon run.': 'Absolviere einen Halbmarathon.'
 Components: Components
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -217,14 +210,10 @@ Race: Race
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
-'Ride a total of 1250km': 'Fahre insgesamt 1250km'
-'Ride a total of 200km': 'Fahre insgesamt 200km'
-'Ride a total of 600km': 'Fahre insgesamt 600km'
 Rides: Fahrten
 'Rock Climbing': Klettern
 'Roller Ski': Rollski
 Rowing: Rudern
-'Run a total of 100km.': 'Laufe insgesamt 100 km.'
 Runs: Läufe
 Sail: Segeln
 Sat: Sa

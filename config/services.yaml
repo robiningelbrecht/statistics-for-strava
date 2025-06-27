@@ -145,6 +145,10 @@ services:
             '@App\Infrastructure\ValueObject\Measurement\UnitSystem'
         ]
 
+    App\Domain\Strava\Challenge\Consistency\ConsistencyChallenges:
+        factory: [ null, 'fromConfiguration' ]
+        arguments: ['@=app_config("metrics.consistencyChallenges", [])']
+
     App\Domain\Strava\Ftp\FtpHistory:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("general.athlete.ftpHistory")']

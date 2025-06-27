@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'2 days of activity for 4 weeks': '2 giorni attivi a settimana per 4 settimane'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 0.8: Potential detraining': '< 0.8: Potential detraining'
@@ -44,18 +43,12 @@ Canoeing: Canoa
 'Challenge consistency': 'Costanza nella sfida'
 Challenges: Sfide
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Climb a total of 2000m': 'Climb a total of 2000m'
-'Climb a total of 7500m': 'Climb a total of 7500m'
 'Close modal': 'Close modal'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Confronta
 'Compare to': 'Confronta con'
-'Complete a 10 km run.': 'Completa una corsa di 10km.'
-'Complete a 100km ride': 'Completa una gara da 100km'
-'Complete a 5 km run.': 'Completa una corsa di 5 km.'
-'Complete a half marathon run.': 'Completa una mezza maratona.'
 Components: Componenti
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -217,14 +210,10 @@ Race: Gara
 'Rest days vs. active days': 'Giorni di riposo vs. giorni attivi'
 Rewind: Indietro
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
-'Ride a total of 1250km': 'Percorri un totale di 1250 km'
-'Ride a total of 200km': 'Percorri un totale di 200km'
-'Ride a total of 600km': 'Percorri un totale di 600km'
 Rides: Gare
 'Rock Climbing': 'Arrampicata su roccia'
 'Roller Ski': 'Roller Ski'
 Rowing: Canottaggio
-'Run a total of 100km.': 'Corri un totale di 100km.'
 Runs: Corse
 Sail: Vela
 Sat: Sab

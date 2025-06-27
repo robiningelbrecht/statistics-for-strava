@@ -8,7 +8,7 @@ use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Collection;
 
-final class ConsistencyChallengeConfiguration extends Collection
+final class ConsistencyChallenges extends Collection
 {
     public function getItemClassName(): string
     {
@@ -107,7 +107,7 @@ final class ConsistencyChallengeConfiguration extends Collection
     /**
      * @param array<int, mixed> $items
      */
-    public static function fromScalarArray(array $items): self
+    public static function fromConfiguration(array $items): self
     {
         if (empty($items)) {
             // Make sure this new feature is backwards compatible.
@@ -117,8 +117,6 @@ final class ConsistencyChallengeConfiguration extends Collection
 
         $consistencyChallenges = [];
         foreach ($items as $challengeConfig) {
-            $sportTypesToInclude = SportTypes::empty();
-
             if (!is_array($challengeConfig)) {
                 throw new InvalidConsistencyChallengeConfiguration('Invalid Challenge configuration provided');
             }
@@ -138,6 +136,14 @@ final class ConsistencyChallengeConfiguration extends Collection
                 throw new InvalidConsistencyChallengeConfiguration('"enabled" property must be a boolean');
             }
 
+            if (!is_numeric($challengeConfig['goal'])) {
+                throw new InvalidConsistencyChallengeConfiguration('"goal" property must be a valid number');
+            }
+
+            if (!$type = ChallengeConsistencyType::tryFrom($challengeConfig['type'])) {
+                throw new InvalidConsistencyChallengeConfiguration(sprintf('"%s" is not a valid type', $challengeConfig['type']));
+            }
+
             if (!is_array($challengeConfig['sportTypesToInclude'])) {
                 throw new InvalidConsistencyChallengeConfiguration('"sportTypesToInclude" property must be an array');
             }
@@ -146,6 +152,7 @@ final class ConsistencyChallengeConfiguration extends Collection
                 throw new InvalidConsistencyChallengeConfiguration('"sportTypesToInclude" property cannot be empty');
             }
 
+            $sportTypesToInclude = SportTypes::empty();
             foreach ($challengeConfig['sportTypesToInclude'] as $sportTypeToInclude) {
                 if (!$sportType = SportType::tryFrom($sportTypeToInclude)) {
                     throw new InvalidConsistencyChallengeConfiguration(sprintf('"%s" is not a valid sport type', $sportTypeToInclude));
@@ -153,10 +160,17 @@ final class ConsistencyChallengeConfiguration extends Collection
                 $sportTypesToInclude->add($sportType);
             }
 
-            $consistencyChallenges[] = EddingtonConfigItem::create(
-                label: $eddingtonConfig['label'],
-                showInNavBar: $eddingtonConfig['showInNavBar'],
-                sportTypesToInclude: $sportTypesToInclude,
+            // @TODO validate that unit and type make sense.
+
+            $consistencyChallenges[] = ConsistencyChallenge::from(
+                label: $challengeConfig['label'],
+                isEnabled: $challengeConfig['enabled'],
+                type: $type,
+                goal: ChallengeConsistencyGoal::from(
+                    (float) $challengeConfig['goal'],
+                    $challengeConfig['unit']
+                ),
+                sportsTypesToInclude: $sportTypesToInclude
             );
         }
 

@@ -34,7 +34,7 @@ use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\CarbonSavedComparison;
-use App\Domain\Strava\Challenge\Consistency\ChallengeConsistency;
+use App\Domain\Strava\Challenge\Consistency\ConsistencyChallengeCalculator;
 use App\Domain\Strava\Ftp\FtpHistory;
 use App\Domain\Strava\Ftp\FtpHistoryChart;
 use App\Domain\Strava\Trivia;
@@ -62,6 +62,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private ActivityIntensity $activityIntensity,
+        private ConsistencyChallengeCalculator $consistencyChallengeCalculator,
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -240,10 +241,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                         translator: $this->translator,
                     )->build(),
                 ),
-                'challengeConsistency' => ChallengeConsistency::create(
-                    months: $allMonths,
-                    activities: $allActivities
-                ),
+                'challengeConsistency' => $this->consistencyChallengeCalculator->calculateFor($allMonths),
                 'yearlyDistanceCharts' => $yearlyDistanceCharts,
                 'yearlyStatistics' => $yearlyStatistics,
                 'bestEfforts' => $bestEfforts,
