@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'2 days of activity for 4 weeks': '2 days of activity for 4 weeks'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 0.8: Potential detraining': '< 0.8: Potential detraining'
@@ -44,18 +43,12 @@ Canoeing: Canoeing
 'Challenge consistency': 'Challenge consistency'
 Challenges: Challenges
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Climb a total of 2000m': 'Climb a total of 2000m'
-'Climb a total of 7500m': 'Climb a total of 7500m'
 'Close modal': 'Close modal'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Compare
 'Compare to': 'Compare to'
-'Complete a 10 km run.': 'Complete a 10 km run.'
-'Complete a 100km ride': 'Complete a 100km ride'
-'Complete a 5 km run.': 'Complete a 5 km run.'
-'Complete a half marathon run.': 'Complete a half marathon run.'
 Components: Components
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -217,14 +210,10 @@ Race: Race
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
-'Ride a total of 1250km': 'Ride a total of 1250km'
-'Ride a total of 200km': 'Ride a total of 200km'
-'Ride a total of 600km': 'Ride a total of 600km'
 Rides: Rides
 'Rock Climbing': 'Rock Climbing'
 'Roller Ski': 'Roller Ski'
 Rowing: Rowing
-'Run a total of 100km.': 'Run a total of 100km.'
 Runs: Runs
 Sail: Sail
 Sat: Sat

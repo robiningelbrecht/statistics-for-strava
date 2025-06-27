@@ -98,6 +98,7 @@ final class DbalActivityRepository implements ActivityRepository
 
     public function findBySportTypes(SportTypes $sportTypes): Activities
     {
+        // @TODO: Add static cache to this call.
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')
             ->from('Activity')

@@ -3,7 +3,6 @@
 '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
 '0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'2 days of activity for 4 weeks': '2 dias de atividade durante 4 semanas'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 0.8: Potential detraining': '< 0.8: Potential detraining'
@@ -44,18 +43,12 @@ Canoeing: Canoagem
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Climb a total of 2000m': 'Escale um total de 2000m'
-'Climb a total of 7500m': 'Escale um total de 7500m'
 'Close modal': 'Fechar modal'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Deslocamentos
 'Commutes only': 'Apenas deslocamentos'
 Compare: Compare
 'Compare to': 'Compare to'
-'Complete a 10 km run.': 'Complete uma corrida de 10 km'
-'Complete a 100km ride': 'Complete um passeio de 100 km'
-'Complete a 5 km run.': 'Complete uma corrida de 5 km'
-'Complete a half marathon run.': 'Complete uma meia maratona'
 Components: Componentes
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -217,14 +210,10 @@ Race: Competição
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
-'Ride a total of 1250km': 'Percorrer um total de 1250 km'
-'Ride a total of 200km': 'Percorrer um total de 200 km'
-'Ride a total of 600km': 'Percorrer um total de 600 km'
 Rides: Pedais
 'Rock Climbing': Escalada
 'Roller Ski': 'Esqui de Rodas'
 Rowing: Remo
-'Run a total of 100km.': 'Correr um total de 100 km.'
 Runs: Corridas
 Sail: Vela
 Sat: Sáb

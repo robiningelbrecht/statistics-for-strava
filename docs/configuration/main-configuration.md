@@ -114,8 +114,8 @@ consistencyChallenges:
     # The challenge type.
     # Allowed values: ["distance", "distanceInOneActivity", "elevation", "elevationInOneActivity", "movingTime", "numberOfActivities"]
     type: 'distance'
-    # The unit to use for measuring this challenge. This setting not apply to type "numberOfActivities"
-    # Allowed values: ["km", "m", "mi", "ft", "hours", "minutes"]
+    # The unit to use for measuring this challenge. This setting does not apply to type "numberOfActivities"
+    # Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]
     unit: 'km'
     # The goal of the challenge.
     goal: 200
