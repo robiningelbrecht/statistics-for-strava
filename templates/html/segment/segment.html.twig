@@ -6,12 +6,12 @@
         </h3>
         <div class="flex items-center">
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
-                <li class="flex items-center gap-x-0.5 pr-2">
+                <li class="flex items-center gap-x-0.5 pr-2" title="Distance">
                     {{ renderSvg('distance') }}
                     <div>{{ segment.getDistance().toFloat()|formatNumber(2) }}</div>
                     <div class="text-xs text-gray-500">{{ segment.getDistance().getSymbol() }}</div>
                 </li>
-                <li class="flex items-center gap-x-0.5 px-2">
+                <li class="flex items-center gap-x-0.5 px-2" title="Max gradient">
                     {{ renderSvg('max-gradient') }}
                     <div>{{ segment.getMaxGradient() }}</div>
                     <div class="text-xs text-gray-500">{{ "max gradient"|trans }}</div>
@@ -33,29 +33,29 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="cursor-pointer px-2 py-3 bg-gray-50 lg:sticky lg:left-0">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" title="{{ "Ranking"|trans }}">
                                 {{ renderSvg('hashtag') }}
                             </div>
                         </th>
                         <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
                                 {{ renderSvg('calendar') }}
                             </div>
                         </th>
                         <th scope="col" class="no-sort px-2 py-3">
                         </th>
                         <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
                                 {{ renderSvg('time') }}
                             </div>
                         </th>
                         <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
                                 {{ renderSvg('speed') }}
                             </div>
                         </th>
                         <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center">
+                            <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
                                 {{ renderSvg('power') }}
                             </div>
                         </th>

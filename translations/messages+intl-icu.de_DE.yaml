@@ -33,11 +33,13 @@ Avg: Durchschn.
 Badminton: Badminton
 Best: Beste
 'Best Efforts': 'Best Efforts'
+'Best effort': 'Best effort'
 'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Kadenz
 Calories: Kalorien
+'Calories burnt': 'Calories burnt'
 Canoeing: Kanufahren
 'Carbon emission comparisons': 'Carbon emission comparisons'
 'Challenge consistency': Herausforderungskonstanz
@@ -55,6 +57,7 @@ Crossfit: Crossfit
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: Dashboard
+Date: Date
 'Days needed': 'Benötigte Tage'
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
@@ -153,6 +156,7 @@ Low: Niedrig
 Maintenance: Maintenance
 Mar: Mär
 Max: Max
+'Max gradient': 'Max gradient'
 May: Mai
 Medium: Mittel
 Metrics: Metrics
@@ -177,6 +181,7 @@ Night: Nacht
 'Nordic Ski': 'Nordischer Ski'
 Nov: Nov
 'Number of activities per month': 'Number of activities per month'
+'Number of times completed': 'Number of times completed'
 Oct: Okt
 'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
 'Optimal training range': 'Optimal training range'
@@ -204,6 +209,7 @@ Race: Race
 'Racing Score': Rennpunktzahl
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
+Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'
