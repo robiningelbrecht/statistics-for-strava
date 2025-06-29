@@ -40,7 +40,7 @@ final readonly class ConsistencyChallengeCalculator
             foreach ($months as $month) {
                 $activitiesInCurrentMonth = $activities->filterOnMonth($month);
                 if ($activitiesInCurrentMonth->isEmpty()) {
-                    $consistency[$challenge->getId()][$month->getId()] = 0;
+                    $consistency[$challenge->getId()][$month->getId()] = false;
                     continue;
                 }
 
