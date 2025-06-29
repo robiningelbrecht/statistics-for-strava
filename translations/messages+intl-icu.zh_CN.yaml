@@ -33,11 +33,13 @@ Avg: 平均
 Badminton: 羽毛球
 Best: 最佳
 'Best Efforts': 最大努力
+'Best effort': 'Best effort'
 'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: 踏频
 Calories: 卡路里
+'Calories burnt': 'Calories burnt'
 Canoeing: 划独木舟
 'Carbon emission comparisons': 碳排放比较
 'Challenge consistency': 挑战一致性
@@ -55,6 +57,7 @@ Crossfit: 交叉健身
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: 仪表板
+Date: Date
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
@@ -153,6 +156,7 @@ Low: 低
 Maintenance: Maintenance
 Mar: 三月
 Max: 最大
+'Max gradient': 'Max gradient'
 May: 五月
 Medium: 中等
 Metrics: Metrics
@@ -177,6 +181,7 @@ Night: 夜晚
 'Nordic Ski': 北欧滑雪
 Nov: 十一月
 'Number of activities per month': 'Number of activities per month'
+'Number of times completed': 'Number of times completed'
 Oct: 十月
 'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
 'Optimal training range': 'Optimal training range'
@@ -204,6 +209,7 @@ Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
+Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'
