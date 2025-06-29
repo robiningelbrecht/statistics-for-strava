@@ -895,7 +895,7 @@
                             <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
 
                             </th>
-                            {% for month in allMonths %}
+                            {% for month in allMonths.reverse() %}
                                 <th scope="col" class="px-3 py-3 [writing-mode:vertical-lr]">
                                     {{ month.getShortLabel() }}
                                 </th>

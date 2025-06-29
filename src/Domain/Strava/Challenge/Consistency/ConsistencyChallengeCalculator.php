@@ -94,14 +94,6 @@ final readonly class ConsistencyChallengeCalculator
             }
         }
 
-        // Filter out challenges that have never been completed.
-        foreach ($consistency as $challengeId => $achievements) {
-            if (!empty(array_filter($achievements))) {
-                continue;
-            }
-            unset($consistency[$challengeId]);
-        }
-
         return $consistency;
     }
 
