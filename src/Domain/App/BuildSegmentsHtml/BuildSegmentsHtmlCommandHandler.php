@@ -54,12 +54,6 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                 }
 
                 /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
-                foreach ($segmentEffortsTopTen as $segmentEffort) {
-                    $activity = $this->activityRepository->find($segmentEffort->getActivityId());
-                    $segmentEffort->enrichWithActivity($activity);
-                }
-
-                /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
                 foreach ($segmentEffortsHistory as $segmentEffort) {
                     $activity = $this->activityRepository->find($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
