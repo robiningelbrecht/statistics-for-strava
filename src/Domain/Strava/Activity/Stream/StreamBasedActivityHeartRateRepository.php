@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration;
+use App\Infrastructure\Exception\EntityNotFound;
 
 final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateRepository
 {
@@ -64,7 +65,6 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
 
         $athlete = $this->athleteRepository->find();
         $activities = $this->activityRepository->findAll();
-        $heartRateStreams = $this->activityStreamRepository->findByStreamType(StreamType::HEART_RATE);
 
         /** @var \App\Domain\Strava\Activity\Activity $activity */
         foreach ($activities as $activity) {
@@ -75,16 +75,17 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
                 HeartRateZone::FOUR => 0,
                 HeartRateZone::FIVE => 0,
             ];
-            $heartRateStreamsForActivity = $heartRateStreams->filter(fn (ActivityStream $stream) => $stream->getActivityId() == $activity->getId());
 
-            if ($heartRateStreamsForActivity->isEmpty()) {
+            try {
+                $heartRateStreamForActivity = $this->activityStreamRepository->findOneByActivityAndStreamType(
+                    activityId: $activity->getId(),
+                    streamType: StreamType::HEART_RATE
+                );
+            } catch (EntityNotFound) {
                 continue;
             }
 
             $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
-
-            /** @var ActivityStream $stream */
-            $stream = $heartRateStreamsForActivity->getFirst();
             $athleteHeartRateZones = $this->heartRateZoneConfiguration->getHeartRateZonesFor(
                 sportType: $activity->getSportType(),
                 on: $activity->getStartDate()
@@ -92,7 +93,7 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
 
             foreach ($athleteHeartRateZones->getZones() as $heartRateZone) {
                 [$minHeartRate, $maxHeartRate] = $heartRateZone->getRangeInBpm($athleteMaxHeartRate);
-                $secondsInZone = count(array_filter($stream->getData(), fn (int $heartRate) => $heartRate >= $minHeartRate && $heartRate <= $maxHeartRate));
+                $secondsInZone = count(array_filter($heartRateStreamForActivity->getData(), fn (int $heartRate) => $heartRate >= $minHeartRate && $heartRate <= $maxHeartRate));
                 StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesPerActivity[(string) $activity->getId()][$heartRateZone->getName()] = $secondsInZone;
             }
         }
