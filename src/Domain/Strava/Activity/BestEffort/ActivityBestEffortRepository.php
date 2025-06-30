@@ -12,6 +12,8 @@ interface ActivityBestEffortRepository
 {
     public function add(ActivityBestEffort $activityBestEffort): void;
 
+    public function findAll(): ActivityBestEfforts;
+
     public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts;
 
     public function findActivityIdsThatNeedBestEffortsCalculation(): ActivityIds;

@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\ActivityIds;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
@@ -38,7 +39,17 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         ]);
     }
 
+    public function findAll(): ActivityBestEfforts
+    {
+        return $this->findBestEffortsForSportTypes(SportTypes::fromArray(SportType::cases()));
+    }
+
     public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts
+    {
+        return $this->findBestEffortsForSportTypes($activityType->getSportTypes());
+    }
+
+    private function findBestEffortsForSportTypes(SportTypes $sportTypes): ActivityBestEfforts
     {
         $sql = 'WITH BestEfforts AS (
                     SELECT distanceInMeter, MIN(timeInSeconds) AS bestTime, sportType
@@ -70,7 +81,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 
         $results = $this->connection->executeQuery($sql,
             [
-                'sportTypes' => array_unique($activityType->getSportTypes()->map(fn (SportType $sportType) => $sportType->value)),
+                'sportTypes' => array_unique($sportTypes->map(fn (SportType $sportType) => $sportType->value)),
             ],
             [
                 'sportTypes' => ArrayParameterType::STRING,

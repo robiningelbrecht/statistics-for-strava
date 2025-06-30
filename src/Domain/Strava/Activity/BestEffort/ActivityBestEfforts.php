@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\BestEffort;
 
+use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Collection;
@@ -31,6 +32,11 @@ final class ActivityBestEfforts extends Collection
     public function getBySportType(SportType $sportType): ActivityBestEfforts
     {
         return $this->filter(fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType);
+    }
+
+    public function getByActivity(ActivityId $activityId): ActivityBestEfforts
+    {
+        return $this->filter(fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getActivityId() == $activityId);
     }
 
     public function getBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ?ActivityBestEffort
