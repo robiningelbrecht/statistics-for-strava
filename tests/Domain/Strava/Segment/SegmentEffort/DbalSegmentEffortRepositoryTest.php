@@ -42,7 +42,7 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
         $this->segmentEffortRepository->find(SegmentEffortId::fromUnprefixed(1));
     }
 
-    public function testFindBySegmentId(): void
+    public function testFindTopXBySegmentId(): void
     {
         $segmentEffortOne = SegmentEffortBuilder::fromDefaults()
             ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(1))
@@ -67,7 +67,36 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             SegmentEfforts::fromArray([$segmentEffortOne, $segmentEffortTwo]),
-            $this->segmentEffortRepository->findBySegmentId($segmentEffortOne->getSegmentId(), 10)
+            $this->segmentEffortRepository->findTopXBySegmentId($segmentEffortOne->getSegmentId(), 10)
+        );
+    }
+
+    public function testFindHistoryBySegmentId(): void
+    {
+        $segmentEffortOne = SegmentEffortBuilder::fromDefaults()
+            ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(1))
+            ->withSegmentId(SegmentId::fromUnprefixed(1))
+            ->withRank(1)
+            ->build();
+        $this->segmentEffortRepository->add($segmentEffortOne);
+
+        $segmentEffortTwo = SegmentEffortBuilder::fromDefaults()
+            ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(2))
+            ->withSegmentId(SegmentId::fromUnprefixed(1))
+            ->withRank(2)
+            ->build();
+        $this->segmentEffortRepository->add($segmentEffortTwo);
+
+        $segmentEffortThree = SegmentEffortBuilder::fromDefaults()
+            ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(3))
+            ->withSegmentId(SegmentId::fromUnprefixed(2))
+            ->withRank(null)
+            ->build();
+        $this->segmentEffortRepository->add($segmentEffortThree);
+
+        $this->assertEquals(
+            SegmentEfforts::fromArray([$segmentEffortOne, $segmentEffortTwo]),
+            $this->segmentEffortRepository->findHistoryBySegmentId($segmentEffortOne->getSegmentId())
         );
     }
 

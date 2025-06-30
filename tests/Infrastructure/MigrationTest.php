@@ -39,6 +39,7 @@ class MigrationTest extends ContainerTestCase
 
     private function runMigrations(): void
     {
+        /** @var \Doctrine\Migrations\DependencyFactory $dependencyFactory */
         $dependencyFactory = $this->getContainer()->get('doctrine.migrations.dependency_factory');
 
         $version = $dependencyFactory->getVersionAliasResolver()->resolveVersionAlias('latest');
