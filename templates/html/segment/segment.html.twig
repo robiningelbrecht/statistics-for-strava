@@ -2,7 +2,7 @@
     <!-- Modal header -->
     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
         <h3 class="flex items-center text-lg font-semibold text-gray-900">
-            <span>{{ segment.getName() }} - {{ "Top 10"|trans }}</span>
+            <span>{{ segment.getName() }}</span>
         </h3>
         <div class="flex items-center">
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
@@ -27,71 +27,154 @@
     </div>
     <!-- Modal body -->
     <div class="p-4 md:p-5 space-y-4">
-        <div class="grid grid-cols-1 gap-4">
-            <div class="relative overflow-x-auto">
-                <table class="sortable w-full text-sm text-center text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        <th scope="col" class="cursor-pointer px-2 py-3 bg-gray-50 lg:sticky lg:left-0">
-                            <div class="flex items-center justify-center" title="{{ "Ranking"|trans }}">
-                                {{ renderSvg('hashtag') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
-                                {{ renderSvg('calendar') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="no-sort px-2 py-3">
-                        </th>
-                        <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
-                                {{ renderSvg('time') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                {{ renderSvg('speed') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="cursor-pointer px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
-                                {{ renderSvg('power') }}
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for segmentEffort in segmentEfforts %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                {{ loop.index }}
-                            </td>
-                            <td class="px-2 py-2">
-                                <div class="flex justify-center">
-                                    <div class="w-[4.5rem]">{{ segmentEffort.getStartDateTime()|formatDate() }}</div>
-                                </div>
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('activity-title', {'activity': segmentEffort.getActivity(), 'truncate': true}) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ segmentEffort.getElapsedTimeFormatted() }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {% if segmentEffort.getAverageWatts() %}
-                                    {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
-                                {% else %}
-                                    {{ "n/a"|trans }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+        <div class="grid grid-cols-1 gap-y-1">
+            <div class="border-b border-gray-200">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ "Top 10"|trans }}
+                        </a>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ "History"|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="segmentListsContent">
+                <div id="segmentListsTabTopTen" role="tabpanel" aria-labelledby="segmentListsTabTopTen-tab">
+                    <div class="relative overflow-x-auto">
+                        <table class="sortable w-full text-sm text-center text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="cursor-pointer px-2 py-3 bg-gray-50 lg:sticky lg:left-0">
+                                    <div class="flex items-center justify-center" title="{{ "Ranking"|trans }}">
+                                        {{ renderSvg('hashtag') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
+                                        {{ renderSvg('calendar') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
+                                        {{ renderSvg('time') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
+                                        {{ renderSvg('speed') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
+                                        {{ renderSvg('power') }}
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for segmentEffort in segmentEffortsTopTen %}
+                                <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                    <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                        {{ loop.index }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        <div class="flex justify-center">
+                                            <div class="w-[4.5rem]">{{ segmentEffort.getStartDateTime()|formatDate() }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ renderComponent('activity-title', {'activity': segmentEffort.getActivity(), 'truncate': true}) }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ segmentEffort.getElapsedTimeFormatted() }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {% if segmentEffort.getAverageWatts() %}
+                                            {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="segmentListsTabHistory" role="tabpanel" aria-labelledby="segmentListsTabHistory-tab">
+                    <div class="relative overflow-x-auto max-h-[calc(100vh-285px)]">
+                        <table class="sortable w-full text-sm text-center text-gray-500">
+                            <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-2 py-3 bg-gray-50">
+
+                                </th>
+                                <th scope="col" class="px-2 py-3  lg:sticky lg:left-0">
+                                    <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
+                                        {{ renderSvg('calendar') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
+                                        {{ renderSvg('time') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
+                                        {{ renderSvg('speed') }}
+                                    </div>
+                                </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
+                                        {{ renderSvg('power') }}
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for segmentEffort in segmentEffortsHistory %}
+                                <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                    <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                        {{ loop.index }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        <div class="flex justify-center">
+                                            <div class="w-[4.5rem]">{{ segmentEffort.getStartDateTime()|formatDate() }}</div>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ renderComponent('activity-title', {'activity': segmentEffort.getActivity(), 'truncate': true}) }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ segmentEffort.getElapsedTimeFormatted() }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {% if segmentEffort.getAverageWatts() %}
+                                            {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

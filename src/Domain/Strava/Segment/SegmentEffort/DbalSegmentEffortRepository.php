@@ -70,18 +70,30 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
         return $this->hydrate($result);
     }
 
-    public function findBySegmentId(SegmentId $segmentId, ?int $limit = null): SegmentEfforts
+    public function findTopXBySegmentId(SegmentId $segmentId, int $limit): SegmentEfforts
     {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')
             ->from('SegmentEffort')
             ->andWhere('segmentId = :segmentId')
             ->setParameter('segmentId', $segmentId)
+            ->setMaxResults($limit)
             ->orderBy('elapsedTimeInSeconds', 'ASC');
 
-        if ($limit) {
-            $queryBuilder->setMaxResults($limit);
-        }
+        return SegmentEfforts::fromArray(array_map(
+            fn (array $result) => $this->hydrate($result),
+            $queryBuilder->executeQuery()->fetchAllAssociative()
+        ));
+    }
+
+    public function findHistoryBySegmentId(SegmentId $segmentId): SegmentEfforts
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('*')
+            ->from('SegmentEffort')
+            ->andWhere('segmentId = :segmentId')
+            ->setParameter('segmentId', $segmentId)
+            ->orderBy('startDateTime', 'DESC');
 
         return SegmentEfforts::fromArray(array_map(
             fn (array $result) => $this->hydrate($result),
