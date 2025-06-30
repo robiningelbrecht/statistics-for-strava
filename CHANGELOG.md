@@ -1,6 +1,6 @@
 # [v2.3.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.6) - 2025-06-30
 
-⚠️We moved the sorting og sportTypes away from the import process by introducing a new setting:
+⚠️We moved the sorting of sportTypes away from the import process by introducing a new setting:
 
 ```yaml
 appearance:
