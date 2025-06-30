@@ -2,6 +2,7 @@
 
 namespace App\Domain\Strava\Activity;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Activity\Stream\PowerOutput;
 use App\Domain\Strava\Activity\Stream\PowerOutputs;
@@ -29,7 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'Activity_startDateTimeIndex', columns: ['startDateTime'])]
-final class Activity
+final class Activity implements SupportsAITooling
 {
     use RecordsEvents;
     use ProvideTimeFormats;
@@ -669,5 +670,40 @@ final class Activity
     public function delete(): void
     {
         $this->recordThat(new ActivityWasDeleted($this->getId()));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId()->toUnprefixedString(),
+            'startDateTime' => $this->getStartDate(),
+            'sportType' => $this->getSportType()->value,
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'distanceInKilometer' => $this->getDistance(),
+            'elevationInMeter' => $this->getElevation(),
+            'startingCoordinate' => $this->getStartingCoordinate(),
+            'caloriesBurnt' => $this->getCalories(),
+            'averagePowerInWatts' => $this->getAveragePower(),
+            'maxPowerInWatts' => $this->getMaxPower(),
+            'averageSpeed' => $this->getAverageSpeed(),
+            'maxSpeed' => $this->getMaxSpeed(),
+            'averageHeartRate' => $this->getAverageHeartRate(),
+            'maxHeartRate' => $this->getMaxHeartRate(),
+            'averageCadence' => $this->getAverageCadence(),
+            'movingTimeInSeconds' => $this->getMovingTimeInSeconds(),
+            'kudoCount' => $this->getKudoCount(),
+            'recordedOnDevice' => $this->getDeviceName(),
+            'totalImageCount' => $this->getTotalImageCount(),
+            'location' => $this->getLocation()?->jsonSerialize(),
+            'weather' => $this->getWeather(),
+            'gearId' => $this->getGearId()?->toUnprefixedString(),
+            'gearName' => $this->getGearName(),
+            'isCommute' => $this->isCommute(),
+            'workoutType' => $this->getWorkoutType()?->value,
+        ];
     }
 }

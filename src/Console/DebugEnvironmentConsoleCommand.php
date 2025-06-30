@@ -41,6 +41,7 @@ final class DebugEnvironmentConsoleCommand extends Command
                 ['STRAVA_REFRESH_TOKEN', getenv('STRAVA_REFRESH_TOKEN')],
                 ['IMPORT_AND_BUILD_SCHEDULE', getenv('IMPORT_AND_BUILD_SCHEDULE')],
                 ['TZ', getenv('TZ')],
+                ['INSPECTOR_INGESTION_KEY', getenv('INSPECTOR_INGESTION_KEY')],
                 new TableSeparator(),
                 ['APP_CONFIG_GENERAL', Json::encodePretty($this->appConfig->get('general'))],
                 new TableSeparator(),

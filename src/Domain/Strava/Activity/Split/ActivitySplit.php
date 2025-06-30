@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Split;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivitySplit_activityIdUnitSystemIndex', columns: ['activityId', 'unitSystem'])]
-final class ActivitySplit
+final class ActivitySplit implements SupportsAITooling
 {
     use ProvideTimeFormats;
 
@@ -192,5 +193,21 @@ final class ActivitySplit
     public function getAverageHeartRate(): ?int
     {
         return $this->averageHeartRate;
+    }
+
+    public function exportForAITooling(): array
+    {
+        return [
+            'activityId' => $this->getActivityId()->toUnprefixedString(),
+            'unitSystem' => $this->getUnitSystem()->value,
+            'splitNumber' => $this->getSplitNumber(),
+            'elapsedTimeInSeconds' => $this->getElapsedTimeInSeconds(),
+            'movingTimeInSeconds' => $this->getMovingTimeInSeconds(),
+            'distanceInMeter' => $this->getDistance(),
+            'averageSpeedInMetersPerSecond' => $this->getAverageSpeed(),
+            'elevationDifferenceInMeter' => $this->getElevationDifference(),
+            'averageHeartRate' => $this->getAverageHeartRate(),
+            'paceZone' => $this->getPaceZone(),
+        ];
     }
 }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Athlete;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class Athlete implements \JsonSerializable
+final class Athlete implements \JsonSerializable, SupportsAITooling
 {
     private ?MaxHeartRateFormula $maxHeartRateFormula = null;
 
@@ -70,6 +71,14 @@ final class Athlete implements \JsonSerializable
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
+    {
+        return $this->exportForAITooling();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
     {
         return $this->data;
     }

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "b12659861",
+        "totalDistanceInKilometer": 1450.147,
+        "name": "Retro Race Bike",
+        "isRetired": false
+    },
+    {
+        "id": "b12659862",
+        "totalDistanceInKilometer": 145.014,
+        "name": "Zwift hub",
+        "isRetired": false
+    }
+]

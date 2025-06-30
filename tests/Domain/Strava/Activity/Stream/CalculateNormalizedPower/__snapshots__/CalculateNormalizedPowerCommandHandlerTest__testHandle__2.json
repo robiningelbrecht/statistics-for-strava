@@ -1,0 +1,22 @@
+[
+    {
+        "activityId": "activity-4",
+        "streamType": "watts",
+        "normalizedPower": 232
+    },
+    {
+        "activityId": "activity-4",
+        "streamType": "time",
+        "normalizedPower": null
+    },
+    {
+        "activityId": "activity-1",
+        "streamType": "watts",
+        "normalizedPower": 0
+    },
+    {
+        "activityId": "activity-5",
+        "streamType": "watts",
+        "normalizedPower": 10
+    }
+]

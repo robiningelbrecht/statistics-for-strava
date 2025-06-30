@@ -2,12 +2,13 @@
 
 namespace App\Domain\Strava\Challenge;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'Challenge_createdOnIndex', columns: ['createdOn'])]
-final class Challenge
+final class Challenge implements SupportsAITooling
 {
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -105,5 +106,18 @@ final class Challenge
     public function getCreatedOn(): SerializableDateTime
     {
         return $this->createdOn;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId()->toUnprefixedString(),
+            'obtainedOn' => $this->getCreatedOn()->format('Y-m-d'),
+            'name' => $this->getName(),
+            'slug' => $this->getSlug(),
+        ];
     }
 }

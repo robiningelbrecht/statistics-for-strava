@@ -25,7 +25,7 @@ return [
     ),
     new MinCoverageRule(
         pattern: 'App\Domain\*',
-        minCoverage: 96,
+        minCoverage: 97,
         exitOnLowCoverage: true
     ),
     new MinCoverageRule(

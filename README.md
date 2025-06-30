@@ -50,6 +50,7 @@ https://github.com/user-attachments/assets/81554f32-31be-4899-afd6-681ce3e7bcb6
 * **Strava Rewind** - A fun way to look back on your year in motion
 * **Challenges** - See which Strava challenges you've conquered
 * **Activity Photos** - Relive your moments with a photo archive
+* **AI workout assistant** - Get personalized workout suggestions and insights powered by AI
 * **User badges** - Shareable badges you can embed on your website, blog, or forum profiles
 * **PWA support** - Use it like a native app on your phone
 

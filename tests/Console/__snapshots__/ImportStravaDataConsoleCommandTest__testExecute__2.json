@@ -66,6 +66,12 @@
         }
     },
     {
+        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CalculateNormalizedPower\\CalculateNormalizedPower",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CombinedStream\\CalculateCombinedStreams\\CalculateCombinedStreams",
         "payload": {
             "output": {}

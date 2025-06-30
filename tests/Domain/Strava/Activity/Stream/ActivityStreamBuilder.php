@@ -16,6 +16,7 @@ final class ActivityStreamBuilder
     private SerializableDateTime $createdOn;
     private array $data;
     private array $bestAverages;
+    private ?int $normalizedPower;
 
     private function __construct()
     {
@@ -24,6 +25,7 @@ final class ActivityStreamBuilder
         $this->createdOn = SerializableDateTime::fromString('2023-10-10');
         $this->data = [];
         $this->bestAverages = [];
+        $this->normalizedPower = null;
     }
 
     public static function fromDefaults(): self
@@ -39,6 +41,7 @@ final class ActivityStreamBuilder
             streamData: $this->data,
             createdOn: $this->createdOn,
             bestAverages: $this->bestAverages,
+            normalizedPower: $this->normalizedPower
         );
     }
 
@@ -73,6 +76,13 @@ final class ActivityStreamBuilder
     public function withBestAverages(array $bestAverages): self
     {
         $this->bestAverages = $bestAverages;
+
+        return $this;
+    }
+
+    public function withNormalizedPower(int $normalizedPower): self
+    {
+        $this->normalizedPower = $normalizedPower;
 
         return $this;
     }
