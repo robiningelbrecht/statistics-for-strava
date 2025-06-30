@@ -46,7 +46,7 @@
                     {% set textY = (rectangleHeight / 2) %}
                     <rect width="{{ rectangleWidth }}px" height="{{ rectangleHeight }}px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
                     <text x="{{ textX }}" y="{{ textY }}" text-anchor="middle">
-                        <tspan x="{{ textX }}" font-size="15.5px" font-weight="600">{{ bestEffort ? bestEffort.getFormattedTimeInSeconds() : 'n/a' }}</tspan>
+                        <tspan x="{{ textX }}" font-size="15.5px" font-weight="600">{{ bestEffort ? bestEffort.getFormattedTime() : 'n/a' }}</tspan>
                         <tspan x="{{ textX }}" dy="1.2em">{{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}</tspan>
                     </text>
                 </g>
