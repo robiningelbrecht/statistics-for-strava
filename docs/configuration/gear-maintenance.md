@@ -28,7 +28,6 @@ services:
     volumes:
       - ./config:/var/www/config/app
       # ...
-      - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
 ```
 
 * Create a new file `gear-maintenance.yaml` in `./config`
