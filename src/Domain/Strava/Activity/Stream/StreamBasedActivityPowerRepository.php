@@ -36,20 +36,20 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         }
 
         $activities = $this->activityRepository->findAll();
-        $powerStreams = $this->activityStreamRepository->findByStreamType(StreamType::WATTS);
-
         /** @var Activity $activity */
         foreach ($activities as $activity) {
             StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activity->getId()] = PowerOutputs::empty();
-            $powerStreamsForActivity = $powerStreams->filter(fn (ActivityStream $stream) => $stream->getActivityId() == $activity->getId());
 
-            if ($powerStreamsForActivity->isEmpty()) {
+            try {
+                $powerStreamForActivity = $this->activityStreamRepository->findOneByActivityAndStreamType(
+                    activityId: $activity->getId(),
+                    streamType: StreamType::WATTS
+                );
+            } catch (EntityNotFound) {
                 continue;
             }
 
-            /** @var ActivityStream $activityStream */
-            $activityStream = $powerStreamsForActivity->getFirst();
-            $bestAverages = $activityStream->getBestAverages();
+            $bestAverages = $powerStreamForActivity->getBestAverages();
 
             foreach (self::TIME_INTERVALS_IN_SECONDS_REDACTED as $timeIntervalInSeconds) {
                 $interval = CarbonInterval::seconds($timeIntervalInSeconds);

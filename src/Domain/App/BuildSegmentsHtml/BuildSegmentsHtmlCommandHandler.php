@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildSegmentsHtml;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
+use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Segment\Segment;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
@@ -23,7 +23,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private SportTypeRepository $sportTypeRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -33,7 +33,6 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildSegmentsHtml);
 
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
         $importedSportTypes = $this->sportTypeRepository->findAll();
 
         $dataDatableRows = [];
@@ -50,13 +49,13 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
 
                 /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
                 foreach ($segmentEffortsTopTen as $segmentEffort) {
-                    $activity = $activities->getByActivityId($segmentEffort->getActivityId());
+                    $activity = $this->activityRepository->find($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
 
                 /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
                 foreach ($segmentEffortsHistory as $segmentEffort) {
-                    $activity = $activities->getByActivityId($segmentEffort->getActivityId());
+                    $activity = $this->activityRepository->find($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
 
