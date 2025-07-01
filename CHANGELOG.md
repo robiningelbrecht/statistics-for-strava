@@ -1,3 +1,17 @@
+# [v2.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.0) - 2025-07-01
+
+🚀 Statistics for Strava v2.4.0 is here!
+The most noteworthy feature is the virtual workout assistant: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
+
+## What's Changed
+* ISSUE #806: Fix filter date range bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/807
+* ISSUE #789: Show segment effort history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/808
+* ISSUE #794: Show PB on activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/805
+* ISSUE #810: Docs - Proxmox by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/812
+* ISSUE #150: give the required AI implementation a try by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/358
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.6...v2.4.0
+
 # [v2.3.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.6) - 2025-06-30
 
 ⚠️We moved the sorting of sportTypes away from the import process by introducing a new setting:
