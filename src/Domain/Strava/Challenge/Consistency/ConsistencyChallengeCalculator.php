@@ -40,7 +40,7 @@ final readonly class ConsistencyChallengeCalculator
             foreach ($months as $month) {
                 $activitiesInCurrentMonth = $activities->filterOnMonth($month);
                 if ($activitiesInCurrentMonth->isEmpty()) {
-                    $consistency[$challenge->getId()][$month->getId()] = 0;
+                    $consistency[$challenge->getId()][$month->getId()] = false;
                     continue;
                 }
 
@@ -92,14 +92,6 @@ final readonly class ConsistencyChallengeCalculator
 
                 $consistency[$challenge->getId()][$month->getId()] = $challengeCompleted;
             }
-        }
-
-        // Filter out challenges that have never been completed.
-        foreach ($consistency as $challengeId => $achievements) {
-            if (!empty(array_filter($achievements))) {
-                continue;
-            }
-            unset($consistency[$challengeId]);
         }
 
         return $consistency;

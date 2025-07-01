@@ -69,16 +69,6 @@ final class Activities extends Collection
         return $this->filter(fn (Activity $activity) => $sportType === $activity->getSportType());
     }
 
-    public function getByActivityId(ActivityId $activityId): Activity
-    {
-        $activities = $this->filter(fn (Activity $activity) => $activityId == $activity->getId())->toArray();
-
-        /** @var Activity $activity */
-        $activity = reset($activities);
-
-        return $activity;
-    }
-
     public function getUniqueYears(): Years
     {
         $years = Years::empty();

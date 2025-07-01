@@ -146,6 +146,10 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
+    App\Domain\Strava\Activity\SportType\SportTypesSortingOrder:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("appearance.sportTypesSortingOrder", [])']
+
     App\Domain\Strava\Activity\SportType\SportTypesToImport:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("import.sportTypesToImport")']

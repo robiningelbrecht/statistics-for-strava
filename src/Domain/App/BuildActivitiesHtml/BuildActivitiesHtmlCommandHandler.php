@@ -6,6 +6,7 @@ namespace App\Domain\App\BuildActivitiesHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
+use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Strava\Activity\HeartRateDistributionChart;
 use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
 use App\Domain\Strava\Activity\PowerDistributionChart;
@@ -47,6 +48,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private GearRepository $gearRepository,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private UnitSystem $unitSystem,
@@ -64,6 +66,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $now = $command->getCurrentDateTime();
         $athlete = $this->athleteRepository->find();
         $importedSportTypes = $this->sportTypeRepository->findAll();
+        $bestEfforts = $this->activityBestEffortRepository->findAll();
+
         $activities = $this->activitiesEnricher->getEnrichedActivities();
 
         $activityTotals = ActivityTotals::getInstance(
@@ -208,6 +212,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'splits' => $activitySplits,
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
                     'profileCharts' => array_reverse($activityProfileCharts),
+                    'bestEfforts' => $bestEfforts->getByActivity($activity->getId()),
                 ]),
             );
 

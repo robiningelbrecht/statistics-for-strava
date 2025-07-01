@@ -74,6 +74,10 @@ appearance:
   dateFormat:
     short: 'd-m-y' # This renders to 01-01-25
     normal: 'd-m-Y' # This renders to 01-01-2025
+  # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
+  # You don't have to include all sport types. Sport types not included in this list will be rendered by the app default.
+  # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
+  sportTypesSortingOrder: []  
 import:
   # Strava API has rate limits (https://statistics-for-strava-docs.robiningelbrecht.be/#/troubleshooting/faq?id=why-does-it-take-so-long-to-import-my-data),
   # to make sure we don't hit the rate limit, we want to cap the number of new activities processed
@@ -81,7 +85,6 @@ import:
   # take up to 3 API calls, 250 should be a safe number.
   numberOfNewActivitiesToProcessPerImport: 250
   # Sport types to import. Leave empty to import all sport types
-  # With this list you can also decide the order the sport types will be rendered in.
   # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
   sportTypesToImport: []
   # Activity visibilities to import. Leave empty to import all visibilities

@@ -8,6 +8,7 @@ use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
+use App\Infrastructure\ValueObject\Measurement\Length\ConvertableToMeter;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,7 +80,7 @@ final class ActivityBestEffort
         return $this->timeInSeconds;
     }
 
-    public function getFormattedTimeInSeconds(): string
+    public function getFormattedTime(): string
     {
         return $this->formatDurationForChartLabel($this->getTimeInSeconds());
     }
@@ -92,5 +93,23 @@ final class ActivityBestEffort
     public function enrichWithActivity(Activity $activity): void
     {
         $this->activity = $activity;
+    }
+
+    public function getBestEffortDistance(): ?ConvertableToMeter
+    {
+        if (!$this->getActivity()) {
+            return null;
+        }
+
+        $bestEffortDistances = $this->getActivity()->getSportType()->getActivityType()->getDistancesForBestEffortCalculation();
+        foreach ($bestEffortDistances as $bestEffortDistance) {
+            if ($this->getDistanceInMeter()->toInt() !== $bestEffortDistance->toMeter()->toInt()) {
+                continue;
+            }
+
+            return $bestEffortDistance;
+        }
+
+        return null;
     }
 }

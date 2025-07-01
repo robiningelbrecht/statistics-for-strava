@@ -11,7 +11,7 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
 {
     public function __construct(
         Connection $connection,
-        private SportTypesToImport $sportTypesToImport,
+        private SportTypesSortingOrder $sportTypesSortingOrder,
     ) {
         parent::__construct($connection);
     }
@@ -19,7 +19,7 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function findAll(): SportTypes
     {
         $orderByStatement = [];
-        foreach ($this->sportTypesToImport as $index => $sportType) {
+        foreach ($this->sportTypesSortingOrder as $index => $sportType) {
             $orderByStatement[] = sprintf('WHEN "%s" THEN %d', $sportType->value, $index);
         }
         $orderByStatement[] = 'ELSE 9999';

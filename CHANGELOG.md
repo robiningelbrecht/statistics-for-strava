@@ -1,3 +1,23 @@
+# [v2.3.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.6) - 2025-06-30
+
+⚠️We moved the sorting of sportTypes away from the import process by introducing a new setting:
+
+```yaml
+appearance:
+  # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
+  # You don't have to include all sport types. Sport types not included in this list will be rendered by the app default.
+  # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
+  sportTypesSortingOrder: []  
+```
+
+## What's Changed
+* ISSUE #795: Reverse months when rendering ConsistencyChallenges by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/797
+* ISSUE #793: Add tooltips to column icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/798
+* ISSUE #796: Fix elevation chart when elevation is below sea level by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/799
+* ISSUE #792: Move sorting of sport types away from importing them by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/800
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.3.5...v2.3.6
+
 # [v2.3.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.3.5) - 2025-06-27
 
 Configure your own consistency challenges: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges

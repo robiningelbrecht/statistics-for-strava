@@ -9,7 +9,7 @@ use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\DbalSportTypeRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Activity\SportType\SportTypesToImport;
+use App\Domain\Strava\Activity\SportType\SportTypesSortingOrder;
 use App\Domain\Strava\Activity\SportTypeBasedActivityTypeRepository;
 use App\Tests\ContainerTestCase;
 
@@ -49,7 +49,7 @@ class SportTypeBasedActivityTypeRepositoryTest extends ContainerTestCase
         $activityTypeRepository = new SportTypeBasedActivityTypeRepository(
             new DbalSportTypeRepository(
                 $this->getConnection(),
-                SportTypesToImport::fromArray([SportType::RUN, SportType::WALK])
+                SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK])
             )
         );
 
@@ -61,7 +61,7 @@ class SportTypeBasedActivityTypeRepositoryTest extends ContainerTestCase
         $activityTypeRepository = new SportTypeBasedActivityTypeRepository(
             new DbalSportTypeRepository(
                 $this->getConnection(),
-                SportTypesToImport::fromArray([SportType::WALK, SportType::RUN])
+                SportTypesSortingOrder::fromArray([SportType::WALK, SportType::RUN])
             )
         );
 

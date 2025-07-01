@@ -57,7 +57,7 @@ final readonly class CombinedStreamProfileChart
         if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
             [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
             $margin = ($max - $min) * 0.1;
-            $minYAxis = max(0, (int) floor($min - $margin));
+            $minYAxis = (int) floor($min - $margin);
             $maxYAxis = (int) ceil($max + $margin);
         } else {
             $minYAxis = 0;

@@ -33,11 +33,13 @@ Avg: Avg
 Badminton: Badminton
 Best: Best
 'Best Efforts': 'Best Efforts'
+'Best effort': 'Best effort'
 'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Cadence
 Calories: Calories
+'Calories burnt': 'Calories burnt'
 Canoeing: Canoeing
 'Carbon emission comparisons': 'Carbon emission comparisons'
 'Challenge consistency': 'Challenge consistency'
@@ -50,11 +52,13 @@ Commutes: Commutes
 Compare: Compare
 'Compare to': 'Compare to'
 Components: Components
+'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: Dashboard
+Date: Date
 'Days needed': 'Days needed'
 'Daytime stats': 'Daytime stats'
 Dec: Dec
@@ -80,6 +84,7 @@ Elliptical: Elliptical
 Evening: Evening
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP history'
+'Fastest times': 'Fastest times'
 'Fatigued – productive heavy-training range': 'Fatigued – productive heavy-training range'
 Favourite: Favourite
 Feb: Feb
@@ -153,6 +158,7 @@ Low: Low
 Maintenance: Maintenance
 Mar: Mar
 Max: Max
+'Max gradient': 'Max gradient'
 May: May
 Medium: Medium
 Metrics: Metrics
@@ -177,6 +183,7 @@ Night: Night
 'Nordic Ski': 'Nordic Ski'
 Nov: Nov
 'Number of activities per month': 'Number of activities per month'
+'Number of times completed': 'Number of times completed'
 Oct: Oct
 'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
 'Optimal training range': 'Optimal training range'
@@ -204,6 +211,7 @@ Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
+Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'

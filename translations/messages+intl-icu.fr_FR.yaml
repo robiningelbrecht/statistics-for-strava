@@ -33,11 +33,13 @@ Avg: Moy
 Badminton: Badminton
 Best: Meilleur
 'Best Efforts': 'Meilleurs efforts'
+'Best effort': 'Best effort'
 'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Zone de progression (–10)'
 'CTL (Fitness)': 'CTL (Forme à long terme)'
 Cadence: Cadence
 Calories: Calories
+'Calories burnt': 'Calories burnt'
 Canoeing: Canoë
 'Carbon emission comparisons': 'Comparaisons des émissions de carbone'
 'Challenge consistency': 'Défi de régularité'
@@ -50,11 +52,13 @@ Commutes: 'Trajets domicile-travail'
 Compare: Comparer
 'Compare to': 'Comparer à'
 Components: Composants
+'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Matériel personnalisé désactivé'
 'Daily TRIMP': 'TRIMP quotidien'
 'Daily activities': 'Activités quotidiennes'
 Dashboard: 'Tableau de bord'
+Date: Date
 'Days needed': 'Jours nécessaires'
 'Daytime stats': 'Statistiques diurnes'
 Dec: Déc
@@ -80,6 +84,7 @@ Elliptical: Elliptique
 Evening: Soirée
 'Excludes commutes': 'Trajets domicile-travail exclus'
 'FTP history': 'Historique FTP'
+'Fastest times': 'Fastest times'
 'Fatigued – productive heavy-training range': 'Zone de fatigue productive – entraînement intensif'
 Favourite: Favori
 Feb: Fév
@@ -153,6 +158,7 @@ Low: Bas
 Maintenance: Maintenance
 Mar: Mar
 Max: Max
+'Max gradient': 'Max gradient'
 May: Mai
 Medium: Moyen
 Metrics: Métriques
@@ -177,6 +183,7 @@ Night: Nuit
 'Nordic Ski': 'Ski nordique'
 Nov: Nov
 'Number of activities per month': "Nombre d'activités par mois"
+'Number of times completed': 'Number of times completed'
 Oct: Oct
 'One of your gear maintenance tasks is due': 'Une de vos tâches de maintenance de matériel est à effectuer'
 'Optimal training range': "Zone d'entraînement optimale"
@@ -204,6 +211,7 @@ Race: Course
 'Racing Score': 'Score de course'
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
+Ranking: Ranking
 'Rest Days': 'Jours de repos'
 'Rest days': 'Jours de repos'
 'Rest days in last 7 days': 'Jours de repos des 7 derniers jours'
