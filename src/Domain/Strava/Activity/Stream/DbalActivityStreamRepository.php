@@ -13,8 +13,8 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
 {
     public function add(ActivityStream $stream): void
     {
-        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, createdOn, bestAverages)
-        VALUES (:activityId, :streamType, :data, :createdOn, :bestAverages)';
+        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, createdOn, bestAverages, normalizedPower)
+        VALUES (:activityId, :streamType, :data, :createdOn, :bestAverages, :normalizedPower)';
 
         $this->connection->executeStatement($sql, [
             'activityId' => $stream->getActivityId(),
@@ -22,13 +22,15 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             'data' => Json::encode($stream->getData()),
             'createdOn' => $stream->getCreatedOn(),
             'bestAverages' => !empty($stream->getBestAverages()) ? Json::encode($stream->getBestAverages()) : null,
+            'normalizedPower' => $stream->getNormalizedPower(),
         ]);
     }
 
     public function update(ActivityStream $stream): void
     {
         $sql = 'UPDATE ActivityStream 
-        SET bestAverages = :bestAverages
+        SET bestAverages = :bestAverages, 
+            normalizedPower = :normalizedPower
         WHERE activityId = :activityId
         AND streamType = :streamType';
 
@@ -36,6 +38,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             'activityId' => $stream->getActivityId(),
             'streamType' => $stream->getStreamType()->value,
             'bestAverages' => Json::encode($stream->getBestAverages()),
+            'normalizedPower' => $stream->getNormalizedPower(),
         ]);
     }
 
@@ -138,6 +141,23 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
         ));
     }
 
+    public function findWithoutNormalizedPower(int $limit): ActivityStreams
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('*')
+            ->from('ActivityStream')
+            ->andWhere('normalizedPower IS NULL')
+            ->andWhere('streamType = :streamType')
+            ->setParameter('streamType', StreamType::WATTS->value)
+            ->orderBy('activityId')
+            ->setMaxResults($limit);
+
+        return ActivityStreams::fromArray(array_map(
+            fn (array $result) => $this->hydrate($result),
+            $queryBuilder->executeQuery()->fetchAllAssociative()
+        ));
+    }
+
     /**
      * @param array<string, mixed> $result
      */
@@ -149,6 +169,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             streamData: Json::decode($result['data']),
             createdOn: SerializableDateTime::fromString($result['createdOn']),
             bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
+            normalizedPower: $result['normalizedPower'] ?? null
         );
     }
 }

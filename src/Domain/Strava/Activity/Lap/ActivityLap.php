@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Lap;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivitySplit_activityId', columns: ['activityId'])]
-final readonly class ActivityLap
+final readonly class ActivityLap implements SupportsAITooling
 {
     use ProvideTimeFormats;
 
@@ -168,5 +169,24 @@ final readonly class ActivityLap
     public function getAverageHeartRate(): ?int
     {
         return $this->averageHeartRate;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getLapId()->toUnprefixedString(),
+            'activityId' => $this->getActivityId()->toUnprefixedString(),
+            'lapNumber' => $this->getLapNumber(),
+            'elapsedTimeInSeconds' => $this->getElapsedTimeInSeconds(),
+            'movingTimeInSeconds' => $this->getMovingTimeInSeconds(),
+            'distanceInMeter' => $this->getDistance(),
+            'averageSpeedInMetersPerSecond' => $this->getAverageSpeed(),
+            'maxSpeedInMetersPerSecond' => $this->getMaxSpeed(),
+            'elevationDifferenceInMeter' => $this->getElevationDifference(),
+            'averageHeartRate' => $this->getAverageHeartRate(),
+        ];
     }
 }

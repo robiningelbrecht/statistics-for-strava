@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Segment;
 
+use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -11,7 +12,7 @@ use App\Infrastructure\ValueObject\String\Name;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-final class Segment
+final class Segment implements SupportsAITooling
 {
     private ?SegmentEffort $bestEffort = null;
     private int $numberOfTimesRidden = 0;
@@ -197,6 +198,21 @@ final class Segment
     public function getClimbCategory(): ?int
     {
         return $this->climbCategory;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'sportType' => $this->getSportType()->value,
+            'distanceInKilometer' => $this->getDistance(),
+            'isFavourite' => $this->isFavourite(),
+            'climbCategory' => $this->getClimbCategory(),
+        ];
     }
 
     public function isKOM(): bool

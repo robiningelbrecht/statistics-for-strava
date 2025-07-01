@@ -45,6 +45,7 @@ abstract class ContainerTestCase extends KernelTestCase
         // Empty file systems.
         /** @var \League\Flysystem\FilesystemOperator[] $fileSystems */
         $fileSystems = [
+            $this->getContainer()->get('default.storage'),
             $this->getContainer()->get('public.storage'),
             $this->getContainer()->get('file.storage'),
             $this->getContainer()->get('build.storage'),

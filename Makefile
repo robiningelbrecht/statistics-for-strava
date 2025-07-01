@@ -86,6 +86,10 @@ app-build-all:
 app-run-docs:
 	docsify serve docs
 
+# Ollama models
+ollama-run-llama32:
+	docker compose exec ollama ollama run llama3.2
+
 # Helpers for forks and PRs
 fork-fetch-remote:
 	git remote add $(remote-name) $(fork-url)

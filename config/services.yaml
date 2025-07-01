@@ -7,12 +7,16 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
+    env(INSPECTOR_INGESTION_KEY): ''
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    _instanceof:
+        NeuronAI\Tools\ToolInterface:
+            tags: [ 'app.ai_tool' ]
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -84,6 +88,15 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
+    NeuronAI\Chat\History\ChatHistoryInterface:
+        class: App\Domain\Integration\AI\Chat\FlysystemChatHistory
+
+    NeuronAI\Tools\Toolkits\ToolkitInterface:
+        class: App\Domain\Integration\AI\Tool\Toolkit
+
+    App\Domain\Integration\AI\AIProviderFactory:
+        arguments: ['@=app_config("integrations.ai", [])']
+
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.ntfyUrl")']
@@ -130,7 +143,6 @@ services:
         arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
 
     App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore:
-        class: App\Domain\Strava\Activity\ImportActivities\SkipActivitiesRecordedBefore
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
@@ -177,3 +189,6 @@ services:
 
     GuzzleHttp\Client:
         class: GuzzleHttp\Client
+
+    Inspector\Inspector:
+        class: Inspector\Inspector

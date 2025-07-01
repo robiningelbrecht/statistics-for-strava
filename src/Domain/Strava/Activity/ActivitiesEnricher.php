@@ -19,6 +19,8 @@ final class ActivitiesEnricher
     private array $activitiesPerActivityType;
     /** @var array<string, Activities> */
     private array $activitiesPerSportType;
+    /** @var array<string, Activity> */
+    private array $activitiesKeyedByActivityId;
 
     public function __construct(
         private readonly ActivityRepository $activityRepository,
@@ -59,11 +61,12 @@ final class ActivitiesEnricher
                 }
             } catch (EntityNotFound) {
             }
+            $this->activitiesKeyedByActivityId[(string) $activity->getId()] = $activity;
         }
 
         $this->enrichedActivities = $activities;
 
-        return $activities;
+        return $this->enrichedActivities;
     }
 
     public function getEnrichedActivities(): Activities
@@ -73,6 +76,15 @@ final class ActivitiesEnricher
         }
 
         return $this->enrichedActivities;
+    }
+
+    public function getEnrichedActivity(ActivityId $activityId): Activity
+    {
+        if ($this->enrichedActivities->isEmpty()) {
+            $this->enrichedActivities = $this->enrichAll();
+        }
+
+        return $this->activitiesKeyedByActivityId[(string) $activityId] ?? throw new EntityNotFound('Activity not found: '.$activityId);
     }
 
     /**

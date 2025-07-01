@@ -135,4 +135,17 @@ class ImportedGear implements Gear
 
         return $this;
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function exportForAITooling(): array
+    {
+        return [
+            'id' => $this->getId()->toUnprefixedString(),
+            'totalDistanceInKilometer' => $this->getDistance(),
+            'name' => $this->getName(),
+            'isRetired' => $this->isRetired(),
+        ];
+    }
 }
