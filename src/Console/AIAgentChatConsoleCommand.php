@@ -42,7 +42,8 @@ final class AIAgentChatConsoleCommand extends Command
 
         $io->block(
             messages: [
-                "Hi 👋, I'm Mark, your personal workout assistant. Ask me anything about your workout history.",
+                "Hi 👋, I'm Mark, your personal workout assistant.".PHP_EOL.
+                'Feel free to ask me anything—whether it’s about your training history or tips to improve!',
                 'Type "exit" to close the conversation.',
             ],
             style: 'fg=black;bg=green',
