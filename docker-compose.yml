@@ -11,8 +11,6 @@ services:
             - path: ./.env.local
               required: false
         environment:
-            - PHP_CS_FIXER_IGNORE_ENV=true
-            - IMPORT_AND_BUILD_SCHEDULE=* * * * *
             - PHP_IDE_CONFIG=phpstorm
         profiles: [on-demand]
         networks:

@@ -44,8 +44,7 @@ final class GetActivity extends Tool
     public function __invoke(string $activityId): array
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
 
-        return $activities->getByActivityId($activityId)->exportForAITooling();
+        return $this->activitiesEnricher->getEnrichedActivity($activityId)->exportForAITooling();
     }
 }
