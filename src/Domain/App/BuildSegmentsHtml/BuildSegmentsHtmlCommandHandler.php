@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildSegmentsHtml;
 
 use App\Domain\Strava\Activity\ActivitiesEnricher;
-use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Segment\Segment;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
