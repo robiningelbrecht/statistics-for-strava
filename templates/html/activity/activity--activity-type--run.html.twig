@@ -1,6 +1,7 @@
 {% autoescape false %}
-<div>
-        <div class="mb-4 grid grid-cols-6 gap-2">
+<div class="grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-1 gap-4">
+        <div class="grid grid-cols-6 gap-2">
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
@@ -40,14 +41,14 @@
         </div>
         {% set weather = activity.getWeather() %}
         {% if weather %}
-            <div class="mb-4 text-xs font-normal text-gray-500">
+            <div class="text-xs font-normal text-gray-500">
                 {{ weather.getWeatherCodeDescription() }}, {{ renderComponent('measurement', {'measurement': weather.getTemperatureInCelsius(), 'precision': 1}) }},
                 Humidity {{ weather.getRelativeHumidity() }}%,
                 Wind {{ renderComponent('measurement', {'measurement': weather.getWindSpeed(), 'precision': 1}) }} from {{ weather.getWindDirection() }}.
             </div>
         {% endif %}
         {% if activity.getLocalImagePaths() %}
-            <div class="mb-4 grid grid-cols-6 gap-2">
+            <div class="grid grid-cols-6 gap-2">
                 {% for imagePath in activity.getLocalImagePaths()|slice(0, 6) %}
                     <div>
                         <img class="h-auto max-w-full rounded-lg lazy"
@@ -58,132 +59,132 @@
             </div>
         {% endif %}
     </div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    {% if not splits.isEmpty() or not laps.isEmpty() %}
-        <div>
-            {% if not splits.isEmpty() and not laps.isEmpty() %}
-                <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
-                        <li class="mr-2" role="presentation">
-                            <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                {{ "Splits"|trans }}
-                            </a>
-                        </li>
-                        <li class="mr-2" role="presentation">
-                            <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                {{ "Laps"|trans }}
-                            </a>
-                        </li>
-                    </ul>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {% if not splits.isEmpty() or not laps.isEmpty() %}
+            <div>
+                {% if not splits.isEmpty() and not laps.isEmpty() %}
+                    <div class="mb-4 border-b border-gray-200">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
+                            <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Splits"|trans }}
+                                </a>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Laps"|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <div id="splitsLapsTabContent">
+                    {% if not splits.isEmpty() %}
+                        <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
+                            <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                    <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                    <div class="grow min-w-[10rem] px-2 py-2"></div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "Elev"|trans }}</div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
+                                </div>
+                                {% for split in splits %}
+                                    <div class="flex items-center border-b last:border-b-0">
+                                        <div class="w-[2rem] px-2 py-2 font-bold">
+                                            {{ split.getSplitNumber() }}
+                                        </div>
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ split.getPaceInSecPerKm()|formatPace }}
+                                        </div>
+                                        <div class="grow min-w-[10rem] px-2 py-2">
+                                            <div class=" bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ renderComponent('measurement', {'measurement': split.getElevationDifference(), 'precision': 0}) }}
+                                        </div>
+                                        {% if split.getAverageHeartRate() %}
+                                            <div class="w-[5rem] px-2 py-2">
+                                                {{ split.getAverageHeartRate() }}
+                                            </div>
+                                        {% else %}
+                                            <div class="w-[5rem] px-2 py-2">
+                                                {{ "n/a"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if not laps.isEmpty() %}
+                        <div id="splitsLapsTabLaps" role="tabpanel" aria-labelledby="splitsLapsTabLaps-tab">
+                            <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                    <div class="w-[2rem] px-2 py-2">{{ "Lap"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Distance"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Time"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Elev"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "HR"|trans }}</div>
+                                </div>
+                                {% for lab in laps %}
+                                    <div class="flex items-center border-b last:border-b-0">
+                                        <div class="w-[2rem] px-2 py-2 font-bold">
+                                            {{ lab.getLapNumber() }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ renderComponent('measurement', {'measurement': lab.getDistanceInKilometer(), 'precision': 1}) }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lab.getMovingTimeFormatted() }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lab.getPaceInSecPerKm()|formatPace }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ renderComponent('measurement', {'measurement': lab.getElevationDifference(), 'precision': 0}) }}
+                                        </div>
+                                        {% if lab.getAverageHeartRate() %}
+                                            <div class="w-[8rem] px-2 py-2">
+                                                {{ lab.getAverageHeartRate() }}
+                                            </div>
+                                        {% else %}
+                                            <div class="w-[8rem] px-2 py-2">
+                                                {{ "n/a"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
-            <div id="splitsLapsTabContent">
-                {% if not splits.isEmpty() %}
-                    <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
-                        <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
-                            <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
-                                <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
-                                <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
-                                <div class="grow min-w-[10rem] px-2 py-2"></div>
-                                <div class="w-[5rem] px-2 py-2">{{ "Elev"|trans }}</div>
-                                <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
-                            </div>
-                            {% for split in splits %}
-                                <div class="flex items-center border-b last:border-b-0">
-                                    <div class="w-[2rem] px-2 py-2 font-bold">
-                                        {{ split.getSplitNumber() }}
-                                    </div>
-                                    <div class="w-[5rem] px-2 py-2">
-                                        {{ split.getPaceInSecPerKm()|formatPace }}
-                                    </div>
-                                    <div class="grow min-w-[10rem] px-2 py-2">
-                                        <div class=" bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="w-[5rem] px-2 py-2">
-                                        {{ renderComponent('measurement', {'measurement': split.getElevationDifference(), 'precision': 0}) }}
-                                    </div>
-                                    {% if split.getAverageHeartRate() %}
-                                        <div class="w-[5rem] px-2 py-2">
-                                            {{ split.getAverageHeartRate() }}
-                                        </div>
-                                    {% else %}
-                                        <div class="w-[5rem] px-2 py-2">
-                                            {{ "n/a"|trans }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
-                {% if not laps.isEmpty() %}
-                    <div id="splitsLapsTabLaps" role="tabpanel" aria-labelledby="splitsLapsTabLaps-tab">
-                        <div class="text-center text-gray-500 text-sm h-[350px] mb-4 relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
-                            <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
-                                <div class="w-[2rem] px-2 py-2">{{ "Lap"|trans }}</div>
-                                <div class="w-[8rem] px-2 py-2">{{ "Distance"|trans }}</div>
-                                <div class="w-[8rem] px-2 py-2">{{ "Time"|trans }}</div>
-                                <div class="w-[8rem] px-2 py-2">{{ "Pace"|trans }}</div>
-                                <div class="w-[8rem] px-2 py-2">{{ "Elev"|trans }}</div>
-                                <div class="w-[8rem] px-2 py-2">{{ "HR"|trans }}</div>
-                            </div>
-                            {% for lab in laps %}
-                                <div class="flex items-center border-b last:border-b-0">
-                                    <div class="w-[2rem] px-2 py-2 font-bold">
-                                        {{ lab.getLapNumber() }}
-                                    </div>
-                                    <div class="w-[8rem] px-2 py-2">
-                                        {{ renderComponent('measurement', {'measurement': lab.getDistanceInKilometer(), 'precision': 1}) }}
-                                    </div>
-                                    <div class="w-[8rem] px-2 py-2">
-                                        {{ lab.getMovingTimeFormatted() }}
-                                    </div>
-                                    <div class="w-[8rem] px-2 py-2">
-                                        {{ lab.getPaceInSecPerKm()|formatPace }}
-                                    </div>
-                                    <div class="w-[8rem] px-2 py-2">
-                                        {{ renderComponent('measurement', {'measurement': lab.getElevationDifference(), 'precision': 0}) }}
-                                    </div>
-                                    {% if lab.getAverageHeartRate() %}
-                                        <div class="w-[8rem] px-2 py-2">
-                                            {{ lab.getAverageHeartRate() }}
-                                        </div>
-                                    {% else %}
-                                        <div class="w-[8rem] px-2 py-2">
-                                            {{ "n/a"|trans }}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endif %}
             </div>
-        </div>
-    {% endif %}
-    {% if leaflet %}
-        {% set leafletOptions = {
-            'routes': leaflet.routes,
-            'tileLayer': leaflet.map.getTileLayer(),
-            'minZoom': leaflet.map.getMinZoom(),
-            'maxZoom': leaflet.map.getMaxZoom(),
-            'imageOverlay': leaflet.map.getOverlayImageUrl(),
-            'bounds': leaflet.map.getBounds(),
-        } %}
-        {% set leafletMargin = splits.isEmpty() or laps.isEmpty() ? '': 'lg:mt-[54px]' %}
-        <div class="h-[350px] {{ leafletMargin }}" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
-             data-leaflet='{{ leafletOptions|json_encode }}'></div>
-    {% else %}
-        <div>
-            <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
-                 data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
-                 alt="No map"/>
-        </div>
-    {% endif %}
-</div>
-{% if bestEfforts|length > 0 %}
+        {% endif %}
+        {% if leaflet %}
+            {% set leafletOptions = {
+                'routes': leaflet.routes,
+                'tileLayer': leaflet.map.getTileLayer(),
+                'minZoom': leaflet.map.getMinZoom(),
+                'maxZoom': leaflet.map.getMaxZoom(),
+                'imageOverlay': leaflet.map.getOverlayImageUrl(),
+                'bounds': leaflet.map.getBounds(),
+            } %}
+            {% set leafletMargin = splits.isEmpty() or laps.isEmpty() ? '': 'lg:mt-[54px]' %}
+            <div class="h-[350px] {{ leafletMargin }}" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+                 data-leaflet='{{ leafletOptions|json_encode }}'></div>
+        {% else %}
+            <div>
+                <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
+                     data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
+                     alt="No map"/>
+            </div>
+        {% endif %}
+    </div>
+    {% if bestEfforts|length > 0 %}
         <div>
             <div class="font-medium text-gray-900">{{ "Fastest times"|trans }}</div>
             <div class="mb-2 text-gray-500 text-xs">
@@ -218,116 +219,117 @@
             </div>
         </div>
     {% endif %}
-{% if segmentEfforts|length > 0 %}
-    <div class="grid grid-cols-1 gap-4">
-        <div id="accordion-segments" data-accordion="collapse"
-             data-active-classes="text-gray-900"
-             data-inactive-classes="text-gray-900">
-            <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
-               aria-controls="accordion-segments-body"
-               class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full py-3 font-medium rtl:text-right text-gray-900">
-                <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
-                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 5 5 1 1 5"/>
-                </svg>
-            </a>
-            <div id="accordion-segments-body" class="hidden relative overflow-x-auto"
-                 aria-labelledby="accordion-segments-heading">
-                <table class="w-full text-sm text-center text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Number of times completed"|trans }}">
-                                {{ renderSvg('hashtag') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3 text-left">
+    {% if segmentEfforts|length > 0 %}
+        <div class="grid grid-cols-1 gap-4">
+            <div id="accordion-segments" data-accordion="collapse"
+                 data-active-classes="text-gray-900"
+                 data-inactive-classes="text-gray-900">
+                <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
+                   aria-controls="accordion-segments-body"
+                   class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full py-3 font-medium rtl:text-right text-gray-900">
+                    <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5 5 1 1 5"/>
+                    </svg>
+                </a>
+                <div id="accordion-segments-body" class="hidden relative overflow-x-auto"
+                     aria-labelledby="accordion-segments-heading">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Number of times completed"|trans }}">
+                                    {{ renderSvg('hashtag') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3 text-left">
 
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
-                                {{ renderSvg('time') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                {{ renderSvg('speed') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
-                                {{ renderSvg('distance') }}
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for segmentEffort in segmentEfforts %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <td class="px-2 py-2">
-                                {{ segmentEffort.getRank() }}
-                            </td>
-                            <td class="px-2 py-2 text-left">
-                                <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
-                                   class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline"
-                                   rel="nofollow">
-                                    <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
-                                </a>
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ segmentEffort.getElapsedTimeFormatted() }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('measurement', {'measurement': segmentEffort.getDistance(), 'precision': 2}) }}
-                            </td>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
+                                    {{ renderSvg('time') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
+                                    {{ renderSvg('speed') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
+                                    {{ renderSvg('distance') }}
+                                </div>
+                            </th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-{% endif %}
-{% if heartRateDistributionChart and profileCharts is not empty  %}
-    <div class="mb-4 border-b border-gray-200">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
-            <li class="mr-2" role="presentation">
-                <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                    {{ "Metrics"|trans }}
-                </a>
-            </li>
-            <li class="mr-2" role="presentation">
-                <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                    {{ "Distribution"|trans }}
-                </a>
-            </li>
-        </ul>
-    </div>
-{% endif %}
-<div id="chartsTabContent">
-    {% if profileCharts is not empty %}
-        <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
-            <div class="flex flex-col gap-y-1">
-                {% for chart in profileCharts %}
-                    <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-    {% if heartRateDistributionChart %}
-        <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div>
-                    <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
-                    <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
+                        </thead>
+                        <tbody>
+                        {% for segmentEffort in segmentEfforts %}
+                            <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                <td class="px-2 py-2">
+                                    {{ segmentEffort.getRank() }}
+                                </td>
+                                <td class="px-2 py-2 text-left">
+                                    <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
+                                       class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline"
+                                       rel="nofollow">
+                                        <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
+                                    </a>
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ segmentEffort.getElapsedTimeFormatted() }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getDistance(), 'precision': 2}) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     {% endif %}
+    {% if heartRateDistributionChart and profileCharts is not empty  %}
+        <div class="border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "Metrics"|trans }}
+                    </a>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "Distribution"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    <div id="chartsTabContent">
+        {% if profileCharts is not empty %}
+            <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
+                <div class="flex flex-col gap-y-1">
+                    {% for chart in profileCharts %}
+                        <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        {% if heartRateDistributionChart %}
+            <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
+                        <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 </div>
 {% endautoescape %}
