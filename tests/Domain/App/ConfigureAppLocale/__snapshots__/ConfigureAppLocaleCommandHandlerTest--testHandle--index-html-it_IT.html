@@ -245,36 +245,36 @@
     </aside>
     <!-- MAIN -->
     <main class="p-4 md:ml-64 [&amp;.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
-        <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
-            <div role="status">
-                <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
-                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
-                </svg>
-                <span class="sr-only">Caricamento...</span>
+                    <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
+                <div role="status">
+                    <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                    </svg>
+                    <span class="sr-only">Caricamento...</span>
+                </div>
             </div>
-        </div>
-        <!-- JS LOADED CONTENT -->
-        <div id="js-loaded-content"></div>
-        <div id="modal-skeleton" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-1500 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-7xl max-h-full">
-                <!-- Modal spinner -->
-                <div class="spinner hidden p-4 items-center justify-center h-auto bg-white rounded-lg shadow-sm">
-                    <div role="status">
-                        <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
-                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
-                        </svg>
-                        <span class="sr-only">Caricamento...</span>
+            <!-- JS LOADED CONTENT -->
+            <div id="js-loaded-content"></div>
+            <div id="modal-skeleton" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-1500 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-7xl max-h-full">
+                    <!-- Modal spinner -->
+                    <div class="spinner hidden p-4 items-center justify-center h-auto bg-white rounded-lg shadow-sm">
+                        <div role="status">
+                            <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-orange-500" viewbox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"></path>
+                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"></path>
+                            </svg>
+                            <span class="sr-only">Caricamento...</span>
+                        </div>
+                    </div>
+                    <!-- Modal content -->
+                    <div id="modal-content" class="relative bg-white rounded-lg shadow-sm">
+
                     </div>
                 </div>
-                <!-- Modal content -->
-                <div id="modal-content" class="relative bg-white rounded-lg shadow-sm">
-
-                </div>
             </div>
-        </div>
-    </main>
+            </main>
 </div>
 <script>
     window.statisticsForStrava = {"countries":{"AF":"Afghanistan","AL":"Albania","DZ":"Algeria","AD":"Andorra","AO":"Angola","AI":"Anguilla","AQ":"Antartide","AG":"Antigua e Barbuda","SA":"Arabia Saudita","AR":"Argentina","AM":"Armenia","AW":"Aruba","AU":"Australia","AT":"Austria","AZ":"Azerbaigian","BS":"Bahamas","BH":"Bahrein","BD":"Bangladesh","BB":"Barbados","BE":"Belgio","BZ":"Belize","BJ":"Benin","BM":"Bermuda","BT":"Bhutan","BY":"Bielorussia","BO":"Bolivia","BA":"Bosnia ed Erzegovina","BW":"Botswana","BR":"Brasile","BN":"Brunei","BG":"Bulgaria","BF":"Burkina Faso","BI":"Burundi","KH":"Cambogia","CM":"Camerun","CA":"Canada","CV":"Capo Verde","BQ":"Caraibi Olandesi","CZ":"Cechia","TD":"Ciad","CL":"Cile","CN":"Cina","CY":"Cipro","VA":"Citt\u00e0 del Vaticano","CO":"Colombia","KM":"Comore","CD":"Congo - Kinshasa","CG":"Congo-Brazzaville","KP":"Corea del Nord","KR":"Corea del Sud","CI":"Costa d\u2019Avorio","CR":"Costa Rica","HR":"Croazia","CU":"Cuba","CW":"Cura\u00e7ao","DK":"Danimarca","DM":"Dominica","EC":"Ecuador","EG":"Egitto","SV":"El Salvador","AE":"Emirati Arabi Uniti","ER":"Eritrea","EE":"Estonia","SZ":"Eswatini","ET":"Etiopia","FJ":"Figi","PH":"Filippine","FI":"Finlandia","FR":"Francia","GA":"Gabon","GM":"Gambia","GE":"Georgia","GS":"Georgia del Sud e Sandwich Australi","DE":"Germania","GH":"Ghana","JM":"Giamaica","JP":"Giappone","GI":"Gibilterra","DJ":"Gibuti","JO":"Giordania","GR":"Grecia","GD":"Grenada","GL":"Groenlandia","GP":"Guadalupa","GU":"Guam","GT":"Guatemala","GG":"Guernsey","GN":"Guinea","GQ":"Guinea Equatoriale","GW":"Guinea-Bissau","GY":"Guyana","GF":"Guyana Francese","HT":"Haiti","HN":"Honduras","IN":"India","ID":"Indonesia","IR":"Iran","IQ":"Iraq","IE":"Irlanda","IS":"Islanda","BV":"Isola Bouvet","CX":"Isola Christmas","IM":"Isola di Man","NF":"Isola Norfolk","AX":"Isole \u00c5land","KY":"Isole Cayman","CC":"Isole Cocos (Keeling)","CK":"Isole Cook","FO":"Isole F\u00e6r \u00d8er","FK":"Isole Falkland","HM":"Isole Heard e McDonald","MP":"Isole Marianne Settentrionali","MH":"Isole Marshall","UM":"Isole Minori Esterne degli Stati Uniti","PN":"Isole Pitcairn","SB":"Isole Salomone","TC":"Isole Turks e Caicos","VI":"Isole Vergini Americane","VG":"Isole Vergini Britanniche","IL":"Israele","IT":"Italia","JE":"Jersey","KZ":"Kazakistan","KE":"Kenya","KG":"Kirghizistan","KI":"Kiribati","KW":"Kuwait","LA":"Laos","LS":"Lesotho","LV":"Lettonia","LB":"Libano","LR":"Liberia","LY":"Libia","LI":"Liechtenstein","LT":"Lituania","LU":"Lussemburgo","MK":"Macedonia del Nord","MG":"Madagascar","MW":"Malawi","MY":"Malaysia","MV":"Maldive","ML":"Mali","MT":"Malta","MA":"Marocco","MQ":"Martinica","MR":"Mauritania","MU":"Mauritius","YT":"Mayotte","MX":"Messico","FM":"Micronesia","MD":"Moldavia","MC":"Monaco","MN":"Mongolia","ME":"Montenegro","MS":"Montserrat","MZ":"Mozambico","MM":"Myanmar (Birmania)","NA":"Namibia","NR":"Nauru","NP":"Nepal","NI":"Nicaragua","NE":"Niger","NG":"Nigeria","NU":"Niue","NO":"Norvegia","NC":"Nuova Caledonia","NZ":"Nuova Zelanda","OM":"Oman","NL":"Paesi Bassi","PK":"Pakistan","PW":"Palau","PA":"Panama","PG":"Papua Nuova Guinea","PY":"Paraguay","PE":"Per\u00f9","PF":"Polinesia Francese","PL":"Polonia","PT":"Portogallo","PR":"Portorico","QA":"Qatar","HK":"RAS di Hong Kong","MO":"RAS di Macao","GB":"Regno Unito","CF":"Repubblica Centrafricana","DO":"Repubblica Dominicana","RE":"Riunione","RO":"Romania","RW":"Ruanda","RU":"Russia","EH":"Sahara Occidentale","KN":"Saint Kitts e Nevis","LC":"Saint Lucia","MF":"Saint Martin","VC":"Saint Vincent e Grenadine","BL":"Saint-Barth\u00e9lemy","PM":"Saint-Pierre e Miquelon","WS":"Samoa","AS":"Samoa Americane","SM":"San Marino","SH":"Sant\u2019Elena","ST":"S\u00e3o Tom\u00e9 e Pr\u00edncipe","SN":"Senegal","RS":"Serbia","SC":"Seychelles","SL":"Sierra Leone","SG":"Singapore","SX":"Sint Maarten","SY":"Siria","SK":"Slovacchia","SI":"Slovenia","SO":"Somalia","ES":"Spagna","LK":"Sri Lanka","US":"Stati Uniti","SS":"Sud Sudan","ZA":"Sudafrica","SD":"Sudan","SR":"Suriname","SJ":"Svalbard e Jan Mayen","SE":"Svezia","CH":"Svizzera","TJ":"Tagikistan","TW":"Taiwan","TZ":"Tanzania","TF":"Terre Australi Francesi","PS":"Territori Palestinesi","IO":"Territorio Britannico dell\u2019Oceano Indiano","TH":"Thailandia","TL":"Timor Est","TG":"Togo","TK":"Tokelau","TO":"Tonga","TT":"Trinidad e Tobago","TN":"Tunisia","TR":"Turchia","TM":"Turkmenistan","TV":"Tuvalu","UA":"Ucraina","UG":"Uganda","HU":"Ungheria","UY":"Uruguay","UZ":"Uzbekistan","VU":"Vanuatu","VE":"Venezuela","VN":"Vietnam","WF":"Wallis e Futuna","YE":"Yemen","ZM":"Zambia","ZW":"Zimbabwe"},"unitSystem":{"paceSymbol":"\/km"}};
@@ -378,7 +378,7 @@
         });
 
         renderedChartsPerTab = [];
-        allRenderedCharts= [];
+        allRenderedCharts = [];
         initElements(document);
 
         if (e.detail && e.detail.modalId) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildSegmentsHtml;
 
+use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Segment\Segment;
@@ -23,7 +24,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private SportTypeRepository $sportTypeRepository,
-        private ActivityRepository $activityRepository,
+        private ActivitiesEnricher $activitiesEnricher,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -49,13 +50,13 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
 
                 /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
                 foreach ($segmentEffortsTopTen as $segmentEffort) {
-                    $activity = $this->activityRepository->find($segmentEffort->getActivityId());
+                    $activity = $this->activitiesEnricher->getEnrichedActivity($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
 
                 /** @var \App\Domain\Strava\Segment\SegmentEffort\SegmentEffort $segmentEffort */
                 foreach ($segmentEffortsHistory as $segmentEffort) {
-                    $activity = $this->activityRepository->find($segmentEffort->getActivityId());
+                    $activity = $this->activitiesEnricher->getEnrichedActivity($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
 
