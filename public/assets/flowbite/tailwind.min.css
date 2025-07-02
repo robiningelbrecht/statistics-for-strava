@@ -1774,9 +1774,6 @@
   .w-\[8rem\] {
     width: 8rem;
   }
-  .w-\[10rem\] {
-    width: 10rem;
-  }
   .w-\[13rem\] {
     width: 13rem;
   }
@@ -1898,6 +1895,9 @@
   }
   .grow {
     flex-grow: 1;
+  }
+  .caption-top {
+    caption-side: top;
   }
   .-translate-x-full {
     --tw-translate-x: -100%;

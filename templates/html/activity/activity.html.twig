@@ -34,7 +34,7 @@
         {% endif %}
     </div>
     <!-- Modal body -->
-    <div class="p-4 md:p-5 space-y-4">
+    <div class="p-4 md:p-5">
     {% include [
         'html/activity/activity--sport-type--' ~ activity.getSportType().getTemplateName() ~'.html.twig',
         'html/activity/activity--activity-type--' ~ activity.getSportType().getActivityType().getTemplateName() ~'.html.twig',

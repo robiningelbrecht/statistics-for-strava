@@ -1,7 +1,7 @@
 {% autoescape false %}
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <div>
-        <div class="mb-4 grid grid-cols-6 gap-2">
+<div class="grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-1 gap-4">
+        <div class="grid grid-cols-6 gap-2">
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
@@ -41,15 +41,15 @@
         </div>
         {% set weather = activity.getWeather() %}
         {% if weather %}
-            <div class="mb-4 text-xs font-normal text-gray-500">
+            <div class="text-xs font-normal text-gray-500">
                 {{ weather.getWeatherCodeDescription() }}, {{ renderComponent('measurement', {'measurement': weather.getTemperatureInCelsius(), 'precision': 1}) }},
                 Humidity {{ weather.getRelativeHumidity() }}%,
                 Wind {{ renderComponent('measurement', {'measurement': weather.getWindSpeed(), 'precision': 1}) }} from {{ weather.getWindDirection() }}.
             </div>
         {% endif %}
         {% if activity.getLocalImagePaths() %}
-            <div class="mb-4 grid grid-cols-4 gap-2">
-                {% for imagePath in activity.getLocalImagePaths()|slice(0, 4) %}
+            <div class="grid grid-cols-6 gap-2">
+                {% for imagePath in activity.getLocalImagePaths()|slice(0, 6) %}
                     <div>
                         <img class="h-auto max-w-full rounded-lg lazy"
                              src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
@@ -58,316 +58,317 @@
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="mb-4 relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-            <table class="w-full text-sm text-center text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase">
-                <tr>
-                    <th scope="col" class="px-2 py-2">
-
-                    </th>
-                    <th scope="col" class="px-2 py-2">
-                        {{ "Speed"|trans }}
-                    </th>
-                    <th scope="col" class="px-2 py-2">
-                        {{ "Heart rate"|trans }}
-                    </th>
-                    <th scope="col" class="px-2 py-2">
-                        {{ "Cadence"|trans }}
-                    </th>
-                    <th scope="col" class="px-2 py-2">
-                        {{ "Power"|trans }}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="border-b">
-                    <th class="px-2 py-2">
-                        {{ "Avg"|trans }}
-                    </th>
-                    <td class="px-2 py-2 text-sm">
-                        {% set averageSpeed = activity.getAverageSpeed() %}
-                        {% if averageSpeed %}
-                            {{ renderComponent('measurement', {'measurement': averageSpeed, 'precision': 1}) }}
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set averageHearRate = activity.getAverageHeartRate() %}
-                        {% if averageHearRate %}
-                            {{ averageHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set averageCadence = activity.getAverageCadence() %}
-                        {{ averageCadence ?: 'n/a'|trans }}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set averagePower = activity.getAveragePower() %}
-                        {% if averagePower %}
-                            {{ averagePower }}<span class="text-xs">w</span>
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <th class="px-2 py-2">
-                        {{ "Max"|trans }}
-                    </th>
-                    <td class="px-2 py-2 text-sm">
-                        {% set maxSpeed = activity.getMaxSpeed() %}
-                        {% if maxSpeed %}
-                            {{ renderComponent('measurement', {'measurement': maxSpeed, 'precision': 1}) }}
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set maxHearRate = activity.getMaxHeartRate() %}
-                        {% if maxHearRate %}
-                            {{ maxHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set maxCadence = activity.getMaxCadence() %}
-                        {{ maxCadence ?: 'n/a'|trans }}
-                    </td>
-                    <td class="px-2 py-2 text-sm">
-                        {% set maxPower = activity.getMaxPower() %}
-                        {% if maxPower %}
-                            {{ maxPower }}<span class="text-xs">w</span>
-                        {% else %}
-                            {{ "n/a"|trans }}
-                        {% endif %}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        {% if activity.hasDetailedPowerData() %}
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-4">
             <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                 <table class="w-full text-sm text-center text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase">
-                    {% set timeIntervals =  [5, 60, 300, 1200] %}
-                    {% set timeIntervalLabels = ['5s', '1m', '5m', '20m'] %}
                     <tr>
-                        {% for timeInterval in timeIntervals %}
-                            {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
-                            {% if powerOutput %}
-                                <th scope="col" colspan="2" class="px-2 py-2">
-                                    {{ "Best"|trans }} {{ timeIntervalLabels[loop.index0] }}
-                                </th>
-                            {% endif %}
-                        {% endfor %}
+                        <th scope="col" class="px-2 py-2">
+
+                        </th>
+                        <th scope="col" class="px-2 py-2">
+                            {{ "Speed"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 py-2">
+                            {{ "Heart rate"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 py-2">
+                            {{ "Cadence"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 py-2">
+                            {{ "Power"|trans }}
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        {% for timeInterval in timeIntervals %}
-                            {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
-                            {% if powerOutput %}
-                                <td class="px-2 py-2 first:border-l-0 border-l">
-                                    {{ powerOutput.getPower() }}<span class="text-xs">w</span>
-                                </td>
-                                <td class="px-2 py-2 last:border-r-0 border-r">
-                                    {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
-                                </td>
+                    <tr class="border-b">
+                        <th class="px-2 py-2">
+                            {{ "Avg"|trans }}
+                        </th>
+                        <td class="px-2 py-2 text-sm">
+                            {% set averageSpeed = activity.getAverageSpeed() %}
+                            {% if averageSpeed %}
+                                {{ renderComponent('measurement', {'measurement': averageSpeed, 'precision': 1}) }}
+                            {% else %}
+                                {{ "n/a"|trans }}
                             {% endif %}
-                        {% endfor %}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set averageHearRate = activity.getAverageHeartRate() %}
+                            {% if averageHearRate %}
+                                {{ averageHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
+                            {% else %}
+                                {{ "n/a"|trans }}
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set averageCadence = activity.getAverageCadence() %}
+                            {{ averageCadence ?: 'n/a'|trans }}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set averagePower = activity.getAveragePower() %}
+                            {% if averagePower %}
+                                {{ averagePower }}<span class="text-xs">w</span>
+                            {% else %}
+                                {{ "n/a"|trans }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="px-2 py-2">
+                            {{ "Max"|trans }}
+                        </th>
+                        <td class="px-2 py-2 text-sm">
+                            {% set maxSpeed = activity.getMaxSpeed() %}
+                            {% if maxSpeed %}
+                                {{ renderComponent('measurement', {'measurement': maxSpeed, 'precision': 1}) }}
+                            {% else %}
+                                {{ "n/a"|trans }}
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set maxHearRate = activity.getMaxHeartRate() %}
+                            {% if maxHearRate %}
+                                {{ maxHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
+                            {% else %}
+                                {{ "n/a"|trans }}
+                            {% endif %}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set maxCadence = activity.getMaxCadence() %}
+                            {{ maxCadence ?: 'n/a'|trans }}
+                        </td>
+                        <td class="px-2 py-2 text-sm">
+                            {% set maxPower = activity.getMaxPower() %}
+                            {% if maxPower %}
+                                {{ maxPower }}<span class="text-xs">w</span>
+                            {% else %}
+                                {{ "n/a"|trans }}
+                            {% endif %}
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            {% if activity.hasDetailedPowerData() %}
+                <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase">
+                        {% set timeIntervals =  [5, 60, 300, 1200] %}
+                        {% set timeIntervalLabels = ['5s', '1m', '5m', '20m'] %}
+                        <tr>
+                            {% for timeInterval in timeIntervals %}
+                                {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
+                                {% if powerOutput %}
+                                    <th scope="col" colspan="2" class="px-2 py-2">
+                                        {{ "Best"|trans }} {{ timeIntervalLabels[loop.index0] }}
+                                    </th>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for timeInterval in timeIntervals %}
+                                {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
+                                {% if powerOutput %}
+                                    <td class="px-2 py-2 first:border-l-0 border-l">
+                                        {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                    </td>
+                                    <td class="px-2 py-2 last:border-r-0 border-r">
+                                        {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                    </td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+            {% if bestEfforts|length > 0 %}
+                <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <caption class="caption-top text-xs">
+                            {{ "Congrats! You achieved personal bests during this activity."|trans }}
+                        </caption>
+                        <thead class="text-xs text-gray-700 uppercase">
+                        <tr>
+                            <th scope="col" class="px-2 py-2">
+                                {{ "Distance"|trans }}
+                            </th>
+                            <th scope="col" class="px-2 py-2">
+                                {{ "Time"|trans }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for bestEffort in bestEfforts %}
+                            {% set distance = bestEffort.getBestEffortDistance() %}
+                            <tr class="border-b last:border-b-0">
+                                <th class="px-2 py-2">
+                                    {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
+                                </th>
+                                <td class="px-2 py-2">
+                                    {{ bestEffort.getFormattedTime() }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+        {% if leaflet %}
+            {% set leafletOptions = {
+                'routes': leaflet.routes,
+                'tileLayer': leaflet.map.getTileLayer(),
+                'minZoom': leaflet.map.getMinZoom(),
+                'maxZoom': leaflet.map.getMaxZoom(),
+                'imageOverlay': leaflet.map.getOverlayImageUrl(),
+                'bounds': leaflet.map.getBounds(),
+            } %}
+            <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+                 data-leaflet='{{ leafletOptions|json_encode }}'></div>
+        {% else %}
+            <div>
+                <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
+                     data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
+                     alt="No map"/>
             </div>
         {% endif %}
     </div>
-    {% if leaflet %}
-        {% set leafletOptions = {
-            'routes': leaflet.routes,
-            'tileLayer': leaflet.map.getTileLayer(),
-            'minZoom': leaflet.map.getMinZoom(),
-            'maxZoom': leaflet.map.getMaxZoom(),
-            'imageOverlay': leaflet.map.getOverlayImageUrl(),
-            'bounds': leaflet.map.getBounds(),
-        } %}
-        <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
-             data-leaflet='{{ leafletOptions|json_encode }}'></div>
-    {% else %}
-        <div>
-            <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
-                 data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
-                 alt="No map"/>
-        </div>
-    {% endif %}
-</div>
-{% if bestEfforts|length > 0 %}
-    <div>
-        <div class="font-medium text-gray-900">{{ "Fastest times"|trans }}</div>
-        <div class="mb-2 text-gray-500 text-xs">
-            {{ "Congrats! You achieved personal bests during this activity."|trans }}
-        </div>
-        <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-            <table class="w-full text-sm text-center text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase">
-                <tr>
-                    <th scope="col" class="px-2 py-2">
-                        {{ "Distance"|trans }}
-                    </th>
-                    <th scope="col" class="px-2 py-3">
-                        {{ "Time"|trans }}
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for bestEffort in bestEfforts %}
-                    {% set distance = bestEffort.getBestEffortDistance() %}
-                    <tr class="border-b last:border-b-0">
-                        <th class="px-2 py-2">
-                            {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
-                        </th>
-                        <td class="px-2 py-2">
-                            {{ bestEffort.getFormattedTime() }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-{% endif %}
-{% if segmentEfforts|length > 0 %}
-    <div class="grid grid-cols-1 gap-4">
-        <div id="accordion-segments" data-accordion="collapse"
-             data-active-classes="text-gray-900"
-             data-inactive-classes="text-gray-900">
-            <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
-               aria-controls="accordion-segments-body"
-               class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full py-3 font-medium rtl:text-right text-gray-900">
-                <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
-                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 5 5 1 1 5"/>
-                </svg>
-            </a>
-            <div id="accordion-segments-body" class="hidden relative overflow-x-auto"
-                 aria-labelledby="accordion-segments-heading">
-                <table class="w-full text-sm text-center text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Number of times completed"|trans }}">
-                                {{ renderSvg('hashtag') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3 text-left">
+    {% if segmentEfforts|length > 0 %}
+        <div class="grid grid-cols-1 gap-4">
+            <div id="accordion-segments" data-accordion="collapse"
+                 data-active-classes="text-gray-900"
+                 data-inactive-classes="text-gray-900">
+                <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
+                   aria-controls="accordion-segments-body"
+                   class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full py-3 font-medium rtl:text-right text-gray-900">
+                    <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
+                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 5 5 1 1 5"/>
+                    </svg>
+                </a>
+                <div id="accordion-segments-body" class="hidden relative overflow-x-auto"
+                     aria-labelledby="accordion-segments-heading">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Number of times completed"|trans }}">
+                                    {{ renderSvg('hashtag') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3 text-left">
 
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
-                                {{ renderSvg('time') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                {{ renderSvg('speed') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
-                                {{ renderSvg('distance') }}
-                            </div>
-                        </th>
-                        <th scope="col" class="px-2 py-3">
-                            <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
-                                {{ renderSvg('power') }}
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for segmentEffort in segmentEfforts %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <td class="px-2 py-2">
-                                {{ segmentEffort.getRank() }}
-                            </td>
-                            <td class="px-2 py-2 text-left">
-                                <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
-                                   class="font-medium text-blue-600 hover:underline" rel="nofollow">
-                                    <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
-                                </a>
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ segmentEffort.getElapsedTimeFormatted() }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ renderComponent('measurement', {'measurement': segmentEffort.getDistance(), 'precision': 2}) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {% if segmentEffort.getAverageWatts() %}
-                                    {{ segmentEffort.getAverageWatts()|formatNumber(0) }}<span class="text-xs">w</span>
-                                {% else %}
-                                    n/a
-                                {% endif %}
-                            </td>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
+                                    {{ renderSvg('time') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
+                                    {{ renderSvg('speed') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
+                                    {{ renderSvg('distance') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
+                                    {{ renderSvg('power') }}
+                                </div>
+                            </th>
                         </tr>
+                        </thead>
+                        <tbody>
+                        {% for segmentEffort in segmentEfforts %}
+                            <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                <td class="px-2 py-2">
+                                    {{ segmentEffort.getRank() }}
+                                </td>
+                                <td class="px-2 py-2 text-left">
+                                    <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
+                                       class="font-medium text-blue-600 hover:underline" rel="nofollow">
+                                        <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
+                                    </a>
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ segmentEffort.getElapsedTimeFormatted() }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getDistance(), 'precision': 2}) }}
+                                </td>
+                                <td class="px-2 py-2">
+                                    {% if segmentEffort.getAverageWatts() %}
+                                        {{ segmentEffort.getAverageWatts()|formatNumber(0) }}<span class="text-xs">w</span>
+                                    {% else %}
+                                        n/a
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if (powerDistributionChart or heartRateDistributionChart) and profileCharts is not empty  %}
+        <div class="border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "Metrics"|trans }}
+                    </a>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "Distribution"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    <div id="chartsTabContent">
+        {% if profileCharts is not empty %}
+            <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
+                <div class="flex flex-col gap-y-1">
+                    {% for chart in profileCharts %}
+                        <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
                     {% endfor %}
-                    </tbody>
-                </table>
+                </div>
             </div>
-        </div>
+        {% endif %}
+        {% if powerDistributionChart or heartRateDistributionChart %}
+            <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {% if powerDistributionChart %}
+                        <div>
+                            <h3 class="font-bold mb-1 text-center">{{ "Power distribution"|trans }}</h3>
+                            <div class="h-[350px]" data-echarts-options='{{ powerDistributionChart }}'></div>
+                        </div>
+                    {% endif %}
+                    {% if heartRateDistributionChart %}
+                        <div>
+                            <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
+                            <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     </div>
-{% endif %}
-{% if (powerDistributionChart or heartRateDistributionChart) and profileCharts is not empty  %}
-<div class="mb-4 border-b border-gray-200">
-    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
-        <li class="mr-2" role="presentation">
-            <a href="#" data-tabs-target="#chartsTabMetrics" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                {{ "Metrics"|trans }}
-            </a>
-        </li>
-        <li class="mr-2" role="presentation">
-            <a href="#" data-tabs-target="#chartsTabDistribution" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                {{ "Distribution"|trans }}
-            </a>
-        </li>
-    </ul>
-</div>
-{% endif %}
-<div id="chartsTabContent">
-    {% if profileCharts is not empty %}
-        <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
-            <div class="flex flex-col gap-y-1">
-                {% for chart in profileCharts %}
-                    <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
-                {% endfor %}
-            </div>
-        </div>
-    {% endif %}
-    {% if powerDistributionChart or heartRateDistributionChart %}
-        <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {% if powerDistributionChart %}
-                    <div>
-                        <h3 class="font-bold mb-1 text-center">{{ "Power distribution"|trans }}</h3>
-                        <div class="h-[350px]" data-echarts-options='{{ powerDistributionChart }}'></div>
-                    </div>
-                {% endif %}
-                {% if heartRateDistributionChart %}
-                    <div>
-                        <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
-                        <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-    {% endif %}
 </div>
 {% endautoescape %}
