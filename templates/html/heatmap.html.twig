@@ -1,84 +1,76 @@
-{% extends "html/base.html.twig" %}
-
-{% block breadcrumbs %}
-    <li>
-        <div class="flex items-center">
-            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="{{ relativeUrl('heatmap') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Heatmap"|trans }}</a>
-        </div>
-    </li>
-{% endblock %}
-{% block content %}
-    {% autoescape false %}
-        <div class="grid grid-cols-1 gap-y-2 heatmap-wrapper">
-            <div class="lg:flex items-center justify-between gap-x-[2rem] p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                <form class="flex flex-col gap-y-2" autocomplete="off">
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        {% if sportTypes|length > 0 %}
-                            <div>
-                                <button id="dropdownSportTypesButton"
-                                        data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
-                                        class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                                    <span>{{ "Filter on sport type"|trans }}</span>
-                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                    </svg>
-                                </button>
-                                <div id="dropdownSportTypes" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
-                                    <ul class="max-h-48 overflow-y-auto px-1 py-2 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
-                                        {% for sportType in sportTypes %}
-                                            <li>
-                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
-                                                    <input type="radio" id="{{ sportType.value }}" data-heatmap-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
-                                                    <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
-                                                        {{ renderSvg(sportType.getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
-                                                        <div>{{ sportType|trans }}</div>
-                                                    </label>
-                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-heatmap-filter-clear="sportType">{{ "clear"|trans }}</a>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
+{% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': [{
+    'url': 'heatmap',
+    'label': 'Heatmap'|trans
+}]} %}
+{% autoescape false %}
+    <div class="grid grid-cols-1 gap-y-2 heatmap-wrapper">
+        <div class="lg:flex items-center justify-between gap-x-[2rem] p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <form class="flex flex-col gap-y-2" autocomplete="off">
+                <div class="flex flex-col sm:flex-row gap-2">
+                    {% if sportTypes|length > 0 %}
                         <div>
-                            <button id="dropdownDateRangeButton"
-                                    data-dropdown-toggle="dropdownDateRange" type="button"
-                                    class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between">
-                                <span>{{ "From"|trans }} - {{ "To"|trans }}</span>
+                            <button id="dropdownSportTypesButton"
+                                    data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
+                                    class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                                <span>{{ "Filter on sport type"|trans }}</span>
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                            <div id="dropdownDateRange" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
-                                <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
-                                    <div class="flex items-center" data-heatmap-filter="start-date[]">
-                                        <input name="start-date[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                        <span class="mx-2 text-gray-500">{{ "To"|trans }}</span>
-                                        <input name="start-date[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    </div>
-                                    <a href="#" class="text-strava-orange text-sm text-right underline" data-heatmap-filter-clear="start-date">{{ "clear"|trans }}</a>
+                            <div id="dropdownSportTypes" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <ul class="max-h-48 overflow-y-auto px-1 py-2 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
+                                    {% for sportType in sportTypes %}
+                                        <li>
+                                            <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                <input type="radio" id="{{ sportType.value }}" data-heatmap-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                    {{ renderSvg(sportType.getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
+                                                    <div>{{ sportType|trans }}</div>
+                                                </label>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-heatmap-filter-clear="sportType">{{ "clear"|trans }}</a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <button id="dropdownDateRangeButton"
+                                data-dropdown-toggle="dropdownDateRange" type="button"
+                                class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between">
+                            <span>{{ "From"|trans }} - {{ "To"|trans }}</span>
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <div id="dropdownDateRange" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                            <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
+                                <div class="flex items-center" data-heatmap-filter="start-date[]">
+                                    <input name="start-date[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    <span class="mx-2 text-gray-500">{{ "To"|trans }}</span>
+                                    <input name="start-date[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
+                                <a href="#" class="text-strava-orange text-sm text-right underline" data-heatmap-filter-clear="start-date">{{ "clear"|trans }}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="text-xs text-gray-700">
-                        {% set numberOfResults = '<span class="font-bold" data-heatmap-route-count>' ~ numberOfRoutes ~ '</span>' %}
-                        {{ "{numberOfResults} routes based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
-                        <a href="#" class="hidden text-strava-orange underline" data-heatmap-reset>{{ "clear"|trans }}</a>
-                    </div>
-                </form>
-                <div class="mt-2 lg:mt-0 text-gray-700 text-xs">
-                    {% set percentage = '<span class="font-bold">' ~ (numberOfCountriesWithWorkouts / 195 * 100)|formatNumber(0) ~ '%</span>' %}
-                    {{ "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"|trans({
-                        '{numberOfCountriesWithWorkouts}': numberOfCountriesWithWorkouts,
-                        '{percentage}': percentage
-                    }) }}
                 </div>
+                <div class="text-xs text-gray-700">
+                    {% set numberOfResults = '<span class="font-bold" data-heatmap-route-count>' ~ numberOfRoutes ~ '</span>' %}
+                    {{ "{numberOfResults} routes based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
+                    <a href="#" class="hidden text-strava-orange underline" data-heatmap-reset>{{ "clear"|trans }}</a>
+                </div>
+            </form>
+            <div class="mt-2 lg:mt-0 text-gray-700 text-xs">
+                {% set percentage = '<span class="font-bold">' ~ (numberOfCountriesWithWorkouts / 195 * 100)|formatNumber(0) ~ '%</span>' %}
+                {{ "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"|trans({
+                    '{numberOfCountriesWithWorkouts}': numberOfCountriesWithWorkouts,
+                    '{percentage}': percentage
+                }) }}
             </div>
-            <!-- HEATMAP -->
-            <div id="heatmap" data-leaflet-routes='{{ routes }}' class="grid grid-cols-1 h-[calc(100vh-245px)]"></div>
         </div>
-    {% endautoescape %}
-{% endblock %}
+        <!-- HEATMAP -->
+        <div id="heatmap" data-leaflet-routes='{{ routes }}' class="grid grid-cols-1 h-[calc(100vh-245px)]"></div>
+    </div>
+{% endautoescape %}

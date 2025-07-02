@@ -1,146 +1,138 @@
-{% extends "html/base.html.twig" %}
-
-{% block breadcrumbs %}
-    <li>
-        <div class="flex items-center">
-            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="{{ relativeUrl('segments') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 ">{{ "Segments"|trans }}</a>
-        </div>
-    </li>
-{% endblock %}
-{% block content %}
-    {% autoescape false %}
-        <div class="grid grid-cols-1 gap-4">
-            <!-- SEGMENTS -->
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                <div data-dataTable-settings='{"url":"fetch-json/segment-data-table.json"}' class="relative">
-                    <form class="flex flex-col gap-y-2 mb-2" autocomplete="off">
-                        <div class="flex items-center">
-                            <label for="search" class="sr-only">{{ "Search"|trans }}</label>
-                            <div class="relative w-full">
-                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                    </svg>
-                                </div>
-                                <input id="search" type="search" placeholder="{{ "Search segment..."|trans }}" class="table-search bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5">
+{% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': [{
+    'url': 'segments',
+    'label': 'Segments'|trans
+}]} %}
+{% autoescape false %}
+    <div class="grid grid-cols-1 gap-4">
+        <!-- SEGMENTS -->
+        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div data-dataTable-settings='{"url":"fetch-json/segment-data-table.json"}' class="relative">
+                <form class="flex flex-col gap-y-2 mb-2" autocomplete="off">
+                    <div class="flex items-center">
+                        <label for="search" class="sr-only">{{ "Search"|trans }}</label>
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                </svg>
                             </div>
+                            <input id="search" type="search" placeholder="{{ "Search segment..."|trans }}" class="table-search bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5">
                         </div>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            {% if sportTypes|length > 0 %}
-                                <div>
-                                    <button id="dropdownSportTypesButton"
-                                            data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
-                                            class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                                        <span>{{ "Filter on sport type"|trans }}</span>
-                                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                        </svg>
-                                    </button>
-                                    <div id="dropdownSportTypes" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
-                                        <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
-                                            {% for sportType in sportTypes %}
-                                                <li>
-                                                    <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
-                                                        <input type="radio" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
-                                                        <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
-                                                            {{ renderSvg(sportType.getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
-                                                            <div>{{ sportType|trans }}</div>
-                                                        </label>
-                                                        <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="sportType">{{ "clear"|trans }}</a>
-                                                    </div>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            {% endif %}
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        {% if sportTypes|length > 0 %}
                             <div>
-                                <button id="dropdownOtherButton"
-                                        data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
-                                        class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                                    <span>{{ "Other"|trans }}</span>
+                                <button id="dropdownSportTypesButton"
+                                        data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
+                                        class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                                    <span>{{ "Filter on sport type"|trans }}</span>
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
-                                <div id="dropdownOther" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
-                                    <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownOtherButton">
-                                        <li>
-                                            <div class="flex items-center p-2 rounded-xs hover:bg-gray-100">
-                                                <input type="checkbox" id="isFavourite" data-dataTable-filter="isFavourite" name="isFavourite" value="isFavourite" class="w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
-                                                <label for="isFavourite" class="w-full ms-2 text-sm font-medium text-gray-500 cursor-pointer peer-checked:border-strava-orange peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                <div id="dropdownSportTypes" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                    <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
+                                        {% for sportType in sportTypes %}
+                                            <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                    <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        {{ renderSvg(sportType.getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
+                                                        <div>{{ sportType|trans }}</div>
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="sportType">{{ "clear"|trans }}</a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div>
+                            <button id="dropdownOtherButton"
+                                    data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
+                                    class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                                <span>{{ "Other"|trans }}</span>
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div id="dropdownOther" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownOtherButton">
+                                    <li>
+                                        <div class="flex items-center p-2 rounded-xs hover:bg-gray-100">
+                                            <input type="checkbox" id="isFavourite" data-dataTable-filter="isFavourite" name="isFavourite" value="isFavourite" class="w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                            <label for="isFavourite" class="w-full ms-2 text-sm font-medium text-gray-500 cursor-pointer peer-checked:border-strava-orange peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
                                                     <span class="flex gap-x-1 items-center">
                                                         {{ renderSvg('star') }}
                                                         <div>{{ "Favourite"|trans }}</div>
                                                     </span>
-                                                    <span class="text-xs font-normal text-gray-500">{{ "Filter on starred segments"|trans }}</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="flex items-center p-2 rounded-xs hover:bg-gray-100">
-                                                <input type="checkbox" id="isKom" data-dataTable-filter="isKom" name="isKom" value="isKom" class="w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
-                                                <label for="isKom" class="w-full ms-2 text-sm font-medium text-gray-500 cursor-pointer peer-checked:border-strava-orange peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                <span class="text-xs font-normal text-gray-500">{{ "Filter on starred segments"|trans }}</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center p-2 rounded-xs hover:bg-gray-100">
+                                            <input type="checkbox" id="isKom" data-dataTable-filter="isKom" name="isKom" value="isKom" class="w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                            <label for="isKom" class="w-full ms-2 text-sm font-medium text-gray-500 cursor-pointer peer-checked:border-strava-orange peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
                                                     <span class="flex gap-x-1 items-center">
                                                         {{ renderSvg('elevation', {'classes': 'h-4 shrink-0 text-strava-orange'}) }}
                                                         <div>{{ "KOM"|trans }}</div>
                                                     </span>
-                                                    <span class="text-xs font-normal text-gray-500">{{ "Filter on KOM segments"|trans }}</span>
-                                                </label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                                <span class="text-xs font-normal text-gray-500">{{ "Filter on KOM segments"|trans }}</span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="text-xs text-gray-700">
-                            {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ totalSegmentCount ~ '</span>' %}
-                            {{ "{numberOfResults} results based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
-                            <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
-                        </div>
-                    </form>
-                    <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
-                        <table class="w-full text-sm text-center text-gray-500">
-                            <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" data-dataTable-sort="name" class="px-2 py-3 cursor-pointer">
-                                    <div class="w-[23rem]">{{ renderSvg('sorting-icon') }}</div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Best effort"|trans }}">
-                                        {{ renderSvg('trophy') }}
-                                    </div>
-                                </th>
-                                <th scope="col" data-dataTable-sort="distance" class="px-2 py-3 cursor-pointer" title="{{ "Distance"|trans }}">
-                                    <div class="flex items-center justify-center">
-                                        {{ renderSvg('distance') }}
-                                        {{ renderSvg('sorting-icon') }}
-                                    </div>
-                                </th>
-                                <th scope="col" data-dataTable-sort="max-gradient" class="px-2 py-3 cursor-pointer" title="{{ "Max gradient"|trans }}">
-                                    <div class="flex items-center justify-center">
-                                        {{ renderSvg('max-gradient') }}
-                                        {{ renderSvg('sorting-icon') }}
-                                    </div>
-                                </th>
-                                <th scope="col" data-dataTable-sort="ride-count" class="px-2 py-3 cursor-pointer" title="{{ "Number of times completed"|trans }}">
-                                    <div class="flex items-center justify-center">
-                                        {{ renderSvg('hashtag') }}
-                                        {{ renderSvg('sorting-icon') }}
-                                    </div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="clusterize-content">
-                            <tr class="clusterize-loading">
-                                <td class="px-6 py-2 truncate">{{ "Loading data..."|trans }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
                     </div>
+                    <div class="text-xs text-gray-700">
+                        {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ totalSegmentCount ~ '</span>' %}
+                        {{ "{numberOfResults} results based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
+                        <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
+                    </div>
+                </form>
+                <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" data-dataTable-sort="name" class="px-2 py-3 cursor-pointer">
+                                <div class="w-[23rem]">{{ renderSvg('sorting-icon') }}</div>
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                <div class="flex items-center justify-center" title="{{ "Best effort"|trans }}">
+                                    {{ renderSvg('trophy') }}
+                                </div>
+                            </th>
+                            <th scope="col" data-dataTable-sort="distance" class="px-2 py-3 cursor-pointer" title="{{ "Distance"|trans }}">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('distance') }}
+                                    {{ renderSvg('sorting-icon') }}
+                                </div>
+                            </th>
+                            <th scope="col" data-dataTable-sort="max-gradient" class="px-2 py-3 cursor-pointer" title="{{ "Max gradient"|trans }}">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('max-gradient') }}
+                                    {{ renderSvg('sorting-icon') }}
+                                </div>
+                            </th>
+                            <th scope="col" data-dataTable-sort="ride-count" class="px-2 py-3 cursor-pointer" title="{{ "Number of times completed"|trans }}">
+                                <div class="flex items-center justify-center">
+                                    {{ renderSvg('hashtag') }}
+                                    {{ renderSvg('sorting-icon') }}
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="clusterize-content">
+                        <tr class="clusterize-loading">
+                            <td class="px-6 py-2 truncate">{{ "Loading data..."|trans }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    {% endautoescape %}
-{% endblock %}
+    </div>
+{% endautoescape %}

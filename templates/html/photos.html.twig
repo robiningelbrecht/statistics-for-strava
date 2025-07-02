@@ -1,46 +1,38 @@
-{% extends "html/base.html.twig" %}
-
-{% block breadcrumbs %}
-    <li>
-        <div class="flex items-center">
-            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-            <a href="#" data-router-navigate="{{ relativeUrl('photos') }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">{{ "Photos"|trans }}</a>
-        </div>
-    </li>
-{% endblock %}
-
-{% block content %}
-    {% autoescape false %}
-        <!-- PHOTOS -->
-        <div class="mb-4 border-b border-gray-200 flex items-center">
-            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
-                {% for sportType in sportTypes %}
-                    {% set imageCount =  images|filter(image => image.getActivity().getSportType() == sportType)|length %}
-                    {% if imageCount > 0 %}
-                        <li class="mr-2" role="presentation">
-                            <a href="#" data-tabs-target="#{{ sportType.value }}" role="tab" aria-controls="{{ sportType.value }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                {{ sportType|trans }} ({{ imageCount }})
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
-        <div id="photoTypeTabContent">
+{% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': [{
+    'url': 'photos',
+    'label': 'Photos'|trans
+}]} %}
+{% autoescape false %}
+    <!-- PHOTOS -->
+    <div class="mb-4 border-b border-gray-200 flex items-center">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
             {% for sportType in sportTypes %}
-                {% set imagesForSportType = images|filter(image => image.getActivity().getSportType() == sportType) %}
-                {% set lightGalleryElements = imagesForSportType|map(image => {
-                    'src': relativeUrl(image.getImageUrl()),
-                    'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
-                    'alt':  image.getActivity().getSanitizedName(),
-                })|array_values() %}
-                <div class="relative" id="{{ sportType.value }}" role="tabpanel" aria-labelledby="{{ sportType.value }}-tab">
-                    <div class="absolute -top-[48px] right-0 text-gray-500 hover:text-strava-orange">
-                        <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-elements='{{ lightGalleryElements|json_encode() }}'>
-                            {{ renderSvg('slideshow') }}
+                {% set imageCount =  images|filter(image => image.getActivity().getSportType() == sportType)|length %}
+                {% if imageCount > 0 %}
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#{{ sportType.value }}" role="tab" aria-controls="{{ sportType.value }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ sportType|trans }} ({{ imageCount }})
                         </a>
-                    </div>
-                    <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="photoTypeTabContent">
+        {% for sportType in sportTypes %}
+            {% set imagesForSportType = images|filter(image => image.getActivity().getSportType() == sportType) %}
+            {% set lightGalleryElements = imagesForSportType|map(image => {
+                'src': relativeUrl(image.getImageUrl()),
+                'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
+                'alt':  image.getActivity().getSanitizedName(),
+            })|array_values() %}
+            <div class="relative" id="{{ sportType.value }}" role="tabpanel" aria-labelledby="{{ sportType.value }}-tab">
+                <div class="absolute -top-[48px] right-0 text-gray-500 hover:text-strava-orange">
+                    <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-elements='{{ lightGalleryElements|json_encode() }}'>
+                        {{ renderSvg('slideshow') }}
+                    </a>
+                </div>
+                <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
                     {% for image in imagesForSportType %}
                         <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
                             <a href="{{ image.getActivity().getUrl() }}" target="_blank">
@@ -54,8 +46,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% endautoescape %}
-{% endblock %}
+            </div>
+        {% endfor %}
+    </div>
+{% endautoescape %}
