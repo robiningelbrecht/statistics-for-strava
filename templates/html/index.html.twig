@@ -315,7 +315,8 @@
 <script src="{{ relativeUrl(asset('assets/data-table/data-table.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.umd.min.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
-
+{% block scripts %}
+{% endblock %}
 <script type="module">
     import LeafletMap from "{{ relativeUrl('/assets/leaflet/leaflet-map.js') }}";
     import Heatmap from "{{ relativeUrl('/assets/leaflet/heatmap.js') }}";
