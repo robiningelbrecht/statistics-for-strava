@@ -2,7 +2,7 @@ export default function Router(app) {
     const appContent = app.querySelector('#js-loaded-content');
     const spinner = app.querySelector('#spinner');
     const menu = document.querySelector('aside');
-    const menuItems = document.querySelectorAll("aside li a[data-router-navigate]");
+    const menuItems = document.querySelectorAll("aside li a[data-router-navigate]:not([data-router-disbaled])");
     const mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
     const defaultRoute = '/dashboard';
 
@@ -40,7 +40,6 @@ export default function Router(app) {
             }));
         }
 
-        // Show loader.
         showLoader();
 
         // Load content.
@@ -48,7 +47,6 @@ export default function Router(app) {
         appContent.innerHTML = await response.text();
         window.scrollTo(0, 0);
 
-        // Hide loader.
         hideLoader();
 
         app.setAttribute('data-router-current', page);
@@ -66,7 +64,7 @@ export default function Router(app) {
         }
 
         // There might be other nav links on the newly loaded page, make sure they are registered.
-        const nav = document.querySelectorAll("nav a[data-router-navigate], main a[data-router-navigate]");
+        const nav = document.querySelectorAll("nav a[data-router-navigate]:not([data-router-disbaled]), main a[data-router-navigate]:not([data-router-disbaled])");
         registerNavItems(nav);
 
         const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
@@ -127,6 +125,10 @@ export default function Router(app) {
     };
 
     const boot = () => {
+        if (appContent === null) {
+            // App content can be null if SYMFONY routing is used.
+            return;
+        }
         const route = currentRoute();
         const modal = location.hash.replace('#', '');
 
