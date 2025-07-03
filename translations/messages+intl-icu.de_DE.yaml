@@ -45,6 +45,7 @@ Canoeing: Kanufahren
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
+'Click to upload': 'Click to upload'
 'Close modal': 'Modal schließen'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
@@ -129,6 +130,7 @@ History: Verlauf
 'Ice Skate': Eislaufen
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
+'Image generator': 'Image generator'
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': Inlineskaten
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -223,6 +225,7 @@ Rides: Fahrten
 'Roller Ski': Rollski
 Rowing: Rudern
 Runs: Läufe
+'SVG, PNG, JPG or GIF': 'SVG, PNG, JPG or GIF'
 Sail: Segeln
 Sat: Sa
 Saturday: Samstag
@@ -361,6 +364,7 @@ more: more
 'more info': 'more info'
 n/a: n/v
 never: never
+'or drag and drop': 'or drag and drop'
 to: to
 weeks: weeks
 workouts: Trainingseinheiten

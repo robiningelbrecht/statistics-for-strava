@@ -45,6 +45,7 @@ Canoeing: Canoagem
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carga de Treino Crónica (Forma) - média ponderada exponencial de 42-dias da carga diária de treino. Representa adaptação ao treino de longo prazo.'
+'Click to upload': 'Click to upload'
 'Close modal': 'Fechar modal'
 'Collapse sidebar': 'Fechar barra lateral'
 Commutes: 'Viagens Escritório'
@@ -129,6 +130,7 @@ History: Histórico
 'Ice Skate': 'Patinagem no Gelo'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Imagem "{imgSrc}" referenciada no ficheiro de configuração de manutenção, mas não foi encontrado em "storage/gear-maintenance"'
+'Image generator': 'Image generator'
 'Individual thresholds vary based on fitness level.': 'Thresholds individuais variam consoante o nível de forma.'
 'Inline Skate': 'Patinagem em Linha'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Parece que nenhum equipamento válido está associado a nenhum dos componentes. Por favor verificar o ficheiro de configuração.'
@@ -223,6 +225,7 @@ Rides: 'Passeios de bicicleta'
 'Roller Ski': 'Esqui de Rodas'
 Rowing: Remo
 Runs: Corridas
+'SVG, PNG, JPG or GIF': 'SVG, PNG, JPG or GIF'
 Sail: Vela
 Sat: Sáb
 Saturday: Sábado
@@ -361,6 +364,7 @@ more: mais
 'more info': 'mais info'
 n/a: n/d
 never: nunca
+'or drag and drop': 'or drag and drop'
 to: to
 weeks: semanas
 workouts: treinos

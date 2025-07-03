@@ -1613,6 +1613,9 @@
   .max-h-\[calc\(100vh-160px\)\] {
     max-height: calc(100vh - 160px);
   }
+  .max-h-\[calc\(100vh-170px\)\] {
+    max-height: calc(100vh - 170px);
+  }
   .max-h-\[calc\(100vh-200px\)\] {
     max-height: calc(100vh - 200px);
   }
@@ -2191,6 +2194,10 @@
     border-style: var(--tw-border-style);
     border-width: 0px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -2230,6 +2237,10 @@
   .border-l-4 {
     border-left-style: var(--tw-border-style);
     border-left-width: 4px;
+  }
+  .border-dashed {
+    --tw-border-style: dashed;
+    border-style: dashed;
   }
   .dark {
     & .apexcharts-canvas .apexcharts-tooltip {
@@ -3780,6 +3791,11 @@
       &:focus {
         --tw-ring-color: var(--color-gray-600);
       }
+    }
+  }
+  .\[\&\.dragover\]\:bg-gray-100 {
+    &.dragover {
+      background-color: var(--color-gray-100);
     }
   }
   .\[\&\.sidebar-is-collapsed\]\:w-32 {

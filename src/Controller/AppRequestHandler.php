@@ -25,7 +25,7 @@ final readonly class AppRequestHandler
     ) {
     }
 
-    #[Route(path: '/{wildcard?}', requirements: ['wildcard' => '.*'], methods: ['GET'])]
+    #[Route(path: '/{wildcard?}', requirements: ['wildcard' => '.*'], methods: ['GET'], priority: -10)]
     public function handle(Request $request): Response
     {
         if ($this->buildStorage->fileExists('index.html')) {
