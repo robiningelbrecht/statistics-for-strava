@@ -50,8 +50,8 @@
         {% if activity.getLocalImagePaths() %}
             <div class="grid grid-cols-6 gap-2">
                 {% for imagePath in activity.getLocalImagePaths()|slice(0, 6) %}
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg lazy"
+                    <div class="h-[130px]">
+                        <img class="h-full w-full object-cover object-top rounded-lg lazy"
                              src="{{ placeholderImage() }}" data-src="{{ imagePath }}"
                              alt="Activity image"/>
                     </div>

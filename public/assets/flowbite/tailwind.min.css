@@ -1583,6 +1583,9 @@
   .h-\[120px\] {
     height: 120px;
   }
+  .h-\[130px\] {
+    height: 130px;
+  }
   .h-\[145px\] {
     height: 145px;
   }
@@ -2595,6 +2598,9 @@
   }
   .object-cover {
     object-fit: cover;
+  }
+  .object-top {
+    object-position: top;
   }
   .apexcharts-legend {
     .apexcharts-canvas & {

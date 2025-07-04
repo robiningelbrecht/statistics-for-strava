@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Domain\App\AppVersion;
 use App\Domain\App\BuildActivitiesHtml\BuildActivitiesHtml;
 use App\Domain\App\BuildBadgeSvg\BuildBadgeSvg;
 use App\Domain\App\BuildChallengesHtml\BuildChallengesHtml;
@@ -31,6 +32,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
 #[AsCommand(name: 'app:strava:build-files', description: 'Build Strava files')]
@@ -49,7 +51,7 @@ final class BuildAppConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output = new LoggableConsoleOutput($output, $this->logger);
+        $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
         if (!$this->migrationRunner->isAtLatestVersion()) {
             $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');
@@ -64,6 +66,12 @@ final class BuildAppConsoleCommand extends Command
         $this->resourceUsage->startTimer();
 
         $now = $this->clock->getCurrentDateTimeImmutable();
+
+        $output->block(
+            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
+            style: 'fg=black;bg=green',
+            padding: true
+        );
 
         $output->writeln('Configuring locale...');
         $this->commandBus->dispatch(new ConfigureAppLocale());
