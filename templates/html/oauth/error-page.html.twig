@@ -12,7 +12,7 @@
     <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
 </head>
 <body class="bg-gray-50 h-screen flex justify-center items-center">
-{{ renderComponent('top-nav-bar') }}
+{% include 'html/component/top-nav-bar.html.twig' %}
 <div class="flex flex-col items-center p-4 text-center">
     <div class="flex mb-2 p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
          role="alert">
