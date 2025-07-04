@@ -24,4 +24,10 @@ final readonly class UrlTwigExtension
 
         return '/'.trim($this->appUrl->getBasePath(), '/').$path;
     }
+
+    #[AsTwigFunction('placeholderImage')]
+    public function placeholderImage(): string
+    {
+        return $this->toRelativeUrl('/assets/placeholder.webp');
+    }
 }

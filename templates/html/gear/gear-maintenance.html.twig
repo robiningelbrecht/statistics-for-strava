@@ -97,7 +97,7 @@
                                 </td>
                                 <td class="py-2">
                                     <img class="w-auto h-8 rounded-sm object-cover lazy"
-                                         src="{{ renderComponent('placeholder-image') }}"
+                                         src="{{ placeholderImage() }}"
                                          data-src="{{ gear.getImageSrc() }}"
                                          alt="{{ gear.getName() }}"/>
                                 </td>
@@ -125,7 +125,7 @@
                                             <div class="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm">
                                                 <div class="relative w-48 h-full">
                                                     <img class="absolute inset-0 lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
-                                                         src="{{ renderComponent('placeholder-image') }}"
+                                                         src="{{ placeholderImage() }}"
                                                          data-src="{{ relativeUrl('/gear-maintenance/' ~ gearComponent.getImgSrc()) }}"
                                                          alt="{{ gearComponent.getLabel() }}">
                                                 </div>

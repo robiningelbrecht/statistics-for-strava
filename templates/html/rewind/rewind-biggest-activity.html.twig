@@ -13,7 +13,7 @@
              data-leaflet='{{ leafletOptions|json_encode }}'></div>
     {% else %}
         <div class="flex h-48 justify-center">
-            <img class="w-full object-cover rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
+            <img class="w-full object-cover rounded-lg lazy" src="{{ placeholderImage() }}"
                  data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
                  alt="No map"/>
         </div>
