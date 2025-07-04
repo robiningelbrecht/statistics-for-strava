@@ -176,21 +176,6 @@ enum SportType: string implements TranslatableInterface
         };
     }
 
-    public function getSvgIcon(): string
-    {
-        return match ($this) {
-            SportType::ALPINE_SKI, SportType::BACK_COUNTRY_SKI,
-            SportType::NORDIC_SKI, SportType::ROLLER_SKI => 'ski',
-            SportType::RIDE, SportType::VIRTUAL_RIDE => 'bike-ride',
-            SportType::CROSSFIT, SportType::WEIGHT_TRAINING => 'weight-training',
-            SportType::RUN, SportType::VIRTUAL_RUN => 'run',
-            SportType::WORKOUT, SportType::ELLIPTICAL => 'workout',
-            SportType::CANOEING, SportType::KAYAKING => 'canoeing',
-            SportType::SAIL, SportType::WIND_SURF => 'sail',
-            default => str_replace('_', '-', strtolower($this->name)),
-        };
-    }
-
     public function supportsBestEffortsStats(): bool
     {
         return in_array($this, [
