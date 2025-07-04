@@ -24,7 +24,7 @@
                                             <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
                                                 <input type="radio" id="{{ sportType.value }}" data-heatmap-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
                                                 <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
-                                                    {{ renderSvg(sportType.getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
+                                                    {{ svgSportType(sportType) }}
                                                     <div>{{ sportType|trans }}</div>
                                                 </label>
                                                 <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-heatmap-filter-clear="sportType">{{ "clear"|trans }}</a>

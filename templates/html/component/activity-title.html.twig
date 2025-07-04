@@ -9,7 +9,7 @@
                 {{ renderSvg('indoor-bike') }}
             {% endif %}
         {% else %}
-            {{ renderSvg(activity.getSportType().getSvgIcon(), {'customPath': 'svg/sport-type'}) }}
+            {{ svgSportType(activity.getSportType()) }}
         {% endif %}
         {% if ellipses %}
             <span>{{ activity.getName()|ellipses(ellipses) }}</span>
