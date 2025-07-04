@@ -1,21 +1,21 @@
 
- Statistics for Strava v2.4.1                                                                                           
+StatisticsforStravav2.4.1
 
-Configuring locale...
-Building Manifest...
-Building App...
-  => Building index
-  => Building dashboard
-  => Building activities
-  => Building gpx files
-  => Building monthly-stats
-  => Building gear-stats
-  => Building gear-maintenance
-  => Building eddington
-  => Building segments
-  => Building heatmap
-  => Building rewind
-  => Building challenges
-  => Building photos
-  => Building badges
-Time: 10s, Memory: 45MB
+Configuringlocale...
+BuildingManifest...
+BuildingApp...
+=>Buildingindex
+=>Buildingdashboard
+=>Buildingactivities
+=>Buildinggpxfiles
+=>Buildingmonthly-stats
+=>Buildinggear-stats
+=>Buildinggear-maintenance
+=>Buildingeddington
+=>Buildingsegments
+=>Buildingheatmap
+=>Buildingrewind
+=>Buildingchallenges
+=>Buildingphotos
+=>Buildingbadges
+Time:10s,Memory:45MB
