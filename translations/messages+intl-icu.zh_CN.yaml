@@ -45,7 +45,6 @@ Canoeing: 划独木舟
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Click to upload': 'Click to upload'
 'Close modal': 关闭模态框
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: 通勤
@@ -130,7 +129,6 @@ History: 历史
 'Ice Skate': 冰刀
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
-'Image generator': 'Image generator'
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 直排轮滑
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -225,7 +223,6 @@ Rides: 骑行
 'Roller Ski': 轮滑
 Rowing: 划船
 Runs: 跑步
-'SVG, PNG, JPG or GIF': 'SVG, PNG, JPG or GIF'
 Sail: 帆船
 Sat: 周六
 Saturday: 星期六
@@ -364,7 +361,6 @@ more: more
 'more info': 更多信息
 n/a: 不适用
 never: never
-'or drag and drop': 'or drag and drop'
 to: to
 weeks: weeks
 workouts: 锻炼
