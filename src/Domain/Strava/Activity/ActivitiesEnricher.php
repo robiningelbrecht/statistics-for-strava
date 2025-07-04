@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity;
 
-use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
@@ -17,8 +16,6 @@ final class ActivitiesEnricher
     private Activities $enrichedActivities;
     /** @var array<string, Activities> */
     private array $activitiesPerActivityType;
-    /** @var array<string, Activities> */
-    private array $activitiesPerSportType;
     /** @var array<string, Activity> */
     private array $activitiesKeyedByActivityId;
 
@@ -27,7 +24,6 @@ final class ActivitiesEnricher
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
-        private readonly SportTypeRepository $sportTypeRepository,
         private readonly GearMaintenanceConfig $gearMaintenanceConfig,
         private readonly CustomGearConfig $customGearConfig,
     ) {
@@ -102,22 +98,5 @@ final class ActivitiesEnricher
         }
 
         return $this->activitiesPerActivityType;
-    }
-
-    /**
-     * @return array<string, Activities>
-     */
-    public function getActivitiesPerSportType(): array
-    {
-        if (empty($this->activitiesPerSportType)) {
-            $sportTypes = $this->sportTypeRepository->findAll();
-
-            /** @var SportType\SportType $sportType */
-            foreach ($sportTypes as $sportType) {
-                $this->activitiesPerSportType[$sportType->value] = $this->getEnrichedActivities()->filterOnSportType($sportType);
-            }
-        }
-
-        return $this->activitiesPerSportType;
     }
 }

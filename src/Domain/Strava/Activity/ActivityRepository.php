@@ -3,6 +3,7 @@
 namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\SportType\SportTypes;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 
 interface ActivityRepository
@@ -14,6 +15,8 @@ interface ActivityRepository
     public function count(): int;
 
     public function findAll(?int $limit = null): Activities;
+
+    public function findByStartDate(SerializableDateTime $startDate, ?ActivityType $activityType): Activities;
 
     public function findBySportTypes(SportTypes $sportTypes): Activities;
 

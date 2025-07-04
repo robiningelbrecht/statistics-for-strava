@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityIds;
 use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\DbalActivityRepository;
@@ -81,6 +82,47 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()],
             $this->activityRepository->findAll()->map(fn (Activity $activity) => $activity->getId())
+        );
+    }
+
+    public function testFindByStartDate(): void
+    {
+        $activityOne = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
+            ->withSportType(SportType::BADMINTON)
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityOne,
+            ['raw' => 'data']
+        ));
+        $activityTwo = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(2))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
+            ->withSportType(SportType::RUN)
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityTwo,
+            ['raw' => 'data']
+        ));
+        $activityThree = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(3))
+            ->withSportType(SportType::MOUNTAIN_BIKE_RIDE)
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityThree,
+            ['raw' => 'data']
+        ));
+
+        $this->assertEquals(
+            [$activityOne->getId(), $activityTwo->getId()],
+            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity) => $activity->getId())
+        );
+
+        $this->assertEquals(
+            [$activityOne->getId()],
+            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity) => $activity->getId())
         );
     }
 

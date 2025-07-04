@@ -30,6 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'Activity_startDateTimeIndex', columns: ['startDateTime'])]
+#[ORM\Index(name: 'Activity_sportType', columns: ['sportType'])]
 final class Activity implements SupportsAITooling
 {
     use RecordsEvents;
