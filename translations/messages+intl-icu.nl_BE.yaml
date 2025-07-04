@@ -45,7 +45,6 @@ Canoeing: Kanoën
 'Challenge consistency': 'Challenge consistentie'
 Challenges: Challenges
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
-'Click to upload': 'Click to upload'
 'Close modal': Sluiten
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
@@ -130,7 +129,6 @@ History: Historiek
 'Ice Skate': 'Ice Skate'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
-'Image generator': 'Image generator'
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 'Inline Skate'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -225,7 +223,6 @@ Rides: Ritten
 'Roller Ski': 'Roller Ski'
 Rowing: Roeien
 Runs: Hardlopen
-'SVG, PNG, JPG or GIF': 'SVG, PNG, JPG or GIF'
 Sail: Zeilen
 Sat: Zat
 Saturday: Zaterdag
@@ -364,7 +361,6 @@ more: more
 'more info': 'more info'
 n/a: n/a
 never: never
-'or drag and drop': 'or drag and drop'
 to: to
 weeks: weeks
 workouts: workouts

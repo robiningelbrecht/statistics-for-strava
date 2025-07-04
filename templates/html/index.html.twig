@@ -132,7 +132,7 @@
                     </a>
                 </li>
             </ul>
-            <ul class="space-y-1 py-2">
+            <ul class="space-y-1 pt-2">
                 <li>
                     <a href="{{ relativeUrl('challenges') }}" data-router-navigate="{{ relativeUrl('challenges') }}" {{ isSymfonyRouter ? 'data-router-disbaled' : '' }}
                        class="{{ menuLinkClasses }} {{ collapsedMenuLinkClasses }}">
@@ -152,17 +152,6 @@
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Photos"|trans|ellipses(19) }}</span>
                         <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalPhotoCount }}</span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="space-y-1 pt-2">
-                <li>
-                    <a href="{{ relativeUrl('image-generator') }}" data-router-name="image-generator" {{ isSymfonyRouter ? 'data-router-disbaled' : '' }}
-                       class="{{ menuLinkClasses }} {{ collapsedMenuLinkClasses }}">
-                        <svg class="{{ menulinkSvgIconClasses }}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15.141 6 5.518 4.95a1.05 1.05 0 0 1 0 1.549l-5.612 5.088m-6.154-3.214v1.615a.95.95 0 0 0 1.525.845l5.108-4.251a1.1 1.1 0 0 0 0-1.646l-5.108-4.251a.95.95 0 0 0-1.525.846v1.7c-3.312 0-6 2.979-6 6.654v1.329a.7.7 0 0 0 1.344.353 5.174 5.174 0 0 1 4.652-3.191l.004-.003Z"/>
-                        </svg>
-                        <span class="flex-1 whitespace-nowrap">{{ "Image generator"|trans }}</span>
                     </a>
                 </li>
             </ul>
