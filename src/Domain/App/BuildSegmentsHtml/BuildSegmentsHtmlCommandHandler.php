@@ -36,7 +36,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
 
         $dataDatableRows = [];
-        $pagination = Pagination::fromOffsetAndLimit(0, 10);
+        $pagination = Pagination::fromOffsetAndLimit(0, 100);
 
         do {
             $segments = $this->segmentRepository->findAll($pagination);

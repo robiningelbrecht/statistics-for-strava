@@ -24,7 +24,7 @@
         <div class="flex items-center">
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
                 <li class="flex items-center gap-x-0.5 pr-2">
-                    {{ renderSvg('distance', {'classes': 'w-5 h-5'}) }}
+                    {{ svg('distance', 'w-5 h-5') }}
                     {% if statistics.totalDistance %}
                         <div>{{ statistics.totalDistance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.totalDistance|convertMeasurement.getSymbol() }}</div>
@@ -33,7 +33,7 @@
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ renderSvg('elevation', {'classes': 'w-5 h-5'}) }}
+                    {{ svg('elevation', 'w-5 h-5') }}
                     {% if statistics.totalElevation %}
                         <div>{{ statistics.totalElevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.totalElevation|convertMeasurement.getSymbol() }}</div>
@@ -42,21 +42,21 @@
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ renderSvg('time', {'classes': 'w-5 h-5'}) }}
+                    {{ svg('time', 'w-5 h-5') }}
                     <div>{{ (statistics.movingTimeInSeconds / 3600)|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">hours</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ renderSvg('challenge', {'classes': 'w-5 h-5'}) }}
+                    {{ svg('challenge', 'w-5 h-5') }}
                     <div> {{ statistics.challengesCompleted }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ renderSvg('calories', {'classes': 'w-5 h-5'}) }}
+                    {{ svg('calories', 'w-5 h-5') }}
                     <div>{{ statistics.totalCalories|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">kcal</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 pl-2">
-                    {{ renderSvg('hashtag') }}
+                    {{ svg('hashtag') }}
                     <div>{{ statistics.numberOfWorkouts }}</div>
                     <div class="text-xs text-gray-500">{{ "workouts"|trans }}</div>
                 </li>

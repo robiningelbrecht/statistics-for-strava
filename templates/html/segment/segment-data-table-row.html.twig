@@ -5,11 +5,11 @@
             <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segment.getId() ~ '.html') }}" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">
                 {% if segment.getSportType().isVirtualRide() %}
                     {% if segment.isZwiftSegment() %}
-                        {{ renderSvg('zwift-logo') }}
+                        {{ svg('zwift-logo') }}
                     {% elseif segment.isRouvySegment() %}
-                        {{ renderSvg('rouvy-logo') }}
+                        {{ svg('rouvy-logo') }}
                     {% else %}
-                        {{ renderSvg('indoor-bike') }}
+                        {{ svg('indoor-bike') }}
                     {% endif %}
                 {% else %}
                     {{ svgSportType(segment.getSportType()) }}
