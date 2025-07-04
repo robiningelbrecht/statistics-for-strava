@@ -89,7 +89,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ renderComponent('activity-title', {'activity': segmentEffort.getActivity(), 'truncate': true}) }}
+                                        {{ segmentEffort.getActivity()|renderTitle(truncate: true) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
@@ -154,7 +154,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ renderComponent('activity-title', {'activity': segmentEffort.getActivity(), 'truncate': true}) }}
+                                        {{ segmentEffort.getActivity()|renderTitle(truncate: true) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}

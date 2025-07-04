@@ -67,7 +67,7 @@
                                 <div class="w-[4.5rem]">{{ activity.getStartDate()|formatDate() }}</div>
                             </td>
                             <td class="px-2 py-2 truncate sticky left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                {{ renderComponent('activity-title', {'activity': activity, 'ellipses': 30}) }}
+                                {{ activity|renderTitle(ellipses: 30) }}
                             </td>
                             <td class="px-6 py-2">
                                 {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
@@ -228,7 +228,7 @@
                                         {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
                                     </td>
                                     <td class="px-6 py-2 text-left truncate">
-                                        {{ renderComponent('activity-title', {'activity': powerOutput.getActivity()}) }}
+                                        {{ powerOutput.getActivity()|renderTitle() }}
                                     </td>
                                 </tr>
                             {% endif %}
@@ -561,7 +561,7 @@
                             {{ firstActivity.getStartDate()|formatDate('normal') }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': firstActivity, 'ellipses': 30}) }}
+                            {{ firstActivity|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -574,7 +574,7 @@
                             {{ earliestActivity.getStartDate()|formatTime() }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': earliestActivity, 'ellipses': 30}) }}
+                            {{ earliestActivity|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -587,7 +587,7 @@
                             {{ latestActivity.getStartDate()|formatTime() }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': latestActivity, 'ellipses': 30}) }}
+                            {{ latestActivity|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -600,7 +600,7 @@
                             {{ longestWorkout.getMovingTimeFormatted() }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': longestWorkout, 'ellipses': 30}) }}
+                            {{ longestWorkout|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -613,7 +613,7 @@
                             {{ highestElevationActivity.getElevation()|renderMeasurement(0) }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': highestElevationActivity, 'ellipses': 30}) }}
+                            {{ highestElevationActivity|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -626,7 +626,7 @@
                             {{ mostKudosActivity.getKudoCount() }}
                         </td>
                         <td class="px-2 py-2 truncate">
-                            {{ renderComponent('activity-title', {'activity': mostKudosActivity, 'ellipses': 30}) }}
+                            {{ mostKudosActivity|renderTitle(ellipses: 30) }}
                         </td>
                     </tr>
                     <tr class="bg-white border-b">
@@ -752,7 +752,7 @@
                                                         <td class="px-2 py-2 truncate">
                                                             {% set bestEffort = bestEffortsForActivityType.getBySportTypeAndDistance(sportType, distance) %}
                                                             {% if bestEffort %}
-                                                                {{ renderComponent('activity-title', {'activity': bestEffort.getActivity(), 'ellipses': 30}) }}
+                                                                {{ bestEffort.getActivity()|renderTitle(ellipses: 30) }}
                                                             {% endif %}
                                                         </td>
                                                     {% endfor %}
