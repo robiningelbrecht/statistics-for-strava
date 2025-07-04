@@ -202,8 +202,8 @@
                         <tr>
                             <th scope="col" data-dataTable-sort="start-date" class="px-2 py-3 cursor-pointer">
                                 <div class="w-[4.5rem] flex items-center justify-center" title="{{ "Date"|trans }}">
-                                    {{ renderSvg('calendar') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('calendar') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                             </th>
                             <th scope="col" class="px-2 py-3 bg-gray-50 lg:sticky lg:left-0">
@@ -211,8 +211,8 @@
                             </th>
                             <th scope="col" data-dataTable-sort="distance" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[5rem] flex items-center justify-center" title="{{ "Distance"|trans }}">
-                                    {{ renderSvg('distance') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('distance') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5 normal-case text-xxs">
                                     {% set convertedTotalDistance = activityTotals.getDistance()|convertMeasurement %}
@@ -221,8 +221,8 @@
                             </th>
                             <th scope="col" data-dataTable-sort="elevation" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[5rem] flex items-center justify-center" title="{{ "Elevation"|trans }}">
-                                    {{ renderSvg('elevation') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('elevation') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5 normal-case text-xxs">
                                     {% set convertedTotalElevation = activityTotals.getElevation()|convertMeasurement %}
@@ -231,8 +231,8 @@
                             </th>
                             <th scope="col" data-dataTable-sort="moving-time" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[4rem] flex items-center justify-center" title="{{ "Time"|trans }}">
-                                    {{ renderSvg('time') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('time') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5 normal-case text-xxs">
                                     <span data-dataTable-summable="moving-time">{{ activityTotals.getMovingTimeInHours()|formatNumber(0) }}</span>h
@@ -240,22 +240,22 @@
                             </th>
                             <th scope="col" data-dataTable-sort="speed" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[4rem] flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                    {{ renderSvg('speed') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('speed') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="heart-rate" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[4rem] flex items-center justify-center" title="{{ "Heart rate"|trans }}">
-                                    {{ renderSvg('heart-rate') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('heart-rate') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="calories" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[6rem] flex items-center justify-center" title="{{ "Calories burnt"|trans }}">
-                                    {{ renderSvg('calories') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('calories') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5 normal-case text-xxs">
                                     <span data-dataTable-summable="calories">{{ activityTotals.getCalories()|formatNumber(0) }}</span>kcal
@@ -263,8 +263,8 @@
                             </th>
                             <th scope="col" data-dataTable-sort="power" class="px-6 py-3 cursor-pointer">
                                 <div class="w-[rem] flex items-center justify-center" title="{{ "Power"|trans }}">
-                                    {{ renderSvg('power') }}
-                                    {{ renderSvg('sorting-icon') }}
+                                    {{ svg('power') }}
+                                    {{ svg('sorting-icon') }}
                                 </div>
                                 <div class="pt-0.5">&nbsp;</div>
                             </th>
