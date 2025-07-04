@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\YearlyDistance;
 
-use App\Domain\Strava\Activity\Activities;
 use App\Domain\Strava\Activity\Activity;
+use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Strava\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\Years;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class YearlyDistanceChart
 {
     private function __construct(
-        private Activities $activities,
+        private ActivityRepository $activityRepository,
+        private Years $uniqueYears,
+        private ActivityType $activityType,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
@@ -21,13 +25,17 @@ final readonly class YearlyDistanceChart
     }
 
     public static function create(
-        Activities $activities,
+        ActivityRepository $activityRepository,
+        Years $uniqueYears,
+        ActivityType $activityType,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
         SerializableDateTime $now,
     ): self {
         return new self(
-            activities: $activities,
+            activityRepository: $activityRepository,
+            uniqueYears: $uniqueYears,
+            activityType: $activityType,
             unitSystem: $unitSystem,
             translator: $translator,
             now: $now
@@ -61,7 +69,7 @@ final readonly class YearlyDistanceChart
 
         $series = [];
         /** @var \App\Infrastructure\ValueObject\Time\Year $year */
-        foreach ($this->activities->getUniqueYears() as $year) {
+        foreach ($this->uniqueYears as $year) {
             $series[(string) $year] = [
                 'name' => (string) $year,
                 'type' => 'line',
@@ -79,7 +87,7 @@ final readonly class YearlyDistanceChart
                         $monthNumber,
                         str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT))
                     );
-                    $activitiesOnThisDay = $this->activities->filterOnDate($date);
+                    $activitiesOnThisDay = $this->activityRepository->findByStartDate($date, $this->activityType);
 
                     if ($date->isAfter($this->now)) {
                         break 2;

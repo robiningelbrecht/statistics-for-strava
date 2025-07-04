@@ -7,6 +7,7 @@ namespace App\Domain\App\BuildDashboardHtml;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Activity\ActivityIntensityChart;
+use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityTypeRepository;
@@ -54,6 +55,7 @@ use Twig\Environment;
 final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
+        private ActivityRepository $activityRepository,
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private ActivityPowerRepository $activityPowerRepository,
         private FtpHistory $ftpHistory,
@@ -132,7 +134,9 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             if ($activityType->supportsYearlyStats()) {
                 $yearlyDistanceCharts[$activityType->value] = Json::encode(
                     YearlyDistanceChart::create(
-                        activities: $activitiesPerActivityType[$activityType->value],
+                        activityRepository: $this->activityRepository,
+                        uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
+                        activityType: $activityType,
                         unitSystem: $this->unitSystem,
                         translator: $this->translator,
                         now: $now
