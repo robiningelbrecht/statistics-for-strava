@@ -36,6 +36,7 @@ final readonly class SvgsTwigExtension
         };
 
         if ($classes) {
+            /** @var non-empty-string $svg */
             $svg = preg_replace('/class="[^"]*"/', 'class="'.$classes.'"', $svg);
         }
 

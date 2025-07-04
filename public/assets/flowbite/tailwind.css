@@ -5,6 +5,7 @@
 @source "../../../public/app.php";
 @source "../../../public/*.html";
 @source "../../../public/assets/leaflet/leaflet.fly.to.places.js";
+@source "../../../src/Infrastructure/Twig/*.php";
 
 @plugin "flowbite/plugin";
 @source "../../../node_modules/flowbite";

@@ -116,7 +116,7 @@
                                         {% for activity in day.getActivities() %}
                                             {% set color = activity.getSportType().getActivityType().getColor() %}
                                             <li class="mb-1 truncate pl-1 bg-{{ color }}/[.1] border-l-2 border-l-{{ color }}">
-                                                {{ renderComponent('activity-title', {'activity': activity, 'truncate': true}) }}
+                                                {{ activity|renderTitle(truncate: true) }}
                                             </li>
                                         {% endfor %}
                                     </ul>
