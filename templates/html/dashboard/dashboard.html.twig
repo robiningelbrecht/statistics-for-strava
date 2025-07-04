@@ -70,10 +70,10 @@
                                 {{ renderComponent('activity-title', {'activity': activity, 'ellipses': 30}) }}
                             </td>
                             <td class="px-6 py-2">
-                                {{ renderComponent('measurement', {'measurement': activity.getDistance(), 'precision': activityType.getDistancePrecision()}) }}
+                                {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
                             </td>
                             <td class="px-6 py-2">
-                                <div class="w-[4rem]">{{ renderComponent('measurement', {'measurement': activity.getElevation(), 'precision': 0}) }}</div>
+                                <div class="w-[4rem]"> {{ activity.getElevation()|renderMeasurement(0) }}</div>
                             </td>
                             <td class="px-6 py-2">
                                 {{ activity.getMovingTimeFormatted() }}
@@ -83,7 +83,7 @@
                                     {{ activity.getPaceInSecPerKm()|formatPace }}<span
                                         class="text-xs">{{ renderUnitSymbol('pace') }}</span>
                                 {% else %}
-                                    {{ renderComponent('measurement', {'measurement': activity.getAverageSpeed(), 'precision': 1}) }}
+                                    {{ activity.getAverageSpeed()|renderMeasurement(1) }}
                                 {% endif %}
                             </td>
                             <td class="px-6 py-2">
@@ -354,14 +354,14 @@
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {% if statistic.totalDistance.toFloat() > 0 %}
-                                    {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
-                                    {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0, 'symbolSuffix': 'total'}) }}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                                    {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
                                 {% else %}
                                     0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
                                 {% endif %}
                             </td>
                             <td class="px-6 py-2 truncate">
-                                {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                {{ statistic.totalElevation|renderMeasurement(0) }}
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.movingTimeForHumans }}
@@ -420,14 +420,14 @@
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {% if statistic.totalDistance.toFloat() > 0 %}
-                                    {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
-                                    {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0, 'symbolSuffix': 'total'}) }}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                                    {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
                                 {% else %}
                                     0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
                                 {% endif %}
                             </td>
                             <td class="px-6 py-2 truncate">
-                                {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                {{ statistic.totalElevation|renderMeasurement(0) }}
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.movingTimeForHumans }}
@@ -507,20 +507,20 @@
                                     </td>
                                     <td class="px-6 py-2 truncate">
                                         {% if statistic.totalDistance.toFloat() > 0 %}
-                                            {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
-                                            {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0, 'symbolSuffix': 'total'}) }}
+                                            {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                                            {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
                                         {% else %}
                                             0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
                                         {% endif %}
                                     </td>
                                     <td class="px-6 py-2 truncate">
-                                        {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                        {{ statistic.totalElevation|renderMeasurement(0) }}
                                     </td>
                                     <td class="px-6 py-2 truncate">
                                         {{ statistic.movingTimeForHumans }}
                                     </td>
                                     <td class="px-6 py-2 truncate">
-                                        {{ renderComponent('measurement', {'measurement': statistic.averageSpeed, 'precision': 1}) }}
+                                        {{ statistic.averageSpeed|renderMeasurement(1) }}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -610,7 +610,7 @@
                             {{ "Most elevation"|trans }}
                         </th>
                         <td class="px-2 py-2">
-                            {{ renderComponent('measurement', {'measurement': highestElevationActivity.getElevation(), 'precision': 0}) }}
+                            {{ highestElevationActivity.getElevation()|renderMeasurement(0) }}
                         </td>
                         <td class="px-2 py-2 truncate">
                             {{ renderComponent('activity-title', {'activity': highestElevationActivity, 'ellipses': 30}) }}
@@ -838,7 +838,7 @@
                                             <div>{{ statistic.year }}</div>
                                         </th>
                                         <td class="px-6 py-2">
-                                            {{ renderComponent('measurement', {'measurement': statistic.totalDistance, 'precision': 0}) }}
+                                            {{ statistic.totalDistance|renderMeasurement(0) }}
                                         </td>
                                         <td>
                                             <div class="flex items-center justify-center {{ statistic.differenceInDistanceYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
@@ -857,20 +857,19 @@
                                                         </svg>
                                                     {% endif %}
                                                     <div>
-                                                        {{ renderComponent('measurement', {'measurement': statistic.differenceInDistanceYearBefore, 'precision': 0}) }}
+                                                        {{ statistic.differenceInDistanceYearBefore|renderMeasurement(0) }}
                                                     </div>
                                                 {% endif %}
                                             </div>
                                         </td>
                                         <td>
-                                            {{ renderComponent('measurement', {'measurement': statistic.totalElevation, 'precision': 0}) }}
+                                            {{ statistic.totalElevation|renderMeasurement(0) }}
                                         </td>
                                         <td>
                                             {{ statistic.movingTime }}
                                         </td>
                                         <td>
-                                            {{ statistic.totalCalories|formatNumber(0) }}<span
-                                                    class="text-xs">kcal</span>
+                                            {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
                                         </td>
                                     </tr>
                                 {% endfor %}

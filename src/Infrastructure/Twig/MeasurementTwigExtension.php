@@ -23,7 +23,7 @@ final readonly class MeasurementTwigExtension
     }
 
     #[AsTwigFilter('convertMeasurement')]
-    public function doConversion(Unit $measurement): Unit
+    public function convertMeasurement(Unit $measurement): Unit
     {
         if (UnitSystem::IMPERIAL === $this->unitSystem && $measurement instanceof Metric) {
             return $measurement->toImperial();
@@ -33,6 +33,27 @@ final readonly class MeasurementTwigExtension
         }
 
         return $measurement;
+    }
+
+    #[AsTwigFilter('renderMeasurement')]
+    public function renderMeasurement(Unit $measurement, int $precision, ?string $symbolSuffix = null): string
+    {
+        $convertedMeasurement = $this->convertMeasurement($measurement);
+
+        if (!$symbolSuffix) {
+            return sprintf(
+                '%s<span class="text-xs">%s</span>',
+                self::formatNumber($convertedMeasurement->toFloat(), $precision),
+                $convertedMeasurement->getSymbol()
+            );
+        }
+
+        return sprintf(
+            '%s<span class="text-xs">%s %s</span>',
+            self::formatNumber($convertedMeasurement->toFloat(), $precision),
+            $convertedMeasurement->getSymbol(),
+            $symbolSuffix
+        );
     }
 
     #[AsTwigFilter('formatPace')]
@@ -53,5 +74,15 @@ final readonly class MeasurementTwigExtension
             'pace' => $this->unitSystem->paceSymbol(),
             default => throw new \RuntimeException(sprintf('Invalid unitName "%s"', $unitName)),
         };
+    }
+
+    #[AsTwigFilter('formatNumber')]
+    public function formatNumber(?float $number, int $precision): string
+    {
+        if (is_null($number)) {
+            return '0';
+        }
+
+        return number_format(round($number, $precision), $precision, '.', ' ');
     }
 }

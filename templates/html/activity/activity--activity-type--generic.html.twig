@@ -5,7 +5,7 @@
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
-                    <dt class="font-extrabold">{{ renderComponent('measurement', {'measurement': activity.getDistance(), 'precision': activity.getSportType().getActivityType().getDistancePrecision()}) }}</dt>
+                    <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
                 </div>
             </div>
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
@@ -17,7 +17,7 @@
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
-                    <dt class="font-extrabold">{{ renderComponent('measurement', {'measurement': activity.getElevation(), 'precision': 0}) }}</dt>
+                    <dt class="font-extrabold">{{ activity.getElevation()|renderMeasurement(0) }}</dt>
                 </div>
             </div>
             <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
@@ -42,9 +42,9 @@
         {% set weather = activity.getWeather() %}
         {% if weather %}
             <div class="text-xs font-normal text-gray-500">
-                {{ weather.getWeatherCodeDescription() }}, {{ renderComponent('measurement', {'measurement': weather.getTemperatureInCelsius(), 'precision': 1}) }},
+                {{ weather.getWeatherCodeDescription() }}, {{ weather.getTemperatureInCelsius()|renderMeasurement(1) }},
                 Humidity {{ weather.getRelativeHumidity() }}%,
-                Wind {{ renderComponent('measurement', {'measurement': weather.getWindSpeed(), 'precision': 1}) }} from {{ weather.getWindDirection() }}.
+                Wind {{ weather.getWindSpeed()|renderMeasurement(1) }} from {{ weather.getWindDirection() }}.
             </div>
         {% endif %}
         {% if activity.getLocalImagePaths() %}
@@ -90,7 +90,7 @@
                         <td class="px-2 py-2 text-sm">
                             {% set averageSpeed = activity.getAverageSpeed() %}
                             {% if averageSpeed %}
-                                {{ renderComponent('measurement', {'measurement': averageSpeed, 'precision': 1}) }}
+                                {{ averageSpeed|renderMeasurement(1) }}
                             {% else %}
                                 {{ "n/a"|trans }}
                             {% endif %}
@@ -123,7 +123,7 @@
                         <td class="px-2 py-2 text-sm">
                             {% set maxSpeed = activity.getMaxSpeed() %}
                             {% if maxSpeed %}
-                                {{ renderComponent('measurement', {'measurement': maxSpeed, 'precision': 1}) }}
+                                {{ maxSpeed|renderMeasurement(1) }}
                             {% else %}
                                 {{ "n/a"|trans }}
                             {% endif %}
@@ -305,10 +305,10 @@
                                     {{ segmentEffort.getElapsedTimeFormatted() }}
                                 </td>
                                 <td class="px-2 py-2">
-                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                    {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
                                 </td>
                                 <td class="px-2 py-2">
-                                    {{ renderComponent('measurement', {'measurement': segmentEffort.getDistance(), 'precision': 2}) }}
+                                    {{ segmentEffort.getDistance()|renderMeasurement(2) }}
                                 </td>
                                 <td class="px-2 py-2">
                                     {% if segmentEffort.getAverageWatts() %}

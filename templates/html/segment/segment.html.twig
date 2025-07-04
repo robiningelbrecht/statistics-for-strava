@@ -95,7 +95,7 @@
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                        {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {% if segmentEffort.getAverageWatts() %}
@@ -160,7 +160,7 @@
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ renderComponent('measurement', {'measurement': segmentEffort.getAverageSpeed(), 'precision': 1}) }}
+                                        {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {% if segmentEffort.getAverageWatts() %}
