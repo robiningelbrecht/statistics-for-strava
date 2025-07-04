@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
 use App\Infrastructure\ValueObject\Collection;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
@@ -36,16 +35,6 @@ final class Activities extends Collection
         }
 
         return $startDate;
-    }
-
-    public function filterOnDate(SerializableDateTime $date): Activities
-    {
-        return $this->filter(fn (Activity $activity) => $activity->getStartDate()->format('Ymd') === $date->format('Ymd'));
-    }
-
-    public function filterOnMonth(Month $month): Activities
-    {
-        return $this->filter(fn (Activity $activity) => $activity->getStartDate()->format(Month::MONTH_ID_FORMAT) === $month->getId());
     }
 
     public function filterOnActivityType(ActivityType $activityType): Activities

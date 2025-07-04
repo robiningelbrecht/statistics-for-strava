@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Challenge\Consistency;
 
-use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Calendar\Months;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Domain\Strava\Challenge\Consistency\FindConsistencyMetricsPerMonth\FindConsistencyMetricsPerMonth;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
 final readonly class ConsistencyChallengeCalculator
 {
     public function __construct(
         private ActivityRepository $activityRepository,
+        private QueryBus $queryBus,
     ) {
     }
 
@@ -32,62 +31,44 @@ final readonly class ConsistencyChallengeCalculator
             if (!$challenge->isEnabled()) {
                 continue;
             }
-            $activities = $this->activityRepository->findBySportTypes($challenge->getSportTypesToInclude());
-            if ($activities->isEmpty()) {
+
+            if (!$this->activityRepository->hasForSportTypes($challenge->getSportTypesToInclude())) {
                 continue;
             }
 
+            $response = $this->queryBus->ask(new FindConsistencyMetricsPerMonth($challenge->getSportTypesToInclude()));
+
             foreach ($months as $month) {
-                $activitiesInCurrentMonth = $activities->filterOnMonth($month);
-                if ($activitiesInCurrentMonth->isEmpty()) {
+                if (!$metrics = $response->getConsistencyMetricsForMonth($month)) {
                     $consistency[$challenge->getId()][$month->getId()] = false;
                     continue;
                 }
 
                 $challengeGoal = $challenge->getGoal();
+                [$numberOfActivities, $totalDistance, $maxDistance, $totalElevation, $maxElevation, $movingTime] = $metrics;
 
                 $challengeCompleted = match ($challenge->getType()) {
                     ChallengeConsistencyType::DISTANCE => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
-                        $challengeGoal->convertKilometerToUnit(
-                            Kilometer::from(
-                                $activitiesInCurrentMonth->sum(fn (Activity $a) => $a->getDistance()->toFloat())
-                            )
-                        )
+                        $challengeGoal->convertKilometerToUnit($totalDistance)
                     ),
                     ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
-                        $challengeGoal->convertKilometerToUnit(
-                            Kilometer::from(
-                                $activitiesInCurrentMonth->max(fn (Activity $a) => $a->getDistance()->toFloat())
-                            )
-                        )
+                        $challengeGoal->convertKilometerToUnit($maxDistance)
                     ),
                     ChallengeConsistencyType::ELEVATION => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
-                        $challengeGoal->convertMeterToUnit(
-                            Meter::from(
-                                $activitiesInCurrentMonth->sum(fn (Activity $a) => $a->getElevation()->toFloat())
-                            )
-                        )
+                        $challengeGoal->convertMeterToUnit($totalElevation)
                     ),
                     ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
-                        $challengeGoal->convertMeterToUnit(
-                            Meter::from(
-                                $activitiesInCurrentMonth->max(fn (Activity $a) => $a->getElevation()->toFloat())
-                            )
-                        )
+                        $challengeGoal->convertMeterToUnit($maxElevation)
                     ),
                     ChallengeConsistencyType::MOVING_TIME => $this->checkIfGoalHasBeenReached(
                         $challengeGoal,
-                        $challengeGoal->convertSecondsToUnit(
-                            Seconds::from(
-                                $activitiesInCurrentMonth->sum(fn (Activity $a) => $a->getMovingTimeInSeconds())
-                            )
-                        )
+                        $challengeGoal->convertSecondsToUnit($movingTime)
                     ),
-                    ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => count($activitiesInCurrentMonth) >= $challengeGoal->toInt(),
+                    ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => $numberOfActivities >= $challengeGoal->toInt(),
                 };
 
                 $consistency[$challenge->getId()][$month->getId()] = $challengeCompleted;

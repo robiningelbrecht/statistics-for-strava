@@ -81,7 +81,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 
         $results = $this->connection->executeQuery($sql,
             [
-                'sportTypes' => array_unique($sportTypes->map(fn (SportType $sportType) => $sportType->value)),
+                'sportTypes' => array_unique(array_map(fn (SportType $sportType) => $sportType->value, $sportTypes->toArray())),
             ],
             [
                 'sportTypes' => ArrayParameterType::STRING,
