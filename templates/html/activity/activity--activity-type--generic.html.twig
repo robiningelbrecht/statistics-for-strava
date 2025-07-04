@@ -52,7 +52,7 @@
                 {% for imagePath in activity.getLocalImagePaths()|slice(0, 6) %}
                     <div>
                         <img class="h-auto max-w-full rounded-lg lazy"
-                             src="{{ renderComponent('placeholder-image') }}" data-src="{{ imagePath }}"
+                             src="{{ placeholderImage() }}" data-src="{{ imagePath }}"
                              alt="Activity image"/>
                     </div>
                 {% endfor %}
@@ -233,7 +233,7 @@
                  data-leaflet='{{ leafletOptions|json_encode }}'></div>
         {% else %}
             <div>
-                <img class="h-auto max-w-full rounded-lg lazy" src="{{ renderComponent('placeholder-image') }}"
+                <img class="h-auto max-w-full rounded-lg lazy" src="{{ placeholderImage() }}"
                      data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
                      alt="No map"/>
             </div>

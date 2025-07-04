@@ -2,7 +2,7 @@
     {% set activity = image.getActivity() %}
     <div class="w-full flex flex-col justify-center items-center gap-y-6 text-center">
         <a href="#" data-model-content-url="{{ relativeUrl('activity/' ~ activity.getId() ~ '.html') }}" target="_blank">
-            <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ image.getImageUrl() }}" alt="{{ activity.getName() }}" src="{{ renderComponent('placeholder-image') }}" />
+            <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ image.getImageUrl() }}" alt="{{ activity.getName() }}" src="{{ placeholderImage() }}" />
         </a>
     </div>
 {% endautoescape %}
