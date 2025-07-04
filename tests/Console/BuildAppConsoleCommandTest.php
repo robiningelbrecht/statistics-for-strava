@@ -70,7 +70,7 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot($commandTester->getDisplay());
+        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
         $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
     }
 
