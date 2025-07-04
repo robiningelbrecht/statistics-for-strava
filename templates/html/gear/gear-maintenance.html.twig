@@ -110,7 +110,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-2 truncate">
-                                    {{ renderComponent('measurement', {'measurement': gear.getDistance(), 'precision': 0}) }}
+                                    {{ gear.getDistance()|renderMeasurement(0) }}
                                 </td>
                                 <td class="px-6 py-2 truncate">
                                     {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}

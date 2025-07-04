@@ -8,10 +8,10 @@
         {{ renderComponent('activity-title', {'activity': activity, 'ellipses': 50}) }}
     </td>
     <td class="px-6 py-2">
-        {{ renderComponent('measurement', {'measurement': activity.getDistance(), 'precision': activityType.getDistancePrecision()}) }}
+        {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
     </td>
     <td class="px-6 py-2">
-        {{ renderComponent('measurement', {'measurement': activity.getElevation(), 'precision': 0}) }}
+        {{ activity.getElevation()|renderMeasurement(0) }}
     </td>
     <td class="px-6 py-2">
         {{ activity.getMovingTimeFormatted() }}
@@ -20,7 +20,7 @@
         {% if activityType.prefersPaceOverSpeed() %}
             {{ activity.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
         {% else %}
-            {{ renderComponent('measurement', {'measurement': activity.getAverageSpeed(), 'precision': 1}) }}
+            {{ activity.getAverageSpeed()|renderMeasurement(1) }}
         {% endif %}
     </td>
     <td class="px-6 py-2">

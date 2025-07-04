@@ -20,7 +20,7 @@ class MeasurementTwigExtensionTest extends TestCase
 
         $this->assertEquals(
             $expectedMeasurement,
-            $extension->doConversion($measurementToConvert)
+            $extension->convertMeasurement($measurementToConvert)
         );
     }
 
@@ -50,6 +50,21 @@ class MeasurementTwigExtensionTest extends TestCase
 
         $extension = new MeasurementTwigExtension(UnitSystem::METRIC);
         $extension->getUnitSymbol('invalid');
+    }
+
+    public function testFormatNumber(): void
+    {
+        $extension = new MeasurementTwigExtension(UnitSystem::METRIC);
+
+        $this->assertEquals(
+            '1 000.33',
+            $extension->formatNumber(1000.334, 2)
+        );
+
+        $this->assertEquals(
+            0,
+            $extension->formatNumber(null, 0)
+        );
     }
 
     public static function provideConversions(): array

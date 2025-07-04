@@ -23,7 +23,7 @@
             <div class="w-[13rem]">
                 {{ segment.getBestEffort().getElapsedTimeFormatted() }}
                 <span class="font-medium">-</span>
-                {{ renderComponent('measurement', {'measurement': segment.getBestEffort().getAverageSpeed(), 'precision': 1}) }}
+                {{ segment.getBestEffort().getAverageSpeed()|renderMeasurement(1) }}
                 {% if segment.getBestEffort().getAverageWatts() %}
                     <span class="font-medium">-</span> {{ segment.getBestEffort().getAverageWatts()|formatNumber(0) }}<span class="text-xs">w</span>
                 {% endif %}
@@ -31,7 +31,7 @@
         </div>
     </td>
     <td class="px-2 py-2">
-        {{ renderComponent('measurement', {'measurement': segment.getDistance(), 'precision': 2}) }}
+        {{ segment.getDistance()|renderMeasurement(2) }}
     </td>
     <td class="px-2 py-2">
         {{ segment.getMaxGradient() }}<span class="text-xs">%</span>

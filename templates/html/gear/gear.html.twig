@@ -68,20 +68,20 @@
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {% if statistic.distance.toFloat() > 0 %}
-                                    {{ renderComponent('measurement', {'measurement': statistic.averageDistance, 'precision': 0, 'symbolSuffix': 'avg'}) }} /
-                                    {{ renderComponent('measurement', {'measurement': statistic.distance, 'precision': 0, 'symbolSuffix': 'total'}) }}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                                    {{ statistic.distance|renderMeasurement(0, 'total') }}
                                 {% else %}
                                     0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
                                 {% endif %}
                             </td>
                             <td class="px-6 py-2 truncate">
-                                {{ renderComponent('measurement', {'measurement': statistic.elevation, 'precision': 0}) }}
+                                {{ statistic.elevation|renderMeasurement(0) }}
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.movingTime }}
                             </td>
                             <td class="px-6 py-2 truncate">
-                                {{ renderComponent('measurement', {'measurement': statistic.averageSpeed, 'precision': 1}) }}
+                                {{ statistic.averageSpeed|renderMeasurement(1) }}
                             </td>
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
