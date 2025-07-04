@@ -1,3 +1,12 @@
+# [v2.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.1) - 2025-07-04
+
+## What's Changed
+* ISSUE #814: Re-arrange components on activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/815
+* ISSUE #813: Better template structure by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/816
+* ISSUE-818: Performance improvements by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/820
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.0...v2.4.1
+
 # [v2.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.0) - 2025-07-01
 
 🚀 Statistics for Strava v2.4.0 is here!
