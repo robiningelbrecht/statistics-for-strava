@@ -80,9 +80,11 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 [
                     'unitSystem' => $unitSystem->value,
                     'distanceStreamType' => CombinedStreamType::DISTANCE->value,
-                    'otherStreamTypes' => CombinedStreamTypes::othersFor($activityType)
-                        ->map(fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value),
-                    'sportTypes' => $activityType->getSportTypes()->map(fn (SportType $sportType) => $sportType->value),
+                    'otherStreamTypes' => array_map(
+                        fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value,
+                        CombinedStreamTypes::othersFor($activityType)->toArray()
+                    ),
+                    'sportTypes' => array_map(fn (SportType $sportType) => $sportType->value, $activityType->getSportTypes()->toArray()),
                 ],
                 [
                     'sportTypes' => ArrayParameterType::STRING,

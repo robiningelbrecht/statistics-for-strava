@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildMonthlyStatsHtml;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
+use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Calendar\Calendar;
 use App\Domain\Strava\Calendar\Month;
@@ -21,7 +21,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
     public function __construct(
         private ChallengeRepository $challengeRepository,
         private SportTypeRepository $sportTypeRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -32,7 +32,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         assert($command instanceof BuildMonthlyStatsHtml);
 
         $now = $command->getCurrentDateTime();
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->activityRepository->findAll();
         $allChallenges = $this->challengeRepository->findAll();
 
         $allMonths = Months::create(
@@ -64,7 +64,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                     'statistics' => $monthlyStatistics->getStatisticsForMonth($month),
                     'calendar' => Calendar::create(
                         month: $month,
-                        activities: $allActivities
+                        activityRepository: $this->activityRepository,
                     ),
                 ]),
             );

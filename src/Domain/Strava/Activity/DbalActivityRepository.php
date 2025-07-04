@@ -117,7 +117,7 @@ final class DbalActivityRepository implements ActivityRepository
             $queryBuilder->andWhere('sportType IN (:sportTypes)')
                 ->setParameter(
                     key: 'sportTypes',
-                    value: $activityType->getSportTypes()->map(fn (SportType $sportType) => $sportType->value),
+                    value: array_map(fn (SportType $sportType) => $sportType->value, $activityType->getSportTypes()->toArray()),
                     type: ArrayParameterType::STRING
                 );
         }
@@ -146,6 +146,21 @@ final class DbalActivityRepository implements ActivityRepository
             fn (array $result) => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
+    }
+
+    public function hasForSportTypes(SportTypes $sportTypes): bool
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('COUNT(*)')
+            ->from('Activity')
+            ->andWhere('sportType IN (:sportTypes)')
+            ->setParameter(
+                key: 'sportTypes',
+                value: array_map(fn (SportType $sportType) => $sportType->value, $sportTypes->toArray()),
+                type: ArrayParameterType::STRING
+            );
+
+        return (bool) $queryBuilder->executeQuery()->fetchOne();
     }
 
     public function delete(Activity $activity): void

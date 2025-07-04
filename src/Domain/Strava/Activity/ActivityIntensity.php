@@ -28,7 +28,10 @@ final class ActivityIntensity
             return self::$cachedIntensities[$cacheKey];
         }
 
-        $activities = $this->activityRepository->findAll()->filterOnDate($on);
+        $activities = $this->activityRepository->findByStartDate(
+            startDate: $on,
+            activityType: null
+        );
         self::$cachedIntensities[$cacheKey] = 0;
 
         /** @var Activity $activity */

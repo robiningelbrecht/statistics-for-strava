@@ -20,6 +20,8 @@ interface ActivityRepository
 
     public function findBySportTypes(SportTypes $sportTypes): Activities;
 
+    public function hasForSportTypes(SportTypes $sportTypes): bool;
+
     public function delete(Activity $activity): void;
 
     public function findActivityIds(): ActivityIds;

@@ -11,6 +11,7 @@ use App\Domain\Strava\Challenge\Consistency\ChallengeConsistencyType;
 use App\Domain\Strava\Challenge\Consistency\ConsistencyChallenge;
 use App\Domain\Strava\Challenge\Consistency\ConsistencyChallengeCalculator;
 use App\Domain\Strava\Challenge\Consistency\ConsistencyChallenges;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -142,6 +143,7 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
 
         $this->calculator = new ConsistencyChallengeCalculator(
             $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(QueryBus::class),
         );
     }
 }

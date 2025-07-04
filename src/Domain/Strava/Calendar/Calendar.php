@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Calendar;
 
-use App\Domain\Strava\Activity\Activities;
+use App\Domain\Strava\Activity\ActivityRepository;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Calendar
 {
     private function __construct(
         private Month $month,
-        private Activities $activities,
+        private ActivityRepository $activityRepository,
     ) {
     }
 
     public static function create(
         Month $month,
-        Activities $activities,
+        ActivityRepository $activityRepository,
     ): self {
         return new self(
             month: $month,
-            activities: $activities
+            activityRepository: $activityRepository
         );
     }
 
@@ -43,10 +43,10 @@ final readonly class Calendar
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activities->filterOnDate(SerializableDateTime::createFromFormat(
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$previousMonth->getMonth().'-'.$previousMonth->getYear(),
-                ))
+                ), null)
             ));
         }
 
@@ -55,10 +55,10 @@ final readonly class Calendar
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: true,
-                activities: $this->activities->filterOnDate(SerializableDateTime::createFromFormat(
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$this->month->getMonth().'-'.$this->month->getYear(),
-                ))
+                ), null)
             ));
         }
 
@@ -68,10 +68,10 @@ final readonly class Calendar
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activities->filterOnDate(SerializableDateTime::createFromFormat(
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$nextMonth->getMonth().'-'.$nextMonth->getYear(),
-                ))
+                ), null)
             ));
         }
 
