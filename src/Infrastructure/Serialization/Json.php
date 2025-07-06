@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Serialization;
 
-class Json
+final readonly class Json
 {
     public static function encode(mixed $value, int $depth = 512): string
     {

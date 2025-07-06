@@ -6,9 +6,9 @@ namespace App\Domain\Integration\AI;
 
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
-use NeuronAI\Providers\Deepseek;
+use NeuronAI\Providers\Deepseek\Deepseek;
 use NeuronAI\Providers\Gemini\Gemini;
-use NeuronAI\Providers\Mistral;
+use NeuronAI\Providers\Mistral\Mistral;
 use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\Providers\OpenAI\OpenAI;
 

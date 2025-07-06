@@ -226,7 +226,7 @@ This is the list of sport types supported in the `config.yaml` file. Make sure t
 * StandUpPaddling
 * Surfing
 * Swim
-* WindSurf
+* Windsurf
 
 ### Winter sports
 

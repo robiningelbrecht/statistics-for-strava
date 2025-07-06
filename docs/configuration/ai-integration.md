@@ -61,7 +61,7 @@ Check out this <a href="https://github.com/mythrantic/ollama-docker">Ollama Dock
 Next, download the model you want to use. For example, to run `llama3.2`:
 
 ```bash
-> docker compose exec ollama ollama run llama3.2
+> docker compose exec ollama ollama pull llama3.2
 ```
 
 Finally, configure the AI integration in your `config.yaml` file:
