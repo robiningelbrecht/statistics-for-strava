@@ -33,16 +33,19 @@ final class FlysystemChatHistory extends AbstractChatHistory
         return $this;
     }
 
-    public function removeOldestMessage(): ChatHistoryInterface
+    protected function clear(): ChatHistoryInterface
     {
-        $this->defaultStorage->write(self::FILE_PATH, Json::encode($this->getMessages()));
+        $this->defaultStorage->delete(self::FILE_PATH);
 
         return $this;
     }
 
-    protected function clear(): ChatHistoryInterface
+    public function removeOldMessage(int $index): ChatHistoryInterface
     {
-        $this->defaultStorage->delete(self::FILE_PATH);
+        if (isset($this->history[$index])) {
+            unset($this->history[$index]);
+        }
+        $this->defaultStorage->write(self::FILE_PATH, Json::encode($this->getMessages()));
 
         return $this;
     }
