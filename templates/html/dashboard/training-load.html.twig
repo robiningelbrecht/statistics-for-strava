@@ -17,7 +17,7 @@
     <div class="p-4 md:p-5 space-y-4">
         <div class="h-120" data-echarts-options='{{ trainingLoadChart }}'></div>
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'modal' } %}
+            {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'timeInHeartRateZoneData': timeInHeartRateZoneData, 'context': 'modal' } %}
         </div>
     </div>
 {% endautoescape %}

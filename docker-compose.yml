@@ -1,53 +1,14 @@
 services:
-    php-cli:
-        build: docker/php-cli
-        container_name: 'statistics-for-strava-php-cli'
-        volumes:
-            - './:/var/www/'
-        working_dir: /var/www
-        env_file:
-            - path: ./.env
-              required: true
-            - path: ./.env.local
-              required: false
-        environment:
-            - PHP_IDE_CONFIG=phpstorm
-        profiles: [on-demand]
-        networks:
-            - statistics-for-strava-network
-    app:
-        build:
-            context: ./
-            dockerfile: docker/app/Dockerfile
-        container_name: 'statistics-for-strava-app'
-        volumes:
-            - ./config/app:/var/www/config/app
-            - ./build:/var/www/build
-            - ./storage/database:/var/www/storage/database
-            - ./storage/files:/var/www/storage/files
-            - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
-            #- ./cron:/config/crontabs
-        env_file: ".env.local"
-        ports:
-            - '8081:8080'
-        networks:
-            - statistics-for-strava-network
-
-    ollama:
-        image: ollama/ollama:latest
-        container_name: 'statistics-for-strava-ollama'
-        tty: true
-        restart: unless-stopped
-        volumes:
-            - .:/code
-            - ./ollama:/root/.ollama
-        environment:
-            - OLLAMA_KEEP_ALIVE=24h
-            - OLLAMA_HOST=0.0.0.0
-        ports:
-            - '11434:11434'
-        networks:
-            - statistics-for-strava-network
-
-networks:
-    statistics-for-strava-network: {}
+  app:
+    image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava
+    restart: unless-stopped
+    volumes:
+      - ./config:/var/www/config/app
+      - ./templates:/var/www/templates
+      - ./build:/var/www/build
+      - ./storage/database:/var/www/storage/database
+      - ./storage/files:/var/www/storage/files
+    env_file: ./.env
+    ports:
+      - 8080:8080

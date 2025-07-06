@@ -203,6 +203,15 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             till: $now,
         )))->getNumberOfRestDays();
 
+        $timeInHeartRateZoneData = TimeInHeartRateZoneChart::create(
+            timeInSecondsInHeartRateZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::ONE),
+            timeInSecondsInHeartRateZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::TWO),
+            timeInSecondsInHeartRateZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::THREE),
+            timeInSecondsInHeartRateZoneFour: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FOUR),
+            timeInSecondsInHeartRateZoneFive: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FIVE),
+            translator: $this->translator,
+        );
+
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
@@ -237,16 +246,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                         now: $now
                     )->build()
                 ) : null,
-                'timeInHeartRateZoneChart' => Json::encode(
-                    TimeInHeartRateZoneChart::create(
-                        timeInSecondsInHeartRateZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::ONE),
-                        timeInSecondsInHeartRateZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::TWO),
-                        timeInSecondsInHeartRateZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::THREE),
-                        timeInSecondsInHeartRateZoneFour: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FOUR),
-                        timeInSecondsInHeartRateZoneFive: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FIVE),
-                        translator: $this->translator,
-                    )->build(),
-                ),
+                'timeInHeartRateZoneChart' => Json::encode($timeInHeartRateZoneData->build()),
+                'timeInHeartRateZoneData' => $timeInHeartRateZoneData,
                 'allMonths' => $allMonths,
                 'allConsistencyChallenges' => $this->consistencyChallenges,
                 'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(
@@ -274,6 +275,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'trainingMetrics' => $trainingMetrics,
                 'restDaysInLast7Days' => $numberOfRestDays,
+                'timeInHeartRateZoneData' => $timeInHeartRateZoneData,
             ])
         );
 
