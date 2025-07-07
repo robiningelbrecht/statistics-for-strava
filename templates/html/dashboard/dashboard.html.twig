@@ -244,37 +244,38 @@
                 {{ "Heart rate zones"|trans }}
             </h3>
             <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
-            <div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
-                <div class="text-center my-2">
-                    <div class="text-md font-semibold">{{ "Training Type (last 30 days)"|trans }}</div>
-                    <div class="text-2xl font-bold">{{ trainingType.value }}</div>
-                </div>
-                <div class="flex items-center">
-                    <h4 class="text-sm font-semibold">{{ "Time in HR Zones (last 30 days)"|trans }}</h4>
-                    <button class="hidden lg:block ml-1" data-popover-target="popover-hr-zones-{{ context }}" data-popover-placement="right" type="button">
-                        <svg class="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-                    </button>
-                    <div data-popover id="popover-hr-zones-{{ context }}" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
-                        <div class="p-2 space-y-2">
-                            <p>{{ "Time distribution across heart rate zones for the last month"|trans }}</p>
-                            <p>{{ "Zone 1: Recovery"|trans }}</p>
-                            <p>{{ "Zone 2: Aerobic"|trans }}</p>
-                            <p>{{ "Zone 3: Aerobic/Anaerobic"|trans }}</p>
-                            <p>{{ "Zone 4: Anaerobic"|trans }}</p>
-                            <p>{{ "Zone 5: Maximal"|trans }}</p>
+            {% if timeInHeartRateZonesForLast30Days %}
+                <div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+                    <div class="text-center my-2">
+                        <div class="text-md font-semibold">{{ "Training Type (last 30 days)"|trans }}</div>
+                        <div class="text-2xl font-bold">{{ timeInHeartRateZonesForLast30Days.getTrainingType()|trans }}</div>
+                    </div>
+                    <div class="flex items-center">
+                        <h4 class="text-sm font-semibold">{{ "Time in HR Zones (last 30 days)"|trans }}</h4>
+                        <button class="hidden lg:block ml-1" data-popover-target="popover-hr-zones-{{ context }}" data-popover-placement="right" type="button">
+                            <svg class="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div data-popover id="popover-hr-zones-{{ context }}" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+                            <div class="p-2 space-y-2">
+                                <p>{{ "Time distribution across heart rate zones for the last month"|trans }}</p>
+                                <p>{{ "Zone 1: Recovery"|trans }}</p>
+                                <p>{{ "Zone 2: Aerobic"|trans }}</p>
+                                <p>{{ "Zone 3: Aerobic/Anaerobic"|trans }}</p>
+                                <p>{{ "Zone 4: Anaerobic"|trans }}</p>
+                                <p>{{ "Zone 5: Maximal"|trans }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% if timeInHeartRateZonesForLast30Days %}
                     <div class="space-y-1">
+                        {% set totalTimeInSeconds = timeInHeartRateZonesForLast30Days.getTotalTime() %}
                         <div class="flex justify-between items-center">
                             <div class="flex items-center">
                                 <div class="w-3 h-3 rounded-full mr-2" style="background-color: #DF584A;"></div>
                                 <span class="text-xs">{{ "Zone 1"|trans }}</span>
                             </div>
                             <div class="text-xs">
-                                {{ (timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneOne() / 60)|round(0) }}min
-                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneOne() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
+                                {{ (timeInHeartRateZonesForLast30Days.getTimeInZoneOne() / 60)|round(0) }}min
+                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZonesForLast30Days.getTimeInZoneOne() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -283,8 +284,8 @@
                                 <span class="text-xs">{{ "Zone 2"|trans }}</span>
                             </div>
                             <div class="text-xs">
-                                {{ (timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneTwo() / 60)|round(0) }}min
-                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneTwo() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
+                                {{ (timeInHeartRateZonesForLast30Days.getTimeInZoneTwo() / 60)|round(0) }}min
+                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZonesForLast30Days.getTimeInZoneTwo() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -293,8 +294,8 @@
                                 <span class="text-xs">{{ "Zone 3"|trans }}</span>
                             </div>
                             <div class="text-xs">
-                                {{ (timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneThree() / 60)|round(0) }}min
-                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneThree() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
+                                {{ (timeInHeartRateZonesForLast30Days.getTimeInZoneThree() / 60)|round(0) }}min
+                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZonesForLast30Days.getTimeInZoneThree() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -303,8 +304,8 @@
                                 <span class="text-xs">{{ "Zone 4"|trans }}</span>
                             </div>
                             <div class="text-xs">
-                                {{ (timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneFour() / 60)|round(0) }}min
-                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneFour() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
+                                {{ (timeInHeartRateZonesForLast30Days.getTimeInZoneFour() / 60)|round(0) }}min
+                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZonesForLast30Days.getTimeInZoneFour() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
@@ -313,13 +314,13 @@
                                 <span class="text-xs">{{ "Zone 5"|trans }}</span>
                             </div>
                             <div class="text-xs">
-                                {{ (timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneFive() / 60)|round(0) }}min
-                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZoneData.getTimeInSecondsInHeartRateZoneFive() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
+                                {{ (timeInHeartRateZonesForLast30Days.getTimeInZoneFive() / 60)|round(0) }}min
+                                ({{ totalTimeInSeconds > 0 ? ((timeInHeartRateZonesForLast30Days.getTimeInZoneFive() / totalTimeInSeconds) * 100)|round(1) : 0 }}%)
                             </div>
                         </div>
                     </div>
-                {% endif %}
-            </div>
+                </div>
+            {% endif %}
         </div>
         <!-- ACTIVITY HEATMAP -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
