@@ -88,7 +88,7 @@ app-run-docs:
 
 # Ollama models
 ollama-run-llama32:
-	docker compose exec ollama ollama run llama3.2
+	docker compose exec ollama ollama pull llama3.2
 
 # Helpers for forks and PRs
 fork-fetch-remote:

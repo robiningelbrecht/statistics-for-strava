@@ -42,9 +42,6 @@ final class FlysystemChatHistory extends AbstractChatHistory
 
     public function removeOldMessage(int $index): ChatHistoryInterface
     {
-        if (isset($this->history[$index])) {
-            unset($this->history[$index]);
-        }
         $this->defaultStorage->write(self::FILE_PATH, Json::encode($this->getMessages()));
 
         return $this;
