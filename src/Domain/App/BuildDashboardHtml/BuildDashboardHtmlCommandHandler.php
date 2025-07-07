@@ -23,7 +23,6 @@ use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\BestPowerOutputs;
 use App\Domain\Strava\Activity\Stream\PowerOutputChart;
 use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDays;
-use App\Domain\Strava\Activity\Training\TimeInZones;
 use App\Domain\Strava\Activity\Training\TrainingLoadChart;
 use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
@@ -33,6 +32,7 @@ use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
+use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZones;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\CarbonSavedComparison;
@@ -248,7 +248,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                         translator: $this->translator,
                     )->build(),
                 ),
-                'timeInHeartRateZonesForLast30Days' => TimeInZones::create(
+                'timeInHeartRateZonesForLast30Days' => TimeInHeartRateZones::create(
                     timeInZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::ONE),
                     timeInZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::TWO),
                     timeInZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::THREE),
