@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Strava\Activity;
 
+use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityWithRawData;
@@ -9,7 +10,6 @@ use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\DbalActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Gear\GearId;
-use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;

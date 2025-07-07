@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\Route;
 
+use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;

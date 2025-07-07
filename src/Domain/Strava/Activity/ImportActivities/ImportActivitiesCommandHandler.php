@@ -2,6 +2,10 @@
 
 namespace App\Domain\Strava\Activity\ImportActivities;
 
+use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
+use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
+use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
@@ -15,13 +19,9 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
-use App\Domain\Weather\OpenMeteo\OpenMeteo;
-use App\Domain\Weather\OpenMeteo\Weather;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
-use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;

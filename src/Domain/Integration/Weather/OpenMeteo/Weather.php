@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Weather\OpenMeteo;
+namespace App\Domain\Integration\Weather\OpenMeteo;
 
 use App\Infrastructure\ValueObject\Measurement\Temperature\Celsius;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
