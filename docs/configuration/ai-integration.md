@@ -76,6 +76,10 @@ integrations:
       model: 'MODEL-NAME'
 ```
 
+<div class="alert important">
+Make sure you're running the latest version of Ollama. Streaming responses with tooling has been <a href="https://ollama.com/blog/streaming-tool">added on May 28, 2025.</a>
+</div>
+
 ## Your AI workout assistant
 
 The first available AI feature is an AI-powered workout assistant named **Mark**.
