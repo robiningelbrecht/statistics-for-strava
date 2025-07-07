@@ -11,6 +11,11 @@ interface ActivityHeartRateRepository
     public function findTotalTimeInSecondsInHeartRateZone(string $heartRateZoneName): int;
 
     /**
+     * @return array<string, int>
+     */
+    public function findTotalTimeInSecondsInHeartRateZonesForLast30Days(): array;
+
+    /**
      * @return array<int, int>
      */
     public function findTimeInSecondsPerHeartRateForActivity(ActivityId $activityId): array;

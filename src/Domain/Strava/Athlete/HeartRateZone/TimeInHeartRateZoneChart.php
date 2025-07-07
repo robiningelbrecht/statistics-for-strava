@@ -114,38 +114,4 @@ final readonly class TimeInHeartRateZoneChart
             ],
         ];
     }
-
-    public function getTimeInSecondsInHeartRateZoneOne(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneOne;
-    }
-
-    public function getTimeInSecondsInHeartRateZoneTwo(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneTwo;
-    }
-
-    public function getTimeInSecondsInHeartRateZoneThree(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneThree;
-    }
-
-    public function getTimeInSecondsInHeartRateZoneFour(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneFour;
-    }
-
-    public function getTimeInSecondsInHeartRateZoneFive(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneFive;
-    }
-
-    public function getTotalTimeInSeconds(): int
-    {
-        return $this->timeInSecondsInHeartRateZoneOne 
-            + $this->timeInSecondsInHeartRateZoneTwo 
-            + $this->timeInSecondsInHeartRateZoneThree 
-            + $this->timeInSecondsInHeartRateZoneFour 
-            + $this->timeInSecondsInHeartRateZoneFive;
-    }
 }
