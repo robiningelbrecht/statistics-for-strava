@@ -229,8 +229,10 @@
                 'imageOverlay': leaflet.map.getOverlayImageUrl(),
                 'bounds': leaflet.map.getBounds(),
             } %}
-            <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
-                 data-leaflet='{{ leafletOptions|json_encode }}'></div>
+            <div class="flex flex-col">
+                <div class="min-h-[350px] flex-grow-1" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+                     data-leaflet='{{ leafletOptions|json_encode }}'></div>
+            </div>
         {% else %}
             <div>
                 <img class="h-auto max-w-full rounded-lg lazy" src="{{ placeholderImage() }}"

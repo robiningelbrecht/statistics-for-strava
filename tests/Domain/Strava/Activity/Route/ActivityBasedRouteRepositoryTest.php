@@ -2,12 +2,12 @@
 
 namespace App\Tests\Domain\Strava\Activity\Route;
 
+use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\Route\ActivityBasedRouteRepository;
 use App\Domain\Strava\Activity\Route\RouteRepository;
-use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;

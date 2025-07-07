@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\Geocoding\Nominatim;
+namespace App\Tests\Domain\Integration\Geocoding\Nominatim;
 
-use App\Infrastructure\Geocoding\Nominatim\Location;
-use App\Infrastructure\Geocoding\Nominatim\Nominatim;
+use App\Domain\Integration\Geocoding\Nominatim\Location;
+use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 
 class SpyNominatim implements Nominatim

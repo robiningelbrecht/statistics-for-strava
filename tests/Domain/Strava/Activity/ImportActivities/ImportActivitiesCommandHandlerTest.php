@@ -2,6 +2,8 @@
 
 namespace App\Tests\Domain\Strava\Activity\ImportActivities;
 
+use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityVisibility;
@@ -28,8 +30,6 @@ use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
-use App\Domain\Weather\OpenMeteo\OpenMeteo;
-use App\Infrastructure\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;

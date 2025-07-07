@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Domain\Weather\OpenMeteo;
+namespace App\Tests\Domain\Integration\Weather\OpenMeteo;
 
-use App\Domain\Weather\OpenMeteo\LiveOpenMeteo;
+use App\Domain\Integration\Weather\OpenMeteo\LiveOpenMeteo;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Geography\Coordinate;

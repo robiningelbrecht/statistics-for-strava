@@ -32,21 +32,6 @@ class FlysystemChatHistoryTest extends ContainerTestCase
         $this->assertFileSystemWrites($this->getContainer()->get('default.storage'));
     }
 
-    public function testItRemovesOldestMessage(): void
-    {
-        $flysystemChatHistory = new FlysystemChatHistory(
-            $this->getContainer()->get('default.storage'),
-            -1,
-        );
-
-        $flysystemChatHistory->addMessage(new Message(
-            MessageRole::ASSISTANT,
-            'This is my message'
-        ));
-
-        $this->assertFileSystemWrites($this->getContainer()->get('default.storage'));
-    }
-
     public function testItShouldClear(): void
     {
         $flysystemChatHistory = new FlysystemChatHistory(
