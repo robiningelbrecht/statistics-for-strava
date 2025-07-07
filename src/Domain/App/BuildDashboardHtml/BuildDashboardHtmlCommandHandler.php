@@ -26,7 +26,6 @@ use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDay
 use App\Domain\Strava\Activity\Training\TimeInZones;
 use App\Domain\Strava\Activity\Training\TrainingLoadChart;
 use App\Domain\Strava\Activity\Training\TrainingMetrics;
-use App\Domain\Strava\Activity\Training\TrainingTypeClassification;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
@@ -205,8 +204,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             till: $now,
         )))->getNumberOfRestDays();
 
-        $timeInZones = TimeInZones::fromArray($this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days());
-
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
@@ -243,21 +240,21 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ) : null,
                 'timeInHeartRateZoneChart' => Json::encode(
                     TimeInHeartRateZoneChart::create(
-                        timeInSecondsInHeartRateZoneOne: $timeInZones->getZ1Time(),
-                        timeInSecondsInHeartRateZoneTwo: $timeInZones->getZ2Time(),
-                        timeInSecondsInHeartRateZoneThree: $timeInZones->getZ3Time(),
-                        timeInSecondsInHeartRateZoneFour: $timeInZones->getZ4Time(),
-                        timeInSecondsInHeartRateZoneFive: $timeInZones->getZ5Time(),
+                        timeInSecondsInHeartRateZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::ONE),
+                        timeInSecondsInHeartRateZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::TWO),
+                        timeInSecondsInHeartRateZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::THREE),
+                        timeInSecondsInHeartRateZoneFour: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FOUR),
+                        timeInSecondsInHeartRateZoneFive: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FIVE),
                         translator: $this->translator,
                     )->build(),
                 ),
-                'timeInHeartRateZonesForLast30Days' => [
-                    HeartRateZone::ONE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::ONE),
-                    HeartRateZone::TWO => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::TWO),
-                    HeartRateZone::THREE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::THREE),
-                    HeartRateZone::FOUR => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FIVE),
-                    HeartRateZone::FIVE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FIVE),
-                ],
+                'timeInHeartRateZonesForLast30Days' => TimeInZones::create(
+                    timeInZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::ONE),
+                    timeInZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::TWO),
+                    timeInZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::THREE),
+                    timeInZoneFour: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FOUR),
+                    timeInZoneFive: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FIVE),
+                ),
                 'allMonths' => $allMonths,
                 'allConsistencyChallenges' => $this->consistencyChallenges,
                 'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(
@@ -269,7 +266,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
                 'trainingMetrics' => $trainingMetrics,
-                'trainingType' => TrainingTypeClassification::fromTimeInZones($timeInZones)->getType(),
                 'restDaysInLast7Days' => $numberOfRestDays,
             ]),
         );

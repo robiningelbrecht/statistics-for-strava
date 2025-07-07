@@ -7,53 +7,59 @@ namespace App\Domain\Strava\Activity\Training;
 final readonly class TimeInZones
 {
     private function __construct(
-        private int $z1Time,
-        private int $z2Time,
-        private int $z3Time,
-        private int $z4Time,
-        private int $z5Time,
+        private int $timeInZoneOne,
+        private int $timeInZoneTwo,
+        private int $timeInZoneThree,
+        private int $timeInZoneFour,
+        private int $timeInZoneFive,
     ) {
     }
 
-    public static function fromArray(array $data): self
-    {
+    public static function create(
+        int $timeInZoneOne,
+        int $timeInZoneTwo,
+        int $timeInZoneThree,
+        int $timeInZoneFour,
+        int $timeInZoneFive,
+    ): self {
         return new self(
-            z1Time: $data['z1Time'] ?? 0,
-            z2Time: $data['z2Time'] ?? 0,
-            z3Time: $data['z3Time'] ?? 0,
-            z4Time: $data['z4Time'] ?? 0,
-            z5Time: $data['z5Time'] ?? 0,
+            timeInZoneOne: $timeInZoneOne,
+            timeInZoneTwo: $timeInZoneTwo,
+            timeInZoneThree: $timeInZoneThree,
+            timeInZoneFour: $timeInZoneFour,
+            timeInZoneFive: $timeInZoneFive,
         );
     }
 
-    public function getZ1Time(): int
+    public function getTimeInZoneOne(): int
     {
-        return $this->z1Time;
+        return $this->timeInZoneOne;
     }
 
-    public function getZ2Time(): int
+    public function getTimeInZoneTwo(): int
     {
-        return $this->z2Time;
+        return $this->timeInZoneTwo;
     }
 
-    public function getZ3Time(): int
+    public function getTimeInZoneThree(): int
     {
-        return $this->z3Time;
+        return $this->timeInZoneThree;
     }
 
-    public function getZ4Time(): int
+    public function getTimeInZoneFour(): int
     {
-        return $this->z4Time;
+        return $this->timeInZoneFour;
     }
 
-    public function getZ5Time(): int
+    public function getTimeInZoneFive(): int
     {
-        return $this->z5Time;
+        return $this->timeInZoneFive;
     }
 
     public function getTotalTime(): int
     {
-        return $this->z1Time + $this->z2Time + $this->z3Time + $this->z4Time + $this->z5Time;
+        return $this->getTimeInZoneOne() + $this->getTimeInZoneTwo()
+            + $this->getTimeInZoneThree() + $this->getTimeInZoneFour() + $this->getTimeInZoneFive();
     }
 
     public function getPercentageInLowZones(): float
@@ -62,7 +68,7 @@ final readonly class TimeInZones
             return 0;
         }
 
-        return ($this->z1Time + $this->z2Time) / $this->getTotalTime() * 100;
+        return ($this->getTimeInZoneOne() + $this->getTimeInZoneTwo()) / $this->getTotalTime() * 100;
     }
 
     public function getPercentageInMediumZone(): float
@@ -71,7 +77,7 @@ final readonly class TimeInZones
             return 0;
         }
 
-        return $this->z3Time / $this->getTotalTime() * 100;
+        return $this->getTimeInZoneThree() / $this->getTotalTime() * 100;
     }
 
     public function getPercentageInHighZones(): float
@@ -80,6 +86,35 @@ final readonly class TimeInZones
             return 0;
         }
 
-        return ($this->z4Time + $this->z5Time) / $this->getTotalTime() * 100;
+        return ($this->getTimeInZoneFour() + $this->getTimeInZoneFive()) / $this->getTotalTime() * 100;
+    }
+
+    public function getTrainingType(): TrainingType
+    {
+        $low = $this->getPercentageInLowZones();
+        $medium = $this->getPercentageInMediumZone();
+        $high = $this->getPercentageInHighZones();
+
+        if ($low >= 75 && $low <= 85 && $medium >= 5 && $medium <= 10 && $high >= 10 && $high <= 20) {
+            return TrainingType::POLARIZED;
+        }
+
+        if ($low >= 60 && $low <= 75 && $medium >= 15 && $medium <= 25 && $high >= 10 && $high <= 20) {
+            return TrainingType::PYRAMIDAL;
+        }
+
+        if ($low >= 50 && $low <= 65 && $medium >= 25 && $medium <= 35 && $high >= 10 && $high <= 20) {
+            return TrainingType::THRESHOLD;
+        }
+
+        if ($low >= 45 && $low <= 60 && $medium >= 15 && $medium <= 25 && $high >= 25 && $high <= 40) {
+            return TrainingType::HIIT;
+        }
+
+        if ($low >= 85 && $low <= 95 && $medium >= 3 && $medium <= 8 && $high >= 2 && $high <= 7) {
+            return TrainingType::BASE;
+        }
+
+        return TrainingType::UNIQUE_OTHER;
     }
 }
