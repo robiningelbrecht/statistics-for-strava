@@ -23,8 +23,10 @@ use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Strava\Activity\Stream\BestPowerOutputs;
 use App\Domain\Strava\Activity\Stream\PowerOutputChart;
 use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDays;
+use App\Domain\Strava\Activity\Training\TimeInZones;
 use App\Domain\Strava\Activity\Training\TrainingLoadChart;
 use App\Domain\Strava\Activity\Training\TrainingMetrics;
+use App\Domain\Strava\Activity\Training\TrainingTypeClassification;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
@@ -203,6 +205,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             till: $now,
         )))->getNumberOfRestDays();
 
+        $timeInZones = TimeInZones::fromArray($this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days());
+
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
@@ -239,11 +243,11 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ) : null,
                 'timeInHeartRateZoneChart' => Json::encode(
                     TimeInHeartRateZoneChart::create(
-                        timeInSecondsInHeartRateZoneOne: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::ONE),
-                        timeInSecondsInHeartRateZoneTwo: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::TWO),
-                        timeInSecondsInHeartRateZoneThree: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::THREE),
-                        timeInSecondsInHeartRateZoneFour: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FOUR),
-                        timeInSecondsInHeartRateZoneFive: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZone(HeartRateZone::FIVE),
+                        timeInSecondsInHeartRateZoneOne: $timeInZones->getZ1Time(),
+                        timeInSecondsInHeartRateZoneTwo: $timeInZones->getZ2Time(),
+                        timeInSecondsInHeartRateZoneThree: $timeInZones->getZ3Time(),
+                        timeInSecondsInHeartRateZoneFour: $timeInZones->getZ4Time(),
+                        timeInSecondsInHeartRateZoneFive: $timeInZones->getZ5Time(),
                         translator: $this->translator,
                     )->build(),
                 ),
@@ -259,6 +263,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
                 'trainingMetrics' => $trainingMetrics,
+                'trainingType' => TrainingTypeClassification::fromTimeInZones($timeInZones)->getType(),
                 'restDaysInLast7Days' => $numberOfRestDays,
             ]),
         );
