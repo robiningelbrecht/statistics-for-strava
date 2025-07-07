@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Infrastructure\Geocoding\Nominatim;
+namespace App\Tests\Domain\Integration\Geocoding\Nominatim;
 
-use App\Infrastructure\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
-use App\Infrastructure\Geocoding\Nominatim\LiveNominatim;
-use App\Infrastructure\Geocoding\Nominatim\Nominatim;
+use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
+use App\Domain\Integration\Geocoding\Nominatim\LiveNominatim;
+use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;

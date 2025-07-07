@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Weather\OpenMeteo;
+namespace App\Domain\Integration\Weather\OpenMeteo;
 
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;

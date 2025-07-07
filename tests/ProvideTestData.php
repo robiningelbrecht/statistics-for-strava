@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
+use App\Domain\Integration\Geocoding\Nominatim\Location;
+use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityType;
@@ -27,8 +29,6 @@ use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Segment\SegmentRepository;
-use App\Domain\Weather\OpenMeteo\Weather;
-use App\Infrastructure\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;

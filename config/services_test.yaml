@@ -23,11 +23,11 @@ services:
     App\Infrastructure\ValueObject\Identifier\UuidFactory:
         class: App\Tests\Infrastructure\ValueObject\Identifier\FakeUuidFactory
 
-    App\Domain\Weather\OpenMeteo\OpenMeteo:
-        class: App\Tests\Domain\Weather\OpenMeteo\SpyOpenMeteo
+    App\Domain\Integration\Weather\OpenMeteo\OpenMeteo:
+        class: App\Tests\Domain\Integration\Weather\OpenMeteo\SpyOpenMeteo
 
-    App\Infrastructure\Geocoding\Nominatim\Nominatim:
-        class: App\Tests\Infrastructure\Geocoding\Nominatim\SpyNominatim
+    App\Domain\Integration\Geocoding\Nominatim\Nominatim:
+        class: App\Tests\Domain\Integration\Geocoding\Nominatim\SpyNominatim
 
     App\Domain\Integration\Notification\Ntfy\Ntfy:
         class: App\Tests\Domain\Integration\Notification\Ntfy\SpyNotify
