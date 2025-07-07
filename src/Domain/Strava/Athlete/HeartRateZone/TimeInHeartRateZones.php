@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Activity\Training;
+namespace App\Domain\Strava\Athlete\HeartRateZone;
 
-final readonly class TimeInZones
+use App\Domain\Strava\Activity\Training\TrainingType;
+
+final readonly class TimeInHeartRateZones
 {
     private function __construct(
         private int $timeInZoneOne,
