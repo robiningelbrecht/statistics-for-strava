@@ -251,7 +251,13 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                         translator: $this->translator,
                     )->build(),
                 ),
-                'timeInHeartRateZonesForLast30Days' => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days(),
+                'timeInHeartRateZonesForLast30Days' => [
+                    HeartRateZone::ONE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::ONE),
+                    HeartRateZone::TWO => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::TWO),
+                    HeartRateZone::THREE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::THREE),
+                    HeartRateZone::FOUR => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FIVE),
+                    HeartRateZone::FIVE => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZoneForLast30Days(HeartRateZone::FIVE),
+                ],
                 'allMonths' => $allMonths,
                 'allConsistencyChallenges' => $this->consistencyChallenges,
                 'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(

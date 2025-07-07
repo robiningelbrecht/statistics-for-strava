@@ -37,7 +37,8 @@ abstract class ContainerTestCase extends KernelTestCase
         // Empty the static cache between tests.
         $this->getContainer()->get(ActivityRepository::class)::$cachedActivities = [];
         $this->getContainer()->get(ActivityIntensity::class)::$cachedIntensities = [];
-        $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZonesPerActivity = [];
+        $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZones = [];
+        $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZonesInLastXDays = [];
         Eddington::$instances = [];
         ActivityTotals::$instance = null;
         Trivia::$instance = null;
