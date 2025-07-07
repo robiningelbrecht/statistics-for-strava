@@ -10,6 +10,7 @@ use App\Domain\Strava\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 use App\Tests\Domain\Strava\Activity\Stream\ActivityStreamBuilder;
@@ -51,6 +52,7 @@ class CalculateBestActivityEffortsCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
+                ->withDistance(Kilometer::from(200))
                 ->build(), []
         ));
         $this->getContainer()->get(ActivityStreamRepository::class)->add(
@@ -70,6 +72,7 @@ class CalculateBestActivityEffortsCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(2))
+                ->withDistance(Kilometer::from(20))
                 ->build(), []
         ));
         $this->getContainer()->get(ActivityStreamRepository::class)->add(
