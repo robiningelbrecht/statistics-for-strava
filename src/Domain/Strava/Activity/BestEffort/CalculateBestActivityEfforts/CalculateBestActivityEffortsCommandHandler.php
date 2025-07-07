@@ -48,6 +48,12 @@ final readonly class CalculateBestActivityEffortsCommandHandler implements Comma
             ++$activityWithBestEffortsCalculatedCount;
 
             foreach ($distancesForBestEfforts as $distance) {
+                if ($activity->getDistance()->toMeter()->toInt() < $distance->toMeter()->toInt()) {
+                    // For some reason the Strava distance indicates a longer distance than the actual activity distance.
+                    // No clue why this happens, but it does.
+                    // Make sure we don't calculate best efforts for distance streams that are longer than the activity distance.
+                    continue;
+                }
                 $n = count($distances);
                 $fastestTime = PHP_INT_MAX;
                 $startIdx = 0;

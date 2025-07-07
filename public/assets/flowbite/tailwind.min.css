@@ -1631,6 +1631,9 @@
   .min-h-\[16rem\] {
     min-height: 16rem;
   }
+  .min-h-\[350px\] {
+    min-height: 350px;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -1895,6 +1898,9 @@
   }
   .shrink-0 {
     flex-shrink: 0;
+  }
+  .flex-grow-1 {
+    flex-grow: 1;
   }
   .grow {
     flex-grow: 1;
