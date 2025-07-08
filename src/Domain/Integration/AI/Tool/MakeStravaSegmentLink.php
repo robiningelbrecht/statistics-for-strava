@@ -14,7 +14,10 @@ final class MakeStravaSegmentLink extends Tool
     ) {
         parent::__construct(
             'make_strava_segment_link',
-            'Creates a link to the strava segment by a given activity id',
+            <<<DESC
+            Generates a direct Strava URL for a segment based on a given segment ID.
+            Requires the segment ID and returns a full link to the corresponding Strava segment page.
+            DESC
         );
     }
 

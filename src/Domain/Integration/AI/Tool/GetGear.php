@@ -15,7 +15,11 @@ final class GetGear extends Tool
     ) {
         parent::__construct(
             'get_gear',
-            'Retrieves the gear data from the database',
+            <<<DESC
+            Retrieves the athlete’s gear information from the database.
+            Use this tool when the user refers to equipment such as shoes, bikes, or other gear
+            Returns gear details like name, type and usage distance.
+            DESC
         );
     }
 

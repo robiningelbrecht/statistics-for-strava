@@ -14,7 +14,10 @@ final class MakeStravaActivityLink extends Tool
     ) {
         parent::__construct(
             'make_strava_activity_link',
-            'Creates a link to the strava activity by a given activity id',
+            <<<DESC
+            Generates a direct Strava URL for a given activity ID.
+            Requires an activity ID and returns a full link to the corresponding Strava activity page.
+            DESC
         );
     }
 

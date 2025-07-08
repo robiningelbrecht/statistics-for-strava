@@ -20,7 +20,11 @@ final class GetActivitySplits extends Tool
     ) {
         parent::__construct(
             'get_activity_splits',
-            'Retrieves detailed split data from the database for a specific activity',
+            <<<DESC
+            Retrieves detailed split information for a specific activity from the database.
+            Use this tool when the user asks about splits data within an activity or when a user ask for all details of an activity.
+            Requires the activity ID as input.
+            DESC
         );
     }
 
