@@ -15,7 +15,11 @@ final class GetAllActivitiesSummary extends Tool
     ) {
         parent::__construct(
             'get_user_activities_summary',
-            'Retrieves all activity ids from the database sorted from new => old and adds some summary data',
+            <<<DESC
+            Retrieves a list of all activity IDs for the user, sorted from newest to oldest, along with summary data for each activity.
+            Use this tool when the user requests an overview of their past activities.
+            Returns basic information such as activity ID and date.
+            DESC
         );
     }
 

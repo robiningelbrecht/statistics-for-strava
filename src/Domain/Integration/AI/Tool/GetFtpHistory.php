@@ -14,7 +14,11 @@ final class GetFtpHistory extends Tool
     ) {
         parent::__construct(
             'get_ftp_history',
-            'Retrieves ftp history from database',
+            <<<DESC
+            Retrieves the athlete’s Functional Threshold Power (FTP) history from the database.
+            Use this tool when the user asks about changes in their FTP over time or when you need to determine intensity
+            Returns a timeline of FTP values with corresponding dates.
+            DESC
         );
     }
 

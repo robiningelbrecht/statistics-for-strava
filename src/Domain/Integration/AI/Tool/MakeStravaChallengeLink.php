@@ -14,7 +14,10 @@ class MakeStravaChallengeLink extends Tool
     ) {
         parent::__construct(
             'make_strava_challenge_link',
-            'Creates a link to the strava challenge by a given challenge slug',
+            <<<DESC
+            Generates a direct Strava URL for a given challenge using its slug.
+            Requires the challenge slug and returns a full link to the corresponding Strava challenge page.
+            DESC
         );
     }
 

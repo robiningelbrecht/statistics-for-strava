@@ -18,7 +18,11 @@ final class GetActivityLaps extends Tool
     ) {
         parent::__construct(
             'get_activity_laps',
-            'Retrieves detailed lap data from the database for a specific activity',
+            <<<DESC
+            Retrieves detailed lap information for a specific activity from the database.
+            Use this tool when the user asks about lap data within an activity or when a user ask for all details of an activity.
+            Requires the activity ID as input.
+            DESC
         );
     }
 

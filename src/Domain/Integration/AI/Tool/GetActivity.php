@@ -17,7 +17,10 @@ final class GetActivity extends Tool
     ) {
         parent::__construct(
             'get_activity_by_id',
-            'Retrieves an activity from the database by a given id',
+            <<<DESC
+            Retrieves a single activity from the database by its unique ID. 
+            Use this tool when the user refers to a specific activity. Requires the activity ID as input.
+            DESC
         );
     }
 

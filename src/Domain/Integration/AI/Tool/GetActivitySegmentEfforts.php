@@ -18,7 +18,12 @@ final class GetActivitySegmentEfforts extends Tool
     ) {
         parent::__construct(
             'get_activity_segments_efforts',
-            'Retrieves detailed segment effort data from the database for a specific activity',
+            <<<DESC
+            Retrieves detailed segment information for a specific activity from the database.
+            Use this tool when the user asks about segments and segment efforts within an activity 
+            or when a user ask for all details of an activity.
+            Requires the activity ID as input.
+            DESC
         );
     }
 

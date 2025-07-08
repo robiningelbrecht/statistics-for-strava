@@ -17,7 +17,11 @@ final class GetSegment extends Tool
     ) {
         parent::__construct(
             'get_segment_by_id',
-            'Retrieves a segment from the database by a given id',
+            <<<DESC
+            Retrieves detailed information about a specific segment using its ID.
+            Use this tool when the user asks about a particular segment. (e.g., “Tell me more about segment 1234” or “What’s the length of that climb?”).
+            Returns segment data such as name, distance, elevation, sport type and climb category.
+            DESC
         );
     }
 
