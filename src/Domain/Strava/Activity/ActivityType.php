@@ -25,11 +25,6 @@ enum ActivityType: string implements TranslatableInterface
     case ADAPTIVE_INCLUSIVE_SPORTS = 'AdaptiveInclusiveSports';
     case OTHER = 'Other';
 
-    public function getTemplateName(): string
-    {
-        return str_replace(['_'], '-', strtolower($this->name));
-    }
-
     public function getSportTypes(): SportTypes
     {
         $sportTypes = SportTypes::empty();

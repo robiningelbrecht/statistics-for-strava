@@ -198,9 +198,10 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $leafletMap = $activity->getLeafletMap();
+            $templateName = sprintf('html/activity/%s.html.twig', $activity->getSportType()->getTemplateName());
             $this->buildStorage->write(
                 'activity/'.$activity->getId().'.html',
-                $this->twig->load('html/activity/activity.html.twig')->render([
+                $this->twig->load($templateName)->render([
                     'activity' => $activity,
                     'leaflet' => $leafletMap ? [
                         'routes' => [$activity->getPolyline()],
