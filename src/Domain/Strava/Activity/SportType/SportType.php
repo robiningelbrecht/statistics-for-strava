@@ -74,7 +74,10 @@ enum SportType: string implements TranslatableInterface
 
     public function getTemplateName(): string
     {
-        return str_replace(['_'], '-', strtolower($this->name));
+        return match ($this) {
+            self::RUN, self::WALK => 'activity--activity-type--run',
+            default => 'activity--activity-type--generic',
+        };
     }
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string

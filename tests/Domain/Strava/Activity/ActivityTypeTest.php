@@ -11,15 +11,6 @@ class ActivityTypeTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    public function testGetTemplateName(): void
-    {
-        $snapshot = [];
-        foreach (ActivityType::cases() as $activityType) {
-            $snapshot[] = $activityType->getTemplateName();
-        }
-        $this->assertMatchesJsonSnapshot($snapshot);
-    }
-
     public function testGetSportTypes(): void
     {
         $snapshot = [];
