@@ -2451,6 +2451,9 @@
       background-color: var(--color-gray-700);
     }
   }
+  .bg-\[\#89D7D2\] {
+    background-color: #89D7D2;
+  }
   .bg-blue-50 {
     background-color: var(--color-blue-50);
   }
@@ -3572,11 +3575,6 @@
   .lg\:mt-0 {
     @media (width >= 64rem) {
       margin-top: calc(var(--spacing) * 0);
-    }
-  }
-  .lg\:mt-\[54px\] {
-    @media (width >= 64rem) {
-      margin-top: 54px;
     }
   }
   .lg\:block {
