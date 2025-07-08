@@ -86,10 +86,10 @@
                     </div>
                 {% endif %}
                 {% if activity.getLocalImagePaths() %}
-                    <div class="grid grid-cols-6 gap-2">
-                        {% for imagePath in activity.getLocalImagePaths()|slice(0, 6) %}
-                            <div class="h-[130px]">
-                                <img class="h-full w-full object-cover object-top rounded-lg lazy"
+                    <div class="flex gap-2 relative overflow-x-auto">
+                        {% for imagePath in activity.getLocalImagePaths() %}
+                            <div class="h-[130px] shrink-0">
+                                <img class="h-full object-cover object-top rounded-lg lazy"
                                      src="{{ placeholderImage() }}" data-src="{{ imagePath }}"
                                      alt="Activity image"/>
                             </div>
