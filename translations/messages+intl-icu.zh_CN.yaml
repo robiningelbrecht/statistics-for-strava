@@ -42,6 +42,7 @@ Calories: 卡路里
 'Calories burnt': 'Calories burnt'
 Canoeing: 划独木舟
 'Carbon emission comparisons': 碳排放比较
+Category: Category
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
@@ -204,13 +205,17 @@ Photos: 照片
 'Pickle Ball': 匹克球
 Pilates: 普拉提
 'Please address these issues': 'Please address these issues'
+Polarised: Polarised
+'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: 功率
 'Power distribution': 功率分布
 'Prev year': 去年
+Pyramidal: Pyramidal
 Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
+Random: Random
 Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
@@ -270,10 +275,12 @@ Tennis: 网球
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是“高强度”
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
+Threshold-heavy: Threshold-heavy
 Thu: 周四
 Thursday: 星期四
 Time: Time
 'Time / week': 每周时间
+'Time distribution across heart rate zones for the last month': 'Time distribution across heart rate zones for the last month'
 'Times completed': 完成次数
 To: 到
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
@@ -297,6 +304,7 @@ Trivia: 琐事
 Tue: 周二
 Tuesday: 星期二
 Unspecified: Unspecified
+Unstructured: Unstructured
 'Updated on': 更新于
 'User badge': 'User badge'
 'Velo Mobiles': 躺车
@@ -334,6 +342,10 @@ Yoga: 瑜伽
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': Zwift徽章
 'Your badge(s)': 徽章
+'Your training': 'Your training'
+'Z1-2 (Low)': 'Z1-2 (Low)'
+'Z3 (Mod)': 'Z3 (Mod)'
+'Z4-5 (High)': 'Z4-5 (High)'
 'Zone 1 (recovery)': 区域1（恢复）
 'Zone 2 (aerobic)': 区域2（有氧）
 'Zone 3 (aerobic/anaerobic)': 区域3（有氧/无氧）

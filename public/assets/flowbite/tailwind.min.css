@@ -3117,6 +3117,22 @@
       color: var(--color-strava-orange);
     }
   }
+  .group-\[\.polarised\]\/training\:bg-green-500\/15 {
+    &:is(:where(.group\/training):is(.polarised) *) {
+      background-color: color-mix(in srgb, #10B981 15%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
+      }
+    }
+  }
+  .group-\[\.pyramidal\]\/training\:bg-green-500\/15 {
+    &:is(:where(.group\/training):is(.pyramidal) *) {
+      background-color: color-mix(in srgb, #10B981 15%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
+      }
+    }
+  }
   .group-\[\.sidebar-is-collapsed\]\:block {
     &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       display: block;
@@ -3146,6 +3162,22 @@
     &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
+    }
+  }
+  .group-\[\.threshold-heavy\]\/training\:bg-green-500\/15 {
+    &:is(:where(.group\/training):is(.threshold-heavy) *) {
+      background-color: color-mix(in srgb, #10B981 15%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
+      }
+    }
+  }
+  .group-\[\.unstructured\]\/training\:bg-green-500\/15 {
+    &:is(:where(.group\/training):is(.unstructured) *) {
+      background-color: color-mix(in srgb, #10B981 15%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
+      }
     }
   }
   .peer-checked\:visible {

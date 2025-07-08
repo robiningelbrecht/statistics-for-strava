@@ -42,6 +42,7 @@ Calories: Calorias
 'Calories burnt': 'Calories burnt'
 Canoeing: Canoagem
 'Carbon emission comparisons': 'Comparações de emissão de carbono'
+Category: Category
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
@@ -204,13 +205,17 @@ Photos: Fotos
 'Pickle Ball': Pickleball
 Pilates: Pilates
 'Please address these issues': 'Por favor, corrija esses problemas'
+Polarised: Polarised
+'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Potência
 'Power distribution': 'Distribuição da potência'
 'Prev year': 'Ano anterior'
+Pyramidal: Pyramidal
 Race: Competição
 'Racing Score': 'Pontuação de Corrida'
 'Racquet & Paddle Sports': 'Esportes de Raquete e Padel'
 'Racquet Ball': Racquetball
+Random: Random
 Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
@@ -270,10 +275,12 @@ Tennis: Ténis
 'This feature is currently disabled': 'Essa funcionalidade está desativada'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
+Threshold-heavy: Threshold-heavy
 Thu: Qui
 Thursday: Quinta-feira
 Time: Time
 'Time / week': 'Tempo / semana'
+'Time distribution across heart rate zones for the last month': 'Time distribution across heart rate zones for the last month'
 'Times completed': 'Vezes concluído'
 To: Até
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para ativar, configure {configFile} e reconstrua os arquivos para que as alterações entrem em vigor'
@@ -297,6 +304,7 @@ Trivia: Trivia
 Tue: Ter
 Tuesday: Terça-feira
 Unspecified: 'Não especificado'
+Unstructured: Unstructured
 'Updated on': 'Atualizado em'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Móveis'
@@ -334,6 +342,10 @@ Yoga: Yoga
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Seu emblema do Zwift'
 'Your badge(s)': 'Seu(s) emblema(s)'
+'Your training': 'Your training'
+'Z1-2 (Low)': 'Z1-2 (Low)'
+'Z3 (Mod)': 'Z3 (Mod)'
+'Z4-5 (High)': 'Z4-5 (High)'
 'Zone 1 (recovery)': 'Zona 1 (recuperação)'
 'Zone 2 (aerobic)': 'Zona 2 (aeróbica)'
 'Zone 3 (aerobic/anaerobic)': 'Zona 3 (aeróbica/anaeróbica)'
