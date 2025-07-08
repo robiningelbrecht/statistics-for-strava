@@ -37,44 +37,46 @@
     <div class="p-4 md:p-5">
         <div class="grid grid-cols-1 gap-4">
             <div class="grid grid-cols-1 gap-4">
-                <div class="grid grid-cols-6 gap-2">
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
-                            <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
+                {% block mainStatsOnTop %}
+                    <div class="grid grid-cols-6 gap-2">
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
+                                <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Moving time"|trans }}</dd>
+                                <dt class="font-extrabold">{{ activity.getMovingTimeFormatted() }}</dt>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
+                                <dt class="font-extrabold">{{ activity.getElevation()|renderMeasurement(0) }}</dt>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Calories"|trans }}</dd>
+                                <dt class="font-extrabold">{{ activity.getCalories() }}</dt>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Gear"|trans }}</dd>
+                                <dt class="text-xs font-extrabold">{{ activity.getGearName() ?: 'Other' }}</dt>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                            <div class="text-center">
+                                <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
+                                <dt class="text-xs font-extrabold">{{ activity.getDeviceName() ?: 'None' }}</dt>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Moving time"|trans }}</dd>
-                            <dt class="font-extrabold">{{ activity.getMovingTimeFormatted() }}</dt>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
-                            <dt class="font-extrabold">{{ activity.getElevation()|renderMeasurement(0) }}</dt>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Calories"|trans }}</dd>
-                            <dt class="font-extrabold">{{ activity.getCalories() }}</dt>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Gear"|trans }}</dd>
-                            <dt class="text-xs font-extrabold">{{ activity.getGearName() ?: 'Other' }}</dt>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
-                        <div class="text-center">
-                            <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
-                            <dt class="text-xs font-extrabold">{{ activity.getDeviceName() ?: 'None' }}</dt>
-                        </div>
-                    </div>
-                </div>
+                {% endblock mainStatsOnTop %}
                 {% set weather = activity.getWeather() %}
                 {% if weather %}
                     <div class="text-xs font-normal text-gray-500">
@@ -96,166 +98,168 @@
                 {% endif %}
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div class="space-y-4">
-                    <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                        <table class="w-full text-sm text-center text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase">
-                            <tr>
-                                <th scope="col" class="px-2 py-2">
+                {% block statsInleftColumn %}
+                    <div class="space-y-4">
+                        <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                            <table class="w-full text-sm text-center text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase">
+                                <tr>
+                                    <th scope="col" class="px-2 py-2">
 
-                                </th>
-                                <th scope="col" class="px-2 py-2">
-                                    {{ "Speed"|trans }}
-                                </th>
-                                <th scope="col" class="px-2 py-2">
-                                    {{ "Heart rate"|trans }}
-                                </th>
-                                <th scope="col" class="px-2 py-2">
-                                    {{ "Cadence"|trans }}
-                                </th>
-                                <th scope="col" class="px-2 py-2">
-                                    {{ "Power"|trans }}
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="border-b">
-                                <th class="px-2 py-2">
-                                    {{ "Avg"|trans }}
-                                </th>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set averageSpeed = activity.getAverageSpeed() %}
-                                    {% if averageSpeed %}
-                                        {{ averageSpeed|renderMeasurement(1) }}
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set averageHearRate = activity.getAverageHeartRate() %}
-                                    {% if averageHearRate %}
-                                        {{ averageHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set averageCadence = activity.getAverageCadence() %}
-                                    {{ averageCadence ?: 'n/a'|trans }}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set averagePower = activity.getAveragePower() %}
-                                    {% if averagePower %}
-                                        {{ averagePower }}<span class="text-xs">w</span>
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="px-2 py-2">
-                                    {{ "Max"|trans }}
-                                </th>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set maxSpeed = activity.getMaxSpeed() %}
-                                    {% if maxSpeed %}
-                                        {{ maxSpeed|renderMeasurement(1) }}
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set maxHearRate = activity.getMaxHeartRate() %}
-                                    {% if maxHearRate %}
-                                        {{ maxHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set maxCadence = activity.getMaxCadence() %}
-                                    {{ maxCadence ?: 'n/a'|trans }}
-                                </td>
-                                <td class="px-2 py-2 text-sm">
-                                    {% set maxPower = activity.getMaxPower() %}
-                                    {% if maxPower %}
-                                        {{ maxPower }}<span class="text-xs">w</span>
-                                    {% else %}
-                                        {{ "n/a"|trans }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    {% if activity.hasDetailedPowerData() %}
-                        <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                            <table class="w-full text-sm text-center text-gray-500">
-                                <thead class="text-xs text-gray-700 uppercase">
-                                {% set timeIntervals =  [5, 60, 300, 1200] %}
-                                {% set timeIntervalLabels = ['5s', '1m', '5m', '20m'] %}
-                                <tr>
-                                    {% for timeInterval in timeIntervals %}
-                                        {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
-                                        {% if powerOutput %}
-                                            <th scope="col" colspan="2" class="px-2 py-2">
-                                                {{ "Best"|trans }} {{ timeIntervalLabels[loop.index0] }}
-                                            </th>
-                                        {% endif %}
-                                    {% endfor %}
+                                    </th>
+                                    <th scope="col" class="px-2 py-2">
+                                        {{ "Speed"|trans }}
+                                    </th>
+                                    <th scope="col" class="px-2 py-2">
+                                        {{ "Heart rate"|trans }}
+                                    </th>
+                                    <th scope="col" class="px-2 py-2">
+                                        {{ "Cadence"|trans }}
+                                    </th>
+                                    <th scope="col" class="px-2 py-2">
+                                        {{ "Power"|trans }}
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    {% for timeInterval in timeIntervals %}
-                                        {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
-                                        {% if powerOutput %}
-                                            <td class="px-2 py-2 first:border-l-0 border-l">
-                                                {{ powerOutput.getPower() }}<span class="text-xs">w</span>
-                                            </td>
-                                            <td class="px-2 py-2 last:border-r-0 border-r">
-                                                {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
-                                            </td>
+                                <tr class="border-b">
+                                    <th class="px-2 py-2">
+                                        {{ "Avg"|trans }}
+                                    </th>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set averageSpeed = activity.getAverageSpeed() %}
+                                        {% if averageSpeed %}
+                                            {{ averageSpeed|renderMeasurement(1) }}
+                                        {% else %}
+                                            {{ "n/a"|trans }}
                                         {% endif %}
-                                    {% endfor %}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set averageHearRate = activity.getAverageHeartRate() %}
+                                        {% if averageHearRate %}
+                                            {{ averageHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set averageCadence = activity.getAverageCadence() %}
+                                        {{ averageCadence ?: 'n/a'|trans }}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set averagePower = activity.getAveragePower() %}
+                                        {% if averagePower %}
+                                            {{ averagePower }}<span class="text-xs">w</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="px-2 py-2">
+                                        {{ "Max"|trans }}
+                                    </th>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set maxSpeed = activity.getMaxSpeed() %}
+                                        {% if maxSpeed %}
+                                            {{ maxSpeed|renderMeasurement(1) }}
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set maxHearRate = activity.getMaxHeartRate() %}
+                                        {% if maxHearRate %}
+                                            {{ maxHearRate }}<span class="text-xs">{{ "bpm"|trans }}</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set maxCadence = activity.getMaxCadence() %}
+                                        {{ maxCadence ?: 'n/a'|trans }}
+                                    </td>
+                                    <td class="px-2 py-2 text-sm">
+                                        {% set maxPower = activity.getMaxPower() %}
+                                        {% if maxPower %}
+                                            {{ maxPower }}<span class="text-xs">w</span>
+                                        {% else %}
+                                            {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-                    {% endif %}
-                    {% if bestEfforts|length > 0 %}
-                        <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                            <table class="w-full text-sm text-center text-gray-500">
-                                <caption class="caption-top text-xs">
-                                    {{ "Congrats! You achieved personal bests during this activity."|trans }}
-                                </caption>
-                                <thead class="text-xs text-gray-700 uppercase">
-                                <tr>
-                                    <th scope="col" class="px-2 py-2">
-                                        {{ "Distance"|trans }}
-                                    </th>
-                                    <th scope="col" class="px-2 py-2">
-                                        {{ "Time"|trans }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for bestEffort in bestEfforts %}
-                                    {% set distance = bestEffort.getBestEffortDistance() %}
-                                    <tr class="border-b last:border-b-0">
-                                        <th class="px-2 py-2">
-                                            {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
-                                        </th>
-                                        <td class="px-2 py-2">
-                                            {{ bestEffort.getFormattedTime() }}
-                                        </td>
+                        {% if activity.hasDetailedPowerData() %}
+                            <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                                <table class="w-full text-sm text-center text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase">
+                                    {% set timeIntervals =  [5, 60, 300, 1200] %}
+                                    {% set timeIntervalLabels = ['5s', '1m', '5m', '20m'] %}
+                                    <tr>
+                                        {% for timeInterval in timeIntervals %}
+                                            {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
+                                            {% if powerOutput %}
+                                                <th scope="col" colspan="2" class="px-2 py-2">
+                                                    {{ "Best"|trans }} {{ timeIntervalLabels[loop.index0] }}
+                                                </th>
+                                            {% endif %}
+                                        {% endfor %}
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% endif %}
-                </div>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        {% for timeInterval in timeIntervals %}
+                                            {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
+                                            {% if powerOutput %}
+                                                <td class="px-2 py-2 first:border-l-0 border-l">
+                                                    {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                                </td>
+                                                <td class="px-2 py-2 last:border-r-0 border-r">
+                                                    {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                                </td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                        {% if bestEfforts|length > 0 %}
+                            <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                                <table class="w-full text-sm text-center text-gray-500">
+                                    <caption class="caption-top text-xs">
+                                        {{ "Congrats! You achieved personal bests during this activity."|trans }}
+                                    </caption>
+                                    <thead class="text-xs text-gray-700 uppercase">
+                                    <tr>
+                                        <th scope="col" class="px-2 py-2">
+                                            {{ "Distance"|trans }}
+                                        </th>
+                                        <th scope="col" class="px-2 py-2">
+                                            {{ "Time"|trans }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for bestEffort in bestEfforts %}
+                                        {% set distance = bestEffort.getBestEffortDistance() %}
+                                        <tr class="border-b last:border-b-0">
+                                            <th class="px-2 py-2">
+                                                {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
+                                            </th>
+                                            <td class="px-2 py-2">
+                                                {{ bestEffort.getFormattedTime() }}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endblock statsInleftColumn %}
                 {% if leaflet %}
                     {% set leafletOptions = {
                         'routes': leaflet.routes,
@@ -270,13 +274,15 @@
                              data-leaflet='{{ leafletOptions|json_encode }}'></div>
                     </div>
                 {% else %}
-                    <div>
+                    <div class="flex flex-col justify-center rounded-lg bg-[#89D7D2]">
                         <img class="h-auto max-w-full rounded-lg lazy" src="{{ placeholderImage() }}"
                              data-src="{{ relativeUrl('assets/images/maps/not-found.jpg') }}"
                              alt="No map"/>
                     </div>
                 {% endif %}
             </div>
+            {% block extraStatsUnderColumns %}
+            {% endblock extraStatsUnderColumns %}
             {% if segmentEfforts|length > 0 %}
                 <div class="grid grid-cols-1 gap-4">
                     <div id="accordion-segments" data-accordion="collapse"
