@@ -1,3 +1,14 @@
+# [v2.4.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.2) - 2025-07-08
+
+## What's Changed
+* ISSUE #822: Fix portrait images on activity detail pages by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/823
+* ISSUE #824: Escape quotes in JSON encoded strings by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/825
+* ISSUE #827: Fix activity best efforts when Strava data is wrong by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/828
+* ISSUE #764: Add polarised training/ time in zones by @oddish3 in https://github.com/robiningelbrecht/statistics-for-strava/pull/826
+* ISSUE #831: Improve activity template performance by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/832
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.1...v2.4.2
+
 # [v2.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.1) - 2025-07-04
 
 ## What's Changed
