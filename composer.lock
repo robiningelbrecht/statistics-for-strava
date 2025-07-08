@@ -1736,16 +1736,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.15.10",
+            "version": "3.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "3840b3c2270338ff3e50b8221bde0dc5adfc6c1f"
+                "reference": "5bb90a64cab9b9b902506c6c358b67478dea4a45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/3840b3c2270338ff3e50b8221bde0dc5adfc6c1f",
-                "reference": "3840b3c2270338ff3e50b8221bde0dc5adfc6c1f",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/5bb90a64cab9b9b902506c6c358b67478dea4a45",
+                "reference": "5bb90a64cab9b9b902506c6c358b67478dea4a45",
                 "shasum": ""
             },
             "require": {
@@ -1776,17 +1776,19 @@
                     "email": "valerio@inspector.dev"
                 }
             ],
-            "description": "Inspector for PHP applications.",
+            "description": "Inspector monitoring for PHP applications.",
             "keywords": [
                 "inspector",
                 "monitoring",
-                "php"
+                "observability",
+                "php",
+                "telemetry"
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.15.10"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.0"
             },
-            "time": "2025-07-03T17:27:12+00:00"
+            "time": "2025-07-08T10:39:48+00:00"
         },
         {
             "name": "inspector-apm/inspector-symfony",
@@ -1858,16 +1860,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.15.5",
+            "version": "1.15.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "ec1aad3b26b1faac811fe4c1e2b5e926a6f03814"
+                "reference": "2d613566ee2335182ff4570676441a9b246aa6f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/ec1aad3b26b1faac811fe4c1e2b5e926a6f03814",
-                "reference": "ec1aad3b26b1faac811fe4c1e2b5e926a6f03814",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/2d613566ee2335182ff4570676441a9b246aa6f6",
+                "reference": "2d613566ee2335182ff4570676441a9b246aa6f6",
                 "shasum": ""
             },
             "require": {
@@ -1920,9 +1922,9 @@
             "description": "PHP AI Framework with built-in observability.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.5"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.6"
             },
-            "time": "2025-07-07T15:02:33+00:00"
+            "time": "2025-07-07T17:31:32+00:00"
         },
         {
             "name": "league/flysystem",
@@ -7394,16 +7396,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.81.0",
+            "version": "v3.82.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "e00a39c729aced6c3771b9530c6e58c2efa87592"
+                "reference": "240f67bbf812ab8ac097c3097e7e65d43f9a0079"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e00a39c729aced6c3771b9530c6e58c2efa87592",
-                "reference": "e00a39c729aced6c3771b9530c6e58c2efa87592",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/240f67bbf812ab8ac097c3097e7e65d43f9a0079",
+                "reference": "240f67bbf812ab8ac097c3097e7e65d43f9a0079",
                 "shasum": ""
             },
             "require": {
@@ -7487,7 +7489,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.81.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.82.1"
             },
             "funding": [
                 {
@@ -7495,7 +7497,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-07T15:27:54+00:00"
+            "time": "2025-07-08T10:18:50+00:00"
         },
         {
             "name": "myclabs/deep-copy",
