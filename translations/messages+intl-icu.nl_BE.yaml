@@ -42,6 +42,7 @@ Calories: Calorieën
 'Calories burnt': 'Calories burnt'
 Canoeing: Kanoën
 'Carbon emission comparisons': 'Carbon emission comparisons'
+Category: Category
 'Challenge consistency': 'Challenge consistentie'
 Challenges: Challenges
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
@@ -204,13 +205,17 @@ Photos: Photos
 'Pickle Ball': 'Pickle Ball'
 Pilates: Pilates
 'Please address these issues': 'Please address these issues'
+Polarised: Polarised
+'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Kracht
 'Power distribution': Krachtverdeling
 'Prev year': 'Vorig jaar'
+Pyramidal: Pyramidal
 Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
+Random: Random
 Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
@@ -270,10 +275,12 @@ Tennis: Tennis
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Deze formule betekent dat een uur fietsen op je maximale hartslag resulteert in een score van 100, wat we beschouwen als “hoge intensiteit”'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Deze kaart toont de dagelijkse trainingsintensiteit van het afgelopen jaar. De trainingsintensiteit voor een activiteit wordt berekend op basis van verschillende meetgegevens.'
+Threshold-heavy: Threshold-heavy
 Thu: Do
 Thursday: Donderdag
 Time: Time
 'Time / week': 'Tijd / week'
+'Time distribution across heart rate zones for the last month': 'Time distribution across heart rate zones for the last month'
 'Times completed': 'Aantal keer voltooid'
 To: Tot
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
@@ -297,6 +304,7 @@ Trivia: Trivia
 Tue: Di
 Tuesday: Dinsdag
 Unspecified: Unspecified
+Unstructured: Unstructured
 'Updated on': 'Bijgewerkt op'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Mobiles'
@@ -334,6 +342,10 @@ Yoga: Yoga
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Your Zwift badge'
 'Your badge(s)': 'Your badge(s)'
+'Your training': 'Your training'
+'Z1-2 (Low)': 'Z1-2 (Low)'
+'Z3 (Mod)': 'Z3 (Mod)'
+'Z4-5 (High)': 'Z4-5 (High)'
 'Zone 1 (recovery)': 'Zone 1 (recovery)'
 'Zone 2 (aerobic)': 'Zone 2 (aerobic)'
 'Zone 3 (aerobic/anaerobic)': 'Zone 3 (aerobic/anaerobic)'

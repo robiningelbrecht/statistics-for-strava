@@ -9,30 +9,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class TimeInHeartRateZoneChart
 {
     private function __construct(
-        private int $timeInSecondsInHeartRateZoneOne,
-        private int $timeInSecondsInHeartRateZoneTwo,
-        private int $timeInSecondsInHeartRateZoneThree,
-        private int $timeInSecondsInHeartRateZoneFour,
-        private int $timeInSecondsInHeartRateZoneFive,
+        private TimeInHeartRateZones $timeInHeartRateZones,
         private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
-        int $timeInSecondsInHeartRateZoneOne,
-        int $timeInSecondsInHeartRateZoneTwo,
-        int $timeInSecondsInHeartRateZoneThree,
-        int $timeInSecondsInHeartRateZoneFour,
-        int $timeInSecondsInHeartRateZoneFive,
+        TimeInHeartRateZones $timeInHeartRateZones,
         TranslatorInterface $translator,
     ): self {
         return new self(
-            timeInSecondsInHeartRateZoneOne: $timeInSecondsInHeartRateZoneOne,
-            timeInSecondsInHeartRateZoneTwo: $timeInSecondsInHeartRateZoneTwo,
-            timeInSecondsInHeartRateZoneThree: $timeInSecondsInHeartRateZoneThree,
-            timeInSecondsInHeartRateZoneFour: $timeInSecondsInHeartRateZoneFour,
-            timeInSecondsInHeartRateZoneFive: $timeInSecondsInHeartRateZoneFive,
-            translator: $translator
+            timeInHeartRateZones: $timeInHeartRateZones,
+            translator: $translator,
         );
     }
 
@@ -75,35 +63,35 @@ final readonly class TimeInHeartRateZoneChart
                     ],
                     'data' => [
                         [
-                            'value' => $this->timeInSecondsInHeartRateZoneOne,
+                            'value' => $this->timeInHeartRateZones->getTimeInZoneOne(),
                             'name' => $this->translator->trans('Zone 1 (recovery)'),
                             'itemStyle' => [
                                 'color' => '#DF584A',
                             ],
                         ],
                         [
-                            'value' => $this->timeInSecondsInHeartRateZoneTwo,
+                            'value' => $this->timeInHeartRateZones->getTimeInZoneTwo(),
                             'name' => $this->translator->trans('Zone 2 (aerobic)'),
                             'itemStyle' => [
                                 'color' => '#D63522',
                             ],
                         ],
                         [
-                            'value' => $this->timeInSecondsInHeartRateZoneThree,
+                            'value' => $this->timeInHeartRateZones->getTimeInZoneThree(),
                             'name' => $this->translator->trans('Zone 3 (aerobic/anaerobic)'),
                             'itemStyle' => [
                                 'color' => '#BD2D22',
                             ],
                         ],
                         [
-                            'value' => $this->timeInSecondsInHeartRateZoneFour,
+                            'value' => $this->timeInHeartRateZones->getTimeInZoneFour(),
                             'name' => $this->translator->trans('Zone 4 (anaerobic)'),
                             'itemStyle' => [
                                 'color' => '#942319',
                             ],
                         ],
                         [
-                            'value' => $this->timeInSecondsInHeartRateZoneFive,
+                            'value' => $this->timeInHeartRateZones->getTimeInZoneFive(),
                             'name' => $this->translator->trans('Zone 5 (maximal)'),
                             'itemStyle' => [
                                 'color' => '#6A1009',

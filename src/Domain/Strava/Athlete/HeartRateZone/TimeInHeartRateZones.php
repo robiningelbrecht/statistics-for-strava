@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Athlete\HeartRateZone;
 
-use App\Domain\Strava\Activity\Training\TrainingType;
-
 final readonly class TimeInHeartRateZones
 {
     private function __construct(
@@ -58,7 +56,7 @@ final readonly class TimeInHeartRateZones
         return $this->timeInZoneFive;
     }
 
-    public function getTotalTime(): int
+    private function getTotalTime(): int
     {
         return $this->getTimeInZoneOne() + $this->getTimeInZoneTwo()
             + $this->getTimeInZoneThree() + $this->getTimeInZoneFour() + $this->getTimeInZoneFive();
@@ -89,34 +87,5 @@ final readonly class TimeInHeartRateZones
         }
 
         return ($this->getTimeInZoneFour() + $this->getTimeInZoneFive()) / $this->getTotalTime() * 100;
-    }
-
-    public function getTrainingType(): TrainingType
-    {
-        $low = $this->getPercentageInLowZones();
-        $medium = $this->getPercentageInMediumZone();
-        $high = $this->getPercentageInHighZones();
-
-        if ($low >= 75 && $low <= 85 && $medium >= 5 && $medium <= 10 && $high >= 10 && $high <= 20) {
-            return TrainingType::POLARIZED;
-        }
-
-        if ($low >= 60 && $low <= 75 && $medium >= 15 && $medium <= 25 && $high >= 10 && $high <= 20) {
-            return TrainingType::PYRAMIDAL;
-        }
-
-        if ($low >= 50 && $low <= 65 && $medium >= 25 && $medium <= 35 && $high >= 10 && $high <= 20) {
-            return TrainingType::THRESHOLD;
-        }
-
-        if ($low >= 45 && $low <= 60 && $medium >= 15 && $medium <= 25 && $high >= 25 && $high <= 40) {
-            return TrainingType::HIIT;
-        }
-
-        if ($low >= 85 && $low <= 95 && $medium >= 3 && $medium <= 8 && $high >= 2 && $high <= 7) {
-            return TrainingType::BASE;
-        }
-
-        return TrainingType::UNIQUE_OTHER;
     }
 }

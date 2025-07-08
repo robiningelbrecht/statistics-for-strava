@@ -414,7 +414,104 @@
 </div>
             </div>
         </div>
-        <!-- WEEKDAY STATS -->
+                                            
+                                    <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <h3 class="text-lg font-semibold">Polarised training (last 30 days)</h3>
+                <p class="mb-4 text-xs text-gray-500">Time distribution across heart rate zones for the last month</p>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-center text-gray-500 group/training unstructured">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                                Category
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                Z1-2 (Low)
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                Z3 (Mod)
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                Z4-5 (High)
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="bg-white border-b">
+                            <td class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                Your training
+                            </td>
+                            <td class="px-2 py-2 font-medium text-gray-700">
+                                0.00%
+                            </td>
+                            <td class="px-2 py-2 font-medium text-gray-700">
+                                0.00%
+                            </td>
+                            <td class="px-2 py-2 font-medium text-gray-700">
+                                0.00%
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-2 py-2 sticky left-0 bg-white group-[.polarised]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
+                                Polarised
+                            </td>
+                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
+                                75 - 90%
+                            </td>
+                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
+                                0 - 10%
+                            </td>
+                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
+                                10 - 20%
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-2 py-2 sticky left-0 font-medium group-[.pyramidal]/training:bg-green-500/15 text-gray-900 whitespace-nowrap">
+                                Pyramidal
+                            </td>
+                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
+                                60 - 80%
+                            </td>
+                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
+                                10 - 30%
+                            </td>
+                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
+                                5 - 15%
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-2 py-2 sticky left-0 bg-white group-[.threshold-heavy]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
+                                Threshold-heavy
+                            </td>
+                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
+                                50 - 65%
+                            </td>
+                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
+                                30 - 45%
+                            </td>
+                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
+                                5 - 15%
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b">
+                            <td class="px-2 py-2 sticky left-0 bg-white group-[.unstructured]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
+                                Unstructured
+                            </td>
+                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
+                                Random
+                            </td>
+                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
+                                Random
+                            </td>
+                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
+                                Random
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <!-- WEEKDAY STATS -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <h3 class="mb-4 text-lg font-semibold">
                 Stats per weekday

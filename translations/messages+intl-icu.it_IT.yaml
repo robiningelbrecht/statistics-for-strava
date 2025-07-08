@@ -42,6 +42,7 @@ Calories: Calorie
 'Calories burnt': 'Calories burnt'
 Canoeing: Canoa
 'Carbon emission comparisons': 'Confronti sulle emissioni di carbonio'
+Category: Category
 'Challenge consistency': 'Costanza nella sfida'
 Challenges: Sfide
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
@@ -204,13 +205,17 @@ Photos: Foto
 'Pickle Ball': 'Pickle Ball'
 Pilates: Pilates
 'Please address these issues': 'Per favore occupati di questi problemi'
+Polarised: Polarised
+'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Potenza
 'Power distribution': 'Distribuzione potenza'
 'Prev year': 'Anno precedente'
+Pyramidal: Pyramidal
 Race: Gara
 'Racing Score': 'Punteggio Gara'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
+Random: Random
 Ranking: Ranking
 'Rest Days': 'Rest Days'
 'Rest days': 'Giorni di riposo'
@@ -270,10 +275,12 @@ Tennis: Tennis
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.'
+Threshold-heavy: Threshold-heavy
 Thu: Thu
 Thursday: Thursday
 Time: Time
 'Time / week': 'Time / week'
+'Time distribution across heart rate zones for the last month': 'Time distribution across heart rate zones for the last month'
 'Times completed': 'Times completed'
 To: To
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
@@ -297,6 +304,7 @@ Trivia: Trivia
 Tue: Tue
 Tuesday: Tuesday
 Unspecified: Unspecified
+Unstructured: Unstructured
 'Updated on': 'Updated on'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Mobiles'
@@ -334,6 +342,10 @@ Yoga: Yoga
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Your Zwift badge'
 'Your badge(s)': 'Your badge(s)'
+'Your training': 'Your training'
+'Z1-2 (Low)': 'Z1-2 (Low)'
+'Z3 (Mod)': 'Z3 (Mod)'
+'Z4-5 (High)': 'Z4-5 (High)'
 'Zone 1 (recovery)': 'Zone 1 (recovery)'
 'Zone 2 (aerobic)': 'Zone 2 (aerobic)'
 'Zone 3 (aerobic/anaerobic)': 'Zone 3 (aerobic/anaerobic)'

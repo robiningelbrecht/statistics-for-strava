@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZone;
 use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration;
+use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZones;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Time\Clock\Clock;
 
@@ -30,18 +31,30 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
     ) {
     }
 
-    public function findTotalTimeInSecondsInHeartRateZone(string $heartRateZoneName): int
+    public function findTotalTimeInSecondsInHeartRateZones(): TimeInHeartRateZones
     {
         $this->buildHeartRateZoneCache();
 
-        return StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[$heartRateZoneName];
+        return TimeInHeartRateZones::create(
+            timeInZoneOne: StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[HeartRateZone::ONE],
+            timeInZoneTwo: StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[HeartRateZone::TWO],
+            timeInZoneThree: StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[HeartRateZone::THREE],
+            timeInZoneFour: StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[HeartRateZone::FOUR],
+            timeInZoneFive: StreamBasedActivityHeartRateRepository::$cachedHeartRateZones[HeartRateZone::FIVE],
+        );
     }
 
-    public function findTotalTimeInSecondsInHeartRateZoneForLast30Days(string $heartRateZoneName): int
+    public function findTotalTimeInSecondsInHeartRateZonesForLast30Days(): TimeInHeartRateZones
     {
         $this->buildHeartRateZoneCache();
 
-        return StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[$heartRateZoneName];
+        return TimeInHeartRateZones::create(
+            timeInZoneOne: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::ONE],
+            timeInZoneTwo: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::TWO],
+            timeInZoneThree: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::THREE],
+            timeInZoneFour: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::FOUR],
+            timeInZoneFive: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::FIVE],
+        );
     }
 
     /**
