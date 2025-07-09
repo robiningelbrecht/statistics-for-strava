@@ -44,78 +44,82 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for statistic in monthlyStatistics.getStatistics() %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <th scope="row" class="sticky left-0 w-36 px-2 py-2 text-right font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                <a href="#" data-model-content-url="{{ relativeUrl('month/month-' ~ statistic.id ~ '.html') }}" class="text-blue-600 hover:underline">
-                                    {{ statistic.month }}
-                                </a>
-                            </th>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.numberOfWorkouts }}
-                            </td>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.totalDistance|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.totalElevation|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.movingTime }}
-                            </td>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
-                            </td>
-                            <td class="px-2 py-2 truncate">
-                                {{ statistic.challengesCompleted }}
-                            </td>
-                        </tr>
+                    {% for month in months %}
+                        {% set statsForCurrentMonth = monthlyStatistics.getForMonth(month) %}
+                        {% if statsForCurrentMonth|length > 0 %}
+                            <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                                <th scope="row" class="sticky left-0 w-36 px-2 py-2 text-right font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                    <a href="#" data-model-content-url="{{ relativeUrl('month/month-' ~ month.getId() ~ '.html') }}" class="text-blue-600 hover:underline">
+                                        {{ month.getLabel() }}
+                                    </a>
+                                </th>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statsForCurrentMonth.numberOfActivities }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statsForCurrentMonth.distance|renderMeasurement(0) }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statsForCurrentMonth.elevation|renderMeasurement(0) }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statsForCurrentMonth.movingTime|formatSeconds }}
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ statsForCurrentMonth.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                </td>
+                                <td class="px-2 py-2 truncate">
+                                    {{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == month.getId())|length }}
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                     </tbody>
                     <tfoot>
                     {% for sportType in sportTypes %}
-                        {% set totalsForSportType = monthlyStatistics.getTotalsForSportType(sportType) %}
+                        {% set totalsForSportType = monthlyStatistics.getForSportType(sportType) %}
                         <tr class="font-semibold text-gray-900 {{ loop.first ? 'border-t-4' : '' }}">
                             <td class="px-2 py-2 text-right sticky left-0 bg-white">
                                 {{ sportType|trans }}
                             </td>
                             <td class="px-2 py-2">
-                                {{ totalsForSportType.numberOfWorkouts }}
+                                {{ totalsForSportType.numberOfActivities }}
                             </td>
                             <td class="px-2 py-2">
-                                {{ totalsForSportType.totalDistance|renderMeasurement(0) }}
+                                {{ totalsForSportType.distance|renderMeasurement(0) }}
                             </td>
                             <td class="px-2 py-2">
-                                {{ totalsForSportType.totalElevation|renderMeasurement(0) }}
+                                {{ totalsForSportType.elevation|renderMeasurement(0) }}
                             </td>
                             <td class="px-2 py-2">
-                                {{ totalsForSportType.movingTime }}
+                                {{ totalsForSportType.movingTime|formatSeconds }}
                             </td>
                             <td class="px-2 py-2">
-                                {{ totalsForSportType.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                {{ totalsForSportType.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
                             </td>
                             <td class="px-2 py-2">
                             </td>
                         </tr>
                     {% endfor %}
                     <tr class="font-semibold text-gray-900">
+                        {% set totals = monthlyStatistics.getTotals() %}
                         <td class="px-2 py-2 text-right sticky left-0 bg-white">
                             {{ "TOTAL"|trans }}
                         </td>
                         <td class="px-2 py-2">
-                            {{ monthlyStatistics.getTotals().numberOfWorkouts }}
+                            {{ totals.numberOfActivities }}
                         </td>
                         <td class="px-2 py-2">
-                            {{ monthlyStatistics.getTotals().totalDistance|renderMeasurement(0) }}
+                            {{ totals.distance|renderMeasurement(0) }}
                         </td>
                         <td class="px-2 py-2">
-                            {{ monthlyStatistics.getTotals().totalElevation|renderMeasurement(0) }}
+                            {{ totals.elevation|renderMeasurement(0) }}
                         </td>
                         <td class="px-2 py-2">
-                            {{ monthlyStatistics.getTotals().movingTime }}
+                            {{ totals.movingTime|formatSeconds }}
                         </td>
                         <td class="px-2 py-2">
-                            {{ monthlyStatistics.getTotals().totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                            {{ totals.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
                         </td>
                         <td class="px-2 py-2">
                         </td>

@@ -9,7 +9,6 @@ use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Calendar\Calendar;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\Month;
-use App\Domain\Strava\Calendar\MonthlyStatistics;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Infrastructure\CQRS\Command\Command;
@@ -43,18 +42,14 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             now: $now
         );
 
-        $response = $this->queryBus->ask(new FindMonthlyStats());
-
-        $monthlyStatistics = MonthlyStatistics::create(
-            monthlyStats: $response,
-            challenges: $allChallenges,
-            months: $allMonths,
-        );
+        $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
 
         $this->buildStorage->write(
             'monthly-stats.html',
             $this->twig->load('html/calendar/monthly-stats.html.twig')->render([
-                'monthlyStatistics' => $monthlyStatistics,
+                'monthlyStatistics' => $monthlyStats,
+                'challenges' => $allChallenges,
+                'months' => $allMonths->reverse(),
                 'sportTypes' => $this->sportTypeRepository->findAll(),
             ]),
         );
@@ -66,7 +61,8 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                 $this->twig->load('html/calendar/month.html.twig')->render([
                     'hasPreviousMonth' => $month->getId() != $allActivities->getFirstActivityStartDate()->format(Month::MONTH_ID_FORMAT),
                     'hasNextMonth' => $month->getId() != $now->format(Month::MONTH_ID_FORMAT),
-                    'statistics' => $monthlyStatistics->getStatisticsForMonth($month),
+                    'statistics' => $monthlyStats->getForMonth($month),
+                    'challenges' => $allChallenges,
                     'calendar' => Calendar::create(
                         month: $month,
                         activityRepository: $this->activityRepository,

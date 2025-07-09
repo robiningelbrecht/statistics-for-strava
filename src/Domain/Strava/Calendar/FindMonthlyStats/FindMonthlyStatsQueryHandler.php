@@ -42,14 +42,15 @@ final readonly class FindMonthlyStatsQueryHandler implements QueryHandler
 
         $response = [];
         foreach ($results as $result) {
+            $month = Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01', $result['yearAndMonth'])));
             $response[] = [
-                Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01', $result['yearAndMonth']))),
-                SportType::from($result['sportType']),
-                $result['numberOfActivities'],
-                Meter::from($result['totalDistance'])->toKilometer(),
-                Meter::from($result['totalElevation']),
-                Seconds::from($result['totalMovingTime']),
-                $result['totalCalories'],
+                'month' => $month,
+                'sportType' => SportType::from($result['sportType']),
+                'numberOfActivities' => (int) $result['numberOfActivities'],
+                'distance' => Meter::from($result['totalDistance'])->toKilometer(),
+                'elevation' => Meter::from($result['totalElevation']),
+                'movingTime' => Seconds::from($result['totalMovingTime']),
+                'calories' => (int) $result['totalCalories'],
             ];
         }
 
