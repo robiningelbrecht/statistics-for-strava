@@ -7,12 +7,14 @@ namespace App\Domain\App\BuildMonthlyStatsHtml;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Calendar\Calendar;
+use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\Month;
 use App\Domain\Strava\Calendar\MonthlyStatistics;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
 
@@ -22,6 +24,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ChallengeRepository $challengeRepository,
         private SportTypeRepository $sportTypeRepository,
         private ActivityRepository $activityRepository,
+        private QueryBus $queryBus,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -40,8 +43,10 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             now: $now
         );
 
+        $response = $this->queryBus->ask(new FindMonthlyStats());
+
         $monthlyStatistics = MonthlyStatistics::create(
-            activities: $allActivities,
+            monthlyStats: $response,
             challenges: $allChallenges,
             months: $allMonths,
         );
