@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Calendar;
+namespace App\Domain\Strava\Calendar\MonthlyStats;
 
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStatsResponse;
+use App\Domain\Strava\Calendar\Month;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -15,6 +17,8 @@ final readonly class MonthlyStatsChart
     private function __construct(
         private ActivityType $activityType,
         private FindMonthlyStatsResponse $monthlyStats,
+        private MonthlyStatsContext $context,
+        private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
     ) {
     }
@@ -22,11 +26,15 @@ final readonly class MonthlyStatsChart
     public static function create(
         ActivityType $activityType,
         FindMonthlyStatsResponse $monthlyStats,
+        MonthlyStatsContext $context,
+        UnitSystem $unitSystem,
         TranslatorInterface $translator,
     ): self {
         return new self(
             activityType: $activityType,
             monthlyStats: $monthlyStats,
+            context: $context,
+            unitSystem: $unitSystem,
             translator: $translator,
         );
     }
@@ -62,7 +70,8 @@ final readonly class MonthlyStatsChart
                         $data[] = 0;
                     }
                 } else {
-                    $data[] = $stats['movingTime']->toHour()->toInt();
+                    $data[] = MonthlyStatsContext::TIME === $this->context ?
+                        $stats['movingTime']->toHour()->toInt() : $stats['distance']->toUnitSystem($this->unitSystem)->toFloat();
                 }
             }
 
@@ -86,7 +95,7 @@ final readonly class MonthlyStatsChart
             ],
             'tooltip' => [
                 'trigger' => 'axis',
-                'valueFormatter' => 'formatHours',
+                'valueFormatter' => MonthlyStatsContext::TIME === $this->context ? 'formatHours' : 'formatDistance',
             ],
             'legend' => [
                 'data' => array_map(
@@ -118,7 +127,7 @@ final readonly class MonthlyStatsChart
             'yAxis' => [
                 'type' => 'value',
                 'axisLabel' => [
-                    'formatter' => '{value}h',
+                    'formatter' => '{value}'.(MonthlyStatsContext::TIME === $this->context ? 'h' : $this->unitSystem->distanceSymbol()),
                 ],
             ],
             'series' => $series,

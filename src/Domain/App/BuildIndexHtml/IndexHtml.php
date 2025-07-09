@@ -75,6 +75,7 @@ final readonly class IndexHtml
                 'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
                 'unitSystem' => [
                     'paceSymbol' => $this->unitSystem->paceSymbol(),
+                    'distanceSymbol' => $this->unitSystem->distanceSymbol(),
                 ],
             ]),
         ];
