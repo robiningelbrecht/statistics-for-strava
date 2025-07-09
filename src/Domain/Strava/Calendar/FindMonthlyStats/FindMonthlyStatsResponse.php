@@ -23,6 +23,38 @@ final readonly class FindMonthlyStatsResponse implements Response
     /**
      * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
      */
+    public function getTotals(): array
+    {
+        $totals = [
+            'numberOfActivities' => 0,
+            'distance' => 0,
+            'elevation' => 0,
+            'movingTime' => 0,
+            'calories' => 0,
+        ];
+
+        foreach ($this->statsPerMonth as $statsPerMonth) {
+            [$currentMonth, $sportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
+
+            $totals['numberOfActivities'] += $numberOfActivities;
+            $totals['distance'] += $distance->toFloat();
+            $totals['elevation'] += $elevation->toInt();
+            $totals['movingTime'] += $movingTime->toInt();
+            $totals['calories'] += $calories;
+        }
+
+        return [
+            $totals['numberOfActivities'],
+            Kilometer::from($totals['distance']),
+            Meter::from($totals['elevation']),
+            Seconds::from($totals['movingTime']),
+            $totals['calories'],
+        ];
+    }
+
+    /**
+     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     */
     public function getForMonth(Month $month): array
     {
         $totals = [
@@ -35,6 +67,41 @@ final readonly class FindMonthlyStatsResponse implements Response
         foreach ($this->statsPerMonth as $statsPerMonth) {
             [$currentMonth, $sportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
             if ($currentMonth->getId() !== $month->getId()) {
+                continue;
+            }
+
+            $totals['numberOfActivities'] += $numberOfActivities;
+            $totals['distance'] += $distance->toFloat();
+            $totals['elevation'] += $elevation->toInt();
+            $totals['movingTime'] += $movingTime->toInt();
+            $totals['calories'] += $calories;
+        }
+
+        return [
+            $totals['numberOfActivities'],
+            Kilometer::from($totals['distance']),
+            Meter::from($totals['elevation']),
+            Seconds::from($totals['movingTime']),
+            $totals['calories'],
+        ];
+    }
+
+    /**
+     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     */
+    public function getForSportType(SportType $sportType): array
+    {
+        $totals = [
+            'numberOfActivities' => 0,
+            'distance' => 0,
+            'elevation' => 0,
+            'movingTime' => 0,
+            'calories' => 0,
+        ];
+
+        foreach ($this->statsPerMonth as $statsPerMonth) {
+            [$currentMonth, $currentSportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
+            if ($sportType !== $currentSportType) {
                 continue;
             }
 
