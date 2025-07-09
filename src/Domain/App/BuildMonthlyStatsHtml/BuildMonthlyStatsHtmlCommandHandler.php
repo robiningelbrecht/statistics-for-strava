@@ -10,13 +10,15 @@ use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Calendar\Calendar;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\Month;
-use App\Domain\Strava\Calendar\MonthlyStatsChart;
+use App\Domain\Strava\Calendar\MonthlyStats\MonthlyStatsChart;
+use App\Domain\Strava\Calendar\MonthlyStats\MonthlyStatsContext;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -29,6 +31,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ActivityRepository $activityRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
+        private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -61,21 +64,45 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             ]),
         );
 
-        $monthlyStatCharts = [];
+        $monthlyTimeStatCharts = [];
         foreach ($activityTypes as $activityType) {
-            $monthlyStatCharts[$activityType->value] = Json::encode(
+            $monthlyTimeStatCharts[$activityType->value] = Json::encode(
                 MonthlyStatsChart::create(
                     activityType: $activityType,
                     monthlyStats: $monthlyStats,
+                    context: MonthlyStatsContext::TIME,
+                    unitSystem: $this->unitSystem,
                     translator: $this->translator,
                 )->build()
             );
         }
 
         $this->buildStorage->write(
-            'monthly-stats/charts.html',
+            'monthly-stats/chart/time.html',
             $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
-                'monthlyStatsCharts' => $monthlyStatCharts,
+                'monthlyStatsCharts' => $monthlyTimeStatCharts,
+                'context' => MonthlyStatsContext::TIME,
+            ]),
+        );
+
+        $monthlyDistanceStatCharts = [];
+        foreach ($activityTypes as $activityType) {
+            $monthlyDistanceStatCharts[$activityType->value] = Json::encode(
+                MonthlyStatsChart::create(
+                    activityType: $activityType,
+                    monthlyStats: $monthlyStats,
+                    context: MonthlyStatsContext::DISTANCE,
+                    unitSystem: $this->unitSystem,
+                    translator: $this->translator,
+                )->build()
+            );
+        }
+
+        $this->buildStorage->write(
+            'monthly-stats/chart/distance.html',
+            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
+                'monthlyStatsCharts' => $monthlyDistanceStatCharts,
+                'context' => MonthlyStatsContext::DISTANCE,
             ]),
         );
 
