@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
+use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStatsQueryHandler;
 use App\Domain\Strava\Calendar\Month;
@@ -78,8 +79,9 @@ class FindMonthlyStatsQueryHandlerTest extends ContainerTestCase
             Month::fromDate(SerializableDateTime::fromString('2024-01-03 00:00:00')),
             ActivityType::RIDE
         ));
+        $this->assertMatchesJsonSnapshot($response->getForSportType(SportType::VIRTUAL_RIDE));
 
-        $this->assertMatchesJsonSnapshot($response->getForMonth(Month::fromDate(SerializableDateTime::fromString('2026-01-03 00:00:00'))));
+        $this->assertNull($response->getForMonth(Month::fromDate(SerializableDateTime::fromString('2026-01-03 00:00:00'))));
     }
 
     protected function setUp(): void

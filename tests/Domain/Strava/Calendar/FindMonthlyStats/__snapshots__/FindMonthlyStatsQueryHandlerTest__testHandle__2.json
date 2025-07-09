@@ -1,7 +1,7 @@
-[
-    3,
-    30,
-    0,
-    30,
-    0
-]
+{
+    "numberOfActivities": 3,
+    "distance": 30,
+    "elevation": 0,
+    "movingTime": 30,
+    "calories": 0
+}

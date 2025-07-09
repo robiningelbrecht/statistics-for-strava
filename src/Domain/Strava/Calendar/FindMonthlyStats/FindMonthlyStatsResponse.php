@@ -15,148 +15,90 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 final readonly class FindMonthlyStatsResponse implements Response
 {
     public function __construct(
-        /** @var array<int, array{0: Month, 1: SportType, 2: int, 3: Kilometer, 4: Meter, 5: Seconds, 6: int}> */
+        /** @var array<int, array{'month': Month, 'sportType': SportType, 'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}> */
         private array $statsPerMonth,
     ) {
     }
 
     /**
-     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
      */
     public function getTotals(): array
     {
-        $totals = [
-            'numberOfActivities' => 0,
-            'distance' => 0,
-            'elevation' => 0,
-            'movingTime' => 0,
-            'calories' => 0,
-        ];
-
-        foreach ($this->statsPerMonth as $statsPerMonth) {
-            [$currentMonth, $sportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
-
-            $totals['numberOfActivities'] += $numberOfActivities;
-            $totals['distance'] += $distance->toFloat();
-            $totals['elevation'] += $elevation->toInt();
-            $totals['movingTime'] += $movingTime->toInt();
-            $totals['calories'] += $calories;
-        }
-
-        return [
-            $totals['numberOfActivities'],
-            Kilometer::from($totals['distance']),
-            Meter::from($totals['elevation']),
-            Seconds::from($totals['movingTime']),
-            $totals['calories'],
-        ];
+        return $this->aggregateStats($this->statsPerMonth);
     }
 
     /**
-     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}|null
      */
-    public function getForMonth(Month $month): array
+    public function getForMonth(Month $month): ?array
     {
-        $totals = [
-            'numberOfActivities' => 0,
-            'distance' => 0,
-            'elevation' => 0,
-            'movingTime' => 0,
-            'calories' => 0,
-        ];
-        foreach ($this->statsPerMonth as $statsPerMonth) {
-            [$currentMonth, $sportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
-            if ($currentMonth->getId() !== $month->getId()) {
-                continue;
-            }
+        $stats = array_filter(
+            $this->statsPerMonth,
+            fn (array $entry) => $entry['month']->getId() === $month->getId()
+        );
+        $result = $this->aggregateStats($stats);
 
-            $totals['numberOfActivities'] += $numberOfActivities;
-            $totals['distance'] += $distance->toFloat();
-            $totals['elevation'] += $elevation->toInt();
-            $totals['movingTime'] += $movingTime->toInt();
-            $totals['calories'] += $calories;
-        }
-
-        return [
-            $totals['numberOfActivities'],
-            Kilometer::from($totals['distance']),
-            Meter::from($totals['elevation']),
-            Seconds::from($totals['movingTime']),
-            $totals['calories'],
-        ];
+        return 0 === $result['numberOfActivities'] ? null : $result;
     }
 
     /**
-     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
      */
     public function getForSportType(SportType $sportType): array
     {
-        $totals = [
-            'numberOfActivities' => 0,
-            'distance' => 0,
-            'elevation' => 0,
-            'movingTime' => 0,
-            'calories' => 0,
-        ];
+        $stats = array_filter(
+            $this->statsPerMonth,
+            fn (array $entry) => $entry['sportType'] === $sportType
+        );
 
-        foreach ($this->statsPerMonth as $statsPerMonth) {
-            [$currentMonth, $currentSportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
-            if ($sportType !== $currentSportType) {
-                continue;
-            }
-
-            $totals['numberOfActivities'] += $numberOfActivities;
-            $totals['distance'] += $distance->toFloat();
-            $totals['elevation'] += $elevation->toInt();
-            $totals['movingTime'] += $movingTime->toInt();
-            $totals['calories'] += $calories;
-        }
-
-        return [
-            $totals['numberOfActivities'],
-            Kilometer::from($totals['distance']),
-            Meter::from($totals['elevation']),
-            Seconds::from($totals['movingTime']),
-            $totals['calories'],
-        ];
+        return $this->aggregateStats($stats);
     }
 
     /**
-     * @return array{0: int, 1: Kilometer, 2: Meter, 3: Seconds, 4: int}
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
      */
     public function getForMonthAndActivityType(Month $month, ActivityType $activityType): array
     {
         $sportTypes = $activityType->getSportTypes();
+
+        $stats = array_filter(
+            $this->statsPerMonth,
+            fn (array $entry) => $entry['month']->getId() === $month->getId() && $sportTypes->has($entry['sportType'])
+        );
+
+        return $this->aggregateStats($stats);
+    }
+
+    /**
+     * @param array<int, array{'month': Month, 'sportType': SportType, 'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}> $stats
+     *
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
+     */
+    private function aggregateStats(array $stats): array
+    {
         $totals = [
             'numberOfActivities' => 0,
-            'distance' => 0,
+            'distance' => 0.0,
             'elevation' => 0,
             'movingTime' => 0,
             'calories' => 0,
         ];
 
-        foreach ($this->statsPerMonth as $statsPerMonth) {
-            [$currentMonth, $sportType, $numberOfActivities, $distance, $elevation, $movingTime, $calories] = $statsPerMonth;
-            if ($currentMonth->getId() !== $month->getId()) {
-                continue;
-            }
-            if (!$sportTypes->has($sportType)) {
-                continue;
-            }
-
-            $totals['numberOfActivities'] += $numberOfActivities;
-            $totals['distance'] += $distance->toFloat();
-            $totals['elevation'] += $elevation->toInt();
-            $totals['movingTime'] += $movingTime->toInt();
-            $totals['calories'] += $calories;
+        foreach ($stats as $entry) {
+            $totals['numberOfActivities'] += $entry['numberOfActivities'];
+            $totals['distance'] += $entry['distance']->toFloat();
+            $totals['elevation'] += $entry['elevation']->toInt();
+            $totals['movingTime'] += $entry['movingTime']->toInt();
+            $totals['calories'] += $entry['calories'];
         }
 
         return [
-            $totals['numberOfActivities'],
-            Kilometer::from($totals['distance']),
-            Meter::from($totals['elevation']),
-            Seconds::from($totals['movingTime']),
-            $totals['calories'],
+            'numberOfActivities' => $totals['numberOfActivities'],
+            'distance' => Kilometer::from($totals['distance']),
+            'elevation' => Meter::from($totals['elevation']),
+            'movingTime' => Seconds::from($totals['movingTime']),
+            'calories' => $totals['calories'],
         ];
     }
 }
