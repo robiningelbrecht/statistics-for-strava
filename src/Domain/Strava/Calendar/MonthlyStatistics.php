@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Domain\Strava;
+namespace App\Domain\Strava\Calendar;
 
 use App\Domain\Strava\Activity\Activities;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
-use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\Challenge;
 use App\Domain\Strava\Challenge\Challenges;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -15,7 +13,7 @@ use Carbon\CarbonInterval;
 
 final readonly class MonthlyStatistics
 {
-    /** @var array<mixed> */
+    /** @var array<string, mixed> */
     private array $statistics;
 
     private function __construct(
@@ -39,7 +37,7 @@ final readonly class MonthlyStatistics
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     private function buildStatistics(): array
     {
