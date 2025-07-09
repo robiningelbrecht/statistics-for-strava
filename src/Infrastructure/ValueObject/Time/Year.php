@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Time;
 
+use App\Domain\Strava\Calendar\Months;
+
 final readonly class Year implements \Stringable
 {
     private function __construct(
@@ -46,5 +48,13 @@ final readonly class Year implements \Stringable
     public function getNumberOfDays(): int
     {
         return SerializableDateTime::fromString(sprintf('%d-01-01', $this->year))->format('L') ? 366 : 365;
+    }
+
+    public function getMonths(): Months
+    {
+        return Months::create(
+            startDate: SerializableDateTime::fromString(sprintf('%d-01-01', $this->year)),
+            endDate: SerializableDateTime::fromString(sprintf('%d-12-31', $this->year)),
+        );
     }
 }

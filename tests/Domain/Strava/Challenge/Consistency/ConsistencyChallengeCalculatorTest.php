@@ -33,7 +33,7 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
             $this->calculator->calculateFor(
                 months: Months::create(
                     startDate: SerializableDateTime::fromString('2023-01-01'),
-                    now: SerializableDateTime::fromString('2023-12-31'),
+                    endDate: SerializableDateTime::fromString('2023-12-31'),
                 ),
                 challenges: ConsistencyChallenges::fromArray([
                     ConsistencyChallenge::create(
