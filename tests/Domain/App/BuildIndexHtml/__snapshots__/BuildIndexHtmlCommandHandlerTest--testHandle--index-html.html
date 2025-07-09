@@ -301,6 +301,12 @@
     window.statisticsForStrava.callbacks.toInteger = function (value) {
         return value.toFixed(0);
     };
+    window.statisticsForStrava.callbacks.formatHours = function (value) {
+        if(value === undefined || value === null) {
+            return '-';
+        }
+        return `${value.toFixed(0)}h`;
+    };
 </script>
 <script src="/assets/lazyload.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
 <script src="/assets/flowbite/flowbite.js?0025176c-5652-11ee-923d-02424dd627d5"></script>

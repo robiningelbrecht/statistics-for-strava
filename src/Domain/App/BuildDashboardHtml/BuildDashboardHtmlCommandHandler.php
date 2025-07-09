@@ -90,7 +90,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $allMonths = Months::create(
             startDate: $allActivities->getFirstActivityStartDate(),
-            now: $now
+            endDate: $now
         );
         $weekdayStats = WeekdayStats::create(
             activities: $allActivities,

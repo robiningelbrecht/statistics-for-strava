@@ -27,7 +27,9 @@ final readonly class FindMonthlyStatsQueryHandler implements QueryHandler
 
         $results = $this->connection->executeQuery(
             <<<SQL
-                SELECT strftime('%Y-%m', startDateTime) AS yearAndMonth, 
+                SELECT strftime('%Y-%m', startDateTime) AS yearAndMonth,
+                       strftime('%Y', startDateTime) AS year,
+                       ltrim(strftime('%m', startDateTime), "0") AS month,
                        sportType,
                        COUNT(*) AS numberOfActivities,
                        SUM(distance) AS totalDistance,
@@ -35,8 +37,8 @@ final readonly class FindMonthlyStatsQueryHandler implements QueryHandler
                        SUM(movingTimeInSeconds) AS totalMovingTime,
                        SUM(calories) as totalCalories
                 FROM Activity
-                GROUP BY yearAndMonth, sportType
-                ORDER BY yearAndMonth DESC
+                GROUP BY yearAndMonth, year, month, sportType
+                ORDER BY year ASC, month ASC
             SQL,
         )->fetchAllAssociative();
 

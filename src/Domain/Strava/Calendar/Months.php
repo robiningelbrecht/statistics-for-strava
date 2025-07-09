@@ -19,13 +19,13 @@ final class Months extends Collection
 
     public static function create(
         SerializableDateTime $startDate,
-        SerializableDateTime $now,
+        SerializableDateTime $endDate,
     ): self {
         $months = Months::empty();
         $period = new \DatePeriod(
             $startDate->modify('first day of this month'),
             new \DateInterval('P1M'),
-            $now->modify('last day of this month')
+            $endDate->modify('last day of this month')
         );
 
         foreach ($period as $date) {

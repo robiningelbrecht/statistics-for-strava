@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildMonthlyStatsHtml;
 
 use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Strava\Activity\ActivityTypeRepository;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Calendar\Calendar;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\Month;
+use App\Domain\Strava\Calendar\MonthlyStatsChart;
 use App\Domain\Strava\Calendar\Months;
 use App\Domain\Strava\Challenge\ChallengeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
+use App\Infrastructure\Serialization\Json;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandler
@@ -23,7 +27,9 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ChallengeRepository $challengeRepository,
         private SportTypeRepository $sportTypeRepository,
         private ActivityRepository $activityRepository,
+        private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
+        private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -36,10 +42,11 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         $now = $command->getCurrentDateTime();
         $allActivities = $this->activityRepository->findAll();
         $allChallenges = $this->challengeRepository->findAll();
+        $activityTypes = $this->activityTypeRepository->findAll();
 
         $allMonths = Months::create(
             startDate: $allActivities->getFirstActivityStartDate(),
-            now: $now
+            endDate: $now
         );
 
         $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
@@ -51,6 +58,24 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                 'challenges' => $allChallenges,
                 'months' => $allMonths->reverse(),
                 'sportTypes' => $this->sportTypeRepository->findAll(),
+            ]),
+        );
+
+        $monthlyStatCharts = [];
+        foreach ($activityTypes as $activityType) {
+            $monthlyStatCharts[$activityType->value] = Json::encode(
+                MonthlyStatsChart::create(
+                    activityType: $activityType,
+                    monthlyStats: $monthlyStats,
+                    translator: $this->translator,
+                )->build()
+            );
+        }
+
+        $this->buildStorage->write(
+            'monthly-stats/charts.html',
+            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
+                'monthlyStatsCharts' => $monthlyStatCharts,
             ]),
         );
 

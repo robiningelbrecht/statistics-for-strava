@@ -20,6 +20,23 @@ final readonly class FindMonthlyStatsResponse implements Response
     ) {
     }
 
+    public function getFirstMonthFor(ActivityType $activityType): Month
+    {
+        $sportTypes = $activityType->getSportTypes();
+        $statsForActivityType = array_values(array_filter($this->statsPerMonth, fn (array $entry) => $sportTypes->has($entry['sportType'])));
+
+        return $statsForActivityType[0]['month'];
+    }
+
+    public function getLastMonthFor(ActivityType $activityType): Month
+    {
+        $sportTypes = $activityType->getSportTypes();
+        $statsForActivityType = array_values(array_filter($this->statsPerMonth, fn (array $entry) => $sportTypes->has($entry['sportType'])));
+        $count = count($statsForActivityType);
+
+        return $statsForActivityType[$count - 1]['month'];
+    }
+
     /**
      * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
      */
@@ -56,9 +73,9 @@ final readonly class FindMonthlyStatsResponse implements Response
     }
 
     /**
-     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
+     * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}|null
      */
-    public function getForMonthAndActivityType(Month $month, ActivityType $activityType): array
+    public function getForMonthAndActivityType(Month $month, ActivityType $activityType): ?array
     {
         $sportTypes = $activityType->getSportTypes();
 
@@ -67,7 +84,9 @@ final readonly class FindMonthlyStatsResponse implements Response
             fn (array $entry) => $entry['month']->getId() === $month->getId() && $sportTypes->has($entry['sportType'])
         );
 
-        return $this->aggregateStats($stats);
+        $result = $this->aggregateStats($stats);
+
+        return 0 === $result['numberOfActivities'] ? null : $result;
     }
 
     /**
