@@ -1,3 +1,12 @@
+# [v2.4.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.3) - 2025-07-10
+
+## What's Changed
+* ISSUE #833: Improve NeuronAI tool descriptions by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/839
+* ISSUE #834: Monthly overview in graph by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/842
+* ISSUE #848: Improve activity detail combined profile charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/849
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.2...v2.4.3
+
 # [v2.4.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.2) - 2025-07-08
 
 ## What's Changed
