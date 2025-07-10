@@ -14,7 +14,9 @@ final class GetAthleteDetails extends Tool
     ) {
         parent::__construct(
             'get_athlete_details',
-            'Retrieves athlete details from the database',
+            <<<DESC
+            Retrieves the athlete’s personal details from the database.
+            DESC
         );
     }
 

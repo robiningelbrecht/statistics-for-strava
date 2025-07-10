@@ -1,0 +1,42 @@
+<!-- Modal header --><html><body>
+<div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+        <h3 class="flex items-center text-lg font-semibold text-gray-900">
+            <span>Monthly stats</span>
+        </h3>
+        <div class="flex items-center">
+            <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+    </div>
+    <!-- Modal body -->
+    <div class="p-4 md:p-5">
+        <div class="grid grid-cols-1 gap-4">
+                            <div class="mb-4 border-b border-gray-200">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="monthlyStatsActivityTypeTab" data-tabs="#monthlyStatsActivityTypeTabContent" role="tablist">
+                                                    <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#monthlyStatsRide" role="tab" aria-controls="monthlyStatsRide" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    Rides
+                                </a>
+                            </li>
+                                                    <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#monthlyStatsRun" role="tab" aria-controls="monthlyStatsRun" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    Runs
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+                        <div id="monthlyStatsActivityTypeTabContent">
+                                    <div id="monthlyStatsRide" role="tabpanel" aria-labelledby="monthlyStatsRide-tab">
+                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"0","right":"30px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"formatHours"},"legend":{"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,3,1,1,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,0,0,0,0,0]}]}'></div>
+                    </div>
+                                    <div id="monthlyStatsRun" role="tabpanel" aria-labelledby="monthlyStatsRun-tab">
+                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"0","right":"30px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"formatHours"},"legend":{"data":["2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,null,null,null,null,null]}]}'></div>
+                    </div>
+                            </div>
+        </div>
+    </div>
+</body></html>

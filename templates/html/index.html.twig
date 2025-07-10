@@ -300,6 +300,19 @@
     window.statisticsForStrava.callbacks.toInteger = function (value) {
         return value.toFixed(0);
     };
+    window.statisticsForStrava.callbacks.formatHours = function (value) {
+        if(value === undefined || value === null) {
+            return '-';
+        }
+        return `${value.toFixed(0)}h`;
+    };
+    window.statisticsForStrava.callbacks.formatDistance = function (value) {
+        if(value === undefined || value === null) {
+            return '-';
+        }
+        const distanceSymbol = window.statisticsForStrava.unitSystem.distanceSymbol;
+        return `${value.toFixed(0)}${distanceSymbol}`;
+    };
 </script>
 <script src="{{ relativeUrl(asset('assets/lazyload.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/flowbite/flowbite.js')) }}"></script>

@@ -25,39 +25,39 @@
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
                 <li class="flex items-center gap-x-0.5 pr-2">
                     {{ svg('distance', 'w-5 h-5') }}
-                    {% if statistics.totalDistance %}
-                        <div>{{ statistics.totalDistance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
-                        <div class="text-xs text-gray-500">{{ statistics.totalDistance|convertMeasurement.getSymbol() }}</div>
+                    {% if statistics.distance %}
+                        <div>{{ statistics.distance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
+                        <div class="text-xs text-gray-500">{{ statistics.distance|convertMeasurement.getSymbol() }}</div>
                     {% else %}
                         0
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
                     {{ svg('elevation', 'w-5 h-5') }}
-                    {% if statistics.totalElevation %}
-                        <div>{{ statistics.totalElevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
-                        <div class="text-xs text-gray-500">{{ statistics.totalElevation|convertMeasurement.getSymbol() }}</div>
+                    {% if statistics.elevation %}
+                        <div>{{ statistics.elevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
+                        <div class="text-xs text-gray-500">{{ statistics.elevation|convertMeasurement.getSymbol() }}</div>
                     {% else %}
                         0
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
                     {{ svg('time', 'w-5 h-5') }}
-                    <div>{{ (statistics.movingTimeInSeconds / 3600)|formatNumber(0) }}</div>
-                    <div class="text-xs text-gray-500">hours</div>
+                    <div>{{ (statistics.movingTime.toHour().toFloat())|formatNumber(0) }}</div>
+                    <div class="text-xs text-gray-500">{{ "hours"|trans }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
                     {{ svg('challenge', 'w-5 h-5') }}
-                    <div> {{ statistics.challengesCompleted }}</div>
+                    <div>{{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == calendar.getMonth().getId())|length }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
                     {{ svg('calories', 'w-5 h-5') }}
-                    <div>{{ statistics.totalCalories|formatNumber(0) }}</div>
+                    <div>{{ statistics.calories|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">kcal</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 pl-2">
                     {{ svg('hashtag') }}
-                    <div>{{ statistics.numberOfWorkouts }}</div>
+                    <div>{{ statistics.numberOfActivities }}</div>
                     <div class="text-xs text-gray-500">{{ "workouts"|trans }}</div>
                 </li>
             </ul>

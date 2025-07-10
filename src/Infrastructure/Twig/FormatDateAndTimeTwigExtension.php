@@ -6,7 +6,9 @@ namespace App\Infrastructure\Twig;
 
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
 use App\Infrastructure\Time\Format\TimeFormat;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Carbon\CarbonInterval;
 use Twig\Attribute\AsTwigFilter;
 
 final readonly class FormatDateAndTimeTwigExtension
@@ -37,5 +39,11 @@ final readonly class FormatDateAndTimeTwigExtension
             TimeFormat::TWENTY_FOUR => $date->format('H:i'),
             TimeFormat::AM_PM => $date->format('h:i a'),
         };
+    }
+
+    #[AsTwigFilter('formatSeconds')]
+    public function formatSeconds(Seconds $seconds): string
+    {
+        return CarbonInterval::seconds($seconds->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
     }
 }

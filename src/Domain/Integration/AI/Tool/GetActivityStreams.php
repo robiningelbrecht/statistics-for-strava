@@ -18,7 +18,11 @@ final class GetActivityStreams extends Tool
     ) {
         parent::__construct(
             'get_activity_streams',
-            'Retrieves detailed stream data from the database for a specific activity',
+            <<<DESC
+            Retrieves detailed stream information for a specific activity from the database.
+            Use this tool when the user asks about stream data within an activity or when a user ask for all details of an activity.
+            Requires the activity ID as input.
+            DESC
         );
     }
 

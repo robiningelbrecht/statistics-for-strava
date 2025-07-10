@@ -70,9 +70,9 @@ final readonly class Month
         return (int) $this->firstDay->translatedFormat('N');
     }
 
-    public function getFirstMonday(): SerializableDateTime
+    public function getFirstDay(): SerializableDateTime
     {
-        return $this->firstDay->modify('first monday of this month');
+        return $this->firstDay;
     }
 
     public function getPreviousMonth(): self
@@ -87,5 +87,29 @@ final readonly class Month
         $date = $this->firstDay->modify('first day of next month');
 
         return self::fromDate($date);
+    }
+
+    public function isBefore(Month $other): bool
+    {
+        if ($this->getYear() < $other->getYear()) {
+            return true;
+        }
+        if ($this->getYear() > $other->getYear()) {
+            return false;
+        }
+
+        return $this->getMonth() < $other->getMonth();
+    }
+
+    public function isAfter(Month $other): bool
+    {
+        if ($this->getYear() > $other->getYear()) {
+            return true;
+        }
+        if ($this->getYear() < $other->getYear()) {
+            return false;
+        }
+
+        return $this->getMonth() > $other->getMonth();
     }
 }

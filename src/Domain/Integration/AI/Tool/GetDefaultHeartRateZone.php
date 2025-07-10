@@ -23,7 +23,11 @@ final class GetDefaultHeartRateZone extends Tool
     ) {
         parent::__construct(
             'get_heart_rate_zones',
-            'Retrieves heart rate zones from database',
+            <<<DESC
+            Retrieves the athlete’s personalized heart rate zones from the database.
+            Use this tool when the user asks about their heart rate zones, training intensity, or zone-based performance
+            Returns zone ranges based on the athlete’s max heart rate or custom configuration.
+            DESC
         );
     }
 

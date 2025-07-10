@@ -47,7 +47,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         $gearStats = $this->queryBus->ask(new FindGearStatsPerDay());
         $allMonths = Months::create(
             startDate: $activities->getFirstActivityStartDate(),
-            now: $now
+            endDate: $now
         );
 
         $this->buildStorage->write(
