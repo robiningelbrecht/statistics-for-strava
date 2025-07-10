@@ -315,11 +315,11 @@
             {% set percentageInHighZones = timeInHeartRateZonesForLast30Days.getPercentageInHighZones() %}
 
             {% set trainingProfile = 'unstructured' %}
-            {% if percentageInLowZones >= 75 and percentageInLowZones <= 90 and percentageInMediumZones >= 0 and percentageInMediumZones <= 10 and percentageInHighZones >= 10 and percentageInHighZones <= 20 %}
+            {% if percentageInLowZones >= 75 and percentageInMediumZones <= 15 %}
                 {% set trainingProfile = 'polarised' %}
-            {% elseif percentageInLowZones >= 60 and percentageInLowZones <= 80 and percentageInMediumZones >= 10 and percentageInMediumZones <= 30 and percentageInHighZones >= 5 and percentageInHighZones <= 15 %}
+            {% elseif percentageInLowZones >= 60 and percentageInMediumZones <= 35 %}
                 {% set trainingProfile = 'pyramidal' %}
-            {% elseif percentageInLowZones >= 50 and percentageInLowZones <= 65 and percentageInMediumZones >= 30 and percentageInMediumZones <= 45 and percentageInHighZones >= 5 and percentageInHighZones <= 15 %}
+            {% elseif percentageInMediumZones >= 20 %}
                 {% set trainingProfile = 'threshold-heavy' %}
             {% endif %}
             <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
