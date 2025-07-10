@@ -17,24 +17,35 @@ final readonly class FindMonthlyStatsResponse implements Response
     public function __construct(
         /** @var array<int, array{'month': Month, 'sportType': SportType, 'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}> */
         private array $statsPerMonth,
+        /** @var array<int, array{'activityType': ActivityType, min: Month, max: Month}> */
+        private array $minMaxMonthPerActivityType,
     ) {
     }
 
     public function getFirstMonthFor(ActivityType $activityType): Month
     {
-        $sportTypes = $activityType->getSportTypes();
-        $statsForActivityType = array_values(array_filter($this->statsPerMonth, fn (array $entry) => $sportTypes->has($entry['sportType'])));
+        foreach ($this->minMaxMonthPerActivityType as $minMaxDatePerActivityType) {
+            if ($minMaxDatePerActivityType['activityType'] !== $activityType) {
+                continue;
+            }
 
-        return $statsForActivityType[0]['month'];
+            return $minMaxDatePerActivityType['min'];
+        }
+
+        throw new \RuntimeException('No min date found for activity type '.$activityType->value);
     }
 
     public function getLastMonthFor(ActivityType $activityType): Month
     {
-        $sportTypes = $activityType->getSportTypes();
-        $statsForActivityType = array_values(array_filter($this->statsPerMonth, fn (array $entry) => $sportTypes->has($entry['sportType'])));
-        $count = count($statsForActivityType);
+        foreach ($this->minMaxMonthPerActivityType as $minMaxDatePerActivityType) {
+            if ($minMaxDatePerActivityType['activityType'] !== $activityType) {
+                continue;
+            }
 
-        return $statsForActivityType[$count - 1]['month'];
+            return $minMaxDatePerActivityType['max'];
+        }
+
+        throw new \RuntimeException('No max date found for activity type '.$activityType->value);
     }
 
     /**
