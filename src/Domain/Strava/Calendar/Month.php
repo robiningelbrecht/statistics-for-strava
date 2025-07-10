@@ -70,11 +70,6 @@ final readonly class Month
         return (int) $this->firstDay->translatedFormat('N');
     }
 
-    public function getFirstMonday(): SerializableDateTime
-    {
-        return $this->firstDay->modify('first monday of this month');
-    }
-
     public function getFirstDay(): SerializableDateTime
     {
         return $this->firstDay;
