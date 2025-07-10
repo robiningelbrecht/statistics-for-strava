@@ -14,6 +14,22 @@
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
     --color-grey-yo: #cccccc;
+
+    --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
+    @keyframes chat-message {
+        0% {
+            max-height: 100vmax;
+        }
+        80% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+            max-height: 100vmax;
+            overflow: visible;
+            padding-top: 1rem;
+        }
+    }
 }
 
 @custom-variant aria-asc (&[aria-sort="ascending"]);

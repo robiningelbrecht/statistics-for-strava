@@ -200,6 +200,7 @@
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
     --color-grey-yo: #cccccc;
+    --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
   }
 }
 @layer base {
@@ -3248,6 +3249,11 @@
       border-left-width: 0px;
     }
   }
+  .last\:animate-fade-in-chat-message {
+    &:last-child {
+      animation: var(--animate-fade-in-chat-message);
+    }
+  }
   .last\:border-r-0 {
     &:last-child {
       border-right-style: var(--tw-border-style);
@@ -3482,6 +3488,20 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
+    }
+  }
+  .disabled\:cursor-not-allowed {
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  .disabled\:hover\:bg-white {
+    &:disabled {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-white);
+        }
+      }
     }
   }
   .aria-expanded\:bg-gray-100 {
@@ -4555,6 +4575,20 @@
 @keyframes pulse {
   50% {
     opacity: 0.5;
+  }
+}
+@keyframes chat-message {
+  0% {
+    max-height: 100vmax;
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    max-height: 100vmax;
+    overflow: visible;
+    padding-top: 1rem;
   }
 }
 @layer properties {
