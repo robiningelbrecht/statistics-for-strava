@@ -54,19 +54,18 @@ final readonly class CombinedStreamProfileChart
         $distanceSymbol = $this->unitSystem->distanceSymbol();
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
 
+        [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
+        $margin = ($max - $min) * 0.1;
+        $maxYAxis = (int) ceil($max + $margin);
+        $minYAxis = max($min, 0);
+
         if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
-            [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
-            $margin = ($max - $min) * 0.1;
             $minYAxis = (int) floor($min - $margin);
-            $maxYAxis = (int) ceil($max + $margin);
-        } else {
-            $minYAxis = 0;
-            $maxYAxis = (int) ceil(max($this->yAxisData) * 1.1);
         }
 
         return [
             'grid' => [
-                'left' => '25px',
+                'left' => '30px',
                 'right' => '0%',
                 'bottom' => $this->showXAxis ? '20px' : '0%',
                 'top' => '0%',
@@ -94,7 +93,7 @@ final readonly class CombinedStreamProfileChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => sprintf('%s (%s)', $this->yAxisStreamType->trans($this->translator), $yAxisSuffix),
+                    'name' => $this->yAxisStreamType->trans($this->translator),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 10,
@@ -104,7 +103,11 @@ final readonly class CombinedStreamProfileChart
                         'show' => false,
                     ],
                     'axisLabel' => [
-                        'show' => false,
+                        'show' => true,
+                        'customValues' => [$minYAxis, $maxYAxis],
+                        'color' => '#aaa',
+                        'verticalAlignMaxLabel' => 'top',
+                        'verticalAlignMinLabel' => 'bottom',
                     ],
                 ],
             ],
