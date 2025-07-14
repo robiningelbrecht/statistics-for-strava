@@ -34,6 +34,8 @@ final class Segment implements SupportsAITooling
         private readonly ?int $climbCategory,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private readonly ?string $countryCode,
     ) {
     }
 
@@ -46,6 +48,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $countryCode,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -56,6 +59,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            countryCode: $countryCode,
         );
     }
 
@@ -68,6 +72,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $countryCode,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -78,6 +83,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            countryCode: $countryCode,
         );
     }
 
@@ -160,6 +166,11 @@ final class Segment implements SupportsAITooling
         return $this->isFavourite;
     }
 
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
     /**
      * @return string[]
      */
@@ -179,6 +190,7 @@ final class Segment implements SupportsAITooling
             'isKom' => $this->isKOM() ? 'isKom' : '',
             'isFavourite' => $this->isFavourite() ? 'isFavourite' : '',
             'sportType' => $this->getSportType()->value,
+            'countryCode' => $this->getCountryCode() ?? '',
         ];
     }
 

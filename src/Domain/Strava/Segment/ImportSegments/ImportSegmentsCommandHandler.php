@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Segment\ImportSegments;
 
+use App\Domain\App\Countries;
 use App\Domain\Strava\Activity\Activity;
 use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
@@ -27,6 +28,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
+        private Countries $countries,
     ) {
     }
 
@@ -40,7 +42,6 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         $countSegmentsAdded = 0;
         $countSegmentEffortsAdded = 0;
 
-        // @TODO: Only check activities that have no segment efforts imported yet?
         foreach ($this->activityRepository->findActivityIds() as $activityId) {
             $activityWithRawData = $this->activityWithRawDataRepository->find($activityId);
             if (!$segmentEfforts = $activityWithRawData->getSegmentEfforts()) {
@@ -52,6 +53,11 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 $activitySegment = $activitySegmentEffort['segment'];
                 $segmentId = SegmentId::fromUnprefixed((string) $activitySegment['id']);
 
+                $countryCode = null;
+                if ($activity->getSportType()->supportsReverseGeocoding() && !empty($activitySegment['country'])) {
+                    $countryCode = $this->countries->findCountryCodeByCountryName($activitySegment['country']);
+                }
+
                 $segment = Segment::create(
                     segmentId: $segmentId,
                     name: Name::fromString($activitySegment['name']),
@@ -61,6 +67,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                     isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
                     climbCategory: $activitySegment['climb_category'] ?? null,
                     deviceName: $activity->getDeviceName(),
+                    countryCode: $countryCode
                 );
 
                 // Do not import segments that have been imported in the current run.
