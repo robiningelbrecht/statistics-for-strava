@@ -65,7 +65,7 @@ final readonly class CombinedStreamProfileChart
 
         return [
             'grid' => [
-                'left' => '30px',
+                'left' => '40px',
                 'right' => '0%',
                 'bottom' => $this->showXAxis ? '20px' : '0%',
                 'top' => '0%',
