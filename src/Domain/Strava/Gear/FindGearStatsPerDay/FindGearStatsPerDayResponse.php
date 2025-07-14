@@ -11,7 +11,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class FindGearStatsPerDayResponse implements Response
 {
-    /** @var array<mixed> */
+    /** @var array<string, mixed> */
     private array $stats = [];
 
     private function __construct()
