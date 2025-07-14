@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Activity\YearlyDistance\FindYearStatsPerDay;
+namespace App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay;
 
 use App\Domain\Strava\Activity\ActivityType;
 use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-class FindYearStatsPerDayResponse implements Response
+class FindYearlyStatsPerDayResponse implements Response
 {
     /** @var array<string, array<string|int, Kilometer>> */
     private array $stats = [];
