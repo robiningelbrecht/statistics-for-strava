@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Segment\SegmentId;
 use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Sleep;
@@ -24,6 +25,8 @@ class Strava
     public static ?string $cachedAccessToken = null;
     /** @var array<mixed>|null */
     public static ?array $cachedActivitiesResponse = null;
+    /** @var array<string, array<mixed>>|null */
+    public static ?array $cachedSegmentsResponse = null;
 
     public function __construct(
         private readonly Client $client,
@@ -233,6 +236,43 @@ class Strava
                 'Authorization' => 'Bearer '.$this->getAccessToken(),
             ],
         ]));
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getSegment(SegmentId $segmentId): array
+    {
+        $segmentIdString = $segmentId->toUnprefixedString();
+        
+        if (null === self::$cachedSegmentsResponse) {
+            self::$cachedSegmentsResponse = [];
+        }
+        
+        if (isset(self::$cachedSegmentsResponse[$segmentIdString])) {
+            return self::$cachedSegmentsResponse[$segmentIdString];
+        }
+        
+        try {
+            $response = Json::decode($this->request('api/v3/segments/'.$segmentIdString, 'GET', [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer '.$this->getAccessToken(),
+                ],
+            ]));
+            
+            self::$cachedSegmentsResponse[$segmentIdString] = $response;
+            
+            return $response;
+        } catch (\Exception $e) {
+            $this->logger->error(new Monolog(
+                'Failed to fetch segment from Strava API',
+                'segment_id: '.$segmentIdString,
+                'error: '.$e->getMessage(),
+                'error_code: '.$e->getCode()
+            ));
+            
+            throw $e;
+        }
     }
 
     /**

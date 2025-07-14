@@ -34,6 +34,8 @@ final class Segment implements SupportsAITooling
         private readonly ?int $climbCategory,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
+        #[ORM\Column(type: 'text', nullable: true)]
+        private ?string $polyline = null,
     ) {
     }
 
@@ -46,6 +48,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $polyline = null,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -56,6 +59,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            polyline: $polyline,
         );
     }
 
@@ -68,6 +72,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $polyline = null,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -78,6 +83,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            polyline: $polyline,
         );
     }
 
@@ -198,6 +204,18 @@ final class Segment implements SupportsAITooling
     public function getClimbCategory(): ?int
     {
         return $this->climbCategory;
+    }
+
+    public function getPolyline(): ?string
+    {
+        return $this->polyline;
+    }
+
+    public function updatePolyline(?string $polyline): self
+    {
+        $this->polyline = $polyline;
+
+        return $this;
     }
 
     /**

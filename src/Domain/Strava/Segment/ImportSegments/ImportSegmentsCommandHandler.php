@@ -13,12 +13,15 @@ use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Segment\SegmentRepository;
+use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Psr\Log\LoggerInterface;
 
 final readonly class ImportSegmentsCommandHandler implements CommandHandler
 {
@@ -27,6 +30,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
+        private Strava $strava,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -52,27 +57,70 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 $activitySegment = $activitySegmentEffort['segment'];
                 $segmentId = SegmentId::fromUnprefixed((string) $activitySegment['id']);
 
-                $segment = Segment::create(
-                    segmentId: $segmentId,
-                    name: Name::fromString($activitySegment['name']),
-                    sportType: $activity->getSportType(),
-                    distance: Meter::from($activitySegment['distance'])->toKilometer(),
-                    maxGradient: $activitySegment['maximum_grade'],
-                    isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
-                    climbCategory: $activitySegment['climb_category'] ?? null,
-                    deviceName: $activity->getDeviceName(),
-                );
-
-                // Do not import segments that have been imported in the current run.
+                // Fetch polyline data from Strava API if this is a new segment
+                $polyline = null;
                 if (!isset($segmentsAddedInCurrentRun[(string) $segmentId])) {
-                    // Check if the segment is imported in a previous run.
                     try {
-                        $segment = $this->segmentRepository->find($segment->getId());
+                        $existingSegment = $this->segmentRepository->find($segmentId);
+                        $segment = $existingSegment;
                     } catch (EntityNotFound) {
+                        // This is a new segment, fetch detailed data from Strava
+                        try {
+                            $segmentDetails = $this->strava->getSegment($segmentId);
+                            $polyline = $segmentDetails['map']['polyline'] ?? null;
+                            
+                            if ($polyline) {
+                                $this->logger->info(new Monolog(
+                                    'Successfully fetched segment polyline from Strava API',
+                                    'segment_id: '.$segmentId->toUnprefixedString(),
+                                    'polyline_length: '.strlen($polyline)
+                                ));
+                            } else {
+                                $this->logger->warning(new Monolog(
+                                    'Segment fetched from Strava API but no polyline data available',
+                                    'segment_id: '.$segmentId->toUnprefixedString(),
+                                    'segment_name: '.$activitySegment['name']
+                                ));
+                            }
+                        } catch (\Exception $e) {
+                            // If we can't fetch segment details, continue without polyline
+                            $polyline = null;
+                            $this->logger->warning(new Monolog(
+                                'Failed to fetch segment details from Strava API, continuing without polyline',
+                                'segment_id: '.$segmentId->toUnprefixedString(),
+                                'segment_name: '.$activitySegment['name'],
+                                'error: '.$e->getMessage()
+                            ));
+                        }
+                        
+                        $segment = Segment::create(
+                            segmentId: $segmentId,
+                            name: Name::fromString($activitySegment['name']),
+                            sportType: $activity->getSportType(),
+                            distance: Meter::from($activitySegment['distance'])->toKilometer(),
+                            maxGradient: $activitySegment['maximum_grade'],
+                            isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
+                            climbCategory: $activitySegment['climb_category'] ?? null,
+                            deviceName: $activity->getDeviceName(),
+                            polyline: $polyline,
+                        );
+                        
                         $this->segmentRepository->add($segment);
                         $segmentsAddedInCurrentRun[(string) $segmentId] = $segmentId;
                         ++$countSegmentsAdded;
                     }
+                } else {
+                    // Segment already processed in this run, create a temporary object for effort processing
+                    $segment = Segment::create(
+                        segmentId: $segmentId,
+                        name: Name::fromString($activitySegment['name']),
+                        sportType: $activity->getSportType(),
+                        distance: Meter::from($activitySegment['distance'])->toKilometer(),
+                        maxGradient: $activitySegment['maximum_grade'],
+                        isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
+                        climbCategory: $activitySegment['climb_category'] ?? null,
+                        deviceName: $activity->getDeviceName(),
+                    );
                 }
 
                 $segmentEffortId = SegmentEffortId::fromUnprefixed((string) $activitySegmentEffort['id']);

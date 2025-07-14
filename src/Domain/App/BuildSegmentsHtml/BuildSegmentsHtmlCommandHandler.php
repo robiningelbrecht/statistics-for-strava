@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Segment\Segment;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentRepository;
+use App\Infrastructure\Leaflet\LeafletMap;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Repository\Pagination;
@@ -26,6 +27,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private ActivitiesEnricher $activitiesEnricher,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
+        private LeafletMap $leafletMap,
     ) {
     }
 
@@ -59,12 +61,22 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     $segmentEffort->enrichWithActivity($activity);
                 }
 
+                // Prepare leaflet map data if segment has polyline
+                $leafletData = null;
+                if ($segment->getPolyline()) {
+                    $leafletData = [
+                        'routes' => [$segment->getPolyline()],
+                        'map' => $this->leafletMap,
+                    ];
+                }
+
                 $this->buildStorage->write(
                     'segment/'.$segment->getId().'.html',
                     $this->twig->load('html/segment/segment.html.twig')->render([
                         'segment' => $segment,
                         'segmentEffortsTopTen' => $segmentEffortsTopTen,
                         'segmentEffortsHistory' => $segmentEffortsHistory,
+                        'leaflet' => $leafletData,
                     ]),
                 );
 
