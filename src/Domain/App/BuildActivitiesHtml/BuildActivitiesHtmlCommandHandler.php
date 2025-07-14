@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildActivitiesHtml;
 
+use App\Domain\App\Countries;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
@@ -30,8 +31,6 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\DataTableRow;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Component\Intl\Countries;
-use Symfony\Component\Translation\LocaleSwitcher;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
@@ -51,11 +50,11 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
+        private Countries $countries,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
         private TranslatorInterface $translator,
-        private LocaleSwitcher $localeSwitcher,
     ) {
     }
 
@@ -76,27 +75,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             translator: $this->translator
         );
 
-        $countriesWithWorkouts = [];
-        foreach ($activities as $activity) {
-            if (!$countryCode = $activity->getLocation()?->getCountryCode()) {
-                continue;
-            }
-            if (isset($countriesWithWorkouts[$countryCode])) {
-                continue;
-            }
-
-            $countriesWithWorkouts[$countryCode] = Countries::getName(
-                country: strtoupper($countryCode),
-                displayLocale: $this->localeSwitcher->getLocale()
-            );
-        }
-
         $this->buildStorage->write(
             'activities.html',
             $this->twig->load('html/activity/activities.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
                 'activityTotals' => $activityTotals,
-                'countries' => $countriesWithWorkouts,
+                'countries' => $this->countries->getUsedInActivities(),
                 'gears' => $this->gearRepository->findAll(),
             ]),
         );

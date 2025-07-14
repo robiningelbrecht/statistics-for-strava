@@ -48,6 +48,34 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {% if countries|length > 0 %}
+                            <div>
+                                <button id="dropdownCountriesButton"
+                                        data-dropdown-toggle="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
+                                        class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                                    <span>{{ "Filter on country"|trans }}</span>
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                    </svg>
+                                </button>
+                                <div id="dropdownCountries" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                    <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownCountriesButton">
+                                        {% for countryCode,countryName in countries %}
+                                            <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="{{ countryCode }}" data-dataTable-filter="countryCode" name="countryCode" value="{{ countryCode }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                    <label for="{{ countryCode }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        <img src="{{ relativeUrl('assets/images/flags/' ~ countryCode|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
+                                                        <span>{{ countryName }}</span>
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="countryCode">{{ "clear"|trans }}</a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
                         <div>
                             <button id="dropdownOtherButton"
                                     data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0"
