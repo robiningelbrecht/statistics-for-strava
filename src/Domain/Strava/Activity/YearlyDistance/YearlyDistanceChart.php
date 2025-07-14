@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Activity\YearlyDistance;
 
-use App\Domain\Strava\Activity\Activity;
-use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityType;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearStatsPerDay\FindYearStatsPerDayResponse;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class YearlyDistanceChart
 {
     private function __construct(
-        private ActivityRepository $activityRepository,
+        private FindYearStatsPerDayResponse $yearStats,
         private Years $uniqueYears,
         private ActivityType $activityType,
         private UnitSystem $unitSystem,
@@ -25,7 +25,7 @@ final readonly class YearlyDistanceChart
     }
 
     public static function create(
-        ActivityRepository $activityRepository,
+        FindYearStatsPerDayResponse $yearStats,
         Years $uniqueYears,
         ActivityType $activityType,
         UnitSystem $unitSystem,
@@ -33,7 +33,7 @@ final readonly class YearlyDistanceChart
         SerializableDateTime $now,
     ): self {
         return new self(
-            activityRepository: $activityRepository,
+            yearStats: $yearStats,
             uniqueYears: $uniqueYears,
             activityType: $activityType,
             unitSystem: $unitSystem,
@@ -48,18 +48,18 @@ final readonly class YearlyDistanceChart
     public function build(): array
     {
         $months = [
-            '01' => $this->translator->trans('Jan'),
-            '02' => $this->translator->trans('Feb'),
-            '03' => $this->translator->trans('Mar'),
-            '04' => $this->translator->trans('Apr'),
-            '05' => $this->translator->trans('May'),
-            '06' => $this->translator->trans('Jun'),
-            '07' => $this->translator->trans('Jul'),
-            '08' => $this->translator->trans('Aug'),
-            '09' => $this->translator->trans('Sep'),
-            '10' => $this->translator->trans('Oct'),
-            '11' => $this->translator->trans('Nov'),
-            '12' => $this->translator->trans('Dec'),
+            1 => $this->translator->trans('Jan'),
+            2 => $this->translator->trans('Feb'),
+            3 => $this->translator->trans('Mar'),
+            4 => $this->translator->trans('Apr'),
+            5 => $this->translator->trans('May'),
+            6 => $this->translator->trans('Jun'),
+            7 => $this->translator->trans('Jul'),
+            8 => $this->translator->trans('Aug'),
+            9 => $this->translator->trans('Sep'),
+            10 => $this->translator->trans('Oct'),
+            11 => $this->translator->trans('Nov'),
+            12 => $this->translator->trans('Dec'),
         ];
 
         $xAxisLabels = [];
@@ -78,25 +78,25 @@ final readonly class YearlyDistanceChart
                 'data' => [],
             ];
 
-            $runningSum = 0;
-            foreach ($months as $monthNumber => $label) {
-                for ($i = 0; $i < 31; ++$i) {
+            $previousDistance = Kilometer::zero()->toUnitSystem($this->unitSystem);
+            foreach ($months as $month => $label) {
+                for ($dayOfMonth = 1; $dayOfMonth <= 31; ++$dayOfMonth) {
                     $date = SerializableDateTime::fromString(sprintf(
-                        '%s-%s-%s',
-                        $year,
-                        $monthNumber,
-                        str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT))
+                        '%04d-%02d-%02d',
+                        $year->toInt(),
+                        $month,
+                        $dayOfMonth),
                     );
-                    $activitiesOnThisDay = $this->activityRepository->findByStartDate($date, $this->activityType);
 
                     if ($date->isAfter($this->now)) {
                         break 2;
                     }
 
-                    $runningSum += $activitiesOnThisDay->sum(
-                        fn (Activity $activity) => $activity->getDistance()->toUnitSystem($this->unitSystem)->toFloat()
-                    );
-                    $series[(string) $year]['data'][] = round($runningSum);
+                    if (!$distance = $this->yearStats->getDistanceFor($date, $this->activityType)?->toUnitSystem($this->unitSystem)) {
+                        $distance = $previousDistance;
+                    }
+                    $previousDistance = $distance;
+                    $series[(string) $year]['data'][] = round($distance->toFloat());
                 }
             }
         }
