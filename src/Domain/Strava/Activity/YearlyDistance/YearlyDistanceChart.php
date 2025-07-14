@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\YearlyDistance;
 
 use App\Domain\Strava\Activity\ActivityType;
-use App\Domain\Strava\Activity\YearlyDistance\FindYearStatsPerDay\FindYearStatsPerDayResponse;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDayResponse;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class YearlyDistanceChart
 {
     private function __construct(
-        private FindYearStatsPerDayResponse $yearStats,
+        private FindYearlyStatsPerDayResponse $yearStats,
         private Years $uniqueYears,
         private ActivityType $activityType,
         private UnitSystem $unitSystem,
@@ -25,7 +25,7 @@ final readonly class YearlyDistanceChart
     }
 
     public static function create(
-        FindYearStatsPerDayResponse $yearStats,
+        FindYearlyStatsPerDayResponse $yearStats,
         Years $uniqueYears,
         ActivityType $activityType,
         UnitSystem $unitSystem,

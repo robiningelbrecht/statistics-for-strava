@@ -27,7 +27,7 @@ use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
-use App\Domain\Strava\Activity\YearlyDistance\FindYearStatsPerDay\FindYearStatsPerDay;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
@@ -97,7 +97,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $dayTimeStats = DaytimeStats::create($allActivities);
 
-        $yearlyStats = $this->queryBus->ask(new FindYearStatsPerDay());
+        $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
 
         $weeklyDistanceTimeCharts = [];
         $distanceBreakdowns = [];
@@ -134,7 +134,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             if ($activityType->supportsYearlyStats()) {
                 $yearlyDistanceCharts[$activityType->value] = Json::encode(
                     YearlyDistanceChart::create(
-                        yearStats: $yearlyStats,
+                        yearStats: $yearlyStatsPerDay,
                         uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
                         activityType: $activityType,
                         unitSystem: $this->unitSystem,

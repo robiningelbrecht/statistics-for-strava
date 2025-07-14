@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Activity\YearlyDistance\FindYearStatsPerDay;
+namespace App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay;
 
 use App\Domain\Strava\Activity\ActivityType;
 use App\Infrastructure\CQRS\Query\Query;
@@ -12,7 +12,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
-final readonly class FindYearStatsPerDayQueryHandler implements QueryHandler
+final readonly class FindYearlyStatsPerDayQueryHandler implements QueryHandler
 {
     public function __construct(
         private Connection $connection,
@@ -21,7 +21,7 @@ final readonly class FindYearStatsPerDayQueryHandler implements QueryHandler
 
     public function handle(Query $query): Response
     {
-        assert($query instanceof FindYearStatsPerDay);
+        assert($query instanceof FindYearlyStatsPerDay);
 
         $sql = <<<'SQL'
                 SELECT
@@ -37,7 +37,7 @@ final readonly class FindYearStatsPerDayQueryHandler implements QueryHandler
                 ORDER BY startDate DESC;
                 SQL;
 
-        $response = FindYearStatsPerDayResponse::empty();
+        $response = FindYearlyStatsPerDayResponse::empty();
         if (!$results = $this->connection->executeQuery($sql)->fetchAllAssociative()) {
             return $response;
         }
