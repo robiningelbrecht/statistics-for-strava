@@ -9,7 +9,7 @@ use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-class FindYearlyStatsPerDayResponse implements Response
+final class FindYearlyStatsPerDayResponse implements Response
 {
     /** @var array<string, array<string|int, Kilometer>> */
     private array $stats = [];

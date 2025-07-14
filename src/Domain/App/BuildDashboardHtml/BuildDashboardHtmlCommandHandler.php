@@ -27,6 +27,7 @@ use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
 use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
@@ -97,6 +98,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $dayTimeStats = DaytimeStats::create($allActivities);
 
+        $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
         $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
 
         $weeklyDistanceTimeCharts = [];
@@ -144,7 +146,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 );
 
                 $yearlyStatistics[$activityType->value] = YearlyStatistics::create(
-                    activities: $activitiesPerActivityType[$activityType->value],
+                    yearlyStats: $yearlyStats,
+                    activityType: $activityType,
                     years: $allYears
                 );
             }
