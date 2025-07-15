@@ -190,6 +190,11 @@ final class Segment implements SupportsAITooling
         return $this->countryCode;
     }
 
+    public function getUrl(): string
+    {
+        return 'https://www.strava.com/segments/'.$this->getId()->toUnprefixedString();
+    }
+
     /**
      * @return string[]
      */
