@@ -19,6 +19,11 @@
         </div>
     </td>
     <td class="px-2 py-2">
+        {% if segment.getLastEffortDate() %}
+            {{ segment.getLastEffortDate()|formatDate() }}
+        {% endif %}
+    </td>
+    <td class="px-2 py-2">
         <div class="flex justify-center">
             <div class="w-[13rem]">
                 {{ segment.getBestEffort().getElapsedTimeFormatted() }}

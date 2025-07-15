@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -16,6 +17,7 @@ final class Segment implements SupportsAITooling
 {
     private ?SegmentEffort $bestEffort = null;
     private int $numberOfTimesRidden = 0;
+    private ?SerializableDateTime $lastEffortDate = null;
 
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -29,11 +31,13 @@ final class Segment implements SupportsAITooling
         #[ORM\Column(type: 'float')]
         private readonly float $maxGradient,
         #[ORM\Column(type: 'boolean')]
-        private readonly bool $isFavourite,
+        private bool $isFavourite,
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $climbCategory,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private readonly ?string $countryCode,
     ) {
     }
 
@@ -46,6 +50,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $countryCode,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -56,6 +61,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            countryCode: $countryCode,
         );
     }
 
@@ -68,6 +74,7 @@ final class Segment implements SupportsAITooling
         bool $isFavourite,
         ?int $climbCategory,
         ?string $deviceName,
+        ?string $countryCode,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -78,6 +85,7 @@ final class Segment implements SupportsAITooling
             isFavourite: $isFavourite,
             climbCategory: $climbCategory,
             deviceName: $deviceName,
+            countryCode: $countryCode,
         );
     }
 
@@ -155,9 +163,36 @@ final class Segment implements SupportsAITooling
         $this->numberOfTimesRidden = $numberOfTimesRidden;
     }
 
+    public function getLastEffortDate(): ?SerializableDateTime
+    {
+        return $this->lastEffortDate;
+    }
+
+    public function enrichWithLastEffortDate(SerializableDateTime $lastEffortDate): void
+    {
+        $this->lastEffortDate = $lastEffortDate;
+    }
+
     public function isFavourite(): bool
     {
         return $this->isFavourite;
+    }
+
+    public function updateIsFavourite(bool $isFavourite): self
+    {
+        $this->isFavourite = $isFavourite;
+
+        return $this;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function getUrl(): string
+    {
+        return 'https://www.strava.com/segments/'.$this->getId()->toUnprefixedString();
     }
 
     /**
@@ -179,6 +214,7 @@ final class Segment implements SupportsAITooling
             'isKom' => $this->isKOM() ? 'isKom' : '',
             'isFavourite' => $this->isFavourite() ? 'isFavourite' : '',
             'sportType' => $this->getSportType()->value,
+            'countryCode' => $this->getCountryCode() ?? '',
         ];
     }
 
@@ -192,6 +228,7 @@ final class Segment implements SupportsAITooling
             'distance' => round($this->getDistance()->toFloat(), 2),
             'max-gradient' => $this->getMaxGradient(),
             'ride-count' => $this->getNumberOfTimesRidden(),
+            'last-effort-date' => $this->getLastEffortDate()?->getTimestamp(),
         ]);
     }
 

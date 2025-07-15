@@ -1,3 +1,11 @@
+# [v2.4.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.4) - 2025-07-14
+
+## What's Changed
+* ISSUE #852: Fix yearly stats by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/854
+* ISSUE #857: Add country filter to segments page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/858
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.3...v2.4.4
+
 # [v2.4.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.3) - 2025-07-10
 
 ## What's Changed

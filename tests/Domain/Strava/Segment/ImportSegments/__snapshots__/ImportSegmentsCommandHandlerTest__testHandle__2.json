@@ -1,5 +1,16 @@
 [
     {
+        "segmentId": "segment-2",
+        "name": "Segment",
+        "sportType": "Ride",
+        "distance": 1000,
+        "maxGradient": 5.3,
+        "isFavourite": 1,
+        "climbCategory": null,
+        "deviceName": "Polar",
+        "countryCode": "BE"
+    },
+    {
         "segmentId": "segment-1",
         "name": "Segment One",
         "sportType": "Ride",
@@ -7,6 +18,7 @@
         "maxGradient": 5.3,
         "isFavourite": 0,
         "climbCategory": null,
-        "deviceName": "Zwift"
+        "deviceName": "Zwift",
+        "countryCode": null
     }
 ]

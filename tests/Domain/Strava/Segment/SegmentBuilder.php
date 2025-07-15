@@ -20,6 +20,7 @@ final class SegmentBuilder
     private bool $isFavourite;
     private ?string $deviceName;
     private ?int $climbCategory;
+    private ?string $countryCode;
 
     private function __construct()
     {
@@ -31,6 +32,7 @@ final class SegmentBuilder
         $this->isFavourite = false;
         $this->deviceName = 'Polar';
         $this->climbCategory = null;
+        $this->countryCode = 'BE';
     }
 
     public static function fromDefaults(): self
@@ -49,6 +51,7 @@ final class SegmentBuilder
             isFavourite: $this->isFavourite,
             climbCategory: $this->climbCategory,
             deviceName: $this->deviceName,
+            countryCode: $this->countryCode
         );
     }
 

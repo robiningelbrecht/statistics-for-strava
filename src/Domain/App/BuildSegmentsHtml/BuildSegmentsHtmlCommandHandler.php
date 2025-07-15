@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildSegmentsHtml;
 
+use App\Domain\App\Countries;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
 use App\Domain\Strava\Segment\Segment;
@@ -24,6 +25,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private SegmentEffortRepository $segmentEffortRepository,
         private SportTypeRepository $sportTypeRepository,
         private ActivitiesEnricher $activitiesEnricher,
+        private Countries $countries,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -58,6 +60,9 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     $activity = $this->activitiesEnricher->getEnrichedActivity($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
+                if ($lastEffortDate = $segmentEffortsHistory->getFirst()?->getStartDateTime()) {
+                    $segment->enrichWithLastEffortDate($lastEffortDate);
+                }
 
                 $this->buildStorage->write(
                     'segment/'.$segment->getId().'.html',
@@ -91,6 +96,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
             'segments.html',
             $this->twig->load('html/segment/segments.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
+                'countries' => $this->countries->getUsedInSegments(),
                 'totalSegmentCount' => $this->segmentRepository->count(),
             ]),
         );
