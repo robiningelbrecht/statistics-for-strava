@@ -17,11 +17,9 @@ use App\Domain\Strava\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Psr\Log\LoggerInterface;
 
 final readonly class ImportSegmentsCommandHandler implements CommandHandler
 {
@@ -59,40 +57,29 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 if ($activity->getSportType()->supportsReverseGeocoding() && !empty($activitySegment['country'])) {
                     $countryCode = $this->countries->findCountryCodeByCountryName($activitySegment['country']);
                 }
+
+                $segment = Segment::create(
+                    segmentId: $segmentId,
+                    name: Name::fromString($activitySegment['name']),
+                    sportType: $activity->getSportType(),
+                    distance: Meter::from($activitySegment['distance'])->toKilometer(),
+                    maxGradient: $activitySegment['maximum_grade'],
+                    isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
+                    climbCategory: $activitySegment['climb_category'] ?? null,
+                    deviceName: $activity->getDeviceName(),
+                    countryCode: $countryCode
+                );
+
+                // Do not import segments that have been imported in the current run.
                 if (!isset($segmentsAddedInCurrentRun[(string) $segmentId])) {
+                    // Check if the segment is imported in a previous run.
                     try {
-                        $existingSegment = $this->segmentRepository->find($segmentId);
-                        $segment = $existingSegment;
+                        $segment = $this->segmentRepository->find($segment->getId());
                     } catch (EntityNotFound) {
-                        $segment = Segment::create(
-                            segmentId: $segmentId,
-                            name: Name::fromString($activitySegment['name']),
-                            sportType: $activity->getSportType(),
-                            distance: Meter::from($activitySegment['distance'])->toKilometer(),
-                            maxGradient: $activitySegment['maximum_grade'],
-                            isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
-                            climbCategory: $activitySegment['climb_category'] ?? null,
-                            deviceName: $activity->getDeviceName(),
-                            countryCode: $countryCode,
-                        );
-                        
                         $this->segmentRepository->add($segment);
                         $segmentsAddedInCurrentRun[(string) $segmentId] = $segmentId;
                         ++$countSegmentsAdded;
                     }
-                } else {
-                    // Segment already processed in this run, create a temporary object for effort processing
-                    $segment = Segment::create(
-                        segmentId: $segmentId,
-                        name: Name::fromString($activitySegment['name']),
-                        sportType: $activity->getSportType(),
-                        distance: Meter::from($activitySegment['distance'])->toKilometer(),
-                        maxGradient: $activitySegment['maximum_grade'],
-                        isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
-                        climbCategory: $activitySegment['climb_category'] ?? null,
-                        deviceName: $activity->getDeviceName(),
-                        countryCode: $countryCode,
-                    );
                 }
 
                 $segmentEffortId = SegmentEffortId::fromUnprefixed((string) $activitySegmentEffort['id']);

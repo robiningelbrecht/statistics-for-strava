@@ -235,7 +235,6 @@ class Strava
         ]));
     }
 
-
     /**
      * @return array<mixed>
      */

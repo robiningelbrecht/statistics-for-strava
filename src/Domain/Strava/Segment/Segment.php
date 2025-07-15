@@ -212,7 +212,6 @@ final class Segment implements SupportsAITooling
         return $this->climbCategory;
     }
 
-
     /**
      * @return array<string, mixed>
      */

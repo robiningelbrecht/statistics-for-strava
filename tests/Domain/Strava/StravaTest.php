@@ -7,7 +7,6 @@ use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
 use App\Domain\Strava\InvalidStravaAccessToken;
-use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -329,80 +328,6 @@ class StravaTest extends TestCase
         $this->strava->getGear(GearId::fromUnprefixed(3));
     }
 
-    public function testGetSegment(): void
-    {
-        $matcher = $this->exactly(2);
-        $this->client
-            ->expects($matcher)
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
-                if (1 === $matcher->numberOfInvocations()) {
-                    $this->assertEquals('POST', $method);
-                    $this->assertEquals('oauth/token', $path);
-                    $this->assertMatchesJsonSnapshot($options);
-
-                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
-                }
-
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('api/v3/segments/123', $path);
-                $this->assertMatchesJsonSnapshot($options);
-
-                return new Response(200, [], Json::encode([
-                    'id' => 123,
-                    'name' => 'Test Segment',
-                    'map' => [
-                        'polyline' => 'encodedPolyline123'
-                    ]
-                ]));
-            });
-
-        $this->logger
-            ->expects($this->exactly(2))
-            ->method('info');
-
-        $result = $this->strava->getSegment(SegmentId::fromUnprefixed(123));
-        $this->assertEquals(123, $result['id']);
-        $this->assertEquals('Test Segment', $result['name']);
-        $this->assertEquals('encodedPolyline123', $result['map']['polyline']);
-    }
-
-    public function testGetSegmentWithCaching(): void
-    {
-        $matcher = $this->exactly(2);
-        $this->client
-            ->expects($matcher)
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
-                if (1 === $matcher->numberOfInvocations()) {
-                    $this->assertEquals('POST', $method);
-                    $this->assertEquals('oauth/token', $path);
-
-                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
-                }
-
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('api/v3/segments/456', $path);
-
-                return new Response(200, [], Json::encode([
-                    'id' => 456,
-                    'name' => 'Cached Segment',
-                    'map' => ['polyline' => 'cachedPolyline456']
-                ]));
-            });
-
-        $this->logger
-            ->expects($this->exactly(2))
-            ->method('info');
-
-        // First call should hit the API
-        $result1 = $this->strava->getSegment(SegmentId::fromUnprefixed(456));
-        $this->assertEquals(456, $result1['id']);
-
-        // Second call should use cache (no additional API call)
-        $result2 = $this->strava->getSegment(SegmentId::fromUnprefixed(456));
-        $this->assertEquals($result1, $result2);
-    }
 
     public function testGetChallengesOnPublicProfile(): void
     {
@@ -887,6 +812,5 @@ class StravaTest extends TestCase
         );
         $this->strava::$cachedAccessToken = null;
         $this->strava::$cachedActivitiesResponse = null;
-        $this->strava::$cachedSegmentsResponse = null;
     }
 }
