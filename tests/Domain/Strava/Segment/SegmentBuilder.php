@@ -104,11 +104,4 @@ final class SegmentBuilder
         return $this;
     }
 
-    public function withCountryCode(?string $countryCode): self
-    {
-        $this->countryCode = $countryCode;
-
-        return $this;
-    }
-
 }

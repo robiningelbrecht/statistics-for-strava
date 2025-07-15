@@ -328,7 +328,6 @@ class StravaTest extends TestCase
         $this->strava->getGear(GearId::fromUnprefixed(3));
     }
 
-
     public function testGetChallengesOnPublicProfile(): void
     {
         $this->client
