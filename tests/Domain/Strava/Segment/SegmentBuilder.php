@@ -103,5 +103,4 @@ final class SegmentBuilder
 
         return $this;
     }
-
 }
