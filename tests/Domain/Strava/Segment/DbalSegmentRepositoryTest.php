@@ -30,6 +30,21 @@ class DbalSegmentRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testUpdate(): void
+    {
+        $segment = SegmentBuilder::fromDefaults()
+            ->withIsFavourite(false)
+            ->build();
+        $this->segmentRepository->add($segment);
+
+        $segment->updateIsFavourite(true);
+        $this->segmentRepository->update($segment);
+
+        $this->assertTrue(
+            $this->segmentRepository->find($segment->getId())->isFavourite()
+        );
+    }
+
     public function testItShouldThrowWhenNotFound(): void
     {
         $this->expectException(EntityNotFound::class);

@@ -31,6 +31,18 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
         ]);
     }
 
+    public function update(Segment $segment): void
+    {
+        $sql = 'UPDATE Segment SET 
+                    isFavourite = :isFavourite   
+                    WHERE segmentId = :segmentId';
+
+        $this->connection->executeStatement($sql, [
+            'segmentId' => $segment->getId(),
+            'isFavourite' => (int) $segment->isFavourite(),
+        ]);
+    }
+
     public function find(SegmentId $segmentId): Segment
     {
         $queryBuilder = $this->connection->createQueryBuilder();
