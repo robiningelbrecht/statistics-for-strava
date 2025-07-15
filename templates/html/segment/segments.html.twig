@@ -128,6 +128,12 @@
                             <th scope="col" data-dataTable-sort="name" class="px-2 py-3 cursor-pointer">
                                 <div class="w-[23rem]">{{ svg('sorting-icon') }}</div>
                             </th>
+                            <th scope="col"data-dataTable-sort="last-effort-date" class="px-2 py-3 cursor-pointer">
+                                <div class="flex items-center justify-center" title="{{ "Last effort"|trans }}">
+                                    {{ svg('calendar') }}
+                                    {{ svg('sorting-icon') }}
+                                </div>
+                            </th>
                             <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center justify-center" title="{{ "Best effort"|trans }}">
                                     {{ svg('trophy') }}
