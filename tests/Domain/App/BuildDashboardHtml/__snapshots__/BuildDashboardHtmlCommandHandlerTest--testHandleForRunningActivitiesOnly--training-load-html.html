@@ -154,6 +154,36 @@
     <div class="text-xl font-bold">0</div>
     <div class="text-xs text-gray-500 truncate">Last 7 days training load</div>
 </div>
+<div class="col-span-2 lg:col-span-4 flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+    <div class="flex items-center">
+        <h4 class="text-sm font-semibold">Polarised training (last 30 days)</h4>
+        <button class="hidden lg:block ml-1" data-popover-target="popover-polarised-modal" data-popover-placement="right" type="button">
+            <svg class="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+        </button>
+        <div data-popover id="popover-polarised-modal" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+            <div class="p-2 space-y-2">
+                <p>Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones:</p>
+                <p>Z1-2 (Low): 75 - 90%</p>
+                <p>Z3 (Mod): 0 - 10%</p>
+                <p>Z4-5 (High): 10 - 20%</p>
+            </div>
+        </div>
+    </div>
+                <div class="grid grid-cols-3 gap-4 divide-x divide-gray-200">
+        <div class="flex flex-col items-center">
+            <div class="text-lg md:text-xl font-bold">0.00%</div>
+            <div class="text-xs text-gray-500 truncate">Z1-2 (Low)</div>
+        </div>
+        <div class="flex flex-col items-center">
+            <div class="text-lg md:text-xl font-bold">0.00%</div>
+            <div class="text-xs text-gray-500 truncate">Z3 (Mod)</div>
+        </div>
+        <div class="flex flex-col items-center">
+            <div class="text-lg md:text-xl font-bold">0.00%</div>
+            <div class="text-xs text-gray-500 truncate">Z4-5 (High)</div>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </body></html>
