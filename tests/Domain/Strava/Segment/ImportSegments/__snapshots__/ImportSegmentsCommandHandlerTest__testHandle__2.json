@@ -7,6 +7,7 @@
         "maxGradient": 5.3,
         "isFavourite": 0,
         "climbCategory": null,
-        "deviceName": "Zwift"
+        "deviceName": "Zwift",
+        "countryCode": null
     }
 ]
