@@ -301,124 +301,18 @@
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold">{{ "Training Load Analysis"|trans }}</h3>
                 <a href="#" data-model-content-url="{{ relativeUrl('training-load.html') }}"
-                   class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                   class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
                     {{ "View details"|trans }}
                 </a>
             </div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'page' } %}
+                {% include 'html/dashboard/training-metrics.html.twig' with {
+                    'trainingMetrics': trainingMetrics,
+                    'timeInHeartRateZonesForLast30Days': timeInHeartRateZonesForLast30Days,
+                    'context': 'page'
+                } %}
             </div>
         </div>
-        {% if timeInHeartRateZonesForLast30Days %}
-            {% set percentageInLowZones = timeInHeartRateZonesForLast30Days.getPercentageInLowZones() %}
-            {% set percentageInMediumZones = timeInHeartRateZonesForLast30Days.getPercentageInMediumZone() %}
-            {% set percentageInHighZones = timeInHeartRateZonesForLast30Days.getPercentageInHighZones() %}
-
-            {% set trainingProfile = 'unstructured' %}
-            {% if percentageInLowZones >= 75 and percentageInLowZones <= 90 and percentageInMediumZones >= 0 and percentageInMediumZones <= 10 and percentageInHighZones >= 10 and percentageInHighZones <= 20 %}
-                {% set trainingProfile = 'polarised' %}
-            {% elseif percentageInLowZones >= 60 and percentageInLowZones <= 80 and percentageInMediumZones >= 10 and percentageInMediumZones <= 30 and percentageInHighZones >= 5 and percentageInHighZones <= 15 %}
-                {% set trainingProfile = 'pyramidal' %}
-            {% elseif percentageInLowZones >= 50 and percentageInLowZones <= 65 and percentageInMediumZones >= 30 and percentageInMediumZones <= 45 and percentageInHighZones >= 5 and percentageInHighZones <= 15 %}
-                {% set trainingProfile = 'threshold-heavy' %}
-            {% endif %}
-            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                <h3 class="text-lg font-semibold">{{ "Polarised training (last 30 days)"|trans }}</h3>
-                <p class="mb-4 text-xs text-gray-500">{{ "Time distribution across heart rate zones for the last month"|trans }}</p>
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-center text-gray-500 group/training {{ trainingProfile }}">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
-                                {{ "Category"|trans }}
-                            </th>
-                            <th scope="col" class="px-2 py-3">
-                                {{ "Z1-2 (Low)"|trans }}
-                            </th>
-                            <th scope="col" class="px-2 py-3">
-                                {{ "Z3 (Mod)"|trans }}
-                            </th>
-                            <th scope="col" class="px-2 py-3">
-                                {{ "Z4-5 (High)"|trans }}
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="bg-white border-b">
-                            <td class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                {{ "Your training"|trans }}
-                            </td>
-                            <td class="px-2 py-2 font-medium text-gray-700">
-                                {{ percentageInLowZones|formatNumber(2) }}%
-                            </td>
-                            <td class="px-2 py-2 font-medium text-gray-700">
-                                {{ percentageInMediumZones|formatNumber(2) }}%
-                            </td>
-                            <td class="px-2 py-2 font-medium text-gray-700">
-                                {{ percentageInHighZones|formatNumber(2) }}%
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-2 py-2 sticky left-0 bg-white group-[.polarised]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
-                                {{ "Polarised"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
-                                75 - 90%
-                            </td>
-                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
-                                0 - 10%
-                            </td>
-                            <td class="px-2 py-2 group-[.polarised]/training:bg-green-500/15">
-                                10 - 20%
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-2 py-2 sticky left-0 font-medium group-[.pyramidal]/training:bg-green-500/15 text-gray-900 whitespace-nowrap">
-                                {{ "Pyramidal"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
-                                60 - 80%
-                            </td>
-                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
-                                10 - 30%
-                            </td>
-                            <td class="px-2 py-2 group-[.pyramidal]/training:bg-green-500/15">
-                                5 - 15%
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-2 py-2 sticky left-0 bg-white group-[.threshold-heavy]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
-                                {{ "Threshold-heavy"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
-                                50 - 65%
-                            </td>
-                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
-                                30 - 45%
-                            </td>
-                            <td class="px-2 py-2 group-[.threshold-heavy]/training:bg-green-500/15">
-                                5 - 15%
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-2 py-2 sticky left-0 bg-white group-[.unstructured]/training:bg-green-500/15 font-medium text-gray-900 whitespace-nowrap">
-                                {{ "Unstructured"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
-                                {{ "Random"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
-                                {{ "Random"|trans }}
-                            </td>
-                            <td class="px-2 py-2 group-[.unstructured]/training:bg-green-500/15">
-                                {{ "Random"|trans }}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        {% endif %}
         <!-- WEEKDAY STATS -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <h3 class="mb-4 text-lg font-semibold">

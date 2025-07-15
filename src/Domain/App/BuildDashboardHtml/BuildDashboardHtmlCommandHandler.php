@@ -205,6 +205,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             from: $now->modify('-6 days'),
             till: $now,
         )))->getNumberOfRestDays();
+        $timeInHeartRateZonesForLast30Days = $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days();
 
         $this->buildStorage->write(
             'dashboard.html',
@@ -246,7 +247,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                         translator: $this->translator,
                     )->build(),
                 ),
-                'timeInHeartRateZonesForLast30Days' => $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days(),
+                'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
                 'allMonths' => $allMonths,
                 'allConsistencyChallenges' => $this->consistencyChallenges,
                 'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(
@@ -274,6 +275,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'trainingMetrics' => $trainingMetrics,
                 'restDaysInLast7Days' => $numberOfRestDays,
+                'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
             ])
         );
 

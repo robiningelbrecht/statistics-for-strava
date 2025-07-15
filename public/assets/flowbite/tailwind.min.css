@@ -1042,6 +1042,9 @@
   .z-10000 {
     z-index: 10000;
   }
+  .col-span-2 {
+    grid-column: span 2 / span 2;
+  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -1987,6 +1990,9 @@
   }
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -3165,22 +3171,6 @@
       color: var(--color-strava-orange);
     }
   }
-  .group-\[\.polarised\]\/training\:bg-green-500\/15 {
-    &:is(:where(.group\/training):is(.polarised) *) {
-      background-color: color-mix(in srgb, #10B981 15%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
-      }
-    }
-  }
-  .group-\[\.pyramidal\]\/training\:bg-green-500\/15 {
-    &:is(:where(.group\/training):is(.pyramidal) *) {
-      background-color: color-mix(in srgb, #10B981 15%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
-      }
-    }
-  }
   .group-\[\.sidebar-is-collapsed\]\:block {
     &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       display: block;
@@ -3210,22 +3200,6 @@
     &:is(:where(.group):is(.sidebar-is-collapsed) *) {
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
-    }
-  }
-  .group-\[\.threshold-heavy\]\/training\:bg-green-500\/15 {
-    &:is(:where(.group\/training):is(.threshold-heavy) *) {
-      background-color: color-mix(in srgb, #10B981 15%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
-      }
-    }
-  }
-  .group-\[\.unstructured\]\/training\:bg-green-500\/15 {
-    &:is(:where(.group\/training):is(.unstructured) *) {
-      background-color: color-mix(in srgb, #10B981 15%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-green-500) 15%, transparent);
-      }
     }
   }
   .peer-checked\:visible {
@@ -3632,6 +3606,12 @@
       line-height: var(--tw-leading, var(--text-lg--line-height));
     }
   }
+  .md\:text-xl {
+    @media (width >= 48rem) {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
+  }
   .lg\:sticky {
     @media (width >= 64rem) {
       position: sticky;
@@ -3650,6 +3630,11 @@
   .lg\:col-span-2 {
     @media (width >= 64rem) {
       grid-column: span 2 / span 2;
+    }
+  }
+  .lg\:col-span-4 {
+    @media (width >= 64rem) {
+      grid-column: span 4 / span 4;
     }
   }
   .lg\:mt-0 {

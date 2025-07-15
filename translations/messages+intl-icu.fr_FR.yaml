@@ -42,7 +42,6 @@ Calories: Calories
 'Calories burnt': 'Calories burnt'
 Canoeing: Canoë
 'Carbon emission comparisons': 'Comparaisons des émissions de carbone'
-Category: Category
 'Challenge consistency': 'Défi de régularité'
 Challenges: Défis
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': "Charge d'Entraînement Chronique (Forme) - Moyenne pondérée exponentiellement sur 42 jours de votre charge d'entraînement quotidienne. Représente l'adaptation d'entraînement à long terme."
@@ -118,6 +117,7 @@ HR: FC
 'Hand Cycle': Handbike
 'Heart rate': 'Fréquence cardiaque'
 'Heart rate distribution': 'Répartition de la fréquence cardiaque'
+'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones'
 'Heart rate zones': 'Zones de fréquence cardiaque'
 Heatmap: 'Carte de chaleur'
 High: Élevé
@@ -206,17 +206,14 @@ Photos: Photos
 'Pickle Ball': Pickleball
 Pilates: Pilates
 'Please address these issues': 'Veuillez résoudre ces problèmes'
-Polarised: Polarised
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Puissance
 'Power distribution': 'Répartition de la puissance'
 'Prev year': 'Année précédente'
-Pyramidal: Pyramidal
 Race: Course
 'Racing Score': 'Score de course'
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
-Random: Random
 Ranking: Ranking
 'Rest Days': 'Jours de repos'
 'Rest days': 'Jours de repos'
@@ -276,12 +273,10 @@ Tennis: Tennis
 'This feature is currently disabled': 'Cette fonctionnalité est actuellement désactivée'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Cette formule signifie que rouler pendant une heure à votre fréquence cardiaque maximale donne un score de 100, ce que nous considérons comme une "intensité élevée".'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': "Cette carte montre l'intensité d'entraînement quotidienne de l'année dernière. L'intensité d'entraînement d'une activité est calculée sur la base de plusieurs métriques."
-Threshold-heavy: Threshold-heavy
 Thu: Jeu
 Thursday: Jeudi
 Time: Temps
 'Time / week': 'Temps / semaine'
-'Time distribution across heart rate zones for the last month': 'Time distribution across heart rate zones for the last month'
 'Times completed': 'Fois accompli'
 To: À
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': "Pour l'activer, configurez {configFile} et reconstruisez les fichiers pour que les modifications prennent effet"
@@ -305,7 +300,6 @@ Trivia: Anecdotes
 Tue: Mar
 Tuesday: Mardi
 Unspecified: 'Non spécifié'
-Unstructured: Unstructured
 'Updated on': 'Mis à jour le'
 'User badge': 'User badge'
 'Velo Mobiles': Vélomobiles
@@ -343,7 +337,6 @@ Yoga: Yoga
 'Your Strava {year} rewind will be available on the 24th of December.': 'Votre récapitulatif Strava {year} sera disponible le 24 décembre.'
 'Your Zwift badge': 'Votre badge Zwift'
 'Your badge(s)': 'Vos badge(s)'
-'Your training': 'Your training'
 'Z1-2 (Low)': 'Z1-2 (Low)'
 'Z3 (Mod)': 'Z3 (Mod)'
 'Z4-5 (High)': 'Z4-5 (High)'
