@@ -10,6 +10,16 @@
         "averageWatts": 200
     },
     {
+        "segmentEffortId": "segmentEffort-3",
+        "segmentId": "segment-2",
+        "activityId": "activity-9542782314",
+        "startDateTime": "2023-10-10 00:00:00",
+        "name": "Segment One",
+        "elapsedTimeInSeconds": 9.3,
+        "distance": 100,
+        "averageWatts": 200
+    },
+    {
         "segmentEffortId": "segmentEffort-1",
         "segmentId": "segment-1",
         "activityId": "activity-1",

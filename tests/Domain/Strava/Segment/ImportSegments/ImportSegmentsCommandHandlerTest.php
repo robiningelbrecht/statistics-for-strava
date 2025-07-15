@@ -9,11 +9,13 @@ use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
+use App\Domain\Strava\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use App\Tests\Domain\Strava\Segment\SegmentBuilder;
 use App\Tests\Domain\Strava\Segment\SegmentEffort\SegmentEffortBuilder;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -81,6 +83,29 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->withName('Test activity 4')
+                ->withStartDateTime(SerializableDateTime::fromString('2024-01-01'))
+                ->build(),
+            [
+                'segment_efforts' => [
+                    [
+                        'id' => '3',
+                        'start_date_local' => '2023-07-29T09:34:03Z',
+                        'name' => 'Segment Effort Two',
+                        'segment' => [
+                            'id' => '2',
+                            'name' => 'Segment Two',
+                            'maximum_grade' => 5.3,
+                            'distance' => 1000,
+                            'starred' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ));
         $this->getContainer()->get(SegmentEffortRepository::class)->add(
             SegmentEffortBuilder::fromDefaults()
                 ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(2))
@@ -89,6 +114,22 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 ->withElapsedTimeInSeconds(9.3)
                 ->withAverageWatts(200)
                 ->withDistance(Kilometer::from(0.1))
+                ->build()
+        );
+        $this->getContainer()->get(SegmentEffortRepository::class)->add(
+            SegmentEffortBuilder::fromDefaults()
+                ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(3))
+                ->withSegmentId(SegmentId::fromUnprefixed('2'))
+                ->withActivityId(ActivityId::fromUnprefixed(9542782314))
+                ->withElapsedTimeInSeconds(9.3)
+                ->withAverageWatts(200)
+                ->withDistance(Kilometer::from(0.1))
+                ->build()
+        );
+        $this->getContainer()->get(SegmentRepository::class)->add(
+            SegmentBuilder::fromDefaults()
+                ->withSegmentId(SegmentId::fromUnprefixed('2'))
+                ->withIsFavourite(false)
                 ->build()
         );
 

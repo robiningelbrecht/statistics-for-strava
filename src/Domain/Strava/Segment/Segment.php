@@ -29,7 +29,7 @@ final class Segment implements SupportsAITooling
         #[ORM\Column(type: 'float')]
         private readonly float $maxGradient,
         #[ORM\Column(type: 'boolean')]
-        private readonly bool $isFavourite,
+        private bool $isFavourite,
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $climbCategory,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -164,6 +164,13 @@ final class Segment implements SupportsAITooling
     public function isFavourite(): bool
     {
         return $this->isFavourite;
+    }
+
+    public function updateIsFavourite(bool $isFavourite): self
+    {
+        $this->isFavourite = $isFavourite;
+
+        return $this;
     }
 
     public function getCountryCode(): ?string
