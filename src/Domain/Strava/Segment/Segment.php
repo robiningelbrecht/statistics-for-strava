@@ -9,6 +9,7 @@ use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\String\Name;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -16,6 +17,7 @@ final class Segment implements SupportsAITooling
 {
     private ?SegmentEffort $bestEffort = null;
     private int $numberOfTimesRidden = 0;
+    private ?SerializableDateTime $lastEffortDate = null;
 
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -161,6 +163,16 @@ final class Segment implements SupportsAITooling
         $this->numberOfTimesRidden = $numberOfTimesRidden;
     }
 
+    public function getLastEffortDate(): ?SerializableDateTime
+    {
+        return $this->lastEffortDate;
+    }
+
+    public function enrichWithLastEffortDate(SerializableDateTime $lastEffortDate): void
+    {
+        $this->lastEffortDate = $lastEffortDate;
+    }
+
     public function isFavourite(): bool
     {
         return $this->isFavourite;
@@ -211,6 +223,7 @@ final class Segment implements SupportsAITooling
             'distance' => round($this->getDistance()->toFloat(), 2),
             'max-gradient' => $this->getMaxGradient(),
             'ride-count' => $this->getNumberOfTimesRidden(),
+            'last-effort-date' => $this->getLastEffortDate()?->getTimestamp(),
         ]);
     }
 
