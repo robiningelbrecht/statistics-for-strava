@@ -37,7 +37,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         assert($command instanceof ImportSegments);
         $command->getOutput()->writeln('Importing segments and efforts...');
 
-        $segmentsAddedInCurrentRun = [];
+        $segmentsProcessedInCurrentRun = [];
 
         $countSegmentsAdded = 0;
         $countSegmentEffortsAdded = 0;
@@ -58,28 +58,32 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                     $countryCode = $this->countries->findCountryCodeByCountryName($activitySegment['country']);
                 }
 
-                $segment = Segment::create(
-                    segmentId: $segmentId,
-                    name: Name::fromString($activitySegment['name']),
-                    sportType: $activity->getSportType(),
-                    distance: Meter::from($activitySegment['distance'])->toKilometer(),
-                    maxGradient: $activitySegment['maximum_grade'],
-                    isFavourite: isset($activitySegment['starred']) && $activitySegment['starred'],
-                    climbCategory: $activitySegment['climb_category'] ?? null,
-                    deviceName: $activity->getDeviceName(),
-                    countryCode: $countryCode
-                );
+                $isFavourite = isset($activitySegment['starred']) && $activitySegment['starred'];
 
-                // Do not import segments that have been imported in the current run.
-                if (!isset($segmentsAddedInCurrentRun[(string) $segmentId])) {
-                    // Check if the segment is imported in a previous run.
+                // Do not process segments that have been imported in the current run.
+                if (!isset($segmentsProcessedInCurrentRun[(string) $segmentId])) {
                     try {
-                        $segment = $this->segmentRepository->find($segment->getId());
+                        $segment = $this->segmentRepository->find($segmentId);
+                        if ($isFavourite !== $segment->isFavourite()) {
+                            $segment->updateIsFavourite($isFavourite);
+                            $this->segmentRepository->update($segment);
+                        }
                     } catch (EntityNotFound) {
+                        $segment = Segment::create(
+                            segmentId: $segmentId,
+                            name: Name::fromString($activitySegment['name']),
+                            sportType: $activity->getSportType(),
+                            distance: Meter::from($activitySegment['distance'])->toKilometer(),
+                            maxGradient: $activitySegment['maximum_grade'],
+                            isFavourite: $isFavourite,
+                            climbCategory: $activitySegment['climb_category'] ?? null,
+                            deviceName: $activity->getDeviceName(),
+                            countryCode: $countryCode
+                        );
                         $this->segmentRepository->add($segment);
-                        $segmentsAddedInCurrentRun[(string) $segmentId] = $segmentId;
                         ++$countSegmentsAdded;
                     }
+                    $segmentsProcessedInCurrentRun[(string) $segmentId] = $segmentId;
                 }
 
                 $segmentEffortId = SegmentEffortId::fromUnprefixed((string) $activitySegmentEffort['id']);
@@ -88,7 +92,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 } catch (EntityNotFound) {
                     $this->segmentEffortRepository->add(SegmentEffort::create(
                         segmentEffortId: $segmentEffortId,
-                        segmentId: $segment->getId(),
+                        segmentId: $segmentId,
                         activityId: $activity->getId(),
                         startDateTime: SerializableDateTime::createFromFormat(
                             Activity::DATE_TIME_FORMAT,

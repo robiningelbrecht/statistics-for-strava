@@ -60,6 +60,9 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     $activity = $this->activitiesEnricher->getEnrichedActivity($segmentEffort->getActivityId());
                     $segmentEffort->enrichWithActivity($activity);
                 }
+                if ($lastEffortDate = $segmentEffortsHistory->getFirst()?->getStartDateTime()) {
+                    $segment->enrichWithLastEffortDate($lastEffortDate);
+                }
 
                 $this->buildStorage->write(
                     'segment/'.$segment->getId().'.html',
