@@ -20,7 +20,6 @@ final class SegmentBuilder
     private bool $isFavourite;
     private ?string $deviceName;
     private ?int $climbCategory;
-    private ?string $polyline;
 
     private function __construct()
     {
@@ -32,7 +31,6 @@ final class SegmentBuilder
         $this->isFavourite = false;
         $this->deviceName = 'Polar';
         $this->climbCategory = null;
-        $this->polyline = null;
     }
 
     public static function fromDefaults(): self
@@ -51,7 +49,6 @@ final class SegmentBuilder
             isFavourite: $this->isFavourite,
             climbCategory: $this->climbCategory,
             deviceName: $this->deviceName,
-            polyline: $this->polyline,
         );
     }
 
@@ -104,10 +101,4 @@ final class SegmentBuilder
         return $this;
     }
 
-    public function withPolyline(?string $polyline): self
-    {
-        $this->polyline = $polyline;
-
-        return $this;
-    }
 }
