@@ -60,9 +60,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
 
                 $isFavourite = isset($activitySegment['starred']) && $activitySegment['starred'];
 
-                // Do not import segments that have been imported in the current run.
+                // Do not process segments that have been imported in the current run.
                 if (!isset($segmentsProcessedInCurrentRun[(string) $segmentId])) {
-                    // Check if the segment is imported in a previous run.
                     try {
                         $segment = $this->segmentRepository->find($segmentId);
                         if ($isFavourite !== $segment->isFavourite()) {
@@ -93,7 +92,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 } catch (EntityNotFound) {
                     $this->segmentEffortRepository->add(SegmentEffort::create(
                         segmentEffortId: $segmentEffortId,
-                        segmentId: $segment->getId(),
+                        segmentId: $segmentId,
                         activityId: $activity->getId(),
                         startDateTime: SerializableDateTime::createFromFormat(
                             Activity::DATE_TIME_FORMAT,
