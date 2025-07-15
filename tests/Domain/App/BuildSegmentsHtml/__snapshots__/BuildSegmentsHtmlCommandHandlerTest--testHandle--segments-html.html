@@ -74,6 +74,28 @@
                                                                             </ul>
                                 </div>
                             </div>
+                                                                            <div>
+                                <button id="dropdownCountriesButton" data-dropdown-toggle="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
+                                    <span>Filter on country</span>
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                                    </svg>
+                                </button>
+                                <div id="dropdownCountries" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                    <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownCountriesButton">
+                                                                                    <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="BE" data-datatable-filter="countryCode" name="countryCode" value="BE" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                    <label for="BE" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        <img src="/assets/images/flags/be.svg" width="15" class="rounded-xs" title="Belgium" alt="Belgium">
+                                                        <span>Belgium</span>
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="countryCode">clear</a>
+                                                </div>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                            </div>
                                                 <div>
                             <button id="dropdownOtherButton" data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" class="cursor-pointer w-fit text-strava-orange border border-strava-orange hover:border-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
                                 <span>Other</span>
@@ -124,6 +146,14 @@
                                 <div class="w-[23rem]"><div class="ml-1.5 group sorting-icon" aria-sort="none">
 <svg class="w-2 h-2 group-aria-[sort=descending]:text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="w-2 h-2 group-aria-[sort=ascending]:text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div></div>
+                            </th>
+                            <th scope="col" data-datatable-sort="last-effort-date" class="px-2 py-3 cursor-pointer">
+                                <div class="flex items-center justify-center" title="Last effort">
+                                    <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24"><path stroke="#F26722" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path></svg>
+                                    <div class="ml-1.5 group sorting-icon" aria-sort="none">
+<svg class="w-2 h-2 group-aria-[sort=descending]:text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="w-2 h-2 group-aria-[sort=ascending]:text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+</div>
+                                </div>
                             </th>
                             <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center justify-center" title="Best effort">

@@ -43,6 +43,9 @@ final class Activity implements SupportsAITooling
     /** @var string[] */
     private array $tags = [];
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    // @phpstan-ignore-next-line
+    private ActivityType $activityType;
     #[ORM\Column(type: 'json', nullable: true)]
     // @phpstan-ignore-next-line
     private readonly array $data;

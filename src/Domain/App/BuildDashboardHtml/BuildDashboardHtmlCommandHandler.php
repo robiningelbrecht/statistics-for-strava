@@ -7,7 +7,6 @@ namespace App\Domain\App\BuildDashboardHtml;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Activity\ActivityIntensityChart;
-use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityTypeRepository;
@@ -28,6 +27,8 @@ use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
 use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
+use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
@@ -54,7 +55,6 @@ use Twig\Environment;
 final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private ActivityPowerRepository $activityPowerRepository,
         private FtpHistory $ftpHistory,
@@ -98,6 +98,9 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         );
         $dayTimeStats = DaytimeStats::create($allActivities);
 
+        $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
+        $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
+
         $weeklyDistanceTimeCharts = [];
         $distanceBreakdowns = [];
         $yearlyDistanceCharts = [];
@@ -133,7 +136,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             if ($activityType->supportsYearlyStats()) {
                 $yearlyDistanceCharts[$activityType->value] = Json::encode(
                     YearlyDistanceChart::create(
-                        activityRepository: $this->activityRepository,
+                        yearStats: $yearlyStatsPerDay,
                         uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
                         activityType: $activityType,
                         unitSystem: $this->unitSystem,
@@ -143,7 +146,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 );
 
                 $yearlyStatistics[$activityType->value] = YearlyStatistics::create(
-                    activities: $activitiesPerActivityType[$activityType->value],
+                    yearlyStats: $yearlyStats,
+                    activityType: $activityType,
                     years: $allYears
                 );
             }
