@@ -32,18 +32,6 @@
     </div>
     <!-- Modal body -->
     <div class="p-4 md:p-5 space-y-4">
-        {% if leaflet %}
-            {% set leafletOptions = {
-                'routes': leaflet.routes,
-                'tileLayer': leaflet.map.getTileLayer(),
-                'minZoom': leaflet.map.getMinZoom(),
-                'maxZoom': leaflet.map.getMaxZoom(),
-                'imageOverlay': leaflet.map.getOverlayImageUrl(),
-                'bounds': leaflet.map.getBounds(),
-            } %}
-            <div class="min-h-[300px] flex-grow-1" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
-                 data-leaflet='{{ leafletOptions|json_encode }}'></div>
-        {% endif %}
         <div class="grid grid-cols-1 gap-y-1">
             <div class="border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
