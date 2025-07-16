@@ -1,3 +1,16 @@
+# [v2.4.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.5) - 2025-07-16
+
+## What's Changed
+* ISSUE #861: Update starred segments while importing from Strava by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/862
+* ISSUE #860: Add last effort date to segment overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/863
+* PR #865: Fix photo slideshow bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/865
+* PR #866: Re-work polarized training layout by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/866
+
+## New Contributors
+* @jamesfricker made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/855
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.4...v2.4.5
+
 # [v2.4.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.4) - 2025-07-14
 
 ## What's Changed
