@@ -6,6 +6,9 @@ namespace App\Controller;
 
 use App\Domain\App\ProfilePictureUrl;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +22,7 @@ final readonly class AIChatRequestHandler
     public function __construct(
         private FilesystemOperator $buildStorage,
         private ?ProfilePictureUrl $profilePictureUrl,
+        private FormFactoryInterface $formFactory,
         private Environment $twig,
     ) {
     }
@@ -30,8 +34,19 @@ final readonly class AIChatRequestHandler
             return new RedirectResponse('/', Response::HTTP_FOUND);
         }
 
-        return new Response($this->twig->render('html/ai-chat.html.twig', [
+        $formBuilder = $this->formFactory->createBuilder();
+
+        $form = $formBuilder
+            ->add('message', TextType::class, [
+                'label' => 'Message',
+                'required' => true,
+            ])
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+        return new Response($this->twig->render('html/chat/chat.html.twig', [
             'profilePictureUrl' => $this->profilePictureUrl,
+            'form' => $form->createView(),
         ]), Response::HTTP_OK);
     }
 }

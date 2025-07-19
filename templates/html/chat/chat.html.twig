@@ -1,0 +1,44 @@
+{% autoescape false %}
+<!-- Modal header -->
+<div class=" p-4 border-b rounded-t">
+  <div class="flex items-center justify-between">
+    <h3 class="flex items-center text-lg font-semibold text-gray-900">
+      {{ "Virtual workout assistant"|trans }}
+    </h3>
+    <div class="flex items-center">
+      <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+        <span class="sr-only">{{ "Close modal"|trans }}</span>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Modal body -->
+<div class="p-4 md:p-5">
+  <div class="grid grid-cols-1">
+    <div class="flex flex-col-reverse items-center border rounded-t bg-gray-50 h-[calc(100vh-15.4rem)] overflow-y-auto">
+      <div class="chat--wrapper w-full flex flex-col gap-6 p-8">
+        {% for i in 0..100 %}
+            {% include 'html/chat/message.html.twig' with {'message': 'User message YO','profilePictureUrl': profilePictureUrl, 'letter': 'R' } %}
+            {% include 'html/chat/message.html.twig' with {'message': 'Robit answer YEAH','profilePictureUrl': relativeUrl('assets/images/mark.png'), 'letter': 'R' } %}
+        {% endfor %}
+      </div>
+    </div>
+      {{ form_start(form, {'attr': {'class': 'flex gap-x-4 items-center border border-t-0 rounded-b text-gray-900 py-2 px-2'}}) }}
+        <input required name="{{ field_name(form.message) }}" id="{{ field_id(form.message) }}"
+            value="{{ field_value(form.message) }}" placeholder="{{ "Ask Mark something..."|trans }}"
+            class="message disabled:cursor-not-allowed border-0 w-full px-1 py-2.5 focus:ring-0 focus-visible:outline-0">
+
+        <button type="submit" name="{{ field_name(form.submit) }}" id="{{ field_id(form.submit) }}"
+                class="send-message disabled:cursor-not-allowed cursor-pointer text-strava-orange hover:bg-strava-orange/30 disabled:hover:bg-white rounded-full text-sm p-2.5 inline-flex items-center">
+            <svg class="size-4 rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"></path>
+            </svg>
+            <span class="sr-only">Send message</span>
+        </button>
+      {{ form_end(form) }}
+  </div>
+</div>
+{% endautoescape %}
