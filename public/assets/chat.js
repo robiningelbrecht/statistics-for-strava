@@ -19,11 +19,16 @@ export default function Chat($chatModal) {
         $form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            const formData = new FormData($form);
+
             disableElements();
 
             const response = await fetch($form.getAttribute('action'), {
                 method: 'POST',
-                body: new FormData($form),
+                body: JSON.stringify(Object.fromEntries(formData)),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
             const json = await response.json();
 

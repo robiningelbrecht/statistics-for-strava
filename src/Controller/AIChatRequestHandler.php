@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\App\ProfilePictureUrl;
+use App\Infrastructure\Serialization\Json;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,10 +60,12 @@ final readonly class AIChatRequestHandler
             return new RedirectResponse('/', Response::HTTP_FOUND);
         }
 
+        $content = Json::decode($request->getContent());
+
         return new JsonResponse([
             'response' => $this->twig->render('html/chat/message.html.twig', [
                 'profilePictureUrl' => $this->profilePictureUrl,
-                'message' => 'LOL',
+                'message' => $content['form[message]'],
             ]),
         ]);
     }

@@ -27,8 +27,8 @@
       </div>
     </div>
       {{ form_start(form, {'attr': {'class': 'flex gap-x-4 items-center border border-t-0 rounded-b text-gray-900 py-2 px-2'}}) }}
-        <input required name="{{ field_name(form.message) }}" id="{{ field_id(form.message) }}"
-            value="{{ field_value(form.message) }}" placeholder="{{ "Ask Mark something..."|trans }}"
+        <div class="hidden">{{ field_label(form.message) }}</div>
+        <input required name="{{ field_name(form.message) }}" id="{{ field_id(form.message) }}" value="{{ field_value(form.message) }}" placeholder="{{ "Ask Mark something..."|trans }}"
             class="message disabled:cursor-not-allowed border-0 w-full px-1 py-2.5 focus:ring-0 focus-visible:outline-0">
 
         <button type="submit" name="{{ field_name(form.submit) }}" id="{{ field_id(form.submit) }}"
