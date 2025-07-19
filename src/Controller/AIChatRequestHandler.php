@@ -9,6 +9,7 @@ use League\Flysystem\FilesystemOperator;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,7 @@ final readonly class AIChatRequestHandler
         $formBuilder = $this->formFactory->createBuilder();
 
         $form = $formBuilder
+            ->setAction('/ai/chat/user-message')
             ->add('message', TextType::class, [
                 'label' => 'Message',
                 'required' => true,
@@ -48,5 +50,20 @@ final readonly class AIChatRequestHandler
             'profilePictureUrl' => $this->profilePictureUrl,
             'form' => $form->createView(),
         ]), Response::HTTP_OK);
+    }
+
+    #[Route(path: '/ai/chat/user-message', methods: ['POST'], priority: 2)]
+    public function handleUserMessage(Request $request): Response
+    {
+        if (!$this->buildStorage->fileExists('index.html')) {
+            return new RedirectResponse('/', Response::HTTP_FOUND);
+        }
+
+        return new JsonResponse([
+            'response' => $this->twig->render('html/chat/message.html.twig', [
+                'profilePictureUrl' => $this->profilePictureUrl,
+                'message' => 'LOL',
+            ]),
+        ]);
     }
 }

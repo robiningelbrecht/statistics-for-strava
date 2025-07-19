@@ -1,7 +1,8 @@
 export default function Chat($chatModal) {
-    const $button = $chatModal.querySelector('button.send-message');
-    const $textInput =  $chatModal.querySelector('input.message');
     const $chatWrapper = $chatModal.querySelector('.chat--wrapper');
+    const $form = $chatModal.querySelector('form');
+    const $button = $form.querySelector('button.send-message');
+    const $textInput = $form.querySelector('input.message');
 
     const disableElements = () => {
         $textInput.disabled = true;
@@ -11,12 +12,24 @@ export default function Chat($chatModal) {
     const enableElements = () => {
         $textInput.disabled = false;
         $button.disabled = false;
+        $textInput.value = '';
     }
 
     const render = () => {
-        $button.addEventListener('click', (e) => {
+        $form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
             disableElements();
-            $chatWrapper.innerHTML += '<div class="flex items-start gap-x-6 bg-white shadow-xs p-6 text-gray-500 rounded-md last:animate-fade-in-chat-message"> <img class="size-6 rounded-full border" src=""  alt="Mark"/> <div>Certainly! Here is a list of potential essay topics related to design principles, along with a brief outline of main points for each topic:</div> </div>'
+
+            const response = await fetch($form.getAttribute('action'), {
+                method: 'POST',
+                body: new FormData($form),
+            });
+            const json = await response.json();
+
+            $chatWrapper.innerHTML += json.response;
+
+            enableElements();
         });
     };
 
