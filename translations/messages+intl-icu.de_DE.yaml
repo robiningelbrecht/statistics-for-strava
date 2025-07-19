@@ -1,26 +1,26 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: Moderately fresh. Good balance of fitness and recovery.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
-'0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'42-day fitness trend': '42-day fitness trend'
-'7-day fatigue level': '7-day fatigue level'
-'< 0.8: Potential detraining': '< 0.8: Potential detraining'
-'< 1.5: Good variety in training': '< 1.5: Good variety in training'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: Over-fatigued. Risk of injury; require extra recovery'
-'> 1.3: Increased injury risk': '> 1.3: Increased injury risk'
-'> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
-'>+25: Possible detraining': '>+25: Possible detraining'
-'A:C Ratio': 'A:C Ratio'
-'ATL (Fatigue)': 'ATL (Fatigue)'
+'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 bis +15: Mäßige Form. Gute Balance zwischen Fitness und Erholung.'
+'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 bis +25: in Top-Form, wettkampftauglich. Idealer Taper-Sweetspot'
+'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 bis 0: Ausgeprägte Erschöpfung. Erholung im Gange. Geeignet für leichtes/technisches Training.'
+'0 to +10: Slightly fresh. Transitional; brief is best': '0 bis +10: Wenig in Form. Übergangsphase; kurz ist am besten'
+'0.8-1.3: Safe training zone': '0,8-1.3: Sichere Trainingszone'
+'42-day fitness trend': '42-tägiger Fitness-Trend'
+'7-day fatigue level': '7-tägiges Erschöpfungsniveau'
+'< 0.8: Potential detraining': '< 0.8: Möglicher Leistungsabbau durch Trainingspause'
+'< 1.5: Good variety in training': '< 1.5: Gute Abwechslung im Training'
+'< –30: Over-fatigued. Risk of injury; require extra recovery': '< -30: Übermüdet. Verletzungsgefahr; zusätzliche Erholung erforderlich'
+'> 1.3: Increased injury risk': '> 1.3: Erhöhtes Verletzungsrisiko'
+'> 2.0: High monotony, increased risk': '> 2.0: Hohe Monotonie, erhöhtes Risiko'
+'>+25: Possible detraining': '>+25: Möglicher Leistungsabbau durch Trainingspause'
+'A:C Ratio': 'A:C-Verhältnis'
+'ATL (Fatigue)': 'ATL (Ermüdung)'
 'Active days': 'Active days'
 Activities: Aktivitäten
 'Activity count': 'Activity count'
 'Activity intensity': Aktivitätsintensität
 'Activity locations': 'Activity locations'
 'Activity start times': 'Activity start times'
-'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
-'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
+'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'AAkute Trainingsbelastung (Ermüdung) - 7-tägiger exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die kurzfristige Erschöpfung dar.'
+'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Aktuelle vs. dauerhafte Trainingsbelastung - Verhältnis von ATL zu CTL. Gibt das Verletzungsrisiko an.'
 'Adaptive & Inclusive Sports': 'Adaptive & inklusive Sportarten'
 Advanced: Fortgeschritten
 Afternoon: Nachmittag
@@ -32,7 +32,7 @@ Avg: Durchschn.
 'Back Country Ski': Backcountry-Ski
 Badminton: Badminton
 Best: Beste
-'Best Efforts': 'Best Efforts'
+'Best Efforts': 'Beste Leistungen'
 'Best effort': 'Best effort'
 'Best efforts for {sportType}': 'Best efforts for {sportType}'
 'Build zone (–10)': 'Build zone (–10)'
@@ -44,7 +44,7 @@ Canoeing: Kanufahren
 'Carbon emission comparisons': 'Carbon emission comparisons'
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
-'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
+'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
 'Close modal': 'Modal schließen'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
@@ -111,7 +111,7 @@ Gear: Ausrüstung
 Golf: Golf
 'Good training variety': 'Good training variety'
 'Gravel Rides': Gravel-Fahrten
-"Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."
+"Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Die Richtlinien variieren von Person zu Person; weitere Informationen findest du in Joe Friels ‚The Cyclist's Training Bible‘ oder in den Forschungsunterlagen von TrainingPeaks."
 HIIT: HIIT
 HR: HF
 'Hand Cycle': Handbike
@@ -142,7 +142,7 @@ Kayaking: Kajakfahren
 Lap: Lap
 Laps: Laps
 'Last 45 days': 'Letzten 45 Tage'
-'Last 7 days training load': 'Last 7 days training load'
+'Last 7 days training load': 'Trainingsbelastung der letzten 7 Tage'
 'Last 90 days': 'Letzten 90 Tage'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
@@ -168,7 +168,7 @@ Metrics: Metrics
 'Moderate monotony': 'Moderate monotony'
 Mon: Mo
 Monday: Montag
-Monotony: Monotony
+Monotony: Monotonie
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
 'Most consecutive days': 'Meiste aufeinanderfolgende Tage'
@@ -193,7 +193,7 @@ Other: Andere
 'Outdoor Sports': Outdoor-Sportarten
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
-'Overall weekly training stress': 'Overall weekly training stress'
+'Overall weekly training stress': 'Gesamte wöchentliche Trainingsbelastung'
 'PB badges': 'PB badges'
 PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
@@ -215,9 +215,9 @@ Race: Race
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Ranking
-'Rest Days': 'Rest Days'
-'Rest days': 'Rest days'
-'Rest days in last 7 days': 'Rest days in last 7 days'
+'Rest Days': 'Ruhetage'
+'Rest days': 'Ruhetage'
+'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
@@ -291,11 +291,11 @@ To: Bis
 'Total kudos': 'Gesamte Kudos'
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': Trail-Läufe
-'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
+'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'
 'Training Load Analysis': 'Training Load Analysis'
 'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
-'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
-'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
+'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
+'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Müdigkeit (ATL). Zeigt an, wie leistungsfähig du bist.'
 Trivia: Wissenswertes
 Tue: Di
 Tuesday: Dienstag
@@ -315,9 +315,9 @@ Walks: Spaziergänge
 'We detected following issues': 'We detected following issues'
 Wed: Mi
 Wednesday: Mittwoch
-'Weekly Strain': 'Weekly Strain'
-'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
-'Weekly TRIMP': 'Weekly TRIMP'
+'Weekly Strain': 'Wöchentliche Belastung (Strain)'
+'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
+'Weekly TRIMP': 'Wöchentlicher TRIMP'
 'Weekly stats': 'Weekly stats'
 'Weight Training': Krafttraining
 Wheelchair: Rollstuhl
@@ -337,9 +337,9 @@ Yoga: Yoga
 'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
 'Your Zwift badge': 'Dein Zwift-Abzeichen'
 'Your badge(s)': 'Dein(e) Abzeichen'
-'Z1-2 (Low)': 'Z1-2 (Low)'
-'Z3 (Mod)': 'Z3 (Mod)'
-'Z4-5 (High)': 'Z4-5 (High)'
+'Z1-2 (Low)': 'Z1-2 (Niedrig)'
+'Z3 (Mod)': 'Z3 (Mittel)'
+'Z4-5 (High)': 'Z4-5 (Hoch)'
 'Zone 1 (recovery)': 'Zone 1 (Erholung)'
 'Zone 2 (aerobic)': 'Zone 2 (aerob)'
 'Zone 3 (aerobic/anaerobic)': 'Zone 3 (aerob/anaerob)'
@@ -384,4 +384,4 @@ workouts: Trainingseinheiten
 '{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
 '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'
+'–10 to –30: Build/fatigue zone. Productive heavy-training range': '-10 bis -30: Aufbau/Ermüdungszone. Produktiver Bereich für schweres Training'
