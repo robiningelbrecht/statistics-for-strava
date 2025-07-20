@@ -1,8 +1,13 @@
-<div class="flex items-start gap-x-6 bg-white shadow-xs p-6 text-gray-500 rounded-md last:animate-fade-in-chat-message">
-    {% if profilePictureUrl %}
-        <img class="size-6 rounded-full border" src="{{ profilePictureUrl }}"  alt="Profile Picture"/>
+{% set thinkingMessage = "Let me think..."|trans %}
+<div class="message-wrapper flex items-start gap-x-6 bg-white shadow-xs p-6 text-gray-500 rounded-md last:animate-fade-in-chat-message">
+    {% if isUserMessage %}
+        {% if profilePictureUrl %}
+            <img class="size-6 rounded-full border" src="{{ profilePictureUrl }}"  alt="Profile Picture"/>
+        {% else %}
+            <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">{{ letter }}</div>
+        {% endif %}
     {% else %}
-        <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">{{ letter }}</div>
+        <img class="size-6 rounded-full border" src="{{ relativeUrl('assets/images/mark.png') }}"  alt="Mark"/>
     {% endif %}
-    <div>{{ message }}</div>
+    <div data-thinking-message="{{ thinkingMessage }}" class="message">{{ isThinking ? thinkingMessage : message|raw }}</div>
 </div>

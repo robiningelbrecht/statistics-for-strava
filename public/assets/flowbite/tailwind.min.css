@@ -1537,6 +1537,10 @@
     width: calc(var(--spacing) * 4);
     height: calc(var(--spacing) * 4);
   }
+  .size-5 {
+    width: calc(var(--spacing) * 5);
+    height: calc(var(--spacing) * 5);
+  }
   .size-6 {
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
@@ -4170,6 +4174,11 @@
       }
     }
   }
+  .\[\&\.disabled\]\:bg-gray-100 {
+    &.disabled {
+      background-color: var(--color-gray-100);
+    }
+  }
   .\[\&\.sidebar-is-collapsed\]\:w-32 {
     &.sidebar-is-collapsed {
       width: calc(var(--spacing) * 32);
@@ -4859,7 +4868,6 @@
     transform: scale(1);
     max-height: 100vmax;
     overflow: visible;
-    padding-top: 1rem;
   }
 }
 @layer properties {

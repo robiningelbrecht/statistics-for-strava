@@ -27,7 +27,6 @@
             transform: scale(1);
             max-height: 100vmax;
             overflow: visible;
-            padding-top: 1rem;
         }
     }
 }

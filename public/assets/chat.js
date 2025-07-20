@@ -3,38 +3,56 @@ export default function Chat($chatModal) {
     const $form = $chatModal.querySelector('form');
     const $button = $form.querySelector('button.send-message');
     const $textInput = $form.querySelector('input.message');
+    const $spinner = $form.querySelector('div.spinner');
 
-    const disableElements = () => {
-        $textInput.disabled = true;
-        $button.disabled = true;
-    };
+    const placeholderIdle = $textInput.getAttribute('data-placeholder-idle');
+    const placeholderProcessing = $textInput.getAttribute('data-placeholder-processing');
 
-    const enableElements = () => {
-        $textInput.disabled = false;
-        $button.disabled = false;
+    const toggleElements = (disabled) => {
+        $textInput.disabled = disabled;
+        $button.disabled = disabled;
+
+        $button.classList.toggle('inline-flex', !disabled);
+        $button.classList.toggle('hidden', disabled);
+
+        $form.classList.toggle('disabled', disabled);
+        $spinner.classList.toggle('hidden', !disabled);
+
         $textInput.value = '';
-    }
+        $textInput.placeholder = disabled ? placeholderProcessing : placeholderIdle;
+    };
 
     const render = () => {
         $form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const formData = new FormData($form);
+            toggleElements(true);
 
-            disableElements();
+            const source = new EventSource(`/chat/sse?message=${encodeURIComponent(formData.get('form[message]'))}`);
 
-            const response = await fetch($form.getAttribute('action'), {
-                method: 'POST',
-                body: JSON.stringify(Object.fromEntries(formData)),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            source.addEventListener('fullMessage', (event) => {
+                $chatWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
             });
-            const json = await response.json();
 
-            $chatWrapper.innerHTML += json.response;
+            source.addEventListener('agentResponse', (event) => {
+                const $agentAnswerWrapper = $chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
+                const isThinkingMessage = $agentAnswerWrapper.getAttribute('data-thinking-message');
+                $agentAnswerWrapper.innerHTML = $agentAnswerWrapper.innerHTML.replace(isThinkingMessage, '');
+                $agentAnswerWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
+            });
 
-            enableElements();
+            source.addEventListener('done', function () {
+                source.close();
+                toggleElements(false);
+            });
+        });
+
+        $textInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                $form.requestSubmit();
+            }
         });
     };
 
