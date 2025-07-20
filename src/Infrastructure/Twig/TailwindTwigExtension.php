@@ -9,8 +9,12 @@ use Twig\Attribute\AsTwigFilter;
 
 final readonly class TailwindTwigExtension
 {
+    /**
+     * @param array<array<string>|string>|string $classes
+     * @param array<string, mixed>               $configuration
+     */
     #[AsTwigFilter('tailwind_merge')]
-    public function merge(string|array|null $classes, array $configuration = []): string
+    public function merge(string|array $classes, array $configuration = []): string
     {
         return TailwindMerge::factory()
             ->withConfiguration($configuration)->make()

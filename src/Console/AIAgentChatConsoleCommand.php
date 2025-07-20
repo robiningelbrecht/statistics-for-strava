@@ -31,7 +31,7 @@ final class AIAgentChatConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        if (!$this->appConfig->get('integrations.ai.enabled', false)) {
+        if (!$this->appConfig->AIIntegrationIsEnabled()) {
             $io->error('The AI feature is not enabled.');
 
             return Command::SUCCESS;

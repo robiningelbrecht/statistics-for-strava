@@ -35,14 +35,15 @@ export default function Chat($chatModal) {
                 $chatWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
             });
 
-            source.addEventListener('agentResponse', (event) => {
-                const $agentAnswerWrapper = $chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
-
-                const $thinkingAnimation = $agentAnswerWrapper.querySelector('.thinking');
+            source.addEventListener('removeThinking', () => {
+                const $thinkingAnimation = $chatWrapper.querySelector('.thinking');
                 if ($thinkingAnimation) {
                     $thinkingAnimation.remove();
                 }
+            });
 
+            source.addEventListener('agentResponse', (event) => {
+                const $agentAnswerWrapper = $chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
                 $agentAnswerWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
             });
 

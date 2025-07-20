@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Domain\Integration\AI\NeuronAIAgent;
+use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Http\SsrEvent;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\Chat\Messages\UserMessage;
@@ -25,6 +26,7 @@ final readonly class AIChatRequestHandler
 {
     public function __construct(
         private FilesystemOperator $buildStorage,
+        private AppConfig $appConfig,
         private NeuronAIAgent $neuronAIAgent,
         private ChatRepository $chatRepository,
         private FormFactoryInterface $formFactory,
@@ -37,6 +39,10 @@ final readonly class AIChatRequestHandler
     {
         if (!$this->buildStorage->fileExists('index.html')) {
             return new RedirectResponse('/', Response::HTTP_FOUND);
+        }
+
+        if (!$this->appConfig->AIIntegrationWithUiIsEnabled()) {
+            return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
 
         $formBuilder = $this->formFactory->createBuilder();
@@ -56,7 +62,7 @@ final readonly class AIChatRequestHandler
         ]), Response::HTTP_OK);
     }
 
-    #[Route('/chat/sse', name: 'chat_sse', methods: ['GET'], priority: 2)]
+    #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): StreamedResponse
     {
         return new StreamedResponse(function () use ($request) {
@@ -69,40 +75,54 @@ final readonly class AIChatRequestHandler
             header('Cache-Control: no-cache');
             header('X-Accel-Buffering: no');
 
+            /** @var string $message */
             $message = $request->query->get('message');
 
-            $userMessage = $this->twig->render('html/chat/message.html.twig', [
-                'chatMessage' => $this->chatRepository->create(
-                    message: $message,
-                    isUserMessage: true,
-                ),
-                'isThinking' => false,
-            ]);
+            echo new SsrEvent(
+                eventName: 'fullMessage',
+                data: $this->twig->render('html/chat/message.html.twig', [
+                    'chatMessage' => $this->chatRepository->create(
+                        message: $message,
+                        isUserMessage: true,
+                    ),
+                    'isThinking' => false,
+                ])
+            );
 
             echo new SsrEvent(
                 eventName: 'fullMessage',
-                data: $userMessage
+                data: $this->twig->render('html/chat/message.html.twig', [
+                    'chatMessage' => $this->chatRepository->create(
+                        message: '__PLACEHOLDER__',
+                        isUserMessage: false,
+                    ),
+                    'isThinking' => true,
+                ])
             );
 
-            $markThinkingMessage = $this->twig->render('html/chat/message.html.twig', [
-                'chatMessage' => $this->chatRepository->create(
-                    message: '__PLACEHOLDER__',
-                    isUserMessage: false,
-                ),
-                'isThinking' => true,
-            ]);
+            try {
+                foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
+                    echo new SsrEvent(
+                        eventName: 'removeThinking',
+                        data: ''
+                    );
 
-            echo new SsrEvent(
-                eventName: 'fullMessage',
-                data: $markThinkingMessage
-            );
+                    echo new SsrEvent(
+                        eventName: 'agentResponse',
+                        data: nl2br($chunk)
+                    );
+                    flush();
+                }
+            } catch (\Exception $e) {
+                echo new SsrEvent(
+                    eventName: 'removeThinking',
+                    data: ''
+                );
 
-            foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
                 echo new SsrEvent(
                     eventName: 'agentResponse',
-                    data: nl2br($chunk)
+                    data: 'Oh no, I made a booboo... <br />'.$e->getMessage()
                 );
-                flush();
             }
 
             echo new SsrEvent(

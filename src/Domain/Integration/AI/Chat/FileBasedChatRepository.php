@@ -27,7 +27,7 @@ final readonly class FileBasedChatRepository implements ChatRepository
                 continue;
             }
             $history[] = new ChatMessage(
-                message: $message->getContent(),
+                message: nl2br($message->getContent()),
                 userProfilePictureUrl: $this->profilePictureUrl,
                 firstLetterOfFirstName: substr((string) $this->athleteRepository->find()->getName(), 0, 1),
                 isUserMessage: $message->getRole() === MessageRole::USER->value,

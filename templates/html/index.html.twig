@@ -18,7 +18,12 @@
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
     {% autoescape false %}
-        {% include 'html/component/top-nav-bar.html.twig' with {'subTitle': subTitle, 'profilePictureUrl': profilePictureUrl, 'athlete': athlete} %}
+        {% include 'html/component/top-nav-bar.html.twig' with {
+            'subTitle': subTitle,
+            'profilePictureUrl': profilePictureUrl,
+            'athlete': athlete,
+            'appConfig': appConfig
+        } %}
     {% endautoescape %}
     <!-- SIDEBAR -->
     <aside class="group fixed top-0 left-0 w-64 [&.sidebar-is-collapsed]:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001"
@@ -417,13 +422,15 @@
     });
 
     const $modalAIChat = document.querySelector('a[data-modal-custom-ai]');
-    $modalAIChat.addEventListener('click', (e) => {
-        e.preventDefault();
-        const modalId = $modalAIChat.getAttribute('data-modal-custom-ai');
-        openModal(modalId);
-        // Add modal to history state.
-        router.pushCurrentRouteToHistoryState(modalId);
-    });
+    if ($modalAIChat) {
+        $modalAIChat.addEventListener('click', (e) => {
+            e.preventDefault();
+            const modalId = $modalAIChat.getAttribute('data-modal-custom-ai');
+            openModal(modalId);
+            // Add modal to history state.
+            router.pushCurrentRouteToHistoryState(modalId);
+        });
+    }
 
     document.addEventListener('modalWasLoaded.ai-chat', (e) => {
         const $modal = e.detail.modal;
