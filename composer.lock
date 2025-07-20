@@ -1837,16 +1837,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.15.9",
+            "version": "1.15.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "267e9ae52e7548550a3d5e8869ca92c54d7f6478"
+                "reference": "ebad512827ea478ebcc14db375ccb19aea3ddc9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/267e9ae52e7548550a3d5e8869ca92c54d7f6478",
-                "reference": "267e9ae52e7548550a3d5e8869ca92c54d7f6478",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/ebad512827ea478ebcc14db375ccb19aea3ddc9d",
+                "reference": "ebad512827ea478ebcc14db375ccb19aea3ddc9d",
                 "shasum": ""
             },
             "require": {
@@ -1899,9 +1899,9 @@
             "description": "The AI Agent Development Kit for PHP.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.9"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.11"
             },
-            "time": "2025-07-10T08:42:17+00:00"
+            "time": "2025-07-19T10:13:01+00:00"
         },
         {
             "name": "league/flysystem",
@@ -1988,16 +1988,16 @@
         },
         {
             "name": "league/flysystem-bundle",
-            "version": "3.4.0",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-bundle.git",
-                "reference": "6493f7f2ab49bc5817e4b064b9b971d93faabc12"
+                "reference": "bf5ab3c072c0def47872e28f69876548d8669657"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-bundle/zipball/6493f7f2ab49bc5817e4b064b9b971d93faabc12",
-                "reference": "6493f7f2ab49bc5817e4b064b9b971d93faabc12",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-bundle/zipball/bf5ab3c072c0def47872e28f69876548d8669657",
+                "reference": "bf5ab3c072c0def47872e28f69876548d8669657",
                 "shasum": ""
             },
             "require": {
@@ -2021,6 +2021,7 @@
                 "league/flysystem-read-only": "^3.15",
                 "league/flysystem-sftp-v3": "^3.1",
                 "league/flysystem-webdav": "^3.29",
+                "platformcommunity/flysystem-bunnycdn": "^3.3",
                 "symfony/dotenv": "^5.4 || ^6.0 || ^7.0",
                 "symfony/framework-bundle": "^5.4 || ^6.0 || ^7.0",
                 "symfony/phpunit-bridge": "^5.4 || ^6.0 || ^7.0",
@@ -2052,9 +2053,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem-bundle/issues",
-                "source": "https://github.com/thephpleague/flysystem-bundle/tree/3.4.0"
+                "source": "https://github.com/thephpleague/flysystem-bundle/tree/3.5.0"
             },
-            "time": "2025-01-23T18:07:31+00:00"
+            "time": "2025-06-22T12:43:01+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -8459,16 +8460,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.17",
+            "version": "2.1.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "89b5ef665716fa2a52ecd2633f21007a6a349053"
+                "reference": "ee1f390b7a70cdf74a2b737e554f68afea885db7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/89b5ef665716fa2a52ecd2633f21007a6a349053",
-                "reference": "89b5ef665716fa2a52ecd2633f21007a6a349053",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ee1f390b7a70cdf74a2b737e554f68afea885db7",
+                "reference": "ee1f390b7a70cdf74a2b737e554f68afea885db7",
                 "shasum": ""
             },
             "require": {
@@ -8513,7 +8514,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-21T20:55:28+00:00"
+            "time": "2025-07-17T17:22:31+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

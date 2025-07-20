@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Domain\Integration\AI\NeuronAIAgent;
 use App\Infrastructure\Config\AppConfig;
-use App\Infrastructure\Http\SsrEvent;
+use App\Infrastructure\Http\ServerSentEvent;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -78,7 +78,7 @@ final readonly class AIChatRequestHandler
             /** @var string $message */
             $message = $request->query->get('message');
 
-            echo new SsrEvent(
+            echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
                     'chatMessage' => $this->chatRepository->create(
@@ -89,7 +89,7 @@ final readonly class AIChatRequestHandler
                 ])
             );
 
-            echo new SsrEvent(
+            echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
                     'chatMessage' => $this->chatRepository->create(
@@ -102,32 +102,32 @@ final readonly class AIChatRequestHandler
 
             try {
                 foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
-                    echo new SsrEvent(
+                    echo new ServerSentEvent(
                         eventName: 'removeThinking',
                         data: ''
                     );
 
-                    echo new SsrEvent(
+                    echo new ServerSentEvent(
                         eventName: 'agentResponse',
                         data: nl2br($chunk)
                     );
                     flush();
                 }
             } catch (\Exception $e) {
-                echo new SsrEvent(
+                echo new ServerSentEvent(
                     eventName: 'removeThinking',
                     data: ''
                 );
 
-                echo new SsrEvent(
+                echo new ServerSentEvent(
                     eventName: 'agentResponse',
                     data: 'Oh no, I made a booboo... <br />'.$e->getMessage()
                 );
             }
 
-            echo new SsrEvent(
+            echo new ServerSentEvent(
                 eventName: 'done',
-                data: '[DONE]'
+                data: 'done'
             );
             flush();
         });

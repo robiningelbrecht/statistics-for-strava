@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http;
 
-final readonly class SsrEvent implements \Stringable
+final readonly class ServerSentEvent implements \Stringable
 {
     public function __construct(
         private string $eventName,
