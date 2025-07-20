@@ -1616,6 +1616,9 @@
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
   }
+  .max-h-\[35px\] {
+    max-height: 35px;
+  }
   .max-h-\[calc\(100vh-160px\)\] {
     max-height: calc(100vh - 160px);
   }
