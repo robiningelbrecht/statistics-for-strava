@@ -30,7 +30,7 @@
             </button>
         </div>
         {% if activity.getDescription() %}
-            <div class="text-xs font-normal text-gray-500">{{ activity.getDescription() }}</div>
+            <div class="text-xs font-normal text-gray-500 max-h-[35px] overflow-y-auto">{{ activity.getDescription()|nl2br }}</div>
         {% endif %}
     </div>
     <!-- Modal body -->
