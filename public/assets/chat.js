@@ -37,8 +37,12 @@ export default function Chat($chatModal) {
 
             source.addEventListener('agentResponse', (event) => {
                 const $agentAnswerWrapper = $chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
-                const isThinkingMessage = $agentAnswerWrapper.getAttribute('data-thinking-message');
-                $agentAnswerWrapper.innerHTML = $agentAnswerWrapper.innerHTML.replace(isThinkingMessage, '');
+
+                const $thinkingAnimation = $agentAnswerWrapper.querySelector('.thinking');
+                if ($thinkingAnimation) {
+                    $thinkingAnimation.remove();
+                }
+
                 $agentAnswerWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
             });
 

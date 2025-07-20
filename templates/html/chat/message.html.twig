@@ -1,13 +1,30 @@
-{% set thinkingMessage = "Let me think..."|trans %}
 <div class="message-wrapper flex items-start gap-x-6 bg-white shadow-xs p-6 text-gray-500 rounded-md last:animate-fade-in-chat-message">
-    {% if isUserMessage %}
-        {% if profilePictureUrl %}
-            <img class="size-6 rounded-full border" src="{{ profilePictureUrl }}"  alt="Profile Picture"/>
+    {% if chatMessage.isUserMessage() %}
+        {% if chatMessage.getUserProfilePictureUrl() %}
+            <img class="size-6 rounded-full border" src="{{ chatMessage.getUserProfilePictureUrl() }}"  alt="Profile Picture"/>
         {% else %}
-            <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">{{ letter }}</div>
+            <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">
+                {{ chatMessage.getFirstLetterOfFirstName()|upper }}
+            </div>
         {% endif %}
     {% else %}
         <img class="size-6 rounded-full border" src="{{ relativeUrl('assets/images/mark.png') }}"  alt="Mark"/>
     {% endif %}
-    <div data-thinking-message="{{ thinkingMessage }}" class="message">{{ isThinking ? thinkingMessage : message|raw }}</div>
+    <div class="message">
+        {% if isThinking %}
+            <div class="thinking mt-2.5 flex h-full items-center space-x-1">
+                <div class="h-5 animate-[bounce_1s_infinite_200ms]">
+                    <div class="h-1.5 w-1.5 rounded-full bg-gray-400"></div>
+                </div>
+                <div class="h-5 animate-[bounce_1s_infinite_300ms]">
+                    <div class="h-1.5 w-1.5 rounded-full bg-gray-400"></div>
+                </div>
+                <div class="h-5 animate-[bounce_1s_infinite_400ms]">
+                    <div class="h-1.5 w-1.5 rounded-full bg-gray-400"></div>
+                </div>
+            </div>
+        {% else %}
+            {{ chatMessage.getMessage()|raw }}
+        {% endif %}
+    </div>
 </div>

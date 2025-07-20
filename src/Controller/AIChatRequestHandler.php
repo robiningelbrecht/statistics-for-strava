@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\App\ProfilePictureUrl;
+use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Domain\Integration\AI\NeuronAIAgent;
+use App\Infrastructure\Http\SsrEvent;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,7 +26,7 @@ final readonly class AIChatRequestHandler
     public function __construct(
         private FilesystemOperator $buildStorage,
         private NeuronAIAgent $neuronAIAgent,
-        private ?ProfilePictureUrl $profilePictureUrl,
+        private ChatRepository $chatRepository,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
     ) {
@@ -50,7 +51,7 @@ final readonly class AIChatRequestHandler
             ->getForm();
 
         return new Response($this->twig->render('html/chat/chat.html.twig', [
-            'profilePictureUrl' => $this->profilePictureUrl,
+            'chatHistory' => $this->chatRepository->getHistory(),
             'form' => $form->createView(),
         ]), Response::HTTP_OK);
     }
@@ -71,33 +72,43 @@ final readonly class AIChatRequestHandler
             $message = $request->query->get('message');
 
             $userMessage = $this->twig->render('html/chat/message.html.twig', [
-                'profilePictureUrl' => $this->profilePictureUrl,
-                'message' => $message,
-                'isUserMessage' => true,
+                'chatMessage' => $this->chatRepository->create(
+                    message: $message,
+                    isUserMessage: true,
+                ),
+                'isThinking' => false,
             ]);
 
-            echo "event: fullMessage\n";
-            echo 'data: '.str_replace("\n", '\\n', $userMessage)."\n\n";
+            echo new SsrEvent(
+                eventName: 'fullMessage',
+                data: $userMessage
+            );
 
             $markThinkingMessage = $this->twig->render('html/chat/message.html.twig', [
-                'profilePictureUrl' => $this->profilePictureUrl,
-                'isUserMessage' => false,
+                'chatMessage' => $this->chatRepository->create(
+                    message: '__PLACEHOLDER__',
+                    isUserMessage: false,
+                ),
                 'isThinking' => true,
             ]);
 
-            echo "event: fullMessage\n";
-            echo 'data: '.str_replace("\n", '\\n', $markThinkingMessage)."\n\n";
+            echo new SsrEvent(
+                eventName: 'fullMessage',
+                data: $markThinkingMessage
+            );
 
-            foreach ($this->neuronAIAgent->stream([
-                new UserMessage($message),
-            ]) as $chunk) {
-                echo "event: agentResponse\n";
-                echo 'data: '.str_replace("\n", '\\n', nl2br($chunk))."\n\n";
+            foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
+                echo new SsrEvent(
+                    eventName: 'agentResponse',
+                    data: nl2br($chunk)
+                );
                 flush();
             }
 
-            // Optionally close the stream
-            echo "event: done\ndata: [DONE]\n\n";
+            echo new SsrEvent(
+                eventName: 'done',
+                data: '[DONE]'
+            );
             flush();
         });
     }
