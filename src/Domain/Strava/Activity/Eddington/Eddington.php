@@ -78,7 +78,7 @@ final class Eddington
             return 0;
         }
 
-        return (int) round(max($this->getDistancesPerDay()));
+        return (int) floor(max($this->getDistancesPerDay()));
     }
 
     /**
