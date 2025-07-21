@@ -52,16 +52,27 @@ final class Eddington
 
     private function calculateEddingtonNumber(): int
     {
-        $number = 0;
-        for ($distance = 1; $distance <= $this->getLongestDistanceInADay(); ++$distance) {
-            $timesCompleted = count(array_filter($this->getDistancesPerDay(), fn (float $distanceForDay) => $distanceForDay >= $distance));
-            if ($timesCompleted < $distance) {
-                break;
+        $distanceCounts = [];
+
+        foreach ($this->distancesPerDay as $distance) {
+            $rounded = (int) floor($distance);
+            for ($i = 1; $i <= $rounded; ++$i) {
+                $distanceCounts[$i] = ($distanceCounts[$i] ?? 0) + 1;
             }
-            $number = $distance;
         }
 
-        return $number;
+        ksort($distanceCounts);
+
+        $eddington = 0;
+        foreach ($distanceCounts as $distance => $count) {
+            if ($count >= $distance) {
+                $eddington = $distance;
+            } else {
+                break;
+            }
+        }
+
+        return $eddington;
     }
 
     /**
@@ -86,13 +97,18 @@ final class Eddington
      */
     public function getTimesCompletedData(): array
     {
-        $data = [];
-        for ($distance = 1; $distance <= $this->getLongestDistanceInADay(); ++$distance) {
-            // We need to count the number of days we exceeded this distance.
-            $data[$distance] = count(array_filter($this->getDistancesPerDay(), fn (float $distanceForDay) => $distanceForDay >= $distance));
+        $counts = [];
+
+        foreach ($this->distancesPerDay as $distance) {
+            $rounded = (int) floor($distance);
+            for ($i = 1; $i <= $rounded; ++$i) {
+                $counts[$i] = ($counts[$i] ?? 0) + 1;
+            }
         }
 
-        return $data;
+        ksort($counts);
+
+        return $counts;
     }
 
     public function getNumber(): int
