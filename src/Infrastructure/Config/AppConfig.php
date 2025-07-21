@@ -126,7 +126,7 @@ final class AppConfig
         return !empty($this->get('integrations.ai.enabled', false));
     }
 
-    public function AIIntegrationWithUiIsEnabled(): bool
+    public function AIIntegrationWithUIIsEnabled(): bool
     {
         return $this->AIIntegrationIsEnabled() && !empty($this->get('integrations.ai.enableUI', false));
     }

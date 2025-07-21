@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\Integration\AI\Chat\ChatRepository;
-use App\Domain\Integration\AI\NeuronAIAgent;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Http\ServerSentEvent;
 use League\Flysystem\FilesystemOperator;
+use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,7 +27,7 @@ final readonly class AIChatRequestHandler
     public function __construct(
         private FilesystemOperator $buildStorage,
         private AppConfig $appConfig,
-        private NeuronAIAgent $neuronAIAgent,
+        private AgentInterface $neuronAIAgent,
         private ChatRepository $chatRepository,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
@@ -41,7 +41,7 @@ final readonly class AIChatRequestHandler
             return new RedirectResponse('/', Response::HTTP_FOUND);
         }
 
-        if (!$this->appConfig->AIIntegrationWithUiIsEnabled()) {
+        if (!$this->appConfig->AIIntegrationWithUIIsEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
 
@@ -62,6 +62,9 @@ final readonly class AIChatRequestHandler
         ]), Response::HTTP_OK);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): StreamedResponse
     {

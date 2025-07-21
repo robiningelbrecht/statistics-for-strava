@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Domain\Integration\AI\NeuronAIAgent;
 use App\Infrastructure\Config\AppConfig;
 use GuzzleHttp\Exception\ClientException;
+use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +23,7 @@ final class AIAgentChatConsoleCommand extends Command
 {
     public function __construct(
         private readonly AppConfig $appConfig,
-        private readonly NeuronAIAgent $agent,
+        private readonly AgentInterface $agent,
     ) {
         parent::__construct();
     }
