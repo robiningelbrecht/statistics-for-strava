@@ -34,7 +34,8 @@ final readonly class FindConsistencyMetricsPerMonthQueryHandler implements Query
                        COUNT(*) AS numberOfActivities,
                        SUM(distance) AS totalDistance, MAX(distance) AS maxDistance,
                        SUM(elevation) AS totalElevation, MAX(elevation) AS maxElevation,
-                       SUM(movingTimeInSeconds) AS movingTime
+                       SUM(movingTimeInSeconds) AS movingTime,
+                       SUM(calories) AS totalCaloriesBurnt
                 FROM Activity
                 WHERE SportType IN(:sportTypes)
                 GROUP BY yearAndMonth
@@ -57,6 +58,7 @@ final readonly class FindConsistencyMetricsPerMonthQueryHandler implements Query
                 Meter::from($result['totalElevation']),
                 Meter::from($result['maxElevation']),
                 Seconds::from($result['movingTime']),
+                $result['totalCaloriesBurnt'],
             ];
         }
 

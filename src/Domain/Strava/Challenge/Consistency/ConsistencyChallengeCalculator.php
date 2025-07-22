@@ -45,7 +45,7 @@ final readonly class ConsistencyChallengeCalculator
                 }
 
                 $challengeGoal = $challenge->getGoal();
-                [$numberOfActivities, $totalDistance, $maxDistance, $totalElevation, $maxElevation, $movingTime] = $metrics;
+                [$numberOfActivities, $totalDistance, $maxDistance, $totalElevation, $maxElevation, $movingTime, $totalCaloriesBurnt] = $metrics;
 
                 $challengeCompleted = match ($challenge->getType()) {
                     ChallengeConsistencyType::DISTANCE => $this->checkIfGoalHasBeenReached(
@@ -69,6 +69,7 @@ final readonly class ConsistencyChallengeCalculator
                         $challengeGoal->convertSecondsToUnit($movingTime)
                     ),
                     ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => $numberOfActivities >= $challengeGoal->toInt(),
+                    ChallengeConsistencyType::CALORIES => $totalCaloriesBurnt >= $challengeGoal->toInt(),
                 };
 
                 $consistency[$challenge->getId()][$month->getId()] = $challengeCompleted;

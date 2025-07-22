@@ -121,6 +121,18 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         ]),
                     ),
                     ConsistencyChallenge::create(
+                        label: 'Calories',
+                        isEnabled: true,
+                        type: ChallengeConsistencyType::CALORIES,
+                        goal: ChallengeConsistencyGoal::from(
+                            2,
+                            ChallengeConsistencyGoal::METER
+                        ),
+                        sportTypesToInclude: SportTypes::fromArray([
+                            SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
+                        ]),
+                    ),
+                    ConsistencyChallenge::create(
                         label: 'Swim a total of 100km',
                         isEnabled: false,
                         type: ChallengeConsistencyType::DISTANCE,
