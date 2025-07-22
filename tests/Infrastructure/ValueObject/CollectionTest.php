@@ -3,7 +3,6 @@
 namespace App\Tests\Infrastructure\ValueObject;
 
 use App\Infrastructure\ValueObject\String\Name;
-use App\Tests\Infrastructure\ValueObject\ATestCollection;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
