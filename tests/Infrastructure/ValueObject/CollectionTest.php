@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\ValueObject;
+namespace App\Tests\Infrastructure\ValueObject;
 
 use App\Infrastructure\ValueObject\String\Name;
 use App\Tests\Infrastructure\ValueObject\ATestCollection;
