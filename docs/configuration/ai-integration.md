@@ -84,7 +84,8 @@ Make sure you're running the latest version of Ollama. Streaming responses with 
 ## Your AI workout assistant
 
 The first available AI feature is an AI-powered workout assistant named **Mark**.
-Currently, Mark can only be accessed via the CLI:
+
+### Via the CLI
 
 ```bash
 > docker compose exec app bin/console app:ai:agent-chat
@@ -93,3 +94,7 @@ Currently, Mark can only be accessed via the CLI:
 This will prompt you with a message like the following:
 
 ![SMark example](../assets/images/mark-example.png) 
+
+### Via the UI
+
+[Virtual AI assistant](https://www.youtube.com/embed/mdidBVigJAo ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
