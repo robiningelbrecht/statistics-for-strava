@@ -10,6 +10,7 @@ use App\Domain\Strava\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Strava\Rewind\FindSocialsMetrics\FindSocialsMetricsQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -78,7 +79,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindSocialsMetrics\FindSocialsMetricsResponse $response */
-        $response = $this->queryHandler->handle(new FindSocialsMetrics(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindSocialsMetrics(Years::fromArray([Year::fromInt(2024)])));
 
         $this->assertEquals(
             14,

@@ -19,6 +19,7 @@ use App\Domain\Strava\Rewind\FindActivityCountPerMonth\FindActivityCountPerMonth
 use App\Domain\Strava\Rewind\FindActivityLocations\FindActivityLocations;
 use App\Domain\Strava\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHour;
 use App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYears;
+use App\Domain\Strava\Rewind\FindCarbonSaved\FindCarbonSaved;
 use App\Domain\Strava\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Strava\Rewind\FindElevationPerMonth\FindElevationPerMonth;
 use App\Domain\Strava\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
@@ -41,6 +42,7 @@ use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -97,7 +99,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($availableRewindYearLeft));
             $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($availableRewindYearLeft));
-            $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics($availableRewindYearLeft));
+            $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics(Years::fromArray([$availableRewindYearLeft])));
             $streaksResponse = $this->queryBus->ask(new FindStreaks($availableRewindYearLeft));
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($availableRewindYearLeft));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($availableRewindYearLeft));
@@ -254,6 +256,14 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     ]),
                     totalMetric: $totalActivityCount,
                     totalMetricLabel: $this->translator->trans('activities'),
+                ))
+                ->add(RewindItem::from(
+                    icon: 'carbon',
+                    title: $this->translator->trans('Carbon saved'),
+                    subTitle: $this->translator->trans('Reduced carbon emission'),
+                    content: $this->twig->render('html/rewind/rewind-carbon-saved.html.twig', [
+                        'kilogramCarbonSaved' => $this->queryBus->ask(new FindCarbonSaved($availableRewindYearLeft))->getKgCoCarbonSaved(),
+                    ]),
                 ));
 
             if ($activityLocations = $this->queryBus->ask(new FindActivityLocations($availableRewindYearLeft))->getActivityLocations()) {
@@ -261,7 +271,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     icon: 'globe',
                     title: $this->translator->trans('Activity locations'),
                     subTitle: $this->translator->trans('Locations over the globe'),
-                    content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
+                    content: $this->twig->render('html/rewind/rewind-chart-world-map.html.twig', [
                         'chart' => Json::encode(ActivityLocationsChart::create($activityLocations)->build()),
                     ]),
                 ));

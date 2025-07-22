@@ -21,6 +21,9 @@ general:
     # Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
     # Or you can set a fixed number for any given date range.  
     maxHeartRateFormula: 'fox'
+    # maxHeartRateFormula:
+    #    "2020-01-01": 198
+    #    "2025-01-10": 193
     # If you're not sure about your zones, leave this unchanged — the defaults are sensible.
     heartRateZones:
       # Relative or absolute. 
@@ -46,9 +49,6 @@ general:
           to: null # Infinity and beyond.
       # 🔥 PRO tip: You can further refine your heart rate zones by specifying date ranges and sport types.
       #    Read more about the possibilities on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-heart-rate-zones
-    # maxHeartRateFormula:
-    #    "2020-01-01": 198
-    #    "2025-01-10": 193
     # History of weight (in kg or pounds, depending on appearance.unitSystem). Needed to calculate relative w/kg.
     # Make sure to replace the YYYY-MM-DD examples with your own weight history.
     # Read more about the weight history on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=athlete-weight-history

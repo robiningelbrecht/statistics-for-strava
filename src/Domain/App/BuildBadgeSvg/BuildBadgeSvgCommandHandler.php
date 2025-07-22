@@ -12,11 +12,13 @@ use App\Domain\Strava\Activity\ActivityTypeRepository;
 use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Challenge\ChallengeRepository;
-use App\Domain\Strava\Trivia;
+use App\Domain\Strava\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Zwift\ZwiftLevel;
 use App\Domain\Zwift\ZwiftRacingScore;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
+use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -33,6 +35,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
         private Environment $twig,
+        private QueryBus $queryBus,
         private FilesystemOperator $fileStorage,
         private FilesystemOperator $buildStorage,
         private TranslatorInterface $translator,
@@ -52,7 +55,6 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             now: $now,
             translator: $this->translator
         );
-        $trivia = Trivia::getInstance($activities);
 
         $this->fileStorage->write(
             'strava-badge.svg',
@@ -60,7 +62,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 'athlete' => $athlete,
                 'activities' => $activities->slice(0, 5),
                 'activityTotals' => $activityTotals,
-                'trivia' => $trivia,
+                'totalKudosReceived' => $this->queryBus->ask(new FindSocialsMetrics(Years::all($now)))->getKudoCount(),
                 'challengesCompleted' => $this->challengeRepository->count(),
             ])
         );
