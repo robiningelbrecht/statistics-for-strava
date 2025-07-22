@@ -27,6 +27,7 @@ Afternoon: Tarde
 'All time': 'Desde sempre'
 'Alpine Ski': 'Esqui Alpino'
 Apr: Abr
+'Ask Mark something...': 'Ask Mark something...'
 Aug: Ago
 Avg: Média
 'Back Country Ski': 'Esqui Fora de Pista'
@@ -270,6 +271,7 @@ Tennis: Ténis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'A quantidade de CO₂ que {amountOfTrees} árvores absorvem anualmente'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
+Thinking...: Thinking...
 'This feature is currently disabled': 'Essa funcionalidade está desativada'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
@@ -310,6 +312,7 @@ Unspecified: 'Não especificado'
 'Virtual Rides': 'Passeios Virtuais'
 'Virtual Row': 'Remo Virtual'
 'Virtual Runs': 'Corridas Virtuais'
+'Virtual workout assistant': 'Virtual workout assistant'
 Walks: Caminhadas
 'Water Sports': 'Esportes Aquáticos'
 'We detected following issues': 'Detectamos os seguintes problemas'

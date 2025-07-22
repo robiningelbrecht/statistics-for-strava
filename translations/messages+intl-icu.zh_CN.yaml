@@ -27,6 +27,7 @@ Afternoon: 下午
 'All time': 所有时间
 'Alpine Ski': 高山滑雪
 Apr: 四月
+'Ask Mark something...': 'Ask Mark something...'
 Aug: 八月
 Avg: 平均
 'Back Country Ski': 越野滑雪
@@ -270,6 +271,7 @@ Tennis: 网球
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': '{amountOfTrees}棵树每年吸收的二氧化碳量'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
+Thinking...: Thinking...
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是“高强度”
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
@@ -310,6 +312,7 @@ Unspecified: Unspecified
 'Virtual Rides': 虚拟骑行
 'Virtual Row': 虚拟划船
 'Virtual Runs': 虚拟跑步
+'Virtual workout assistant': 'Virtual workout assistant'
 Walks: 步行
 'Water Sports': 水上运动
 'We detected following issues': 'We detected following issues'

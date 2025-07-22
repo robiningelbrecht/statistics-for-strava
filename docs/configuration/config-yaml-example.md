@@ -137,6 +137,9 @@ integrations:
     # Enable or disable AI features.
     # ⚠️ Use caution when enabling this feature if your app is publicly accessible!
     enabled: false
+    # Enable or disable AI features in the UI. By default, these features are only accessible via a CLI command.
+    # ⚠️ Use caution when enabling this feature if your app is publicly accessible!
+    enableUI: false
     # The provider you want to use. 
     # Allowed values: ["anthropic", "gemini", "ollama", "openAI", "deepseek", "mistral"]
     provider: 'PROVIDER-YOU-CHOOSE'
