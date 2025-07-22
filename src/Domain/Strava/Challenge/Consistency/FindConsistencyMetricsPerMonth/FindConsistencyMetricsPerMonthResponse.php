@@ -13,13 +13,13 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 final readonly class FindConsistencyMetricsPerMonthResponse implements Response
 {
     public function __construct(
-        /** @var array<string, array{0: int, 1: Kilometer, 2: Kilometer, 3: Meter, 4: Meter, 5: Seconds}> */
+        /** @var array<string, array{0: int, 1: Kilometer, 2: Kilometer, 3: Meter, 4: Meter, 5: Seconds, 6: int}> */
         private array $consistencyMetricsPerMonth,
     ) {
     }
 
     /**
-     * @return array{0: int, 1: Kilometer, 2: Kilometer, 3: Meter, 4: Meter, 5: Seconds}|null
+     * @return array{0: int, 1: Kilometer, 2: Kilometer, 3: Meter, 4: Meter, 5: Seconds, 6: int}|null
      */
     public function getConsistencyMetricsForMonth(Month $month): ?array
     {

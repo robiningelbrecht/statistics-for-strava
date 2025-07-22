@@ -112,9 +112,9 @@ consistencyChallenges:
     # Alternatively, you can remove the entire entry to exclude it completely.
     enabled: true
     # The challenge type.
-    # Allowed values: ["distance", "distanceInOneActivity", "elevation", "elevationInOneActivity", "movingTime", "numberOfActivities"]
+    # Allowed values: ["distance", "distanceInOneActivity", "elevation", "elevationInOneActivity", "movingTime", "numberOfActivities", "calories"]
     type: 'distance'
-    # The unit to use for measuring this challenge. This setting does not apply to type "numberOfActivities"
+    # The unit to use for measuring this challenge. This setting does not apply to types "numberOfActivities" and "calories"
     # Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]
     unit: 'km'
     # The goal of the challenge.

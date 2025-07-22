@@ -12,6 +12,7 @@ enum ChallengeConsistencyType: string
     case ELEVATION_IN_ONE_ACTIVITY = 'elevationInOneActivity';
     case MOVING_TIME = 'movingTime';
     case NUMBER_OF_ACTIVITIES = 'numberOfActivities';
+    case CALORIES = 'calories';
 
     /**
      * @return ChallengeConsistencyType[]
