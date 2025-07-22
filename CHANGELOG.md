@@ -1,6 +1,6 @@
 # [v3.0.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.0) - 2025-07-22
 
-* 🚀 Our AI agent "Mark" is now available via the UI as well. You can enable this by setting `enableUI: false` in your config.yaml file
+* 🚀 Our AI agent "Mark" is now available via the UI as well. You can enable this by setting `enableUI: true` in your config.yaml file
 * ⚠️ Native scheduling has been removed from the SFS image. [Check the docs](https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/scheduling) for alternatives.
 
 ## What's Changed
