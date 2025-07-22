@@ -1,3 +1,19 @@
+# [v3.0.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.0) - 2025-07-22
+
+* 🚀 Our AI agent "Mark" is now available via the UI as well. You can enable this by setting `enableUI: false` in your config.yaml file
+* ⚠️ Native scheduling has been removed from the SFS image. [Check the docs](https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/scheduling) for alternatives.
+
+## What's Changed
+* ISSUE #870: German translations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/871
+* ISSUE #835: Better activity description formatting by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/872
+* PR #874: Little Eddington bug fix by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/874
+* ISSUE #875: Remove profiler by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/876
+* ISSUE #846: AI chat agent UI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/847
+* ISSUE #651: Move scheduling out of the SFS container by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/878
+* ISSUE #879: Add Calories as an option to Challenge consistency custom… by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/880
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v2.4.5...v3.0.0
+
 # [v2.4.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v2.4.5) - 2025-07-16
 
 ## What's Changed
