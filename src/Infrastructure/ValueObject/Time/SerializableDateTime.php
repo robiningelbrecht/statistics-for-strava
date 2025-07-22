@@ -130,11 +130,6 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         return implode('-', $this->getYearAndWeekNumber());
     }
 
-    public function getMinutesSinceStartOfDay(): int
-    {
-        return ($this->getHourWithoutLeadingZero() * 60) + $this->getMinutesWithoutLeadingZero();
-    }
-
     public function isAfterOrOn(SerializableDateTime $that): bool
     {
         return $this >= $that;
