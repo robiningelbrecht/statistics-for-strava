@@ -42,7 +42,7 @@ final readonly class FileBasedChatRepository implements ChatRepository
         return new ChatMessage(
             message: $message,
             userProfilePictureUrl: $this->profilePictureUrl,
-            firstLetterOfFirstName: $message,
+            firstLetterOfFirstName: substr((string) $this->athleteRepository->find()->getName(), 0, 1),
             isUserMessage: $isUserMessage
         );
     }
