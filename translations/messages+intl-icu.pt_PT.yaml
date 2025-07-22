@@ -42,7 +42,7 @@ Cadence: Cadência
 Calories: Calorias
 'Calories burnt': 'Calories burnt'
 Canoeing: Canoagem
-'Carbon emission comparisons': 'Comparação emissões de CO2'
+'Carbon saved': 'Carbon saved'
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carga de Treino Crónica (Forma) - média ponderada exponencial de 42-dias da carga diária de treino. Representa adaptação ao treino de longo prazo.'
@@ -73,10 +73,8 @@ Distance: Distância
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
 Distribution: Distribution
-'Driving your car for {amountOfKmDrivingACar} km': 'Conduzir o carro durante {amountOfKmDrivingACar} km'
 'E-Bike Rides': 'Passeios de E-Bike'
 'E-Mountain Bike Rides': 'Passeios de E-MTB'
-'Earliest start time': 'Hora de início mais cedo'
 Eddington: Eddington
 Elev: Desnível
 Elevation: Elevação
@@ -94,7 +92,6 @@ Feb: Fev
 'Filter on gear': 'Filtrar por equipamento'
 'Filter on sport type': 'Filtrar por tipo de desporto'
 'Filter on starred segments': 'Filtrar por segmentos favoritos'
-'First workout': 'Primeiro treino'
 Fitness: Forma
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Por exemplo, um número de Eddington de 70 implica que um ciclista percorreu pelo menos 70 km num dia em pelo menos 70 ocasiões. Atingir um número elevado de Eddington é difícil, pois passar de 70 para 75 exigirá (provavelmente) mais de cinco novos treinos de longa distância, uma vez que qualquer treino inferior a 75 km deixará de ser incluído no cálculo.'
 'Form (TSB)': 'Forma (TSB)'
@@ -111,6 +108,7 @@ Gear: Equipamento
 'Gear that is retired is disabled by default.': 'Equipamento reformado é desativado por defeito.'
 Golf: Golfe
 'Good training variety': 'Boa diversidade de treino'
+'Google searches': 'Google searches'
 'Gravel Rides': 'Passeios de Gravel'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Directrizes variam por indivíduo; para mais informação ver investigação 'The Cyclist's Training Bible' ou 'TrainingPeaks' de Joe Friel."
 HIIT: HIIT
@@ -147,7 +145,6 @@ Laps: Voltas
 'Last 90 days': 'Últimos 90 dias'
 'Last effort': 'Last effort'
 'Last maintenance': 'Última manutenção'
-'Latest start time': 'Hora de início mais tardia'
 'Load (CTL/ATL)': 'Carga (CTL/ATL)'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'
@@ -155,7 +152,6 @@ Loading...: 'A carregar...'
 'Long run': 'Corrida longa'
 'Longest activity (h)': 'Actividade mais longa (h)'
 'Longest streaks': 'Maiores sequências'
-'Longest workout': 'Treino mais longo'
 Low: Baixa
 'Low stress - potential detraining': 'Baixo stress - "detreino" possível'
 Maintenance: Manutenção
@@ -172,9 +168,6 @@ Monday: Segunda-feira
 Monotony: Monotonia
 'Monthly stats': 'Estatísticas mensais'
 Morning: Manhã
-'Most consecutive days': 'Mais dias consecutivos'
-'Most elevation': 'Maior elevação'
-'Most kudos': 'Mais kudos'
 'Most recent activities': 'Atividades mais recentes'
 'Mountain Bike Rides': 'Passeios de BTT'
 'Moving time': 'Tempo em movimento'
@@ -196,6 +189,7 @@ Other: Outro
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Sobre-fatigado – risco de lesão ou esgotamento, recuperação extra necessária'
 'Overall weekly training stress': 'Stress de treino geral semanal'
 'PB badges': 'Emblemas de Recordes'
+'PET bottles produced': 'PET bottles produced'
 PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
@@ -216,6 +210,7 @@ Race: Corrida
 'Racquet & Paddle Sports': 'Desportos de Raquete e Padel'
 'Racquet Ball': Racquetball
 Ranking: Ranking
+'Reduced carbon emission': 'Reduced carbon emission'
 'Rest Days': 'Dias de Descanso'
 'Rest days': 'Dias de descanso'
 'Rest days in last 7 days': 'Descanso nos últimos 7 dias'
@@ -245,7 +240,6 @@ Snowboard: Snowboard
 Snowshoe: 'Raquetes de Neve'
 Soccer: Futebol
 Socials: Socials
-Source: Source
 Speed: Velocidade
 Splits: Intervalos
 Squash: Squash
@@ -269,7 +263,6 @@ TOTAL: TOTAL
 Tennis: Ténis
 "That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Isso dá uma média diária de {dailyAverage}, uma média semanal de {weeklyAverage} e uma média mensal de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
-'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'Quantidade de CO₂ que {amountOfTrees} árvores absorvem anualmente'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Estas medalhas são criadas dinamicamente. Pode usá-las em qualquer tag de &lt;img&gt;'
 Thinking...: Thinking...
 'This feature is currently disabled': 'Esta funcionalidade está desabilitada'
@@ -284,13 +277,11 @@ To: Até
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para activar, configurar {configFile} e recriar os ficheiros para que as mudanças sejam efectivas'
 'Toggle sidebar': 'Ativar/desativar barra lateral'
 'Top 10': 'Top 10'
-'Total carbon saved': 'Carbono total poupado'
 'Total distance per month': 'Distância total por mês'
 'Total elevation per month': 'Elevação total por mês'
 'Total hours': 'Total de horas'
 'Total hours spent per gear': 'Total de horas por equipamento'
 'Total hours spent per sport type': 'Total de horas por desporto'
-'Total kudos': 'Total de kudos'
 'Total kudos and comments received': 'Total de kudos e comentários recebidos'
 'Trail Runs': 'Corridas de Trilho'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Impulso de Treino- Métrica de carga de treino que considera intensidade e duração.'
@@ -298,7 +289,6 @@ To: Até
 'Training Load Analysis (6 week history)': 'Análise de Carga de Treino (histórico 6 semanas)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Monotonia de Treino - Rácio da média diária de carga vs. desvio padrão. Indica variedade de treino.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Balanço de Stress de Treino (Forma) – A diferença entre (CTL) e fadiga (ATL). Reflecte prontidão para treinar ou competir.'
-Trivia: Trivia
 Tue: Ter
 Tuesday: Terça-feira
 Unspecified: 'Não especificado'
@@ -334,7 +324,6 @@ Year: Ano
 Yoga: Yoga
 'You have not recorded any activities in the previous years.': 'Não registou quaisquer actividades nos anos anteriores.'
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Registou actividades em {numberOfCountriesWithWorkouts} países diferentes, o que dá {percentage} de todos os países🌍'
-'You reduced carbon emission by {amountOfCarbonSaved} by commuting 🥳. This equates to': 'Reduziu emissões de carbono em {amountOfCarbonSaved} por se deslocar de bicicleta para o trabalho🥳. Isto equivale a'
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
 'Your Strava {year} rewind will be available on the 24th of December.': 'O seu Rewind Strava de {year} estará disponível no dia 24 de Dezembro.'
@@ -367,24 +356,15 @@ kudos: kudos
 maxHeartRate: 'frequência cardíaca máxima'
 months: meses
 more: mais
-'more info': 'mais info'
 n/a: n/d
 never: nunca
 to: to
 weeks: semanas
 workouts: treinos
-'{amountOfAluminiumCans} aluminium cans for soft drinks produced': '{amountOfAluminiumCans} número de latas de bebidas produzidas'
-'{amountOfCapsForPetBottles} caps for PET bottles produced': '{amountOfCapsForPetBottles} tampas de plástico para garrafas produzidas'
-'{amountOfFlights} single Economy flight(s) between Zurich and London': '{amountOfFlights} vôo(s) em classe económica entre Zurique e Londres'
-'{amountOfGlassBottles} one liter reusable glass bottles produced': '{amountOfGlassBottles} garrafas de vidro reutilizáveis de um litro produzidas'
-'{amountOfGoogleSearches} Google searches': '{amountOfGoogleSearches} pesquisas no Google'
-'{amountOfPetBottles} one liter PET bottles produced': '{amountOfPetBottles} garrafas de plástico de um litro produzidas'
-'{amountOfSmartphonesManufactured} manufactured smartphones': '{amountOfSmartphonesManufactured} smartphones fabricados'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dias'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} horas'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} a cada {interval}'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} actividades em {year}'
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
-'{portionsOfSpaghettiMade} portions of spaghetti with tomato sauce prepared': '{portionsOfSpaghettiMade} doses de esparguete com molho de tomate preparadas'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Zona de crescimento/fadiga. Intervalo productivo de treino intenso'

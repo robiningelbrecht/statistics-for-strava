@@ -34,12 +34,10 @@ use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
 use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Calendar\Months;
-use App\Domain\Strava\CarbonSavedComparison;
 use App\Domain\Strava\Challenge\Consistency\ConsistencyChallengeCalculator;
 use App\Domain\Strava\Challenge\Consistency\ConsistencyChallenges;
 use App\Domain\Strava\Ftp\FtpHistory;
 use App\Domain\Strava\Ftp\FtpHistoryChart;
-use App\Domain\Strava\Trivia;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
@@ -168,7 +166,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             now: $now,
             translator: $this->translator,
         );
-        $trivia = Trivia::getInstance($allActivities);
+
         $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
 
         $bestEfforts = $bestEffortsCharts = [];
@@ -234,7 +232,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 ),
                 'daytimeStats' => $dayTimeStats,
                 'distanceBreakdowns' => $distanceBreakdowns,
-                'trivia' => $trivia,
                 'ftpHistoryChart' => !$allFtps->isEmpty() ? Json::encode(
                     FtpHistoryChart::create(
                         ftps: $allFtps,
@@ -277,14 +274,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'restDaysInLast7Days' => $numberOfRestDays,
                 'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
             ])
-        );
-
-        $this->buildStorage->write(
-            'carbon-comparison.html',
-            $this->twig->load('html/dashboard/carbon-comparison.html.twig')->render([
-                'carbonSavedComparison' => CarbonSavedComparison::create($trivia->getTotalCarbonSaved()),
-                'carbonSavedInKg' => $trivia->getTotalCarbonSaved(),
-            ]),
         );
 
         if ($bestAllTimePowerOutputs->isEmpty()) {

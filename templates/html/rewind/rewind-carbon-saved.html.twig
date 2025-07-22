@@ -1,0 +1,25 @@
+{% autoescape false %}
+    <div class="w-full flex flex-col justify-center items-center gap-y-6 text-center">
+        <div>
+            <div class="text-3xl font-extrabold">
+                {{ kilogramCarbonSaved.toFloat()|formatNumber(2) }}
+            </div>
+            <div class="text-sm">kg CO₂</div>
+        </div>
+        <hr class="w-[200px]" />
+        <div class="flex gap-x-4">
+            <div>
+                <div class="text-xl font-extrabold">
+                    {{ (kilogramCarbonSaved.toFloat() / 0.067)|round|formatNumber(0)}}
+                </div>
+                <div class="text-xs">{{ "PET bottles produced"|trans }}</div>
+            </div>
+            <div>
+                <div class="text-xl font-extrabold">
+                    {{ (kilogramCarbonSaved.toFloat() / 0.0002)|round|formatNumber(0)}}
+                </div>
+                <div class="text-xs">{{ "Google searches"|trans }}</div>
+            </div>
+        </div>
+    </div>
+{% endautoescape %}

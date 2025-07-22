@@ -33,4 +33,15 @@ class Years extends Collection
 
         return $years;
     }
+
+    public static function all(SerializableDateTime $now): self
+    {
+        $years = self::empty();
+
+        for ($i = 2000; $i <= $now->getYear(); ++$i) {
+            $years->add(Year::fromInt($i));
+        }
+
+        return $years;
+    }
 }
