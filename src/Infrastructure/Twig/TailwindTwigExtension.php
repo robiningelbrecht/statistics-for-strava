@@ -7,6 +7,9 @@ namespace App\Infrastructure\Twig;
 use TailwindMerge\TailwindMerge;
 use Twig\Attribute\AsTwigFilter;
 
+/**
+ * @codeCoverageIgnore
+ */
 final readonly class TailwindTwigExtension
 {
     /**
