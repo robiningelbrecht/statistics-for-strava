@@ -24,6 +24,7 @@ Once you have this information, update your `config.yaml` file:
 integrations:
   ai:
     enabled: true
+    enableUI: false
     provider: 'PROVIDER-YOU-CHOOSE'
     configuration:
       key: 'YOUR-API-KEY'

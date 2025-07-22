@@ -27,6 +27,7 @@ Afternoon: Nachmittag
 'All time': Gesamtzeit
 'Alpine Ski': Alpinski
 Apr: Apr
+'Ask Mark something...': 'Ask Mark something...'
 Aug: Aug
 Avg: Durchschn.
 'Back Country Ski': Backcountry-Ski
@@ -215,8 +216,8 @@ Race: Race
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Ranking
-'Rest Days': 'Ruhetage'
-'Rest days': 'Ruhetage'
+'Rest Days': Ruhetage
+'Rest days': Ruhetage
 'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
 'Rest days vs. active days': 'Rest days vs. active days'
 Rewind: Rewind
@@ -270,6 +271,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Die Eddington-Zahl im Kontext des Radfahrens oder Laufens ist definiert als die maximale Zahl E, bei der der Sportler an mindestens E Tagen jeweils mindestens E km zurückgelegt hat.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
+Thinking...: Thinking...
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Diese Formel bedeutet, dass eine Stunde Fahren mit maximaler Herzfrequenz zu einer Punktzahl von 100 führt, was wir als "hohe Intensität" betrachten'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Diese Karte zeigt die tägliche Trainingsintensität für das letzte Jahr. Die Trainingsintensität für eine Aktivität wird auf Basis mehrerer Metriken berechnet.'
@@ -310,6 +312,7 @@ Unspecified: Unspecified
 'Virtual Rides': 'Virtuelle Fahrten'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
+'Virtual workout assistant': 'Virtual workout assistant'
 Walks: Spaziergänge
 'Water Sports': Wassersport
 'We detected following issues': 'We detected following issues'

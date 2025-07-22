@@ -27,6 +27,7 @@ Afternoon: Afternoon
 'All time': 'All time'
 'Alpine Ski': 'Alpine Ski'
 Apr: Apr
+'Ask Mark something...': 'Ask Mark something...'
 Aug: Aug
 Avg: Avg
 'Back Country Ski': 'Back Country Ski'
@@ -270,6 +271,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'The amount of CO₂ that {amountOfTrees} trees absorb annually': 'The amount of CO₂ that {amountOfTrees} trees absorb annually'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
+Thinking...: Thinking...
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.'
@@ -310,6 +312,7 @@ Unspecified: Unspecified
 'Virtual Rides': 'Virtual Rides'
 'Virtual Row': 'Virtual Row'
 'Virtual Runs': 'Virtual Runs'
+'Virtual workout assistant': 'Virtual workout assistant'
 Walks: Walks
 'Water Sports': 'Water Sports'
 'We detected following issues': 'We detected following issues'

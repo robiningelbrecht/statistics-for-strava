@@ -120,4 +120,14 @@ final class AppConfig
 
         return $this->config[$key];
     }
+
+    public function AIIntegrationIsEnabled(): bool
+    {
+        return !empty($this->get('integrations.ai.enabled', false));
+    }
+
+    public function AIIntegrationWithUIIsEnabled(): bool
+    {
+        return $this->AIIntegrationIsEnabled() && !empty($this->get('integrations.ai.enableUI', false));
+    }
 }

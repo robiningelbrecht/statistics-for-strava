@@ -88,6 +88,9 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
+    NeuronAI\AgentInterface:
+        class: App\Domain\Integration\AI\NeuronAIAgent
+
     NeuronAI\Chat\History\ChatHistoryInterface:
         class: App\Domain\Integration\AI\Chat\FlysystemChatHistory
 

@@ -26,6 +26,12 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Validate PSR-4 compliance
+        run: composer dump-autoload --dev --optimize --strict-psr
+
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse
 

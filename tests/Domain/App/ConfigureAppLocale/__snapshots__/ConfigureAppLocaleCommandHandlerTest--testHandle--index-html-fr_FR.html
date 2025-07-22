@@ -330,11 +330,13 @@
 <script src="/assets/data-table/data-table.js?0025176c-5652-11ee-923d-02424dd627d5" type="module"></script>
 <script src="/assets/lightgallery/lightgallery.umd.min.js?0025176c-5652-11ee-923d-02424dd627d5" type="module"></script>
 <script src="/assets/lightgallery/lightgallery.lg-zoom.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
+<script src="/assets/chat.js?0025176c-5652-11ee-923d-02424dd627d5" type="module"></script>
 <script type="module">
     import LeafletMap from "/assets/leaflet/leaflet-map.js";
     import Heatmap from "/assets/leaflet/heatmap.js";
     import DataTable from "/assets/data-table/data-table.js";
     import Router from "/assets/router.js";
+    import Chat from "/assets/chat.js";
     import {resolveEchartsCallbacks} from "/assets/utils.js";
 
     const $main = document.querySelector("main");
@@ -404,17 +406,31 @@
     document.addEventListener('dataTableClusterWasChanged', () => {
         initModals(document);
     });
-
     document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
         allRenderedCharts.forEach(chart => {
             chart.resize();
         });
     })
-
     window.addEventListener('resize', function () {
         allRenderedCharts.forEach(chart => {
             chart.resize();
         });
+    });
+
+    const $modalAIChat = document.querySelector('a[data-modal-custom-ai]');
+    if ($modalAIChat) {
+        $modalAIChat.addEventListener('click', (e) => {
+            e.preventDefault();
+            const modalId = $modalAIChat.getAttribute('data-modal-custom-ai');
+            openModal(modalId);
+            // Add modal to history state.
+            router.pushCurrentRouteToHistoryState(modalId);
+        });
+    }
+
+    document.addEventListener('modalWasLoaded.ai-chat', (e) => {
+        const $modal = e.detail.modal;
+        Chat($modal).render();
     });
 
     const initElements = (rootNode) => {
@@ -566,6 +582,13 @@
                     }
                     router.pushCurrentRouteToHistoryState();
                 }, {once: true});
+
+                const modalName = modalId.replace(/^\/+/, '').replaceAll('/', '-');
+                document.dispatchEvent(new CustomEvent('modalWasLoaded.' + modalName, {
+                    bubbles: true, cancelable: false, detail: {
+                        modal: modalSkeletonNode
+                    }
+                }));
             },
             onHide: () => {
                 modalContent.innerHTML = '';
