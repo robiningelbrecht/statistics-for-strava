@@ -19,7 +19,6 @@ use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
@@ -556,15 +555,6 @@ final class Activity implements SupportsAITooling
         $this->workoutType = $workoutType;
 
         return $this;
-    }
-
-    public function getCarbonSaved(): Kilogram
-    {
-        if (!$this->isCommute) {
-            return Kilogram::zero();
-        }
-
-        return Kilogram::from($this->getDistance()->toFloat() * 0.2178);
     }
 
     public function isZwiftRide(): bool
