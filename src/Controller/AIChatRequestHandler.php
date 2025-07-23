@@ -133,7 +133,7 @@ final readonly class AIChatRequestHandler
                     $message = $e->getResponse()->getBody()->getContents();
                 }
 
-                $fullMessage = 'Oh no, I made a booboo... <br />'.$message;
+                $fullMessage = 'Oh no, I made a booboo... <br />'.preg_replace('/\s+/', ' ', $message);
                 echo new ServerSentEvent(
                     eventName: 'agentResponse',
                     data: $fullMessage
