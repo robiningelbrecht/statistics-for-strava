@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Http\ServerSentEvent;
+use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Messages\UserMessage;
@@ -122,9 +123,14 @@ final readonly class AIChatRequestHandler
                     data: ''
                 );
 
+                $message = $e->getMessage();
+                if ($e instanceof ClientException) {
+                    $message = $e->getResponse()->getBody()->getContents();
+                }
+
                 echo new ServerSentEvent(
                     eventName: 'agentResponse',
-                    data: 'Oh no, I made a booboo... <br />'.$e->getMessage()
+                    data: 'Oh no, I made a booboo... <br />'.$message
                 );
             }
 
