@@ -4,13 +4,16 @@ namespace App\Tests\Controller;
 
 use App\Controller\AIChatRequestHandler;
 use App\Domain\Integration\AI\Chat\ChatMessage;
+use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\String\PlatformEnvironment;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
+use NeuronAI\Chat\Enums\MessageRole;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -33,11 +36,11 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             ->expects($this->once())
             ->method('getHistory')
             ->willReturn([new ChatMessage(
+                messageId: ChatMessageId::random(),
                 message: 'message',
-                userProfilePictureUrl: null,
-                firstLetterOfFirstName: 'R',
-                isUserMessage: true
-            )]);
+                messageRole: MessageRole::USER,
+                on: SerializableDateTime::fromString('2025-05-05')
+            )->withFirstLetterOfFirstName('R')]);
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')

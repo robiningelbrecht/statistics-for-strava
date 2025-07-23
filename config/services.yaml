@@ -92,7 +92,7 @@ services:
         class: App\Domain\Integration\AI\NeuronAIAgent
 
     NeuronAI\Chat\History\ChatHistoryInterface:
-        class: App\Domain\Integration\AI\Chat\FlysystemChatHistory
+        class: App\Domain\Integration\AI\Chat\SFSChatHistory
 
     NeuronAI\Tools\Toolkits\ToolkitInterface:
         class: App\Domain\Integration\AI\Tool\Toolkit
