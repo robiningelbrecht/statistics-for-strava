@@ -10,6 +10,7 @@ use App\Infrastructure\Http\ServerSentEvent;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
+use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -85,9 +86,9 @@ final readonly class AIChatRequestHandler
             echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
-                    'chatMessage' => $this->chatRepository->create(
+                    'chatMessage' => $this->chatRepository->build(
                         message: $message,
-                        isUserMessage: true,
+                        messageRole: MessageRole::USER,
                     ),
                     'isThinking' => false,
                 ])
@@ -96,9 +97,9 @@ final readonly class AIChatRequestHandler
             echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
-                    'chatMessage' => $this->chatRepository->create(
+                    'chatMessage' => $this->chatRepository->build(
                         message: '__PLACEHOLDER__',
-                        isUserMessage: false,
+                        messageRole: MessageRole::ASSISTANT,
                     ),
                     'isThinking' => true,
                 ])
