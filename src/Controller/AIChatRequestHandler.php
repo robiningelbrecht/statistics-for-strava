@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Domain\Integration\AI\Chat\ChatMessage;
+use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Http\ServerSentEvent;
+use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
@@ -33,6 +36,7 @@ final readonly class AIChatRequestHandler
         private ChatRepository $chatRepository,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
+        private Clock $clock,
     ) {
     }
 
@@ -129,10 +133,20 @@ final readonly class AIChatRequestHandler
                     $message = $e->getResponse()->getBody()->getContents();
                 }
 
+                $fullMessage = 'Oh no, I made a booboo... <br />'.$message;
                 echo new ServerSentEvent(
                     eventName: 'agentResponse',
-                    data: 'Oh no, I made a booboo... <br />'.$message
+                    data: $fullMessage
                 );
+
+                $this->chatRepository->add(new ChatMessage(
+                    messageId: ChatMessageId::random(),
+                    message: $fullMessage,
+                    messageRole: MessageRole::ASSISTANT,
+                    on: $this->clock->getCurrentDateTimeImmutable()
+                ));
+
+                flush();
             }
 
             echo new ServerSentEvent(
