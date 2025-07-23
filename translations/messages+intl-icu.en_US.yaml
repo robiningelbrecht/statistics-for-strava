@@ -175,8 +175,10 @@ Name: Name
 'Neutral – short-term sustainable': 'Neutral – short-term sustainable'
 Night: Night
 'No activities': 'No activities'
+'No data available': 'No data available'
 'No other options to compare with': 'No other options to compare with'
 'Nordic Ski': 'Nordic Ski'
+'Not supported': 'Not supported'
 Nov: Nov
 'Number of activities per month': 'Number of activities per month'
 'Number of times completed': 'Number of times completed'
@@ -364,6 +366,7 @@ workouts: workouts
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
+'{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
 '{numberOfResults} results based on your active filters': '{numberOfResults} results based on your active filters'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes based on your active filters'

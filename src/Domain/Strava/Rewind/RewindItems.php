@@ -12,4 +12,9 @@ final class RewindItems extends Collection
     {
         return RewindItem::class;
     }
+
+    public function get(int $index): RewindItem
+    {
+        return $this->toArray()[$index];
+    }
 }

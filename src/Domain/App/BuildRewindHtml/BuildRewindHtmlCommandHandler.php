@@ -115,22 +115,33 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $rewindItems = RewindItems::empty();
 
             if (FindAvailableRewindOptions::ALL_TIME !== $availableRewindOption) {
-                $rewindItems
-                    ->add(RewindItem::from(
-                        icon: 'calendar',
-                        title: $this->translator->trans('Daily activities'),
-                        subTitle: $this->translator->trans('{numberOfActivities} activities in {year}', [
-                            '{numberOfActivities}' => $totalActivityCount,
-                            '{year}' => $availableRewindOption,
-                        ]),
-                        content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
-                            'chart' => Json::encode(DailyActivitiesChart::create(
-                                movingTimePerDay: $findMovingTimePerDayResponse->getMovingTimePerDay(),
-                                year: Year::fromInt((int) $availableRewindOption),
-                                translator: $this->translator,
-                            )->build()),
-                        ]),
-                    ));
+                $rewindItems->add(RewindItem::from(
+                    icon: 'calendar',
+                    title: $this->translator->trans('Daily activities'),
+                    subTitle: $this->translator->trans('{numberOfActivities} activities in {year}', [
+                        '{numberOfActivities}' => $totalActivityCount,
+                        '{year}' => $availableRewindOption,
+                    ]),
+                    content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
+                        'chart' => Json::encode(DailyActivitiesChart::create(
+                            movingTimePerDay: $findMovingTimePerDayResponse->getMovingTimePerDay(),
+                            year: Year::fromInt((int) $availableRewindOption),
+                            translator: $this->translator,
+                        )->build()),
+                    ]),
+                ));
+            } else {
+                $rewindItems->add(RewindItem::from(
+                    icon: 'calendar',
+                    title: $this->translator->trans('Daily activities'),
+                    subTitle: $this->translator->trans('{numberOfActivities} activities', [
+                        '{numberOfActivities}' => $totalActivityCount,
+                    ]),
+                    content: $this->twig->render('html/rewind/rewind-item-empty.html.twig', [
+                        'message' => $this->translator->trans('Not supported'),
+                    ]),
+                    isPlaceHolderForComparison: true
+                ));
             }
 
             $rewindItems
@@ -284,6 +295,16 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                         'chart' => Json::encode(ActivityLocationsChart::create($activityLocations)->build()),
                     ]),
                 ));
+            } else {
+                $rewindItems->add(RewindItem::from(
+                    icon: 'globe',
+                    title: $this->translator->trans('Activity locations'),
+                    subTitle: $this->translator->trans('Locations over the globe'),
+                    content: $this->twig->render('html/rewind/rewind-item-empty.html.twig', [
+                        'message' => $this->translator->trans('No data available'),
+                    ]),
+                    isPlaceHolderForComparison: true
+                ));
             }
             if ($randomImage) {
                 $rewindItems->add(RewindItem::from(
@@ -293,6 +314,16 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-random-image.html.twig', [
                         'image' => $randomImage,
                     ]),
+                ));
+            } else {
+                $rewindItems->add(RewindItem::from(
+                    icon: 'image',
+                    title: $this->translator->trans('Photo'),
+                    subTitle: '',
+                    content: $this->twig->render('html/rewind/rewind-item-empty.html.twig', [
+                        'message' => $this->translator->trans('No data available'),
+                    ]),
+                    isPlaceHolderForComparison: true
                 ));
             }
 
@@ -306,6 +337,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 'availableRewindOptions' => $availableRewindOptions,
                 'activeRewindOption' => $availableRewindOption,
                 'rewindItems' => $rewindItems,
+                'isAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOption,
             ];
 
             $this->buildStorage->write(
@@ -339,6 +371,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     'activeRewindOptionRight' => $availableRewindOptionRight,
                     'rewindItemsLeft' => $rewindItemsPerYear->getForGroup($availableRewindOptionLeft),
                     'rewindItemsRight' => $rewindItemsPerYear->getForGroup($availableRewindOptionRight),
+                    'rewindItemsLeftIsAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOptionLeft,
+                    'rewindItemsRightIsAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOptionRight,
                 ]);
 
                 if ($availableRewindOptionRight == $defaultRewindYearToCompareWith) {
