@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Rewind\FindAvailableRewindOptions;
 
-use App\Domain\Strava\Rewind\RewindCutOffDate;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\Connection;
@@ -25,22 +25,31 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
 
         $now = $query->getNow();
         $currentYear = $now->getYear();
-        if (RewindCutOffDate::fromYear(Year::fromInt($currentYear))->isBefore($now)) {
-            $currentYear = 0;
-        }
 
         $years = $this->connection->executeQuery(
             'SELECT DISTINCT strftime("%Y",startDateTime) AS year FROM Activity
-             WHERE year != :currentYear 
              ORDER BY year DESC',
             [
                 'currentYear' => $currentYear,
             ]
         )->fetchFirstColumn();
 
-        return new FindAvailableRewindOptionsResponse(Years::fromArray(array_map(
+        $allYears = Years::fromArray(array_map(
             static fn (int $year): Year => Year::fromInt((int) $year),
             $years
-        )));
+        ));
+        $options = [
+            FindAvailableRewindOptions::ALL_TIME => $allYears,
+        ];
+
+        foreach ($years as $year) {
+            $cutOffDate = SerializableDateTime::fromString(sprintf('%s-12-24 00:00:00', $year));
+            if ($now->isBefore($cutOffDate)) {
+                continue;
+            }
+            $options[$year] = Years::fromArray([Year::fromInt((int) $year)]);
+        }
+
+        return new FindAvailableRewindOptionsResponse($options);
     }
 }

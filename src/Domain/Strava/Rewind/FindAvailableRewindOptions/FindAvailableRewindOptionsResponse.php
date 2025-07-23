@@ -10,12 +10,21 @@ use App\Infrastructure\ValueObject\Time\Years;
 final readonly class FindAvailableRewindOptionsResponse implements Response
 {
     public function __construct(
-        private Years $availableRewindYears,
+        /** @var array<string, Years> */
+        private array $availableRewindOptions,
     ) {
     }
 
-    public function getAvailableOptions(): Years
+    /**
+     * @return string[]
+     */
+    public function getAvailableOptions(): array
     {
-        return $this->availableRewindYears;
+        return array_map('strval', array_keys($this->availableRewindOptions));
+    }
+
+    public function getYearsToQuery(string $option): Years
+    {
+        return $this->availableRewindOptions[$option];
     }
 }

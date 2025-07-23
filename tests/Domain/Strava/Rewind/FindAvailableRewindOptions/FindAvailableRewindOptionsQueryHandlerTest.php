@@ -8,8 +8,6 @@ use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
 use App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Infrastructure\ValueObject\Time\Year;
-use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -54,20 +52,17 @@ class FindAvailableRewindOptionsQueryHandlerTest extends ContainerTestCase
         );
 
         $this->assertEquals(
-            Years::fromArray([Year::fromInt(2024), Year::fromInt(2023)]),
+            [
+                'all-time',
+                2024,
+                2023,
+            ],
             $response->getAvailableOptions(),
         );
     }
 
     public function testHandleWhenAfterCutOffDate(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('1'))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
@@ -96,7 +91,11 @@ class FindAvailableRewindOptionsQueryHandlerTest extends ContainerTestCase
         );
 
         $this->assertEquals(
-            Years::fromArray([Year::fromInt(2025), Year::fromInt(2024), Year::fromInt(2023)]),
+            [
+                'all-time',
+                2024,
+                2023,
+            ],
             $response->getAvailableOptions(),
         );
     }

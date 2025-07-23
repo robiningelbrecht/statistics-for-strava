@@ -12,6 +12,8 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
  */
 final readonly class FindAvailableRewindOptions implements Query
 {
+    public const string ALL_TIME = 'all-time';
+
     public function __construct(
         private SerializableDateTime $now,
     ) {

@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Rewind\FindStreaks;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
@@ -21,10 +22,10 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
     {
         assert($query instanceof FindStreaks);
 
-        /** @var int[] $daysOfTheYear */
-        $daysOfTheYear = array_map('intval', $this->connection->executeQuery(
+        /** @var string[] $days */
+        $days = $this->connection->executeQuery(
             <<<SQL
-                SELECT LTRIM(strftime('%j',startDateTime), 0) as day
+                SELECT strftime('%Y-%m-%d', startDateTime) as day
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY day
@@ -35,15 +36,16 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             [
                 'years' => ArrayParameterType::STRING,
             ]
-        )->fetchFirstColumn());
+        )->fetchFirstColumn();
 
-        /** @var int[] $weeksOfTheYear */
-        $weeksOfTheYear = array_map('intval', $this->connection->executeQuery(
+        /** @var array<int, array{'year': int, 'week': int}> $weeksAndYears */
+        $weeksAndYears = $this->connection->executeQuery(
             <<<SQL
-                SELECT LTRIM(strftime('%W',startDateTime), 0) as day
+                SELECT LTRIM(strftime('%W',startDateTime), 0) as week,
+                strftime('%Y',startDateTime) as year
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
-                GROUP BY day
+                GROUP BY week
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
@@ -51,15 +53,15 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             [
                 'years' => ArrayParameterType::STRING,
             ]
-        )->fetchFirstColumn());
+        )->fetchAllAssociative();
 
-        /** @var int[] $monthsOfTheYear */
-        $monthsOfTheYear = array_map('intval', $this->connection->executeQuery(
+        /** @var int[] $months */
+        $months = array_map('intval', $this->connection->executeQuery(
             <<<SQL
-                SELECT LTRIM(strftime('%m',startDateTime), 0) as day
+                SELECT CAST(strftime('%Y', startDateTime) AS INTEGER) * 12 + CAST(strftime('%m', startDateTime) AS INTEGER) as month
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
-                GROUP BY day
+                GROUP BY month
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
@@ -70,16 +72,16 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         )->fetchFirstColumn());
 
         return new FindStreaksResponse(
-            dayStreak: $this->findLongestStreakLength($daysOfTheYear),
-            weekStreak: $this->findLongestStreakLength($weeksOfTheYear),
-            monthStreak: $this->findLongestStreakLength($monthsOfTheYear),
+            dayStreak: $this->findLongestStreakLengthInDays($days),
+            weekStreak: $this->findLongestStreakLengthInWeeks($weeksAndYears),
+            monthStreak: $this->findLongestStreakLengthInMonths($months),
         );
     }
 
     /**
      * @param int[] $numbers
      */
-    private function findLongestStreakLength(array $numbers): int
+    private function findLongestStreakLengthInMonths(array $numbers): int
     {
         if (empty($numbers)) {
             return 0;
@@ -99,5 +101,71 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         }
 
         return $longestStreak;
+    }
+
+    /**
+     * @param string[] $days
+     */
+    private function findLongestStreakLengthInDays(array $days): int
+    {
+        sort($days);
+
+        $longest = $current = 1;
+        for ($i = 1; $i < count($days); ++$i) {
+            $prev = SerializableDateTime::fromString($days[$i - 1]);
+            $curr = SerializableDateTime::fromString($days[$i]);
+
+            $diff = $prev->diff($curr)->days;
+            if (1 === $diff) {
+                ++$current;
+                $longest = max($longest, $current);
+            } else {
+                $current = 1;
+            }
+        }
+
+        return $longest;
+    }
+
+    /**
+     * @param array<int, array{'year': int, 'week': int}> $weeksAndYears
+     */
+    private function findLongestStreakLengthInWeeks(array $weeksAndYears): int
+    {
+        $globalWeeks = [];
+
+        foreach ($weeksAndYears as $row) {
+            $year = (int) $row['year'];
+            $week = (int) $row['week'];
+            $globalWeeks[] = $year * 100 + $week;
+        }
+
+        // Remove duplicates and sort
+        $globalWeeks = array_unique($globalWeeks);
+        sort($globalWeeks);
+
+        // Count the longest streak of consecutive weeks
+        $longest = $current = 1;
+        for ($i = 1; $i < count($globalWeeks); ++$i) {
+            $prev = $globalWeeks[$i - 1];
+            $curr = $globalWeeks[$i];
+
+            // Check if it's the next week
+            [$prevYear, $prevWeek] = [intdiv($prev, 100), $prev % 100];
+            [$currYear, $currWeek] = [intdiv($curr, 100), $curr % 100];
+
+            if (
+                ($currYear === $prevYear && $currWeek === $prevWeek + 1)             // same year, next week
+                || ($currYear === $prevYear + 1 && $prevWeek >= 52 && 0 === $currWeek)  // year rollover: week 52/53 to week 0
+                || ($currYear === $prevYear + 1 && 53 === $prevWeek && 1 === $currWeek)    // alternative rollover handling
+            ) {
+                ++$current;
+                $longest = max($longest, $current);
+            } else {
+                $current = 1;
+            }
+        }
+
+        return $longest;
     }
 }
