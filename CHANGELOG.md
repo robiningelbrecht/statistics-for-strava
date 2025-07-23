@@ -1,3 +1,11 @@
+# [v3.0.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.1) - 2025-07-23
+
+## What's Changed
+* ISSUE #883: Get rid of Trivia and add All time option to Rewind by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/884
+* ISSUE #887: Better error handling for AI agent by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/888
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.0.0...v3.0.1
+
 # [v3.0.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.0) - 2025-07-22
 
 * 🚀 Our AI agent "Mark" is now available via the UI as well. You can enable this by setting `enableUI: true` in your config.yaml file
