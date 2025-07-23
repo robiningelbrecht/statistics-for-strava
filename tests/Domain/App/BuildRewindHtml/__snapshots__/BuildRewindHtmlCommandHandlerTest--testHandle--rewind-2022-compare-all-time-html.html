@@ -25,6 +25,12 @@
                     <a href="/rewind/2022/compare" data-router-navigate="/rewind/2022/compare" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">Compare</a>
                 </div>
             </li>
+                    <li>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                    <a href="/rewind/2022/compare/all-time" data-router-navigate="/rewind/2022/compare/all-time" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2">All time</a>
+                </div>
+            </li>
             </ol>
 </nav>
     <div class="flex lg:hidden p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
@@ -43,21 +49,27 @@
             <div class="text-gray-500">compare</div>
             <div>
                 <button id="dropdownRewindOptionButton" data-dropdown-toggle="dropdownRewindOption" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                    Rewind 2022
-                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                            Rewind 2022
+                                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
                     </svg>
                 </button>
                 <div id="dropdownRewindOption" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindOptionButton">
                                                     <li>
-                                <a href="#" data-router-navigate="/rewind/all-time/compare" class="block px-4 py-2 hover:bg-gray-100 ">Rewind all-time</a>
+                                <a href="#" data-router-navigate="/rewind/all-time/compare" class="block px-4 py-2 hover:bg-gray-100 ">
+                                                                            All time
+                                                                    </a>
                             </li>
                                                     <li>
-                                <a href="#" data-router-navigate="/rewind/2023/compare" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
+                                <a href="#" data-router-navigate="/rewind/2023/compare" class="block px-4 py-2 hover:bg-gray-100 ">
+                                                                            Rewind 2023
+                                                                    </a>
                             </li>
                                                     <li>
-                                <a href="#" data-router-navigate="/rewind/2021/compare" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
+                                <a href="#" data-router-navigate="/rewind/2021/compare" class="block px-4 py-2 hover:bg-gray-100 ">
+                                                                            Rewind 2021
+                                                                    </a>
                             </li>
                                             </ul>
                 </div>
@@ -67,18 +79,22 @@
             <div class="text-gray-500">to</div>
             <div>
                 <button id="dropdownRewindOptionCompareToButton" data-dropdown-toggle="dropdownRewindOptionCompareTo" class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between" type="button">
-                    Rewind all-time
-                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                            All time
+                                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
                     </svg>
                 </button>
                 <div id="dropdownRewindOptionCompareTo" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindOptionCompareToButton">
                                                                                     <li>
-                                    <a href="#" data-router-navigate="/rewind/2022/compare/2023" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2023</a>
+                                    <a href="#" data-router-navigate="/rewind/2022/compare/2023" class="block px-4 py-2 hover:bg-gray-100 ">
+                                                                                    Rewind 2023
+                                                                            </a>
                                 </li>
                                                             <li>
-                                    <a href="#" data-router-navigate="/rewind/2022/compare/2021" class="block px-4 py-2 hover:bg-gray-100 ">Rewind 2021</a>
+                                    <a href="#" data-router-navigate="/rewind/2022/compare/2021" class="block px-4 py-2 hover:bg-gray-100 ">
+                                                                                    Rewind 2021
+                                                                            </a>
                                 </li>
                                                                         </ul>
                 </div>
