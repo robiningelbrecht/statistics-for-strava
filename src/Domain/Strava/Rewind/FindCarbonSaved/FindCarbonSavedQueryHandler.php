@@ -9,6 +9,7 @@ use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindCarbonSavedQueryHandler implements QueryHandler
@@ -26,11 +27,14 @@ final readonly class FindCarbonSavedQueryHandler implements QueryHandler
             <<<SQL
                 SELECT SUM(distance)
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
                 AND isCommute = 1
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchOne();
 

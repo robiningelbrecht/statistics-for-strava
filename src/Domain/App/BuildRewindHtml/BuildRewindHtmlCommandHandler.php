@@ -260,10 +260,12 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 ->add(RewindItem::from(
                     icon: 'carbon',
                     title: $this->translator->trans('Carbon saved'),
-                    subTitle: $this->translator->trans('Reduced carbon emission'),
+                    subTitle: $this->translator->trans('Reduced carbon emission by commuting'),
                     content: $this->twig->render('html/rewind/rewind-carbon-saved.html.twig', [
-                        'kilogramCarbonSaved' => $this->queryBus->ask(new FindCarbonSaved($availableRewindYearLeft))->getKgCoCarbonSaved(),
+                        'kilogramCarbonSaved' => $this->queryBus->ask(new FindCarbonSaved(Years::fromArray([$availableRewindYearLeft])))->getKgCoCarbonSaved(),
                     ]),
+                    totalMetric: (int) round($this->queryBus->ask(new FindCarbonSaved(Years::all($now)))->getKgCoCarbonSaved()->toFloat()),
+                    totalMetricLabel: 'kg CO₂',
                 ));
 
             if ($activityLocations = $this->queryBus->ask(new FindActivityLocations($availableRewindYearLeft))->getActivityLocations()) {

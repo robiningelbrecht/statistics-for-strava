@@ -41,7 +41,7 @@ final readonly class ActivityLocationsChart
                 'center' => [$center[0], $center[1]],
                 'zoom' => 15,
                 'map' => 'world',
-                'roam' => true,
+                'roam' => false,
             ],
             'series' => [
                 'type' => 'effectScatter',
