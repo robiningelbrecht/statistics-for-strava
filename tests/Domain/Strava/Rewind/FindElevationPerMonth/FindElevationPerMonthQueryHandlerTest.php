@@ -6,13 +6,13 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Rewind\FindElevationPerMonth\FindElevationPerMonth;
 use App\Domain\Strava\Rewind\FindElevationPerMonth\FindElevationPerMonthQueryHandler;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -74,11 +74,11 @@ class FindElevationPerMonthQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindElevationPerMonth\FindElevationPerMonthResponse $response */
-        $response = $this->queryHandler->handle(new FindElevationPerMonth(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindElevationPerMonth(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
-                [Month::fromDate(SerializableDateTime::fromString('2024-01-03 00:00:00')), SportType::RIDE, Meter::from(40)],
-                [Month::fromDate(SerializableDateTime::fromString('2024-03-03 00:00:00')), SportType::RIDE, Meter::from(10)],
+                [1, SportType::RIDE, Meter::from(40)],
+                [3, SportType::RIDE, Meter::from(10)],
             ],
             $response->getElevationPerMonth(),
         );

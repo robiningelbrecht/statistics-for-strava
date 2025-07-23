@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Rewind\FindElevationPerMonth;
 
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindElevationPerMonthQueryHandler implements QueryHandler
@@ -28,30 +27,36 @@ final readonly class FindElevationPerMonthQueryHandler implements QueryHandler
             <<<SQL
                 SELECT SUM(elevation) as distance
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchOne();
 
         $results = $this->connection->executeQuery(
             <<<SQL
-                SELECT strftime('%Y-%m', startDateTime) AS yearAndMonth, sportType, SUM(elevation) as elevation
+                SELECT CAST(strftime('%m', startDateTime) AS INTEGER) AS monthNumber, sportType, SUM(elevation) as elevation
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
-                GROUP BY sportType, yearAndMonth
-                ORDER BY sportType ASC, yearAndMonth ASC
+                WHERE strftime('%Y',startDateTime) IN (:years)
+                GROUP BY sportType, monthNumber
+                ORDER BY sportType ASC, monthNumber ASC
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchAllAssociative();
 
         return new FindElevationPerMonthResponse(
             elevationPerMonth: array_map(
                 fn (array $result) => [
-                    Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01', $result['yearAndMonth']))),
+                    $result['monthNumber'],
                     SportType::from($result['sportType']),
                     Meter::from($result['elevation']),
                 ],

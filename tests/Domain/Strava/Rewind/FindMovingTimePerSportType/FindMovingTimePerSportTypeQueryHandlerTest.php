@@ -11,6 +11,7 @@ use App\Domain\Strava\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportTy
 use App\Domain\Strava\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportTypeQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -65,7 +66,7 @@ class FindMovingTimePerSportTypeQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportTypeResponse $response */
-        $response = $this->queryHandler->handle(new FindMovingTimePerSportType(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindMovingTimePerSportType(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
                 'Ride' => 20,

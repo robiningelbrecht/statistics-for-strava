@@ -6,13 +6,13 @@ use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Strava\Rewind\FindDistancePerMonth\FindDistancePerMonthQueryHandler;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -70,11 +70,11 @@ class FindDistancePerMonthQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindDistancePerMonth\FindDistancePerMonthResponse $response */
-        $response = $this->queryHandler->handle(new FindDistancePerMonth(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindDistancePerMonth(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
-                [Month::fromDate(SerializableDateTime::fromString('2024-01-03 00:00:00')), SportType::RIDE, Kilometer::from(30)],
-                [Month::fromDate(SerializableDateTime::fromString('2024-03-03 00:00:00')), SportType::RIDE, Kilometer::from(10)],
+                [1, SportType::RIDE, Kilometer::from(30)],
+                [3, SportType::RIDE, Kilometer::from(10)],
             ],
             $response->getDistancePerMonth(),
         );

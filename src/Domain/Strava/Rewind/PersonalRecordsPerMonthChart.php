@@ -12,24 +12,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class PersonalRecordsPerMonthChart
 {
     private function __construct(
-        /** @var array<int, array{0: Month, 1: int}> */
+        /** @var array<int, array{0: int, 1: int}> */
         private array $personalRecordsPerMonth,
-        private Year $year,
         private TranslatorInterface $translator,
     ) {
     }
 
     /**
-     * @param array<int, array{0: Month, 1: int}> $personalRecordsPerMonth
+     * @param array<int, array{0: int, 1: int}> $personalRecordsPerMonth
      */
     public static function create(
         array $personalRecordsPerMonth,
-        Year $year,
         TranslatorInterface $translator,
     ): self {
         return new self(
             personalRecordsPerMonth: $personalRecordsPerMonth,
-            year: $year,
             translator: $translator
         );
     }
@@ -43,12 +40,14 @@ final readonly class PersonalRecordsPerMonthChart
         $xAxisLabels = [];
 
         foreach ($this->personalRecordsPerMonth as $personalRecordsPerMonth) {
-            [$month, $personalRecords] = $personalRecordsPerMonth;
-            $data[] = [$month->getMonth() - 1, $personalRecords];
+            [$monthNumber, $personalRecords] = $personalRecordsPerMonth;
+            $data[] = [$monthNumber - 1, $personalRecords];
         }
 
         for ($monthNumber = 1; $monthNumber <= 12; ++$monthNumber) {
-            $month = Month::fromDate(SerializableDateTime::fromString(sprintf('%s-%02d-01', $this->year, $monthNumber)));
+            // We don't care about the year, we only need this to display the month label.
+            $date = sprintf('%s-%02d-01', 2025, $monthNumber);
+            $month = Month::fromDate(SerializableDateTime::fromString($date));
             $xAxisLabels[] = $month->getShortLabelWithoutYear();
         }
 

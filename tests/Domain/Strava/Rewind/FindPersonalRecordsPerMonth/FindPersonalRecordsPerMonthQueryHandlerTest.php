@@ -12,6 +12,7 @@ use App\Domain\Strava\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerM
 use App\Domain\Strava\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonthResponse;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -76,7 +77,7 @@ class FindPersonalRecordsPerMonthQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var FindPersonalRecordsPerMonthResponse $response */
-        $response = $this->queryHandler->handle(new FindPersonalRecordsPerMonth(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindPersonalRecordsPerMonth(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
                 [Month::fromDate(SerializableDateTime::fromString('2024-03-01')), 3],

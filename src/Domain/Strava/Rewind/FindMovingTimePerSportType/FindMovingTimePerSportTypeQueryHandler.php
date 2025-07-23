@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Rewind\FindMovingTimePerSportType;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindMovingTimePerSportTypeQueryHandler implements QueryHandler
@@ -24,10 +25,13 @@ final readonly class FindMovingTimePerSportTypeQueryHandler implements QueryHand
             <<<SQL
                 SELECT SUM(movingTimeInSeconds) as movingTimeInSeconds
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchOne();
 
@@ -36,12 +40,15 @@ final readonly class FindMovingTimePerSportTypeQueryHandler implements QueryHand
                 <<<SQL
                 SELECT sportType, SUM(movingTimeInSeconds) as movingTimeInSeconds
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY sportType
                 ORDER BY sportType ASC
                 SQL,
                 [
-                    'year' => (string) $query->getYear(),
+                    'years' => array_map('strval', $query->getYears()->toArray()),
+                ],
+                [
+                    'years' => ArrayParameterType::STRING,
                 ]
             )->fetchAllKeyValue(),
             totalMovingTime: $totalMovingTime

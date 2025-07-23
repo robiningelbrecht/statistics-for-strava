@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Rewind\FindStreaks;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindStreaksQueryHandler implements QueryHandler
@@ -25,11 +26,14 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             <<<SQL
                 SELECT LTRIM(strftime('%j',startDateTime), 0) as day
                 FROM activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY day
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchFirstColumn());
 
@@ -38,11 +42,14 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             <<<SQL
                 SELECT LTRIM(strftime('%W',startDateTime), 0) as day
                 FROM activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY day
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchFirstColumn());
 
@@ -51,11 +58,14 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             <<<SQL
                 SELECT LTRIM(strftime('%m',startDateTime), 0) as day
                 FROM activity
-                WHERE strftime('%Y',startDateTime) = :year
+                WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY day
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchFirstColumn());
 

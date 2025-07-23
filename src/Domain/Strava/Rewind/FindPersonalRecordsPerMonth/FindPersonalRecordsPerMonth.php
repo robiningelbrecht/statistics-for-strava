@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Rewind\FindPersonalRecordsPerMonth;
 
 use App\Infrastructure\CQRS\Query\Query;
-use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 
 /**
  * @implements Query<\App\Domain\Strava\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonthResponse>
@@ -13,12 +13,12 @@ use App\Infrastructure\ValueObject\Time\Year;
 final readonly class FindPersonalRecordsPerMonth implements Query
 {
     public function __construct(
-        private Year $year,
+        private Years $years,
     ) {
     }
 
-    public function getYear(): Year
+    public function getYears(): Years
     {
-        return $this->year;
+        return $this->years;
     }
 }

@@ -96,14 +96,15 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 
             $longestActivity = $this->activityRepository->findLongestActivityForYear($availableRewindYearLeft);
             $leafletMap = $longestActivity->getLeafletMap();
+            $yearsToQuery = Years::fromArray([$availableRewindYearLeft]);
 
-            $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($availableRewindYearLeft));
-            $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($availableRewindYearLeft));
-            $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics(Years::fromArray([$availableRewindYearLeft])));
-            $streaksResponse = $this->queryBus->ask(new FindStreaks($availableRewindYearLeft));
-            $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($availableRewindYearLeft));
-            $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($availableRewindYearLeft));
-            $activeDaysResponse = $this->queryBus->ask(new FindActiveDays($availableRewindYearLeft));
+            $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
+            $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($yearsToQuery));
+            $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics($yearsToQuery));
+            $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery));
+            $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
+            $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
+            $activeDaysResponse = $this->queryBus->ask(new FindActiveDays($yearsToQuery));
 
             $totalActivityCount = $findMovingTimePerDayResponse->getTotalActivityCount();
             /** @var RewindItems $rewindItems */
@@ -129,7 +130,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('Total hours spent per gear'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(MovingTimePerGearChart::create(
-                            movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($availableRewindYearLeft))->getMovingTimePerGear(),
+                            movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($yearsToQuery))->getMovingTimePerGear(),
                             gears: $gears,
                         )->build()),
                     ]),
@@ -152,8 +153,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('PRs achieved per month'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(PersonalRecordsPerMonthChart::create(
-                            personalRecordsPerMonth: $this->queryBus->ask(new FindPersonalRecordsPerMonth($availableRewindYearLeft))->getPersonalRecordsPerMonth(),
-                            year: $availableRewindYearLeft,
+                            personalRecordsPerMonth: $this->queryBus->ask(new FindPersonalRecordsPerMonth($yearsToQuery))->getPersonalRecordsPerMonth(),
                             translator: $this->translator,
                         )->build()),
                     ]),
@@ -174,7 +174,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(DistancePerMonthChart::create(
                             distancePerMonth: $distancePerMonthResponse->getDistancePerMonth(),
-                            year: $availableRewindYearLeft,
                             unitSystem: $this->unitSystem,
                             translator: $this->translator,
                         )->build()),
@@ -189,7 +188,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(ElevationPerMonthChart::create(
                             elevationPerMonth: $elevationPerMonthResponse->getElevationPerMonth(),
-                            year: $availableRewindYearLeft,
                             unitSystem: $this->unitSystem,
                             translator: $this->translator,
                         )->build()),
@@ -238,7 +236,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('Activity start times'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(ActivityStartTimesChart::create(
-                            activityStartTimes: $this->queryBus->ask(new FindActivityStartTimesPerHour($availableRewindYearLeft))->getActivityStartTimesPerHour(),
+                            activityStartTimes: $this->queryBus->ask(new FindActivityStartTimesPerHour($yearsToQuery))->getActivityStartTimesPerHour(),
                             translator: $this->translator
                         )->build()),
                     ]),
@@ -249,8 +247,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('Number of activities per month'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(ActivityCountPerMonthChart::create(
-                            activityCountPerMonth: $this->queryBus->ask(new FindActivityCountPerMonth($availableRewindYearLeft))->getActivityCountPerMonth(),
-                            year: $availableRewindYearLeft,
+                            activityCountPerMonth: $this->queryBus->ask(new FindActivityCountPerMonth($yearsToQuery))->getActivityCountPerMonth(),
                             translator: $this->translator,
                         )->build()),
                     ]),
@@ -262,13 +259,13 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     title: $this->translator->trans('Carbon saved'),
                     subTitle: $this->translator->trans('Reduced carbon emission by commuting'),
                     content: $this->twig->render('html/rewind/rewind-carbon-saved.html.twig', [
-                        'kilogramCarbonSaved' => $this->queryBus->ask(new FindCarbonSaved(Years::fromArray([$availableRewindYearLeft])))->getKgCoCarbonSaved(),
+                        'kilogramCarbonSaved' => $this->queryBus->ask(new FindCarbonSaved($yearsToQuery))->getKgCoCarbonSaved(),
                     ]),
                     totalMetric: (int) round($this->queryBus->ask(new FindCarbonSaved(Years::all($now)))->getKgCoCarbonSaved()->toFloat()),
                     totalMetricLabel: 'kg CO₂',
                 ));
 
-            if ($activityLocations = $this->queryBus->ask(new FindActivityLocations($availableRewindYearLeft))->getActivityLocations()) {
+            if ($activityLocations = $this->queryBus->ask(new FindActivityLocations($yearsToQuery))->getActivityLocations()) {
                 $rewindItems->add(RewindItem::from(
                     icon: 'globe',
                     title: $this->translator->trans('Activity locations'),
