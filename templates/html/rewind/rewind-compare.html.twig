@@ -2,7 +2,7 @@
     'url': 'rewind',
     'label': 'Rewind'|trans
 }] %}
-{% if availableRewindOptions.getFirst() != activeRewindOptionLeft %}
+{% if availableRewindOptions|first != activeRewindOptionLeft %}
     {% set breadcrumbs = breadcrumbs|merge([{
         'url': 'rewind/' ~ activeRewindOptionLeft,
         'label': activeRewindOptionLeft
@@ -84,16 +84,10 @@
         </div>
     </div>
     <div class="hidden lg:grid lg:grid-cols-2 gap-4">
-        <div class="flex flex-col gap-4">
-            {% for item in rewindItemsLeft %}
-                {% include 'html/rewind/rewind-item.html.twig' with {'item': item } %}
-            {% endfor %}
-        </div>
-        <div id="rewind-compare-to" class="flex flex-col gap-4">
-            {% for item in rewindItemsRight %}
-                {% include 'html/rewind/rewind-item.html.twig' with {'item': item } %}
-            {% endfor %}
-        </div>
+        {% for item in rewindItemsLeft %}
+            {% include 'html/rewind/rewind-item.html.twig' with {'item': item } %}
+            {% include 'html/rewind/rewind-item.html.twig' with {'item': rewindItemsRight.get(loop.index0) } %}
+        {% endfor %}
     </div>
     <div class="hidden lg:flex mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
         <p class="text-xs">

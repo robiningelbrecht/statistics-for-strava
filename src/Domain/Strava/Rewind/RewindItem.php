@@ -13,6 +13,7 @@ final readonly class RewindItem
         private string $content,
         private ?int $totalMetric,
         private ?string $totalMetricLabel,
+        private bool $isPlaceHolderForComparison,
     ) {
     }
 
@@ -23,6 +24,7 @@ final readonly class RewindItem
         string $content,
         ?int $totalMetric = null,
         ?string $totalMetricLabel = null,
+        bool $isPlaceHolderForComparison = false,
     ): self {
         return new self(
             icon: $icon,
@@ -31,6 +33,7 @@ final readonly class RewindItem
             content: $content,
             totalMetric: $totalMetric,
             totalMetricLabel: $totalMetricLabel,
+            isPlaceHolderForComparison: $isPlaceHolderForComparison,
         );
     }
 
@@ -67,5 +70,10 @@ final readonly class RewindItem
     public function getTotalMetricLabel(): ?string
     {
         return $this->totalMetricLabel;
+    }
+
+    public function isPlaceHolderForComparison(): bool
+    {
+        return $this->isPlaceHolderForComparison;
     }
 }

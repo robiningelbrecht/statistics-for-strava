@@ -1,6 +1,6 @@
 <div class="{{ extraClass }} flex flex-col gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center justify-between">
-        <div>
+        <div class="overflow-hidden whitespace-nowrap">
             <h5 class="flex items-center gap-x-0.5 text-lg font-medium text-gray-900">
                 {% include 'html/rewind/svg/svg-' ~ item.getIcon() ~ '.html.twig' %}
                 <span class="block">{{ item.getTitle() }}</span>
