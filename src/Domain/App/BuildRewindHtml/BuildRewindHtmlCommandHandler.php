@@ -18,7 +18,7 @@ use App\Domain\Strava\Rewind\FindActiveDays\FindActiveDays;
 use App\Domain\Strava\Rewind\FindActivityCountPerMonth\FindActivityCountPerMonth;
 use App\Domain\Strava\Rewind\FindActivityLocations\FindActivityLocations;
 use App\Domain\Strava\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHour;
-use App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYears;
+use App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
 use App\Domain\Strava\Rewind\FindCarbonSaved\FindCarbonSaved;
 use App\Domain\Strava\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Strava\Rewind\FindElevationPerMonth\FindElevationPerMonth;
@@ -66,10 +66,9 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildRewindHtml);
 
         $now = $command->getCurrentDateTime();
-        $findAvailableRewindYearsResponse = $this->queryBus->ask(new FindAvailableRewindYears($now));
-        $availableRewindYears = $findAvailableRewindYearsResponse->getAvailableRewindYears();
+        $availableRewindOptions = $this->queryBus->ask(new FindAvailableRewindOptions($now))->getAvailableOptions();
 
-        if (count($availableRewindYears) <= 1) {
+        if (count($availableRewindOptions) <= 1) {
             // No years to compare with.
             $this->buildStorage->write(
                 'rewind.html',
@@ -84,19 +83,19 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         $gears = $this->gearRepository->findAll();
 
         $rewindItemsPerYear = RewindItemsPerGroup::empty();
-        foreach ($availableRewindYears as $availableRewindYearLeft) {
+        foreach ($availableRewindOptions as $availableRewindOption) {
+            $yearsToQuery = Years::fromArray([$availableRewindOption]);
             $randomImage = null;
             try {
                 $randomImage = $this->imageRepository->findRandomFor(
                     sportTypes: SportTypes::thatSupportImagesForStravaRewind(),
-                    year: $availableRewindYearLeft
+                    years: $yearsToQuery
                 );
             } catch (EntityNotFound) {
             }
 
-            $longestActivity = $this->activityRepository->findLongestActivityForYear($availableRewindYearLeft);
+            $longestActivity = $this->activityRepository->findLongestActivityFor($yearsToQuery);
             $leafletMap = $longestActivity->getLeafletMap();
-            $yearsToQuery = Years::fromArray([$availableRewindYearLeft]);
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
             $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($yearsToQuery));
@@ -114,12 +113,12 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     title: $this->translator->trans('Daily activities'),
                     subTitle: $this->translator->trans('{numberOfActivities} activities in {year}', [
                         '{numberOfActivities}' => $totalActivityCount,
-                        '{year}' => $availableRewindYearLeft,
+                        '{year}' => $availableRewindOption,
                     ]),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(DailyActivitiesChart::create(
                             movingTimePerDay: $findMovingTimePerDayResponse->getMovingTimePerDay(),
-                            year: $availableRewindYearLeft,
+                            year: $availableRewindOption,
                             translator: $this->translator,
                         )->build()),
                     ]),
@@ -224,11 +223,11 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(RestDaysVsActiveDaysChart::create(
                             numberOfActiveDays: $activeDaysResponse->getNumberOfActiveDays(),
-                            numberOfRestDays: $availableRewindYearLeft->getNumberOfDays() - $activeDaysResponse->getNumberOfActiveDays(),
+                            numberOfRestDays: $availableRewindOption->getNumberOfDays() - $activeDaysResponse->getNumberOfActiveDays(),
                             translator: $this->translator,
                         )->build()),
                     ]),
-                    totalMetric: (int) round(($activeDaysResponse->getNumberOfActiveDays() / $availableRewindYearLeft->getNumberOfDays()) * 100),
+                    totalMetric: (int) round(($activeDaysResponse->getNumberOfActiveDays() / $availableRewindOption->getNumberOfDays()) * 100),
                     totalMetricLabel: '%'
                 ))->add(RewindItem::from(
                     icon: 'clock',
@@ -287,23 +286,23 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
 
             $rewindItemsPerYear->add(
-                group: (string) $availableRewindYearLeft,
+                group: (string) $availableRewindOption,
                 items: $rewindItems,
             );
 
             $render = [
                 'now' => $now,
-                'availableRewindYears' => $availableRewindYears,
-                'activeRewindYear' => $availableRewindYearLeft,
+                'availableRewindOptions' => $availableRewindOptions,
+                'activeRewindOption' => $availableRewindOption,
                 'rewindItems' => $rewindItems,
             ];
 
             $this->buildStorage->write(
-                sprintf('rewind/%s.html', $availableRewindYearLeft),
+                sprintf('rewind/%s.html', $availableRewindOption),
                 $this->twig->load('html/rewind/rewind.html.twig')->render($render),
             );
 
-            if ($availableRewindYears->getFirst() == $availableRewindYearLeft) {
+            if ($availableRewindOptions->getFirst() == $availableRewindOption) {
                 $this->buildStorage->write(
                     'rewind.html',
                     $this->twig->load('html/rewind/rewind.html.twig')->render($render),
@@ -311,33 +310,33 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
         }
 
-        $years = $availableRewindYears->toArray();
-        foreach ($availableRewindYears as $availableRewindYearLeft) {
-            $defaultRewindYearToCompareWith = $years[0] != $availableRewindYearLeft ? $years[0] : $years[1];
+        $years = $availableRewindOptions->toArray();
+        foreach ($availableRewindOptions as $availableRewindOptionLeft) {
+            $defaultRewindYearToCompareWith = $years[0] != $availableRewindOptionLeft ? $years[0] : $years[1];
 
-            foreach ($availableRewindYears as $availableRewindYearRight) {
-                if ($availableRewindYearLeft == $availableRewindYearRight) {
+            foreach ($availableRewindOptions as $availableRewindOptionRight) {
+                if ($availableRewindOptionLeft == $availableRewindOptionRight) {
                     continue;
                 }
 
                 $render = $this->twig->load('html/rewind/rewind-compare.html.twig')->render([
-                    'availableRewindYears' => $availableRewindYears,
-                    'availableRewindYearsToCompareWith' => $availableRewindYears->filter(fn (Year $year) => $year != $availableRewindYearLeft && $year != $availableRewindYearRight),
-                    'activeRewindYearLeft' => $availableRewindYearLeft,
-                    'activeRewindYearRight' => $availableRewindYearRight,
-                    'rewindItemsLeft' => $rewindItemsPerYear->getForGroup((string) $availableRewindYearLeft),
-                    'rewindItemsRight' => $rewindItemsPerYear->getForGroup((string) $availableRewindYearRight),
+                    'availableRewindOptions' => $availableRewindOptions,
+                    'availableRewindOptionsToCompareWith' => $availableRewindOptions->filter(fn (Year $year) => $year != $availableRewindOptionLeft && $year != $availableRewindOptionRight),
+                    'activeRewindOptionLeft' => $availableRewindOptionLeft,
+                    'activeRewindOptionRight' => $availableRewindOptionRight,
+                    'rewindItemsLeft' => $rewindItemsPerYear->getForGroup((string) $availableRewindOptionLeft),
+                    'rewindItemsRight' => $rewindItemsPerYear->getForGroup((string) $availableRewindOptionRight),
                 ]);
 
-                if ($availableRewindYearRight == $defaultRewindYearToCompareWith) {
+                if ($availableRewindOptionRight == $defaultRewindYearToCompareWith) {
                     $this->buildStorage->write(
-                        sprintf('rewind/%s/compare.html', $availableRewindYearLeft),
+                        sprintf('rewind/%s/compare.html', $availableRewindOptionLeft),
                         $render
                     );
                 }
 
                 $this->buildStorage->write(
-                    sprintf('rewind/%s/compare/%s.html', $availableRewindYearLeft, $availableRewindYearRight),
+                    sprintf('rewind/%s/compare/%s.html', $availableRewindOptionLeft, $availableRewindOptionRight),
                     $render
                 );
             }

@@ -4,13 +4,13 @@ namespace App\Domain\Strava\Activity;
 
 use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 
 interface ActivityRepository
 {
     public function find(ActivityId $activityId): Activity;
 
-    public function findLongestActivityForYear(Year $year): Activity;
+    public function findLongestActivityFor(Years $years): Activity;
 
     public function count(): int;
 

@@ -3,40 +3,40 @@
     'label': 'Rewind'|trans
 }] %}
 
-{% if availableRewindYears.getFirst() != activeRewindYear %}
+{% if availableRewindOptions.getFirst() != activeRewindOption %}
     {% set breadcrumbs = breadcrumbs|merge([{
-        'url': 'rewind/' ~ activeRewindYear,
-        'label': activeRewindYear
+        'url': 'rewind/' ~ activeRewindOption,
+        'label': activeRewindOption
     }]) %}
 {% endif %}
 {% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': breadcrumbs} %}
 {% autoescape false %}
-    {% if availableRewindYears|length > 1 %}
+    {% if availableRewindOptions|length > 1 %}
         <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <div class="flex gap-x-2">
                 <div>
-                    <button id="dropdownRewindYearButton" data-dropdown-toggle="dropdownRewindYear"
+                    <button id="dropdownRewindOptionButton" data-dropdown-toggle="dropdownRewindOption"
                             class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between"
                             type="button">
-                        {{ "Rewind"|trans }} {{ activeRewindYear }}
+                        {{ "Rewind"|trans }} {{ activeRewindOption }}
                         <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                              viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="m1 1 4 4 4-4"/>
                         </svg>
                     </button>
-                    <div id="dropdownRewindYear" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
-                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearButton">
-                            {% for rewindYear in availableRewindYears|filter(rewindYear => rewindYear != activeRewindYear) %}
+                    <div id="dropdownRewindOption" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
+                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindOptionButton">
+                            {% for rewindOption in availableRewindOptions|filter(rewindOption => rewindOption != activeRewindOption) %}
                                 <li>
-                                    <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ rewindYear) }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
+                                    <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ rewindOption) }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindOption }}</a>
                                 </li>
                             {% endfor %}
                         </ul>
                     </div>
                 </div>
                 <div class="hidden lg:block">
-                    <button id="dropdownRewindYearCompareToButton" data-dropdown-toggle="dropdownRewindYearCompareTo"
+                    <button id="dropdownRewindOptionCompareToButton" data-dropdown-toggle="dropdownRewindOptionCompareTo"
                             class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between"
                             type="button">
                         {{ "Compare to"|trans }}
@@ -46,11 +46,11 @@
                                   d="m1 1 4 4 4-4"/>
                         </svg>
                     </button>
-                    <div id="dropdownRewindYearCompareTo" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
-                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindYearCompareToButton">
-                            {% for rewindYear in availableRewindYears|filter(rewindYear => rewindYear != activeRewindYear) %}
+                    <div id="dropdownRewindOptionCompareTo" class="z-1002 w-fit hidden bg-white rounded-lg shadow-sm">
+                        <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownRewindOptionCompareToButton">
+                            {% for rewindOption in availableRewindOptions|filter(rewindOption => rewindOption != activeRewindOption) %}
                                 <li>
-                                    <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ activeRewindYear ~ '/compare/' ~ rewindYear) }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindYear }}</a>
+                                    <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ activeRewindOption ~ '/compare/' ~ rewindOption) }}" class="block px-4 py-2 hover:bg-gray-100 ">{{ "Rewind"|trans }} {{ rewindOption }}</a>
                                 </li>
                             {% endfor %}
                         </ul>

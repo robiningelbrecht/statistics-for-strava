@@ -18,6 +18,7 @@ use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -164,7 +165,7 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testFindLongestActivityForYear(): void
+    public function testFindLongestActivityFor(): void
     {
         $longestActivity = ActivityBuilder::fromDefaults()
             ->withActivityId(ActivityId::fromUnprefixed('0'))
@@ -220,14 +221,14 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             $longestActivity,
-            $this->activityRepository->findLongestActivityForYear(Year::fromInt(2024)),
+            $this->activityRepository->findLongestActivityFor(Years::fromArray([Year::fromInt(2024)])),
         );
     }
 
     public function testFindLongestActivityForYearItShouldThrow(): void
     {
         $this->expectExceptionObject(new EntityNotFound('Could not determine longest activity'));
-        $this->activityRepository->findLongestActivityForYear(Year::fromInt(2024));
+        $this->activityRepository->findLongestActivityFor(Years::fromArray([Year::fromInt(2024)]));
     }
 
     public function testCount(): void

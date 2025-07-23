@@ -6,6 +6,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 
 final readonly class ActivityBasedImageRepository implements ImageRepository
 {
@@ -38,13 +39,13 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         return Images::fromArray($images);
     }
 
-    public function findRandomFor(SportTypes $sportTypes, Year $year): Image
+    public function findRandomFor(SportTypes $sportTypes, Years $years): Image
     {
         $activities = $this->activityRepository->findAll()->toArray();
         shuffle($activities);
 
         foreach ($activities as $activity) {
-            if ($activity->getStartDate()->getYear() !== $year->toInt()) {
+            if (!$years->has(Year::fromInt($activity->getStartDate()->getYear()))) {
                 continue;
             }
 
@@ -64,7 +65,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
             );
         }
 
-        throw new EntityNotFound(sprintf('Random image for %s not found', $year));
+        throw new EntityNotFound(sprintf('Random image not found'));
     }
 
     public function count(): int

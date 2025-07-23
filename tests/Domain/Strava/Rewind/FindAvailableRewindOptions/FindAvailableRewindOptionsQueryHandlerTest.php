@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Rewind\FindAvailableRewindYears;
+namespace App\Tests\Domain\Strava\Rewind\FindAvailableRewindOptions;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
-use App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYears;
-use App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYearsQueryHandler;
+use App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
+use App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
-class FindAvailableRewindYearsQueryHandlerTest extends ContainerTestCase
+class FindAvailableRewindOptionsQueryHandlerTest extends ContainerTestCase
 {
-    private FindAvailableRewindYearsQueryHandler $queryHandler;
+    private FindAvailableRewindOptionsQueryHandler $queryHandler;
 
     public function testHandle(): void
     {
@@ -48,14 +48,14 @@ class FindAvailableRewindYearsQueryHandlerTest extends ContainerTestCase
             []
         ));
 
-        /** @var \App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYearsResponse $response */
+        /** @var \App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsResponse $response */
         $response = $this->queryHandler->handle(
-            new FindAvailableRewindYears(SerializableDateTime::fromString('2025-01-01 00:00:00'))
+            new FindAvailableRewindOptions(SerializableDateTime::fromString('2025-01-01 00:00:00'))
         );
 
         $this->assertEquals(
             Years::fromArray([Year::fromInt(2024), Year::fromInt(2023)]),
-            $response->getAvailableRewindYears(),
+            $response->getAvailableOptions(),
         );
     }
 
@@ -90,14 +90,14 @@ class FindAvailableRewindYearsQueryHandlerTest extends ContainerTestCase
             []
         ));
 
-        /** @var \App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYearsResponse $response */
+        /** @var \App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsResponse $response */
         $response = $this->queryHandler->handle(
-            new FindAvailableRewindYears(SerializableDateTime::fromString('2024-12-2500:00:00'))
+            new FindAvailableRewindOptions(SerializableDateTime::fromString('2024-12-2500:00:00'))
         );
 
         $this->assertEquals(
             Years::fromArray([Year::fromInt(2025), Year::fromInt(2024), Year::fromInt(2023)]),
-            $response->getAvailableRewindYears(),
+            $response->getAvailableOptions(),
         );
     }
 
@@ -105,7 +105,7 @@ class FindAvailableRewindYearsQueryHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->queryHandler = new FindAvailableRewindYearsQueryHandler(
+        $this->queryHandler = new FindAvailableRewindOptionsQueryHandler(
             $this->getConnection()
         );
     }
