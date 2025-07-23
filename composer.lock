@@ -1837,16 +1837,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.15.17",
+            "version": "1.15.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "80a3fafc235d76e5bfa359701f1aae4e128df099"
+                "reference": "cc779854ac7701c0ea7887d15a0d29d8ec58fe22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/80a3fafc235d76e5bfa359701f1aae4e128df099",
-                "reference": "80a3fafc235d76e5bfa359701f1aae4e128df099",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/cc779854ac7701c0ea7887d15a0d29d8ec58fe22",
+                "reference": "cc779854ac7701c0ea7887d15a0d29d8ec58fe22",
                 "shasum": ""
             },
             "require": {
@@ -1899,9 +1899,9 @@
             "description": "The AI Agent Development Kit for PHP.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.17"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.15.20"
             },
-            "time": "2025-07-23T12:52:36+00:00"
+            "time": "2025-07-23T19:40:42+00:00"
         },
         {
             "name": "league/flysystem",
