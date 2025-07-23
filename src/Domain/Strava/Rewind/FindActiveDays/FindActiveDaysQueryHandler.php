@@ -7,6 +7,7 @@ namespace App\Domain\Strava\Rewind\FindActiveDays;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindActiveDaysQueryHandler implements QueryHandler
@@ -26,12 +27,15 @@ final readonly class FindActiveDaysQueryHandler implements QueryHandler
                 FROM (
                 SELECT strftime('%Y-%m-%d', startDateTime) AS date
                       FROM Activity
-                      WHERE strftime('%Y', startDateTime) = :year
+                      WHERE strftime('%Y', startDateTime) IN (:years)
                       GROUP BY date
                   )
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchOne();
 

@@ -9,6 +9,7 @@ use App\Domain\Strava\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Domain\Strava\Rewind\FindMovingTimePerDay\FindMovingTimePerDayQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -55,7 +56,7 @@ class FindMovingTimePerDayQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindMovingTimePerDay\FindMovingTimePerDayResponse $response */
-        $response = $this->queryHandler->handle(new FindMovingTimePerDay(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindMovingTimePerDay(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
                 '2024-01-01' => 10,

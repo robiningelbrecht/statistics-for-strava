@@ -10,6 +10,7 @@ use App\Domain\Strava\Rewind\FindActiveDays\FindActiveDays;
 use App\Domain\Strava\Rewind\FindActiveDays\FindActiveDaysQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -67,7 +68,7 @@ class FindActiveDaysQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Strava\Rewind\FindActiveDays\FindActiveDaysResponse $response */
-        $response = $this->queryHandler->handle(new FindActiveDays(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindActiveDays(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             3,
             $response->getNumberOfActiveDays(),

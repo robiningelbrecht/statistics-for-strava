@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Rewind\FindActivityCountPerMonth;
 
 use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Calendar\Month;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class FindActivityCountPerMonthQueryHandler implements QueryHandler
@@ -25,21 +24,24 @@ final readonly class FindActivityCountPerMonthQueryHandler implements QueryHandl
 
         $results = $this->connection->executeQuery(
             <<<SQL
-                SELECT strftime('%Y-%m', startDateTime) AS yearAndMonth, sportType, COUNT(1) as count
+                SELECT CAST(strftime('%m', startDateTime) AS INTEGER) AS monthNumber, sportType, COUNT(1) as count
                 FROM Activity
-                WHERE strftime('%Y',startDateTime) = :year
-                GROUP BY sportType, yearAndMonth
-                ORDER BY sportType ASC, yearAndMonth ASC
+                WHERE strftime('%Y',startDateTime) IN (:years)
+                GROUP BY sportType, monthNumber
+                ORDER BY sportType ASC, monthNumber ASC
             SQL,
             [
-                'year' => (string) $query->getYear(),
+                'years' => array_map('strval', $query->getYears()->toArray()),
+            ],
+            [
+                'years' => ArrayParameterType::STRING,
             ]
         )->fetchAllAssociative();
 
         return new FindActivityCountPerMonthResponse(
             array_map(
                 fn (array $result) => [
-                    Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01', $result['yearAndMonth']))),
+                    $result['monthNumber'],
                     SportType::from($result['sportType']),
                     $result['count'],
                 ],

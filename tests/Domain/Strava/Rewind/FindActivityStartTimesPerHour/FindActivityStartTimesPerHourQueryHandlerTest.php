@@ -11,6 +11,7 @@ use App\Domain\Strava\Rewind\FindActivityStartTimesPerHour\FindActivityStartTime
 use App\Domain\Strava\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHourResponse;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -68,7 +69,7 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var FindActivityStartTimesPerHourResponse $response */
-        $response = $this->queryHandler->handle(new FindActivityStartTimesPerHour(Year::fromInt(2024)));
+        $response = $this->queryHandler->handle(new FindActivityStartTimesPerHour(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [0 => 4],
             $response->getActivityStartTimesPerHour(),

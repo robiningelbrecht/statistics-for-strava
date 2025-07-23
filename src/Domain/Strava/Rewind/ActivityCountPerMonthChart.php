@@ -13,24 +13,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class ActivityCountPerMonthChart
 {
     private function __construct(
-        /** @var array<int, array{0: Month, 1: SportType, 2: int}> */
+        /** @var array<int, array{0: int, 1: SportType, 2: int}> */
         private array $activityCountPerMonth,
-        private Year $year,
         private TranslatorInterface $translator,
     ) {
     }
 
     /**
-     * @param array<int, array{0: Month, 1: SportType, 2: int}> $activityCountPerMonth
+     * @param array<int, array{0: int, 1: SportType, 2: int}> $activityCountPerMonth
      */
     public static function create(
         array $activityCountPerMonth,
-        Year $year,
         TranslatorInterface $translator,
     ): self {
         return new self(
             activityCountPerMonth: $activityCountPerMonth,
-            year: $year,
             translator: $translator
         );
     }
@@ -45,9 +42,7 @@ final readonly class ActivityCountPerMonthChart
         $monthlyTotals = array_fill(1, 12, 0);
         $sportTypes = [];
 
-        foreach ($this->activityCountPerMonth as [$month, $sportType, $count]) {
-            $monthNumber = $month->getMonth();
-
+        foreach ($this->activityCountPerMonth as [$monthNumber, $sportType, $count]) {
             $monthlyActivityCounts[$sportType->value][$monthNumber] = $count;
             $monthlyTotals[$monthNumber] += $count;
 
@@ -85,7 +80,8 @@ final readonly class ActivityCountPerMonthChart
         // X axis labels.
         $xAxisLabels = [];
         for ($monthNumber = 1; $monthNumber <= 12; ++$monthNumber) {
-            $date = sprintf('%s-%02d-01', $this->year, $monthNumber);
+            // We don't care about the year, we only need this to display the month label.
+            $date = sprintf('%s-%02d-01', 2025, $monthNumber);
             $month = Month::fromDate(SerializableDateTime::fromString($date));
             $xAxisLabels[] = $month->getShortLabelWithoutYear();
         }

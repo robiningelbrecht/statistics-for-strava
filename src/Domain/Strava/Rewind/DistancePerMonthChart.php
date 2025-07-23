@@ -15,26 +15,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class DistancePerMonthChart
 {
     private function __construct(
-        /** @var array<int, array{0: Month, 1: SportType, 2: Kilometer}> */
+        /** @var array<int, array{0: int, 1: SportType, 2: Kilometer}> */
         private array $distancePerMonth,
-        private Year $year,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
     ) {
     }
 
     /**
-     * @param array<int, array{0: Month, 1: SportType, 2: Kilometer}> $distancePerMonth
+     * @param array<int, array{0: int, 1: SportType, 2: Kilometer}> $distancePerMonth
      */
     public static function create(
         array $distancePerMonth,
-        Year $year,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
     ): self {
         return new self(
             distancePerMonth: $distancePerMonth,
-            year: $year,
             unitSystem: $unitSystem,
             translator: $translator
         );
@@ -51,9 +48,8 @@ final readonly class DistancePerMonthChart
         $monthlyTotals = array_fill(1, 12, 0);
         $sportTypes = [];
 
-        foreach ($this->distancePerMonth as [$month, $sportType, $distance]) {
+        foreach ($this->distancePerMonth as [$monthNumber, $sportType, $distance]) {
             $convertedDistance = round($distance->toUnitSystem($this->unitSystem)->toFloat());
-            $monthNumber = $month->getMonth();
 
             $monthlyDistances[$sportType->value][$monthNumber] = $convertedDistance;
             $monthlyTotals[$monthNumber] += $convertedDistance;
@@ -92,7 +88,8 @@ final readonly class DistancePerMonthChart
         // X axis labels.
         $xAxisLabels = [];
         for ($monthNumber = 1; $monthNumber <= 12; ++$monthNumber) {
-            $date = sprintf('%s-%02d-01', $this->year, $monthNumber);
+            // We don't care about the year, we only need this to display the month label.
+            $date = sprintf('%s-%02d-01', 2025, $monthNumber);
             $month = Month::fromDate(SerializableDateTime::fromString($date));
             $xAxisLabels[] = $month->getShortLabelWithoutYear();
         }
