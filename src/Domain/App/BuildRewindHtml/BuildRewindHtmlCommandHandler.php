@@ -34,7 +34,7 @@ use App\Domain\Strava\Rewind\PersonalRecordsPerMonthChart;
 use App\Domain\Strava\Rewind\RestDaysVsActiveDaysChart;
 use App\Domain\Strava\Rewind\RewindItem;
 use App\Domain\Strava\Rewind\RewindItems;
-use App\Domain\Strava\Rewind\RewindItemsPerYear;
+use App\Domain\Strava\Rewind\RewindItemsPerGroup;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
@@ -83,7 +83,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 
         $gears = $this->gearRepository->findAll();
 
-        $rewindItemsPerYear = RewindItemsPerYear::empty();
+        $rewindItemsPerYear = RewindItemsPerGroup::empty();
         foreach ($availableRewindYears as $availableRewindYearLeft) {
             $randomImage = null;
             try {
@@ -287,7 +287,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
 
             $rewindItemsPerYear->add(
-                rewindYear: $availableRewindYearLeft,
+                group: (string) $availableRewindYearLeft,
                 items: $rewindItems,
             );
 
@@ -325,8 +325,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     'availableRewindYearsToCompareWith' => $availableRewindYears->filter(fn (Year $year) => $year != $availableRewindYearLeft && $year != $availableRewindYearRight),
                     'activeRewindYearLeft' => $availableRewindYearLeft,
                     'activeRewindYearRight' => $availableRewindYearRight,
-                    'rewindItemsLeft' => $rewindItemsPerYear->getForYear($availableRewindYearLeft),
-                    'rewindItemsRight' => $rewindItemsPerYear->getForYear($availableRewindYearRight),
+                    'rewindItemsLeft' => $rewindItemsPerYear->getForGroup((string) $availableRewindYearLeft),
+                    'rewindItemsRight' => $rewindItemsPerYear->getForGroup((string) $availableRewindYearRight),
                 ]);
 
                 if ($availableRewindYearRight == $defaultRewindYearToCompareWith) {
