@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Rewind\FindAvailableRewindYears;
+namespace App\Domain\Strava\Rewind\FindAvailableRewindOptions;
 
 use App\Domain\Strava\Rewind\RewindCutOffDate;
 use App\Infrastructure\CQRS\Query\Query;
@@ -12,7 +12,7 @@ use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\Connection;
 
-final readonly class FindAvailableRewindYearsQueryHandler implements QueryHandler
+final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHandler
 {
     public function __construct(
         private Connection $connection,
@@ -21,7 +21,7 @@ final readonly class FindAvailableRewindYearsQueryHandler implements QueryHandle
 
     public function handle(Query $query): Response
     {
-        assert($query instanceof FindAvailableRewindYears);
+        assert($query instanceof FindAvailableRewindOptions);
 
         $now = $query->getNow();
         $currentYear = $now->getYear();
@@ -38,7 +38,7 @@ final readonly class FindAvailableRewindYearsQueryHandler implements QueryHandle
             ]
         )->fetchFirstColumn();
 
-        return new FindAvailableRewindYearsResponse(Years::fromArray(array_map(
+        return new FindAvailableRewindOptionsResponse(Years::fromArray(array_map(
             static fn (int $year): Year => Year::fromInt((int) $year),
             $years
         )));

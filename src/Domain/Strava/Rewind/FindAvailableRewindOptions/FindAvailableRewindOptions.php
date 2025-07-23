@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Rewind\FindAvailableRewindYears;
+namespace App\Domain\Strava\Rewind\FindAvailableRewindOptions;
 
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 /**
- * @implements Query<\App\Domain\Strava\Rewind\FindAvailableRewindYears\FindAvailableRewindYearsResponse>
+ * @implements Query<\App\Domain\Strava\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsResponse>
  */
-final readonly class FindAvailableRewindYears implements Query
+final readonly class FindAvailableRewindOptions implements Query
 {
     public function __construct(
         private SerializableDateTime $now,

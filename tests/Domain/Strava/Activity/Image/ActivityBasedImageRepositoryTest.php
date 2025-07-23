@@ -13,6 +13,7 @@ use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
+use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\Activity\ActivityBuilder;
 
@@ -60,7 +61,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
             ActivityId::fromUnprefixed('3'),
             $this->imageRepository->findRandomFor(
                 sportTypes: SportTypes::thatSupportImagesForStravaRewind(),
-                year: Year::fromInt(2024),
+                years: Years::fromArray([Year::fromInt(2024)]),
             )->getActivity()->getId()
         );
     }
@@ -92,11 +93,11 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
             []
         ));
 
-        $this->expectExceptionObject(new EntityNotFound('Random image for 2024 not found'));
+        $this->expectExceptionObject(new EntityNotFound('Random image not found'));
 
         $this->imageRepository->findRandomFor(
             sportTypes: SportTypes::thatSupportImagesForStravaRewind(),
-            year: Year::fromInt(2024),
+            years: Years::fromArray([Year::fromInt(2024)]),
         );
     }
 
