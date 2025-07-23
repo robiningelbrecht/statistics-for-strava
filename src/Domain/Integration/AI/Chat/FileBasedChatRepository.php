@@ -26,6 +26,9 @@ final readonly class FileBasedChatRepository implements ChatRepository
             if (!$message->getContent()) {
                 continue;
             }
+            if (!is_string($message->getContent())) {
+                continue;
+            }
             $history[] = new ChatMessage(
                 message: nl2br($message->getContent()),
                 userProfilePictureUrl: $this->profilePictureUrl,

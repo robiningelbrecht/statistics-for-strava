@@ -33,6 +33,7 @@ class FileBasedChatRepositoryTest extends ContainerTestCase
                 Message::make(MessageRole::USER, 'User message'),
                 Message::make(MessageRole::ASSISTANT, 'Assistant message'),
                 Message::make(MessageRole::USER, ''),
+                Message::make(MessageRole::USER, ['lol']),
             ]);
 
         $this->assertEquals(
