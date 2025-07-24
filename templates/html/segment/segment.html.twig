@@ -80,6 +80,11 @@
                                         {{ svg('power') }}
                                     </div>
                                 </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Gear"|trans }}">
+                                        {{ svg('rocket') }}
+                                    </div>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -107,6 +112,14 @@
                                             {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
                                         {% else %}
                                             {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-2 py-2 truncate">
+                                        {% set gearName = segmentEffort.getActivity().getGearName() %}
+                                        {% if gearName %}
+                                            {{ segmentEffort.getActivity().getGearName() }}
+                                        {% else %}
+                                            {{ "Unspecified"|trans }}
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -145,6 +158,11 @@
                                         {{ svg('power') }}
                                     </div>
                                 </th>
+                                <th scope="col" class="px-2 py-3">
+                                    <div class="flex items-center justify-center" title="{{ "Gear"|trans }}">
+                                        {{ svg('rocket') }}
+                                    </div>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -172,6 +190,14 @@
                                             {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
                                         {% else %}
                                             {{ "n/a"|trans }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-2 py-2 truncate">
+                                        {% set gearName = segmentEffort.getActivity().getGearName() %}
+                                        {% if gearName %}
+                                            {{ segmentEffort.getActivity().getGearName() }}
+                                        {% else %}
+                                            {{ "Unspecified"|trans }}
                                         {% endif %}
                                     </td>
                                 </tr>
