@@ -1,8 +1,17 @@
 {
     "ride-a-total-of-1km": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 24.424
@@ -15,17 +24,44 @@
             "goalHasBeenReached": true,
             "actualValue": 170.793
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "ride-a-total-of-200km": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": false,
             "actualValue": 24.424
@@ -38,17 +74,44 @@
             "goalHasBeenReached": false,
             "actualValue": 170.793
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "a-2km-ride": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 6.106
@@ -61,17 +124,44 @@
             "goalHasBeenReached": true,
             "actualValue": 112.415
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "total-elevation": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 36
@@ -84,17 +174,44 @@
             "goalHasBeenReached": true,
             "actualValue": 601
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "a-1m-elevation-ride": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 9
@@ -107,17 +224,44 @@
             "goalHasBeenReached": true,
             "actualValue": 278
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "quantity": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 4
@@ -130,17 +274,44 @@
             "goalHasBeenReached": true,
             "actualValue": 5
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     },
     "calories": {
-        "2023-12": false,
-        "2023-11": false,
-        "2023-10": false,
+        "2023-12": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-11": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-10": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
         "2023-09": {
             "goalHasBeenReached": true,
             "actualValue": 652
@@ -153,11 +324,29 @@
             "goalHasBeenReached": true,
             "actualValue": 2269
         },
-        "2023-06": false,
-        "2023-05": false,
-        "2023-04": false,
-        "2023-03": false,
-        "2023-02": false,
-        "2023-01": false
+        "2023-06": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-05": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-04": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-03": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-02": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        },
+        "2023-01": {
+            "goalHasBeenReached": false,
+            "actualValue": 0
+        }
     }
 }

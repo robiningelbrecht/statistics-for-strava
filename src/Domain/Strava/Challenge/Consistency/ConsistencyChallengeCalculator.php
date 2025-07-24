@@ -40,7 +40,10 @@ final readonly class ConsistencyChallengeCalculator
 
             foreach ($months as $month) {
                 if (!$metrics = $response->getConsistencyMetricsForMonth($month)) {
-                    $consistency[$challenge->getId()][$month->getId()] = false;
+                    $consistency[$challenge->getId()][$month->getId()] = [
+                        'goalHasBeenReached' => false,
+                        'actualValue' => 0,
+                    ];
                     continue;
                 }
 

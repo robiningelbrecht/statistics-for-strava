@@ -12,9 +12,9 @@ final readonly class ObjectTwigExtension
      * @param class-string $class
      */
     #[AsTwigTest('instanceof')]
-    public function isInstanceOf(?object $object, string $class): bool
+    public function isInstanceOf(mixed $object, string $class): bool
     {
-        if (is_null($object)) {
+        if (!is_object($object)) {
             return false;
         }
         $reflectionClass = new \ReflectionClass($class);
