@@ -1498,9 +1498,6 @@
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
-  .ml-\[-3px\] {
-    margin-left: -3px;
-  }
   .ml-auto {
     margin-left: auto;
   }
@@ -1786,9 +1783,6 @@
   }
   .w-11 {
     width: calc(var(--spacing) * 11);
-  }
-  .w-16 {
-    width: calc(var(--spacing) * 16);
   }
   .w-36 {
     width: calc(var(--spacing) * 36);
@@ -3715,11 +3709,6 @@
       max-width: 50%;
     }
   }
-  .sm\:grid-cols-2 {
-    @media (width >= 40rem) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
   .sm\:flex-row {
     @media (width >= 40rem) {
       flex-direction: row;
@@ -4237,6 +4226,10 @@
     filter: grayscale(100%);
   }
   #heatmap .leaflet-tile-pane {
+    -webkit-filter: grayscale(0);
+    filter: grayscale(0);
+  }
+  #heatmap.enable-grey-scale .leaflet-tile-pane {
     -webkit-filter: grayscale(100%) brightness(75%);
     filter: grayscale(100%) brightness(75%);
   }

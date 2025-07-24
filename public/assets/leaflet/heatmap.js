@@ -1,5 +1,6 @@
 export default function Heatmap($heatmapWrapper) {
     const $heatmap = $heatmapWrapper.querySelector('[data-leaflet-routes]');
+    const config = JSON.parse($heatmap.getAttribute('data-heatmap-config'));
 
     const mainFeatureGroup = L.featureGroup();
     let placesControl = null;
@@ -8,7 +9,7 @@ export default function Heatmap($heatmapWrapper) {
         minZoom: 1,
         maxZoom: 21,
     });
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.tileLayer(config.tileLayerUrl).addTo(map);
 
     const determineMostActiveState = (routes) => {
         const stateCounts = routes.reduce((counts, route) => {
@@ -140,7 +141,7 @@ export default function Heatmap($heatmapWrapper) {
 
             const polyline = L.Polyline.fromEncoded(route.encodedPolyline).getLatLngs();
             L.polyline(polyline, {
-                color: '#fc6719',
+                color: config.polylineColor,
                 weight: 1.5,
                 opacity: 0.5,
                 smoothFactor: 1,

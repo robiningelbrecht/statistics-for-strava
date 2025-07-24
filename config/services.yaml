@@ -88,6 +88,14 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
+    App\Domain\App\HeatmapConfig:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@=app_config("appearance.heatmap.polylineColor", "#fc6719")',
+            '@=app_config("appearance.heatmap.tileLayerUrl", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")',
+            '@=app_config("appearance.heatmap.enableGreyScale", true)'
+        ]
+
     NeuronAI\AgentInterface:
         class: App\Domain\Integration\AI\NeuronAIAgent
 

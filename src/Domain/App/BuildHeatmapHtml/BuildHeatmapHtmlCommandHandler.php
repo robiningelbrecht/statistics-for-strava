@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildHeatmapHtml;
 
+use App\Domain\App\HeatmapConfig;
 use App\Domain\Strava\Activity\Route\Route;
 use App\Domain\Strava\Activity\Route\RouteRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
@@ -19,6 +20,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
     public function __construct(
         private RouteRepository $routeRepository,
         private SportTypeRepository $sportTypeRepository,
+        private HeatmapConfig $heatmapConfig,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -42,6 +44,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                 'numberOfCountriesWithWorkouts' => count(array_unique($routes->map(
                     fn (Route $route) => $route->getLocation()->getCountryCode()
                 ))),
+                'heatmapConfig' => $this->heatmapConfig,
             ]),
         );
     }
