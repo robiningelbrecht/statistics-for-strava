@@ -1,3 +1,13 @@
+# [v3.0.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.2) - 2025-07-24
+
+## What's Changed
+* ISSUE #887: Add a proper chat history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/891
+* ISSUE #893: Add gear to segment effort overviews by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/897
+* ISSUE #895: Add tooltips to consistency challenges by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/898
+* ISSUE #885: Allow to configure heatmap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/896
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.0.1...v3.0.2
+
 # [v3.0.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.1) - 2025-07-23
 
 ## What's Changed
