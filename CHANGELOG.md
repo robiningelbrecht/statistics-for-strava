@@ -1,5 +1,19 @@
 # [v3.0.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.2) - 2025-07-24
 
+This release introduces configuration options for the heatmap
+
+```yaml
+  heatmap:
+    # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
+    # (e.g. "red", "#FF0000", "rgb(255,0,0)")
+    polylineColor: '#fc6719'
+    # Specifies the type of map to use. Must be a valid tile layer URL.
+    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    # Enables or disables grayscale styling on the heatmap.
+    enableGreyScale: true
+```
+
 ## What's Changed
 * ISSUE #887: Add a proper chat history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/891
 * ISSUE #893: Add gear to segment effort overviews by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/897
