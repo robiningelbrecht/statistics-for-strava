@@ -7,11 +7,11 @@ use App\Domain\Integration\AI\Chat\ChatMessage;
 use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
@@ -112,9 +112,9 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             ),
             $this->neuronAIAgent,
             $this->chatRepository,
+            $this->getContainer()->get(CommandBus::class),
             $this->getContainer()->get(FormFactoryInterface::class),
             $this->getContainer()->get(Environment::class),
-            PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
         );
     }
 

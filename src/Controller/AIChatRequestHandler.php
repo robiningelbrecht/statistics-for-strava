@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Domain\Integration\AI\Chat\ChatMessage;
-use App\Domain\Integration\AI\Chat\ChatMessageId;
+use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Http\ServerSentEvent;
-use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
@@ -34,9 +33,9 @@ final readonly class AIChatRequestHandler
         private AppConfig $appConfig,
         private AgentInterface $neuronAIAgent,
         private ChatRepository $chatRepository,
+        private CommandBus $commandBus,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
-        private Clock $clock,
     ) {
     }
 
@@ -90,7 +89,7 @@ final readonly class AIChatRequestHandler
             echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
-                    'chatMessage' => $this->chatRepository->build(
+                    'chatMessage' => $this->chatRepository->buildMessage(
                         message: $message,
                         messageRole: MessageRole::USER,
                     ),
@@ -101,7 +100,7 @@ final readonly class AIChatRequestHandler
             echo new ServerSentEvent(
                 eventName: 'fullMessage',
                 data: $this->twig->render('html/chat/message.html.twig', [
-                    'chatMessage' => $this->chatRepository->build(
+                    'chatMessage' => $this->chatRepository->buildMessage(
                         message: '__PLACEHOLDER__',
                         messageRole: MessageRole::ASSISTANT,
                     ),
@@ -139,11 +138,9 @@ final readonly class AIChatRequestHandler
                     data: $fullMessage
                 );
 
-                $this->chatRepository->add(new ChatMessage(
-                    messageId: ChatMessageId::random(),
+                $this->commandBus->dispatch(new AddChatMessage(
                     message: $fullMessage,
                     messageRole: MessageRole::ASSISTANT,
-                    on: $this->clock->getCurrentDateTimeImmutable()
                 ));
 
                 flush();

@@ -15,5 +15,5 @@ interface ChatRepository
      */
     public function getHistory(): array;
 
-    public function build(string $message, MessageRole $messageRole): ChatMessage;
+    public function buildMessage(string $message, MessageRole $messageRole): ChatMessage;
 }
