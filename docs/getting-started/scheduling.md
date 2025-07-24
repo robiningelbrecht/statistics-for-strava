@@ -72,6 +72,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 ```
 
+### Deck Chores
+
+> A job scheduler for Docker containers, configured via container labels.
+
+https://github.com/funkyfuture/deck-chores
+
 ### Docker Cron
 
 If you want to have more control over the scheduling, check out [this repository](https://github.com/AnalogJ/docker-cron).
