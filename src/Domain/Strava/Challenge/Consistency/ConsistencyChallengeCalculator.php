@@ -47,32 +47,51 @@ final readonly class ConsistencyChallengeCalculator
                 $challengeGoal = $challenge->getGoal();
                 [$numberOfActivities, $totalDistance, $maxDistance, $totalElevation, $maxElevation, $movingTime, $totalCaloriesBurnt] = $metrics;
 
-                $challengeCompleted = match ($challenge->getType()) {
-                    ChallengeConsistencyType::DISTANCE => $this->checkIfGoalHasBeenReached(
-                        $challengeGoal,
-                        $challengeGoal->convertKilometerToUnit($totalDistance)
-                    ),
-                    ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
-                        $challengeGoal,
-                        $challengeGoal->convertKilometerToUnit($maxDistance)
-                    ),
-                    ChallengeConsistencyType::ELEVATION => $this->checkIfGoalHasBeenReached(
-                        $challengeGoal,
-                        $challengeGoal->convertMeterToUnit($totalElevation)
-                    ),
-                    ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => $this->checkIfGoalHasBeenReached(
-                        $challengeGoal,
-                        $challengeGoal->convertMeterToUnit($maxElevation)
-                    ),
-                    ChallengeConsistencyType::MOVING_TIME => $this->checkIfGoalHasBeenReached(
-                        $challengeGoal,
-                        $challengeGoal->convertSecondsToUnit($movingTime)
-                    ),
-                    ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => $numberOfActivities >= $challengeGoal->toInt(),
-                    ChallengeConsistencyType::CALORIES => $totalCaloriesBurnt >= $challengeGoal->toInt(),
+                $consistency[$challenge->getId()][$month->getId()] = match ($challenge->getType()) {
+                    ChallengeConsistencyType::DISTANCE => [
+                        'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
+                            $challengeGoal,
+                            $challengeGoal->convertKilometerToUnit($totalDistance)
+                        ),
+                        'actualValue' => $challengeGoal->convertKilometerToUnit($totalDistance),
+                    ],
+                    ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => [
+                        'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
+                            $challengeGoal,
+                            $challengeGoal->convertKilometerToUnit($maxDistance)
+                        ),
+                        'actualValue' => $challengeGoal->convertKilometerToUnit($maxDistance),
+                    ],
+                    ChallengeConsistencyType::ELEVATION => [
+                        'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
+                            $challengeGoal,
+                            $challengeGoal->convertMeterToUnit($totalElevation)
+                        ),
+                        'actualValue' => $challengeGoal->convertMeterToUnit($totalElevation),
+                    ],
+                    ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => [
+                        'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
+                            $challengeGoal,
+                            $challengeGoal->convertMeterToUnit($maxElevation)
+                        ),
+                        'actualValue' => $challengeGoal->convertMeterToUnit($maxElevation),
+                    ],
+                    ChallengeConsistencyType::MOVING_TIME => [
+                        'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
+                            $challengeGoal,
+                            $challengeGoal->convertSecondsToUnit($movingTime)
+                        ),
+                        'actualValue' => $challengeGoal->convertSecondsToUnit($movingTime),
+                    ],
+                    ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => [
+                        'goalHasBeenReached' => $numberOfActivities >= $challengeGoal->toInt(),
+                        'actualValue' => $numberOfActivities,
+                    ],
+                    ChallengeConsistencyType::CALORIES => [
+                        'goalHasBeenReached' => $totalCaloriesBurnt >= $challengeGoal->toInt(),
+                        'actualValue' => $totalCaloriesBurnt,
+                    ],
                 };
-
-                $consistency[$challenge->getId()][$month->getId()] = $challengeCompleted;
             }
         }
 
