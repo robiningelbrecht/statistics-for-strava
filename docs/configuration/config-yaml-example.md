@@ -74,6 +74,15 @@ appearance:
   dateFormat:
     short: 'd-m-y' # This renders to 01-01-25
     normal: 'd-m-Y' # This renders to 01-01-2025
+  heatmap:
+    # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
+    # (e.g. "red", "#FF0000", "rgb(255,0,0)")
+    polylineColor: '#fc6719'
+    # Specifies the type of map to use. Must be a valid tile layer URL.
+    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    # Enables or disables grayscale styling on the heatmap.
+    enableGreyScale: true
   # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
   # You don't have to include all sport types. Sport types not included in this list will be rendered by the app default.
   # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 

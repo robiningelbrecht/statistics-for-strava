@@ -60,6 +60,11 @@
     }
 
     #heatmap .leaflet-tile-pane {
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+    }
+
+    #heatmap.enable-grey-scale .leaflet-tile-pane {
         -webkit-filter: grayscale(100%) brightness(75%);
         filter: grayscale(100%) brightness(75%);
     }
