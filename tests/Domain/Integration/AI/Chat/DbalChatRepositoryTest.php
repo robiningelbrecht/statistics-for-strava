@@ -74,7 +74,7 @@ class DbalChatRepositoryTest extends ContainerTestCase
             'firstname' => 'robin',
         ]));
 
-        $message = $this->chatRepository->build('The message', MessageRole::USER);
+        $message = $this->chatRepository->buildMessage('The message', MessageRole::USER);
         $this->assertEquals(
             'The message',
             $message->getMessage(),

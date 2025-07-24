@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Chat;
 
-use App\Infrastructure\Time\Clock\Clock;
+use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Chat\History\InMemoryChatHistory as BaseInMemoryChatHistory;
@@ -16,8 +17,7 @@ use NeuronAI\Chat\Messages\Message;
 final class SFSChatHistory extends BaseInMemoryChatHistory
 {
     public function __construct(
-        private readonly ChatRepository $chatRepository,
-        private readonly Clock $clock,
+        private readonly CommandBus $commandBus,
     ) {
         parent::__construct();
     }
@@ -25,11 +25,9 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
     protected function storeMessage(Message $message): ChatHistoryInterface
     {
         if (!empty($message->getContent()) && is_string($message->getContent())) {
-            $this->chatRepository->add(new ChatMessage(
-                messageId: ChatMessageId::random(),
+            $this->commandBus->dispatch(new AddChatMessage(
                 message: $message->getContent(),
                 messageRole: MessageRole::from($message->getRole()),
-                on: $this->clock->getCurrentDateTimeImmutable(),
             ));
         }
 

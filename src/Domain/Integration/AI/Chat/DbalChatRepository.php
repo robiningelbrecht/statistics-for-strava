@@ -55,7 +55,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         return $history;
     }
 
-    public function build(string $message, MessageRole $messageRole): ChatMessage
+    public function buildMessage(string $message, MessageRole $messageRole): ChatMessage
     {
         return new ChatMessage(
             messageId: ChatMessageId::random(),
