@@ -11,19 +11,27 @@ final readonly class HeatmapConfig implements \JsonSerializable
 {
     private function __construct(
         private CssColor $polylineColor,
-        private Url $tileLayerUrl,
+        /** @var Url[] */
+        private array $tileLayerUrls,
         private bool $enableGreyScale,
     ) {
     }
 
+    /**
+     * @param string[]|string $tileLayerUrls
+     */
     public static function create(
         string $polylineColor,
-        string $tileLayerUrl,
+        string|array $tileLayerUrls,
         bool $enableGreyScale,
     ): self {
+        if (is_string($tileLayerUrls)) {
+            $tileLayerUrls = [$tileLayerUrls];
+        }
+
         return new self(
             polylineColor: CssColor::fromString($polylineColor),
-            tileLayerUrl: Url::fromString($tileLayerUrl),
+            tileLayerUrls: array_map(fn (string $url) => Url::fromString($url), $tileLayerUrls),
             enableGreyScale: $enableGreyScale,
         );
     }
@@ -33,9 +41,12 @@ final readonly class HeatmapConfig implements \JsonSerializable
         return $this->polylineColor;
     }
 
-    public function getTileLayerUrl(): Url
+    /**
+     * @return Url[]
+     */
+    public function getTileLayerUrls(): array
     {
-        return $this->tileLayerUrl;
+        return $this->tileLayerUrls;
     }
 
     public function enableGreyScale(): bool
@@ -50,7 +61,7 @@ final readonly class HeatmapConfig implements \JsonSerializable
     {
         return [
             'polylineColor' => $this->getPolylineColor(),
-            'tileLayerUrl' => $this->getTileLayerUrl(),
+            'tileLayerUrls' => $this->getTileLayerUrls(),
             'enableGreyScale' => $this->enableGreyScale(),
         ];
     }

@@ -9,7 +9,10 @@ export default function Heatmap($heatmapWrapper) {
         minZoom: 1,
         maxZoom: 21,
     });
-    L.tileLayer(config.tileLayerUrl).addTo(map);
+
+    config.tileLayerUrls.forEach((tileLayerUrl)=> {
+        L.tileLayer(tileLayerUrl).addTo(map);
+    });
 
     const determineMostActiveState = (routes) => {
         const stateCounts = routes.reduce((counts, route) => {

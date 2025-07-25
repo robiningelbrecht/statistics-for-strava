@@ -79,8 +79,12 @@ appearance:
     # (e.g. "red", "#FF0000", "rgb(255,0,0)")
     polylineColor: '#fc6719'
     # Specifies the type of map to use. Must be a valid tile layer URL.
-    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png
     tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    # You can also define multiple tile layers — for example, to overlay place names on a satellite tile layer.
+    # tileLayerUrl:
+    #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png'
+    #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}.png'
     # Enables or disables grayscale styling on the heatmap.
     enableGreyScale: true
   # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
