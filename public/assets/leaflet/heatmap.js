@@ -10,7 +10,7 @@ export default function Heatmap($heatmapWrapper) {
         maxZoom: 21,
     });
 
-    config.tileLayerUrls.forEach((tileLayerUrl)=> {
+    config.tileLayerUrls.forEach((tileLayerUrl) => {
         L.tileLayer(tileLayerUrl).addTo(map);
     });
 
