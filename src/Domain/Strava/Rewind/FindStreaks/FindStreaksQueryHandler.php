@@ -29,6 +29,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY day
+                ORDER BY day ASC
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
@@ -41,11 +42,12 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         /** @var array<int, array{'year': int, 'week': int}> $weeksAndYears */
         $weeksAndYears = $this->connection->executeQuery(
             <<<SQL
-                SELECT LTRIM(strftime('%W',startDateTime), 0) as week,
-                strftime('%Y',startDateTime) as year
+                SELECT CAST(strftime('%W',startDateTime) AS INTEGER) as week,
+                       CAST(strftime('%Y',startDateTime) AS INTEGER) as year
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
-                GROUP BY week
+                GROUP BY year, week
+                ORDER BY year ASC, week ASC
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
@@ -62,6 +64,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY month
+                ORDER BY month ASC
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
