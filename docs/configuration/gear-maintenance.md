@@ -51,8 +51,9 @@ components:
     # The image must be in the same directory as this config file.
     imgSrc: 'chain.png'
     # List of gear ids this component is attached to
+    # See: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance?id=strava-gear-ids to obtain this ID
     attachedTo:
-      - 'gxxxxxxxx'
+      - 'gxxxxxxxx' # May not always start with g 
       - 'gxxxxxxxx'
     # A list of maintenance tasks for this component
     maintenance:
