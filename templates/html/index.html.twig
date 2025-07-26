@@ -236,7 +236,7 @@
 
     </aside>
     <!-- MAIN -->
-    <main class="p-4 md:ml-64 [&.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
+    <main class="group p-4 md:ml-64 [&.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">
         {% block main %}
             <div id="spinner" class="items-center justify-center h-auto min-h-screen hidden">
                 <div role="status">
@@ -402,6 +402,16 @@
             // Open modal.
             openModal(e.detail.modalId);
         }
+    });
+    document.addEventListener('pageWasLoaded.dashboard', () => {
+        document.querySelector('a[data-dashboard-edit]').addEventListener('click', (e) => {
+            e.preventDefault();
+            $main.classList.add('dashboard-in-edit-mode');
+        });
+        document.querySelector('a[data-dashboard-save]').addEventListener('click', (e) => {
+            e.preventDefault();
+            $main.classList.remove('dashboard-in-edit-mode');
+        });
     });
     document.addEventListener('pageWasLoaded.heatmap', () => {
         const $heatmapWrapper = document.querySelector('.heatmap-wrapper');

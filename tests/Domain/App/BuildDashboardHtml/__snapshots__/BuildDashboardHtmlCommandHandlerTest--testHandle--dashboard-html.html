@@ -1,5 +1,5 @@
 <html><body>
-<nav class="flex mb-5" aria-label="Breadcrumb">
+<nav class="flex justify-between mb-5" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
         <li class="inline-flex items-center">
             <a href="/dashboard" data-router-navigate="/dashboard" class="inline-flex items-center text-gray-700 hover:text-primary-600 hover:underline">
@@ -7,11 +7,29 @@
                 Dashboard
             </a>
         </li>
-            </ol>
+    </ol>
+    <div>
+        <a href="#" data-dashboard-edit class="inline-flex group-[.dashboard-in-edit-mode]:hidden items-center text-xs text-gray-700 hover:text-primary-600 hover:underline">
+            <svg class="size-3 mr-1" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+            edit
+        </a>
+        <a href="#" data-dashboard-save class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center text-xs text-gray-700 hover:text-primary-600 hover:underline">
+            <svg class="size-3 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11c.889-.086 1.416-.543 2.156-1.057a22.323 22.323 0 0 0 3.958-5.084 1.6 1.6 0 0 1 .582-.628 1.549 1.549 0 0 1 1.466-.087c.205.095.388.233.537.406a1.64 1.64 0 0 1 .384 1.279l-1.388 4.114M7 11H4v6.5A1.5 1.5 0 0 0 5.5 19v0A1.5 1.5 0 0 0 7 17.5V11Zm6.5-1h4.915c.286 0 .372.014.626.15.254.135.472.332.637.572a1.874 1.874 0 0 1 .215 1.673l-2.098 6.4C17.538 19.52 17.368 20 16.12 20c-2.303 0-4.79-.943-6.67-1.475"></path>
+            </svg>
+            done
+        </a>
+    </div>
 </nav>
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
         <!-- MOST RECENT ACTIVITIES -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold">
                     Most recent activities
@@ -224,6 +242,12 @@
         </div>
         <!-- INTRO -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
                                     <p class="mb-3">
                                                                 Since I began working out <kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">1 year and 2 months</kbd> ago on <span class="text-sm">30-07-2022</span>, I had <kbd class="px-1 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">10</kbd> active days of working out.            </p>
             <p class="mb-3">
@@ -237,6 +261,12 @@
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
         <!-- WEEKLY STATS -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Weekly stats
             </h3>
@@ -265,6 +295,12 @@
         </div>
         <!-- PEAK POWER OUTPUTS -->
                     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold">Peak power outputs</h3>
                     <a href="#" data-model-content-url="/power-output.html" class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
@@ -409,6 +445,12 @@
             </div>
                 <!-- HEART RATE ZONES -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Heart rate zones
             </h3>
@@ -416,6 +458,12 @@
         </div>
         <!-- ACTIVITY HEATMAP -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <div class="flex items-center">
                 <h3 class="font-semibold text-lg">Activity intensity</h3>
                 <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right" type="button">
@@ -457,6 +505,12 @@
         </div>
         <!-- TRAINING LOAD METRICS -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <div class="flex items-center justify-between mb-4">
                 <h3 class="text-lg font-semibold">Training Load Analysis</h3>
                 <a href="#" data-model-content-url="/training-load.html" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
@@ -636,6 +690,12 @@
         </div>
         <!-- WEEKDAY STATS -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Stats per weekday
             </h3>
@@ -798,6 +858,12 @@
         </div>
         <!-- DAYTIME STATS -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Daytime stats
             </h3>
@@ -919,6 +985,12 @@
         </div>
         <!-- DISTANCE BREAKDOWN -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Distance breakdown
             </h3>
@@ -1377,6 +1449,12 @@
         </div>
         <!-- BEST EFFORTS -->
                     <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
                 <h3 class="mb-4 text-lg font-semibold">
                     Best Efforts
                 </h3>
@@ -1549,6 +1627,12 @@
             </div>
                 <!-- YEARLY DISTANCE STATS -->
         <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Yearly distances
             </h3>
@@ -1751,6 +1835,12 @@
         </div>
         <!-- CHALLENGE CONSISTENCY -->
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
             <h3 class="mb-4 text-lg font-semibold">
                 Challenge consistency
             </h3>
@@ -3148,6 +3238,12 @@
         </div>
         <!-- FTP HISTORY -->
                     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <label data-widget-toggle="test" class="hidden group-[.dashboard-in-edit-mode]:inline-flex items-center mb-2 cursor-pointer">
+        <input type="checkbox" value="" checked class="sr-only peer">
+        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-strava-orange"></div>
+        <span class="ms-2 text-xs text-gray-900">enable</span>
+    </label>
+
                 <h3 class="mb-4 text-lg font-semibold">
                     FTP history
                 </h3>
