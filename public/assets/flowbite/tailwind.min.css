@@ -3249,6 +3249,11 @@
       color: var(--color-strava-orange);
     }
   }
+  .group-\[\.dashboard-in-edit-mode\]\:block {
+    &:is(:where(.group):is(.dashboard-in-edit-mode) *) {
+      display: block;
+    }
+  }
   .group-\[\.dashboard-in-edit-mode\]\:hidden {
     &:is(:where(.group):is(.dashboard-in-edit-mode) *) {
       display: none;

@@ -406,7 +406,7 @@
         });
         document.querySelector('a[data-dashboard-save]').addEventListener('click', (e) => {
             e.preventDefault();
-            $main.classList.remove('dashboard-in-edit-mode');
+            location.reload();
         });
     });
     document.addEventListener('pageWasLoaded.heatmap', () => {
