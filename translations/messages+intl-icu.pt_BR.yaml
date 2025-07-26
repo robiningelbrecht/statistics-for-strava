@@ -349,6 +349,9 @@ clear: limpar
 comments: comments
 compare: compare
 days: days
+done: done
+edit: edit
+enable: enable
 hours: hours
 hrs: hrs
 intensity: intensidade
