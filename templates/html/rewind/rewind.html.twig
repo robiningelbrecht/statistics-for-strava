@@ -76,7 +76,7 @@
             </div>
         </div>
     {% endif %}
-    <div class="grid lg:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {% for item in rewindItems %}
             {% if not item.isPlaceHolderForComparison() %}
                 {% include 'html/rewind/rewind-item.html.twig' with {'item': item, 'extraClass': loop.first and not isAllTimeRewind ? 'lg:col-span-2': '' } %}
