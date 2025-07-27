@@ -12,6 +12,7 @@ use App\Domain\Strava\CouldNotDetermineLeafletMap;
 use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\LeafletMap;
 use App\Infrastructure\Eventing\RecordsEvents;
+use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -381,7 +382,7 @@ final class Activity implements SupportsAITooling
 
     public function getSanitizedName(): string
     {
-        return htmlspecialchars($this->getName());
+        return Escape::htmlSpecialChars($this->getName());
     }
 
     public function updateName(string $name): self
