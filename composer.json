@@ -23,7 +23,6 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-libxml": "*",
-        "ext-pcntl": "*",
         "ext-simplexml": "*",
         "adrenalinkin/doctrine-naming-strategy": "^3.0",
         "doctrine/dbal": "^3",
