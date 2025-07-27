@@ -22,8 +22,10 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
         parent::__construct();
     }
 
-    protected function storeMessage(Message $message): ChatHistoryInterface
+    public function addMessage(Message $message): ChatHistoryInterface
     {
+        parent::addMessage($message);
+
         if (!empty($message->getContent()) && is_string($message->getContent())) {
             $this->commandBus->dispatch(new AddChatMessage(
                 message: $message->getContent(),
@@ -31,6 +33,6 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
             ));
         }
 
-        return parent::storeMessage($message);
+        return $this;
     }
 }
