@@ -39,12 +39,12 @@ final readonly class FtpHistoryWidget implements Widget
         }
 
         return $this->twig->load('html/dashboard/widget/ftp-history.html.twig')->render([
-            'ftpHistoryChart' => !$allFtps->isEmpty() ? Json::encode(
+            'ftpHistoryChart' => Json::encode(
                 FtpHistoryChart::create(
                     ftps: $allFtps,
                     now: $now
                 )->build()
-            ) : null,
+            ),
         ]);
     }
 }

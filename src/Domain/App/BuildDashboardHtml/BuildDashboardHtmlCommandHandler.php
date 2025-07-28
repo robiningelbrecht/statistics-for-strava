@@ -23,13 +23,11 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildDashboardHtml);
 
-        $now = $command->getCurrentDateTime();
-
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
                 'widgets' => $this->widgets,
-                'now' => $now,
+                'now' => $command->getCurrentDateTime(),
             ]),
         );
     }
