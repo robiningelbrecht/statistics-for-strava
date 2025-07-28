@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App;
+namespace App\Domain\App\BuildHeatmapHtml;
 
 use App\Infrastructure\ValueObject\String\CssColor;
 use App\Infrastructure\ValueObject\String\Url;

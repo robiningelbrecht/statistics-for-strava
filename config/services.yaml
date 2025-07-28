@@ -88,7 +88,7 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
 
-    App\Domain\App\HeatmapConfig:
+    App\Domain\App\BuildHeatmapHtml\HeatmapConfig:
         factory: [ null, 'create' ]
         arguments: [
             '@=app_config("appearance.heatmap.polylineColor", "#fc6719")',

@@ -1,0 +1,30 @@
+{% autoescape false %}
+    <h3 class="mb-4 text-lg font-semibold">
+        {{ "Weekly stats"|trans }}
+    </h3>
+    {% if weeklyDistanceCharts|length > 1 %}
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                id="weeklyDistancesActivityTypeTab" data-tabs="#weeklyDistancesActivityTypeTabContent"
+                role="tablist">
+                {% for activityType,chart in weeklyDistanceCharts %}
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#weeklyDistances{{ activityType }}" role="tab"
+                           aria-controls="weeklyDistances{{ activityType }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="weeklyDistancesActivityTypeTabContent">
+        {% for activityType,chart in weeklyDistanceCharts %}
+            <div id="weeklyDistances{{ activityType }}" role="tabpanel"
+                 aria-labelledby="weeklyDistances{{ activityType }}-tab">
+                <div class="h-80" data-echarts-options='{{ chart }}'></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endautoescape %}
