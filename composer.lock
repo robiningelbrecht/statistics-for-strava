@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58823d1fb00462d64c0a43766697bc4f",
+    "content-hash": "7fe331b644334f12265a934d5ff8614f",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -1837,16 +1837,16 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.16.2",
+            "version": "1.16.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "c827df1d6dab308dc6b1648a0da4aa60e98d0e95"
+                "reference": "acd10f7be0ac97eccef8a174b97d3f30d5599621"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/c827df1d6dab308dc6b1648a0da4aa60e98d0e95",
-                "reference": "c827df1d6dab308dc6b1648a0da4aa60e98d0e95",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/acd10f7be0ac97eccef8a174b97d3f30d5599621",
+                "reference": "acd10f7be0ac97eccef8a174b97d3f30d5599621",
                 "shasum": ""
             },
             "require": {
@@ -1899,9 +1899,9 @@
             "description": "The AI Agent Development Kit for PHP.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.16.2"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.16.5"
             },
-            "time": "2025-07-25T16:20:39+00:00"
+            "time": "2025-07-28T15:05:02+00:00"
         },
         {
             "name": "league/flysystem",
@@ -8098,16 +8098,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.5.0",
+            "version": "v5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9"
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/ae59794362fe85e051a58ad36b289443f57be7a9",
-                "reference": "ae59794362fe85e051a58ad36b289443f57be7a9",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/221b0d0fdf1369c71047ad1d18bb5880017bbc56",
+                "reference": "221b0d0fdf1369c71047ad1d18bb5880017bbc56",
                 "shasum": ""
             },
             "require": {
@@ -8150,9 +8150,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.5.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.0"
             },
-            "time": "2025-05-31T08:24:38+00:00"
+            "time": "2025-07-27T20:03:57+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -8460,16 +8460,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.19",
+            "version": "2.1.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "473a8c30e450d87099f76313edcbb90852f9afdf"
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/473a8c30e450d87099f76313edcbb90852f9afdf",
-                "reference": "473a8c30e450d87099f76313edcbb90852f9afdf",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a9ccfef95210f92ba6feea6e8d1eef42b5605499",
+                "reference": "a9ccfef95210f92ba6feea6e8d1eef42b5605499",
                 "shasum": ""
             },
             "require": {
@@ -8514,7 +8514,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-21T19:58:24+00:00"
+            "time": "2025-07-26T20:45:26+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10867,7 +10867,6 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-libxml": "*",
-        "ext-pcntl": "*",
         "ext-simplexml": "*"
     },
     "platform-dev": {},
