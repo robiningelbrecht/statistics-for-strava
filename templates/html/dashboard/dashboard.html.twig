@@ -1,70 +1,68 @@
 {% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': []} %}
 {% autoescape false %}
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
+    <div class="grid grid-cols-1 xl:grid-cols-6 gap-4 mb-4">
         <!-- MOST RECENT ACTIVITIES -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('MostRecentActivities').render(now) }}
         </div>
         <!-- INTRO -->
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('IntroText').render(now) }}
         </div>
-    </div>
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
         <!-- WEEKLY STATS -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('WeeklyStats').render(now) }}
         </div>
         <!-- PEAK POWER OUTPUTS -->
         {% set peakPowerOutputsRender = widgets.getWidget('PeakPowerOutputs').render(now) %}
         {% if peakPowerOutputsRender is not empty %}
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {{ peakPowerOutputsRender }}
             </div>
         {% endif %}
         <!-- HEART RATE ZONES -->
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('HeartRateZones').render(now) }}
         </div>
         <!-- ACTIVITY INTENSITY -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('ActivityIntensity').render(now) }}
         </div>
         <!-- TRAINING LOAD METRICS -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('TrainingLoad').render(now) }}
         </div>
         <!-- WEEKDAY STATS -->
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('WeekdayStats').render(now) }}
         </div>
         <!-- DAYTIME STATS -->
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('DayTimeStats').render(now) }}
         </div>
         <!-- DISTANCE BREAKDOWN -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('DistanceBreakdown').render(now) }}
         </div>
         <!-- BEST EFFORTS -->
         {% set bestEffortsRender = widgets.getWidget('BestEfforts').render(now) %}
         {% if bestEffortsRender is not empty %}
-            <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {{ bestEffortsRender }}
             </div>
         {% endif %}
         <!-- YEARLY DISTANCE STATS -->
-        <div class="xl:col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-6 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('YearlyDistances').render(now) }}
         </div>
         <!-- CHALLENGE CONSISTENCY -->
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             {{ widgets.getWidget('ChallengeConsistency').render(now) }}
         </div>
         <!-- FTP HISTORY -->
         {% set ftpHistoryRender = widgets.getWidget('FtpHistory').render(now) %}
         {% if ftpHistoryRender is not empty %}
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="xl:col-span-3 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {{ ftpHistoryRender }}
             </div>
         {% endif %}
