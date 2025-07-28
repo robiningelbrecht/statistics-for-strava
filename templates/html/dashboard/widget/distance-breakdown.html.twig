@@ -1,0 +1,91 @@
+{% autoescape false %}
+    <h3 class="mb-4 text-lg font-semibold">
+        {{ "Distance breakdown"|trans }}
+    </h3>
+    {% if distanceBreakdowns|length > 1 %}
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                id="distanceBreakdownActivityTypeTab" data-tabs="#distanceBreakdownActivityTypeTabContent"
+                role="tablist">
+                {% for activityType,distanceBreakdown in distanceBreakdowns %}
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}" role="tab"
+                           aria-controls="distanceBreakdown{{ activityType }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="distanceBreakdownActivityTypeTabContent">
+        {% for activityType,distanceBreakdown in distanceBreakdowns %}
+            <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}" role="tabpanel"
+                 aria-labelledby="distanceBreakdown{{ activityType }}-tab">
+                <table class="w-full text-sm text-center text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            # {{ "workouts"|trans }}
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('distance') }}
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('elevation') }}
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('time') }}
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('speed') }}
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for statistic in distanceBreakdown %}
+                        <tr class="bg-white border-b">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                <div>{{ statistic.label }}</div>
+                            </th>
+                            <td class="px-6 py-2">
+                                {{ statistic.numberOfWorkouts }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% if statistic.totalDistance.toFloat() > 0 %}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                                    {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
+                                {% else %}
+                                    0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.totalElevation|renderMeasurement(0) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.movingTimeForHumans }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.averageSpeed|renderMeasurement(1) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% endautoescape %}

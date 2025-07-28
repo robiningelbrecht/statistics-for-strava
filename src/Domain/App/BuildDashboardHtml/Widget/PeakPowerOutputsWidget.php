@@ -17,7 +17,7 @@ use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final readonly class PeakPowerOutputs implements Widget
+final readonly class PeakPowerOutputsWidget implements Widget
 {
     public function __construct(
         private ActivitiesEnricher $activitiesEnricher,

@@ -13,7 +13,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final readonly class WeeklyStats implements Widget
+final readonly class WeeklyStatsWidget implements Widget
 {
     public function __construct(
         private ActivitiesEnricher $activitiesEnricher,
@@ -33,6 +33,7 @@ final readonly class WeeklyStats implements Widget
                 continue;
             }
             $activityType = ActivityType::from($activityType);
+
             if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
