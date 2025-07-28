@@ -1,0 +1,62 @@
+{% autoescape false %}
+    <h3 class="mb-4 text-lg font-semibold">
+        {{ "Stats per weekday"|trans }}
+    </h3>
+    <div class="h-80" data-echarts-options='{{ weekdayStatsChart }}'></div>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-center text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    # workouts
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('distance') }}
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('elevation') }}
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('time') }}
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for weekday, statistic in weekdayStats.getData() %}
+                <tr class="bg-white border-b">
+                    <th scope="row"
+                        class="px-2 py-2 sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
+                        {{ weekday }}
+                    </th>
+                    <td class="px-6 py-2">
+                        {{ statistic.numberOfWorkouts }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {% if statistic.totalDistance.toFloat() > 0 %}
+                            {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
+                            {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
+                        {% else %}
+                            0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.totalElevation|renderMeasurement(0) }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.movingTimeForHumans }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endautoescape %}

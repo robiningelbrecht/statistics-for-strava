@@ -5,66 +5,17 @@ declare(strict_types=1);
 namespace App\Domain\App\BuildDashboardHtml;
 
 use App\Domain\App\BuildDashboardHtml\Widget\Widgets;
-use App\Domain\Strava\Activity\ActivitiesEnricher;
-use App\Domain\Strava\Activity\ActivityIntensity;
-use App\Domain\Strava\Activity\ActivityIntensityChart;
-use App\Domain\Strava\Activity\ActivityType;
-use App\Domain\Strava\Activity\ActivityTypeRepository;
-use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
-use App\Domain\Strava\Activity\BestEffort\BestEffortChart;
-use App\Domain\Strava\Activity\DaytimeStats\DaytimeStats;
-use App\Domain\Strava\Activity\DaytimeStats\DaytimeStatsCharts;
-use App\Domain\Strava\Activity\DistanceBreakdown;
-use App\Domain\Strava\Activity\SportType\SportTypeRepository;
-use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
-use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
-use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDays;
-use App\Domain\Strava\Activity\Training\TrainingLoadChart;
-use App\Domain\Strava\Activity\Training\TrainingMetrics;
-use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
-use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
-use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
-use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
-use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
-use App\Domain\Strava\Activity\YearlyDistance\YearlyStatistics;
-use App\Domain\Strava\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
-use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
-use App\Domain\Strava\Calendar\Months;
-use App\Domain\Strava\Challenge\Consistency\ConsistencyChallengeCalculator;
-use App\Domain\Strava\Challenge\Consistency\ConsistencyChallenges;
-use App\Domain\Strava\Ftp\FtpHistory;
-use App\Domain\Strava\Ftp\FtpHistoryChart;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\CQRS\Query\Bus\QueryBus;
-use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use App\Infrastructure\ValueObject\Time\DateRange;
-use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private Widgets $widgets,
-        private ActivityHeartRateRepository $activityHeartRateRepository,
-        private FtpHistory $ftpHistory,
-        private AthleteWeightHistory $athleteWeightHistory,
-        private ActivityTypeRepository $activityTypeRepository,
-        private SportTypeRepository $sportTypeRepository,
-        private ActivityBestEffortRepository $activityBestEffortRepository,
-        private ActivitiesEnricher $activitiesEnricher,
-        private ActivityIntensity $activityIntensity,
-        private ConsistencyChallenges $consistencyChallenges,
-        private ConsistencyChallengeCalculator $consistencyChallengeCalculator,
-        private QueryBus $queryBus,
-        private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -73,183 +24,13 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildDashboardHtml);
 
         $now = $command->getCurrentDateTime();
-        $importedActivityTypes = $this->activityTypeRepository->findAll();
-        $importedSportTypes = $this->sportTypeRepository->findAll();
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
-        $allFtps = $this->ftpHistory->findAll();
-        $allYears = Years::create(
-            startDate: $allActivities->getFirstActivityStartDate(),
-            endDate: $now
-        );
-        $allMonths = Months::create(
-            startDate: $allActivities->getFirstActivityStartDate(),
-            endDate: $now
-        );
-        $weekdayStats = WeekdayStats::create(
-            activities: $allActivities,
-            translator: $this->translator
-        );
-        $dayTimeStats = DaytimeStats::create($allActivities);
-
-        $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
-        $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
-
-        $distanceBreakdowns = [];
-        $yearlyDistanceCharts = [];
-        $yearlyStatistics = [];
-
-        foreach ($activitiesPerActivityType as $activityType => $activities) {
-            if ($activities->isEmpty()) {
-                continue;
-            }
-
-            $activityType = ActivityType::from($activityType);
-
-            if ($activityType->supportsDistanceBreakdownStats()) {
-                $distanceBreakdown = DistanceBreakdown::create(
-                    activities: $activitiesPerActivityType[$activityType->value],
-                    unitSystem: $this->unitSystem
-                );
-
-                if ($build = $distanceBreakdown->build()) {
-                    $distanceBreakdowns[$activityType->value] = $build;
-                }
-            }
-
-            if ($activityType->supportsYearlyStats()) {
-                $yearlyDistanceCharts[$activityType->value] = Json::encode(
-                    YearlyDistanceChart::create(
-                        yearStats: $yearlyStatsPerDay,
-                        uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
-                        activityType: $activityType,
-                        unitSystem: $this->unitSystem,
-                        translator: $this->translator,
-                        now: $now
-                    )->build()
-                );
-
-                $yearlyStatistics[$activityType->value] = YearlyStatistics::create(
-                    yearlyStats: $yearlyStats,
-                    activityType: $activityType,
-                    years: $allYears
-                );
-            }
-        }
-
-        /** @var \App\Domain\Strava\Ftp\Ftp $ftp */
-        foreach ($allFtps as $ftp) {
-            try {
-                $ftp->enrichWithAthleteWeight(
-                    $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
-                );
-            } catch (EntityNotFound) {
-            }
-        }
-
-        $bestEfforts = $bestEffortsCharts = [];
-        /** @var ActivityType $activityType */
-        foreach ($importedActivityTypes as $activityType) {
-            if (!$activityType->supportsBestEffortsStats()) {
-                continue;
-            }
-
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
-            if ($bestEffortsForActivityType->isEmpty()) {
-                continue;
-            }
-
-            $bestEfforts[$activityType->value] = $bestEffortsForActivityType;
-            $bestEffortsCharts[$activityType->value] = Json::encode(
-                BestEffortChart::create(
-                    activityType: $activityType,
-                    bestEfforts: $bestEffortsForActivityType,
-                    sportTypes: $importedSportTypes,
-                    translator: $this->translator,
-                )->build()
-            );
-        }
-
-        $intensities = [];
-        for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 210); $i >= 0; --$i) {
-            $calculateForDate = $now->modify('- '.$i.' days');
-            $intensities[$calculateForDate->format('Y-m-d')] = $this->activityIntensity->calculateForDate($calculateForDate);
-        }
-
-        $trainingMetrics = TrainingMetrics::create($intensities);
-        $numberOfRestDays = $this->queryBus->ask(new FindNumberOfRestDays(DateRange::fromDates(
-            from: $now->modify('-6 days'),
-            till: $now,
-        )))->getNumberOfRestDays();
-        $timeInHeartRateZonesForLast30Days = $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days();
 
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
                 'widgets' => $this->widgets,
-                'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
-                'activityIntensityChart' => Json::encode(
-                    ActivityIntensityChart::create(
-                        activityIntensity: $this->activityIntensity,
-                        translator: $this->translator,
-                        now: $now,
-                    )->build()
-                ),
-                'weekdayStatsChart' => Json::encode(
-                    WeekdayStatsChart::create($weekdayStats)->build(),
-                ),
-                'weekdayStats' => $weekdayStats,
-                'daytimeStatsChart' => Json::encode(
-                    DaytimeStatsCharts::create(
-                        daytimeStats: $dayTimeStats,
-                        translator: $this->translator,
-                    )->build(),
-                ),
-                'daytimeStats' => $dayTimeStats,
-                'distanceBreakdowns' => $distanceBreakdowns,
-                'ftpHistoryChart' => !$allFtps->isEmpty() ? Json::encode(
-                    FtpHistoryChart::create(
-                        ftps: $allFtps,
-                        now: $now
-                    )->build()
-                ) : null,
-                'timeInHeartRateZoneChart' => Json::encode(
-                    TimeInHeartRateZoneChart::create(
-                        timeInHeartRateZones: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZones(),
-                        translator: $this->translator,
-                    )->build(),
-                ),
-                'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
-                'allMonths' => $allMonths,
-                'allConsistencyChallenges' => $this->consistencyChallenges,
-                'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(
-                    months: $allMonths,
-                    challenges: $this->consistencyChallenges
-                ),
-                'yearlyDistanceCharts' => $yearlyDistanceCharts,
-                'yearlyStatistics' => $yearlyStatistics,
-                'bestEfforts' => $bestEfforts,
-                'bestEffortsCharts' => $bestEffortsCharts,
-                'trainingMetrics' => $trainingMetrics,
-                'restDaysInLast7Days' => $numberOfRestDays,
                 'now' => $now,
             ]),
-        );
-
-        $this->buildStorage->write(
-            'training-load.html',
-            $this->twig->render('html/dashboard/training-load.html.twig', [
-                'trainingLoadChart' => Json::encode(
-                    TrainingLoadChart::create(
-                        trainingMetrics: $trainingMetrics,
-                        translator: $this->translator,
-                        now: $now
-                    )->build()
-                ),
-                'trainingMetrics' => $trainingMetrics,
-                'restDaysInLast7Days' => $numberOfRestDays,
-                'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
-            ])
         );
     }
 }

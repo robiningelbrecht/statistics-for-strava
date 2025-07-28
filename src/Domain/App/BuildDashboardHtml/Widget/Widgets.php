@@ -20,7 +20,8 @@ final readonly class Widgets
     public function getWidget(string $widgetName): Widget
     {
         foreach ($this->widgets as $widget) {
-            if (new \ReflectionClass($widget)->getShortName() === $widgetName) {
+            $className = str_replace('Widget', '', new \ReflectionClass($widget)->getShortName());
+            if ($className === $widgetName) {
                 return $widget;
             }
         }
