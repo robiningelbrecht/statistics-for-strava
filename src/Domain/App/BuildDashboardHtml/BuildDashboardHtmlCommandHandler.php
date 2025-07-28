@@ -26,8 +26,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
-                'widgets' => $this->widgets,
-                'now' => $command->getCurrentDateTime(),
+                'widgets' => $this->widgets->getRenderedWidgets(),
             ]),
         );
     }
