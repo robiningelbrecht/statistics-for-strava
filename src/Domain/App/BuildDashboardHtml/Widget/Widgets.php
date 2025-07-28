@@ -9,7 +9,7 @@ use App\Domain\App\BuildDashboardHtml\RenderedWidget;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
-final class Widgets
+final class Widgets implements \IteratorAggregate
 {
     /** @var Widget[] */
     private array $widgets;
@@ -28,10 +28,7 @@ final class Widgets
         }
     }
 
-    /**
-     * @return RenderedWidget[]
-     */
-    public function getRenderedWidgets(): array
+    public function getIterator(): \Traversable
     {
         $renderedWidgets = [];
         $layout = DashboardLayout::default();
@@ -54,6 +51,6 @@ final class Widgets
             );
         }
 
-        return $renderedWidgets;
+        return new \ArrayIterator($renderedWidgets);
     }
 }
