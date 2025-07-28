@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildDashboardHtml;
 
+use App\Domain\App\BuildDashboardHtml\Widget\Widgets;
 use App\Domain\Strava\Activity\ActivitiesEnricher;
 use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Activity\ActivityIntensityChart;
-use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\ActivityType;
 use App\Domain\Strava\Activity\ActivityTypeRepository;
 use App\Domain\Strava\Activity\BestEffort\ActivityBestEffortRepository;
@@ -16,17 +16,13 @@ use App\Domain\Strava\Activity\DaytimeStats\DaytimeStats;
 use App\Domain\Strava\Activity\DaytimeStats\DaytimeStatsCharts;
 use App\Domain\Strava\Activity\DistanceBreakdown;
 use App\Domain\Strava\Activity\SportType\SportTypeRepository;
-use App\Domain\Strava\Activity\SportType\SportTypes;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Strava\Activity\Stream\ActivityPowerRepository;
-use App\Domain\Strava\Activity\Stream\BestPowerOutputs;
-use App\Domain\Strava\Activity\Stream\PowerOutputChart;
 use App\Domain\Strava\Activity\Training\FindNumberOfRestDays\FindNumberOfRestDays;
 use App\Domain\Strava\Activity\Training\TrainingLoadChart;
 use App\Domain\Strava\Activity\Training\TrainingMetrics;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStats;
 use App\Domain\Strava\Activity\WeekdayStats\WeekdayStatsChart;
-use App\Domain\Strava\Activity\WeeklyDistanceTimeChart;
 use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
 use App\Domain\Strava\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
 use App\Domain\Strava\Activity\YearlyDistance\YearlyDistanceChart;
@@ -53,8 +49,8 @@ use Twig\Environment;
 final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
+        private Widgets $widgets,
         private ActivityHeartRateRepository $activityHeartRateRepository,
-        private ActivityPowerRepository $activityPowerRepository,
         private FtpHistory $ftpHistory,
         private AthleteWeightHistory $athleteWeightHistory,
         private ActivityTypeRepository $activityTypeRepository,
@@ -99,7 +95,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
         $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
 
-        $weeklyDistanceTimeCharts = [];
         $distanceBreakdowns = [];
         $yearlyDistanceCharts = [];
         $yearlyStatistics = [];
@@ -110,15 +105,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             }
 
             $activityType = ActivityType::from($activityType);
-            if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
-                activities: $activitiesPerActivityType[$activityType->value],
-                unitSystem: $this->unitSystem,
-                activityType: $activityType,
-                translator: $this->translator,
-                now: $now,
-            )->build()) {
-                $weeklyDistanceTimeCharts[$activityType->value] = Json::encode($chartData);
-            }
 
             if ($activityType->supportsDistanceBreakdownStats()) {
                 $distanceBreakdown = DistanceBreakdown::create(
@@ -161,14 +147,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
             }
         }
 
-        $activityTotals = ActivityTotals::getInstance(
-            activities: $allActivities,
-            now: $now,
-            translator: $this->translator,
-        );
-
-        $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
-
         $bestEfforts = $bestEffortsCharts = [];
         /** @var ActivityType $activityType */
         foreach ($importedActivityTypes as $activityType) {
@@ -208,11 +186,8 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
         $this->buildStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
+                'widgets' => $this->widgets,
                 'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
-                'mostRecentActivities' => $allActivities->slice(0, 5),
-                'intro' => $activityTotals,
-                'weeklyDistanceCharts' => $weeklyDistanceTimeCharts,
-                'powerOutputs' => $bestAllTimePowerOutputs,
                 'activityIntensityChart' => Json::encode(
                     ActivityIntensityChart::create(
                         activityIntensity: $this->activityIntensity,
@@ -257,6 +232,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'bestEffortsCharts' => $bestEffortsCharts,
                 'trainingMetrics' => $trainingMetrics,
                 'restDaysInLast7Days' => $numberOfRestDays,
+                'now' => $now,
             ]),
         );
 
@@ -274,49 +250,6 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
                 'restDaysInLast7Days' => $numberOfRestDays,
                 'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
             ])
-        );
-
-        if ($bestAllTimePowerOutputs->isEmpty()) {
-            return;
-        }
-
-        $bestPowerOutputs = BestPowerOutputs::empty();
-        $bestPowerOutputs->add(
-            description: $this->translator->trans('All time'),
-            powerOutputs: $bestAllTimePowerOutputs
-        );
-        $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 45 days'),
-            powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
-                dateRange: DateRange::lastXDays($now, 45)
-            )
-        );
-        $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 90 days'),
-            powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
-                dateRange: DateRange::lastXDays($now, 90)
-            )
-        );
-        foreach ($allYears->reverse() as $year) {
-            $bestPowerOutputs->add(
-                description: (string) $year,
-                powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                    sportTypes: SportTypes::thatSupportPeakPowerOutputs(),
-                    dateRange: $year->getRange(),
-                )
-            );
-        }
-
-        $this->buildStorage->write(
-            'power-output.html',
-            $this->twig->load('html/dashboard/power-output.html.twig')->render([
-                'powerOutputChart' => Json::encode(
-                    PowerOutputChart::create($bestPowerOutputs)->build()
-                ),
-                'bestPowerOutputs' => $bestPowerOutputs,
-            ]),
         );
     }
 }

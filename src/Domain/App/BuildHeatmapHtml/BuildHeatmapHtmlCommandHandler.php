@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildHeatmapHtml;
 
-use App\Domain\App\HeatmapConfig;
 use App\Domain\Strava\Activity\Route\Route;
 use App\Domain\Strava\Activity\Route\RouteRepository;
 use App\Domain\Strava\Activity\SportType\SportType;
