@@ -9,6 +9,7 @@ use App\Infrastructure\ValueObject\Measurement\Imperial;
 use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
@@ -57,7 +58,7 @@ final readonly class MeasurementTwigExtension
     }
 
     #[AsTwigFilter('formatPace')]
-    public function formatPace(SecPerKm $pace): string
+    public function formatPace(SecPerKm|SecPer100Meter $pace): string
     {
         $pace = $pace->toUnitSystem($this->unitSystem);
 

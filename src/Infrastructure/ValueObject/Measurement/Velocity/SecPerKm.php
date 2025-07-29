@@ -23,6 +23,11 @@ final readonly class SecPerKm implements Unit
         return SecPerMile::from($this->value * Mile::FACTOR_TO_KM);
     }
 
+    public function toSecPer100Meter(): SecPer100Meter
+    {
+        return SecPer100Meter::from($this->value / 10);
+    }
+
     public function toMetersPerSecond(): MetersPerSecond
     {
         if (0.0 === $this->value) {

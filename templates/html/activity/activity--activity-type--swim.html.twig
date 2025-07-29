@@ -1,0 +1,185 @@
+{% extends "html/activity/activity--activity-type--generic.html.twig" %}
+
+{% block mainStatsOnTop %}
+    {% autoescape false %}
+        <div class="grid grid-cols-6 gap-2">
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
+                    <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Moving time"|trans }}</dd>
+                    <dt class="font-extrabold">{{ activity.getMovingTimeFormatted() }}</dt>
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Pace"|trans }}</dd>
+                    <dt class="font-extrabold">{{ activity.getPaceInSecPerKm()|formatPace }}</dt>
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Heart rate"|trans }}</dd>
+                    <dt class="font-extrabold">{{ activity.getAverageHeartRate() }}</dt>
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Calories"|trans }}</dd>
+                    <dt class="font-extrabold">{{ activity.getCalories() }}</dt>
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
+                    <dt class="text-xs font-extrabold">{{ activity.getDeviceName() ?: 'None' }}</dt>
+                </div>
+            </div>
+        </div>
+    {% endautoescape %}
+{% endblock mainStatsOnTop %}
+
+{% block statsInleftColumn %}
+    {% autoescape false %}
+        {% if not splits.isEmpty() or not laps.isEmpty() %}
+            <div>
+                {% if not splits.isEmpty() and not laps.isEmpty() %}
+                    <div class="mb-4 border-b border-gray-200">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
+                            <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Splits"|trans }}
+                                </a>
+                            </li>
+                            <li class="mr-2" role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Laps"|trans }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+                <div id="splitsLapsTabContent">
+                    {% if not splits.isEmpty() %}
+                        <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
+                            <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                    <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                    <div class="grow min-w-[10rem] px-2 py-2"></div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
+                                </div>
+                                {% for split in splits %}
+                                    <div class="flex items-center border-b last:border-b-0">
+                                        <div class="w-[2rem] px-2 py-2 font-bold">
+                                            {{ split.getSplitNumber() }}
+                                        </div>
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ split.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
+                                        </div>
+                                        <div class="grow min-w-[10rem] px-2 py-2">
+                                            <div class=" bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+                                            </div>
+                                        </div>
+                                        {% if split.getAverageHeartRate() %}
+                                            <div class="w-[5rem] px-2 py-2">
+                                                {{ split.getAverageHeartRate() }}
+                                            </div>
+                                        {% else %}
+                                            <div class="w-[5rem] px-2 py-2">
+                                                {{ "n/a"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if not laps.isEmpty() %}
+                        <div id="splitsLapsTabLaps" role="tabpanel" aria-labelledby="splitsLapsTabLaps-tab">
+                            <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                    <div class="w-[2rem] px-2 py-2">{{ "Lap"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Distance"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Time"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                    <div class="w-[8rem] px-2 py-2">{{ "HR"|trans }}</div>
+                                </div>
+                                {% for lap in laps %}
+                                    <div class="flex items-center border-b last:border-b-0">
+                                        <div class="w-[2rem] px-2 py-2 font-bold">
+                                            {{ lap.getLapNumber() }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lap.getDistance()|renderMeasurement(0) }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lap.getMovingTimeFormatted() }}
+                                        </div>
+                                        <div class="w-[8rem] px-2 py-2">
+                                            {{ lap.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
+                                        </div>
+                                        {% if lap.getAverageHeartRate() %}
+                                            <div class="w-[8rem] px-2 py-2">
+                                                {{ lap.getAverageHeartRate() }}
+                                            </div>
+                                        {% else %}
+                                            <div class="w-[8rem] px-2 py-2">
+                                                {{ "n/a"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endautoescape %}
+{% endblock statsInleftColumn %}
+
+{% block extraStatsUnderColumns %}
+    {% autoescape false %}
+        {% if bestEfforts|length > 0 %}
+            <div>
+                <div class="font-medium text-gray-900">{{ "Fastest times"|trans }}</div>
+                <div class="mb-2 text-gray-500 text-xs">
+                    {{ "Congrats! You achieved personal bests during this activity."|trans }}
+                </div>
+                <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase">
+                        <tr>
+                            <th scope="col" class="px-2 py-2">
+                                {{ "Distance"|trans }}
+                            </th>
+                            <th scope="col" class="px-2 py-3">
+                                {{ "Time"|trans }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for bestEffort in bestEfforts %}
+                            {% set distance = bestEffort.getBestEffortDistance() %}
+                            <tr class="border-b last:border-b-0">
+                                <th class="px-2 py-2">
+                                    {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
+                                </th>
+                                <td class="px-2 py-2">
+                                    {{ bestEffort.getFormattedTime() }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    {% endautoescape %}
+{% endblock extraStatsUnderColumns %}
