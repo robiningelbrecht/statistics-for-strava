@@ -22,7 +22,7 @@ final readonly class HeartRateZonesWidget implements Widget
 
     public function render(SerializableDateTime $now): string
     {
-        return $this->twig->load('html/dashboard/widget/heart-rate-zones.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--heart-rate-zones.html.twig')->render([
             'timeInHeartRateZoneChart' => Json::encode(
                 TimeInHeartRateZoneChart::create(
                     timeInHeartRateZones: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZones(),

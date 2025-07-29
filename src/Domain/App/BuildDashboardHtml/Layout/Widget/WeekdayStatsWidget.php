@@ -30,7 +30,7 @@ final readonly class WeekdayStatsWidget implements Widget
             translator: $this->translator
         );
 
-        return $this->twig->load('html/dashboard/widget/weekday-stats.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--weekday-stats.html.twig')->render([
             'weekdayStats' => $weekdayStats,
             'weekdayStatsChart' => Json::encode(
                 WeekdayStatsChart::create($weekdayStats)->build(),

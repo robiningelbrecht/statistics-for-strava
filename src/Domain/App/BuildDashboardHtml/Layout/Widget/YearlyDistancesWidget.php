@@ -72,7 +72,7 @@ final readonly class YearlyDistancesWidget implements Widget
             );
         }
 
-        return $this->twig->load('html/dashboard/widget/yearly-distances.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--yearly-distances.html.twig')->render([
             'yearlyDistanceCharts' => $yearlyDistanceCharts,
             'yearlyStatistics' => $yearlyStatistics,
         ]);
