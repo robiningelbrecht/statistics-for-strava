@@ -9,7 +9,7 @@ use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
-final readonly class KmPerHour implements Unit, Metric
+final readonly class KmPerHour implements Unit, Metric, Velocity
 {
     use MeasurementFromFloat;
 
