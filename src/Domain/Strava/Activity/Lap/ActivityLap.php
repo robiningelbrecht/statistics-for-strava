@@ -10,6 +10,7 @@ use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -149,6 +150,11 @@ final readonly class ActivityLap implements SupportsAITooling
     public function getPaceInSecPerKm(): SecPerKm
     {
         return $this->getAverageSpeed()->toSecPerKm();
+    }
+
+    public function getPaceInSecPer100Meter(): SecPer100Meter
+    {
+        return $this->getAverageSpeed()->toSecPerKm()->toSecPer100Meter();
     }
 
     public function getAverageSpeed(): MetersPerSecond

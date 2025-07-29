@@ -101,6 +101,7 @@ The dashboard is built using widgets. You can enable or disable each widget, and
 Below is an example of a dashboard configuration. In fact, it's the default configuration, so you can use it as a starting point.
 
 ```yaml
+appearance:
   dashboard:
     # The width is a percentage of the available space, so 33 means the widget will take up one third of the available space.
     # The allowed values for width are 33, 50, 66, and 100.

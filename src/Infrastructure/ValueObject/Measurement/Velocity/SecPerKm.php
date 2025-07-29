@@ -6,10 +6,9 @@ namespace App\Infrastructure\ValueObject\Measurement\Velocity;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
-use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
-final readonly class SecPerKm implements Unit
+final readonly class SecPerKm implements Pace
 {
     use MeasurementFromFloat;
 
@@ -21,6 +20,11 @@ final readonly class SecPerKm implements Unit
     public function toSecPerMile(): SecPerMile
     {
         return SecPerMile::from($this->value * Mile::FACTOR_TO_KM);
+    }
+
+    public function toSecPer100Meter(): SecPer100Meter
+    {
+        return SecPer100Meter::from($this->value / 10);
     }
 
     public function toMetersPerSecond(): MetersPerSecond

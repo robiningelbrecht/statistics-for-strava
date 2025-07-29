@@ -15,7 +15,16 @@ class SportTypeTest extends ContainerTestCase
     {
         $snapshot = [];
         foreach (SportType::cases() as $sportType) {
-            $snapshot[] = $sportType->getTemplateName();
+            $snapshot[$sportType->value] = $sportType->getTemplateName();
+        }
+        $this->assertMatchesJsonSnapshot($snapshot);
+    }
+
+    public function testGetVelocityDisplayPreference(): void
+    {
+        $snapshot = [];
+        foreach (SportType::cases() as $sportType) {
+            $snapshot[$sportType->value] = $sportType->getVelocityDisplayPreference()::class;
         }
         $this->assertMatchesJsonSnapshot($snapshot);
     }
@@ -24,7 +33,7 @@ class SportTypeTest extends ContainerTestCase
     {
         $snapshot = [];
         foreach (SportType::cases() as $sportType) {
-            $snapshot[] = $sportType->trans($this->getContainer()->get(TranslatorInterface::class));
+            $snapshot[$sportType->value] = $sportType->trans($this->getContainer()->get(TranslatorInterface::class));
         }
         $this->assertMatchesJsonSnapshot($snapshot);
     }

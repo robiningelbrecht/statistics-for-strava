@@ -7,7 +7,7 @@ namespace App\Infrastructure\ValueObject\Measurement\Velocity;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
-final readonly class MetersPerSecond implements Unit
+final readonly class MetersPerSecond implements Unit, Velocity
 {
     use MeasurementFromFloat;
 

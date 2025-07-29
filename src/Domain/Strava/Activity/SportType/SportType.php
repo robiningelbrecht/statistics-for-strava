@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Activity\SportType;
 
 use App\Domain\Strava\Activity\ActivityType;
+use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use App\Infrastructure\ValueObject\Measurement\Velocity\Velocity;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -72,11 +76,27 @@ enum SportType: string implements TranslatableInterface
     case HAND_CYCLE = 'Handcycle';
     case WHEELCHAIR = 'Wheelchair';
 
+    public function getVelocityDisplayPreference(): Velocity
+    {
+        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+            return SecPerKm::zero();
+        }
+
+        return match ($this) {
+            self::SWIM => SecPer100Meter::zero(),
+            default => KmPerHour::zero(),
+        };
+    }
+
     public function getTemplateName(): string
     {
+        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+            return 'activity--sport-type--run';
+        }
+
         return match ($this) {
-            self::RUN, self::WALK => 'activity--activity-type--run',
-            default => 'activity--activity-type--generic',
+            self::SWIM => 'activity--sport-type--swim',
+            default => 'activity--sport-type--generic',
         };
     }
 
