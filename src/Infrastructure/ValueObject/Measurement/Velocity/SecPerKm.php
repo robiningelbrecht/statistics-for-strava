@@ -6,10 +6,9 @@ namespace App\Infrastructure\ValueObject\Measurement\Velocity;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
-use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
-final readonly class SecPerKm implements Unit
+final readonly class SecPerKm implements Pace
 {
     use MeasurementFromFloat;
 

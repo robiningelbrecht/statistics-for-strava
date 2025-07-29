@@ -8,6 +8,7 @@ use App\Domain\Strava\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use App\Infrastructure\ValueObject\Measurement\Velocity\Velocity;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -75,7 +76,7 @@ enum SportType: string implements TranslatableInterface
     case HAND_CYCLE = 'Handcycle';
     case WHEELCHAIR = 'Wheelchair';
 
-    public function getVelocityDisplayPreference(): KmPerHour|SecPerKm|SecPer100Meter
+    public function getVelocityDisplayPreference(): Velocity
     {
         return match ($this) {
             self::SWIM => SecPer100Meter::zero(),
@@ -87,9 +88,9 @@ enum SportType: string implements TranslatableInterface
     public function getTemplateName(): string
     {
         return match ($this) {
-            self::RUN, self::WALK => 'activity--activity-type--run',
-            self::SWIM => 'activity--activity-type--swim',
-            default => 'activity--activity-type--generic',
+            self::RUN, self::WALK => 'activity--sport-type--run',
+            self::SWIM => 'activity--sport-type--swim',
+            default => 'activity--sport-type--generic',
         };
     }
 
