@@ -45,7 +45,7 @@ final readonly class WeeklyStatsWidget implements Widget
             }
         }
 
-        return $this->twig->load('html/dashboard/widget/weekly-stats.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--weekly-stats.html.twig')->render([
             'weeklyDistanceCharts' => $weeklyDistanceTimeCharts,
         ]);
     }

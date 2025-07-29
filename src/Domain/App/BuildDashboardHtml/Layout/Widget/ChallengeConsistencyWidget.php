@@ -30,7 +30,7 @@ final readonly class ChallengeConsistencyWidget implements Widget
             endDate: $now
         );
 
-        return $this->twig->load('html/dashboard/widget/challenge-consistency.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--challenge-consistency.html.twig')->render([
             'allMonths' => $allMonths,
             'allConsistencyChallenges' => $this->consistencyChallenges,
             'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(

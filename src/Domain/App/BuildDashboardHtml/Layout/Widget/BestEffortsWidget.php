@@ -58,7 +58,7 @@ final readonly class BestEffortsWidget implements Widget
             return null;
         }
 
-        return $this->twig->load('html/dashboard/widget/best-efforts.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--best-efforts.html.twig')->render([
             'bestEfforts' => $bestEfforts,
             'bestEffortsCharts' => $bestEffortsCharts,
         ]);

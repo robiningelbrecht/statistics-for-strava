@@ -28,7 +28,7 @@ final readonly class IntroTextWidget implements Widget
             translator: $this->translator,
         );
 
-        return $this->twig->load('html/dashboard/widget/intro-text.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--intro-text.html.twig')->render([
             'intro' => $activityTotals,
         ]);
     }

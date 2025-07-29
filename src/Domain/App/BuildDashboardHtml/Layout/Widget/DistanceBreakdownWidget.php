@@ -45,7 +45,7 @@ final readonly class DistanceBreakdownWidget implements Widget
             }
         }
 
-        return $this->twig->load('html/dashboard/widget/distance-breakdown.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--distance-breakdown.html.twig')->render([
             'distanceBreakdowns' => $distanceBreakdowns,
         ]);
     }
