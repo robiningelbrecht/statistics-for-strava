@@ -1,3 +1,19 @@
+# [v3.1.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.0) - 2025-07-29
+
+🔥 This release allows you to configure dashboard widgets. You can now choose which widgets you want to see on your dashboard and in which order they are displayed.
+Check https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=dashboard-layout for more information.
+
+## What's Changed
+* ISSUE #902: Fix weekly streaks in rewind by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/907
+* ISSUE #903: Allow to configure multiple tile layers on heatmap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/908
+* ISSUE #911: Fix UI issue rewind feature on mobile by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/913
+* ISSUE #912: Allow to configure dashboard widgets by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/923
+
+## New Contributors
+* @kenetickreator made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/909
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.0.2...v3.1.0
+
 # [v3.0.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.0.2) - 2025-07-24
 
 This release introduces configuration options for the heatmap
