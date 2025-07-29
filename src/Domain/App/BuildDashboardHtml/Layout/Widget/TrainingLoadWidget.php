@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\BuildDashboardHtml\Widget;
+namespace App\Domain\App\BuildDashboardHtml\Layout\Widget;
 
 use App\Domain\Strava\Activity\ActivityIntensity;
 use App\Domain\Strava\Activity\Stream\ActivityHeartRateRepository;

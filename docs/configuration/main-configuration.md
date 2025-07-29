@@ -95,6 +95,33 @@ This lets you create very specific zones for different scenarios.
             "2024-11-08": ...
 ```
 
+## Dashboard layout
+
+The dashboard is built using widgets. You can enable or disable each widget, and set their respective width.
+Below is an example of a dashboard configuration. In fact, it's the default configuration, so you can use it as a starting point.
+
+```yaml
+  dashboard:
+    # The width is a percentage of the available space, so 33 means the widget will take up one third of the available space.
+    # The allowed values for width are 33, 50, 66, and 100.
+    # The order of the widgets in the list determines their order on the dashboard.
+    layout:
+      - {'widget': 'mostRecentActivities', 'width': 66, 'enabled': true}
+      - {'widget': 'introText', 'width': 33, 'enabled': true}
+      - {'widget': 'weeklyStats', 'width': 100, 'enabled': true}
+      - {'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true}
+      - {'widget': 'heartRateZones', 'width': 50, 'enabled': true}
+      - {'widget': 'activityIntensity', 'width': 100, 'enabled': true}
+      - {'widget': 'trainingLoad', 'width': 100, 'enabled': true}
+      - {'widget': 'weekdayStats', 'width': 50, 'enabled': true}
+      - {'widget': 'dayTimeStats', 'width': 50, 'enabled': true}
+      - {'widget': 'distanceBreakdown', 'width': 100, 'enabled': true}
+      - {'widget': 'bestEfforts', 'width': 100, 'enabled': true}
+      - {'widget': 'yearlyDistances', 'width': 100, 'enabled': true}
+      - {'widget': 'challengeConsistency', 'width': 50, 'enabled': true}
+      - {'widget': 'ftpHistory', 'width': 50, 'enabled': true}
+```
+
 ## Consistency challenges
 
 If the default consistency challenges do not quite work for you, you can reconfigure them.

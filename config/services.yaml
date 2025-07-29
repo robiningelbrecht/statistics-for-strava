@@ -84,6 +84,10 @@ services:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.appUrl")']
 
+    App\Domain\App\BuildDashboardHtml\Layout\DashboardLayout:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("appearance.dashboard.layout", [])']
+
     App\Domain\App\ProfilePictureUrl:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("general.profilePictureUrl")']
