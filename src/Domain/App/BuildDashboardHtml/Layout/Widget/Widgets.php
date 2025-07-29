@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\BuildDashboardHtml\Widget;
+namespace App\Domain\App\BuildDashboardHtml\Layout\Widget;
 
-use App\Domain\App\BuildDashboardHtml\DashboardLayout;
-use App\Domain\App\BuildDashboardHtml\RenderedWidget;
+use App\Domain\App\BuildDashboardHtml\Layout\DashboardLayout;
+use App\Domain\App\BuildDashboardHtml\Layout\RenderedWidget;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
@@ -20,6 +20,7 @@ final class Widgets implements \IteratorAggregate
     public function __construct(
         #[AutowireIterator('app.dashboard.widget')]
         iterable $widgets,
+        private readonly DashboardLayout $dashboardLayout,
         private readonly Clock $clock,
     ) {
         foreach ($widgets as $widget) {
@@ -31,9 +32,7 @@ final class Widgets implements \IteratorAggregate
     public function getIterator(): \Traversable
     {
         $renderedWidgets = [];
-        $layout = DashboardLayout::default();
-
-        foreach ($layout as $widgetConfig) {
+        foreach ($this->dashboardLayout as $widgetConfig) {
             if (!$widgetConfig['enabled']) {
                 continue;
             }

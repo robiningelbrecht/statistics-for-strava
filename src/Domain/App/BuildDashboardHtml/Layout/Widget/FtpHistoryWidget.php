@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\BuildDashboardHtml\Widget;
+namespace App\Domain\App\BuildDashboardHtml\Layout\Widget;
 
 use App\Domain\Strava\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Strava\Ftp\FtpHistory;

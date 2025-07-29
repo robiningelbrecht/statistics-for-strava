@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\App\BuildDashboardHtml;
+namespace App\Domain\App\BuildDashboardHtml\Layout;
 
 final readonly class RenderedWidget
 {
