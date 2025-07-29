@@ -146,14 +146,6 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
-    public function prefersPaceOverSpeed(): bool
-    {
-        return match ($this) {
-            self::RUN, self::WALK => true,
-            default => false,
-        };
-    }
-
     public function getColor(): string
     {
         return match ($this) {

@@ -22,6 +22,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
@@ -450,6 +451,11 @@ final class Activity implements SupportsAITooling
     public function getPaceInSecPerKm(): SecPerKm
     {
         return $this->getAverageSpeed()->toMetersPerSecond()->toSecPerKm();
+    }
+
+    public function getPaceInSecPer100Meter(): SecPer100Meter
+    {
+        return $this->getAverageSpeed()->toMetersPerSecond()->toSecPerKm()->toSecPer100Meter();
     }
 
     public function getMaxSpeed(): KmPerHour
