@@ -78,17 +78,23 @@ enum SportType: string implements TranslatableInterface
 
     public function getVelocityDisplayPreference(): Velocity
     {
+        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+            return SecPerKm::zero();
+        }
+
         return match ($this) {
             self::SWIM => SecPer100Meter::zero(),
-            self::WALK,self::HIKE, self::RUN, self::TRAIL_RUN, self::VIRTUAL_RUN => SecPerKm::zero(),
             default => KmPerHour::zero(),
         };
     }
 
     public function getTemplateName(): string
     {
+        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+            return 'activity--sport-type--run';
+        }
+
         return match ($this) {
-            self::RUN, self::WALK => 'activity--sport-type--run',
             self::SWIM => 'activity--sport-type--swim',
             default => 'activity--sport-type--generic',
         };
