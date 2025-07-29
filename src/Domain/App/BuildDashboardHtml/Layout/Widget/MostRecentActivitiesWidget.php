@@ -20,7 +20,7 @@ final readonly class MostRecentActivitiesWidget implements Widget
     {
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
 
-        return $this->twig->load('html/dashboard/widget/most-recent-activities.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--most-recent-activities.html.twig')->render([
             'mostRecentActivities' => $allActivities->slice(0, 5),
         ]);
     }

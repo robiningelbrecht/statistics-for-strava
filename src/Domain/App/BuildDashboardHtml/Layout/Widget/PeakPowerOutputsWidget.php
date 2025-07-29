@@ -80,7 +80,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
             ]),
         );
 
-        return $this->twig->load('html/dashboard/widget/peak-power-outputs.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--peak-power-outputs.html.twig')->render([
             'powerOutputs' => $bestAllTimePowerOutputs,
             'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
         ]);

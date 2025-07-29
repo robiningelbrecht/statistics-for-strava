@@ -26,7 +26,7 @@ final readonly class DayTimeStatsWidget implements Widget
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $dayTimeStats = DaytimeStats::create($allActivities);
 
-        return $this->twig->load('html/dashboard/widget/day-time-stats.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--day-time-stats.html.twig')->render([
             'daytimeStatsChart' => Json::encode(
                 DaytimeStatsCharts::create(
                     daytimeStats: $dayTimeStats,

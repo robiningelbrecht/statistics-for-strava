@@ -38,7 +38,7 @@ final readonly class FtpHistoryWidget implements Widget
             }
         }
 
-        return $this->twig->load('html/dashboard/widget/ftp-history.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--ftp-history.html.twig')->render([
             'ftpHistoryChart' => Json::encode(
                 FtpHistoryChart::create(
                     ftps: $allFtps,
