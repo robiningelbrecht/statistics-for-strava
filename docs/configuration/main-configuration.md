@@ -102,7 +102,7 @@ Below is an example of a dashboard configuration. In fact, it's the default conf
 
 ```yaml
 appearance:
-    dashboard:
+  dashboard:
     # The width is a percentage of the available space, so 33 means the widget will take up one third of the available space.
     # The allowed values for width are 33, 50, 66, and 100.
     # The order of the widgets in the list determines their order on the dashboard.
