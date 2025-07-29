@@ -24,14 +24,9 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
         assert($query instanceof FindAvailableRewindOptions);
 
         $now = $query->getNow();
-        $currentYear = $now->getYear();
-
         $years = $this->connection->executeQuery(
             'SELECT DISTINCT strftime("%Y",startDateTime) AS year FROM Activity
              ORDER BY year DESC',
-            [
-                'currentYear' => $currentYear,
-            ]
         )->fetchFirstColumn();
 
         $allYears = Years::fromArray(array_map(
