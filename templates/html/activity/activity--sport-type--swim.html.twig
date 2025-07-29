@@ -51,55 +51,19 @@
                     <div class="mb-4 border-b border-gray-200">
                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
                             <li class="mr-2" role="presentation">
-                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ "Splits"|trans }}
+                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Laps"|trans }}
                                 </a>
                             </li>
                             <li class="mr-2" role="presentation">
-                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ "Laps"|trans }}
+                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ "Splits"|trans }}
                                 </a>
                             </li>
                         </ul>
                     </div>
                 {% endif %}
                 <div id="splitsLapsTabContent">
-                    {% if not splits.isEmpty() %}
-                        <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
-                            <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
-                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
-                                    <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
-                                    <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
-                                    <div class="grow min-w-[10rem] px-2 py-2"></div>
-                                    <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
-                                </div>
-                                {% for split in splits %}
-                                    <div class="flex items-center border-b last:border-b-0">
-                                        <div class="w-[2rem] px-2 py-2 font-bold">
-                                            {{ split.getSplitNumber() }}
-                                        </div>
-                                        <div class="w-[5rem] px-2 py-2">
-                                            {{ split.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
-                                        </div>
-                                        <div class="grow min-w-[10rem] px-2 py-2">
-                                            <div class=" bg-gray-200 rounded-full h-2.5">
-                                                <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
-                                            </div>
-                                        </div>
-                                        {% if split.getAverageHeartRate() %}
-                                            <div class="w-[5rem] px-2 py-2">
-                                                {{ split.getAverageHeartRate() }}
-                                            </div>
-                                        {% else %}
-                                            <div class="w-[5rem] px-2 py-2">
-                                                {{ "n/a"|trans }}
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
                     {% if not laps.isEmpty() %}
                         <div id="splitsLapsTabLaps" role="tabpanel" aria-labelledby="splitsLapsTabLaps-tab">
                             <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
@@ -130,6 +94,42 @@
                                             </div>
                                         {% else %}
                                             <div class="w-[8rem] px-2 py-2">
+                                                {{ "n/a"|trans }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if not splits.isEmpty() %}
+                        <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
+                            <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
+                                <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
+                                    <div class="w-[2rem] px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                    <div class="grow min-w-[10rem] px-2 py-2"></div>
+                                    <div class="w-[5rem] px-2 py-2">{{ "HR"|trans }}</div>
+                                </div>
+                                {% for split in splits %}
+                                    <div class="flex items-center border-b last:border-b-0">
+                                        <div class="w-[2rem] px-2 py-2 font-bold">
+                                            {{ split.getSplitNumber() }}
+                                        </div>
+                                        <div class="w-[5rem] px-2 py-2">
+                                            {{ split.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
+                                        </div>
+                                        <div class="grow min-w-[10rem] px-2 py-2">
+                                            <div class=" bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+                                            </div>
+                                        </div>
+                                        {% if split.getAverageHeartRate() %}
+                                            <div class="w-[5rem] px-2 py-2">
+                                                {{ split.getAverageHeartRate() }}
+                                            </div>
+                                        {% else %}
+                                            <div class="w-[5rem] px-2 py-2">
                                                 {{ "n/a"|trans }}
                                             </div>
                                         {% endif %}
