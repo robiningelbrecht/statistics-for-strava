@@ -22,7 +22,49 @@ export default function Chat($chatModal) {
         $textInput.placeholder = disabled ? placeholderProcessing : placeholderIdle;
     };
 
+    const commands = {
+        '/analyse-last-workout': 'You are my bike trainer. Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions.',
+        '/compare-last-two-weeks': 'You are my bike trainer. Please compare my workouts and performance of the last 7 days with the 7 days before and give a short assessment.'
+    }
+
+    const initAutoComplete = () => {
+        const autoCompleteJS = new autoComplete({
+            selector: () => $textInput,
+            data: {
+                src: Object.keys(commands),
+            },
+            threshold: 1,
+            trigger: (query) => {
+                return query.startsWith('/');
+            },
+            resultsList:{
+                tabSelect: true,
+                position: 'beforebegin',
+            },
+            resultItem: {
+                highlight: true,
+                element: (item, data) => {
+                    item.innerHTML = `<div>${data.match}</div><div class="text-xs text-gray-500">${commands[data.value]}</div>`;
+                }
+            },
+            events: {
+                input: {
+                    focus: () => {
+                        if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+                    }
+                }
+            }
+        });
+
+        autoCompleteJS.input.addEventListener("selection", function (event) {
+            const feedback = event.detail;
+            autoCompleteJS.input.value = commands[feedback.selection.value] || null;
+        });
+    };
+
     const render = () => {
+        initAutoComplete();
+
         $form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -50,6 +92,7 @@ export default function Chat($chatModal) {
             source.addEventListener('done', function () {
                 source.close();
                 toggleElements(false);
+                $textInput.focus();
             });
         });
 
