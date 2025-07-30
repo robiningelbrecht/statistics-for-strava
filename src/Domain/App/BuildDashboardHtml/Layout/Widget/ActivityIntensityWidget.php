@@ -20,7 +20,7 @@ final readonly class ActivityIntensityWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         return $this->twig->load('html/dashboard/widget/widget--activity-intensity.html.twig')->render([
             'activityIntensityChart' => Json::encode(

@@ -4,6 +4,7 @@ namespace App\Tests\Domain\App\BuildDashboardHtml\Layout;
 
 use App\Domain\App\BuildDashboardHtml\Layout\DashboardLayout;
 use App\Domain\App\BuildDashboardHtml\Layout\InvalidDashboardLayout;
+use App\Domain\Strava\Calendar\MonthlyStats\MonthlyStatsContext;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
@@ -21,7 +22,10 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
                 ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
                 ['widget' => 'activityIntensity', 'width' => 100, 'enabled' => true],
-                ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true],
+                ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
+                    'context' => MonthlyStatsContext::DISTANCE->value,
+                    'yearsToEnableByDefault' => 10,
+                ]],
                 ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
                 ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
                 ['widget' => 'dayTimeStats', 'width' => 50, 'enabled' => true],
@@ -66,6 +70,14 @@ class DashboardLayoutTest extends TestCase
         $yml = self::getValidYml();
         $yml[0]['width'] = 20;
         yield 'invalid "width" key case 2' => [$yml, '"width" property must be one of [33, 50, 66, 100], found 20'];
+
+        $yml = self::getValidYml();
+        $yml[0]['config']['test'] = [];
+        yield 'invalid "config"' => [$yml, 'Invalid type for config item "test" in widget "mostRecentActivities". Expected int, string, float, or bool.'];
+
+        $yml = self::getValidYml();
+        $yml[0]['config'] = 'lol';
+        yield 'invalid "config" case 2' => [$yml, '"config" property must be an array'];
     }
 
     private static function getValidYml(): array

@@ -21,7 +21,7 @@ final readonly class FtpHistoryWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): ?string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $allFtps = $this->ftpHistory->findAll();
         if ($allFtps->isEmpty()) {

@@ -32,21 +32,28 @@ final class Widgets implements \IteratorAggregate
     public function getIterator(): \Traversable
     {
         $renderedWidgets = [];
-        foreach ($this->dashboardLayout as $widgetConfig) {
-            if (!$widgetConfig['enabled']) {
+        foreach ($this->dashboardLayout as $configuredWidget) {
+            if (!$configuredWidget['enabled']) {
                 continue;
             }
 
-            $widgetName = $widgetConfig['widget'];
+            $widgetName = $configuredWidget['widget'];
             $widget = $this->widgets[$widgetName] ?? throw new \InvalidArgumentException(sprintf('Dashboard widget "%s" does not exists.', $widgetName));
 
-            if (!$render = $widget->render($this->clock->getCurrentDateTimeImmutable())) {
+            $widgetConfig = WidgetConfiguration::empty();
+            if (isset($configuredWidget['config'])) {
+                foreach ($configuredWidget['config'] as $key => $value) {
+                    $widgetConfig->add($key, $value);
+                }
+            }
+
+            if (!$render = $widget->render($this->clock->getCurrentDateTimeImmutable(), $widgetConfig)) {
                 continue;
             }
 
             $renderedWidgets[] = new RenderedWidget(
                 renderedHtml: $render,
-                width: $widgetConfig['width']
+                width: $configuredWidget['width']
             );
         }
 

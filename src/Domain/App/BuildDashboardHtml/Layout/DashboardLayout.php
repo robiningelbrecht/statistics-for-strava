@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildDashboardHtml\Layout;
 
+use App\Domain\Strava\Calendar\MonthlyStats\MonthlyStatsContext;
+
 final readonly class DashboardLayout implements \IteratorAggregate
 {
     private function __construct(
@@ -29,7 +31,10 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
             ['widget' => 'activityIntensity', 'width' => 100, 'enabled' => true],
-            ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true],
+            ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
+                'context' => MonthlyStatsContext::DISTANCE->value,
+                'yearsToEnableByDefault' => 10,
+            ]],
             ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
             ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
             ['widget' => 'dayTimeStats', 'width' => 50, 'enabled' => true],
@@ -51,24 +56,35 @@ final readonly class DashboardLayout implements \IteratorAggregate
             $config = self::default();
         }
 
-        foreach ($config as $widgetConfig) {
+        foreach ($config as $widget) {
             foreach (['widget', 'width', 'enabled'] as $requiredKey) {
-                if (array_key_exists($requiredKey, $widgetConfig)) {
+                if (array_key_exists($requiredKey, $widget)) {
                     continue;
                 }
                 throw new InvalidDashboardLayout(sprintf('"%s" property is required for each custom gear', $requiredKey));
             }
 
-            if (!is_bool($widgetConfig['enabled'])) {
+            if (!is_bool($widget['enabled'])) {
                 throw new InvalidDashboardLayout('"enabled" property must be a boolean');
             }
 
-            if (!is_int($widgetConfig['width'])) {
+            if (!is_int($widget['width'])) {
                 throw new InvalidDashboardLayout('"width" property must be a valid integer');
             }
 
-            if (!in_array($widgetConfig['width'], [33, 50, 66, 100])) {
-                throw new InvalidDashboardLayout(sprintf('"width" property must be one of [33, 50, 66, 100], found %s', $widgetConfig['width']));
+            if (!in_array($widget['width'], [33, 50, 66, 100])) {
+                throw new InvalidDashboardLayout(sprintf('"width" property must be one of [33, 50, 66, 100], found %s', $widget['width']));
+            }
+
+            if (array_key_exists('config', $widget)) {
+                if (!is_array($widget['config'])) {
+                    throw new InvalidDashboardLayout('"config" property must be an array');
+                }
+                foreach ($widget['config'] as $key => $value) {
+                    if (!is_int($value) && !is_string($value) && !is_float($value) && !is_bool($value)) {
+                        throw new InvalidDashboardLayout(sprintf('Invalid type for config item "%s" in widget "%s". Expected int, string, float, or bool.', $key, $widget['widget']));
+                    }
+                }
             }
         }
 

@@ -29,7 +29,7 @@ final readonly class TrainingLoadWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $timeInHeartRateZonesForLast30Days = $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days();
 
