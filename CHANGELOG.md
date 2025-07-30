@@ -1,3 +1,29 @@
+# [v3.1.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.1) - 2025-07-30
+
+🤖 This release introduces extra configuration options for the AI agent. You can now configure pre-defined chat commands. 
+
+```yaml
+  heatmap:
+    # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
+    # (e.g. "red", "#FF0000", "rgb(255,0,0)")
+    polylineColor: '#fc6719'
+    # Specifies the type of map to use. Must be a valid tile layer URL.
+    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
+    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    # Enables or disables grayscale styling on the heatmap.
+    enableGreyScale: true
+```
+
+## What's Changed
+* ISSUE #927: Better support for swimming activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/929
+* ISSUE #930: No rewind available when there's only one year worth of data by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/931
+* ISSUE #906: Allow to configure commands for AI chat agent by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/936
+
+## New Contributors
+* @cailloux made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/935
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.1.0...v3.1.1
+
 # [v3.1.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.0) - 2025-07-29
 
 🔥 This release allows you to configure dashboard widgets. You can now choose which widgets you want to see on your dashboard and in which order they are displayed.
