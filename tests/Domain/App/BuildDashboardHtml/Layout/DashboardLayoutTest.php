@@ -21,6 +21,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
                 ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
                 ['widget' => 'activityIntensity', 'width' => 100, 'enabled' => true],
+                ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true],
                 ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
                 ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
                 ['widget' => 'dayTimeStats', 'width' => 50, 'enabled' => true],
