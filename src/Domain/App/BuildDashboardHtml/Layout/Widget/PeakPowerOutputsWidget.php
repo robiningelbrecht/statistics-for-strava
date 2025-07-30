@@ -28,7 +28,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): ?string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $bestAllTimePowerOutputs = $this->activityPowerRepository->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs());
         if ($bestAllTimePowerOutputs->isEmpty()) {

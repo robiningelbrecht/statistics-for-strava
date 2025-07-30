@@ -26,7 +26,7 @@ final readonly class MonthlyStatsWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $activityTypes = $this->activityTypeRepository->findAll();
 
@@ -38,9 +38,10 @@ final readonly class MonthlyStatsWidget implements Widget
                 MonthlyStatsChart::create(
                     activityType: $activityType,
                     monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::DISTANCE,
+                    context: MonthlyStatsContext::from($configuration->getConfigItem('context')),
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
+                    enableLastXYearsByDefault: $configuration->getConfigItem('enableLastXYearsByDefault'),
                 )->build()
             );
         }

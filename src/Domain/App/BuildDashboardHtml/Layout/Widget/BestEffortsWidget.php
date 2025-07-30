@@ -25,7 +25,7 @@ final readonly class BestEffortsWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): ?string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $bestEfforts = $bestEffortsCharts = [];
 

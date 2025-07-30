@@ -20,6 +20,7 @@ final readonly class MonthlyStatsChart
         private MonthlyStatsContext $context,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
+        private int $enableLastXYearsByDefault,
     ) {
     }
 
@@ -29,6 +30,7 @@ final readonly class MonthlyStatsChart
         MonthlyStatsContext $context,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
+        ?int $enableLastXYearsByDefault = null,
     ): self {
         return new self(
             activityType: $activityType,
@@ -36,6 +38,7 @@ final readonly class MonthlyStatsChart
             context: $context,
             unitSystem: $unitSystem,
             translator: $translator,
+            enableLastXYearsByDefault: $enableLastXYearsByDefault ?? 20
         );
     }
 
@@ -53,8 +56,19 @@ final readonly class MonthlyStatsChart
             endDate: $lastMonth->getFirstDay(),
         )->reverse();
 
+        $selectedSeries = [];
+        $delta = 1;
         /** @var Year $year */
         foreach ($years as $year) {
+            if (!is_null($this->enableLastXYearsByDefault)) {
+                if ($delta <= $this->enableLastXYearsByDefault) {
+                    $selectedSeries[$year->toInt()] = true;
+                } else {
+                    $selectedSeries[$year->toInt()] = false;
+                }
+            }
+            ++$delta;
+
             $data = [];
             /** @var Month $month */
             foreach ($year->getMonths() as $month) {
@@ -98,6 +112,7 @@ final readonly class MonthlyStatsChart
                 'valueFormatter' => MonthlyStatsContext::TIME === $this->context ? 'formatHours' : 'formatDistance',
             ],
             'legend' => [
+                'selected' => $selectedSeries,
                 'data' => array_map(
                     fn (Year $year) => (string) $year->toInt(),
                     $years->toArray()
