@@ -78,7 +78,7 @@ appearance:
     # The dashboard is built using widgets. You can enable or disable each widget, and set their respective width.
     # Leave this setting unchanged to use the default dashboard.
     # For a detailed guide on how to override these defaults, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=dashboard-layout
-    layout: null,
+    layout: null
   heatmap:
     # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
     # (e.g. "red", "#FF0000", "rgb(255,0,0)")
@@ -167,4 +167,8 @@ integrations:
       # This option is only required when using provider "ollama"
       # The url to your hosted Ollama instance.
       url: 'http://host.docker.internal:11434/api'
+    # agent:
+    #   commands:
+    #    For a detailed guide on how to configure pre-defined chat commands, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands
+
 ```

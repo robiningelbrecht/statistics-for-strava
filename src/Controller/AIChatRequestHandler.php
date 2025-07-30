@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
+use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Http\ServerSentEvent;
+use App\Infrastructure\Serialization\Json;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
@@ -32,6 +34,7 @@ final readonly class AIChatRequestHandler
         private FilesystemOperator $buildStorage,
         private AppConfig $appConfig,
         private AgentInterface $neuronAIAgent,
+        private ChatCommands $chatCommands,
         private ChatRepository $chatRepository,
         private CommandBus $commandBus,
         private FormFactoryInterface $formFactory,
@@ -64,6 +67,7 @@ final readonly class AIChatRequestHandler
         return new Response($this->twig->render('html/chat/chat.html.twig', [
             'chatHistory' => $this->chatRepository->getHistory(),
             'form' => $form->createView(),
+            'chatCommands' => Json::encode($this->chatCommands),
         ]), Response::HTTP_OK);
     }
 
@@ -121,7 +125,7 @@ final readonly class AIChatRequestHandler
                     );
                     flush();
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 echo new ServerSentEvent(
                     eventName: 'removeThinking',
                     data: ''

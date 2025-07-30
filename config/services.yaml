@@ -109,6 +109,10 @@ services:
     NeuronAI\Tools\Toolkits\ToolkitInterface:
         class: App\Domain\Integration\AI\Tool\Toolkit
 
+    App\Domain\Integration\AI\Chat\ChatCommands:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("integrations.ai.agent.commands", [])']
+
     App\Domain\Integration\AI\AIProviderFactory:
         arguments: ['@=app_config("integrations.ai", [])']
 

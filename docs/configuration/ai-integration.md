@@ -93,8 +93,33 @@ The first available AI feature is an AI-powered workout assistant named **Mark**
 
 This will prompt you with a message like the following:
 
-![SMark example](../assets/images/mark-example.png) 
+![Mark example](../assets/images/mark-example.png) 
 
 ### Via the UI
 
 [Virtual AI assistant](https://www.youtube.com/embed/mdidBVigJAo ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
+
+### Pre-defining chat commands
+
+The app allows you to pre-define chat commands that can be used by the AI assistant.
+This is useful for questions that might be asked frequently, such as 
+
+> Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions?
+
+To pre-define a chat command, add it to the `config.yaml` file under the `integration.ai.agent.commands` section:
+
+```yaml
+integrations:
+  ai:
+    # Other AI configuration options
+    agent:
+      commands:
+        - command: 'analyse-last-workout'
+          message: 'You are my bike trainer. Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions.'
+        - command: 'compare-last-two-weeks'
+          message:  'You are my bike trainer. Please compare my workouts and performance of the last 7 days with the 7 days before and give a short assessment.'
+```
+
+This config will allow you to use the commands `/analyse-last-workout` and `/compare-last-two-weeks` in your chat with the AI assistant:
+
+![Mark chat commands](../assets/images/mark-chat-commands.png)

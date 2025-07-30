@@ -1,1 +1,0 @@
-[{"role":"assistant","content":"This is my message"},{"role":"user","content":"Hello?"}]

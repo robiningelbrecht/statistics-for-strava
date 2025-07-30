@@ -68,19 +68,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         $now = $command->getCurrentDateTime();
         $availableRewindOptionsResponse = $this->queryBus->ask(new FindAvailableRewindOptions($now));
         $availableRewindOptions = $availableRewindOptionsResponse->getAvailableOptions();
-
-        if (count($availableRewindOptions) <= 1) {
-            // No years to compare with.
-            $this->buildStorage->write(
-                'rewind.html',
-                $this->twig->load('html/rewind/rewind-empty.html.twig')->render([
-                    'now' => $now,
-                ]),
-            );
-
-            return;
-        }
-
         $gears = $this->gearRepository->findAll();
 
         $rewindItemsPerYear = RewindItemsPerGroup::empty();
@@ -351,6 +338,11 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     $this->twig->load('html/rewind/rewind.html.twig')->render($render),
                 );
             }
+        }
+
+        if (count($availableRewindOptions) <= 1) {
+            // No data to compare with, no need to render comparison pages.
+            return;
         }
 
         foreach ($availableRewindOptions as $availableRewindOptionLeft) {

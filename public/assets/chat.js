@@ -22,7 +22,50 @@ export default function Chat($chatModal) {
         $textInput.placeholder = disabled ? placeholderProcessing : placeholderIdle;
     };
 
+    const commands = JSON.parse($chatWrapper.getAttribute('data-chat-commands') || '{}');
+
+    const initAutoComplete = () => {
+        if (!commands) {
+            return;
+        }
+
+        const autoCompleteJS = new autoComplete({
+            selector: () => $textInput,
+            data: {
+                src: Object.keys(commands),
+            },
+            threshold: 1,
+            trigger: (query) => {
+                return query.startsWith('/');
+            },
+            resultsList: {
+                tabSelect: true,
+                position: 'beforebegin',
+            },
+            resultItem: {
+                highlight: true,
+                element: (item, data) => {
+                    item.innerHTML = `<div>${data.match}</div><div class="text-xs text-gray-500">${commands[data.value]}</div>`;
+                }
+            },
+            events: {
+                input: {
+                    focus: () => {
+                        if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+                    }
+                }
+            }
+        });
+
+        autoCompleteJS.input.addEventListener("selection", function (event) {
+            const feedback = event.detail;
+            autoCompleteJS.input.value = commands[feedback.selection.value] || null;
+        });
+    };
+
     const render = () => {
+        initAutoComplete();
+
         $form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -50,6 +93,7 @@ export default function Chat($chatModal) {
             source.addEventListener('done', function () {
                 source.close();
                 toggleElements(false);
+                $textInput.focus();
             });
         });
 

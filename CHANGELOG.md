@@ -1,3 +1,30 @@
+# [v3.1.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.1) - 2025-07-30
+
+🤖 This release introduces extra configuration options for the AI agent. You can now configure pre-defined chat commands.
+Check https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands for more information.
+
+```yaml
+integrations:
+  ai:
+    # Other AI configuration options
+    agent:
+      commands:
+        - command: 'analyse-last-workout'
+          message: 'You are my bike trainer. Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions.'
+        - command: 'compare-last-two-weeks'
+          message:  'You are my bike trainer. Please compare my workouts and performance of the last 7 days with the 7 days before and give a short assessment.'
+```
+
+## What's Changed
+* ISSUE #927: Better support for swimming activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/929
+* ISSUE #930: No rewind available when there's only one year worth of data by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/931
+* ISSUE #906: Allow to configure commands for AI chat agent by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/936
+
+## New Contributors
+* @cailloux made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/935
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.1.0...v3.1.1
+
 # [v3.1.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.0) - 2025-07-29
 
 🔥 This release allows you to configure dashboard widgets. You can now choose which widgets you want to see on your dashboard and in which order they are displayed.
