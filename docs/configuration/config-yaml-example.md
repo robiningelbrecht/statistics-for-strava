@@ -167,4 +167,8 @@ integrations:
       # This option is only required when using provider "ollama"
       # The url to your hosted Ollama instance.
       url: 'http://host.docker.internal:11434/api'
+    # agent:
+    #   commands:
+    #    For a detailed guide on how to configure pre-defined chat commands, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands
+
 ```

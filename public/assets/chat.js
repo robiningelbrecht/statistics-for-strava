@@ -22,12 +22,13 @@ export default function Chat($chatModal) {
         $textInput.placeholder = disabled ? placeholderProcessing : placeholderIdle;
     };
 
-    const commands = {
-        '/analyse-last-workout': 'You are my bike trainer. Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions.',
-        '/compare-last-two-weeks': 'You are my bike trainer. Please compare my workouts and performance of the last 7 days with the 7 days before and give a short assessment.'
-    }
+    const commands = JSON.parse($chatWrapper.getAttribute('data-chat-commands') || '{}');
 
     const initAutoComplete = () => {
+        if (!commands) {
+            return;
+        }
+
         const autoCompleteJS = new autoComplete({
             selector: () => $textInput,
             data: {
