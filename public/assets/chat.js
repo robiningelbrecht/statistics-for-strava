@@ -37,7 +37,7 @@ export default function Chat($chatModal) {
             trigger: (query) => {
                 return query.startsWith('/');
             },
-            resultsList:{
+            resultsList: {
                 tabSelect: true,
                 position: 'beforebegin',
             },
