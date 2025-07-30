@@ -33,15 +33,19 @@ final readonly class MonthlyStatsWidget implements Widget
         $monthlyStatCharts = [];
         $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
 
+        /** @var string $context */
+        $context = $configuration->getConfigItem('context');
+        /** @var int $enableLastXYearsByDefault */
+        $enableLastXYearsByDefault = $configuration->getConfigItem('enableLastXYearsByDefault');
         foreach ($activityTypes as $activityType) {
             $monthlyStatCharts[$activityType->value] = Json::encode(
                 MonthlyStatsChart::create(
                     activityType: $activityType,
                     monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::from($configuration->getConfigItem('context')),
+                    context: MonthlyStatsContext::from($context),
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
-                    enableLastXYearsByDefault: $configuration->getConfigItem('enableLastXYearsByDefault'),
+                    enableLastXYearsByDefault: $enableLastXYearsByDefault,
                 )->build()
             );
         }
