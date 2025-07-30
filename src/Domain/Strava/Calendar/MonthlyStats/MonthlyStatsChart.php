@@ -60,12 +60,10 @@ final readonly class MonthlyStatsChart
         $delta = 1;
         /** @var Year $year */
         foreach ($years as $year) {
-            if (!is_null($this->enableLastXYearsByDefault)) {
-                if ($delta <= $this->enableLastXYearsByDefault) {
-                    $selectedSeries[$year->toInt()] = true;
-                } else {
-                    $selectedSeries[$year->toInt()] = false;
-                }
+            if ($delta <= $this->enableLastXYearsByDefault) {
+                $selectedSeries[$year->toInt()] = true;
+            } else {
+                $selectedSeries[$year->toInt()] = false;
             }
             ++$delta;
 
