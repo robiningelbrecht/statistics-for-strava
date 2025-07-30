@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\Controller\AIChatRequestHandler;
+use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatMessage;
 use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Domain\Integration\AI\Chat\ChatRepository;
@@ -111,6 +112,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
                 platformEnvironment: PlatformEnvironment::PROD
             ),
             $this->neuronAIAgent,
+            ChatCommands::fromArray([]),
             $this->chatRepository,
             $this->getContainer()->get(CommandBus::class),
             $this->getContainer()->get(FormFactoryInterface::class),
