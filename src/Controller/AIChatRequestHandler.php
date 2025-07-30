@@ -121,7 +121,7 @@ final readonly class AIChatRequestHandler
                     );
                     flush();
                 }
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 echo new ServerSentEvent(
                     eventName: 'removeThinking',
                     data: ''
