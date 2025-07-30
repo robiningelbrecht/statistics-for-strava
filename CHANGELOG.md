@@ -1,17 +1,18 @@
 # [v3.1.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.1) - 2025-07-30
 
-🤖 This release introduces extra configuration options for the AI agent. You can now configure pre-defined chat commands. 
+🤖 This release introduces extra configuration options for the AI agent. You can now configure pre-defined chat commands.
+Check https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands for more information.
 
 ```yaml
-  heatmap:
-    # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
-    # (e.g. "red", "#FF0000", "rgb(255,0,0)")
-    polylineColor: '#fc6719'
-    # Specifies the type of map to use. Must be a valid tile layer URL.
-    # For example, a satellite layer: https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}
-    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
-    # Enables or disables grayscale styling on the heatmap.
-    enableGreyScale: true
+integrations:
+  ai:
+    # Other AI configuration options
+    agent:
+      commands:
+        - command: 'analyse-last-workout'
+          message: 'You are my bike trainer. Please analyze my most recent ride with regard to aspects such as heart rate, power (if available). Please give me an assessment of my performance level and possible improvements for future training sessions.'
+        - command: 'compare-last-two-weeks'
+          message:  'You are my bike trainer. Please compare my workouts and performance of the last 7 days with the 7 days before and give a short assessment.'
 ```
 
 ## What's Changed
