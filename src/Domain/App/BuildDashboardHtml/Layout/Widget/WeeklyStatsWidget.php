@@ -23,7 +23,7 @@ final readonly class WeeklyStatsWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $weeklyDistanceTimeCharts = [];
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();

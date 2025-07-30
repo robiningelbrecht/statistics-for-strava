@@ -20,7 +20,7 @@ final readonly class DistanceBreakdownWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
 

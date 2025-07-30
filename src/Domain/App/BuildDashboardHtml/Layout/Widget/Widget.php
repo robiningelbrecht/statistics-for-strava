@@ -10,5 +10,5 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 #[AutoconfigureTag('app.dashboard.widget')]
 interface Widget
 {
-    public function render(SerializableDateTime $now): ?string;
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string;
 }

@@ -19,7 +19,7 @@ final readonly class IntroTextWidget implements Widget
     ) {
     }
 
-    public function render(SerializableDateTime $now): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $activityTotals = ActivityTotals::getInstance(
