@@ -21,6 +21,15 @@ final readonly class WeekdayStatsWidget implements Widget
     ) {
     }
 
+    public function getDefaultConfiguration(): WidgetConfiguration
+    {
+        return WidgetConfiguration::empty();
+    }
+
+    public function guardValidConfiguration(array $config): void
+    {
+    }
+
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();

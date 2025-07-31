@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildDashboardHtml\Layout\Widget;
 
+use App\Domain\App\BuildDashboardHtml\Layout\InvalidDashboardLayout;
 use App\Domain\Strava\Activity\ActivityTypeRepository;
 use App\Domain\Strava\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Strava\Calendar\MonthlyStats\MonthlyStatsChart;
@@ -24,6 +25,29 @@ final readonly class MonthlyStatsWidget implements Widget
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
+    }
+
+    public function getDefaultConfiguration(): WidgetConfiguration
+    {
+        return WidgetConfiguration::empty()
+            ->add('enableLastXYearsByDefault', 10)
+            ->add('context', MonthlyStatsContext::DISTANCE->value);
+    }
+
+    public function guardValidConfiguration(array $config): void
+    {
+        if (!array_key_exists('enableLastXYearsByDefault', $config)) {
+            throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" is required for MonthlyStatsWidget.');
+        }
+        if (!is_int($config['enableLastXYearsByDefault'])) {
+            throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
+        }
+        if (!array_key_exists('context', $config)) {
+            throw new InvalidDashboardLayout('Configuration item "context" is required for MonthlyStatsWidget.');
+        }
+        if (!MonthlyStatsContext::tryFrom($config['context'])) {
+            throw new InvalidDashboardLayout(sprintf('Invalid context "%s" provided for MonthlyStatsWidget.', $config['context']));
+        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string

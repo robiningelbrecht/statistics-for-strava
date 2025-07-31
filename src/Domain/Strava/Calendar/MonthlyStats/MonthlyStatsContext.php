@@ -6,6 +6,6 @@ namespace App\Domain\Strava\Calendar\MonthlyStats;
 
 enum MonthlyStatsContext: string
 {
-    case TIME = 'time';
+    case MOVING_TIME = 'movingTime';
     case DISTANCE = 'distance';
 }

@@ -1,6 +1,28 @@
+# [v3.1.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.2) - 2025-07-31
+
+This release introduces a new dashboard widget for monthly stats.
+
+```yml
+appearance:
+  dashboard:
+    # The width is a percentage of the available space, so 33 means the widget will take up one third of the available space.
+    # The allowed values for width are 33, 50, 66, and 100.
+    # The order of the widgets in the list determines their order on the dashboard.
+    layout:
+      - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'context': 'distance', enableLastXYearsByDefault: 10 } }
+```
+
+## What's Changed
+* ISSUE #939: Improve rewind compare links by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/940
+* ISSUE #937: Expose monthly stats as a dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/941
+* ISSUE #916: Escape activity titles when rendering lightGallery by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/917
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.1.1...v3.1.2
+
 # [v3.1.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.1) - 2025-07-30
 
 🤖 This release introduces extra configuration options for the AI agent. You can now configure pre-defined chat commands.
+
 Check https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands for more information.
 
 ```yaml

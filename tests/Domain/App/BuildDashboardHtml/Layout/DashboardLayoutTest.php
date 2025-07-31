@@ -24,7 +24,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'activityIntensity', 'width' => 100, 'enabled' => true],
                 ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
                     'context' => MonthlyStatsContext::DISTANCE->value,
-                    'yearsToEnableByDefault' => 10,
+                    'enableLastXYearsByDefault' => 10,
                 ]],
                 ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
                 ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
