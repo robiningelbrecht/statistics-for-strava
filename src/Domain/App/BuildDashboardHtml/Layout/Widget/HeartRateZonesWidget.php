@@ -20,6 +20,15 @@ final readonly class HeartRateZonesWidget implements Widget
     ) {
     }
 
+    public function getDefaultConfiguration(): WidgetConfiguration
+    {
+        return WidgetConfiguration::empty();
+    }
+
+    public function guardValidConfiguration(array $config): void
+    {
+    }
+
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         return $this->twig->load('html/dashboard/widget/widget--heart-rate-zones.html.twig')->render([

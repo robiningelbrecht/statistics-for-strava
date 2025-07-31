@@ -70,7 +70,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                 MonthlyStatsChart::create(
                     activityType: $activityType,
                     monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::TIME,
+                    context: MonthlyStatsContext::MOVING_TIME,
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
                 )->build()
@@ -81,7 +81,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             'monthly-stats/chart/time.html',
             $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
                 'monthlyStatsCharts' => $monthlyTimeStatCharts,
-                'context' => MonthlyStatsContext::TIME,
+                'context' => MonthlyStatsContext::MOVING_TIME,
             ]),
         );
 

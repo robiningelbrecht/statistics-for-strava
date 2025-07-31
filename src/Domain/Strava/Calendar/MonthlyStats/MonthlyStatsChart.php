@@ -82,7 +82,7 @@ final readonly class MonthlyStatsChart
                         $data[] = 0;
                     }
                 } else {
-                    $data[] = MonthlyStatsContext::TIME === $this->context ?
+                    $data[] = MonthlyStatsContext::MOVING_TIME === $this->context ?
                         $stats['movingTime']->toHour()->toInt() : $stats['distance']->toUnitSystem($this->unitSystem)->toFloat();
                 }
             }
@@ -107,7 +107,7 @@ final readonly class MonthlyStatsChart
             ],
             'tooltip' => [
                 'trigger' => 'axis',
-                'valueFormatter' => MonthlyStatsContext::TIME === $this->context ? 'formatHours' : 'formatDistance',
+                'valueFormatter' => MonthlyStatsContext::MOVING_TIME === $this->context ? 'formatHours' : 'formatDistance',
             ],
             'legend' => [
                 'selected' => $selectedSeries,
@@ -140,7 +140,7 @@ final readonly class MonthlyStatsChart
             'yAxis' => [
                 'type' => 'value',
                 'axisLabel' => [
-                    'formatter' => '{value}'.(MonthlyStatsContext::TIME === $this->context ? 'h' : $this->unitSystem->distanceSymbol()),
+                    'formatter' => '{value}'.(MonthlyStatsContext::MOVING_TIME === $this->context ? 'h' : $this->unitSystem->distanceSymbol()),
                 ],
             ],
             'series' => $series,

@@ -20,6 +20,15 @@ final readonly class ActivityIntensityWidget implements Widget
     ) {
     }
 
+    public function getDefaultConfiguration(): WidgetConfiguration
+    {
+        return WidgetConfiguration::empty();
+    }
+
+    public function guardValidConfiguration(array $config): void
+    {
+    }
+
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         return $this->twig->load('html/dashboard/widget/widget--activity-intensity.html.twig')->render([

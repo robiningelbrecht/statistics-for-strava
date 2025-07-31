@@ -9,6 +9,7 @@
 - Configuration
 
   - [Main configuration](configuration/main-configuration.md "Statistics for Strava | Main configuration")
+  - [Dashboard widgets](configuration/dashboard-widgets.md "Statistics for Strava | Dashboard widgets")
   - [Custom gear](configuration/custom-gear.md "Statistics for Strava | Custom gear")
   - [Gear maintenance](configuration/gear-maintenance.md "Statistics for Strava | Gear maintenance")
   - [AI integration](configuration/ai-integration.md "Statistics for Strava | AI integration")

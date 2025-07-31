@@ -29,6 +29,15 @@ final readonly class TrainingLoadWidget implements Widget
     ) {
     }
 
+    public function guardValidConfiguration(array $config): void
+    {
+    }
+
+    public function getDefaultConfiguration(): WidgetConfiguration
+    {
+        return WidgetConfiguration::empty();
+    }
+
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $timeInHeartRateZonesForLast30Days = $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForLast30Days();
