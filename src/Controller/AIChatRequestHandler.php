@@ -131,7 +131,7 @@ final readonly class AIChatRequestHandler
                     data: ''
                 );
 
-                $message = $e->getMessage();
+                $message = $e->getMessage().': '.$e->getTraceAsString();
                 if ($e instanceof ClientException) {
                     $message = $e->getResponse()->getBody()->getContents();
                 }
