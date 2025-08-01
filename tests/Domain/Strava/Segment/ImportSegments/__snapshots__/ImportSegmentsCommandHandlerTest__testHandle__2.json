@@ -8,7 +8,9 @@
         "isFavourite": 1,
         "climbCategory": null,
         "deviceName": "Polar",
-        "countryCode": "BE"
+        "countryCode": "BE",
+        "detailsHaveBeenImported": 0,
+        "polyline": null
     },
     {
         "segmentId": "segment-1",
@@ -19,6 +21,8 @@
         "isFavourite": 0,
         "climbCategory": null,
         "deviceName": "Zwift",
-        "countryCode": null
+        "countryCode": null,
+        "detailsHaveBeenImported": 0,
+        "polyline": null
     }
 ]

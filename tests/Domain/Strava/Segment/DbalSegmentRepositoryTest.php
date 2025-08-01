@@ -38,10 +38,19 @@ class DbalSegmentRepositoryTest extends ContainerTestCase
         $this->segmentRepository->add($segment);
 
         $segment->updateIsFavourite(true);
+        $segment->updatePolyline('polyline');
+        $segment->flagDetailsAsImported();
         $this->segmentRepository->update($segment);
 
         $this->assertTrue(
             $this->segmentRepository->find($segment->getId())->isFavourite()
+        );
+        $this->assertTrue(
+            $this->segmentRepository->find($segment->getId())->detailsHaveBeenImported()
+        );
+        $this->assertEquals(
+            'polyline',
+            $this->segmentRepository->find($segment->getId())->getPolyline()
         );
     }
 

@@ -38,6 +38,10 @@ final class Segment implements SupportsAITooling
         private readonly ?string $deviceName,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $countryCode,
+        #[ORM\Column(type: 'boolean', nullable: true)]
+        private bool $detailsHaveBeenImported,
+        #[ORM\Column(type: 'text', nullable: true)]
+        private ?string $polyline,
     ) {
     }
 
@@ -51,6 +55,8 @@ final class Segment implements SupportsAITooling
         ?int $climbCategory,
         ?string $deviceName,
         ?string $countryCode,
+        bool $detailsHaveBeenImported,
+        ?string $polyline,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -62,6 +68,8 @@ final class Segment implements SupportsAITooling
             climbCategory: $climbCategory,
             deviceName: $deviceName,
             countryCode: $countryCode,
+            detailsHaveBeenImported: $detailsHaveBeenImported,
+            polyline: $polyline,
         );
     }
 
@@ -75,6 +83,8 @@ final class Segment implements SupportsAITooling
         ?int $climbCategory,
         ?string $deviceName,
         ?string $countryCode,
+        bool $detailsHaveBeenImported,
+        ?string $polyline,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -86,6 +96,8 @@ final class Segment implements SupportsAITooling
             climbCategory: $climbCategory,
             deviceName: $deviceName,
             countryCode: $countryCode,
+            detailsHaveBeenImported: $detailsHaveBeenImported,
+            polyline: $polyline,
         );
     }
 
@@ -181,6 +193,30 @@ final class Segment implements SupportsAITooling
     public function updateIsFavourite(bool $isFavourite): self
     {
         $this->isFavourite = $isFavourite;
+
+        return $this;
+    }
+
+    public function detailsHaveBeenImported(): bool
+    {
+        return $this->detailsHaveBeenImported;
+    }
+
+    public function flagDetailsAsImported(): self
+    {
+        $this->detailsHaveBeenImported = true;
+
+        return $this;
+    }
+
+    public function getPolyline(): ?string
+    {
+        return $this->polyline;
+    }
+
+    public function updatePolyline(string $polyline): self
+    {
+        $this->polyline = $polyline;
 
         return $this;
     }

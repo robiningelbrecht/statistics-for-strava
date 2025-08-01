@@ -196,6 +196,10 @@ services:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gearMaintenance", [])']
 
+    App\Domain\Strava\Segment\ImportSegments\OptInToSegmentDetailsImport:
+        factory: [ null, 'fromBool' ]
+        arguments: ['@=app_config("import.optInToSegmentDetailImport", false)']
+
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.level")']
