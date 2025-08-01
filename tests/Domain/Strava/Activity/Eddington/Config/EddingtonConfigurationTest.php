@@ -21,6 +21,7 @@ class EddingtonConfigurationTest extends TestCase
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
+                showInDashboardWidget: true,
             ),
             EddingtonConfigItem::create(
                 label: 'Run',
@@ -28,6 +29,7 @@ class EddingtonConfigurationTest extends TestCase
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
+                showInDashboardWidget: true,
             ),
             EddingtonConfigItem::create(
                 label: 'Walk',
@@ -35,6 +37,7 @@ class EddingtonConfigurationTest extends TestCase
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::WALK, SportType::HIKE,
                 ]),
+                showInDashboardWidget: false,
             ),
         ]);
         $this->assertEquals(
@@ -100,6 +103,14 @@ class EddingtonConfigurationTest extends TestCase
         $yml = self::getValidYml();
         $yml[2]['showInNavBar'] = true;
         yield 'too many items in navBar"' => [$yml, 'You can only have two Eddingtons with "showInNavBar" set to true'];
+
+        $yml = self::getValidYml();
+        $yml[0]['showInDashboardWidget'] = 'LOL';
+        yield 'invalid "showInDashboardWidget"' => [$yml, '"showInDashboardWidget" property must be a boolean'];
+
+        $yml = self::getValidYml();
+        $yml[2]['showInDashboardWidget'] = true;
+        yield 'too many items in showInDashboardWidget"' => [$yml, 'You can only have two Eddingtons with "showInDashboardWidget" set to true'];
     }
 
     private static function getValidYml(): array
@@ -109,16 +120,19 @@ class EddingtonConfigurationTest extends TestCase
                 'label' => 'Ride',
                 'showInNavBar' => true,
                 'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
+                'showInDashboardWidget' => true,
             ],
             [
                 'label' => 'Run',
                 'showInNavBar' => true,
                 'sportTypesToInclude' => ['Run', 'TrailRun', 'VirtualRun'],
+                'showInDashboardWidget' => true,
             ],
             [
                 'label' => 'Walk',
                 'showInNavBar' => false,
                 'sportTypesToInclude' => ['Walk', 'Hike'],
+                'showInDashboardWidget' => false,
             ],
         ];
     }

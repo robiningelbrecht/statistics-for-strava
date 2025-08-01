@@ -26,16 +26,19 @@ final class EddingtonConfiguration extends Collection
                 'label' => 'Ride',
                 'showInNavBar' => true,
                 'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
+                'showInDashboardWidget' => true,
             ],
             [
                 'label' => 'Run',
                 'showInNavBar' => true,
                 'sportTypesToInclude' => ['Run', 'TrailRun', 'VirtualRun'],
+                'showInDashboardWidget' => true,
             ],
             [
                 'label' => 'Walk',
                 'showInNavBar' => false,
                 'sportTypesToInclude' => ['Walk', 'Hike'],
+                'showInDashboardWidget' => false,
             ],
         ];
     }
@@ -74,6 +77,10 @@ final class EddingtonConfiguration extends Collection
                 throw new InvalidEddingtonConfiguration('"showInNavBar" property must be a boolean');
             }
 
+            if (array_key_exists('showInDashboardWidget', $eddingtonConfig) && !is_bool($eddingtonConfig['showInDashboardWidget'])) {
+                throw new InvalidEddingtonConfiguration('"showInDashboardWidget" property must be a boolean');
+            }
+
             if (!is_array($eddingtonConfig['sportTypesToInclude'])) {
                 throw new InvalidEddingtonConfiguration('"sportTypesToInclude" property must be an array');
             }
@@ -102,11 +109,15 @@ final class EddingtonConfiguration extends Collection
                 label: $eddingtonConfig['label'],
                 showInNavBar: $eddingtonConfig['showInNavBar'],
                 sportTypesToInclude: $sportTypesToInclude,
+                showInDashboardWidget: $eddingtonConfig['showInDashboardWidget'] ?? false,
             );
         }
 
         if (count(array_filter($items, fn (array $eddingtonConfig) => $eddingtonConfig['showInNavBar'])) > 2) {
             throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInNavBar" set to true');
+        }
+        if (count(array_filter($items, fn (array $eddingtonConfig) => array_key_exists('showInDashboardWidget', $eddingtonConfig) && $eddingtonConfig['showInDashboardWidget'])) > 2) {
+            throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInDashboardWidget" set to true');
         }
 
         return parent::fromArray($eddingtonConfigItems);

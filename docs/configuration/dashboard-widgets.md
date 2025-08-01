@@ -26,6 +26,7 @@ appearance:
       - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
+      - { 'widget': 'eddington', 'width': 50, 'enabled': true }
 ```
 
 ## mostRecentActivities
@@ -185,3 +186,14 @@ This widget shows your Functional Threshold Power (FTP) history, allowing you to
 ```
 
 ![ftpHistory widget](../assets/images/dashboard-widgets/ftp-history.png)
+
+## eddington
+
+This widget displays your Eddington number(s). To determine which Eddington number(s) to display, 
+you can configure this in the Eddington settings using `showInDashboardWidget: true|false`.
+
+```yml
+{ 'widget': 'eddington', 'width': 50, 'enabled': true }
+```
+
+![eddington widget](../assets/images/dashboard-widgets/eddington.png)
