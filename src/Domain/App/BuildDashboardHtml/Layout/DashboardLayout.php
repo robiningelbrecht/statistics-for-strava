@@ -43,6 +43,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'yearlyDistances', 'width' => 100, 'enabled' => true],
             ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
             ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
+            ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
         ];
     }
 

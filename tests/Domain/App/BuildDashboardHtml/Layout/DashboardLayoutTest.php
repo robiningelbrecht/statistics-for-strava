@@ -34,6 +34,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'yearlyDistances', 'width' => 100, 'enabled' => true],
                 ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
                 ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
+                ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
             ])
         );
     }

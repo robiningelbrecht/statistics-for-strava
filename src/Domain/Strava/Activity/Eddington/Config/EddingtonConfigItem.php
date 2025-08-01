@@ -12,6 +12,7 @@ final readonly class EddingtonConfigItem
         private string $label,
         private bool $showInNavBar,
         private SportTypes $sportTypesToInclude,
+        private bool $showInDashboardWidget,
     ) {
     }
 
@@ -19,11 +20,13 @@ final readonly class EddingtonConfigItem
         string $label,
         bool $showInNavBar,
         SportTypes $sportTypesToInclude,
+        bool $showInDashboardWidget,
     ): self {
         return new self(
             label: $label,
             showInNavBar: $showInNavBar,
-            sportTypesToInclude: $sportTypesToInclude
+            sportTypesToInclude: $sportTypesToInclude,
+            showInDashboardWidget: $showInDashboardWidget,
         );
     }
 
@@ -50,5 +53,10 @@ final readonly class EddingtonConfigItem
     public function getSportTypesToInclude(): SportTypes
     {
         return $this->sportTypesToInclude;
+    }
+
+    public function showInDashboardWidget(): bool
+    {
+        return $this->showInDashboardWidget;
     }
 }
