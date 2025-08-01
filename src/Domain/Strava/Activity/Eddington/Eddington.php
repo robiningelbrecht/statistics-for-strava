@@ -21,6 +21,7 @@ final class Eddington
         private readonly string $label,
         private readonly Activities $activities,
         private readonly UnitSystem $unitSystem,
+        private readonly EddingtonConfigItem $config,
     ) {
         $this->distancesPerDay = $this->buildDistancesPerDay();
         $this->eddingtonNumber = $this->calculateEddingtonNumber();
@@ -29,6 +30,11 @@ final class Eddington
     public function getLabel(): string
     {
         return $this->label;
+    }
+
+    public function getConfig(): EddingtonConfigItem
+    {
+        return $this->config;
     }
 
     /**
@@ -172,7 +178,8 @@ final class Eddington
         self::$instances[$eddingtonId] = new self(
             label: $config->getLabel(),
             activities: $activities,
-            unitSystem: $unitSystem
+            unitSystem: $unitSystem,
+            config: $config
         );
 
         return self::$instances[$eddingtonId];

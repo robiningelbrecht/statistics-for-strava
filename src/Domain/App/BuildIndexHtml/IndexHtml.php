@@ -7,8 +7,7 @@ namespace App\Domain\App\BuildIndexHtml;
 use App\Domain\App\AppSubTitle;
 use App\Domain\App\ProfilePictureUrl;
 use App\Domain\Strava\Activity\ActivityRepository;
-use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration;
-use App\Domain\Strava\Activity\Eddington\Eddington;
+use App\Domain\Strava\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Strava\Activity\Image\ImageRepository;
 use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Domain\Strava\Challenge\ChallengeRepository;
@@ -26,7 +25,7 @@ final readonly class IndexHtml
         private ActivityRepository $activityRepository,
         private ChallengeRepository $challengeRepository,
         private ImageRepository $imageRepository,
-        private EddingtonConfiguration $eddingtonConfiguration,
+        private EddingtonCalculator $eddingtonCalculator,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
         private ?AppSubTitle $appSubTitle,
@@ -41,21 +40,10 @@ final readonly class IndexHtml
     public function getContext(SerializableDateTime $now): array
     {
         $eddingtonNumbers = [];
-        /** @var \App\Domain\Strava\Activity\Eddington\Config\EddingtonConfigItem $eddingtonConfigItem */
-        foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
-            $activities = $this->activityRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
-            if ($activities->isEmpty()) {
-                continue;
-            }
-            $eddington = Eddington::getInstance(
-                activities: $activities,
-                config: $eddingtonConfigItem,
-                unitSystem: $this->unitSystem
-            );
-            if ($eddington->getNumber() <= 0) {
-                continue;
-            }
-            if (!$eddingtonConfigItem->showInNavBar()) {
+        $eddingtons = $this->eddingtonCalculator->calculate();
+
+        foreach ($eddingtons as $eddington) {
+            if (!$eddington->getConfig()->showInNavBar()) {
                 continue;
             }
             $eddingtonNumbers[] = $eddington->getNumber();

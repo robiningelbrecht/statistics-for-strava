@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\App\BuildEddingtonHtml;
 
-use App\Domain\Strava\Activity\ActivityRepository;
-use App\Domain\Strava\Activity\Eddington\Config\EddingtonConfiguration;
-use App\Domain\Strava\Activity\Eddington\Eddington;
+use App\Domain\Strava\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Strava\Activity\Eddington\EddingtonChart;
 use App\Domain\Strava\Activity\Eddington\EddingtonHistoryChart;
 use App\Infrastructure\CQRS\Command\Command;
@@ -21,8 +19,7 @@ use Twig\Environment;
 final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
-        private EddingtonConfiguration $eddingtonConfiguration,
+        private EddingtonCalculator $eddingtonCalculator,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -34,24 +31,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildEddingtonHtml);
 
-        $eddingtons = [];
-        /** @var \App\Domain\Strava\Activity\Eddington\Config\EddingtonConfigItem $eddingtonConfigItem */
-        foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
-            $activities = $this->activityRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
-            if ($activities->isEmpty()) {
-                continue;
-            }
-
-            $eddington = Eddington::getInstance(
-                activities: $activities,
-                config: $eddingtonConfigItem,
-                unitSystem: $this->unitSystem
-            );
-            if ($eddington->getNumber() <= 0) {
-                continue;
-            }
-            $eddingtons[$eddingtonConfigItem->getId()] = $eddington;
-        }
+        $eddingtons = $this->eddingtonCalculator->calculate();
 
         $eddingtonCharts = [];
         $eddingtonHistoryCharts = [];
