@@ -1,3 +1,23 @@
+# [v3.1.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.3) - 2025-08-01
+
+Another day, another release, another new dashboard widget. This time it's the Eddington widget.
+
+```yml
+appearance:
+  dashboard:
+    layout:
+      - { 'widget': 'eddington', 'width': 50, 'enabled': true }
+```
+
+Check https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=eddington for more information.
+
+## What's Changed
+* ISSUE #942: Better error messages in chat UI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/947
+* ISSUE #946: Introduce EddingtonCalculator by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/948
+* ISSUE #946: Expose eddington as a dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/949
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.1.2...v3.1.3
+
 # [v3.1.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.2) - 2025-07-31
 
 This release introduces a new dashboard widget for monthly stats.
