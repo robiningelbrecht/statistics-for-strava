@@ -21,6 +21,8 @@ final class SegmentBuilder
     private ?string $deviceName;
     private ?int $climbCategory;
     private ?string $countryCode;
+    private bool $detailsHaveBeenImported;
+    private ?string $polyline;
 
     private function __construct()
     {
@@ -33,6 +35,8 @@ final class SegmentBuilder
         $this->deviceName = 'Polar';
         $this->climbCategory = null;
         $this->countryCode = 'BE';
+        $this->detailsHaveBeenImported = false;
+        $this->polyline = null;
     }
 
     public static function fromDefaults(): self
@@ -51,7 +55,9 @@ final class SegmentBuilder
             isFavourite: $this->isFavourite,
             climbCategory: $this->climbCategory,
             deviceName: $this->deviceName,
-            countryCode: $this->countryCode
+            countryCode: $this->countryCode,
+            detailsHaveBeenImported: $this->detailsHaveBeenImported,
+            polyline: $this->polyline
         );
     }
 

@@ -117,6 +117,11 @@ import:
   # This allows you to skip specific activities during import.
   # ["123456789", "987654321"]
   activitiesToSkipDuringImport: []
+  # Setting this to true will import segment details. This means each segment will need an extra Strava API call to fetch the segment details.
+  # This is required to be able to display a map of the segment.
+  # Setting this to true will increase the import time significantly if you have a lot of segments.
+  # Each segment only needs to be imported once, so this will not affect the import time for subsequent imports.
+  optInToSegmentDetailImport: false
 metrics:
   # By default, the app calculates your Eddington score for Rides, Runs, and Walks.
   # Each category includes a list of sport types used in the calculation.

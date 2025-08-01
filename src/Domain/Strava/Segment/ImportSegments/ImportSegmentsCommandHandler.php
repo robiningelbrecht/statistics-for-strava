@@ -28,6 +28,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
+        private OptInToSegmentDetailsImport $optInToSegmentDetailsImport,
         private Countries $countries,
     ) {
     }
@@ -63,12 +64,26 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 // Do not process segments that have been imported in the current run.
                 if (!isset($segmentsProcessedInCurrentRun[(string) $segmentId])) {
                     try {
+                        $segmentNeedsPersistence = false;
                         $segment = $this->segmentRepository->find($segmentId);
                         if ($isFavourite !== $segment->isFavourite()) {
                             $segment->updateIsFavourite($isFavourite);
+                            $segmentNeedsPersistence = true;
+                        }
+                        if ($this->optInToSegmentDetailsImport->hasOptedIn() && !$segment->detailsHaveBeenImported()) {
+                            $segment->updatePolyline('');
+                            $segment->flagDetailsAsImported();
+                            $segmentNeedsPersistence = true;
+                        }
+                        if ($segmentNeedsPersistence) {
                             $this->segmentRepository->update($segment);
                         }
                     } catch (EntityNotFound) {
+                        $detailsHaveBeenImported = false;
+                        if ($this->optInToSegmentDetailsImport->hasOptedIn()) {
+                            $detailsHaveBeenImported = true;
+                        }
+
                         $segment = Segment::create(
                             segmentId: $segmentId,
                             name: Name::fromString($activitySegment['name']),
@@ -78,7 +93,9 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                             isFavourite: $isFavourite,
                             climbCategory: $activitySegment['climb_category'] ?? null,
                             deviceName: $activity->getDeviceName(),
-                            countryCode: $countryCode
+                            countryCode: $countryCode,
+                            detailsHaveBeenImported: $detailsHaveBeenImported,
+                            polyline: null
                         );
                         $this->segmentRepository->add($segment);
                         ++$countSegmentsAdded;
