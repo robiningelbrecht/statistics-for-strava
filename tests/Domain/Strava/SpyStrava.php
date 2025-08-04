@@ -7,6 +7,7 @@ namespace App\Tests\Domain\Strava;
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\Stream\StreamType;
 use App\Domain\Strava\Gear\GearId;
+use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
@@ -177,6 +178,17 @@ class SpyStrava extends Strava
         ];
 
         return $gears[(string) $gearId];
+    }
+
+    #[\Override]
+    public function getSegment(SegmentId $segmentId): array
+    {
+        $segments = [
+            'segment-1' => ['map' => ['polyline' => 'DaLine']],
+            'segment-2' => ['map' => ['polyline' => 'DaLine2']],
+        ];
+
+        return $segments[(string) $segmentId];
     }
 
     #[\Override]

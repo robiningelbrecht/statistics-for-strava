@@ -81,7 +81,7 @@ final class BuildAppConsoleCommand extends Command
         $output->writeln('  => Building index');
         $this->commandBus->dispatch(new BuildIndexHtml($now));
         $output->writeln('  => Building dashboard');
-        $this->commandBus->dispatch(new BuildDashboardHtml($now));
+        $this->commandBus->dispatch(new BuildDashboardHtml());
         $output->writeln('  => Building activities');
         $this->commandBus->dispatch(new BuildActivitiesHtml($now));
         $output->writeln('  => Building gpx files');
