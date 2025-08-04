@@ -214,7 +214,7 @@ final class Segment implements SupportsAITooling
         return $this->polyline;
     }
 
-    public function updatePolyline(string $polyline): self
+    public function updatePolyline(?string $polyline): self
     {
         $this->polyline = $polyline;
 

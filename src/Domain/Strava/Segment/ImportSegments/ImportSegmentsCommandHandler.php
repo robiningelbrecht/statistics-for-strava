@@ -14,12 +14,15 @@ use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Segment\SegmentRepository;
+use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 final readonly class ImportSegmentsCommandHandler implements CommandHandler
 {
@@ -29,6 +32,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private OptInToSegmentDetailsImport $optInToSegmentDetailsImport,
+        private Strava $strava,
         private Countries $countries,
     ) {
     }
@@ -42,6 +46,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
 
         $countSegmentsAdded = 0;
         $countSegmentEffortsAdded = 0;
+        $stravaRateLimitsHaveBeenReached = false;
 
         foreach ($this->activityRepository->findActivityIds() as $activityId) {
             $activityWithRawData = $this->activityWithRawDataRepository->find($activityId);
@@ -70,18 +75,58 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                             $segment->updateIsFavourite($isFavourite);
                             $segmentNeedsPersistence = true;
                         }
-                        if ($this->optInToSegmentDetailsImport->hasOptedIn() && !$segment->detailsHaveBeenImported()) {
-                            $segment->updatePolyline('');
-                            $segment->flagDetailsAsImported();
-                            $segmentNeedsPersistence = true;
+                        if (!$stravaRateLimitsHaveBeenReached
+                            && $this->optInToSegmentDetailsImport->hasOptedIn() && !$segment->detailsHaveBeenImported()) {
+                            try {
+                                $stravaSegment = $this->strava->getSegment($segmentId);
+                                $segment->updatePolyline($stravaSegment['map']['polyline'] ?? null);
+                                $segment->flagDetailsAsImported();
+                                $segmentNeedsPersistence = true;
+
+                                $command->getOutput()->writeln(sprintf(
+                                    '  => Imported segment details: "%s"',
+                                    $segment->getName()
+                                ));
+                            } catch (ClientException|RequestException $exception) {
+                                if (429 === $exception->getResponse()?->getStatusCode()) {
+                                    // This will allow initial imports with a lot of activities to proceed the next day.
+                                    // This occurs when we exceed Strava API rate limits or throws an unexpected error.
+                                    $stravaRateLimitsHaveBeenReached = true;
+                                    $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your segment details tomorrow</error>');
+                                    continue;
+                                }
+
+                                $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
+
+                                return;
+                            }
                         }
                         if ($segmentNeedsPersistence) {
                             $this->segmentRepository->update($segment);
                         }
                     } catch (EntityNotFound) {
                         $detailsHaveBeenImported = false;
-                        if ($this->optInToSegmentDetailsImport->hasOptedIn()) {
+                        if (!$stravaRateLimitsHaveBeenReached && $this->optInToSegmentDetailsImport->hasOptedIn()) {
                             $detailsHaveBeenImported = true;
+                            try {
+                                $stravaSegment = $this->strava->getSegment($segmentId);
+                                $command->getOutput()->writeln(sprintf(
+                                    '  => Imported segment details: "%s"',
+                                    $activitySegment['name']
+                                ));
+                            } catch (ClientException|RequestException $exception) {
+                                if (429 === $exception->getResponse()?->getStatusCode()) {
+                                    // This will allow initial imports with a lot of activities to proceed the next day.
+                                    // This occurs when we exceed Strava API rate limits or throws an unexpected error.
+                                    $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>');
+                                    $stravaRateLimitsHaveBeenReached = true;
+                                    continue;
+                                }
+
+                                $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
+
+                                return;
+                            }
                         }
 
                         $segment = Segment::create(
@@ -95,7 +140,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                             deviceName: $activity->getDeviceName(),
                             countryCode: $countryCode,
                             detailsHaveBeenImported: $detailsHaveBeenImported,
-                            polyline: null
+                            polyline: $stravaSegment['map']['polyline'] ?? null
                         );
                         $this->segmentRepository->add($segment);
                         ++$countSegmentsAdded;
