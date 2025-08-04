@@ -24,6 +24,7 @@ import:
   activity_visibilities_to_import: []
   skip_activities_recorded_before: null
   activitiesToSkipDuringImport: ['skip']
+  optInToSegmentDetailImport: true
 zwift:
   level: 80
   racing_score: 495

@@ -15,9 +15,7 @@
     },
     {
         "commandName": "App\\Domain\\App\\BuildDashboardHtml\\BuildDashboardHtml",
-        "payload": {
-            "now": "2023-10-17 16:15:04"
-        }
+        "payload": []
     },
     {
         "commandName": "App\\Domain\\App\\BuildActivitiesHtml\\BuildActivitiesHtml",

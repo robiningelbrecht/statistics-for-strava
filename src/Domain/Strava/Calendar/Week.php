@@ -36,14 +36,4 @@ final readonly class Week
     {
         return $this->firstDay->translatedFormat('M Y');
     }
-
-    public function getNextWeek(): Week
-    {
-        $nextMonday = $this->firstDay->modify('next monday');
-
-        return Week::fromYearAndWeekNumber(
-            year: $nextMonday->getYear(),
-            weekNumber: $nextMonday->getWeekNumber()
-        );
-    }
 }
