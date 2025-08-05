@@ -9,8 +9,8 @@
         "climbCategory": null,
         "deviceName": "Polar",
         "countryCode": "BE",
-        "detailsHaveBeenImported": 0,
-        "polyline": null
+        "detailsHaveBeenImported": 1,
+        "polyline": "DaLine2"
     },
     {
         "segmentId": "segment-1",
@@ -22,7 +22,7 @@
         "climbCategory": null,
         "deviceName": "Zwift",
         "countryCode": null,
-        "detailsHaveBeenImported": 0,
-        "polyline": null
+        "detailsHaveBeenImported": 1,
+        "polyline": "DaLine"
     }
 ]
