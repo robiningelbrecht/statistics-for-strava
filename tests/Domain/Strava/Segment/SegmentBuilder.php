@@ -109,4 +109,11 @@ final class SegmentBuilder
 
         return $this;
     }
+
+    public function withDetailsHaveBeenImported(bool $flag): self
+    {
+        $this->detailsHaveBeenImported = $flag;
+
+        return $this;
+    }
 }
