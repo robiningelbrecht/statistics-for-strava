@@ -1,4 +1,4 @@
 Importing segments and efforts...
-  => Imported segment details: "Segment One"
-  => Imported segment details: "⭐️ Segment"
   => Added 1 new segments and 1 new segment efforts
+  => [1/2] Imported segment details: "⭐️ Segment"
+  => [2/2] Imported segment details: "Segment One"

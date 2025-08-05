@@ -81,6 +81,19 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
         ));
     }
 
+    public function findSegmentsIdsMissingDetails(): array
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('segmentId')
+            ->from('Segment')
+            ->andWhere('detailsHaveBeenImported = 0');
+
+        return array_map(
+            fn (string $segmentId) => SegmentId::fromString($segmentId),
+            $queryBuilder->executeQuery()->fetchFirstColumn()
+        );
+    }
+
     public function count(): int
     {
         return (int) $this->connection->executeQuery('SELECT COUNT(*) FROM Segment')->fetchOne();

@@ -102,6 +102,33 @@ class DbalSegmentRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindSegmentsIdsMissingDetails(): void
+    {
+        $segmentOne = SegmentBuilder::fromDefaults()
+            ->withSegmentId(SegmentId::fromUnprefixed(1))
+            ->withDetailsHaveBeenImported(true)
+            ->withName(Name::fromString('A name'))
+            ->build();
+        $this->segmentRepository->add($segmentOne);
+        $segmentTwo = SegmentBuilder::fromDefaults()
+            ->withSegmentId(SegmentId::fromUnprefixed(2))
+            ->withDetailsHaveBeenImported(false)
+            ->withName(Name::fromString('C name'))
+            ->build();
+        $this->segmentRepository->add($segmentTwo);
+        $segmentThree = SegmentBuilder::fromDefaults()
+            ->withSegmentId(SegmentId::fromUnprefixed(3))
+            ->withDetailsHaveBeenImported(false)
+            ->withName(Name::fromString('B name'))
+            ->build();
+        $this->segmentRepository->add($segmentThree);
+
+        $this->assertEquals(
+            [$segmentTwo->getId(), $segmentThree->getId()],
+            $this->segmentRepository->findSegmentsIdsMissingDetails()
+        );
+    }
+
     public function testCount(): void
     {
         $segmentOne = SegmentBuilder::fromDefaults()
