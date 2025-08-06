@@ -1,3 +1,24 @@
+# [v3.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.0) - 2025-08-06
+
+This release allows you to import segment details from Strava to be able to display maps on segment detail pages:
+
+```yml
+import:
+  # Setting this to true will import segment details. This means each segment will need an extra Strava API call to fetch the segment details.
+  # This is required to be able to display a map of the segment.
+  # Setting this to true will increase the import time significantly if you have a lot of segments.
+  # Each segment only needs to be imported once, so this will not affect the import time for subsequent imports.
+  optInToSegmentDetailImport: false
+```
+
+## What's Changed
+* ISSUE #945: Allow to opt-in to import segment details by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/952
+* ISSUE #945: Render segment leaflet map by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/958
+* ISSUE #959: Add support for Kosovo as a country by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/960
+* ISSUE #953: Add ALL tab to photos by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/961
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.1.3...v3.2.0
+
 # [v3.1.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.1.3) - 2025-08-01
 
 Another day, another release, another new dashboard widget. This time it's the Eddington widget.
