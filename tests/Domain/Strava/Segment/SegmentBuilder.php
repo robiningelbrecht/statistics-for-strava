@@ -7,6 +7,8 @@ namespace App\Tests\Domain\Strava\Segment;
 use App\Domain\Strava\Activity\SportType\SportType;
 use App\Domain\Strava\Segment\Segment;
 use App\Domain\Strava\Segment\SegmentId;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\String\Name;
 
@@ -22,7 +24,8 @@ final class SegmentBuilder
     private ?int $climbCategory;
     private ?string $countryCode;
     private bool $detailsHaveBeenImported;
-    private ?string $polyline;
+    private ?EncodedPolyline $polyline;
+    private ?Coordinate $startingCoordinate;
 
     private function __construct()
     {
@@ -37,6 +40,7 @@ final class SegmentBuilder
         $this->countryCode = 'BE';
         $this->detailsHaveBeenImported = false;
         $this->polyline = null;
+        $this->startingCoordinate = null;
     }
 
     public static function fromDefaults(): self
@@ -57,7 +61,8 @@ final class SegmentBuilder
             deviceName: $this->deviceName,
             countryCode: $this->countryCode,
             detailsHaveBeenImported: $this->detailsHaveBeenImported,
-            polyline: $this->polyline
+            polyline: $this->polyline,
+            startingCoordinate: $this->startingCoordinate
         );
     }
 

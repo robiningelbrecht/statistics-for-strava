@@ -8,6 +8,10 @@ use App\Domain\Strava\Activity\SportType\SportType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Repository\Pagination;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
+use App\Infrastructure\ValueObject\Geography\Latitude;
+use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 
@@ -16,9 +20,11 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
     public function add(Segment $segment): void
     {
         $sql = 'INSERT INTO Segment (segmentId, name, sportType, distance, maxGradient, isFavourite, 
-                     deviceName, climbCategory, countryCode, detailsHaveBeenImported, polyline) 
+                     deviceName, climbCategory, countryCode, detailsHaveBeenImported, polyline,
+                     startingCoordinateLatitude, startingCoordinateLongitude) 
                 VALUES (:segmentId, :name, :sportType, :distance, :maxGradient, :isFavourite, 
-                        :deviceName, :climbCategory, :countryCode, :detailsHaveBeenImported, :polyline)';
+                        :deviceName, :climbCategory, :countryCode, :detailsHaveBeenImported, :polyline,
+                        :startingCoordinateLatitude, :startingCoordinateLongitude)';
 
         $this->connection->executeStatement($sql, [
             'segmentId' => $segment->getId(),
@@ -31,7 +37,9 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             'climbCategory' => $segment->getClimbCategory(),
             'countryCode' => $segment->getCountryCode(),
             'detailsHaveBeenImported' => (int) $segment->detailsHaveBeenImported(),
-            'polyline' => $segment->getPolyline(),
+            'polyline' => null,
+            'startingCoordinateLatitude' => null,
+            'startingCoordinateLongitude' => null,
         ]);
     }
 
@@ -40,14 +48,20 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
         $sql = 'UPDATE Segment SET 
                     isFavourite = :isFavourite,
                     detailsHaveBeenImported = :detailsHaveBeenImported,
-                    polyline = :polyline
+                    polyline = :polyline,
+                    startingCoordinateLatitude = :startingCoordinateLatitude,
+                    startingCoordinateLongitude = :startingCoordinateLongitude
                     WHERE segmentId = :segmentId';
 
+        $polyline = $segment->getPolyline();
+        $startingCoordinate = $polyline?->getStartingCoordinate();
         $this->connection->executeStatement($sql, [
             'segmentId' => $segment->getId(),
             'isFavourite' => (int) $segment->isFavourite(),
             'detailsHaveBeenImported' => (int) $segment->detailsHaveBeenImported(),
-            'polyline' => $segment->getPolyline(),
+            'polyline' => $polyline,
+            'startingCoordinateLatitude' => $startingCoordinate?->getLatitude()->toFloat(),
+            'startingCoordinateLongitude' => $startingCoordinate?->getLongitude()->toFloat(),
         ]);
     }
 
@@ -115,7 +129,11 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             deviceName: $result['deviceName'],
             countryCode: $result['countryCode'],
             detailsHaveBeenImported: (bool) $result['detailsHaveBeenImported'],
-            polyline: $result['polyline'],
+            polyline: EncodedPolyline::fromOptionalString($result['polyline']),
+            startingCoordinate: Coordinate::createFromOptionalLatAndLng(
+                Latitude::fromOptionalString((string) $result['startingCoordinateLatitude']),
+                Longitude::fromOptionalString((string) $result['startingCoordinateLongitude'])
+            ),
         );
     }
 

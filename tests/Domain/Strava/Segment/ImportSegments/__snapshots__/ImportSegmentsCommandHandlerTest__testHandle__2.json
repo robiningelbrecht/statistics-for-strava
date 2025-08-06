@@ -10,7 +10,9 @@
         "deviceName": "Polar",
         "countryCode": "BE",
         "detailsHaveBeenImported": 1,
-        "polyline": "DaLine2"
+        "polyline": "DaLine2",
+        "startingCoordinateLatitude": -3.0e-5,
+        "startingCoordinateLongitude": 0.00209
     },
     {
         "segmentId": "segment-1",
@@ -23,6 +25,8 @@
         "deviceName": "Zwift",
         "countryCode": null,
         "detailsHaveBeenImported": 1,
-        "polyline": "DaLine"
+        "polyline": "DaLine",
+        "startingCoordinateLatitude": -3.0e-5,
+        "startingCoordinateLongitude": 0.00209
     }
 ]

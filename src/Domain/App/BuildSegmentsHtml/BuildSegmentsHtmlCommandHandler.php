@@ -64,12 +64,17 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     $segment->enrichWithLastEffortDate($lastEffortDate);
                 }
 
+                $leafletMap = $segment->getLeafletMap();
                 $this->buildStorage->write(
                     'segment/'.$segment->getId().'.html',
                     $this->twig->load('html/segment/segment.html.twig')->render([
                         'segment' => $segment,
                         'segmentEffortsTopTen' => $segmentEffortsTopTen,
                         'segmentEffortsHistory' => $segmentEffortsHistory,
+                        'leaflet' => $leafletMap ? [
+                            'routes' => [$segment->getPolyline()],
+                            'map' => $leafletMap,
+                        ] : null,
                     ]),
                 );
 
