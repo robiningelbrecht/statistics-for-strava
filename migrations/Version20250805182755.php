@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250801141930 extends AbstractMigration
+final class Version20250805182755 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,6 +23,8 @@ final class Version20250801141930 extends AbstractMigration
         $this->addSql('ALTER TABLE Segment ADD COLUMN detailsHaveBeenImported BOOLEAN DEFAULT NULL');
         $this->addSql('UPDATE segment SET detailsHaveBeenImported = 0');
         $this->addSql('ALTER TABLE Segment ADD COLUMN polyline CLOB DEFAULT NULL');
+        $this->addSql('ALTER TABLE Segment ADD COLUMN startingCoordinateLatitude DOUBLE PRECISION DEFAULT NULL');
+        $this->addSql('ALTER TABLE Segment ADD COLUMN startingCoordinateLongitude DOUBLE PRECISION DEFAULT NULL');
     }
 
     public function down(Schema $schema): void

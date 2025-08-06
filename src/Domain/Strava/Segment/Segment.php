@@ -6,7 +6,11 @@ namespace App\Domain\Strava\Segment;
 
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Strava\CouldNotDetermineLeafletMap;
+use App\Domain\Strava\LeafletMap;
 use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -41,7 +45,9 @@ final class Segment implements SupportsAITooling
         #[ORM\Column(type: 'boolean', nullable: true)]
         private bool $detailsHaveBeenImported,
         #[ORM\Column(type: 'text', nullable: true)]
-        private ?string $polyline,
+        private ?EncodedPolyline $polyline,
+        #[ORM\Embedded(class: Coordinate::class)]
+        private ?Coordinate $startingCoordinate,
     ) {
     }
 
@@ -55,8 +61,6 @@ final class Segment implements SupportsAITooling
         ?int $climbCategory,
         ?string $deviceName,
         ?string $countryCode,
-        bool $detailsHaveBeenImported,
-        ?string $polyline,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -68,8 +72,9 @@ final class Segment implements SupportsAITooling
             climbCategory: $climbCategory,
             deviceName: $deviceName,
             countryCode: $countryCode,
-            detailsHaveBeenImported: $detailsHaveBeenImported,
-            polyline: $polyline,
+            detailsHaveBeenImported: false,
+            polyline: null,
+            startingCoordinate: null,
         );
     }
 
@@ -84,7 +89,8 @@ final class Segment implements SupportsAITooling
         ?string $deviceName,
         ?string $countryCode,
         bool $detailsHaveBeenImported,
-        ?string $polyline,
+        ?EncodedPolyline $polyline,
+        ?Coordinate $startingCoordinate,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -98,6 +104,7 @@ final class Segment implements SupportsAITooling
             countryCode: $countryCode,
             detailsHaveBeenImported: $detailsHaveBeenImported,
             polyline: $polyline,
+            startingCoordinate: $startingCoordinate,
         );
     }
 
@@ -209,16 +216,21 @@ final class Segment implements SupportsAITooling
         return $this;
     }
 
-    public function getPolyline(): ?string
+    public function getPolyline(): ?EncodedPolyline
     {
         return $this->polyline;
     }
 
-    public function updatePolyline(?string $polyline): self
+    public function updatePolyline(?EncodedPolyline $polyline): self
     {
         $this->polyline = $polyline;
 
         return $this;
+    }
+
+    public function getStartingCoordinate(): ?Coordinate
+    {
+        return $this->startingCoordinate;
     }
 
     public function getCountryCode(): ?string
@@ -229,6 +241,27 @@ final class Segment implements SupportsAITooling
     public function getUrl(): string
     {
         return 'https://www.strava.com/segments/'.$this->getId()->toUnprefixedString();
+    }
+
+    public function getLeafletMap(): ?LeafletMap
+    {
+        if (!$this->getPolyline()) {
+            return null;
+        }
+        if (!$this->isZwiftSegment()) {
+            return LeafletMap::REAL_WORLD;
+        }
+        if (!$startingCoordinate = $this->getStartingCoordinate()) {
+            return null;
+        }
+
+        try {
+            return LeafletMap::forZwiftStartingCoordinate($startingCoordinate);
+        } catch (CouldNotDetermineLeafletMap) {
+            // Very old Zwift activities have routes that we don't have corresponding maps for.
+        }
+
+        return null;
     }
 
     /**

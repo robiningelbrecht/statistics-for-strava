@@ -18,6 +18,7 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -84,8 +85,6 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                             climbCategory: $activitySegment['climb_category'] ?? null,
                             deviceName: $activity->getDeviceName(),
                             countryCode: $countryCode,
-                            detailsHaveBeenImported: false,
-                            polyline: null
                         );
                         $this->segmentRepository->add($segment);
                         ++$countSegmentsAdded;
@@ -127,7 +126,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             try {
                 $stravaSegment = $this->strava->getSegment($segmentId);
                 $segment = $this->segmentRepository->find($segmentId);
-                $segment->updatePolyline($stravaSegment['map']['polyline'] ?? null);
+                $segment->updatePolyline(EncodedPolyline::fromOptionalString($stravaSegment['map']['polyline'] ?? null));
                 $segment->flagDetailsAsImported();
                 $this->segmentRepository->update($segment);
 
