@@ -17,26 +17,26 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
     public function findAll(): Images
     {
-        $images = [];
+        $images = Images::empty();
         $activities = $this->activityRepository->findAll();
         /** @var \App\Domain\Strava\Activity\Activity $activity */
         foreach ($activities as $activity) {
             if (0 === $activity->getTotalImageCount()) {
                 continue;
             }
-            $images = [
-                ...$images,
-                ...array_map(
-                    fn (string $path) => Image::create(
-                        imageLocation: $path,
+
+            foreach ($activity->getLocalImagePaths() as $localImagePath) {
+                $images->add(
+                    sportType: $activity->getSportType(),
+                    image: Image::create(
+                        imageLocation: $localImagePath,
                         activity: $activity
-                    ),
-                    $activity->getLocalImagePaths()
-                ),
-            ];
+                    )
+                );
+            }
         }
 
-        return Images::fromArray($images);
+        return $images;
     }
 
     public function findRandomFor(SportTypes $sportTypes, Years $years): Image
