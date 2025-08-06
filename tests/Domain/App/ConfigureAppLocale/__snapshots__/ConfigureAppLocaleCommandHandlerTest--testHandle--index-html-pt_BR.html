@@ -510,8 +510,9 @@
     };
 
     const initTabs = (rootNode) => {
-        rootNode.querySelectorAll('[data-tabs]').forEach(function ($triggerEl) {
+        rootNode.querySelectorAll('[data-tabs]').forEach(($triggerEl) => {
             const tabItems = [];
+            let defaultTabId = null;
 
             $triggerEl
                 .querySelectorAll('[role="tab"]')
@@ -522,10 +523,13 @@
                         triggerEl: $triggerEl,
                         targetEl: document.querySelector(dataTabsTarget),
                     });
+                    if ($triggerEl.hasAttribute('data-tab-default')) {
+                        defaultTabId = dataTabsTarget;
+                    }
                 });
 
             new Tabs($triggerEl, tabItems, {
-                defaultTabId: null,
+                defaultTabId: defaultTabId,
                 activeClasses: 'text-strava-orange border-strava-orange hover:text-gray-600 hover:border-gray-300',
                 inactiveClasses: 'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
                 onShow: (tabs, activeTab) => {
