@@ -42,7 +42,7 @@
                     'imageOverlay': leaflet.map.getOverlayImageUrl(),
                     'bounds': leaflet.map.getBounds(),
                 } %}
-                <div class="min-h-[350px] flex-grow-1" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+                <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
             <div class="border-b border-gray-200">
