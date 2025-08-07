@@ -1,3 +1,4 @@
+{% set uniqueId = uniqueNumberForId('bestEffortsWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Best Efforts"|trans }}
@@ -5,12 +6,12 @@
     {% if bestEffortsCharts|length > 1 %}
         <div class="mb-4 border-b border-gray-200">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-                id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
+                id="bestEffortsActivityTypeTab{{ uniqueId }}" data-tabs="#bestEffortsActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">
                 {% for activityType,chart in bestEffortsCharts %}
                     <li class="mr-2" role="presentation">
-                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
-                           aria-controls="bestEfforts{{ activityType }}"
+                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="bestEfforts{{ activityType }}{{ uniqueId }}"
                            class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                         </a>
@@ -19,18 +20,18 @@
             </ul>
         </div>
     {% endif %}
-    <div id="bestEffortsActivityTypeTabContent">
+    <div id="bestEffortsActivityTypeTabContent{{ uniqueId }}">
         {% for activityType,bestEffortsChart in bestEffortsCharts %}
             {% set activityTypeEnum = enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType) %}
             {% set bestEffortsForActivityType = bestEfforts[activityType] %}
-            <div id="bestEfforts{{ activityType }}" role="tabpanel"
-                 aria-labelledby="bestEfforts{{ activityType }}-tab">
+            <div id="bestEfforts{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="bestEfforts{{ activityType }}{{ uniqueId }}-tab">
                 <div class="h-[20rem]" data-echarts-options='{{ bestEffortsChart }}'></div>
-                <div id="accordion-bestEfforts{{ activityType }}" data-accordion="collapse"
+                <div id="accordion-bestEfforts{{ activityType }}{{ uniqueId }}" data-accordion="collapse"
                      data-active-classes="text-gray-900"
                      data-inactive-classes="text-gray-900">
-                    <a id="accordion-bestEfforts{{ activityType }}-heading" data-accordion-target="#accordion-bestEfforts{{ activityType }}-body" aria-expanded="false"
-                       aria-controls="accordion-bestEfforts{{ activityType }}-body"
+                    <a id="accordion-bestEfforts{{ activityType }}{{ uniqueId }}-heading" data-accordion-target="#accordion-bestEfforts{{ activityType }}{{ uniqueId }}-body" aria-expanded="false"
+                       aria-controls="accordion-bestEfforts{{ activityType }}{{ uniqueId }}-body"
                        class="hover:underline cursor-pointer flex items-center text-xs gap-x-1 w-full px-2 py-3 font-medium rtl:text-right text-gray-900">
                         <span>{{ "Details"|trans }}</span>
                         <svg data-accordion-icon class="w-2 h-2 rotate-180 shrink-0" aria-hidden="true"
@@ -39,8 +40,8 @@
                                   d="M9 5 5 1 1 5"/>
                         </svg>
                     </a>
-                    <div id="accordion-bestEfforts{{ activityType }}-body" class="hidden relative overflow-x-auto"
-                         aria-labelledby="accordion-bestEfforts{{ activityType }}-heading">
+                    <div id="accordion-bestEfforts{{ activityType }}{{ uniqueId }}-body" class="hidden relative overflow-x-auto"
+                         aria-labelledby="accordion-bestEfforts{{ activityType }}{{ uniqueId }}-heading">
                         <div class="relative overflow-x-scroll">
                             <table class="w-full text-sm text-center text-gray-500">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
