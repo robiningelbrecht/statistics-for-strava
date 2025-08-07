@@ -7,6 +7,7 @@ use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityTotals;
 use App\Domain\Strava\Activity\Eddington\Eddington;
 use App\Domain\Strava\Activity\Stream\StreamBasedActivityHeartRateRepository;
+use App\Infrastructure\Twig\HtmlTwigExtension;
 use Carbon\Carbon;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -40,6 +41,7 @@ abstract class ContainerTestCase extends KernelTestCase
         $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZonesInLastXDays = [];
         Eddington::$instances = [];
         ActivityTotals::$instance = null;
+        HtmlTwigExtension::$seenIds = [];
 
         // Empty file systems.
         /** @var \League\Flysystem\FilesystemOperator[] $fileSystems */
