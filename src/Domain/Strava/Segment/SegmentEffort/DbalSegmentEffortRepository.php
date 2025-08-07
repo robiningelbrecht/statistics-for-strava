@@ -26,8 +26,10 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
 
     public function add(SegmentEffort $segmentEffort): void
     {
-        $sql = 'INSERT INTO SegmentEffort (segmentEffortId, segmentId, activityId, startDateTime, name, elapsedTimeInSeconds, distance, averageWatts)
-                VALUES (:segmentEffortId, :segmentId, :activityId, :startDateTime, :name, :elapsedTimeInSeconds, :distance, :averageWatts)';
+        $sql = 'INSERT INTO SegmentEffort (segmentEffortId, segmentId, activityId, startDateTime, 
+                           name, elapsedTimeInSeconds, distance, averageWatts, averageHeartRate, maxHeartRate)
+                VALUES (:segmentEffortId, :segmentId, :activityId, :startDateTime, 
+                        :name, :elapsedTimeInSeconds, :distance, :averageWatts, :averageHeartRate, :maxHeartRate)';
 
         $this->connection->executeStatement($sql, [
             'segmentEffortId' => $segmentEffort->getId(),
@@ -38,6 +40,8 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             'elapsedTimeInSeconds' => $segmentEffort->getElapsedTimeInSeconds(),
             'distance' => $segmentEffort->getDistance()->toMeter()->toInt(),
             'averageWatts' => $segmentEffort->getAverageWatts(),
+            'averageHeartRate' => $segmentEffort->getAverageHeartRate(),
+            'maxHeartRate' => $segmentEffort->getMaxHeartRate(),
         ]);
     }
 
@@ -142,6 +146,8 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             elapsedTimeInSeconds: $result['elapsedTimeInSeconds'],
             distance: Meter::from($result['distance'])->toKilometer(),
             averageWatts: $result['averageWatts'],
+            averageHeartRate: $result['averageHeartRate'],
+            maxHeartRate: $result['maxHeartRate'],
             rank: $this->segmentEffortRankingMap->getRankFor($segmentEffortId)
         );
     }

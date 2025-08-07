@@ -108,6 +108,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                         elapsedTimeInSeconds: (float) $activitySegmentEffort['elapsed_time'],
                         distance: Meter::from($activitySegment['distance'])->toKilometer(),
                         averageWatts: isset($activitySegmentEffort['average_watts']) ? (float) $activitySegmentEffort['average_watts'] : null,
+                        averageHeartRate: isset($activitySegmentEffort['average_heartrate']) ? (int) $activitySegmentEffort['average_heartrate'] : null,
+                        maxHeartRate: isset($activitySegmentEffort['max_heartrate']) ? (int) $activitySegmentEffort['max_heartrate'] : null,
                     ));
                     ++$countSegmentEffortsAdded;
                 }

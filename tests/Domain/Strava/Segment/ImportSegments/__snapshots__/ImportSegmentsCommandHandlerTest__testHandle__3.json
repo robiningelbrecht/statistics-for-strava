@@ -7,7 +7,9 @@
         "name": "Segment One",
         "elapsedTimeInSeconds": 9.3,
         "distance": 100,
-        "averageWatts": 200
+        "averageWatts": 200,
+        "averageHeartRate": null,
+        "maxHeartRate": null
     },
     {
         "segmentEffortId": "segmentEffort-3",
@@ -17,7 +19,9 @@
         "name": "Segment One",
         "elapsedTimeInSeconds": 9.3,
         "distance": 100,
-        "averageWatts": 200
+        "averageWatts": 200,
+        "averageHeartRate": null,
+        "maxHeartRate": null
     },
     {
         "segmentEffortId": "segmentEffort-1",
@@ -27,6 +31,8 @@
         "name": "Segment Effort One",
         "elapsedTimeInSeconds": 300,
         "distance": 1000,
-        "averageWatts": null
+        "averageWatts": null,
+        "averageHeartRate": null,
+        "maxHeartRate": null
     }
 ]
