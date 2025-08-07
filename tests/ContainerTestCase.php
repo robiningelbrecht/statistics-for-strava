@@ -3,8 +3,8 @@
 namespace App\Tests;
 
 use App\Domain\Strava\Activity\ActivityIntensity;
-use App\Domain\Strava\Activity\ActivityRepository;
 use App\Domain\Strava\Activity\ActivityTotals;
+use App\Domain\Strava\Activity\DbalActivityRepository;
 use App\Domain\Strava\Activity\Eddington\Eddington;
 use App\Domain\Strava\Activity\Stream\StreamBasedActivityHeartRateRepository;
 use App\Infrastructure\Twig\HtmlTwigExtension;
@@ -35,10 +35,10 @@ abstract class ContainerTestCase extends KernelTestCase
         $this->createTestDatabase();
 
         // Empty the static cache between tests.
-        $this->getContainer()->get(ActivityRepository::class)::$cachedActivities = [];
-        $this->getContainer()->get(ActivityIntensity::class)::$cachedIntensities = [];
-        $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZones = [];
-        $this->getContainer()->get(StreamBasedActivityHeartRateRepository::class)::$cachedHeartRateZonesInLastXDays = [];
+        DbalActivityRepository::$cachedActivities = [];
+        ActivityIntensity::$cachedIntensities = [];
+        StreamBasedActivityHeartRateRepository::$cachedHeartRateZones = [];
+        StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays = [];
         Eddington::$instances = [];
         ActivityTotals::$instance = null;
         HtmlTwigExtension::$seenIds = [];
