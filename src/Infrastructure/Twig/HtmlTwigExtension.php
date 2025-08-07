@@ -9,7 +9,7 @@ use Twig\Attribute\AsTwigFunction;
 final class HtmlTwigExtension
 {
     /** @var array<string, int> */
-    private static array $seenIds;
+    public static array $seenIds;
 
     #[AsTwigFunction('uniqueNumberForId')]
     public function uniqueNumberForId(string $id): string
