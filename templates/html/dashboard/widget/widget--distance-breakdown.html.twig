@@ -1,3 +1,4 @@
+{% set uniqueId = uniqueNumberForId('distanceBreakdownWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Distance breakdown"|trans }}
@@ -5,12 +6,12 @@
     {% if distanceBreakdowns|length > 1 %}
         <div class="mb-4 border-b border-gray-200">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-                id="distanceBreakdownActivityTypeTab" data-tabs="#distanceBreakdownActivityTypeTabContent"
+                id="distanceBreakdownActivityTypeTab{{ uniqueId }}" data-tabs="#distanceBreakdownActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">
                 {% for activityType,distanceBreakdown in distanceBreakdowns %}
                     <li class="mr-2" role="presentation">
-                        <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}" role="tab"
-                           aria-controls="distanceBreakdown{{ activityType }}"
+                        <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="distanceBreakdown{{ activityType }}{{ uniqueId }}"
                            class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                         </a>
@@ -19,10 +20,10 @@
             </ul>
         </div>
     {% endif %}
-    <div id="distanceBreakdownActivityTypeTabContent">
+    <div id="distanceBreakdownActivityTypeTabContent{{ uniqueId }}">
         {% for activityType,distanceBreakdown in distanceBreakdowns %}
-            <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}" role="tabpanel"
-                 aria-labelledby="distanceBreakdown{{ activityType }}-tab">
+            <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="distanceBreakdown{{ activityType }}{{ uniqueId }}-tab">
                 <table class="w-full text-sm text-center text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>

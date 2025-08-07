@@ -1,15 +1,16 @@
+{% set uniqueId = uniqueNumberForId('monthlyStatsWidget') %}
 <h3 class="mb-4 text-lg font-semibold">
     {{ "Monthly stats"|trans }}
 </h3>
 {% if monthlyStatsCharts|length > 1 %}
     <div class="mb-4 border-b border-gray-200">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-            id="monthlyStatsActivityTypeTab" data-tabs="#monthlyStatsActivityTypeTabContent"
+            id="monthlyStatsActivityTypeTab{{ uniqueId }}" data-tabs="#monthlyStatsActivityTypeTabContent{{ uniqueId }}"
             role="tablist">
             {% for activityType,chart in monthlyStatsCharts %}
                 <li class="mr-2" role="presentation">
-                    <a href="#" data-tabs-target="#monthlyStats{{ activityType }}" role="tab"
-                       aria-controls="monthlyStats{{ activityType }}"
+                    <a href="#" data-tabs-target="#monthlyStats{{ activityType }}{{ uniqueId }}" role="tab"
+                       aria-controls="monthlyStats{{ activityType }}{{ uniqueId }}"
                        class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                         {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                     </a>
@@ -18,10 +19,10 @@
         </ul>
     </div>
 {% endif %}
-<div id="monthlyStatsActivityTypeTabContent">
+<div id="monthlyStatsActivityTypeTabContent{{ uniqueId }}">
     {% for activityType,chart in monthlyStatsCharts %}
-        <div id="monthlyStats{{ activityType }}" role="tabpanel"
-             aria-labelledby="monthlyStats{{ activityType }}-tab">
+        <div id="monthlyStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="monthlyStats{{ activityType }}{{ uniqueId }}-tab">
             <div class="h-80" data-echarts-options='{{ chart }}'></div>
         </div>
     {% endfor %}

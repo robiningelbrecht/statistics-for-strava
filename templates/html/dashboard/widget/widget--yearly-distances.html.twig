@@ -1,3 +1,4 @@
+{% set uniqueId = uniqueNumberForId('yearlyDistancesWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Yearly distances"|trans }}
@@ -5,12 +6,12 @@
     {% if yearlyDistanceCharts|length > 1 %}
         <div class="mb-4 border-b border-gray-200">
             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-                id="yearlyDistancesActivityTypeTab" data-tabs="#yearlyDistancesActivityTypeTabContent"
+                id="yearlyDistancesActivityTypeTab{{ uniqueId }}" data-tabs="#yearlyDistancesActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">
                 {% for activityType,chart in yearlyDistanceCharts %}
                     <li class="mr-2" role="presentation">
-                        <a href="#" data-tabs-target="#yearlyDistances{{ activityType }}" role="tab"
-                           aria-controls="yearlyDistances{{ activityType }}"
+                        <a href="#" data-tabs-target="#yearlyDistances{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="yearlyDistances{{ activityType }}{{ uniqueId }}"
                            class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
                         </a>
@@ -19,10 +20,10 @@
             </ul>
         </div>
     {% endif %}
-    <div id="yearlyDistancesActivityTypeTabContent">
+    <div id="yearlyDistancesActivityTypeTabContent{{ uniqueId }}">
         {% for activityType,chart in yearlyDistanceCharts %}
-            <div id="yearlyDistances{{ activityType }}" role="tabpanel"
-                 aria-labelledby="yearlyDistances{{ activityType }}-tab">
+            <div id="yearlyDistances{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="yearlyDistances{{ activityType }}{{ uniqueId }}-tab">
                 <div class="mb-4 h-[20rem]" data-echarts-options='{{ chart }}'></div>
                 <div class="relative overflow-x-scroll">
                     <table class="w-full text-sm text-center text-gray-500">
