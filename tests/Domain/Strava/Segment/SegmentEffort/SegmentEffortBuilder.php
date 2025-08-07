@@ -21,6 +21,8 @@ final class SegmentEffortBuilder
     private float $elapsedTimeInSeconds;
     private Kilometer $distance;
     private ?float $averageWatts;
+    private ?int $maxHeartRate;
+    private ?int $averageHeartRate;
     private ?int $rank;
 
     private function __construct()
@@ -34,6 +36,8 @@ final class SegmentEffortBuilder
         $this->distance = Kilometer::from(0.1);
         $this->averageWatts = 200;
         $this->rank = 1;
+        $this->averageHeartRate = null;
+        $this->maxHeartRate = null;
     }
 
     public static function fromDefaults(): self
@@ -52,6 +56,8 @@ final class SegmentEffortBuilder
             elapsedTimeInSeconds: $this->elapsedTimeInSeconds,
             distance: $this->distance,
             averageWatts: $this->averageWatts,
+            averageHeartRate: $this->averageHeartRate,
+            maxHeartRate: $this->maxHeartRate,
             rank: $this->rank,
         );
     }

@@ -41,6 +41,10 @@ final class SegmentEffort implements SupportsAITooling
         private readonly Kilometer $distance,
         #[ORM\Column(type: 'float', nullable: true)]
         private readonly ?float $averageWatts,
+        #[ORM\Column(type: 'integer', nullable: true)]
+        private readonly ?int $averageHeartRate,
+        #[ORM\Column(type: 'integer', nullable: true)]
+        private readonly ?int $maxHeartRate,
         private readonly ?int $rank,
     ) {
     }
@@ -54,6 +58,8 @@ final class SegmentEffort implements SupportsAITooling
         float $elapsedTimeInSeconds,
         Kilometer $distance,
         ?float $averageWatts,
+        ?int $averageHeartRate,
+        ?int $maxHeartRate,
     ): self {
         return new self(
             segmentEffortId: $segmentEffortId,
@@ -64,6 +70,8 @@ final class SegmentEffort implements SupportsAITooling
             elapsedTimeInSeconds: $elapsedTimeInSeconds,
             distance: $distance,
             averageWatts: $averageWatts,
+            averageHeartRate: $averageHeartRate,
+            maxHeartRate: $maxHeartRate,
             rank: null,
         );
     }
@@ -77,6 +85,8 @@ final class SegmentEffort implements SupportsAITooling
         float $elapsedTimeInSeconds,
         Kilometer $distance,
         ?float $averageWatts,
+        ?int $averageHeartRate,
+        ?int $maxHeartRate,
         ?int $rank,
     ): self {
         return new self(
@@ -88,6 +98,8 @@ final class SegmentEffort implements SupportsAITooling
             elapsedTimeInSeconds: $elapsedTimeInSeconds,
             distance: $distance,
             averageWatts: $averageWatts,
+            averageHeartRate: $averageHeartRate,
+            maxHeartRate: $maxHeartRate,
             rank: $rank,
         );
     }
@@ -147,6 +159,16 @@ final class SegmentEffort implements SupportsAITooling
         return $this->distance;
     }
 
+    public function getAverageHeartRate(): ?int
+    {
+        return $this->averageHeartRate;
+    }
+
+    public function getMaxHeartRate(): ?int
+    {
+        return $this->maxHeartRate;
+    }
+
     public function getRank(): ?int
     {
         return $this->rank;
@@ -175,6 +197,8 @@ final class SegmentEffort implements SupportsAITooling
             'name' => $this->getName(),
             'distanceInKilometer' => $this->getDistance(),
             'averageWatts' => $this->getAverageWatts(),
+            'averageHeatRate' => $this->getAverageHeartRate(),
+            'maxHeartRate' => $this->getMaxHeartRate(),
             'rank' => $this->getRank(),
         ];
     }
