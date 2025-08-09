@@ -35,6 +35,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
                 ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
                 ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
+                ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],
                 ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
             ])
         );

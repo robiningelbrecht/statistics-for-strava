@@ -13,13 +13,9 @@
             <div class="grid grid-cols-8 gap-4">
                 {% for challenge in challenges %}
                     {% set tooltipContent = challenge.getName()|replace({'"':'\''}) %}
-                    <a href="{{ challenge.getUrl() }}" data-tooltip-target="tooltip-{{ challenge.getId() }}">
+                    <a href="{{ challenge.getUrl() }}" title="{{ tooltipContent }}">
                         <img src="{{ placeholderImage() }}" data-src="{{ relativeUrl(challenge.getLocalLogoUrl()) }}" alt="{{ tooltipContent }}" class="lazy h-auto max-w-full rounded-lg" />
                     </a>
-                    <div id="tooltip-{{ challenge.getId() }}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
-                        {{ tooltipContent }}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
                 {% endfor %}
             </div>
         </div>
