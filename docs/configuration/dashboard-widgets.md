@@ -27,6 +27,7 @@ appearance:
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
+      - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
 ```
 
@@ -200,6 +201,18 @@ This widget displays your consistency in completing challenges, helping you stay
 ```
 
 ![challengeConsistency widget](../assets/images/dashboard-widgets/challenge-consistency.png)
+
+## mostRecentChallengesCompleted
+
+This widget displays your most recent challenges.
+
+* __numberOfChallengesToDisplay__: the number of challenges to display.
+
+```yml
+{ 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
+```
+
+![mostRecentChallengesCompleted widget](../assets/images/dashboard-widgets/most-recent-challenges.png)
 
 ## ftpHistory
 
