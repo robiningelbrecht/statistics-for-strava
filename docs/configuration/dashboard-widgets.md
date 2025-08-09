@@ -24,9 +24,10 @@ appearance:
       - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
       - { 'widget': 'bestEfforts', 'width': 100, 'enabled': true }
       - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
+      - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+      - { 'widget': 'eddington', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
-      - { 'widget': 'eddington', 'width': 50, 'enabled': true }
 ```
 
 ## mostRecentActivities
@@ -167,6 +168,29 @@ This widget shows your yearly distances per activity type, allowing you to track
 
 ![yearlyDistances widget](../assets/images/dashboard-widgets/yearly-distances.png)
 
+## gearStats
+
+This widget displays your hours spent per gear.
+
+* __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
+
+```yml
+{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+```
+
+![gearStats widget](../assets/images/dashboard-widgets/gear-stats.png)
+
+## eddington
+
+This widget displays your Eddington number(s). To determine which Eddington number(s) to display,
+you can configure this in the Eddington settings using `showInDashboardWidget: true|false`.
+
+```yml
+{ 'widget': 'eddington', 'width': 50, 'enabled': true }
+```
+
+![eddington widget](../assets/images/dashboard-widgets/eddington.png)
+
 ## challengeConsistency
 
 This widget displays your consistency in completing challenges, helping you stay motivated and track your progress.
@@ -186,14 +210,3 @@ This widget shows your Functional Threshold Power (FTP) history, allowing you to
 ```
 
 ![ftpHistory widget](../assets/images/dashboard-widgets/ftp-history.png)
-
-## eddington
-
-This widget displays your Eddington number(s). To determine which Eddington number(s) to display, 
-you can configure this in the Eddington settings using `showInDashboardWidget: true|false`.
-
-```yml
-{ 'widget': 'eddington', 'width': 50, 'enabled': true }
-```
-
-![eddington widget](../assets/images/dashboard-widgets/eddington.png)

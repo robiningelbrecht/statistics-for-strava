@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Rewind\FindMovingTimePerGear;
+namespace App\Domain\Strava\Gear\FindMovingTimePerGear;
 
 use App\Infrastructure\CQRS\Query\Response;
 

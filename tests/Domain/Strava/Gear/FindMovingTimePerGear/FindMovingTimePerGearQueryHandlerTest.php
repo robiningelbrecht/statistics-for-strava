@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests\Domain\Strava\Rewind\FindMovingTimePerGear;
+namespace App\Tests\Domain\Strava\Gear\FindMovingTimePerGear;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Activity\ActivityWithRawData;
 use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
+use App\Domain\Strava\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
+use App\Domain\Strava\Gear\FindMovingTimePerGear\FindMovingTimePerGearQueryHandler;
 use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Rewind\FindMovingTimePerGear\FindMovingTimePerGear;
-use App\Domain\Strava\Rewind\FindMovingTimePerGear\FindMovingTimePerGearQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -60,7 +60,7 @@ class FindMovingTimePerGearQueryHandlerTest extends ContainerTestCase
             []
         ));
 
-        /** @var \App\Domain\Strava\Rewind\FindMovingTimePerGear\FindMovingTimePerGearResponse $response */
+        /** @var \App\Domain\Strava\Gear\FindMovingTimePerGear\FindMovingTimePerGearResponse $response */
         $response = $this->queryHandler->handle(new FindMovingTimePerGear(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             [
