@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava\Rewind;
-
-use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Gear\Gears;
+namespace App\Domain\Strava\Gear;
 
 final readonly class MovingTimePerGearChart
 {
