@@ -37,7 +37,7 @@ final class AppConfig
                 filePath: $basePath.($isTest ? 'custom-gear_test.yaml' : 'custom-gear.yaml'),
                 isRequired: false,
                 needsNestedProcessing: false,
-                prefix: 'custom_gear',
+                prefix: 'customGear',
             ),
             new YamlConfigFile(
                 filePath: $basePath.($isTest ? 'gear-maintenance_test.yaml' : 'gear-maintenance.yaml'),
@@ -129,5 +129,23 @@ final class AppConfig
     public function AIIntegrationWithUIIsEnabled(): bool
     {
         return $this->AIIntegrationIsEnabled() && !empty($this->get('integrations.ai.enableUI', false));
+    }
+
+    /**
+     * @return array<string|int, mixed>
+     */
+    public function getRoot(): array
+    {
+        $root = [];
+
+        foreach ($this->config as $name => $value) {
+            if (str_contains((string) $name, '.')) {
+                continue;
+            }
+
+            $root[$name] = $value;
+        }
+
+        return $root;
     }
 }

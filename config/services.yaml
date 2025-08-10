@@ -190,7 +190,7 @@ services:
 
     App\Domain\Strava\Gear\CustomGear\CustomGearConfig:
         factory: [ null, 'fromArray' ]
-        arguments: ['@=app_config("custom_gear", [])']
+        arguments: ['@=app_config("customGear", [])']
 
     App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, 'fromArray' ]
