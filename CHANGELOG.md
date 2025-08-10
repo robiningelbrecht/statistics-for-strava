@@ -1,3 +1,36 @@
+# [v3.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.1) - 2025-08-10
+
+This release introduces 2 new dashboard widgets:
+
+#### gearStats
+
+This widget displays your hours spent per gear.
+
+* __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
+
+```yml
+{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+```
+
+#### mostRecentChallengesCompleted
+
+This widget displays your most recent challenges.
+
+* __numberOfChallengesToDisplay__: the number of challenges to display.
+
+```yml
+{ 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
+```
+
+## What's Changed
+* ISSUE #955: Add average heart rate to segment efforts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/963
+* ISSUE #957: Make sure tab IDs are unique for all dashboard widgets by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/964
+* ISSUE #966: Gear widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/968
+* ISSUE #966: Challenges widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/969
+* ISSUE #970: Better CLI debug output by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/971
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.0...v3.2.1
+
 # [v3.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.0) - 2025-08-06
 
 This release allows you to import segment details from Strava to be able to display maps on segment detail pages:
