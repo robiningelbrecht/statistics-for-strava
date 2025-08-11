@@ -58,6 +58,7 @@
         "twig/twig": "^3.21"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.3",
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^12",
