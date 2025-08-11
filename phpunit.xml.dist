@@ -23,6 +23,7 @@
         <server name="SYMFONY_PHPUNIT_VERSION" value="12.1" />
     </php>
     <extensions>
+        <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <bootstrap class="RobinIngelbrecht\PHPUnitPrettyPrint\PhpUnitExtension">
             <parameter name="displayProfiling" value="false"/>
         </bootstrap>
