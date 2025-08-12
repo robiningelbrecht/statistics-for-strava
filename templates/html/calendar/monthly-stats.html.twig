@@ -1,4 +1,4 @@
-{% include 'html/component/breadcrumbs.html.twig' with {'breadcrumbs': [{
+{% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
     'url': 'monthly-stats',
     'label': 'Monthly stats'|trans
 }]} %}
@@ -76,9 +76,10 @@
                     </thead>
                     {% for month in months %}
                         {% set statsForCurrentMonth = monthlyStatistics.getForMonth(month) %}
+                        {% set zebraClasses = cycle(['bg-white', 'bg-gray-50'], loop.index0) %}
                         {% if statsForCurrentMonth|length > 0 %}
                             <tbody>
-                            <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }} cursor-pointer"
+                            <tr class="{{ zebraClasses }} border-b cursor-pointer"
                                 id="table-months-header-{{ loop.index0 }}"
                                 data-accordion-target="#table-months-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-months-content-{{ loop.index0 }}">
@@ -91,7 +92,7 @@
                                     </svg>
                                 </td>
                                 <th scope="row"
-                                    class="sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                    class="sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap {{ zebraClasses }}">
                                     <a href="#"
                                        data-model-content-url="{{ relativeUrl('month/month-' ~ month.getId() ~ '.html') }}"
                                        class="text-blue-600 hover:underline">
@@ -118,7 +119,7 @@
                                 </td>
                             </tr>
                             </tbody>
-                            <tbody class="hidden {{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}"
+                            <tbody class="hidden border-b {{ zebraClasses }}"
                                    id="table-months-content-{{ loop.index0 }}"
                                    aria-labelledby="table-months-header-{{ loop.index0 }}">
                             {% for sportType in sportTypes %}
@@ -128,7 +129,7 @@
                                         <td class="w-[1rem] p-2 text-gray-700">
 
                                         </td>
-                                        <td class="text-gray-700 left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
+                                        <td class="{{ zebraClasses }} text-gray-700 sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
                                             {{ sportType|trans }}
                                         </td>
                                         <td class="px-2 py-2 truncate">
