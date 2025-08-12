@@ -422,6 +422,7 @@
     if ($modalAIChat) {
         $modalAIChat.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const modalId = $modalAIChat.getAttribute('data-modal-custom-ai');
             openModal(modalId);
             // Add modal to history state.
@@ -571,6 +572,7 @@
                 // Modal close event listeners.
                 modalContent.querySelector('button.close').addEventListener('click', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     modal.hide();
                     router.pushCurrentRouteToHistoryState();
                 });

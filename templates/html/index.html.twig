@@ -18,7 +18,7 @@
 <div class="antialiased bg-gray-50">
     <!-- NAVIGATION -->
     {% autoescape false %}
-        {% include 'html/component/top-nav-bar.html.twig' with {
+        {% include 'html/navigation/top-nav-bar.html.twig' with {
             'subTitle': subTitle,
             'profilePictureUrl': profilePictureUrl,
             'athlete': athlete,
@@ -426,6 +426,7 @@
     if ($modalAIChat) {
         $modalAIChat.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             const modalId = $modalAIChat.getAttribute('data-modal-custom-ai');
             openModal(modalId);
             // Add modal to history state.
@@ -575,6 +576,7 @@
                 // Modal close event listeners.
                 modalContent.querySelector('button.close').addEventListener('click', (e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     modal.hide();
                     router.pushCurrentRouteToHistoryState();
                 });
