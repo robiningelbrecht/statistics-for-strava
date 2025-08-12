@@ -505,6 +505,7 @@
         modalLinks.forEach(function (node) {
             node.addEventListener('click', function (e) {
                 e.preventDefault();
+                e.stopPropagation();
                 const modalId = node.getAttribute('data-model-content-url');
                 openModal(modalId);
                 // Add modal to history state.
