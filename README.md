@@ -6,7 +6,6 @@
 
 <p align="center">
 <a href="https://github.com/robiningelbrecht/statistics-for-strava/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/robiningelbrecht/statistics-for-strava/ci.yml?branch=master&logo=github&logoColor=white&label=CI" alt="CI"></a>
-<a href="https://github.com/robiningelbrecht/statistics-for-strava/actions/workflows/docker-image.yml"><img src="https://img.shields.io/github/actions/workflow/status/robiningelbrecht/statistics-for-strava/docker-image.yml?branch=master&logo=github&logoColor=white&label=Docker%20image" alt="Publish Docker image"></a>
 <a href="https://raw.githubusercontent.com/robiningelbrecht/statistics-for-strava/refs/heads/master/LICENSE"><img src="https://img.shields.io/github/license/robiningelbrecht/statistics-for-strava?color=428f7e&logo=open%20source%20initiative&logoColor=white" alt="License"></a>
 <a href="https://hub.docker.com/r/robiningelbrecht/strava-statistics"><img src="https://img.shields.io/docker/image-size/robiningelbrecht/strava-statistics?logo=docker&logoColor=white" alt="Docker Image Size"></a>
 <a href="https://hub.docker.com/r/robiningelbrecht/strava-statistics"><img src="https://img.shields.io/docker/pulls/robiningelbrecht/strava-statistics?logo=docker&logoColor=white" alt="Docker pulls"></a>
