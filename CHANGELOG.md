@@ -1,3 +1,12 @@
+# [v3.2.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.2) - 2025-08-12
+
+## What's Changed
+* ISSUE #973: Add gear to run activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/977
+* ISSUE #974: Rework monthly overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/978
+
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.1...v3.2.2
+
 # [v3.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.1) - 2025-08-10
 
 This release introduces 2 new dashboard widgets:

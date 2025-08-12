@@ -1,5 +1,5 @@
 
-StatisticsforStravav3.2.1
+StatisticsforStravav3.2.2
 
 Configuringlocale...
 BuildingManifest...
