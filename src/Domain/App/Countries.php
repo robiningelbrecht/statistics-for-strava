@@ -27,7 +27,7 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT JSON_EXTRACT(location, '$.country_code') as countryCode
+            SELECT DISTINCT LOWER(JSON_EXTRACT(location, '$.country_code')) as countryCode
             FROM Activity
             WHERE JSON_EXTRACT(location, '$.country_code') IS NOT NULL
             SQL
@@ -58,7 +58,7 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT countryCode
+            SELECT DISTINCT LOWER(countryCode)
             FROM Segment
             WHERE countryCode IS NOT NULL
             SQL
