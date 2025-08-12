@@ -38,38 +38,38 @@
         <div class="grid grid-cols-1 gap-4">
             <div class="grid grid-cols-1 gap-4">
                 {% block mainStatsOnTop %}
-                    <div class="grid grid-cols-6 gap-2">
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                    <div class="flex gap-x-2 overflow-x-scroll">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Moving time"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getMovingTimeFormatted() }}</dt>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getElevation()|renderMeasurement(0) }}</dt>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Calories"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getCalories() }}</dt>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Gear"|trans }}</dd>
                                 <dt class="text-xs font-extrabold">{{ activity.getGearName() ?: 'Other' }}</dt>
                             </div>
                         </div>
-                        <div class="flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
                                 <dt class="text-xs font-extrabold">{{ activity.getDeviceName() ?: 'None' }}</dt>

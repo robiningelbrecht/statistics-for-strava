@@ -1760,6 +1760,12 @@
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
+  .w-1\/6 {
+    width: calc(1/6 * 100%);
+  }
+  .w-1\/7 {
+    width: calc(1/7 * 100%);
+  }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -1923,6 +1929,9 @@
   }
   .min-w-\[10rem\] {
     min-width: 10rem;
+  }
+  .min-w-\[100px\] {
+    min-width: 100px;
   }
   .min-w-\[800px\] {
     min-width: 800px;
