@@ -2,6 +2,7 @@
     'url': 'monthly-stats',
     'label': 'Monthly stats'|trans
 }]} %}
+ {% set totals = monthlyStatistics.getTotals() %}
 {% autoescape false %}
     <!-- MONTHLY STATS -->
     <div class="grid grid-cols-1 mb-4">
@@ -20,31 +21,53 @@
 
                         </th>
                         <th scope="col" class="px-2 py-3">
-                            # {{ "workouts"|trans }}
+                            <div class="leading-7">
+                                # {{ "workouts"|trans }}
+                            </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {{ totals.numberOfActivities }}
+                            </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('distance') }}
                             </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {% set convertedTotalDistance = totals.distance|convertMeasurement %}
+                                {{ convertedTotalDistance.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('distance') }}
+                            </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('elevation') }}
                             </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {% set convertedTotalElevation = totals.elevation|convertMeasurement %}
+                                {{ convertedTotalElevation.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('elevation') }}
+                            </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {{ totals.movingTime|formatSeconds }}
+                            </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('calories') }}
                             </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {{ totals.calories|formatNumber(0) }}kcal
+                            </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('challenge') }}
+                            </div>
+                            <div class="pt-0.5 normal-case text-xxs">
+                                {{ challenges|length }}
                             </div>
                         </th>
                     </tr>
@@ -81,56 +104,6 @@
                         {% endif %}
                     {% endfor %}
                     </tbody>
-                    <tfoot>
-                    {% for sportType in sportTypes %}
-                        {% set totalsForSportType = monthlyStatistics.getForSportType(sportType) %}
-                        <tr class="font-semibold text-gray-900 {{ loop.first ? 'border-t-4' : '' }}">
-                            <td class="px-2 py-2 text-right sticky left-0 bg-white">
-                                {{ sportType|trans }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ totalsForSportType.numberOfActivities }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ totalsForSportType.distance|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ totalsForSportType.elevation|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ totalsForSportType.movingTime|formatSeconds }}
-                            </td>
-                            <td class="px-2 py-2">
-                                {{ totalsForSportType.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
-                            </td>
-                            <td class="px-2 py-2">
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    <tr class="font-semibold text-gray-900">
-                        {% set totals = monthlyStatistics.getTotals() %}
-                        <td class="px-2 py-2 text-right sticky left-0 bg-white">
-                            {{ "TOTAL"|trans }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ totals.numberOfActivities }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ totals.distance|renderMeasurement(0) }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ totals.elevation|renderMeasurement(0) }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ totals.movingTime|formatSeconds }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ totals.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
-                        </td>
-                        <td class="px-2 py-2">
-                        </td>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>

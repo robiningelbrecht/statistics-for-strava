@@ -259,7 +259,6 @@ Sun: 周日
 Sunday: 星期日
 Surfing: 冲浪
 Swim: 游泳
-TOTAL: 总计
 'TSB (Form)': 'TSB (Form)'
 'Table Tennis': 乒乓球
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
