@@ -73,11 +73,11 @@ final readonly class FindMonthlyStatsResponse implements Response
     /**
      * @return array{'numberOfActivities': int, 'distance': Kilometer, 'elevation': Meter, 'movingTime': Seconds, 'calories': int}
      */
-    public function getForSportType(SportType $sportType): array
+    public function getForMonthAndSportType(Month $month, SportType $sportType): array
     {
         $stats = array_filter(
             $this->statsPerMonth,
-            fn (array $entry) => $entry['sportType'] === $sportType
+            fn (array $entry) => $entry['month']->getId() === $month->getId() && $entry['sportType'] === $sportType
         );
 
         return $this->aggregateStats($stats);

@@ -259,7 +259,6 @@ Sun: Dim
 Sunday: Dimanche
 Surfing: Surf
 Swim: Natation
-TOTAL: TOTAL
 'TSB (Form)': 'TSB (État de forme)'
 'Table Tennis': 'Tennis de table'
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'L''étiquette "{maintenanceTaskTag}" a été utilisée sur "{activityName}", mais le matériel référencé sur cette activité n''est pas attaché à ce composant.'

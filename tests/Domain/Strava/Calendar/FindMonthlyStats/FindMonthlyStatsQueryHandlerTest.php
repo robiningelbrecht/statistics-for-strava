@@ -80,7 +80,10 @@ class FindMonthlyStatsQueryHandlerTest extends ContainerTestCase
             Month::fromDate(SerializableDateTime::fromString('2024-01-03 00:00:00')),
             ActivityType::RIDE
         ));
-        $this->assertMatchesJsonSnapshot($response->getForSportType(SportType::VIRTUAL_RIDE));
+        $this->assertMatchesJsonSnapshot($response->getForMonthAndSportType(
+            Month::fromDate(SerializableDateTime::fromString('2024-01-03 00:00:00')),
+            SportType::RIDE
+        ));
 
         $this->assertEquals(
             Month::fromDate(SerializableDateTime::fromString('2023-01-01')),
