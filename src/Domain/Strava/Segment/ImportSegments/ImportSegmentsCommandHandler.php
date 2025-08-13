@@ -149,8 +149,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
-
-                return;
+                continue;
             }
         }
     }
