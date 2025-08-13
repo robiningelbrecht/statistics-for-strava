@@ -13,7 +13,7 @@ Statistics for Strava allows you to manage custom gear. This is useful for gear 
 
 ## How It Works
 
-Custom gear is configured using a YAML file called `custom-gear.yml`. You can define any number of gear items and assign them to activities using hashtags in the Strava activity title (e.g. #sfs-peddle-board).
+Custom gear is configured using a YAML file called `custom-gear.yaml`. You can define any number of gear items and assign them to activities using hashtags in the Strava activity title (e.g. #sfs-peddle-board).
 Custom gears will work just like Strava-imported ones — tracking stats, allowing maintenance setup, and letting you filter them in overviews.
 
 ## Setup
