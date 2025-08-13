@@ -1,9 +1,17 @@
+# [v3.2.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.3) - 2025-08-13
+
+## What's Changed
+* ISSUE #980: Fix duplicate countries in segment country filter by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/981
+* ISSUE #982: Fix bug with sticky columns in month overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/983
+* ISSUE #984: Continue segment import when Strava API makes booboo by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/985
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.2...v3.2.3
+
 # [v3.2.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.2) - 2025-08-12
 
 ## What's Changed
 * ISSUE #973: Add gear to run activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/977
 * ISSUE #974: Rework monthly overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/978
-
 
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.1...v3.2.2
 
