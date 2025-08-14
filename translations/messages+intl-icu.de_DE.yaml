@@ -170,7 +170,7 @@ Monotony: Monotonie
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
 'Most recent activities': 'Neueste Aktivitäten'
-'Most recent challenges': 'Most recent challenges'
+'Most recent challenges': 'Aktuelle Herausforderungen'
 'Mountain Bike Rides': Mountainbike-Fahrten
 'Moving time': Bewegungszeit
 Name: Name
@@ -283,12 +283,12 @@ To: Bis
 'Total distance per month': 'Total distance per month'
 'Total elevation per month': 'Total elevation per month'
 'Total hours': 'Total hours'
-'Total hours spent per gear': 'Total hours spent per gear'
+'Total hours spent per gear': 'Gesamtstunden pro Ausrüstung'
 'Total hours spent per sport type': 'Total hours spent per sport type'
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': Trail-Läufe
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'
-'Training Load Analysis': 'Training Load Analysis'
+'Training Load Analysis': 'Trainingsbelastungsanalyse'
 'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Müdigkeit (ATL). Zeigt an, wie leistungsfähig du bist.'
@@ -314,7 +314,7 @@ Wednesday: Mittwoch
 'Weekly Strain': 'Wöchentliche Belastung (Strain)'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Weekly TRIMP': 'Wöchentlicher TRIMP'
-'Weekly stats': 'Weekly stats'
+'Weekly stats': 'Wöchentliche Statistiken'
 'Weight Training': Krafttraining
 Wheelchair: Rollstuhl
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Wenn Leistungsmetriken und FTP verfügbar sind, werden diese stattdessen verwendet. Diese Formel bedeutet, dass eine Stunde Fahren mit Ihrer FTP zu einer Punktzahl von 100 führt, was wir als "hohe Intensität" betrachten'
