@@ -129,8 +129,3 @@ Make sure the gearId matches your Strava gear, and the image is located in the `
 To attach components to specific gear in your config, you’ll need the gear ID from Strava. You can find these IDs by clicking the question mark icon in the top-right corner:
 
 ![image](https://github.com/user-attachments/assets/4e7b8833-6d1d-4bdc-aae4-14ee7c4757a5)
-
-## Coming Soon
-
-* Automatic notifications when maintenance is due
-* Detailed usage history per component
