@@ -39,7 +39,6 @@
                 </thead>
                 <tbody>
                 {% for maintenanceTaskTag in maintenanceTaskTags %}
-                    {% set activityType =  activity.getSportType().getActivityType() %}
                     <tr class="border-b {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                         <td class="px-2 py-2 text-center">
                             <div class="w-[4.5rem]">{{ maintenanceTaskTag.getTaggedOn()|formatDate() }}</div>
