@@ -570,12 +570,15 @@
                 // Init elements in modal.
                 initElements(modalSkeletonNode);
                 // Modal close event listeners.
-                modalContent.querySelector('button.close').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    modal.hide();
-                    router.pushCurrentRouteToHistoryState();
-                });
+                const closeButton = modalContent.querySelector('button.close');
+                if (closeButton) {
+                    modalContent.querySelector('button.close').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        modal.hide();
+                        router.pushCurrentRouteToHistoryState();
+                    });
+                }
 
                 document.body.addEventListener('keydown', (e) => {
                     if (e.key !== 'Escape') {

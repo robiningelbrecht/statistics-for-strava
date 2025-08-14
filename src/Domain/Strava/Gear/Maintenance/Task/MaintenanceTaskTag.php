@@ -6,6 +6,7 @@ namespace App\Domain\Strava\Gear\Maintenance\Task;
 
 use App\Domain\Strava\Activity\ActivityId;
 use App\Domain\Strava\Gear\GearId;
+use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
@@ -15,6 +16,7 @@ final readonly class MaintenanceTaskTag
         private Tag $maintenanceTaskTag,
         private ActivityId $taggedOnActivityId,
         private ?GearId $taggedForGearId,
+        private Name $taggedForGearComponentName,
         private SerializableDateTime $taggedOn,
         private string $activityName,
         private bool $isValid,
@@ -25,6 +27,7 @@ final readonly class MaintenanceTaskTag
         Tag $maintenanceTaskTag,
         ActivityId $taggedOnActivityId,
         ?GearId $taggedForGearId,
+        Name $taggedForGearComponentName,
         SerializableDateTime $taggedOn,
         string $activityName,
         bool $isValid,
@@ -33,6 +36,7 @@ final readonly class MaintenanceTaskTag
             maintenanceTaskTag: $maintenanceTaskTag,
             taggedOnActivityId: $taggedOnActivityId,
             taggedForGearId: $taggedForGearId,
+            taggedForGearComponentName: $taggedForGearComponentName,
             taggedOn: $taggedOn,
             activityName: $activityName,
             isValid: $isValid,
@@ -52,6 +56,11 @@ final readonly class MaintenanceTaskTag
     public function getTaggedForGearId(): ?GearId
     {
         return $this->taggedForGearId;
+    }
+
+    public function getTaggedForGearComponentName(): Name
+    {
+        return $this->taggedForGearComponentName;
     }
 
     public function getTaggedOn(): SerializableDateTime

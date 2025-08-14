@@ -133,5 +133,15 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
+
+        foreach ($gearsAttachedToComponents as $gear) {
+            $this->buildStorage->write(
+                sprintf('gear/maintenance/history/%s.html', $gear->getId()),
+                $this->twig->load('html/gear/gear-maintenance-history.html.twig')->render([
+                    'gear' => $gear,
+                    'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid()->filterOnGear($gear->getId())->sortOnDateDesc(),
+                ])
+            );
+        }
     }
 }
