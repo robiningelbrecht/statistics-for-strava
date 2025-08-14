@@ -15,6 +15,7 @@
 'ATL (Fatigue)': 'ATL (Fatigue)'
 'Active days': 'Giornate attive'
 Activities: Attività
+Activity: Activity
 'Activity count': 'Conteggio attività'
 'Activity intensity': 'Intensità attività'
 'Activity locations': 'Luoghi attività'
@@ -53,7 +54,6 @@ Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Confronta
 'Compare to': 'Confronta con'
-Components: Componenti
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -156,6 +156,7 @@ Loading...: Caricamento...
 Low: Basso
 'Low stress - potential detraining': 'Low stress - potential detraining'
 Maintenance: Manutenzione
+'Maintenance history': 'Maintenance history'
 Mar: Mar
 Max: Massimo
 'Max gradient': 'Max gradient'
@@ -261,6 +262,7 @@ Surfing: Surfing
 Swim: Nuoto
 'TSB (Form)': 'TSB (Form)'
 'Table Tennis': 'Table Tennis'
+Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: Tennis
@@ -350,6 +352,7 @@ comments: comments
 compare: compare
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
+history: history
 hours: hours
 hrs: hrs
 intensity: intensity

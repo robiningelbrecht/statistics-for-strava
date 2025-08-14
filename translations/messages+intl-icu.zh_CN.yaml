@@ -15,6 +15,7 @@
 'ATL (Fatigue)': 'ATL (Fatigue)'
 'Active days': 'Active days'
 Activities: 活动
+Activity: Activity
 'Activity count': 'Activity count'
 'Activity intensity': 活动强度
 'Activity locations': 'Activity locations'
@@ -53,7 +54,6 @@ Commutes: 通勤
 'Commutes only': 仅通勤
 Compare: Compare
 'Compare to': 'Compare to'
-Components: Components
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: 交叉健身
 'Custom gear disabled': 'Custom gear disabled'
@@ -156,6 +156,7 @@ Loading...: 加载中...
 Low: 低
 'Low stress - potential detraining': 'Low stress - potential detraining'
 Maintenance: Maintenance
+'Maintenance history': 'Maintenance history'
 Mar: 三月
 Max: 最大
 'Max gradient': 'Max gradient'
@@ -261,6 +262,7 @@ Surfing: 冲浪
 Swim: 游泳
 'TSB (Form)': 'TSB (Form)'
 'Table Tennis': 乒乓球
+Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: 网球
@@ -350,6 +352,7 @@ comments: comments
 compare: compare
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
+history: history
 hours: hours
 hrs: hrs
 intensity: 强度

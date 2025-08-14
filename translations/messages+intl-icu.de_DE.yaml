@@ -15,6 +15,7 @@
 'ATL (Fatigue)': 'ATL (Ermüdung)'
 'Active days': 'Active days'
 Activities: Aktivitäten
+Activity: Activity
 'Activity count': 'Activity count'
 'Activity intensity': Aktivitätsintensität
 'Activity locations': 'Activity locations'
@@ -53,7 +54,6 @@ Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Compare
 'Compare to': 'Compare to'
-Components: Components
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
@@ -156,6 +156,7 @@ Loading...: Lädt...
 Low: Niedrig
 'Low stress - potential detraining': 'Low stress - potential detraining'
 Maintenance: Maintenance
+'Maintenance history': 'Maintenance history'
 Mar: Mär
 Max: Max
 'Max gradient': 'Max gradient'
@@ -261,6 +262,7 @@ Surfing: Surfen
 Swim: Schwimmen
 'TSB (Form)': 'TSB (Form)'
 'Table Tennis': Tischtennis
+Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: Tennis
@@ -288,7 +290,7 @@ To: Bis
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': Trail-Läufe
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'
-'Training Load Analysis': 'Trainingsbelastungsanalyse'
+'Training Load Analysis': Trainingsbelastungsanalyse
 'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Müdigkeit (ATL). Zeigt an, wie leistungsfähig du bist.'
@@ -350,6 +352,7 @@ comments: comments
 compare: compare
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
+history: history
 hours: hours
 hrs: hrs
 intensity: Intensität

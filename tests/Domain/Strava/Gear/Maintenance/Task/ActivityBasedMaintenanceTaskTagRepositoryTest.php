@@ -55,6 +55,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
                     maintenanceTaskTag: Tag::fromString('#sfs-chain-lubed'),
                     taggedOnActivityId: ActivityId::fromUnprefixed(1),
                     taggedForGearId: GearId::fromUnprefixed('g12337767'),
+                    taggedForGearComponentName: Name::fromString('Some cool chain'),
                     taggedOn: SerializableDateTime::fromString('2023-10-10'),
                     activityName: '#sfs-chain-lubed',
                     isValid: true
@@ -63,6 +64,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
                     maintenanceTaskTag: Tag::fromString('#sfs-chain-two-lubed'),
                     taggedOnActivityId: ActivityId::fromUnprefixed(2),
                     taggedForGearId: GearId::fromUnprefixed('g12337767'),
+                    taggedForGearComponentName: Name::fromString('Some cool chain'),
                     taggedOn: SerializableDateTime::fromString('2023-10-10'),
                     activityName: '#sfs-chain-two-lubed',
                     isValid: false

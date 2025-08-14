@@ -74,7 +74,14 @@
                                 </div>
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                {{ "Components"|trans }}
+                                <div class="flex items-center justify-center">
+                                    {{ svg('components') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('history') }}
+                                </div>
                             </th>
                         </tr>
                         </thead>
@@ -114,6 +121,11 @@
                                 </td>
                                 <td class="px-6 py-2 truncate">
                                     {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
+                                </td>
+                                <td class="px-6 py-2 truncate">
+                                    <a href="#" data-model-content-url="{{ relativeUrl('gear/maintenance/history/' ~ gear.getId()) }}.html" class="font-medium text-blue-600 hover:underline">
+                                        {{ "history"|trans }}
+                                    </a>
                                 </td>
                             </tr>
                             <tr class="border-b hidden overflow-x-auto w-full"
