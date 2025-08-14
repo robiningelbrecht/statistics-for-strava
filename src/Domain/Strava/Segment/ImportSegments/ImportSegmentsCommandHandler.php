@@ -125,8 +125,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         $numberOfSegmentIdsMissingDetails = count($segmentIdsMissingDetails);
         $delta = 1;
         foreach ($segmentIdsMissingDetails as $segmentId) {
-            $segment = $this->segmentRepository->find($segmentId);
             try {
+                robiningelbrecht/statistics-for-strava-docs
                 $stravaSegment = $this->strava->getSegment($segmentId);
                 $segment->updatePolyline(EncodedPolyline::fromOptionalString($stravaSegment['map']['polyline'] ?? null));
                 $segment->flagDetailsAsImported();
