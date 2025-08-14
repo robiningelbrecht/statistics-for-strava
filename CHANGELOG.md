@@ -1,3 +1,12 @@
+# [v3.2.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.4) - 2025-08-14
+
+## What's Changed
+* ISSUE #989: Mark 404 segments as imported to avoid importing them again by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/990
+* ISSUE #992: German translations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/993
+* ISSUE #995: Show gear maintenance history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/996
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.3...v3.2.4
+
 # [v3.2.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.3) - 2025-08-13
 
 ## What's Changed
