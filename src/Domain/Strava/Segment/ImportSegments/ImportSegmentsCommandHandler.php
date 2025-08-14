@@ -125,9 +125,9 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         $numberOfSegmentIdsMissingDetails = count($segmentIdsMissingDetails);
         $delta = 1;
         foreach ($segmentIdsMissingDetails as $segmentId) {
+            $segment = $this->segmentRepository->find($segmentId);
             try {
                 $stravaSegment = $this->strava->getSegment($segmentId);
-                $segment = $this->segmentRepository->find($segmentId);
                 $segment->updatePolyline(EncodedPolyline::fromOptionalString($stravaSegment['map']['polyline'] ?? null));
                 $segment->flagDetailsAsImported();
                 $this->segmentRepository->update($segment);
@@ -146,6 +146,11 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                     $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your segment details tomorrow</error>');
 
                     return;
+                }
+                if (404 === $exception->getResponse()?->getStatusCode()) {
+                    // Segment does not exist anymore. Mark as imported.
+                    $segment->flagDetailsAsImported();
+                    $this->segmentRepository->update($segment);
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
