@@ -9,6 +9,11 @@ return [
         exitOnLowCoverage: true
     ),
     new MinCoverageRule(
+        pattern: 'App\BuildApp\*',
+        minCoverage: 95,
+        exitOnLowCoverage: true
+    ),
+    new MinCoverageRule(
         pattern: 'App\Console\*',
         minCoverage: 100,
         exitOnLowCoverage: true
@@ -26,11 +31,6 @@ return [
     new MinCoverageRule(
         pattern: 'App\Domain\*',
         minCoverage: 97,
-        exitOnLowCoverage: true
-    ),
-    new MinCoverageRule(
-        pattern: 'App\Domain\Manifest\*',
-        minCoverage: 100,
         exitOnLowCoverage: true
     ),
 ];

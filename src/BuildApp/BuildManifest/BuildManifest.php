@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Manifest\BuildManifest;
+namespace App\BuildApp\BuildManifest;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
