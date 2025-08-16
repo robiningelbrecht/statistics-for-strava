@@ -8,6 +8,7 @@ use App\Domain\Strava\Gear\Gear;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\GearRepository;
 use App\Domain\Strava\Gear\Gears;
+use App\Domain\Strava\Gear\Maintenance\GearComponent;
 use App\Domain\Strava\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
@@ -98,14 +99,14 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             );
         }
 
-        $gearsAttachedToComponents = Gears::empty();
-        /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
+        $gearsThatAttachedToComponents = Gears::empty();
+        /** @var GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getAttachedTo() as $attachedToGearId) {
                 if (!$gear = $gears->getByGearId($attachedToGearId)) {
                     continue;
                 }
-                if ($gearsAttachedToComponents->has($gear)) {
+                if ($gearsThatAttachedToComponents->has($gear)) {
                     continue;
                 }
 
@@ -114,32 +115,35 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                     $gear->enrichWithImageSrc('/gear-maintenance/'.$imageSrc);
                 }
 
-                $gearsAttachedToComponents->add($gear);
+                $gearsThatAttachedToComponents->add($gear);
             }
         }
 
-        if ($gearsAttachedToComponents->isEmpty()) {
+        if ($gearsThatAttachedToComponents->isEmpty()) {
             $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
         }
+
+        $validMaintenanceTaskTags = $maintenanceTaskTags->filterOnValid();
+        $allGearComponents = $this->gearMaintenanceConfig->getGearComponents()
+            ->enrichWithMaintenanceTaskTags($validMaintenanceTaskTags);
 
         $this->buildStorage->write(
             'gear/maintenance.html',
             $this->twig->load('html/gear/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
                 'warnings' => $warnings,
-                'gearsAttachedToComponents' => $gearsAttachedToComponents,
-                'gearComponents' => $this->gearMaintenanceConfig->getGearComponents(),
-                'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid(),
+                'gearsAttachedToComponents' => $gearsThatAttachedToComponents,
+                'gearComponents' => $allGearComponents,
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
 
-        foreach ($gearsAttachedToComponents as $gear) {
+        foreach ($gearsThatAttachedToComponents as $gear) {
             $this->buildStorage->write(
                 sprintf('gear/maintenance/history/%s.html', $gear->getId()),
                 $this->twig->load('html/gear/gear-maintenance-history.html.twig')->render([
                     'gear' => $gear,
-                    'maintenanceTaskTags' => $maintenanceTaskTags->filterOnValid()->filterOnGear($gear->getId())->sortOnDateDesc(),
+                    'maintenanceTaskTags' => $validMaintenanceTaskTags->filterOnGear($gear->getId())->sortOnDateDesc(),
                 ])
             );
         }

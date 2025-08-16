@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Strava\Gear\Maintenance;
 
 use App\Domain\Strava\Gear\GearIds;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\Collection;
 
 final class GearComponents extends Collection
@@ -55,5 +56,18 @@ final class GearComponents extends Collection
         }
 
         return array_filter($images);
+    }
+
+    public function enrichWithMaintenanceTaskTags(MaintenanceTaskTags $maintenanceTaskTags): self
+    {
+        $enrichedComponents = GearComponents::empty();
+
+        /** @var GearComponent $gearComponent */
+        foreach ($this as $gearComponent) {
+            $gearComponent->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
+            $enrichedComponents->add($gearComponent);
+        }
+
+        return $enrichedComponents;
     }
 }

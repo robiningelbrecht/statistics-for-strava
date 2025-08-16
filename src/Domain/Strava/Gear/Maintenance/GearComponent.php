@@ -8,6 +8,8 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTasks;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTag;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 
@@ -71,6 +73,29 @@ final class GearComponent
     public function getMaintenanceTasks(): MaintenanceTasks
     {
         return $this->maintenanceTasks;
+    }
+
+    public function enrichWithMaintenanceTaskTags(MaintenanceTaskTags $maintenanceTaskTags): void
+    {
+        /** @var MaintenanceTask $maintenanceTask */
+        foreach ($this->maintenanceTasks as $maintenanceTask) {
+            $mostRecentMaintenance = null;
+            /* @var MaintenanceTaskTag $maintenanceTaskTag */
+            foreach ($maintenanceTaskTags as $maintenanceTaskTag) {
+                if ($maintenanceTask->getTag() != $maintenanceTaskTag->getTag()) {
+                    continue;
+                }
+
+                if ($mostRecentMaintenance
+                    && $maintenanceTaskTag->getTaggedOn()->isBeforeOrOn($mostRecentMaintenance->getTaggedOn())
+                ) {
+                    continue;
+                }
+                $mostRecentMaintenance = $maintenanceTaskTag;
+            }
+
+            $maintenanceTask->enrichWithMostRecentMaintenanceTaskTag($mostRecentMaintenance);
+        }
     }
 
     public function normalizeGearIds(GearIds $normalizedGearIds): void
