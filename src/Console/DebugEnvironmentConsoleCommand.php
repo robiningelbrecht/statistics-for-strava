@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Domain\App\AppVersion;
+use App\BuildApp\AppVersion;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Serialization\Json;
 use Symfony\Component\Console\Attribute\AsCommand;

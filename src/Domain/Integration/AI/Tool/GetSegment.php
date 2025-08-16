@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Segment\SegmentId;
-use App\Domain\Strava\Segment\SegmentRepository;
+use App\Domain\Segment\SegmentId;
+use App\Domain\Segment\SegmentRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;

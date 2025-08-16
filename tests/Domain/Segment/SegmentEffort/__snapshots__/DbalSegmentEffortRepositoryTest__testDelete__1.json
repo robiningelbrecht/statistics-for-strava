@@ -1,0 +1,6 @@
+[
+    {
+        "eventName": "App.Domain.Segment.SegmentEffort.DeleteActivitySegmentEfforts.SegmentEffortsWereDeleted",
+        "payload": []
+    }
+]

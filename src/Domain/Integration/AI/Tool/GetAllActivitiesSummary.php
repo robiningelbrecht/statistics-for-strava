@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\ActivitiesEnricher;
-use App\Domain\Strava\Activity\Activity;
+use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\Activity;
 use NeuronAI\Tools\Tool;
 
 final class GetAllActivitiesSummary extends Tool

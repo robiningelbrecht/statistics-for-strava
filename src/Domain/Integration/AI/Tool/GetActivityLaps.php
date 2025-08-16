@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Lap\ActivityLap;
-use App\Domain\Strava\Activity\Lap\ActivityLapRepository;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Lap\ActivityLap;
+use App\Domain\Activity\Lap\ActivityLapRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;

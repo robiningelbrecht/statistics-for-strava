@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Domain\Strava\Segment\SegmentId;
+use App\Domain\Segment\SegmentId;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 

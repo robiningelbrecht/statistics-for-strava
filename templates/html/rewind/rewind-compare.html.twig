@@ -59,7 +59,7 @@
                                     {% set url = relativeUrl('rewind/' ~ rewindOption ~ '/compare/' ~ activeRewindOptionRight) %}
                                 {% endif %}
                                 <a href="#" data-router-navigate="{{ url }}" class="block px-4 py-2 hover:bg-gray-100 ">
-                                    {% if rewindOption == constant('App\\Domain\\Strava\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
+                                    {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
                                         {{ allTimeLabel }}
                                     {% else %}
                                         {{ "Rewind"|trans }} {{ rewindOption }}
@@ -94,7 +94,7 @@
                             {% for rewindOption in availableRewindOptionsToCompareWith %}
                                 <li>
                                     <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ activeRewindOptionLeft ~ '/compare/' ~ rewindOption) }}" class="block px-4 py-2 hover:bg-gray-100 ">
-                                        {% if rewindOption == constant('App\\Domain\\Strava\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
+                                        {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
                                             {{ allTimeLabel }}
                                         {% else %}
                                             {{ "Rewind"|trans }} {{ rewindOption }}

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests;
 
-use App\Domain\App\AppVersion;
+use App\BuildApp\AppVersion;
 use PHPUnit\Framework\TestCase;
 
 class ChangelogTest extends TestCase

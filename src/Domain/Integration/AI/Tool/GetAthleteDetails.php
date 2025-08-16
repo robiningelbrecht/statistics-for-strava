@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Athlete\AthleteRepository;
+use App\Domain\Athlete\AthleteRepository;
 use NeuronAI\Tools\Tool;
 
 final class GetAthleteDetails extends Tool

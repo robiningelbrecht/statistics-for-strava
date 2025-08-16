@@ -2,12 +2,12 @@
 
 namespace App\Tests\Domain\Strava;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
-use App\Domain\Strava\Gear\GearId;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
+use App\Domain\Gear\GearId;
+use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
 use App\Domain\Strava\InvalidStravaAccessToken;
-use App\Domain\Strava\Segment\SegmentId;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;

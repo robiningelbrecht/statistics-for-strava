@@ -2,7 +2,7 @@
 
 namespace App\Tests\Infrastructure\ValueObject\String;
 
-use App\Domain\Strava\Gear\Maintenance\InvalidGearMaintenanceConfig;
+use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
 use App\Infrastructure\ValueObject\String\Tag;
 use PHPUnit\Framework\TestCase;
 

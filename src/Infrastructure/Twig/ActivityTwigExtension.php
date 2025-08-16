@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\Domain\Strava\Activity\Activity;
+use App\Domain\Activity\Activity;
 use Twig\Attribute\AsTwigFilter;
 
 final readonly class ActivityTwigExtension

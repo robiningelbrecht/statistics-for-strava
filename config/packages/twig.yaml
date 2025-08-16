@@ -5,4 +5,4 @@ twig:
     cache: true
     form_themes: ['form/flowbite-layout.html.twig']
     globals:
-        appVersion: '@App\Domain\App\AppVersion'
+        appVersion: '@App\BuildApp\AppVersion'

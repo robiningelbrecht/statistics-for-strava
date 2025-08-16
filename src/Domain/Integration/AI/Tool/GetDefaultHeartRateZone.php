@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\SportType\SportType;
-use App\Domain\Strava\Athlete\AthleteRepository;
-use App\Domain\Strava\Athlete\HeartRateZone\HeartRateZoneConfiguration;
-use App\Domain\Strava\Athlete\MaxHeartRate\MaxHeartRateFormula;
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Athlete\AthleteRepository;
+use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
+use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Infrastructure\Time\Clock\Clock;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;

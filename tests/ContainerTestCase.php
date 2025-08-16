@@ -2,11 +2,11 @@
 
 namespace App\Tests;
 
-use App\Domain\Strava\Activity\ActivityIntensity;
-use App\Domain\Strava\Activity\ActivityTotals;
-use App\Domain\Strava\Activity\DbalActivityRepository;
-use App\Domain\Strava\Activity\Eddington\Eddington;
-use App\Domain\Strava\Activity\Stream\StreamBasedActivityHeartRateRepository;
+use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\ActivityTotals;
+use App\Domain\Activity\DbalActivityRepository;
+use App\Domain\Activity\Eddington\Eddington;
+use App\Domain\Activity\Stream\StreamBasedActivityHeartRateRepository;
 use App\Infrastructure\Twig\HtmlTwigExtension;
 use Carbon\Carbon;
 use Doctrine\DBAL\Connection;

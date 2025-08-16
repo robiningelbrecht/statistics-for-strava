@@ -2,11 +2,11 @@
 
 namespace App\Tests\Domain\Integration\AI\Chat;
 
+use App\Domain\Athlete\Athlete;
+use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Domain\Integration\AI\Chat\ChatRepository;
 use App\Domain\Integration\AI\Chat\DbalChatRepository;
-use App\Domain\Strava\Athlete\Athlete;
-use App\Domain\Strava\Athlete\AthleteRepository;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;

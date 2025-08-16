@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportType;
 use Twig\Attribute\AsTwigFunction;
 
 final readonly class SvgsTwigExtension

@@ -1,78 +1,78 @@
 [
     {
-        "commandName": "App\\Domain\\Strava\\Athlete\\ImportAthlete\\ImportAthlete",
+        "commandName": "App\\Domain\\Athlete\\ImportAthlete\\ImportAthlete",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Gear\\ImportGear\\ImportGear",
+        "commandName": "App\\Domain\\Gear\\ImportGear\\ImportGear",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\ImportActivities\\ImportActivities",
+        "commandName": "App\\Domain\\Activity\\ImportActivities\\ImportActivities",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Gear\\CustomGear\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "commandName": "App\\Domain\\Gear\\CustomGear\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Split\\ImportActivitySplits\\ImportActivitySplits",
+        "commandName": "App\\Domain\\Activity\\Split\\ImportActivitySplits\\ImportActivitySplits",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Lap\\ImportActivityLaps\\ImportActivityLaps",
+        "commandName": "App\\Domain\\Activity\\Lap\\ImportActivityLaps\\ImportActivityLaps",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\ImportActivityStreams\\ImportActivityStreams",
+        "commandName": "App\\Domain\\Activity\\Stream\\ImportActivityStreams\\ImportActivityStreams",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\BestEffort\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
+        "commandName": "App\\Domain\\Activity\\BestEffort\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Segment\\ImportSegments\\ImportSegments",
+        "commandName": "App\\Domain\\Segment\\ImportSegments\\ImportSegments",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Challenge\\ImportChallenges\\ImportChallenges",
+        "commandName": "App\\Domain\\Challenge\\ImportChallenges\\ImportChallenges",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
+        "commandName": "App\\Domain\\Activity\\Stream\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CalculateNormalizedPower\\CalculateNormalizedPower",
+        "commandName": "App\\Domain\\Activity\\Stream\\CalculateNormalizedPower\\CalculateNormalizedPower",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Domain\\Strava\\Activity\\Stream\\CombinedStream\\CalculateCombinedStreams\\CalculateCombinedStreams",
+        "commandName": "App\\Domain\\Activity\\Stream\\CombinedStream\\CalculateCombinedStreams\\CalculateCombinedStreams",
         "payload": {
             "output": {}
         }

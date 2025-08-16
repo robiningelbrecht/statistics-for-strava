@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Chat;
 
-use App\Domain\App\ProfilePictureUrl;
-use App\Domain\Strava\Athlete\AthleteRepository;
+use App\BuildApp\ProfilePictureUrl;
+use App\Domain\Athlete\AthleteRepository;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;

@@ -40,7 +40,7 @@
                                 <a href="#" data-tabs-target="#monthlyStats{{ activityType }}" role="tab"
                                    aria-controls="monthlyStats{{ activityType }}"
                                    class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ enum('App\\Domain\\Strava\\Activity\\ActivityType').from(activityType)|trans }}
+                                    {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
                                 </a>
                             </li>
                         {% endfor %}
