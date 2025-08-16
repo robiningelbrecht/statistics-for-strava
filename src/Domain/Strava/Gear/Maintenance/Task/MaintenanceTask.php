@@ -7,13 +7,15 @@ namespace App\Domain\Strava\Gear\Maintenance\Task;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 
-final readonly class MaintenanceTask
+final class MaintenanceTask
 {
+    private ?MaintenanceTaskTag $mostRecentMaintenanceTaskTag = null;
+
     private function __construct(
-        private Tag $tag,
-        private Name $label,
-        private int $intervalValue,
-        private IntervalUnit $intervalUnit,
+        private readonly Tag $tag,
+        private readonly Name $label,
+        private readonly int $intervalValue,
+        private readonly IntervalUnit $intervalUnit,
     ) {
     }
 
@@ -49,5 +51,15 @@ final readonly class MaintenanceTask
     public function getIntervalUnit(): IntervalUnit
     {
         return $this->intervalUnit;
+    }
+
+    public function enrichWithMostRecentMaintenanceTaskTag(?MaintenanceTaskTag $maintenanceTaskTag): void
+    {
+        $this->mostRecentMaintenanceTaskTag = $maintenanceTaskTag;
+    }
+
+    public function getMostRecentMaintenanceTaskTag(): ?MaintenanceTaskTag
+    {
+        return $this->mostRecentMaintenanceTaskTag;
     }
 }
