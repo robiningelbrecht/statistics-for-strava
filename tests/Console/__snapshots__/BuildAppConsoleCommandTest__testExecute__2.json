@@ -4,7 +4,7 @@
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\Manifest\\BuildManifest\\BuildManifest",
+        "commandName": "App\\BuildApp\\BuildManifest\\BuildManifest",
         "payload": []
     },
     {
