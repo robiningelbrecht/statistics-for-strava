@@ -41,10 +41,10 @@ final readonly class MaintenanceTaskProgressCalculator
     {
         $gearIdsThatHaveDueTasks = GearIds::empty();
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
-        $enrichedGearComponents = $this->gearMaintenanceConfig->getGearComponents()->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
+        $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
 
         /** @var \App\Domain\Strava\Gear\Maintenance\GearComponent $gearComponent */
-        foreach ($enrichedGearComponents as $gearComponent) {
+        foreach ($allGearComponents as $gearComponent) {
             $gearComponent->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
             /** @var \App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask $maintenanceTask */
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {

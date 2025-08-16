@@ -124,8 +124,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         }
 
         $validMaintenanceTaskTags = $maintenanceTaskTags->filterOnValid();
-        $allGearComponents = $this->gearMaintenanceConfig->getGearComponents()
-            ->enrichWithMaintenanceTaskTags($validMaintenanceTaskTags);
+        $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($validMaintenanceTaskTags);
 
         $this->buildStorage->write(
             'gear/maintenance.html',

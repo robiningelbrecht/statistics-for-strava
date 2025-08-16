@@ -8,6 +8,7 @@ use App\Domain\Strava\Gear\GearId;
 use App\Domain\Strava\Gear\GearIds;
 use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTask;
+use App\Domain\Strava\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
@@ -165,6 +166,18 @@ final readonly class GearMaintenanceConfig implements \Stringable
     public function getGearComponents(): GearComponents
     {
         return $this->gearComponents;
+    }
+
+    public function getEnrichedGearComponents(MaintenanceTaskTags $maintenanceTaskTags): GearComponents
+    {
+        $enrichedGearComponents = GearComponents::empty();
+        /** @var GearComponent $gearComponent */
+        foreach ($this->getGearComponents() as $gearComponent) {
+            $gearComponent->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
+            $enrichedGearComponents->add($gearComponent);
+        }
+
+        return $enrichedGearComponents;
     }
 
     public function getGearOptions(): GearOptions
