@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\Domain\App\AppUrl;
+use App\BuildApp\AppUrl;
 use Twig\Attribute\AsTwigFunction;
 
 final readonly class UrlTwigExtension

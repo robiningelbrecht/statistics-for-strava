@@ -3,9 +3,9 @@
 namespace App\Tests\Console;
 
 use App\Console\BuildAppConsoleCommand;
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\ActivityWithRawData;
-use App\Domain\Strava\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
@@ -16,7 +16,7 @@ use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Tests\Domain\Strava\Activity\ActivityBuilder;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;

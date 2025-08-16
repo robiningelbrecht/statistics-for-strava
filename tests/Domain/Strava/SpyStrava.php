@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Strava;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Segment\SegmentId;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Gear\GearId;
+use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;

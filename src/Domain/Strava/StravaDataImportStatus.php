@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava;
 
-use App\Domain\Strava\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;

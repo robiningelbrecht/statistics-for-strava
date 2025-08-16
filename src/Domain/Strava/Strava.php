@@ -2,11 +2,11 @@
 
 namespace App\Domain\Strava;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Stream\StreamType;
-use App\Domain\Strava\Challenge\ImportChallenges\ImportChallengesCommandHandler;
-use App\Domain\Strava\Gear\GearId;
-use App\Domain\Strava\Segment\SegmentId;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
+use App\Domain\Gear\GearId;
+use App\Domain\Segment\SegmentId;
 use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Sleep;

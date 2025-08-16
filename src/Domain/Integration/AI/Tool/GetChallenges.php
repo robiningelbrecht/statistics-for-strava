@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Challenge\Challenge;
-use App\Domain\Strava\Challenge\ChallengeRepository;
+use App\Domain\Challenge\Challenge;
+use App\Domain\Challenge\ChallengeRepository;
 use NeuronAI\Tools\Tool;
 
 final class GetChallenges extends Tool

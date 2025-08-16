@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Time;
 
-use App\Domain\Strava\Calendar\Months;
+use App\Domain\Calendar\Months;
 
 final readonly class Year implements \Stringable
 {

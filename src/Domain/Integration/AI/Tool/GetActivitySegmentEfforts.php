@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Segment\SegmentEffort\SegmentEffort;
-use App\Domain\Strava\Segment\SegmentEffort\SegmentEffortRepository;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Segment\SegmentEffort\SegmentEffort;
+use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;

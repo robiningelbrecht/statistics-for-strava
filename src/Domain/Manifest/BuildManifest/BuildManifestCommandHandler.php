@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Manifest\BuildManifest;
 
-use App\Domain\App\AppUrl;
-use App\Domain\Strava\Athlete\AthleteRepository;
+use App\BuildApp\AppUrl;
+use App\Domain\Athlete\AthleteRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;

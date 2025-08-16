@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Ftp\FtpHistory;
+use App\Domain\Ftp\FtpHistory;
 use NeuronAI\Tools\Tool;
 
 final class GetFtpHistory extends Tool

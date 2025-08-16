@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\BuildApp\BuildIndexHtml;
+
+use App\Infrastructure\CQRS\Command\DomainCommand;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+
+final readonly class BuildIndexHtml extends DomainCommand
+{
+    public function __construct(
+        private SerializableDateTime $now,
+    ) {
+    }
+
+    public function getCurrentDateTime(): SerializableDateTime
+    {
+        return $this->now;
+    }
+}

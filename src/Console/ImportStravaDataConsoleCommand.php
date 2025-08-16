@@ -2,19 +2,19 @@
 
 namespace App\Console;
 
-use App\Domain\Strava\Activity\BestEffort\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
-use App\Domain\Strava\Activity\ImportActivities\ImportActivities;
-use App\Domain\Strava\Activity\Lap\ImportActivityLaps\ImportActivityLaps;
-use App\Domain\Strava\Activity\Split\ImportActivitySplits\ImportActivitySplits;
-use App\Domain\Strava\Activity\Stream\CalculateBestStreamAverages\CalculateBestStreamAverages;
-use App\Domain\Strava\Activity\Stream\CalculateNormalizedPower\CalculateNormalizedPower;
-use App\Domain\Strava\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
-use App\Domain\Strava\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
-use App\Domain\Strava\Athlete\ImportAthlete\ImportAthlete;
-use App\Domain\Strava\Challenge\ImportChallenges\ImportChallenges;
-use App\Domain\Strava\Gear\CustomGear\LinkCustomGearToActivities\LinkCustomGearToActivities;
-use App\Domain\Strava\Gear\ImportGear\ImportGear;
-use App\Domain\Strava\Segment\ImportSegments\ImportSegments;
+use App\Domain\Activity\BestEffort\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
+use App\Domain\Activity\ImportActivities\ImportActivities;
+use App\Domain\Activity\Lap\ImportActivityLaps\ImportActivityLaps;
+use App\Domain\Activity\Split\ImportActivitySplits\ImportActivitySplits;
+use App\Domain\Activity\Stream\CalculateBestStreamAverages\CalculateBestStreamAverages;
+use App\Domain\Activity\Stream\CalculateNormalizedPower\CalculateNormalizedPower;
+use App\Domain\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
+use App\Domain\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
+use App\Domain\Athlete\ImportAthlete\ImportAthlete;
+use App\Domain\Challenge\ImportChallenges\ImportChallenges;
+use App\Domain\Gear\CustomGear\LinkCustomGearToActivities\LinkCustomGearToActivities;
+use App\Domain\Gear\ImportGear\ImportGear;
+use App\Domain\Segment\ImportSegments\ImportSegments;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\FileSystem\PermissionChecker;

@@ -1,0 +1,8 @@
+[
+    {
+        "eventName": "App.Domain.Activity.ActivityWasDeleted",
+        "payload": {
+            "activityId": "activity-903645"
+        }
+    }
+]

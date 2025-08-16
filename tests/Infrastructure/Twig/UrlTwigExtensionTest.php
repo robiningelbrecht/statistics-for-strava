@@ -2,7 +2,7 @@
 
 namespace App\Tests\Infrastructure\Twig;
 
-use App\Domain\App\AppUrl;
+use App\BuildApp\AppUrl;
 use App\Infrastructure\Twig\UrlTwigExtension;
 use PHPUnit\Framework\TestCase;
 

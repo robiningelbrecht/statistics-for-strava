@@ -1,6 +1,6 @@
 [
     {
-        "commandName": "App\\Domain\\App\\ConfigureAppLocale\\ConfigureAppLocale",
+        "commandName": "App\\BuildApp\\ConfigureAppLocale\\ConfigureAppLocale",
         "payload": []
     },
     {
@@ -8,77 +8,77 @@
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\App\\BuildIndexHtml\\BuildIndexHtml",
+        "commandName": "App\\BuildApp\\BuildIndexHtml\\BuildIndexHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildDashboardHtml\\BuildDashboardHtml",
+        "commandName": "App\\BuildApp\\BuildDashboardHtml\\BuildDashboardHtml",
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\App\\BuildActivitiesHtml\\BuildActivitiesHtml",
+        "commandName": "App\\BuildApp\\BuildActivitiesHtml\\BuildActivitiesHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildGpxFiles\\BuildGpxFiles",
+        "commandName": "App\\BuildApp\\BuildGpxFiles\\BuildGpxFiles",
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\App\\BuildMonthlyStatsHtml\\BuildMonthlyStatsHtml",
+        "commandName": "App\\BuildApp\\BuildMonthlyStatsHtml\\BuildMonthlyStatsHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildGearStatsHtml\\BuildGearStatsHtml",
+        "commandName": "App\\BuildApp\\BuildGearStatsHtml\\BuildGearStatsHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildGearMaintenanceHtml\\BuildGearMaintenanceHtml",
+        "commandName": "App\\BuildApp\\BuildGearMaintenanceHtml\\BuildGearMaintenanceHtml",
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\App\\BuildEddingtonHtml\\BuildEddingtonHtml",
+        "commandName": "App\\BuildApp\\BuildEddingtonHtml\\BuildEddingtonHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildSegmentsHtml\\BuildSegmentsHtml",
+        "commandName": "App\\BuildApp\\BuildSegmentsHtml\\BuildSegmentsHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildHeatmapHtml\\BuildHeatmapHtml",
+        "commandName": "App\\BuildApp\\BuildHeatmapHtml\\BuildHeatmapHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildRewindHtml\\BuildRewindHtml",
+        "commandName": "App\\BuildApp\\BuildRewindHtml\\BuildRewindHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildChallengesHtml\\BuildChallengesHtml",
+        "commandName": "App\\BuildApp\\BuildChallengesHtml\\BuildChallengesHtml",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }
     },
     {
-        "commandName": "App\\Domain\\App\\BuildPhotosHtml\\BuildPhotosHtml",
+        "commandName": "App\\BuildApp\\BuildPhotosHtml\\BuildPhotosHtml",
         "payload": []
     },
     {
-        "commandName": "App\\Domain\\App\\BuildBadgeSvg\\BuildBadgeSvg",
+        "commandName": "App\\BuildApp\\BuildBadgeSvg\\BuildBadgeSvg",
         "payload": {
             "now": "2023-10-17 16:15:04"
         }

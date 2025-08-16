@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Activity\Split\ActivitySplit;
-use App\Domain\Strava\Activity\Split\ActivitySplitRepository;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Split\ActivitySplit;
+use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;

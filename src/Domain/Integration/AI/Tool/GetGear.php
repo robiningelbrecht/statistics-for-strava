@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Strava\Gear\Gear;
-use App\Domain\Strava\Gear\GearRepository;
+use App\Domain\Gear\Gear;
+use App\Domain\Gear\GearRepository;
 use NeuronAI\Tools\Tool;
 
 final class GetGear extends Tool

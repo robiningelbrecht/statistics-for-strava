@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
-use App\Domain\Strava\Activity\ActivityType;
-use App\Domain\Strava\Activity\SportType\SportType;
+use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\SportType\SportType;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;

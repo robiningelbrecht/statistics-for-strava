@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\Domain\Strava\Activity\ActivityId;
-use App\Domain\Strava\Gear\GearIds;
-use App\Domain\Strava\Gear\Maintenance\Task\IntervalUnit;
-use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
-use App\Domain\Strava\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Domain\Strava\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Gear\GearIds;
+use App\Domain\Gear\Maintenance\Task\IntervalUnit;
+use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
+use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
+use App\Domain\Gear\Maintenance\Task\Progress\ProgressCalculationContext;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Twig\Attribute\AsTwigFunction;
 
