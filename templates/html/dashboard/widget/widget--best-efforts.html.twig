@@ -64,12 +64,20 @@
                                             <div>{{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}</div>
                                         </th>
                                         {% for sportType in bestEffortsForActivityType.getUniqueSportTypes() %}
-                                            <td class="px-2 py-2 truncate">
-                                                {% set bestEffort = bestEffortsForActivityType.getBySportTypeAndDistance(sportType, distance) %}
-                                                {% if bestEffort %}
-                                                    {{ bestEffort.getActivity()|renderTitle(ellipses: 30) }}
-                                                {% endif %}
-                                            </td>
+                                            {% set bestEffort = bestEffortsForActivityType.getBySportTypeAndDistance(sportType, distance) %}
+                                            {% if bestEffort %}
+                                                {% set activity = bestEffort.getActivity() %}
+                                                <td class="px-2 py-2 truncate">
+                                                    <div class="flex gap-x-4">
+                                                        {{ activity.getStartDate()|formatDate() }}
+                                                        {{ activity|renderTitle(ellipses: 30) }}
+                                                    </div>
+                                                </td>
+                                            {% else %}
+                                                <td class="px-2 py-2 truncate">
+
+                                                </td>
+                                            {% endif %}
                                         {% endfor %}
                                     </tr>
                                 {% endfor %}

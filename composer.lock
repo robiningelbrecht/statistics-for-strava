@@ -1836,20 +1836,20 @@
         },
         {
             "name": "inspector-apm/neuron-ai",
-            "version": "1.16.17",
+            "version": "1.16.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/neuron-ai.git",
-                "reference": "29ba2bdfd413f70883bbf2149ce2772dc955ae9e"
+                "reference": "769a570bd544e1ce96e86709f320e97d9ae3f9b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/29ba2bdfd413f70883bbf2149ce2772dc955ae9e",
-                "reference": "29ba2bdfd413f70883bbf2149ce2772dc955ae9e",
+                "url": "https://api.github.com/repos/inspector-apm/neuron-ai/zipball/769a570bd544e1ce96e86709f320e97d9ae3f9b1",
+                "reference": "769a570bd544e1ce96e86709f320e97d9ae3f9b1",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "^7.0",
+                "guzzlehttp/guzzle": "^7.9",
                 "inspector-apm/inspector-php": "^3.15.10",
                 "php": "^8.1",
                 "psr/http-message": "^1.0|^2.0",
@@ -1861,6 +1861,7 @@
                 "elasticsearch/elasticsearch": "^8.0",
                 "ext-pdo": "*",
                 "friendsofphp/php-cs-fixer": "^3.75",
+                "html2text/html2text": "^4.3",
                 "monolog/monolog": "^3.9",
                 "php-http/curl-client": "^2.3",
                 "phpstan/phpstan": "^2.1",
@@ -1898,9 +1899,9 @@
             "description": "The AI Agent Development Kit for PHP.",
             "support": {
                 "issues": "https://github.com/inspector-apm/neuron-ai/issues",
-                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.16.17"
+                "source": "https://github.com/inspector-apm/neuron-ai/tree/1.16.20"
             },
-            "time": "2025-08-14T03:30:43+00:00"
+            "time": "2025-08-16T15:14:27+00:00"
         },
         {
             "name": "league/flysystem",
