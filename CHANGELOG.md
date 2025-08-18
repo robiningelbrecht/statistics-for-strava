@@ -1,3 +1,12 @@
+# [v3.2.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.5) - 2025-08-18
+
+## What's Changed
+* ISSUE #998: Refactor Gear maintenance calculator by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/999
+* ISSUE #1000: Refactor APP namespaces by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1001
+* ISSUE #1002: Add date to best efforts table by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1003
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.4...v3.2.5
+
 # [v3.2.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.4) - 2025-08-14
 
 ## What's Changed
