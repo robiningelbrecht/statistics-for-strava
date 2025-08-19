@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\BuildApp\BuildRewindHtml;
 
+use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypes;
@@ -51,6 +52,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private ActivityRepository $activityRepository,
+        private ActivitiesEnricher $activitiesEnricher,
         private GearRepository $gearRepository,
         private ImageRepository $imageRepository,
         private QueryBus $queryBus,
@@ -82,7 +84,9 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
             }
 
-            $longestActivity = $this->activityRepository->findLongestActivityFor($yearsToQuery);
+            $longestActivity = $this->activitiesEnricher->getEnrichedActivity(
+                $this->activityRepository->findLongestActivityFor($yearsToQuery)->getId()
+            );
             $leafletMap = $longestActivity->getLeafletMap();
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
