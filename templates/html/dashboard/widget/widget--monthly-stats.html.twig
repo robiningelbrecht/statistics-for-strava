@@ -1,6 +1,6 @@
 {% set uniqueId = uniqueNumberForId('monthlyStatsWidget') %}
 <h3 class="mb-4 text-lg font-semibold">
-    {{ "Monthly stats"|trans }}
+    {{ "Monthly stats"|trans }} - {{ context|trans }}
 </h3>
 {% if monthlyStatsCharts|length > 1 %}
     <div class="mb-4 border-b border-gray-200">
