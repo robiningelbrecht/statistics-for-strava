@@ -346,6 +346,7 @@ Yoga: Yoga
 activities: activities
 age: idade
 and: e
+avg: avg
 bpm: bpm
 clear: limpar
 comments: comments
@@ -365,6 +366,7 @@ more: more
 n/a: n/d
 never: nunca
 to: to
+total: total
 weeks: weeks
 workouts: treinos
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dias'

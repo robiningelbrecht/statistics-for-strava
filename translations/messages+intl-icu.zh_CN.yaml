@@ -346,6 +346,7 @@ Yoga: 瑜伽
 activities: activities
 age: 年龄
 and: 和
+avg: avg
 bpm: 拍子数
 clear: 清除
 comments: comments
@@ -365,6 +366,7 @@ more: more
 n/a: 不适用
 never: never
 to: to
+total: total
 weeks: weeks
 workouts: 锻炼
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
