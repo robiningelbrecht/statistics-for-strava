@@ -64,6 +64,7 @@ final readonly class IndexHtml
                 'unitSystem' => [
                     'paceSymbol' => $this->unitSystem->paceSymbol(),
                     'distanceSymbol' => $this->unitSystem->distanceSymbol(),
+                    'elevationSymbol' => $this->unitSystem->elevationSymbol(),
                 ],
             ]),
         ];

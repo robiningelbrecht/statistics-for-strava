@@ -8,4 +8,5 @@ enum MonthlyStatsContext: string
 {
     case MOVING_TIME = 'time';
     case DISTANCE = 'distance';
+    case ELEVATION = 'elevation';
 }

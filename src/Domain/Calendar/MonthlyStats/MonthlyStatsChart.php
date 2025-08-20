@@ -82,8 +82,11 @@ final readonly class MonthlyStatsChart
                         $data[] = 0;
                     }
                 } else {
-                    $data[] = MonthlyStatsContext::MOVING_TIME === $this->context ?
-                        $stats['movingTime']->toHour()->toInt() : $stats['distance']->toUnitSystem($this->unitSystem)->toFloat();
+                    $data[] = match ($this->context) {
+                        MonthlyStatsContext::MOVING_TIME => $stats['movingTime']->toHour()->toInt(),
+                        MonthlyStatsContext::DISTANCE => $stats['distance']->toUnitSystem($this->unitSystem)->toFloat(),
+                        MonthlyStatsContext::ELEVATION => $stats['elevation']->toUnitSystem($this->unitSystem)->toFloat(),
+                    };
                 }
             }
 
@@ -107,7 +110,11 @@ final readonly class MonthlyStatsChart
             ],
             'tooltip' => [
                 'trigger' => 'axis',
-                'valueFormatter' => MonthlyStatsContext::MOVING_TIME === $this->context ? 'formatHours' : 'formatDistance',
+                'valueFormatter' => match ($this->context) {
+                    MonthlyStatsContext::MOVING_TIME => 'formatHours',
+                    MonthlyStatsContext::DISTANCE => 'formatDistance',
+                    MonthlyStatsContext::ELEVATION => 'formatElevation',
+                },
             ],
             'legend' => [
                 'selected' => $selectedSeries,
@@ -140,7 +147,11 @@ final readonly class MonthlyStatsChart
             'yAxis' => [
                 'type' => 'value',
                 'axisLabel' => [
-                    'formatter' => '{value}'.(MonthlyStatsContext::MOVING_TIME === $this->context ? 'h' : $this->unitSystem->distanceSymbol()),
+                    'formatter' => match ($this->context) {
+                        MonthlyStatsContext::MOVING_TIME => '{value}h',
+                        MonthlyStatsContext::DISTANCE => '{value}'.$this->unitSystem->distanceSymbol(),
+                        MonthlyStatsContext::ELEVATION => '{value}'.$this->unitSystem->elevationSymbol(),
+                    },
                 ],
             ],
             'series' => $series,
