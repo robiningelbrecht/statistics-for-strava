@@ -162,7 +162,7 @@ Max: Max
 'Max gradient': 'Max. Steigung'
 May: Mai
 Medium: Mittel
-Metrics: Maße
+Metrics: Metriken
 'Mind & Body Sports': 'Geist & Körper Sportarten'
 'Moderate monotony': 'Moderate Monotonie'
 Mon: Mo
@@ -197,7 +197,7 @@ Other: Andere
 'PET bottles produced': 'PET Flaschen hergestellt'
 PRs: PRs
 'PRs achieved per month': 'PRs erreicht pro Monat'
-Pace: Tempo
+Pace: Pace
 'Peak power outputs': Spitzenleistungen
 'Peak-fresh, race-ready – ideal taper sweet spot': 'In Top-Form, wettkampftauglich - Idealer Taper-Sweetspot'
 'Personal Records': 'Persönliche Bestzeiten'
@@ -282,8 +282,8 @@ To: Bis
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
-'Total distance per month': 'Gesamte Distanz pro Monat'
-'Total elevation per month': 'Gesamte Höhenmeter pro Monat'
+'Total distance per month': 'Gesamtdistanz pro Monat'
+'Total elevation per month': 'Gesamthöhenmeter pro Monat'
 'Total hours': Gesamtstunden
 'Total hours spent per gear': 'Gesamtstunden pro Ausrüstung'
 'Total hours spent per sport type': 'Gesamtstunden pro Sportart'
@@ -346,7 +346,7 @@ Yoga: Yoga
 activities: Aktivitäten
 age: Alter
 and: und
-avg: avg
+avg: durchschn.
 bpm: bpm
 clear: löschen
 comments: Kommentare
@@ -366,7 +366,7 @@ more: mehr
 n/a: n/v
 never: nie
 to: mit
-total: total
+total: gesamt
 weeks: Wochen
 workouts: Trainingseinheiten
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} Tagen'
