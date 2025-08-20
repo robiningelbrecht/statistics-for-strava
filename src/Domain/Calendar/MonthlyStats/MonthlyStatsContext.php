@@ -6,6 +6,6 @@ namespace App\Domain\Calendar\MonthlyStats;
 
 enum MonthlyStatsContext: string
 {
-    case MOVING_TIME = 'movingTime';
+    case MOVING_TIME = 'time';
     case DISTANCE = 'distance';
 }

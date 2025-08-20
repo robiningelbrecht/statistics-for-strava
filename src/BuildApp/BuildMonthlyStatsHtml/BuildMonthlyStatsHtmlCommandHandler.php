@@ -64,48 +64,6 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             ]),
         );
 
-        $monthlyTimeStatCharts = [];
-        foreach ($activityTypes as $activityType) {
-            $monthlyTimeStatCharts[$activityType->value] = Json::encode(
-                MonthlyStatsChart::create(
-                    activityType: $activityType,
-                    monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::MOVING_TIME,
-                    unitSystem: $this->unitSystem,
-                    translator: $this->translator,
-                )->build()
-            );
-        }
-
-        $this->buildStorage->write(
-            'monthly-stats/chart/time.html',
-            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
-                'monthlyStatsCharts' => $monthlyTimeStatCharts,
-                'context' => MonthlyStatsContext::MOVING_TIME,
-            ]),
-        );
-
-        $monthlyDistanceStatCharts = [];
-        foreach ($activityTypes as $activityType) {
-            $monthlyDistanceStatCharts[$activityType->value] = Json::encode(
-                MonthlyStatsChart::create(
-                    activityType: $activityType,
-                    monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::DISTANCE,
-                    unitSystem: $this->unitSystem,
-                    translator: $this->translator,
-                )->build()
-            );
-        }
-
-        $this->buildStorage->write(
-            'monthly-stats/chart/distance.html',
-            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
-                'monthlyStatsCharts' => $monthlyDistanceStatCharts,
-                'context' => MonthlyStatsContext::DISTANCE,
-            ]),
-        );
-
         /** @var Month $month */
         foreach ($allMonths as $month) {
             $this->buildStorage->write(
@@ -119,6 +77,29 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                         month: $month,
                         activityRepository: $this->activityRepository,
                     ),
+                ]),
+            );
+        }
+
+        foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
+            $monthlyStatCharts = [];
+            foreach ($activityTypes as $activityType) {
+                $monthlyStatCharts[$activityType->value] = Json::encode(
+                    MonthlyStatsChart::create(
+                        activityType: $activityType,
+                        monthlyStats: $monthlyStats,
+                        context: $monthlyStatsContext,
+                        unitSystem: $this->unitSystem,
+                        translator: $this->translator,
+                    )->build()
+                );
+            }
+
+            $this->buildStorage->write(
+                sprintf('monthly-stats/chart/%s.html', $monthlyStatsContext->value),
+                $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
+                    'monthlyStatsCharts' => $monthlyStatCharts,
+                    'context' => $monthlyStatsContext,
                 ]),
             );
         }
