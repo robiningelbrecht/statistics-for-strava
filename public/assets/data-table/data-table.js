@@ -92,6 +92,11 @@ export default function DataTable($dataTableWrapperNode) {
             return;
         }
 
+        const dateInputsWithDefaultValue = $dataTableWrapperNode.querySelectorAll('input[type="date"][data-default-to-today]');
+        dateInputsWithDefaultValue.forEach(element => {
+            element.valueAsDate = new Date();
+        });
+
         fetch(settings.url, {cache: 'no-store'}).then(async function (response) {
             const dataRows = await response.json();
             const $scrollElement = $dataTableWrapperNode.querySelector('.scroll-area');
