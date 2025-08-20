@@ -48,6 +48,11 @@ export default function Heatmap($heatmapWrapper) {
             });
         });
 
+        const dateInputsWithDefaultValue = $heatmapWrapper.querySelectorAll('input[type="date"][data-default-to-today]');
+        dateInputsWithDefaultValue.forEach(element => {
+            element.valueAsDate = new Date();
+        });
+
         // Reset filter event listeners.
         $heatmapWrapper.querySelector('[data-heatmap-reset]').addEventListener('click', (e) => {
             e.preventDefault();
