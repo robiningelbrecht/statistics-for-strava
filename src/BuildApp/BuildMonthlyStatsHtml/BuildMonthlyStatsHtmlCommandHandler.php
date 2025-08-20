@@ -96,7 +96,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             }
 
             $this->buildStorage->write(
-                sprintf('monthly-stats/chart/%s.html', $monthlyStatsContext->value),
+                sprintf('monthly-stats/chart/%s.html', $monthlyStatsContext->getUrlSlug()),
                 $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
                     'monthlyStatsCharts' => $monthlyStatCharts,
                     'context' => $monthlyStatsContext,

@@ -96,7 +96,7 @@ This widget provides an overview of the intensity of your activities in a GitHub
 
 This widget displays your monthly statistics and lets you compare your performance with the same months in previous years.
 
-* __context__: The context for the statistics, allowed values are `distance` and `movingTime`
+* __context__: The context for the statistics, allowed values are `distance`, `movingTime` and `elevation`
 * __enableLastXYearsByDefault__: enable the last X years of data dy default. Earlier years will be disabled but can be toggled.
 
 ```yml
