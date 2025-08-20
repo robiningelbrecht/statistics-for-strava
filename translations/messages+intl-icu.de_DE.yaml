@@ -50,8 +50,8 @@ Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
 'Close modal': 'Modalen Dialog schließen'
 'Collapse sidebar': 'Seitenleiste einklappen'
-Commutes: Fahrten
-'Commutes only': 'Nur Fahrten'
+Commutes: Pendeln
+'Commutes only': 'Nur Pendler'
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
@@ -64,7 +64,7 @@ Date: Datum
 'Days needed': 'Benötigte Tage'
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
-'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen sind in der Dokumentation im'
+'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 Details: Details
 Device: Gerät
 Distance: Distanz
@@ -82,7 +82,7 @@ Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
 Evening: Abend
-'Excludes commutes': 'Fahrten ausschließen'
+'Excludes commutes': 'Pendler ausschließen'
 'FTP history': FTP-Verlauf
 'Fastest times': 'Schnellste Zeiten'
 'Fatigued – productive heavy-training range': 'Erschöpft – produktiver Bereich für schweres Training'
@@ -150,7 +150,7 @@ Laps: Runden
 'Loading data...': 'Daten werden geladen...'
 Loading...: Lädt...
 'Locations over the globe': 'Orte auf der Welt'
-'Long run': 'Long run'
+'Long run': 'Langer lauf'
 'Longest activity (h)': 'Längste Aktivität (h)'
 'Longest streaks': 'Längste Serie'
 Low: Niedrig
@@ -279,7 +279,7 @@ Time: Zeit
 'Time / week': 'Zeit / Woche'
 'Times completed': 'Male abgeschlossen'
 To: Bis
-'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden.'
+'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
 'Total distance per month': 'Gesamte Distanz pro Monat'
