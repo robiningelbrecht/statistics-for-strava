@@ -94,8 +94,15 @@ export default function Heatmap($heatmapWrapper) {
                 throw new Error('input[name="' + filterName + '[to]"] element not found');
             }
 
-            if (!isNaN($rangeInputFrom.valueAsNumber) && !isNaN($rangeInputTo.valueAsNumber)) {
-                filters[filterName] = [$rangeInputFrom.valueAsNumber, $rangeInputTo.valueAsNumber];
+            if (!isNaN($rangeInputFrom.valueAsDate) && !isNaN($rangeInputTo.valueAsDate) && $rangeInputFrom.valueAsDate && $rangeInputTo.valueAsDate) {
+                // Date range filter.
+                const dateFrom = $rangeInputFrom.valueAsDate;
+                dateFrom.setHours(0, 0, 0);
+
+                const dateTo = $rangeInputTo.valueAsDate;
+                dateTo.setHours(23, 59, 59);
+
+                filters[filterName] = [dateFrom.getTime(), dateTo.getTime()];
             }
         });
 
