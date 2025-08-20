@@ -76,6 +76,7 @@ final readonly class MonthlyStatsWidget implements Widget
 
         return $this->twig->load('html/dashboard/widget/widget--monthly-stats.html.twig')->render([
             'monthlyStatsCharts' => $monthlyStatCharts,
+            'context' => MonthlyStatsContext::from($context),
         ]);
     }
 }
