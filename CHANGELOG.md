@@ -1,3 +1,16 @@
+# [v3.2.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.6) - 2025-08-20
+
+## What's Changed
+* ISSUE #1006: Yearly statistics: add more delta's comparing previous years by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1007
+* ISSUE #1008: Remove maintenance tags from activity title in rewind by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1009
+* updated german translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1011
+* ISSUE #1012: Monthly elevation chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1013
+
+## New Contributors
+* @Export33 made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1011
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.5...v3.2.6
+
 # [v3.2.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.5) - 2025-08-18
 
 ## What's Changed
