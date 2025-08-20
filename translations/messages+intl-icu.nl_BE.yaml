@@ -346,6 +346,7 @@ Yoga: Yoga
 activities: activities
 age: leeftijd
 and: and
+avg: avg
 bpm: bpm
 clear: clear
 comments: comments
@@ -365,6 +366,7 @@ more: more
 n/a: n/a
 never: never
 to: to
+total: total
 weeks: weeks
 workouts: workouts
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'

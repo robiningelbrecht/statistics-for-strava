@@ -42,8 +42,8 @@
                     </td>
                     <td class="px-6 py-2 truncate">
                         {% if statistic.totalDistance.toFloat() > 0 %}
-                            {{ statistic.averageDistance|renderMeasurement(0, 'avg') }} /
-                            {{ statistic.totalDistance|renderMeasurement(0, 'total') }}
+                            {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                            {{ statistic.totalDistance|renderMeasurement(0, 'total'|trans) }}
                         {% else %}
                             0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
                         {% endif %}
