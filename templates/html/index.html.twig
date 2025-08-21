@@ -330,26 +330,20 @@
 <script src="{{ relativeUrl(asset('assets/flowbite/flowbite.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/echarts/echarts.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/echarts/echarts.world.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/utils.js')) }}" type="module"></script>
-<script src="{{ relativeUrl(asset('assets/router.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/leaflet/leaflet.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/leaflet/leaflet.polyline.encoded.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/leaflet/leaflet.fly.to.places.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/leaflet/leaflet-map.js')) }}" type="module"></script>
-<script src="{{ relativeUrl(asset('assets/leaflet/heatmap.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/data-table/clusterize.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/data-table/data-table.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.umd.min.js')) }}" type="module"></script>
 <script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('assets/autocomplete.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/chat.js')) }}" type="module"></script>
 <script type="module">
-    import LeafletMap from "{{ relativeUrl('/assets/leaflet/leaflet-map.js') }}";
-    import Heatmap from "{{ relativeUrl('/assets/leaflet/heatmap.js') }}";
-    import DataTable from "{{ relativeUrl('/assets/data-table/data-table.js') }}";
-    import Router from "{{ relativeUrl('/assets/router.js') }}";
-    import Chat from "{{ relativeUrl('/assets/chat.js') }}";
-    import {resolveEchartsCallbacks} from "{{ relativeUrl('/assets/utils.js') }}";
+    import LeafletMap from "{{ relativeUrl(asset('/assets/leaflet/leaflet-map.js')) }}";
+    import Heatmap from "{{ relativeUrl(asset('/assets/leaflet/heatmap.js')) }}";
+    import DataTable from "{{ relativeUrl(asset('/assets/data-table/data-table.js')) }}";
+    import Router from "{{ relativeUrl(asset('/assets/router.js')) }}";
+    import Chat from "{{ relativeUrl(asset('/assets/chat.js')) }}";
+    import {resolveEchartsCallbacks} from "{{ relativeUrl(asset('/assets/utils.js')) }}";
 
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
