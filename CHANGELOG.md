@@ -1,3 +1,13 @@
+# [v3.2.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.7) - 2025-08-21
+
+## What's Changed
+* ISSUE #1016: More translatables by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1017
+* Improved German translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1018
+* ISSUE #1021: Fix heatmap date filter by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1024
+* ISSUE #1022: Add default date to date filters by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1025
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.6...v3.2.7
+
 # [v3.2.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.6) - 2025-08-20
 
 ## What's Changed
