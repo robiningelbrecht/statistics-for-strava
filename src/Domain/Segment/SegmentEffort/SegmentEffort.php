@@ -12,6 +12,8 @@ use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -152,6 +154,16 @@ final class SegmentEffort implements SupportsAITooling
         $averageSpeed = $this->getDistance()->toMeter()->toFloat() / $this->getElapsedTimeInSeconds();
 
         return MetersPerSecond::from($averageSpeed)->toKmPerHour();
+    }
+
+    public function getPaceInSecPerKm(): SecPerKm
+    {
+        return $this->getAverageSpeed()->toMetersPerSecond()->toSecPerKm();
+    }
+
+    public function getPaceInSecPer100Meter(): SecPer100Meter
+    {
+        return $this->getAverageSpeed()->toMetersPerSecond()->toSecPerKm()->toSecPer100Meter();
     }
 
     public function getDistance(): Kilometer
