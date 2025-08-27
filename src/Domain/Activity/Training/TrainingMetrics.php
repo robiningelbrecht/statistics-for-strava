@@ -39,7 +39,7 @@ final class TrainingMetrics
     private function buildMetrics(): void
     {
         $alphaATL = 1 - exp(-1 / 7);
-        $alphaCTL = 1 - exp(-1 / TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY);
+        $alphaCTL = 1 - exp(-1 / 42);
 
         $altValues = $ctlValues = $tsbValues = $trimpValues = $monotonyValues = $strainValues = $acRatioValues = [];
 
