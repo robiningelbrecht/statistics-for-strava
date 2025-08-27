@@ -10,7 +10,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class TrainingLoadChart
 {
-    public const int NUMBER_OF_DAYS_TO_DISPLAY = 42;
+    public const int NUMBER_OF_DAYS_TO_DISPLAY = 366;
 
     private function __construct(
         private TrainingMetrics $trainingMetrics,
@@ -61,6 +61,27 @@ final readonly class TrainingLoadChart
             'legend' => [
                 'show' => true,
             ],
+            'toolbox' => [
+                'show' => true,
+                'feature' => [
+                    'restore' => [
+                        'show' => true,
+                    ],
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'inside',
+                    'startValue' => self::NUMBER_OF_DAYS_TO_DISPLAY - 42,
+                    'endValue' => self::NUMBER_OF_DAYS_TO_DISPLAY,
+                    'minValueSpan' => 42,
+                    'brushSelect' => false,
+                    'zoomLock' => true,
+                    'xAxisIndex' => 'all',
+                ],
+                [
+                ],
+            ],
             'axisPointer' => [
                 'link' => ['xAxisIndex' => 'all'],
             ],
@@ -69,13 +90,13 @@ final readonly class TrainingLoadChart
                     'left' => '50px',
                     'right' => '50px',
                     'top' => '40px',
-                    'height' => '63%',
+                    'height' => '53%',
                     'containLabel' => false,
                 ],
                 [
                     'left' => '50px',
                     'right' => '50px',
-                    'top' => '75%',
+                    'top' => '65%',
                     'height' => '20%',
                     'bottom' => '0px',
                     'containLabel' => false,
