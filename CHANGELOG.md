@@ -1,3 +1,12 @@
+# [v3.2.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.8) - 2025-08-27
+
+## What's Changed
+* Fix javascript imports by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1028
+* ISSUE #1031: Fix overflow-x-scroll on tab elements by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1032
+* ISSUE #1030: render pace for running segments by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1033
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.7...v3.2.8
+
 # [v3.2.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.7) - 2025-08-21
 
 ## What's Changed
