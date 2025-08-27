@@ -39,7 +39,7 @@ final class TrainingMetrics
     private function buildMetrics(): void
     {
         $alphaATL = 1 - exp(-1 / 7);
-        $alphaCTL = 1 - exp(-1 / 42);
+        $alphaCTL = 1 - exp(-1 / TrainingLoadChart::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST);
 
         $altValues = $ctlValues = $tsbValues = $trimpValues = $monotonyValues = $strainValues = $acRatioValues = [];
 

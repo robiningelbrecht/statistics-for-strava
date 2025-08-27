@@ -11,6 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class TrainingLoadChart
 {
     public const int NUMBER_OF_DAYS_TO_DISPLAY = 366;
+    public const int ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST = 42;
 
     private function __construct(
         private TrainingMetrics $trainingMetrics,
@@ -72,9 +73,9 @@ final readonly class TrainingLoadChart
             'dataZoom' => [
                 [
                     'type' => 'inside',
-                    'startValue' => self::NUMBER_OF_DAYS_TO_DISPLAY - 42,
+                    'startValue' => self::NUMBER_OF_DAYS_TO_DISPLAY - self::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST,
                     'endValue' => self::NUMBER_OF_DAYS_TO_DISPLAY,
-                    'minValueSpan' => 42,
+                    'minValueSpan' => self::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST,
                     'brushSelect' => false,
                     'zoomLock' => true,
                     'xAxisIndex' => 'all',
