@@ -13,7 +13,7 @@ final class TrainingMetrics
     /** @var array<string, int|float> */
     private array $tsbValues = [];
     /** @var array<string, int|float|null> */
-    private array $trimpValues = []; // Will now store daily TRIMP (intensity)
+    private array $trimpValues = [];
     /** @var array<string, int|float|null> */
     private array $monotonyValues = [];
     /** @var array<string, int|float|null> */
@@ -29,7 +29,7 @@ final class TrainingMetrics
     }
 
     /**
-     * @param array<string, int> $intensities // Keys should be dates/identifiers, values are daily TRIMP/intensity
+     * @param array<string, int> $intensities
      */
     public static function create(array $intensities): TrainingMetrics
     {
@@ -39,7 +39,7 @@ final class TrainingMetrics
     private function buildMetrics(): void
     {
         $alphaATL = 1 - exp(-1 / 7);
-        $alphaCTL = 1 - exp(-1 / 42);
+        $alphaCTL = 1 - exp(-1 / TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY);
 
         $altValues = $ctlValues = $tsbValues = $trimpValues = $monotonyValues = $strainValues = $acRatioValues = [];
 
