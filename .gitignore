@@ -8,6 +8,7 @@
 node_modules
 /src/Entity
 /src/Repository
+.idea
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
