@@ -4,7 +4,7 @@
 '0 to +10: Slightly fresh. Transitional; brief is best': '0 bis +10: Wenig in Form. Übergangszone; kurz ist am besten'
 '0.8-1.3: Safe training zone': '0.8-1.3: Sichere Trainingszone'
 '42-day fitness trend': '42-tägiger Fitness-Trend'
-'7-day fatigue level': '7-tägiges Erschöpfungsniveau'
+'7-day fatigue level': '7-tägiges Ermüdungsniveau'
 '< 0.8: Potential detraining': '< 0.8: Möglicher Leistungsabbau durch Trainingspause'
 '< 1.5: Good variety in training': '< 1.5: Gute Abwechslung im Training'
 '< –30: Over-fatigued. Risk of injury; require extra recovery': '< -30: Übermüdet. Verletzungsgefahr; zusätzliche Erholung erforderlich'
@@ -20,31 +20,31 @@ Activity: Aktivität
 'Activity intensity': Aktivitätsintensität
 'Activity locations': Orte
 'Activity start times': 'Startzeiten der Aktivitäten'
-'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akute Trainingsbelastung (Ermüdung) - 7-tägiger exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die kurzfristige Erschöpfung dar.'
+'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akute Trainingsbelastung (Ermüdung) - 7-tägiger exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die kurzfristige Ermüdung dar.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Aktuelle vs. dauerhafte Trainingsbelastung - Verhältnis von ATL zu CTL. Gibt das Verletzungsrisiko an.'
 'Adaptive & Inclusive Sports': 'Adaptive & inklusive Sportarten'
 Advanced: Fortgeschritten
 Afternoon: Nachmittag
 All: Alle
 'All time': Gesamtzeit
-'Alpine Ski': Alpinski
+'Alpine Ski': 'Ski Alpin'
 Apr: Apr
 'Ask Mark something...': 'Frag Mark etwas...'
 Aug: Aug
 Avg: Durchschn.
-'Back Country Ski': Backcountry-Ski
+'Back Country Ski': Skitouren
 Badminton: Badminton
 Best: Beste
-'Best Efforts': 'Beste Leistungen'
-'Best effort': 'Beste Leistung'
-'Best efforts for {sportType}': 'Beste Leistungen für {sportType}'
+'Best Efforts': Bestzeiten
+'Best effort': Bestezeit
+'Best efforts for {sportType}': 'Bestzeiten für {sportType}'
 'Build zone (–10)': 'Aufbauzone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Trittfrequenz
 Calories: Kalorien
 'Calories burnt': 'Kalorien verbrannt'
 Canoeing: Kanufahren
-'Carbon saved': 'Kohlenstoffdioxid gespart'
+'Carbon saved': 'Kohlendioxid gespart'
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
@@ -74,10 +74,10 @@ Distance: Distanz
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
 'Distance per month per gear': 'Distanz pro Monat pro Ausrüstung'
 Distribution: Verteilung
-'E-Bike Rides': E-Bike-Fahrten
+'E-Bike Rides': E-Bike-Radfahrten
 'E-Mountain Bike Rides': E-Mountainbike-Fahrten
 Eddington: Eddington
-Elev: Höhe
+Elev: Anstieg
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
@@ -110,7 +110,7 @@ Gear: Ausrüstung
 Golf: Golf
 'Good training variety': 'Gute Abwechslung im Training'
 'Google searches': 'Google Suchanfragen'
-'Gravel Rides': Gravel-Fahrten
+'Gravel Rides': Schotterfahrt
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Die Richtlinien variieren von Person zu Person; weitere Informationen findest du in Joe Friels ‚The Cyclist's Training Bible‘ oder in den Forschungsunterlagen von TrainingPeaks."
 HIIT: HIIT
 HR: HF
@@ -150,7 +150,7 @@ Laps: Runden
 'Loading data...': 'Daten werden geladen...'
 Loading...: Lädt...
 'Locations over the globe': 'Orte auf der Welt'
-'Long run': 'Langer lauf'
+'Long run': 'Langer Lauf'
 'Longest activity (h)': 'Längste Aktivität (h)'
 'Longest streaks': 'Längste Serie'
 Low: Niedrig
@@ -180,7 +180,7 @@ Night: Nacht
 'No activities': 'Keine Aktivitäten'
 'No data available': 'Keine Daten verfügbar'
 'No other options to compare with': 'Keine anderen Optionen zum Vergleich'
-'Nordic Ski': 'Nordischer Ski'
+'Nordic Ski': 'Nordischer Skilanglauf'
 'Not supported': 'Nicht unterstützt'
 Nov: Nov
 'Number of activities per month': 'Anzahl an Aktivitäten pro Monat'
@@ -215,14 +215,14 @@ Race: Wettkampf
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Rangliste
-'Reduced carbon emission by commuting': 'Reduzierter Kohlenstoffdioxidausstoß durch Fahrten'
+'Reduced carbon emission by commuting': 'Reduzierter Kohlendioxidausstoß durch Pendler'
 'Rest Days': Ruhetage
 'Rest days': Ruhetage
 'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
 'Rest days vs. active days': 'Ruhetage vs. aktive Tage'
 Rewind: Rückblick
 'Rewind comparisons are only available on larger screens.': 'Rückblick Vergleiche sind nur auf großen Bildschirmen verfügbar.'
-Rides: Fahrten
+Rides: Radfahren
 'Rock Climbing': Klettern
 'Roller Ski': Rollski
 Rowing: Rudern
@@ -236,7 +236,7 @@ Search: Suche
 Segments: Segmente
 Sep: Sep
 'Show information': 'Informationen anzeigen'
-Simplified: Verinfacht
+Simplified: Vereinfacht
 'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Seit ich vor {numberOfDaysAgo} am {startDate} mit dem Training begonnen habe, hatte ich {totalDaysOfWorkingOut} aktive Trainingstage.'
 Skateboard: Skateboard
 Skating: Skaten
@@ -246,10 +246,10 @@ Snowshoe: Schneeschuhwandern
 Soccer: Fußball
 Socials: 'Soziale Medien'
 Speed: Geschwindigkeit
-Splits: Splits
+Splits: Zwischenzeiten
 Squash: Squash
-'Stair Stepper': Treppensteiger
-'Stand Up Paddling': 'Stand-Up Paddeln'
+'Stair Stepper': Stufen-Stepper
+'Stand Up Paddling': 'Stand-Up-Paddeln'
 'Start slideshow': 'Start slideshow'
 'Start times': Startzeiten
 'Statistics for Strava': 'Statistiken für Strava'
@@ -293,36 +293,36 @@ To: Bis
 'Training Load Analysis': Trainingsbelastungsanalyse
 'Training Load Analysis (6 week history)': 'Trainingsbelastungsanalyse (6 Wochen Verlauf)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
-'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Müdigkeit (ATL). Zeigt an, wie leistungsfähig du bist.'
+'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Ermüdung (ATL). Zeigt an, wie leistungsfähig du bist.'
 Tue: Di
 Tuesday: Dienstag
 Unspecified: 'Nicht spezifiziert'
 'Updated on': 'Aktualisiert am'
 'User badge': 'Benutzer Abzeichen'
-'Velo Mobiles': Velomobile
+'Velo Mobiles': Velomobil
 'Very fresh – possible detraining': 'Sehr erholt – möglicher Leistungsabbau'
 'Very high': 'Sehr hoch'
 'View all': 'Alle anzeigen'
 'View details': 'Details anzeigen'
-'Virtual Rides': 'Virtuelle Fahrten'
+'Virtual Rides': 'Virtuelle Radfahrten'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
 'Virtual workout assistant': 'Virtueller Workout Assistent'
 Walks: Spaziergänge
 'Water Sports': Wassersport
-'We detected following issues': 'Wir hhaben die folgenden Probleme festgestellt'
+'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
 Wed: Mi
 Wednesday: Mittwoch
 'Weekly Strain': 'Wöchentliche Belastung (Strain)'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Weekly TRIMP': 'Wöchentlicher TRIMP'
 'Weekly stats': 'Wöchentliche Statistiken'
-'Weight Training': Krafttraining
+'Weight Training': Gewichtstraining
 Wheelchair: Rollstuhl
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Wenn Leistungsmetriken und FTP verfügbar sind, werden diese stattdessen verwendet. Diese Formel bedeutet, dass eine Stunde Fahren mit Ihrer FTP zu einer Punktzahl von 100 führt, was wir als "hohe Intensität" betrachten'
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
-Workout: Trainingseinheit
+Workout: Training
 'Workout type': Trainingseinheitstyp
 Year: Jahr
 'Yearly distances': 'Jährliche Distanzen'
