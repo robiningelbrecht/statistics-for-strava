@@ -5,7 +5,7 @@
 {% autoescape false %}
     <!-- PHOTOS -->
     <div class="mb-4 border-b border-gray-200 flex items-center">
-        <ul class="mr-[40px] overflow-x-scroll flex gap-x-2 -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
+        <ul class="mr-[40px] overflow-x-auto flex gap-x-2 -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
             <li class="shrink-0" role="presentation">
                 <a href="#" data-tabs-target="#all" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                     {{ "All"|trans }} ({{ images.getAll()|length }})
