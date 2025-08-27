@@ -119,8 +119,8 @@ final readonly class WeeklyDistanceTimeChart
                 '#E34902',
             ],
             'grid' => [
-                'left' => '3%',
-                'right' => '4%',
+                'left' => '10px',
+                'right' => '10px',
                 'bottom' => '50px',
                 'containLabel' => true,
             ],
