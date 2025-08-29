@@ -15,12 +15,15 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
     ) {
     }
 
-    public function findAll(): Images
+    public function findBySportTypes(SportTypes $sportTypes): Images
     {
         $images = Images::empty();
         $activities = $this->activityRepository->findAll();
         /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
+            if (!$sportTypes->has($activity->getSportType())) {
+                continue;
+            }
             if (0 === $activity->getTotalImageCount()) {
                 continue;
             }

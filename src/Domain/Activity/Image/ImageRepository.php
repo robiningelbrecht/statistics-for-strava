@@ -7,7 +7,7 @@ use App\Infrastructure\ValueObject\Time\Years;
 
 interface ImageRepository
 {
-    public function findAll(): Images;
+    public function findBySportTypes(SportTypes $sportTypes): Images;
 
     public function count(): int;
 

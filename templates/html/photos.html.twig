@@ -4,72 +4,72 @@
 }]} %}
 {% autoescape false %}
     <!-- PHOTOS -->
-    <div class="mb-4 border-b border-gray-200 flex items-center">
-        <ul class="mr-[40px] overflow-x-auto flex gap-x-2 -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
-            <li class="shrink-0" role="presentation">
-                <a href="#" data-tabs-target="#all" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                    {{ "All"|trans }} ({{ images.getAll()|length }})
-                </a>
-            </li>
-            {% for sportType in sportTypes %}
-                {% set imageCount =  images.getForSportType(sportType)|length %}
-                {% if imageCount > 0 %}
+    {% if sportTypes|length > 1 %}
+        <div class="mb-4 border-b border-gray-200 flex items-center">
+            <ul class="mr-[40px] overflow-x-auto flex gap-x-2 -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
+                <li class="shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#all" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "All"|trans }} ({{ images.getAll()|length }})
+                    </a>
+                </li>
+                {% for sportType in sportTypes %}
+                    {% set imageCount =  images.getForSportType(sportType)|length %}
                     <li class="shrink-0" role="presentation">
                         <a href="#" {{ loop.first ? 'data-tab-default': '' }} data-tabs-target="#{{ sportType.value }}" role="tab" aria-controls="{{ sportType.value }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ sportType|trans }} ({{ imageCount }})
                         </a>
                     </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
-    <div id="photoTypeTabContent">
-        <div class="relative" id="all" role="tabpanel" aria-labelledby="all-tab">
-            <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
-                {% for image in images.getAll() %}
-                    <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
-                        <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                            <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                        </a>
-                        <div class="p-2 text-center">
-                            <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
-                            </a>
-                        </div>
-                    </div>
                 {% endfor %}
-            </div>
+            </ul>
         </div>
+    {% endif %}
+    <div id="photoTypeTabContent">
+        {% if sportTypes|length > 1 %}
+            <div class="relative" id="all" role="tabpanel" aria-labelledby="all-tab">
+                <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
+                    {% for image in images.getAll() %}
+                        <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <a href="{{ image.getActivity().getUrl() }}" target="_blank">
+                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                            </a>
+                            <div class="p-2 text-center">
+                                <a href="{{ image.getActivity().getUrl() }}" target="_blank">
+                                    <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
         {% for sportType in sportTypes %}
             {% set imagesForSportType = images.getForSportType(sportType) %}
-            {% if imagesForSportType|length > 0 %}
-                {% set lightGalleryElements = imagesForSportType|map(image => {
-                    'src': relativeUrl(image.getImageUrl()),
-                    'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
-                    'alt':  image.getActivity().getSanitizedName(),
-                })|array_values() %}
-                <div class="relative" id="{{ sportType.value }}" role="tabpanel" aria-labelledby="{{ sportType.value }}-tab">
-                    <div class="absolute -top-[48px] right-0 text-gray-500 hover:text-strava-orange">
-                        <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-elements='{{ lightGalleryElements|json_encode() }}'>
-                            {{ svg('slideshow') }}
-                        </a>
-                    </div>
-                    <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
-                        {% for image in imagesForSportType %}
-                            <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
-                                <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                    <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                                </a>
-                                <div class="p-2 text-center">
-                                    <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                        <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
-                                    </a>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+            {% set lightGalleryElements = imagesForSportType|map(image => {
+                'src': relativeUrl(image.getImageUrl()),
+                'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
+                'alt':  image.getActivity().getSanitizedName(),
+            })|array_values() %}
+            <div class="relative" id="{{ sportType.value }}" role="tabpanel" aria-labelledby="{{ sportType.value }}-tab">
+                <div class="absolute -top-[48px] right-0 text-gray-500 hover:text-strava-orange">
+                    <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-elements='{{ lightGalleryElements|json_encode() }}'>
+                        {{ svg('slideshow') }}
+                    </a>
                 </div>
-            {% endif %}
+                <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
+                    {% for image in imagesForSportType %}
+                        <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
+                            <a href="{{ image.getActivity().getUrl() }}" target="_blank">
+                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                            </a>
+                            <div class="p-2 text-center">
+                                <a href="{{ image.getActivity().getUrl() }}" target="_blank">
+                                    <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         {% endfor %}
     </div>
 {% endautoescape %}
