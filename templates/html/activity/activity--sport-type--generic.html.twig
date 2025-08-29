@@ -15,7 +15,7 @@
             </h3>
             <span class="mx-1 text-xs font-normal text-gray-500">-</span>
             <span class="text-xs font-normal text-gray-500">
-                {{ activity.getStartDate()|formatTime() }} on {{ activity.getStartDate().translatedFormat('l') }},
+                {{ activity.getStartDate()|formatTime() }} {{ 'on'|trans }} {{ activity.getStartDate().translatedFormat('l') }},
                 <a href="#" data-model-content-url="{{ relativeUrl('month/month-' ~ activity.getStartDate().translatedFormat('Y-m') ~ '.html') }}"
                    class="hover:underline">{{ activity.getStartDate().translatedFormat('F') }}</a>
                 {{ activity.getStartDate().translatedFormat(' j, Y') }}
