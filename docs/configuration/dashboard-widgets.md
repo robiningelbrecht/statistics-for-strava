@@ -16,7 +16,7 @@ appearance:
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
-      - { 'widget': 'activityIntensity', 'width': 100, 'enabled': true }
+      - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
       - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'context': 'distance', enableLastXYearsByDefault: 10 } }
       - { 'widget': 'trainingLoad', 'width': 100, 'enabled': true }
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
@@ -82,15 +82,15 @@ This widget shows your heart rate zones, helping you understand your training in
 
 ![heartRateZones widget](../assets/images/dashboard-widgets/heart-rate-zones.png)
 
-## activityIntensity
+## activityGrid
 
-This widget provides an overview of the intensity of your activities in a GitHub style graph.
+This widget provides an overview your activities in a GitHub style graph.
 
 ```yml
-{ 'widget': 'activityIntensity', 'width': 100, 'enabled': true }
+{ 'widget': 'activityGrid', 'width': 100, 'enabled': true }
 ```
 
-![activityIntensity widget](../assets/images/dashboard-widgets/activity-intensity.png)$
+![activityGrid widget](../assets/images/dashboard-widgets/activity-intensity.png)$
 
 ## monthlyStats
 
