@@ -21,7 +21,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true],
                 ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
                 ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
-                ['widget' => 'activityIntensity', 'width' => 100, 'enabled' => true],
+                ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
                 ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
                     'context' => MonthlyStatsContext::DISTANCE->value,
                     'enableLastXYearsByDefault' => 10,
@@ -91,7 +91,7 @@ class DashboardLayoutTest extends TestCase
 - {'widget': 'weeklyStats', 'width': 100, 'enabled': true}
 - {'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true}
 - {'widget': 'heartRateZones', 'width': 50, 'enabled': true}
-- {'widget': 'activityIntensity', 'width': 100, 'enabled': true}
+- {'widget': 'activityGrid', 'width': 100, 'enabled': true}
 - {'widget': 'trainingLoad', 'width': 100, 'enabled': true}
 - {'widget': 'weekdayStats', 'width': 50, 'enabled': true}
 - {'widget': 'dayTimeStats', 'width': 50, 'enabled': true}

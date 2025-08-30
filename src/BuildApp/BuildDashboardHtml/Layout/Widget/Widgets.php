@@ -24,8 +24,8 @@ final class Widgets implements \IteratorAggregate
         private readonly Clock $clock,
     ) {
         foreach ($widgets as $widget) {
-            $widgetName = lcfirst(str_replace('Widget', '', new \ReflectionClass($widget)->getShortName()));
-            $this->widgets[$widgetName] = $widget;
+            $widgetName = WidgetName::fromWidgetInstance($widget);
+            $this->widgets[(string) $widgetName] = $widget;
         }
     }
 
@@ -37,8 +37,8 @@ final class Widgets implements \IteratorAggregate
                 continue;
             }
 
-            $widgetName = $configuredWidget['widget'];
-            $widget = $this->widgets[$widgetName] ?? throw new \InvalidArgumentException(sprintf('Dashboard widget "%s" does not exists.', $widgetName));
+            $widgetName = WidgetName::fromConfigValue($configuredWidget['widget']);
+            $widget = $this->widgets[(string) $widgetName] ?? throw new \InvalidArgumentException(sprintf('Dashboard widget "%s" does not exists.', $widgetName));
 
             $widget->guardValidConfiguration($configuredWidget['config'] ?? []);
             $widgetConfig = $widget->getDefaultConfiguration();

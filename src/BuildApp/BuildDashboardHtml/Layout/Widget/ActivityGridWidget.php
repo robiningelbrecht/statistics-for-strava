@@ -11,7 +11,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final readonly class ActivityIntensityWidget implements Widget
+final readonly class ActivityGridWidget implements Widget
 {
     public function __construct(
         private ActivityIntensity $activityIntensity,
