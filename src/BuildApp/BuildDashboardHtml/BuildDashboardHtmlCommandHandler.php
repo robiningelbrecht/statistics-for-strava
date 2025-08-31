@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\BuildApp\BuildDashboardHtml;
 
-use App\BuildApp\BuildDashboardHtml\Layout\Widget\Widgets;
+use App\Domain\Dashboard\Widget\Widgets;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;

@@ -84,7 +84,7 @@ services:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.appUrl")']
 
-    App\BuildApp\BuildDashboardHtml\Layout\DashboardLayout:
+    App\Domain\Dashboard\DashboardLayout:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("appearance.dashboard.layout", [])']
 
