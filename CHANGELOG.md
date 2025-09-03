@@ -1,3 +1,15 @@
+# [v3.2.9](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.9) - 2025-09-03
+
+## What's Changed
+* Adjustment of the german translation to Strava. by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1036
+* ISSUE #1029: Time Window for the Training Load Analysis by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1035
+* ISSUE #1039: Allow to hide photos per sportType by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1040
+* german translations new variables by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1045
+* ISSUE #1023: Rename ActivityIntensityWidget to ActivityGridWidget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1046
+* ISSUE #1051: Round ride distance to 2 numbers by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1052
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.8...v3.2.9
+
 # [v3.2.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.8) - 2025-08-27
 
 ## What's Changed
