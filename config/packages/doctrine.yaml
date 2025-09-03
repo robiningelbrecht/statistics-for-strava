@@ -6,6 +6,7 @@ doctrine:
   orm:
     auto_generate_proxy_classes: true
     enable_lazy_ghost_objects: true
+    enable_native_lazy_objects: true
     report_fields_where_declared: true
     validate_xml_mapping: true
     naming_strategy: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy

@@ -1,35 +1,31 @@
 <?php
 
-namespace App\Domain\Activity;
+namespace App\Domain\Activity\Grid;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class ActivityIntensityChart
+final readonly class ActivityGridChart
 {
-    private SerializableDateTime $fromDate;
-    private SerializableDateTime $toDate;
-
     private function __construct(
-        private ActivityIntensity $activityIntensity,
+        private ActivityGridData $gridData,
+        private SerializableDateTime $fromDate,
+        private SerializableDateTime $toDate,
         private TranslatorInterface $translator,
-        private SerializableDateTime $now,
     ) {
-        $fromDate = SerializableDateTime::fromString($this->now->modify('-11 months')->format('Y-m-01'));
-        $this->fromDate = $fromDate;
-        $toDate = SerializableDateTime::fromString($this->now->format('Y-m-t 23:59:59'));
-        $this->toDate = $toDate;
     }
 
     public static function create(
-        ActivityIntensity $activityIntensity,
+        ActivityGridData $gridData,
+        SerializableDateTime $fromDate,
+        SerializableDateTime $toDate,
         TranslatorInterface $translator,
-        SerializableDateTime $now,
     ): self {
         return new self(
-            activityIntensity: $activityIntensity,
+            gridData: $gridData,
+            fromDate: $fromDate,
+            toDate: $toDate,
             translator: $translator,
-            now: $now,
         );
     }
 
@@ -128,31 +124,8 @@ final readonly class ActivityIntensityChart
             'series' => [
                 'type' => 'heatmap',
                 'coordinateSystem' => 'calendar',
-                'data' => $this->getData(),
+                'data' => $this->gridData,
             ],
         ];
-    }
-
-    /**
-     * @return array<int, array{0: string, 1: int}>
-     */
-    private function getData(): array
-    {
-        $data = [];
-        $interval = \DateInterval::createFromDateString('1 day');
-        $period = new \DatePeriod(
-            $this->fromDate,
-            $interval,
-            $this->toDate,
-        );
-
-        foreach ($period as $dt) {
-            $data[] = [
-                $dt->format('Y-m-d'),
-                $this->activityIntensity->calculateForDate(SerializableDateTime::fromDateTimeImmutable($dt)),
-            ];
-        }
-
-        return $data;
     }
 }
