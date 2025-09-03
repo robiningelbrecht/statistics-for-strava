@@ -141,7 +141,7 @@ enum ActivityType: string implements TranslatableInterface
     public function getDistancePrecision(): int
     {
         return match ($this) {
-            self::RUN, self::WALK, self::WATER_SPORTS => 2,
+            self::RIDE, self::RUN, self::WALK, self::WATER_SPORTS => 2,
             default => 0,
         };
     }
