@@ -9,7 +9,6 @@ use App\Domain\Activity\DaytimeStats\DaytimeStats;
 use App\Domain\Activity\DaytimeStats\DaytimeStatsCharts;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class DayTimeStatsWidget implements Widget
@@ -17,7 +16,6 @@ final readonly class DayTimeStatsWidget implements Widget
     public function __construct(
         private ActivitiesEnricher $activitiesEnricher,
         private Environment $twig,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -39,7 +37,6 @@ final readonly class DayTimeStatsWidget implements Widget
             'daytimeStatsChart' => Json::encode(
                 DaytimeStatsCharts::create(
                     daytimeStats: $dayTimeStats,
-                    translator: $this->translator,
                 )->build(),
             ),
             'daytimeStats' => $dayTimeStats,

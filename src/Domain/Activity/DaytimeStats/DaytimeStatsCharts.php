@@ -2,23 +2,20 @@
 
 namespace App\Domain\Activity\DaytimeStats;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 final readonly class DaytimeStatsCharts
 {
     private function __construct(
         private DaytimeStats $daytimeStats,
-        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         DaytimeStats $daytimeStats,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             $daytimeStats,
-            $translator
         );
     }
 
@@ -77,7 +74,7 @@ final readonly class DaytimeStatsCharts
         foreach ($this->daytimeStats->getData() as $statistic) {
             $data[] = [
                 'value' => $statistic['percentage'],
-                'name' => $statistic['daytime']->getEmoji().' '.$this->translator->trans($statistic['daytime']->value),
+                'name' => $statistic['daytime']->getEmoji().' '.t($statistic['daytime']->value),
             ];
         }
 

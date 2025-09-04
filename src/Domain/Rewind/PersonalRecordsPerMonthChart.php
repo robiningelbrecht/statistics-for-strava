@@ -6,14 +6,14 @@ namespace App\Domain\Rewind;
 
 use App\Domain\Calendar\Month;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function Symfony\Component\Translation\t;
 
 final readonly class PersonalRecordsPerMonthChart
 {
     private function __construct(
         /** @var array<int, array{0: int, 1: int}> */
         private array $personalRecordsPerMonth,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -22,11 +22,9 @@ final readonly class PersonalRecordsPerMonthChart
      */
     public static function create(
         array $personalRecordsPerMonth,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             personalRecordsPerMonth: $personalRecordsPerMonth,
-            translator: $translator
         );
     }
 
@@ -84,7 +82,7 @@ final readonly class PersonalRecordsPerMonthChart
             ],
             'series' => [
                 [
-                    'name' => $this->translator->trans('Personal Records'),
+                    'name' => (string) t('Personal Records'),
                     'color' => [
                         '#E34902',
                     ],

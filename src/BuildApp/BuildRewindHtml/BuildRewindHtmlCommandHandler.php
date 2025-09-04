@@ -117,7 +117,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                         'chart' => Json::encode(DailyActivitiesChart::create(
                             movingTimePerDay: $findMovingTimePerDayResponse->getMovingTimePerDay(),
                             year: Year::fromInt((int) $availableRewindOption),
-                            translator: $this->translator,
                         )->build()),
                     ]),
                 ));
@@ -166,7 +165,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(PersonalRecordsPerMonthChart::create(
                             personalRecordsPerMonth: $this->queryBus->ask(new FindPersonalRecordsPerMonth($yearsToQuery))->getPersonalRecordsPerMonth(),
-                            translator: $this->translator,
                         )->build()),
                     ]),
                 ))
@@ -237,7 +235,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                         'chart' => Json::encode(RestDaysVsActiveDaysChart::create(
                             numberOfActiveDays: $activeDaysResponse->getNumberOfActiveDays(),
                             numberOfRestDays: $totalNumberOfDays - $activeDaysResponse->getNumberOfActiveDays(),
-                            translator: $this->translator,
                         )->build()),
                     ]),
                     totalMetric: (int) round(($activeDaysResponse->getNumberOfActiveDays() / $totalNumberOfDays) * 100),
@@ -249,7 +246,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(ActivityStartTimesChart::create(
                             activityStartTimes: $this->queryBus->ask(new FindActivityStartTimesPerHour($yearsToQuery))->getActivityStartTimesPerHour(),
-                            translator: $this->translator
                         )->build()),
                     ]),
                 ))

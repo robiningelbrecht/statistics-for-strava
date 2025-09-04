@@ -10,7 +10,6 @@ use App\Domain\Activity\Grid\ActivityGridChart;
 use App\Domain\Activity\Grid\GridPieces;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class ActivityGridWidget implements Widget
@@ -18,7 +17,6 @@ final readonly class ActivityGridWidget implements Widget
     public function __construct(
         private ActivityIntensity $activityIntensity,
         private Environment $twig,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -58,7 +56,6 @@ final readonly class ActivityGridWidget implements Widget
                     activityGrid: $activityGrid,
                     fromDate: $fromDate,
                     toDate: $toDate,
-                    translator: $this->translator,
                 )->build()
             ),
         ]);

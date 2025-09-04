@@ -6,7 +6,8 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Carbon\CarbonInterval;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function Symfony\Component\Translation\t;
 
 final class ActivityTotals
 {
@@ -21,7 +22,6 @@ final class ActivityTotals
     private function __construct(
         private readonly Activities $activities,
         private readonly SerializableDateTime $now,
-        private readonly TranslatorInterface $translator,
     ) {
         $this->totalDistance = Kilometer::from(
             $this->activities->sum(fn (Activity $activity) => $activity->getDistance()->toFloat())
@@ -36,14 +36,12 @@ final class ActivityTotals
 
     public static function getInstance(
         Activities $activities,
-        SerializableDateTime $now,
-        TranslatorInterface $translator): self
+        SerializableDateTime $now): self
     {
         if (null === self::$instance) {
             self::$instance = new self(
                 activities: $activities,
                 now: $now,
-                translator: $translator,
             );
         }
 
@@ -117,7 +115,7 @@ final class ActivityTotals
 
     public function getTotalDaysSinceFirstActivity(): string
     {
-        $join = $this->translator->trans('and');
+        $join = t('and');
 
         return CarbonInterval::diff($this->getStartDate(), $this->now)->cascade()->forHumans(['minimumUnit' => 'day', 'join' => [
             ' ', sprintf(' %s ', $join),
