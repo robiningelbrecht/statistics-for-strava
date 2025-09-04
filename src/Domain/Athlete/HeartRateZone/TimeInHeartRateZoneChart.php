@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Athlete\HeartRateZone;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 final readonly class TimeInHeartRateZoneChart
 {
     private function __construct(
         private TimeInHeartRateZones $timeInHeartRateZones,
-        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         TimeInHeartRateZones $timeInHeartRateZones,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             timeInHeartRateZones: $timeInHeartRateZones,
-            translator: $translator,
         );
     }
 
@@ -64,35 +61,35 @@ final readonly class TimeInHeartRateZoneChart
                     'data' => [
                         [
                             'value' => $this->timeInHeartRateZones->getTimeInZoneOne(),
-                            'name' => $this->translator->trans('Zone 1 (recovery)'),
+                            'name' => (string) t('Zone 1 (recovery)'),
                             'itemStyle' => [
                                 'color' => '#DF584A',
                             ],
                         ],
                         [
                             'value' => $this->timeInHeartRateZones->getTimeInZoneTwo(),
-                            'name' => $this->translator->trans('Zone 2 (aerobic)'),
+                            'name' => (string) t('Zone 2 (aerobic)'),
                             'itemStyle' => [
                                 'color' => '#D63522',
                             ],
                         ],
                         [
                             'value' => $this->timeInHeartRateZones->getTimeInZoneThree(),
-                            'name' => $this->translator->trans('Zone 3 (aerobic/anaerobic)'),
+                            'name' => (string) t('Zone 3 (aerobic/anaerobic)'),
                             'itemStyle' => [
                                 'color' => '#BD2D22',
                             ],
                         ],
                         [
                             'value' => $this->timeInHeartRateZones->getTimeInZoneFour(),
-                            'name' => $this->translator->trans('Zone 4 (anaerobic)'),
+                            'name' => (string) t('Zone 4 (anaerobic)'),
                             'itemStyle' => [
                                 'color' => '#942319',
                             ],
                         ],
                         [
                             'value' => $this->timeInHeartRateZones->getTimeInZoneFive(),
-                            'name' => $this->translator->trans('Zone 5 (maximal)'),
+                            'name' => (string) t('Zone 5 (maximal)'),
                             'itemStyle' => [
                                 'color' => '#6A1009',
                             ],
