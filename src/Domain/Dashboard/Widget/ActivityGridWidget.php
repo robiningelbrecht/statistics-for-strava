@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Dashboard\Widget;
 
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\Grid\ActivityGrid;
 use App\Domain\Activity\Grid\ActivityGridChart;
-use App\Domain\Activity\Grid\ActivityGridData;
+use App\Domain\Activity\Grid\GridPieces;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,7 +33,7 @@ final readonly class ActivityGridWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $gridData = ActivityGridData::empty();
+        $activityGrid = ActivityGrid::create(GridPieces::forActivityIntensity());
         $fromDate = SerializableDateTime::fromString($now->modify('-11 months')->format('Y-m-01'));
         $toDate = SerializableDateTime::fromString($now->format('Y-m-t 23:59:59'));
 
@@ -45,7 +46,7 @@ final readonly class ActivityGridWidget implements Widget
 
         foreach ($period as $dt) {
             $on = SerializableDateTime::fromDateTimeImmutable($dt);
-            $gridData->add(
+            $activityGrid->add(
                 on: $on,
                 value: $this->activityIntensity->calculateForDate($on)
             );
@@ -54,7 +55,7 @@ final readonly class ActivityGridWidget implements Widget
         return $this->twig->load('html/dashboard/widget/widget--activity-grid.html.twig')->render([
             'activityIntensityChart' => Json::encode(
                 ActivityGridChart::create(
-                    gridData: $gridData,
+                    activityGrid: $activityGrid,
                     fromDate: $fromDate,
                     toDate: $toDate,
                     translator: $this->translator,
