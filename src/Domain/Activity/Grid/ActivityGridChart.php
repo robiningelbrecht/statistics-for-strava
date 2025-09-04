@@ -8,7 +8,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class ActivityGridChart
 {
     private function __construct(
-        private ActivityGridData $gridData,
+        private ActivityGrid $activityGrid,
         private SerializableDateTime $fromDate,
         private SerializableDateTime $toDate,
         private TranslatorInterface $translator,
@@ -16,13 +16,13 @@ final readonly class ActivityGridChart
     }
 
     public static function create(
-        ActivityGridData $gridData,
+        ActivityGrid $activityGrid,
         SerializableDateTime $fromDate,
         SerializableDateTime $toDate,
         TranslatorInterface $translator,
     ): self {
         return new self(
-            gridData: $gridData,
+            activityGrid: $activityGrid,
             fromDate: $fromDate,
             toDate: $toDate,
             translator: $translator,
@@ -57,37 +57,7 @@ final readonly class ActivityGridChart
                 'left' => 'center',
                 'bottom' => 0,
                 'orient' => 'horizontal',
-                'pieces' => [
-                    [
-                        'min' => 0,
-                        'max' => 0,
-                        'color' => '#cdd9e5',
-                        'label' => $this->translator->trans('No activities'),
-                    ],
-                    [
-                        'min' => 0.01,
-                        'max' => 33,
-                        'color' => '#68B34B',
-                        'label' => $this->translator->trans('Low').' (0 - 33)',
-                    ],
-                    [
-                        'min' => 33.01,
-                        'max' => 66,
-                        'color' => '#FAB735',
-                        'label' => $this->translator->trans('Medium').' (34 - 66)',
-                    ],
-                    [
-                        'min' => 66.01,
-                        'max' => 100,
-                        'color' => '#FF8E14',
-                        'label' => $this->translator->trans('High').' (67 - 100)',
-                    ],
-                    [
-                        'min' => 100.01,
-                        'color' => '#FF0C0C',
-                        'label' => $this->translator->trans('Very high').' (> 100)',
-                    ],
-                ],
+                'pieces' => $this->activityGrid->getPieces(),
             ],
             'calendar' => [
                 'left' => 40,
@@ -124,7 +94,7 @@ final readonly class ActivityGridChart
             'series' => [
                 'type' => 'heatmap',
                 'coordinateSystem' => 'calendar',
-                'data' => $this->gridData,
+                'data' => $this->activityGrid->getData(),
             ],
         ];
     }
