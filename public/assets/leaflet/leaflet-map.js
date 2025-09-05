@@ -2,7 +2,6 @@ export default function LeafletMap($mapNode, data){
     const render = () => {
         const map = L.map($mapNode, {
             scrollWheelZoom: false,
-            minZoom: data.minZoom,
             maxZoom: data.maxZoom,
         });
         if (data.tileLayer) {
@@ -34,7 +33,7 @@ export default function LeafletMap($mapNode, data){
         }
 
         featureGroup.addTo(map);
-        map.fitBounds(featureGroup.getBounds(), {maxZoom: 14});
+        map.fitBounds(featureGroup.getBounds());
     }
 
     return {
