@@ -4,7 +4,8 @@ namespace App\Domain\Rewind;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function Symfony\Component\Translation\t;
 
 final readonly class DailyActivitiesChart
 {
@@ -15,7 +16,6 @@ final readonly class DailyActivitiesChart
         /** @var array<string, int> */
         private array $movingTimePerDay,
         private Year $year,
-        private TranslatorInterface $translator,
     ) {
         $this->fromDate = SerializableDateTime::fromString(sprintf('%s-01-01 00:00:00', $this->year));
         $this->toDate = SerializableDateTime::fromString(sprintf('%s-12-31 23:59:59', $this->year));
@@ -27,12 +27,10 @@ final readonly class DailyActivitiesChart
     public static function create(
         array $movingTimePerDay,
         Year $year,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             movingTimePerDay: $movingTimePerDay,
             year: $year,
-            translator: $translator,
         );
     }
 
@@ -98,7 +96,7 @@ final readonly class DailyActivitiesChart
                     [
                         'value' => 4,
                         'color' => '#75C84F',
-                        'label' => $this->translator->trans('more'),
+                        'label' => (string) t('more'),
                     ],
                 ],
             ],
@@ -124,13 +122,13 @@ final readonly class DailyActivitiesChart
                     'align' => 'right',
                     'fontSize' => 10,
                     'nameMap' => [
-                        $this->translator->trans('Sun'),
-                        $this->translator->trans('Mon'),
-                        $this->translator->trans('Tue'),
-                        $this->translator->trans('Wed'),
-                        $this->translator->trans('Thu'),
-                        $this->translator->trans('Fri'),
-                        $this->translator->trans('Sat'),
+                        (string) t('Sun'),
+                        (string) t('Mon'),
+                        (string) t('Tue'),
+                        (string) t('Wed'),
+                        (string) t('Thu'),
+                        (string) t('Fri'),
+                        (string) t('Sat'),
                     ],
                 ],
             ],

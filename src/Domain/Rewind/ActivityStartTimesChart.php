@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Rewind;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 final readonly class ActivityStartTimesChart
 {
     private function __construct(
         /** @var array<int, int> */
         private array $activityStartTimes,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -20,11 +19,9 @@ final readonly class ActivityStartTimesChart
      */
     public static function create(
         array $activityStartTimes,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             activityStartTimes: $activityStartTimes,
-            translator: $translator,
         );
     }
 
@@ -50,7 +47,7 @@ final readonly class ActivityStartTimesChart
             'backgroundColor' => null,
             'tooltip' => [
                 'trigger' => 'axis',
-                'formatter' => '{b}h: {c} '.$this->translator->trans('activities'),
+                'formatter' => '{b}h: {c} '.t('activities'),
             ],
             'grid' => [
                 'left' => '0%',

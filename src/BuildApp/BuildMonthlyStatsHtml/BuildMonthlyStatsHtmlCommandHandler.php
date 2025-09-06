@@ -20,7 +20,6 @@ use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandler
@@ -32,7 +31,6 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
-        private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -90,7 +88,6 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                         monthlyStats: $monthlyStats,
                         context: $monthlyStatsContext,
                         unitSystem: $this->unitSystem,
-                        translator: $this->translator,
                     )->build()
                 );
             }

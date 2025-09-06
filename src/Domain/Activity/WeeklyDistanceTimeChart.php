@@ -6,7 +6,8 @@ use App\Domain\Calendar\Week;
 use App\Domain\Calendar\Weeks;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
+use function Symfony\Component\Translation\t;
 
 final readonly class WeeklyDistanceTimeChart
 {
@@ -14,7 +15,6 @@ final readonly class WeeklyDistanceTimeChart
         private Activities $activities,
         private UnitSystem $unitSystem,
         private ActivityType $activityType,
-        private TranslatorInterface $translator,
         private SerializableDateTime $now,
     ) {
     }
@@ -23,14 +23,12 @@ final readonly class WeeklyDistanceTimeChart
         Activities $activities,
         UnitSystem $unitSystem,
         ActivityType $activityType,
-        TranslatorInterface $translator,
         SerializableDateTime $now,
     ): self {
         return new self(
             activities: $activities,
             unitSystem: $unitSystem,
             activityType: $activityType,
-            translator: $translator,
             now: $now
         );
     }
@@ -88,7 +86,7 @@ final readonly class WeeklyDistanceTimeChart
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => $this->translator->trans('Distance / week'),
+                    'name' => (string) t('Distance / week'),
                     'data' => $data[0],
                     'yAxisIndex' => 0,
                     'label' => [
@@ -102,7 +100,7 @@ final readonly class WeeklyDistanceTimeChart
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => $this->translator->trans('Time / week'),
+                    'name' => (string) t('Time / week'),
                     'data' => $data[1],
                     'yAxisIndex' => 1,
                     'label' => [

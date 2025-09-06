@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace App\Domain\Rewind;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 final readonly class RestDaysVsActiveDaysChart
 {
     private function __construct(
         private int $numberOfActiveDays,
         private int $numberOfRestDays,
-        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         int $numberOfActiveDays,
         int $numberOfRestDays,
-        TranslatorInterface $translator,
     ): self {
         return new self(
             numberOfActiveDays: $numberOfActiveDays,
             numberOfRestDays: $numberOfRestDays,
-            translator: $translator,
         );
     }
 
@@ -71,11 +68,11 @@ final readonly class RestDaysVsActiveDaysChart
                     'data' => [
                         [
                             'value' => $this->numberOfActiveDays,
-                            'name' => $this->translator->trans('Active days'),
+                            'name' => (string) t('Active days'),
                         ],
                         [
                             'value' => $this->numberOfRestDays,
-                            'name' => $this->translator->trans('Rest days'),
+                            'name' => (string) t('Rest days'),
                         ],
                     ],
                 ],

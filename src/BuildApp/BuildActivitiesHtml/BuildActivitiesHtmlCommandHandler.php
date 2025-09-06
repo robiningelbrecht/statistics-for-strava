@@ -72,7 +72,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,
             now: $now,
-            translator: $this->translator
         );
 
         $this->buildStorage->write(
