@@ -109,7 +109,7 @@ enum LeafletMap: string
     public function getMaxZoom(): int
     {
         if (self::REAL_WORLD === $this) {
-            return 14;
+            return 17;
         }
 
         return 18;

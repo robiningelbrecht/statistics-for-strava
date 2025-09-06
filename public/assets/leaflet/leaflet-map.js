@@ -34,7 +34,7 @@ export default function LeafletMap($mapNode, data){
         }
 
         featureGroup.addTo(map);
-        map.fitBounds(featureGroup.getBounds(), {maxZoom: 14});
+        map.fitBounds(featureGroup.getBounds(), {maxZoom: data.maxZoom});
     }
 
     return {
