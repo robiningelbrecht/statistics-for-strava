@@ -56,7 +56,7 @@ class LeafletMapTest extends TestCase
     public function testGetMinAndMaxZoom(): void
     {
         $this->assertEquals(
-            14,
+            17,
             LeafletMap::REAL_WORLD->getMaxZoom()
         );
         $this->assertEquals(
