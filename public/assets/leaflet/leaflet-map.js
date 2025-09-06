@@ -3,6 +3,7 @@ export default function LeafletMap($mapNode, data){
         const map = L.map($mapNode, {
             scrollWheelZoom: false,
             maxZoom: data.maxZoom,
+            minZoom: data.minZoom,
         });
         if (data.tileLayer) {
             L.tileLayer(
