@@ -6,6 +6,7 @@ namespace App\Domain\Activity;
 
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
+use App\Infrastructure\Serialization\Escape;
 
 // Based on https://github.com/SauceLLC/sauce4strava/blob/3548ad2346a23aaf275a965190a6e013dd21e111/src/common/export.mjs#L67
 final readonly class GpxSerializer
@@ -53,10 +54,10 @@ final readonly class GpxSerializer
         $metadataNode->addChild('time', $activity->getStartDate()->format(self::DATE_TIME_FORMAT));
 
         $trkNode = $rootNode->addChild('trk');
-        $trkNode->addChild('name', htmlspecialchars($activity->getName()));
+        $trkNode->addChild('name', Escape::htmlSpecialChars($activity->getName()));
         $trkNode->addChild('type', $activity->getSportType()->value);
         if ($description = $activity->getDescription()) {
-            $trkNode->addChild('desc', htmlspecialchars($description));
+            $trkNode->addChild('desc', Escape::htmlSpecialChars($description));
         }
         $trksegNode = $trkNode->addChild('trkseg');
 
