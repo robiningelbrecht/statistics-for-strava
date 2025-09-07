@@ -17,6 +17,7 @@
 Activities: Activités
 Activity: Activity
 'Activity count': "Nombre d'activités"
+'Activity heatmap': 'Activity heatmap'
 'Activity intensity': "Intensité de l'activité"
 'Activity locations': "Lieux d'activité"
 'Activity start times': "Heures de début d'activité"
@@ -42,6 +43,7 @@ Best: Meilleur
 'CTL (Fitness)': 'CTL (Forme à long terme)'
 Cadence: Cadence
 Calories: Calories
+'Calories burned': 'Calories burned'
 'Calories burnt': 'Calories burnt'
 Canoeing: Canoë
 'Carbon saved': 'Carbon saved'

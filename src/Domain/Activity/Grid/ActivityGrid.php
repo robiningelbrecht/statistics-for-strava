@@ -10,13 +10,14 @@ final class ActivityGrid
     private array $data = [];
 
     private function __construct(
-        private readonly GridPieces $gridPieces,
+        /** @var array<int, array{min: int|float, max?: int|float, color: string, label: string}> */
+        private readonly array $gridPieces,
     ) {
     }
 
-    public static function create(GridPieces $gridPieces): self
+    public static function create(ActivityGridType $activityGridType): self
     {
-        return new self($gridPieces);
+        return new self($activityGridType->getPieces());
     }
 
     public function add(SerializableDateTime $on, int $value): void
@@ -24,7 +25,10 @@ final class ActivityGrid
         $this->data[] = [$on->format('Y-m-d'), $value];
     }
 
-    public function getPieces(): GridPieces
+    /**
+     * @return array<int, array{min: int|float, max?: int|float, color: string, label: string}>
+     */
+    public function getPieces(): array
     {
         return $this->gridPieces;
     }

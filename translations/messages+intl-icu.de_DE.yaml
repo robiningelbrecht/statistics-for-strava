@@ -17,6 +17,7 @@
 Activities: Aktivitäten
 Activity: Aktivität
 'Activity count': 'Anzahl Aktivitäen'
+'Activity heatmap': 'Activity heatmap'
 'Activity intensity': Aktivitätsintensität
 'Activity locations': Orte
 'Activity start times': 'Startzeiten der Aktivitäten'
@@ -42,6 +43,7 @@ Best: Beste
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Trittfrequenz
 Calories: Kalorien
+'Calories burned': 'Calories burned'
 'Calories burnt': 'Kalorien verbrannt'
 Canoeing: Kanufahren
 'Carbon saved': 'Kohlendioxid gespart'
@@ -366,7 +368,7 @@ months: Monate
 more: mehr
 n/a: n/v
 never: nie
-'on': 'am'
+'on': am
 to: mit
 total: gesamt
 weeks: Wochen

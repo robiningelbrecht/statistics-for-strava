@@ -1,6 +1,7 @@
+{% set uniqueId = uniqueNumberForId('activityGridWidget') %}
 {% autoescape false %}
     <div class="flex items-center">
-        <h3 class="font-semibold text-lg">{{ "Activity intensity"|trans }}</h3>
+        <h3 class="font-semibold text-lg">{{ "Activity heatmap"|trans }}</h3>
         <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right"
                 type="button">
             <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
@@ -44,7 +45,29 @@
             </div>
         </div>
     </div>
-    <div class="relative overflow-x-auto">
-        <div class="h-52 min-w-[800px]" data-echarts-options='{{ activityIntensityChart }}'></div>
+    <div class="mb-4 border-b border-gray-200">
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+            id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
+            role="tablist">
+            {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases %}
+                <li class="mr-2" role="presentation">
+                    <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
+                       aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}"
+                       class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ activityGridType|trans }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="activityGridWidgetTabContent{{ uniqueId }}">
+        {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases %}
+            <div id="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
+                <div class="relative overflow-x-auto">
+                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ gridCharts[activityGridType.value] }}'></div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endautoescape %}
