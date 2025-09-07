@@ -90,6 +90,41 @@ final readonly class GridPieces implements \JsonSerializable
         ]);
     }
 
+    public static function forActivityCalories(): self
+    {
+        return new self([
+            [
+                'min' => 0,
+                'max' => 0,
+                'color' => '#cdd9e5',
+                'label' => (string) t('No activities'),
+            ],
+            [
+                'min' => 0.01,
+                'max' => 500,
+                'color' => '#68B34B',
+                'label' => t('Low').' (0 - 500)',
+            ],
+            [
+                'min' => 500.01,
+                'max' => 750,
+                'color' => '#FAB735',
+                'label' => t('Medium').' (501 - 750)',
+            ],
+            [
+                'min' => 750.01,
+                'max' => 1000,
+                'color' => '#FF8E14',
+                'label' => t('High').' (751 - 1000)',
+            ],
+            [
+                'min' => 1000.01,
+                'color' => '#FF0C0C',
+                'label' => t('Very high').' (> 1000)',
+            ],
+        ]);
+    }
+
     /**
      * @return array<int, array{min: int|float, max?: int|float, color: string, label: string}>
      */
