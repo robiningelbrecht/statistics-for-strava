@@ -30,6 +30,7 @@ use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
 use App\Domain\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonth;
 use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
+use App\Domain\Rewind\FindTotalActivityCount\FindTotalActivityCount;
 use App\Domain\Rewind\MovingTimePerSportTypeChart;
 use App\Domain\Rewind\PersonalRecordsPerMonthChart;
 use App\Domain\Rewind\RestDaysVsActiveDaysChart;
@@ -96,8 +97,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
             $activeDaysResponse = $this->queryBus->ask(new FindActiveDays($yearsToQuery));
+            $totalActivityCountResponse = $this->queryBus->ask(new FindTotalActivityCount($yearsToQuery));
 
-            $totalActivityCount = $findMovingTimePerDayResponse->getTotalActivityCount();
             $totalNumberOfDays = array_sum(array_map(
                 fn (Year $year) => $year->getNumberOfDays(),
                 $yearsToQuery->toArray()
@@ -110,7 +111,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     icon: 'calendar',
                     title: $this->translator->trans('Daily activities'),
                     subTitle: $this->translator->trans('{numberOfActivities} activities in {year}', [
-                        '{numberOfActivities}' => $totalActivityCount,
+                        '{numberOfActivities}' => $totalActivityCountResponse->getTotalActivityCount(),
                         '{year}' => $availableRewindOption,
                     ]),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
@@ -125,7 +126,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     icon: 'calendar',
                     title: $this->translator->trans('Daily activities'),
                     subTitle: $this->translator->trans('{numberOfActivities} activities', [
-                        '{numberOfActivities}' => $totalActivityCount,
+                        '{numberOfActivities}' => $totalActivityCountResponse->getTotalActivityCount(),
                     ]),
                     content: $this->twig->render('html/rewind/rewind-item-empty.html.twig', [
                         'message' => $this->translator->trans('Not supported'),
@@ -259,7 +260,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                             translator: $this->translator,
                         )->build()),
                     ]),
-                    totalMetric: $totalActivityCount,
+                    totalMetric: $totalActivityCountResponse->getTotalActivityCount(),
                     totalMetricLabel: $this->translator->trans('activities'),
                 ))
                 ->add(RewindItem::from(

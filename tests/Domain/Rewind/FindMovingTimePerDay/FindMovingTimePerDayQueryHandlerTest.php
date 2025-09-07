@@ -64,11 +64,6 @@ class FindMovingTimePerDayQueryHandlerTest extends ContainerTestCase
             ],
             $response->getMovingTimePerDay()
         );
-
-        $this->assertEquals(
-            3,
-            $response->getTotalActivityCount()
-        );
     }
 
     protected function setUp(): void

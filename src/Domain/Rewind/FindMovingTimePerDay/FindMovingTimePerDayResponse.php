@@ -11,7 +11,6 @@ final readonly class FindMovingTimePerDayResponse implements Response
     public function __construct(
         /** @var array<string, int> */
         private array $movingTimePerDay,
-        private int $totalActivityCount,
     ) {
     }
 
@@ -21,10 +20,5 @@ final readonly class FindMovingTimePerDayResponse implements Response
     public function getMovingTimePerDay(): array
     {
         return $this->movingTimePerDay;
-    }
-
-    public function getTotalActivityCount(): int
-    {
-        return $this->totalActivityCount;
     }
 }
