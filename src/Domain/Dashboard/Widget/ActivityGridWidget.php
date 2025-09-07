@@ -7,8 +7,8 @@ namespace App\Domain\Dashboard\Widget;
 use App\Domain\Activity\ActivityIntensity;
 use App\Domain\Activity\Grid\ActivityGrid;
 use App\Domain\Activity\Grid\ActivityGridChart;
+use App\Domain\Activity\Grid\ActivityGridType;
 use App\Domain\Activity\Grid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDay;
-use App\Domain\Activity\Grid\GridPieces;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
@@ -51,37 +51,45 @@ final readonly class ActivityGridWidget implements Widget
             endDate: $toDate
         );
 
-        $movingTimePerDay = $this->queryBus->ask(new FindMovingTimePerDay($years))->getMovingTimePerDay();
+        $movingTimePerDay = $this->queryBus->ask(new FindMovingTimePerDay($years))->getMovingTimePerDayInMinutes();
         $caloriesBurnedPerDay = $this->queryBus->ask(new FindCaloriesBurnedPerDay($years))->getCaloriesBurnedPerDay();
 
-        $activityIntensityGrid = ActivityGrid::create(GridPieces::forActivityIntensity());
-        $activityMovingTimeGrid = ActivityGrid::create(GridPieces::forActivityMovingTime());
-        $activityCaloriesBurnedGrid = ActivityGrid::create(GridPieces::forActivityCaloriesBurned());
+        $activityIntensityGrid = ActivityGrid::create(ActivityGridType::INTENSITY);
+        $activityMovingTimeGrid = ActivityGrid::create(ActivityGridType::MOVING_TIME);
+        $activityCaloriesBurnedGrid = ActivityGrid::create(ActivityGridType::CALORIES_BURNED);
+
+        $activityGrids = [];
+        foreach (ActivityGridType::cases() as $activityGridType) {
+            $activityGrids[$activityGridType->value] = ActivityGrid::create($activityGridType);
+        }
 
         foreach ($period as $dt) {
             $on = SerializableDateTime::fromDateTimeImmutable($dt);
-            $activityIntensityGrid->add(
+            $activityGrids[ActivityGridType::INTENSITY->value]->add(
                 on: $on,
                 value: $this->activityIntensity->calculateForDate($on)
             );
-            $activityMovingTimeGrid->add(
+            $activityGrids[ActivityGridType::MOVING_TIME->value]->add(
                 on: $on,
                 value: $movingTimePerDay[$on->format('Y-m-d')] ?? 0
             );
-            $activityCaloriesBurnedGrid->add(
+            $activityGrids[ActivityGridType::CALORIES_BURNED->value]->add(
                 on: $on,
                 value: $caloriesBurnedPerDay[$on->format('Y-m-d')] ?? 0
             );
         }
 
+        $activityGridsCharts = [];
+        foreach (ActivityGridType::cases() as $activityGridType) {
+            $activityGridsCharts[$activityGridType->value] = Json::encode(ActivityGridChart::create(
+                activityGrid: $activityGrids[$activityGridType->value],
+                fromDate: $fromDate,
+                toDate: $toDate,
+            )->build());
+        }
+
         return $this->twig->load('html/dashboard/widget/widget--activity-grid.html.twig')->render([
-            'activityIntensityChart' => Json::encode(
-                ActivityGridChart::create(
-                    activityGrid: $activityIntensityGrid,
-                    fromDate: $fromDate,
-                    toDate: $toDate,
-                )->build()
-            ),
+            'gridCharts' => $activityGridsCharts,
         ]);
     }
 }
