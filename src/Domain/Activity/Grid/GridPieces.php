@@ -55,7 +55,7 @@ final readonly class GridPieces implements \JsonSerializable
         ]);
     }
 
-    public static function forActivityDuration(): self
+    public static function forActivityMovingTime(): self
     {
         return new self([
             [
@@ -90,7 +90,7 @@ final readonly class GridPieces implements \JsonSerializable
         ]);
     }
 
-    public static function forActivityCalories(): self
+    public static function forActivityCaloriesBurned(): self
     {
         return new self([
             [
