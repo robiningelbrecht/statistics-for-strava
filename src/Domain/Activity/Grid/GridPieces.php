@@ -55,6 +55,41 @@ final readonly class GridPieces implements \JsonSerializable
         ]);
     }
 
+    public static function forActivityDuration(): self
+    {
+        return new self([
+            [
+                'min' => 0,
+                'max' => 0,
+                'color' => '#cdd9e5',
+                'label' => (string) t('No activities'),
+            ],
+            [
+                'min' => 0.01,
+                'max' => 30,
+                'color' => '#68B34B',
+                'label' => t('Low').' (0 - 30m)',
+            ],
+            [
+                'min' => 30.01,
+                'max' => 60,
+                'color' => '#FAB735',
+                'label' => t('Medium').' (31m - 1h)',
+            ],
+            [
+                'min' => 60.01,
+                'max' => 90,
+                'color' => '#FF8E14',
+                'label' => t('High').' (1h - 1h30)',
+            ],
+            [
+                'min' => 90.01,
+                'color' => '#FF0C0C',
+                'label' => t('Very high').' (> 1h30)',
+            ],
+        ]);
+    }
+
     /**
      * @return array<int, array{min: int|float, max?: int|float, color: string, label: string}>
      */

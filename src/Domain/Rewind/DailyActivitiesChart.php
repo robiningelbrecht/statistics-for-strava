@@ -35,7 +35,7 @@ final readonly class DailyActivitiesChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
