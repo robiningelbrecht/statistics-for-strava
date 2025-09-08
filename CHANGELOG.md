@@ -1,3 +1,17 @@
+# [v3.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.3.0) - 2025-09-08
+
+## What's Changed
+* ISSUE-1054: Remove 'minZoom' property from leaflet options in segment… by @ausernamedtom in https://github.com/robiningelbrecht/statistics-for-strava/pull/1055
+* ISSUE #1023: Add activity grids by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1049
+* ISSUE #1056: Add elevation gain on weekly stats chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1059
+* ISSUE #1058: Fix bug in AIAgentChatConsoleCommand by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1060
+* ISSUE #1057: Move best efforts away from dashboard to dedicated page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1061
+
+## New Contributors
+* @ausernamedtom made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1055
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.2.9...v3.3.0
+
 # [v3.2.9](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.2.9) - 2025-09-03
 
 ## What's Changed
