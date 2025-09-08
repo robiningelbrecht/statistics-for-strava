@@ -5,6 +5,7 @@ namespace App\Console;
 use App\BuildApp\AppVersion;
 use App\BuildApp\BuildActivitiesHtml\BuildActivitiesHtml;
 use App\BuildApp\BuildBadgeSvg\BuildBadgeSvg;
+use App\BuildApp\BuildBestEffortsHtml\BuildBestEffortsHtml;
 use App\BuildApp\BuildChallengesHtml\BuildChallengesHtml;
 use App\BuildApp\BuildDashboardHtml\BuildDashboardHtml;
 use App\BuildApp\BuildEddingtonHtml\BuildEddingtonHtml;
@@ -98,6 +99,8 @@ final class BuildAppConsoleCommand extends Command
         $this->commandBus->dispatch(new BuildSegmentsHtml($now));
         $output->writeln('  => Building heatmap');
         $this->commandBus->dispatch(new BuildHeatmapHtml($now));
+        $output->writeln('  => Building best-efforts');
+        $this->commandBus->dispatch(new BuildBestEffortsHtml());
         $output->writeln('  => Building rewind');
         $this->commandBus->dispatch(new BuildRewindHtml($now));
         $output->writeln('  => Building challenges');

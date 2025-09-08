@@ -2,40 +2,36 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget;
+namespace App\BuildApp\BuildBestEffortsHtml;
 
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\BestEffortChart;
 use App\Domain\Activity\SportType\SportTypeRepository;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final readonly class BestEffortsWidget implements Widget
+final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private SportTypeRepository $sportTypeRepository,
-        private Environment $twig,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
         private TranslatorInterface $translator,
+        private Environment $twig,
+        private FilesystemOperator $buildStorage,
     ) {
     }
 
-    public function getDefaultConfiguration(): WidgetConfiguration
+    public function handle(Command $command): void
     {
-        return WidgetConfiguration::empty();
-    }
+        assert($command instanceof BuildBestEffortsHtml);
 
-    public function guardValidConfiguration(array $config): void
-    {
-    }
-
-    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
-    {
         $bestEfforts = $bestEffortsCharts = [];
 
         $importedActivityTypes = $this->activityTypeRepository->findAll();
@@ -64,12 +60,15 @@ final readonly class BestEffortsWidget implements Widget
         }
 
         if (empty($bestEffortsCharts)) {
-            return null;
+            return;
         }
 
-        return $this->twig->load('html/dashboard/widget/widget--best-efforts.html.twig')->render([
-            'bestEfforts' => $bestEfforts,
-            'bestEffortsCharts' => $bestEffortsCharts,
-        ]);
+        $this->buildStorage->write(
+            'best-efforts.html',
+            $this->twig->load('html/best-efforts.html.twig')->render([
+                'bestEfforts' => $bestEfforts,
+                'bestEffortsCharts' => $bestEffortsCharts,
+            ])
+        );
     }
 }

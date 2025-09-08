@@ -26,6 +26,11 @@ final readonly class WidgetName implements \Stringable
         return new self($name);
     }
 
+    public function wasRemoved(): bool
+    {
+        return 'bestEfforts' === $this->name;
+    }
+
     public function __toString(): string
     {
         return $this->name;

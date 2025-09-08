@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\BuildApp\BuildIndexHtml;
 
 use App\BuildApp\AppSubTitle;
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\BuildApp\ProfilePictureUrl;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\Image\ImageRepository;
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
@@ -29,6 +32,7 @@ final readonly class IndexHtml
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
         private ?AppSubTitle $appSubTitle,
+        private HidePhotosForSportTypes $hidePhotosForSportTypes,
         private UnitSystem $unitSystem,
         private LocaleSwitcher $localeSwitcher,
     ) {
@@ -49,11 +53,16 @@ final readonly class IndexHtml
             $eddingtonNumbers[] = $eddington->getNumber();
         }
 
+        $sportTypesToRenderPhotosFor = SportTypes::fromArray(array_filter(
+            SportType::cases(),
+            fn (SportType $sportType) => !$this->hidePhotosForSportTypes->has($sportType),
+        ));
+
         return [
             'totalActivityCount' => $this->activityRepository->count(),
             'eddingtonNumbers' => $eddingtonNumbers,
             'completedChallenges' => $this->challengeRepository->count(),
-            'totalPhotoCount' => $this->imageRepository->count(),
+            'totalPhotoCount' => $this->imageRepository->countBySportTypes($sportTypesToRenderPhotosFor),
             'lastUpdate' => $now,
             'athlete' => $this->athleteRepository->find(),
             'profilePictureUrl' => $this->profilePictureUrl,
