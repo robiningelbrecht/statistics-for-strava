@@ -38,6 +38,9 @@ final class Widgets implements \IteratorAggregate
             }
 
             $widgetName = WidgetName::fromConfigValue($configuredWidget['widget']);
+            if ($widgetName->wasRemoved()) {
+                continue;
+            }
             $widget = $this->widgets[(string) $widgetName] ?? throw new \InvalidArgumentException(sprintf('Dashboard widget "%s" does not exists.', $widgetName));
 
             $widget->guardValidConfiguration($configuredWidget['config'] ?? []);

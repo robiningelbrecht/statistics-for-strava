@@ -22,7 +22,6 @@ appearance:
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
       - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
-      - { 'widget': 'bestEfforts', 'width': 100, 'enabled': true }
       - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
@@ -148,16 +147,6 @@ This widget provides a breakdown of your activities by distance and activity typ
 ```
 
 ![distanceBreakdown widget](../assets/images/dashboard-widgets/distance-breakdown.png)
-
-## bestEfforts
-
-This widget displays your best efforts for various distances per activity type.
-
-```yml
-{ 'widget': 'bestEfforts', 'width': 100, 'enabled': true }
-```
-
-![bestEfforts widget](../assets/images/dashboard-widgets/best-efforts.png)
 
 ## yearlyDistances
 

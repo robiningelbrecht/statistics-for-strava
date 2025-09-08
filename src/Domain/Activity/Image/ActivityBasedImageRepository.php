@@ -71,12 +71,15 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         throw new EntityNotFound(sprintf('Random image not found'));
     }
 
-    public function count(): int
+    public function countBySportTypes(SportTypes $sportTypes): int
     {
         $activities = $this->activityRepository->findAll();
         $totalImageCount = 0;
 
         foreach ($activities as $activity) {
+            if (!$sportTypes->has($activity->getSportType())) {
+                continue;
+            }
             $totalImageCount += $activity->getTotalImageCount();
         }
 
