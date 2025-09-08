@@ -3,31 +3,33 @@
     'label': 'Best efforts'|trans
 }]} %}
 {% autoescape false %}
-    <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-        {% if bestEffortsCharts|length > 1 %}
-            <div class="mb-4 border-b border-gray-200">
-                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
-                    id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
-                    role="tablist">
-                    {% for activityType,chart in bestEffortsCharts %}
-                        <li class="mr-2" role="presentation">
-                            <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
-                               aria-controls="bestEfforts{{ activityType }}"
-                               class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        <div id="bestEffortsActivityTypeTabContent">
-            {% for activityType,bestEffortsChart in bestEffortsCharts %}
-                {% set activityTypeEnum = enum('App\\Domain\\Activity\\ActivityType').from(activityType) %}
-                {% set bestEffortsForActivityType = bestEfforts[activityType] %}
-                <div id="bestEfforts{{ activityType }}" role="tabpanel"
-                     aria-labelledby="bestEfforts{{ activityType }}-tab">
+    {% if bestEffortsCharts|length > 1 %}
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+                id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
+                role="tablist">
+                {% for activityType,chart in bestEffortsCharts %}
+                    <li class="mr-2" role="presentation">
+                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
+                           aria-controls="bestEfforts{{ activityType }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="bestEffortsActivityTypeTabContent">
+        {% for activityType,bestEffortsChart in bestEffortsCharts %}
+            {% set activityTypeEnum = enum('App\\Domain\\Activity\\ActivityType').from(activityType) %}
+            {% set bestEffortsForActivityType = bestEfforts[activityType] %}
+            <div id="bestEfforts{{ activityType }}" role="tabpanel"
+                 aria-labelledby="bestEfforts{{ activityType }}-tab">
+                <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="mb-4 h-[20rem]" data-echarts-options='{{ bestEffortsChart }}'></div>
+                </div>
+                <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <h3 class="mb-4 text-lg font-semibold">
                         {{ "Details"|trans }}
                     </h3>
@@ -74,7 +76,7 @@
                         </table>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
 {% endautoescape %}
