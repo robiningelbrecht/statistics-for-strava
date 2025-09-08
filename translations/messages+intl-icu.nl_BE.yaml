@@ -81,6 +81,7 @@ Distribution: Distribution
 Eddington: Eddington
 Elev: Elev
 Elevation: Hoogte
+'Elevation / week': 'Elevation / week'
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: Elliptical
 Evening: Avond

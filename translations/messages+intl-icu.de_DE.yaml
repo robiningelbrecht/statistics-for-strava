@@ -81,6 +81,7 @@ Distribution: Verteilung
 Eddington: Eddington
 Elev: Anstieg
 Elevation: Höhenmeter
+'Elevation / week': 'Elevation / week'
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
 Evening: Abend

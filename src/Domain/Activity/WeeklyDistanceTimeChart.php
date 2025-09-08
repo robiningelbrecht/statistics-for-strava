@@ -44,7 +44,7 @@ final readonly class WeeklyDistanceTimeChart
         );
         $zoomValueSpan = 10;
         $data = $this->getData($weeks);
-        if (empty(array_filter($data[0])) && empty(array_filter($data[1]))) {
+        if (empty(array_filter($data[0])) && empty(array_filter($data[1])) && empty(array_filter($data[2]))) {
             return [];
         }
 
@@ -110,6 +110,20 @@ final readonly class WeeklyDistanceTimeChart
             );
         }
 
+        if (!empty(array_filter($data[2]))) {
+            $series[] = array_merge_recursive(
+                $serie,
+                [
+                    'name' => (string) t('Elevation / week'),
+                    'data' => $data[2],
+                    'yAxisIndex' => 2,
+                    'label' => [
+                        'formatter' => '{@[2]} '.$this->unitSystem->elevationSymbol(),
+                    ],
+                ],
+            );
+        }
+
         return [
             'animation' => true,
             'backgroundColor' => null,
@@ -167,6 +181,7 @@ final readonly class WeeklyDistanceTimeChart
                     'axisLabel' => [
                         'formatter' => '{value} '.$unitSymbol,
                     ],
+                    'position' => 'left',
                 ],
                 [
                     'type' => 'value',
@@ -176,6 +191,17 @@ final readonly class WeeklyDistanceTimeChart
                     'axisLabel' => [
                         'formatter' => '{value} h',
                     ],
+                    'position' => 'left',
+                ],
+                [
+                    'type' => 'value',
+                    'splitLine' => [
+                        'show' => false,
+                    ],
+                    'axisLabel' => [
+                        'formatter' => '{value} '.$this->unitSystem->elevationSymbol(),
+                    ],
+                    'position' => 'left',
                 ],
             ],
             'series' => $series,
@@ -189,11 +215,13 @@ final readonly class WeeklyDistanceTimeChart
     {
         $distancePerWeek = [];
         $timePerWeek = [];
+        $elevationPerWeek = [];
 
         /** @var Week $week */
         foreach ($weeks as $week) {
             $distancePerWeek[$week->getId()] = 0;
             $timePerWeek[$week->getId()] = 0;
+            $elevationPerWeek[$week->getId()] = 0;
         }
 
         /** @var Activity $activity */
@@ -204,7 +232,9 @@ final readonly class WeeklyDistanceTimeChart
             }
 
             $distance = $activity->getDistance()->toUnitSystem($this->unitSystem);
+            $elevation = $activity->getElevation()->toUnitSystem($this->unitSystem);
             $distancePerWeek[$week] += $distance->toFloat();
+            $elevationPerWeek[$week] += $elevation->toFloat();
             $timePerWeek[$week] += $activity->getMovingTimeInSeconds();
         }
 
@@ -212,8 +242,12 @@ final readonly class WeeklyDistanceTimeChart
             fn (float|int $distance) => round($distance, $this->activityType->getDistancePrecision()),
             $distancePerWeek
         );
+        $elevationPerWeek = array_map(
+            fn (float|int $distance) => (int) round($distance),
+            $elevationPerWeek
+        );
         $timePerWeek = array_map(fn (int $time) => round($time / 3600, 1), $timePerWeek);
 
-        return [array_values($distancePerWeek), array_values($timePerWeek)];
+        return [array_values($distancePerWeek), array_values($timePerWeek), array_values($elevationPerWeek)];
     }
 }
