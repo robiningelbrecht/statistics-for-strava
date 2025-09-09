@@ -54,10 +54,6 @@ final readonly class ActivityGridWidget implements Widget
         $movingTimePerDay = $this->queryBus->ask(new FindMovingTimePerDay($years))->getMovingTimePerDayInMinutes();
         $caloriesBurnedPerDay = $this->queryBus->ask(new FindCaloriesBurnedPerDay($years))->getCaloriesBurnedPerDay();
 
-        $activityIntensityGrid = ActivityGrid::create(ActivityGridType::INTENSITY);
-        $activityMovingTimeGrid = ActivityGrid::create(ActivityGridType::MOVING_TIME);
-        $activityCaloriesBurnedGrid = ActivityGrid::create(ActivityGridType::CALORIES_BURNED);
-
         $activityGrids = [];
         foreach (ActivityGridType::cases() as $activityGridType) {
             $activityGrids[$activityGridType->value] = ActivityGrid::create($activityGridType);
