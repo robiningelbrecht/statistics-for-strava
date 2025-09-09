@@ -36,7 +36,7 @@ final readonly class ActivityGridChart
             'backgroundColor' => null,
             'animation' => true,
             'legend' => [
-                'show' => true,
+                'show' => false,
             ],
             'title' => [
                 'left' => 'center',
@@ -48,6 +48,7 @@ final readonly class ActivityGridChart
             ],
             'tooltip' => [
                 'trigger' => 'item',
+                'formatter' => 'formatActivityGridTooltip',
             ],
             'visualMap' => [
                 'type' => 'piecewise',
@@ -93,6 +94,7 @@ final readonly class ActivityGridChart
                 'type' => 'heatmap',
                 'coordinateSystem' => 'calendar',
                 'data' => $this->activityGrid->getData(),
+                'name' => $this->activityGrid->getGridType()->value,
             ],
         ];
     }

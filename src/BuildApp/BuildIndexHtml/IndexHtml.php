@@ -71,6 +71,7 @@ final readonly class IndexHtml
             'javascriptWindowConstants' => Json::encode([
                 'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
                 'unitSystem' => [
+                    'name' => $this->unitSystem->value,
                     'paceSymbol' => $this->unitSystem->paceSymbol(),
                     'distanceSymbol' => $this->unitSystem->distanceSymbol(),
                     'elevationSymbol' => $this->unitSystem->elevationSymbol(),
