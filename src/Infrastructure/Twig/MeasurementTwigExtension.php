@@ -39,18 +39,20 @@ final readonly class MeasurementTwigExtension
     public function renderMeasurement(Unit $measurement, int $precision, ?string $symbolSuffix = null): string
     {
         $convertedMeasurement = $this->convertMeasurement($measurement);
+        $measurementInScalar = $convertedMeasurement->toFloat();
+        $formattedNumber = self::formatNumber($measurementInScalar, $measurementInScalar < 100 ? $precision : 0);
 
         if (!$symbolSuffix) {
             return sprintf(
                 '%s<span class="text-xs">%s</span>',
-                self::formatNumber($convertedMeasurement->toFloat(), $precision),
+                $formattedNumber,
                 $convertedMeasurement->getSymbol()
             );
         }
 
         return sprintf(
             '%s<span class="text-xs">%s %s</span>',
-            self::formatNumber($convertedMeasurement->toFloat(), $precision),
+            $formattedNumber,
             $convertedMeasurement->getSymbol(),
             $symbolSuffix
         );

@@ -239,7 +239,7 @@ final readonly class WeeklyDistanceTimeChart
         }
 
         $distancePerWeek = array_map(
-            fn (float|int $distance) => round($distance, $this->activityType->getDistancePrecision()),
+            fn (float|int $distance) => round($distance, $distance < 100 ? $this->activityType->getDistancePrecision() : 0),
             $distancePerWeek
         );
         $elevationPerWeek = array_map(
