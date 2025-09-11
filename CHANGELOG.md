@@ -1,3 +1,13 @@
+# [v3.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.3.1) - 2025-09-11
+
+## What's Changed
+* ISSUE #1063: Format activity grid values by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1065
+* ISSUE #1051: No decimals for distances greater than 100 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1066
+* ISSUE #1067: Disable Symfony logging by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1068
+
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.3.0...v3.3.1
+
 # [v3.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.3.0) - 2025-09-08
 
 ## What's Changed
