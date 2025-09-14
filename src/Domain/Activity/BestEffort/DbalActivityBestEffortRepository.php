@@ -49,34 +49,84 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         return $this->findBestEffortsForSportTypes($activityType->getSportTypes());
     }
 
+    public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts
+    {
+        $sql = 'SELECT
+            activityId,
+            distanceInMeter,
+            sportType,
+            timeInSeconds
+        FROM (
+            SELECT
+                activityId,
+                distanceInMeter,
+                sportType,
+                timeInSeconds,
+                ROW_NUMBER() OVER (
+                    PARTITION BY sportType, distanceInMeter
+                    ORDER BY timeInSeconds ASC
+                ) AS rn
+            FROM ActivityBestEffort
+            WHERE sportType IN (:sportTypes)
+        ) ranked
+        WHERE rn <= 10
+        ORDER BY sportType, distanceInMeter, rn';
+
+        $results = $this->connection->executeQuery($sql,
+            [
+                'sportTypes' => array_unique(array_map(
+                    fn (SportType $sportType) => $sportType->value,
+                    $activityType->getSportTypes()->toArray())
+                ),
+            ],
+            [
+                'sportTypes' => ArrayParameterType::STRING,
+            ]
+        )->fetchAllAssociative();
+
+        $activityBestEfforts = ActivityBestEfforts::empty();
+
+        foreach ($results as $result) {
+            $activityId = ActivityId::fromString($result['activityId']);
+            $activityBestEffort = ActivityBestEffort::fromState(
+                activityId: $activityId,
+                distanceInMeter: Meter::from($result['distanceInMeter']),
+                sportType: SportType::from($result['sportType']),
+                timeInSeconds: $result['timeInSeconds']
+            );
+
+            try {
+                $activityBestEffort->enrichWithActivity($this->activityRepository->find($activityId));
+            } catch (EntityNotFound) {
+                // continue;
+            }
+            $activityBestEfforts->add($activityBestEffort);
+        }
+
+        return $activityBestEfforts;
+    }
+
     private function findBestEffortsForSportTypes(SportTypes $sportTypes): ActivityBestEfforts
     {
-        $sql = 'WITH BestEfforts AS (
-                    SELECT distanceInMeter, MIN(timeInSeconds) AS bestTime, sportType
+        $sql = 'SELECT
+                activityId,
+                sportType,
+                distanceInMeter,
+                timeInSeconds
+                FROM (
+                    SELECT
+                        activityId,
+                        sportType,
+                        distanceInMeter,
+                        timeInSeconds,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY sportType, distanceInMeter
+                            ORDER BY timeInSeconds ASC
+                        ) AS rn
                     FROM ActivityBestEffort
                     WHERE sportType IN (:sportTypes)
-                    GROUP BY distanceInMeter, sportType
-                ),
-                RankedEfforts AS (
-                    SELECT 
-                        a.activityId, 
-                        a.sportType, 
-                        a.distanceInMeter, 
-                        a.timeInSeconds,
-                        ROW_NUMBER() OVER (
-                            PARTITION BY a.distanceInMeter, a.sportType 
-                            ORDER BY a.activityId
-                        ) AS rowNumber
-                    FROM ActivityBestEffort a
-                    JOIN BestEfforts b 
-                        ON a.distanceInMeter = b.distanceInMeter
-                    AND a.timeInSeconds = b.bestTime
-                    AND a.sportType = b.sportType
-                    WHERE a.sportType IN (:sportTypes)
-                )
-                SELECT activityId, sportType, distanceInMeter, timeInSeconds
-                FROM RankedEfforts
-                WHERE rowNumber = 1
+                ) ranked
+                WHERE rn = 1
                 ORDER BY distanceInMeter ASC';
 
         $results = $this->connection->executeQuery($sql,
