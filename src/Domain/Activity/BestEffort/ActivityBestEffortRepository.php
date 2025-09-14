@@ -16,6 +16,8 @@ interface ActivityBestEffortRepository
 
     public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts;
 
+    public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts;
+
     public function findActivityIdsThatNeedBestEffortsCalculation(): ActivityIds;
 
     public function deleteForActivity(ActivityId $activityId): void;
