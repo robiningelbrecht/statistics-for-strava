@@ -33,8 +33,8 @@
                 </div>
             </a>
         </div>
-        <div class="hidden md:flex items-center text-gray-500 lg:order-2 gap-x-2">
-            <div class="flex items-center">
+        <div class="flex items-center text-gray-500 lg:order-2 gap-x-2">
+            <div class="hidden md:flex items-center">
                 <a href="https://buymeacoffee.com/ingelbrecht" target="_blank" title="Buy me a coffee"
                    class="p-1 rounded-sm hover:bg-gray-100 group/menu-item">
                     <svg class="w-7 h-6" viewBox="0 0 884 1279" fill="none"
@@ -67,14 +67,14 @@
                     {% if appConfig.AIIntegrationWithUiIsEnabled() %}
                         <a href="#" data-modal-custom-ai="{{ relativeUrl('/ai/chat') }}"
                            class="p-1 rounded-sm hover:bg-gray-100 hover:text-strava-orange">
-                            <svg class="w-7 h-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <svg class="size-5 sm:size-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"/>
                             </svg>
                         </a>
                     {% endif %}
                     {% if profilePictureUrl %}
                         <a href="https://www.strava.com/athletes/{{ athlete.getAthleteId() }}" target="_blank"
-                           class="rounded-full border">
+                           class="hidden md:flex rounded-full border">
                             <img class="w-8 h-8 rounded-full bg-white" src="{{ profilePictureUrl }}"
                                  alt="Profile Picture">
                         </a>

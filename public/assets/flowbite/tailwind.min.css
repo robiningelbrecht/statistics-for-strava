@@ -335,6 +335,9 @@
   ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
     padding-block: 0;
   }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
   :-moz-ui-invalid {
     box-shadow: none;
   }
@@ -3708,6 +3711,12 @@
   .aria-selected\:bg-gray-100 {
     &[aria-selected="true"] {
       background-color: var(--color-gray-100);
+    }
+  }
+  .sm\:size-7 {
+    @media (width >= 40rem) {
+      width: calc(var(--spacing) * 7);
+      height: calc(var(--spacing) * 7);
     }
   }
   .sm\:max-w-\[50\%\] {
