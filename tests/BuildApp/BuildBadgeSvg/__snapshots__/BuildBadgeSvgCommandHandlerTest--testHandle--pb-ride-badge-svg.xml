@@ -18,84 +18,84 @@
       <g transform="translate(0, 0)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:05</tspan>
           <tspan x="40" dy="1.2em">5 mi</tspan>
         </text>
       </g>
       <g transform="translate(92.5, 0)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:10</tspan>
           <tspan x="40" dy="1.2em">10 km</tspan>
         </text>
       </g>
       <g transform="translate(185, 0)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:10</tspan>
           <tspan x="40" dy="1.2em">10 mi</tspan>
         </text>
       </g>
       <g transform="translate(277.5, 0)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:20</tspan>
           <tspan x="40" dy="1.2em">20 km</tspan>
         </text>
       </g>
       <g transform="translate(0, 72.5)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:30</tspan>
           <tspan x="40" dy="1.2em">30 km</tspan>
         </text>
       </g>
       <g transform="translate(92.5, 72.5)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:40</tspan>
           <tspan x="40" dy="1.2em">40 km</tspan>
         </text>
       </g>
       <g transform="translate(185, 72.5)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:50</tspan>
           <tspan x="40" dy="1.2em">50 km</tspan>
         </text>
       </g>
       <g transform="translate(277.5, 72.5)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">01:20</tspan>
           <tspan x="40" dy="1.2em">80 km</tspan>
         </text>
       </g>
       <g transform="translate(0, 145)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">00:50</tspan>
           <tspan x="40" dy="1.2em">50 mi</tspan>
         </text>
       </g>
       <g transform="translate(92.5, 145)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">01:30</tspan>
           <tspan x="40" dy="1.2em">90 km</tspan>
         </text>
       </g>
       <g transform="translate(185, 145)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">01:40</tspan>
           <tspan x="40" dy="1.2em">100 km</tspan>
         </text>
       </g>
       <g transform="translate(277.5, 145)">
         <rect width="80px" height="60px" x="0" y="0" rx="10" ry="10" fill="#F4F7F9"/>
         <text x="40" y="30" text-anchor="middle">
-          <tspan x="40" font-size="15.5px" font-weight="600"/>
+          <tspan x="40" font-size="15.5px" font-weight="600">01:40</tspan>
           <tspan x="40" dy="1.2em">100 mi</tspan>
         </text>
       </g>
