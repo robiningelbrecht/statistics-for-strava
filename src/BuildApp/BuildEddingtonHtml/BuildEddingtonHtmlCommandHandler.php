@@ -13,6 +13,7 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
@@ -22,6 +23,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -38,6 +40,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
                 EddingtonChart::create(
                     eddington: $eddington,
                     unitSystem: $this->unitSystem,
+                    translator: $this->translator,
                 )->build()
             );
             $eddingtonHistoryCharts[$id] = Json::encode(

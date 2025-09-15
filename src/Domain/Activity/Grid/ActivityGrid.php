@@ -3,6 +3,7 @@
 namespace App\Domain\Activity\Grid;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ActivityGrid
 {
@@ -16,10 +17,12 @@ final class ActivityGrid
     ) {
     }
 
-    public static function create(ActivityGridType $activityGridType): self
-    {
+    public static function create(
+        ActivityGridType $activityGridType,
+        TranslatorInterface $translator,
+    ): self {
         return new self(
-            gridPieces: $activityGridType->getPieces(),
+            gridPieces: $activityGridType->getPieces($translator),
             gridType: $activityGridType
         );
     }

@@ -9,21 +9,23 @@ use App\Domain\Activity\Activity;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Carbon\CarbonInterval;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class WeekdayStats
 {
     private function __construct(
         private Activities $activities,
+        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         Activities $activities,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             activities: $activities,
+            translator: $translator,
         );
     }
 
@@ -34,13 +36,13 @@ final readonly class WeekdayStats
     {
         $statistics = [];
         $daysOfTheWeekMap = [
-            (string) t('Sunday'),
-            (string) t('Monday'),
-            (string) t('Tuesday'),
-            (string) t('Wednesday'),
-            (string) t('Thursday'),
-            (string) t('Friday'),
-            (string) t('Saturday'),
+            $this->translator->trans('Sunday'),
+            $this->translator->trans('Monday'),
+            $this->translator->trans('Tuesday'),
+            $this->translator->trans('Wednesday'),
+            $this->translator->trans('Thursday'),
+            $this->translator->trans('Friday'),
+            $this->translator->trans('Saturday'),
         ];
         $totalMovingTime = $this->activities->sum(fn (Activity $activity) => $activity->getMovingTimeInSeconds());
 

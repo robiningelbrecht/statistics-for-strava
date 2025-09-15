@@ -6,8 +6,7 @@ namespace App\Domain\Activity\Training;
 
 use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class TrainingLoadChart
 {
@@ -17,16 +16,19 @@ final readonly class TrainingLoadChart
     private function __construct(
         private TrainingMetrics $trainingMetrics,
         private SerializableDateTime $now,
+        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         TrainingMetrics $trainingMetrics,
         SerializableDateTime $now,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             trainingMetrics: $trainingMetrics,
             now: $now,
+            translator: $translator,
         );
     }
 
@@ -124,7 +126,7 @@ final readonly class TrainingLoadChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars((string) t('Daily TRIMP')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('Daily TRIMP')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 1,
@@ -135,7 +137,7 @@ final readonly class TrainingLoadChart
                 ],
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars((string) t('Load (CTL/ATL)')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('Load (CTL/ATL)')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 0,
@@ -148,7 +150,7 @@ final readonly class TrainingLoadChart
                 ],
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars((string) t('Form (TSB)')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('Form (TSB)')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 0,
@@ -164,7 +166,7 @@ final readonly class TrainingLoadChart
             ],
             'series' => [
                 [
-                    'name' => Escape::htmlSpecialChars((string) t('CTL (Fitness)')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('CTL (Fitness)')),
                     'type' => 'line',
                     'data' => $this->trainingMetrics->getCtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'smooth' => true,
@@ -173,7 +175,7 @@ final readonly class TrainingLoadChart
                     'yAxisIndex' => 1,
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars((string) t('ATL (Fatigue)')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('ATL (Fatigue)')),
                     'type' => 'line',
                     'data' => $this->trainingMetrics->getAtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'smooth' => true,
@@ -182,7 +184,7 @@ final readonly class TrainingLoadChart
                     'yAxisIndex' => 1,
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars((string) t('TSB (Form)')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('TSB (Form)')),
                     'type' => 'line',
                     'data' => $tsbValues,
                     'smooth' => true,
@@ -198,21 +200,21 @@ final readonly class TrainingLoadChart
                         'data' => [
                             [
                                 'yAxis' => 15,
-                                'label' => ['formatter' => Escape::htmlSpecialChars((string) t('Taper sweet-spot (+15)'))],
+                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Taper sweet-spot (+15)'))],
                             ],
                             [
                                 'yAxis' => -10,
-                                'label' => ['formatter' => Escape::htmlSpecialChars((string) t('Build zone (–10)'))],
+                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Build zone (–10)'))],
                             ],
                             [
                                 'yAxis' => -30,
-                                'label' => ['formatter' => Escape::htmlSpecialChars((string) t('Over-fatigued (–30)'))],
+                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Over-fatigued (–30)'))],
                             ],
                         ],
                     ],
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars((string) t('Daily TRIMP')),
+                    'name' => Escape::htmlSpecialChars($this->translator->trans('Daily TRIMP')),
                     'type' => 'bar',
                     'data' => $this->trainingMetrics->getTrimpValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'itemStyle' => ['color' => '#FC4C02'],

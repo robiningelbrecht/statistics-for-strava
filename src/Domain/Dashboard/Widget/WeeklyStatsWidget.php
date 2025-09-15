@@ -10,6 +10,7 @@ use App\Domain\Activity\WeeklyDistanceTimeChart;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class WeeklyStatsWidget implements Widget
@@ -18,6 +19,7 @@ final readonly class WeeklyStatsWidget implements Widget
         private ActivitiesEnricher $activitiesEnricher,
         private UnitSystem $unitSystem,
         private Environment $twig,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -46,6 +48,7 @@ final readonly class WeeklyStatsWidget implements Widget
                 unitSystem: $this->unitSystem,
                 activityType: $activityType,
                 now: $now,
+                translator: $this->translator,
             )->build()) {
                 $weeklyDistanceTimeCharts[$activityType->value] = Json::encode($chartData);
             }
