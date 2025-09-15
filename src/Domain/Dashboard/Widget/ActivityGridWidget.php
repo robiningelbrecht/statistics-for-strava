@@ -14,6 +14,7 @@ use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class ActivityGridWidget implements Widget
@@ -22,6 +23,7 @@ final readonly class ActivityGridWidget implements Widget
         private ActivityIntensity $activityIntensity,
         private QueryBus $queryBus,
         private Environment $twig,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -56,7 +58,10 @@ final readonly class ActivityGridWidget implements Widget
 
         $activityGrids = [];
         foreach (ActivityGridType::cases() as $activityGridType) {
-            $activityGrids[$activityGridType->value] = ActivityGrid::create($activityGridType);
+            $activityGrids[$activityGridType->value] = ActivityGrid::create(
+                activityGridType: $activityGridType,
+                translator: $this->translator
+            );
         }
 
         foreach ($period as $dt) {
@@ -81,6 +86,7 @@ final readonly class ActivityGridWidget implements Widget
                 activityGrid: $activityGrids[$activityGridType->value],
                 fromDate: $fromDate,
                 toDate: $toDate,
+                translator: $this->translator
             )->build());
         }
 

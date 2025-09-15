@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityTotals;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ActivityTotalsTest extends ContainerTestCase
 {
@@ -18,6 +19,7 @@ class ActivityTotalsTest extends ContainerTestCase
             ActivityTotals::getInstance(
                 activities: $activities,
                 now: $now,
+                translator: $this->getContainer()->get(TranslatorInterface::class),
             )->getTotalDaysSinceFirstActivity()
         );
     }

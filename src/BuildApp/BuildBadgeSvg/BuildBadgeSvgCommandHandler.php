@@ -20,6 +20,7 @@ use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
@@ -37,6 +38,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private QueryBus $queryBus,
         private FilesystemOperator $fileStorage,
         private FilesystemOperator $buildStorage,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -51,6 +53,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,
             now: $now,
+            translator: $this->translator,
         );
 
         $this->fileStorage->write(

@@ -13,6 +13,7 @@ use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class MonthlyStatsWidget implements Widget
@@ -22,6 +23,7 @@ final readonly class MonthlyStatsWidget implements Widget
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -66,7 +68,8 @@ final readonly class MonthlyStatsWidget implements Widget
                     monthlyStats: $monthlyStats,
                     context: MonthlyStatsContext::from($context),
                     unitSystem: $this->unitSystem,
-                    enableLastXYearsByDefault: $enableLastXYearsByDefault,
+                    translator: $this->translator,
+                    enableLastXYearsByDefault: $enableLastXYearsByDefault
                 )->build()
             );
         }

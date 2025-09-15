@@ -10,8 +10,7 @@ use App\Domain\Calendar\Month;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class MonthlyStatsChart
 {
@@ -21,6 +20,7 @@ final readonly class MonthlyStatsChart
         private MonthlyStatsContext $context,
         private UnitSystem $unitSystem,
         private int $enableLastXYearsByDefault,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -29,6 +29,7 @@ final readonly class MonthlyStatsChart
         FindMonthlyStatsResponse $monthlyStats,
         MonthlyStatsContext $context,
         UnitSystem $unitSystem,
+        TranslatorInterface $translator,
         ?int $enableLastXYearsByDefault = null,
     ): self {
         return new self(
@@ -36,7 +37,8 @@ final readonly class MonthlyStatsChart
             monthlyStats: $monthlyStats,
             context: $context,
             unitSystem: $unitSystem,
-            enableLastXYearsByDefault: $enableLastXYearsByDefault ?? 20
+            enableLastXYearsByDefault: $enableLastXYearsByDefault ?? 20,
+            translator: $translator,
         );
     }
 
@@ -125,18 +127,18 @@ final readonly class MonthlyStatsChart
                 'type' => 'category',
                 'boundaryGap' => false,
                 'data' => [
-                    (string) t('Jan'),
-                    (string) t('Feb'),
-                    (string) t('Mar'),
-                    (string) t('Apr'),
-                    (string) t('May'),
-                    (string) t('Jun'),
-                    (string) t('Jul'),
-                    (string) t('Aug'),
-                    (string) t('Sep'),
-                    (string) t('Oct'),
-                    (string) t('Nov'),
-                    (string) t('Dec'),
+                    $this->translator->trans('Jan'),
+                    $this->translator->trans('Feb'),
+                    $this->translator->trans('Mar'),
+                    $this->translator->trans('Apr'),
+                    $this->translator->trans('May'),
+                    $this->translator->trans('Jun'),
+                    $this->translator->trans('Jul'),
+                    $this->translator->trans('Aug'),
+                    $this->translator->trans('Sep'),
+                    $this->translator->trans('Oct'),
+                    $this->translator->trans('Nov'),
+                    $this->translator->trans('Dec'),
                 ],
                 'axisPointer' => [
                     'type' => 'shadow',

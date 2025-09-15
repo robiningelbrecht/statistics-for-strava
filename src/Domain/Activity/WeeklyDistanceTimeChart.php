@@ -6,8 +6,7 @@ use App\Domain\Calendar\Week;
 use App\Domain\Calendar\Weeks;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class WeeklyDistanceTimeChart
 {
@@ -16,6 +15,7 @@ final readonly class WeeklyDistanceTimeChart
         private UnitSystem $unitSystem,
         private ActivityType $activityType,
         private SerializableDateTime $now,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -24,12 +24,14 @@ final readonly class WeeklyDistanceTimeChart
         UnitSystem $unitSystem,
         ActivityType $activityType,
         SerializableDateTime $now,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             activities: $activities,
             unitSystem: $unitSystem,
             activityType: $activityType,
-            now: $now
+            now: $now,
+            translator: $translator,
         );
     }
 
@@ -86,7 +88,7 @@ final readonly class WeeklyDistanceTimeChart
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => (string) t('Distance / week'),
+                    'name' => $this->translator->trans('Distance / week'),
                     'data' => $data[0],
                     'yAxisIndex' => 0,
                     'label' => [
@@ -100,7 +102,7 @@ final readonly class WeeklyDistanceTimeChart
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => (string) t('Time / week'),
+                    'name' => $this->translator->trans('Time / week'),
                     'data' => $data[1],
                     'yAxisIndex' => 1,
                     'label' => [
@@ -114,7 +116,7 @@ final readonly class WeeklyDistanceTimeChart
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => (string) t('Elevation / week'),
+                    'name' => $this->translator->trans('Elevation / week'),
                     'data' => $data[2],
                     'yAxisIndex' => 2,
                     'label' => [

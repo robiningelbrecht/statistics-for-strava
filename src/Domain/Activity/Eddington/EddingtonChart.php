@@ -4,24 +4,26 @@ namespace App\Domain\Activity\Eddington;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class EddingtonChart
 {
     private function __construct(
         private Eddington $eddington,
         private UnitSystem $unitSystem,
+        private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         Eddington $eddington,
         UnitSystem $unitSystem,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             eddington: $eddington,
             unitSystem: $unitSystem,
+            translator: $translator,
         );
     }
 
@@ -91,7 +93,7 @@ final readonly class EddingtonChart
             ],
             'series' => [
                 [
-                    'name' => (string) t('Times completed'),
+                    'name' => $this->translator->trans('Times completed'),
                     'yAxisIndex' => 0,
                     'type' => 'bar',
                     'label' => [
@@ -123,7 +125,7 @@ final readonly class EddingtonChart
                     'data' => array_values($timesCompletedDataForChart),
                 ],
                 [
-                    'name' => (string) t('Eddington'),
+                    'name' => $this->translator->trans('Eddington'),
                     'yAxisIndex' => 1,
                     'zlevel' => 1,
                     'type' => 'line',

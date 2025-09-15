@@ -3,8 +3,7 @@
 namespace App\Domain\Activity\Grid;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-
-use function Symfony\Component\Translation\t;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class ActivityGridChart
 {
@@ -12,6 +11,7 @@ final readonly class ActivityGridChart
         private ActivityGrid $activityGrid,
         private SerializableDateTime $fromDate,
         private SerializableDateTime $toDate,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -19,11 +19,13 @@ final readonly class ActivityGridChart
         ActivityGrid $activityGrid,
         SerializableDateTime $fromDate,
         SerializableDateTime $toDate,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             activityGrid: $activityGrid,
             fromDate: $fromDate,
             toDate: $toDate,
+            translator: $translator
         );
     }
 
@@ -80,13 +82,13 @@ final readonly class ActivityGridChart
                     'align' => 'right',
                     'fontSize' => 10,
                     'nameMap' => [
-                        (string) t('Sun'),
-                        (string) t('Mon'),
-                        (string) t('Tue'),
-                        (string) t('Wed'),
-                        (string) t('Thu'),
-                        (string) t('Fri'),
-                        (string) t('Sat'),
+                        $this->translator->trans('Sun'),
+                        $this->translator->trans('Mon'),
+                        $this->translator->trans('Tue'),
+                        $this->translator->trans('Wed'),
+                        $this->translator->trans('Thu'),
+                        $this->translator->trans('Fri'),
+                        $this->translator->trans('Sat'),
                     ],
                 ],
             ],

@@ -14,6 +14,7 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use League\Flysystem\FilesystemOperator;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class TrainingLoadWidget implements Widget
@@ -24,6 +25,7 @@ final readonly class TrainingLoadWidget implements Widget
         private QueryBus $queryBus,
         private FilesystemOperator $buildStorage,
         private Environment $twig,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -59,7 +61,8 @@ final readonly class TrainingLoadWidget implements Widget
                 'trainingLoadChart' => Json::encode(
                     TrainingLoadChart::create(
                         trainingMetrics: $trainingMetrics,
-                        now: $now
+                        now: $now,
+                        translator: $this->translator,
                     )->build()
                 ),
                 'trainingMetrics' => $trainingMetrics,
