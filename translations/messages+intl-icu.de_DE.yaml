@@ -17,7 +17,7 @@
 Activities: Aktivitäten
 Activity: Aktivität
 'Activity count': 'Anzahl Aktivitäen'
-'Activity heatmap': 'Activity heatmap'
+'Activity heatmap': 'Aktivitäten Heatmap'
 'Activity intensity': Aktivitätsintensität
 'Activity locations': Orte
 'Activity start times': 'Startzeiten der Aktivitäten'
@@ -36,7 +36,7 @@ Avg: Durchschn.
 'Back Country Ski': Skitouren
 Badminton: Badminton
 Best: Beste
-'Best effort': 'Best effort'
+'Best effort': Bestzeit
 'Best efforts': Bestzeiten
 'Best efforts for {sportType}': 'Bestzeiten für {sportType}'
 'Build zone (–10)': 'Aufbauzone (–10)'
@@ -80,7 +80,7 @@ Distribution: Verteilung
 Eddington: Eddington
 Elev: Anstieg
 Elevation: Höhenmeter
-'Elevation / week': 'Elevation / week'
+'Elevation / week': 'Hohenmeter / Woche'
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
 Evening: Abend
