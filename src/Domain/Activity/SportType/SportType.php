@@ -206,6 +206,7 @@ enum SportType: string implements TranslatableInterface
             self::MOUNTAIN_BIKE_RIDE,
             self::GRAVEL_RIDE,
             self::VIRTUAL_RIDE,
+            self::E_MOUNTAIN_BIKE_RIDE,
             self::RUN,
             self::TRAIL_RUN,
             self::VIRTUAL_RUN,
