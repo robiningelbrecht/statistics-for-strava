@@ -48,22 +48,24 @@ final class ActivityIntensity
 
     private function calculateForActivity(Activity $activity): ?int
     {
-        $athlete = $this->athleteRepository->find();
-        try {
-            // To calculate intensity, we need
-            // 1) Max and average heart rate
-            // OR
-            // 2) FTP and average power
-            $ftp = $this->ftpHistory->find($activity->getStartDate())->getFtp();
-            if ($averagePower = $activity->getAveragePower()) {
-                // Use more complicated and more accurate calculation.
-                // intensityFactor = averagePower / FTP
-                // (durationInSeconds * averagePower * intensityFactor) / (FTP x 3600) * 100
-                return (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
+        if ($activity->getSportType()->getActivityType()->supportsPowerData()) {
+            try {
+                // To calculate intensity, we need
+                // 1) Max and average heart rate
+                // OR
+                // 2) FTP and average power
+                $ftp = $this->ftpHistory->find($activity->getStartDate())->getFtp();
+                if ($averagePower = $activity->getAveragePower()) {
+                    // Use more complicated and more accurate calculation.
+                    // intensityFactor = averagePower / FTP
+                    // (durationInSeconds * averagePower * intensityFactor) / (FTP x 3600) * 100
+                    return (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
+                }
+            } catch (EntityNotFound) {
             }
-        } catch (EntityNotFound) {
         }
 
+        $athlete = $this->athleteRepository->find();
         if ($averageHeartRate = $activity->getAverageHeartRate()) {
             $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
             // Use simplified, less accurate calculation.
