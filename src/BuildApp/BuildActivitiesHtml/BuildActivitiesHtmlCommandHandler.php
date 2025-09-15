@@ -110,7 +110,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
             $timeInSecondsPerWattage = null;
             $powerDistributionChart = null;
-            if ($activityType->supportsPowerDistributionChart() && $activity->getAveragePower()
+            if ($activityType->supportsPowerData() && $activity->getAveragePower()
                 && ($timeInSecondsPerWattage = $this->activityPowerRepository->findTimeInSecondsPerWattageForActivity($activity->getId()))) {
                 $powerDistributionChart = PowerDistributionChart::create(
                     powerData: $timeInSecondsPerWattage,

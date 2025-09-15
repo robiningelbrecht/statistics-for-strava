@@ -62,7 +62,7 @@ enum ActivityType: string implements TranslatableInterface
         return ActivityType::OTHER !== $this;
     }
 
-    public function supportsPowerDistributionChart(): bool
+    public function supportsPowerData(): bool
     {
         return match ($this) {
             self::RIDE => true,
