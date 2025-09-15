@@ -1,3 +1,12 @@
+# [v3.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.0) - 2025-09-15
+
+## What's Changed
+* German translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1071
+* ISSUE #1057: BestEffort history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1073
+* ISSUE #1072: Fix translations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1077
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.3.1...v3.4.0
+
 # [v3.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.3.1) - 2025-09-11
 
 ## What's Changed
