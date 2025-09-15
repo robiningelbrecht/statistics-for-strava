@@ -57,6 +57,24 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
                     translator: $this->translator,
                 )->build()
             );
+
+            $bestEffortsHistoryForActivityType = $this->activityBestEffortRepository->findBestEffortHistory($activityType);
+
+            foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
+                $this->buildStorage->write(
+                    strtolower(sprintf(
+                        'best-efforts/%s/%s-%s.html',
+                        $activityType->value,
+                        $distance->toInt(),
+                        $distance->getSymbol()
+                    )),
+                    $this->twig->load('html/best-efforts/best-efforts-history.html.twig')->render([
+                        'activityType' => $activityType,
+                        'bestEffortsHistory' => $bestEffortsHistoryForActivityType,
+                        'distance' => $distance,
+                    ])
+                );
+            }
         }
 
         if (empty($bestEffortsCharts)) {
@@ -65,7 +83,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
 
         $this->buildStorage->write(
             'best-efforts.html',
-            $this->twig->load('html/best-efforts.html.twig')->render([
+            $this->twig->load('html/best-efforts/best-efforts.html.twig')->render([
                 'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
             ])

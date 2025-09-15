@@ -39,7 +39,7 @@ final class ActivityBestEfforts extends Collection
         return $this->filter(fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getActivityId() == $activityId);
     }
 
-    public function getBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ?ActivityBestEffort
+    public function getOneBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ?ActivityBestEffort
     {
         $activityBestEfforts = $this->filter(
             fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType
@@ -47,5 +47,13 @@ final class ActivityBestEfforts extends Collection
         );
 
         return $activityBestEfforts->getFirst();
+    }
+
+    public function getBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ActivityBestEfforts
+    {
+        return $this->filter(
+            fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType
+                && $activityBestEffort->getDistanceInMeter()->toInt() === $distance->toMeter()->toInt()
+        );
     }
 }
