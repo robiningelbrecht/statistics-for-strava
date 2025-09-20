@@ -48,10 +48,10 @@ Canoeing: Canoa
 'Carbon saved': 'Emissioni di carbonio risparmiate'
 'Challenge consistency': 'Costanza nella sfida'
 Challenges: Sfide
-'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carico di Allenamento Cronico (Forma) - media esponenziale a 42 giorni del tuo carico giornaliero. Rappresenta l''adattamento a lungo termine.'
+'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': "Carico di Allenamento Cronico (Forma) - media esponenziale a 42 giorni del tuo carico giornaliero. Rappresenta l'adattamento a lungo termine."
 'Close modal': 'Chiudi modale'
 'Collapse sidebar': 'Comprimi barra laterale'
-Commutes: Spostamenti quotidiani
+Commutes: 'Spostamenti quotidiani'
 'Commutes only': 'Solo spostamenti quotidiani'
 Compare: Confronta
 'Compare to': 'Confronta con'
@@ -95,7 +95,7 @@ Feb: Feb
 'Filter on gear': 'Filtra per attrezzatura'
 'Filter on sport type': 'Filtra per tipo di sport'
 'Filter on starred segments': 'Filtra sui segmenti preferiti'
-Fitness: Forma fisica
+Fitness: 'Forma fisica'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Ad esempio, un numero di Eddington pari a 70 implicherebbe che un ciclista ha percorso almeno 70 km o miglia al giorno in almeno 70 occasioni. Raggiungere un numero di Eddington elevato è difficile, poiché passare, ad esempio, da 70 a 75 richiederà (probabilmente) più di cinque nuovi allenamenti a lunga distanza, dato che qualsiasi allenamento inferiore a 75 km o miglia non sarà più incluso nel calcolo.'
 'Form (TSB)': 'Forma (TSB)'
 'Fresh – reduced training load': 'Fresco – carico di allenamento ridotto'
@@ -116,12 +116,12 @@ Golf: Golf
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Le linee guida variano da persona a persona; per maggiori informazioni consulta 'The Cyclist's Training Bible' di Joe Friel o la documentazione di ricerca di TrainingPeaks."
 HIIT: HIIT
 HR: FC
-'Hand Cycle': 'Handbike'
+'Hand Cycle': Handbike
 'Heart rate': 'Frequenza cardiaca'
 'Heart rate distribution': 'Distribuzione frequenza cardiaca'
-'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Distribuzione delle zone di frequenza cardiaca nell''ultimo mese. Per un allenamento polarizzato efficace, gli allenamenti dovrebbero ricadere principalmente nelle seguenti zone'
+'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': "Distribuzione delle zone di frequenza cardiaca nell'ultimo mese. Per un allenamento polarizzato efficace, gli allenamenti dovrebbero ricadere principalmente nelle seguenti zone"
 'Heart rate zones': 'Zone frequenza cardiaca'
-Heatmap: Mappa di calore
+Heatmap: 'Mappa di calore'
 High: Alto
 'High monotony - increase variety': 'Monotonia elevata - aumenta la varietà'
 'High risk - reduce volume': 'Rischio elevato - riduci il volume'
@@ -140,7 +140,7 @@ Jul: Lug
 Jun: Giu
 KOM: KOM
 Kayaking: Kayak
-'Kite Surf': 'Kitesurf'
+'Kite Surf': Kitesurf
 Lap: Giro
 Laps: Giri
 'Last 45 days': 'Ultimi 45 giorni'
@@ -181,7 +181,7 @@ Name: Nome
 Night: Notte
 'No activities': 'Nessuna attività'
 'No data available': 'Nessun dato disponibile'
-'No other options to compare with': 'Nessun''altra opzione con cui confrontare'
+'No other options to compare with': "Nessun'altra opzione con cui confrontare"
 None: Nessuno
 'Nordic Ski': 'Sci nordico'
 'Not supported': 'Non supportato'
@@ -198,7 +198,7 @@ Other: Altro
 'Overall weekly training stress': 'Stress di allenamento settimanale complessivo'
 'PB badges': 'Badge record personali'
 'PET bottles produced': 'Bottiglie PET prodotte'
-PRs: Record personali
+PRs: 'Record personali'
 'PRs achieved per month': 'Record Personali raggiunti al mese'
 Pace: Andatura
 'Peak power outputs': 'Picchi di potenza'
@@ -206,7 +206,7 @@ Pace: Andatura
 'Personal Records': 'Record personali'
 Photo: Foto
 Photos: Foto
-'Pickle Ball': 'Pickleball'
+'Pickle Ball': Pickleball
 Pilates: Pilates
 'Please address these issues': 'Per favore occupati di questi problemi'
 'Polarised training (last 30 days)': 'Allenamento polarizzato (ultimi 30 giorni)'
@@ -216,7 +216,7 @@ Power: Potenza
 Race: Gara
 'Racing Score': 'Punteggio Gara'
 'Racquet & Paddle Sports': 'Sport con racchetta e pagaia'
-'Racquet Ball': 'Racquetball'
+'Racquet Ball': Racquetball
 Ranking: Classifica
 'Reduced carbon emission by commuting': 'Emissioni di carbonio ridotte grazie agli spostamenti casa-lavoro'
 'Rest Days': 'Giorni di riposo'
@@ -227,7 +227,7 @@ Rewind: Indietro
 'Rewind comparisons are only available on larger screens.': 'I confronti Rewind sono disponibili solo su schermi più grandi.'
 Rides: Gare
 'Rock Climbing': 'Arrampicata su roccia'
-'Roller Ski': 'Skiroll'
+'Roller Ski': Skiroll
 Rowing: Canottaggio
 Runs: Corse
 Sail: Vela
@@ -269,13 +269,13 @@ Tag: Etichetta
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'L''etichetta "{maintenanceTaskTag}" è stata usata su "{activityName}", ma l''attrezzatura associata a quell''attività non è collegata a questo componente.'
 'Taper sweet-spot (+15)': 'Zona ideale di tapering (+15)'
 Tennis: Tennis
-"That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": "È una media giornaliera di {dailyAverage}, una media settimanale di {weeklyAverage} e una media mensile di {monthlyAverage} 🐣."
-'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Il numero di Eddington nel ciclismo o nella corsa è definito come il massimo numero E tale che l''atleta abbia percorso almeno E km in almeno E giorni.'
+"That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'È una media giornaliera di {dailyAverage}, una media settimanale di {weeklyAverage} e una media mensile di {monthlyAverage} 🐣.'
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Il numero di Eddington nel ciclismo o nella corsa è definito come il massimo numero E tale che l'atleta abbia percorso almeno E km in almeno E giorni."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Questi badge sono generati dinamicamente. Puoi usarli in qualsiasi tag &lt;img&gt;'
 Thinking...: Elaborazione...
 'This feature is currently disabled': 'Questa funzionalità è attualmente disattivata'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Questa formula indica che pedalare per un''ora alla tua frequenza cardiaca massima genera un punteggio di 100, che consideriamo "alta intensità"'
-'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Questa mappa mostra l''intensità di allenamento giornaliera dell''ultimo anno. L''intensità di un''attività è calcolata in base a diverse metriche.'
+'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': "Questa mappa mostra l'intensità di allenamento giornaliera dell'ultimo anno. L'intensità di un'attività è calcolata in base a diverse metriche."
 Thu: Gio
 Thursday: Giovedì
 Time: Tempo
@@ -295,14 +295,14 @@ To: A
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - metrica del carico di allenamento che tiene conto di intensità e durata.'
 'Training Load Analysis': 'Analisi del carico di allenamento'
 'Training Load Analysis (6 week history)': 'Analisi del carico di allenamento (storico 6 settimane)'
-'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Monotonia di allenamento - rapporto tra carico giornaliero medio e deviazione standard. Indica la varietà dell''allenamento.'
+'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': "Monotonia di allenamento - rapporto tra carico giornaliero medio e deviazione standard. Indica la varietà dell'allenamento."
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Forma) – differenza tra forma (CTL) e fatica (ATL). Indica quanto sei pronto a rendere al meglio.'
 Tue: Mar
 Tuesday: Martedì
-Unspecified: Non specificato
+Unspecified: 'Non specificato'
 'Updated on': 'Aggiornato il'
 'User badge': 'Badge utente'
-'Velo Mobiles': 'Velomobili'
+'Velo Mobiles': Velomobili
 'Very fresh – possible detraining': 'Molto fresco – possibile perdita di forma'
 'Very high': 'Molto alto'
 'View all': 'Vedi tutto'
@@ -321,16 +321,16 @@ Wednesday: Mercoledì
 'Weekly TRIMP': 'TRIMP settimanale'
 'Weekly stats': 'Statistiche settimanali'
 'Weight Training': 'Allenamento con i pesi'
-Wheelchair: Sedia a rotelle
+Wheelchair: 'Sedia a rotelle'
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Quando sono disponibili le metriche di potenza e l''FTP, vengono usate queste. La formula indica che pedalare per un''ora al tuo FTP produce un punteggio di 100, considerato "alta intensità"'
-'Wind Surf': 'Windsurf'
+'Wind Surf': Windsurf
 'Winter Sports': 'Sport invernali'
 Workout: Allenamento
 'Workout type': 'Tipo di allenamento'
 Year: Anno
 'Yearly distances': 'Distanze annuali'
 Yoga: Yoga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "Hai registrato allenamenti in {numberOfCountriesWithWorkouts} paesi diversi, pari al {percentage} di tutti i paesi 🌍"
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Hai registrato allenamenti in {numberOfCountriesWithWorkouts} paesi diversi, pari al {percentage} di tutti i paesi 🌍'
 'Your PB badge': 'Il tuo badge record personale'
 'Your Strava badge': 'Il tuo badge Strava'
 'Your Strava {year} rewind will be available on the 24th of December.': 'Il tuo Rewind Strava {year} sarà disponibile il 24 dicembre.'
@@ -360,15 +360,15 @@ history: cronologia
 hours: ore
 hrs: ore
 intensity: intensità
-intensityFactor: fattore di intensità
+intensityFactor: 'fattore di intensità'
 kudos: kudos
 'max gradient': 'pendenza massima'
-maxHeartRate: frequenza cardiaca max
+maxHeartRate: 'frequenza cardiaca max'
 months: mesi
 more: altro
 n/a: n/d
 never: mai
-'on': 'il'
+'on': il
 to: a
 total: totale
 weeks: settimane
