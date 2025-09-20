@@ -1,3 +1,18 @@
+# [v3.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.1) - 2025-09-20
+
+## What's Changed
+* ISSUE #1050: Fix bug while calculating activity intensity by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1079
+* ISSUE #1080: Show chat icon on mobile version by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1081
+* ISSUE #1084: Add eMTB to best effort stats by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1085
+* fix: docs typo by @zipWhale in https://github.com/robiningelbrecht/statistics-for-strava/pull/1092
+* ISSUE #1090: Fix unknown `workout_type` values by @romainveillard in https://github.com/robiningelbrecht/statistics-for-strava/pull/1093
+
+## New Contributors
+* @zipWhale made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1092
+* @romainveillard made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1093
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.4.0...v3.4.1
+
 # [v3.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.0) - 2025-09-15
 
 ## What's Changed
