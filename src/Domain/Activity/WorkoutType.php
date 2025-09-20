@@ -28,7 +28,8 @@ enum WorkoutType: string implements TranslatableInterface
             1, 11 => self::RACE,
             3, 12 => self::WORKOUT,
             2 => self::LONG_RUN,
-            default => throw new \RuntimeException(sprintf('Workout type "%s" not supported', $workoutType)),
+            // Catch all for unknown values.
+            default => null,
         };
     }
 
