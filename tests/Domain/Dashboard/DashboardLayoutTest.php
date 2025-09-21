@@ -16,7 +16,7 @@ class DashboardLayoutTest extends TestCase
         $this->assertEquals(
             DashboardLayout::fromArray(null),
             DashboardLayout::fromArray([
-                ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true],
+                ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
                 ['widget' => 'introText', 'width' => 33, 'enabled' => true],
                 ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true],
                 ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
