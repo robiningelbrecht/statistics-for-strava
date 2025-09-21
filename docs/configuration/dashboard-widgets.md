@@ -11,7 +11,7 @@ appearance:
     # The allowed values for width are 33, 50, 66, and 100.
     # The order of the widgets in the list determines their order on the dashboard.
     layout:
-      - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true }
+      - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
@@ -33,9 +33,10 @@ appearance:
 ## mostRecentActivities
 
 This widget displays your most recent activities, providing a quick overview of your latest workouts.
+Leaving numberOfActivitiesToDisplay set to 5 works for most layouts.
 
 ```yml
-{ 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true }
+{ 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
 ```
 
 ![mostRecentActivities widget](../assets/images/dashboard-widgets/most-recent-activities.png)
