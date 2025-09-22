@@ -36,9 +36,13 @@ final readonly class MostRecentChallengesCompletedWidget implements Widget
         }
     }
 
-    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $challenges = $this->challengeRepository->findAll();
+        if ($challenges->isEmpty()) {
+            return null;
+        }
+
         /** @var int $numberOfChallengesToDisplay */
         $numberOfChallengesToDisplay = $configuration->getConfigItem('numberOfChallengesToDisplay');
 
