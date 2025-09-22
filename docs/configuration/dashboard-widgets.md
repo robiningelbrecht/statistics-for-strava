@@ -33,7 +33,8 @@ appearance:
 ## mostRecentActivities
 
 This widget displays your most recent activities, providing a quick overview of your latest workouts.
-Leaving numberOfActivitiesToDisplay set to 5 works for most layouts.
+
+* __numberOfActivitiesToDisplay__: the number of activities to display.
 
 ```yml
 { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
