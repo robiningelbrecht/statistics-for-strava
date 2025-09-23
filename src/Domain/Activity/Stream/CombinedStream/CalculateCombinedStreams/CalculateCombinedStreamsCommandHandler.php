@@ -98,6 +98,14 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 $distanceInKm = Meter::from($row[$distanceIndex])->toKilometer();
                 $row[$distanceIndex] = $distanceInKm->toFloat();
 
+                if (UnitSystem::IMPERIAL === $this->unitSystem) {
+                    $row[$distanceIndex] = $distanceInKm->toMiles()->toFloat();
+                }
+
+                if (false !== $altitudeIndex && UnitSystem::IMPERIAL === $this->unitSystem) {
+                    $row[$altitudeIndex] = Meter::from($row[$altitudeIndex])->toFoot()->toFloat();
+                }
+
                 if (false !== $paceIndex) {
                     $secondsPerKilometer = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
                     if (UnitSystem::IMPERIAL === $this->unitSystem) {
@@ -115,13 +123,6 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     }
                     if (UnitSystem::METRIC === $this->unitSystem) {
                         $row[$velocityIndex] = $kmPerHour->toFloat();
-                    }
-                }
-
-                if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                    $row[$distanceIndex] = $distanceInKm->toMiles()->toFloat();
-                    if (false !== $altitudeIndex) {
-                        $row[$altitudeIndex] = Meter::from($row[$altitudeIndex])->toFoot()->toFloat();
                     }
                 }
 
