@@ -16,12 +16,13 @@ enum CombinedStreamType: string implements TranslatableInterface
     case WATTS = 'watts';
     case CADENCE = 'cadence';
     case HEART_RATE = 'heartrate';
+    case VELOCITY = 'velocity';
     case PACE = 'pace';
 
     public function getStreamType(): StreamType
     {
         return match ($this) {
-            CombinedStreamType::PACE => StreamType::VELOCITY,
+            CombinedStreamType::PACE, CombinedStreamType::VELOCITY => StreamType::VELOCITY,
             default => StreamType::from($this->value),
         };
     }
@@ -35,6 +36,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::CADENCE => $translator->trans('Cadence'),
             CombinedStreamType::WATTS => $translator->trans('Power'),
             CombinedStreamType::PACE => $translator->trans('Pace'),
+            CombinedStreamType::VELOCITY => $translator->trans('Speed'),
         };
     }
 
@@ -46,6 +48,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::WATTS => 'watt',
             CombinedStreamType::PACE => $unitSystem->paceSymbol(),
             CombinedStreamType::ALTITUDE => $unitSystem->elevationSymbol(),
+            CombinedStreamType::VELOCITY => $unitSystem->speedSymbol(),
             default => throw new \RuntimeException('Suffix not supported for '.$this->value),
         };
     }
@@ -57,7 +60,8 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::HEART_RATE => '#ee6666',
             CombinedStreamType::CADENCE => '#91cc75',
             CombinedStreamType::WATTS => '#73c0de',
-            CombinedStreamType::PACE => '#fac858',
+            CombinedStreamType::PACE,
+            CombinedStreamType::VELOCITY => '#fac858',
             default => '#cccccc',
         };
     }
