@@ -99,12 +99,12 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 $row[$distanceIndex] = $distanceInKm->toFloat();
 
                 if (false !== $paceIndex) {
-                    $kmPerHour = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
+                    $secondsPerKilometer = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
                     if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                        $row[$paceIndex] = $kmPerHour->toSecPerMile()->toInt();
+                        $row[$paceIndex] = $secondsPerKilometer->toSecPerMile()->toInt();
                     }
                     if (UnitSystem::METRIC === $this->unitSystem) {
-                        $row[$paceIndex] = $kmPerHour->toInt();
+                        $row[$paceIndex] = $secondsPerKilometer->toInt();
                     }
                 }
 
