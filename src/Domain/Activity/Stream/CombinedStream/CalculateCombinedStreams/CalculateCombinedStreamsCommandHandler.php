@@ -58,6 +58,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             ]);
 
             $otherStreams = ActivityStreams::empty();
+            /** @var CombinedStreamType $combinedStreamType */
             foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
                 if (!$stream = $streams->filterOnType($combinedStreamType->getStreamType())) {
                     continue;
@@ -69,6 +70,10 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 if (StreamType::ALTITUDE === $stream->getStreamType()) {
                     // Smoothen the altitude stream to remove noise and have a smooth line.
                     $stream = $stream->applySimpleMovingAverage(5);
+                }
+                if (StreamType::WATTS === $stream->getStreamType()) {
+                    // Smoothen the power stream to remove noise and have a smooth line.
+                    $stream = $stream->applySimpleMovingAverage(3);
                 }
 
                 $streamTypes->add($combinedStreamType);
@@ -84,6 +89,8 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $distanceIndex = array_search(CombinedStreamType::DISTANCE, $streamTypes->toArray(), true);
             $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $streamTypes->toArray(), true);
             $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
+            $velocityIndex = array_search(CombinedStreamType::VELOCITY, $streamTypes->toArray(), true);
+            $powerIndex = array_search(CombinedStreamType::WATTS, $streamTypes->toArray(), true);
 
             // Make sure necessary streams are converted before saving,
             // So we do not need to convert it when reading the data.
@@ -92,12 +99,22 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 $row[$distanceIndex] = $distanceInKm->toFloat();
 
                 if (false !== $paceIndex) {
-                    $secondsPerKilometer = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
+                    $kmPerHour = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
                     if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                        $row[$paceIndex] = $secondsPerKilometer->toSecPerMile()->toInt();
+                        $row[$paceIndex] = $kmPerHour->toSecPerMile()->toInt();
                     }
                     if (UnitSystem::METRIC === $this->unitSystem) {
-                        $row[$paceIndex] = $secondsPerKilometer->toInt();
+                        $row[$paceIndex] = $kmPerHour->toInt();
+                    }
+                }
+
+                if (false !== $velocityIndex) {
+                    $kmPerHour = MetersPerSecond::from($row[$velocityIndex])->toKmPerHour();
+                    if (UnitSystem::IMPERIAL === $this->unitSystem) {
+                        $row[$velocityIndex] = $kmPerHour->toMph()->toFloat();
+                    }
+                    if (UnitSystem::METRIC === $this->unitSystem) {
+                        $row[$velocityIndex] = $kmPerHour->toFloat();
                     }
                 }
 
@@ -115,6 +132,12 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 };
                 if (false !== $altitudeIndex) {
                     $row[$altitudeIndex] = round($row[$altitudeIndex], 2);
+                }
+                if (false !== $powerIndex) {
+                    $row[$powerIndex] = round($row[$powerIndex]);
+                }
+                if (false !== $velocityIndex) {
+                    $row[$velocityIndex] = round($row[$velocityIndex], 1);
                 }
             }
 

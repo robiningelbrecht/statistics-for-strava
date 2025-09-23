@@ -22,6 +22,7 @@ final class CombinedStreamTypes extends Collection
                 CombinedStreamType::HEART_RATE,
                 CombinedStreamType::WATTS,
                 CombinedStreamType::CADENCE,
+                CombinedStreamType::VELOCITY,
             ]);
         }
 
