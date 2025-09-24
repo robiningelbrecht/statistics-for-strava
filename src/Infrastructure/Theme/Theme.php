@@ -26,14 +26,14 @@ final class Theme
      */
     private static function getThemeConfig(): array
     {
-        if( null === self::$keyValueStore) {
+        if (null === self::$keyValueStore) {
             throw new \RuntimeException('KeyValueStore not set. Please call Theme::setKeyValueStore() before using this method.');
         }
         if (null === self::$themeConfig) {
             self::$themeConfig = Json::decode((string) self::$keyValueStore->find(Key::THEME));
         }
 
-        /** @var array<string, mixed> */
+        /* @var array<string, mixed> */
         return self::$themeConfig;
     }
 
