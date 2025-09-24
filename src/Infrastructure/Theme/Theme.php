@@ -13,7 +13,7 @@ use App\Infrastructure\Serialization\Json;
 final class Theme
 {
     /** @var array<string, mixed> */
-    private static ?array $themeConfig = null;
+    private static array $themeConfig;
     private static ?KeyValueStore $keyValueStore = null;
 
     public static function setKeyValueStore(KeyValueStore $keyValueStore): void
@@ -29,11 +29,10 @@ final class Theme
         if (null === self::$keyValueStore) {
             throw new \RuntimeException('KeyValueStore not set. Please call Theme::setKeyValueStore() before using this method.');
         }
-        if (null === self::$themeConfig) {
+        if (!isset(self::$themeConfig)) {
             self::$themeConfig = Json::decode((string) self::$keyValueStore->find(Key::THEME));
         }
 
-        /* @var array<string, mixed> */
         return self::$themeConfig;
     }
 
