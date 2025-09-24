@@ -19,6 +19,7 @@ use App\BuildApp\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
 use App\BuildApp\BuildPhotosHtml\BuildPhotosHtml;
 use App\BuildApp\BuildRewindHtml\BuildRewindHtml;
 use App\BuildApp\BuildSegmentsHtml\BuildSegmentsHtml;
+use App\BuildApp\ConfigureAppColors\ConfigureAppColors;
 use App\BuildApp\ConfigureAppLocale\ConfigureAppLocale;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\StravaDataImportStatus;
@@ -76,6 +77,8 @@ final class BuildAppConsoleCommand extends Command
 
         $output->writeln('Configuring locale...');
         $this->commandBus->dispatch(new ConfigureAppLocale());
+        $output->writeln('Configuring theme colors...');
+        $this->commandBus->dispatch(new ConfigureAppColors());
         $output->writeln('Building Manifest...');
         $this->commandBus->dispatch(new BuildManifest());
         $output->writeln('Building App...');

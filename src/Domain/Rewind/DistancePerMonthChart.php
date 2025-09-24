@@ -6,6 +6,7 @@ namespace App\Domain\Rewind;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Calendar\Month;
+use App\Infrastructure\Theme\ChartColors;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -47,7 +48,11 @@ final readonly class DistancePerMonthChart
         $monthlyTotals = array_fill(1, 12, 0);
         $sportTypes = [];
 
+        /** @var Kilometer $distance */
         foreach ($this->distancePerMonth as [$monthNumber, $sportType, $distance]) {
+            if ($distance->isZeroOrLower()) {
+                continue;
+            }
             $convertedDistance = round($distance->toUnitSystem($this->unitSystem)->toFloat());
 
             $monthlyDistances[$sportType->value][$monthNumber] = $convertedDistance;
@@ -63,6 +68,9 @@ final readonly class DistancePerMonthChart
                 $data[] = [
                     'name' => $monthlyTotals[$month] ?? 0,
                     'value' => $monthlyDistances[$key][$month] ?? 0,
+                    'itemStyle' => [
+                        'color' => ChartColors::getColorForSportType($sportType),
+                    ],
                 ];
             }
 
@@ -113,7 +121,10 @@ final readonly class DistancePerMonthChart
                 [
                     'type' => 'value',
                     'min' => 0,
-                    'name' => $this->translator->trans('Distance in {unit}', ['{unit}' => $unitSymbol]),
+                    'name' => $this->translator->trans(
+                        'Distance in {unit}',
+                        ['{unit}' => $unitSymbol]
+                    ),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 40,

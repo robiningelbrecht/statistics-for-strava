@@ -4,6 +4,10 @@
         "payload": []
     },
     {
+        "commandName": "App\\BuildApp\\ConfigureAppColors\\ConfigureAppColors",
+        "payload": []
+    },
+    {
         "commandName": "App\\BuildApp\\BuildManifest\\BuildManifest",
         "payload": []
     },
