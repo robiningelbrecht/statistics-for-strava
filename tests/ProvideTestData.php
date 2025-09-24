@@ -29,6 +29,10 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -454,6 +458,13 @@ trait ProvideTestData
             'firstname' => 'Robin',
             'lastname' => 'Ingelbrecht',
         ]));
+
+        /** @var KeyValueStore $keyValueStore */
+        $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+        $keyValueStore->save(KeyValue::fromState(
+            Key::THEME,
+            Value::fromString(Json::encode($this->buildThemeConfig())),
+        ));
     }
 
     public function provideRunningOnlyTestSet(): void
@@ -565,5 +576,88 @@ trait ProvideTestData
             'firstname' => 'Robin',
             'lastname' => 'Ingelbrecht',
         ]));
+
+        /** @var KeyValueStore $keyValueStore */
+        $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
+        $keyValueStore->save(KeyValue::fromState(
+            Key::THEME,
+            Value::fromString(Json::encode($this->buildThemeConfig())),
+        ));
+    }
+
+    private function buildThemeConfig(): array
+    {
+        return [
+            'sportType' => [
+                'Ride' => '#5470c6',
+                'MountainBikeRide' => '#91cc75',
+                'GravelRide' => '#fac858',
+                'EBikeRide' => '#ee6666',
+                'EMountainBikeRide' => '#73c0de',
+                'VirtualRide' => '#3ba272',
+                'Velomobile' => '#fc8452',
+                'Run' => '#9a60b4',
+                'TrailRun' => '#ea7ccc',
+                'VirtualRun' => '#5470c6',
+                'Walk' => '#91cc75',
+                'Hike' => '#fac858',
+                'Canoeing' => '#ee6666',
+                'Kayaking' => '#73c0de',
+                'Kitesurf' => '#3ba272',
+                'Rowing' => '#fc8452',
+                'StandUpPaddling' => '#9a60b4',
+                'Surfing' => '#ea7ccc',
+                'Swim' => '#5470c6',
+                'Windsurf' => '#91cc75',
+                'BackcountrySki' => '#fac858',
+                'AlpineSki' => '#ee6666',
+                'NordicSki' => '#73c0de',
+                'IceSkate' => '#3ba272',
+                'Snowboard' => '#fc8452',
+                'Snowshoe' => '#9a60b4',
+                'Skateboard' => '#ea7ccc',
+                'InlineSkate' => '#5470c6',
+                'RollerSki' => '#91cc75',
+                'Badminton' => '#fac858',
+                'Pickleball' => '#ee6666',
+                'Racquetball' => '#73c0de',
+                'Squash' => '#3ba272',
+                'TableTennis' => '#fc8452',
+                'Tennis' => '#9a60b4',
+                'Crossfit' => '#ea7ccc',
+                'WeightTraining' => '#5470c6',
+                'Workout' => '#91cc75',
+                'StairStepper' => '#fac858',
+                'VirtualRow' => '#ee6666',
+                'HighIntensityIntervalTraining' => '#73c0de',
+                'Elliptical' => '#3ba272',
+                'Pilates' => '#fc8452',
+                'Yoga' => '#9a60b4',
+                'Golf' => '#ea7ccc',
+                'RockClimbing' => '#5470c6',
+                'Sail' => '#91cc75',
+                'Soccer' => '#fac858',
+                'Handcycle' => '#ee6666',
+                'Wheelchair' => '#73c0de',
+            ],
+            'activityType' => [
+                'Ride' => '#5470c6',
+                'Run' => '#91cc75',
+                'Walk' => '#fac858',
+                'WaterSports' => '#ee6666',
+                'WinterSports' => '#73c0de',
+                'Skating' => '#3ba272',
+                'RacquetPaddleSports' => '#fc8452',
+                'Fitness' => '#9a60b4',
+                'MindBodySports' => '#ea7ccc',
+                'OutdoorAdventureSports' => '#5470c6',
+                'AdaptiveInclusiveSports' => '#91cc75',
+                'Other' => '#fac858',
+            ],
+            'gear' => [
+                'gear-b12659861' => '#5470c6',
+                'gear-b12659862' => '#91cc75',
+            ],
+        ];
     }
 }

@@ -6,7 +6,7 @@ namespace App\Domain\Rewind;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Calendar\Month;
-use App\Infrastructure\Theme\ChartColors;
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -68,7 +68,7 @@ final readonly class ElevationPerMonthChart
                     'name' => $monthlyTotals[$month] ?? 0,
                     'value' => $monthlyElevations[$key][$month] ?? 0,
                     'itemStyle' => [
-                        'color' => ChartColors::getColorForSportType($sportType),
+                        'color' => Theme::getColorForSportType($sportType),
                     ],
                 ];
             }

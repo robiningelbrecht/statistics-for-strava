@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Rewind;
 
 use App\Domain\Activity\SportType\SportType;
-use App\Infrastructure\Theme\ChartColors;
+use App\Infrastructure\Theme\Theme;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class MovingTimePerSportTypeChart
@@ -42,7 +42,7 @@ final readonly class MovingTimePerSportTypeChart
                 'value' => round($time / 3600),
                 'name' => $sportTypeEnum->trans($this->translator),
                 'itemStyle' => [
-                    'color' => ChartColors::getColorForSportType($sportTypeEnum),
+                    'color' => Theme::getColorForSportType($sportTypeEnum),
                 ],
             ];
         }
