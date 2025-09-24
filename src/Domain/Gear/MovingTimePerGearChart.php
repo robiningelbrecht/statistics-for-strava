@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear;
 
-use App\Infrastructure\Theme\ChartColors;
+use App\Infrastructure\Theme\Theme;
 
 final readonly class MovingTimePerGearChart
 {
@@ -42,7 +42,7 @@ final readonly class MovingTimePerGearChart
                 'value' => round($time / 3600),
                 'name' => $gear->getName(),
                 'itemStyle' => [
-                    'color' => ChartColors::getColorForGear($gear->getId()),
+                    'color' => Theme::getColorForGear($gear->getId()),
                 ],
             ];
         }

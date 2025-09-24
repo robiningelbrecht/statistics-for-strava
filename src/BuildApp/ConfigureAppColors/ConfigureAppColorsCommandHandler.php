@@ -9,9 +9,12 @@ use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Gear\GearRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\Theme\ChartColors;
-use League\Flysystem\FilesystemOperator;
-use Symfony\Component\VarExporter\VarExporter;
+use App\Infrastructure\KeyValue\Key;
+use App\Infrastructure\KeyValue\KeyValue;
+use App\Infrastructure\KeyValue\KeyValueStore;
+use App\Infrastructure\KeyValue\Value;
+use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Theme\Theme;
 
 final readonly class ConfigureAppColorsCommandHandler implements CommandHandler
 {
@@ -19,7 +22,7 @@ final readonly class ConfigureAppColorsCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private GearRepository $gearRepository,
-        private FilesystemOperator $defaultStorage,
+        private KeyValueStore $keyValueStore,
     ) {
     }
 
@@ -28,7 +31,7 @@ final readonly class ConfigureAppColorsCommandHandler implements CommandHandler
         assert($command instanceof ConfigureAppColors);
 
         $configuredColors = [];
-        $defaultChatColors = ChartColors::default();
+        $defaultChatColors = Theme::defaultChartColors();
 
         $sportTypes = $this->sportTypeRepository->findAll();
         foreach ($sportTypes as $index => $sportType) {
@@ -45,16 +48,9 @@ final readonly class ConfigureAppColorsCommandHandler implements CommandHandler
             $configuredColors['gear'][(string) $gear->getId()] = $defaultChatColors[$index % count($defaultChatColors)];
         }
 
-        $exportedColors = VarExporter::export($configuredColors);
-        $fileContent = <<<PHP
-<?php
-
-declare(strict_types=1);
-
-return $exportedColors;
-
-PHP;
-
-        $this->defaultStorage->write('config/chart-colors.php', $fileContent);
+        $this->keyValueStore->save(KeyValue::fromState(
+            Key::THEME,
+            Value::fromString(Json::encode($configuredColors)),
+        ));
     }
 }

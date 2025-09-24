@@ -41,6 +41,10 @@ services:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
 
+    App\Infrastructure\KeyValue\KeyValueStore:
+      class: App\Infrastructure\KeyValue\DbalKeyValueStore
+      public: true
+
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
