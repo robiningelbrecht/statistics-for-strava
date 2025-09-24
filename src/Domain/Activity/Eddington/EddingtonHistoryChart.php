@@ -88,7 +88,7 @@ final readonly class EddingtonHistoryChart
                         'formatter' => [
                             'year' => '{yyyy}',
                             'month' => '{MMM}',
-                            'day' => '{DD}',
+                            'day' => '',
                             'hour' => '{HH}:{mm}',
                             'minute' => '{HH}:{mm}',
                             'second' => '{HH}:{mm}:{ss}',
