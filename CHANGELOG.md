@@ -1,3 +1,21 @@
+# [v3.4.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.2) - 2025-09-24
+
+## What's Changed
+* Fix Italian Translation by @maramazza in https://github.com/robiningelbrecht/statistics-for-strava/pull/1095
+* Add flexibility for number of activities to display by @GrabBug in https://github.com/robiningelbrecht/statistics-for-strava/pull/1102
+* ISSUE #1101: Do not render challenges dashboard widget when empty by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1103
+* ISSUE #1098: show mouseover over newest activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1104
+* ISSUE #1106 #1096: Improve combined activity charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1107
+* ISSUE #1100: Use consistent colors in rewind charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1108
+* ISSUE #1100: Store theme in database by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1109
+* EddingtonHistoryChart axis label formatting by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1110
+
+## New Contributors
+* @maramazza made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1095
+* @GrabBug made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1102
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.4.1...v3.4.2
+
 # [v3.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.1) - 2025-09-20
 
 ## What's Changed
