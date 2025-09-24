@@ -6,6 +6,7 @@ namespace App\Domain\Rewind;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Calendar\Month;
+use App\Infrastructure\Theme\ChartColors;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -48,6 +49,9 @@ final readonly class ElevationPerMonthChart
         $sportTypes = [];
 
         foreach ($this->elevationPerMonth as [$monthNumber, $sportType, $elevation]) {
+            if ($elevation->isZeroOrLower()) {
+                continue;
+            }
             $convertedElevation = round($elevation->toUnitSystem($this->unitSystem)->toFloat());
 
             $monthlyElevations[$sportType->value][$monthNumber] = $convertedElevation;
@@ -63,6 +67,9 @@ final readonly class ElevationPerMonthChart
                 $data[] = [
                     'name' => $monthlyTotals[$month] ?? 0,
                     'value' => $monthlyElevations[$key][$month] ?? 0,
+                    'itemStyle' => [
+                        'color' => ChartColors::getColorForSportType($sportType),
+                    ],
                 ];
             }
 

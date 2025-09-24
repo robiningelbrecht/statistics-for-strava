@@ -6,6 +6,7 @@ namespace App\Domain\Rewind;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Calendar\Month;
+use App\Infrastructure\Theme\ChartColors;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -42,6 +43,9 @@ final readonly class ActivityCountPerMonthChart
         $sportTypes = [];
 
         foreach ($this->activityCountPerMonth as [$monthNumber, $sportType, $count]) {
+            if (0 === $count) {
+                continue;
+            }
             $monthlyActivityCounts[$sportType->value][$monthNumber] = $count;
             $monthlyTotals[$monthNumber] += $count;
 
@@ -55,6 +59,9 @@ final readonly class ActivityCountPerMonthChart
                 $data[] = [
                     'name' => $monthlyTotals[$month] ?? 0,
                     'value' => $monthlyActivityCounts[$key][$month] ?? 0,
+                    'itemStyle' => [
+                        'color' => ChartColors::getColorForSportType($sportType),
+                    ],
                 ];
             }
 
