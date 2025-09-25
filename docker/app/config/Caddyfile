@@ -1,0 +1,84 @@
+{
+    http_port    8080
+    auto_https   off
+
+    frankenphp {
+         worker {
+           file ./public/index.php
+           env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
+           watch
+        }
+    }
+
+    log default {
+        output stdout
+        format console
+        level ERROR
+    }
+}
+
+localhost:8080 {
+    root /var/www/public
+    encode zstd br gzip
+
+    # Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+    header {
+        Cache-Control "no-cache, no-store, must-revalidate"
+        ?Permissions-Policy "browsing-topics=()"
+    }
+
+    # Serve static .html and .json from build/html
+    @staticBuildFiles {
+        path *.html *.json
+    }
+    handle @staticBuildFiles {
+    	handle /manifest.json {
+           root /var/www/public
+        }
+
+        handle {
+            root * /var/www/build/html
+            file_server
+        }
+    }
+
+     # Serve /files/* from storage
+    handle /files/* {
+        root * /var/www/storage
+        file_server
+    }
+
+    # Serve everything else trough Symfony.
+    @phpRoute {
+        not file {path}
+        not path *.html *.json
+        not path /files/*
+    }
+
+    rewrite @phpRoute index.php
+
+    @frontController path index.php
+    php @frontController
+
+    # Handle error codes.
+    handle_errors 403 404 {
+        root /var/www/public
+        rewrite * /{err.status_code}.html
+        file_server
+    }
+
+    handle_errors 5xx {
+        root /var/www/public
+        rewrite * /50x.html
+        file_server
+    }
+
+    handle_errors {
+    	respond "{err.status_code} {err.status_text}"
+    }
+
+    # Hide php and yaml file from filesystem
+    file_server {
+        hide *.php *.yaml *.yml
+    }
+}
