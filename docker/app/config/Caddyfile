@@ -42,7 +42,7 @@ localhost:8080 {
         }
     }
 
-     # Serve /files/* from storage
+    # Serve /files/* from storage
     handle /files/* {
         root * /var/www/storage
         file_server
