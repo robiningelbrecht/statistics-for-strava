@@ -39,6 +39,7 @@
         "nesbot/carbon": "^3.10",
         "ramsey/uuid": "^4.7",
         "respect/validation": "^2.3",
+        "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/asset": "7.3.*",
         "symfony/console": "7.3.*",
         "symfony/dotenv": "7.3.*",
