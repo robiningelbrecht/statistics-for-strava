@@ -1,6 +1,6 @@
 {
-  "id": "http://localhost:8080/",
-  "name": "Statistics for Strava | Adrie Warmerdam",
+  "id": "[APP_HOST]",
+  "name": "[APP_NAME]",
   "short_name": "Statistics for Strava",
   "description": "Statistics for Strava is a self-hosted web app designed to provide you with better stats.",
   "categories": [
@@ -9,7 +9,7 @@
     "utilities"
   ],
   "start_url": "/",
-  "scope": "http://localhost:8080/",
+  "scope": "[APP_HOST]",
   "display": "standalone",
   "display_override": [
     "fullscreen",
@@ -20,34 +20,34 @@
   "background_color": "#f9fafb",
   "icons": [
     {
-      "src": "/assets/images/manifest/icon-192.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/images/manifest/icon-192.maskable.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-192.maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/images/manifest/icon-512.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "/assets/images/manifest/icon-512.maskable.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-512.maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/images/manifest/icon-512.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-512.png",
       "sizes": "any",
       "type": "image/png"
     },
     {
-      "src": "/assets/images/manifest/icon-512.maskable.png",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/icon-512.maskable.png",
       "sizes": "any",
       "type": "image/png",
       "purpose": "maskable"
@@ -55,14 +55,14 @@
   ],
   "screenshots": [
     {
-      "src": "/assets/images/manifest/screenshots/dashboard.jpeg",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/screenshots/dashboard.jpeg",
       "sizes": "750x1600",
       "type": "image/jpeg",
       "form_factor": "narrow",
       "label": "Dashboard"
     },
     {
-      "src": "/assets/images/manifest/screenshots/heatmap.jpeg",
+      "src": "[APP_BASE_PATH]/assets/images/manifest/screenshots/heatmap.jpeg",
       "sizes": "750x1600",
       "type": "image/jpeg",
       "form_factor": "narrow",
