@@ -13,11 +13,11 @@
     log default {
         output stdout
         format console
-        level ERROR
+        level DEBUG
     }
 }
 
-{$SERVER_NAME:localhost}:8080 {
+:8080 {
     root /var/www/public
     encode zstd br gzip
 
@@ -81,4 +81,9 @@
     file_server {
         hide *.php *.yaml *.yml
     }
+}
+
+# Reverse proxy for custom domain
+{$PROXY_HOST}:{$PROXY_PORT} {
+    reverse_proxy localhost:8080
 }
