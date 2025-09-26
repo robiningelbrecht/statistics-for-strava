@@ -10,10 +10,10 @@
         }
     }
 
-    log default {
+    log {
         output stdout
         format console
-        level DEBUG
+        level {$CADDY_LOG_LEVEL:ERROR}
     }
 }
 
