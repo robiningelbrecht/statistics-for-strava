@@ -23,17 +23,17 @@ final readonly class MostRecentActivitiesWidget implements Widget
             ->add('numberOfActivitiesToDisplay', 5);
     }
 
-    public function guardValidConfiguration(array $config): void
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!array_key_exists('numberOfActivitiesToDisplay', $config)) {
+        if (!$configuration->configItemExists('numberOfActivitiesToDisplay')) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" is required for MostRecentActivitiesWidget.');
         }
 
-        if (!is_int($config['numberOfActivitiesToDisplay'])) {
+        if (!is_int($configuration->getConfigItem('numberOfActivitiesToDisplay'))) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" must be an integer.');
         }
 
-        if ($config['numberOfActivitiesToDisplay'] < 1) {
+        if ($configuration->getConfigItem('numberOfActivitiesToDisplay') < 1) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" must be set to a value of 1 or greater.');
         }
     }

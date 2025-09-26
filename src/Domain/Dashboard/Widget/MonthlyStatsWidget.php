@@ -34,19 +34,22 @@ final readonly class MonthlyStatsWidget implements Widget
             ->add('context', MonthlyStatsContext::DISTANCE->value);
     }
 
-    public function guardValidConfiguration(array $config): void
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!array_key_exists('enableLastXYearsByDefault', $config)) {
+        if (!$configuration->configItemExists('enableLastXYearsByDefault')) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" is required for MonthlyStatsWidget.');
         }
-        if (!is_int($config['enableLastXYearsByDefault'])) {
+        if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
         }
-        if (!array_key_exists('context', $config)) {
+        if (!$configuration->configItemExists('context')) {
             throw new InvalidDashboardLayout('Configuration item "context" is required for MonthlyStatsWidget.');
         }
-        if (!MonthlyStatsContext::tryFrom($config['context'])) {
-            throw new InvalidDashboardLayout(sprintf('Invalid context "%s" provided for MonthlyStatsWidget.', $config['context']));
+        if (!is_string($configuration->getConfigItem('context'))) {
+            throw new InvalidDashboardLayout('Configuration item "context" must be a string.');
+        }
+        if (!MonthlyStatsContext::tryFrom($configuration->getConfigItem('context'))) {
+            throw new InvalidDashboardLayout(sprintf('Invalid context "%s" provided for MonthlyStatsWidget.', $configuration->getConfigItem('context')));
         }
     }
 

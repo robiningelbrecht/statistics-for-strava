@@ -28,7 +28,7 @@ final readonly class WeeklyStatsWidget implements Widget
         return WidgetConfiguration::empty();
     }
 
-    public function guardValidConfiguration(array $config): void
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
     }
 

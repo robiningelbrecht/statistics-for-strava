@@ -12,10 +12,7 @@ interface Widget
 {
     public function getDefaultConfiguration(): WidgetConfiguration;
 
-    /**
-     * @param array<string, mixed> $config
-     */
-    public function guardValidConfiguration(array $config): void;
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void;
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string;
 }
