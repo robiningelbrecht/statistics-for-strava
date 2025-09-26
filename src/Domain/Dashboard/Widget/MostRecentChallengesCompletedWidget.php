@@ -23,15 +23,15 @@ final readonly class MostRecentChallengesCompletedWidget implements Widget
             ->add('numberOfChallengesToDisplay', 5);
     }
 
-    public function guardValidConfiguration(array $config): void
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!array_key_exists('numberOfChallengesToDisplay', $config)) {
+        if (!$configuration->configItemExists('numberOfChallengesToDisplay')) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" is required for MostRecentChallengesCompletedWidget.');
         }
-        if (!is_int($config['numberOfChallengesToDisplay'])) {
+        if (!is_int($configuration->getConfigItem('numberOfChallengesToDisplay'))) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" must be an integer.');
         }
-        if ($config['numberOfChallengesToDisplay'] < 1) {
+        if ($configuration->getConfigItem('numberOfChallengesToDisplay') < 1) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" must be set to a value of 1 or greater.');
         }
     }

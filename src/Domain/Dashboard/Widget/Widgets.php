@@ -42,13 +42,13 @@ final class Widgets implements \IteratorAggregate
                 continue;
             }
             $widget = $this->widgets[(string) $widgetName] ?? throw new \InvalidArgumentException(sprintf('Dashboard widget "%s" does not exists.', $widgetName));
-
-            $widget->guardValidConfiguration($configuredWidget['config'] ?? []);
             $widgetConfig = $widget->getDefaultConfiguration();
 
             foreach ($configuredWidget['config'] ?? [] as $key => $value) {
                 $widgetConfig->add($key, $value);
             }
+
+            $widget->guardValidConfiguration($widgetConfig);
 
             if (!$render = $widget->render($this->clock->getCurrentDateTimeImmutable(), $widgetConfig)) {
                 continue;
