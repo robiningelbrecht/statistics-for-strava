@@ -1,3 +1,10 @@
+# [v3.4.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.3) - 2025-09-26
+
+## What's Changed
+* ISSUE #1114: Fix backwards compatibility bug in MostRecentActivitiesWidget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1115
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.4.2...v3.4.3
+
 # [v3.4.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.2) - 2025-09-24
 
 ## What's Changed

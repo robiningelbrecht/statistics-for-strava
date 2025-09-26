@@ -25,4 +25,9 @@ final class WidgetConfiguration
     {
         return $this->configuration[$key] ?? $default;
     }
+
+    public function configItemExists(string $key): bool
+    {
+        return array_key_exists($key, $this->configuration);
+    }
 }

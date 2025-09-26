@@ -32,12 +32,12 @@ final readonly class GearStatsWidget implements Widget
             ->add('includeRetiredGear', true);
     }
 
-    public function guardValidConfiguration(array $config): void
+    public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!array_key_exists('includeRetiredGear', $config)) {
+        if (!$configuration->configItemExists('includeRetiredGear')) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" is required for GearStatsWidget.');
         }
-        if (!is_bool($config['includeRetiredGear'])) {
+        if (!is_bool($configuration->getConfigItem('includeRetiredGear'))) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" must be a boolean.');
         }
     }
