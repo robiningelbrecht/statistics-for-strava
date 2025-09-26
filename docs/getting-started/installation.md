@@ -60,16 +60,16 @@ STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
 # Valid timezones can found under TZ Identifier column here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 TZ=Etc/GMT
 
-# If you want to serve Statistics for Strava from a custom domain (not localhost), 
+# !! IMPORTANT If you want to serve Statistics for Strava from a custom domain (not localhost), 
 # uncomment the following lines and configure them accordingly:
 
 # The domain where Statistics for Strava will be available.
-#PROXY_HOST=https://your-domain.com
+# PROXY_HOST=https://your-domain.com
 # The port on which the app will be served.
-#PROXY_PORT=8080
+# PROXY_PORT=8080
 
 # Caddy server log level. Available options: DEBUG, INFO, ERROR
-#CADDY_LOG_LEVEL=ERROR
+# CADDY_LOG_LEVEL=ERROR
 ```
 
 ## config.yaml
