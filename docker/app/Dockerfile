@@ -6,12 +6,10 @@ WORKDIR /var/www
 RUN apk add --no-cache \
   bash \
   curl \
-  file \
-  git
+  file
 
 RUN set -eux; \
 	install-php-extensions \
-		@composer \
         bcmath \
         ctype \
         curl \
@@ -31,7 +29,6 @@ RUN set -eux; \
         xml \
         xmlreader \
         xmlwriter \
-        zip \
         pcntl;
 
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
