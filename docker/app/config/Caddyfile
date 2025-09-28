@@ -55,17 +55,16 @@
     }
 
     # Serve everything else trough Symfony.
-    @phpRoute {
-        not file {path}
-        not path *.html *.json
-        not path /files/*
-        not path /gear-maintenance/*
+    handle {
+        @phpRoute {
+            not file {path}
+        }
+
+        rewrite @phpRoute index.php
+
+        @frontController path index.php
+        php @frontController
     }
-
-    rewrite @phpRoute index.php
-
-    @frontController path index.php
-    php @frontController
 
     # Handle error codes.
     handle_errors 403 404 {
