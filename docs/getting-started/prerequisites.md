@@ -14,4 +14,8 @@ Most importantly, you'll need a `Strava client ID` and `Strava client Secret`
   You can configure these by clicking the __Edit__ button on the top right-hand side of the page.
 * Make sure to add an App Icon. You can find this setting at the bottom of the API settings page. 
 
-![Strava API settings page](../assets/images/strava-api-settings.png) 
+<div class="alert important">
+Do not include a port number in the <i>Authorization Callback Domain</i> field.
+</div>
+
+![Strava API settings page](../assets/images/strava-api-settings.png)
