@@ -3,10 +3,11 @@
     auto_https   off
 
     frankenphp {
+         num_threads 3
          worker {
+           num 2
            file ./public/index.php
            env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
-           #watch
         }
     }
 
