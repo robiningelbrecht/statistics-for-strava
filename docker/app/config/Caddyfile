@@ -48,11 +48,18 @@
         file_server
     }
 
+    # Serve /gear-maintenance/* from storage
+    handle /gear-maintenance/* {
+        root * /var/www/storage
+        file_server
+    }
+
     # Serve everything else trough Symfony.
     @phpRoute {
         not file {path}
         not path *.html *.json
         not path /files/*
+        not path /gear-maintenance/*
     }
 
     rewrite @phpRoute index.php
