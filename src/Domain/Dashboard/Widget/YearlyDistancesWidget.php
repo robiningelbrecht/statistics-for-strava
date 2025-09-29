@@ -10,6 +10,7 @@ use App\Domain\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
 use App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
 use App\Domain\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Activity\YearlyDistance\YearlyStatistics;
+use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -31,11 +32,18 @@ final readonly class YearlyDistancesWidget implements Widget
 
     public function getDefaultConfiguration(): WidgetConfiguration
     {
-        return WidgetConfiguration::empty();
+        return WidgetConfiguration::empty()
+            ->add('enableLastXYearsByDefault', 10);
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
+        if (!$configuration->configItemExists('enableLastXYearsByDefault')) {
+            throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" is required for YearlyDistancesWidget.');
+        }
+        if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
+            throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
+        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
@@ -52,6 +60,9 @@ final readonly class YearlyDistancesWidget implements Widget
 
         $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
         $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
+
+        /** @var int $enableLastXYearsByDefault */
+        $enableLastXYearsByDefault = $configuration->getConfigItem('enableLastXYearsByDefault');
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {
@@ -70,7 +81,8 @@ final readonly class YearlyDistancesWidget implements Widget
                     activityType: $activityType,
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
-                    now: $now
+                    now: $now,
+                    enableLastXYearsByDefault: $enableLastXYearsByDefault
                 )->build()
             );
 

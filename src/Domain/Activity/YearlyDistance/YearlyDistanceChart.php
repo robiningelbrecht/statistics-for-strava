@@ -21,6 +21,7 @@ final readonly class YearlyDistanceChart
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
+        private int $enableLastXYearsByDefault,
     ) {
     }
 
@@ -31,6 +32,7 @@ final readonly class YearlyDistanceChart
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
         SerializableDateTime $now,
+        int $enableLastXYearsByDefault,
     ): self {
         return new self(
             yearStats: $yearStats,
@@ -38,12 +40,13 @@ final readonly class YearlyDistanceChart
             activityType: $activityType,
             unitSystem: $unitSystem,
             translator: $translator,
-            now: $now
+            now: $now,
+            enableLastXYearsByDefault: $enableLastXYearsByDefault,
         );
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
@@ -68,8 +71,17 @@ final readonly class YearlyDistanceChart
         }
 
         $series = [];
+        $selectedSeries = [];
+        $delta = 1;
         /** @var \App\Infrastructure\ValueObject\Time\Year $year */
         foreach ($this->uniqueYears as $year) {
+            if ($delta <= $this->enableLastXYearsByDefault) {
+                $selectedSeries[$year->toInt()] = true;
+            } else {
+                $selectedSeries[$year->toInt()] = false;
+            }
+            ++$delta;
+
             $series[(string) $year] = [
                 'name' => (string) $year,
                 'type' => 'line',
@@ -125,6 +137,7 @@ final readonly class YearlyDistanceChart
                 ],
             ],
             'legend' => [
+                'selected' => $selectedSeries,
                 'show' => true,
             ],
             'tooltip' => [
