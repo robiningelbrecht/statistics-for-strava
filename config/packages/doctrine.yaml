@@ -20,11 +20,6 @@ doctrine:
         dir: '%kernel.project_dir%/src'
         prefix: 'App'
         alias: App
-      Money\Money:
-        type: xml
-        dir: "%kernel.project_dir%/config/packages/doctrine"
-        prefix: Money
-        is_bundle: false
     controller_resolver:
       auto_mapping: false
 
