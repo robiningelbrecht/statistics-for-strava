@@ -10,9 +10,3 @@
 ## Description
 
 Fixes ISSUE_NUMBER
-
-## Checklist
-
-- [ ] Added/updated tests?
-- [ ] Bumped APP version?
-

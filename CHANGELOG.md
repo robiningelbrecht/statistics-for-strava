@@ -1,3 +1,13 @@
+# [v3.5.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.5.0) - 2025-09-29
+
+## What's Changed
+* ISSUE #1117: Improve performance of RamerDouglasPeucker algorithm by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1119
+* ISSUE #1118: Improve prerequisites documentation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1120
+* ISSUE #1097: Show position on leaflet map when hovering charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1123
+* ISSUE #1122: Add enableLastXYearsByDefault config option to yearlyDistances widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1124
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.4.3...v3.5.0
+
 # [v3.4.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.4.3) - 2025-09-26
 
 ## What's Changed

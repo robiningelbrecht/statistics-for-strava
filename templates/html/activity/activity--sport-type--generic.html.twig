@@ -271,7 +271,7 @@
                     } %}
                     <div class="flex flex-col">
                         <div class="min-h-[350px] flex-grow-1" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
-                             data-leaflet='{{ leafletOptions|json_encode }}'></div>
+                             data-leaflet='{{ leafletOptions|json_encode }}' data-leaflet-echart-connect></div>
                     </div>
                 {% else %}
                     <div class="flex flex-col justify-center rounded-lg bg-[#89D7D2]">
@@ -397,7 +397,11 @@
                     <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
                         <div class="flex flex-col gap-y-1">
                             {% for chart in profileCharts %}
-                                <div class="{{ loop.last ? 'h-[145px]' : 'h-[120px]' }}" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                                {% if loop.last %}
+                                    <div class="h-[145px]" data-echarts-options='{{ chart }}' data-echarts-connect data-leaflet-echart-connect='{{ coordinateMap }}'></div>
+                                {% else %}
+                                    <div class="h-[120px]" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>

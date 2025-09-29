@@ -91,11 +91,22 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
             $velocityIndex = array_search(CombinedStreamType::VELOCITY, $streamTypes->toArray(), true);
             $powerIndex = array_search(CombinedStreamType::WATTS, $streamTypes->toArray(), true);
+            $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $streamTypes->toArray(), true);
+
+            $coordinates = $streams->filterOnType(StreamType::LAT_LNG)?->getData() ?? [];
+            $originalDistances = $distanceStream->getData();
 
             // Make sure necessary streams are converted before saving,
             // So we do not need to convert it when reading the data.
             foreach ($combinedData as &$row) {
-                $distanceInKm = Meter::from($row[$distanceIndex])->toKilometer();
+                $distance = $row[$distanceIndex];
+
+                if (false !== $coordinateIndex && !empty($coordinates)) {
+                    // Find corresponding coordinate for distance.
+                    $row[$coordinateIndex] = $coordinates[array_search($distance, $originalDistances)];
+                }
+
+                $distanceInKm = Meter::from($distance)->toKilometer();
                 $row[$distanceIndex] = $distanceInKm->toFloat();
 
                 if (UnitSystem::IMPERIAL === $this->unitSystem) {

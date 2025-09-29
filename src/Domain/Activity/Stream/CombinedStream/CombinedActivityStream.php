@@ -97,6 +97,19 @@ final readonly class CombinedActivityStream
     }
 
     /**
+     * @return array<int, array<float, float>>
+     */
+    public function getCoordinates(): array
+    {
+        $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $this->streamTypes->toArray(), true);
+        if (false === $coordinateIndex) {
+            return [];
+        }
+
+        return array_column($this->data, $coordinateIndex);
+    }
+
+    /**
      * @return array<int, float>
      */
     public function getOtherStreamData(CombinedStreamType $streamType): array
