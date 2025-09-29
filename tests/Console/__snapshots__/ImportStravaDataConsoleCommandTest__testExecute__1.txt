@@ -1,3 +1,6 @@
-Running database migrations...
-Database got vacuumed 🧹
-Time: 10s, Memory: 45MB
+
+StatisticsforStravav3.5.0
+
+Runningdatabasemigrations...
+Databasegotvacuumed🧹
+Time:10s,Memory:45MB
