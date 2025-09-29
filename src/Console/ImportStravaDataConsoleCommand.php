@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\BuildApp\AppVersion;
 use App\Domain\Activity\BestEffort\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
 use App\Domain\Activity\ImportActivities\ImportActivities;
 use App\Domain\Activity\Lap\ImportActivityLaps\ImportActivityLaps;
@@ -29,6 +30,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
 #[AsCommand(name: 'app:strava:import-data', description: 'Import Strava data')]
@@ -47,7 +49,7 @@ final class ImportStravaDataConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output = new LoggableConsoleOutput($output, $this->logger);
+        $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
         try {
             $this->fileSystemPermissionChecker->ensureWriteAccess();
@@ -58,6 +60,12 @@ final class ImportStravaDataConsoleCommand extends Command
         }
 
         $this->resourceUsage->startTimer();
+
+        $output->block(
+            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
+            style: 'fg=black;bg=green',
+            padding: true
+        );
 
         $output->writeln('Running database migrations...');
         $this->migrationRunner->run();
