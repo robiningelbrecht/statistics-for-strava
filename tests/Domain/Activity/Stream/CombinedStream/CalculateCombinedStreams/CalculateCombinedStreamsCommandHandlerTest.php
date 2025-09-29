@@ -81,6 +81,13 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
                 ->withData([3])
                 ->build()
         );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
+                ->withStreamType(StreamType::LAT_LNG)
+                ->withData([[1, 2]])
+                ->build()
+        );
 
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
