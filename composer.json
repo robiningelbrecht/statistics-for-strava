@@ -35,7 +35,6 @@
         "inspector-apm/neuron-ai": "^2.0",
         "league/flysystem-bundle": "^3.3",
         "league/flysystem-memory": "^3.29",
-        "moneyphp/money": "^4.5",
         "nesbot/carbon": "^3.10",
         "ramsey/uuid": "^4.7",
         "respect/validation": "^2.3",
