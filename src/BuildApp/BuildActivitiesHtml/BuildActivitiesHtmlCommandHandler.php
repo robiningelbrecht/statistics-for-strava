@@ -145,6 +145,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $activityProfileCharts = [];
+            $coordinateMap = [];
             if ($activityType->supportsCombinedStreamCalculation()) {
                 try {
                     $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
@@ -159,6 +160,10 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     $firstIteration = true;
                     foreach ($combinedStreamTypes as $combinedStreamType) {
                         if (CombinedStreamType::DISTANCE === $combinedStreamType) {
+                            continue;
+                        }
+                        if (CombinedStreamType::LAT_LNG === $combinedStreamType) {
+                            $coordinateMap = $combinedActivityStream->getCoordinates();
                             continue;
                         }
 
@@ -198,6 +203,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
                     'profileCharts' => array_reverse($activityProfileCharts),
                     'bestEfforts' => $bestEfforts->getByActivity($activity->getId()),
+                    'coordinateMap' => Json::encode($coordinateMap),
                 ]),
             );
 

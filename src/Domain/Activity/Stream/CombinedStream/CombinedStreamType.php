@@ -18,6 +18,7 @@ enum CombinedStreamType: string implements TranslatableInterface
     case HEART_RATE = 'heartrate';
     case VELOCITY = 'velocity';
     case PACE = 'pace';
+    case LAT_LNG = 'latlng';
 
     public function getStreamType(): StreamType
     {
@@ -37,6 +38,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::WATTS => $translator->trans('Power'),
             CombinedStreamType::PACE => $translator->trans('Pace'),
             CombinedStreamType::VELOCITY => $translator->trans('Speed'),
+            default => throw new \RuntimeException(sprintf('Cannot translate CombinedStreamType "%s"', $this->value)),
         };
     }
 
