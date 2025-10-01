@@ -58,6 +58,11 @@ After each change to these values, you need to run the both <i>app:strava:import
 and <i>app:strava:build-files</i> commands again for the changes to take effect
 </div>
 
+<div class="alert warning">
+Each activity can be linked to only one gear, either a Strava gear or a custom gear. 
+If both are present, the Strava gear takes precedence, and the custom gear will be ignored.
+</div>
+
 ## Tips
 
 * Use unique tag values. Avoid spaces or special characters.
