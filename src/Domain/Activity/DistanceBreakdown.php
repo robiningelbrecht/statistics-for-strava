@@ -27,7 +27,7 @@ final readonly class DistanceBreakdown
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     public function build(): array
     {
@@ -45,7 +45,15 @@ final readonly class DistanceBreakdown
             return [];
         }
 
-        $breakdownOnDistance = ceil(($longestDistanceForActivity->toFloat() / $numberOfBreakdowns) / 5) * 5;
+        $scaleForBreakdowns = match (true) {
+            $longestDistanceForActivity->toFloat() <= 5 => 1,
+            $longestDistanceForActivity->toFloat() <= 10 => 2,
+            $longestDistanceForActivity->toFloat() <= 15 => 3,
+            $longestDistanceForActivity->toFloat() <= 20 => 4,
+            default => 5,
+        };
+
+        $breakdownOnDistance = ceil(($longestDistanceForActivity->toFloat() / $numberOfBreakdowns) / $scaleForBreakdowns) * $scaleForBreakdowns;
 
         $range = range($breakdownOnDistance, ceil($longestDistanceForActivity->toFloat() / $breakdownOnDistance) * $breakdownOnDistance, $breakdownOnDistance);
         foreach ($range as $breakdownLimit) {
