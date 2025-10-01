@@ -21,6 +21,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
     private function __construct(
         private bool $isFeatureEnabled,
         private HashtagPrefix $hashtagPrefix,
+        private bool $resetCountersFromNextActivityOnwards,
     ) {
         $this->gearComponents = GearComponents::empty();
         $this->gearOptions = GearOptions::empty();
@@ -36,6 +37,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),
+                resetCountersFromNextActivityOnwards: true,
             );
         }
 
@@ -58,6 +60,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
             hashtagPrefix: $hashtagPrefix,
+            resetCountersFromNextActivityOnwards: $config['resetCountersFromNextActivityOnwards'] ?? true
         );
 
         foreach ($config['components'] as $component) {
@@ -231,6 +234,11 @@ final readonly class GearMaintenanceConfig implements \Stringable
     public function isFeatureEnabled(): bool
     {
         return $this->isFeatureEnabled;
+    }
+
+    public function needsResetCountersFromNextActivityOnwards(): bool
+    {
+        return $this->resetCountersFromNextActivityOnwards;
     }
 
     public function __toString(): string
