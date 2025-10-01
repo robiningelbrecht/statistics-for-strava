@@ -40,6 +40,10 @@ services:
 enabled: false
 # Prefix for the hashtags used in the Strava activity title
 hashtagPrefix: 'sfs'
+# If true, adding a maintenance hashtag to an activity title will reset the counters from the next activity onwards.
+# If false, adding a maintenance hashtag to an activity title will reset the counters from the tagged activity onwards.
+# If you are unsure, set this to true as this is the most common use case.
+resetCountersFromNextActivityOnwards: true
 components:
   # Tag to be added to the Strava activity title.
   # Will be combined with the hashtag-prefix and must be unique across all components.
