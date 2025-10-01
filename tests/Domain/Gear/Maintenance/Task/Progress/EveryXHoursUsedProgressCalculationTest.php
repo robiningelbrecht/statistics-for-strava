@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\Progress\EveryXHoursUsedProgressCalculation;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgress;
@@ -93,6 +94,7 @@ class EveryXHoursUsedProgressCalculationTest extends ContainerTestCase
 
         $this->calculation = new EveryXHoursUsedProgressCalculation(
             $this->getContainer()->get(Connection::class),
+            $this->getContainer()->get(GearMaintenanceConfig::class),
             $this->getContainer()->get(TranslatorInterface::class),
         );
     }

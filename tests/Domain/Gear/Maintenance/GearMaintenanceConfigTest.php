@@ -109,6 +109,10 @@ class GearMaintenanceConfigTest extends TestCase
         yield '"components" is empty' => [$yml, 'You must configure at least one component'];
 
         $yml = self::getValidYml();
+        $yml['countersResetMode'] = 'lol';
+        yield '"countersResetMode" is invalid' => [$yml, 'invalid countersResetMode "lol"'];
+
+        $yml = self::getValidYml();
         unset($yml['components'][0]['tag']);
         yield 'missing "components[tag]" key' => [$yml, '"tag" property is required for each component'];
 
