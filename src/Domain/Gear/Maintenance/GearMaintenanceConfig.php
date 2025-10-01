@@ -21,7 +21,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
     private function __construct(
         private bool $isFeatureEnabled,
         private HashtagPrefix $hashtagPrefix,
-        private bool $resetCountersFromNextActivityOnwards,
+        private GearMaintenanceCountersResetMode $resetMode,
     ) {
         $this->gearComponents = GearComponents::empty();
         $this->gearOptions = GearOptions::empty();
@@ -37,7 +37,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),
-                resetCountersFromNextActivityOnwards: true,
+                resetMode: GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS,
             );
         }
 
@@ -56,11 +56,19 @@ final readonly class GearMaintenanceConfig implements \Stringable
             throw new InvalidGearMaintenanceConfig('You must configure at least one component');
         }
 
+        $resetMode = GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS;
+        if (!empty($config['countersResetMode'])) {
+            $resetMode = GearMaintenanceCountersResetMode::tryFrom($config['countersResetMode']);
+            if (is_null($resetMode)) {
+                throw new InvalidGearMaintenanceConfig(sprintf('invalid countersResetMode "%s"', $config['countersResetMode']));
+            }
+        }
+
         $hashtagPrefix = HashtagPrefix::fromString($config['hashtagPrefix']);
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
             hashtagPrefix: $hashtagPrefix,
-            resetCountersFromNextActivityOnwards: $config['resetCountersFromNextActivityOnwards'] ?? true
+            resetMode: $resetMode
         );
 
         foreach ($config['components'] as $component) {
@@ -236,9 +244,9 @@ final readonly class GearMaintenanceConfig implements \Stringable
         return $this->isFeatureEnabled;
     }
 
-    public function needsResetCountersFromNextActivityOnwards(): bool
+    public function getResetMode(): GearMaintenanceCountersResetMode
     {
-        return $this->resetCountersFromNextActivityOnwards;
+        return $this->resetMode;
     }
 
     public function __toString(): string
