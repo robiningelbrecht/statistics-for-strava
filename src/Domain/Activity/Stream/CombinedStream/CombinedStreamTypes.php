@@ -23,7 +23,6 @@ final class CombinedStreamTypes extends Collection
                 CombinedStreamType::WATTS,
                 CombinedStreamType::CADENCE,
                 CombinedStreamType::VELOCITY,
-                CombinedStreamType::LAT_LNG,
             ]);
         }
 
@@ -31,7 +30,6 @@ final class CombinedStreamTypes extends Collection
             CombinedStreamType::ALTITUDE,
             CombinedStreamType::HEART_RATE,
             CombinedStreamType::PACE,
-            CombinedStreamType::LAT_LNG,
         ]);
     }
 }

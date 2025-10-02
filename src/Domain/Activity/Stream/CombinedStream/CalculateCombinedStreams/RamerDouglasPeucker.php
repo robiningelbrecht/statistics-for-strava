@@ -45,10 +45,6 @@ final readonly class RamerDouglasPeucker
             $otherPoints = [];
             /** @var ActivityStream $otherStream */
             foreach ($this->otherStreams as $otherStream) {
-                if (StreamType::LAT_LNG === $otherStream->getStreamType()) {
-                    // LatLng streams are handled separately.
-                    continue;
-                }
                 $otherPoints[] = $otherStream->getData()[$i] ?? 0;
             }
 

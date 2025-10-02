@@ -53,7 +53,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             if (!$distanceStream = $streams->filterOnType(StreamType::DISTANCE)) {
                 continue;
             }
-            $streamTypes = CombinedStreamTypes::fromArray([
+            $combinedStreamTypes = CombinedStreamTypes::fromArray([
                 CombinedStreamType::DISTANCE,
             ]);
 
@@ -76,7 +76,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     $stream = $stream->applySimpleMovingAverage(3);
                 }
 
-                $streamTypes->add($combinedStreamType);
+                $combinedStreamTypes->add($combinedStreamType);
                 $otherStreams->add($stream);
             }
 
@@ -86,14 +86,26 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 otherStreams: $otherStreams
             )->applyWith(Epsilon::create($activityType));
 
-            $distanceIndex = array_search(CombinedStreamType::DISTANCE, $streamTypes->toArray(), true);
-            $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $streamTypes->toArray(), true);
-            $paceIndex = array_search(CombinedStreamType::PACE, $streamTypes->toArray(), true);
-            $velocityIndex = array_search(CombinedStreamType::VELOCITY, $streamTypes->toArray(), true);
-            $powerIndex = array_search(CombinedStreamType::WATTS, $streamTypes->toArray(), true);
-            $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $streamTypes->toArray(), true);
+            // We need to add these after the CombinedStreamTypes::othersFor() otherwise we'll end up with "Undefined array key" errors.
+            // This is because CombinedStreamTypes::othersFor() does not return LAT_LNG and TIME as these are not really "combined" streams.
+            if ($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) {
+                $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
+            }
+            if ($timeStream = $streams->filterOnType(StreamType::TIME)) {
+                $combinedStreamTypes->add(CombinedStreamType::TIME);
+            }
 
-            $coordinates = $streams->filterOnType(StreamType::LAT_LNG)?->getData() ?? [];
+            $combinedStreamTypesScalar = $combinedStreamTypes->toArray();
+            $distanceIndex = array_search(CombinedStreamType::DISTANCE, $combinedStreamTypesScalar, true);
+            $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $combinedStreamTypesScalar, true);
+            $paceIndex = array_search(CombinedStreamType::PACE, $combinedStreamTypesScalar, true);
+            $velocityIndex = array_search(CombinedStreamType::VELOCITY, $combinedStreamTypesScalar, true);
+            $powerIndex = array_search(CombinedStreamType::WATTS, $combinedStreamTypesScalar, true);
+            $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $combinedStreamTypesScalar, true);
+            $timeIndex = array_search(CombinedStreamType::TIME, $combinedStreamTypesScalar, true);
+
+            $originalCoordinates = $latLngStream?->getData() ?? [];
+            $originalTime = $timeStream?->getData() ?? [];
             $originalDistances = $distanceStream->getData();
 
             // Make sure necessary streams are converted before saving,
@@ -101,9 +113,14 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             foreach ($combinedData as &$row) {
                 $distance = $row[$distanceIndex];
 
-                if (false !== $coordinateIndex && !empty($coordinates)) {
+                $indexForOriginalDistance = array_search($distance, $originalDistances);
+                if (false !== $coordinateIndex && !empty($originalCoordinates)) {
                     // Find corresponding coordinate for distance.
-                    $row[$coordinateIndex] = $coordinates[array_search($distance, $originalDistances)];
+                    $row[$coordinateIndex] = $originalCoordinates[$indexForOriginalDistance];
+                }
+                if (false !== $timeIndex && !empty($originalTime)) {
+                    // Find corresponding time for distance.
+                    $row[$timeIndex] = $originalTime[$indexForOriginalDistance];
                 }
 
                 $distanceInKm = Meter::from($distance)->toKilometer();
@@ -157,7 +174,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 CombinedActivityStream::create(
                     activityId: $activityId,
                     unitSystem: $this->unitSystem,
-                    streamTypes: $streamTypes,
+                    streamTypes: $combinedStreamTypes,
                     data: $combinedData,
                 )
             );

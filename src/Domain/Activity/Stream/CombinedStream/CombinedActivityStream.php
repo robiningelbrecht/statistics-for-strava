@@ -9,21 +9,41 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-final readonly class CombinedActivityStream
+final class CombinedActivityStream
 {
+    /** @var array<string, array<int, float>> */
+    private array $chartStreamDataCache;
+    private readonly CombinedStreamTypes $streamTypesForCharts;
+
     /**
      * @param array<mixed> $data
      */
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private ActivityId $activityId,
+        private readonly ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'string')]
-        private UnitSystem $unitSystem,
+        private readonly UnitSystem $unitSystem,
         #[ORM\Column(type: 'string')]
-        private CombinedStreamTypes $streamTypes,
+        private readonly CombinedStreamTypes $streamTypes,
         #[ORM\Column(type: 'json')]
-        private array $data,
+        private readonly array $data,
     ) {
+        $this->streamTypesForCharts = CombinedStreamTypes::empty();
+        $streamTypes = $this->streamTypes->toArray();
+
+        foreach ($this->streamTypes as $streamType) {
+            if (in_array($streamType, [CombinedStreamType::DISTANCE, CombinedStreamType::LAT_LNG, CombinedStreamType::TIME])) {
+                continue;
+            }
+
+            $index = array_search($streamType, $streamTypes, true);
+            if (false === $index) {
+                continue;
+            }
+
+            $this->streamTypesForCharts->add($streamType);
+            $this->chartStreamDataCache[$streamType->value] = array_column($this->data, $index);
+        }
     }
 
     /**
@@ -97,6 +117,19 @@ final readonly class CombinedActivityStream
     }
 
     /**
+     * @return array<int, float>
+     */
+    public function getTimes(): array
+    {
+        $distanceIndex = array_search(CombinedStreamType::TIME, $this->streamTypes->toArray(), true);
+        if (false === $distanceIndex) {
+            return [];
+        }
+
+        return array_column($this->data, $distanceIndex);
+    }
+
+    /**
      * @return array<int, array<float, float>>
      */
     public function getCoordinates(): array
@@ -109,16 +142,16 @@ final readonly class CombinedActivityStream
         return array_column($this->data, $coordinateIndex);
     }
 
+    public function getStreamTypesForCharts(): CombinedStreamTypes
+    {
+        return $this->streamTypesForCharts;
+    }
+
     /**
      * @return array<int, float>
      */
-    public function getOtherStreamData(CombinedStreamType $streamType): array
+    public function getChartStreamData(CombinedStreamType $streamType): array
     {
-        $index = array_search($streamType, $this->streamTypes->toArray(), true);
-        if (false === $index) {
-            return [];
-        }
-
-        return array_column($this->data, $index);
+        return $this->chartStreamDataCache[$streamType->value] ?? [];
     }
 }

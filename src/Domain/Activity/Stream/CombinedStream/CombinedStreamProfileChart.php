@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Stream\CombinedStream;
 
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -11,34 +12,37 @@ final readonly class CombinedStreamProfileChart
 {
     private function __construct(
         /** @var array<int, int|float> */
-        private array $distances,
+        private array $xAxisData,
+        private ?string $xAxisLabelSuffix,
+        private ?string $xAxisPosition,
         /** @var array<int, int|float> */
         private array $yAxisData,
         private CombinedStreamType $yAxisStreamType,
         private UnitSystem $unitSystem,
-        private bool $showXAxis,
         private TranslatorInterface $translator,
     ) {
     }
 
     /**
-     * @param array<int, int|float> $distances
+     * @param array<int, int|float> $xAxisData
      * @param array<int, int|float> $yAxisData
      */
     public static function create(
-        array $distances,
+        array $xAxisData,
+        ?string $xAxisPosition,
+        ?string $xAxisLabelSuffix,
         array $yAxisData,
         CombinedStreamType $yAxisStreamType,
         UnitSystem $unitSystem,
-        bool $showXAxis,
         TranslatorInterface $translator,
     ): self {
         return new self(
-            distances: $distances,
+            xAxisData: $xAxisData,
+            xAxisLabelSuffix: $xAxisLabelSuffix,
+            xAxisPosition: $xAxisPosition,
             yAxisData: $yAxisData,
             yAxisStreamType: $yAxisStreamType,
             unitSystem: $unitSystem,
-            showXAxis: $showXAxis,
             translator: $translator
         );
     }
@@ -51,7 +55,6 @@ final readonly class CombinedStreamProfileChart
         if (empty($this->yAxisData)) {
             throw new \RuntimeException('yAxisData data cannot be empty');
         }
-        $distanceSymbol = $this->unitSystem->distanceSymbol();
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
 
         [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
@@ -67,8 +70,8 @@ final readonly class CombinedStreamProfileChart
             'grid' => [
                 'left' => '40px',
                 'right' => '0%',
-                'bottom' => $this->showXAxis ? '20px' : '0%',
-                'top' => '0%',
+                'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && !empty($this->xAxisData) ? '20px' : '0%',
+                'top' => Theme::POSITION_TOP === $this->xAxisPosition && !empty($this->xAxisData) ? '20px' : '0%',
                 'containLabel' => false,
             ],
             'animation' => false,
@@ -78,13 +81,14 @@ final readonly class CombinedStreamProfileChart
                     '<strong>{c}</strong> '.$yAxisSuffix : 'formatPace',
             ],
             'xAxis' => [
+                'position' => $this->xAxisPosition,
                 'type' => 'category',
                 'boundaryGap' => false,
                 'axisLabel' => [
-                    'show' => $this->showXAxis,
-                    'formatter' => '{value} '.$distanceSymbol,
+                    'show' => !is_null($this->xAxisPosition) && !empty($this->xAxisData),
+                    'formatter' => '{value} '.$this->xAxisLabelSuffix,
                 ],
-                'data' => $this->distances,
+                'data' => $this->xAxisData,
                 'min' => 0,
                 'axisTick' => [
                     'show' => false,
