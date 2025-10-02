@@ -12,6 +12,9 @@ use App\Infrastructure\Serialization\Json;
 
 final class Theme
 {
+    public const string POSITION_TOP = 'top';
+    public const string POSITION_BOTTOM = 'bottom';
+
     /** @var array<string, mixed> */
     private static array $themeConfig;
     private static ?KeyValueStore $keyValueStore = null;

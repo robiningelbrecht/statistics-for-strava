@@ -19,6 +19,7 @@ enum CombinedStreamType: string implements TranslatableInterface
     case VELOCITY = 'velocity';
     case PACE = 'pace';
     case LAT_LNG = 'latlng';
+    case TIME = 'time';
 
     public function getStreamType(): StreamType
     {

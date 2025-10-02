@@ -28,6 +28,7 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\DataTableRow;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
@@ -154,33 +155,33 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     );
 
                     $distances = $combinedActivityStream->getDistances();
+                    $times = $combinedActivityStream->getTimes();
+                    $coordinateMap = $combinedActivityStream->getCoordinates();
 
-                    $combinedStreamTypes = $combinedActivityStream->getStreamTypes();
+                    $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
                     /** @var CombinedStreamType $combinedStreamType */
-                    $firstIteration = true;
-                    foreach ($combinedStreamTypes as $combinedStreamType) {
-                        if (CombinedStreamType::DISTANCE === $combinedStreamType) {
-                            continue;
-                        }
-                        if (CombinedStreamType::LAT_LNG === $combinedStreamType) {
-                            $coordinateMap = $combinedActivityStream->getCoordinates();
-                            continue;
-                        }
-
-                        if (!$data = $combinedActivityStream->getOtherStreamData($combinedStreamType)) {
-                            continue;
-                        }
+                    foreach ($streamTypesForCharts as $index => $combinedStreamType) {
+                        $xAxisPosition = match (true) {
+                            0 === $index => Theme::POSITION_BOTTOM,
+                            $index === count($streamTypesForCharts) - 1 => Theme::POSITION_TOP,
+                            default => null,
+                        };
+                        $xAxisData = match (true) {
+                            Theme::POSITION_BOTTOM === $xAxisPosition => $distances,
+                            Theme::POSITION_TOP === $xAxisPosition && !empty($times) => $times,
+                            default => [],
+                        };
 
                         $chart = CombinedStreamProfileChart::create(
-                            distances: $distances,
-                            yAxisData: $data,
+                            xAxisData: $xAxisData,
+                            xAxisPosition: $xAxisPosition,
+                            xAxisLabelSuffix: Theme::POSITION_BOTTOM === $xAxisPosition ? $this->unitSystem->distanceSymbol() : null,
+                            yAxisData: $combinedActivityStream->getChartStreamData($combinedStreamType),
                             yAxisStreamType: $combinedStreamType,
                             unitSystem: $this->unitSystem,
-                            showXAxis: $firstIteration,
                             translator: $this->translator
                         );
                         $activityProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
-                        $firstIteration = false;
                     }
                 } catch (EntityNotFound) {
                 }
