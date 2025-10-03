@@ -10,6 +10,7 @@ use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -40,6 +41,7 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Domain\Activity\BestEffort\ActivityBestEffortBuilder;
+use App\Tests\Domain\Activity\Lap\ActivityLapBuilder;
 use App\Tests\Domain\Activity\Split\ActivitySplitBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamBuilder;
@@ -224,6 +226,22 @@ trait ProvideTestData
             activity: $activity,
             rawData: $rawData
         ));
+
+        /** @var ActivitySplitRepository $activitySplitRepository */
+        $activitySplitRepository = $this->getContainer()->get(ActivitySplitRepository::class);
+        $activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
+                ->withActivityId($activity->getId())
+                ->build()
+        );
+
+        /** @var ActivityLapRepository $activityLapRepository */
+        $activityLapRepository = $this->getContainer()->get(ActivityLapRepository::class);
+        $activityLapRepository->add(
+            ActivityLapBuilder::fromDefaults()
+                ->withActivityId($activity->getId())
+                ->build()
+        );
 
         /** @var ImportedGearRepository $gearRepository */
         $gearRepository = $this->getContainer()->get(ImportedGearRepository::class);

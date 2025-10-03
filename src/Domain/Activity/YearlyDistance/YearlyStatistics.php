@@ -75,6 +75,9 @@ final readonly class YearlyStatistics
         }
 
         foreach ($years as $year) {
+            if (!isset($statistics[$year->toInt()]['totalDistance'])) {
+                continue;
+            }
             if (!isset($statistics[$year->toInt() - 1]['totalDistance'])) {
                 continue;
             }

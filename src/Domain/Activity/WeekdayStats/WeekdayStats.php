@@ -63,9 +63,9 @@ final readonly class WeekdayStats
 
             ++$statistics[$weekDay]['numberOfWorkouts'];
 
-            $statistics[$weekDay]['totalDistance'] += $activity->getDistance()->toFloat();
-            $statistics[$weekDay]['totalElevation'] += $activity->getElevation()->toFloat();
-            $statistics[$weekDay]['movingTime'] += $activity->getMovingTimeInSeconds();
+            $statistics[$weekDay]['totalDistance'] = ($statistics[$weekDay]['totalDistance'] ?? 0) + $activity->getDistance()->toFloat();
+            $statistics[$weekDay]['totalElevation'] = ($statistics[$weekDay]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
+            $statistics[$weekDay]['movingTime'] = ($statistics[$weekDay]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$weekDay]['averageDistance'] = $statistics[$weekDay]['totalDistance'] / $statistics[$weekDay]['numberOfWorkouts'];
             $statistics[$weekDay]['movingTimeForHumans'] = CarbonInterval::seconds($statistics[$weekDay]['movingTime'])->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
             $statistics[$weekDay]['percentage'] = round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2);
