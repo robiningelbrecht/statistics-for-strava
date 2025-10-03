@@ -77,6 +77,13 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ActivityStreamRepository::class)->add(
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-5'))
+                ->withStreamType(StreamType::MOVING)
+                ->withData([true])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
                 ->withStreamType(StreamType::VELOCITY)
                 ->withData([3])
                 ->build()

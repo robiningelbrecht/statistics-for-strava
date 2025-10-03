@@ -163,13 +163,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     foreach ($streamTypesForCharts as $index => $combinedStreamType) {
                         $xAxisPosition = match (true) {
                             0 === $index => Theme::POSITION_BOTTOM,
-                            $index === count($streamTypesForCharts) - 1 => Theme::POSITION_TOP,
+                            $index === count($streamTypesForCharts) - 1 && !empty($times) => Theme::POSITION_TOP,
                             default => null,
                         };
                         $xAxisData = match (true) {
-                            Theme::POSITION_BOTTOM === $xAxisPosition => $distances,
-                            Theme::POSITION_TOP === $xAxisPosition && !empty($times) => $times,
-                            default => [],
+                            Theme::POSITION_TOP === $xAxisPosition => $times,
+                            default => $distances,
                         };
 
                         $chart = CombinedStreamProfileChart::create(
