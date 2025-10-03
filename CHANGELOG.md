@@ -1,3 +1,29 @@
+# [v3.6.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.0) - 2025-10-03
+
+> [!WARNING]  
+> This release comes with a new Docker-based architecture.  Before upgrading, review and update the required `.env` values for your setup:  
+> https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=env
+
+```.env
+# !! IMPORTANT If you want to serve Statistics for Strava from a custom domain (not localhost), 
+# uncomment the following lines and configure them accordingly:
+
+# The domain where Statistics for Strava will be available.
+# PROXY_HOST=https://your-domain.com
+# The port on which the app will be served.
+# PROXY_PORT=8080
+```
+
+## What's Changed
+* ISSUE #1112: Replace PHP-FPM and Nginx with FrankenPHP and Caddy by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1113
+* ISSUE #1131: Improve custom gear docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1132
+* ISSUE #1121: Gear maintenance reset counters mode by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1133
+* ISSUE #1129: Improve Distance Breakdown for short distance athletes by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1134
+* ISSUE #1135: Add time to xAxis on activity combined charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1137
+* ISSUE #1130: Add bar chart to activity laps by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1138
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.5.0...v3.6.0
+
 # [v3.5.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.5.0) - 2025-09-29
 
 ## What's Changed
