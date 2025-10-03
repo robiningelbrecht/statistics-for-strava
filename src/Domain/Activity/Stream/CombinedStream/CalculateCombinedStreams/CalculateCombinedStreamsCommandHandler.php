@@ -91,7 +91,28 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             if ($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) {
                 $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
             }
-            if ($timeStream = $streams->filterOnType(StreamType::TIME)) {
+
+            $originalDistances = $distanceStream->getData();
+            $originalCoordinates = $latLngStream?->getData() ?? [];
+            $originalTimeData = $streams->filterOnType(StreamType::TIME)?->getData() ?? [];
+            $originalMovingData = $streams->filterOnType(StreamType::MOVING)?->getData();
+
+            $cumulativeMovingTime = [];
+            if (!empty($originalTimeData) && !empty($originalMovingData)) {
+                $cumulativeMovingTime = [0];
+                for ($i = 1, $len = count($originalTimeData); $i < $len; ++$i) {
+                    $delta = $originalTimeData[$i] - $originalTimeData[$i - 1];
+                    $cumulativeMovingTime[$i] = $cumulativeMovingTime[$i - 1] + ($originalMovingData[$i] ? $delta : 0);
+                }
+
+                if (abs(end($cumulativeMovingTime) - $activity->getMovingTimeInSeconds()) > 300) {
+                    // For some reason the calculated moving time does not match or reflect the activity moving time.
+                    // This means the Strava time stream is fucked up somehow. Discard it.
+                    $cumulativeMovingTime = [];
+                }
+            }
+
+            if (!empty($cumulativeMovingTime)) {
                 $combinedStreamTypes->add(CombinedStreamType::TIME);
             }
 
@@ -104,10 +125,6 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $combinedStreamTypesScalar, true);
             $timeIndex = array_search(CombinedStreamType::TIME, $combinedStreamTypesScalar, true);
 
-            $originalCoordinates = $latLngStream?->getData() ?? [];
-            $originalTime = $timeStream?->getData() ?? [];
-            $originalDistances = $distanceStream->getData();
-
             // Make sure necessary streams are converted before saving,
             // So we do not need to convert it when reading the data.
             foreach ($combinedData as &$row) {
@@ -118,9 +135,10 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     // Find corresponding coordinate for distance.
                     $row[$coordinateIndex] = $originalCoordinates[$indexForOriginalDistance];
                 }
-                if (false !== $timeIndex && !empty($originalTime)) {
+                if ($cumulativeMovingTime) {
                     // Find corresponding time for distance.
-                    $row[$timeIndex] = $originalTime[$indexForOriginalDistance];
+                    $movingUpUntilThisPoint = $cumulativeMovingTime[$indexForOriginalDistance];
+                    $row[$timeIndex] = $this->formatDurationForHumans($movingUpUntilThisPoint);
                 }
 
                 $distanceInKm = Meter::from($distance)->toKilometer();
