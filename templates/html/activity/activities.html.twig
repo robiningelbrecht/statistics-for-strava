@@ -34,7 +34,7 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
-                                <div id="dropdownSportTypes" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <div id="dropdownSportTypes" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
                                     <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
                                         {% for sportType in sportTypes %}
                                             <li>
@@ -61,7 +61,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                            <div id="dropdownDateRange" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                            <div id="dropdownDateRange" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
                                 <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
                                     <div class="flex items-center" data-dataTable-filter="start-date[]">
                                         <input name="start-date[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
@@ -82,7 +82,7 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
-                                <div id="dropdownCountries" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <div id="dropdownCountries" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
                                     <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownCountriesButton">
                                         {% for countryCode,countryName in countries %}
                                             <li>
@@ -110,7 +110,7 @@
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
-                                <div id="dropdownGears" class="z-20 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <div id="dropdownGears" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
                                     <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownGearsButton">
                                         {% for gear in gears %}
                                             <li>
@@ -145,7 +145,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                            <div id="dropdownOther" class="z-20 w-fit hidden border border-gray-200 bg-white rounded-lg shadow-xs">
+                            <div id="dropdownOther" class="z-1002 w-fit hidden border border-gray-200 bg-white rounded-lg shadow-xs">
                                 <div class="px-1 py-2 flex gap-x-2 divide-x divide-gray-100">
                                     <div class="flex flex-col items-center">
                                         <div class="text-xs font-medium items-center">{{ "Commutes"|trans }}</div>
