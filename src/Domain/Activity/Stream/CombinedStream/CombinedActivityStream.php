@@ -13,7 +13,6 @@ final class CombinedActivityStream
 {
     /** @var array<string, array<int, float>> */
     private array $chartStreamDataCache;
-    private readonly CombinedStreamTypes $streamTypesForCharts;
 
     /**
      * @param array<mixed> $data
@@ -28,22 +27,6 @@ final class CombinedActivityStream
         #[ORM\Column(type: 'json')]
         private readonly array $data,
     ) {
-        $this->streamTypesForCharts = CombinedStreamTypes::empty();
-        $streamTypes = $this->streamTypes->toArray();
-
-        foreach ($this->streamTypes as $streamType) {
-            if (in_array($streamType, [CombinedStreamType::DISTANCE, CombinedStreamType::LAT_LNG, CombinedStreamType::TIME])) {
-                continue;
-            }
-
-            $index = array_search($streamType, $streamTypes, true);
-            if (false === $index) {
-                continue;
-            }
-
-            $this->streamTypesForCharts->add($streamType);
-            $this->chartStreamDataCache[$streamType->value] = array_column($this->data, $index);
-        }
     }
 
     /**
@@ -144,7 +127,14 @@ final class CombinedActivityStream
 
     public function getStreamTypesForCharts(): CombinedStreamTypes
     {
-        return $this->streamTypesForCharts;
+        $this->buildChartStreamDataCache();
+        $streamTypesForCharts = CombinedStreamTypes::empty();
+
+        foreach ($this->chartStreamDataCache as $streamType => $_) {
+            $streamTypesForCharts->add(CombinedStreamType::from($streamType));
+        }
+
+        return $streamTypesForCharts;
     }
 
     /**
@@ -152,6 +142,35 @@ final class CombinedActivityStream
      */
     public function getChartStreamData(CombinedStreamType $streamType): array
     {
+        $this->buildChartStreamDataCache();
+
         return $this->chartStreamDataCache[$streamType->value] ?? [];
+    }
+
+    private function buildChartStreamDataCache(): void
+    {
+        if (!empty($this->chartStreamDataCache)) {
+            // Cache has been built already.
+            return;
+        }
+
+        $streamTypes = $this->streamTypes->toArray();
+
+        foreach ($this->streamTypes as $streamType) {
+            if (in_array($streamType, [CombinedStreamType::DISTANCE, CombinedStreamType::LAT_LNG, CombinedStreamType::TIME])) {
+                continue;
+            }
+
+            $index = array_search($streamType, $streamTypes, true);
+            if (false === $index) {
+                continue;
+            }
+
+            if (!$data = array_column($this->data, $index)) {
+                continue;
+            }
+
+            $this->chartStreamDataCache[$streamType->value] = $data;
+        }
     }
 }
