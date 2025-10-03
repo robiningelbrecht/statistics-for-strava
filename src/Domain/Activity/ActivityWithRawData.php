@@ -96,6 +96,15 @@ final readonly class ActivityWithRawData
      */
     public function getLaps(): array
     {
-        return $this->rawData['laps'];
+        /** @var non-empty-array<float> $averageSpeeds */
+        $averageSpeeds = array_column($this->rawData['laps'] ?? [], 'average_speed');
+
+        return array_map(
+            fn (array $split) => array_merge($split, [
+                'min_average_speed' => min($averageSpeeds),
+                'max_average_speed' => max($averageSpeeds),
+            ]),
+            $this->rawData['laps'] ?? [],
+        );
     }
 }

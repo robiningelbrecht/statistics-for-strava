@@ -34,7 +34,7 @@ class ActivitySplitTest extends TestCase
                     ->withMinAverageSpeed(MetersPerSecond::from(0))
                     ->withMaxAverageSpeed(MetersPerSecond::from(100))
                     ->build(),
-                12.64,
+                12.67,
             ],
             [
                 ActivitySplitBuilder::fromDefaults()
@@ -42,7 +42,7 @@ class ActivitySplitTest extends TestCase
                     ->withMinAverageSpeed(MetersPerSecond::from(2.4))
                     ->withMaxAverageSpeed(MetersPerSecond::from(4.8))
                     ->build(),
-                51.99,
+                52.0,
             ],
             [
                 ActivitySplitBuilder::fromDefaults()

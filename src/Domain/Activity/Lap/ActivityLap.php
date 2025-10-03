@@ -38,6 +38,10 @@ final readonly class ActivityLap implements SupportsAITooling
         #[ORM\Column(type: 'float')]
         private MetersPerSecond $averageSpeed,
         #[ORM\Column(type: 'float')]
+        private MetersPerSecond $minAverageSpeed,
+        #[ORM\Column(type: 'float')]
+        private MetersPerSecond $maxAverageSpeed,
+        #[ORM\Column(type: 'float')]
         private MetersPerSecond $maxSpeed,
         #[ORM\Column(type: 'integer')]
         private Meter $elevationDifference,
@@ -55,6 +59,8 @@ final readonly class ActivityLap implements SupportsAITooling
         int $movingTimeInSeconds,
         Meter $distance,
         MetersPerSecond $averageSpeed,
+        MetersPerSecond $minAverageSpeed,
+        MetersPerSecond $maxAverageSpeed,
         MetersPerSecond $maxSpeed,
         Meter $elevationDifference,
         ?int $averageHeartRate,
@@ -68,6 +74,8 @@ final readonly class ActivityLap implements SupportsAITooling
             movingTimeInSeconds: $movingTimeInSeconds,
             distance: $distance,
             averageSpeed: $averageSpeed,
+            minAverageSpeed: $minAverageSpeed,
+            maxAverageSpeed: $maxAverageSpeed,
             maxSpeed: $maxSpeed,
             elevationDifference: $elevationDifference,
             averageHeartRate: $averageHeartRate,
@@ -83,6 +91,8 @@ final readonly class ActivityLap implements SupportsAITooling
         int $movingTimeInSeconds,
         Meter $distance,
         MetersPerSecond $averageSpeed,
+        MetersPerSecond $minAverageSpeed,
+        MetersPerSecond $maxAverageSpeed,
         MetersPerSecond $maxSpeed,
         Meter $elevationDifference,
         ?int $averageHeartRate,
@@ -96,6 +106,8 @@ final readonly class ActivityLap implements SupportsAITooling
             movingTimeInSeconds: $movingTimeInSeconds,
             distance: $distance,
             averageSpeed: $averageSpeed,
+            minAverageSpeed: $minAverageSpeed,
+            maxAverageSpeed: $maxAverageSpeed,
             maxSpeed: $maxSpeed,
             elevationDifference: $elevationDifference,
             averageHeartRate: $averageHeartRate,
@@ -160,6 +172,39 @@ final readonly class ActivityLap implements SupportsAITooling
     public function getAverageSpeed(): MetersPerSecond
     {
         return $this->averageSpeed;
+    }
+
+    public function getRelativePacePercentage(): float
+    {
+        $minAverageSpeed = $this->getMinAverageSpeed()->toFloat();
+        $maxAverageSpeed = $this->getMaxAverageSpeed()->toFloat();
+
+        if ($maxAverageSpeed <= 0.0) {
+            return 0.0;
+        }
+
+        if ($maxAverageSpeed === $minAverageSpeed) {
+            return 0.0;
+        }
+
+        $min = $minAverageSpeed * 0.85;
+        $max = $maxAverageSpeed * 1.05;
+        $averageSpeed = $this->getAverageSpeed()->toFloat();
+
+        $relative = ($averageSpeed - $min) / ($max - $min) * 100;
+        $relative = max(0, min(100, $relative));
+
+        return round($relative, 2);
+    }
+
+    public function getMinAverageSpeed(): MetersPerSecond
+    {
+        return $this->minAverageSpeed;
+    }
+
+    public function getMaxAverageSpeed(): MetersPerSecond
+    {
+        return $this->maxAverageSpeed;
     }
 
     public function getMaxSpeed(): MetersPerSecond
