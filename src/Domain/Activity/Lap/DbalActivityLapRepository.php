@@ -31,10 +31,10 @@ final readonly class DbalActivityLapRepository extends DbalRepository implements
     {
         $sql = 'INSERT INTO ActivityLap (
             lapId, activityId, lapNumber, name, elapsedTimeInSeconds, movingTimeInSeconds, distance,
-            averageSpeed, maxSpeed, elevationDifference, averageHeartRate
+            averageSpeed, minAverageSpeed, maxAverageSpeed, maxSpeed, elevationDifference, averageHeartRate
         ) VALUES(
             :lapId, :activityId, :lapNumber, :name, :elapsedTimeInSeconds, :movingTimeInSeconds, :distance,
-            :averageSpeed, :maxSpeed, :elevationDifference, :averageHeartRate
+            :averageSpeed, :minAverageSpeed, :maxAverageSpeed, :maxSpeed, :elevationDifference, :averageHeartRate
         )';
 
         $this->connection->executeStatement($sql, [
@@ -46,6 +46,8 @@ final readonly class DbalActivityLapRepository extends DbalRepository implements
             'movingTimeInSeconds' => $lap->getMovingTimeInSeconds(),
             'distance' => $lap->getDistance()->toInt(),
             'averageSpeed' => $lap->getAverageSpeed()->toFloat(),
+            'minAverageSpeed' => $lap->getMinAverageSpeed()->toFloat(),
+            'maxAverageSpeed' => $lap->getMaxAverageSpeed()->toFloat(),
             'maxSpeed' => $lap->getMaxSpeed()->toFloat(),
             'elevationDifference' => $lap->getElevationDifference()->toInt(),
             'averageHeartRate' => $lap->getAverageHeartRate(),
@@ -84,6 +86,8 @@ final readonly class DbalActivityLapRepository extends DbalRepository implements
             movingTimeInSeconds: $result['movingTimeInSeconds'],
             distance: Meter::from($result['distance']),
             averageSpeed: MetersPerSecond::from($result['averageSpeed']),
+            minAverageSpeed: MetersPerSecond::from($result['minAverageSpeed']),
+            maxAverageSpeed: MetersPerSecond::from($result['maxAverageSpeed']),
             maxSpeed: MetersPerSecond::from($result['maxSpeed']),
             elevationDifference: Meter::from($result['elevationDifference']),
             averageHeartRate: $result['averageHeartRate'],

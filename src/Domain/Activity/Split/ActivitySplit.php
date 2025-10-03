@@ -146,24 +146,25 @@ final class ActivitySplit implements SupportsAITooling
 
     public function getRelativePacePercentage(): float
     {
-        if (0.0 === $this->getMaxAverageSpeed()->toFloat()) {
-            return 0;
+        $minAverageSpeed = $this->getMinAverageSpeed()->toFloat();
+        $maxAverageSpeed = $this->getMaxAverageSpeed()->toFloat();
+
+        if ($maxAverageSpeed <= 0.0) {
+            return 0.0;
         }
-        if (0.0 === $this->getMaxAverageSpeed()->toFloat() - $this->getMinAverageSpeed()->toFloat()) {
-            return 0;
+
+        if ($maxAverageSpeed === $minAverageSpeed) {
+            return 0.0;
         }
 
-        $adjustMinSpeedPercentage = 0.85;
-        $adjustMaxSpeedPercentage = 1.05;
+        $min = $minAverageSpeed * 0.85;
+        $max = $maxAverageSpeed * 1.05;
+        $averageSpeed = $this->getAverageSpeed()->toFloat();
 
-        $maxAverageSpeed = MetersPerSecond::from($this->getMaxAverageSpeed()->toFloat() * $adjustMaxSpeedPercentage);
-        $minAverageSpeed = MetersPerSecond::from($this->getMinAverageSpeed()->toFloat() * $adjustMinSpeedPercentage);
+        $relative = ($averageSpeed - $min) / ($max - $min) * 100;
+        $relative = max(0, min(100, $relative));
 
-        $step = round(100 / ($maxAverageSpeed->toFloat() - $minAverageSpeed->toFloat()), 2);
-        // Relative = step *  (value - min).
-        $relativePercentage = $step * ($this->getAverageSpeed()->toFloat() - $minAverageSpeed->toFloat());
-
-        return round($relativePercentage, 2);
+        return round($relative, 2);
     }
 
     public function getMinAverageSpeed(): MetersPerSecond

@@ -20,6 +20,8 @@ final class ActivityLapBuilder
     private int $movingTimeInSeconds;
     private Meter $distance;
     private MetersPerSecond $averageSpeed;
+    private MetersPerSecond $minAverageSpeed;
+    private MetersPerSecond $maxAverageSpeed;
     private MetersPerSecond $maxSpeed;
     private Meter $elevationDifference;
     private ?int $averageHeartRate;
@@ -35,6 +37,8 @@ final class ActivityLapBuilder
         $this->movingTimeInSeconds = 110;
         $this->elevationDifference = Meter::from(2);
         $this->averageSpeed = MetersPerSecond::from(3);
+        $this->minAverageSpeed = MetersPerSecond::from(1);
+        $this->maxAverageSpeed = MetersPerSecond::from(8);
         $this->maxSpeed = MetersPerSecond::from(8);
         $this->averageHeartRate = null;
     }
@@ -55,6 +59,8 @@ final class ActivityLapBuilder
             movingTimeInSeconds: $this->movingTimeInSeconds,
             distance: $this->distance,
             averageSpeed: $this->averageSpeed,
+            minAverageSpeed: $this->minAverageSpeed,
+            maxAverageSpeed: $this->maxAverageSpeed,
             maxSpeed: $this->maxSpeed,
             elevationDifference: $this->elevationDifference,
             averageHeartRate: $this->averageHeartRate,

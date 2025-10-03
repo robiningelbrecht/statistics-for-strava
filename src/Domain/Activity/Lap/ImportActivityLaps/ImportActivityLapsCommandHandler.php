@@ -42,19 +42,21 @@ final readonly class ImportActivityLapsCommandHandler implements CommandHandler
 
             ++$countActivitiesProcessed;
 
-            foreach ($activityWithRawData->getLaps() as $lab) {
+            foreach ($activityWithRawData->getLaps() as $lap) {
                 $this->activityLapRepository->add(ActivityLap::create(
-                    lapId: ActivityLapId::fromUnprefixed((string) $lab['id']),
+                    lapId: ActivityLapId::fromUnprefixed((string) $lap['id']),
                     activityId: $activityId,
-                    lapNumber: $lab['lap_index'],
-                    name: $lab['name'],
-                    elapsedTimeInSeconds: $lab['elapsed_time'],
-                    movingTimeInSeconds: $lab['moving_time'],
-                    distance: Meter::from($lab['distance']),
-                    averageSpeed: MetersPerSecond::from($lab['average_speed']),
-                    maxSpeed: MetersPerSecond::from($lab['max_speed']),
-                    elevationDifference: Meter::from($lab['total_elevation_gain'] ?? 0),
-                    averageHeartRate: !empty($lab['average_heartrate']) ? (int) round($lab['average_heartrate']) : null,
+                    lapNumber: $lap['lap_index'],
+                    name: $lap['name'],
+                    elapsedTimeInSeconds: $lap['elapsed_time'],
+                    movingTimeInSeconds: $lap['moving_time'],
+                    distance: Meter::from($lap['distance']),
+                    averageSpeed: MetersPerSecond::from($lap['average_speed']),
+                    minAverageSpeed: MetersPerSecond::from($lap['min_average_speed']),
+                    maxAverageSpeed: MetersPerSecond::from($lap['max_average_speed']),
+                    maxSpeed: MetersPerSecond::from($lap['max_speed']),
+                    elevationDifference: Meter::from($lap['total_elevation_gain'] ?? 0),
+                    averageHeartRate: !empty($lap['average_heartrate']) ? (int) round($lap['average_heartrate']) : null,
                 ));
                 ++$countLapsAdded;
             }
