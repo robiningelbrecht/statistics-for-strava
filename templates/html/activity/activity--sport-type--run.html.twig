@@ -118,6 +118,7 @@
                                 <div class="w-[8rem] px-2 py-2">{{ "Distance"|trans }}</div>
                                 <div class="w-[8rem] px-2 py-2">{{ "Time"|trans }}</div>
                                 <div class="w-[8rem] px-2 py-2">{{ "Pace"|trans }}</div>
+                                <div class="grow min-w-[10rem] px-2 py-2"></div>
                                 <div class="w-[8rem] px-2 py-2">{{ "Elev"|trans }}</div>
                                 <div class="w-[8rem] px-2 py-2">{{ "HR"|trans }}</div>
                             </div>
@@ -134,6 +135,11 @@
                                     </div>
                                     <div class="w-[8rem] px-2 py-2">
                                         {{ lap.getPaceInSecPerKm()|formatPace }}
+                                    </div>
+                                    <div class="grow min-w-[10rem] px-2 py-2">
+                                        <div class=" bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%"></div>
+                                        </div>
                                     </div>
                                     <div class="w-[8rem] px-2 py-2">
                                         {{ lap.getElevationDifference()|renderMeasurement(0) }}
