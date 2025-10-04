@@ -8,9 +8,12 @@ use PHLAK\Twine\Str;
 
 final readonly class Device
 {
+    private string $id;
+
     private function __construct(
         private string $name,
     ) {
+        $this->id = (string) Str::make($this->name)->kebabCase();
     }
 
     public static function create(string $name): self
@@ -20,7 +23,7 @@ final readonly class Device
 
     public function getId(): string
     {
-        return (string) Str::make($this->name)->kebabCase();
+        return $this->id;
     }
 
     public function getName(): string
