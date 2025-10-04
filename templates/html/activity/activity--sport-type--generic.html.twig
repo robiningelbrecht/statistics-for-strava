@@ -198,6 +198,9 @@
                                     {% set timeIntervals =  [5, 60, 300, 1200] %}
                                     {% set timeIntervalLabels = ['5s', '1m', '5m', '20m'] %}
                                     <tr>
+                                        <th scope="col" class="px-2 py-2">
+                                            {{ "Normalized"|trans }}
+                                        </th>
                                         {% for timeInterval in timeIntervals %}
                                             {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
                                             {% if powerOutput %}
@@ -210,10 +213,13 @@
                                     </thead>
                                     <tbody>
                                     <tr>
+                                        <td class="px-2 py-2">
+                                            {{ activity.getNormalizedPower() }}<span class="text-xs">w</span>
+                                        </td>
                                         {% for timeInterval in timeIntervals %}
                                             {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
                                             {% if powerOutput %}
-                                                <td class="px-2 py-2 first:border-l-0 border-l">
+                                                <td class="px-2 py-2 border-l">
                                                     {{ powerOutput.getPower() }}<span class="text-xs">w</span>
                                                 </td>
                                                 <td class="px-2 py-2 last:border-r-0 border-r">

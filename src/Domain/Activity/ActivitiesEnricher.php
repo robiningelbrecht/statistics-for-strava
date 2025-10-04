@@ -39,7 +39,10 @@ final class ActivitiesEnricher
 
         foreach ($activities as $activity) {
             $activity->enrichWithBestPowerOutputs(
-                $this->activityPowerRepository->findBestForActivity($activity->getId())
+                $this->activityPowerRepository->findBest($activity->getId())
+            );
+            $activity->enrichWithNormalizedPower(
+                $this->activityPowerRepository->findNormalizedPower($activity->getId())
             );
             $activity->enrichWithTags([
                 ...$maintenanceTags,

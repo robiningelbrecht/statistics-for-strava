@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\DbalActivityRepository;
 use App\Domain\Activity\Eddington\Eddington;
 use App\Domain\Activity\Stream\StreamBasedActivityHeartRateRepository;
+use App\Domain\Activity\Stream\StreamBasedActivityPowerRepository;
 use App\Infrastructure\Twig\HtmlTwigExtension;
 use Carbon\Carbon;
 use Doctrine\DBAL\Connection;
@@ -37,6 +38,8 @@ abstract class ContainerTestCase extends KernelTestCase
         // Empty the static cache between tests.
         DbalActivityRepository::$cachedActivities = [];
         ActivityIntensity::$cachedIntensities = [];
+        StreamBasedActivityPowerRepository::$cachedPowerOutputs = [];
+        StreamBasedActivityPowerRepository::$cachedNormalizedPowers = [];
         StreamBasedActivityHeartRateRepository::$cachedHeartRateZones = [];
         StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays = [];
         Eddington::$instances = [];
