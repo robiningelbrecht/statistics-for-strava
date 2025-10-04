@@ -13,7 +13,6 @@
   - [Custom gear](configuration/custom-gear.md "Statistics for Strava | Custom gear")
   - [Gear maintenance](configuration/gear-maintenance.md "Statistics for Strava | Gear maintenance")
   - [AI integration](configuration/ai-integration.md "Statistics for Strava | AI integration")
-  - [File permissions](configuration/file-permissions.md "Statistics for Strava | File permissions")
   
 - Troubleshooting
 
