@@ -8,6 +8,7 @@ use App\BuildApp\Countries;
 use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\PowerDistributionChart;
@@ -48,6 +49,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private GearRepository $gearRepository,
+        private DeviceRepository $deviceRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
@@ -80,6 +82,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             'activities.html',
             $this->twig->load('html/activity/activities.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
+                'devices' => $this->deviceRepository->findAll(),
                 'activityTotals' => $activityTotals,
                 'countries' => $this->countries->getUsedInActivities(),
                 'gears' => $this->gearRepository->findAll(),

@@ -23,6 +23,7 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use App\Infrastructure\ValueObject\String\SanitizedString;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use Doctrine\ORM\Mapping as ORM;
@@ -633,6 +634,7 @@ final class Activity implements SupportsAITooling
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearId() ?? 'gear-none',
             'workoutType' => $this->getWorkoutType()?->value,
+            'device' => SanitizedString::fromOptionalString($this->getDeviceName()) ?? 'device-none',
         ]);
     }
 

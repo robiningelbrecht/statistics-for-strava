@@ -203,6 +203,13 @@ final class ActivityBuilder
         return $this;
     }
 
+    public function withoutDeviceName(): self
+    {
+        $this->deviceName = null;
+
+        return $this;
+    }
+
     public function withSportType(SportType $sportType): self
     {
         $this->sportType = $sportType;

@@ -6,7 +6,8 @@
             "sportType": "Ride",
             "start-date": 1694552738000,
             "isCommute": "false",
-            "gear": "gear-none"
+            "gear": "gear-none",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -33,7 +34,8 @@
             "sportType": "Ride",
             "start-date": 1694466338000,
             "isCommute": "false",
-            "gear": "gear-none"
+            "gear": "gear-none",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -61,7 +63,8 @@
             "start-date": 1693947938000,
             "countryCode": "be",
             "isCommute": "false",
-            "gear": "gear-none"
+            "gear": "gear-none",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -88,7 +91,8 @@
             "sportType": "Ride",
             "start-date": 1693861538000,
             "isCommute": "false",
-            "gear": "gear-none"
+            "gear": "gear-none",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -115,7 +119,8 @@
             "sportType": "VirtualRide",
             "start-date": 1693499735000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "zwift"
         },
         "summables": {
             "distance": 33.55,
@@ -142,7 +147,8 @@
             "sportType": "VirtualRide",
             "start-date": 1690821335000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "rouvy"
         },
         "summables": {
             "distance": 33.55,
@@ -169,7 +175,8 @@
             "sportType": "VirtualRide",
             "start-date": 1690734935000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "device-none"
         },
         "summables": {
             "distance": 0,
@@ -195,7 +202,8 @@
             "sportType": "Ride",
             "start-date": 1690623243000,
             "isCommute": "true",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 12.42,
@@ -222,7 +230,8 @@
             "sportType": "Ride",
             "start-date": 1690616043000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 112.42,
@@ -249,7 +258,8 @@
             "sportType": "Ride",
             "start-date": 1690536843000,
             "isCommute": "false",
-            "gear": "gear-b12659862"
+            "gear": "gear-b12659862",
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 12.42,
@@ -276,7 +286,8 @@
             "sportType": "Run",
             "start-date": 1659198935000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "device-none"
         },
         "summables": {
             "distance": 50,
@@ -303,7 +314,8 @@
             "sportType": "VirtualRide",
             "start-date": 1659198935000,
             "isCommute": "false",
-            "gear": "gear-b12659861"
+            "gear": "gear-b12659861",
+            "device": "device-none"
         },
         "summables": {
             "distance": 0,
