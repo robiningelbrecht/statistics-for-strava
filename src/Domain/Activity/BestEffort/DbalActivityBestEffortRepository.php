@@ -44,6 +44,13 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         return $this->findBestEffortsForSportTypes(SportTypes::fromArray(SportType::cases()));
     }
 
+    public function hasData(): bool
+    {
+        $sql = 'SELECT 1 FROM ActivityBestEffort LIMIT 1';
+
+        return (bool) $this->connection->executeQuery($sql)->fetchOne();
+    }
+
     public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts
     {
         return $this->findBestEffortsForSportTypes($activityType->getSportTypes());

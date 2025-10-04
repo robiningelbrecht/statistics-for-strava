@@ -14,6 +14,8 @@ interface ActivityBestEffortRepository
 
     public function findAll(): ActivityBestEfforts;
 
+    public function hasData(): bool;
+
     public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts;
 
     public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts;

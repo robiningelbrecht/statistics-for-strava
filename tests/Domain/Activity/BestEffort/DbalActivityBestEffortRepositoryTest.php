@@ -29,6 +29,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
 
     public function testAdd(): void
     {
+        $this->assertFalse($this->activityBestEffortRepository->hasData());
         $this->activityBestEffortRepository->add(
             ActivityBestEffortBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test'))
@@ -37,6 +38,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
                 ->withTimeInSeconds(3600)
                 ->build()
         );
+        $this->assertTrue($this->activityBestEffortRepository->hasData());
         $this->activityBestEffortRepository->add(
             ActivityBestEffortBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-2'))
