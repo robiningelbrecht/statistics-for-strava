@@ -36,6 +36,7 @@
         "league/flysystem-memory": "^3.29",
         "nesbot/carbon": "^3.10",
         "neuron-core/neuron-ai": "^2.0",
+        "phlak/twine": "^5.0",
         "ramsey/uuid": "^4.7",
         "respect/validation": "^2.3",
         "runtime/frankenphp-symfony": "^0.2.0",

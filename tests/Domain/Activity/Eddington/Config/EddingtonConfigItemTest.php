@@ -18,7 +18,7 @@ class EddingtonConfigItemTest extends TestCase
         );
 
         $this->assertEquals(
-            'test-with-999-weird-chars-yo',
+            'test-with-999-weird-chars',
             $configItem->getId(),
         );
     }

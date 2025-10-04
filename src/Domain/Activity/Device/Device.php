@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Device;
 
-use App\Infrastructure\ValueObject\String\SanitizedString;
+use PHLAK\Twine\Str;
 
 final readonly class Device
 {
@@ -20,7 +20,7 @@ final readonly class Device
 
     public function getId(): string
     {
-        return (string) SanitizedString::fromString($this->name);
+        return (string) Str::make($this->name)->kebabCase();
     }
 
     public function getName(): string
