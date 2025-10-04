@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Device;
 
-use PHLAK\Twine\Str;
+use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class Device
 {
@@ -13,7 +13,7 @@ final readonly class Device
     private function __construct(
         private string $name,
     ) {
-        $this->id = (string) Str::make($this->name)->kebabCase();
+        $this->id = Name::fromString($this->name)->kebabCase();
     }
 
     public static function create(string $name): self

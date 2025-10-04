@@ -7,7 +7,7 @@
             "start-date": 1694552738000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -35,7 +35,7 @@
             "start-date": 1694466338000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -64,7 +64,7 @@
             "countryCode": "be",
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -92,7 +92,7 @@
             "start-date": 1693861538000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 6.11,
@@ -203,7 +203,7 @@
             "start-date": 1690623243000,
             "isCommute": "true",
             "gear": "gear-b12659861",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 12.42,
@@ -231,7 +231,7 @@
             "start-date": 1690616043000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 112.42,
@@ -259,7 +259,7 @@
             "start-date": 1690536843000,
             "isCommute": "false",
             "gear": "gear-b12659862",
-            "device": "polar-vantage"
+            "device": "polar-vantage-m"
         },
         "summables": {
             "distance": 12.42,

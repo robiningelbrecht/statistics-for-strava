@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Challenge\Consistency;
 
 use App\Domain\Activity\SportType\SportTypes;
-use PHLAK\Twine\Str;
+use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class ConsistencyChallenge
 {
@@ -36,7 +36,7 @@ final readonly class ConsistencyChallenge
 
     public function getId(): string
     {
-        return (string) Str::make($this->label)->kebabCase();
+        return Name::fromString($this->label)->kebabCase();
     }
 
     public function getLabel(): string
