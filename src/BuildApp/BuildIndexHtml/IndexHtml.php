@@ -8,6 +8,7 @@ use App\BuildApp\AppSubTitle;
 use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\BuildApp\ProfilePictureUrl;
 use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportType;
@@ -27,6 +28,7 @@ final readonly class IndexHtml
         private AthleteRepository $athleteRepository,
         private ActivityRepository $activityRepository,
         private ChallengeRepository $challengeRepository,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
         private ImageRepository $imageRepository,
         private EddingtonCalculator $eddingtonCalculator,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
@@ -68,6 +70,7 @@ final readonly class IndexHtml
             'profilePictureUrl' => $this->profilePictureUrl,
             'subTitle' => $this->appSubTitle,
             'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
+            'hasBestEfforts' => $this->activityBestEffortRepository->hasData(),
             'javascriptWindowConstants' => Json::encode([
                 'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
                 'unitSystem' => [
