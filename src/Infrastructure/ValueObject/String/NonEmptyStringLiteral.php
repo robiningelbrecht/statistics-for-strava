@@ -6,6 +6,7 @@ namespace App\Infrastructure\ValueObject\String;
 
 abstract readonly class NonEmptyStringLiteral implements \JsonSerializable, \Stringable
 {
+    private const string ENCODING = 'UTF-8';
     private string $value;
 
     final private function __construct(string $value)
@@ -43,5 +44,58 @@ abstract readonly class NonEmptyStringLiteral implements \JsonSerializable, \Str
     public function jsonSerialize(): string
     {
         return (string) $this;
+    }
+
+    public function camelCase(): string
+    {
+        $words = array_map(function (string $word) {
+            return mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING);
+        }, $this->words());
+
+        $word = implode('', $words);
+
+        return mb_strtolower(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING);
+    }
+
+    public function studlyCase(): string
+    {
+        $words = array_map(function (string $word) {
+            return mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING);
+        }, $this->words());
+
+        return implode('', $words);
+    }
+
+    public function pascalCase(): string
+    {
+        return $this->studlyCase();
+    }
+
+    public function snakeCase(): string
+    {
+        $words = array_map(function (string $word) {
+            return mb_strtolower($word, self::ENCODING);
+        }, $this->words());
+
+        return implode('_', $words);
+    }
+
+    public function kebabCase(): string
+    {
+        $words = array_map(function (string $word) {
+            return mb_strtolower($word, self::ENCODING);
+        }, $this->words());
+
+        return implode('-', $words);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function words(): array
+    {
+        preg_match_all('/[\p{L}0-9]+/u', $this->value, $matches);
+
+        return array_filter($matches[0]);
     }
 }

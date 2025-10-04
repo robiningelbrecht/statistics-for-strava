@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Activity\Eddington\Config;
 
 use App\Domain\Activity\SportType\SportTypes;
-use PHLAK\Twine\Str;
+use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class EddingtonConfigItem
 {
@@ -33,7 +33,7 @@ final readonly class EddingtonConfigItem
 
     public function getId(): string
     {
-        return (string) Str::make($this->label)->kebabCase();
+        return Name::fromString($this->label)->kebabCase();
     }
 
     public function getLabel(): string

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e21fbc84e9765de48d06fb6cfcb046d4",
+    "content-hash": "a02badc84dd1a98560131e74b3800423",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -2412,68 +2412,6 @@
                 "source": "https://github.com/neuron-core/neuron-ai/tree/2.3.4"
             },
             "time": "2025-10-01T14:00:15+00:00"
-        },
-        {
-            "name": "phlak/twine",
-            "version": "5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHLAK/Twine.git",
-                "reference": "f7303fb5a0868341af5f0ec55db007d943423228"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHLAK/Twine/zipball/f7303fb5a0868341af5f0ec55db007d943423228",
-                "reference": "f7303fb5a0868341af5f0ec55db007d943423228",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "ext-openssl": "*",
-                "php": ">=8.1"
-            },
-            "require-dev": {
-                "phlak/coding-standards": "^4.0",
-                "php": ">=8.2",
-                "phpstan/phpstan": "^2.0",
-                "psy/psysh": "^0.12",
-                "yoast/phpunit-polyfills": "^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/Support/helpers.php"
-                ],
-                "psr-4": {
-                    "PHLAK\\Twine\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Kankiewicz",
-                    "email": "Chris@ChrisKankiewicz.com"
-                }
-            ],
-            "description": "String manipulation, leveled up!",
-            "support": {
-                "issues": "https://github.com/PHLAK/Twine/issues",
-                "source": "https://github.com/PHLAK/Twine/tree/5.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/PHLAK",
-                    "type": "github"
-                },
-                {
-                    "url": "https://paypal.me/ChrisKankiewicz",
-                    "type": "paypal"
-                }
-            ],
-            "time": "2024-12-16T16:26:25+00:00"
         },
         {
             "name": "psr/cache",
