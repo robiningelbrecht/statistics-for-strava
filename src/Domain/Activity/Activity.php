@@ -40,6 +40,7 @@ final class Activity implements SupportsAITooling
 
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
+    private ?int $normalizedPower = null;
     /** @var string[] */
     private array $tags = [];
 
@@ -604,6 +605,16 @@ final class Activity implements SupportsAITooling
         $this->location = $location;
 
         return $this;
+    }
+
+    public function getNormalizedPower(): ?int
+    {
+        return $this->normalizedPower;
+    }
+
+    public function enrichWithNormalizedPower(?int $normalizedPower): void
+    {
+        $this->normalizedPower = $normalizedPower;
     }
 
     /**

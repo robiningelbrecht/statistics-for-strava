@@ -19,7 +19,9 @@ use Doctrine\DBAL\Connection;
 final class StreamBasedActivityPowerRepository implements ActivityPowerRepository
 {
     /** @var array<string, PowerOutputs> */
-    private static array $cachedPowerOutputs = [];
+    public static array $cachedPowerOutputs = [];
+    /** @var array<string, ?int> */
+    public static array $cachedNormalizedPowers = [];
 
     public function __construct(
         private readonly Connection $connection,
@@ -29,22 +31,38 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
     ) {
     }
 
-    public function findBestForActivity(ActivityId $activityId): PowerOutputs
+    public function findNormalizedPower(ActivityId $activityId): ?int
     {
-        if (array_key_exists((string) $activityId, StreamBasedActivityPowerRepository::$cachedPowerOutputs)) {
-            return StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activityId];
+        $this->buildStaticCaches();
+
+        return StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activityId];
+    }
+
+    public function findBest(ActivityId $activityId): PowerOutputs
+    {
+        $this->buildStaticCaches();
+
+        return StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activityId];
+    }
+
+    private function buildStaticCaches(): void
+    {
+        if (!empty(StreamBasedActivityPowerRepository::$cachedPowerOutputs)) {
+            return;
         }
 
         $activities = $this->activityRepository->findAll();
         /** @var Activity $activity */
         foreach ($activities as $activity) {
             StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activity->getId()] = PowerOutputs::empty();
+            StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activity->getId()] = null;
 
             try {
                 $powerStreamForActivity = $this->activityStreamRepository->findOneByActivityAndStreamType(
                     activityId: $activity->getId(),
                     streamType: StreamType::WATTS
                 );
+                StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activity->getId()] = $powerStreamForActivity->getNormalizedPower();
             } catch (EntityNotFound) {
                 continue;
             }
@@ -74,8 +92,6 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 ));
             }
         }
-
-        return StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activityId];
     }
 
     /**
