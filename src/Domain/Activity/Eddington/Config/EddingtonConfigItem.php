@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Activity\Eddington\Config;
 
 use App\Domain\Activity\SportType\SportTypes;
+use PHLAK\Twine\Str;
 
 final readonly class EddingtonConfigItem
 {
@@ -32,12 +33,7 @@ final readonly class EddingtonConfigItem
 
     public function getId(): string
     {
-        /** @var string $sanitizedLabel */
-        $sanitizedLabel = preg_replace('/-+/', '-', str_replace(' ', '-',
-            preg_replace('/[^a-z0-9 ]/', '', strtolower($this->label)) // @phpstan-ignore argument.type
-        ));
-
-        return $sanitizedLabel;
+        return (string) Str::make($this->label)->kebabCase();
     }
 
     public function getLabel(): string

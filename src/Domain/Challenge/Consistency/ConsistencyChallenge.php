@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Challenge\Consistency;
 
 use App\Domain\Activity\SportType\SportTypes;
+use PHLAK\Twine\Str;
 
 final readonly class ConsistencyChallenge
 {
@@ -35,12 +36,7 @@ final readonly class ConsistencyChallenge
 
     public function getId(): string
     {
-        /** @var string $sanitizedLabel */
-        $sanitizedLabel = preg_replace('/-+/', '-', str_replace(' ', '-',
-            preg_replace('/[^a-z0-9 ]/', '', strtolower($this->label)) // @phpstan-ignore argument.type
-        ));
-
-        return $sanitizedLabel;
+        return (string) Str::make($this->label)->kebabCase();
     }
 
     public function getLabel(): string
