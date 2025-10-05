@@ -1,3 +1,11 @@
+# [v3.6.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.2) - 2025-10-05
+
+## What's Changed
+* Minor bug fix in device filter by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1152
+* ISSUE #1154: Bug fix when activity is not set by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1155
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.6.1...v3.6.2
+
 # [v3.6.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.1) - 2025-10-05
 
 ## What's Changed
