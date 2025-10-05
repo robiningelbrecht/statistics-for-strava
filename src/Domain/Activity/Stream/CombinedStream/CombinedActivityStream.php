@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 final class CombinedActivityStream
 {
     /** @var array<string, array<int, float>> */
-    private array $chartStreamDataCache;
+    private array $chartStreamDataCache = [];
 
     /**
      * @param array<mixed> $data
