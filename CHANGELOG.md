@@ -1,3 +1,13 @@
+# [v3.6.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.1) - 2025-10-05
+
+## What's Changed
+* ISSUE #1140: Improve version update workflow by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1141
+* ISSUE #1143: Do not render Best Efforts menu item when there are none by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1144
+* ISSUE #1142: Add Device filter on activities overview page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1145
+* ISSUE #1147: Add normalized power to activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1148
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.6.0...v3.6.1
+
 # [v3.6.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.0) - 2025-10-03
 
 > [!WARNING]  
