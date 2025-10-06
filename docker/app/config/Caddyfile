@@ -1,96 +1,96 @@
 {
-    http_port    8080
-    auto_https   off
+	http_port 8080
+	auto_https off
 
-    frankenphp {
-         num_threads 3
-         worker {
-           num 2
-           file ./public/index.php
-           env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
-        }
-    }
+	frankenphp {
+		num_threads 3
+		worker {
+			num 2
+			file ./public/index.php
+			env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
+		}
+	}
 
-    log {
-        output stdout
-        format console
-        level {$CADDY_LOG_LEVEL:ERROR}
-    }
+	log {
+		output stdout
+		format console
+		level {$CADDY_LOG_LEVEL:ERROR}
+	}
 }
 
 :8080 {
-    root /var/www/public
-    encode zstd br gzip
+	root /var/www/public
+	encode zstd br gzip
 
-    # Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
-    header {
-        Cache-Control "no-cache, no-store, must-revalidate"
-        ?Permissions-Policy "browsing-topics=()"
-    }
+	# Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
+	header {
+		Cache-Control "no-cache, no-store, must-revalidate"
+		?Permissions-Policy "browsing-topics=()"
+	}
 
-    # Serve static .html and .json from build/html
-    @staticBuildFiles {
-        path *.html *.json
-    }
-    handle @staticBuildFiles {
-    	handle /manifest.json {
-           root /var/www/public
-        }
+	# Serve static .html and .json from build/html
+	@staticBuildFiles {
+		path *.html *.json
+	}
+	handle @staticBuildFiles {
+		handle /manifest.json {
+			root /var/www/public
+		}
 
-        handle {
-            root * /var/www/build/html
-            file_server
-        }
-    }
+		handle {
+			root * /var/www/build/html
+			file_server
+		}
+	}
 
-    # Serve /files/* from storage
-    handle /files/* {
-        root * /var/www/storage
-        file_server
-    }
+	# Serve /files/* from storage
+	handle /files/* {
+		root * /var/www/storage
+		file_server
+	}
 
-    # Serve /gear-maintenance/* from storage
-    handle /gear-maintenance/* {
-        root * /var/www/storage
-        file_server
-    }
+	# Serve /gear-maintenance/* from storage
+	handle /gear-maintenance/* {
+		root * /var/www/storage
+		file_server
+	}
 
-    # Serve everything else trough Symfony.
-    handle {
-        @phpRoute {
-            not file {path}
-        }
+	# Serve everything else trough Symfony.
+	handle {
+		@phpRoute {
+			not file {path}
+		}
 
-        rewrite @phpRoute index.php
+		rewrite @phpRoute index.php
 
-        @frontController path index.php
-        php @frontController
-    }
+		@frontController path index.php
+		php @frontController
+	}
 
-    # Handle error codes.
-    handle_errors 403 404 {
-        root /var/www/public
-        rewrite * /{err.status_code}.html
-        file_server
-    }
+	# Handle error codes.
+	handle_errors 403 404 {
+		root /var/www/public
+		rewrite * /{err.status_code}.html
+		file_server
+	}
 
-    handle_errors 5xx {
-        root /var/www/public
-        rewrite * /50x.html
-        file_server
-    }
+	handle_errors 5xx {
+		root /var/www/public
+		rewrite * /50x.html
+		file_server
+	}
 
-    handle_errors {
-    	respond "{err.status_code} {err.status_text}"
-    }
+	handle_errors {
+		respond "{err.status_code} {err.status_text}"
+	}
 
-    # Hide php and yaml file from filesystem
-    file_server {
-        hide *.php *.yaml *.yml
-    }
+	# Hide php and yaml file from filesystem
+	file_server {
+		hide *.php *.yaml *.yml
+	}
 }
 
 # Reverse proxy for custom domain
 {$PROXY_HOST}:{$PROXY_PORT} {
-    reverse_proxy localhost:8080
+	reverse_proxy localhost:8080
 }

@@ -63,6 +63,7 @@ phpstan:
 
 csfix:
 	@make dcr cmd="vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
+	@make dcr cmd="bin/caddy fmt --overwrite --config=/var/www/docker/app/config/Caddyfile"
 
 delete-snapshots:
 	find . -name __snapshots__ -type d -prune -exec rm -rf {} \;
