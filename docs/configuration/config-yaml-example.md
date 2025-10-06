@@ -11,7 +11,8 @@ general:
   # Any image can be used; a square format is recommended.
   # Leave empty to disable this feature.
   profilePictureUrl: null
-  # Optional, full URL with ntfy topic included. This topic will be used to notify you when a new HTML build has run.
+  # Optional, full URL to ntfy.sh topic (for example https://ntfy.sh/cdd8f660-6b08-4dd8-8b4a-7c4df28642e3). 
+  # This topic will be used to notify you when a new HTML build has run.
   # Leave empty to disable notifications.
   ntfyUrl: null
   athlete:
