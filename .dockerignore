@@ -34,3 +34,4 @@ CHANGELOG.md
 symfony.lock
 tailwind.config.js
 logo.xcf
+bin/caddy
