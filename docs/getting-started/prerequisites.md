@@ -19,3 +19,11 @@ Do not include a port number in the <i>Authorization Callback Domain</i> field.
 </div>
 
 ![Strava API settings page](../assets/images/strava-api-settings.png)
+
+## Map visibility
+
+To view maps of your activities in the app, make sure your Strava map visibility settings are configured correctly.
+Go to your [Strava account settings](https://www.strava.com/settings/privacy) 
+and make sure <i>Hide your activity maps from others completely</i> is not enabled.
+
+![Strava API privacy settings](../assets/images/strava-privacy-settings.png)
