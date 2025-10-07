@@ -48,9 +48,7 @@ abstract readonly class NonEmptyStringLiteral implements \JsonSerializable, \Str
 
     public function camelCase(): string
     {
-        $words = array_map(function (string $word) {
-            return mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING);
-        }, $this->words());
+        $words = array_map(fn (string $word): string => mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING), $this->words());
 
         $word = implode('', $words);
 
@@ -59,9 +57,7 @@ abstract readonly class NonEmptyStringLiteral implements \JsonSerializable, \Str
 
     public function studlyCase(): string
     {
-        $words = array_map(function (string $word) {
-            return mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING);
-        }, $this->words());
+        $words = array_map(fn (string $word): string => mb_strtoupper(mb_substr($word, 0, 1, self::ENCODING), self::ENCODING).mb_substr($word, 1, null, self::ENCODING), $this->words());
 
         return implode('', $words);
     }
@@ -73,18 +69,14 @@ abstract readonly class NonEmptyStringLiteral implements \JsonSerializable, \Str
 
     public function snakeCase(): string
     {
-        $words = array_map(function (string $word) {
-            return mb_strtolower($word, self::ENCODING);
-        }, $this->words());
+        $words = array_map(fn (string $word) => mb_strtolower($word, self::ENCODING), $this->words());
 
         return implode('_', $words);
     }
 
     public function kebabCase(): string
     {
-        $words = array_map(function (string $word) {
-            return mb_strtolower($word, self::ENCODING);
-        }, $this->words());
+        $words = array_map(fn (string $word) => mb_strtolower($word, self::ENCODING), $this->words());
 
         return implode('-', $words);
     }

@@ -28,7 +28,7 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
                     fn (SportType $sportType) => $sportType->value,
                     array_filter(
                         SportType::cases(),
-                        fn (SportType $sportType) => $sportType->supportsReverseGeocoding()
+                        fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                     )
                 ),
             ],

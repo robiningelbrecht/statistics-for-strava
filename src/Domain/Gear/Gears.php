@@ -18,12 +18,12 @@ final class Gears extends Collection
 
     public function sortByIsRetired(): self
     {
-        return $this->usort(fn (Gear $a, Gear $b) => $a->isRetired() <=> $b->isRetired());
+        return $this->usort(fn (Gear $a, Gear $b): int => $a->isRetired() <=> $b->isRetired());
     }
 
     public function getByGearId(GearId $gearId): ?Gear
     {
-        $gears = $this->filter(fn (Gear $gear) => $gearId == $gear->getId())->toArray();
+        $gears = $this->filter(fn (Gear $gear): bool => $gearId == $gear->getId())->toArray();
 
         return reset($gears) ?: null;
     }

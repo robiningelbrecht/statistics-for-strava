@@ -12,7 +12,7 @@ services:
               required: false
         environment:
             - PHP_IDE_CONFIG=phpstorm
-        profiles: [on-demand]
+
         networks:
             - statistics-for-strava-network
     app:

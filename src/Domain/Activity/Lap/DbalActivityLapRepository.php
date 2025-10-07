@@ -22,7 +22,7 @@ final readonly class DbalActivityLapRepository extends DbalRepository implements
         ])->fetchAllAssociative();
 
         return ActivityLaps::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): ActivityLap => $this->hydrate($result),
             $results
         ));
     }

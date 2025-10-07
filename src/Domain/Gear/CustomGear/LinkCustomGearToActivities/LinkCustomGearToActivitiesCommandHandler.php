@@ -40,13 +40,13 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
 
         $importedGears = $this->importedGearRepository->findAll();
         $customGears = $this->customGearRepository->findAll();
-        $allCustomGearTags = $customGears->map(static fn (CustomGear $customGear) => $customGear->getTag());
+        $allCustomGearTags = $customGears->map(static fn (CustomGear $customGear): string => $customGear->getTag());
         $activities = $this->activitiesEnricher->getEnrichedActivities();
 
         // Filter out activities that have a Strava gear linked,
         // we only want to link custom gear to activities that do not have a Strava gear.
         $activitiesWithoutStravaGear = $activities->filter(
-            fn (Activity $activity) => !$activity->getGearId() || !$importedGears->getByGearId($activity->getGearId())
+            fn (Activity $activity): bool => !$activity->getGearId() || !$importedGears->getByGearId($activity->getGearId())
         );
         $activitiesWithCustomGearTag = [];
         $activitiesWithoutCustomGearTag = [];
@@ -54,7 +54,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
         foreach ($activitiesWithoutStravaGear as $activity) {
             $matchedCustomGearTagsForActivity = array_filter(
                 $allCustomGearTags,
-                static fn (string $customGearTag) => 1 === preg_match('/(^|\s)'.preg_quote($customGearTag, '/').'(\s|$)/', $activity->getOriginalName())
+                static fn (string $customGearTag): bool => 1 === preg_match('/(^|\s)'.preg_quote($customGearTag, '/').'(\s|$)/', $activity->getOriginalName())
             );
 
             if (count($matchedCustomGearTagsForActivity) > 1) {

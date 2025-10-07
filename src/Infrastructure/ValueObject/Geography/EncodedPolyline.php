@@ -28,7 +28,7 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
             $diff = ($result & 1) ? ~($result >> 1) : ($result >> 1);
             $number = $previous[$index % 2] + $diff;
             $previous[$index % 2] = $number;
-            $points[] = $number * 1 / pow(10, self::PRECISION);
+            $points[] = $number * 1 / 10 ** self::PRECISION;
             ++$index;
         }
 
@@ -59,7 +59,7 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
             $number = $previous[$index % 2] + $diff;
             $previous[$index % 2] = $number;
             ++$index;
-            $points[] = $number * 1 / pow(10, self::PRECISION);
+            $points[] = $number * 1 / 10 ** self::PRECISION;
         }
 
         return $points;

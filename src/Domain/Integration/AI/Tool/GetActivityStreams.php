@@ -31,6 +31,7 @@ final class GetActivityStreams extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [
@@ -51,6 +52,6 @@ final class GetActivityStreams extends Tool
         $activityId = ActivityId::fromUnprefixed($activityId);
         $streams = $this->activityStreamRepository->findByActivityId($activityId);
 
-        return $streams->map(static fn (ActivityStream $stream) => $stream->exportForAITooling());
+        return $streams->map(static fn (ActivityStream $stream): array => $stream->exportForAITooling());
     }
 }

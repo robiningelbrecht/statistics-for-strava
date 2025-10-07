@@ -91,7 +91,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->setMaxResults($limit);
 
         $activities = array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): Activity => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         );
         DbalActivityRepository::$cachedActivities[$cacheKey] = Activities::fromArray($activities);
@@ -126,7 +126,7 @@ final class DbalActivityRepository implements ActivityRepository
         }
 
         return Activities::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): Activity => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -146,7 +146,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return Activities::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): Activity => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -186,7 +186,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return ActivityIds::fromArray(array_map(
-            fn (string $id) => ActivityId::fromString($id),
+            fn (string $id): ActivityId => ActivityId::fromString($id),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
     }
@@ -200,7 +200,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return ActivityIds::fromArray(array_map(
-            fn (string $id) => ActivityId::fromString($id),
+            fn (string $id): ActivityId => ActivityId::fromString($id),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
     }
@@ -236,7 +236,7 @@ final class DbalActivityRepository implements ActivityRepository
             kudoCount: $result['kudoCount'] ?: 0,
             deviceName: $result['deviceName'],
             totalImageCount: $result['totalImageCount'] ?: 0,
-            localImagePaths: $result['localImagePaths'] ? explode(',', $result['localImagePaths']) : [],
+            localImagePaths: $result['localImagePaths'] ? explode(',', (string) $result['localImagePaths']) : [],
             polyline: $result['polyline'],
             location: $location ? Location::fromState($location) : null,
             weather: $result['weather'],

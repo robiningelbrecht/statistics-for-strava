@@ -110,7 +110,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
             activityId: $activityId,
             streamType: StreamType::WATTS
         );
-        $powerStreamForActivity = array_count_values(array_filter($stream->getData(), fn (mixed $item) => !is_null($item)));
+        $powerStreamForActivity = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
         ksort($powerStreamForActivity);
 
         return $powerStreamForActivity;

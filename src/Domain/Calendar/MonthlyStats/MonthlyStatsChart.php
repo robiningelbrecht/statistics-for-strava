@@ -119,7 +119,7 @@ final readonly class MonthlyStatsChart
             'legend' => [
                 'selected' => $selectedSeries,
                 'data' => array_map(
-                    fn (Year $year) => (string) $year->toInt(),
+                    fn (Year $year): string => (string) $year->toInt(),
                     $years->toArray()
                 ),
             ],

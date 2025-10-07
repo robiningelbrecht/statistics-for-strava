@@ -68,7 +68,7 @@ final readonly class ActivityWithRawData
 
         return array_merge(
             array_map(
-                fn (array $split) => array_merge($split, [
+                fn (array $split): array => array_merge($split, [
                     'unit_system' => UnitSystem::METRIC->value,
                     'min_average_speed' => min($metricAverageSpeeds),
                     'max_average_speed' => max($metricAverageSpeeds),
@@ -76,7 +76,7 @@ final readonly class ActivityWithRawData
                 $this->rawData['splits_metric'] ?? [],
             ),
             array_map(
-                fn (array $split) => array_merge($split, [
+                fn (array $split): array => array_merge($split, [
                     'unit_system' => UnitSystem::IMPERIAL->value,
                     'min_average_speed' => min($imperialAverageSpeeds),
                     'max_average_speed' => max($imperialAverageSpeeds),
@@ -100,7 +100,7 @@ final readonly class ActivityWithRawData
         $averageSpeeds = array_column($this->rawData['laps'] ?? [], 'average_speed');
 
         return array_map(
-            fn (array $split) => array_merge($split, [
+            fn (array $split): array => array_merge($split, [
                 'min_average_speed' => min($averageSpeeds),
                 'max_average_speed' => max($averageSpeeds),
             ]),

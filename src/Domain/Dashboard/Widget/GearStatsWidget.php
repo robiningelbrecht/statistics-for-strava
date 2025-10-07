@@ -48,7 +48,7 @@ final readonly class GearStatsWidget implements Widget
         $gears = $this->gearRepository->findAll();
 
         if (!$configuration->getConfigItem('includeRetiredGear')) {
-            $gears = $gears->filter(fn (Gear $gear) => !$gear->isRetired());
+            $gears = $gears->filter(fn (Gear $gear): bool => !$gear->isRetired());
         }
 
         return $this->twig->load('html/dashboard/widget/widget--gear-stats.html.twig')->render([

@@ -24,13 +24,13 @@ final class ActivityTotals
         private readonly TranslatorInterface $translator,
     ) {
         $this->totalDistance = Kilometer::from(
-            $this->activities->sum(fn (Activity $activity) => $activity->getDistance()->toFloat())
+            $this->activities->sum(fn (Activity $activity): float => $activity->getDistance()->toFloat())
         );
         $this->totalElevation = Meter::from(
-            $this->activities->sum(fn (Activity $activity) => $activity->getElevation()->toFloat())
+            $this->activities->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())
         );
-        $this->totalCalories = (int) $this->activities->sum(fn (Activity $activity) => $activity->getCalories());
-        $this->totalMovingTimeInSeconds = (int) $this->activities->sum(fn (Activity $activity) => $activity->getMovingTimeInSeconds());
+        $this->totalCalories = (int) $this->activities->sum(fn (Activity $activity): ?int => $activity->getCalories());
+        $this->totalMovingTimeInSeconds = (int) $this->activities->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
         $this->totalActivities = count($this->activities);
     }
 

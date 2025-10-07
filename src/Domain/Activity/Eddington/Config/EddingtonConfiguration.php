@@ -116,7 +116,7 @@ final class EddingtonConfiguration extends Collection
         if (count(array_filter($items, fn (array $eddingtonConfig) => $eddingtonConfig['showInNavBar'])) > 2) {
             throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInNavBar" set to true');
         }
-        if (count(array_filter($items, fn (array $eddingtonConfig) => array_key_exists('showInDashboardWidget', $eddingtonConfig) && $eddingtonConfig['showInDashboardWidget'])) > 2) {
+        if (count(array_filter($items, fn (array $eddingtonConfig): bool => array_key_exists('showInDashboardWidget', $eddingtonConfig) && $eddingtonConfig['showInDashboardWidget'])) > 2) {
             throw new InvalidEddingtonConfiguration('You can only have two Eddingtons with "showInDashboardWidget" set to true');
         }
 

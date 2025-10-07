@@ -38,10 +38,10 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                 'numberOfRoutes' => count($routes),
                 'routes' => Json::encode($routes),
                 'sportTypes' => $importedSportTypes->filter(
-                    fn (SportType $sportType) => $sportType->supportsReverseGeocoding()
+                    fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                 ),
                 'numberOfCountriesWithWorkouts' => count(array_unique($routes->map(
-                    fn (Route $route) => $route->getLocation()->getCountryCode()
+                    fn (Route $route): string => $route->getLocation()->getCountryCode()
                 ))),
                 'heatmapConfig' => $this->heatmapConfig,
             ]),

@@ -28,7 +28,7 @@ final readonly class FindMovingTimePerDayResponse implements Response
     public function getMovingTimePerDayInMinutes(): array
     {
         return array_map(
-            fn (int $seconds) => (int) round($seconds / 60),
+            fn (int $seconds): int => (int) round($seconds / 60),
             $this->movingTimePerDay,
         );
     }

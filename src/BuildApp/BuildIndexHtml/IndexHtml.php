@@ -57,7 +57,7 @@ final readonly class IndexHtml
 
         $sportTypesToRenderPhotosFor = SportTypes::fromArray(array_filter(
             SportType::cases(),
-            fn (SportType $sportType) => !$this->hidePhotosForSportTypes->has($sportType),
+            fn (SportType $sportType): bool => !$this->hidePhotosForSportTypes->has($sportType),
         ));
 
         return [

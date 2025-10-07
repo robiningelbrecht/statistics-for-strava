@@ -31,7 +31,7 @@ final readonly class DbalChallengeRepository extends DbalRepository implements C
             ->orderBy('createdOn', 'DESC');
 
         return Challenges::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): Challenge => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }

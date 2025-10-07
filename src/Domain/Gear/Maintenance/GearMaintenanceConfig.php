@@ -97,7 +97,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 tag: $gearComponentTag,
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
-                    fn (string $gearId) => GearId::fromUnprefixed($gearId),
+                    fn (string $gearId): GearId => GearId::fromUnprefixed($gearId),
                     $component['attachedTo']
                 )),
                 imgSrc: $component['imgSrc'] ?? null,
@@ -127,7 +127,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
             }
 
             $maintenanceTags = array_count_values(array_column($component['maintenance'], 'tag'));
-            if ($duplicates = array_keys(array_filter($maintenanceTags, fn (int $count) => $count > 1))) {
+            if ($duplicates = array_keys(array_filter($maintenanceTags, fn (int $count): bool => $count > 1))) {
                 throw new InvalidGearMaintenanceConfig(sprintf('duplicate maintenance tags found for component "%s:" %s', $gearComponent->getLabel(), implode(', ', $duplicates)));
             }
 
@@ -135,7 +135,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
         }
 
         $componentTags = array_count_values(array_column($config['components'], 'tag'));
-        if ($duplicates = array_keys(array_filter($componentTags, fn (int $count) => $count > 1))) {
+        if ($duplicates = array_keys(array_filter($componentTags, fn (int $count): bool => $count > 1))) {
             throw new InvalidGearMaintenanceConfig(sprintf('duplicate component tags found: %s', implode(', ', $duplicates)));
         }
 
@@ -261,7 +261,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
         foreach ($this->getGearComponents() as $gearComponent) {
             $string[] = sprintf('  - Tag: %s', $gearComponent->getTag());
             $string[] = sprintf('    Label: %s', $gearComponent->getLabel());
-            $string[] = sprintf('    Attached to: %s', implode(', ', $gearComponent->getAttachedTo()->map(fn (GearId $gearId) => $gearId->toUnprefixedString())));
+            $string[] = sprintf('    Attached to: %s', implode(', ', $gearComponent->getAttachedTo()->map(fn (GearId $gearId): string => $gearId->toUnprefixedString())));
             $string[] = sprintf('    Image: %s', $gearComponent->getImgSrc());
             $string[] = '    Maintenance tasks:';
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {

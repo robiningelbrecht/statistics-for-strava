@@ -19,6 +19,7 @@ class Kernel extends BaseKernel
         $container->addExpressionLanguageProvider(new AppExpressionLanguageProvider());
     }
 
+    #[\Override]
     protected function initializeContainer(): void
     {
         parent::initializeContainer();

@@ -76,7 +76,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             ->setParameter('streamType', $streamType->value);
 
         return ActivityStreams::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): ActivityStream => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -90,7 +90,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             ->setParameter('streamType', $streamType->value);
 
         return ActivityIds::fromArray(array_map(
-            fn (string $activityId) => ActivityId::fromString($activityId),
+            fn (string $activityId): ActivityId => ActivityId::fromString($activityId),
             $queryBuilder->executeQuery()->fetchFirstColumn()
         ));
     }
@@ -121,7 +121,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             ->setParameter('activityId', $activityId);
 
         return ActivityStreams::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): ActivityStream => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -136,7 +136,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             ->setMaxResults($limit);
 
         return ActivityStreams::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): ActivityStream => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -153,7 +153,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             ->setMaxResults($limit);
 
         return ActivityStreams::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): ActivityStream => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }

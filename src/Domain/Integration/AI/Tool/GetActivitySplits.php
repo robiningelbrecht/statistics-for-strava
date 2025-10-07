@@ -33,6 +33,7 @@ final class GetActivitySplits extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [
@@ -56,6 +57,6 @@ final class GetActivitySplits extends Tool
             unitSystem: $this->unitSystem
         );
 
-        return $splits->map(static fn (ActivitySplit $split) => $split->exportForAITooling());
+        return $splits->map(static fn (ActivitySplit $split): array => $split->exportForAITooling());
     }
 }

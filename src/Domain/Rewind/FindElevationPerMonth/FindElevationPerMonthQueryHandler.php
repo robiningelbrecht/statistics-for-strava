@@ -55,7 +55,7 @@ final readonly class FindElevationPerMonthQueryHandler implements QueryHandler
 
         return new FindElevationPerMonthResponse(
             elevationPerMonth: array_map(
-                fn (array $result) => [
+                fn (array $result): array => [
                     $result['monthNumber'],
                     SportType::from($result['sportType']),
                     Meter::from($result['elevation']),

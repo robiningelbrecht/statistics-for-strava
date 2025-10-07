@@ -55,7 +55,7 @@ final readonly class FindDistancePerMonthQueryHandler implements QueryHandler
 
         return new FindDistancePerMonthResponse(
             distancePerMonth: array_map(
-                fn (array $result) => [
+                fn (array $result): array => [
                     $result['monthNumber'],
                     SportType::from($result['sportType']),
                     Meter::from($result['distance'])->toKilometer(),

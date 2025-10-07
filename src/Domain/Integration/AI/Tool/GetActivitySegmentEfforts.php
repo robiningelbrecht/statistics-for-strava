@@ -32,6 +32,7 @@ final class GetActivitySegmentEfforts extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [
@@ -53,7 +54,7 @@ final class GetActivitySegmentEfforts extends Tool
         $segmentEfforts = $this->segmentEffortRepository->findByActivityId($activityId);
 
         return $segmentEfforts->map(
-            fn (SegmentEffort $segmentEffort) => $segmentEffort->exportForAITooling()
+            fn (SegmentEffort $segmentEffort): array => $segmentEffort->exportForAITooling()
         );
     }
 }

@@ -44,10 +44,10 @@ final readonly class WeekdayStats
             $this->translator->trans('Friday'),
             $this->translator->trans('Saturday'),
         ];
-        $totalMovingTime = $this->activities->sum(fn (Activity $activity) => $activity->getMovingTimeInSeconds());
+        $totalMovingTime = $this->activities->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
         foreach ([1, 2, 3, 4, 5, 6, 0] as $weekDay) {
-            $statistics[(string) $daysOfTheWeekMap[$weekDay]] = [
+            $statistics[$daysOfTheWeekMap[$weekDay]] = [
                 'numberOfWorkouts' => 0,
                 'totalDistance' => 0,
                 'totalElevation' => 0,
@@ -59,7 +59,7 @@ final readonly class WeekdayStats
 
         /** @var Activity $activity */
         foreach ($this->activities as $activity) {
-            $weekDay = (string) $daysOfTheWeekMap[$activity->getStartDate()->format('w')];
+            $weekDay = $daysOfTheWeekMap[$activity->getStartDate()->format('w')];
 
             ++$statistics[$weekDay]['numberOfWorkouts'];
 

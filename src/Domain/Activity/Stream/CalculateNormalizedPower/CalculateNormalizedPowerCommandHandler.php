@@ -39,9 +39,9 @@ final readonly class CalculateNormalizedPowerCommandHandler implements CommandHa
                 for ($i = $windowSize - 1; $i < count($powerData); ++$i) {
                     $window = array_slice($powerData, $i - $windowSize + 1, $windowSize);
                     $avg = array_sum($window) / $windowSize;
-                    $movingAvg[] = pow($avg, 4);
+                    $movingAvg[] = $avg ** 4;
                 }
-                $avgPower = pow(array_sum($movingAvg) / count($movingAvg), 0.25);
+                $avgPower = (array_sum($movingAvg) / count($movingAvg)) ** 0.25;
 
                 ++$countCalculatedStreams;
                 $stream->updateNormalizedPower((int) round($avgPower));

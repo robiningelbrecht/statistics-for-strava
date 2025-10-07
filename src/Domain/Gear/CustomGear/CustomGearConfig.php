@@ -79,7 +79,7 @@ final readonly class CustomGearConfig
         }
 
         $customGearTags = array_count_values(array_column($config['customGears'], 'tag'));
-        if ($duplicates = array_keys(array_filter($customGearTags, fn (int $count) => $count > 1))) {
+        if ($duplicates = array_keys(array_filter($customGearTags, fn (int $count): bool => $count > 1))) {
             throw new InvalidCustomGearConfig(sprintf('duplicate custom gear tags found: %s', implode(', ', $duplicates)));
         }
 

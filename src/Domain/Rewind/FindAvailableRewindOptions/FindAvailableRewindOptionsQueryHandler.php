@@ -30,7 +30,7 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
         )->fetchFirstColumn();
 
         $allYears = Years::fromArray(array_map(
-            static fn (int $year): Year => Year::fromInt((int) $year),
+            static fn (int $year): Year => Year::fromInt($year),
             $years
         ));
         $options = [

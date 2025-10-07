@@ -82,13 +82,13 @@ final class TrainingMetrics
         $intensityKeys = array_keys($this->intensities);
         // Round numbers when all calculating is done and combine with original keys.
         $this->acRatioValues = array_combine($intensityKeys, $acRatioValues);
-        $this->atlValues = array_combine($intensityKeys, array_map(fn (int|float $value) => round($value, 1), $altValues));
-        $this->ctlValues = array_combine($intensityKeys, array_map(fn (int|float $value) => round($value, 1), $ctlValues));
-        $this->tsbValues = array_combine($intensityKeys, array_map(fn (int|float $value) => round($value, 1), $tsbValues));
+        $this->atlValues = array_combine($intensityKeys, array_map(fn (int|float $value): float => round($value, 1), $altValues));
+        $this->ctlValues = array_combine($intensityKeys, array_map(fn (int|float $value): float => round($value, 1), $ctlValues));
+        $this->tsbValues = array_combine($intensityKeys, array_map(fn (int|float $value): float => round($value, 1), $tsbValues));
         // Apply rounding/casting to the daily trimp values
-        $this->trimpValues = array_combine($intensityKeys, array_map(fn (int|float|null $value) => null === $value ? null : (int) round($value), $trimpValues));
-        $this->strainValues = array_combine($intensityKeys, array_map(fn (int|float|null $value) => null === $value ? null : (int) round($value), $strainValues));
-        $this->monotonyValues = array_combine($intensityKeys, array_map(fn (int|float|null $value) => null === $value ? null : round($value, 2), $monotonyValues));
+        $this->trimpValues = array_combine($intensityKeys, array_map(fn (int|float|null $value): ?int => null === $value ? null : (int) round($value), $trimpValues));
+        $this->strainValues = array_combine($intensityKeys, array_map(fn (int|float|null $value): ?int => null === $value ? null : (int) round($value), $strainValues));
+        $this->monotonyValues = array_combine($intensityKeys, array_map(fn (int|float|null $value): ?float => null === $value ? null : round($value, 2), $monotonyValues));
     }
 
     /**
@@ -200,7 +200,7 @@ final class TrainingMetrics
         $mean = array_sum($values) / $count;
         $sumSquares = 0;
         foreach ($values as $v) {
-            $sumSquares += pow($v - $mean, 2);
+            $sumSquares += ($v - $mean) ** 2;
         }
 
         return sqrt($sumSquares / $count);

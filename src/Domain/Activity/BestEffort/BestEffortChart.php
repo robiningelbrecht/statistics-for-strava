@@ -58,7 +58,7 @@ final readonly class BestEffortChart
                 'label' => [
                     'show' => false,
                 ],
-                'data' => $this->bestEfforts->getBySportType($sportType)->map(fn (ActivityBestEffort $bestEffort) => $bestEffort->getTimeInSeconds()),
+                'data' => $this->bestEfforts->getBySportType($sportType)->map(fn (ActivityBestEffort $bestEffort): int => $bestEffort->getTimeInSeconds()),
             ];
         }
 
@@ -90,7 +90,7 @@ final readonly class BestEffortChart
                         'show' => false,
                     ],
                     'data' => array_map(
-                        fn (Unit $distance) => sprintf('%s%s', $distance->isLowerThanOne() ? round($distance->toFloat(), 1) : $distance->toInt(), $distance->getSymbol()),
+                        fn (Unit $distance): string => sprintf('%s%s', $distance->isLowerThanOne() ? round($distance->toFloat(), 1) : $distance->toInt(), $distance->getSymbol()),
                         $this->activityType->getDistancesForBestEffortCalculation()
                     ),
                 ],

@@ -183,14 +183,14 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
                   )';
 
         return ActivityIds::fromArray(array_map(
-            fn (string $activityId) => ActivityId::fromString($activityId),
+            fn (string $activityId): ActivityId => ActivityId::fromString($activityId),
             $this->connection->executeQuery($sql,
                 [
                     'timeStreamType' => StreamType::TIME->value,
                     'distanceStreamType' => StreamType::DISTANCE->value,
                     'sportTypes' => array_map(
                         fn (SportType $sportType) => $sportType->value,
-                        array_filter(SportType::cases(), fn (SportType $sportType) => $sportType->supportsBestEffortsStats())
+                        array_filter(SportType::cases(), fn (SportType $sportType): bool => $sportType->supportsBestEffortsStats())
                     ),
                 ],
                 [

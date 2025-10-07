@@ -100,7 +100,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $totalActivityCountResponse = $this->queryBus->ask(new FindTotalActivityCount($yearsToQuery));
 
             $totalNumberOfDays = array_sum(array_map(
-                fn (Year $year) => $year->getNumberOfDays(),
+                fn (Year $year): int => $year->getNumberOfDays(),
                 $yearsToQuery->toArray()
             ));
             /** @var RewindItems $rewindItems */
@@ -362,7 +362,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     'availableRewindOptions' => $availableRewindOptions,
                     'availableRewindOptionsToCompareWith' => array_filter(
                         $availableRewindOptions,
-                        fn (string $option) => $option != $availableRewindOptionLeft && $option != $availableRewindOptionRight,
+                        fn (string $option): bool => $option != $availableRewindOptionLeft && $option != $availableRewindOptionRight,
                     ),
                     'activeRewindOptionLeft' => $availableRewindOptionLeft,
                     'activeRewindOptionRight' => $availableRewindOptionRight,

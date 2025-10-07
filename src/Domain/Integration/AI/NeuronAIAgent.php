@@ -36,6 +36,7 @@ final class NeuronAIAgent extends Agent
         return [$this->toolkit];
     }
 
+    #[\Override]
     public function instructions(): string
     {
         return (string) new SystemPrompt(

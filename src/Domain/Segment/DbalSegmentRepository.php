@@ -90,7 +90,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             ->orderBy('countCompleted', 'DESC');
 
         return Segments::fromArray(array_map(
-            fn (array $result) => $this->hydrate($result),
+            fn (array $result): Segment => $this->hydrate($result),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -103,7 +103,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             ->andWhere('detailsHaveBeenImported = 0');
 
         return array_map(
-            fn (string $segmentId) => SegmentId::fromString($segmentId),
+            fn (string $segmentId): SegmentId => SegmentId::fromString($segmentId),
             $queryBuilder->executeQuery()->fetchFirstColumn()
         );
     }
