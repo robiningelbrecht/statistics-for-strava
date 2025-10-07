@@ -31,7 +31,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $sportTypesToRenderPhotosFor = SportTypes::fromArray(array_filter(
             $importedSportTypes->toArray(),
-            fn (SportType $sportType) => !$this->hidePhotosForSportTypes->has($sportType),
+            fn (SportType $sportType): bool => !$this->hidePhotosForSportTypes->has($sportType),
         ));
         $images = $this->imageRepository->findBySportTypes($sportTypesToRenderPhotosFor);
 

@@ -6,6 +6,7 @@ namespace App\Infrastructure\ValueObject\String;
 
 final readonly class HashtagPrefix extends NonEmptyStringLiteral
 {
+    #[\Override]
     protected function validate(string $value): void
     {
         parent::validate($value);
@@ -18,6 +19,7 @@ final readonly class HashtagPrefix extends NonEmptyStringLiteral
         }
     }
 
+    #[\Override]
     public function __toString(): string
     {
         return sprintf('#%s', parent::__toString());

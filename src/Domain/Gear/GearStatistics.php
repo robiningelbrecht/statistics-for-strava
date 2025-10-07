@@ -33,39 +33,39 @@ final readonly class GearStatistics
     public function getRows(): array
     {
         $statistics = $this->gears->map(function (Gear $gear) {
-            $activitiesWithGear = $this->activities->filter(fn (Activity $activity) => $activity->getGearId() == $gear->getId());
+            $activitiesWithGear = $this->activities->filter(fn (Activity $activity): bool => $activity->getGearId() == $gear->getId());
             $countActivitiesWithGear = count($activitiesWithGear);
-            $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity) => $activity->getMovingTimeInSeconds());
+            $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
             return [
                 'name' => $gear->getName(),
                 'distance' => $gear->getDistance(),
                 'numberOfWorkouts' => $countActivitiesWithGear,
                 'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
-                'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity) => $activity->getElevation()->toFloat())),
+                'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
                 'averageDistance' => $countActivitiesWithGear > 0 ? Kilometer::from($gear->getDistance()->toFloat() / $countActivitiesWithGear) : Kilometer::zero(),
                 'averageSpeed' => $movingTimeInSeconds > 0 ? Kilometer::from(($gear->getDistance()->toFloat() / $movingTimeInSeconds) * 3600) : Kilometer::zero(),
-                'totalCalories' => $activitiesWithGear->sum(fn (Activity $activity) => $activity->getCalories()),
+                'totalCalories' => $activitiesWithGear->sum(fn (Activity $activity): ?int => $activity->getCalories()),
             ];
         });
 
-        $activitiesWithOtherGear = $this->activities->filter(fn (Activity $activity) => empty($activity->getGearId()));
+        $activitiesWithOtherGear = $this->activities->filter(fn (Activity $activity): bool => empty($activity->getGearId()));
         $countActivitiesWithOtherGear = count($activitiesWithOtherGear);
         if (0 === $countActivitiesWithOtherGear) {
             return $statistics;
         }
-        $distanceWithOtherGear = Kilometer::from($activitiesWithOtherGear->sum(fn (Activity $activity) => $activity->getDistance()->toFloat()));
-        $movingTimeInSeconds = $activitiesWithOtherGear->sum(fn (Activity $activity) => $activity->getMovingTimeInSeconds());
+        $distanceWithOtherGear = Kilometer::from($activitiesWithOtherGear->sum(fn (Activity $activity): float => $activity->getDistance()->toFloat()));
+        $movingTimeInSeconds = $activitiesWithOtherGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
         $statistics[] = [
             'name' => 'Other',
             'distance' => $distanceWithOtherGear,
             'numberOfWorkouts' => $countActivitiesWithOtherGear,
             'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
-            'elevation' => Meter::from($activitiesWithOtherGear->sum(fn (Activity $activity) => $activity->getElevation()->toFloat())),
+            'elevation' => Meter::from($activitiesWithOtherGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
             'averageDistance' => Kilometer::from($distanceWithOtherGear->toFloat() / $countActivitiesWithOtherGear),
             'averageSpeed' => KmPerHour::from(($distanceWithOtherGear->toFloat() / $movingTimeInSeconds) * 3600),
-            'totalCalories' => $activitiesWithOtherGear->sum(fn (Activity $activity) => $activity->getCalories()),
+            'totalCalories' => $activitiesWithOtherGear->sum(fn (Activity $activity): ?int => $activity->getCalories()),
         ];
 
         return $statistics;

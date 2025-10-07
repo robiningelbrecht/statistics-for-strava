@@ -8,6 +8,7 @@ use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
 
 final readonly class Tag extends NonEmptyStringLiteral
 {
+    #[\Override]
     protected function validate(string $value): void
     {
         parent::validate($value);

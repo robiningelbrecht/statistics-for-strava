@@ -22,6 +22,7 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
         parent::__construct();
     }
 
+    #[\Override]
     public function addMessage(Message $message): ChatHistoryInterface
     {
         parent::addMessage($message);

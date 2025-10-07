@@ -39,7 +39,7 @@ final readonly class FindPersonalRecordsPerMonthQueryHandler implements QueryHan
         )->fetchAllAssociative();
 
         return new FindPersonalRecordsPerMonthResponse(array_map(
-            fn (array $result) => [
+            fn (array $result): array => [
                 $result['monthNumber'],
                 (int) $result['prCount'],
             ],

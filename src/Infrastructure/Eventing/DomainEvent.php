@@ -25,7 +25,7 @@ abstract class DomainEvent extends Event implements \JsonSerializable
     protected function getSerializablePayload(): array
     {
         $serializedPayload = [];
-        foreach ((new \ReflectionClass($this))->getProperties() as $property) {
+        foreach (new \ReflectionClass($this)->getProperties() as $property) {
             $serializedPayload[$property->getName()] = $property->getValue($this);
         }
 

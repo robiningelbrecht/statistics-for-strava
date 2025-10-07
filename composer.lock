@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a02badc84dd1a98560131e74b3800423",
+    "content-hash": "2c30e1fe371cc5e704e2e920b0f3b245",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -2349,16 +2349,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.3.4",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "7c7cf30416ec4bd8098a8061b92922b97537a7e4"
+                "reference": "e68d6446c4390cbb4202d8a93fc1db4a33b41914"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/7c7cf30416ec4bd8098a8061b92922b97537a7e4",
-                "reference": "7c7cf30416ec4bd8098a8061b92922b97537a7e4",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/e68d6446c4390cbb4202d8a93fc1db4a33b41914",
+                "reference": "e68d6446c4390cbb4202d8a93fc1db4a33b41914",
                 "shasum": ""
             },
             "require": {
@@ -2409,9 +2409,9 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.3.4"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.4.1"
             },
-            "time": "2025-10-01T14:00:15+00:00"
+            "time": "2025-10-06T16:31:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -9657,6 +9657,66 @@
                 }
             ],
             "time": "2024-06-11T12:45:25+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "e1aaf3061e9ae9342ed0824865e3a3360defddeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/e1aaf3061e9ae9342ed0824865e3a3360defddeb",
+                "reference": "e1aaf3061e9ae9342ed0824865e3a3360defddeb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "phpstan/phpstan": "^2.1.26"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "suggest": {
+                "ext-dom": "To manipulate phpunit.xml via the custom-rule command"
+            },
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "homepage": "https://getrector.com/",
+            "keywords": [
+                "automation",
+                "dev",
+                "migration",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/2.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-10-06T21:25:14+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",

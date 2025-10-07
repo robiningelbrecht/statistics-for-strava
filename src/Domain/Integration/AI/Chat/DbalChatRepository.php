@@ -45,7 +45,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         foreach ($results as $result) {
             $history[] = new ChatMessage(
                 messageId: ChatMessageId::fromString($result['messageId']),
-                message: nl2br($result['message']),
+                message: nl2br((string) $result['message']),
                 messageRole: MessageRole::from($result['messageRole']),
                 on: SerializableDateTime::fromString($result['on']),
             )->withUserProfilePictureUrl($this->profilePictureUrl)

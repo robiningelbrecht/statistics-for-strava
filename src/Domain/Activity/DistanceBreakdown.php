@@ -38,7 +38,7 @@ final readonly class DistanceBreakdown
         $numberOfBreakdowns = 11;
         $statistics = [];
         $longestDistanceForActivity = Kilometer::from($this->activities->max(
-            fn (Activity $activity) => $activity->getDistance()->toFloat()
+            fn (Activity $activity): float => $activity->getDistance()->toFloat()
         ))->toUnitSystem($this->unitSystem);
 
         if ($longestDistanceForActivity->isZeroOrLower()) {

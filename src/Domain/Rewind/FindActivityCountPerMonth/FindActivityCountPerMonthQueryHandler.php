@@ -40,7 +40,7 @@ final readonly class FindActivityCountPerMonthQueryHandler implements QueryHandl
 
         return new FindActivityCountPerMonthResponse(
             array_map(
-                fn (array $result) => [
+                fn (array $result): array => [
                     $result['monthNumber'],
                     SportType::from($result['sportType']),
                     $result['count'],

@@ -31,7 +31,7 @@ final readonly class HeatmapConfig implements \JsonSerializable
 
         return new self(
             polylineColor: CssColor::fromString($polylineColor),
-            tileLayerUrls: array_map(fn (string $url) => Url::fromString($url), $tileLayerUrls),
+            tileLayerUrls: array_map(fn (string $url): Url => Url::fromString($url), $tileLayerUrls),
             enableGreyScale: $enableGreyScale,
         );
     }

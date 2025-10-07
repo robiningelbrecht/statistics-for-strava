@@ -36,6 +36,7 @@ final class GetDefaultHeartRateZone extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [

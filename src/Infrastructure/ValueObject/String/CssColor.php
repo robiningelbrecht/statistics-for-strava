@@ -6,6 +6,7 @@ namespace App\Infrastructure\ValueObject\String;
 
 final readonly class CssColor extends NonEmptyStringLiteral
 {
+    #[\Override]
     protected function validate(string $value): void
     {
         parent::validate($value);

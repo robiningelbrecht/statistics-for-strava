@@ -47,7 +47,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
             unitSystem: UnitSystem::from($result['unitSystem']),
             streamTypes: CombinedStreamTypes::fromArray(array_map(
                 fn (string $streamType) => CombinedStreamType::from($streamType),
-                explode(',', $result['streamTypes'])
+                explode(',', (string) $result['streamTypes'])
             )),
             data: Json::decode($result['data'])
         );
@@ -94,7 +94,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
         }
 
         return ActivityIds::fromArray(array_map(
-            fn (string $activityId) => ActivityId::fromString($activityId),
+            fn (string $activityId): ActivityId => ActivityId::fromString($activityId),
             array_unique($activityIds),
         ));
     }

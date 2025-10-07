@@ -31,18 +31,18 @@ final class ActivityBestEfforts extends Collection
 
     public function getBySportType(SportType $sportType): ActivityBestEfforts
     {
-        return $this->filter(fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType);
+        return $this->filter(fn (ActivityBestEffort $activityBestEffort): bool => $activityBestEffort->getSportType() === $sportType);
     }
 
     public function getByActivity(ActivityId $activityId): ActivityBestEfforts
     {
-        return $this->filter(fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getActivityId() == $activityId);
+        return $this->filter(fn (ActivityBestEffort $activityBestEffort): bool => $activityBestEffort->getActivityId() == $activityId);
     }
 
     public function getOneBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ?ActivityBestEffort
     {
         $activityBestEfforts = $this->filter(
-            fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType
+            fn (ActivityBestEffort $activityBestEffort): bool => $activityBestEffort->getSportType() === $sportType
                 && $activityBestEffort->getDistanceInMeter()->toInt() === $distance->toMeter()->toInt()
         );
 
@@ -52,7 +52,7 @@ final class ActivityBestEfforts extends Collection
     public function getBySportTypeAndDistance(SportType $sportType, ConvertableToMeter $distance): ActivityBestEfforts
     {
         return $this->filter(
-            fn (ActivityBestEffort $activityBestEffort) => $activityBestEffort->getSportType() === $sportType
+            fn (ActivityBestEffort $activityBestEffort): bool => $activityBestEffort->getSportType() === $sportType
                 && $activityBestEffort->getDistanceInMeter()->toInt() === $distance->toMeter()->toInt()
         );
     }

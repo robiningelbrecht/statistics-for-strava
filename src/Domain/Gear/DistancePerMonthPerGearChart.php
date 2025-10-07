@@ -121,7 +121,7 @@ final readonly class DistancePerMonthPerGearChart
             'legend' => [
                 'selected' => $selectedSeries,
                 'data' => array_map(
-                    fn (string $gearName) => [
+                    fn (string $gearName): array => [
                         'name' => $gearName,
                     ],
                     array_keys($selectedSeries),

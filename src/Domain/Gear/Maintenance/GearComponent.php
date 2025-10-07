@@ -13,15 +13,15 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 
-final class GearComponent
+final readonly class GearComponent
 {
     private MaintenanceTasks $maintenanceTasks;
 
     private function __construct(
-        private readonly Tag $tag,
-        private readonly Name $label,
-        private readonly GearIds $attachedTo,
-        private readonly ?string $imgSrc,
+        private Tag $tag,
+        private Name $label,
+        private GearIds $attachedTo,
+        private ?string $imgSrc,
     ) {
         $this->maintenanceTasks = MaintenanceTasks::empty();
     }

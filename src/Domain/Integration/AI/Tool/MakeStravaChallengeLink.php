@@ -26,6 +26,7 @@ class MakeStravaChallengeLink extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [

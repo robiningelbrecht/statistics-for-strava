@@ -78,7 +78,7 @@ final readonly class AIChatRequestHandler
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): StreamedResponse
     {
-        return new StreamedResponse(function () use ($request) {
+        return new StreamedResponse(function () use ($request): void {
             while (ob_get_level() > 0) {
                 ob_end_flush();
             }

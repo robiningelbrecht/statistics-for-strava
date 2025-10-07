@@ -16,23 +16,23 @@ final class MaintenanceTaskTags extends Collection
 
     public function filterOnValid(): self
     {
-        return $this->filter(fn (MaintenanceTaskTag $tag) => $tag->isValid());
+        return $this->filter(fn (MaintenanceTaskTag $tag): bool => $tag->isValid());
     }
 
     public function filterOnGear(GearId $gearId): self
     {
-        return $this->filter(fn (MaintenanceTaskTag $tag) => $tag->getTaggedForGearId() == $gearId);
+        return $this->filter(fn (MaintenanceTaskTag $tag): bool => $tag->getTaggedForGearId() == $gearId);
     }
 
     public function sortOnDateDesc(): self
     {
         return $this->usort(
-            fn (MaintenanceTaskTag $a, MaintenanceTaskTag $b) => $b->getTaggedOn()->getTimestamp() <=> $a->getTaggedOn()->getTimestamp()
+            fn (MaintenanceTaskTag $a, MaintenanceTaskTag $b): int => $b->getTaggedOn()->getTimestamp() <=> $a->getTaggedOn()->getTimestamp()
         );
     }
 
     public function filterOnInvalid(): self
     {
-        return $this->filter(fn (MaintenanceTaskTag $tag) => !$tag->isValid());
+        return $this->filter(fn (MaintenanceTaskTag $tag): bool => !$tag->isValid());
     }
 }

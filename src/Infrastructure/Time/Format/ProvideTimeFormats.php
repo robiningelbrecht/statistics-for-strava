@@ -16,7 +16,7 @@ trait ProvideTimeFormats
             return $interval->seconds.'s';
         }
 
-        $movingTime = implode(':', array_map(fn (int $value) => sprintf('%02d', $value), [
+        $movingTime = implode(':', array_map(fn (int $value): string => sprintf('%02d', $value), [
             $interval->minutes,
             $interval->seconds,
         ]));
@@ -32,7 +32,7 @@ trait ProvideTimeFormats
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 
-        $movingTime = implode(':', array_map(fn (int $value) => sprintf('%02d', $value), [
+        $movingTime = implode(':', array_map(fn (int $value): string => sprintf('%02d', $value), [
             $interval->minutes,
             $interval->seconds,
         ]));
@@ -48,7 +48,7 @@ trait ProvideTimeFormats
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 
-        return implode(':', array_map(fn (int $value) => sprintf('%02d', $value), [
+        return implode(':', array_map(fn (int $value): string => sprintf('%02d', $value), [
             $interval->hours,
             $interval->minutes,
             $interval->seconds,

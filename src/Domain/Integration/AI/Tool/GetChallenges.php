@@ -30,6 +30,6 @@ final class GetChallenges extends Tool
     {
         $challenges = $this->challengeRepository->findAll();
 
-        return $challenges->map(fn (Challenge $challenge) => $challenge->exportForAITooling());
+        return $challenges->map(fn (Challenge $challenge): array => $challenge->exportForAITooling());
     }
 }

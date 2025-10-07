@@ -317,7 +317,7 @@ final class Activity implements SupportsAITooling
             return null;
         }
 
-        return $this->bestPowerOutputs->find(fn (PowerOutput $bestPowerOutput) => $bestPowerOutput->getTimeIntervalInSeconds() === $timeInterval);
+        return $this->bestPowerOutputs->find(fn (PowerOutput $bestPowerOutput): bool => $bestPowerOutput->getTimeIntervalInSeconds() === $timeInterval);
     }
 
     public function enrichWithBestPowerOutputs(PowerOutputs $bestPowerOutputs): void
@@ -348,7 +348,7 @@ final class Activity implements SupportsAITooling
     public function getLocalImagePaths(): array
     {
         return array_map(
-            fn (string $path) => str_starts_with($path, '/') ? $path : '/'.$path,
+            fn (string $path): string => str_starts_with($path, '/') ? $path : '/'.$path,
             $this->localImagePaths
         );
     }

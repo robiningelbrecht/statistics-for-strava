@@ -30,7 +30,7 @@ final class GetAllActivitiesSummary extends Tool
     {
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $summary = $allActivities
-            ->map(fn (Activity $activity) => [
+            ->map(fn (Activity $activity): array => [
                 'id' => $activity->getId()->toUnprefixedString(),
                 'on' => $activity->getStartDate()->format('Y-m-d'),
             ]);

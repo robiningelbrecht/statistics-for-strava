@@ -62,11 +62,14 @@ phpstan:
 	@make dcr cmd="vendor/bin/phpstan --memory-limit=1G $(arg)"
 
 csfix:
-	#@make dcr cmd="vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
+	@make dcr cmd="vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php"
 	@make dcr cmd="caddy fmt --overwrite --config=/var/www/docker/app/config/Caddyfile"
 
 delete-snapshots:
 	find . -name __snapshots__ -type d -prune -exec rm -rf {} \;
+
+rector:
+	@make dcr cmd="vendor/bin/rector src"
 
 # Helpers to build the app.
 app-import-data:

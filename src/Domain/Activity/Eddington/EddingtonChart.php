@@ -67,7 +67,7 @@ final readonly class EddingtonChart
                 'selectedMode' => false,
             ],
             'xAxis' => [
-                'data' => array_map(fn (int $distance) => $distance.$unitDistance, range(1, $longestDistanceInADay)),
+                'data' => array_map(fn (int $distance): string => $distance.$unitDistance, range(1, $longestDistanceInADay)),
                 'type' => 'category',
                 'axisTick' => [
                     'alignWithLabel' => true,

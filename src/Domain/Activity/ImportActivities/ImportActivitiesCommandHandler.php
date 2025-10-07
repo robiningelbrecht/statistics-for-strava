@@ -66,7 +66,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         $allGears = $this->gearRepository->findAll();
         $allActivityIds = $this->activityRepository->findActivityIds();
         $activityIdsToDelete = array_combine(
-            $allActivityIds->map(fn (ActivityId $activityId) => (string) $activityId),
+            $allActivityIds->map(fn (ActivityId $activityId): string => (string) $activityId),
             $allActivityIds->toArray(),
         );
         $stravaActivities = $this->strava->getActivities();
@@ -152,7 +152,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         // Activity got updated and images were uploaded, import them.
                         if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
                             $activity->updateLocalImagePaths(array_map(
-                                fn (string $fileSystemPath) => 'files/'.$fileSystemPath,
+                                fn (string $fileSystemPath): string => 'files/'.$fileSystemPath,
                                 $fileSystemPaths
                             ));
                         }
@@ -189,7 +189,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     if (($rawStravaData['total_photo_count'] ?? 0) > 0) {
                         if ($fileSystemPaths = $this->activityImageDownloader->downloadImages($activity->getId())) {
                             $activity->updateLocalImagePaths(array_map(
-                                fn (string $fileSystemPath) => 'files/'.$fileSystemPath,
+                                fn (string $fileSystemPath): string => 'files/'.$fileSystemPath,
                                 $fileSystemPaths
                             ));
                         }
@@ -252,9 +252,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
         if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {
             // Shortcut the process here to make sure no activities are deleted yet.
-            return;
-        }
-        if (empty($activityIdsToDelete)) {
             return;
         }
 

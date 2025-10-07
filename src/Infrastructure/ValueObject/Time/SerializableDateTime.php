@@ -28,7 +28,7 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
 
     public static function fromYearAndWeekNumber(int $year, int $weekNumber): self
     {
-        $datetime = (new self())->setISODate($year, $weekNumber);
+        $datetime = new self()->setISODate($year, $weekNumber);
 
         return self::fromString(
             $datetime->format('Y-m-d H:i:s')

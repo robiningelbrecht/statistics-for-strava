@@ -31,6 +31,7 @@ final class GetActivityLaps extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [
@@ -51,6 +52,6 @@ final class GetActivityLaps extends Tool
         $activityId = ActivityId::fromUnprefixed($activityId);
         $laps = $this->activityLapRepository->findBy($activityId);
 
-        return $laps->map(static fn (ActivityLap $lap) => $lap->exportForAITooling());
+        return $laps->map(static fn (ActivityLap $lap): array => $lap->exportForAITooling());
     }
 }

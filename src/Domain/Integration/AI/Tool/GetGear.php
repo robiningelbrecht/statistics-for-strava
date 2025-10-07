@@ -30,6 +30,6 @@ final class GetGear extends Tool
     {
         $gears = $this->gearRepository->findAll();
 
-        return $gears->map(fn (Gear $gear) => $gear->exportForAITooling());
+        return $gears->map(fn (Gear $gear): array => $gear->exportForAITooling());
     }
 }

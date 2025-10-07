@@ -35,7 +35,7 @@ final readonly class Countries
 
         $countries = [];
         foreach ($results as $countryCode) {
-            if ('xk' === strtolower($countryCode)) {
+            if ('xk' === strtolower((string) $countryCode)) {
                 // Currently Symfony does not support Kosovo as a country.
                 // Need to wait until this commit is released in Symfony 7.4:
                 // https://github.com/symfony/symfony/issues/40020
@@ -43,7 +43,7 @@ final readonly class Countries
                 continue;
             }
             $countries[$countryCode] = SymfonyCountries::getName(
-                country: strtoupper($countryCode),
+                country: strtoupper((string) $countryCode),
                 displayLocale: $this->localeSwitcher->getLocale()
             );
         }
@@ -67,7 +67,7 @@ final readonly class Countries
         $countries = [];
         foreach ($results as $countryCode) {
             $countries[$countryCode] = SymfonyCountries::getName(
-                country: strtoupper($countryCode),
+                country: strtoupper((string) $countryCode),
                 displayLocale: $this->localeSwitcher->getLocale()
             );
         }

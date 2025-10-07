@@ -26,6 +26,7 @@ final class MakeStravaSegmentLink extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [

@@ -78,7 +78,7 @@ final readonly class FtpHistoryChart
                     'axisLabel' => [
                         'formatter' => '{value} w',
                     ],
-                    'min' => $this->ftps->min(fn (Ftp $ftp) => $ftp->getFtp()->getValue()) - 10,
+                    'min' => $this->ftps->min(fn (Ftp $ftp): int => $ftp->getFtp()->getValue()) - 10,
                 ],
                 $this->ftps->getFirst()?->getRelativeFtp() ? [
                     'type' => 'value',
@@ -88,7 +88,7 @@ final readonly class FtpHistoryChart
                     'axisLabel' => [
                         'formatter' => '{value} w/kg',
                     ],
-                    'min' => $this->ftps->min(fn (Ftp $ftp) => $ftp->getRelativeFtp()) - 1,
+                    'min' => $this->ftps->min(fn (Ftp $ftp): ?float => $ftp->getRelativeFtp()) - 1,
                 ] : [],
             ],
             'series' => [
@@ -110,7 +110,7 @@ final readonly class FtpHistoryChart
                     'showSymbol' => true,
                     'data' => [
                         ...$this->ftps->map(
-                            fn (Ftp $ftp) => [
+                            fn (Ftp $ftp): array => [
                                 $ftp->getSetOn()->format('Y-m-d'),
                                 $ftp->getFtp(),
                             ],
@@ -140,7 +140,7 @@ final readonly class FtpHistoryChart
                     'showSymbol' => true,
                     'data' => [
                         ...$this->ftps->map(
-                            fn (Ftp $ftp) => [
+                            fn (Ftp $ftp): array => [
                                 $ftp->getSetOn()->format('Y-m-d'),
                                 $ftp->getRelativeFtp(),
                             ]

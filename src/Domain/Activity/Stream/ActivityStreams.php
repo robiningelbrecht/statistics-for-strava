@@ -18,6 +18,6 @@ class ActivityStreams extends Collection
 
     public function filterOnType(StreamType $streamType): ?ActivityStream
     {
-        return $this->filter(fn (ActivityStream $stream) => $stream->getStreamType() === $streamType)->getFirst();
+        return $this->filter(fn (ActivityStream $stream): bool => $stream->getStreamType() === $streamType)->getFirst();
     }
 }

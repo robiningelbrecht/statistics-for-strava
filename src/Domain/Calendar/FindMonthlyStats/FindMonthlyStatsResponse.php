@@ -63,7 +63,7 @@ final readonly class FindMonthlyStatsResponse implements Response
     {
         $stats = array_filter(
             $this->statsPerMonth,
-            fn (array $entry) => $entry['month']->getId() === $month->getId()
+            fn (array $entry): bool => $entry['month']->getId() === $month->getId()
         );
         $result = $this->aggregateStats($stats);
 
@@ -77,7 +77,7 @@ final readonly class FindMonthlyStatsResponse implements Response
     {
         $stats = array_filter(
             $this->statsPerMonth,
-            fn (array $entry) => $entry['month']->getId() === $month->getId() && $entry['sportType'] === $sportType
+            fn (array $entry): bool => $entry['month']->getId() === $month->getId() && $entry['sportType'] === $sportType
         );
 
         return $this->aggregateStats($stats);
@@ -92,7 +92,7 @@ final readonly class FindMonthlyStatsResponse implements Response
 
         $stats = array_filter(
             $this->statsPerMonth,
-            fn (array $entry) => $entry['month']->getId() === $month->getId() && $sportTypes->has($entry['sportType'])
+            fn (array $entry): bool => $entry['month']->getId() === $month->getId() && $sportTypes->has($entry['sportType'])
         );
 
         $result = $this->aggregateStats($stats);

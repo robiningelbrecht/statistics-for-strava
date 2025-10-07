@@ -26,6 +26,7 @@ final class MakeStravaActivityLink extends Tool
      *
      * @codeCoverageIgnore
      */
+    #[\Override]
     protected function properties(): array
     {
         return [
