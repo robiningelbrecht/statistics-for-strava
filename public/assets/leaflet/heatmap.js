@@ -80,6 +80,11 @@ export default function Heatmap($heatmapWrapper) {
     }
 
     const applyFiltersToRoutes = function (routes, $heatmapWrapper) {
+        const $allCheckableFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter]');
+        $allCheckableFilters.forEach(element => {
+            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.remove('active');
+        });
+
         const $activeCheckedFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter]:checked');
         const $rangeFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter*="[]"]');
 
@@ -87,10 +92,14 @@ export default function Heatmap($heatmapWrapper) {
         $activeCheckedFilters.forEach(element => {
             const filterName = element.getAttribute('data-heatmap-filter');
             filters[filterName] = element.value.toLowerCase();
+            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.add('active');
         });
         $rangeFilters.forEach(element => {
             const filterName = element.getAttribute('data-heatmap-filter').replace('[]', '');
             const $rangeInputFrom = element.querySelector('input[name="' + filterName + '[from]"]');
+            const filterDropdownButton =  $rangeInputFrom.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]');
+            filterDropdownButton.classList.remove('active');
+
             if (!$rangeInputFrom) {
                 throw new Error('input[name="' + filterName + '[from]"] element not found');
             }
@@ -108,6 +117,7 @@ export default function Heatmap($heatmapWrapper) {
                 dateTo.setHours(23, 59, 59);
 
                 filters[filterName] = [dateFrom.getTime(), dateTo.getTime()];
+                filterDropdownButton.classList.add('active');
             }
         });
 

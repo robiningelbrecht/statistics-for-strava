@@ -23,6 +23,11 @@ export default function DataTable($dataTableWrapperNode) {
         const $searchInput = $dataTableWrapperNode.querySelector('input[type="search"]');
         const searchValue = $searchInput.value.toLowerCase();
 
+        const $allCheckableFilters = $dataTableWrapperNode.querySelectorAll('[data-dataTable-filter]');
+        $allCheckableFilters.forEach(element => {
+            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.remove('active');
+        });
+
         const $activeCheckedFilters = $dataTableWrapperNode.querySelectorAll('[data-dataTable-filter]:checked');
         const $rangeFilters = $dataTableWrapperNode.querySelectorAll('[data-dataTable-filter*="[]"]');
 
@@ -30,10 +35,14 @@ export default function DataTable($dataTableWrapperNode) {
         $activeCheckedFilters.forEach(element => {
             const filterName = element.getAttribute('data-dataTable-filter');
             filters[filterName] = element.value.toLowerCase();
+            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.add('active');
         });
         $rangeFilters.forEach(element => {
             const filterName = element.getAttribute('data-dataTable-filter').replace('[]', '');
             const $rangeInputFrom = element.querySelector('input[name="' + filterName + '[from]"]');
+            const filterDropdownButton =  $rangeInputFrom.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]');
+            filterDropdownButton.classList.remove('active');
+
             if (!$rangeInputFrom) {
                 throw new Error('input[name="' + filterName + '[from]"] element not found');
             }
@@ -51,6 +60,7 @@ export default function DataTable($dataTableWrapperNode) {
                 dateTo.setHours(23,59,59);
 
                 filters[filterName] = [dateFrom.getTime(), dateTo.getTime()];
+                filterDropdownButton.classList.add('active');
             }
         });
 
