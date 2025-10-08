@@ -476,6 +476,20 @@
         initAccordions();
         initModals(rootNode);
 
+        const chartClickHandlers = {
+            handleActivityGridChartClick: (params) => {
+                if (!params || !params.value || params.value < 1) {
+                    return;
+                }
+
+                localStorage.setItem('dataTableFilters', JSON.stringify({
+                    "start-date.from": params.value[0],
+                    "start-date.to": params.value[0]
+                }));
+                router.navigateTo(`/activities`);
+            },
+        };
+
         // Render charts.
         const connectedCharts = [];
         rootNode.querySelectorAll('[data-echarts-options]').forEach(function (chartNode) {
@@ -488,6 +502,13 @@
             resolveEchartsCallbacks(chartOptions, 'series.symbolSize');
 
             chart.setOption(chartOptions);
+
+            const clickHandlerName = chartNode.getAttribute('data-chart-click');
+            if (clickHandlerName && chartClickHandlers[clickHandlerName]) {
+                chart.on('click', function (params) {
+                    chartClickHandlers[clickHandlerName](params);
+                });
+            }
             if (chartNode.hasAttribute('data-echarts-connect')) {
                 connectedCharts.push(chart);
             }

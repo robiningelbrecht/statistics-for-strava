@@ -79,27 +79,15 @@ export default function DataTable($dataTableWrapperNode) {
         return dataRows;
     };
 
-    const applyFiltersFromQueryParams = () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const filtersParam = Object.fromEntries(
-            [...urlParams.entries()]
-                .filter(([key]) => key.startsWith('filters['))
-                .map(([key, value]) => {
-                    // Extract nested keys like filters[date][from]
-                    const match = key.match(/^filters\[([^\]]+)](?:\[([^\]]+)])?/);
-                    if (!match) return [];
-                    const [, mainKey, subKey] = match;
-                    return subKey ? [`${mainKey}.${subKey}`, value] : [mainKey, value];
-                })
-                .filter(([key]) => key)
-        );
+    const applyFiltersFromLocalStorage = () => {
+        const storedFiltersJson = localStorage.getItem('dataTableFilters');
+        if (!storedFiltersJson) return;
 
-        if (urlParams.has('search')) {
-            $dataTableWrapperNode.querySelector('input[type="search"]').value = urlParams.get('search');
-        }
+        const filtersParam = JSON.parse(storedFiltersJson);
 
+        // Apply checkbox/radio filters
         Object.keys(filtersParam).forEach(filterName => {
-            if (filterName.includes('.')) return; // handled separately for range filters.
+            if (filterName.includes('.')) return; // range filters handled later
 
             const filterValue = filtersParam[filterName];
             const $inputs = $dataTableWrapperNode.querySelectorAll(
@@ -112,7 +100,7 @@ export default function DataTable($dataTableWrapperNode) {
             });
         });
 
-        // Populate range filters (e.g. filters[date][from], filters[date][to]).
+        // Apply range filters (e.g., filters.date.from / filters.date.to)
         const rangeFilterGroups = {};
         Object.keys(filtersParam)
             .filter(k => k.includes('.'))
@@ -129,6 +117,8 @@ export default function DataTable($dataTableWrapperNode) {
             if ($from && range.from) $from.value = range.from;
             if ($to && range.to) $to.value = range.to;
         });
+
+        localStorage.removeItem('dataTableFilters');
     };
 
     const render = () => {
@@ -153,9 +143,7 @@ export default function DataTable($dataTableWrapperNode) {
             const dataRows = await response.json();
             const $scrollElement = $dataTableWrapperNode.querySelector('.scroll-area');
 
-            applyFiltersFromQueryParams();
-            // Clean the URL to remove query params added by filters.
-            window.history.replaceState({  }, '', `${location.pathname}`);
+            applyFiltersFromLocalStorage();
 
             const initialFilteredRows = applySearchAndFiltersToDataRows(dataRows, $dataTableWrapperNode);
 

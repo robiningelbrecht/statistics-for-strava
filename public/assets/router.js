@@ -19,25 +19,20 @@ export default function Router(app) {
     };
 
     const determineActiveMenuLink = (url) => {
-        // Strip query string
-        const cleanUrl = url.split('?')[0];
-        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + cleanUrl + '"]');
+        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + url + '"]');
         if ($activeMenuLink) {
             return $activeMenuLink;
         }
 
         const newUrl = url.replace(/\/[^\/]*$/, '');
-        if (newUrl === cleanUrl || newUrl === '') {
+        if (newUrl === url || newUrl === '') {
             return null;
         }
 
         return determineActiveMenuLink(newUrl);
     };
 
-    const renderContent = async (fullRoute, modalId) => {
-        const [page] = fullRoute.split('?');
-        const queryString = fullRoute.includes('?') ? '?' + fullRoute.split('?')[1] : '';
-
+    const renderContent = async (page, modalId) => {
         if (!menu.hasAttribute('aria-hidden')) {
             // Trigger click event to close mobile nav.
             mobileNavTriggerEl.dispatchEvent(new MouseEvent('click', {
@@ -76,15 +71,13 @@ export default function Router(app) {
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true, cancelable: false, detail: {
                 page: fullPageName,
-                modalId: modalId,
-                query: queryString
+                modalId: modalId
             }
         }));
         document.dispatchEvent(new CustomEvent('pageWasLoaded.' + fullPageName, {
             bubbles: true, cancelable: false, detail: {
                 page: fullPageName,
-                modalId: modalId,
-                query: queryString
+                modalId: modalId
             }
         }));
     };
@@ -94,14 +87,7 @@ export default function Router(app) {
             to.addEventListener("click", (e) => {
                 e.preventDefault();
                 const route = to.getAttribute('data-router-navigate');
-                const currentRoute = app.getAttribute('data-router-current');
-                if (currentRoute === route) {
-                    // Do not reload the same page.
-                    return
-                }
-
-                renderContent(route, null);
-                pushRouteToHistoryState(route);
+                navigateTo(route, null);
             });
         });
     };
@@ -114,6 +100,17 @@ export default function Router(app) {
             renderContent(e.state.route, e.state.modal);
         };
     };
+
+    const navigateTo = (route, modal) => {
+        const currentRoute = app.getAttribute('data-router-current');
+        if (currentRoute === route) {
+            // Do not reload the same page.
+            return
+        }
+
+        renderContent(route, modal);
+        pushRouteToHistoryState(route);
+    }
 
     const pushRouteToHistoryState = (route, modal) => {
         const fullRouteWithModal = modal ? route + '#' + modal : route;
@@ -128,9 +125,7 @@ export default function Router(app) {
     }
 
     const currentRoute = () => {
-        const path = location.pathname.replace('/', '') ? location.pathname : defaultRoute;
-        const query = location.search;
-        return path + query;
+        return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
     };
 
     const boot = () => {
@@ -150,6 +145,6 @@ export default function Router(app) {
     }
 
     return {
-        boot, pushCurrentRouteToHistoryState
+        boot, pushCurrentRouteToHistoryState, navigateTo
     };
 }
