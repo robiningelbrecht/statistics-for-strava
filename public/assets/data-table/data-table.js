@@ -79,7 +79,7 @@ export default function DataTable($dataTableWrapperNode) {
         return dataRows;
     };
 
-    const applyFiltersFromLocalStorage = (dataTableName) => {
+    const prefillFiltersFromLocalStorage = (dataTableName) => {
         const storedFiltersJson = localStorage.getItem('dataTableFilters');
         if (!storedFiltersJson) return;
 
@@ -144,8 +144,7 @@ export default function DataTable($dataTableWrapperNode) {
             const dataRows = await response.json();
             const $scrollElement = $dataTableWrapperNode.querySelector('.scroll-area');
 
-            applyFiltersFromLocalStorage(dataTableName);
-
+            prefillFiltersFromLocalStorage(dataTableName);
             const initialFilteredRows = applySearchAndFiltersToDataRows(dataRows, $dataTableWrapperNode);
 
             const clusterize = new Clusterize({
