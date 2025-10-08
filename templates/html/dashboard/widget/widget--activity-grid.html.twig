@@ -65,7 +65,7 @@
             <div id="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
                 <div class="relative overflow-x-auto">
-                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ gridCharts[activityGridType.value] }}' data-chart-click="handleActivityGridChartClick"></div>
+                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ gridCharts[activityGridType.value] }}' data-echarts-click="handleActivityGridChartClick"></div>
                 </div>
             </div>
         {% endfor %}

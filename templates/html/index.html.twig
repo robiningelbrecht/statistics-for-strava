@@ -292,64 +292,80 @@
 </div>
 <script>
     window.statisticsForStrava = {{ javascriptWindowConstants|raw }};
-    window.statisticsForStrava.callbacks = {};
-    window.statisticsForStrava.callbacks.formatSeconds = (secondsToFormat) => {
-        const hours = String(Math.floor(secondsToFormat / 3600)).padStart(2, '0');
-        const minutes = String(Math.floor((secondsToFormat % 3600) / 60)).padStart(2, '0');
-        const seconds = String(secondsToFormat % 60).padStart(2, '0');
 
-        return `${hours}:${minutes}:${seconds}`;
-    };
-    window.statisticsForStrava.callbacks.formatPace = (params) => {
-        const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
-        const secondsToFormat = params[0].value;
-        if (secondsToFormat < 60) {
-            return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
-        }
-        const minutes = Math.floor(secondsToFormat / 60);
-        const secs = secondsToFormat % 60;
-        return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
-    };
-    window.statisticsForStrava.callbacks.symbolSize = function (params) {
-        return (params[2] / 100) * 15 + 5;
-    };
-    window.statisticsForStrava.callbacks.toInteger = function (value) {
-        return value.toFixed(0);
-    };
-    window.statisticsForStrava.callbacks.formatHours = function (value) {
-        if(value === undefined || value === null) {
-            return '-';
-        }
-        return `${value.toFixed(0)}h`;
-    };
-    window.statisticsForStrava.callbacks.formatDistance = function (value) {
-        if(value === undefined || value === null) {
-            return '-';
-        }
-        const distanceSymbol = window.statisticsForStrava.unitSystem.distanceSymbol;
-        return `${value.toFixed(0)}${distanceSymbol}`;
-    };
-    window.statisticsForStrava.callbacks.formatElevation = function (value) {
-        if(value === undefined || value === null) {
-            return '-';
-        }
-        const elevationSymbol = window.statisticsForStrava.unitSystem.elevationSymbol;
-        return `${value.toFixed(0)}${elevationSymbol}`;
-    };
-    window.statisticsForStrava.callbacks.formatActivityGridTooltip = function (value) {
-        if (value === undefined || value === null) {
-            return '-';
-        }
+    const chartClickHandlers = {
+        handleActivityGridChartClick: (params) => {
+            if (!params || !params.value || params.value < 1) {
+                return;
+            }
 
-        const dateFormat = window.statisticsForStrava.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
-        const date = echarts.time.format(value.data[0], dateFormat, false);
-        if ('movingTime' === value.seriesName) {
-            const secondsToFormat = value.data[1] * 60;
+            localStorage.setItem('dataTableFilters', JSON.stringify({
+                "start-date.from": params.value[0],
+                "start-date.to": params.value[0]
+            }));
+            router.navigateTo(`/activities`);
+        },
+    };
+
+    window.statisticsForStrava.callbacks = {
+        formatSeconds: (secondsToFormat) => {
             const hours = String(Math.floor(secondsToFormat / 3600)).padStart(2, '0');
             const minutes = String(Math.floor((secondsToFormat % 3600) / 60)).padStart(2, '0');
-            return date + ': ' + `${hours}h${minutes}`;
+            const seconds = String(secondsToFormat % 60).padStart(2, '0');
+
+            return `${hours}:${minutes}:${seconds}`;
+        },
+        formatPace: (params) => {
+            const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
+            const secondsToFormat = params[0].value;
+            if (secondsToFormat < 60) {
+                return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
+            }
+            const minutes = Math.floor(secondsToFormat / 60);
+            const secs = secondsToFormat % 60;
+            return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
+        },
+        symbolSize: (params) => {
+            return (params[2] / 100) * 15 + 5;
+        },
+        toInteger: (value) => {
+            return value.toFixed(0);
+        },
+        formatHours: (value) => {
+            if (value === undefined || value === null) {
+                return '-';
+            }
+            return `${value.toFixed(0)}h`;
+        },
+        formatDistance: (value) => {
+            if(value === undefined || value === null) {
+                return '-';
+            }
+            const distanceSymbol = window.statisticsForStrava.unitSystem.distanceSymbol;
+            return `${value.toFixed(0)}${distanceSymbol}`;
+        },
+        formatElevation: (value) => {
+            if(value === undefined || value === null) {
+                return '-';
+            }
+            const elevationSymbol = window.statisticsForStrava.unitSystem.elevationSymbol;
+            return `${value.toFixed(0)}${elevationSymbol}`;
+        },
+        formatActivityGridTooltip: (value) => {
+            if (value === undefined || value === null) {
+                return '-';
+            }
+
+            const dateFormat = window.statisticsForStrava.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
+            const date = echarts.time.format(value.data[0], dateFormat, false);
+            if ('movingTime' === value.seriesName) {
+                const secondsToFormat = value.data[1] * 60;
+                const hours = String(Math.floor(secondsToFormat / 3600)).padStart(2, '0');
+                const minutes = String(Math.floor((secondsToFormat % 3600) / 60)).padStart(2, '0');
+                return date + ': ' + `${hours}h${minutes}`;
+            }
+            return date + ': ' + value.data[1];
         }
-        return date + ': ' + value.data[1];
     };
 </script>
 <script src="{{ relativeUrl(asset('assets/lazyload.min.js')) }}"></script>
@@ -503,7 +519,7 @@
 
             chart.setOption(chartOptions);
 
-            const clickHandlerName = chartNode.getAttribute('data-chart-click');
+            const clickHandlerName = chartNode.getAttribute('data-echarts-click');
             if (clickHandlerName && chartClickHandlers[clickHandlerName]) {
                 chart.on('click', function (params) {
                     chartClickHandlers[clickHandlerName](params);
