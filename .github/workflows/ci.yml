@@ -35,6 +35,9 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse
 
+      - name: Run Rector
+        run: vendor/bin/rector --dry-run
+
       - name: Run PHPcs fixer dry-run
         run: vendor/bin/php-cs-fixer fix --dry-run --stop-on-violation --config=.php-cs-fixer.dist.php
 
