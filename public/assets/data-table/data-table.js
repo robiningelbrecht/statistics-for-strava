@@ -79,11 +79,11 @@ export default function DataTable($dataTableWrapperNode) {
         return dataRows;
     };
 
-    const applyFiltersFromLocalStorage = () => {
+    const applyFiltersFromLocalStorage = (dataTableName) => {
         const storedFiltersJson = localStorage.getItem('dataTableFilters');
         if (!storedFiltersJson) return;
 
-        const filtersParam = JSON.parse(storedFiltersJson);
+        const filtersParam = JSON.parse(storedFiltersJson)[dataTableName] || {};
 
         // Apply checkbox/radio filters
         Object.keys(filtersParam).forEach(filterName => {
@@ -123,6 +123,7 @@ export default function DataTable($dataTableWrapperNode) {
 
     const render = () => {
         const settings = JSON.parse($dataTableWrapperNode.getAttribute('data-dataTable-settings'));
+        const dataTableName = settings.name;
 
         const $searchInput = $dataTableWrapperNode.querySelector('input[type="search"]');
         const $dataTable = $dataTableWrapperNode.querySelector('table');
@@ -143,7 +144,7 @@ export default function DataTable($dataTableWrapperNode) {
             const dataRows = await response.json();
             const $scrollElement = $dataTableWrapperNode.querySelector('.scroll-area');
 
-            applyFiltersFromLocalStorage();
+            applyFiltersFromLocalStorage(dataTableName);
 
             const initialFilteredRows = applySearchAndFiltersToDataRows(dataRows, $dataTableWrapperNode);
 

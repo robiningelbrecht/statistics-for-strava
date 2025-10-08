@@ -498,9 +498,12 @@
                     return;
                 }
 
+                // Make sure results are prefiltered by clicked date.
                 localStorage.setItem('dataTableFilters', JSON.stringify({
-                    "start-date.from": params.value[0],
-                    "start-date.to": params.value[0]
+                    'activities' : {
+                        "start-date.from": params.value[0],
+                        "start-date.to": params.value[0]
+                    }
                 }));
                 router.navigateTo(`/activities`);
             },
