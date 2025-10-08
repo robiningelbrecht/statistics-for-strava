@@ -79,6 +79,58 @@ export default function DataTable($dataTableWrapperNode) {
         return dataRows;
     };
 
+    const applyFiltersFromQueryParams = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const filtersParam = Object.fromEntries(
+            [...urlParams.entries()]
+                .filter(([key]) => key.startsWith('filters['))
+                .map(([key, value]) => {
+                    // Extract nested keys like filters[date][from]
+                    const match = key.match(/^filters\[([^\]]+)](?:\[([^\]]+)])?/);
+                    if (!match) return [];
+                    const [, mainKey, subKey] = match;
+                    return subKey ? [`${mainKey}.${subKey}`, value] : [mainKey, value];
+                })
+                .filter(([key]) => key)
+        );
+
+        if (urlParams.has('search')) {
+            $dataTableWrapperNode.querySelector('input[type="search"]').value = urlParams.get('search');
+        }
+
+        Object.keys(filtersParam).forEach(filterName => {
+            if (filterName.includes('.')) return; // handled separately for range filters.
+
+            const filterValue = filtersParam[filterName];
+            const $inputs = $dataTableWrapperNode.querySelectorAll(
+                `input[data-dataTable-filter="${filterName}"]`
+            );
+            $inputs.forEach(input => {
+                if (input.value.toLowerCase() === filterValue.toLowerCase()) {
+                    input.checked = true;
+                }
+            });
+        });
+
+        // Populate range filters (e.g. filters[date][from], filters[date][to]).
+        const rangeFilterGroups = {};
+        Object.keys(filtersParam)
+            .filter(k => k.includes('.'))
+            .forEach(k => {
+                const [filter, part] = k.split('.');
+                if (!rangeFilterGroups[filter]) rangeFilterGroups[filter] = {};
+                rangeFilterGroups[filter][part] = filtersParam[k];
+            });
+
+        Object.keys(rangeFilterGroups).forEach(filter => {
+            const range = rangeFilterGroups[filter];
+            const $from = $dataTableWrapperNode.querySelector(`input[name="${filter}[from]"]`);
+            const $to = $dataTableWrapperNode.querySelector(`input[name="${filter}[to]"]`);
+            if ($from && range.from) $from.value = range.from;
+            if ($to && range.to) $to.value = range.to;
+        });
+    };
+
     const render = () => {
         const settings = JSON.parse($dataTableWrapperNode.getAttribute('data-dataTable-settings'));
 
@@ -101,8 +153,14 @@ export default function DataTable($dataTableWrapperNode) {
             const dataRows = await response.json();
             const $scrollElement = $dataTableWrapperNode.querySelector('.scroll-area');
 
+            applyFiltersFromQueryParams();
+            // Clean the URL to remove query params added by filters.
+            window.history.replaceState({  }, '', `${location.pathname}`);
+
+            const initialFilteredRows = applySearchAndFiltersToDataRows(dataRows, $dataTableWrapperNode);
+
             const clusterize = new Clusterize({
-                rows: filterOnActiveRows(dataRows),
+                rows: filterOnActiveRows(initialFilteredRows),
                 scrollElem: $scrollElement,
                 contentElem: $dataTable.querySelector('tbody'),
                 no_data_class: 'clusterize-loading',

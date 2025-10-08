@@ -19,20 +19,25 @@ export default function Router(app) {
     };
 
     const determineActiveMenuLink = (url) => {
-        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + url + '"]');
+        // Strip query string
+        const cleanUrl = url.split('?')[0];
+        const $activeMenuLink = document.querySelector('aside li a[data-router-navigate="' + cleanUrl + '"]');
         if ($activeMenuLink) {
             return $activeMenuLink;
         }
 
         const newUrl = url.replace(/\/[^\/]*$/, '');
-        if (newUrl === url || newUrl === '') {
+        if (newUrl === cleanUrl || newUrl === '') {
             return null;
         }
 
         return determineActiveMenuLink(newUrl);
     };
 
-    const renderContent = async (page, modalId) => {
+    const renderContent = async (fullRoute, modalId) => {
+        const [page] = fullRoute.split('?');
+        const queryString = fullRoute.includes('?') ? '?' + fullRoute.split('?')[1] : '';
+
         if (!menu.hasAttribute('aria-hidden')) {
             // Trigger click event to close mobile nav.
             mobileNavTriggerEl.dispatchEvent(new MouseEvent('click', {
@@ -71,13 +76,15 @@ export default function Router(app) {
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true, cancelable: false, detail: {
                 page: fullPageName,
-                modalId: modalId
+                modalId: modalId,
+                query: queryString
             }
         }));
         document.dispatchEvent(new CustomEvent('pageWasLoaded.' + fullPageName, {
             bubbles: true, cancelable: false, detail: {
                 page: fullPageName,
-                modalId: modalId
+                modalId: modalId,
+                query: queryString
             }
         }));
     };
@@ -121,7 +128,9 @@ export default function Router(app) {
     }
 
     const currentRoute = () => {
-        return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
+        const path = location.pathname.replace('/', '') ? location.pathname : defaultRoute;
+        const query = location.search;
+        return path + query;
     };
 
     const boot = () => {
