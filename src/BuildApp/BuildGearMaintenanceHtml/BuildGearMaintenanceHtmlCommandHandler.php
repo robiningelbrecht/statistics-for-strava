@@ -55,7 +55,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         }
 
         // Validate that all gear ids are in the DB.
-        $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear): GearId => $gear->getId()));
+        $gearIdsInDb = GearIds::fromArray($gears->map(fn (Gear $gear) => $gear->getId()));
         // By default, gear ids are prefixed with "b" or "g" in the Strava API.
         // But these prefixes are not exposed in the URL of the gear, so users might
         // copy-paste the gear id from the URL without these prefixes.
