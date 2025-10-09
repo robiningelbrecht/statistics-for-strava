@@ -385,7 +385,7 @@
     import DataTable from "{{ relativeUrl(asset('/assets/data-table/data-table.js')) }}";
     import Router from "{{ relativeUrl(asset('/assets/router.js')) }}";
     import Chat from "{{ relativeUrl(asset('/assets/chat.js')) }}";
-    import {resolveEchartsCallbacks} from "{{ relativeUrl(asset('/assets/utils.js')) }}";
+    import {resolveEchartsCallbacks, compareVersions} from "{{ relativeUrl(asset('/assets/utils.js')) }}";
 
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
@@ -695,7 +695,8 @@
 
         // If cache exists and is recent, use it
         if (cached && now - cached.timestamp < CACHE_TTL) {
-            if (cached.latestVersion !== currentVersion) {
+            if (compareVersions(currentVersion, cached.latestVersion) < 0) {
+                // Update available.
                 showLatestVersion(cached.latestVersion);
             }
             return;
