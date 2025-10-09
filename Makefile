@@ -79,7 +79,8 @@ app-build-files:
 	docker compose exec app bin/console app:strava:build-files
 
 app-build-flowbite:
-	npx @tailwindcss/cli -i public/assets/flowbite/tailwind.css -o public/assets/flowbite/tailwind.min.css
+	npx @tailwindcss/cli -i public/assets/flowbite/tailwind.css -o public/assets/flowbite/tailwind.min.css --minify
+	npx @tailwindcss/cli -i public/assets/flowbite/tailwind.css -o public/assets/flowbite/tailwind.output.css
 
 app-build-all:
 	@make build-containers

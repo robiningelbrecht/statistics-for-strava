@@ -11,6 +11,7 @@ var
 storage
 node_modules
 public/assets/images/readme
+public/assets/flowbite/tailwind.output.css
 .DS_Store
 .env
 .env.dev
