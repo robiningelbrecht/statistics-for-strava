@@ -1,3 +1,15 @@
+# [v3.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.3) - 2025-10-09
+
+🔥 This release introduces a new feature that lets you click on any day in the dashboard’s activity heatmap to quickly view the activities completed on that date.
+
+## What's Changed
+* ISSUE #1151: ntfyUrl documenation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1157
+* ISSUE #1158: Add documentation related to map visibility by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1159
+* ISSUE #1160: Add rector to CI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1163
+* ISSUE #1162: Allow dataTables to be pre-filtered based on localStorage by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1164
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.6.2...v3.6.3
+
 # [v3.6.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.2) - 2025-10-05
 
 ## What's Changed
