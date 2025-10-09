@@ -10,9 +10,9 @@
     <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="">
     <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
     <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
-    <link href="{{ relativeUrl(asset('assets/leaflet/leaflet.css')) }}" rel="stylesheet"/>
-    <link href="{{ relativeUrl(asset('assets/data-table/clusterize.min.css')) }}" rel="stylesheet">
-    <link href="{{ relativeUrl(asset('assets/lightgallery/lightgallery-bundle.min.css')) }}" rel="stylesheet">
+    <link rel="preload" href="{{ relativeUrl(asset('assets/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ relativeUrl(asset('assets/data-table/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ relativeUrl(asset('assets/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 <body>
 <div class="antialiased bg-gray-50">
