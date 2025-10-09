@@ -13,6 +13,11 @@ final readonly class GearId extends Identifier
         return 'gear-';
     }
 
+    public static function none(): self
+    {
+        return self::fromUnprefixed('none');
+    }
+
     public function isPrefixedWithStravaPrefix(): bool
     {
         $unprefixed = $this->toUnprefixedString();

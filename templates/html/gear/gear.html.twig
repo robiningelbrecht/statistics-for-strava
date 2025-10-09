@@ -61,7 +61,9 @@
                     {% for statistic in gearStatistics.getRows() %}
                         <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                             <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                {{ statistic.name }}
+                                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
+                                    {{ statistic.name }}
+                                </a>
                             </th>
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.numberOfWorkouts }}

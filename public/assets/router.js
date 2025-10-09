@@ -2,7 +2,7 @@ export default function Router(app) {
     const appContent = app.querySelector('#js-loaded-content');
     const spinner = app.querySelector('#spinner');
     const menu = document.querySelector('aside');
-    const menuItems = document.querySelectorAll("aside li a[data-router-navigate]:not([data-router-disabled])");
+    const menuItems = document.querySelectorAll("nav a[data-router-navigate]:not([data-router-disabled]), aside li a[data-router-navigate]:not([data-router-disabled])");
     const mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
     const defaultRoute = '/dashboard';
 
@@ -64,7 +64,7 @@ export default function Router(app) {
         }
 
         // There might be other nav links on the newly loaded page, make sure they are registered.
-        const nav = document.querySelectorAll("nav a[data-router-navigate]:not([data-router-disabled]), main a[data-router-navigate]:not([data-router-disabled])");
+        const nav = document.querySelectorAll("main a[data-router-navigate]:not([data-router-disabled])");
         registerNavItems(nav);
 
         const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
@@ -87,6 +87,12 @@ export default function Router(app) {
             to.addEventListener("click", (e) => {
                 e.preventDefault();
                 const route = to.getAttribute('data-router-navigate');
+
+                document.dispatchEvent(new CustomEvent('navigationLinkHasBeenClicked', {
+                    bubbles: true, cancelable: false, detail: {
+                        link: to,
+                    }
+                }));
                 navigateTo(route, null);
             });
         });

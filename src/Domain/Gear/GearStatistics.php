@@ -38,6 +38,7 @@ final readonly class GearStatistics
             $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
             return [
+                'id' => $gear->getId(),
                 'name' => $gear->getName(),
                 'distance' => $gear->getDistance(),
                 'numberOfWorkouts' => $countActivitiesWithGear,
@@ -58,7 +59,8 @@ final readonly class GearStatistics
         $movingTimeInSeconds = $activitiesWithOtherGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
         $statistics[] = [
-            'name' => 'Other',
+            'id' => GearId::none(),
+            'name' => 'Unspecified',
             'distance' => $distanceWithOtherGear,
             'numberOfWorkouts' => $countActivitiesWithOtherGear,
             'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),

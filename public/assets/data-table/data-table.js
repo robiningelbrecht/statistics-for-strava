@@ -1,6 +1,7 @@
 import {debounce, numberFormat} from "../utils.js";
 
-export default function DataTable($dataTableWrapperNode) {
+export function DataTable($dataTableWrapperNode) {
+    const dataTableStorage = new DataTableStorage();
     const calculateSummables = function (dataRows) {
         const sums = [];
         dataRows.filter((row) => row.active).map((row) => row.summables).forEach((summables => {
@@ -90,10 +91,8 @@ export default function DataTable($dataTableWrapperNode) {
     };
 
     const prefillFiltersFromLocalStorage = (dataTableName) => {
-        const storedFiltersJson = localStorage.getItem('dataTableFilters');
-        if (!storedFiltersJson) return;
-
-        const filtersParam = JSON.parse(storedFiltersJson)[dataTableName] || {};
+        const filtersParam = dataTableStorage.get(dataTableName);
+        if (!filtersParam) return;
 
         // Apply checkbox/radio filters
         Object.keys(filtersParam).forEach(filterName => {
@@ -128,7 +127,7 @@ export default function DataTable($dataTableWrapperNode) {
             if ($to && range.to) $to.value = range.to;
         });
 
-        localStorage.removeItem('dataTableFilters');
+        dataTableStorage.clearAll();
     };
 
     const render = () => {
@@ -269,4 +268,25 @@ export default function DataTable($dataTableWrapperNode) {
     return {
         render
     };
+}
+
+export function DataTableStorage() {
+    const clearAll = () => {
+        localStorage.removeItem('dataTableFilters');
+    };
+
+    const get = (name) => {
+        const storedFiltersJson = localStorage.getItem('dataTableFilters');
+        if (!storedFiltersJson) return;
+
+        return JSON.parse(storedFiltersJson)[name] || {};
+    };
+
+    const set = (object) => {
+        localStorage.setItem('dataTableFilters', JSON.stringify(object));
+    };
+
+    return {
+        clearAll, get, set
+    }
 }

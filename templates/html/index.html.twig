@@ -382,10 +382,10 @@
 <script type="module">
     import LeafletMap from "{{ relativeUrl(asset('/assets/leaflet/leaflet-map.js')) }}";
     import Heatmap from "{{ relativeUrl(asset('/assets/leaflet/heatmap.js')) }}";
-    import DataTable from "{{ relativeUrl(asset('/assets/data-table/data-table.js')) }}";
+    import {DataTable, DataTableStorage} from "{{ relativeUrl(asset('/assets/data-table/data-table.js')) }}";
     import Router from "{{ relativeUrl(asset('/assets/router.js')) }}";
     import Chat from "{{ relativeUrl(asset('/assets/chat.js')) }}";
-    import {resolveEchartsCallbacks, compareVersions} from "{{ relativeUrl(asset('/assets/utils.js')) }}";
+    import {resolveEchartsCallbacks, compareVersions} from "{{ relativeUrl('/assets/utils.js') }}";
 
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
@@ -413,6 +413,8 @@
     // Boot router.
     const router = Router($main);
     router.boot();
+
+    const dataTableStorage = new DataTableStorage();
 
     // Enable image lazy load.
     const lazyLoad = new LazyLoad({
@@ -450,6 +452,15 @@
     document.addEventListener('pageWasLoaded.heatmap', () => {
         const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
         Heatmap($heatmapWrapper).render();
+    });
+    document.addEventListener('navigationLinkHasBeenClicked', (e) => {
+        if (!e.detail || !e.detail.link) {
+            return;
+        }
+        if(!e.detail.link.hasAttribute('data-dataTable-filters')){
+            return;
+        }
+        dataTableStorage.set(JSON.parse(e.detail.link.getAttribute('data-dataTable-filters')));
     });
     document.addEventListener('dataTableClusterWasChanged', () => {
         initModals(document);
@@ -499,12 +510,13 @@
                 }
 
                 // Make sure results are prefiltered by clicked date.
-                localStorage.setItem('dataTableFilters', JSON.stringify({
+                dataTableStorage.set({
                     'activities' : {
                         "start-date.from": params.value[0],
                         "start-date.to": params.value[0]
                     }
-                }));
+                });
+
                 router.navigateTo(`/activities`);
             },
         };
@@ -549,7 +561,7 @@
             LeafletMap(mapNode, data).render();
         });
 
-        // Init Lightgallery.
+        // Init LightGallery.
         rootNode.querySelectorAll('[data-light-gallery-elements]').forEach(function (node) {
             const elements = JSON.parse(node.getAttribute('data-light-gallery-elements'));
 
