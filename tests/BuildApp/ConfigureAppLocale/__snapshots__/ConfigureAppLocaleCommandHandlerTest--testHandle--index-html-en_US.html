@@ -378,7 +378,7 @@
     import DataTable from "/assets/data-table/data-table.js?0025176c-5652-11ee-923d-02424dd627d5";
     import Router from "/assets/router.js?0025176c-5652-11ee-923d-02424dd627d5";
     import Chat from "/assets/chat.js?0025176c-5652-11ee-923d-02424dd627d5";
-    import {resolveEchartsCallbacks} from "/assets/utils.js?0025176c-5652-11ee-923d-02424dd627d5";
+    import {resolveEchartsCallbacks, compareVersions} from "/assets/utils.js?0025176c-5652-11ee-923d-02424dd627d5";
 
     const $main = document.querySelector("main");
     const $sideNav = document.querySelector("aside");
@@ -688,7 +688,8 @@
 
         // If cache exists and is recent, use it
         if (cached && now - cached.timestamp < CACHE_TTL) {
-            if (cached.latestVersion !== currentVersion) {
+            if (compareVersions(currentVersion, cached.latestVersion) < 0) {
+                // Update available.
                 showLatestVersion(cached.latestVersion);
             }
             return;
