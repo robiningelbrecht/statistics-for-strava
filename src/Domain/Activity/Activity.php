@@ -643,7 +643,7 @@ final class Activity implements SupportsAITooling
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
             'countryCode' => $this->getLocation()?->getCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
-            'gear' => $this->getGearId() ?? 'gear-none',
+            'gear' => $this->getGearId() ?? GearId::none(),
             'workoutType' => $this->getWorkoutType()?->value,
             'device' => Name::fromOptionalString($this->getDeviceName())?->kebabCase() ?? 'device-none',
         ]);
