@@ -1,6 +1,6 @@
 import LeafletMap from "./leaflet/leaflet-map";
 import {Heatmap} from "./leaflet/heatmap";
-import {DataTable, DataTableStorage} from "./data-table/data-table";
+import {DataTable, DataTableStorage} from "./data-table";
 import Router from "./router";
 import Chat from "./chat";
 import {resolveEchartsCallbacks, compareVersions} from "./utils";
@@ -29,7 +29,7 @@ document.getElementById('toggle-sidebar-collapsed-state').addEventListener('clic
 });
 
 // Boot router.
-const router = Router($main);
+const router = new Router($main);
 router.boot();
 
 const dataTableStorage = new DataTableStorage();
