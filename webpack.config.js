@@ -4,10 +4,10 @@ module.exports = {
     mode: 'production',
     context: __dirname,
     entry: {
-        'app.min': './public/assets/app.js',
+        'app.min': './public/js/app.js',
     },
     output: {
-        path: path.resolve(__dirname, 'public/assets'),
+        path: path.resolve(__dirname, 'public/js'),
         filename: '[name].js'
     },
     resolve: {

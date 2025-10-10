@@ -1,4 +1,4 @@
-@import "../../node_modules/tailwindcss/dist/lib.d.mts" source(none);
+@import "tailwindcss" source(none);
 @import "../../node_modules/flowbite/src/themes/default.css";
 
 @source "../../templates/**/*.html.twig";
