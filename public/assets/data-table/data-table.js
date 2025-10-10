@@ -1,6 +1,6 @@
 import {debounce, numberFormat} from "../utils.js";
 
-class FilterManager {
+export class FilterManager {
     constructor(wrapper, storage) {
         this.wrapper = wrapper;
         this.storage = storage;
@@ -86,7 +86,8 @@ class FilterManager {
         const searchLower = search.toLowerCase();
 
         rows.forEach(row => {
-            row.active = row.searchables.toLowerCase().includes(searchLower);
+            row.active = !row.searchables || row.searchables.toLowerCase().includes(searchLower);
+
             for (const [key, value] of Object.entries(filters)) {
                 if (Array.isArray(value)) {
                     const val = row.filterables[key];

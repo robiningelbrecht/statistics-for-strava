@@ -21,12 +21,12 @@
                                     {% for sportType in sportTypes %}
                                         <li>
                                             <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
-                                                <input type="radio" id="{{ sportType.value }}" data-heatmap-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                <input type="radio" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
                                                 <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
                                                     {{ svgSportType(sportType) }}
                                                     <div>{{ sportType|trans }}</div>
                                                 </label>
-                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-heatmap-filter-clear="sportType">{{ "clear"|trans }}</a>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-dataTable-filter-clear="sportType">{{ "clear"|trans }}</a>
                                             </div>
                                         </li>
                                     {% endfor %}
@@ -44,20 +44,20 @@
                         </button>
                         <div id="dropdownDateRange" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
                             <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
-                                <div class="flex items-center" data-heatmap-filter="start-date[]">
+                                <div class="flex items-center" data-dataTable-filter="start-date[]">
                                     <input name="start-date[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                     <span class="mx-2 text-gray-500">{{ "To"|trans }}</span>
                                     <input name="start-date[to]" type="date" data-default-to-today class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 </div>
-                                <a href="#" class="text-strava-orange text-sm text-right underline" data-heatmap-filter-clear="start-date">{{ "clear"|trans }}</a>
+                                <a href="#" class="text-strava-orange text-sm text-right underline" data-dataTable-filter-clear="start-date">{{ "clear"|trans }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-xs text-gray-700">
-                    {% set numberOfResults = '<span class="font-bold" data-heatmap-route-count>' ~ numberOfRoutes ~ '</span>' %}
+                    {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ numberOfRoutes ~ '</span>' %}
                     {{ "{numberOfResults} routes based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
-                    <a href="#" class="hidden text-strava-orange underline" data-heatmap-reset>{{ "clear"|trans }}</a>
+                    <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
                 </div>
             </form>
             <div class="mt-2 lg:mt-0 text-gray-700 text-xs">

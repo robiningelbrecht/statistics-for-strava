@@ -1,156 +1,39 @@
-export default function Heatmap($heatmapWrapper) {
-    const $heatmap = $heatmapWrapper.querySelector('[data-leaflet-routes]');
-    const config = JSON.parse($heatmap.getAttribute('data-heatmap-config'));
+import {DataTableStorage, FilterManager} from "../data-table/data-table.js";
 
-    const mainFeatureGroup = L.featureGroup();
-    let placesControl = null;
-    const map = L.map($heatmap, {
-        scrollWheelZoom: true,
-        minZoom: 1,
-        maxZoom: 21,
-    });
-
-    config.tileLayerUrls.forEach((tileLayerUrl) => {
-        L.tileLayer(tileLayerUrl).addTo(map);
-    });
-
-    const determineMostActiveState = (routes) => {
-        const stateCounts = routes.reduce((counts, route) => {
-            const state = route.location.state;
-            if (state) counts[state] = (counts[state] || 0) + 1;
-            return counts;
-        }, {});
-
-        const mostActiveState = Object.keys(stateCounts).reduce((a, b) => stateCounts[a] > stateCounts[b] ? a : b, '');
-        return mostActiveState ? mostActiveState : null;
-    };
-
-    const filterOnActiveRoutes = function (routes) {
-        return routes.filter((route) => route.active);
-    }
-
-    const render = () => {
-        const routes = JSON.parse($heatmap.getAttribute('data-leaflet-routes'));
-        redraw(filterOnActiveRoutes(routes));
-
-        // Filter event listeners.
-        const clickableFilters = $heatmapWrapper.querySelectorAll('input[type="checkbox"][data-heatmap-filter],input[type="radio"][data-heatmap-filter]');
-        clickableFilters.forEach(element => {
-            element.addEventListener('click', () => {
-                redraw(filterOnActiveRoutes(applyFiltersToRoutes(routes, $heatmapWrapper)));
-            });
+class HeatmapDrawer {
+    constructor(wrapper, config) {
+        this.wrapper = wrapper;
+        this.config = config;
+        this.placesControl = null;
+        this.mainFeatureGroup = L.featureGroup();
+        this.map = L.map(this.wrapper, {
+            scrollWheelZoom: true,
+            minZoom: 1,
+            maxZoom: 21,
         });
-
-        const rangeFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter*="[]"]');
-        rangeFilters.forEach(element => {
-            element.addEventListener('input', () => {
-                redraw(filterOnActiveRoutes(applyFiltersToRoutes(routes, $heatmapWrapper)));
-            });
-        });
-
-        const dateInputsWithDefaultValue = $heatmapWrapper.querySelectorAll('input[type="date"][data-default-to-today]');
-        dateInputsWithDefaultValue.forEach(element => {
-            element.valueAsDate = new Date();
-        });
-
-        // Reset filter event listeners.
-        $heatmapWrapper.querySelector('[data-heatmap-reset]').addEventListener('click', (e) => {
-            e.preventDefault();
-            location.reload();
-        });
-
-        $heatmapWrapper.querySelectorAll('[data-heatmap-filter-clear]').forEach(element => {
-            element.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                const filterNameToClear = element.getAttribute('data-heatmap-filter-clear');
-                const $checkableFiltersToClear = $heatmapWrapper.querySelectorAll('input[type="checkbox"][name^="' + filterNameToClear + '"],input[type="radio"][name^="' + filterNameToClear + '"]');
-                $checkableFiltersToClear.forEach($filterToClear => {
-                    $filterToClear.checked = false;
-                });
-
-                const $valueFiltersToClear = $heatmapWrapper.querySelectorAll('input[type="date"][name^="' + filterNameToClear + '"]');
-                $valueFiltersToClear.forEach($filterToClear => {
-                    $filterToClear.value = '';
-                });
-
-                redraw(filterOnActiveRoutes(applyFiltersToRoutes(routes, $heatmapWrapper)));
-            });
+        this.config.tileLayerUrls.forEach((tileLayerUrl) => {
+            L.tileLayer(tileLayerUrl).addTo(this.map);
         });
     }
 
-    const applyFiltersToRoutes = function (routes, $heatmapWrapper) {
-        const $allCheckableFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter]');
-        $allCheckableFilters.forEach(element => {
-            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.remove('active');
-        });
-
-        const $activeCheckedFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter]:checked');
-        const $rangeFilters = $heatmapWrapper.querySelectorAll('[data-heatmap-filter*="[]"]');
-
-        const filters = [];
-        $activeCheckedFilters.forEach(element => {
-            const filterName = element.getAttribute('data-heatmap-filter');
-            filters[filterName] = element.value.toLowerCase();
-            element.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]').classList.add('active');
-        });
-        $rangeFilters.forEach(element => {
-            const filterName = element.getAttribute('data-heatmap-filter').replace('[]', '');
-            const $rangeInputFrom = element.querySelector('input[name="' + filterName + '[from]"]');
-            const filterDropdownButton =  $rangeInputFrom.closest("div.filter-dropdown").querySelector('button[data-dropdown-toggle]');
-            filterDropdownButton.classList.remove('active');
-
-            if (!$rangeInputFrom) {
-                throw new Error('input[name="' + filterName + '[from]"] element not found');
-            }
-            const $rangeInputTo = element.querySelector('input[name="' + filterName + '[to]"]');
-            if (!$rangeInputTo) {
-                throw new Error('input[name="' + filterName + '[to]"] element not found');
-            }
-
-            if (!isNaN($rangeInputFrom.valueAsDate) && !isNaN($rangeInputTo.valueAsDate) && $rangeInputFrom.valueAsDate && $rangeInputTo.valueAsDate) {
-                // Date range filter.
-                const dateFrom = $rangeInputFrom.valueAsDate;
-                dateFrom.setHours(0, 0, 0);
-
-                const dateTo = $rangeInputTo.valueAsDate;
-                dateTo.setHours(23, 59, 59);
-
-                filters[filterName] = [dateFrom.getTime(), dateTo.getTime()];
-                filterDropdownButton.classList.add('active');
-            }
-        });
-
-        if (Object.keys(filters).length > 0) {
-            $heatmapWrapper.querySelector('[data-heatmap-reset]').classList.remove('hidden');
-        } else {
-            $heatmapWrapper.querySelector('[data-heatmap-reset]').classList.add('hidden');
-        }
-
-        for (let i = 0; i < routes.length; i++) {
-            const routeFilterables = routes[i].filterables;
-            routes[i].active = true;
-
-            for (const filter in filters) {
-                const filterValue = filters[filter];
-                if (Array.isArray(filterValue)) {
-                    // This is range filter.
-                    routes[i].active = routes[i].active && filter in routeFilterables && filterValue[0] <= routeFilterables[filter] && routeFilterables[filter] <= filterValue[1]
-                } else {
-                    routes[i].active = routes[i].active && filter in routeFilterables && routeFilterables[filter].toLowerCase() === filterValue
-                }
-            }
-        }
-
-        return routes;
-    }
-
-    const redraw = (routes) => {
+    redraw(routes) {
+        routes = routes.filter((route) => route.active);
         // First reset map before adding routes and controls.
-        mainFeatureGroup.clearLayers();
-        if (placesControl) {
-            map.removeControl(placesControl);
+        this.mainFeatureGroup.clearLayers();
+        if (this.placesControl) {
+            this.map.removeControl(this.placesControl);
         }
+
+        const determineMostActiveState = (routes) => {
+            const stateCounts = routes.reduce((counts, route) => {
+                const state = route.location.state;
+                if (state) counts[state] = (counts[state] || 0) + 1;
+                return counts;
+            }, {});
+
+            const mostActiveState = Object.keys(stateCounts).reduce((a, b) => stateCounts[a] > stateCounts[b] ? a : b, '');
+            return mostActiveState ? mostActiveState : null;
+        };
 
         const places = [];
         const countryFeatureGroups = new Map();
@@ -166,7 +49,7 @@ export default function Heatmap($heatmapWrapper) {
 
             const polyline = L.Polyline.fromEncoded(route.encodedPolyline).getLatLngs();
             L.polyline(polyline, {
-                color: config.polylineColor,
+                color: this.config.polylineColor,
                 weight: 1.5,
                 opacity: 0.5,
                 smoothFactor: 1,
@@ -180,29 +63,77 @@ export default function Heatmap($heatmapWrapper) {
         });
 
         countryFeatureGroups.forEach((featureGroup, countryCode) => {
-            featureGroup.addTo(mainFeatureGroup);
+            featureGroup.addTo(this.mainFeatureGroup);
             places.push({
                 countryCode: countryCode,
                 bounds: featureGroup.getBounds()
             });
         });
-        mainFeatureGroup.addTo(map);
+        this.mainFeatureGroup.addTo(this.map);
 
-        placesControl = L.control.flyToPlaces({places});
-        placesControl.addTo(map);
+        this.placesControl = L.control.flyToPlaces({places});
+        this.placesControl.addTo(this.map);
 
         if (fitMapBoundsFeatureGroup.getBounds().isValid()) {
-            map.fitBounds(fitMapBoundsFeatureGroup.getBounds());
-        }
-
-        // Update total route count.
-        const $resultCountNode = $heatmapWrapper.querySelector('[data-heatmap-route-count]');
-        if ($resultCountNode) {
-            $resultCountNode.innerText = routes.filter(route => route.active).length;
+            this.map.fitBounds(fitMapBoundsFeatureGroup.getBounds());
         }
     }
+}
 
-    return {
-        render
+export class Heatmap {
+    constructor(wrapper) {
+        this.wrapper = wrapper;
+        this.heatmap = wrapper.querySelector('[data-leaflet-routes]');
+        this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
+        this.config = JSON.parse(this.heatmap.getAttribute('data-heatmap-config'));
+
+        this.filterManager = new FilterManager(wrapper, new DataTableStorage());
+        this.drawer = new HeatmapDrawer(this.heatmap, this.config);
+    }
+
+    async render() {
+        // Default date inputs.
+        this.wrapper.querySelectorAll('input[type="date"][data-default-to-today]').forEach(i => i.valueAsDate = new Date());
+
+        const allRoutes = JSON.parse(this.heatmap.getAttribute('data-leaflet-routes'));
+
+        const redraw = () => {
+            const activeFilters = this.filterManager.getActiveFilters();
+            this.filterManager.updateDropdownState(activeFilters);
+
+            const routes = this.filterManager.applyFiltersToRows(allRoutes);
+            this.drawer.redraw(routes);
+
+            this.resetBtn.classList.toggle('hidden', !(Object.keys(activeFilters).length > 0));
+            const resultCount = this.wrapper.querySelector('[data-dataTable-result-count]');
+            if (resultCount) resultCount.innerText = routes.length;
+        };
+
+        redraw();
+
+        this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
+
+
+        if (this.resetBtn) {
+            this.resetBtn.addEventListener('click', e => {
+                e.preventDefault();
+                location.reload();
+            });
+        }
+
+        this.wrapper.querySelectorAll('[data-datatable-filter-clear]').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                const name = btn.getAttribute('data-datatable-filter-clear');
+                this.wrapper.querySelectorAll(`[name^="${name}"]`).forEach(i => {
+                    if (i.type === 'radio' || i.type === 'checkbox') {
+                        i.checked = false;
+                    } else {
+                        i.value = '';
+                    }
+                });
+                redraw();
+            });
+        });
     };
 }
