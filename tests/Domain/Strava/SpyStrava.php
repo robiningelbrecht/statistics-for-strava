@@ -80,6 +80,17 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
+    public function getRateLimit(): array
+    {
+        return [
+            sprintf('15 min rate: %s/%s', 20, 200),
+            sprintf('15 min read rate: %s/%s', 10, 100),
+            sprintf('daily rate: %s/%s', 10, 2000),
+            sprintf('daily read rate: %s/%s', 14, 1000),
+        ];
+    }
+
+    #[\Override]
     public function verifyAccessToken(): void
     {
     }
