@@ -2,9 +2,9 @@
 @import "flowbite/src/themes/default";
 
 @source "../../../templates/**/*.html.twig";
-@source "../../../public/app.php";
 @source "../../../public/*.html";
 @source "../../../public/assets/leaflet/leaflet.fly.to.places.js";
+@source "../../../public/assets/app.js";
 @source "../../../src/Infrastructure/Twig/*.php";
 
 @plugin "flowbite/plugin";
