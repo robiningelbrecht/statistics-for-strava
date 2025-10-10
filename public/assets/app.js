@@ -1,9 +1,9 @@
-import LeafletMap from "./leaflet/leaflet-map.js";
-import {Heatmap} from "./leaflet/heatmap.js";
-import {DataTable, DataTableStorage} from "./data-table/data-table.js";
-import Router from "./router.js";
-import Chat from "./chat.js";
-import {resolveEchartsCallbacks, compareVersions} from "./utils.js";
+import LeafletMap from "./leaflet/leaflet-map";
+import {Heatmap} from "./leaflet/heatmap";
+import {DataTable, DataTableStorage} from "./data-table/data-table";
+import Router from "./router";
+import Chat from "./chat";
+import {resolveEchartsCallbacks, compareVersions} from "./utils";
 
 const $main = document.querySelector("main");
 const $sideNav = document.querySelector("aside");
