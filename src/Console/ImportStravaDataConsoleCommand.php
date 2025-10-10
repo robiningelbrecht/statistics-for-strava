@@ -16,6 +16,7 @@ use App\Domain\Challenge\ImportChallenges\ImportChallenges;
 use App\Domain\Gear\CustomGear\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Domain\Gear\ImportGear\ImportGear;
 use App\Domain\Segment\ImportSegments\ImportSegments;
+use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\FileSystem\PermissionChecker;
@@ -37,6 +38,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class ImportStravaDataConsoleCommand extends Command
 {
     public function __construct(
+        private readonly Strava $strava,
         private readonly CommandBus $commandBus,
         private readonly PermissionChecker $fileSystemPermissionChecker,
         private readonly MigrationRunner $migrationRunner,
@@ -83,6 +85,11 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->commandBus->dispatch(new CalculateBestStreamAverages($output));
         $this->commandBus->dispatch(new CalculateNormalizedPower($output));
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+
+        $rateLimits = $this->strava->getRateLimit();
+
+        $output->title('STRAVA API RATE LIMITS');
+        $output->listing($rateLimits);
 
         $this->connection->executeStatement('VACUUM');
         $output->writeln('Database got vacuumed 🧹');

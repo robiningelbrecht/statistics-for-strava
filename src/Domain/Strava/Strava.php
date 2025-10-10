@@ -68,6 +68,31 @@ class Strava
         return $response->getBody()->getContents();
     }
 
+    /**
+     * @return string[]
+     */
+    public function getRateLimit(): array
+    {
+        $response = $this->client->request('HEAD', 'api/v3/athlete', [
+            'base_uri' => 'https://www.strava.com/',
+            RequestOptions::HEADERS => [
+                'Authorization' => 'Bearer '.$this->getAccessToken(),
+            ],
+        ]);
+
+        [$fifteenMinRateLimit, $dailyRateLimit] = explode(',', $response->getHeaderLine('x-ratelimit-limit'));
+        [$fifteenMinRateUsage, $dailyRateUsage] = explode(',', $response->getHeaderLine('x-ratelimit-usage'));
+        [$fifteenMinReadRateLimit, $dailyReadRateLimit] = explode(',', $response->getHeaderLine('x-readratelimit-limit'));
+        [$fifteenMinReadRateUsage, $dailyReadRateUsage] = explode(',', $response->getHeaderLine('x-readratelimit-usage'));
+
+        return [
+            sprintf('15 min rate: %s/%s', $fifteenMinRateUsage, $fifteenMinRateLimit),
+            sprintf('15 min read rate: %s/%s', $fifteenMinReadRateUsage, $fifteenMinReadRateLimit),
+            sprintf('daily rate: %s/%s', $dailyRateUsage, $dailyRateLimit),
+            sprintf('daily read rate: %s/%s', $dailyReadRateUsage, $dailyReadRateLimit),
+        ];
+    }
+
     public function verifyAccessToken(): void
     {
         try {

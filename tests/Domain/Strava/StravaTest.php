@@ -124,6 +124,40 @@ class StravaTest extends TestCase
         $this->strava->verifyAccessToken();
     }
 
+    public function testGetRateLimit(): void
+    {
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+                    $this->assertMatchesJsonSnapshot($options);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                $this->assertEquals('HEAD', $method);
+                $this->assertEquals('api/v3/athlete', $path);
+                $this->assertMatchesJsonSnapshot($options);
+
+                return new Response(200, [
+                    'x-ratelimit-limit' => '200,2000',
+                    'x-ratelimit-usage' => '1,2',
+                    'x-readratelimit-limit' => '100,1000',
+                    'x-readratelimit-usage' => '0,0',
+                ], Json::encode([]));
+            });
+
+        $this->logger
+            ->expects($this->exactly(1))
+            ->method('info');
+
+        $this->assertMatchesJsonSnapshot($this->strava->getRateLimit());
+    }
+
     public function testGetAthlete(): void
     {
         $matcher = $this->exactly(2);

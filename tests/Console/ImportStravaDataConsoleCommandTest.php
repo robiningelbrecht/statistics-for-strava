@@ -3,6 +3,7 @@
 namespace App\Tests\Console;
 
 use App\Console\ImportStravaDataConsoleCommand;
+use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
@@ -91,6 +92,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
     public function testExecuteWithInsufficientPermissions(): void
     {
         $this->importStravaDataConsoleCommand = new ImportStravaDataConsoleCommand(
+            $this->getContainer()->get(Strava::class),
             $this->commandBus,
             new UnwritablePermissionChecker(),
             $this->migrationRunner,
@@ -131,6 +133,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
         parent::setUp();
 
         $this->importStravaDataConsoleCommand = new ImportStravaDataConsoleCommand(
+            $this->getContainer()->get(Strava::class),
             $this->commandBus = $this->createMock(CommandBus::class),
             new SuccessfulPermissionChecker(),
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
