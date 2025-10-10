@@ -36,7 +36,11 @@
             <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
-                    <dt class="text-xs font-extrabold">{{ activity.getDeviceName() ?: 'None'|trans }}</dt>
+                    <dt class="text-xs font-extrabold">
+                        <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-router-force-reload data-dataTable-filters='{"activities":{"device":"{{ activity.getDeviceId() }}"}}' class="text-blue-600 hover:underline">
+                            {{ activity.getDeviceName() ?: 'None'|trans }}
+                        </a>
+                    </dt>
                 </div>
             </div>
         </div>
