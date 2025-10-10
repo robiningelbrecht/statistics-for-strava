@@ -79,8 +79,8 @@ app-build-files:
 	docker compose exec app bin/console app:strava:build-files
 
 app-build-assets:
-	npx @tailwindcss/cli -i public/assets/flowbite/tailwind.css -o public/assets/flowbite/tailwind.min.css --minify
-	npx @tailwindcss/cli -i public/assets/flowbite/tailwind.css -o public/assets/flowbite/tailwind.output.css
+	npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.min.css --minify
+	npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.output.css
 	webpack --config webpack.config.js
 
 app-build-all:

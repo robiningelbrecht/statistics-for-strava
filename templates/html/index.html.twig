@@ -9,10 +9,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="">
     <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
-    <link href="{{ relativeUrl(asset('assets/flowbite/tailwind.min.css')) }}" rel="stylesheet"/>
-    <link rel="preload" href="{{ relativeUrl(asset('assets/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="{{ relativeUrl(asset('assets/data-table/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="{{ relativeUrl(asset('assets/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="{{ relativeUrl(asset('css/tailwind.min.css')) }}" rel="stylesheet"/>
+    <link rel="preload" href="{{ relativeUrl(asset('libraries/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{{ relativeUrl(asset('libraries/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 <body>
 <div class="antialiased bg-gray-50">
@@ -368,18 +368,18 @@
         }
     };
 </script>
-<script src="{{ relativeUrl(asset('assets/lazyload.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/flowbite/flowbite.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/echarts/echarts.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/echarts/echarts.world.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/leaflet/leaflet.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/leaflet/leaflet.polyline.encoded.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/leaflet/leaflet.fly.to.places.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/data-table/clusterize.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.umd.min.js')) }}" type="module"></script>
-<script src="{{ relativeUrl(asset('assets/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/autocomplete.js')) }}"></script>
-<script src="{{ relativeUrl(asset('assets/app.min.js')) }}" type="module"></script>
+<script src="{{ relativeUrl(asset('libraries/lazyload.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/flowbite.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/echarts/echarts.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/echarts/echarts.world.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.polyline.encoded.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/lightgallery/lightgallery.umd.min.js')) }}" type="module"></script>
+<script src="{{ relativeUrl(asset('libraries/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('libraries/autocomplete.js')) }}"></script>
+<script src="{{ relativeUrl(asset('js/leaflet/leaflet.fly.to.places.js')) }}"></script>
+<script src="{{ relativeUrl(asset('js/app.min.js')) }}" type="module"></script>
 <script>
     // Enable image lazy load.
     const lazyLoad = new LazyLoad({
