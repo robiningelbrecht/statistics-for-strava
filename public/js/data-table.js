@@ -1,4 +1,4 @@
-import {debounce, numberFormat} from "../utils";
+import {debounce, numberFormat} from "./utils";
 
 export class FilterManager {
     constructor(wrapper, storage) {

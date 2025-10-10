@@ -1,14 +1,15 @@
-@import "tailwindcss" source(none);
-@import "flowbite/src/themes/default";
+@import "../../node_modules/tailwindcss/dist/lib.d.mts" source(none);
+@import "../../node_modules/flowbite/src/themes/default.css";
 
-@source "../../../templates/**/*.html.twig";
-@source "../../../public/*.html";
-@source "../../../public/assets/leaflet/leaflet.fly.to.places.js";
-@source "../../../public/assets/app.js";
-@source "../../../src/Infrastructure/Twig/*.php";
+@source "../../templates/**/*.html.twig";
+@source "../../public/*.html";
+@source "../../public/js/leaflet/leaflet.fly.to.places.js";
+@source "../../public/js/app.js";
+@source "../../public/js/chat.js";
+@source "../../src/Infrastructure/Twig/*.php";
 
 @plugin "flowbite/plugin";
-@source "../../../node_modules/flowbite";
+@source "../../node_modules/flowbite";
 
 @theme {
     --text-xxs: 0.625rem;
