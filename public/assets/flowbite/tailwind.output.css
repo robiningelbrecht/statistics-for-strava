@@ -1036,9 +1036,6 @@
   .z-1100 {
     z-index: 1100;
   }
-  .z-1400 {
-    z-index: 1400;
-  }
   .z-1500 {
     z-index: 1500;
   }
@@ -2507,9 +2504,6 @@
   }
   .border-red-500 {
     border-color: var(--color-red-500);
-  }
-  .border-strava-orange {
-    border-color: var(--color-strava-orange);
   }
   .border-yellow-300 {
     border-color: var(--color-yellow-300);
