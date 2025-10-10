@@ -67,7 +67,7 @@
                                             <td class="px-2 py-2 truncate">
                                                 <div class="flex gap-x-4">
                                                     {{ activity.getStartDate()|formatDate() }}
-                                                    {{ activity|renderTitle(ellipses: 50) }}
+                                                    {{ activity|activityLink(ellipses: 50) }}
                                                 </div>
                                             </td>
                                         {% else %}

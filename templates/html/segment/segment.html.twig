@@ -116,7 +116,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ segmentEffort.getActivity()|renderTitle(truncate: true) }}
+                                        {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
@@ -209,7 +209,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ segmentEffort.getActivity()|renderTitle(truncate: true) }}
+                                        {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
