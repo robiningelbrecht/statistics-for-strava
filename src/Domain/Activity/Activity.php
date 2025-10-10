@@ -282,6 +282,11 @@ final class Activity implements SupportsAITooling
         return $this->gearId;
     }
 
+    public function getGearIdIncludingNone(): GearId
+    {
+        return $this->getGearId() ?? GearId::none();
+    }
+
     public function updateGear(
         ?GearId $gearId = null,
         ?string $gearName = null,
@@ -643,7 +648,7 @@ final class Activity implements SupportsAITooling
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
             'countryCode' => $this->getLocation()?->getCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
-            'gear' => $this->getGearId() ?? GearId::none(),
+            'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,
             'device' => Name::fromOptionalString($this->getDeviceName())?->kebabCase() ?? 'device-none',
         ]);
