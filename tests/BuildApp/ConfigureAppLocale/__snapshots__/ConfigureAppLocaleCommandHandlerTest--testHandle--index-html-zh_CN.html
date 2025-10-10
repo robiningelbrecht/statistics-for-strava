@@ -430,7 +430,7 @@
         }
 
         document.querySelectorAll('div[data-dataTable-settings]').forEach(function ($dataTableWrapperNode) {
-            DataTable($dataTableWrapperNode).render()
+            new DataTable($dataTableWrapperNode).render()
         });
 
         renderedChartsPerTab = [];
