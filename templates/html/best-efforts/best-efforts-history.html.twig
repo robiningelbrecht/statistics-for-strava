@@ -47,7 +47,7 @@
                                     <div class="flex gap-x-1">
                                         {% if bestEffort %}
                                             {{ bestEffort.getFormattedTime() }} -
-                                            {{ activity|renderTitle(ellipses: 50) }}
+                                            {{ activity|activityLink(ellipses: 50) }}
                                         {% else %}
                                             -
                                         {% endif %}

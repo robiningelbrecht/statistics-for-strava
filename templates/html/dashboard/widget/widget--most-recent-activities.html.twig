@@ -63,7 +63,7 @@
                         <div class="w-[4.5rem]">{{ activity.getStartDate()|formatDate() }}</div>
                     </td>
                     <td class="px-2 py-2 truncate sticky left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                        {{ activity|renderTitle(ellipses: 30) }}
+                        {{ activity|activityLink(ellipses: 30) }}
                     </td>
                     <td class="px-6 py-2">
                         {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
