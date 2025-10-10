@@ -545,6 +545,11 @@ final class Activity implements SupportsAITooling
         return $this->deviceName;
     }
 
+    public function getDeviceId(): string
+    {
+        return Name::fromString($this->getDeviceName() ?? 'device-none')->kebabCase();
+    }
+
     public function isCommute(): bool
     {
         return $this->isCommute;
@@ -650,7 +655,7 @@ final class Activity implements SupportsAITooling
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,
-            'device' => Name::fromOptionalString($this->getDeviceName())?->kebabCase() ?? 'device-none',
+            'device' => $this->getDeviceId(),
         ]);
     }
 
