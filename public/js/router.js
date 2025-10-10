@@ -72,7 +72,6 @@ export default class Router {
 
         const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
 
-        // Dispatch lifecycle events
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true,
             detail: { page: fullPageName, modalId }
@@ -95,7 +94,11 @@ export default class Router {
                     detail: { link }
                 }));
 
-                this.navigateTo(route, null);
+                this.navigateTo(
+                    route,
+                    null,
+                    link.hasAttribute('data-router-force-reload')
+                );
             });
         });
     }
@@ -107,9 +110,9 @@ export default class Router {
         };
     }
 
-    navigateTo(route, modal) {
+    navigateTo(route, modal, force = false) {
         const currentRoute = this.app.getAttribute('data-router-current');
-        if (currentRoute === route) return; // Avoid reloading same page.
+        if (currentRoute === route && !force) return; // Avoid reloading same page.
 
         this.renderContent(route, modal);
         this.pushRouteToHistoryState(route, modal);

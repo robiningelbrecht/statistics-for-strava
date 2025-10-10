@@ -287,6 +287,10 @@ export const openModal = (modalId) => {
                 router.pushCurrentRouteToHistoryState();
             }, {once: true});
 
+            // Re-register nav items that may have been added dynamically
+            const newNavItems = modalSkeletonNode.querySelectorAll('a[data-router-navigate]:not([data-router-disabled])');
+            router.registerNavItems(newNavItems);
+
             const modalName = modalId.replace(/^\/+/, '').replaceAll('/', '-');
             document.dispatchEvent(new CustomEvent('modalWasLoaded.' + modalName, {
                 bubbles: true, cancelable: false, detail: {
