@@ -34,14 +34,6 @@ router.boot();
 
 const dataTableStorage = new DataTableStorage();
 
-// Enable image lazy load.
-const lazyLoad = new LazyLoad({
-    thresholds: "50px",
-    callback_error: (img) => {
-        img.setAttribute("src", "{{ relativeUrl('/assets/placeholder-broken.webp') }}");
-    }
-});
-
 const modalSkeletonNode = document.getElementById('modal-skeleton');
 const modalContent = modalSkeletonNode.querySelector('#modal-content');
 const modalSpinner = modalSkeletonNode.querySelector('.spinner');
