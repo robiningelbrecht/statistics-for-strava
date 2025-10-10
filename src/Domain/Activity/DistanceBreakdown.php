@@ -53,8 +53,9 @@ final readonly class DistanceBreakdown
             default => 5,
         };
 
-        $breakdownOnDistance = ceil(($longestDistanceForActivity->toFloat() / $numberOfBreakdowns) / $scaleForBreakdowns) * $scaleForBreakdowns;
+        $breakdownOnDistance = (int) ceil(($longestDistanceForActivity->toFloat() / $numberOfBreakdowns) / $scaleForBreakdowns) * $scaleForBreakdowns;
 
+        /** @var int[] $range */
         $range = range($breakdownOnDistance, ceil($longestDistanceForActivity->toFloat() / $breakdownOnDistance) * $breakdownOnDistance, $breakdownOnDistance);
         foreach ($range as $breakdownLimit) {
             $statistics[$breakdownLimit] = [
@@ -75,7 +76,7 @@ final readonly class DistanceBreakdown
                 continue;
             }
             $elevation = $activity->getElevation()->toUnitSystem($this->unitSystem);
-            $distanceBreakdown = ceil($distance->toFloat() / $breakdownOnDistance) * $breakdownOnDistance;
+            $distanceBreakdown = (int) ceil($distance->toFloat() / $breakdownOnDistance) * $breakdownOnDistance;
 
             ++$statistics[$distanceBreakdown]['numberOfWorkouts'];
             $statistics[$distanceBreakdown]['totalDistance'] = ($statistics[$distanceBreakdown]['totalDistance'] ?? 0) + $distance->toFloat();
