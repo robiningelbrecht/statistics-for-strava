@@ -79,9 +79,9 @@ app-build-files:
 	docker compose exec app bin/console app:strava:build-files
 
 app-build-assets:
-	npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/dist/tailwind.min.css --minify
-	npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.output.css
-	webpack --config webpack.config.js
+	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/dist/tailwind.min.css --minify"
+	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.output.css"
+	@make dcr cmd="node_modules/.bin/webpack --config webpack.config.js"
 
 app-build-all:
 	@make build-containers

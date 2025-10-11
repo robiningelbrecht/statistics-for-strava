@@ -45,4 +45,8 @@ RUN tar -xzf /tmp/caddy.tar.gz -C /usr/bin caddy
 RUN rm -f /tmp/caddy.tar.gz
 RUN chmod +x /usr/bin/caddy
 
+# Install node and npm.
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash
+RUN apt-get install -y nodejs
+
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
