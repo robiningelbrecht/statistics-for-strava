@@ -26,7 +26,7 @@
                             </div>
                         </th>
                         {% for sportType in bestEffortsHistory.getUniqueSportTypes() %}
-                            <th scope="col" class="text-left px-2 py-3">
+                            <th scope="col" colspan="3" class="text-left px-2 py-3">
                                 {{ sportType|trans }}
                             </th>
                         {% endfor %}
@@ -43,16 +43,20 @@
                                 {% set bestEfforts = bestEffortsHistory.getBySportTypeAndDistance(sportType, distance).toArray() %}
                                 {% set bestEffort = bestEfforts[i] %}
                                 {% set activity = bestEffort.getActivity() %}
-                                <td class="px-2 py-2 truncate">
-                                    <div class="flex gap-x-1">
-                                        {% if bestEffort %}
-                                            {{ bestEffort.getFormattedTime() }} -
-                                            {{ activity|activityLink(ellipses: 50) }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </div>
-                                </td>
+                                {% if bestEffort %}
+                                    <td class="px-2 py-2 truncate">
+                                        {{ activity.getStartDate()|formatDate() }}
+                                    </td>
+                                    <td class="px-2 py-2 truncate">
+                                        {{ bestEffort.getFormattedTime() }}
+                                    <td class="px-2 py-2 truncate">
+                                        {{ activity|activityLink(ellipses: 50) }}
+                                    </td>
+                                {% else %}
+                                    <td class="px-2 py-2 truncate"> - </td>
+                                    <td class="px-2 py-2 truncate"></td>
+                                    <td class="px-2 py-2 truncate"></td>
+                                {% endif %}
                             {% endfor %}
                         </tr>
                     {% endfor %}
