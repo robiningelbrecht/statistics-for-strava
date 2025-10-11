@@ -12,6 +12,7 @@ storage
 node_modules
 public/assets/images/readme
 public/css/tailwind.output.css
+public/css/tailwind.css
 .DS_Store
 .env
 .env.dev
