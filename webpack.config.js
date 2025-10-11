@@ -7,7 +7,7 @@ module.exports = {
         'app.min': './public/js/app.js',
     },
     output: {
-        path: path.resolve(__dirname, 'public/js'),
+        path: path.resolve(__dirname, 'public/js/dist'),
         filename: '[name].js'
     },
     resolve: {
