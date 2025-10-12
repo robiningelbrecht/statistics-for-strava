@@ -216,6 +216,7 @@ final class DbalActivityRepository implements ActivityRepository
             activityId: ActivityId::fromString($result['activityId']),
             startDateTime: SerializableDateTime::fromString($result['startDateTime']),
             sportType: SportType::from($result['sportType']),
+            worldType: WorldType::from($result['worldType']),
             name: $result['name'],
             description: $result['description'] ?: '',
             distance: Meter::from($result['distance'])->toKilometer(),

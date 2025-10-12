@@ -8,6 +8,7 @@ use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
+use App\Domain\Activity\WorldType;
 use App\Domain\Gear\GearId;
 use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -21,6 +22,7 @@ final class ActivityBuilder
     private ActivityId $activityId;
     private SerializableDateTime $startDateTime;
     private SportType $sportType;
+    private WorldType $worldType;
     private string $name;
     private readonly string $description;
     private Kilometer $distance;
@@ -53,6 +55,7 @@ final class ActivityBuilder
         $this->activityId = ActivityId::fromUnprefixed('903645');
         $this->startDateTime = SerializableDateTime::fromString('2023-10-10');
         $this->sportType = SportType::RIDE;
+        $this->worldType = WorldType::REAL_WORLD;
         $this->kudoCount = 1;
         $this->name = 'Test activity';
         $this->description = '';
@@ -91,6 +94,7 @@ final class ActivityBuilder
             activityId: $this->activityId,
             startDateTime: $this->startDateTime,
             sportType: $this->sportType,
+            worldType: $this->worldType,
             name: $this->name,
             description: $this->description,
             distance: $this->distance,
