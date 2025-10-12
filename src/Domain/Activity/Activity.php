@@ -64,6 +64,8 @@ final class Activity implements SupportsAITooling
         private readonly SerializableDateTime $startDateTime,
         #[ORM\Column(type: 'string')]
         private SportType $sportType,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private WorldType $worldType,
         #[ORM\Column(type: 'string')]
         private string $name,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -131,10 +133,18 @@ final class Activity implements SupportsAITooling
             timezone: SerializableTimezone::default(),
         );
 
+        $deviceName = $rawData['device_name'] ?? null;
+        $worldType = match (strtolower($deviceName ?? '')) {
+            'zwift' => WorldType::ZWIFT,
+            'rouvy' => WorldType::ROUVY,
+            default => WorldType::REAL_WORLD,
+        };
+
         return self::fromState(
             activityId: ActivityId::fromUnprefixed((string) $rawData['id']),
             startDateTime: $startDate,
             sportType: SportType::from($rawData['sport_type']),
+            worldType: $worldType,
             name: $rawData['name'],
             description: $rawData['description'],
             distance: Kilometer::from(round($rawData['distance'] / 1000, 3)),
@@ -153,7 +163,7 @@ final class Activity implements SupportsAITooling
             averageCadence: isset($rawData['average_cadence']) ? (int) round($rawData['average_cadence']) : null,
             movingTimeInSeconds: $rawData['moving_time'] ?? 0,
             kudoCount: $rawData['kudos_count'] ?? 0,
-            deviceName: $rawData['device_name'] ?? null,
+            deviceName: $deviceName,
             totalImageCount: $rawData['total_photo_count'] ?? 0,
             localImagePaths: [],
             polyline: $rawData['map']['summary_polyline'] ?? null,
@@ -173,6 +183,7 @@ final class Activity implements SupportsAITooling
         ActivityId $activityId,
         SerializableDateTime $startDateTime,
         SportType $sportType,
+        WorldType $worldType,
         string $name,
         ?string $description,
         Kilometer $distance,
@@ -203,6 +214,7 @@ final class Activity implements SupportsAITooling
             activityId: $activityId,
             startDateTime: $startDateTime,
             sportType: $sportType,
+            worldType: $worldType,
             name: $name,
             description: $description,
             distance: $distance,
@@ -244,6 +256,11 @@ final class Activity implements SupportsAITooling
     public function getSportType(): SportType
     {
         return $this->sportType;
+    }
+
+    public function getWorldType(): WorldType
+    {
+        return $this->worldType;
     }
 
     public function updateSportType(SportType $sportType): self
@@ -576,12 +593,12 @@ final class Activity implements SupportsAITooling
 
     public function isZwiftRide(): bool
     {
-        return 'zwift' === strtolower($this->getDeviceName() ?? '');
+        return WorldType::ZWIFT === $this->getWorldType();
     }
 
     public function isRouvyRide(): bool
     {
-        return 'rouvy' === strtolower($this->getDeviceName() ?? '');
+        return WorldType::ROUVY === $this->getWorldType();
     }
 
     public function getLeafletMap(): ?LeafletMap

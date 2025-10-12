@@ -34,13 +34,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
     public function add(ActivityWithRawData $activityWithRawData): void
     {
         $sql = 'INSERT INTO Activity (
-            activityId, startDateTime, sportType, activityType, name, description, distance,
+            activityId, startDateTime, sportType, activityType, worldType, name, description, distance,
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
             polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
-            :activityId, :startDateTime, :sportType, :activityType, :name, :description, :distance,
+            :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
@@ -52,6 +52,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'activityId' => $activity->getId(),
             'startDateTime' => $activity->getStartDate(),
             'sportType' => $activity->getSportType()->value,
+            'worldType' => $activity->getWorldType()->value,
             'activityType' => $activity->getSportType()->getActivityType()->value,
             'name' => $activity->getOriginalName(),
             'description' => $activity->getDescription(),

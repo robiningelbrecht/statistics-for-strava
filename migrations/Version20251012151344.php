@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DoctrineMigrations;
 
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\WorldType;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -21,7 +22,20 @@ final class Version20251012151344 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
+        // this up() migration is auto-generated, please modify it to your needs.
+        $this->addSql('ALTER TABLE Activity ADD COLUMN worldType VARCHAR(255) DEFAULT NULL');
+        $this->addSql('UPDATE Activity set worldType = :worldType', [
+            'worldType' => WorldType::REAL_WORLD->value,
+        ]);
+        $this->addSql('UPDATE Activity set worldType = :worldType WHERE LOWER(deviceName) = :deviceName', [
+            'worldType' => WorldType::ZWIFT->value,
+            'deviceName' => 'zwift',
+        ]);
+        $this->addSql('UPDATE Activity set worldType = :worldType WHERE LOWER(deviceName) = :deviceName', [
+            'worldType' => WorldType::ROUVY->value,
+            'deviceName' => 'rouvy',
+        ]);
+
         $activityIds = $this->connection->fetchFirstColumn(
             <<<'SQL'
                 SELECT activityId FROM Activity WHERE activityType = :activityType
