@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Segment;
 
-use App\Domain\Activity\CouldNotDetermineLeafletMap;
 use App\Domain\Activity\LeafletMap;
+use App\Domain\Activity\RealWorldMap;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Segment\SegmentEffort\SegmentEffort;
+use App\Domain\Zwift\CouldNotDetermineZwiftMap;
+use App\Domain\Zwift\ZwiftMap;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -249,15 +251,15 @@ final class Segment implements SupportsAITooling
             return null;
         }
         if (!$this->isZwiftSegment()) {
-            return LeafletMap::REAL_WORLD;
+            return new RealWorldMap();
         }
         if (!$startingCoordinate = $this->getStartingCoordinate()) {
             return null;
         }
 
         try {
-            return LeafletMap::forZwiftStartingCoordinate($startingCoordinate);
-        } catch (CouldNotDetermineLeafletMap) {
+            return ZwiftMap::forStartingCoordinate($startingCoordinate);
+        } catch (CouldNotDetermineZwiftMap) {
             // Very old Zwift activities have routes that we don't have corresponding maps for.
         }
 
