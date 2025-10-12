@@ -29,6 +29,8 @@ final class CombinedStreamTypes extends Collection
         return self::fromArray([
             CombinedStreamType::ALTITUDE,
             CombinedStreamType::HEART_RATE,
+            CombinedStreamType::WATTS,
+            CombinedStreamType::CADENCE,
             CombinedStreamType::PACE,
         ]);
     }
