@@ -9,6 +9,8 @@ use App\Domain\Gear\GearId;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
+use App\Domain\Zwift\CouldNotDetermineZwiftMap;
+use App\Domain\Zwift\ZwiftMap;
 use App\Infrastructure\Eventing\RecordsEvents;
 use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Serialization\Json;
@@ -607,15 +609,15 @@ final class Activity implements SupportsAITooling
             return null;
         }
         if (!$this->isZwiftRide()) {
-            return LeafletMap::REAL_WORLD;
+            return new RealWorldMap();
         }
         if (!$startingCoordinate = $this->getStartingCoordinate()) {
             return null;
         }
 
         try {
-            return LeafletMap::forZwiftStartingCoordinate($startingCoordinate);
-        } catch (CouldNotDetermineLeafletMap) {
+            return ZwiftMap::forStartingCoordinate($startingCoordinate);
+        } catch (CouldNotDetermineZwiftMap) {
             // Very old Zwift activities have routes that we don't have corresponding maps for.
         }
 
