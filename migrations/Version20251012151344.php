@@ -31,7 +31,7 @@ final class Version20251012151344 extends AbstractMigration
             ]
         );
 
-        if(count($activityIds) === 0) {
+        if (0 === count($activityIds)) {
             return;
         }
 
