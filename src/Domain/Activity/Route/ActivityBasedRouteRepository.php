@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Activity\Route;
 
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\WorldType;
 use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
@@ -19,7 +20,8 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
                     FROM Activity
                     WHERE sportType IN (:sportTypes)
                     AND polyline IS NOT NULL AND polyline <> ""
-                    AND location IS NOT NULL AND location <> ""';
+                    AND location IS NOT NULL AND location <> ""
+                    AND worldType = :worldType';
 
         $results = $this->connection->executeQuery(
             sql: $query,
@@ -31,6 +33,7 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
                         fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                     )
                 ),
+                'worldType' => WorldType::REAL_WORLD->value,
             ],
             types: [
                 'sportTypes' => ArrayParameterType::STRING,

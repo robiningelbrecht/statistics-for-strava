@@ -6,6 +6,11 @@ namespace App\Domain\Activity;
 
 final readonly class RealWorldMap implements LeafletMap
 {
+    public function getLabel(): string
+    {
+        return 'Real world';
+    }
+
     public function getTileLayer(): string
     {
         return 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';

@@ -32,6 +32,11 @@ final readonly class ZwiftMap implements LeafletMap
     ) {
     }
 
+    public function getLabel(): string
+    {
+        return ucfirst(str_replace('-', ' ', $this->mapName));
+    }
+
     public function getTileLayer(): ?string
     {
         return null;
