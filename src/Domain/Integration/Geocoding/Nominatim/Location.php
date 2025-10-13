@@ -22,9 +22,9 @@ final readonly class Location implements \JsonSerializable
         return new self($data);
     }
 
-    public function getCountryCode(): string
+    public function getCountryCode(): ?string
     {
-        return $this->data['country_code'];
+        return $this->data['country_code'] ?? null;
     }
 
     public function getState(): ?string

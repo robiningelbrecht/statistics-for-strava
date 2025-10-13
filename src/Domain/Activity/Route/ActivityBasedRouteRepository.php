@@ -21,6 +21,7 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
                     WHERE sportType IN (:sportTypes)
                     AND polyline IS NOT NULL AND polyline <> ""
                     AND location IS NOT NULL AND location <> ""
+                    AND JSON_EXTRACT(location, "$.country_code") IS NOT NULL
                     AND worldType = :worldType';
 
         $results = $this->connection->executeQuery(
