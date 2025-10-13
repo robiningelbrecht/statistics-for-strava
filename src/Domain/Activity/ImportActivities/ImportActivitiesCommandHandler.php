@@ -269,6 +269,10 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             return;
         }
 
+        if (count($activityIdsToDelete) === count($allActivityIds)) {
+            throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
+        }
+
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activityRepository->find($activityId);
             $activity->delete();

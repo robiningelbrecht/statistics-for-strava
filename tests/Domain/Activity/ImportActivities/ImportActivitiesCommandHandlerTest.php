@@ -272,6 +272,34 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         );
     }
 
+    public function testHandleWithDeleteAllActivities(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+
+        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
+            Key::STRAVA_GEAR_IMPORT,
+            Value::fromString('20205-01_18'),
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(100))
+                ->build(),
+            []
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(1000))
+                ->build(),
+            []
+        ));
+
+        $this->expectExceptionObject(new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss'));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+    }
+
     public function testHandleWithoutActivityDelete(): void
     {
         $output = new SpyOutput();
