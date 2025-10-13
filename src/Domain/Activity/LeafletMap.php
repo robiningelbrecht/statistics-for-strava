@@ -8,6 +8,8 @@ use App\Infrastructure\ValueObject\Geography\Coordinate;
 
 interface LeafletMap
 {
+    public function getLabel(): string;
+
     public function getTileLayer(): ?string;
 
     public function getOverlayImageUrl(): ?string;

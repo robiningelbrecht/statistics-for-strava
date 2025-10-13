@@ -14,6 +14,7 @@ use App\Domain\Activity\WorkoutType;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
+use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
@@ -134,12 +135,18 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     $activity->updateCommute($stravaActivity['commute']);
                 }
 
-                if (!$activity->getLocation() && $sportType->supportsReverseGeocoding()
-                    && $activity->getStartingCoordinate()) {
-                    try {
-                        $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                        $activity->updateLocation($reverseGeocodedAddress);
-                    } catch (CouldNotReverseGeocodeAddress) {
+                if (!$activity->getLocation() && $activity->getStartingCoordinate()) {
+                    if ($sportType->supportsReverseGeocoding()) {
+                        try {
+                            $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                            $activity->updateLocation($reverseGeocodedAddress);
+                        } catch (CouldNotReverseGeocodeAddress) {
+                        }
+                    } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
+                        $location = Location::fromState([
+                            'state' => $zwiftMap->getLabel(),
+                        ]);
+                        $activity->updateLocation($location);
                     }
                 }
 
@@ -206,11 +213,18 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         $activity->updateWeather($weather);
                     }
 
-                    if ($sportType->supportsReverseGeocoding() && $activity->getStartingCoordinate()) {
-                        try {
-                            $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                            $activity->updateLocation($reverseGeocodedAddress);
-                        } catch (CouldNotReverseGeocodeAddress) {
+                    if ($activity->getStartingCoordinate()) {
+                        if ($sportType->supportsReverseGeocoding()) {
+                            try {
+                                $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                                $activity->updateLocation($reverseGeocodedAddress);
+                            } catch (CouldNotReverseGeocodeAddress) {
+                            }
+                        } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
+                            $location = Location::fromState([
+                                'state' => $zwiftMap->getLabel(),
+                            ]);
+                            $activity->updateLocation($location);
                         }
                     }
 
