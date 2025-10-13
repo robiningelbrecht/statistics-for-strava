@@ -20,3 +20,4 @@ FindStreaksQueryHandler
 FindTotalActivityCountQueryHandler
 FindYearlyStatsPerDayQueryHandler
 FindYearlyStatsQueryHandler
+FindZwiftStatsPerWorldQueryHandler

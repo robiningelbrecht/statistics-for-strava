@@ -262,4 +262,11 @@ final class ActivityBuilder
 
         return $this;
     }
+
+    public function withWorldType(WorldType $worldType): self
+    {
+        $this->worldType = $worldType;
+
+        return $this;
+    }
 }

@@ -88,7 +88,7 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
                 GearId::fromUnprefixed('updated'),
                 'updated gear name',
             )
-            ->updateLocation(Location::fromState(['state' => 'updated location']))
+            ->updateLocation(Location::create(['state' => 'updated location']))
             ->updateCommute(true);
 
         $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
@@ -143,7 +143,7 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
             $persistedActivity->getGearName()
         );
         $this->assertEquals(
-            Location::fromState(['state' => 'updated location']),
+            Location::create(['state' => 'updated location']),
             $persistedActivity->getLocation()
         );
         $this->assertTrue($persistedActivity->isCommute());

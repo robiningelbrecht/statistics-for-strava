@@ -45,7 +45,7 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
         foreach ($results as $result) {
             $routes->add(Route::create(
                 encodedPolyline: $result['polyline'],
-                location: Location::fromState(Json::decode($result['location'])),
+                location: Location::create(Json::decode($result['location'])),
                 sportType: SportType::from($result['sportType']),
                 on: SerializableDateTime::fromString($result['startDateTime'])
             ));

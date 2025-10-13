@@ -38,6 +38,6 @@ final readonly class LiveNominatim implements Nominatim
         $response = Json::decode($response->getBody()->getContents());
         $this->sleep->sweetDreams(1);
 
-        return Location::fromState($response['address'] ?? throw new CouldNotReverseGeocodeAddress());
+        return Location::create($response['address'] ?? throw new CouldNotReverseGeocodeAddress());
     }
 }

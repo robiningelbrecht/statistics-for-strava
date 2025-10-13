@@ -15,9 +15,9 @@ final readonly class Location implements \JsonSerializable
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
-    public static function fromState(array $data): self
+    public static function create(array $data): self
     {
         return new self($data);
     }

@@ -28,7 +28,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('line')
-                ->withLocation(Location::fromState(['country_code' => 'BE']))
+                ->withLocation(Location::create(['country_code' => 'BE']))
                 ->build(),
             rawData: []
         ));
@@ -38,7 +38,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(2))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('')
-                ->withLocation(Location::fromState(['waw']))
+                ->withLocation(Location::create(['waw']))
                 ->build(),
             rawData: []
         ));
@@ -47,7 +47,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(3))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline(null)
-                ->withLocation(Location::fromState(['waw']))
+                ->withLocation(Location::create(['waw']))
                 ->build(),
             rawData: []
         ));
