@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Rewind\FindActivityLocations;
 
+use App\Domain\Activity\WorldType;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
@@ -32,6 +33,7 @@ final readonly class FindActivityLocationsQueryHandler implements QueryHandler
                     FROM Activity
                     WHERE location IS NOT NULL
                     AND strftime('%Y',startDateTime) IN (:years)
+                    AND worldType = :worldType
                     GROUP BY selectedLocation
                 ) tmp
                 INNER JOIN Activity ON tmp.activityId = Activity.activityId
@@ -39,6 +41,7 @@ final readonly class FindActivityLocationsQueryHandler implements QueryHandler
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
+                'worldType' => WorldType::REAL_WORLD->value,
             ],
             [
                 'years' => ArrayParameterType::STRING,
