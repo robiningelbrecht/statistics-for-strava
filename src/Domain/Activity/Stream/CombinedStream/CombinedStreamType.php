@@ -15,6 +15,7 @@ enum CombinedStreamType: string implements TranslatableInterface
     case ALTITUDE = 'altitude';
     case WATTS = 'watts';
     case CADENCE = 'cadence';
+    case STEPS_PER_MINUTE = 'spm';
     case HEART_RATE = 'heartrate';
     case VELOCITY = 'velocity';
     case PACE = 'pace';
@@ -25,6 +26,7 @@ enum CombinedStreamType: string implements TranslatableInterface
     {
         return match ($this) {
             CombinedStreamType::PACE, CombinedStreamType::VELOCITY => StreamType::VELOCITY,
+            CombinedStreamType::STEPS_PER_MINUTE => StreamType::CADENCE,
             default => StreamType::from($this->value),
         };
     }
@@ -35,7 +37,8 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::DISTANCE => $translator->trans('Distance'),
             CombinedStreamType::ALTITUDE => $translator->trans('Elevation'),
             CombinedStreamType::HEART_RATE => $translator->trans('Heart rate'),
-            CombinedStreamType::CADENCE => $translator->trans('Cadence'),
+            CombinedStreamType::CADENCE,
+            CombinedStreamType::STEPS_PER_MINUTE => $translator->trans('Cadence'),
             CombinedStreamType::WATTS => $translator->trans('Power'),
             CombinedStreamType::PACE => $translator->trans('Pace'),
             CombinedStreamType::VELOCITY => $translator->trans('Speed'),
@@ -48,6 +51,7 @@ enum CombinedStreamType: string implements TranslatableInterface
         return match ($this) {
             CombinedStreamType::HEART_RATE => 'bpm',
             CombinedStreamType::CADENCE => 'rpm',
+            CombinedStreamType::STEPS_PER_MINUTE => 'spm',
             CombinedStreamType::WATTS => 'watt',
             CombinedStreamType::PACE => $unitSystem->paceSymbol(),
             CombinedStreamType::ALTITUDE => $unitSystem->elevationSymbol(),
@@ -61,7 +65,8 @@ enum CombinedStreamType: string implements TranslatableInterface
         return match ($this) {
             CombinedStreamType::ALTITUDE => '#a6a6a6',
             CombinedStreamType::HEART_RATE => '#ee6666',
-            CombinedStreamType::CADENCE => '#91cc75',
+            CombinedStreamType::CADENCE,
+            CombinedStreamType::STEPS_PER_MINUTE => '#91cc75',
             CombinedStreamType::WATTS => '#73c0de',
             CombinedStreamType::PACE,
             CombinedStreamType::VELOCITY => '#fac858',

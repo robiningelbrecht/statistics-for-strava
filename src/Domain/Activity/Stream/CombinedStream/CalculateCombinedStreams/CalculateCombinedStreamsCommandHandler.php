@@ -124,6 +124,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
             $powerIndex = array_search(CombinedStreamType::WATTS, $combinedStreamTypesScalar, true);
             $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $combinedStreamTypesScalar, true);
             $timeIndex = array_search(CombinedStreamType::TIME, $combinedStreamTypesScalar, true);
+            $stepsPerMinuteIndex = array_search(CombinedStreamType::STEPS_PER_MINUTE, $combinedStreamTypesScalar, true);
 
             // Make sure necessary streams are converted before saving,
             // So we do not need to convert it when reading the data.
@@ -170,6 +171,11 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                     if (UnitSystem::METRIC === $this->unitSystem) {
                         $row[$velocityIndex] = $kmPerHour->toFloat();
                     }
+                }
+
+                if (false !== $stepsPerMinuteIndex) {
+                    // Convert "Stride per minute" to "Steps per minute"
+                    $row[$stepsPerMinuteIndex] *= 2;
                 }
 
                 // Apply rounding rules.
