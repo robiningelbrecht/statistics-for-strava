@@ -23,6 +23,7 @@ appearance:
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
       - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
       - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
+      - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
@@ -161,6 +162,16 @@ This widget shows your yearly distances per activity type, allowing you to track
 ```
 
 ![yearlyDistances widget](../assets/images/dashboard-widgets/yearly-distances.png)
+
+## zwiftStats
+
+This widget displays detailed stats for your Zwift activities.
+
+```yml
+{ 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
+```
+
+![zwiftStats widget](../assets/images/dashboard-widgets/zwift-stats.png)
 
 ## gearStats
 
