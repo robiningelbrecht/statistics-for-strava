@@ -239,7 +239,7 @@ final class DbalActivityRepository implements ActivityRepository
             totalImageCount: $result['totalImageCount'] ?: 0,
             localImagePaths: $result['localImagePaths'] ? explode(',', (string) $result['localImagePaths']) : [],
             polyline: $result['polyline'],
-            location: $location ? Location::fromState($location) : null,
+            location: $location ? Location::create($location) : null,
             weather: $result['weather'],
             gearId: GearId::fromOptionalString($result['gearId']),
             gearName: $result['gearName'],

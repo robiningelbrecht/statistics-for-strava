@@ -143,7 +143,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         } catch (CouldNotReverseGeocodeAddress) {
                         }
                     } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
-                        $location = Location::fromState([
+                        $location = Location::create([
                             'state' => $zwiftMap->getLabel(),
                         ]);
                         $activity->updateLocation($location);
@@ -221,7 +221,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                             } catch (CouldNotReverseGeocodeAddress) {
                             }
                         } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
-                            $location = Location::fromState([
+                            $location = Location::create([
                                 'state' => $zwiftMap->getLabel(),
                             ]);
                             $activity->updateLocation($location);

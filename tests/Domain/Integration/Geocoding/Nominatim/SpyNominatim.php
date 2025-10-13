@@ -12,7 +12,7 @@ class SpyNominatim implements Nominatim
 {
     public function reverseGeocode(Coordinate $coordinate): Location
     {
-        return Location::fromState([
+        return Location::create([
             'country_code' => 'be',
             'state' => 'West Vlaanderen',
         ]);

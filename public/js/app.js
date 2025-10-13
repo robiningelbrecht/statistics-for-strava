@@ -17,16 +17,16 @@ if (sideNavCollapsed === 'true') {
     $topNav.classList.add('sidebar-is-collapsed');
 }
 
-document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
-    $main.classList.toggle('sidebar-is-collapsed');
-    $sideNav.classList.toggle('sidebar-is-collapsed');
-    $topNav.classList.toggle('sidebar-is-collapsed');
+const resizeAllCharts = () => allRenderedCharts.forEach(chart => chart.resize());
 
-    localStorage.setItem('sideNavCollapsed', 'false');
-    if ($main.classList.contains('sidebar-is-collapsed')) {
-        localStorage.setItem('sideNavCollapsed', 'true');
-    }
-});
+const toggleSidebar = () => {
+    const collapsed = $main.classList.toggle('sidebar-is-collapsed');
+    [$sideNav, $topNav].forEach(el => el.classList.toggle('sidebar-is-collapsed', collapsed));
+    localStorage.setItem('sideNavCollapsed', String(collapsed));
+    resizeAllCharts();
+};
+document.getElementById('toggle-sidebar-collapsed-state')?.addEventListener('click', toggleSidebar);
+
 
 // Boot router.
 const router = new Router($main);
@@ -75,15 +75,8 @@ document.addEventListener('navigationLinkHasBeenClicked', (e) => {
 document.addEventListener('dataTableClusterWasChanged', () => {
     initModals(document);
 });
-document.getElementById('toggle-sidebar-collapsed-state').addEventListener('click', () => {
-    allRenderedCharts.forEach(chart => {
-        chart.resize();
-    });
-})
 window.addEventListener('resize', function () {
-    allRenderedCharts.forEach(chart => {
-        chart.resize();
-    });
+    resizeAllCharts();
 });
 
 const $modalAIChat = document.querySelector('a[data-modal-custom-ai]');
@@ -373,4 +366,6 @@ const showLatestVersion = (latestVersion) => {
     $latestVersionEl.classList.remove('hidden');
 };
 
-updateGithubLatestRelease();
+(async () => {
+    await updateGithubLatestRelease();
+})();
