@@ -1,0 +1,64 @@
+{% autoescape false %}
+    <h3 class="mb-4 text-lg font-semibold">
+        {{ "Zwift stats"|trans }}
+    </h3>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-center text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    # {{ "workouts"|trans }}
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('distance') }}
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('elevation') }}
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('time') }}
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <div class="flex items-center justify-center">
+                        {{ svg('calories') }}
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for statistic in statsPerWorld %}
+                <tr class="bg-white border-b">
+                    <th scope="row"
+                        class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                        <div>{{ statistic.zwiftWorld }}</div>
+                    </th>
+                    <td class="px-6 py-2">
+                        {{ statistic.numberOfActivities }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.distance|renderMeasurement(0) }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.elevation|renderMeasurement(0) }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.movingTime|formatSeconds }}
+                    </td>
+                    <td class="px-6 py-2 truncate">
+                        {{ statistic.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endautoescape %}

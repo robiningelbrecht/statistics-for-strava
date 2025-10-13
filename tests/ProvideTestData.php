@@ -112,6 +112,7 @@ trait ProvideTestData
             gearId: GearId::fromUnprefixed('b12659861'),
             gearName: 'Retro Race Bike',
         );
+        $activity->updateLocation(Location::create(['state' => 'Watopia']));
         $activity->updateLocalImagePaths(['files/activities/aea2d7b4-53a7-11ee-a5e1-9a34a3268d74.jpg', 'files/activities/aea2d7b4-53a7-11ee-a5e1-9a34a3268d74.jpg', 'files/activities/aea2d7b4-53a7-11ee-a5e1-9a34a3268d74.jpg', 'files/activities/aea2d7b4-53a7-11ee-a5e1-9a34a3268d74.jpg']);
         $activityWithRawDataRepository->add(ActivityWithRawData::fromState(
             activity: $activity,
