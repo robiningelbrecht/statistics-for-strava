@@ -1,5 +1,5 @@
 
-StatisticsforStravav3.6.3
+StatisticsforStravav3.7.0
 
 Configuringlocale...
 Configuringthemecolors...

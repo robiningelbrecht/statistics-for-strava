@@ -1,3 +1,23 @@
+# [v3.7.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.0) - 2025-10-13
+
+🔥Main new features in this release:
+
+* More clickable links throughout the app that redirect to a pre-filtered list of activities
+* A new dashboard widget "Zwift Stats"
+
+## What's Changed
+* ISSUE #1167: Fix bug when checking new version in sidebar by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1168
+* ISSUE #1169: Preload non required CSS files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1170
+* ISSUE #1171: Allow to click on gear name by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1172
+* ISSUE #1176: Rework public directory structure by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1177
+* ISSUE #1178: Add Strava API rate limits at end of import CLI command by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1179
+* ISSUE #1182: Add date to best efforts list by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1183
+* ISSUE #1187: Add power and cadence to combined activity charts for running by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1188
+* ISSUE #1184: Add a Zwift stats dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1189
+* ISSUE #1192: Add guard to make sure that mis-configuration does not delete all imported activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1193
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.6.3...v3.7.0
+
 # [v3.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.6.3) - 2025-10-09
 
 🔥 This release introduces a new feature that lets you click on any day in the dashboard’s activity heatmap to quickly view the activities completed on that date.
