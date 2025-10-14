@@ -10,6 +10,7 @@ use NeuronAI\Providers\Deepseek\Deepseek;
 use NeuronAI\Providers\Gemini\Gemini;
 use NeuronAI\Providers\Mistral\Mistral;
 use NeuronAI\Providers\Ollama\Ollama;
+use NeuronAI\Providers\OpenAI\AzureOpenAI;
 use NeuronAI\Providers\OpenAI\OpenAI;
 
 final readonly class AIProviderFactory
@@ -26,10 +27,11 @@ final readonly class AIProviderFactory
         /** @var non-empty-array<string, mixed> $config */
         $config = $this->AIConfig['configuration'] ?? throw new InvalidAIConfiguration('integrations.ai.configuration', 'cannot be empty');
 
-        $requiredConfigKeys = [
-            'model',
-            'ollama' === $providerName ? 'url' : 'key',
-        ];
+        $requiredConfigKeys = match ($providerName) {
+            'ollama' => ['model', 'url'],
+            'azureOpenAI' => ['key', 'endpoint', 'model', 'version'],
+            default => ['model', 'key'],
+        };
 
         foreach ($requiredConfigKeys as $key) {
             if (!array_key_exists($key, $config)) {
@@ -41,6 +43,12 @@ final readonly class AIProviderFactory
             'anthropic' => new Anthropic(
                 key: $config['key'],
                 model: $config['model'],
+            ),
+            'azureOpenAI' => new AzureOpenAI(
+                key: $config['key'],
+                endpoint: $config['endpoint'],
+                model: $config['model'],
+                version: $config['version'],
             ),
             'gemini' => new Gemini(
                 key: $config['key'],

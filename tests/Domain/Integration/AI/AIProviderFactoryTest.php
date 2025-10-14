@@ -10,6 +10,7 @@ use NeuronAI\Providers\Deepseek\Deepseek;
 use NeuronAI\Providers\Gemini\Gemini;
 use NeuronAI\Providers\Mistral\Mistral;
 use NeuronAI\Providers\Ollama\Ollama;
+use NeuronAI\Providers\OpenAI\AzureOpenAI;
 use NeuronAI\Providers\OpenAI\OpenAI;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -45,6 +46,19 @@ class AIProviderFactoryTest extends TestCase
                 ],
             ],
             new Anthropic('key', 'model'),
+        ];
+
+        yield 'azureOpenAI' => [
+            [
+                'provider' => 'azureOpenAI',
+                'configuration' => [
+                    'key' => 'key',
+                    'model' => 'model',
+                    'endpoint' => 'endpoint',
+                    'version' => 'version',
+                ],
+            ],
+            new AzureOpenAI('key', 'endpoint', 'model', 'version'),
         ];
 
         yield 'gemini' => [
