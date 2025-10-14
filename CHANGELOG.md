@@ -1,3 +1,12 @@
+# [v3.7.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.1) - 2025-10-14
+
+## What's Changed
+* ISSUE #1196: Cadence on running activities shows stride per minute instead of steps per minute by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1197
+* ISSUE #1201: Add AI support for azureOpenAI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1202
+* ISSUE #1206: Use new css file for auth pages by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1207
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.0...v3.7.1
+
 # [v3.7.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.0) - 2025-10-13
 
 🔥Main new features in this release:
