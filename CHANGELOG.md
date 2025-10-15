@@ -1,3 +1,16 @@
+# [v3.7.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.2) - 2025-10-15
+
+## What's Changed
+* ISSUE #1203: Fix date filter timezone issues by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1210
+* ISSUE #1204: Add translation to swedish by @strobit in https://github.com/robiningelbrecht/statistics-for-strava/pull/1205
+* ISSUE #1209: Add clickable data points in the weekly stats plot by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1211
+* ISSUE #1215: Enable zoom with mouse wheel on activity page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1216
+
+## New Contributors
+* @strobit made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1205
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.1...v3.7.2
+
 # [v3.7.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.1) - 2025-10-14
 
 ## What's Changed
