@@ -6,15 +6,12 @@ namespace App\Domain\Calendar;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class Week
+final readonly class Week implements \JsonSerializable
 {
-    private SerializableDateTime $firstDay;
-
     private function __construct(
         private int $year,
         private int $weekNumber,
     ) {
-        $this->firstDay = SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber);
     }
 
     public static function fromYearAndWeekNumber(
@@ -34,6 +31,17 @@ final readonly class Week
 
     public function getLabel(): string
     {
-        return $this->firstDay->translatedFormat('M Y');
+        return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber)->translatedFormat('M Y');
+    }
+
+    /**
+     * @return array{from: string, to: string}
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'from' => SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber)->format('Y-m-d'),
+            'to' => SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber, 7)->format('Y-m-d'),
+        ];
     }
 }

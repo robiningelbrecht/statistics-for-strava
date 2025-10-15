@@ -24,7 +24,7 @@
         {% for activityType,chart in weeklyDistanceCharts %}
             <div id="weeklyDistances{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="weeklyDistances{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-80" data-echarts-options='{{ chart }}'></div>
+                <div class="h-80" data-echarts-options='{{ chart }}' data-echarts-click="handleWeeklyStatsClick" data-echarts-click-data='{{ weeksPerActivityType[activityType] }}'></div>
             </div>
         {% endfor %}
     </div>

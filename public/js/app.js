@@ -107,12 +107,29 @@ const initElements = (rootNode) => {
     initModals(rootNode);
 
     const chartClickHandlers = {
-        handleActivityGridChartClick: (params) => {
+        handleWeeklyStatsClick: (params, chartNode) => {
+            if (!params || !params.dataIndex) {
+                return;
+            }
+
+            const weeks = JSON.parse(chartNode.getAttribute('data-echarts-click-data'));
+            if (!params.dataIndex in weeks) {
+                return;
+            }
+            dataTableStorage.set({
+                'activities' : {
+                    "start-date.from": weeks[params.dataIndex]['from'],
+                    "start-date.to": weeks[params.dataIndex]['to']
+                }
+            });
+
+            router.navigateTo(`/activities`);
+        },
+        handleActivityGridChartClick: (params, chartNode) => {
             if (!params || !params.value || params.value < 1) {
                 return;
             }
 
-            // Make sure results are prefiltered by clicked date.
             dataTableStorage.set({
                 'activities' : {
                     "start-date.from": params.value[0],
@@ -140,7 +157,7 @@ const initElements = (rootNode) => {
         const clickHandlerName = chartNode.getAttribute('data-echarts-click');
         if (clickHandlerName && chartClickHandlers[clickHandlerName]) {
             chart.on('click', function (params) {
-                chartClickHandlers[clickHandlerName](params);
+                chartClickHandlers[clickHandlerName](params, chartNode);
             });
         }
         if (chartNode.hasAttribute('data-echarts-connect')) {
