@@ -12,27 +12,35 @@ export class FilterManager {
         if (!stored) return;
 
         Object.keys(stored).forEach(key => {
-            if (key.includes('.')) return;
+            if (typeof stored[key] === 'object' && stored[key] !== null && 'from' in stored[key] && 'to' in stored[key]) {
+                // skip date ranges here
+                return;
+            }
             const value = stored[key];
+
             this.wrapper.querySelectorAll(`input[data-dataTable-filter="${key}"]`).forEach(input => {
-                if (input.value.toLowerCase() === value.toLowerCase()) input.checked = true;
+                const inputValue = input.value.toLowerCase();
+
+                if (Array.isArray(value)) {
+                    // Multiple checkbox values.
+                    if (value.map(v => v.toLowerCase()).includes(inputValue)) {
+                        input.checked = true;
+                    }
+                } else if (inputValue === value.toLowerCase()) {
+                    input.checked = true;
+                }
             });
         });
 
-        const rangeGroups = {};
-        Object.keys(stored).filter(k => k.includes('.')).forEach(k => {
-            const [name, part] = k.split('.');
-            if (!rangeGroups[name]) rangeGroups[name] = {};
-            rangeGroups[name][part] = stored[k];
-        });
-
-        Object.keys(rangeGroups).forEach(name => {
-            const range = rangeGroups[name];
-            const from = this.wrapper.querySelector(`input[name="${name}[from]"]`);
-            const to = this.wrapper.querySelector(`input[name="${name}[to]"]`);
-            if (from && range.from) from.value = range.from;
-            if (to && range.to) to.value = range.to;
-        });
+        // Handle date ranges.
+        Object.entries(stored)
+            .filter(([_, v]) => typeof v === 'object' && v !== null && 'from' in v && 'to' in v)
+            .forEach(([name, range]) => {
+                const from = this.wrapper.querySelector(`input[name="${name}[from]"]`);
+                const to = this.wrapper.querySelector(`input[name="${name}[to]"]`);
+                if (from && range.from) from.valueAsDate = new Date(range.from);
+                if (to && range.to) to.valueAsDate = new Date(range.to);
+            });
 
         this.storage.clearAll();
     }
@@ -42,7 +50,17 @@ export class FilterManager {
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]:checked').forEach(el => {
             const key = el.getAttribute('data-dataTable-filter');
-            filters[key] = el.value.toLowerCase();
+            const value = el.value.toLowerCase();
+
+            if (filters[key]) {
+                if (Array.isArray(filters[key])) {
+                    filters[key].push(value);
+                } else {
+                    filters[key] = [filters[key], value];
+                }
+            } else {
+                filters[key] = value;
+            }
         });
 
         this.wrapper.querySelectorAll('[data-dataTable-filter*="[]"]').forEach(group => {
@@ -54,7 +72,7 @@ export class FilterManager {
             if (from.valueAsDate && to.valueAsDate) {
                 const fromMs = new Date(from.valueAsNumber).setUTCHours(0, 0, 0);
                 const toMs = new Date(to.valueAsNumber).setUTCHours(23, 59, 59);
-                filters[name] = [fromMs, toMs];
+                filters[name] = { from: fromMs, to: toMs };
             }
         });
 
@@ -66,18 +84,21 @@ export class FilterManager {
             el.classList.remove('active');
         });
 
-        Object.keys(activeFilters).forEach(key => {
-            const value = activeFilters[key];
-            if (Array.isArray(value)) {
-                // Range filter.
-                const btn = this.wrapper.querySelector(`[data-datatable-filter="${key}[]"]`)?.closest('.filter-dropdown')?.querySelector('[data-dropdown-toggle]');
-                if (btn) btn.classList.add('active');
+
+        Object.entries(activeFilters).forEach(([key, activeFilter]) => {
+            if (activeFilter && typeof activeFilter === 'object' && 'from' in activeFilter && 'to' in activeFilter) {
+                const dropdown = this.wrapper
+                    .querySelector(`[data-datatable-filter="${key}[]"]`)
+                    ?.closest('.filter-dropdown');
+
+                const toggle = dropdown.querySelector('[data-dropdown-toggle]');
+                if (toggle) toggle.classList.add('active');
                 return;
             }
 
-            const input = this.wrapper.querySelector(`[data-dataTable-filter="${key}"]:checked`);
-            const btn = input?.closest('.filter-dropdown')?.querySelector('[data-dropdown-toggle]');
-            if (btn) btn.classList.add('active');
+            const dropdown = this.wrapper.querySelector(`[data-dataTable-filter="${key}"]:checked`)?.closest('.filter-dropdown');
+            const toggle = dropdown.querySelector('[data-dropdown-toggle]');
+            if (toggle) toggle.classList.add('active');
         });
     }
 
@@ -88,14 +109,22 @@ export class FilterManager {
         rows.forEach(row => {
             row.active = !row.searchables || row.searchables.toLowerCase().includes(searchLower);
 
-            for (const [key, value] of Object.entries(filters)) {
-                if (Array.isArray(value)) {
-                    const val = row.filterables[key];
-                    row.active = row.active && val >= value[0] && val <= value[1];
-                } else {
-                    const val = row.filterables[key]?.toLowerCase();
-                    row.active = row.active && val === value;
+            for (const [key, activeFilter] of Object.entries(filters)) {
+                const filterValue = row.filterables[key];
+
+                if (activeFilter && typeof activeFilter === 'object' && 'from' in activeFilter && 'to' in activeFilter) {
+                    row.active = row.active && filterValue >= activeFilter.from && filterValue <= activeFilter.to;
+                    continue;
                 }
+
+                // Multi-checkbox filter.
+                if (Array.isArray(activeFilter)) {
+                    row.active = row.active && activeFilter.includes(filterValue?.toLowerCase());
+                    continue;
+                }
+
+                // Single radio or text filter.
+                row.active = row.active &&  filterValue?.toLowerCase() === activeFilter;
             }
         });
         return rows;

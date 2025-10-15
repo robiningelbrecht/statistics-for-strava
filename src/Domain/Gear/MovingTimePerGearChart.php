@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear;
 
+use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Theme\Theme;
 
 final readonly class MovingTimePerGearChart
@@ -40,7 +41,7 @@ final readonly class MovingTimePerGearChart
             }
             $data[] = [
                 'value' => round($time / 3600),
-                'name' => $gear->getName(),
+                'name' => Escape::htmlSpecialChars($gear->getName()),
                 'itemStyle' => [
                     'color' => Theme::getColorForGear($gear->getId()),
                 ],

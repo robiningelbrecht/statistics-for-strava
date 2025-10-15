@@ -19,8 +19,6 @@ interface Gear extends SupportsAITooling
 
     public function getName(): string;
 
-    public function getSanitizedName(): string;
-
     public function getDistance(): Kilometer;
 
     public function isRetired(): bool;

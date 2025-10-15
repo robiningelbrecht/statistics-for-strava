@@ -86,11 +86,6 @@ class ImportedGear implements Gear
         return sprintf('%s%s', $this->name, $this->isRetired() ? ' ☠️' : '');
     }
 
-    public function getSanitizedName(): string
-    {
-        return htmlspecialchars($this->getName());
-    }
-
     public function getDistance(): Kilometer
     {
         return $this->distanceInMeter->toKilometer();
