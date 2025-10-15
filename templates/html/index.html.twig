@@ -292,20 +292,7 @@
 </div>
 <script>
     window.statisticsForStrava = {{ javascriptWindowConstants|raw }};
-
-    const chartClickHandlers = {
-        handleActivityGridChartClick: (params) => {
-            if (!params || !params.value || params.value < 1) {
-                return;
-            }
-
-            localStorage.setItem('dataTableFilters', JSON.stringify({
-                "start-date.from": params.value[0],
-                "start-date.to": params.value[0]
-            }));
-            router.navigateTo(`/activities`);
-        },
-    };
+    window.statisticsForStrava.placeholderBrokenImage = "{{ relativeUrl('/assets/placeholder-broken.webp') }}"
 
     window.statisticsForStrava.callbacks = {
         formatSeconds: (secondsToFormat) => {
@@ -368,27 +355,13 @@
         }
     };
 </script>
-<script src="{{ relativeUrl(asset('libraries/lazyload.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/flowbite.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/echarts/echarts.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/echarts/echarts.world.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.polyline.encoded.js')) }}"></script>
-<script src="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('libraries/lightgallery/lightgallery.umd.min.js')) }}" type="module"></script>
-<script src="{{ relativeUrl(asset('libraries/lightgallery/lightgallery.lg-zoom.min.js')) }}"></script>
-<script src="{{ relativeUrl(asset('libraries/autocomplete.js')) }}"></script>
 <script src="{{ relativeUrl(asset('js/leaflet/leaflet.fly.to.places.js')) }}"></script>
 <script src="{{ relativeUrl(asset('js/dist/app.min.js')) }}" type="module"></script>
-<script>
-    // Enable image lazy load.
-    const lazyLoad = new LazyLoad({
-        thresholds: "50px",
-        callback_error: (img) => {
-            img.setAttribute("src", "{{ relativeUrl('/assets/placeholder-broken.webp') }}");
-        }
-    });
-</script>
 {% block customScripts %}
 {% endblock customScripts %}
 </body>

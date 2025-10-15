@@ -1,3 +1,5 @@
+import autoComplete from "../libraries/autocomplete";
+
 export default class Chat {
     constructor(chatModal) {
         this.chatWrapper = chatModal.querySelector('.chat--wrapper');

@@ -1,4 +1,5 @@
 import {debounce, numberFormat} from "./utils";
+import Clusterize from '../libraries/clusterize/clusterize.min';
 
 export class FilterManager {
     constructor(wrapper, storage) {
