@@ -137,7 +137,7 @@ const initElements = (rootNode) => {
                 }
             });
 
-            router.navigateTo(`/activities`);
+            router.navigateTo(`/activities`, false);
         },
     };
 
