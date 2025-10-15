@@ -49,7 +49,10 @@ final readonly class WeeklyStatsWidget implements Widget
                 now: $now
             );
 
-            $weeksPerActivityType[$activityType->value] = Json::encode($weeks);
+            $weeksPerActivityType[$activityType->value] = Json::encode([
+                'weeks' => $weeks,
+                'sportTypes' => $activityType->getSportTypes(),
+            ]);
 
             if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],

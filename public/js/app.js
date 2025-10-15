@@ -112,14 +112,15 @@ const initElements = (rootNode) => {
                 return;
             }
 
-            const weeks = JSON.parse(chartNode.getAttribute('data-echarts-click-data'));
+            const clickData = JSON.parse(chartNode.getAttribute('data-echarts-click-data'));
+            const weeks = clickData.weeks;
             if (!params.dataIndex in weeks) {
                 return;
             }
             dataTableStorage.set({
-                'activities' : {
-                    "start-date.from": weeks[params.dataIndex]['from'],
-                    "start-date.to": weeks[params.dataIndex]['to']
+                'activities': {
+                    "sportType": clickData.sportTypes,
+                    "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
                 }
             });
 
@@ -132,8 +133,7 @@ const initElements = (rootNode) => {
 
             dataTableStorage.set({
                 'activities' : {
-                    "start-date.from": params.value[0],
-                    "start-date.to": params.value[0]
+                    "start-date": {"from": params.value[0], "to": params.value[0]},
                 }
             });
 

@@ -7,6 +7,7 @@ namespace App\Domain\Gear;
 use App\Domain\Activity\Activities;
 use App\Domain\Calendar\Month;
 use App\Domain\Calendar\Months;
+use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class DistancePerMonthPerGearChart
@@ -69,12 +70,12 @@ final readonly class DistancePerMonthPerGearChart
         $unitSymbol = $this->unitSystem->distanceSymbol();
 
         foreach ($gears as $gear) {
-            $gearName = $gear->getSanitizedName();
+            $gearName = $gear->getName();
             $distanceInLastThreeMonths = array_sum(array_slice($distancePerGearAndMonth[(string) $gear->getId()], -3, 3));
             $selectedSeries[$gearName] = $distanceInLastThreeMonths > 0;
 
             $series[] = [
-                'name' => $gearName,
+                'name' => Escape::htmlSpecialChars($gearName),
                 'type' => 'bar',
                 'barGap' => 0,
                 'emphasis' => [

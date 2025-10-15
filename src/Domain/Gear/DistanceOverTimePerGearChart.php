@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Gear;
 
 use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDayResponse;
+use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -71,11 +72,11 @@ final readonly class DistanceOverTimePerGearChart
         $selectedSeries = [];
         /** @var Gear $gear */
         foreach ($gears as $gear) {
-            $gearName = $gear->getSanitizedName();
+            $gearName = $gear->getName();
             $selectedSeries[$gearName] = !$gear->isRetired();
 
             $series[] = [
-                'name' => $gearName,
+                'name' => Escape::htmlSpecialChars($gearName),
                 'type' => 'line',
                 'smooth' => true,
                 'showSymbol' => false,
