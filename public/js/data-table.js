@@ -52,8 +52,8 @@ export class FilterManager {
             if (!from || !to) return;
 
             if (from.valueAsDate && to.valueAsDate) {
-                const fromMs = new Date(from.valueAsDate).setHours(0, 0, 0);
-                const toMs = new Date(to.valueAsDate).setHours(23, 59, 59);
+                const fromMs = new Date(from.valueAsNumber).setUTCHours(0, 0, 0);
+                const toMs = new Date(to.valueAsNumber).setUTCHours(23, 59, 59);
                 filters[name] = [fromMs, toMs];
             }
         });
