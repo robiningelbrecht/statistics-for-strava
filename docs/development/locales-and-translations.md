@@ -7,7 +7,8 @@ Currently, the app is translated to:
 * 🇩🇪 German (thanks to [@daydreamer77](https://github.com/daydreamer77))
 * 🇧🇪 Dutch
 * 🇮🇹 Italian (thanks to Highlander)
-* 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg), [@davisenra](https://github.com/davisenra)) & Batista
+* 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg), [@davisenra](https://github.com/davisenra) & Batista)
+* 🇸🇪 Swedish  (thanks to [@strobit](https://github.com/strobit))
 * 🇨🇳 Simplified Chinese (thanks to [@c0j0s](https://github.com/c0j0s))
 
 If you want to see a new locale added, please  [open a new issue](https://github.com/robiningelbrecht/statistics-for-strava/issues/new?template=translations-and-localisation.md).
