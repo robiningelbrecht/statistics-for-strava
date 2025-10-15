@@ -62,7 +62,7 @@ general:
     #
     ftpHistory: []
 appearance:
-  # Allowed options: en_US, fr_FR, it_IT, nl_BE, de_DE, pt_BR, pt_PT or zh_CN
+  # Allowed options: en_US, fr_FR, it_IT, nl_BE, de_DE, pt_BR, pt_PT sv_SE or zh_CN
   locale: 'en_US'
   # Allowed options: metric or imperial
   unitSystem: 'metric'
