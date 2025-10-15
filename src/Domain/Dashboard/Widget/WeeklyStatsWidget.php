@@ -7,6 +7,7 @@ namespace App\Domain\Dashboard\Widget;
 use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\WeeklyDistanceTimeChart;
+use App\Domain\Calendar\Weeks;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -34,14 +35,21 @@ final readonly class WeeklyStatsWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $weeklyDistanceTimeCharts = [];
+        $weeklyDistanceTimeCharts = $weeksPerActivityType = [];
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {
                 continue;
             }
+
             $activityType = ActivityType::from($activityType);
+            $weeks = Weeks::create(
+                startDate: $activities->getFirstActivityStartDate(),
+                now: $now
+            );
+
+            $weeksPerActivityType[$activityType->value] = Json::encode($weeks);
 
             if ($activityType->supportsWeeklyStats() && $chartData = WeeklyDistanceTimeChart::create(
                 activities: $activitiesPerActivityType[$activityType->value],
@@ -56,6 +64,7 @@ final readonly class WeeklyStatsWidget implements Widget
 
         return $this->twig->load('html/dashboard/widget/widget--weekly-stats.html.twig')->render([
             'weeklyDistanceCharts' => $weeklyDistanceTimeCharts,
+            'weeksPerActivityType' => $weeksPerActivityType,
         ]);
     }
 }

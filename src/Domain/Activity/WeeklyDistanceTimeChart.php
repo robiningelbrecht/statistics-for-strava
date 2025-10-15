@@ -36,7 +36,7 @@ final readonly class WeeklyDistanceTimeChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
@@ -211,7 +211,7 @@ final readonly class WeeklyDistanceTimeChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     private function getData(Weeks $weeks): array
     {
