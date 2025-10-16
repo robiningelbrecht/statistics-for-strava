@@ -10,7 +10,7 @@
                 <span>{{ month }}</span>
                 <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ challenges|length }}</span>
             </h3>
-            <div class="grid grid-cols-8 gap-4">
+            <div class="grid gap-4 grid-cols-8 xl:grid-cols-12">
                 {% for challenge in challenges %}
                     {% set tooltipContent = challenge.getName()|replace({'"':'\''}) %}
                     <a href="{{ challenge.getUrl() }}" title="{{ tooltipContent }}">
