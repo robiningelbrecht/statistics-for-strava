@@ -180,6 +180,8 @@ This widget displays your hours spent per gear.
 * __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
 * __restrictToSportTypes__: Allows you to specify an array of sport types to limit which gears are used in the widget.
 
+A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+
 ```yml
 { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true, 'restrictGearToSportTypes': [] } }
 ```
