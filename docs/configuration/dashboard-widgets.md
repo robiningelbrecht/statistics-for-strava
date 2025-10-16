@@ -24,7 +24,7 @@ appearance:
       - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
       - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
       - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
-      - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+      - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true, 'restrictToSportTypes': [] } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
@@ -178,9 +178,10 @@ This widget displays detailed stats for your Zwift activities.
 This widget displays your hours spent per gear.
 
 * __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
+* __restrictToSportTypes__: Allows you to specify an array of sport types to limit which gears are used in the widget.
 
 ```yml
-{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true, 'restrictGearToSportTypes': [] } }
 ```
 
 ![gearStats widget](../assets/images/dashboard-widgets/gear-stats.png)

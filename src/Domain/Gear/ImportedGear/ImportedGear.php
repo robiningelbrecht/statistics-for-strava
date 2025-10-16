@@ -2,6 +2,7 @@
 
 namespace App\Domain\Gear\ImportedGear;
 
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearType;
@@ -17,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ImportedGear implements Gear
 {
     private string $imageSrc;
+    private SportTypes $sportTypes;
 
     final private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -30,6 +32,7 @@ class ImportedGear implements Gear
         #[ORM\Column(type: 'boolean')]
         private bool $isRetired,
     ) {
+        $this->sportTypes = SportTypes::empty();
     }
 
     public static function create(
@@ -127,6 +130,29 @@ class ImportedGear implements Gear
     public function enrichWithImageSrc(string $imageSrc): self
     {
         $this->imageSrc = $imageSrc;
+
+        return $this;
+    }
+
+    public function getSportTypes(): SportTypes
+    {
+        return $this->sportTypes;
+    }
+
+    public function hasAtLeastOneSportType(SportTypes $sportTypesToCheck): bool
+    {
+        foreach ($this->getSportTypes() as $sportType) {
+            if ($sportTypesToCheck->has($sportType)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function enrichWithSportTypes(SportTypes $sportTypes): self
+    {
+        $this->sportTypes = $sportTypes;
 
         return $this;
     }

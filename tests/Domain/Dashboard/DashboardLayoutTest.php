@@ -33,7 +33,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'bestEfforts', 'width' => 100, 'enabled' => true],
                 ['widget' => 'yearlyDistances', 'width' => 100, 'enabled' => true, 'config' => ['enableLastXYearsByDefault' => 10]],
                 ['widget' => 'zwiftStats', 'width' => 50, 'enabled' => true],
-                ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
+                ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true, 'restrictToSportTypes' => []]],
                 ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
                 ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
                 ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],
@@ -76,8 +76,8 @@ class DashboardLayoutTest extends TestCase
         yield 'invalid "width" key case 2' => [$yml, '"width" property must be one of [33, 50, 66, 100], found 20'];
 
         $yml = self::getValidYml();
-        $yml[0]['config']['test'] = [];
-        yield 'invalid "config"' => [$yml, 'Invalid type for config item "test" in widget "mostRecentActivities". Expected int, string, float, or bool.'];
+        $yml[0]['config']['test'] = new \stdClass();
+        yield 'invalid "config"' => [$yml, 'Invalid type for config item "test" in widget "mostRecentActivities". Expected int, string, float, bool or array.'];
 
         $yml = self::getValidYml();
         $yml[0]['config'] = 'lol';
