@@ -4,7 +4,7 @@ export default class MapManager {
     init(rootNode) {
         rootNode.querySelectorAll('[data-leaflet]').forEach(function (mapNode) {
             const data = JSON.parse(mapNode.getAttribute('data-leaflet'));
-            LeafletMap(mapNode, data).render();
+            new LeafletMap(mapNode, data).render();
         });
     }
 }
