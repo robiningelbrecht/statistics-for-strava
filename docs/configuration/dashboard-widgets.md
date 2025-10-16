@@ -178,7 +178,7 @@ This widget displays detailed stats for your Zwift activities.
 This widget displays your hours spent per gear.
 
 * __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
-* __restrictToSportTypes__: Allows you to specify an array of sport types to limit which gears are used in the widget.
+* __restrictToSportTypes__: Allows you to specify an array of sport types to limit which gears are used in the widget. Leave empty to use all sport types.
 
 A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
 
