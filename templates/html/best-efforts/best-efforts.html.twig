@@ -57,7 +57,7 @@
                                         class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                         <div>
                                             <a href="#"
-                                               class="font-medium hover:underline"
+                                               class="font-medium text-blue-600 hover:underline"
                                                data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityTypeEnum.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
                                                 {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
                                             </a>
