@@ -36,7 +36,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         $command->getOutput()->writeln('Importing gear...');
 
         $stravaGearIds = GearIds::fromArray(array_unique(array_filter(array_map(
-            fn (array $activity): ?\App\Domain\Gear\GearId => GearId::fromOptionalUnprefixed($activity['gear_id']),
+            fn (array $activity): ?GearId => GearId::fromOptionalUnprefixed($activity['gear_id']),
             $this->strava->getActivities(),
         ))));
 

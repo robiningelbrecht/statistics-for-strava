@@ -14,14 +14,20 @@ final class WidgetConfiguration
         return new self();
     }
 
-    public function add(string $key, int|string|float|bool $value): self
+    /**
+     * @param int|string|float|bool|array<int, int|string> $value
+     */
+    public function add(string $key, int|string|float|bool|array $value): self
     {
         $this->configuration[$key] = $value;
 
         return $this;
     }
 
-    public function getConfigItem(string $key, mixed $default = null): int|string|float|bool|null
+    /**
+     * @return int|string|float|bool|array<int, int|string>|null $value
+     */
+    public function getConfigItem(string $key, mixed $default = null): int|string|float|bool|array|null
     {
         return $this->configuration[$key] ?? $default;
     }

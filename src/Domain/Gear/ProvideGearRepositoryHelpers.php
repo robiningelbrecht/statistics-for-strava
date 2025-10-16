@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear;
 
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -31,17 +33,22 @@ trait ProvideGearRepositoryHelpers
 
     public function findAll(GearType $gearType): Gears
     {
-        $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('*')
-            ->from('Gear')
-            ->andWhere('type = :type')
-            ->setParameter('type', $gearType->value)
-            ->addOrderBy('isRetired', 'ASC')
-            ->addOrderBy('distanceInMeter', 'DESC');
+        $results = $this->getConnection()->executeQuery('
+            SELECT Gear.*, GROUP_CONCAT(DISTINCT Activity.sportType) AS sportTypes
+            FROM Gear
+            LEFT JOIN Activity ON Activity.gearId = Gear.gearId
+            WHERE Gear.type = :type
+            GROUP BY Gear.gearId, Gear.isRetired, Gear.distanceInMeter
+            ORDER BY Gear.isRetired ASC, Gear.distanceInMeter DESC;
+        ',
+            [
+                'type' => $gearType->value,
+            ]
+        )->fetchAllAssociative();
 
         return Gears::fromArray(array_map(
             fn (array $result) => $this->hydrate($result),
-            $queryBuilder->executeQuery()->fetchAllAssociative()
+            $results
         ));
     }
 
@@ -59,9 +66,21 @@ trait ProvideGearRepositoryHelpers
             'isRetired' => (bool) $result['isRetired'],
         ];
 
-        return match ($gearType) {
+        $gear = match ($gearType) {
             GearType::IMPORTED => ImportedGear::fromState(...$args),
             GearType::CUSTOM => CustomGear::fromState(...$args),
         };
+
+        $sportTypes = SportTypes::empty();
+        if (!empty($result['sportTypes'])) {
+            $sportTypes = SportTypes::fromArray(array_map(
+                fn (string $sportType): SportType => SportType::from($sportType),
+                explode(',', (string) $result['sportTypes'])
+            ));
+        }
+
+        $gear->enrichWithSportTypes($sportTypes);
+
+        return $gear;
     }
 }

@@ -5,12 +5,33 @@ namespace App\Tests\Domain\Dashboard\Widget;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\Widget\GearStatsWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
+use App\Tests\ProvideTestData;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class GearStatsWidgetTest extends ContainerTestCase
 {
+    use ProvideTestData;
+    use MatchesSnapshots;
+
     private GearStatsWidget $widget;
+
+    public function testRender(): void
+    {
+        $this->provideFullTestSet();
+
+        $config = WidgetConfiguration::empty()
+            ->add('includeRetiredGear', false)
+            ->add('restrictToSportTypes', ['Run']);
+
+        $render = $this->widget->render(
+            now: SerializableDateTime::fromString('2025-10-16'),
+            configuration: $config
+        );
+        $this->assertMatchesHtmlSnapshot($render);
+    }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testGuardValidConfigurationItShouldThrow(WidgetConfiguration $config, string $expectedException): void
@@ -23,10 +44,25 @@ class GearStatsWidgetTest extends ContainerTestCase
     {
         yield 'missing "includeRetiredGear" key' => [WidgetConfiguration::empty(), 'Configuration item "includeRetiredGear" is required for GearStatsWidget.'];
         yield 'invalid "includeRetiredGear" key' => [WidgetConfiguration::empty()->add('includeRetiredGear', 'lol'), 'Configuration item "includeRetiredGear" must be a boolean.'];
+
+        $config = WidgetConfiguration::empty()
+            ->add('includeRetiredGear', true);
+        yield 'missing "restrictToSportTypes" key' => [$config, 'Configuration item "restrictToSportTypes" is required for GearStatsWidget.'];
+
+        $config = WidgetConfiguration::empty()
+            ->add('includeRetiredGear', true)
+            ->add('restrictToSportTypes', true);
+        yield 'invalid "restrictToSportTypes" key' => [$config, 'Configuration item "restrictToSportTypes" must be an array.'];
+
+        $config = WidgetConfiguration::empty()
+            ->add('includeRetiredGear', true)
+            ->add('restrictToSportTypes', ['lol']);
+        yield 'invalid "restrictToSportTypes" value' => [$config, 'Configuration item "restrictToSportTypes" has an invalid sport type lol.'];
     }
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->widget = $this->getContainer()->get(GearStatsWidget::class);
     }
 }
