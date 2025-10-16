@@ -19,8 +19,8 @@ const router = new Router($main);
 router.boot();
 
 const sidebar = new Sidebar($main);
-const chartManager = new ChartManager(router, dataTableStorage);
 const modalManager = new ModalManager(router);
+const chartManager = new ChartManager(router, dataTableStorage, modalManager);
 const mapManager = new MapManager();
 const tabsManager = new TabsManager(chartManager);
 const lightGalleryManager = new LightGalleryManager();

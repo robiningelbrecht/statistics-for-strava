@@ -1,9 +1,10 @@
 import {resolveEchartsCallbacks} from "../utils";
 
 export default class ChartManager {
-    constructor(router, dataTableStorage) {
+    constructor(router, dataTableStorage, modalManager) {
         this.router = router;
         this.dataTableStorage = dataTableStorage;
+        this.modalManager = modalManager;
         this.allCharts = [];
         this.chartsPerTab = [];
     }
@@ -27,7 +28,8 @@ export default class ChartManager {
             const clickHandlerName = chartNode.getAttribute('data-echarts-click');
             if (clickHandlerName && handlers[clickHandlerName]) {
                 chart.on('click', function (params) {
-                    handlers[clickHandlerName](params, chartNode);
+                    const clickData = JSON.parse(chartNode.getAttribute('data-echarts-click-data') || '{}');
+                    handlers[clickHandlerName](params, clickData);
                 });
             }
             if (chartNode.hasAttribute('data-echarts-connect')) {
@@ -48,12 +50,21 @@ export default class ChartManager {
 
     getClickHandlers() {
         return {
-            handleWeeklyStatsClick: (params, chartNode) => {
+            handleMonthlyStatsClick: (params, clickData) => {
+                if (!params || !params.dataIndex || !params.seriesName) {
+                    return;
+                }
+                const month = (params.dataIndex + 1).toString().padStart(2, "0");
+                const modalId = `month/month-${params.seriesName}-${month}.html`;
+
+                this.modalManager.open(modalId);
+                this.router.pushCurrentRouteToHistoryState(modalId);
+            },
+            handleWeeklyStatsClick: (params, clickData) => {
                 if (!params || !params.dataIndex) {
                     return;
                 }
 
-                const clickData = JSON.parse(chartNode.getAttribute('data-echarts-click-data'));
                 const weeks = clickData.weeks;
                 if (!params.dataIndex in weeks) {
                     return;
@@ -67,7 +78,7 @@ export default class ChartManager {
 
                 this.router.navigateTo(`/activities`);
             },
-            handleActivityGridChartClick: (params, chartNode) => {
+            handleActivityGridChartClick: (params, clickData) => {
                 if (!params || !params.value || params.value < 1) {
                     return;
                 }

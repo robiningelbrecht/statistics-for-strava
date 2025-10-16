@@ -23,7 +23,7 @@
     {% for activityType,chart in monthlyStatsCharts %}
         <div id="monthlyStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
              aria-labelledby="monthlyStats{{ activityType }}{{ uniqueId }}-tab">
-            <div class="h-80" data-echarts-options='{{ chart }}'></div>
+            <div class="h-80" data-echarts-options='{{ chart }}' data-echarts-click="handleMonthlyStatsClick"></div>
         </div>
     {% endfor %}
 </div>
