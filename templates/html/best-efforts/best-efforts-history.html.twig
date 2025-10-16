@@ -26,8 +26,11 @@
                             </div>
                         </th>
                         {% for sportType in bestEffortsHistory.getUniqueSportTypes() %}
-                            <th scope="col" colspan="3" class="text-left px-2 py-3">
+                            <th scope="col" class="px-2 py-3">
                                 {{ sportType|trans }}
+                            </th>
+                            <th scope="col" colspan="2" class="px-2 py-3">
+
                             </th>
                         {% endfor %}
                     </tr>
