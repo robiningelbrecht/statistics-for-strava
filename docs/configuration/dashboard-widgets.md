@@ -30,6 +30,10 @@ appearance:
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
 ```
+<div class="alert info">
+    🔥 PRO TIP: You can add the same widget multiple times, each with its own configuration.
+</div>
+
 
 ## mostRecentActivities
 
