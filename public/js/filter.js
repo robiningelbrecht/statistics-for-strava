@@ -1,4 +1,4 @@
-import {debounce, numberFormat} from "./utils";
+import {numberFormat} from "./utils";
 import Clusterize from '../libraries/clusterize/clusterize.min';
 
 export class FilterManager {
@@ -132,7 +132,7 @@ export class FilterManager {
     }
 }
 
-class SummableCalculator {
+export class SummableCalculator {
     static calculate(rows) {
         return rows
             .filter(r => r.active)
@@ -152,7 +152,7 @@ class SummableCalculator {
 }
 
 
-class Sorter {
+export class Sorter {
     constructor(columns) {
         this.columns = columns; // NodeList of <th>
         this.sortAsc = false;
@@ -184,8 +184,7 @@ class Sorter {
     }
 }
 
-
-class ClusterRenderer {
+export class ClusterRenderer {
     constructor(wrapper, tbody, scrollElem) {
         this.wrapper = wrapper;
         this.tbody = tbody;
@@ -238,76 +237,4 @@ export class DataTableStorage {
     set(object) {
         localStorage.setItem(this.storageKey, JSON.stringify(object));
     }
-}
-
-export class DataTable {
-    constructor(wrapper) {
-        this.wrapper = wrapper;
-        this.table = wrapper.querySelector('table');
-        this.tbody = this.table?.querySelector('tbody');
-        this.scrollElem = wrapper.querySelector('.scroll-area');
-        this.searchInput = wrapper.querySelector('input[type="search"]');
-        this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
-        this.settings = JSON.parse(wrapper.getAttribute('data-dataTable-settings'));
-        this.storage = new DataTableStorage();
-
-        this.filterManager = new FilterManager(wrapper, this.storage);
-        this.clusterRenderer = new ClusterRenderer(wrapper, this.tbody, this.scrollElem);
-        this.sorter = new Sorter(wrapper.querySelectorAll('thead th[data-dataTable-sort]'));
-    }
-
-    async render() {
-        if (!this.table || !this.tbody || !this.searchInput) return;
-
-        // Default date inputs.
-        this.wrapper.querySelectorAll('input[type="date"][data-default-to-today]').forEach(i => i.valueAsDate = new Date());
-
-        fetch(this.settings.url, {cache: 'no-store'}).then(async (response) => {
-            const dataRows = await response.json();
-
-            // Init cluster.
-            this.clusterRenderer.init(dataRows);
-
-            const updateRows = () => {
-                const search = this.searchInput.value.trim();
-                const activeFilters = this.filterManager.getActiveFilters();
-
-                this.filterManager.updateDropdownState(activeFilters);
-                const rows = this.filterManager.applyFiltersToRows(dataRows, search);
-                this.clusterRenderer.update(rows);
-                this.resetBtn.classList.toggle('hidden', !(Object.keys(activeFilters).length > 0 || search.length > 0));
-            };
-
-            // Prefill filters.
-            this.filterManager.prefillFromStorage(this.settings.name);
-            updateRows();
-
-            // Attach events.
-            this.searchInput.addEventListener('input', debounce(updateRows));
-            this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', updateRows));
-            this.sorter.attachListeners(dataRows, this.clusterRenderer.cluster, this.scrollElem);
-
-            if (this.resetBtn) {
-                this.resetBtn.addEventListener('click', e => {
-                    e.preventDefault();
-                    location.reload();
-                });
-            }
-
-            this.wrapper.querySelectorAll('[data-datatable-filter-clear]').forEach(btn => {
-                btn.addEventListener('click', e => {
-                    e.preventDefault();
-                    const name = btn.getAttribute('data-datatable-filter-clear');
-                    this.wrapper.querySelectorAll(`[name^="${name}"]`).forEach(i => {
-                        if (i.type === 'radio' || i.type === 'checkbox') {
-                            i.checked = false;
-                        } else {
-                            i.value = '';
-                        }
-                    });
-                    updateRows();
-                });
-            });
-        });
-    };
 }

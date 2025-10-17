@@ -17,6 +17,7 @@ final readonly class AIProviderFactory
 {
     public function __construct(
         /** @var array<string, mixed> */
+        #[\SensitiveParameter]
         private array $AIConfig,
     ) {
     }

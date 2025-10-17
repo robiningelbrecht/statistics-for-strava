@@ -12,6 +12,7 @@ final readonly class LiveNtfy implements Ntfy
 {
     public function __construct(
         private Client $client,
+        #[\SensitiveParameter]
         private ?NtfyUrl $ntfyUrl,
     ) {
     }
