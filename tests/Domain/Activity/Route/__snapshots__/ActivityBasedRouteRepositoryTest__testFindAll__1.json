@@ -7,7 +7,9 @@
         },
         "filterables": {
             "sportType": "Ride",
-            "start-date": 1696946434000
+            "start-date": 1696946434000,
+            "isCommute": "false",
+            "workoutType": null
         },
         "encodedPolyline": "line"
     }
