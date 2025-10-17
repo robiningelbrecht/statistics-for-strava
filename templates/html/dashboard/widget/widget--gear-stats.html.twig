@@ -3,7 +3,7 @@
         <h3 class="text-lg font-semibold">
             {{ "Total hours spent per gear"|trans }}
             {% if not restrictedToSportTypes is empty %}
-                - {{ restrictedToSportTypes|map(sportType => sportType|trans)|join(', ', ' and ') }}
+                - {{ restrictedToSportTypes|map(sportType => sportType|trans)|join(', ', ' '~ "and"|trans ~' ') }}
             {% endif %}
         </h3>
         <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
