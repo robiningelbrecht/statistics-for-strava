@@ -67,15 +67,17 @@ final readonly class GearStatsWidget implements Widget
             $gears = $gears->filter(fn (Gear $gear): bool => !$gear->isRetired());
         }
 
-        if ($sportTypesToRestrictTo = $configuration->getConfigItem('restrictToSportTypes')) {
-            $sportTypes = SportTypes::fromArray(array_map(
-                fn (string $sportType): SportType => SportType::from($sportType),  // @phpstan-ignore argument.type
-                $sportTypesToRestrictTo // @phpstan-ignore argument.type
-            ));
-            $gears = $gears->filter(fn (Gear $gear): bool => $gear->hasAtLeastOneSportType($sportTypes));
+        $sportTypesToRestrictTo = SportTypes::fromArray(array_map(
+            fn (string $sportType): SportType => SportType::from($sportType),  // @phpstan-ignore argument.type
+            $configuration->getConfigItem('restrictToSportTypes') // @phpstan-ignore argument.type
+        ));
+
+        if (!$sportTypesToRestrictTo->isEmpty()) {
+            $gears = $gears->filter(fn (Gear $gear): bool => $gear->hasAtLeastOneSportType($sportTypesToRestrictTo));
         }
 
         return $this->twig->load('html/dashboard/widget/widget--gear-stats.html.twig')->render([
+            'restrictedToSportTypes' => $sportTypesToRestrictTo->toArray(),
             'gearChart' => Json::encode(MovingTimePerGearChart::create(
                 movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($allYears))->getMovingTimePerGear(),
                 gears: $gears,
