@@ -69,6 +69,73 @@
                             </div>
                         </div>
                     </div>
+                    <div class="filter-dropdown">
+                        <button id="otherButton" data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                            <span>Other</span>
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                            </svg>
+                        </button>
+                        <div id="dropdownOther" class="z-1002 w-fit hidden border border-gray-200 bg-white rounded-lg shadow-xs">
+                            <div class="px-1 py-2 flex gap-x-2 divide-x divide-gray-100">
+                                <div class="flex flex-col items-center">
+                                    <div class="text-xs font-medium items-center">Commutes</div>
+                                    <ul class="text-sm text-gray-700">
+                                        <li>
+                                            <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                <input type="radio" id="true" data-datatable-filter="isCommute" name="isCommute" value="true" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                <label for="true" class="text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                    Commutes only
+                                                </label>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="isCommute">clear</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                <input type="radio" id="false" data-datatable-filter="isCommute" name="isCommute" value="false" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                <label for="false" class="text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                    Excludes commutes
+                                                </label>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="isCommute">clear</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="text-xs font-medium">Workout type</div>
+                                    <ul class="text-sm text-gray-700">
+                                                                                    <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="race" data-datatable-filter="workoutType" name="workoutType" value="race" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                    <label for="race" class="text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        Race
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="workoutType">clear</a>
+                                                </div>
+                                            </li>
+                                                                                    <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="workout" data-datatable-filter="workoutType" name="workoutType" value="workout" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                    <label for="workout" class="text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        Workout
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="workoutType">clear</a>
+                                                </div>
+                                            </li>
+                                                                                    <li>
+                                                <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                    <input type="radio" id="longRun" data-datatable-filter="workoutType" name="workoutType" value="longRun" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2">
+                                                    <label for="longRun" class="text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                        Long run
+                                                    </label>
+                                                    <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="workoutType">clear</a>
+                                                </div>
+                                            </li>
+                                                                            </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="text-xs text-gray-700">
                                         <span class="font-bold" data-datatable-result-count>1</span> routes based on your active filters
@@ -80,7 +147,7 @@
             </div>
         </div>
         <!-- HEATMAP -->
-        <div id="heatmap" data-heatmap-config='{"polylineColor":"#fc6719","tileLayerUrls":["https:\/\/tile.openstreetmap.org\/{z}\/{x}\/{y}.png"],"enableGreyScale":true}' data-leaflet-routes='[{"active":true,"location":{"countryCode":"be","state":"West-Vlaanderen"},"filterables":{"sportType":"Ride","start-date":1693947938000},"encodedPolyline":"adowHewlRa@aL?sAHuE?eGCaDGoAMmASkAc@qBmCyKc@aC@IJIpAUbBc@~Bc@tA_@XFPCNGZW^MKBm@Zy@?AGMs@SyA?i@WiC@cACg@MiAKqASoAs@kFu@yFMqAQ_AiAsJ]_Cq@_DaA_BiBqCk@uAQw@OaA[yDI}A_@}CHCVuATeCDQLY|BaChAeAjAoAnCeCpGkG@MAKwA_EKa@[cC@m@Bi@Xw@j@oA"}]' class="grid grid-cols-1 h-[calc(100vh-245px)] enable-grey-scale">
+        <div id="heatmap" data-heatmap-config='{"polylineColor":"#fc6719","tileLayerUrls":["https:\/\/tile.openstreetmap.org\/{z}\/{x}\/{y}.png"],"enableGreyScale":true}' data-leaflet-routes='[{"active":true,"location":{"countryCode":"be","state":"West-Vlaanderen"},"filterables":{"sportType":"Ride","start-date":1693947938000,"isCommute":"false","workoutType":null},"encodedPolyline":"adowHewlRa@aL?sAHuE?eGCaDGoAMmASkAc@qBmCyKc@aC@IJIpAUbBc@~Bc@tA_@XFPCNGZW^MKBm@Zy@?AGMs@SyA?i@WiC@cACg@MiAKqASoAs@kFu@yFMqAQ_AiAsJ]_Cq@_DaA_BiBqCk@uAQw@OaA[yDI}A_@}CHCVuATeCDQLY|BaChAeAjAoAnCeCpGkG@MAKwA_EKa@[cC@m@Bi@Xw@j@oA"}]' class="grid grid-cols-1 h-[calc(100vh-245px)] enable-grey-scale">
         </div>
     </div>
 </body></html>
