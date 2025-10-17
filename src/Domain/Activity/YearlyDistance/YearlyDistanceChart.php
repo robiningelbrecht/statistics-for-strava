@@ -120,7 +120,7 @@ final readonly class YearlyDistanceChart
             'backgroundColor' => null,
             'grid' => [
                 'left' => '40px',
-                'right' => '4%',
+                'right' => '10px',
                 'bottom' => '50px',
                 'containLabel' => true,
             ],

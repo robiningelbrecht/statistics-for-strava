@@ -28,8 +28,11 @@ class Strava
 
     public function __construct(
         private readonly Client $client,
+        #[\SensitiveParameter]
         private readonly StravaClientId $stravaClientId,
+        #[\SensitiveParameter]
         private readonly StravaClientSecret $stravaClientSecret,
+        #[\SensitiveParameter]
         private readonly StravaRefreshToken $stravaRefreshToken,
         private readonly FilesystemOperator $filesystemOperator,
         private readonly Sleep $sleep,

@@ -44,7 +44,8 @@ final readonly class WeeklyDistanceTimeChart
             startDate: $this->activities->getFirstActivityStartDate(),
             now: $this->now
         );
-        $zoomValueSpan = 10;
+        $minZoomValueSpan = 10;
+        $maxZoomValueSpan = 26;
         $data = $this->getData($weeks);
         if (empty(array_filter($data[0])) && empty(array_filter($data[1])) && empty(array_filter($data[2]))) {
             return [];
@@ -146,9 +147,9 @@ final readonly class WeeklyDistanceTimeChart
                 [
                     'type' => 'inside',
                     'startValue' => count($weeks),
-                    'endValue' => count($weeks) - $zoomValueSpan,
-                    'minValueSpan' => $zoomValueSpan,
-                    'maxValueSpan' => $zoomValueSpan,
+                    'endValue' => count($weeks) - $minZoomValueSpan,
+                    'minValueSpan' => $minZoomValueSpan,
+                    'maxValueSpan' => $maxZoomValueSpan,
                     'brushSelect' => false,
                     'zoomLock' => true,
                 ],

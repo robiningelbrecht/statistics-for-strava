@@ -1,5 +1,5 @@
 import {Heatmap} from "./leaflet/heatmap";
-import {DataTable, DataTableStorage} from "./data-table";
+import {DataTableStorage} from "./filter";
 import Router from "./router";
 import Chat from "./chat";
 import {updateGithubLatestRelease} from "./github";
@@ -10,6 +10,7 @@ import MapManager from "./ui/maps";
 import TabsManager from "./ui/tabs";
 import LightGalleryManager from "./ui/lightgallery";
 import LazyLoad from "../libraries/lazyload.min";
+import DataTableManager from "./ui/data-tables";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -24,6 +25,7 @@ const chartManager = new ChartManager(router, dataTableStorage, modalManager);
 const mapManager = new MapManager();
 const tabsManager = new TabsManager(chartManager);
 const lightGalleryManager = new LightGalleryManager();
+const dataTableManager = new DataTableManager(dataTableStorage);
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
     callback_error: (img) => {
@@ -51,10 +53,7 @@ sidebar.init();
 
 document.addEventListener('pageWasLoaded', (e) => {
     modalManager.close();
-
-    document.querySelectorAll('div[data-dataTable-settings]').forEach(function ($dataTableWrapperNode) {
-        new DataTable($dataTableWrapperNode).render()
-    });
+    dataTableManager.init();
 
     chartManager.reset();
     initElements(document);
