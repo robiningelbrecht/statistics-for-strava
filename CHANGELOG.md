@@ -1,3 +1,15 @@
+# [v3.7.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.3) - 2025-10-17
+
+## What's Changed
+* ISSUE #1220: Add clickable data points in the MONTHLY stats plot by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1222
+* ISSUE #1221: Total Hours Spent Per Gear Pie Chart restrict on sport type by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1223
+* ISSUE #1224: Upgrade Echarts from v5 to v6 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1225
+* ISSUE #1227: Layout improvements for xl viewport by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1228
+* ISSUE #1230: Weekly Stats X-Axis Scaling by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1233
+* ISSUE #1235: More filters on heatmap page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1236
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.2...v3.7.3
+
 # [v3.7.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.2) - 2025-10-15
 
 ## What's Changed
