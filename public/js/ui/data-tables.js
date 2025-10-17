@@ -52,7 +52,9 @@ export default class DataTableManager {
                 if (resetBtn) {
                     resetBtn.addEventListener('click', e => {
                         e.preventDefault();
-                        location.reload();
+                        searchInput.value = '';
+                        filterManager.resetAll();
+                        updateRows();
                     });
                 }
 
@@ -60,13 +62,7 @@ export default class DataTableManager {
                     btn.addEventListener('click', e => {
                         e.preventDefault();
                         const name = btn.getAttribute('data-datatable-filter-clear');
-                        wrapper.querySelectorAll(`[name^="${name}"]`).forEach(i => {
-                            if (i.type === 'radio' || i.type === 'checkbox') {
-                                i.checked = false;
-                            } else {
-                                i.value = '';
-                            }
-                        });
+                        filterManager.resetOne(name);
                         updateRows();
                     });
                 });

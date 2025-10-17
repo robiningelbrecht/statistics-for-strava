@@ -117,7 +117,8 @@ export class Heatmap {
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', e => {
                 e.preventDefault();
-                location.reload();
+                this.filterManager.resetAll();
+                redraw();
             });
         }
 
@@ -125,13 +126,7 @@ export class Heatmap {
             btn.addEventListener('click', e => {
                 e.preventDefault();
                 const name = btn.getAttribute('data-datatable-filter-clear');
-                this.wrapper.querySelectorAll(`[name^="${name}"]`).forEach(i => {
-                    if (i.type === 'radio' || i.type === 'checkbox') {
-                        i.checked = false;
-                    } else {
-                        i.value = '';
-                    }
-                });
+                this.filterManager.resetOne(name);
                 redraw();
             });
         });

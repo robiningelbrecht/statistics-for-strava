@@ -130,6 +130,28 @@ export class FilterManager {
         });
         return rows;
     }
+
+    resetAll() {
+        const elements = this.wrapper.querySelectorAll('[data-dataTable-filter], [data-dataTable-filter*="[]"] input');
+        elements.forEach(el => {
+            if (el.type === 'radio' || el.type === 'checkbox') {
+                el.checked = false;
+            } else {
+                el.value = '';
+            }
+        });
+        this.storage.clearAll();
+    }
+
+    resetOne(name) {
+        this.wrapper.querySelectorAll(`[data-dataTable-filter][name^="${name}"], [data-dataTable-filter*="[]"] [name^="${name}"]`).forEach(el => {
+            if (el.type === 'radio' || el.type === 'checkbox') {
+                el.checked = false;
+            } else {
+                el.value = '';
+            }
+        });
+    }
 }
 
 export class SummableCalculator {
