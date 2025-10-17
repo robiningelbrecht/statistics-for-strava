@@ -18,6 +18,7 @@ RUN set -eux; \
         gd \
         intl \
         mbstring \
+        opcache \
         pdo \
         pdo_sqlite \
         phar \
