@@ -46,13 +46,13 @@
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
             <div class="border-b border-gray-200">
-                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
-                    <li class="mr-2" role="presentation">
+                <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center" id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
+                    <li class="shrink-0" role="presentation">
                         <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ "Top 10"|trans }}
                         </a>
                     </li>
-                    <li class="mr-2" role="presentation">
+                    <li class="shrink-0" role="presentation">
                         <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                             {{ "History"|trans }}
                         </a>

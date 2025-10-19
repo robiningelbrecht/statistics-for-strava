@@ -5,11 +5,11 @@
     </h3>
     {% if distanceBreakdowns|length > 1 %}
         <div class="mb-4 border-b border-gray-200">
-            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center"
+            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
                 id="distanceBreakdownActivityTypeTab{{ uniqueId }}" data-tabs="#distanceBreakdownActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">
                 {% for activityType,distanceBreakdown in distanceBreakdowns %}
-                    <li class="mr-2" role="presentation">
+                    <li class="shrink-0" role="presentation">
                         <a href="#" data-tabs-target="#distanceBreakdown{{ activityType }}{{ uniqueId }}" role="tab"
                            aria-controls="distanceBreakdown{{ activityType }}{{ uniqueId }}"
                            class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
