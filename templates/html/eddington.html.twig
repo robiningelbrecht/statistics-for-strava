@@ -13,9 +13,9 @@
          <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
              {% if eddingtons|length > 1 %}
                  <div class="mb-4 border-b border-gray-200">
-                     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
+                     <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center" id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
                          {% for eddingtonId,eddington in eddingtons %}
-                             <li class="mr-2" role="presentation">
+                             <li class="shrink-0" role="presentation">
                                  <a href="#" data-tabs-target="#{{ eddingtonId }}" role="tab" aria-controls="{{ eddingtonId }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
                                      {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
                                  </a>
