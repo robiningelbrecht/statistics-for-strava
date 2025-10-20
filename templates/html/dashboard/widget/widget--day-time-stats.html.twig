@@ -26,8 +26,8 @@
         </div>
     {% endif %}
     <div id="dayTimeStatsActivityTypeTabContent{{ uniqueId }}">
-        <div id="dayTimeStatsAll{{ activityType }}{{ uniqueId }}" role="tabpanel"
-             aria-labelledby="dayTimeStatsAll{{ activityType }}{{ uniqueId }}-tab">
+        <div id="dayTimeStatsAll{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="dayTimeStatsAll{{ uniqueId }}-tab">
             <div class="h-80" data-echarts-options='{{ allActivities.chart }}'></div>
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-center text-gray-500">
@@ -57,7 +57,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for statistic in allActivities.daytimeStats.getData() %}
+                    {% for statistic in allActivities.dayTimeStats.getData() %}
                         <tr class="bg-white border-b">
                             <th scope="row"
                                 class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
@@ -121,7 +121,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for statistic in stats.daytimeStats.getData() %}
+                        {% for statistic in stats.dayTimeStats.getData() %}
                             <tr class="bg-white border-b">
                                 <th scope="row"
                                     class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
