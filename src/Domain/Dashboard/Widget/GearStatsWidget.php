@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\SportType\SportType;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearRepository;
+use App\Domain\Gear\Gears;
 use App\Domain\Gear\MovingTimePerGearChart;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
@@ -43,19 +42,6 @@ final readonly class GearStatsWidget implements Widget
         if (!is_bool($configuration->getConfigItem('includeRetiredGear'))) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" must be a boolean.');
         }
-        if (!$configuration->configItemExists('restrictToSportTypes')) {
-            throw new InvalidDashboardLayout('Configuration item "restrictToSportTypes" is required for GearStatsWidget.');
-        }
-        if (!is_array($configuration->getConfigItem('restrictToSportTypes'))) {
-            throw new InvalidDashboardLayout('Configuration item "restrictToSportTypes" must be an array.');
-        }
-
-        $sportTypes = $configuration->getConfigItem('restrictToSportTypes');
-        foreach ($sportTypes as $sportType) {
-            if (!SportType::tryFrom($sportType)) {
-                throw new InvalidDashboardLayout(sprintf('Configuration item "restrictToSportTypes" has an invalid sport type %s.', $sportType));
-            }
-        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
@@ -67,21 +53,24 @@ final readonly class GearStatsWidget implements Widget
             $gears = $gears->filter(fn (Gear $gear): bool => !$gear->isRetired());
         }
 
-        $sportTypesToRestrictTo = SportTypes::fromArray(array_map(
-            fn (string $sportType): SportType => SportType::from($sportType),  // @phpstan-ignore argument.type
-            $configuration->getConfigItem('restrictToSportTypes') // @phpstan-ignore argument.type
-        ));
-
-        if (!$sportTypesToRestrictTo->isEmpty()) {
-            $gears = $gears->filter(fn (Gear $gear): bool => $gear->hasAtLeastOneSportType($sportTypesToRestrictTo));
+        $gearsPerActivityType = [];
+        $movingTimePerGear = $this->queryBus->ask(new FindMovingTimePerGear($allYears))->getMovingTimePerGear();
+        foreach ($gears as $gear) {
+            foreach ($gear->getActivityTypes() as $activityType) {
+                $gearsPerActivityType[$activityType->value] ??= Gears::empty();
+                $gearsPerActivityType[$activityType->value]->add($gear);
+            }
         }
 
         return $this->twig->load('html/dashboard/widget/widget--gear-stats.html.twig')->render([
-            'restrictedToSportTypes' => $sportTypesToRestrictTo->toArray(),
-            'gearChart' => Json::encode(MovingTimePerGearChart::create(
-                movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($allYears))->getMovingTimePerGear(),
+            'chartAllGears' => Json::encode(MovingTimePerGearChart::create(
+                movingTimePerGear: $movingTimePerGear,
                 gears: $gears,
             )->build()),
+            'chartsPerActivityType' => count($gearsPerActivityType) > 1 ? array_map(fn(Gears $gears): string => Json::encode(MovingTimePerGearChart::create(
+                movingTimePerGear: $movingTimePerGear,
+                gears: $gears,
+            )->build()), $gearsPerActivityType) : [],
         ]);
     }
 }

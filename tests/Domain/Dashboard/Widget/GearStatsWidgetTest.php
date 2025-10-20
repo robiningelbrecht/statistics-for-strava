@@ -23,8 +23,7 @@ class GearStatsWidgetTest extends ContainerTestCase
         $this->provideFullTestSet();
 
         $config = WidgetConfiguration::empty()
-            ->add('includeRetiredGear', false)
-            ->add('restrictToSportTypes', ['Run']);
+            ->add('includeRetiredGear', false);
 
         $render = $this->widget->render(
             now: SerializableDateTime::fromString('2025-10-16'),
@@ -44,20 +43,6 @@ class GearStatsWidgetTest extends ContainerTestCase
     {
         yield 'missing "includeRetiredGear" key' => [WidgetConfiguration::empty(), 'Configuration item "includeRetiredGear" is required for GearStatsWidget.'];
         yield 'invalid "includeRetiredGear" key' => [WidgetConfiguration::empty()->add('includeRetiredGear', 'lol'), 'Configuration item "includeRetiredGear" must be a boolean.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('includeRetiredGear', true);
-        yield 'missing "restrictToSportTypes" key' => [$config, 'Configuration item "restrictToSportTypes" is required for GearStatsWidget.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('includeRetiredGear', true)
-            ->add('restrictToSportTypes', true);
-        yield 'invalid "restrictToSportTypes" key' => [$config, 'Configuration item "restrictToSportTypes" must be an array.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('includeRetiredGear', true)
-            ->add('restrictToSportTypes', ['lol']);
-        yield 'invalid "restrictToSportTypes" value' => [$config, 'Configuration item "restrictToSportTypes" has an invalid sport type lol.'];
     }
 
     protected function setUp(): void

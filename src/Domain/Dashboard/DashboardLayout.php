@@ -42,7 +42,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'bestEfforts', 'width' => 100, 'enabled' => true],
             ['widget' => 'yearlyDistances', 'width' => 100, 'enabled' => true, 'config' => ['enableLastXYearsByDefault' => 10]],
             ['widget' => 'zwiftStats', 'width' => 50, 'enabled' => true],
-            ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true, 'restrictToSportTypes' => []]],
+            ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
             ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
             ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
             ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],

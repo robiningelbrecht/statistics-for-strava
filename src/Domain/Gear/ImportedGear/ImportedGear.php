@@ -2,6 +2,7 @@
 
 namespace App\Domain\Gear\ImportedGear;
 
+use App\Domain\Activity\ActivityTypes;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
@@ -19,6 +20,7 @@ class ImportedGear implements Gear
 {
     private string $imageSrc;
     private SportTypes $sportTypes;
+    private ActivityTypes $activityTypes;
 
     final private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -33,6 +35,7 @@ class ImportedGear implements Gear
         private bool $isRetired,
     ) {
         $this->sportTypes = SportTypes::empty();
+        $this->activityTypes = ActivityTypes::empty();
     }
 
     public static function create(
@@ -139,20 +142,23 @@ class ImportedGear implements Gear
         return $this->sportTypes;
     }
 
-    public function hasAtLeastOneSportType(SportTypes $sportTypesToCheck): bool
+    public function getActivityTypes(): ActivityTypes
     {
-        foreach ($this->getSportTypes() as $sportType) {
-            if ($sportTypesToCheck->has($sportType)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->activityTypes;
     }
 
     public function enrichWithSportTypes(SportTypes $sportTypes): self
     {
         $this->sportTypes = $sportTypes;
+        $this->activityTypes = ActivityTypes::empty();
+        /** @var \App\Domain\Activity\SportType\SportType $sportType */
+        foreach ($this->sportTypes as $sportType) {
+            $activityType = $sportType->getActivityType();
+            if ($this->activityTypes->has($activityType)) {
+                continue;
+            }
+            $this->activityTypes->add($activityType);
+        }
 
         return $this;
     }
