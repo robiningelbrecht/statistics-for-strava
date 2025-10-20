@@ -64,15 +64,17 @@ final readonly class GearStatsWidget implements Widget
         }
 
         $chartsPerActivityType = [];
-        foreach ($gearsPerActivityType as $activityType => $gearsForActivityType) {
-            $movingTimePerGear = $this->queryBus->ask(new FindMovingTimePerGear(
-                years: $allYears,
-                activityTypes: ActivityTypes::fromArray([ActivityType::from($activityType)]),
-            ))->getMovingTimePerGear();
-            $chartsPerActivityType[$activityType] = Json::encode(MovingTimePerGearChart::create(
-                movingTimePerGear: $movingTimePerGear,
-                gears: $gearsForActivityType,
-            )->build());
+        if (count($gearsPerActivityType) > 1) {
+            foreach ($gearsPerActivityType as $activityType => $gearsForActivityType) {
+                $movingTimePerGear = $this->queryBus->ask(new FindMovingTimePerGear(
+                    years: $allYears,
+                    activityTypes: ActivityTypes::fromArray([ActivityType::from($activityType)]),
+                ))->getMovingTimePerGear();
+                $chartsPerActivityType[$activityType] = Json::encode(MovingTimePerGearChart::create(
+                    movingTimePerGear: $movingTimePerGear,
+                    gears: $gearsForActivityType,
+                )->build());
+            }
         }
 
         return $this->twig->load('html/dashboard/widget/widget--gear-stats.html.twig')->render([
