@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
@@ -23,6 +23,7 @@ final readonly class GearStatsWidget implements Widget
 {
     public function __construct(
         private GearRepository $gearRepository,
+        private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
         private Clock $clock,
         private Environment $twig,
@@ -50,6 +51,7 @@ final readonly class GearStatsWidget implements Widget
     {
         $allYears = Years::all($this->clock->getCurrentDateTimeImmutable());
         $allGears = $this->gearRepository->findAll();
+        $importedActivityTypes = $this->activityTypeRepository->findAll();
 
         if (!$configuration->getConfigItem('includeRetiredGear')) {
             $allGears = $allGears->filter(fn (Gear $gear): bool => !$gear->isRetired());
@@ -65,14 +67,18 @@ final readonly class GearStatsWidget implements Widget
 
         $chartsPerActivityType = [];
         if (count($gearsPerActivityType) > 1) {
-            foreach ($gearsPerActivityType as $activityType => $gearsForActivityType) {
+            /** @var \App\Domain\Activity\ActivityType $activityType */
+            foreach ($importedActivityTypes as $activityType) {
+                if (!isset($gearsPerActivityType[$activityType->value])) {
+                    continue;
+                }
                 $movingTimePerGear = $this->queryBus->ask(new FindMovingTimePerGear(
                     years: $allYears,
-                    activityTypes: ActivityTypes::fromArray([ActivityType::from($activityType)]),
+                    activityTypes: ActivityTypes::fromArray([$activityType]),
                 ))->getMovingTimePerGear();
-                $chartsPerActivityType[$activityType] = Json::encode(MovingTimePerGearChart::create(
+                $chartsPerActivityType[$activityType->value] = Json::encode(MovingTimePerGearChart::create(
                     movingTimePerGear: $movingTimePerGear,
-                    gears: $gearsForActivityType,
+                    gears: $gearsPerActivityType[$activityType->value],
                 )->build());
             }
         }

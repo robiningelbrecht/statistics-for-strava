@@ -1,6 +1,40 @@
+{% set uniqueId = uniqueNumberForId('heartRateZonesWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Heart rate zones"|trans }}
     </h3>
-    <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
+    {% if chartsPerActivityType|length > 0 %}
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
+                id="hearRateZoneStatsActivityTypeTab{{ uniqueId }}" data-tabs="#hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}"
+                role="tablist">
+                <li class="shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#hearRateZoneStatsAll{{ uniqueId }}" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "All"|trans }}
+                    </a>
+                </li>
+                {% for activityType,charts in chartsPerActivityType %}
+                    <li class="shrink-0" role="presentation">
+                        <a href="#" data-tabs-target="#hearRateZoneStats{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="hearRateZoneStats{{ activityType }}{{ uniqueId }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}">
+        <div id="hearRateZoneStatsAll{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="hearRateZoneStatsAll{{ uniqueId }}-tab">
+            <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
+        </div>
+        {% for activityType,chart in chartsPerActivityType %}
+            <div id="hearRateZoneStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="hearRateZoneStats{{ activityType }}{{ uniqueId }}-tab">
+                <div class="h-80" data-echarts-options='{{ chart }}'></div>
+            </div>
+        {% endfor %}
+    </div>
 {% endautoescape %}
