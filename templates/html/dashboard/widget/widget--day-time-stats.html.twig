@@ -1,65 +1,158 @@
+{% set uniqueId = uniqueNumberForId('dayTimeStatsWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Daytime stats"|trans }}
     </h3>
-    <div class="h-80" data-echarts-options='{{ daytimeStatsChart }}'></div>
-    <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-center text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+    {% if statsPerActivityType|length > 0 %}
+        <div class="mb-2 border-b border-gray-200">
+            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
+                id="dayTimeStatsActivityTypeTab{{ uniqueId }}" data-tabs="#dayTimeStatsActivityTypeTabContent{{ uniqueId }}"
+                role="tablist">
+                <li class="shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#dayTimeStatsAll{{ uniqueId }}" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "All"|trans }}
+                    </a>
+                </li>
+                {% for activityType,stats in statsPerActivityType %}
+                    <li class="shrink-0" role="presentation">
+                        <a href="#" data-tabs-target="#dayTimeStats{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="dayTimeStats{{ activityType }}{{ uniqueId }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="dayTimeStatsActivityTypeTabContent{{ uniqueId }}">
+        <div id="dayTimeStatsAll{{ activityType }}{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="dayTimeStatsAll{{ activityType }}{{ uniqueId }}-tab">
+            <div class="h-80" data-echarts-options='{{ allActivities.chart }}'></div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-center text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
 
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    # {{ "workouts"|trans }}
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    <div class="flex items-center justify-center">
-                        {{ svg('distance') }}
-                    </div>
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    <div class="flex items-center justify-center">
-                        {{ svg('elevation') }}
-                    </div>
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    <div class="flex items-center justify-center">
-                        {{ svg('time') }}
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for statistic in daytimeStats.getData() %}
-                <tr class="bg-white border-b">
-                    <th scope="row"
-                        class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                        <div>{{ statistic.daytime|trans }}</div>
-                        <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
-                            - {{ statistic.daytime.getHours()[1] }}h
-                        </div>
-                    </th>
-                    <td class="px-6 py-2">
-                        {{ statistic.numberOfWorkouts }}
-                    </td>
-                    <td class="px-6 py-2 truncate">
-                        {% if statistic.totalDistance.toFloat() > 0 %}
-                            {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
-                            {{ statistic.totalDistance|renderMeasurement(0, 'total'|trans) }}
-                        {% else %}
-                            0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
-                        {% endif %}
-                    </td>
-                    <td class="px-6 py-2 truncate">
-                        {{ statistic.totalElevation|renderMeasurement(0) }}
-                    </td>
-                    <td class="px-6 py-2 truncate">
-                        {{ statistic.movingTimeForHumans }}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            # {{ "workouts"|trans }}
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('distance') }}
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('elevation') }}
+                            </div>
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('time') }}
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for statistic in allActivities.daytimeStats.getData() %}
+                        <tr class="bg-white border-b">
+                            <th scope="row"
+                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                <div>{{ statistic.daytime|trans }}</div>
+                                <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
+                                    - {{ statistic.daytime.getHours()[1] }}h
+                                </div>
+                            </th>
+                            <td class="px-6 py-2">
+                                {{ statistic.numberOfWorkouts }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% if statistic.totalDistance.toFloat() > 0 %}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                                    {{ statistic.totalDistance|renderMeasurement(0, 'total'|trans) }}
+                                {% else %}
+                                    0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.totalElevation|renderMeasurement(0) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.movingTimeForHumans }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% for activityType,stats in statsPerActivityType %}
+            <div id="dayTimeStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="dayTimeStats{{ activityType }}{{ uniqueId }}-tab">
+                <div class="h-80" data-echarts-options='{{ stats.chart }}'></div>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                # {{ "workouts"|trans }}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('distance') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('elevation') }}
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('time') }}
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for statistic in stats.daytimeStats.getData() %}
+                            <tr class="bg-white border-b">
+                                <th scope="row"
+                                    class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                    <div>{{ statistic.daytime|trans }}</div>
+                                    <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
+                                        - {{ statistic.daytime.getHours()[1] }}h
+                                    </div>
+                                </th>
+                                <td class="px-6 py-2">
+                                    {{ statistic.numberOfWorkouts }}
+                                </td>
+                                <td class="px-6 py-2 truncate">
+                                    {% if statistic.totalDistance.toFloat() > 0 %}
+                                        {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                                        {{ statistic.totalDistance|renderMeasurement(0, 'total'|trans) }}
+                                    {% else %}
+                                        0<span class="text-xs">{{ statistic.totalDistance.getSymbol() }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-2 truncate">
+                                    {{ statistic.totalElevation|renderMeasurement(0) }}
+                                </td>
+                                <td class="px-6 py-2 truncate">
+                                    {{ statistic.movingTimeForHumans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endautoescape %}

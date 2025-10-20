@@ -32,17 +32,37 @@ final readonly class DayTimeStatsWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
+        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+        $statsPerActivityType = [];
+        if (count($activitiesPerActivityType) > 1) {
+            foreach ($activitiesPerActivityType as $activityType => $activities) {
+                $dayTimeStats = DaytimeStats::create($activities);
+                $statsPerActivityType[$activityType] = [
+                    'chart' => Json::encode(
+                        DaytimeStatsCharts::create(
+                            daytimeStats: $dayTimeStats,
+                            translator: $this->translator,
+                        )->build(),
+                    ),
+                    'daytimeStats' => $dayTimeStats,
+                ];
+            }
+        }
+
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
-        $dayTimeStats = DaytimeStats::create($allActivities);
+        $allDayTimeStats = DaytimeStats::create($allActivities);
 
         return $this->twig->load('html/dashboard/widget/widget--day-time-stats.html.twig')->render([
-            'daytimeStatsChart' => Json::encode(
-                DaytimeStatsCharts::create(
-                    daytimeStats: $dayTimeStats,
-                    translator: $this->translator,
-                )->build(),
-            ),
-            'daytimeStats' => $dayTimeStats,
+            'allActivities' => [
+                'chart' => Json::encode(
+                    DaytimeStatsCharts::create(
+                        daytimeStats: $allDayTimeStats,
+                        translator: $this->translator,
+                    )->build(),
+                ),
+                'daytimeStats' => $allDayTimeStats,
+            ],
+            'statsPerActivityType' => $statsPerActivityType,
         ]);
     }
 }
