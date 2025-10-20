@@ -1,6 +1,6 @@
 {% set uniqueId = uniqueNumberForId('weekDayStatsWidget') %}
 {% autoescape false %}
-    <h3 class="mb-2 text-lg font-semibold">
+    <h3 class="mb-4 text-lg font-semibold">
         {{ "Stats per weekday"|trans }}
     </h3>
     {% if statsPerActivityType|length > 0 %}

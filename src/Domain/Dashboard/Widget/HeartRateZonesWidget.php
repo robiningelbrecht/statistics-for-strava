@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
+use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Athlete\HeartRateZone\TimeInHeartRateZoneChart;
 use App\Infrastructure\Serialization\Json;
@@ -15,6 +16,7 @@ final readonly class HeartRateZonesWidget implements Widget
 {
     public function __construct(
         private ActivityHeartRateRepository $activityHeartRateRepository,
+        private ActivityTypeRepository $activityTypeRepository,
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
@@ -31,6 +33,21 @@ final readonly class HeartRateZonesWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
+        $chartsPerActivityType = [];
+        $importedActivityTypes = $this->activityTypeRepository->findAll();
+
+        /* @var \App\Domain\Activity\ActivityType $activityType */
+        if (count($importedActivityTypes) > 1) {
+            foreach ($importedActivityTypes as $activityType) {
+                $chartsPerActivityType[$activityType->value] = Json::encode(
+                    TimeInHeartRateZoneChart::create(
+                        timeInHeartRateZones: $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForActivityType($activityType),
+                        translator: $this->translator,
+                    )->build(),
+                );
+            }
+        }
+
         return $this->twig->load('html/dashboard/widget/widget--heart-rate-zones.html.twig')->render([
             'timeInHeartRateZoneChart' => Json::encode(
                 TimeInHeartRateZoneChart::create(
@@ -38,6 +55,7 @@ final readonly class HeartRateZonesWidget implements Widget
                     translator: $this->translator,
                 )->build(),
             ),
+            'chartsPerActivityType' => $chartsPerActivityType,
         ]);
     }
 }

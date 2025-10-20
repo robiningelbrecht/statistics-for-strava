@@ -409,7 +409,36 @@
                     <h3 class="mb-4 text-lg font-semibold">
         Heart rate zones
     </h3>
-    <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":9,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":36,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":1145,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":4704,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+            <div class="mb-4 border-b border-gray-200">
+            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center" id="hearRateZoneStatsActivityTypeTab--1" data-tabs="#hearRateZoneStatsActivityTypeTabContent--1" role="tablist">
+                <li class="shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#hearRateZoneStatsAll--1" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        All
+                    </a>
+                </li>
+                                    <li class="shrink-0" role="presentation">
+                        <a href="#" data-tabs-target="#hearRateZoneStatsRide--1" role="tab" aria-controls="hearRateZoneStatsRide--1" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            Rides
+                        </a>
+                    </li>
+                                    <li class="shrink-0" role="presentation">
+                        <a href="#" data-tabs-target="#hearRateZoneStatsRun--1" role="tab" aria-controls="hearRateZoneStatsRun--1" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            Runs
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+        <div id="hearRateZoneStatsActivityTypeTabContent--1">
+        <div id="hearRateZoneStatsAll--1" role="tabpanel" aria-labelledby="hearRateZoneStatsAll--1-tab">
+            <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":9,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":36,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":1145,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":4704,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+        </div>
+                    <div id="hearRateZoneStatsRide--1" role="tabpanel" aria-labelledby="hearRateZoneStatsRide--1-tab">
+                <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":0,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":0,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":85,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":4178,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+            </div>
+                    <div id="hearRateZoneStatsRun--1" role="tabpanel" aria-labelledby="hearRateZoneStatsRun--1-tab">
+                <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":9,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":36,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":1060,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":526,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+            </div>
+            </div>
 
             </div>
                     <div class="xl:col-span-6 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
@@ -693,7 +722,7 @@
 
             </div>
                     <div class="xl:col-span-3 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <h3 class="mb-2 text-lg font-semibold">
+                    <h3 class="mb-4 text-lg font-semibold">
         Stats per weekday
     </h3>
             <div class="mb-4 border-b border-gray-200">
@@ -1190,7 +1219,7 @@
 
             </div>
                     <div class="xl:col-span-3 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <h3 class="mb-2 text-lg font-semibold">
+                    <h3 class="mb-4 text-lg font-semibold">
         Daytime stats
     </h3>
             <div class="mb-4 border-b border-gray-200">
@@ -2368,7 +2397,7 @@
 
             </div>
                     <div class="xl:col-span-3 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold">
             Total hours spent per gear
         </h3>
