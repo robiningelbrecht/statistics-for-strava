@@ -32,18 +32,37 @@ final readonly class WeekdayStatsWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $statsPerActivityType = [];
+        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+        if (count($activitiesPerActivityType) > 1) {
+            foreach ($activitiesPerActivityType as $activityType => $activities) {
+                $weekdayStats = WeekdayStats::create(
+                    activities: $activities,
+                    translator: $this->translator,
+                );
+                $statsPerActivityType[$activityType] = [
+                    'chart' => Json::encode(
+                        WeekdayStatsChart::create($weekdayStats)->build(),
+                    ),
+                    'weekDayStats' => $weekdayStats,
+                ];
+            }
+        }
 
-        $weekdayStats = WeekdayStats::create(
+        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allWeekdayStats = WeekdayStats::create(
             activities: $allActivities,
             translator: $this->translator,
         );
 
         return $this->twig->load('html/dashboard/widget/widget--weekday-stats.html.twig')->render([
-            'weekdayStats' => $weekdayStats,
-            'weekdayStatsChart' => Json::encode(
-                WeekdayStatsChart::create($weekdayStats)->build(),
-            ),
+            'allActivities' => [
+                'chart' => Json::encode(
+                    WeekdayStatsChart::create($allWeekdayStats)->build(),
+                ),
+                'weekDayStats' => $allWeekdayStats,
+            ],
+            'statsPerActivityType' => $statsPerActivityType,
         ]);
     }
 }

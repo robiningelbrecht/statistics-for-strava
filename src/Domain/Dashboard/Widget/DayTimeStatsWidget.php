@@ -32,8 +32,8 @@ final readonly class DayTimeStatsWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
         $statsPerActivityType = [];
+        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
         if (count($activitiesPerActivityType) > 1) {
             foreach ($activitiesPerActivityType as $activityType => $activities) {
                 $dayTimeStats = DaytimeStats::create($activities);
@@ -44,7 +44,7 @@ final readonly class DayTimeStatsWidget implements Widget
                             translator: $this->translator,
                         )->build(),
                     ),
-                    'daytimeStats' => $dayTimeStats,
+                    'dayTimeStats' => $dayTimeStats,
                 ];
             }
         }
@@ -60,7 +60,7 @@ final readonly class DayTimeStatsWidget implements Widget
                         translator: $this->translator,
                     )->build(),
                 ),
-                'daytimeStats' => $allDayTimeStats,
+                'dayTimeStats' => $allDayTimeStats,
             ],
             'statsPerActivityType' => $statsPerActivityType,
         ]);
