@@ -1,10 +1,10 @@
 {% set uniqueId = uniqueNumberForId('dayTimeStatsWidget') %}
 {% autoescape false %}
-    <h3 class="mb-4 text-lg font-semibold">
+    <h3 class="mb-2 text-lg font-semibold">
         {{ "Daytime stats"|trans }}
     </h3>
     {% if statsPerActivityType|length > 0 %}
-        <div class="mb-2 border-b border-gray-200">
+        <div class="mb-4 border-b border-gray-200">
             <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
                 id="dayTimeStatsActivityTypeTab{{ uniqueId }}" data-tabs="#dayTimeStatsActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">

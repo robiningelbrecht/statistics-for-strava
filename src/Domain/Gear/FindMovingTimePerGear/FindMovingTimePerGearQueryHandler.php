@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\FindMovingTimePerGear;
 
+use App\Domain\Activity\ActivityType;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
@@ -27,13 +28,19 @@ final readonly class FindMovingTimePerGearQueryHandler implements QueryHandler
                 FROM Activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
                 AND gearId IS NOT NULL
+                AND activityType IN (:activityType)
                 GROUP BY gearId
             SQL,
             [
                 'years' => array_map('strval', $query->getYears()->toArray()),
+                'activityType' => array_map(
+                    fn (ActivityType $activityType): string => $activityType->value,
+                    $query->getActivityTypes()?->toArray() ?? ActivityType::cases()
+                ),
             ],
             [
                 'years' => ArrayParameterType::STRING,
+                'activityType' => ArrayParameterType::STRING,
             ]
         )->fetchAllKeyValue());
     }
