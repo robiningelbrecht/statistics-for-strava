@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear;
 
+use App\Domain\Activity\ActivityTypes;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -34,7 +35,7 @@ interface Gear extends SupportsAITooling
 
     public function getSportTypes(): SportTypes;
 
-    public function hasAtLeastOneSportType(SportTypes $sportTypesToCheck): bool;
+    public function getActivityTypes(): ActivityTypes;
 
     public function enrichWithSportTypes(SportTypes $sportTypes): self;
 

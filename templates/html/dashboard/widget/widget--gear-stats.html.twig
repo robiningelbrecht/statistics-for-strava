@@ -1,16 +1,46 @@
+{% set uniqueId = uniqueNumberForId('gearStatsWidget') %}
 {% autoescape false %}
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex items-center justify-between mb-2">
         <h3 class="text-lg font-semibold">
             {{ "Total hours spent per gear"|trans }}
-            {% if not restrictedToSportTypes is empty %}
-                - {{ restrictedToSportTypes|map(sportType => sportType|trans)|join(', ', ' '~ "and"|trans ~' ') }}
-            {% endif %}
         </h3>
         <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
            class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
             {{ "View details"|trans }}
         </a>
     </div>
-
-    <div class="h-full min-h-[16rem]" data-echarts-options='{{ gearChart }}'></div>
+    {% if chartsPerActivityType|length > 0 %}
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
+                id="gearStatsActivityTypeTab{{ uniqueId }}" data-tabs="#gearStatsActivityTypeTabContent{{ uniqueId }}"
+                role="tablist">
+                <li class="shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#gearStatsAll{{ uniqueId }}" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                        {{ "All"|trans }}
+                    </a>
+                </li>
+                {% for activityType,charts in chartsPerActivityType %}
+                    <li class="shrink-0" role="presentation">
+                        <a href="#" data-tabs-target="#gearStats{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="gearStats{{ activityType }}{{ uniqueId }}"
+                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="gearStatsActivityTypeTabContent{{ uniqueId }}">
+        <div id="gearStatsAll{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="gearStatsAll{{ uniqueId }}-tab">
+            <div class="h-full min-h-[16rem]" data-echarts-options='{{ chartAllGears }}'></div>
+        </div>
+        {% for activityType,chart in chartsPerActivityType %}
+            <div id="gearStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+                 aria-labelledby="gearStats{{ activityType }}{{ uniqueId }}-tab">
+                <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
+            </div>
+        {% endfor %}
+    </div>
 {% endautoescape %}
