@@ -1,4 +1,4 @@
-import {resolveEchartsCallbacks} from "../utils";
+import {parents, resolveEchartsCallbacks} from "../utils";
 
 export default class ChartManager {
     constructor(router, dataTableStorage, modalManager) {
@@ -40,12 +40,13 @@ export default class ChartManager {
 
             this.allCharts.push(chart);
 
-            const $tabPanel = chartNode.closest('div[role="tabpanel"]');
-            if ($tabPanel) {
-                const tabPanelId = $tabPanel.getAttribute('id');
-                this.chartsPerTab[tabPanelId] = this.chartsPerTab[tabPanelId] || [];
+            const tabPanels = parents(chartNode, 'div[role="tabpanel"]');
+            for (const tabPanel of tabPanels) {
+                const tabPanelId = tabPanel.getAttribute('id');
+                this.chartsPerTab[tabPanelId] ??= [];
                 this.chartsPerTab[tabPanelId].push(chart);
             }
+
         });
         echarts.connect(connectedCharts);
     }

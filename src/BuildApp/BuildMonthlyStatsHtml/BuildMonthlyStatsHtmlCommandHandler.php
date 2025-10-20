@@ -81,10 +81,10 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
             );
         }
 
+        $monthlyStatChartsPerContext = [];
         foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
-            $monthlyStatCharts = [];
             foreach ($activityTypes as $activityType) {
-                $monthlyStatCharts[$activityType->value] = Json::encode(
+                $monthlyStatChartsPerContext[$monthlyStatsContext->value][$activityType->value] = Json::encode(
                     MonthlyStatsChart::create(
                         activityType: $activityType,
                         monthlyStats: $monthlyStats,
@@ -94,14 +94,13 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                     )->build()
                 );
             }
-
-            $this->buildStorage->write(
-                sprintf('monthly-stats/chart/%s.html', $monthlyStatsContext->getUrlSlug()),
-                $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
-                    'monthlyStatsCharts' => $monthlyStatCharts,
-                    'context' => $monthlyStatsContext,
-                ]),
-            );
         }
+
+        $this->buildStorage->write(
+            'monthly-stats/charts.html',
+            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
+                'monthlyStatsChartsPerContext' => $monthlyStatChartsPerContext,
+            ]),
+        );
     }
 }
