@@ -61,7 +61,7 @@ class FindMovingTimePerGearQueryHandlerTest extends ContainerTestCase
         ));
 
         /** @var \App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGearResponse $response */
-        $response = $this->queryHandler->handle(new FindMovingTimePerGear(Years::fromArray([Year::fromInt(2024)])));
+        $response = $this->queryHandler->handle(new FindMovingTimePerGear(Years::fromArray([Year::fromInt(2024)]), null));
         $this->assertEquals(
             [
                 'gear-2' => 10,

@@ -143,7 +143,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('Total hours spent per gear'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(MovingTimePerGearChart::create(
-                            movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($yearsToQuery))->getMovingTimePerGear(),
+                            movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($yearsToQuery, null))->getMovingTimePerGear(),
                             gears: $gears,
                         )->build()),
                     ]),
