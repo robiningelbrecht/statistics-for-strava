@@ -1,3 +1,4 @@
+{% set monthlyStatsContext = enum('App\\Domain\\Calendar\\MonthlyStats\\MonthlyStatsContext') %}
 {% autoescape false %}
     <!-- Modal header -->
     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
@@ -5,23 +6,34 @@
             <span>{{ "Monthly stats"|trans }}</span>
         </h3>
         <div class="flex gap-x-2">
-            <div class="inline-flex rounded-md shadow-xs" role="group">
-                <a href="#" data-model-content-url="{{ relativeUrl('monthly-stats/chart/time.html') }}"
-                   class="{{ enum('App\\Domain\\Calendar\\MonthlyStats\\MonthlyStatsContext').MOVING_TIME == context ? 'text-strava-orange' : 'text-gray-900' }} cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border border-gray-200 rounded-s-lg hover:text-strava-orange">
-                    {{ svg('time', 'w-5 h-5') }}
-                    {{ "Time"|trans }}
-                </a>
-                <a href="#" data-model-content-url="{{ relativeUrl('monthly-stats/chart/distance.html') }}"
-                   class="{{ enum('App\\Domain\\Calendar\\MonthlyStats\\MonthlyStatsContext').DISTANCE == context ? 'text-strava-orange' : 'text-gray-900' }} cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 hover:text-strava-orange">
-                    {{ svg('distance', 'w-5 h-5') }}
-                    {{ "Distance"|trans }}
-                </a>
-                <a href="#" data-model-content-url="{{ relativeUrl('monthly-stats/chart/elevation.html') }}"
-                   class="{{ enum('App\\Domain\\Calendar\\MonthlyStats\\MonthlyStatsContext').ELEVATION == context ? 'text-strava-orange' : 'text-gray-900' }} cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-e-lg hover:text-strava-orange">
-                    {{ svg('elevation', 'w-5 h-5') }}
-                    {{ "Elevation"|trans }}
-                </a>
-            </div>
+            <ul class="inline-flex rounded-md shadow-xs"
+                id="monthlyStatsTab" data-tabs="#monthlyStatsTabContent"
+                data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+                <li class="flex shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#monthlyStats{{ monthlyStatsContext.MOVING_TIME.value }}" role="tab"
+                       aria-controls="monthlyStatsTime"
+                       class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border border-gray-200 rounded-s-lg hover:text-strava-orange">
+                        {{ svg('time', 'w-5 h-5') }}
+                        {{ "Time"|trans }}
+                    </a>
+                </li>
+                <li class="flex shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#monthlyStats{{ monthlyStatsContext.DISTANCE.value }}" role="tab"
+                       aria-controls="monthlyStatsDistance"
+                       class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 hover:text-strava-orange">
+                        {{ svg('distance', 'w-5 h-5') }}
+                        {{ "Distance"|trans }}
+                    </a>
+                </li>
+                <li class="flex shrink-0" role="presentation">
+                    <a href="#" data-tabs-target="#monthlyStats{{ monthlyStatsContext.ELEVATION.value }}" role="tab"
+                       aria-controls="monthlyStatsElevation"
+                       class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-e-lg hover:text-strava-orange">
+                        {{ svg('elevation', 'w-5 h-5') }}
+                        {{ "Elevation"|trans }}
+                    </a>
+                </li>
+            </ul>
             <div class="flex items-center">
                 <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -35,28 +47,36 @@
     <!-- Modal body -->
     <div class="p-4 md:p-5">
         <div class="grid grid-cols-1 gap-4">
-            {% if monthlyStatsCharts|length > 1 %}
-                <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
-                        id="monthlyStatsActivityTypeTab" data-tabs="#monthlyStatsActivityTypeTabContent"
-                        role="tablist">
-                        {% for activityType,chart in monthlyStatsCharts %}
-                            <li class="shrink-0" role="presentation">
-                                <a href="#" data-tabs-target="#monthlyStats{{ activityType }}" role="tab"
-                                   aria-controls="monthlyStats{{ activityType }}"
-                                   class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                                    {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-            <div id="monthlyStatsActivityTypeTabContent">
-                {% for activityType,chart in monthlyStatsCharts %}
-                    <div id="monthlyStats{{ activityType }}" role="tabpanel"
-                         aria-labelledby="monthlyStats{{ activityType }}-tab">
-                        <div class="h-80" data-echarts-options='{{ chart }}'></div>
+            <div id="monthlyStatsTabContent">
+                {% for context in monthlyStatsContext.cases() %}
+                    <div id="monthlyStats{{ context.value }}" role="tabpanel"
+                         aria-labelledby="monthlyStats{{ context.value }}">
+                        {% set monthlyStatsCharts = monthlyStatsChartsPerContext[context.value] %}
+                        {% if monthlyStatsCharts|length > 1 %}
+                            <div class="mb-4 border-b border-gray-200">
+                                <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
+                                    id="monthlyStatsActivityType{{ context.value }}Tab" data-tabs="#monthlyStatsActivityType{{ context.value }}TabContent"
+                                    role="tablist">
+                                    {% for activityType,chart in monthlyStatsCharts %}
+                                        <li class="shrink-0" role="presentation">
+                                            <a href="#" data-tabs-target="#monthlyStats{{ activityType }}{{ context.value }}" role="tab"
+                                               aria-controls="monthlyStats{{ activityType }}{{ context.value }}"
+                                               class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                                {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div id="monthlyStatsActivityType{{ context.value }}TabContent">
+                            {% for activityType,chart in monthlyStatsCharts %}
+                                <div id="monthlyStats{{ activityType }}{{ context.value }}" role="tabpanel"
+                                     aria-labelledby="monthlyStats{{ activityType }}{{ context.value }}-tab">
+                                    <div class="h-80" data-echarts-options='{{ chart }}'></div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>

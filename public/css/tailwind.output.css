@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.14 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.1.15 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -312,7 +312,9 @@
     ::placeholder {
       color: currentcolor;
       @supports (color: color-mix(in lab, red, red)) {
-        color: color-mix(in oklab, currentcolor 50%, transparent);
+        & {
+          color: color-mix(in oklab, currentcolor 50%, transparent);
+        }
       }
     }
   }
@@ -1314,7 +1316,7 @@
     }
     :is([dir=rtl]) & .apexcharts-tooltip-marker {
       margin-right: 0px !important;
-      margin-left: e !important;
+      margin-left: 0.375rem !important;
     }
     .dark .apexcharts-canvas & .apexcharts-tooltip-text-y-value {
       color: white !important;
@@ -1358,7 +1360,7 @@
   .apexcharts-tooltip-marker {
     :is([dir=rtl]) .apexcharts-tooltip & {
       margin-right: 0px !important;
-      margin-left: e !important;
+      margin-left: 0.375rem !important;
     }
   }
   .datatable-dropdown {
@@ -2574,7 +2576,9 @@
   .bg-blue-600\/\[\.1\] {
     background-color: color-mix(in srgb, #2563EB 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-blue-600) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-blue-600) 10%, transparent);
+      }
     }
   }
   .bg-blue-700 {
@@ -2583,7 +2587,9 @@
   .bg-emerald-600\/\[\.1\] {
     background-color: color-mix(in srgb, oklch(59.6% 0.145 163.225) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-emerald-600) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-emerald-600) 10%, transparent);
+      }
     }
   }
   .bg-gray-50 {
@@ -2601,7 +2607,9 @@
   .bg-gray-900\/50 {
     background-color: color-mix(in srgb, #111827 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-gray-900) 50%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-gray-900) 50%, transparent);
+      }
     }
   }
   .bg-green-600 {
@@ -2610,13 +2618,17 @@
   .bg-orange-400\/40 {
     background-color: color-mix(in srgb, #ED8936 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-orange-400) 40%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-orange-400) 40%, transparent);
+      }
     }
   }
   .bg-orange-500\/\[\.1\] {
     background-color: color-mix(in srgb, #DD6B20 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-orange-500) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-orange-500) 10%, transparent);
+      }
     }
   }
   .bg-red-50 {
@@ -2631,13 +2643,17 @@
   .bg-red-600\/\[\.1\] {
     background-color: color-mix(in srgb, #DC2626 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
+      }
     }
   }
   .bg-slate-600\/\[\.1\] {
     background-color: color-mix(in srgb, oklch(44.6% 0.043 257.281) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-600) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-slate-600) 10%, transparent);
+      }
     }
   }
   .bg-strava-orange {
@@ -2652,7 +2668,9 @@
   .bg-white\/50 {
     background-color: color-mix(in srgb, #ffffff 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+      }
     }
   }
   .bg-yellow-50 {
@@ -2661,7 +2679,9 @@
   .bg-yellow-300\/\[\.1\] {
     background-color: color-mix(in srgb, #FCD34D 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-yellow-300) 10%, transparent);
+      & {
+        background-color: color-mix(in oklab, var(--color-yellow-300) 10%, transparent);
+      }
     }
   }
   .bg-yellow-400 {
@@ -3473,7 +3493,9 @@
       @media (hover: hover) {
         background-color: color-mix(in srgb, #F26722 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          & {
+            background-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          }
         }
       }
     }
@@ -4018,7 +4040,9 @@
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, #1F2937 50%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-gray-800) 50%, transparent);
+        & {
+          background-color: color-mix(in oklab, var(--color-gray-800) 50%, transparent);
+        }
       }
     }
   }
@@ -4026,7 +4050,9 @@
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, #111827 80%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-gray-900) 80%, transparent);
+        & {
+          background-color: color-mix(in oklab, var(--color-gray-900) 80%, transparent);
+        }
       }
     }
   }
@@ -4276,7 +4302,9 @@
     border-width: 2px;
     border-color: color-mix(in srgb, #000000 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-black) 30%, transparent);
+      & {
+        border-color: color-mix(in oklab, var(--color-black) 30%, transparent);
+      }
     }
     background-color: var(--color-white);
     background-clip: padding-box;
@@ -4355,7 +4383,9 @@
           cursor: pointer;
           background-color: color-mix(in srgb, #F26722 15%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
+            & {
+              background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
+            }
           }
         }
       }

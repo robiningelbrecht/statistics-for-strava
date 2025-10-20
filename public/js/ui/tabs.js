@@ -24,8 +24,8 @@ export default class TabsManager {
 
             new Tabs($triggerEl, tabItems, {
                 defaultTabId: defaultTabId,
-                activeClasses: 'text-strava-orange border-strava-orange hover:text-gray-600 hover:border-gray-300',
-                inactiveClasses: 'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
+                activeClasses: $triggerEl.getAttribute('data-tabs-active-classes') || 'text-strava-orange border-strava-orange hover:text-gray-600 hover:border-gray-300',
+                inactiveClasses: $triggerEl.getAttribute('data-tabs-inactive-classes') || 'text-gray-500 hover:text-gray-600 border-gray-100 hover:border-gray-300',
                 onShow: (tabs, activeTab) => {
                     const activeTabId = activeTab.id.replace('#', '');
                     // Trigger a chart resize to make sure charts are rendered and displayed.

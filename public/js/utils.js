@@ -74,3 +74,17 @@ export const resolveEchartsCallbacks = (obj, path) => {
     resolvePath(obj, parts);
 };
 
+export const parents = (el, selector) => {
+    const matched = [];
+    let parent = el.parentElement;
+
+    while (parent) {
+        if (!selector || parent.matches(selector)) {
+            matched.push(parent);
+        }
+        parent = parent.parentElement;
+    }
+
+    return matched;
+}
+
