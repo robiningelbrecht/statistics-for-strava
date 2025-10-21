@@ -35,11 +35,16 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         ));
         $images = $this->imageRepository->findBySportTypes($sportTypesToRenderPhotosFor);
 
+        $sportTypesWithImages = SportTypes::fromArray(array_filter(
+            $sportTypesToRenderPhotosFor->toArray(),
+            fn (SportType $sportType): bool => $images->hasForSportType($sportType)
+        ));
+
         $this->buildStorage->write(
             'photos.html',
             $this->twig->load('html/photos.html.twig')->render([
                 'images' => $images,
-                'sportTypes' => $sportTypesToRenderPhotosFor,
+                'sportTypes' => $sportTypesWithImages,
             ]),
         );
     }
