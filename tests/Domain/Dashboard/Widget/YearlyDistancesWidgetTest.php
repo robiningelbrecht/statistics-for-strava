@@ -4,13 +4,13 @@ namespace App\Tests\Domain\Dashboard\Widget;
 
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
-use App\Domain\Dashboard\Widget\YearlyDistancesWidget;
+use App\Domain\Dashboard\Widget\YearlyStatsWidget;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class YearlyDistancesWidgetTest extends ContainerTestCase
 {
-    private YearlyDistancesWidget $widget;
+    private YearlyStatsWidget $widget;
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testGuardValidConfigurationItShouldThrow(WidgetConfiguration $config, string $expectedException): void
@@ -31,6 +31,6 @@ class YearlyDistancesWidgetTest extends ContainerTestCase
 
     protected function setUp(): void
     {
-        $this->widget = $this->getContainer()->get(YearlyDistancesWidget::class);
+        $this->widget = $this->getContainer()->get(YearlyStatsWidget::class);
     }
 }

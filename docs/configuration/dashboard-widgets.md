@@ -22,7 +22,7 @@ appearance:
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
       - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
-      - { 'widget': 'yearlyDistances', 'width': 100, 'enabled': true }
+      - { 'widget': 'yearlyStats', 'width': 100, 'enabled': true }
       - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
@@ -155,17 +155,17 @@ This widget provides a breakdown of your activities by distance and activity typ
 
 ![distanceBreakdown widget](../assets/images/dashboard-widgets/distance-breakdown.png)
 
-## yearlyDistances
+## yearlyStats
 
-This widget shows your yearly distances per activity type, allowing you to track your long-term training progress.
+This widget shows your yearly stats per activity type, allowing you to track your long-term training progress.
 
 * __enableLastXYearsByDefault__: enable the last X years of data dy default. Earlier years will be disabled but can be toggled.
 
 ```yml
-{ 'widget': 'yearlyDistances', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10 } }
+{ 'widget': 'yearlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10 } }
 ```
 
-![yearlyDistances widget](../assets/images/dashboard-widgets/yearly-distances.png)
+![yearlyStats widget](../assets/images/dashboard-widgets/yearly-stats.png)
 
 ## zwiftStats
 

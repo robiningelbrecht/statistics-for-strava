@@ -20,7 +20,7 @@ use App\Infrastructure\ValueObject\Time\Years;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
-final readonly class YearlyDistancesWidget implements Widget
+final readonly class YearlyStatsWidget implements Widget
 {
     public function __construct(
         private ActivitiesEnricher $activitiesEnricher,
