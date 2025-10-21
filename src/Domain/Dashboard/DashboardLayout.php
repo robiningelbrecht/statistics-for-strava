@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard;
 
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
-
 final readonly class DashboardLayout implements \IteratorAggregate
 {
     private function __construct(
@@ -32,7 +30,6 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
             ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
             ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
-                'context' => MonthlyStatsContext::DISTANCE->value,
                 'enableLastXYearsByDefault' => 10,
             ]],
             ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],

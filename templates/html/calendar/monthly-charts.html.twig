@@ -14,7 +14,7 @@
                        aria-controls="monthlyStatsTime"
                        class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border border-gray-200 rounded-s-lg hover:text-strava-orange">
                         {{ svg('time', 'w-5 h-5') }}
-                        {{ "Time"|trans }}
+                        <span class="hidden md:block">{{ "Time"|trans }}</span>
                     </a>
                 </li>
                 <li class="flex shrink-0" role="presentation">
@@ -22,7 +22,7 @@
                        aria-controls="monthlyStatsDistance"
                        class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 hover:text-strava-orange">
                         {{ svg('distance', 'w-5 h-5') }}
-                        {{ "Distance"|trans }}
+                        <span class="hidden md:block">{{ "Distance"|trans }}</span>
                     </a>
                 </li>
                 <li class="flex shrink-0" role="presentation">
@@ -30,7 +30,7 @@
                        aria-controls="monthlyStatsElevation"
                        class="cursor-pointer inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-e-lg hover:text-strava-orange">
                         {{ svg('elevation', 'w-5 h-5') }}
-                        {{ "Elevation"|trans }}
+                        <span class="hidden md:block">{{ "Elevation"|trans }}</span>
                     </a>
                 </li>
             </ul>
