@@ -28,7 +28,7 @@ Start off by showing some :heart: and give this repo a star. Then from your comm
 
 ```yml
 services:
-  app:
+  statistics-for-strava:
     image: robiningelbrecht/strava-statistics:latest
     container_name: statistics-for-strava
     restart: unless-stopped
