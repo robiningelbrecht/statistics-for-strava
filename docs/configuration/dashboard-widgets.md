@@ -102,11 +102,10 @@ This widget provides an overview your activities in a GitHub style graph.
 
 This widget displays your monthly statistics and lets you compare your performance with the same months in previous years.
 
-* __context__: The context for the statistics, allowed values are `distance`, `movingTime` and `elevation`
 * __enableLastXYearsByDefault__: enable the last X years of data dy default. Earlier years will be disabled but can be toggled.
 
 ```yml
-{ 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'context': 'distance', enableLastXYearsByDefault: 10 } }
+{ 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10 } }
 ```
 
 ![monthlyStats widget](../assets/images/dashboard-widgets/monthly-stats.png)
