@@ -1,3 +1,23 @@
+# [v3.7.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.4) - 2025-10-21
+
+> [!WARNING]  
+> This release includes updates to the existing `monthlyStats` dashboard widget.
+> The `context` configuration option has been removed, as the widget now displays all data at once. You may need to remove duplicate instances of this widget from your dashboard layout configuration.
+>
+> The same change applies to the `gearStats` dashboard widget.
+
+## What's Changed
+* ISSUE #1243: Try to fix FrankenPHP crash on Synology by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1244
+* ISSUE #1249: Improve tabs on mobile layout by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1250
+* ISSUE #1240 & #1242: Weekday/Daytime stats per activity type by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1253
+* ISSUE #1232: Heart rate zones per activity type by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1254
+* ISSUE #1231: Allow for charts to be rendered in nested tabs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1255
+* ISSUE #1231: Support nested tabs for the monthly stats widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1258
+* ISSUE #1231: Convert yearlyDistances widget to yearlyStats widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1259
+* ISSUE #1260: Only render tabs for sportTypes that have images by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1261
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.3...v3.7.4
+
 # [v3.7.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.3) - 2025-10-17
 
 ## What's Changed
