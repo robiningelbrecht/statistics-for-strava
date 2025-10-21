@@ -9,6 +9,7 @@ use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -31,7 +32,17 @@ final readonly class FindYearlyStatsPerDayQueryHandler implements QueryHandler
                         PARTITION BY strftime('%Y', startDateTime), activityType
                         ORDER BY DATE(startDateTime)
                         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-                        ) AS cumulativeDistance
+                        ) AS cumulativeDistance,
+                    SUM(SUM(movingTimeInSeconds)) OVER (
+                        PARTITION BY strftime('%Y', startDateTime), activityType
+                        ORDER BY DATE(startDateTime)
+                        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                        ) AS cumulativeMovingTime,
+                    SUM(SUM(elevation)) OVER (
+                        PARTITION BY strftime('%Y', startDateTime), activityType
+                        ORDER BY DATE(startDateTime)
+                        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+                        ) AS cumulativeElevation
                 FROM Activity
                 GROUP BY startDate, activityType
                 ORDER BY startDate DESC;
@@ -46,7 +57,9 @@ final readonly class FindYearlyStatsPerDayQueryHandler implements QueryHandler
             $response->add(
                 date: SerializableDateTime::fromString($result['startDate']),
                 activityType: ActivityType::from($result['activityType']),
-                distance: Meter::from($result['cumulativeDistance'])->toKilometer()
+                distance: Meter::from($result['cumulativeDistance'])->toKilometer(),
+                movingTime: Seconds::from($result['cumulativeMovingTime']),
+                elevation: Meter::from($result['cumulativeElevation']),
             );
         }
 

@@ -7,8 +7,8 @@ namespace App\Domain\Dashboard\Widget;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Calendar\MonthlyStats\MonthlyStatsChart;
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
 use App\Domain\Dashboard\InvalidDashboardLayout;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -52,8 +52,12 @@ final readonly class MonthlyStatsWidget implements Widget
 
         /** @var int $enableLastXYearsByDefault */
         $enableLastXYearsByDefault = $configuration->getConfigItem('enableLastXYearsByDefault');
-        foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
+        foreach (StatsContext::cases() as $monthlyStatsContext) {
             foreach ($activityTypes as $activityType) {
+                if (in_array($monthlyStatsContext, [StatsContext::DISTANCE, StatsContext::ELEVATION]) && !$activityType->supportsDistanceAndElevation()) {
+                    continue;
+                }
+
                 $monthlyStatChartsPerContext[$monthlyStatsContext->value][$activityType->value] = Json::encode(
                     MonthlyStatsChart::create(
                         activityType: $activityType,
