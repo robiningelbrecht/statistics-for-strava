@@ -21,28 +21,12 @@ class MonthlyStatsWidgetTest extends ContainerTestCase
 
     public static function provideInvalidConfig(): iterable
     {
-        $config = WidgetConfiguration::empty()
-            ->add('context', 'distance');
+        $config = WidgetConfiguration::empty();
         yield 'missing "enableLastXYearsByDefault" key' => [$config, 'Configuration item "enableLastXYearsByDefault" is required for MonthlyStatsWidget.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 'invalid')
-            ->add('context', 'distance');
+            ->add('enableLastXYearsByDefault', 'invalid');
         yield 'invalid "enableLastXYearsByDefault" key' => [$config, 'Configuration item "enableLastXYearsByDefault" must be an integer.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10);
-        yield 'missing "context" key' => [$config, 'Configuration item "context" is required for MonthlyStatsWidget.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10)
-            ->add('context', 'invalid');
-        yield 'invalid "context" key' => [$config, 'Invalid context "invalid" provided for MonthlyStatsWidget.'];
-
-        $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10)
-            ->add('context', false);
-        yield '"context" must be string' => [$config, 'Configuration item "context" must be a string.'];
     }
 
     protected function setUp(): void

@@ -2,7 +2,6 @@
 
 namespace App\Tests\Domain\Dashboard;
 
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
 use App\Domain\Dashboard\DashboardLayout;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -23,7 +22,6 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
                 ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
                 ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
-                    'context' => MonthlyStatsContext::DISTANCE->value,
                     'enableLastXYearsByDefault' => 10,
                 ]],
                 ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],

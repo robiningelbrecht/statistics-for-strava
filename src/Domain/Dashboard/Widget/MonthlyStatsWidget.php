@@ -30,8 +30,7 @@ final readonly class MonthlyStatsWidget implements Widget
     public function getDefaultConfiguration(): WidgetConfiguration
     {
         return WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10)
-            ->add('context', MonthlyStatsContext::DISTANCE->value);
+            ->add('enableLastXYearsByDefault', 10);
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
@@ -42,44 +41,34 @@ final readonly class MonthlyStatsWidget implements Widget
         if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
         }
-        if (!$configuration->configItemExists('context')) {
-            throw new InvalidDashboardLayout('Configuration item "context" is required for MonthlyStatsWidget.');
-        }
-        if (!is_string($configuration->getConfigItem('context'))) {
-            throw new InvalidDashboardLayout('Configuration item "context" must be a string.');
-        }
-        if (!MonthlyStatsContext::tryFrom($configuration->getConfigItem('context'))) {
-            throw new InvalidDashboardLayout(sprintf('Invalid context "%s" provided for MonthlyStatsWidget.', $configuration->getConfigItem('context')));
-        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $activityTypes = $this->activityTypeRepository->findAll();
 
-        $monthlyStatCharts = [];
+        $monthlyStatChartsPerContext = [];
         $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
 
-        /** @var string $context */
-        $context = $configuration->getConfigItem('context');
         /** @var int $enableLastXYearsByDefault */
         $enableLastXYearsByDefault = $configuration->getConfigItem('enableLastXYearsByDefault');
-        foreach ($activityTypes as $activityType) {
-            $monthlyStatCharts[$activityType->value] = Json::encode(
-                MonthlyStatsChart::create(
-                    activityType: $activityType,
-                    monthlyStats: $monthlyStats,
-                    context: MonthlyStatsContext::from($context),
-                    unitSystem: $this->unitSystem,
-                    translator: $this->translator,
-                    enableLastXYearsByDefault: $enableLastXYearsByDefault
-                )->build()
-            );
+        foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
+            foreach ($activityTypes as $activityType) {
+                $monthlyStatChartsPerContext[$monthlyStatsContext->value][$activityType->value] = Json::encode(
+                    MonthlyStatsChart::create(
+                        activityType: $activityType,
+                        monthlyStats: $monthlyStats,
+                        context: $monthlyStatsContext,
+                        unitSystem: $this->unitSystem,
+                        translator: $this->translator,
+                        enableLastXYearsByDefault: $enableLastXYearsByDefault
+                    )->build()
+                );
+            }
         }
 
         return $this->twig->load('html/dashboard/widget/widget--monthly-stats.html.twig')->render([
-            'monthlyStatsCharts' => $monthlyStatCharts,
-            'context' => MonthlyStatsContext::from($context),
+            'monthlyStatsChartsPerContext' => $monthlyStatChartsPerContext,
         ]);
     }
 }
