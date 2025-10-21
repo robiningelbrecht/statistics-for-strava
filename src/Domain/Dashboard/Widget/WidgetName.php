@@ -22,6 +22,10 @@ final readonly class WidgetName implements \Stringable
         if ('activityIntensity' === $name) {
             $name = 'activityGrid';
         }
+        // We renamed YearlyDistancesWidget to YearlyStatsWidget but want to keep the old name for backwards compatibility.
+        if ('yearlyDistances' === $name) {
+            $name = 'yearlyStats';
+        }
 
         return new self($name);
     }
