@@ -6,7 +6,10 @@ namespace App\Domain\Activity\YearlyDistance;
 
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDayResponse;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -18,6 +21,7 @@ final readonly class YearlyDistanceChart
         private FindYearlyStatsPerDayResponse $yearStats,
         private Years $uniqueYears,
         private ActivityType $activityType,
+        private StatsContext $context,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
         private SerializableDateTime $now,
@@ -29,6 +33,7 @@ final readonly class YearlyDistanceChart
         FindYearlyStatsPerDayResponse $yearStats,
         Years $uniqueYears,
         ActivityType $activityType,
+        StatsContext $context,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
         SerializableDateTime $now,
@@ -38,6 +43,7 @@ final readonly class YearlyDistanceChart
             yearStats: $yearStats,
             uniqueYears: $uniqueYears,
             activityType: $activityType,
+            context: $context,
             unitSystem: $unitSystem,
             translator: $translator,
             now: $now,
@@ -90,7 +96,11 @@ final readonly class YearlyDistanceChart
                 'data' => [],
             ];
 
-            $previousDistance = Kilometer::zero()->toUnitSystem($this->unitSystem);
+            $previousValue = match ($this->context) {
+                StatsContext::MOVING_TIME => Hour::zero(),
+                StatsContext::DISTANCE => Kilometer::zero()->toUnitSystem($this->unitSystem),
+                StatsContext::ELEVATION => Meter::zero()->toUnitSystem($this->unitSystem),
+            };
             foreach ($months as $month => $label) {
                 for ($dayOfMonth = 1; $dayOfMonth <= 31; ++$dayOfMonth) {
                     $date = SerializableDateTime::fromString(sprintf(
@@ -104,22 +114,26 @@ final readonly class YearlyDistanceChart
                         break 2;
                     }
 
-                    if (!$distance = $this->yearStats->getDistanceFor($date, $this->activityType)?->toUnitSystem($this->unitSystem)) {
-                        $distance = $previousDistance;
+                    $value = match ($this->context) {
+                        StatsContext::MOVING_TIME => $this->yearStats->getMovingTimeFor($date, $this->activityType)?->toHour(),
+                        StatsContext::DISTANCE => $this->yearStats->getDistanceFor($date, $this->activityType)?->toUnitSystem($this->unitSystem),
+                        StatsContext::ELEVATION => $this->yearStats->getElevationFor($date, $this->activityType)?->toUnitSystem($this->unitSystem),
+                    };
+
+                    if (!$value) {
+                        $value = $previousValue;
                     }
-                    $previousDistance = $distance;
-                    $series[(string) $year]['data'][] = round($distance->toFloat());
+                    $previousValue = $value;
+                    $series[(string) $year]['data'][] = round($value->toFloat());
                 }
             }
         }
-
-        $unitSymbol = $this->unitSystem->distanceSymbol();
 
         return [
             'animation' => true,
             'backgroundColor' => null,
             'grid' => [
-                'left' => '40px',
+                'left' => '0',
                 'right' => '10px',
                 'bottom' => '50px',
                 'containLabel' => true,
@@ -143,14 +157,25 @@ final readonly class YearlyDistanceChart
             'tooltip' => [
                 'show' => true,
                 'trigger' => 'axis',
+                'valueFormatter' => match ($this->context) {
+                    StatsContext::MOVING_TIME => 'formatHours',
+                    StatsContext::DISTANCE => 'formatDistance',
+                    StatsContext::ELEVATION => 'formatElevation',
+                },
             ],
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => $this->translator->trans('Distance in {unit}', ['{unit}' => $unitSymbol]),
                     'nameRotate' => 90,
                     'nameLocation' => 'middle',
                     'nameGap' => 50,
+                    'axisLabel' => [
+                        'formatter' => match ($this->context) {
+                            StatsContext::MOVING_TIME => '{value}h',
+                            StatsContext::DISTANCE => '{value}'.$this->unitSystem->distanceSymbol(),
+                            StatsContext::ELEVATION => '{value}'.$this->unitSystem->elevationSymbol(),
+                        },
+                    ],
                 ],
             ],
             'toolbox' => [

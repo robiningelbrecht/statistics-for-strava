@@ -7,6 +7,7 @@ namespace App\Domain\Calendar\MonthlyStats;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStatsResponse;
 use App\Domain\Calendar\Month;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -17,7 +18,7 @@ final readonly class MonthlyStatsChart
     private function __construct(
         private ActivityType $activityType,
         private FindMonthlyStatsResponse $monthlyStats,
-        private MonthlyStatsContext $context,
+        private StatsContext $context,
         private UnitSystem $unitSystem,
         private int $enableLastXYearsByDefault,
         private TranslatorInterface $translator,
@@ -27,7 +28,7 @@ final readonly class MonthlyStatsChart
     public static function create(
         ActivityType $activityType,
         FindMonthlyStatsResponse $monthlyStats,
-        MonthlyStatsContext $context,
+        StatsContext $context,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
         ?int $enableLastXYearsByDefault = null,
@@ -83,9 +84,9 @@ final readonly class MonthlyStatsChart
                     }
                 } else {
                     $data[] = match ($this->context) {
-                        MonthlyStatsContext::MOVING_TIME => $stats['movingTime']->toHour()->toInt(),
-                        MonthlyStatsContext::DISTANCE => $stats['distance']->toUnitSystem($this->unitSystem)->toFloat(),
-                        MonthlyStatsContext::ELEVATION => $stats['elevation']->toUnitSystem($this->unitSystem)->toFloat(),
+                        StatsContext::MOVING_TIME => $stats['movingTime']->toHour()->toInt(),
+                        StatsContext::DISTANCE => $stats['distance']->toUnitSystem($this->unitSystem)->toFloat(),
+                        StatsContext::ELEVATION => $stats['elevation']->toUnitSystem($this->unitSystem)->toFloat(),
                     };
                 }
             }
@@ -104,16 +105,16 @@ final readonly class MonthlyStatsChart
             'grid' => [
                 'top' => '50px',
                 'left' => '0',
-                'right' => '30px',
+                'right' => '10px',
                 'bottom' => '2%',
                 'containLabel' => true,
             ],
             'tooltip' => [
                 'trigger' => 'axis',
                 'valueFormatter' => match ($this->context) {
-                    MonthlyStatsContext::MOVING_TIME => 'formatHours',
-                    MonthlyStatsContext::DISTANCE => 'formatDistance',
-                    MonthlyStatsContext::ELEVATION => 'formatElevation',
+                    StatsContext::MOVING_TIME => 'formatHours',
+                    StatsContext::DISTANCE => 'formatDistance',
+                    StatsContext::ELEVATION => 'formatElevation',
                 },
             ],
             'legend' => [
@@ -148,9 +149,9 @@ final readonly class MonthlyStatsChart
                 'type' => 'value',
                 'axisLabel' => [
                     'formatter' => match ($this->context) {
-                        MonthlyStatsContext::MOVING_TIME => '{value}h',
-                        MonthlyStatsContext::DISTANCE => '{value}'.$this->unitSystem->distanceSymbol(),
-                        MonthlyStatsContext::ELEVATION => '{value}'.$this->unitSystem->elevationSymbol(),
+                        StatsContext::MOVING_TIME => '{value}h',
+                        StatsContext::DISTANCE => '{value}'.$this->unitSystem->distanceSymbol(),
+                        StatsContext::ELEVATION => '{value}'.$this->unitSystem->elevationSymbol(),
                     },
                 ],
             ],

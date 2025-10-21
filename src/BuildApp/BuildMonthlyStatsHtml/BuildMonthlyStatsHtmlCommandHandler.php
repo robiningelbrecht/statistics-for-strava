@@ -11,9 +11,9 @@ use App\Domain\Calendar\Calendar;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Calendar\Month;
 use App\Domain\Calendar\MonthlyStats\MonthlyStatsChart;
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
 use App\Domain\Calendar\Months;
 use App\Domain\Challenge\ChallengeRepository;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
@@ -82,7 +82,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         }
 
         $monthlyStatChartsPerContext = [];
-        foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
+        foreach (StatsContext::cases() as $monthlyStatsContext) {
             foreach ($activityTypes as $activityType) {
                 $monthlyStatChartsPerContext[$monthlyStatsContext->value][$activityType->value] = Json::encode(
                     MonthlyStatsChart::create(

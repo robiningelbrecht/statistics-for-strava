@@ -78,7 +78,7 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
-    public function supportsYearlyStats(): bool
+    public function supportsDistanceAndElevation(): bool
     {
         return match ($this) {
             self::RUN, self::RIDE, self::WALK, self::WATER_SPORTS, self::SKATING => true,

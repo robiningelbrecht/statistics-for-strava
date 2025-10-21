@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Calendar\MonthlyStats;
+namespace App\Domain\Dashboard;
 
-enum MonthlyStatsContext: string
+enum StatsContext: string
 {
     case MOVING_TIME = 'movingTime';
     case DISTANCE = 'distance';

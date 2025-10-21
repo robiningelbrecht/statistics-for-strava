@@ -7,7 +7,7 @@ namespace App\Domain\Activity\YearlyDistance\FindYearlyStats;
 use App\Infrastructure\CQRS\Query\Query;
 
 /**
- * @implements Query<\App\Domain\Activity\YearlyDistance\FindYearlyStats\FindYearlyStatsResponse>
+ * @implements Query<FindYearlyStatsResponse>
  */
 final readonly class FindYearlyStats implements Query
 {

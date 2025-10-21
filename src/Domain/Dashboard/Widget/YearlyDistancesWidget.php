@@ -11,6 +11,7 @@ use App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerD
 use App\Domain\Activity\YearlyDistance\YearlyDistanceChart;
 use App\Domain\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Dashboard\InvalidDashboardLayout;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -48,7 +49,7 @@ final readonly class YearlyDistancesWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $yearlyDistanceCharts = [];
+        $yearlyStatChartsPerContext = [];
         $yearlyStatistics = [];
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
@@ -70,21 +71,24 @@ final readonly class YearlyDistancesWidget implements Widget
             }
 
             $activityType = ActivityType::from($activityType);
-            if (!$activityType->supportsYearlyStats()) {
-                continue;
-            }
+            foreach (StatsContext::cases() as $yearlyStatsContext) {
+                if (in_array($yearlyStatsContext, [StatsContext::DISTANCE, StatsContext::ELEVATION]) && !$activityType->supportsDistanceAndElevation()) {
+                    continue;
+                }
 
-            $yearlyDistanceCharts[$activityType->value] = Json::encode(
-                YearlyDistanceChart::create(
-                    yearStats: $yearlyStatsPerDay,
-                    uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
-                    activityType: $activityType,
-                    unitSystem: $this->unitSystem,
-                    translator: $this->translator,
-                    now: $now,
-                    enableLastXYearsByDefault: $enableLastXYearsByDefault
-                )->build()
-            );
+                $yearlyStatChartsPerContext[$yearlyStatsContext->value][$activityType->value] = Json::encode(
+                    YearlyDistanceChart::create(
+                        yearStats: $yearlyStatsPerDay,
+                        uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
+                        activityType: $activityType,
+                        context: $yearlyStatsContext,
+                        unitSystem: $this->unitSystem,
+                        translator: $this->translator,
+                        now: $now,
+                        enableLastXYearsByDefault: $enableLastXYearsByDefault
+                    )->build()
+                );
+            }
 
             $yearlyStatistics[$activityType->value] = YearlyStatistics::create(
                 yearlyStats: $yearlyStats,
@@ -94,7 +98,7 @@ final readonly class YearlyDistancesWidget implements Widget
         }
 
         return $this->twig->load('html/dashboard/widget/widget--yearly-distances.html.twig')->render([
-            'yearlyDistanceCharts' => $yearlyDistanceCharts,
+            'yearlyStatsChartsPerContext' => $yearlyStatChartsPerContext,
             'yearlyStatistics' => $yearlyStatistics,
         ]);
     }
