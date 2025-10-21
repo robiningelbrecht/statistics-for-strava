@@ -129,7 +129,7 @@ final readonly class AIChatRequestHandler
 
                     echo new ServerSentEvent(
                         eventName: 'agentResponse',
-                        data: nl2br((string) $chunk)
+                        data: nl2br($chunk)
                     );
                     flush();
                 }
