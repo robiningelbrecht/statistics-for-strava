@@ -16,6 +16,7 @@ use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\Messages\ToolCallMessage;
+use NeuronAI\Chat\Messages\ToolCallResultMessage;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -118,6 +119,9 @@ final readonly class AIChatRequestHandler
                     if ($chunk instanceof ToolCallMessage) {
                         continue;
                     }
+                    if ($chunk instanceof ToolCallResultMessage) {
+                        continue;
+                    }
                     echo new ServerSentEvent(
                         eventName: 'removeThinking',
                         data: ''
@@ -125,7 +129,7 @@ final readonly class AIChatRequestHandler
 
                     echo new ServerSentEvent(
                         eventName: 'agentResponse',
-                        data: nl2br($chunk)
+                        data: nl2br((string) $chunk)
                     );
                     flush();
                 }

@@ -106,13 +106,12 @@ export class Heatmap {
 
             this.resetBtn.classList.toggle('hidden', !(Object.keys(activeFilters).length > 0));
             const resultCount = this.wrapper.querySelector('[data-dataTable-result-count]');
-            if (resultCount) resultCount.innerText = routes.length;
+            if (resultCount) resultCount.innerText = routes.filter((route) => route.active).length;
         };
 
         redraw();
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
-
 
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', e => {
