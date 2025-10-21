@@ -38,6 +38,11 @@ final class Images
         return $this->imagesPerSportType[$sportType->value] ?? [];
     }
 
+    public function hasForSportType(SportType $sportType): bool
+    {
+        return !empty($this->imagesPerSportType[$sportType->value]);
+    }
+
     /**
      * @return Image[]
      */
