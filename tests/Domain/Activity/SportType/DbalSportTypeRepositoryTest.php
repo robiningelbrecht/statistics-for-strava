@@ -58,4 +58,42 @@ class DbalSportTypeRepositoryTest extends ContainerTestCase
             $sportTypeRepository->findAll(),
         );
     }
+
+    public function testFindForImages(): void
+    {
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::random())
+                ->withSportType(SportType::RUN)
+                ->withTotalImageCount(3)
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::random())
+                ->withSportType(SportType::RUN)
+                ->withTotalImageCount(3)
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::random())
+                ->withSportType(SportType::WALK)
+                ->withTotalImageCount(0)
+                ->build(),
+            []
+        ));
+
+        $sportTypeRepository = new DbalSportTypeRepository(
+            $this->getConnection(),
+            SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK])
+        );
+
+        $this->assertEquals(
+            SportTypes::fromArray([SportType::RUN]),
+            $sportTypeRepository->findForImages(),
+        );
+    }
 }

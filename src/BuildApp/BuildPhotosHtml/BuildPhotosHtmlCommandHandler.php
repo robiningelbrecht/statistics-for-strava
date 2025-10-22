@@ -27,14 +27,13 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildPhotosHtml);
 
-        $importedSportTypes = $this->sportTypeRepository->findAll();
         $images = $this->imageRepository->findAll();
 
         $this->buildStorage->write(
             'photos.html',
             $this->twig->load('html/photos.html.twig')->render([
                 'images' => $images,
-                'sportTypes' => $importedSportTypes,
+                'sportTypes' => $this->sportTypeRepository->findForImages(),
                 'countries' => $this->countries->getUsedInPhotos(),
                 'totalPhotoCount' => count($images),
             ]),
