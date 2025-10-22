@@ -7,4 +7,6 @@ namespace App\Domain\Activity\SportType;
 interface SportTypeRepository
 {
     public function findAll(): SportTypes;
+
+    public function findForImages(): SportTypes;
 }
