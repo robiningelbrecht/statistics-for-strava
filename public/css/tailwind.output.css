@@ -990,9 +990,6 @@
   .start-0 {
     inset-inline-start: calc(var(--spacing) * 0);
   }
-  .-top-\[48px\] {
-    top: calc(48px * -1);
-  }
   .top-0 {
     top: calc(var(--spacing) * 0);
   }
@@ -1416,9 +1413,6 @@
   }
   .mr-4 {
     margin-right: calc(var(--spacing) * 4);
-  }
-  .mr-\[40px\] {
-    margin-right: 40px;
   }
   .apexcharts-tooltip-title {
     .apexcharts-canvas .apexcharts-tooltip & {

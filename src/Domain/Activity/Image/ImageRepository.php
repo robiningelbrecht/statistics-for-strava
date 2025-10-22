@@ -7,9 +7,9 @@ use App\Infrastructure\ValueObject\Time\Years;
 
 interface ImageRepository
 {
-    public function findBySportTypes(SportTypes $sportTypes): Images;
+    public function findAll(): Images;
 
-    public function countBySportTypes(SportTypes $sportTypes): int;
+    public function count(): int;
 
     public function findRandomFor(SportTypes $sportTypes, Years $years): Image;
 }

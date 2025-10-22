@@ -3,63 +3,96 @@
     'label': 'Photos'|trans
 }]} %}
 {% autoescape false %}
-    <!-- PHOTOS -->
-    {% if sportTypes|length > 1 %}
-        <div class="mb-4 border-b border-gray-200 flex items-center">
-            <ul class="mr-[40px] overflow-x-auto flex gap-x-2 -mb-px text-sm font-medium text-center" id="photoTypeTab" data-tabs="#photoTypeTabContent" role="tablist">
-                <li class="shrink-0" role="presentation">
-                    <a href="#" data-tabs-target="#all" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                        {{ "All"|trans }} ({{ images.getAll()|length }})
-                    </a>
-                </li>
-                {% for sportType in sportTypes %}
-                    {% set imageCount =  images.getForSportType(sportType)|length %}
-                    <li class="shrink-0" role="presentation">
-                        <a href="#" {{ loop.first ? 'data-tab-default': '' }} data-tabs-target="#{{ sportType.value }}" role="tab" aria-controls="{{ sportType.value }}" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
-                            {{ sportType|trans }} ({{ imageCount }})
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
+<div class="grid grid-cols-1 gap-y-2 photo-wall-wrapper">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="flex items-center justify-between">
+            <form class="flex flex-col gap-y-2 mb-2" autocomplete="off">
+                <div class="flex flex-wrap gap-2">
+                    {% if sportTypes|length > 0 %}
+                        <div class="filter-dropdown">
+                            <button id="dropdownSportTypesButton"
+                                    data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                <span>{{ "Filter on sport type"|trans }}</span>
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div id="dropdownSportTypes" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownSportTypesButton">
+                                    {% for sportType in sportTypes %}
+                                        <li>
+                                            <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                <input type="checkbox" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType[{{ sportType.value }}]" value="{{ sportType.value }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                <label for="{{ sportType.value }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                    {{ svgSportType(sportType) }}
+                                                    <div>{{ sportType|trans }}</div>
+                                                </label>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="sportType[{{ sportType.value }}]">{{ "clear"|trans }}</a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if countries|length > 0 %}
+                        <div class="filter-dropdown">
+                            <button id="dropdownCountriesButton"
+                                    data-dropdown-toggle="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                <span>{{ "Filter on country"|trans }}</span>
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div id="dropdownCountries" class="z-1002 w-fit hidden border border-gray-200 bg-white divide-y divide-gray-100 rounded-lg shadow-xs">
+                                <ul class="max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700" aria-labelledby="dropdownCountriesButton">
+                                    {% for countryCode,countryName in countries %}
+                                        <li>
+                                            <div class="flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100">
+                                                <input type="radio" id="{{ countryCode }}" data-dataTable-filter="countryCode" name="countryCode" value="{{ countryCode }}" class="w-4 h-4 peer text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2" />
+                                                <label for="{{ countryCode }}" class="flex gap-x-1 items-center text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100">
+                                                    <img src="{{ relativeUrl('assets/images/flags/' ~ countryCode|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
+                                                    <span>{{ countryName }}</span>
+                                                </label>
+                                                <a href="#" class="text-strava-orange text-sm underline invisible peer-checked:visible ml-auto" data-datatable-filter-clear="countryCode">{{ "clear"|trans }}</a>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="text-xs text-gray-700">
+                    {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ totalPhotoCount ~ '</span>' %}
+                    {{ "{numberOfResults} photos based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
+                    <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
+                </div>
+            </form>
+
+            <div class="text-gray-500 hover:text-strava-orange">
+                <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-trigger>
+                    {{ svg('slideshow') }}
+                </a>
+            </div>
         </div>
-    {% endif %}
-    <div id="photoTypeTabContent">
-        {% if sportTypes|length > 1 %}
-            <div class="relative" id="all" role="tabpanel" aria-labelledby="all-tab">
-                <div class="flex flex-wrap gap-2">
-                    {% for image in images.getAll() %}
-                        <a class="grow h-[25vh]" href="{{ image.getActivity().getUrl() }}" target="_blank">
-                            <img class="h-full w-full object-cover align-bottom rounded-lg shadow-sm lazy"
-                                 data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" title="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                        </a>
-                    {% endfor %}
-                    <div class="grow-10"></div>
-                </div>
-            </div>
-        {% endif %}
-        {% for sportType in sportTypes %}
-            {% set imagesForSportType = images.getForSportType(sportType) %}
-            {% set lightGalleryElements = imagesForSportType|map(image => {
-                'src': relativeUrl(image.getImageUrl()),
-                'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
-                'alt':  image.getActivity().getSanitizedName(),
-            })|array_values() %}
-            <div class="relative" id="{{ sportType.value }}" role="tabpanel" aria-labelledby="{{ sportType.value }}-tab">
-                <div class="absolute -top-[48px] right-0 text-gray-500 hover:text-strava-orange">
-                    <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-elements='{{ lightGalleryElements|json_encode() }}'>
-                        {{ svg('slideshow') }}
-                    </a>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    {% for image in imagesForSportType %}
-                        <a class="grow h-[25vh]" href="{{ image.getActivity().getUrl() }}" target="_blank">
-                            <img class="h-full w-full object-cover align-bottom rounded-lg shadow-sm lazy"
-                                 data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" title="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                        </a>
-                    {% endfor %}
-                    <div class="grow-10"></div>
-                </div>
-            </div>
-        {% endfor %}
     </div>
+    <div class="flex flex-wrap gap-2 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div id="images" class="flex flex-wrap gap-2">
+            {% for image in images %}
+                {% set lightGalleryElement = {
+                    'src': relativeUrl(image.getImageUrl()),
+                    'subHtml': '<p>' ~ image.getActivity().getSanitizedName() ~ '</p>',
+                    'alt':  image.getActivity().getSanitizedName(),
+                } %}
+                <a data-image data-filterables='{{ image.getFilterables()|json_encode }}' data-light-gallery-element='{{ lightGalleryElement|json_encode }}'
+                   class="grow h-[25vh]" href="{{ image.getActivity().getUrl() }}" target="_blank">
+                    <img class="h-full w-full object-cover align-bottom rounded-lg shadow-sm lazy"
+                         data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" title="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                </a>
+            {% endfor %}
+            <div class="grow-10"></div>
+        </div>
+    </div>
+</div>
 {% endautoescape %}
