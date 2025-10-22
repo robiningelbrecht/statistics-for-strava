@@ -1,4 +1,4 @@
-import autoComplete from "../libraries/autocomplete";
+import autoComplete from "../../libraries/autocomplete";
 
 export default class Chat {
     constructor(chatModal) {
