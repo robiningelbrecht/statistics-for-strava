@@ -3,7 +3,7 @@
     'label': 'Photos'|trans
 }]} %}
 {% autoescape false %}
-<div class="grid grid-cols-1 gap-y-2 photo-wall-wrapper">
+<div class="grid grid-cols-1 gap-y-2 photo-wall-wrapper" data-default-filters='{{ defaultEnabledPhotoFilters }}'>
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
         <div class="flex items-center justify-between">
             <form class="flex flex-col gap-y-2 mb-2" autocomplete="off">
@@ -69,7 +69,6 @@
                     <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
                 </div>
             </form>
-
             <div class="text-gray-500 hover:text-strava-orange">
                 <a href="#" title="{{ "Start slideshow"|trans }}" data-light-gallery-trigger>
                     {{ svg('slideshow') }}

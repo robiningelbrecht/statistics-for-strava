@@ -26,8 +26,9 @@ class LightGallery {
 }
 
 export class PhotoWall {
-    constructor(wrapper) {
+    constructor(wrapper, dataTableStorage) {
         this.wrapper = wrapper;
+        this.dataTableStorage = dataTableStorage;
         this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
         this.filterManager = new FilterManager(wrapper, new DataTableStorage());
         this.allImages = Array.from(this.wrapper.querySelectorAll('[data-image]')).map(el => ({
@@ -56,6 +57,12 @@ export class PhotoWall {
 
             this.lightGallery.refresh(activeImages);
         };
+
+        this.dataTableStorage.set({
+            'photoWall': JSON.parse(this.wrapper.getAttribute('data-default-filters'))
+        });
+        // Prefill filters.
+        this.filterManager.prefillFromStorage('photoWall');
 
         redraw();
 

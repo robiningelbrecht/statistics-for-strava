@@ -24,10 +24,10 @@ export class FilterManager {
 
                 if (Array.isArray(value)) {
                     // Multiple checkbox values.
-                    if (value.map(v => v.toLowerCase()).includes(inputValue)) {
+                    if (value.filter(v => v !== null).map(v => v.toLowerCase()).includes(inputValue)) {
                         input.checked = true;
                     }
-                } else if (inputValue === value.toLowerCase()) {
+                } else if (value !== null && inputValue === value.toLowerCase()) {
                     input.checked = true;
                 }
             });

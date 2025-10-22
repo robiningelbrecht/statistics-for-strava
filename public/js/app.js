@@ -10,7 +10,7 @@ import MapManager from "./ui/maps";
 import TabsManager from "./ui/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
-import {PhotoWall} from "./photoWall";
+import {PhotoWall} from "./photo-wall";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -67,7 +67,7 @@ document.addEventListener('pageWasLoaded.heatmap', () => {
 });
 document.addEventListener('pageWasLoaded.photos', () => {
     const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
-    new PhotoWall($photoWallWrapper).render();
+    new PhotoWall($photoWallWrapper, dataTableStorage).render();
 });
 document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     if (!e.detail || !e.detail.link) {

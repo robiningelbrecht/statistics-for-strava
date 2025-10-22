@@ -183,7 +183,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
                   )';
 
         return ActivityIds::fromArray(array_map(
-            fn (string $activityId): ActivityId => ActivityId::fromString($activityId),
+            ActivityId::fromString(...),
             $this->connection->executeQuery($sql,
                 [
                     'timeStreamType' => StreamType::TIME->value,

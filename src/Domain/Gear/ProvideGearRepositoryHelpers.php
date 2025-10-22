@@ -74,7 +74,7 @@ trait ProvideGearRepositoryHelpers
         $sportTypes = SportTypes::empty();
         if (!empty($result['sportTypes'])) {
             $sportTypes = SportTypes::fromArray(array_map(
-                fn (string $sportType): SportType => SportType::from($sportType),
+                SportType::from(...),
                 explode(',', (string) $result['sportTypes'])
             ));
         }

@@ -17,6 +17,6 @@ final readonly class DbalDeviceRepository extends DbalRepository implements Devi
                   ORDER BY COUNT(deviceName) DESC')
             ->fetchFirstColumn();
 
-        return array_map(fn (string $result): Device => Device::create($result), $results);
+        return array_map(Device::create(...), $results);
     }
 }

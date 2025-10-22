@@ -24,7 +24,7 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
         ])->fetchAllAssociative();
 
         return ActivitySplits::fromArray(array_map(
-            fn (array $result): ActivitySplit => $this->hydrate($result),
+            $this->hydrate(...),
             $results
         ));
     }

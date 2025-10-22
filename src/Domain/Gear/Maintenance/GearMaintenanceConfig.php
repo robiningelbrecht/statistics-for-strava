@@ -97,7 +97,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 tag: $gearComponentTag,
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
-                    fn (string $gearId): GearId => GearId::fromUnprefixed($gearId),
+                    GearId::fromUnprefixed(...),
                     $component['attachedTo']
                 )),
                 imgSrc: $component['imgSrc'] ?? null,

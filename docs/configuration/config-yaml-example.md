@@ -97,7 +97,7 @@ appearance:
     # Optional, a list of filters that are enabled by default. For example, you can use this to automatically hide all photos from virtual activities.
     defaultEnabledFilters:
       # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
-      sportType: []
+      sportTypes: []
       # A valid ISO2 country code.
       countryCode: null  
   # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
