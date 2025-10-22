@@ -26,19 +26,14 @@
     <div id="photoTypeTabContent">
         {% if sportTypes|length > 1 %}
             <div class="relative" id="all" role="tabpanel" aria-labelledby="all-tab">
-                <div class="gap-4 columns-2 md:columns-3 lg:columns-4">
+                <div class="flex flex-wrap gap-2">
                     {% for image in images.getAll() %}
-                        <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                            </a>
-                            <div class="p-2 text-center">
-                                <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                    <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
-                                </a>
-                            </div>
-                        </div>
+                        <a class="grow h-[25vh]" href="{{ image.getActivity().getUrl() }}" target="_blank">
+                            <img class="h-full w-full object-cover align-bottom rounded-lg shadow-sm lazy"
+                                 data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" title="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                        </a>
                     {% endfor %}
+                    <div class="grow-10"></div>
                 </div>
             </div>
         {% endif %}
@@ -55,19 +50,14 @@
                         {{ svg('slideshow') }}
                     </a>
                 </div>
-                <div class="gap-4 columns-2 md:columns-3 lg:columns-4 xl:columns-5">
+                <div class="flex flex-wrap gap-2">
                     {% for image in imagesForSportType %}
-                        <div class="mb-4 break-inside-avoid-column bg-white border border-gray-200 rounded-lg shadow-sm">
-                            <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                <img class="h-auto max-w-full rounded-t-lg lazy" data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
-                            </a>
-                            <div class="p-2 text-center">
-                                <a href="{{ image.getActivity().getUrl() }}" target="_blank">
-                                    <h5 class="font-bold tracking-tight text-gray-900 hover:underline">{{ image.getActivity().getName() }}</h5>
-                                </a>
-                            </div>
-                        </div>
+                        <a class="grow h-[25vh]" href="{{ image.getActivity().getUrl() }}" target="_blank">
+                            <img class="h-full w-full object-cover align-bottom rounded-lg shadow-sm lazy"
+                                 data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" title="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                        </a>
                     {% endfor %}
+                    <div class="grow-10"></div>
                 </div>
             </div>
         {% endfor %}
