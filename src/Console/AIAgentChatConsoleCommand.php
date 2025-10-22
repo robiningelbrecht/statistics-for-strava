@@ -8,6 +8,7 @@ use App\Infrastructure\Config\AppConfig;
 use GuzzleHttp\Exception\ClientException;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Messages\ToolCallMessage;
+use NeuronAI\Chat\Messages\ToolCallResultMessage;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -69,6 +70,9 @@ final class AIAgentChatConsoleCommand extends Command
                 $first = true;
                 foreach ($stream as $chunk) {
                     if ($chunk instanceof ToolCallMessage) {
+                        continue;
+                    }
+                    if ($chunk instanceof ToolCallResultMessage) {
                         continue;
                     }
                     if ($first) {
