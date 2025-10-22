@@ -381,6 +381,7 @@ workouts: Trainingseinheiten
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} alle {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} Aktivitäten im {year}'
+'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
 '{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '-10 bis -30: Aufbau/Ermüdungszone. Produktiver Bereich für schweres Training'
