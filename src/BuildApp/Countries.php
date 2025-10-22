@@ -33,6 +33,58 @@ final readonly class Countries
             SQL
         )->fetchFirstColumn();
 
+        return $this->hydrate($results);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getUsedInPhotos(): array
+    {
+        $results = $this->connection->executeQuery(
+            <<<SQL
+            SELECT DISTINCT LOWER(JSON_EXTRACT(location, '$.country_code')) as countryCode
+            FROM Activity
+            WHERE JSON_EXTRACT(location, '$.country_code') IS NOT NULL
+            AND totalImageCount > 0
+            SQL
+        )->fetchFirstColumn();
+
+        return $this->hydrate($results);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getUsedInSegments(): array
+    {
+        $results = $this->connection->executeQuery(
+            <<<SQL
+            SELECT DISTINCT LOWER(countryCode)
+            FROM Segment
+            WHERE countryCode IS NOT NULL
+            SQL
+        )->fetchFirstColumn();
+
+        return $this->hydrate($results);
+    }
+
+    public function findCountryCodeByCountryName(string $countryName): ?string
+    {
+        if (!$countryCode = array_search($countryName, $this->countriesKeyedByAlpha2codes)) {
+            return null;
+        }
+
+        return $countryCode;
+    }
+
+    /**
+     * @param string[] $results
+     *
+     * @return array<string, string>
+     */
+    private function hydrate(array $results): array
+    {
         $countries = [];
         foreach ($results as $countryCode) {
             if ('xk' === strtolower((string) $countryCode)) {
@@ -49,38 +101,5 @@ final readonly class Countries
         }
 
         return $countries;
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getUsedInSegments(): array
-    {
-        $results = $this->connection->executeQuery(
-            <<<SQL
-            SELECT DISTINCT LOWER(countryCode)
-            FROM Segment
-            WHERE countryCode IS NOT NULL
-            SQL
-        )->fetchFirstColumn();
-
-        $countries = [];
-        foreach ($results as $countryCode) {
-            $countries[$countryCode] = SymfonyCountries::getName(
-                country: strtoupper((string) $countryCode),
-                displayLocale: $this->localeSwitcher->getLocale()
-            );
-        }
-
-        return $countries;
-    }
-
-    public function findCountryCodeByCountryName(string $countryName): ?string
-    {
-        if (!$countryCode = array_search($countryName, $this->countriesKeyedByAlpha2codes)) {
-            return null;
-        }
-
-        return $countryCode;
     }
 }

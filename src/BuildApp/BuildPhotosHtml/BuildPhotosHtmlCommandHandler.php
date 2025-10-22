@@ -17,7 +17,6 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
     public function __construct(
         private ImageRepository $imageRepository,
         private SportTypeRepository $sportTypeRepository,
-        private HidePhotosForSportTypes $hidePhotosForSportTypes,
         private Countries $countries,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -36,7 +35,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
             $this->twig->load('html/photos.html.twig')->render([
                 'images' => $images,
                 'sportTypes' => $importedSportTypes,
-                'countries' => $this->countries->getUsedInActivities(),
+                'countries' => $this->countries->getUsedInPhotos(),
                 'totalPhotoCount' => count($images),
             ]),
         );
