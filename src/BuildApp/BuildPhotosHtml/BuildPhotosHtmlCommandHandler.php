@@ -9,6 +9,7 @@ use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Serialization\Json;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
 
@@ -18,6 +19,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         private ImageRepository $imageRepository,
         private SportTypeRepository $sportTypeRepository,
         private Countries $countries,
+        private DefaultEnabledPhotoFilters $defaultEnabledPhotoFilters,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -36,6 +38,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
                 'sportTypes' => $this->sportTypeRepository->findForImages(),
                 'countries' => $this->countries->getUsedInPhotos(),
                 'totalPhotoCount' => count($images),
+                'defaultEnabledPhotoFilters' => Json::encode($this->defaultEnabledPhotoFilters),
             ]),
         );
     }

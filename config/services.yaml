@@ -100,6 +100,10 @@ services:
             '@=app_config("appearance.heatmap.enableGreyScale", true)'
         ]
 
+    App\BuildApp\BuildPhotosHtml\DefaultEnabledPhotoFilters:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
+
     App\BuildApp\ProfilePictureUrl:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("general.profilePictureUrl")']

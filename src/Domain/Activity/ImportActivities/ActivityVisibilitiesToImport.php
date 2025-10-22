@@ -25,7 +25,7 @@ final class ActivityVisibilitiesToImport extends Collection
         }
 
         return self::fromArray(array_map(
-            fn (string $visibility) => ActivityVisibility::from($visibility),
+            ActivityVisibility::from(...),
             $visibilities,
         ));
     }

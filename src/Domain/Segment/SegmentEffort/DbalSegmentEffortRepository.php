@@ -85,7 +85,7 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             ->orderBy('elapsedTimeInSeconds', 'ASC');
 
         return SegmentEfforts::fromArray(array_map(
-            fn (array $result): SegmentEffort => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -100,7 +100,7 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             ->orderBy('startDateTime', 'DESC');
 
         return SegmentEfforts::fromArray(array_map(
-            fn (array $result): SegmentEffort => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -125,7 +125,7 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
             ->setParameter('activityId', $activityId);
 
         return SegmentEfforts::fromArray(array_map(
-            fn (array $result): SegmentEffort => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }

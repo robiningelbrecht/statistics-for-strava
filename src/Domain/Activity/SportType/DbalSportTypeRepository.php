@@ -19,7 +19,7 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function findAll(): SportTypes
     {
         return SportTypes::fromArray(array_map(
-            fn (string $sportType) => SportType::from($sportType),
+            SportType::from(...),
             $this->connection->executeQuery(
                 sprintf('SELECT DISTINCT sportType FROM Activity ORDER BY CASE sportType %s END', $this->buildOrderByStatement())
             )->fetchFirstColumn()
@@ -29,7 +29,7 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function findForImages(): SportTypes
     {
         return SportTypes::fromArray(array_map(
-            fn (string $sportType) => SportType::from($sportType),
+            SportType::from(...),
             $this->connection->executeQuery(
                 sprintf('SELECT DISTINCT sportType FROM Activity WHERE totalImageCount > 0 ORDER BY CASE sportType %s END', $this->buildOrderByStatement())
             )->fetchFirstColumn()
