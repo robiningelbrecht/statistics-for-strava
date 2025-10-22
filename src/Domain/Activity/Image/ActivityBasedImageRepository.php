@@ -15,27 +15,21 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
     ) {
     }
 
-    public function findBySportTypes(SportTypes $sportTypes): Images
+    public function findAll(): Images
     {
         $images = Images::empty();
         $activities = $this->activityRepository->findAll();
         /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
-            if (!$sportTypes->has($activity->getSportType())) {
-                continue;
-            }
             if (0 === $activity->getTotalImageCount()) {
                 continue;
             }
 
             foreach ($activity->getLocalImagePaths() as $localImagePath) {
-                $images->add(
-                    sportType: $activity->getSportType(),
-                    image: Image::create(
-                        imageLocation: $localImagePath,
-                        activity: $activity
-                    )
-                );
+                $images->add(Image::create(
+                    imageLocation: $localImagePath,
+                    activity: $activity
+                ));
             }
         }
 
@@ -71,15 +65,12 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         throw new EntityNotFound(sprintf('Random image not found'));
     }
 
-    public function countBySportTypes(SportTypes $sportTypes): int
+    public function count(): int
     {
         $activities = $this->activityRepository->findAll();
         $totalImageCount = 0;
 
         foreach ($activities as $activity) {
-            if (!$sportTypes->has($activity->getSportType())) {
-                continue;
-            }
             $totalImageCount += $activity->getTotalImageCount();
         }
 

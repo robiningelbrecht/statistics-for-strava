@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\BuildApp\BuildPhotosHtml;
 
+use App\BuildApp\Countries;
 use App\Domain\Activity\Image\ImageRepository;
-use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypeRepository;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use League\Flysystem\FilesystemOperator;
@@ -19,6 +18,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         private ImageRepository $imageRepository,
         private SportTypeRepository $sportTypeRepository,
         private HidePhotosForSportTypes $hidePhotosForSportTypes,
+        private Countries $countries,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -29,22 +29,15 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildPhotosHtml);
 
         $importedSportTypes = $this->sportTypeRepository->findAll();
-        $sportTypesToRenderPhotosFor = SportTypes::fromArray(array_filter(
-            $importedSportTypes->toArray(),
-            fn (SportType $sportType): bool => !$this->hidePhotosForSportTypes->has($sportType),
-        ));
-        $images = $this->imageRepository->findBySportTypes($sportTypesToRenderPhotosFor);
-
-        $sportTypesWithImages = SportTypes::fromArray(array_filter(
-            $sportTypesToRenderPhotosFor->toArray(),
-            fn (SportType $sportType): bool => $images->hasForSportType($sportType)
-        ));
+        $images = $this->imageRepository->findAll();
 
         $this->buildStorage->write(
             'photos.html',
             $this->twig->load('html/photos.html.twig')->render([
                 'images' => $images,
-                'sportTypes' => $sportTypesWithImages,
+                'sportTypes' => $importedSportTypes,
+                'countries' => $this->countries->getUsedInActivities(),
+                'totalPhotoCount' => count($images),
             ]),
         );
     }
