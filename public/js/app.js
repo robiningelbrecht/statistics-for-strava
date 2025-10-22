@@ -1,16 +1,16 @@
-import {Heatmap} from "./leaflet/heatmap";
+import {Heatmap} from "./ui/heatmap";
 import {DataTableStorage} from "./filter";
 import Router from "./router";
-import Chat from "./chat";
+import Chat from "./ui/chat";
 import {updateGithubLatestRelease} from "./github";
 import Sidebar from "./ui/sidebar";
 import ChartManager from "./ui/charts";
 import ModalManager from "./ui/modals";
+import {PhotoWall} from "./ui/photo-wall";
 import MapManager from "./ui/maps";
 import TabsManager from "./ui/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
-import {PhotoWall} from "./photo-wall";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();

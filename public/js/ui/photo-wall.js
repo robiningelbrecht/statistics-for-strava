@@ -1,6 +1,6 @@
-import {DataTableStorage, FilterManager} from "./filter";
-import lightGallery from "../libraries/lightgallery/lightgallery.umd.min.js";
-import lgZoom from "../libraries/lightgallery/lightgallery.lg-zoom.min.js";
+import {DataTableStorage, FilterManager} from "../filter";
+import lightGallery from "../../libraries/lightgallery/lightgallery.umd.min.js";
+import lgZoom from "../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
 
 class LightGallery {
     constructor(wrapper) {
