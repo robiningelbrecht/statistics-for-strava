@@ -1,3 +1,27 @@
+# [v3.8.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.0) - 2025-10-23
+
+🔥 This release introduces a complete overhaul of the “Photos” page.
+
+> [!WARNING]  
+> The config option `photos.hidePhotosForSportTypes` has been removed. Use the new `defaultEnabledFilters` option instead:
+> ```yaml
+>   photos:
+>      # Optional, a list of filters that are enabled by default. For example, you can use this to automatically hide all photos from virtual activities.
+>      defaultEnabledFilters: {}
+> ```
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* ISSUE #1264: Fix NeuronAI bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1265
+* ISSUE #1268: Redesign photos page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1270
+* ISSUE #1268: Re-organize js files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1271
+* ISSUE #1269: Add start/end of segment on map by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1276
+* ISSUE #1274: Make sure the sport type list in the docs aligns with the list defined in the app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1277
+* ISSUE #1275: Update "Since I began working out ..." template phrasing by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1277
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.4...v3.8.0
+
 # [v3.7.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.4) - 2025-10-21
 
 > [!WARNING]  
