@@ -1,4 +1,4 @@
-import {DataTableStorage, FilterManager} from "../filter";
+import {DataTableStorage, FilterManager} from "../filters";
 
 class HeatmapDrawer {
     constructor(wrapper, config) {
