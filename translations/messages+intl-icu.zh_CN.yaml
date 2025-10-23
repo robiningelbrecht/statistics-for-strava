@@ -242,7 +242,7 @@ Segments: 路段
 Sep: 九月
 'Show information': 显示信息
 Simplified: 简化
-'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': '从{startDate}至今，{numberOfDaysAgo}多天以来，我已经锻炼了{totalDaysOfWorkingOut}天。'
+'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
 Skateboard: 滑板
 Skating: 滑冰
 'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'

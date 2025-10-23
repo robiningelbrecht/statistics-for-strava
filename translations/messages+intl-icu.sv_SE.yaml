@@ -242,7 +242,7 @@ Segments: Segment
 Sep: Sep
 'Show information': 'Visa information'
 Simplified: Förenklad
-'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Jag började träna för {numberOfDaysAgo} sedan den {startDate}, sen dess har jag haft {totalDaysOfWorkingOut} aktiva träningsdagar.'
+'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
 Skateboard: Skateboard
 Skating: Skridskoåkning
 'Slightly fresh – transitional zone': 'Något redo - Övergångsfas'

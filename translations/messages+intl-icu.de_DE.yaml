@@ -242,7 +242,7 @@ Segments: Segmente
 Sep: Sep
 'Show information': 'Informationen anzeigen'
 Simplified: Vereinfacht
-'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Seit ich vor {numberOfDaysAgo} am {startDate} mit dem Training begonnen habe, hatte ich {totalDaysOfWorkingOut} aktive Trainingstage.'
+'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
 Skateboard: Skateboard
 Skating: Skaten
 'Slightly fresh – transitional zone': 'Wenig in Form - Übergangszone'
