@@ -58,6 +58,7 @@ Compare: Compare
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: 交叉健身
 'Custom gear disabled': 'Custom gear disabled'
+Cycling: Cycling
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: 仪表板
@@ -231,6 +232,7 @@ Rides: 骑行
 'Rock Climbing': 攀岩
 'Roller Ski': 轮滑
 Rowing: 划船
+Running: Running
 Runs: 跑步
 Sail: 帆船
 Sat: 周六
@@ -313,6 +315,7 @@ Unspecified: Unspecified
 'Virtual Row': 虚拟划船
 'Virtual Runs': 虚拟跑步
 'Virtual workout assistant': 'Virtual workout assistant'
+Walking: Walking
 Walks: 步行
 'Water Sports': 水上运动
 'We detected following issues': 'We detected following issues'

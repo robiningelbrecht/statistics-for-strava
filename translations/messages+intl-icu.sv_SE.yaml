@@ -58,6 +58,7 @@ Compare: Jämför
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
+Cycling: Cycling
 'Daily TRIMP': 'Daglig TRIMP'
 'Daily activities': 'Dagliga aktiviteter'
 Dashboard: Översikt
@@ -231,6 +232,7 @@ Rides: Cykling
 'Rock Climbing': Klättring
 'Roller Ski': Rullskidor
 Rowing: Rodd
+Running: Running
 Runs: Löpning
 Sail: Segling
 Sat: Lör
@@ -313,6 +315,7 @@ Unspecified: Ospecificerad
 'Virtual Row': 'Virtuell Rodd'
 'Virtual Runs': 'Virtuell Löpning'
 'Virtual workout assistant': 'Virtuell tränings assistent'
+Walking: Walking
 Walks: Promenader
 'Water Sports': Vattensporter
 'We detected following issues': 'Vi har upptäckt följande problem'

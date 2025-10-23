@@ -243,26 +243,48 @@ This is the list of sport types supported in the `config.yaml` file. Make sure t
 * RollerSki
 * Skateboard
 
-### Other
+### Racquet & Paddle Sports
 
 * Badminton
-* Crossfit
-* Elliptical
-* Golf
-* Handcycle
-* HighIntensityIntervalTraining
 * Pickleball
-* Pilates
 * Racquetball
-* RockClimbing
-* VirtualRow
-* Sail
-* Soccer
 * Squash
-* StairStepper
 * TableTennis
 * Tennis
+
+### Fitness
+
+* Crossfit
 * WeightTraining
-* Wheelchair
 * Workout
+* StairStepper
+* VirtualRow
+* Elliptical
+* HighIntensityIntervalTraining
+
+### Mind & Body Sports
+
+* Pilates
 * Yoga
+
+### Outdoor Sports
+
+* Golf
+* RockClimbing
+* Sail
+* Soccer
+
+### Adaptive & Inclusive Sports
+
+* Handcycle
+* Wheelchair
+
+
+
+
+
+
+
+
+
+

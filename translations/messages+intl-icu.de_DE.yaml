@@ -58,6 +58,7 @@ Compare: Vergleich
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Eigene Ausrüstung deaktiviert'
+Cycling: Cycling
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktiviten'
 Dashboard: Dashboard
@@ -231,6 +232,7 @@ Rides: Radfahren
 'Rock Climbing': Klettern
 'Roller Ski': Rollski
 Rowing: Rudern
+Running: Running
 Runs: Läufe
 Sail: Segeln
 Sat: Sa
@@ -313,6 +315,7 @@ Unspecified: 'Nicht spezifiziert'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
 'Virtual workout assistant': 'Virtueller Workout Assistent'
+Walking: Walking
 Walks: Spaziergänge
 'Water Sports': Wassersport
 'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
