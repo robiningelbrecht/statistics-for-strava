@@ -1,5 +1,5 @@
 
-StatisticsforStravav3.7.4
+StatisticsforStravav3.8.0
 
 Runningdatabasemigrations...
 
