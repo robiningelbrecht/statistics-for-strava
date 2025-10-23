@@ -1,5 +1,5 @@
 import {Heatmap} from "./ui/heatmap";
-import {DataTableStorage} from "./filter";
+import {DataTableStorage} from "./filters";
 import Router from "./router";
 import Chat from "./ui/chat";
 import {updateGithubLatestRelease} from "./github";

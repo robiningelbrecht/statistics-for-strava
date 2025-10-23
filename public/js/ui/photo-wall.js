@@ -1,13 +1,14 @@
-import {DataTableStorage, FilterManager} from "../filter";
+import {DataTableStorage, FilterManager} from "../filters";
 import lightGallery from "../../libraries/lightgallery/lightgallery.umd.min.js";
 import lgZoom from "../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
+import lgFullscreen from "../../libraries/lightgallery/lightgallery.lg-fullscreen.min";
 
 class LightGallery {
     constructor(wrapper) {
         this.trigger = wrapper.querySelector('[data-light-gallery-trigger]');
         this.gallery = lightGallery(this.trigger, {
             dynamic: true,
-            plugins: [lgZoom],
+            plugins: [lgZoom, lgFullscreen],
             backdropDuration: 200,
             dynamicEl: [],
         });

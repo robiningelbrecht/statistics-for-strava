@@ -1,4 +1,4 @@
-import {ClusterRenderer, DataTableStorage, FilterManager, Sorter} from "../filter";
+import {ClusterRenderer, DataTableStorage, FilterManager, Sorter} from "../filters";
 import {debounce} from "../utils";
 
 export default class DataTableManager {

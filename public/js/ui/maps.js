@@ -14,9 +14,27 @@ export default class MapManager {
 
             const featureGroup = L.featureGroup();
             data.routes.forEach((route) => {
-                L.polyline(L.Polyline.fromEncoded(route).getLatLngs(), {
-                    color: '#fc6719', weight: 2, opacity: 0.9, lineJoin: 'round'
+                const coordinates = L.Polyline.fromEncoded(route).getLatLngs();
+
+                L.polyline(coordinates, {
+                    color: '#fc6719',
+                    weight: 2,
+                    opacity: 0.9,
+                    lineJoin: 'round'
                 }).addTo(featureGroup);
+
+                const addMarker = (latLng, color) => {
+                    L.circleMarker(latLng, {
+                        radius: 8,
+                        color: '#303030',
+                        fillColor: color,
+                        fillOpacity: 1,
+                        opacity: 1
+                    }).addTo(featureGroup);
+                };
+
+                if (data.showStartMarker) addMarker(coordinates[0], '#3ba272');
+                if (data.showEndMarker) addMarker(coordinates.at(-1), '#BD2D22');
             });
 
             if (data.imageOverlay) {
@@ -55,18 +73,19 @@ export default class MapManager {
             const initialZoom = map.getZoom();
 
             chart.on('updateAxisPointer', function (event) {
-                if (event.dataIndex && event.dataIndex in coordinateMap) {
-                    const coordinate = coordinateMap[event.dataIndex];
-                    marker.setLatLng(coordinate);
-                    marker.setStyle({opacity: 1, fillOpacity: 1});
-
-                    if (map.getZoom() > initialZoom) {
-                        map.panTo(coordinate);
-                    } else if (!map.getBounds().contains(coordinate)) {
-                        map.panTo(coordinate);
-                    }
-                } else {
+                if (!event.dataIndex || !event.dataIndex in coordinateMap) {
                     marker.setStyle({opacity: 0, fillOpacity: 0});
+                    return;
+                }
+
+                const coordinate = coordinateMap[event.dataIndex];
+                marker.setLatLng(coordinate);
+                marker.setStyle({opacity: 1, fillOpacity: 1});
+
+
+                const shouldPan = map.getZoom() > initialZoom || !map.getBounds().contains(coordinate);
+                if (shouldPan) {
+                    map.panTo(coordinate);
                 }
             });
         });
