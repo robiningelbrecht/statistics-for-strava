@@ -3321,6 +3321,33 @@
       }
     }
   }
+  .group-focus\/image\:translate-y-0 {
+    &:is(:where(.group\/image):focus *) {
+      --tw-translate-y: calc(var(--spacing) * 0);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
+  .group-focus\/image\:scale-105 {
+    &:is(:where(.group\/image):focus *) {
+      --tw-scale-x: 105%;
+      --tw-scale-y: 105%;
+      --tw-scale-z: 105%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
+  }
+  .group-focus\/image\:bg-black\/20 {
+    &:is(:where(.group\/image):focus *) {
+      background-color: color-mix(in srgb, #000000 20%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-black) 20%, transparent);
+      }
+    }
+  }
+  .group-focus\/image\:opacity-100 {
+    &:is(:where(.group\/image):focus *) {
+      opacity: 100%;
+    }
+  }
   .group-aria-\[sort\=ascending\]\:text-strava-orange {
     &:is(:where(.group)[aria-sort="ascending"] *) {
       color: var(--color-strava-orange);
