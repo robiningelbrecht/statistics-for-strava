@@ -31,7 +31,7 @@ final readonly class FindPersonalRecordsPerMonthQueryHandler implements QueryHan
                 ORDER BY monthNumber DESC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

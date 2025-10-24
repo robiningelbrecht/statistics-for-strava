@@ -61,7 +61,7 @@ final readonly class DistancePerMonthPerGearChart
         }
 
         foreach ($distancePerGearAndMonth as $gearId => $months) {
-            $distancePerGearAndMonth[$gearId] = array_map('round', $months);
+            $distancePerGearAndMonth[$gearId] = array_map(round(...), $months);
         }
 
         $series = [];

@@ -31,7 +31,7 @@ final readonly class FindActivityCountPerMonthQueryHandler implements QueryHandl
                 ORDER BY sportType ASC, monthNumber ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

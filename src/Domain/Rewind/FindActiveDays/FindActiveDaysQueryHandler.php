@@ -32,7 +32,7 @@ final readonly class FindActiveDaysQueryHandler implements QueryHandler
                   )
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

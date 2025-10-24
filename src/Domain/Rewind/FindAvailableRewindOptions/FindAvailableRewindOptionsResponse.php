@@ -20,7 +20,7 @@ final readonly class FindAvailableRewindOptionsResponse implements Response
      */
     public function getAvailableOptions(): array
     {
-        return array_map('strval', array_keys($this->availableRewindOptions));
+        return array_map(strval(...), array_keys($this->availableRewindOptions));
     }
 
     public function getYearsToQuery(string $option): Years

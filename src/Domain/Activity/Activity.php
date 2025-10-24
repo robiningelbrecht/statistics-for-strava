@@ -659,7 +659,7 @@ final class Activity implements SupportsAITooling
      */
     public function getSearchables(): array
     {
-        return array_map('strtolower', [$this->getName()]);
+        return array_map(strtolower(...), [$this->getName()]);
     }
 
     /**

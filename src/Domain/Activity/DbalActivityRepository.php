@@ -56,7 +56,7 @@ final class DbalActivityRepository implements ActivityRepository
                 LIMIT 1
             SQL,
             [
-                'years' => array_map('strval', $years->toArray()),
+                'years' => array_map(strval(...), $years->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

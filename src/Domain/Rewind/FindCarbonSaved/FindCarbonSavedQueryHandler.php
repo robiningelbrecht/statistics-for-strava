@@ -31,7 +31,7 @@ final readonly class FindCarbonSavedQueryHandler implements QueryHandler
                 AND isCommute = 1
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,
