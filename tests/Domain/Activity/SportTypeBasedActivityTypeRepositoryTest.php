@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Activity;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypes;
@@ -49,7 +50,8 @@ class SportTypeBasedActivityTypeRepositoryTest extends ContainerTestCase
         $activityTypeRepository = new SportTypeBasedActivityTypeRepository(
             new DbalSportTypeRepository(
                 $this->getConnection(),
-                SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK])
+                SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK]),
+                HidePhotosForSportTypes::empty()
             )
         );
 
@@ -61,7 +63,8 @@ class SportTypeBasedActivityTypeRepositoryTest extends ContainerTestCase
         $activityTypeRepository = new SportTypeBasedActivityTypeRepository(
             new DbalSportTypeRepository(
                 $this->getConnection(),
-                SportTypesSortingOrder::fromArray([SportType::WALK, SportType::RUN])
+                SportTypesSortingOrder::fromArray([SportType::WALK, SportType::RUN]),
+                HidePhotosForSportTypes::empty()
             )
         );
 

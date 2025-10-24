@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Activity\SportType;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -40,7 +41,8 @@ class DbalSportTypeRepositoryTest extends ContainerTestCase
 
         $sportTypeRepository = new DbalSportTypeRepository(
             $this->getConnection(),
-            SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK])
+            SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK]),
+            HidePhotosForSportTypes::empty(),
         );
 
         $this->assertEquals(
@@ -50,7 +52,8 @@ class DbalSportTypeRepositoryTest extends ContainerTestCase
 
         $sportTypeRepository = new DbalSportTypeRepository(
             $this->getConnection(),
-            SportTypesSortingOrder::fromArray([SportType::WALK, SportType::RUN])
+            SportTypesSortingOrder::fromArray([SportType::WALK, SportType::RUN]),
+            HidePhotosForSportTypes::empty()
         );
 
         $this->assertEquals(
@@ -85,10 +88,19 @@ class DbalSportTypeRepositoryTest extends ContainerTestCase
                 ->build(),
             []
         ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::random())
+                ->withSportType(SportType::RIDE)
+                ->withTotalImageCount(3)
+                ->build(),
+            []
+        ));
 
         $sportTypeRepository = new DbalSportTypeRepository(
             $this->getConnection(),
-            SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK])
+            SportTypesSortingOrder::fromArray([SportType::RUN, SportType::WALK]),
+            HidePhotosForSportTypes::fromArray([SportType::RIDE])
         );
 
         $this->assertEquals(

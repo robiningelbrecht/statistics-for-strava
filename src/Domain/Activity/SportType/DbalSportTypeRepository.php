@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\SportType;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Infrastructure\Repository\DbalRepository;
 use Doctrine\DBAL\Connection;
 
@@ -12,6 +13,7 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function __construct(
         Connection $connection,
         private SportTypesSortingOrder $sportTypesSortingOrder,
+        private HidePhotosForSportTypes $hidePhotosForSportTypes,
     ) {
         parent::__construct($connection);
     }
@@ -28,10 +30,20 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
 
     public function findForImages(): SportTypes
     {
+        $notInSportTypes = ['invalid'];
+        /** @var SportType $sportType */
+        foreach ($this->hidePhotosForSportTypes as $sportType) {
+            $notInSportTypes[] = $sportType->value;
+        }
+
         return SportTypes::fromArray(array_map(
             SportType::from(...),
             $this->connection->executeQuery(
-                sprintf('SELECT DISTINCT sportType FROM Activity WHERE totalImageCount > 0 ORDER BY CASE sportType %s END', $this->buildOrderByStatement())
+                sprintf(
+                    'SELECT DISTINCT sportType FROM Activity WHERE totalImageCount > 0 AND sportType NOT IN (%s) ORDER BY CASE sportType %s END',
+                    "'".implode("','", $notInSportTypes)."'",
+                    $this->buildOrderByStatement()
+                )
             )->fetchFirstColumn()
         ));
     }
