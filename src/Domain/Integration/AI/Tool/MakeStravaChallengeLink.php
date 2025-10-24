@@ -15,8 +15,9 @@ class MakeStravaChallengeLink extends Tool
         parent::__construct(
             'make_strava_challenge_link',
             <<<DESC
-            Generates a direct Strava URL for a given challenge using its slug.
-            Requires the challenge slug and returns a full link to the corresponding Strava challenge page.
+            Generates a direct Strava URL for a specific challenge using its unique slug.
+            Use this tool when the user wants a link to view a challenge on Strava. 
+            It requires the challenge slug and returns a full URL to the corresponding Strava challenge page.
             DESC
         );
     }

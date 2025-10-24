@@ -16,9 +16,9 @@ final class GetChallenges extends Tool
         parent::__construct(
             'get_challenges',
             <<<DESC
-            Retrieves all available challenge data from the database.
-            Use this tool when the user asks about current, upcoming, or past challenges
-            Returns information such as challenge name, date and obtained on date
+            Retrieves all available challenge data from the database, including challenge name, start date, and completion date.
+            Use this tool when the user asks about current, upcoming, or past challenges. 
+            Example requests include “List the challenges I completed last month.”
             DESC
         );
     }
