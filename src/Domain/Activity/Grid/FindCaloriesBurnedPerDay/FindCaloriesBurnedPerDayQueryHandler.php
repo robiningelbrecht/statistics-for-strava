@@ -32,7 +32,7 @@ final readonly class FindCaloriesBurnedPerDayQueryHandler implements QueryHandle
                 ORDER BY date DESC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

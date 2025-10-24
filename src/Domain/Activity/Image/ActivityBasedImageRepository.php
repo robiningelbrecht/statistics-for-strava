@@ -2,6 +2,7 @@
 
 namespace App\Domain\Activity\Image;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -12,6 +13,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 {
     public function __construct(
         private ActivityRepository $activityRepository,
+        private HidePhotosForSportTypes $hidePhotosForSportTypes,
     ) {
     }
 
@@ -22,6 +24,10 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
             if (0 === $activity->getTotalImageCount()) {
+                continue;
+            }
+
+            if ($this->hidePhotosForSportTypes->has($activity->getSportType())) {
                 continue;
             }
 
@@ -71,6 +77,9 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         $totalImageCount = 0;
 
         foreach ($activities as $activity) {
+            if ($this->hidePhotosForSportTypes->has($activity->getSportType())) {
+                continue;
+            }
             $totalImageCount += $activity->getTotalImageCount();
         }
 

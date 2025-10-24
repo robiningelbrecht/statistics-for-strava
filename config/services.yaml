@@ -104,6 +104,10 @@ services:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
 
+    App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes:
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
+
     App\BuildApp\ProfilePictureUrl:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("general.profilePictureUrl")']

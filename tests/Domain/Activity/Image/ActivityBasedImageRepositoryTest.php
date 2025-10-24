@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Activity\Image;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -107,6 +108,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
 
         $this->imageRepository = new ActivityBasedImageRepository(
             $this->getContainer()->get(ActivityRepository::class),
+            HidePhotosForSportTypes::fromArray([])
         );
     }
 }
