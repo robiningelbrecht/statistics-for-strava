@@ -14,6 +14,7 @@ final class MigrationConsoleOutput extends NullOutput
     /**
      * @param string|string[] $messages
      */
+    #[\Override]
     public function writeln(string|iterable $messages, int $options = self::OUTPUT_NORMAL): void
     {
         if (is_string($messages)) {
@@ -25,6 +26,7 @@ final class MigrationConsoleOutput extends NullOutput
     /**
      * @param string|string[] $messages
      */
+    #[\Override]
     public function write(string|iterable $messages, bool $newline = false, int $options = self::OUTPUT_NORMAL): void
     {
         $this->writeln($messages, $options);
