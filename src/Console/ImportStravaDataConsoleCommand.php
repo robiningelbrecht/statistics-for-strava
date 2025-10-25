@@ -51,6 +51,9 @@ final class ImportStravaDataConsoleCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (is_null($consoleApplication = $this->getApplication())) {
+            throw new \RuntimeException('Console application is not set.');
+        }
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
         try {
@@ -71,7 +74,7 @@ final class ImportStravaDataConsoleCommand extends Command
 
         $output->writeln('Running database migrations...');
         $this->migrationRunner->run(
-            application: $this->getApplication(),
+            application: $consoleApplication,
             output: $output
         );
 
