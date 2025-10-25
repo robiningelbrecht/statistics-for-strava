@@ -40,7 +40,7 @@ class CombiningGearRepositoryTest extends ContainerTestCase
         $this->getContainer()->get(CustomGearRepository::class)->save($gearFour);
 
         $this->assertMatchesJsonSnapshot(
-            $this->getConnection()->executeQuery('SELECT * FROM GEAR')->fetchAllAssociative()
+            $this->getConnection()->executeQuery('SELECT * FROM Gear')->fetchAllAssociative()
         );
     }
 }

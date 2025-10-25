@@ -226,6 +226,7 @@ Ranking: Rankning
 'Rest days': Vilodagar
 'Rest days in last 7 days': 'Vilodagar de senaste 7 dagarna'
 'Rest days vs. active days': 'Vilodagar kontra aktiva dagar'
+'Retired gear': 'Retired gear'
 Rewind: Tillbakablick
 'Rewind comparisons are only available on larger screens.': 'Tillbakablickar är endast tillgängliga på större skärmar.'
 Rides: Cykling
@@ -375,6 +376,8 @@ more: mera
 n/a: n/a
 never: aldrig
 'on': på
+'per activity': 'per activity'
+'per hour': 'per hour'
 to: till
 total: totalt
 weeks: veckor

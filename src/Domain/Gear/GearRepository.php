@@ -7,4 +7,6 @@ namespace App\Domain\Gear;
 interface GearRepository
 {
     public function findAll(): Gears;
+
+    public function hasGear(): bool;
 }

@@ -21,44 +21,61 @@
                 {% endif %}
             </div>
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-center text-gray-500">
+                <table class="w-full text-sm text-center text-gray-500" data-accordion="table-gear"
+                       data-active-classes="text-gray-500" data-inactive-classes="text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                        <th rowspan="2" scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
 
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col" class="px-6 py-3">
                             # {{ "workouts"|trans }}
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('distance') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('elevation') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col" class="px-6 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('speed') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th rowspan="2" scope="col" class="px-2 py-3">
                             <div class="flex items-center justify-center">
                                 {{ svg('calories') }}
                             </div>
                         </th>
+                        <th rowspan="2" scope="col" class="px-2 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('wallet') }}
+                            </div>
+                        </th>
+                        <th colspan="2" scope="col" class="px-2 py-3">
+                            Relative cost
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                            {{ "per hour"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                            {{ "per activity"|trans }}
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for statistic in gearStatistics.getRows() %}
+                    {% for statistic in gearStatistics.getForActiveGear() %}
                         <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                             <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                                 <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
@@ -88,9 +105,82 @@
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
                             </td>
+                            <td class="px-6 py-2 truncate">
+                                €3 500
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                €50
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                €20
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% set retiredGearStats = gearStatistics.getForRetiredGear() %}
+                    {% if retiredGearStats  %}
+                    <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}"
+                        id="table-retired-gear-header"
+                        data-accordion-target="#table-retired-gear-content"
+                        aria-expanded="false" aria-controls="table-retired-gear-content">
+                        <td colspan="10" class="px-6 py-2">
+                            <div class="flex items-center justify-center gap-x-2 text-blue-600 hover:underline cursor-pointer">
+                                <svg data-accordion-icon class="size-2 rotate-180 shrink-0" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M9 5 5 1 1 5"/>
+                                </svg>
+                                <div>{{ "Retired gear"|trans }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="hidden border-b"
+                           id="table-retired-gear-content"
+                           aria-labelledby="table-retired-gear-header">
+                    {% for statistic in gearStatistics.getForRetiredGear() %}
+                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
+                                    {{ statistic.name }}
+                                </a>
+                            </th>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.numberOfWorkouts }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% if statistic.distance.toFloat() > 0 %}
+                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
+                                {% else %}
+                                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.elevation|renderMeasurement(0) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.movingTime }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.averageSpeed|renderMeasurement(1) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                €3 500
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                €50
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                €20
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
+                    {% endif %}
                 </table>
             </div>
         </div>
