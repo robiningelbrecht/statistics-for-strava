@@ -70,7 +70,12 @@ final class ImportStravaDataConsoleCommand extends Command
         );
 
         $output->writeln('Running database migrations...');
-        $this->migrationRunner->run();
+        /** @var \Symfony\Component\Console\Application $consoleApplication */
+        $consoleApplication = $this->getApplication();
+        $this->migrationRunner->run(
+            application: $consoleApplication,
+            output: $output
+        );
 
         $this->commandBus->dispatch(new ImportAthlete($output));
         $this->commandBus->dispatch(new ImportGear($output));
