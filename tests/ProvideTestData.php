@@ -265,6 +265,16 @@ trait ProvideTestData
                 ->build()
         );
 
+        $gearRepository->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659562'))
+                ->withCreatedOn(SerializableDateTime::fromString('2023-06-20 09:04:58'))
+                ->withDistanceInMeter(Meter::from(100000))
+                ->withName('Zwift One')
+                ->withIsRetired(true)
+                ->build()
+        );
+
         /** @var ActivityStreamRepository $activityStreamRepository */
         $activityStreamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
         $activityStreamRepository->add(

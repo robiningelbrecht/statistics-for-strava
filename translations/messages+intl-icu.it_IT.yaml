@@ -222,10 +222,12 @@ Race: Gara
 'Racquet Ball': Racquetball
 Ranking: Classifica
 'Reduced carbon emission by commuting': 'Emissioni di carbonio ridotte grazie agli spostamenti casa-lavoro'
+'Relative cost': 'Relative cost'
 'Rest Days': 'Giorni di riposo'
 'Rest days': 'Giorni di riposo'
 'Rest days in last 7 days': 'Giorni di riposo negli ultimi 7 giorni'
 'Rest days vs. active days': 'Giorni di riposo vs. giorni attivi'
+'Retired gear': 'Retired gear'
 Rewind: Indietro
 'Rewind comparisons are only available on larger screens.': 'I confronti Rewind sono disponibili solo su schermi più grandi.'
 Rides: Gare
@@ -375,6 +377,8 @@ more: altro
 n/a: n/d
 never: mai
 'on': il
+'per activity': 'per activity'
+'per hour': 'per hour'
 to: a
 total: totale
 weeks: settimane

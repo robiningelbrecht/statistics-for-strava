@@ -24,4 +24,14 @@ final readonly class CombiningGearRepository implements GearRepository
 
         return $gears;
     }
+
+    public function hasGear(): bool
+    {
+        $gear = $this->importedGearRepository->findAll();
+        if (!$gear->isEmpty()) {
+            return true;
+        }
+
+        return !$this->customGearRepository->findAll()->isEmpty();
+    }
 }
