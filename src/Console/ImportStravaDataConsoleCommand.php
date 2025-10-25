@@ -70,7 +70,10 @@ final class ImportStravaDataConsoleCommand extends Command
         );
 
         $output->writeln('Running database migrations...');
-        $this->migrationRunner->run();
+        $this->migrationRunner->run(
+            application: $this->getApplication(),
+            output: $output
+        );
 
         $this->commandBus->dispatch(new ImportAthlete($output));
         $this->commandBus->dispatch(new ImportGear($output));
