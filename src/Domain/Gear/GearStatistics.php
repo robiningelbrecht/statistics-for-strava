@@ -28,11 +28,27 @@ final readonly class GearStatistics
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
-    public function getRows(): array
+    public function getForActiveGear(): array
     {
-        $statistics = $this->gears->map(function (Gear $gear) {
+        return $this->buildStatistics($this->gears->filter(fn (Gear $gear): bool => !$gear->isRetired()));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getForRetiredGear(): array
+    {
+        return $this->buildStatistics($this->gears->filter(fn (Gear $gear): bool => $gear->isRetired()));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function buildStatistics(Gears $gears): array
+    {
+        $statistics = $gears->map(function (Gear $gear) {
             $activitiesWithGear = $this->activities->filter(fn (Activity $activity): bool => $activity->getGearId() == $gear->getId());
             $countActivitiesWithGear = count($activitiesWithGear);
             $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());

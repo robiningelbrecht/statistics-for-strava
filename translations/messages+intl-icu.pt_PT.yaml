@@ -226,6 +226,7 @@ Ranking: Ranking
 'Rest days': 'Dias de descanso'
 'Rest days in last 7 days': 'Descanso nos últimos 7 dias'
 'Rest days vs. active days': 'Dias de descanso vs. Dias activo'
+'Retired gear': 'Retired gear'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Comparações Rewind apenas estão disponíveis em ecrãs maiores.'
 Rides: 'Passeios de bicicleta'
@@ -375,6 +376,8 @@ more: mais
 n/a: n/d
 never: nunca
 'on': 'on'
+'per activity': 'per activity'
+'per hour': 'per hour'
 to: to
 total: total
 weeks: semanas
