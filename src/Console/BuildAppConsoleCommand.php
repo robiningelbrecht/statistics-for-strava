@@ -54,10 +54,8 @@ final class BuildAppConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
-        if (is_null($consoleApplication = $this->getApplication())) {
-            throw new \RuntimeException('Console application is not set.');
-        }
-
+        /** @var \Symfony\Component\Console\Application $consoleApplication */
+        $consoleApplication = $this->getApplication();
         if (!$this->migrationRunner->isAtLatestVersion($consoleApplication)) {
             $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');
 
