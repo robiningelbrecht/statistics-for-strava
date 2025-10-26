@@ -58,7 +58,7 @@ Compare: Vergleich
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Eigene Ausrüstung deaktiviert'
-Cycling: Cycling
+Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktiviten'
 Dashboard: Dashboard
@@ -93,7 +93,7 @@ Favourite: Favorit
 Feb: Feb
 'Filter on KOM segments': 'Filter für KOM-Segmente'
 'Filter on country': 'Filter nach Land'
-'Filter on device': 'Filter on device'
+'Filter on device': 'Filter nach Gerät'
 'Filter on gear': 'Filter nach Ausrüstung'
 'Filter on sport type': 'Filter nach Sportart'
 'Filter on starred segments': 'Filter für markierte Segmente'
@@ -186,7 +186,7 @@ Night: Nacht
 'No other options to compare with': 'Keine anderen Optionen zum Vergleich'
 None: Keine
 'Nordic Ski': 'Nordischer Skilanglauf'
-Normalized: Normalized
+Normalized: Normalisiert
 'Not supported': 'Nicht unterstützt'
 Nov: Nov
 'Number of activities per month': 'Anzahl an Aktivitäten pro Monat'
@@ -232,7 +232,7 @@ Rides: Radfahren
 'Rock Climbing': Klettern
 'Roller Ski': Rollski
 Rowing: Rudern
-Running: Running
+Running: Laufen
 Runs: Läufe
 Sail: Segeln
 Sat: Sa
@@ -244,7 +244,7 @@ Segments: Segmente
 Sep: Sep
 'Show information': 'Informationen anzeigen'
 Simplified: Vereinfacht
-'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
+'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Seit ich vor {numberOfDaysAgo} Tagen am {startDate} angefangen habe Strava zu benutzen, hatte ich {totalDaysOfWorkingOut} aktive Trainingstage.'
 Skateboard: Skateboard
 Skating: Skaten
 'Slightly fresh – transitional zone': 'Wenig in Form - Übergangszone'
@@ -315,7 +315,7 @@ Unspecified: 'Nicht spezifiziert'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
 'Virtual workout assistant': 'Virtueller Workout Assistent'
-Walking: Walking
+Walking: Gehen
 Walks: Spaziergänge
 'Water Sports': Wassersport
 'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
@@ -333,7 +333,7 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout type': Trainingseinheitstyp
 Year: Jahr
-'Yearly stats': 'Yearly stats'
+'Yearly stats': 'Jährliche Statistiken'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Lädnern aufgezeichnet, das sind {percentage} aller Länder 🌍'
 'Your PB badge': 'Dein PB Abzeichen'
@@ -351,7 +351,7 @@ Yoga: Yoga
 'Zone 5 (maximal)': 'Zone 5 (maximal)'
 'Zwift Statistics': Zwift-Statistiken
 'Zwift badge': 'Zwift Abzeichen'
-'Zwift stats': 'Zwift stats'
+'Zwift stats': 'Zwift Statistiken'
 activities: Aktivitäten
 age: Alter
 and: und
@@ -384,7 +384,7 @@ workouts: Trainingseinheiten
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} alle {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} Aktivitäten im {year}'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
+'{numberOfResults} photos based on your active filters': '{numberOfResults} Fotos basierend auf deinen aktiven Filtern'
 '{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '-10 bis -30: Aufbau/Ermüdungszone. Produktiver Bereich für schweres Training'
