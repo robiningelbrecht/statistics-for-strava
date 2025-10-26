@@ -20,6 +20,7 @@ use App\Domain\Integration\AI\Tool\GetActivity;
 use App\Domain\Integration\AI\Tool\GetActivityLaps;
 use App\Domain\Integration\AI\Tool\GetActivitySegmentEfforts;
 use App\Domain\Integration\AI\Tool\GetActivitySplits;
+use App\Domain\Integration\AI\Tool\GetActivityStreams;
 use App\Domain\Integration\AI\Tool\GetAllActivitiesSummary;
 use App\Domain\Integration\AI\Tool\GetAthleteDetails;
 use App\Domain\Integration\AI\Tool\GetChallenges;
@@ -68,7 +69,7 @@ class ToolkitTest extends ContainerTestCase
     public function testItRegistersAllTools(): void
     {
         $this->assertCount(
-            15,
+            16,
             $this->getContainer()->get(ToolkitInterface::class)->tools(),
         );
     }
@@ -87,6 +88,11 @@ class ToolkitTest extends ContainerTestCase
 
         yield 'GetActivitySegmentEfforts Tool' => [
             GetActivitySegmentEfforts::class,
+            ['123456789'],
+        ];
+
+        yield 'GetActivityStreams Tool' => [
+            GetActivityStreams::class,
             ['123456789'],
         ];
 
