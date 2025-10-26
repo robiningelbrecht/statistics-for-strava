@@ -26,6 +26,7 @@ use App\Domain\Integration\AI\Tool\GetChallenges;
 use App\Domain\Integration\AI\Tool\GetDefaultHeartRateZone;
 use App\Domain\Integration\AI\Tool\GetFtpHistory;
 use App\Domain\Integration\AI\Tool\GetGear;
+use App\Domain\Integration\AI\Tool\GetMostRecentActivity;
 use App\Domain\Integration\AI\Tool\GetSegment;
 use App\Domain\Integration\AI\Tool\MakeStravaActivityLink;
 use App\Domain\Integration\AI\Tool\MakeStravaChallengeLink;
@@ -119,8 +120,13 @@ class ToolkitTest extends ContainerTestCase
             [],
         ];
 
-        yield 'GetMostRecentActivities Tool' => [
+        yield 'GetAllActivitiesSummary Tool' => [
             GetAllActivitiesSummary::class,
+            [],
+        ];
+
+        yield 'GetMostRecentActivity Tool' => [
+            GetMostRecentActivity::class,
             [],
         ];
 
