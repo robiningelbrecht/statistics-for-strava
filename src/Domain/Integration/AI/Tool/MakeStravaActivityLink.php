@@ -41,6 +41,12 @@ final class MakeStravaActivityLink extends Tool
         ];
     }
 
+    #[\Override]
+    public function getMaxTries(): int
+    {
+        return 100;
+    }
+
     public function __invoke(string $activityId): string
     {
         return sprintf('https://www.strava.com/activities/%s', $activityId);
