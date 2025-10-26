@@ -1,3 +1,15 @@
+# [v3.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.1) - 2025-10-26
+
+## What's Changed
+* ISSUE #1279: Re-introduce photos.hidePhotosForSportTypes by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1280
+* ISSUE #1279: Show activity details on image hover by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1283
+* ISSUE #1281: Add Caddy rule to cache /files/* by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1285
+* ISSUE #1284: Improve agent chat tools by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1286
+* ISSUE #1289: Better MigrationRunner by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1290
+* ISSUE #1287: Fix tool max calls for AI integration by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1292
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.0...v3.8.1
+
 # [v3.8.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.0) - 2025-10-23
 
 🔥 This release introduces a complete overhaul of the “Photos” page.
