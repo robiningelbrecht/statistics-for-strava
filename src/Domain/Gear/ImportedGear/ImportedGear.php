@@ -11,6 +11,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Money\Money;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'Gear')]
@@ -21,6 +22,7 @@ class ImportedGear implements Gear
     private string $imageSrc;
     private SportTypes $sportTypes;
     private ActivityTypes $activityTypes;
+    private ?Money $purchasePrice = null;
 
     final private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
@@ -33,6 +35,7 @@ class ImportedGear implements Gear
         private string $name,
         #[ORM\Column(type: 'boolean')]
         private bool $isRetired,
+        private readonly GearType $type,
     ) {
         $this->sportTypes = SportTypes::empty();
         $this->activityTypes = ActivityTypes::empty();
@@ -40,6 +43,7 @@ class ImportedGear implements Gear
 
     public static function create(
         GearId $gearId,
+        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -51,11 +55,13 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
+            type: $type,
         );
     }
 
     public static function fromState(
         GearId $gearId,
+        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -67,12 +73,18 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
+            type: $type,
         );
     }
 
     public function getId(): GearId
     {
         return $this->gearId;
+    }
+
+    public function getType(): GearType
+    {
+        return $this->type;
     }
 
     public function updateName(string $name): self
@@ -159,6 +171,18 @@ class ImportedGear implements Gear
             }
             $this->activityTypes->add($activityType);
         }
+
+        return $this;
+    }
+
+    public function getPurchasePrice(): ?Money
+    {
+        return $this->purchasePrice;
+    }
+
+    public function enrichWithPurchasePrice(Money $purchasePrice): Gear
+    {
+        $this->purchasePrice = $purchasePrice;
 
         return $this;
     }

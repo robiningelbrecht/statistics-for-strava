@@ -10,8 +10,11 @@ use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\DistanceOverTimePerGearChart;
 use App\Domain\Gear\DistancePerMonthPerGearChart;
 use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDay;
+use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\GearStatistics;
+use App\Domain\Gear\GearType;
+use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -27,6 +30,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
     public function __construct(
         private GearRepository $gearRepository,
         private CustomGearConfig $customGearConfig,
+        private ImportedGearConfig $importedGearConfig,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ActivitiesEnricher $activitiesEnricher,
         private UnitSystem $unitSystem,
@@ -49,6 +53,15 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             startDate: $activities->getFirstActivityStartDate(),
             endDate: $now
         );
+
+        /** @var Gear $gear */
+        foreach ($allGear as $gear) {
+            if (GearType::CUSTOM === $gear->getType()) {
+                // Already enriched in CustomGearConfig.
+                continue;
+            }
+            $this->importedGearConfig->enrichGearWithCustomData($gear);
+        }
 
         $this->buildStorage->write(
             'gear.html',

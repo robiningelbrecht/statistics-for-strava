@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Gear\ImportedGear;
 
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -35,6 +36,7 @@ final class ImportedGearBuilder
     {
         return ImportedGear::fromState(
             gearId: $this->gearId,
+            type: GearType::IMPORTED,
             distanceInMeter: $this->distanceInMeter,
             createdOn: $this->createdOn,
             name: $this->name,

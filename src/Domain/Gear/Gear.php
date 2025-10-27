@@ -10,10 +10,13 @@ use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Money\Money;
 
 interface Gear extends SupportsAITooling
 {
     public function getId(): GearId;
+
+    public function getType(): GearType;
 
     public function updateName(string $name): self;
 
@@ -35,9 +38,13 @@ interface Gear extends SupportsAITooling
 
     public function getSportTypes(): SportTypes;
 
+    public function getPurchasePrice(): ?Money;
+
     public function getActivityTypes(): ActivityTypes;
 
     public function enrichWithSportTypes(SportTypes $sportTypes): self;
 
     public function enrichWithImageSrc(string $imageSrc): self;
+
+    public function enrichWithPurchasePrice(Money $purchasePrice): self;
 }

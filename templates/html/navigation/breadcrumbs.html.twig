@@ -1,5 +1,5 @@
 {% set isSymfonyRouter = router == enum('App\\BuildApp\\Router').SYMFONY %}
-<nav class="flex mb-5" aria-label="Breadcrumb">
+<nav class="flex {{ disableMargin ? '' : 'mb-5' }}" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
         <li class="inline-flex items-center">
             <a href="{{ relativeUrl('dashboard') }}" data-router-navigate="{{ relativeUrl('dashboard') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }} class="inline-flex items-center text-gray-700 hover:text-primary-600 hover:underline">

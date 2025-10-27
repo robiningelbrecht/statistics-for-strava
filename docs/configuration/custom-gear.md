@@ -48,6 +48,10 @@ customGears:
     label: Peddle Board
     # If true, marks the gear as retired
     isRetired: false
+    # Optional, used to calculate the relative cost per workout and hour.
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
   - tag: workout-shoes
     label: Fancy workout shoes
     isRetired: true

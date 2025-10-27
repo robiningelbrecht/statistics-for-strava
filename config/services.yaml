@@ -33,9 +33,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy:
-        class: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy
-
     Doctrine\Migrations\Version\DbalMigrationFactory: ~
     App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
@@ -204,6 +201,10 @@ services:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("customGear", [])']
 
+    App\Domain\Gear\ImportedGear\ImportedGearConfig:
+      factory: [ null, 'fromArray' ]
+      arguments: ['@=app_config("stravaGear", [])']
+
     App\Domain\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gearMaintenance", [])']
@@ -220,10 +221,17 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.racingScore")']
 
+    # Autowiring of vendor classes
     League\Flysystem\FilesystemOperator: '@default.storage'
 
+    Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy:
+      class: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy
+
     GuzzleHttp\Client:
-        class: GuzzleHttp\Client
+      class: GuzzleHttp\Client
+
+    Money\MoneyFormatter:
+        factory: '@App\Infrastructure\DependencyInjection\MoneyFormatterFactory'
 
     Inspector\Inspector:
         class: Inspector\Inspector

@@ -11,7 +11,7 @@ final readonly class ArrayTwigExtension
     /**
      * @param array<mixed,mixed> $values
      *
-     * @return array<mixed,mixed>
+     * @return array<int,mixed>
      */
     #[AsTwigFilter('array_values')]
     public static function doArrayValues(array $values): array

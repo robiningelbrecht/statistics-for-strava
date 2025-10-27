@@ -6,7 +6,7 @@ namespace App\Infrastructure\Twig;
 
 use Twig\Attribute\AsTwigTest;
 
-final readonly class ObjectTwigExtension
+final readonly class ConditionalsTwigExtension
 {
     /**
      * @param class-string $class

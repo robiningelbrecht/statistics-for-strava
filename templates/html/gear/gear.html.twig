@@ -1,7 +1,12 @@
-{% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
-    'url': 'gear',
-    'label': 'Gear'|trans
-}]} %}
+<div class="flex items-center justify-between mb-5">
+    {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
+        'url': 'gear',
+        'label': 'Gear'|trans
+    }], 'disableMargin': true} %}
+    <a href="#" data-model-content-url="{{ relativeUrl('gear/info.html') }}">
+        <svg class="size-4 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/></svg>
+    </a>
+</div>
 {% autoescape false %}
     <!-- GEAR SUB MENU -->
     {% include 'html/gear/gear-sub-menu.html.twig' with {activeMenuItem: 'gear', maintenanceTaskIsDue: maintenanceTaskIsDue} %}
@@ -75,111 +80,40 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% set globalLoopIndex = 0 %}
                     {% for statistic in gearStatistics.getForActiveGear() %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
-                                    {{ statistic.name }}
-                                </a>
-                            </th>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.numberOfWorkouts }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {% if statistic.distance.toFloat() > 0 %}
-                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
-                                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
-                                {% else %}
-                                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
-                                {% endif %}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.elevation|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.movingTime }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.averageSpeed|renderMeasurement(1) }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €3 500
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €50
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €20
-                            </td>
-                        </tr>
+                        {{ _self.gearStatisticRow(statistic, globalLoopIndex) }}
+                        {% set globalLoopIndex = globalLoopIndex + 1 %}
                     {% endfor %}
                     {% set retiredGearStats = gearStatistics.getForRetiredGear() %}
-                    {% if retiredGearStats  %}
-                    <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}"
-                        id="table-retired-gear-header"
-                        data-accordion-target="#table-retired-gear-content"
-                        aria-expanded="false" aria-controls="table-retired-gear-content">
-                        <td colspan="10" class="px-6 py-2">
-                            <div class="flex items-center justify-center gap-x-2 text-blue-600 hover:underline cursor-pointer">
-                                <svg data-accordion-icon class="size-2 rotate-180 shrink-0" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M9 5 5 1 1 5"/>
-                                </svg>
-                                <div>{{ "Retired gear"|trans }}</div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tbody class="hidden border-b"
-                           id="table-retired-gear-content"
-                           aria-labelledby="table-retired-gear-header">
-                    {% for statistic in gearStatistics.getForRetiredGear() %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
-                                    {{ statistic.name }}
-                                </a>
-                            </th>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.numberOfWorkouts }}
+                    {% if retiredGearStats %}
+                        <tr class="cursor-pointer {{ cycle(['bg-white border-b', 'border-b bg-gray-50'], globalLoopIndex) }}"
+                            id="table-retired-gear-header"
+                            data-accordion-target="#table-retired-gear-content"
+                            aria-expanded="false" aria-controls="table-retired-gear-content">
+                            <td class="px-6 py-2 sticky left-0 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], globalLoopIndex) }}">
+                                <div class="flex items-center justify-center gap-x-2 text-gray-700 hover:underline">
+                                    <svg data-accordion-icon class="size-2 rotate-180 shrink-0" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                              stroke-width="2"
+                                              d="M9 5 5 1 1 5"/>
+                                    </svg>
+                                    <div>{{ "Retired gear"|trans }}</div>
+                                </div>
                             </td>
-                            <td class="px-6 py-2 truncate">
-                                {% if statistic.distance.toFloat() > 0 %}
-                                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
-                                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
-                                {% else %}
-                                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
-                                {% endif %}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.elevation|renderMeasurement(0) }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.movingTime }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.averageSpeed|renderMeasurement(1) }}
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €3 500
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €50
-                            </td>
-                            <td class="px-6 py-2 truncate">
-                                €20
-                            </td>
+                            <td colspan="9"></td>
                         </tr>
-                    {% endfor %}
-                    </tbody>
+                        {% set globalLoopIndex = globalLoopIndex + 1 %}
+                        </tbody>
+                        <tbody class="hidden"
+                               id="table-retired-gear-content"
+                               aria-labelledby="table-retired-gear-header">
+                        {% for statistic in gearStatistics.getForRetiredGear() %}
+                            {{ _self.gearStatisticRow(statistic, globalLoopIndex) }}
+                            {% set globalLoopIndex = globalLoopIndex + 1 %}
+                        {% endfor %}
+                        </tbody>
                     {% endif %}
                 </table>
             </div>
@@ -226,3 +160,62 @@
         </div>
     </div>
 {% endautoescape %}
+
+{% macro gearStatisticRow(statistic, loopIndex) %}
+    {% autoescape false %}
+        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loopIndex) }}">
+            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loopIndex) }}">
+                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
+                    {{ statistic.name }}
+                </a>
+            </th>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.numberOfWorkouts }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% if statistic.distance.toFloat() > 0 %}
+                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
+                {% else %}
+                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.elevation|renderMeasurement(0) }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.movingTime }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.averageSpeed|renderMeasurement(1) }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set purchasePrice = statistic.purchasePrice %}
+                {% if purchasePrice %}
+                    {{ purchasePrice|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set relativeCostPerHour = statistic.relativeCostPerHour %}
+                {% if relativeCostPerHour %}
+                    {{ relativeCostPerHour|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set relativeCostPerWorkout = statistic.relativeCostPerWorkout %}
+                {% if relativeCostPerWorkout %}
+                    {{ relativeCostPerWorkout|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+    {% endautoescape %}
+{% endmacro %}
