@@ -20,7 +20,7 @@ Activity: Aktivitet
 'Activity heatmap': Aktivitskarta
 'Activity intensity': Intensitet
 'Activity locations': 'Aktivitet platser'
-'Activity start times': 'Aktivitet start tider'
+'Activity start times': 'Aktivitet starttider'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Kronisk Ratio - Ratio av ATL till CTL. Indikerar skaderisk.'
 'Adaptive & Inclusive Sports': 'Adaptiva & Inkluderande Sporter'
@@ -58,13 +58,13 @@ Compare: Jämför
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
-Cycling: Cycling
+Cycling: Cykling
 'Daily TRIMP': 'Daglig TRIMP'
 'Daily activities': 'Dagliga aktiviteter'
 Dashboard: Översikt
 Date: Datum
 'Days needed': 'Dagar saknade'
-'Daytime stats': 'Sammanställning start-tider'
+'Daytime stats': 'Sammanställning starttider'
 Dec: Dec
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
@@ -75,7 +75,7 @@ Distance: Distans
 'Distance in {unit}': 'Distans i {unit}'
 'Distance over time per gear': 'Distans över tid per utrustning'
 'Distance per month per gear': 'Distans per månad per utrustning'
-Distribution: Spridning
+Distribution: Fördelning
 'E-Bike Rides': 'E-Cykel Turer'
 'E-Mountain Bike Rides': 'E-Mountain Bike Turer'
 Eddington: Eddington
@@ -122,7 +122,7 @@ HR: Puls
 'Heart rate': Puls
 'Heart rate distribution': Pulsfördelning
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Pulszonfördelning under den senaste månaden. För effektiv polariserad träning bör dina träningspass huvudsakligen falla inom följande zoner'
-'Heart rate zones': Puls-zoner
+'Heart rate zones': Pulszoner
 Heatmap: Färgkarta
 High: Hög
 'High monotony - increase variety': 'Hög monotoni - öka variationen'
@@ -222,20 +222,18 @@ Race: Tävling
 'Racquet Ball': Racketboll
 Ranking: Rankning
 'Reduced carbon emission by commuting': 'Minskade koldioxidutsläpp tack vare pendling'
-'Relative cost': 'Relative cost'
 'Rest Days': Vilodagar
 'Rest days': Vilodagar
 'Rest days in last 7 days': 'Vilodagar de senaste 7 dagarna'
 'Rest days vs. active days': 'Vilodagar kontra aktiva dagar'
-'Retired gear': 'Retired gear'
 Rewind: Tillbakablick
 'Rewind comparisons are only available on larger screens.': 'Tillbakablickar är endast tillgängliga på större skärmar.'
 Rides: Cykling
 'Rock Climbing': Klättring
 'Roller Ski': Rullskidor
 Rowing: Rodd
-Running: Running
-Runs: Löpning
+Running: Löpning
+Runs: Löpturer
 Sail: Segling
 Sat: Lör
 Saturday: Lördag
@@ -246,7 +244,7 @@ Segments: Segment
 Sep: Sep
 'Show information': 'Visa information'
 Simplified: Förenklad
-'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
+'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Jag började använda Strava för {numberOfDaysAgo} sedan, den {startDate}, och har sedan dess haft {totalDaysOfWorkingOut} aktiva träningsdagar.'
 Skateboard: Skateboard
 Skating: Skridskoåkning
 'Slightly fresh – transitional zone': 'Något redo - Övergångsfas'
@@ -260,7 +258,7 @@ Squash: Squash
 'Stair Stepper': Trappmaskin
 'Stand Up Paddling': 'Stand Up Paddling'
 'Start slideshow': 'Starta bildspel'
-'Start times': 'Start tider'
+'Start times': 'Starttider'
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Sammanställning
 'Stats per weekday': 'Sammanställning veckodagar'
@@ -317,9 +315,9 @@ Unspecified: Ospecificerad
 'Virtual Row': 'Virtuell Rodd'
 'Virtual Runs': 'Virtuell Löpning'
 'Virtual workout assistant': 'Virtuell tränings assistent'
-Walking: Walking
+Walking: Promenad
 Walks: Promenader
-'Water Sports': Vattensporter
+'Water Sports': Vattensport
 'We detected following issues': 'Vi har upptäckt följande problem'
 Wed: Ons
 Wednesday: Onsdag
@@ -335,7 +333,7 @@ Wheelchair: Rullstol
 Workout: Träning
 'Workout type': Träningsform
 Year: År
-'Yearly stats': 'Yearly stats'
+'Yearly stats': Årsstatistik
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du har registrerat träningspass i {numberOfCountriesWithWorkouts} olika länder, vilket motsvarar {percentage} av alla länder 🌍'
 'Your PB badge': 'Ditt PB märke'
@@ -357,7 +355,7 @@ Yoga: Yoga
 activities: aktiviteter
 age: ålder
 and: och
-avg: med
+avg: snitt
 bpm: bpm
 clear: rensa
 comments: kommentarer
@@ -377,8 +375,6 @@ more: mera
 n/a: n/a
 never: aldrig
 'on': på
-'per activity': 'per activity'
-'per hour': 'per hour'
 to: till
 total: totalt
 weeks: veckor
@@ -388,7 +384,7 @@ workouts: träningspass
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} varje {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} aktiviteter på {year}'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
-'{numberOfResults} results based on your active filters': '{numberOfResults} resultat baserat dina på aktiva filter'
-'{numberOfResults} routes based on your active filters': '{numberOfResults} turer baserat på dina aktiva filter'
+'{numberOfResults} photos based on your active filters': '{numberOfResults} bilder utifrån dina aktiva filter'
+'{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
+'{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Påbyggnads/utmattnings-fasen. Produktiv massiv träningsbelastning'
