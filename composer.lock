@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b41eec39a8c0cffaef079107f73127c",
+    "content-hash": "0eee9ca05e93f436e0ba12b3d5882ce3",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -1262,26 +1262,26 @@
         },
         {
             "name": "doctrine/sql-formatter",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/sql-formatter.git",
-                "reference": "d6d00aba6fd2957fe5216fe2b7673e9985db20c8"
+                "reference": "a8af23a8e9d622505baa2997465782cbe8bb7fc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/d6d00aba6fd2957fe5216fe2b7673e9985db20c8",
-                "reference": "d6d00aba6fd2957fe5216fe2b7673e9985db20c8",
+                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/a8af23a8e9d622505baa2997465782cbe8bb7fc7",
+                "reference": "a8af23a8e9d622505baa2997465782cbe8bb7fc7",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.1"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^12",
-                "ergebnis/phpunit-slow-test-detector": "^2.14",
-                "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^10.5"
+                "doctrine/coding-standard": "^14",
+                "ergebnis/phpunit-slow-test-detector": "^2.20",
+                "phpstan/phpstan": "^2.1.31",
+                "phpunit/phpunit": "^10.5.58"
             },
             "bin": [
                 "bin/sql-formatter"
@@ -1311,9 +1311,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/sql-formatter/issues",
-                "source": "https://github.com/doctrine/sql-formatter/tree/1.5.2"
+                "source": "https://github.com/doctrine/sql-formatter/tree/1.5.3"
             },
-            "time": "2025-01-24T11:45:48+00:00"
+            "time": "2025-10-26T09:35:14+00:00"
         },
         {
             "name": "gehrisandro/tailwind-merge-php",
@@ -9750,16 +9750,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "fb9418af7777dfb1c87a536dc58398b5b07c74b9"
+                "reference": "5c5bbc956b9a056a26cb593379253104b7ed9c2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/fb9418af7777dfb1c87a536dc58398b5b07c74b9",
-                "reference": "fb9418af7777dfb1c87a536dc58398b5b07c74b9",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/5c5bbc956b9a056a26cb593379253104b7ed9c2d",
+                "reference": "5c5bbc956b9a056a26cb593379253104b7ed9c2d",
                 "shasum": ""
             },
             "require": {
@@ -9798,7 +9798,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.2.5"
+                "source": "https://github.com/rectorphp/rector/tree/2.2.6"
             },
             "funding": [
                 {
@@ -9806,7 +9806,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-23T11:22:37+00:00"
+            "time": "2025-10-27T11:35:56+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",
@@ -11262,6 +11262,7 @@
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-iconv": "*",
+        "ext-intl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*"
     },
