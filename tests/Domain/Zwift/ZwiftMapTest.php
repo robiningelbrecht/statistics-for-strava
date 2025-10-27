@@ -23,6 +23,8 @@ class ZwiftMapTest extends TestCase
         $this->assertMatchesJsonSnapshot(Json::encode([
             'name' => $map->getOverlayImageUrl(),
             'bounds' => $map->getBounds(),
+            'label' => $map->getLabel(),
+            'background' => $map->getBackgroundColor(),
         ]));
     }
 

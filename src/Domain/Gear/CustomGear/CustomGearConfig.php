@@ -6,11 +6,14 @@ namespace App\Domain\Gear\CustomGear;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Money\Currency;
+use Money\Money;
 
 final readonly class CustomGearConfig
 {
@@ -64,8 +67,19 @@ final readonly class CustomGearConfig
                 throw new InvalidCustomGearConfig('"isRetired" property must be a boolean');
             }
 
+            if (isset($customGear['purchasePrice']) && empty($customGear['purchasePrice']['amountInCents'])) {
+                throw new InvalidCustomGearConfig('"purchasePrice.amountInCents" property must be a numeric value');
+            }
+            if (isset($customGear['purchasePrice']) && !is_numeric($customGear['purchasePrice']['amountInCents'])) {
+                throw new InvalidCustomGearConfig('"purchasePrice.amountInCents" property must be a numeric value');
+            }
+            if (isset($customGear['purchasePrice']) && empty($customGear['purchasePrice']['currency'])) {
+                throw new InvalidCustomGearConfig('"purchasePrice.currency" property is required');
+            }
+
             $gear = CustomGear::create(
                 gearId: GearId::fromUnprefixed($customGear['tag']),
+                type: GearType::CUSTOM,
                 distanceInMeter: Meter::zero(),
                 createdOn: SerializableDateTime::some(),
                 name: (string) Name::fromString($customGear['label']),
@@ -75,6 +89,12 @@ final readonly class CustomGearConfig
                 (string) HashtagPrefix::fromString($config['hashtagPrefix']),
                 $customGear['tag'])
             );
+            if (isset($customGear['purchasePrice'])) {
+                $gear->enrichWithPurchasePrice(new Money(
+                    amount: $customGear['purchasePrice']['amountInCents'],
+                    currency: new Currency($customGear['purchasePrice']['currency'])
+                ));
+            }
             $customGearConfig->addCustomGear($gear);
         }
 

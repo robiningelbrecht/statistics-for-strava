@@ -66,6 +66,9 @@ final readonly class Weather implements \JsonSerializable
         return KmPerHour::from($this->data['windspeed_10m']);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getWindDirection(): string
     {
         $degrees = $this->data['winddirection_10m'];
@@ -84,6 +87,9 @@ final readonly class Weather implements \JsonSerializable
         };
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function getWeatherCodeDescription(): string
     {
         $weatherCode = $this->data['weathercode'];

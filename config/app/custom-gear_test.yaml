@@ -4,6 +4,9 @@ customGears:
   - tag: peddle-board
     label: Peddle Board
     isRetired: false
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
   - tag: workout-shoes
     label: Fancy workout shoes
     isRetired: true

@@ -60,6 +60,7 @@ trait ProvideGearRepositoryHelpers
         $gearType = GearType::from($result['type']);
         $args = [
             'gearId' => GearId::fromString($result['gearId']),
+            'type' => $gearType,
             'distanceInMeter' => Meter::from($result['distanceInMeter']),
             'createdOn' => SerializableDateTime::fromString($result['createdOn']),
             'name' => $result['name'],

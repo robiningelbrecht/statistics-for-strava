@@ -165,6 +165,13 @@ metrics:
   # Leave this setting unchanged to use the defaults.
   # For a detailed guide on how to override these defaults, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges 
   consistencyChallenges: []
+# Optional, Used to enrich gear with data that cannot be configured in Strava.  
+stravaGear:
+  - gearId: 'g12337767'
+    # Used to calculate the relative cost per workout and hour.
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null

@@ -6,6 +6,7 @@ use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use Carbon\CarbonInterval;
 
@@ -74,11 +75,15 @@ final readonly class GearStatistics
             $activitiesWithGear = $this->activities->filter(fn (Activity $activity): bool => $activity->getGearId() == $gear->getId());
             $countActivitiesWithGear = count($activitiesWithGear);
             $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
+            $movingTimeInHours = Seconds::from($movingTimeInSeconds)->toHour()->toInt();
 
             return [
                 'id' => $gear->getId(),
                 'name' => $gear->getName(),
                 'distance' => $gear->getDistance(),
+                'purchasePrice' => $gear->getPurchasePrice(),
+                'relativeCostPerHour' => $gear->getPurchasePrice()?->divide($movingTimeInHours > 0 ? $movingTimeInHours : 1),
+                'relativeCostPerWorkout' => $gear->getPurchasePrice()?->divide($countActivitiesWithGear > 0 ? $countActivitiesWithGear : 1),
                 'numberOfWorkouts' => $countActivitiesWithGear,
                 'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
                 'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
