@@ -161,10 +161,6 @@ metrics:
       showInNavBar: false
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
-  # The app uses sensible defaults for the monthly consistency challenges. 
-  # Leave this setting unchanged to use the defaults.
-  # For a detailed guide on how to override these defaults, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges 
-  consistencyChallenges: []
 # Optional, Used to enrich gear with data that cannot be configured in Strava.  
 stravaGear:
   - gearId: 'g12337767'

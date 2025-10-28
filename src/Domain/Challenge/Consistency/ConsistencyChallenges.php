@@ -18,7 +18,7 @@ final class ConsistencyChallenges extends Collection
     /**
      * @return array<int, mixed>
      */
-    private static function getDefaultConfig(): array
+    public static function getDefaultConfig(): array
     {
         return [
             [
@@ -107,7 +107,7 @@ final class ConsistencyChallenges extends Collection
     /**
      * @param array<int, mixed> $items
      */
-    public static function fromConfiguration(array $items): self
+    public static function fromConfig(array $items): self
     {
         if (empty($items)) {
             // Make sure this new feature is backwards compatible.

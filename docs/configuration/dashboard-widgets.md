@@ -26,7 +26,7 @@ appearance:
       - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
-      - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
+      - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, 'config': { 'consistencyChallenges': [] } }
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
 ```
@@ -202,10 +202,127 @@ you can configure this in the Eddington settings using `showInDashboardWidget: t
 ## challengeConsistency
 
 This widget displays your consistency in completing challenges, helping you stay motivated and track your progress.
+The app uses sensible defaults for the challenges. Leave this setting unchanged to use them.
+
+* __consistencyChallenges__: An array of challenges.
 
 ```yml
-{ 'widget': 'challengeConsistency', 'width': 50, 'enabled': true }
+{ 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, config: { 'consistencyChallenges': [] } }
 ```
+
+Each configured challenge should contain the following properties:
+
+```yaml
+# The label to be used for this challenge
+label: 'Ride a total of 200km'
+# Enable or disable the challenge. When disabled, it will no longer appear on the dashboard.
+# Alternatively, you can remove the entire entry to exclude it completely.
+enabled: true
+# The challenge type.
+# Allowed values: ["distance", "distanceInOneActivity", "elevation", "elevationInOneActivity", "movingTime", "numberOfActivities", "calories"]
+type: 'distance'
+# The unit to use for measuring this challenge. This setting does not apply to types "numberOfActivities" and "calories"
+# Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]
+unit: 'km'
+# The goal of the challenge.
+goal: 200
+# The sport types to include in this challenge.
+# For a complete list of supported sport types, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+```
+
+### The defaults
+
+```yaml
+config: {
+  consistencyChallenges: [
+    {
+      label: 'Ride a total of 200km',
+      enabled: true,
+      type: 'distance',
+      unit: 'km',
+      goal: 200,
+      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
+    },
+    {
+      label: 'Ride a total of 600km',
+      enabled: true,
+      type: 'distance',
+      unit: 'km',
+      goal: 600,
+      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
+    },
+    {
+      label: 'Ride a total of 1250km',
+      enabled: true,
+      type: 'distance',
+      unit: 'km',
+      goal: 1250,
+      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
+    },
+    {
+      label: 'Complete a 100km ride',
+      enabled: true,
+      type: 'distanceInOneActivity',
+      unit: 'km',
+      goal: 100,
+      sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+    },
+    {
+      label: 'Climb a total of 7500m',
+      enabled: true,
+      type: 'elevation',
+      unit: 'm',
+      goal: 7500,
+      sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+    },
+    {
+      label: 'Complete a 5 km run',
+      enabled: true,
+      type: 'distanceInOneActivity',
+      unit: 'km',
+      goal: 5,
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    },
+    {
+      label: 'Complete a 10 km run',
+      enabled: true,
+      type: 'distanceInOneActivity',
+      unit: 'km',
+      goal: 10,
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    },
+    {
+      label: 'Complete a half marathon run',
+      enabled: true,
+      type: 'distanceInOneActivity',
+      unit: 'km',
+      goal: 21.1,
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    },
+    {
+      label: 'Run a total of 100km',
+      enabled: true,
+      type: 'distance',
+      unit: 'km',
+      goal: 100,
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    },
+    {
+      label: 'Climb a total of 2000m',
+      enabled: true,
+      type: 'elevation',
+      unit: 'm',
+      goal: 2000,
+      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
+    }
+  ]
+}
+```
+<div class="alert info">
+Challenges are always configured for a monthly basis. 
+This will not be made configurable, as allowing other intervals could unintentionally replicate features restricted to Strava’s paid tier.
+</div>
 
 ![challengeConsistency widget](../assets/images/dashboard-widgets/challenge-consistency.png)
 
