@@ -45,6 +45,12 @@ final class GetActivityStreams extends Tool
         ];
     }
 
+    #[\Override]
+    public function getMaxTries(): int
+    {
+        return 100;
+    }
+
     /**
      * @return array<string, mixed>
      */
