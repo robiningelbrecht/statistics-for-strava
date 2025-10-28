@@ -46,7 +46,7 @@
 	# Serve /files/* from storage
 	handle /files/* {
 		header {
-			Cache-Control "public, max-age=86400"
+			Cache-Control "public, max-age=31536000, immutable"
 		}
 
 		root * /var/www/storage

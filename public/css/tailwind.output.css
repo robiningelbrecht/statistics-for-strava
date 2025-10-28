@@ -1501,6 +1501,27 @@
   .ml-auto {
     margin-left: auto;
   }
+  .scrollbar {
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track);
+      border-radius: var(--scrollbar-track-radius);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-thumb-radius);
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-corner);
+      border-radius: var(--scrollbar-corner-radius);
+    }
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+    &::-webkit-scrollbar {
+      display: block;
+      width: var(--scrollbar-width, 16px);
+      height: var(--scrollbar-height, 16px);
+    }
+  }
   .datatable-pagination-list {
     .datatable-wrapper .datatable-bottom .datatable-pagination & {
       display: flex;
@@ -4339,6 +4360,27 @@
     z-index: 1490 !important;
     opacity: 0.9 !important;
   }
+  .overflow-auto, .overflow-x-auto {
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track);
+      border-radius: var(--scrollbar-track-radius);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-thumb-radius);
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-corner);
+      border-radius: var(--scrollbar-corner-radius);
+    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+    &::-webkit-scrollbar {
+      display: block;
+      width: 8px;
+      height: 8px;
+    }
+  }
   .leaflet-tile-pane {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
@@ -4512,6 +4554,12 @@
         }
       }
     }
+  }
+}
+@layer base {
+  * {
+    scrollbar-color: initial;
+    scrollbar-width: initial;
   }
 }
 @layer base {
