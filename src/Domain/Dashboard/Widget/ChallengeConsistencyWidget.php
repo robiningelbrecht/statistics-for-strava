@@ -15,7 +15,6 @@ final readonly class ChallengeConsistencyWidget implements Widget
 {
     public function __construct(
         private ActivitiesEnricher $activitiesEnricher,
-        private ConsistencyChallenges $consistencyChallenges,
         private ConsistencyChallengeCalculator $consistencyChallengeCalculator,
         private Environment $twig,
     ) {
@@ -23,11 +22,15 @@ final readonly class ChallengeConsistencyWidget implements Widget
 
     public function getDefaultConfiguration(): WidgetConfiguration
     {
-        return WidgetConfiguration::empty();
+        return WidgetConfiguration::empty()
+            ->add('consistencyChallenges', ConsistencyChallenges::getDefaultConfig());
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
+        /** @var array<int, mixed> $config */
+        $config = $configuration->getConfigItem('consistencyChallenges');
+        ConsistencyChallenges::fromConfig($config);
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
@@ -38,13 +41,16 @@ final readonly class ChallengeConsistencyWidget implements Widget
             startDate: $allActivities->getFirstActivityStartDate(),
             endDate: $now
         );
+        /** @var array<int, mixed> $config */
+        $config = $configuration->getConfigItem('consistencyChallenges');
+        $consistencyChallenges = ConsistencyChallenges::fromConfig($config);
 
         return $this->twig->load('html/dashboard/widget/widget--challenge-consistency.html.twig')->render([
             'allMonths' => $allMonths,
-            'allConsistencyChallenges' => $this->consistencyChallenges,
+            'allConsistencyChallenges' => $consistencyChallenges,
             'calculatedConsistencyChallenges' => $this->consistencyChallengeCalculator->calculateFor(
                 months: $allMonths,
-                challenges: $this->consistencyChallenges
+                challenges: $consistencyChallenges
             ),
         ]);
     }

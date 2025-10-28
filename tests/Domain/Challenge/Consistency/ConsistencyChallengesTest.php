@@ -141,18 +141,18 @@ class ConsistencyChallengesTest extends TestCase
 
         $this->assertEquals(
             $theConfig,
-            ConsistencyChallenges::fromConfiguration(self::getValidYml()),
+            ConsistencyChallenges::fromConfig(self::getValidYml()),
         );
 
         $this->assertEquals(
             $theConfig,
-            ConsistencyChallenges::fromConfiguration([])
+            ConsistencyChallenges::fromConfig([])
         );
     }
 
     public function testFromConfigurationWithNumberOfActivities(): void
     {
-        $theConfig = ConsistencyChallenges::fromConfiguration([[
+        $theConfig = ConsistencyChallenges::fromConfig([[
             'label' => 'A test',
             'enabled' => true,
             'type' => 'numberOfActivities',
@@ -184,7 +184,7 @@ class ConsistencyChallengesTest extends TestCase
     public function testFromConfigurationItShouldThrow(array $config, string $expectedException): void
     {
         $this->expectExceptionObject(new InvalidConsistencyChallengeConfiguration($expectedException));
-        ConsistencyChallenges::fromConfiguration($config);
+        ConsistencyChallenges::fromConfig($config);
     }
 
     public static function provideInvalidConfig(): iterable

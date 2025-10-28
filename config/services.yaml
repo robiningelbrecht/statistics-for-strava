@@ -33,6 +33,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
+    app.config:
+        public: true # We need to access this service from the container in expressions
+        class: App\Infrastructure\Config\AppConfig
+
     Doctrine\Migrations\Version\DbalMigrationFactory: ~
     App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
@@ -72,10 +76,6 @@ services:
         autoconfigure: false
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.locale")']
-
-    app.config:
-        public: true # We need to access this service from the container in expressions
-        class: App\Infrastructure\Config\AppConfig
 
     App\BuildApp\AppSubTitle:
         factory: [ null, 'fromOptionalString' ]
@@ -188,10 +188,6 @@ services:
             '@=app_config("general.athlete.weightHistory")',
             '@App\Infrastructure\ValueObject\Measurement\UnitSystem'
         ]
-
-    App\Domain\Challenge\Consistency\ConsistencyChallenges:
-        factory: [ null, 'fromConfiguration' ]
-        arguments: ['@=app_config("metrics.consistencyChallenges", [])']
 
     App\Domain\Ftp\FtpHistory:
         factory: [ null, 'fromArray' ]
