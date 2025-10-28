@@ -6,6 +6,7 @@
 @source "../../public/js/**/*.js";
 @source "../../src/Infrastructure/Twig/*.php";
 
+@plugin 'tailwind-scrollbar';
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
@@ -51,6 +52,10 @@
     body .lg-backdrop {
         z-index: 1490 !important;
         opacity: 0.9 !important;
+    }
+
+    .overflow-auto, .overflow-x-auto{
+        @apply scrollbar-thin;
     }
 
     .leaflet-tile-pane {
