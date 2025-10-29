@@ -236,86 +236,18 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
 ```yaml
 config: {
   challenges: [
-    {
-      label: 'Ride a total of 200km',
-      enabled: true,
-      type: 'distance',
-      unit: 'km',
-      goal: 200,
-      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
-    },
-    {
-      label: 'Ride a total of 600km',
-      enabled: true,
-      type: 'distance',
-      unit: 'km',
-      goal: 600,
-      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
-    },
-    {
-      label: 'Ride a total of 1250km',
-      enabled: true,
-      type: 'distance',
-      unit: 'km',
-      goal: 1250,
-      sportTypesToInclude: [ 'Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide' ]
-    },
-    {
-      label: 'Complete a 100km ride',
-      enabled: true,
-      type: 'distanceInOneActivity',
-      unit: 'km',
-      goal: 100,
-      sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
-    },
-    {
-      label: 'Climb a total of 7500m',
-      enabled: true,
-      type: 'elevation',
-      unit: 'm',
-      goal: 7500,
-      sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
-    },
-    {
-      label: 'Complete a 5 km run',
-      enabled: true,
-      type: 'distanceInOneActivity',
-      unit: 'km',
-      goal: 5,
-      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
-    },
-    {
-      label: 'Complete a 10 km run',
-      enabled: true,
-      type: 'distanceInOneActivity',
-      unit: 'km',
-      goal: 10,
-      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
-    },
-    {
-      label: 'Complete a half marathon run',
-      enabled: true,
-      type: 'distanceInOneActivity',
-      unit: 'km',
-      goal: 21.1,
-      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
-    },
-    {
-      label: 'Run a total of 100km',
-      enabled: true,
-      type: 'distance',
-      unit: 'km',
-      goal: 100,
-      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
-    },
-    {
-      label: 'Climb a total of 2000m',
-      enabled: true,
-      type: 'elevation',
-      unit: 'm',
-      goal: 2000,
-      sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
-    }
+    # Cycling
+    { label: 'Ride a total of 200km',  enabled: true, type: 'distance', unit: 'km', goal: 200,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Ride a total of 600km',  enabled: true, type: 'distance', unit: 'km', goal: 600,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Ride a total of 1250km', enabled: true, type: 'distance', unit: 'km', goal: 1250, sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Complete a 100km ride',  enabled: true, type: 'distanceInOneActivity', unit: 'km', goal: 100, sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Climb a total of 7500m', enabled: true, type: 'elevation', unit: 'm', goal: 7500, sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    # Running
+    { label: 'Complete a 5 km run',    enabled: true, type: 'distanceInOneActivity', unit: 'km', goal: 5,   sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun'] },
+    { label: 'Complete a 10 km run',   enabled: true, type: 'distanceInOneActivity', unit: 'km', goal: 10,  sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun'] },
+    { label: 'Complete a half marathon run', enabled: true, type: 'distanceInOneActivity', unit: 'km', goal: 21.1, sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun'] },
+    { label: 'Run a total of 100km',   enabled: true, type: 'distance', unit: 'km', goal: 100, sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun'] },
+    { label: 'Climb a total of 2000m', enabled: true, type: 'elevation', unit: 'm', goal: 2000, sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun'] }
   ]
 }
 ```
