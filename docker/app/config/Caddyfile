@@ -28,70 +28,72 @@
 		?Permissions-Policy "browsing-topics=()"
 	}
 
-	# Serve static .html and .json from build/html
-	@staticBuildFiles {
-		path *.html *.json
-	}
-	handle @staticBuildFiles {
-		handle /manifest.json {
-			root /var/www/public
+	handle_path /* {
+		# Serve static .html and .json from build/html
+		@staticBuildFiles {
+			path *.html *.json
+		}
+		handle @staticBuildFiles {
+			handle /manifest.json {
+				root /var/www/public
+			}
+
+			handle {
+				root * /var/www/build/html
+				file_server
+			}
 		}
 
-		handle {
-			root * /var/www/build/html
+		# Serve /files/* from storage
+		handle /files/* {
+			header {
+				Cache-Control "public, max-age=31536000, immutable"
+			}
+
+			root * /var/www/storage
 			file_server
 		}
-	}
 
-	# Serve /files/* from storage
-	handle /files/* {
-		header {
-			Cache-Control "public, max-age=31536000, immutable"
+		# Serve /gear-maintenance/* from storage
+		handle /gear-maintenance/* {
+			root * /var/www/storage
+			file_server
 		}
 
-		root * /var/www/storage
-		file_server
-	}
+		# Serve everything else trough Symfony.
+		handle {
+			@phpRoute {
+				not file {path}
+			}
 
-	# Serve /gear-maintenance/* from storage
-	handle /gear-maintenance/* {
-		root * /var/www/storage
-		file_server
-	}
+			rewrite @phpRoute index.php
 
-	# Serve everything else trough Symfony.
-	handle {
-		@phpRoute {
-			not file {path}
+			@frontController path index.php
+			php @frontController
 		}
-
-		rewrite @phpRoute index.php
-
-		@frontController path index.php
-		php @frontController
 	}
 
 	# Handle error codes.
-	handle_errors 403 404 {
-		root /var/www/public
-		rewrite * /{err.status_code}.html
-		file_server
-	}
+    handle_errors 403 404 {
+    	root /var/www/public
+    	rewrite * /{err.status_code}.html
+    	file_server
+    }
 
-	handle_errors 5xx {
-		root /var/www/public
-		rewrite * /50x.html
-		file_server
-	}
+    handle_errors 5xx {
+    	root /var/www/public
+    	rewrite * /50x.html
+    	file_server
+    }
 
-	handle_errors {
-		respond "{err.status_code} {err.status_text}"
-	}
+    handle_errors {
+    	respond "{err.status_code} {err.status_text}"
+    }
 
-	# Hide php and yaml file from filesystem
-	file_server {
-		hide *.php *.yaml *.yml
-	}
+    # Hide php and yaml file from filesystem
+    file_server {
+    	hide *.php *.yaml *.yml
+    }
 }
 
 # Reverse proxy for custom domain
