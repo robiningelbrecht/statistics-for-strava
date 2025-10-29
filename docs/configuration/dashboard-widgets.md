@@ -235,8 +235,8 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
 
 ```yaml
 config: {
-  consistencyChallenges: [
-    {
+  challanges:
+    - {
       label: 'Ride a total of 200km',
       enabled: true,
       type: 'distance',
@@ -316,7 +316,6 @@ config: {
       goal: 2000,
       sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
     }
-  ]
 }
 ```
 <div class="alert info">
