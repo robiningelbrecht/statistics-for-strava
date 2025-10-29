@@ -42,7 +42,7 @@
         "respect/validation": "^2.3",
         "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/asset": "7.3.*",
-        "symfony/console": "v7.3.4",
+        "symfony/console": "v7.3.*",
         "symfony/dotenv": "7.3.*",
         "symfony/expression-language": "7.3.*",
         "symfony/flex": "^2",

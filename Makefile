@@ -50,7 +50,7 @@ translation-debug:
 
 # Code quality tools.
 phpunit:
-	@make dcr cmd="vendor/bin/phpunit --order-by=random -d --enable-pretty-print -d --compact $(arg)"
+	@make dcr cmd="vendor/bin/phpunit --order-by=random $(arg)"
 
 phpunit-with-coverage-report:
 	@make phpunit arg="--coverage-clover=clover.xml -d --min-coverage=min-coverage-rules.php"
