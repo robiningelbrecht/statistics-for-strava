@@ -204,10 +204,10 @@ you can configure this in the Eddington settings using `showInDashboardWidget: t
 This widget displays your consistency in completing challenges, helping you stay motivated and track your progress.
 The app uses sensible defaults for the challenges. Leave this setting unchanged to use them.
 
-* __consistencyChallenges__: An array of challenges.
+* __challenges__: An array of challenges.
 
 ```yml
-{ 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, config: { 'consistencyChallenges': [] } }
+{ 'widget': 'challenges', 'width': 50, 'enabled': true, config: { 'consistencyChallenges': [] } }
 ```
 
 Each configured challenge should contain the following properties:

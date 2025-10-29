@@ -23,13 +23,13 @@ final readonly class ChallengeConsistencyWidget implements Widget
     public function getDefaultConfiguration(): WidgetConfiguration
     {
         return WidgetConfiguration::empty()
-            ->add('consistencyChallenges', ConsistencyChallenges::getDefaultConfig());
+            ->add('challenges', ConsistencyChallenges::getDefaultConfig());
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
         /** @var array<int, mixed> $config */
-        $config = $configuration->getConfigItem('consistencyChallenges');
+        $config = $configuration->getConfigItem('challenges');
         ConsistencyChallenges::fromConfig($config);
     }
 
@@ -42,7 +42,7 @@ final readonly class ChallengeConsistencyWidget implements Widget
             endDate: $now
         );
         /** @var array<int, mixed> $config */
-        $config = $configuration->getConfigItem('consistencyChallenges');
+        $config = $configuration->getConfigItem('challenges');
         $consistencyChallenges = ConsistencyChallenges::fromConfig($config);
 
         return $this->twig->load('html/dashboard/widget/widget--challenge-consistency.html.twig')->render([
