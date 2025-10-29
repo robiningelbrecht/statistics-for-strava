@@ -207,7 +207,7 @@ The app uses sensible defaults for the challenges. Leave this setting unchanged 
 * __challenges__: An array of challenges.
 
 ```yml
-{ 'widget': 'challenges', 'width': 50, 'enabled': true, config: { 'consistencyChallenges': [] } }
+{ 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, config: { 'challenges': [] } }
 ```
 
 Each configured challenge should contain the following properties:
@@ -235,8 +235,8 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
 
 ```yaml
 config: {
-  challanges:
-    - {
+  challenges: [
+    {
       label: 'Ride a total of 200km',
       enabled: true,
       type: 'distance',
@@ -316,6 +316,7 @@ config: {
       goal: 2000,
       sportTypesToInclude: ['Run', 'TrailRun', 'VirtualRun']
     }
+  ]
 }
 ```
 <div class="alert info">
