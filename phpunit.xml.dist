@@ -26,6 +26,7 @@
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
         <bootstrap class="RobinIngelbrecht\PHPUnitPrettyPrint\PhpUnitExtension">
             <parameter name="displayProfiling" value="false"/>
+            <parameter name="enableByDefault" value="false"/>
         </bootstrap>
         <bootstrap class="RobinIngelbrecht\PHPUnitCoverageTools\PhpUnitExtension">
             <parameter name="cleanUpCloverXml" value="1"/>
