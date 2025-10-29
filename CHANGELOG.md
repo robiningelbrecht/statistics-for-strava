@@ -1,3 +1,15 @@
+# [v3.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.2) - 2025-10-29
+
+## What's Changed
+* updated german translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1294
+* ISSUE #1266: Gear cost-per-use and cost-per-hour statistics by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1291
+* ISSUE #1299: Fix Tool get_activity_streams has been attempted too man… by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1301
+* Refine Swedish translations by @strobit in https://github.com/robiningelbrecht/statistics-for-strava/pull/1298
+* ISSUE #1303: thin horizontal scrollbars by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1304
+* ISSUE #1306: Move consistency challenge config to widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1307
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.1...v3.8.2
+
 # [v3.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.1) - 2025-10-26
 
 ## What's Changed
