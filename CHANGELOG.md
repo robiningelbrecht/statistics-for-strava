@@ -1,5 +1,9 @@
 # [v3.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.2) - 2025-10-29
 
+> [!WARNING]  
+> The config option `metrics.consistencyChallenges` has been moved to the config of the `challengeConsistency` dashboard widget.
+> If you do not have custom challenges configured, you don't have to do anything
+
 ## What's Changed
 * updated german translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1294
 * ISSUE #1266: Gear cost-per-use and cost-per-hour statistics by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1291
