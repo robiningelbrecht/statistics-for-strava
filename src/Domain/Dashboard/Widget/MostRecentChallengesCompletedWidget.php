@@ -25,13 +25,13 @@ final readonly class MostRecentChallengesCompletedWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('numberOfChallengesToDisplay')) {
+        if (!$configuration->exists('numberOfChallengesToDisplay')) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" is required for MostRecentChallengesCompletedWidget.');
         }
-        if (!is_int($configuration->getConfigItem('numberOfChallengesToDisplay'))) {
+        if (!is_int($configuration->get('numberOfChallengesToDisplay'))) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" must be an integer.');
         }
-        if ($configuration->getConfigItem('numberOfChallengesToDisplay') < 1) {
+        if ($configuration->get('numberOfChallengesToDisplay') < 1) {
             throw new InvalidDashboardLayout('Configuration item "numberOfChallengesToDisplay" must be set to a value of 1 or greater.');
         }
     }
@@ -44,7 +44,7 @@ final readonly class MostRecentChallengesCompletedWidget implements Widget
         }
 
         /** @var int $numberOfChallengesToDisplay */
-        $numberOfChallengesToDisplay = $configuration->getConfigItem('numberOfChallengesToDisplay');
+        $numberOfChallengesToDisplay = $configuration->get('numberOfChallengesToDisplay');
 
         return $this->twig->load('html/dashboard/widget/widget--most-recent-challenges.html.twig')->render([
             'challenges' => $challenges->slice(0, $numberOfChallengesToDisplay),

@@ -34,16 +34,16 @@ final readonly class WeeklyStatsWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('metricsDisplayOrder')) {
+        if (!$configuration->exists('metricsDisplayOrder')) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for WeeklyStatsWidget.');
         }
-        if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
+        if (!is_array($configuration->get('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
         }
-        if (3 !== count($configuration->getConfigItem('metricsDisplayOrder'))) {
+        if (3 !== count($configuration->get('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
         }
-        foreach ($configuration->getConfigItem('metricsDisplayOrder') as $metricDisplayOrder) {
+        foreach ($configuration->get('metricsDisplayOrder') as $metricDisplayOrder) {
             if (!StatsContext::tryFrom($metricDisplayOrder)) {
                 throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
             }
@@ -56,7 +56,7 @@ final readonly class WeeklyStatsWidget implements Widget
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
 
         /** @var string[] $metricsDisplayOrder */
-        $metricsDisplayOrder = $configuration->getConfigItem('metricsDisplayOrder');
+        $metricsDisplayOrder = $configuration->get('metricsDisplayOrder');
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {

@@ -36,22 +36,22 @@ final readonly class MonthlyStatsWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('enableLastXYearsByDefault')) {
+        if (!$configuration->exists('enableLastXYearsByDefault')) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" is required for MonthlyStatsWidget.');
         }
-        if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
+        if (!is_int($configuration->get('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
         }
-        if (!$configuration->configItemExists('metricsDisplayOrder')) {
+        if (!$configuration->exists('metricsDisplayOrder')) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for MonthlyStatsWidget.');
         }
-        if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
+        if (!is_array($configuration->get('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
         }
-        if (3 !== count($configuration->getConfigItem('metricsDisplayOrder'))) {
+        if (3 !== count($configuration->get('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
         }
-        foreach ($configuration->getConfigItem('metricsDisplayOrder') as $metricDisplayOrder) {
+        foreach ($configuration->get('metricsDisplayOrder') as $metricDisplayOrder) {
             if (!StatsContext::tryFrom($metricDisplayOrder)) {
                 throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
             }
@@ -66,7 +66,7 @@ final readonly class MonthlyStatsWidget implements Widget
         $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
 
         /** @var int $enableLastXYearsByDefault */
-        $enableLastXYearsByDefault = $configuration->getConfigItem('enableLastXYearsByDefault');
+        $enableLastXYearsByDefault = $configuration->get('enableLastXYearsByDefault');
         foreach (StatsContext::cases() as $monthlyStatsContext) {
             foreach ($activityTypes as $activityType) {
                 if (in_array($monthlyStatsContext, [StatsContext::DISTANCE, StatsContext::ELEVATION]) && !$activityType->supportsDistanceAndElevation()) {
@@ -87,7 +87,7 @@ final readonly class MonthlyStatsWidget implements Widget
         }
 
         /** @var string[] $metricsDisplayOrder */
-        $metricsDisplayOrder = $configuration->getConfigItem('metricsDisplayOrder');
+        $metricsDisplayOrder = $configuration->get('metricsDisplayOrder');
 
         return $this->twig->load('html/dashboard/widget/widget--monthly-stats.html.twig')->render([
             'monthlyStatsChartsPerContext' => $monthlyStatChartsPerContext,
