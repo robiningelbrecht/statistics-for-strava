@@ -70,7 +70,6 @@ Dec: Dez
 Details: Details
 Device: Gerät
 Distance: Distanz
-'Distance / week': 'Distanz / Woche'
 'Distance breakdown': Distanzaufschlüsselung
 'Distance in {unit}': 'Distanz in {unit}'
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
@@ -81,7 +80,6 @@ Distribution: Verteilung
 Eddington: Eddington
 Elev: Anstieg
 Elevation: Höhenmeter
-'Elevation / week': 'Hohenmeter / Woche'
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
 Evening: Abend
@@ -285,7 +283,6 @@ Thinking...: Denke...
 Thu: Do
 Thursday: Donnerstag
 Time: Zeit
-'Time / week': 'Zeit / Woche'
 'Times completed': 'Male abgeschlossen'
 To: Bis
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'

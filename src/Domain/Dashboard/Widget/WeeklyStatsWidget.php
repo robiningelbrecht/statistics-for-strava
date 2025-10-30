@@ -8,6 +8,8 @@ use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\WeeklyDistanceTimeChart;
 use App\Domain\Calendar\Weeks;
+use App\Domain\Dashboard\InvalidDashboardLayout;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -26,17 +28,35 @@ final readonly class WeeklyStatsWidget implements Widget
 
     public function getDefaultConfiguration(): WidgetConfiguration
     {
-        return WidgetConfiguration::empty();
+        return WidgetConfiguration::empty()
+            ->add('metricsDisplayOrder', array_map(fn (StatsContext $context) => $context->value, StatsContext::defaultSortingOrder()));
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
+        if (!$configuration->configItemExists('metricsDisplayOrder')) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for WeeklyStatsWidget.');
+        }
+        if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
+        }
+        if (3 !== count($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
+        }
+        foreach ($configuration->getConfigItem('metricsDisplayOrder') as $metricDisplayOrder) {
+            if (!StatsContext::tryFrom($metricDisplayOrder)) {
+                throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
+            }
+        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $weeklyDistanceTimeCharts = $weeksPerActivityType = [];
         $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+
+        /** @var string[] $metricsDisplayOrder */
+        $metricsDisplayOrder = $configuration->getConfigItem('metricsDisplayOrder');
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {
@@ -58,6 +78,10 @@ final readonly class WeeklyStatsWidget implements Widget
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
                 activityType: $activityType,
+                metricsDisplayOrder: array_map(
+                    StatsContext::from(...),
+                    $metricsDisplayOrder,
+                ),
                 now: $now,
                 translator: $this->translator,
             )->build()) {

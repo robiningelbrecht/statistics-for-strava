@@ -4,6 +4,7 @@ namespace App\Domain\Activity;
 
 use App\Domain\Calendar\Week;
 use App\Domain\Calendar\Weeks;
+use App\Domain\Dashboard\StatsContext;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -14,15 +15,21 @@ final readonly class WeeklyDistanceTimeChart
         private Activities $activities,
         private UnitSystem $unitSystem,
         private ActivityType $activityType,
+        /** @var StatsContext[] */
+        private array $metricsDisplayOrder,
         private SerializableDateTime $now,
         private TranslatorInterface $translator,
     ) {
     }
 
+    /**
+     * @param StatsContext[] $metricsDisplayOrder
+     */
     public static function create(
         Activities $activities,
         UnitSystem $unitSystem,
         ActivityType $activityType,
+        array $metricsDisplayOrder,
         SerializableDateTime $now,
         TranslatorInterface $translator,
     ): self {
@@ -30,6 +37,7 @@ final readonly class WeeklyDistanceTimeChart
             activities: $activities,
             unitSystem: $unitSystem,
             activityType: $activityType,
+            metricsDisplayOrder: $metricsDisplayOrder,
             now: $now,
             translator: $translator,
         );
@@ -47,7 +55,10 @@ final readonly class WeeklyDistanceTimeChart
         $minZoomValueSpan = 10;
         $maxZoomValueSpan = 26;
         $data = $this->getData($weeks);
-        if (empty(array_filter($data[0])) && empty(array_filter($data[1])) && empty(array_filter($data[2]))) {
+
+        if (empty(array_filter($data[StatsContext::DISTANCE->value]))
+            && empty(array_filter($data[StatsContext::MOVING_TIME->value]))
+            && empty(array_filter($data[StatsContext::ELEVATION->value]))) {
             return [];
         }
 
@@ -83,48 +94,42 @@ final readonly class WeeklyDistanceTimeChart
             ],
         ];
 
-        $unitSymbol = $this->unitSystem->distanceSymbol();
+        $yAxis = [];
 
-        if (!empty(array_filter($data[0]))) {
+        foreach ($this->metricsDisplayOrder as $context) {
+            if (empty(array_filter($data[$context->value]))) {
+                continue;
+            }
+
+            $unitSymbol = match ($context) {
+                StatsContext::DISTANCE => $this->unitSystem->distanceSymbol(),
+                StatsContext::MOVING_TIME => 'h',
+                StatsContext::ELEVATION => $this->unitSystem->elevationSymbol(),
+            };
+
             $series[] = array_merge_recursive(
                 $serie,
                 [
-                    'name' => $this->translator->trans('Distance / week'),
-                    'data' => $data[0],
-                    'yAxisIndex' => 0,
+                    'name' => $context->trans($this->translator),
+                    'data' => $data[$context->value],
+                    'yAxisId' => $context->value,
                     'label' => [
                         'formatter' => '{@[1]} '.$unitSymbol,
                     ],
                 ],
             );
-        }
 
-        if (!empty(array_filter($data[1]))) {
-            $series[] = array_merge_recursive(
-                $serie,
-                [
-                    'name' => $this->translator->trans('Time / week'),
-                    'data' => $data[1],
-                    'yAxisIndex' => 1,
-                    'label' => [
-                        'formatter' => '{@[1]} h',
-                    ],
+            $yAxis[] = [
+                'id' => $context->value,
+                'type' => 'value',
+                'splitLine' => [
+                    'show' => false,
                 ],
-            );
-        }
-
-        if (!empty(array_filter($data[2]))) {
-            $series[] = array_merge_recursive(
-                $serie,
-                [
-                    'name' => $this->translator->trans('Elevation / week'),
-                    'data' => $data[2],
-                    'yAxisIndex' => 2,
-                    'label' => [
-                        'formatter' => '{@[2]} '.$this->unitSystem->elevationSymbol(),
-                    ],
+                'axisLabel' => [
+                    'formatter' => '{value} '.$unitSymbol,
                 ],
-            );
+                'position' => 'left',
+            ];
         }
 
         return [
@@ -175,44 +180,13 @@ final readonly class WeeklyDistanceTimeChart
                     ],
                 ],
             ],
-            'yAxis' => [
-                [
-                    'type' => 'value',
-                    'splitLine' => [
-                        'show' => false,
-                    ],
-                    'axisLabel' => [
-                        'formatter' => '{value} '.$unitSymbol,
-                    ],
-                    'position' => 'left',
-                ],
-                [
-                    'type' => 'value',
-                    'splitLine' => [
-                        'show' => false,
-                    ],
-                    'axisLabel' => [
-                        'formatter' => '{value} h',
-                    ],
-                    'position' => 'left',
-                ],
-                [
-                    'type' => 'value',
-                    'splitLine' => [
-                        'show' => false,
-                    ],
-                    'axisLabel' => [
-                        'formatter' => '{value} '.$this->unitSystem->elevationSymbol(),
-                    ],
-                    'position' => 'left',
-                ],
-            ],
+            'yAxis' => $yAxis,
             'series' => $series,
         ];
     }
 
     /**
-     * @return array<int, mixed>
+     * @return array{distance: float[], movingTime: float[], elevation: int[]}
      */
     private function getData(Weeks $weeks): array
     {
@@ -251,6 +225,10 @@ final readonly class WeeklyDistanceTimeChart
         );
         $timePerWeek = array_map(fn (int $time): float => round($time / 3600, 1), $timePerWeek);
 
-        return [array_values($distancePerWeek), array_values($timePerWeek), array_values($elevationPerWeek)];
+        return [
+            StatsContext::DISTANCE->value => array_values($distancePerWeek),
+            StatsContext::MOVING_TIME->value => array_values($timePerWeek),
+            StatsContext::ELEVATION->value => array_values($elevationPerWeek),
+        ];
     }
 }
