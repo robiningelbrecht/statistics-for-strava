@@ -70,7 +70,6 @@ Dec: Dec
 Details: Detaljer
 Device: Enhet
 Distance: Distans
-'Distance / week': 'Distans / vecka'
 'Distance breakdown': 'Sammanställning av sträckor'
 'Distance in {unit}': 'Distans i {unit}'
 'Distance over time per gear': 'Distans över tid per utrustning'
@@ -81,7 +80,6 @@ Distribution: Fördelning
 Eddington: Eddington
 Elev: Höjd
 Elevation: Höjdmeter
-'Elevation / week': 'Höjdmeter / vecka'
 'Elevation in {unit}': 'Höjdmeter i {unit}'
 Elliptical: Elliptisk
 Evening: Kväll
@@ -285,7 +283,6 @@ Thinking...: Tänker...
 Thu: Tor
 Thursday: Torsdag
 Time: Tid
-'Time / week': 'Tid / vecka'
 'Times completed': 'Antal gånger avklarade'
 To: Till
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'För att aktivera, konfigurera {configFile} och bygg om filerna så att ändringarna träder i kraft'

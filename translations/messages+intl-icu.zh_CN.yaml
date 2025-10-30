@@ -70,7 +70,6 @@ Dec: 十二月
 Details: Details
 Device: 设备
 Distance: 距离
-'Distance / week': 每周距离
 'Distance breakdown': 距离分解
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
@@ -81,7 +80,6 @@ Distribution: 分布
 Eddington: 愛丁頓數
 Elev: 海拔
 Elevation: 海拔高度
-'Elevation / week': 'Elevation / week'
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: 椭圆机
 Evening: 晚上
@@ -285,7 +283,6 @@ Thinking...: Thinking...
 Thu: 周四
 Thursday: 星期四
 Time: Time
-'Time / week': 每周时间
 'Times completed': 完成次数
 To: 到
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'

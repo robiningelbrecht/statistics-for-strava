@@ -70,7 +70,6 @@ Dec: Dec
 Details: Details
 Device: Device
 Distance: Distance
-'Distance / week': 'Distance / week'
 'Distance breakdown': 'Distance breakdown'
 'Distance in {unit}': 'Distance in {unit}'
 'Distance over time per gear': 'Distance over time per gear'
@@ -81,7 +80,6 @@ Distribution: Distribution
 Eddington: Eddington
 Elev: Elev
 Elevation: Elevation
-'Elevation / week': 'Elevation / week'
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: Elliptical
 Evening: Evening
@@ -285,7 +283,6 @@ Thinking...: Thinking...
 Thu: Thu
 Thursday: Thursday
 Time: Time
-'Time / week': 'Time / week'
 'Times completed': 'Times completed'
 To: To
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
