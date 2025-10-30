@@ -13,7 +13,7 @@ appearance:
     layout:
       - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
-      - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true }
+      - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { metricsDisplayOrder: ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
       - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
@@ -62,8 +62,10 @@ It contains a summary of your workout history.
 
 This widget provides a summary of your weekly statistics per sport type, including total distance and moving time
 
+* __metricsDisplayOrder__: The order in which the metrics are displayed in the widget. Supported metrics are 'distance', 'movingTime' and 'elevation'. All 3 metrics must be included.
+
 ```yml
-{ 'widget': 'weeklyStats', 'width': 100, 'enabled': true }
+{ 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { metricsDisplayOrder: ['distance', 'movingTime', 'elevation'] } }
 ```
 
 ![weeklyStats widget](../assets/images/dashboard-widgets/weekly-stats.png)
