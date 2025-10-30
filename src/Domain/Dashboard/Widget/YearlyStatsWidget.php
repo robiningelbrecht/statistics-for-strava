@@ -34,7 +34,8 @@ final readonly class YearlyStatsWidget implements Widget
     public function getDefaultConfiguration(): WidgetConfiguration
     {
         return WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10);
+            ->add('enableLastXYearsByDefault', 10)
+            ->add('metricsDisplayOrder', array_map(fn (StatsContext $context) => $context->value, StatsContext::defaultSortingOrder()));
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
@@ -44,6 +45,20 @@ final readonly class YearlyStatsWidget implements Widget
         }
         if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
+        }
+        if (!$configuration->configItemExists('metricsDisplayOrder')) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for YearlyDistancesWidget.');
+        }
+        if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
+        }
+        if (3 !== count($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
+        }
+        foreach ($configuration->getConfigItem('metricsDisplayOrder') as $metricDisplayOrder) {
+            if (!StatsContext::tryFrom($metricDisplayOrder)) {
+                throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
+            }
         }
     }
 
@@ -96,10 +111,16 @@ final readonly class YearlyStatsWidget implements Widget
                 years: $allYears
             );
         }
+        /** @var string[] $metricsDisplayOrder */
+        $metricsDisplayOrder = $configuration->getConfigItem('metricsDisplayOrder');
 
-        return $this->twig->load('html/dashboard/widget/widget--yearly-distances.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--yearly-stats.html.twig')->render([
             'yearlyStatsChartsPerContext' => $yearlyStatChartsPerContext,
             'yearlyStatistics' => $yearlyStatistics,
+            'metricsDisplayOrder' => array_map(
+                StatsContext::from(...),
+                $metricsDisplayOrder,
+            ),
         ]);
     }
 }
