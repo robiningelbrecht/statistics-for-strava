@@ -47,7 +47,7 @@ bin/console app:strava:import-data
 bin/console app:strava:build-files
 ```
 
-Edit `docker-compose.yml` to include the shell script as well as the Ofelia image. 
+Edit `docker-compose.yml` to include the shell script as well as the Ofelia image.
 Make sure the path to the shell script matches its location on your system.
 
 ```yml
@@ -66,7 +66,7 @@ services:
   ofelia:
     image: mcuadros/ofelia:latest
     depends_on:
-      - statistics-for-strava
+      - app
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
