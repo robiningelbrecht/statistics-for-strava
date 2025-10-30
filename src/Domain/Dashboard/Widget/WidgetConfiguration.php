@@ -27,12 +27,12 @@ final class WidgetConfiguration
     /**
      * @return int|string|float|bool|array<int, int|string>|null $value
      */
-    public function getConfigItem(string $key, mixed $default = null): int|string|float|bool|array|null
+    public function get(string $key, mixed $default = null): int|string|float|bool|array|null
     {
         return $this->configuration[$key] ?? $default;
     }
 
-    public function configItemExists(string $key): bool
+    public function exists(string $key): bool
     {
         return array_key_exists($key, $this->configuration);
     }

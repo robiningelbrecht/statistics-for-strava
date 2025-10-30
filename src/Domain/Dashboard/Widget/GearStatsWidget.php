@@ -39,10 +39,10 @@ final readonly class GearStatsWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('includeRetiredGear')) {
+        if (!$configuration->exists('includeRetiredGear')) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" is required for GearStatsWidget.');
         }
-        if (!is_bool($configuration->getConfigItem('includeRetiredGear'))) {
+        if (!is_bool($configuration->get('includeRetiredGear'))) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" must be a boolean.');
         }
     }
@@ -53,7 +53,7 @@ final readonly class GearStatsWidget implements Widget
         $allUsedGears = $this->gearRepository->findAllUsed();
         $importedActivityTypes = $this->activityTypeRepository->findAll();
 
-        if (!$configuration->getConfigItem('includeRetiredGear')) {
+        if (!$configuration->get('includeRetiredGear')) {
             $allUsedGears = $allUsedGears->filter(fn (Gear $gear): bool => !$gear->isRetired());
         }
 

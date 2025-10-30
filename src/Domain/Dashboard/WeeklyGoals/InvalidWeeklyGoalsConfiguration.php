@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Challenge\Consistency;
+namespace App\Domain\Dashboard\WeeklyGoals;
 
-final class InvalidConsistencyChallengeConfiguration extends \RuntimeException
+final class InvalidWeeklyGoalsConfiguration extends \RuntimeException
 {
     public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {

@@ -1,0 +1,24 @@
+{% autoescape false %}
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">{{ "Weekly goals"|trans }}</h3>
+        <span class="text-sm">{{ fromToLabel }}</span>
+    </div>
+    <div class="grow flex flex-col justify-center gap-y-4 divide-y divide-gray-200">
+        {% for weeklyGoal in calculatedWeeklyGoals %}
+            <div class="pb-4">
+                <div class="mb-1 flex justify-between">
+                    <div class="flex items-center gap-x-0.5 text-sm text-grey-900">
+                        <div>{{ svg('distance', 'size-4') }}</div>
+                        <div>{{ weeklyGoal.label }} - {{ weeklyGoal.progress }}<span class="text-xs">{{ weeklyGoal.unit }}</span></div>
+                    </div>
+                    <div class="text-sm text-grey-900">{{ "Goal"|trans }}: {{ weeklyGoal.goal }}<span class="text-xs">{{ weeklyGoal.unit }}</span></div>
+                </div>
+                <div class="w-full rounded-full bg-gray-200">
+                    <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ weeklyGoal.progressPercentage }}%">
+                        {{ weeklyGoal.progressPercentage }}%
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endautoescape %}

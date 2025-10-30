@@ -2586,6 +2586,9 @@
   .bg-\[\#89D7D2\] {
     background-color: #89D7D2;
   }
+  .bg-\[\#F26722\] {
+    background-color: #F26722;
+  }
   .bg-black\/0 {
     background-color: color-mix(in srgb, #000000 0%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2774,6 +2777,9 @@
       padding: 0 !important;
     }
   }
+  .p-0\.5 {
+    padding: calc(var(--spacing) * 0.5);
+  }
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
@@ -2898,6 +2904,9 @@
   .pb-3 {
     padding-bottom: calc(var(--spacing) * 3);
   }
+  .pb-4 {
+    padding-bottom: calc(var(--spacing) * 4);
+  }
   .pb-5 {
     padding-bottom: calc(var(--spacing) * 5);
   }
@@ -3019,6 +3028,10 @@
   .leading-9 {
     --tw-leading: calc(var(--spacing) * 9);
     line-height: calc(var(--spacing) * 9);
+  }
+  .leading-none {
+    --tw-leading: 1;
+    line-height: 1;
   }
   .leading-normal {
     --tw-leading: var(--leading-normal);

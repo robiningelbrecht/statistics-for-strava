@@ -25,15 +25,15 @@ final readonly class MostRecentActivitiesWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('numberOfActivitiesToDisplay')) {
+        if (!$configuration->exists('numberOfActivitiesToDisplay')) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" is required for MostRecentActivitiesWidget.');
         }
 
-        if (!is_int($configuration->getConfigItem('numberOfActivitiesToDisplay'))) {
+        if (!is_int($configuration->get('numberOfActivitiesToDisplay'))) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" must be an integer.');
         }
 
-        if ($configuration->getConfigItem('numberOfActivitiesToDisplay') < 1) {
+        if ($configuration->get('numberOfActivitiesToDisplay') < 1) {
             throw new InvalidDashboardLayout('Configuration item "numberOfActivitiesToDisplay" must be set to a value of 1 or greater.');
         }
     }
@@ -43,7 +43,7 @@ final readonly class MostRecentActivitiesWidget implements Widget
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
 
         /** @var int $numberOfActivitiesToDisplay */
-        $numberOfActivitiesToDisplay = $configuration->getConfigItem('numberOfActivitiesToDisplay');
+        $numberOfActivitiesToDisplay = $configuration->get('numberOfActivitiesToDisplay');
 
         return $this->twig->load('html/dashboard/widget/widget--most-recent-activities.html.twig')->render([
             'mostRecentActivities' => $allActivities->slice(0, $numberOfActivitiesToDisplay),
