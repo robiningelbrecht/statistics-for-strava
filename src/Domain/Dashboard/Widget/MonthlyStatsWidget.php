@@ -42,6 +42,9 @@ final readonly class MonthlyStatsWidget implements Widget
         if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
         }
+        if (!$configuration->configItemExists('metricsDisplayOrder')) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for MonthlyStatsWidget.');
+        }
         if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
         }
