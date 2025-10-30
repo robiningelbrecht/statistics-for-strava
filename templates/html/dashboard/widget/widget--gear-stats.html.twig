@@ -31,13 +31,13 @@
             </ul>
         </div>
     {% endif %}
-    <div id="gearStatsActivityTypeTabContent{{ uniqueId }}">
-        <div id="gearStatsAll{{ uniqueId }}" role="tabpanel"
+    <div id="gearStatsActivityTypeTabContent{{ uniqueId }}" class="flex flex-col grow">
+        <div class="grow" id="gearStatsAll{{ uniqueId }}" role="tabpanel"
              aria-labelledby="gearStatsAll{{ uniqueId }}-tab">
             <div class="h-full min-h-[16rem]" data-echarts-options='{{ chartAllGears }}'></div>
         </div>
         {% for activityType,chart in chartsPerActivityType %}
-            <div id="gearStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+            <div class="grow" id="gearStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="gearStats{{ activityType }}{{ uniqueId }}-tab">
                 <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
             </div>

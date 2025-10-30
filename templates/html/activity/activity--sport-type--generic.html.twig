@@ -285,7 +285,7 @@
                         'scrollWheelZoom': true
                     } %}
                     <div class="flex flex-col">
-                        <div class="min-h-[350px] flex-grow-1" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
+                        <div class="min-h-[350px] grow" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                              data-leaflet='{{ leafletOptions|json_encode }}' data-leaflet-echart-connect></div>
                     </div>
                 {% else %}

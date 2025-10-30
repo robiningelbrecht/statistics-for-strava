@@ -218,9 +218,9 @@
                     <h3 class="mb-4 text-lg font-semibold">
         Heart rate zones
     </h3>
-        <div id="hearRateZoneStatsActivityTypeTabContent--1">
-        <div id="hearRateZoneStatsAll--1" role="tabpanel" aria-labelledby="hearRateZoneStatsAll--1-tab">
-            <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":0,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":0,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":0,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":0,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
+        <div id="hearRateZoneStatsActivityTypeTabContent--1" class="flex flex-col grow">
+        <div class="grow" id="hearRateZoneStatsAll--1" role="tabpanel" aria-labelledby="hearRateZoneStatsAll--1-tab">
+            <div class="h-full min-h-[16rem]" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{zone|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"zone":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Zone 1 (recovery)","itemStyle":{"color":"#DF584A"}},{"value":0,"name":"Zone 2 (aerobic)","itemStyle":{"color":"#D63522"}},{"value":0,"name":"Zone 3 (aerobic\/anaerobic)","itemStyle":{"color":"#BD2D22"}},{"value":0,"name":"Zone 4 (anaerobic)","itemStyle":{"color":"#942319"}},{"value":0,"name":"Zone 5 (maximal)","itemStyle":{"color":"#6A1009"}}]}]}'></div>
         </div>
             </div>
 
@@ -1324,8 +1324,8 @@
             View details
         </a>
     </div>
-        <div id="gearStatsActivityTypeTabContent--1">
-        <div id="gearStatsAll--1" role="tabpanel" aria-labelledby="gearStatsAll--1-tab">
+        <div id="gearStatsActivityTypeTabContent--1" class="flex flex-col grow">
+        <div class="grow" id="gearStatsAll--1" role="tabpanel" aria-labelledby="gearStatsAll--1-tab">
             <div class="h-full min-h-[16rem]" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":2,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}},{"value":1,"name":"Zwift hub","itemStyle":{"color":"#91cc75"}}]}]}'></div>
         </div>
             </div>
@@ -1338,7 +1338,7 @@
             View details
         </a>
     </div>
-    <div class="flex-grow-1 flex gap-x-4 divide-x divide-gray-200">
+    <div class="grow flex gap-x-4 divide-x divide-gray-200">
                     <div class="w-full flex flex-col justify-center items-center gap-y-6 text-center">
                 <div>
                     <div class="text-sm">

@@ -8,7 +8,7 @@
             {{ "View all"|trans }}
         </a>
     </div>
-    <div class="flex gap-2 flex-grow-1 items-center overflow-x-auto">
+    <div class="flex gap-2 grow items-center overflow-x-auto">
         {% for challenge in challenges %}
             {% set tooltipContent = challenge.getName()|replace({'"':'\''}) %}
             <a class="h-[130px] shrink-0" href="{{ challenge.getUrl() }}" title="{{ tooltipContent }}">
