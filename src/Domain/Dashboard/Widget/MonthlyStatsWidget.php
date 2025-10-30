@@ -30,7 +30,8 @@ final readonly class MonthlyStatsWidget implements Widget
     public function getDefaultConfiguration(): WidgetConfiguration
     {
         return WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10);
+            ->add('enableLastXYearsByDefault', 10)
+            ->add('metricsDisplayOrder', array_map(fn (StatsContext $context) => $context->value, StatsContext::defaultSortingOrder()));
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
@@ -40,6 +41,17 @@ final readonly class MonthlyStatsWidget implements Widget
         }
         if (!is_int($configuration->getConfigItem('enableLastXYearsByDefault'))) {
             throw new InvalidDashboardLayout('Configuration item "enableLastXYearsByDefault" must be an integer.');
+        }
+        if (!is_array($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
+        }
+        if (3 !== count($configuration->getConfigItem('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
+        }
+        foreach ($configuration->getConfigItem('metricsDisplayOrder') as $metricDisplayOrder) {
+            if (!StatsContext::tryFrom($metricDisplayOrder)) {
+                throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
+            }
         }
     }
 
@@ -71,8 +83,15 @@ final readonly class MonthlyStatsWidget implements Widget
             }
         }
 
+        /** @var string[] $metricsDisplayOrder */
+        $metricsDisplayOrder = $configuration->getConfigItem('metricsDisplayOrder');
+
         return $this->twig->load('html/dashboard/widget/widget--monthly-stats.html.twig')->render([
             'monthlyStatsChartsPerContext' => $monthlyStatChartsPerContext,
+            'metricsDisplayOrder' => array_map(
+                StatsContext::from(...),
+                $metricsDisplayOrder,
+            ),
         ]);
     }
 }

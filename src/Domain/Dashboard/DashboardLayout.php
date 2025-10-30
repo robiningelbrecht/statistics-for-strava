@@ -30,7 +30,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
             ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
             ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
-                'enableLastXYearsByDefault' => 10,
+                'enableLastXYearsByDefault' => 10, 'metricsDisplayOrder' => ['distance', 'movingTime', 'elevation'],
             ]],
             ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
             ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],

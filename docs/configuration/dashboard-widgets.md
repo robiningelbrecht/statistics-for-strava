@@ -17,7 +17,7 @@ appearance:
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
       - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
-      - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10 } }
+      - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10, metricsDisplayOrder: ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'trainingLoad', 'width': 100, 'enabled': true }
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
@@ -103,9 +103,10 @@ This widget provides an overview your activities in a GitHub style graph.
 This widget displays your monthly statistics and lets you compare your performance with the same months in previous years.
 
 * __enableLastXYearsByDefault__: enable the last X years of data dy default. Earlier years will be disabled but can be toggled.
+* __metricsDisplayOrder__: The order in which the metrics are displayed in the widget. Supported metrics are 'distance', 'movingTime' and 'elevation'. All 3 metrics must be included.
 
 ```yml
-{ 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10 } }
+{ 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { enableLastXYearsByDefault: 10, metricsDisplayOrder: ['distance', 'movingTime', 'elevation'] } }
 ```
 
 ![monthlyStats widget](../assets/images/dashboard-widgets/monthly-stats.png)

@@ -49,7 +49,7 @@
         <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
             id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
             role="tablist">
-            {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases %}
+            {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases() %}
                 <li class="shrink-0" role="presentation">
                     <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
                        aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}"
@@ -61,7 +61,7 @@
         </ul>
     </div>
     <div id="activityGridWidgetTabContent{{ uniqueId }}">
-        {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases %}
+        {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases() %}
             <div id="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
                 <div class="relative overflow-x-auto">
