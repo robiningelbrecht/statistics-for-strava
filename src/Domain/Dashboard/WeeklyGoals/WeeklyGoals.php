@@ -30,7 +30,7 @@ final class WeeklyGoals extends Collection
         $weeklyGoals = [];
         foreach ($items as $goalConfig) {
             if (!is_array($goalConfig)) {
-                throw new InvalidWeeklyGoalsConfiguration('Invalid goals configuration provided');
+                throw new InvalidWeeklyGoalsConfiguration('Invalid WeeklyGoals configuration provided');
             }
 
             foreach (['label', 'enabled', 'type', 'unit', 'goal', 'sportTypesToInclude'] as $requiredKey) {
