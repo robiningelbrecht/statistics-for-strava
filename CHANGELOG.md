@@ -1,15 +1,14 @@
 # [v3.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.3) - 2025-10-31
 
-🔥 This release introduces a new config option "metricsDisplayOrder" for the following widgets:
+🔥 This release introduces a new config option __metricsDisplayOrder__ for the following widgets:
 
 * `weeklyStats`
 * `monthlyStats`
-* `yearlyStats
+* `yearlyStats`
 
-This option lets you customize the order of the metric buttons, Distance, Time, and Elevation, 
-in each widget to match your preferred display order.
+This option lets you customize the order of the metric buttons __Distance__, __Time__, and __Elevation__ in each widget to match your preferred display order.
 
-Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets
 
 ## What's Changed
 * Minor change for Ofelia docs example config by @Luen in https://github.com/robiningelbrecht/statistics-for-strava/pull/1314
