@@ -1,8 +1,39 @@
+# [v3.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.3) - 2025-10-31
+
+🔥 This release introduces a new config option "metricsDisplayOrder" for the following widgets:
+
+* `weeklyStats`
+* `monthlyStats`
+* `yearlyStats
+
+This option lets you customize the order of the metric buttons, Distance, Time, and Elevation, 
+in each widget to match your preferred display order.
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* Minor change for Ofelia docs example config by @Luen in https://github.com/robiningelbrecht/statistics-for-strava/pull/1314
+* ISSUE #1316: Dashboard chart widgets should have equal height by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1317
+* ISSUE #1311: Allow to configure metricsDisplayOrder on widgets by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1318
+* Fix cron job schedule for 7 PM by @lennon101 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1320
+* ISSUE #1322: Fix wrong unit for average speed in gear state by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1323
+
+## New Contributors
+* @Luen made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1314
+* @lennon101 made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1320
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.2...v3.8.3
+
 # [v3.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.2) - 2025-10-29
 
 > [!WARNING]  
 > The config option `metrics.consistencyChallenges` has been moved to the config of the `challengeConsistency` dashboard widget.
 > If you do not have custom challenges configured, you don't have to do anything
+
+🔥 You can now set the purchase price of your (custom) gear to track its relative cost per hour and per activity. Read more in the documentation:
+
+* https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+* https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear
 
 ## What's Changed
 * updated german translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1294
