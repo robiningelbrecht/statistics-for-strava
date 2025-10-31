@@ -4,7 +4,6 @@ namespace App\Tests\Domain\Challenge\Consistency;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
-use App\Domain\Challenge\Consistency\ChallengeConsistencyGoal;
 use App\Domain\Challenge\Consistency\ChallengeConsistencyType;
 use App\Domain\Challenge\Consistency\ConsistencyChallenge;
 use App\Domain\Challenge\Consistency\ConsistencyChallenges;
@@ -21,10 +20,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Ride a total of 200km',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE,
-                goal: ChallengeConsistencyGoal::from(
-                    200,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 200,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
@@ -33,10 +30,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Ride a total of 600km',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE,
-                goal: ChallengeConsistencyGoal::from(
-                    600,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 600,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
@@ -45,10 +40,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Ride a total of 1250km',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE,
-                goal: ChallengeConsistencyGoal::from(
-                    1250,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 1250,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
@@ -57,10 +50,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Complete a 100km ride',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY,
-                goal: ChallengeConsistencyGoal::from(
-                    100,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 100,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
@@ -69,10 +60,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Climb a total of 7500m',
                 isEnabled: true,
                 type: ChallengeConsistencyType::ELEVATION,
-                goal: ChallengeConsistencyGoal::from(
-                    7500,
-                    ChallengeConsistencyGoal::METER
-                ),
+                goal: 7500,
+                unit: ConsistencyChallenge::METER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                 ]),
@@ -81,10 +70,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Complete a 5km run',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY,
-                goal: ChallengeConsistencyGoal::from(
-                    5,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 5,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
@@ -93,10 +80,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Complete a 10km run',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY,
-                goal: ChallengeConsistencyGoal::from(
-                    10,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 10,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
@@ -105,10 +90,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Complete a half marathon run',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY,
-                goal: ChallengeConsistencyGoal::from(
-                    21.1,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 21.1,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
@@ -117,10 +100,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Run a total of 100km',
                 isEnabled: true,
                 type: ChallengeConsistencyType::DISTANCE,
-                goal: ChallengeConsistencyGoal::from(
-                    100,
-                    ChallengeConsistencyGoal::KILOMETER
-                ),
+                goal: 100,
+                unit: ConsistencyChallenge::KILOMETER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
@@ -129,10 +110,8 @@ class ConsistencyChallengesTest extends TestCase
                 label: 'Climb a total of 2000m',
                 isEnabled: true,
                 type: ChallengeConsistencyType::ELEVATION,
-                goal: ChallengeConsistencyGoal::from(
-                    2000,
-                    ChallengeConsistencyGoal::METER
-                ),
+                goal: 2000,
+                unit: ConsistencyChallenge::METER,
                 sportTypesToInclude: SportTypes::fromArray([
                     SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                 ]),
@@ -168,10 +147,8 @@ class ConsistencyChallengesTest extends TestCase
                     label: 'A test',
                     isEnabled: true,
                     type: ChallengeConsistencyType::NUMBER_OF_ACTIVITIES,
-                    goal: ChallengeConsistencyGoal::from(
-                        100,
-                        ChallengeConsistencyGoal::KILOMETER
-                    ),
+                    goal: 100,
+                    unit: ConsistencyChallenge::KILOMETER,
                     sportTypesToInclude: SportTypes::fromArray([
                         SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN,
                     ]),

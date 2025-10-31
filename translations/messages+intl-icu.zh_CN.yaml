@@ -109,6 +109,7 @@ Gear: 装备
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
 'Gear that is retired is disabled by default.': 退役的装备默认禁用。
+Goal: Goal
 Golf: 高尔夫
 'Good training variety': 'Good training variety'
 'Google searches': 'Google searches'
@@ -323,6 +324,7 @@ Wednesday: 星期三
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
+'Weekly goals': 'Weekly goals'
 'Weekly stats': 每周统计
 'Weight Training': 重量训练
 Wheelchair: 轮椅

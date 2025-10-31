@@ -2,6 +2,8 @@
 
 namespace App\Tests\Domain\Dashboard\WeeklyGoals;
 
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Dashboard\WeeklyGoals\InvalidWeeklyGoalsConfiguration;
 use App\Domain\Dashboard\WeeklyGoals\WeeklyGoal;
 use App\Domain\Dashboard\WeeklyGoals\WeeklyGoals;
@@ -13,31 +15,6 @@ class WeeklyGoalsTest extends TestCase
 {
     public function testFromConfig(): void
     {
-        [
-            'label' => 'Cycling',
-            'enabled' => true,
-            'type' => 'distance',
-            'unit' => 'km',
-            'goal' => 200,
-            'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-        ],
-            [
-                'label' => 'Cycling',
-                'enabled' => true,
-                'type' => 'elevation',
-                'unit' => 'm',
-                'goal' => 7500,
-                'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-            ],
-            [
-                'label' => 'Cycling',
-                'enabled' => true,
-                'type' => 'movingTime',
-                'unit' => 'hour',
-                'goal' => 7500,
-                'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-            ],
-
         $this->assertEquals(
             WeeklyGoals::empty(),
             WeeklyGoals::fromConfig([])
@@ -45,35 +22,34 @@ class WeeklyGoalsTest extends TestCase
 
         $this->assertEquals(
             WeeklyGoals::fromArray([
-                    WeeklyGoal::create(
-                        label: 'Cycling',
-                        isEnabled: true,
-                        type: WeeklyGoalType::DISTANCE,
-                        goal: 200,
-                        unit: 'km',
-                        sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-                    ),
-                    WeeklyGoal::create(
-                        label: 'Cycling',
-                        isEnabled: true,
-                        type: 'elevation',
-                        goal: 7500,
-                        unit: 'm',
-                        sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-                    ),
-                    WeeklyGoal::create(
-                        label: 'Cycling',
-                        isEnabled: true,
-                        type: 'movingTime',
-                        goal: 7500,
-                        unit: 'hour',
-                        sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'],
-                    ),
-                ]),
+                WeeklyGoal::create(
+                    label: 'Cycling',
+                    isEnabled: true,
+                    type: WeeklyGoalType::DISTANCE,
+                    goal: 200,
+                    unit: 'km',
+                    sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
+                ),
+                WeeklyGoal::create(
+                    label: 'Cycling',
+                    isEnabled: true,
+                    type: WeeklyGoalType::ELEVATION,
+                    goal: 7500,
+                    unit: 'm',
+                    sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
+                ),
+                WeeklyGoal::create(
+                    label: 'Cycling',
+                    isEnabled: true,
+                    type: WeeklyGoalType::MOVING_TIME,
+                    goal: 7500,
+                    unit: 'hour',
+                    sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
+                ),
+            ]),
             WeeklyGoals::fromConfig(self::getValidYml())
         );
     }
-
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testFromConfigurationItShouldThrow(array $config, string $expectedException): void

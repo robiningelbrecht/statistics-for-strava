@@ -109,6 +109,7 @@ Gear: Equipamento
 'Gear stats': 'Estatísticas do equipamento'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Equipamento não utilizado nos últimos três meses é desativado por padrão.'
 'Gear that is retired is disabled by default.': 'Equipamento não utilizado é desativado por padrão.'
+Goal: Goal
 Golf: Golfe
 'Good training variety': 'Good training variety'
 'Google searches': 'Google searches'
@@ -323,6 +324,7 @@ Wednesday: Quarta-feira
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
+'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Estatísticas semanais'
 'Weight Training': 'Treino de Força'
 Wheelchair: 'Cadeira de Rodas'
