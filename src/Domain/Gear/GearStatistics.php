@@ -88,7 +88,7 @@ final readonly class GearStatistics
                 'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
                 'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
                 'averageDistance' => $countActivitiesWithGear > 0 ? Kilometer::from($gear->getDistance()->toFloat() / $countActivitiesWithGear) : Kilometer::zero(),
-                'averageSpeed' => $movingTimeInSeconds > 0 ? Kilometer::from(($gear->getDistance()->toFloat() / $movingTimeInSeconds) * 3600) : Kilometer::zero(),
+                'averageSpeed' => $movingTimeInSeconds > 0 ? KmPerHour::from(($gear->getDistance()->toFloat() / $movingTimeInSeconds) * 3600) : Kilometer::zero(),
                 'totalCalories' => $activitiesWithGear->sum(fn (Activity $activity): ?int => $activity->getCalories()),
             ];
         });
