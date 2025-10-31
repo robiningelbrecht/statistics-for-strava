@@ -3,7 +3,7 @@
 namespace App\Tests\Domain\Dashboard\Widget;
 
 use App\Domain\Dashboard\InvalidDashboardLayout;
-use App\Domain\Dashboard\Widget\WeeklyStatsWidget;
+use App\Domain\Dashboard\Widget\WeeklyStats\WeeklyStatsWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
