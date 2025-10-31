@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Challenge\Consistency;
 
 use App\Domain\Activity\SportType\SportTypes;
-use App\Infrastructure\ValueObject\Measurement\ProvideUnitHelpers;
+use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class ConsistencyChallenge
 {
-    use ProvideUnitHelpers;
+    use ProvideUnitFromScalar;
+    use ProvideGoalConverters;
 
     private function __construct(
         private string $label,

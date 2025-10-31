@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Dashboard\WeeklyGoals;
 
 use App\Domain\Activity\SportType\SportTypes;
-use App\Infrastructure\ValueObject\Measurement\ProvideUnitHelpers;
+use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class WeeklyGoal
 {
-    use ProvideUnitHelpers;
+    use ProvideUnitFromScalar;
 
     private function __construct(
         private string $label,
