@@ -72,11 +72,11 @@ final readonly class DistanceOverTimePerGearChart
         $selectedSeries = [];
         /** @var Gear $gear */
         foreach ($gears as $gear) {
-            $gearName = $gear->getName();
+            $gearName = Escape::htmlSpecialChars($gear->getName());
             $selectedSeries[$gearName] = !$gear->isRetired();
 
             $series[] = [
-                'name' => Escape::htmlSpecialChars($gearName),
+                'name' => $gearName,
                 'type' => 'line',
                 'smooth' => true,
                 'showSymbol' => false,
