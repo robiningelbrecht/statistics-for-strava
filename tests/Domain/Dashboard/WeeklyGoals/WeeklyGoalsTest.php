@@ -4,10 +4,10 @@ namespace App\Tests\Domain\Dashboard\WeeklyGoals;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
-use App\Domain\Dashboard\WeeklyGoals\InvalidWeeklyGoalsConfiguration;
-use App\Domain\Dashboard\WeeklyGoals\WeeklyGoal;
-use App\Domain\Dashboard\WeeklyGoals\WeeklyGoals;
-use App\Domain\Dashboard\WeeklyGoals\WeeklyGoalType;
+use App\Domain\Dashboard\Widget\WeeklyGoals\InvalidWeeklyGoalsConfiguration;
+use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoal;
+use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoals;
+use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoalType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
