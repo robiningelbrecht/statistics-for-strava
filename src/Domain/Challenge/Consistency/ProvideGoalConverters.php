@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\ValueObject\Measurement;
+namespace App\Domain\Challenge\Consistency;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Foot;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -11,32 +11,13 @@ use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Minute;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Infrastructure\ValueObject\Measurement\Unit;
 
-trait ProvideUnitHelpers
+trait ProvideGoalConverters
 {
-    public const string KILOMETER = 'km';
-    public const string METER = 'm';
-    public const string MILES = 'mi';
-    public const string FOOT = 'ft';
-    public const string HOUR = 'hour';
-    public const string MINUTE = 'minute';
-
     abstract public function getGoal(): Unit;
 
-    public static function createUnitFromScalars(float $value, string $unit): Unit
-    {
-        return match ($unit) {
-            self::KILOMETER => Kilometer::from($value),
-            self::METER => Meter::from($value),
-            self::MILES => Mile::from($value),
-            self::FOOT => Foot::from($value),
-            self::HOUR => Hour::from($value),
-            self::MINUTE => Minute::from($value),
-            default => throw new \InvalidArgumentException('Invalid unit '.$unit),
-        };
-    }
-
-    public function convertKilometerToUnit(Kilometer $kilometer): Unit
+    public function convertKilometerToGoalUnit(Kilometer $kilometer): Unit
     {
         if ($this->getGoal() instanceof Kilometer) {
             return $kilometer;
@@ -54,7 +35,7 @@ trait ProvideUnitHelpers
         throw new \RuntimeException(sprintf('Cannot convert Kilometer to %s', $this->getGoal()::class));
     }
 
-    public function convertMeterToUnit(Meter $meter): Unit
+    public function convertMeterToGoalUnit(Meter $meter): Unit
     {
         if ($this->getGoal() instanceof Meter) {
             return $meter;
@@ -72,7 +53,7 @@ trait ProvideUnitHelpers
         throw new \RuntimeException(sprintf('Cannot convert Meter to %s', $this->getGoal()::class));
     }
 
-    public function convertSecondsToUnit(Seconds $seconds): Unit
+    public function convertSecondsToGoalUnit(Seconds $seconds): Unit
     {
         if ($this->getGoal() instanceof Hour) {
             return $seconds->toHour();

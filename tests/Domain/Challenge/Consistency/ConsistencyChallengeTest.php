@@ -30,7 +30,7 @@ class ConsistencyChallengeTest extends TestCase
     {
         $this->assertEquals(
             $expectedConversion,
-            $challenge->convertKilometerToUnit(Kilometer::zero())
+            $challenge->convertKilometerToGoalUnit(Kilometer::zero())
         );
     }
 
@@ -44,7 +44,7 @@ class ConsistencyChallengeTest extends TestCase
             goal: 0,
             unit: 'hour',
             sportTypesToInclude: SportTypes::empty()
-        )->convertKilometerToUnit(Kilometer::zero());
+        )->convertKilometerToGoalUnit(Kilometer::zero());
     }
 
     #[DataProvider(methodName: 'provideDataForUnitConversion')]
@@ -52,7 +52,7 @@ class ConsistencyChallengeTest extends TestCase
     {
         $this->assertEquals(
             $expectedConversion,
-            $challenge->convertMeterToUnit(Meter::zero())
+            $challenge->convertMeterToGoalUnit(Meter::zero())
         );
     }
 
@@ -66,7 +66,7 @@ class ConsistencyChallengeTest extends TestCase
             goal: 0,
             unit: 'hour',
             sportTypesToInclude: SportTypes::empty()
-        )->convertMeterToUnit(Meter::zero());
+        )->convertMeterToGoalUnit(Meter::zero());
     }
 
     #[DataProvider(methodName: 'provideDataForSecondsToUnitConversion')]
@@ -74,7 +74,7 @@ class ConsistencyChallengeTest extends TestCase
     {
         $this->assertEquals(
             $expectedConversion,
-            $challenge->convertSecondsToUnit(Seconds::zero())
+            $challenge->convertSecondsToGoalUnit(Seconds::zero())
         );
     }
 
@@ -88,7 +88,7 @@ class ConsistencyChallengeTest extends TestCase
             goal: 0,
             unit: 'm',
             sportTypesToInclude: SportTypes::empty()
-        )->convertSecondsToUnit(Seconds::zero());
+        )->convertSecondsToGoalUnit(Seconds::zero());
     }
 
     public static function provideDataForUnitConversion(): iterable
