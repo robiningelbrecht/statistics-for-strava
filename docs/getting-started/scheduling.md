@@ -59,8 +59,9 @@ services:
       - # ... other volumes
     # ... other configuration options
     labels:
+      # refresh SFS daily at 7pm (1700). NB: ofelia includes seconds in the cron job 
       ofelia.enabled: "true"
-      ofelia.job-exec.datecron.schedule: "0 19 * * *"
+      ofelia.job-exec.datecron.schedule: "0 0 19 * * *"
       ofelia.job-exec.datecron.command: "sh /bin/refresh.sh"
       
   ofelia:
