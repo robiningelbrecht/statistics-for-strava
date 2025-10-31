@@ -5,24 +5,19 @@ declare(strict_types=1);
 namespace App\Domain\Dashboard\WeeklyGoals;
 
 use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\ValueObject\Measurement\ProvideUnitHelpers;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class WeeklyGoal
 {
-    public const string KILOMETER = 'km';
-    public const string METER = 'm';
-    public const string MILES = 'mi';
-    public const string FOOT = 'ft';
-    public const string HOUR = 'hour';
-    public const string MINUTE = 'minute';
+    use ProvideUnitHelpers;
 
     private function __construct(
         private string $label,
         private bool $isEnabled,
         private WeeklyGoalType $type,
-        private float $goal,
-        private Unit $unit,
+        private Unit $goal,
         private SportTypes $sportTypesToInclude,
     ) {
     }
@@ -32,15 +27,17 @@ final readonly class WeeklyGoal
         bool $isEnabled,
         WeeklyGoalType $type,
         float $goal,
-        Unit $unit,
+        string $unit,
         SportTypes $sportTypesToInclude,
     ): self {
         return new self(
             label: $label,
             isEnabled: $isEnabled,
             type: $type,
-            goal: $goal,
-            unit: $unit,
+            goal: self::createUnitFromScalars(
+                value: $goal,
+                unit: $unit,
+            ),
             sportTypesToInclude: $sportTypesToInclude,
         );
     }
@@ -65,14 +62,9 @@ final readonly class WeeklyGoal
         return $this->type;
     }
 
-    public function getGoal(): float
+    public function getGoal(): Unit
     {
         return $this->goal;
-    }
-
-    public function getUnit(): Unit
-    {
-        return $this->unit;
     }
 
     public function getSportTypesToInclude(): SportTypes

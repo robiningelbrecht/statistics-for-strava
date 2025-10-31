@@ -6,7 +6,6 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Calendar\Months;
-use App\Domain\Challenge\Consistency\ChallengeConsistencyGoal;
 use App\Domain\Challenge\Consistency\ChallengeConsistencyType;
 use App\Domain\Challenge\Consistency\ConsistencyChallenge;
 use App\Domain\Challenge\Consistency\ConsistencyChallengeCalculator;
@@ -40,10 +39,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Ride a total of 1km',
                         isEnabled: true,
                         type: ChallengeConsistencyType::DISTANCE,
-                        goal: ChallengeConsistencyGoal::from(
-                            1,
-                            ChallengeConsistencyGoal::KILOMETER
-                        ),
+                        goal: 1,
+                        unit: ConsistencyChallenge::KILOMETER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -52,10 +49,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Ride a total of 200km',
                         isEnabled: true,
                         type: ChallengeConsistencyType::DISTANCE,
-                        goal: ChallengeConsistencyGoal::from(
-                            200,
-                            ChallengeConsistencyGoal::KILOMETER
-                        ),
+                        goal: 200,
+                        unit: ConsistencyChallenge::KILOMETER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -64,10 +59,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'a 2km ride',
                         isEnabled: true,
                         type: ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY,
-                        goal: ChallengeConsistencyGoal::from(
-                            2,
-                            ChallengeConsistencyGoal::KILOMETER
-                        ),
+                        goal: 2,
+                        unit: ConsistencyChallenge::KILOMETER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -76,10 +69,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Total elevation',
                         isEnabled: true,
                         type: ChallengeConsistencyType::ELEVATION,
-                        goal: ChallengeConsistencyGoal::from(
-                            2,
-                            ChallengeConsistencyGoal::METER
-                        ),
+                        goal: 2,
+                        unit: ConsistencyChallenge::METER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -88,10 +79,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'a 1m elevation ride',
                         isEnabled: true,
                         type: ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY,
-                        goal: ChallengeConsistencyGoal::from(
-                            2,
-                            ChallengeConsistencyGoal::METER
-                        ),
+                        goal: 2,
+                        unit: ConsistencyChallenge::METER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -100,10 +89,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Swim a total of 200km',
                         isEnabled: true,
                         type: ChallengeConsistencyType::DISTANCE,
-                        goal: ChallengeConsistencyGoal::from(
-                            200,
-                            ChallengeConsistencyGoal::KILOMETER
-                        ),
+                        goal: 200,
+                        unit: ConsistencyChallenge::KILOMETER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::SWIM,
                         ]),
@@ -112,10 +99,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Quantity',
                         isEnabled: true,
                         type: ChallengeConsistencyType::NUMBER_OF_ACTIVITIES,
-                        goal: ChallengeConsistencyGoal::from(
-                            2,
-                            ChallengeConsistencyGoal::METER
-                        ),
+                        goal: 2,
+                        unit: ConsistencyChallenge::METER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -124,10 +109,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Calories',
                         isEnabled: true,
                         type: ChallengeConsistencyType::CALORIES,
-                        goal: ChallengeConsistencyGoal::from(
-                            2,
-                            ChallengeConsistencyGoal::METER
-                        ),
+                        goal: 2,
+                        unit: ConsistencyChallenge::METER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE,
                         ]),
@@ -136,10 +119,8 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
                         label: 'Swim a total of 100km',
                         isEnabled: false,
                         type: ChallengeConsistencyType::DISTANCE,
-                        goal: ChallengeConsistencyGoal::from(
-                            100,
-                            ChallengeConsistencyGoal::KILOMETER
-                        ),
+                        goal: 100,
+                        unit: ConsistencyChallenge::KILOMETER,
                         sportTypesToInclude: SportTypes::fromArray([
                             SportType::SWIM,
                         ]),
