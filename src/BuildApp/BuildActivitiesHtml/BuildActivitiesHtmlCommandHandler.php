@@ -85,7 +85,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 'devices' => $this->deviceRepository->findAll(),
                 'activityTotals' => $activityTotals,
                 'countries' => $this->countries->getUsedInActivities(),
-                'gears' => $this->gearRepository->findAll(),
+                'gears' => $this->gearRepository->findAllUsed(),
             ]),
         );
 

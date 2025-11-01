@@ -29,7 +29,7 @@ final class GetGear extends Tool
      */
     public function __invoke(): array
     {
-        $gears = $this->gearRepository->findAll();
+        $gears = $this->gearRepository->findAllUsed();
 
         return $gears->map(fn (Gear $gear): array => $gear->exportForAITooling());
     }
