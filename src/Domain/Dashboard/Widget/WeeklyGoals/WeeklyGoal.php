@@ -8,7 +8,6 @@ use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Challenge\Consistency\ProvideGoalConverters;
 use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
 use App\Infrastructure\ValueObject\Measurement\Unit;
-use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class WeeklyGoal
 {
@@ -42,11 +41,6 @@ final readonly class WeeklyGoal
             ),
             sportTypesToInclude: $sportTypesToInclude,
         );
-    }
-
-    public function getId(): string
-    {
-        return Name::fromString($this->label)->kebabCase();
     }
 
     public function getLabel(): string

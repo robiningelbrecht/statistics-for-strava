@@ -43,12 +43,12 @@ final readonly class FindWeeklyGoalMetricsQueryHandler implements QueryHandler
             [
                 'sportTypes' => ArrayParameterType::STRING,
             ]
-        )->fetchOne();
+        )->fetchAssociative();
 
         return new FindWeeklyGoalMetricsResponse(
-            distance: Meter::from($result['totalDistance'])->toKilometer(),
-            elevation: Meter::from($result['totalElevation']),
-            movingTime: Seconds::from($result['movingTime']),
+            distance: Meter::from($result['totalDistance'] ?? 0)->toKilometer(),
+            elevation: Meter::from($result['totalElevation'] ?? 0),
+            movingTime: Seconds::from($result['movingTime'] ?? 0),
         );
     }
 }

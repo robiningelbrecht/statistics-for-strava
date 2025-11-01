@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget\WeeklyGoals;
 
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Calendar\Week;
 use App\Domain\Dashboard\Widget\WeeklyGoals\FindWeeklyGoalMetrics\FindWeeklyGoalMetrics;
 use App\Domain\Dashboard\Widget\Widget;
@@ -16,7 +15,6 @@ use Twig\Environment;
 final readonly class WeeklyGoalsWidget implements Widget
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
         private QueryBus $queryBus,
         private Environment $twig,
     ) {
@@ -52,10 +50,6 @@ final readonly class WeeklyGoalsWidget implements Widget
                 continue;
             }
 
-            if (!$this->activityRepository->hasForSportTypes($weeklyGoal->getSportTypesToInclude())) {
-                continue;
-            }
-
             $response = $this->queryBus->ask(new FindWeeklyGoalMetrics(
                 sportTypes: $weeklyGoal->getSportTypesToInclude(),
                 week: $week
@@ -70,7 +64,7 @@ final readonly class WeeklyGoalsWidget implements Widget
             $calculatedGoals[] = [
                 'weeklyGoal' => $weeklyGoal,
                 'absolute' => $convertedGoal,
-                'relative' => min(100, $convertedGoal->toFloat() / $weeklyGoal->getGoal()->toFloat() * 100),
+                'relative' => min(100, round($convertedGoal->toFloat() / $weeklyGoal->getGoal()->toFloat() * 100)),
             ];
         }
 
