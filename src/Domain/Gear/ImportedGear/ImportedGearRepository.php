@@ -11,5 +11,7 @@ interface ImportedGearRepository
 
     public function findAll(): Gears;
 
+    public function findAllUsed(): Gears;
+
     public function find(GearId $gearId): ImportedGear;
 }

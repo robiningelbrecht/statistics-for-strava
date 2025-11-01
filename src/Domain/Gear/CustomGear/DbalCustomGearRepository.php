@@ -16,6 +16,7 @@ final readonly class DbalCustomGearRepository extends DbalRepository implements 
     use ProvideGearRepositoryHelpers {
         save as protected parentSave;
         findAll as protected parentFindAll;
+        findAllUsed as protected parentFindAllUsed;
     }
 
     public function __construct(
@@ -44,6 +45,20 @@ final readonly class DbalCustomGearRepository extends DbalRepository implements 
             gearType: GearType::CUSTOM
         );
 
+        return $this->enrichGears($gears);
+    }
+
+    public function findAllUsed(): Gears
+    {
+        $gears = $this->parentFindAllUsed(
+            gearType: GearType::CUSTOM
+        );
+
+        return $this->enrichGears($gears);
+    }
+
+    private function enrichGears(Gears $gears): Gears
+    {
         $gearsWithTags = Gears::empty();
         /** @var CustomGear $gear */
         foreach ($gears as $gear) {

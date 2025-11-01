@@ -43,7 +43,7 @@ final readonly class ConfigureAppColorsCommandHandler implements CommandHandler
             $configuredColors['activityType'][$activityType->value] = $defaultChatColors[$index % count($defaultChatColors)];
         }
 
-        $gears = $this->gearRepository->findAll();
+        $gears = $this->gearRepository->findAllUsed();
         foreach ($gears as $index => $gear) {
             $configuredColors['gear'][(string) $gear->getId()] = $defaultChatColors[$index % count($defaultChatColors)];
         }
