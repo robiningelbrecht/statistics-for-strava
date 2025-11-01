@@ -8,5 +8,7 @@ interface GearRepository
 {
     public function findAll(): Gears;
 
+    public function findAllUsed(): Gears;
+
     public function hasGear(): bool;
 }

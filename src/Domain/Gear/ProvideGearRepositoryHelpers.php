@@ -33,10 +33,26 @@ trait ProvideGearRepositoryHelpers
 
     public function findAll(GearType $gearType): Gears
     {
+        return $this->fetchFindAllResults(
+            gearType: $gearType,
+            onlyUsedGear: false
+        );
+    }
+
+    public function findAllUsed(GearType $gearType): Gears
+    {
+        return $this->fetchFindAllResults(
+            gearType: $gearType,
+            onlyUsedGear: true
+        );
+    }
+
+    private function fetchFindAllResults(GearType $gearType, bool $onlyUsedGear): Gears
+    {
         $results = $this->getConnection()->executeQuery('
             SELECT Gear.*, GROUP_CONCAT(DISTINCT Activity.sportType) AS sportTypes
             FROM Gear
-            LEFT JOIN Activity ON Activity.gearId = Gear.gearId
+            '.($onlyUsedGear ? 'INNER' : 'LEFT').' JOIN Activity ON Activity.gearId = Gear.gearId
             WHERE Gear.type = :type
             GROUP BY Gear.gearId, Gear.isRetired, Gear.distanceInMeter
             ORDER BY Gear.isRetired ASC, Gear.distanceInMeter DESC;

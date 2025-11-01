@@ -16,6 +16,7 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
     use ProvideGearRepositoryHelpers {
         save as protected parentSave;
         findAll as protected parentFindAll;
+        findAllUsed as protected parentFindAllUsed;
     }
 
     protected function getConnection(): Connection
@@ -38,6 +39,13 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
     public function findAll(): Gears
     {
         return $this->parentFindAll(
+            gearType: GearType::IMPORTED
+        );
+    }
+
+    public function findAllUsed(): Gears
+    {
+        return $this->parentFindAllUsed(
             gearType: GearType::IMPORTED
         );
     }

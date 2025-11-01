@@ -47,7 +47,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 
         $now = $command->getCurrentDateTime();
         $activities = $this->activitiesEnricher->getEnrichedActivities();
-        $allGear = $this->gearRepository->findAll();
+        $allUsedGear = $this->gearRepository->findAllUsed();
         $gearStats = $this->queryBus->ask(new FindGearStatsPerDay());
         $allMonths = Months::create(
             startDate: $activities->getFirstActivityStartDate(),
@@ -55,7 +55,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         );
 
         /** @var Gear $gear */
-        foreach ($allGear as $gear) {
+        foreach ($allUsedGear as $gear) {
             if (GearType::CUSTOM === $gear->getType()) {
                 // Already enriched in CustomGearConfig.
                 continue;
@@ -70,11 +70,11 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
                 'customGearConfig' => $this->customGearConfig,
                 'gearStatistics' => GearStatistics::fromActivitiesAndGear(
                     activities: $activities,
-                    gears: $allGear
+                    gears: $allUsedGear
                 ),
                 'distancePerMonthPerGearChart' => Json::encode(
                     DistancePerMonthPerGearChart::create(
-                        gearCollection: $allGear,
+                        gearCollection: $allUsedGear,
                         activityCollection: $activities,
                         unitSystem: $this->unitSystem,
                         months: $allMonths,
@@ -82,7 +82,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
                 ),
                 'distanceOverTimePerGear' => Json::encode(
                     DistanceOverTimePerGearChart::create(
-                        gears: $allGear,
+                        gears: $allUsedGear,
                         gearStats: $gearStats,
                         startDate: $activities->getFirstActivityStartDate(),
                         unitSystem: $this->unitSystem,
