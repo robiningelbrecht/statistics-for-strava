@@ -1678,6 +1678,9 @@
   .max-h-\[35px\] {
     max-height: 35px;
   }
+  .max-h-\[320px\] {
+    max-height: 320px;
+  }
   .max-h-\[calc\(100vh-160px\)\] {
     max-height: calc(100vh - 160px);
   }
@@ -2272,14 +2275,6 @@
   }
   .rounded-xs {
     border-radius: var(--radius-xs);
-  }
-  .rounded-s-lg {
-    border-start-start-radius: var(--radius-lg);
-    border-end-start-radius: var(--radius-lg);
-  }
-  .rounded-e-lg {
-    border-start-end-radius: var(--radius-lg);
-    border-end-end-radius: var(--radius-lg);
   }
   .rounded-t {
     border-top-left-radius: 0.25rem;

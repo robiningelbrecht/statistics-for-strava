@@ -17,4 +17,13 @@ enum WeeklyGoalType: string
     {
         return [self::DISTANCE, self::ELEVATION];
     }
+
+    public function getSvgIcon(): string
+    {
+        return match ($this) {
+            self::MOVING_TIME => 'time',
+            self::DISTANCE => 'distance',
+            self::ELEVATION => 'elevation',
+        };
+    }
 }
