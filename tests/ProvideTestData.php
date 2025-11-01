@@ -243,7 +243,7 @@ trait ProvideTestData
         $activitySplitRepository = $this->getContainer()->get(ActivitySplitRepository::class);
         $activitySplitRepository->add(
             ActivitySplitBuilder::fromDefaults()
-                ->withActivityId($activity->getId())
+                ->withActivityId(ActivityId::fromUnprefixed('45326441741'))
                 ->build()
         );
 
@@ -251,7 +251,7 @@ trait ProvideTestData
         $activityLapRepository = $this->getContainer()->get(ActivityLapRepository::class);
         $activityLapRepository->add(
             ActivityLapBuilder::fromDefaults()
-                ->withActivityId($activity->getId())
+                ->withActivityId(ActivityId::fromUnprefixed('45326441741'))
                 ->build()
         );
 
