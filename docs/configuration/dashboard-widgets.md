@@ -13,6 +13,7 @@ appearance:
     layout:
       - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
+      - { 'widget': 'weeklyGoals', 'width': 33, 'enabled': false, 'config': { goals: [] } }
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { metricsDisplayOrder: ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
@@ -57,6 +58,59 @@ It contains a summary of your workout history.
 ```
 
 ![introText widget](../assets/images/dashboard-widgets/intro-text.png)
+
+## weeklyGoals
+
+This widget lets you define and track your weekly goals, helping you stay motivated and monitor your weekly progress.
+For the best experience, place it next to the weeklyStats widget to get a clear overview of your weekly performance.
+
+<div class="alert info">
+This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
+</div>
+
+* __goals__: An array of goals.
+
+```yml
+{ 'widget': 'weeklyGoals', 'width': 33, 'enabled': false, 'config': { goals: [] } }
+```
+
+Each configured goal should contain the following properties:
+
+```yaml
+# The label to be used for this challenge
+label: 'Cycling'
+# Enable or disable the goal. When disabled, it will no longer appear on the dashboard.
+# Alternatively, you can remove the entire entry to exclude it completely.
+enabled: true
+# The goal type.
+# Allowed values: ["distance", "elevation", "movingTime"]
+type: 'distance'
+# The unit to use for measuring this goal.
+# Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]
+unit: 'km'
+# The goal.
+goal: 200
+# The sport types to include in this goal.
+# For a complete list of supported sport types, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+```
+
+### Example
+
+```yaml
+config: {
+  goals: [
+    # Cycling
+    { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 200,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 8,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    # Running
+    { label: 'Running', enabled: true, type: 'movingTime', unit: 'hour', goal: 2,  sportTypesToInclude: ['Run'] },
+  ]
+}
+```
+
+![weeklyGoals widget](../assets/images/dashboard-widgets/weekly-goals.png)
 
 ## weeklyStats
 
