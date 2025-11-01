@@ -234,6 +234,10 @@ trait ProvideTestData
             gearId: GearId::fromUnprefixed('b12659562'),
             gearName: 'Zwift One',
         );
+        $activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            activity: $activity,
+            rawData: $rawData
+        ));
 
         /** @var ActivitySplitRepository $activitySplitRepository */
         $activitySplitRepository = $this->getContainer()->get(ActivitySplitRepository::class);
