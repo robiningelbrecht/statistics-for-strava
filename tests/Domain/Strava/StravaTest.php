@@ -155,7 +155,7 @@ class StravaTest extends TestCase
             ->expects($this->exactly(1))
             ->method('info');
 
-        $this->assertMatchesJsonSnapshot($this->strava->getRateLimit());
+        $this->assertMatchesObjectSnapshot($this->strava->getRateLimit());
     }
 
     public function testGetAthlete(): void
