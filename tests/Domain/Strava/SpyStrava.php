@@ -83,7 +83,7 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
-    public function getRateLimit(): StravaRateLimits
+    public function getRateLimit(): ?StravaRateLimits
     {
         return StravaRateLimits::fromResponse(new Response(
             status: 200,
