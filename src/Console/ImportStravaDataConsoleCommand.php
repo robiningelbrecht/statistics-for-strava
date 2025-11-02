@@ -91,15 +91,15 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->commandBus->dispatch(new CalculateNormalizedPower($output));
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
-        $rateLimits = $this->strava->getRateLimit();
-
-        $output->title('STRAVA API RATE LIMITS');
-        $output->listing([
-            sprintf('15 min rate: %s/%s', $rateLimits->getFifteenMinRateUsage(), $rateLimits->getFifteenMinRateLimit()),
-            sprintf('15 min read rate: %s/%s', $rateLimits->getFifteenMinReadRateUsage(), $rateLimits->getFifteenMinReadRateLimit()),
-            sprintf('daily rate: %s/%s', $rateLimits->getDailyRateUsage(), $rateLimits->getDailyRateLimit()),
-            sprintf('daily read rate: %s/%s', $rateLimits->getDailyReadRateUsage(), $rateLimits->getDailyReadRateLimit()),
-        ]);
+        if ($rateLimits = $this->strava->getRateLimit()) {
+            $output->title('STRAVA API RATE LIMITS');
+            $output->listing([
+                sprintf('15 min rate: %s/%s', $rateLimits->getFifteenMinRateUsage(), $rateLimits->getFifteenMinRateLimit()),
+                sprintf('15 min read rate: %s/%s', $rateLimits->getFifteenMinReadRateUsage(), $rateLimits->getFifteenMinReadRateLimit()),
+                sprintf('daily rate: %s/%s', $rateLimits->getDailyRateUsage(), $rateLimits->getDailyRateLimit()),
+                sprintf('daily read rate: %s/%s', $rateLimits->getDailyReadRateUsage(), $rateLimits->getDailyReadRateLimit()),
+            ]);
+        }
 
         $this->connection->executeStatement('VACUUM');
         $output->writeln('Database got vacuumed 🧹');

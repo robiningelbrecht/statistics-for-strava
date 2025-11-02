@@ -26,6 +26,7 @@ class Strava
     public static ?string $cachedAccessToken = null;
     /** @var array<mixed>|null */
     public static ?array $cachedActivitiesResponse = null;
+    private static ?StravaRateLimits $stravaRateLimits = null;
 
     public function __construct(
         private readonly Client $client,
@@ -66,6 +67,7 @@ class Strava
         ));
 
         if ($stravaRateLimits = StravaRateLimits::fromResponse($response)) {
+            self::$stravaRateLimits = $stravaRateLimits;
             if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
                 // The next request will hit the 15-minute rate limit. Pause and make sure the import does not crash.
                 // An application's 15-minute limit is reset at natural 15-minute intervals corresponding to 0, 15, 30 and 45 minutes after the hour.
@@ -78,19 +80,9 @@ class Strava
         return $response->getBody()->getContents();
     }
 
-    public function getRateLimit(): StravaRateLimits
+    public function getRateLimit(): ?StravaRateLimits
     {
-        $response = $this->client->request('HEAD', 'api/v3/athlete', [
-            'base_uri' => 'https://www.strava.com/',
-            RequestOptions::HEADERS => [
-                'Authorization' => 'Bearer '.$this->getAccessToken(),
-            ],
-        ]);
-
-        /** @var StravaRateLimits $rateLimits */
-        $rateLimits = StravaRateLimits::fromResponse($response);
-
-        return $rateLimits;
+        return self::$stravaRateLimits;
     }
 
     public function verifyAccessToken(): void
