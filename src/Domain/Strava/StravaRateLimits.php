@@ -20,8 +20,11 @@ final readonly class StravaRateLimits
     ) {
     }
 
-    public static function fromResponse(ResponseInterface $response): self
+    public static function fromResponse(ResponseInterface $response): ?self
     {
+        if (!$response->hasHeader('x-ratelimit-limit')) {
+            return null;
+        }
         [$fifteenMinRateLimit, $dailyRateLimit] = explode(',', $response->getHeaderLine('x-ratelimit-limit'));
         [$fifteenMinRateUsage, $dailyRateUsage] = explode(',', $response->getHeaderLine('x-ratelimit-usage'));
         [$fifteenMinReadRateLimit, $dailyReadRateLimit] = explode(',', $response->getHeaderLine('x-readratelimit-limit'));
@@ -77,5 +80,10 @@ final readonly class StravaRateLimits
     public function getDailyReadRateLimit(): int
     {
         return $this->dailyReadRateLimit;
+    }
+
+    public function fifteenMinReadRateLimitHasBeenReached(): bool
+    {
+        return $this->getFifteenMinReadRateUsage() >= $this->getFifteenMinReadRateLimit();
     }
 }

@@ -13,6 +13,7 @@ use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -871,7 +872,8 @@ class StravaTest extends TestCase
             stravaRefreshToken: StravaRefreshToken::fromString('refreshToken'),
             filesystemOperator: $this->filesystemOperator,
             sleep: new NullSleep(),
-            logger: $this->logger
+            logger: $this->logger,
+            clock: PausedClock::fromString('2025-11-02 12:43:20')
         );
         $this->strava::$cachedAccessToken = null;
         $this->strava::$cachedActivitiesResponse = null;
