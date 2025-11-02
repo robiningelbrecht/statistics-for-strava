@@ -1,3 +1,18 @@
+# [v3.8.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.4) - 2025-11-02
+
+🔥 This release introduces a new dashboard widget __weeklyGoals__.
+
+> [!NOTE]  
+> This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=weeklygoals
+
+## What's Changed
+* ISSUE #1326: Do not use gear that has no activities referencing it by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1327
+* ISSUE #1300: Weekly Goal Widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1321
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.3...v3.8.4
+
 # [v3.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.3) - 2025-10-31
 
 🔥 This release introduces a new config option __metricsDisplayOrder__ for the following widgets:
