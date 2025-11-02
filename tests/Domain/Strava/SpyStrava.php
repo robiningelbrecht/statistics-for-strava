@@ -11,6 +11,7 @@ use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
+use App\Domain\Strava\StravaRateLimits;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
@@ -80,14 +81,17 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
-    public function getRateLimit(): array
+    public function getRateLimit(): StravaRateLimits
     {
-        return [
-            sprintf('15 min rate: %s/%s', 20, 200),
-            sprintf('15 min read rate: %s/%s', 10, 100),
-            sprintf('daily rate: %s/%s', 10, 2000),
-            sprintf('daily read rate: %s/%s', 14, 1000),
-        ];
+        return StravaRateLimits::fromResponse(new Response(
+            status: 200,
+            headers: [
+                'x-ratelimit-limit' => '200,2000',
+                'x-ratelimit-usage' => '20,10',
+                'x-readratelimit-limit' => '100,1000',
+                'x-readratelimit-usage' => '10,14',
+            ]
+        ));
     }
 
     #[\Override]
