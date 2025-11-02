@@ -9,6 +9,7 @@ use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
 use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\Sleep;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
@@ -37,6 +38,7 @@ class Strava
         private readonly FilesystemOperator $filesystemOperator,
         private readonly Sleep $sleep,
         private readonly LoggerInterface $logger,
+        private readonly Clock $clock,
     ) {
     }
 
@@ -52,11 +54,6 @@ class Strava
             'base_uri' => 'https://www.strava.com/',
         ], $options);
 
-        if ('GET' === $method) {
-            // Try to avoid Strava rate limits.
-            $this->sleep->sweetDreams(10);
-        }
-
         $response = $this->client->request($method, $path, $options);
 
         $this->logger->info(new Monolog(
@@ -67,6 +64,16 @@ class Strava
             'x-readratelimit-limit: '.$response->getHeaderLine('x-readratelimit-limit'),
             'x-readratelimit-usage: '.$response->getHeaderLine('x-readratelimit-usage'),
         ));
+
+        if ($stravaRateLimits = StravaRateLimits::fromResponse($response)) {
+            if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
+                // The next request will hit the 15-minute rate limit. Pause and make sure the import does not crash.
+                // An application's 15-minute limit is reset at natural 15-minute intervals corresponding to 0, 15, 30 and 45 minutes after the hour.
+                $secondsUntilNextFifteenMinuteInterval = 15 - ($this->clock->getCurrentDateTimeImmutable()->getMinutesWithoutLeadingZero() % 15);
+                // Add a fex extra second to be sure.
+                $this->sleep->sweetDreams($secondsUntilNextFifteenMinuteInterval + 10);
+            }
+        }
 
         return $response->getBody()->getContents();
     }
@@ -80,7 +87,10 @@ class Strava
             ],
         ]);
 
-        return StravaRateLimits::fromResponse($response);
+        /** @var StravaRateLimits $rateLimits */
+        $rateLimits = StravaRateLimits::fromResponse($response);
+
+        return $rateLimits;
     }
 
     public function verifyAccessToken(): void
