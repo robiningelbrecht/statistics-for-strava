@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Webhook\ProcessWebhookEvent;
 
-use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\DomainCommand;
 
-final readonly class ProcessWebhookEvent extends Command
+final readonly class ProcessWebhookEvent extends DomainCommand
 {
     public function __construct(
         private array $eventPayload,
