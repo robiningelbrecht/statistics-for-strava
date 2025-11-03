@@ -6,6 +6,7 @@ namespace App\Infrastructure\Twig;
 
 use App\BuildApp\AppUrl;
 use App\Domain\Activity\Activity;
+use App\Domain\Segment\Segment;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
 
@@ -38,17 +39,13 @@ final readonly class UrlTwigExtension
     #[AsTwigFilter('activityLink', isSafe: ['html'])]
     public function renderActivityTitleLink(Activity $activity, ?int $ellipses = null, bool $truncate = false): string
     {
-        if ($activity->getSportType()->isVirtualRide()) {
-            if ($activity->isZwiftRide()) {
-                $activityIcon = $this->svgsTwigExtension->svg('zwift-logo');
-            } elseif ($activity->isRouvyRide()) {
-                $activityIcon = $this->svgsTwigExtension->svg('rouvy-logo');
-            } else {
-                $activityIcon = $this->svgsTwigExtension->svg('indoor-bike');
-            }
-        } else {
-            $activityIcon = $this->svgsTwigExtension->svgSportType($activity->getSportType());
-        }
+        $activityIcon = match (true) {
+            !$activity->getSportType()->isVirtualRide() => $this->svgsTwigExtension->svgSportType($activity->getSportType()),
+            $activity->isZwiftRide() => $this->svgsTwigExtension->svg('zwift-logo'),
+            $activity->isRouvyRide() => $this->svgsTwigExtension->svg('rouvy-logo'),
+            $activity->isMyWhooshRide() => $this->svgsTwigExtension->svg('my-whoosh-logo'),
+            default => $this->svgsTwigExtension->svg('indoor-bike'),
+        };
 
         $activityTitle = $activity->getName();
 
@@ -58,6 +55,27 @@ final readonly class UrlTwigExtension
             $activityIcon,
             $truncate ? 'truncate' : '',
             $ellipses ? $this->stringTwigExtension->doEllipses($activityTitle, $ellipses) : $activityTitle
+        );
+    }
+
+    #[AsTwigFilter('segmentLink', isSafe: ['html'])]
+    public function renderSegmentTitleLink(Segment $segment): string
+    {
+        $segmentIcon = match (true) {
+            !$segment->getSportType()->isVirtualRide() => $this->svgsTwigExtension->svgSportType($segment->getSportType()),
+            $segment->isZwiftSegment() => $this->svgsTwigExtension->svg('zwift-logo'),
+            $segment->isRouvySegment() => $this->svgsTwigExtension->svg('rouvy-logo'),
+            $segment->isMyWhooshSegment() => $this->svgsTwigExtension->svg('my-whoosh-logo'),
+            default => $this->svgsTwigExtension->svg('indoor-bike'),
+        };
+
+        $segmentTitle = $segment->getName();
+
+        return sprintf(
+            '<a href="#" data-model-content-url="%s" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">%s<span class="truncate">%s</span></a>',
+            $this->toRelativeUrl('segment/'.$segment->getId().'.html'),
+            $segmentIcon,
+            $this->stringTwigExtension->doEllipses((string) $segmentTitle, 50)
         );
     }
 }
