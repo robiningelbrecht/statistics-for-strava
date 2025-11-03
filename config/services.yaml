@@ -223,3 +223,12 @@ services:
 
     Inspector\Inspector:
         class: Inspector\Inspector
+
+    # Webhook configuration and services
+    App\Domain\Strava\Webhook\WebhookConfig:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("webhooks", [])']
+
+    App\Domain\Strava\Webhook\ProcessWebhookEvent\ProcessWebhookEventCommandHandler:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

@@ -185,5 +185,19 @@ integrations:
     # agent:
     #   commands:
     #    For a detailed guide on how to configure pre-defined chat commands, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration?id=pre-defining-chat-commands
+webhooks:
+  # Enable Strava webhooks to automatically import and build when new activities are uploaded.
+  # When enabled, the app will receive real-time notifications from Strava and automatically run import and build.
+  # This eliminates the need to manually run import commands or set up cron jobs.
+  # NOTE: Your callback URL must be publicly accessible over HTTPS for Strava to reach it.
+  enabled: false
+  # The publicly accessible URL where Strava will send webhook events.
+  # This must be your app's public URL + /webhook/strava
+  # Example: 'https://your-domain.com/webhook/strava'
+  # For local development with ngrok: 'https://abc123.ngrok.io/webhook/strava'
+  callbackUrl: 'https://your-domain.com/webhook/strava'
+  # A secret token you choose to verify webhook requests.
+  # Make this a random, hard-to-guess string for security.
+  verifyToken: 'your-secret-verify-token'
 
 ```
