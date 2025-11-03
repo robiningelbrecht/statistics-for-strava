@@ -44,7 +44,7 @@ final readonly class ZwiftMap implements LeafletMap
 
     public function getOverlayImageUrl(): string
     {
-        return '/assets/images/maps/zwift-'.$this->mapName.'.jpg';
+        return '/assets/images/maps/zwift-'.$this->mapName.'.webp';
     }
 
     public function getBounds(): array

@@ -63,7 +63,7 @@ class ZwiftMapTest extends TestCase
     public function testGetOverlayImageUrl(): void
     {
         $this->assertEquals(
-            '/assets/images/maps/zwift-bologna.jpg',
+            '/assets/images/maps/zwift-bologna.webp',
             ZwiftMap::forStartingCoordinate(Coordinate::createFromLatAndLng(
                 Latitude::fromString('44.5308037'), Longitude::fromString('11.26261748')
             ))->getOverlayImageUrl()
