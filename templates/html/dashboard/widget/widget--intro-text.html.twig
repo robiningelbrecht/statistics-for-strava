@@ -13,7 +13,7 @@
         {% set convertedIntroDistance = intro.getDistance()|convertMeasurement %}
         {% set convertedIntroElevation = intro.getElevation()|convertMeasurement %}
         {% set totalDistance = kbdTagOpen ~ convertedIntroDistance.toFloat()|formatNumber(0) ~ ' ' ~ convertedIntroDistance.getSymbol() ~ kdbTagClose %}
-        {% set numberOfTripsAroundTheWorld = kbdTagOpen ~ (intro.getDistance().toFloat() / 40075)|formatNumber(2)  ~ kdbTagClose %}
+        {% set numberOfTripsAroundTheWorld = kbdTagOpen ~ (intro.getDistance().toFloat() / 40075)|formatNumber(2) ~ kdbTagClose %}
         {% set numberOfTripsToTheMoonPercent = kbdTagOpen ~ (intro.getDistance().toFloat() / 384400 * 100)|formatNumber(1) ~ kdbTagClose %}
         {% set totalElevation = kbdTagOpen ~ convertedIntroElevation.toFloat()|formatNumber(0) ~ ' ' ~ convertedIntroElevation.getSymbol() ~ kdbTagClose %}
         {% set timesMountEverest = kbdTagOpen ~ (intro.getElevation().toFloat() / 8849)|formatNumber(1) ~ kdbTagClose %}
