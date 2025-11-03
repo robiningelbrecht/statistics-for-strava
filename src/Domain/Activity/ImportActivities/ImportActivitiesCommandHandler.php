@@ -18,6 +18,7 @@ use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -57,6 +58,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
     {
         assert($command instanceof ImportActivities);
         $command->getOutput()->writeln('Importing activities...');
+
+        $this->strava->setConsoleOutput($command->getOutput());
 
         if (!$this->stravaDataImportStatus->gearImportIsCompleted()) {
             $command->getOutput()->writeln('<error>Not all gear has been imported yet, activities cannot be imported</error>');
@@ -247,15 +250,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         // Stop importing activities, we reached the max number to process for this batch.
                         break;
                     }
+                } catch (StravaRateLimitHasBeenReached $exception) {
+                    $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+
+                    return;
                 } catch (ClientException|RequestException $exception) {
-                    if (429 === $exception->getResponse()?->getStatusCode()) {
-                        // This will allow initial imports with a lot of activities to proceed the next day.
-                        // This occurs when we exceed Strava API rate limits or throws an unexpected error.
-                        $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>');
-
-                        return;
-                    }
-
                     $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
 
                     return;

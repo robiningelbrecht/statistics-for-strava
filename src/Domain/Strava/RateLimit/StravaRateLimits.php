@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Strava;
+namespace App\Domain\Strava\RateLimit;
 
 use Psr\Http\Message\ResponseInterface;
 
@@ -84,6 +84,13 @@ final readonly class StravaRateLimits
 
     public function fifteenMinReadRateLimitHasBeenReached(): bool
     {
-        return $this->getFifteenMinReadRateUsage() >= $this->getFifteenMinReadRateLimit();
+        // Consider the limit reached when only 1 request is remaining to avoid hitting the actual limit.
+        return $this->getFifteenMinReadRateUsage() >= ($this->getFifteenMinReadRateLimit() - 1);
+    }
+
+    public function dailyReadRateLimitHasBeenReached(): bool
+    {
+        // Consider the limit reached when only 1 request is remaining to avoid hitting the actual limit.
+        return $this->getDailyReadRateUsage() >= ($this->getDailyReadRateLimit() - 1);
     }
 }
