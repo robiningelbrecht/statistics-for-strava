@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[AsController]
-final readonly class StravaWebhookController
+readonly class StravaWebhookController
 {
     public function __construct(
         private WebhookConfig $webhookConfig,

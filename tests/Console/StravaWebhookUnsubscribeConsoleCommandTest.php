@@ -11,8 +11,23 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class StravaWebhookUnsubscribeConsoleCommandTest extends ConsoleCommandTestCase
 {
-    private StravaWebhookUnsubscribeConsoleCommand $command;
+    private StravaWebhookUnsubscribeConsoleCommand $stravaWebhookUnsubscribeConsoleCommand;
     private MockObject $webhookSubscriptionService;
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->stravaWebhookUnsubscribeConsoleCommand = new StravaWebhookUnsubscribeConsoleCommand(
+            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
+        );
+    }
+
+    protected function getConsoleCommand(): Command
+    {
+        return $this->stravaWebhookUnsubscribeConsoleCommand;
+    }
 
     public function testExecuteAborted(): void
     {
@@ -62,13 +77,6 @@ class StravaWebhookUnsubscribeConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertEquals(Command::FAILURE, $commandTester->getStatusCode());
         $this->assertStringContainsString('Failed to delete webhook subscription', $commandTester->getDisplay());
         $this->assertStringContainsString('Subscription not found', $commandTester->getDisplay());
-    }
-
-    protected function getConsoleCommand(): Command
-    {
-        return $this->command = new StravaWebhookUnsubscribeConsoleCommand(
-            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
-        );
     }
 }
 

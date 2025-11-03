@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Webhook;
 
-final readonly class WebhookConfig
+readonly class WebhookConfig
 {
     private function __construct(
         private bool $enabled,

@@ -12,9 +12,25 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class StravaWebhookSubscribeConsoleCommandTest extends ConsoleCommandTestCase
 {
-    private StravaWebhookSubscribeConsoleCommand $command;
+    private StravaWebhookSubscribeConsoleCommand $stravaWebhookSubscribeConsoleCommand;
     private MockObject $webhookConfig;
     private MockObject $webhookSubscriptionService;
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->stravaWebhookSubscribeConsoleCommand = new StravaWebhookSubscribeConsoleCommand(
+            $this->webhookConfig = $this->createMock(WebhookConfig::class),
+            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
+        );
+    }
+
+    protected function getConsoleCommand(): Command
+    {
+        return $this->stravaWebhookSubscribeConsoleCommand;
+    }
 
     public function testExecuteWhenWebhooksDisabled(): void
     {
@@ -111,14 +127,6 @@ class StravaWebhookSubscribeConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertEquals(Command::FAILURE, $commandTester->getStatusCode());
         $this->assertStringContainsString('Failed to create webhook subscription', $commandTester->getDisplay());
         $this->assertStringContainsString('Callback URL not accessible', $commandTester->getDisplay());
-    }
-
-    protected function getConsoleCommand(): Command
-    {
-        return $this->command = new StravaWebhookSubscribeConsoleCommand(
-            $this->webhookConfig = $this->createMock(WebhookConfig::class),
-            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
-        );
     }
 }
 

@@ -12,7 +12,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 
-final readonly class WebhookSubscriptionService
+readonly class WebhookSubscriptionService
 {
     private const string PUSH_SUBSCRIPTIONS_ENDPOINT = 'https://www.strava.com/api/v3/push_subscriptions';
 

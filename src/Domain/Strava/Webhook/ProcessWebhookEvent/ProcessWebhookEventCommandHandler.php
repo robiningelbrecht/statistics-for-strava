@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
-final readonly class ProcessWebhookEventCommandHandler implements CommandHandler
+readonly class ProcessWebhookEventCommandHandler implements CommandHandler
 {
     public function __construct(
         private LoggerInterface $logger,

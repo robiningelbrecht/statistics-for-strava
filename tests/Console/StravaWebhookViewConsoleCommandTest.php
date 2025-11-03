@@ -11,8 +11,23 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class StravaWebhookViewConsoleCommandTest extends ConsoleCommandTestCase
 {
-    private StravaWebhookViewConsoleCommand $command;
+    private StravaWebhookViewConsoleCommand $stravaWebhookViewConsoleCommand;
     private MockObject $webhookSubscriptionService;
+
+    #[\Override]
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->stravaWebhookViewConsoleCommand = new StravaWebhookViewConsoleCommand(
+            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
+        );
+    }
+
+    protected function getConsoleCommand(): Command
+    {
+        return $this->stravaWebhookViewConsoleCommand;
+    }
 
     public function testExecuteNoSubscriptions(): void
     {
@@ -67,13 +82,6 @@ class StravaWebhookViewConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertEquals(Command::FAILURE, $commandTester->getStatusCode());
         $this->assertStringContainsString('Failed to view webhook subscription', $commandTester->getDisplay());
         $this->assertStringContainsString('API error', $commandTester->getDisplay());
-    }
-
-    protected function getConsoleCommand(): Command
-    {
-        return $this->command = new StravaWebhookViewConsoleCommand(
-            $this->webhookSubscriptionService = $this->createMock(WebhookSubscriptionService::class),
-        );
     }
 }
 

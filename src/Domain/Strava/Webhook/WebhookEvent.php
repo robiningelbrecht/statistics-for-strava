@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Webhook;
 
-final readonly class WebhookEvent
+readonly class WebhookEvent
 {
     /**
      * @param array<string, mixed> $updates

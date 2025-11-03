@@ -6,7 +6,7 @@ namespace App\Domain\Strava\Webhook\ProcessWebhookEvent;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 
-final readonly class ProcessWebhookEvent extends DomainCommand
+readonly class ProcessWebhookEvent extends DomainCommand
 {
     /**
      * @param array<string, mixed> $eventPayload
