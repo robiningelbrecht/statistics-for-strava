@@ -40,10 +40,4 @@ final readonly class FormatDateAndTimeTwigExtension
             TimeFormat::AM_PM => $date->format('h:i a'),
         };
     }
-
-    #[AsTwigFilter('formatSeconds')]
-    public function formatSeconds(Seconds $seconds): string
-    {
-        return CarbonInterval::seconds($seconds->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
-    }
 }

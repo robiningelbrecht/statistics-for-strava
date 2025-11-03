@@ -7,9 +7,11 @@ namespace App\Infrastructure\Twig;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Imperial;
 use App\Infrastructure\ValueObject\Measurement\Metric;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\Pace;
+use Carbon\CarbonInterval;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
 
@@ -86,5 +88,11 @@ final readonly class MeasurementTwigExtension
         }
 
         return number_format(round($number, $precision), $precision, '.', ' ');
+    }
+
+    #[AsTwigFilter('formatSeconds')]
+    public function formatSeconds(Seconds $seconds): string
+    {
+        return CarbonInterval::seconds($seconds->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
     }
 }
