@@ -6,6 +6,9 @@ namespace App\Domain\Strava\Webhook;
 
 final readonly class WebhookEvent
 {
+    /**
+     * @param array<string, mixed> $updates
+     */
     private function __construct(
         private string $objectType,
         private int $objectId,
@@ -17,6 +20,9 @@ final readonly class WebhookEvent
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $payload
+     */
     public static function fromWebhookPayload(array $payload): self
     {
         return new self(
@@ -60,6 +66,9 @@ final readonly class WebhookEvent
         return $this->eventTime;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getUpdates(): array
     {
         return $this->updates;
