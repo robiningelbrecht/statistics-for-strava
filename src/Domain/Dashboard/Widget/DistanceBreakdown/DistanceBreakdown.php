@@ -7,6 +7,7 @@ namespace App\Domain\Dashboard\Widget\DistanceBreakdown;
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Carbon\CarbonInterval;
 
@@ -84,6 +85,7 @@ final readonly class DistanceBreakdown
             $statistics[$distanceBreakdown]['totalDistance'] = ($statistics[$distanceBreakdown]['totalDistance'] ?? 0) + $distance->toFloat();
             $statistics[$distanceBreakdown]['totalElevation'] = ($statistics[$distanceBreakdown]['totalElevation'] ?? 0) + $elevation->toFloat();
             $statistics[$distanceBreakdown]['movingTime'] = ($statistics[$distanceBreakdown]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
+            $statistics[$distanceBreakdown]['movingTimeInHours'] = Seconds::from($statistics[$distanceBreakdown]['movingTime'])->toHour();
             $statistics[$distanceBreakdown]['averageDistance'] = $statistics[$distanceBreakdown]['totalDistance'] / $statistics[$distanceBreakdown]['numberOfWorkouts'];
             if ($statistics[$distanceBreakdown]['movingTime'] > 0) {
                 $statistics[$distanceBreakdown]['averageSpeed'] = ($statistics[$distanceBreakdown]['totalDistance'] / $statistics[$distanceBreakdown]['movingTime']) * 3600;

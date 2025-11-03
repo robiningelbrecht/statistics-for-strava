@@ -8,6 +8,8 @@ use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Hour;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use Carbon\CarbonInterval;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -54,6 +56,7 @@ final readonly class WeekdayStats
                 'movingTime' => 0,
                 'percentage' => 0,
                 'averageDistance' => 0,
+                'movingTimeInHours'=> Hour::zero(),
             ];
         }
 
@@ -68,6 +71,7 @@ final readonly class WeekdayStats
             $statistics[$weekDay]['movingTime'] = ($statistics[$weekDay]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$weekDay]['averageDistance'] = $statistics[$weekDay]['totalDistance'] / $statistics[$weekDay]['numberOfWorkouts'];
             $statistics[$weekDay]['movingTimeForHumans'] = CarbonInterval::seconds($statistics[$weekDay]['movingTime'])->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+            $statistics[$weekDay]['movingTimeInHours'] = Seconds::from($statistics[$weekDay]['movingTime'])->toHour();
             $statistics[$weekDay]['percentage'] = round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2);
         }
 

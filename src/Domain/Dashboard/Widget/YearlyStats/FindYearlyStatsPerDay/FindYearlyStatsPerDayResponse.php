@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay;
+namespace App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStatsPerDay;
 
 use App\Domain\Activity\ActivityType;
 use App\Infrastructure\CQRS\Query\Response;

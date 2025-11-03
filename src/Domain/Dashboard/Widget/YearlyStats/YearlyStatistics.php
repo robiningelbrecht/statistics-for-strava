@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\YearlyDistance;
+namespace App\Domain\Dashboard\Widget\YearlyStats;
 
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\YearlyDistance\FindYearlyStats\FindYearlyStatsResponse;
+use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStatsResponse;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\Years;
 use Carbon\CarbonInterval;
@@ -51,6 +52,7 @@ final readonly class YearlyStatistics
                 'differenceInDistanceYearBefore' => null,
                 'movingTime' => CarbonInterval::seconds(0)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
                 'movingTimeInSeconds' => Seconds::zero(),
+                'movingTimeInHours'=> Hour::zero(),
             ];
 
             if (!$yearlyStats = $this->yearlyStats->getFor(
@@ -68,6 +70,7 @@ final readonly class YearlyStatistics
                 'totalCalories' => $yearlyStats['calories'],
                 'movingTime' => CarbonInterval::seconds($yearlyStats['movingTime']->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
                 'movingTimeInSeconds' => $yearlyStats['movingTime'],
+                'movingTimeInHours' => $yearlyStats['movingTime']->toHour(),
                 'differenceInDistanceYearBefore' => null,
                 'differenceInElevationYearBefore' => null,
                 'differenceInMovingTimeYearBefore' => null,

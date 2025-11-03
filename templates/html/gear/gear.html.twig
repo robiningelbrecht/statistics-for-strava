@@ -183,7 +183,7 @@
             <td class="px-6 py-2 truncate">
                 {{ statistic.elevation|renderMeasurement(0) }}
             </td>
-            <td class="px-6 py-2 truncate">
+            <td class="px-6 py-2 truncate" title="{{ statistic.movingTimeInHours.tofloat()|formatNumber(1) }}h">
                 {{ statistic.movingTime }}
             </td>
             <td class="px-6 py-2 truncate">

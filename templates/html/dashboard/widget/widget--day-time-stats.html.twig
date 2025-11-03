@@ -80,7 +80,7 @@
                             <td class="px-6 py-2 truncate">
                                 {{ statistic.totalElevation|renderMeasurement(0) }}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="px-6 py-2 truncate" title="{{ statistic.movingTimeInHours.toFloat()|formatNumber(1) }}h">
                                 {{ statistic.movingTimeForHumans }}
                             </td>
                         </tr>

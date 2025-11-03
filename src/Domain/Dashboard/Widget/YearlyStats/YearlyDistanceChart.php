@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\YearlyDistance;
+namespace App\Domain\Dashboard\Widget\YearlyStats;
 
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDayResponse;
 use App\Domain\Dashboard\StatsContext;
+use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStatsPerDay\FindYearlyStatsPerDayResponse;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
