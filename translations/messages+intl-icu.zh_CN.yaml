@@ -128,11 +128,10 @@ High: 高
 'High risk - reduce volume': 'High risk - reduce volume'
 Hikes: 徒步
 History: 历史
-"I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": '我总共消耗了{caloriesBurned}卡路里，相当于{numberOfPizzaSlices}片披萨🍕。'
-'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': '我的总锻炼距离为{totalDistance}（相当于{numberOfTripsAroundTheWorld}次环游世界🌍和{numberOfTripsToTheMoon}次到月球🌕），总海拔{totalElevation}（相当于{timesMountEverest}次珠穆朗玛峰🏔），总锻炼时间为{totalTimeRecorded} 🎉。'
 'Ice Skate': 冰刀
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
+"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 直排轮滑
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
@@ -191,6 +190,7 @@ Nov: 十一月
 'Number of activities per month': 'Number of activities per month'
 'Number of times completed': 'Number of times completed'
 Oct: 十月
+'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
 'Optimal training range': 'Optimal training range'
 Other: 其他
@@ -214,6 +214,7 @@ Pilates: 普拉提
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: 功率
 'Power distribution': 功率分布
+'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 去年
 Race: 比赛
 'Racing Score': 赛车成绩
@@ -245,7 +246,7 @@ Segments: 路段
 Sep: 九月
 'Show information': 显示信息
 Simplified: 简化
-'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.'
+"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: 滑板
 Skating: 滑冰
 'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
@@ -274,7 +275,6 @@ Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: 网球
-"That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": '我的日均锻炼距离为{dailyAverage}，周均为{weeklyAverage}，月均为{monthlyAverage} 🐣。'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 Thinking...: Thinking...
