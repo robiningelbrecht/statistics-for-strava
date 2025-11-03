@@ -53,10 +53,17 @@
 		file_server
 	}
 
-	# Serve /gear-maintenance/* from storage
+	# Serve /gear-maintenance/* from storage.
 	handle /gear-maintenance/* {
 		root * /var/www/storage
 		file_server
+	}
+
+	# Cache static assets.
+	handle /assets/* {
+		header {
+			Cache-Control "public, max-age=86400"
+		}
 	}
 
 	# Serve everything else trough Symfony.
