@@ -6,9 +6,7 @@ namespace App\Infrastructure\Twig;
 
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
 use App\Infrastructure\Time\Format\TimeFormat;
-use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use Carbon\CarbonInterval;
 use Twig\Attribute\AsTwigFilter;
 
 final readonly class FormatDateAndTimeTwigExtension
