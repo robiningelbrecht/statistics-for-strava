@@ -42,9 +42,8 @@ final readonly class WebhookConfig
 
     public function isConfigured(): bool
     {
-        return $this->enabled 
-            && !empty($this->callbackUrl) 
+        return $this->enabled
+            && !empty($this->callbackUrl)
             && !empty($this->verifyToken);
     }
 }
-

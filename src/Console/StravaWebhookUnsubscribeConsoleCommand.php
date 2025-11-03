@@ -44,8 +44,9 @@ final class StravaWebhookUnsubscribeConsoleCommand extends Command
 
         $io->section('Deleting Strava Webhook Subscription');
 
-        if (!$io->confirm('Are you sure you want to delete subscription ID ' . $subscriptionId . '?', false)) {
+        if (!$io->confirm('Are you sure you want to delete subscription ID '.$subscriptionId.'?', false)) {
             $io->info('Aborted');
+
             return Command::SUCCESS;
         }
 
@@ -57,9 +58,9 @@ final class StravaWebhookUnsubscribeConsoleCommand extends Command
 
             return Command::SUCCESS;
         } catch (WebhookSubscriptionException $e) {
-            $io->error('Failed to delete webhook subscription: ' . $e->getMessage());
+            $io->error('Failed to delete webhook subscription: '.$e->getMessage());
+
             return Command::FAILURE;
         }
     }
 }
-

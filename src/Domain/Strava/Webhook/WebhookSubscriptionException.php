@@ -7,4 +7,3 @@ namespace App\Domain\Strava\Webhook;
 final class WebhookSubscriptionException extends \RuntimeException
 {
 }
-

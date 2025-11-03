@@ -33,6 +33,7 @@ final class StravaWebhookSubscribeConsoleCommand extends Command
         if (!$this->webhookConfig->isEnabled()) {
             $io->error('Webhooks are not enabled in config.yaml');
             $io->note('Set webhooks.enabled to true in config/app/config.yaml to enable webhooks.');
+
             return Command::FAILURE;
         }
 
@@ -44,14 +45,15 @@ final class StravaWebhookSubscribeConsoleCommand extends Command
                 '  - webhooks.callbackUrl: your public webhook URL',
                 '  - webhooks.verifyToken: a secret token of your choice',
             ]);
+
             return Command::FAILURE;
         }
 
         $io->section('Creating Strava Webhook Subscription');
 
         $io->writeln([
-            'Callback URL: ' . $this->webhookConfig->getCallbackUrl(),
-            'Verify Token: ' . $this->webhookConfig->getVerifyToken(),
+            'Callback URL: '.$this->webhookConfig->getCallbackUrl(),
+            'Verify Token: '.$this->webhookConfig->getVerifyToken(),
         ]);
 
         try {
@@ -61,7 +63,7 @@ final class StravaWebhookSubscribeConsoleCommand extends Command
             );
 
             $io->success('Webhook subscription created successfully!');
-            $io->writeln('Subscription ID: ' . $result['id']);
+            $io->writeln('Subscription ID: '.$result['id']);
 
             $io->note([
                 'Strava will now send webhook events to your callback URL when:',
@@ -75,7 +77,7 @@ final class StravaWebhookSubscribeConsoleCommand extends Command
 
             return Command::SUCCESS;
         } catch (WebhookSubscriptionException $e) {
-            $io->error('Failed to create webhook subscription: ' . $e->getMessage());
+            $io->error('Failed to create webhook subscription: '.$e->getMessage());
 
             $io->note([
                 'Common issues:',
@@ -89,4 +91,3 @@ final class StravaWebhookSubscribeConsoleCommand extends Command
         }
     }
 }
-

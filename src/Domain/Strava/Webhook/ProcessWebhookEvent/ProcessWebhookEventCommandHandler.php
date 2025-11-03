@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Webhook\ProcessWebhookEvent;
 
-use App\Console\BuildAppConsoleCommand;
-use App\Console\ImportStravaDataConsoleCommand;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -42,6 +38,7 @@ final readonly class ProcessWebhookEventCommandHandler implements CommandHandler
                 'object_type' => $event->getObjectType(),
                 'aspect_type' => $event->getAspectType(),
             ]);
+
             return;
         }
 
@@ -56,10 +53,11 @@ final readonly class ProcessWebhookEventCommandHandler implements CommandHandler
 
         if (!$phpBinaryPath) {
             $this->logger->error('PHP binary not found, cannot run import in background');
+
             return;
         }
 
-        $consolePath = $this->projectDir . '/bin/console';
+        $consolePath = $this->projectDir.'/bin/console';
 
         // Create a shell script to run both commands sequentially
         $script = sprintf(
@@ -80,4 +78,3 @@ final readonly class ProcessWebhookEventCommandHandler implements CommandHandler
         ]);
     }
 }
-

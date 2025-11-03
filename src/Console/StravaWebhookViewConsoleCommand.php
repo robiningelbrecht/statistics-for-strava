@@ -36,6 +36,7 @@ final class StravaWebhookViewConsoleCommand extends Command
             if (empty($subscriptions)) {
                 $io->warning('No webhook subscriptions found');
                 $io->note('Create a subscription with: bin/console app:strava:webhook:subscribe');
+
                 return Command::SUCCESS;
             }
 
@@ -55,9 +56,9 @@ final class StravaWebhookViewConsoleCommand extends Command
 
             return Command::SUCCESS;
         } catch (WebhookSubscriptionException $e) {
-            $io->error('Failed to view webhook subscription: ' . $e->getMessage());
+            $io->error('Failed to view webhook subscription: '.$e->getMessage());
+
             return Command::FAILURE;
         }
     }
 }
-

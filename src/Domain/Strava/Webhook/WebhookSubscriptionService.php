@@ -27,6 +27,7 @@ final readonly class WebhookSubscriptionService
      * Create a new webhook subscription.
      *
      * @return array{id: int}
+     *
      * @throws WebhookSubscriptionException
      */
     public function createSubscription(string $callbackUrl, string $verifyToken): array
@@ -47,7 +48,7 @@ final readonly class WebhookSubscriptionService
             if ($response = $e->getResponse()) {
                 $errorMessage = $response->getBody()->getContents();
             }
-            throw new WebhookSubscriptionException('Failed to create webhook subscription: ' . $errorMessage);
+            throw new WebhookSubscriptionException('Failed to create webhook subscription: '.$errorMessage);
         }
     }
 
@@ -55,6 +56,7 @@ final readonly class WebhookSubscriptionService
      * View existing webhook subscription.
      *
      * @return array<array{id: int, resource_state: int, application_id: int, callback_url: string, created_at: string, updated_at: string}>
+     *
      * @throws WebhookSubscriptionException
      */
     public function viewSubscription(): array
@@ -73,7 +75,7 @@ final readonly class WebhookSubscriptionService
             if ($response = $e->getResponse()) {
                 $errorMessage = $response->getBody()->getContents();
             }
-            throw new WebhookSubscriptionException('Failed to view webhook subscription: ' . $errorMessage);
+            throw new WebhookSubscriptionException('Failed to view webhook subscription: '.$errorMessage);
         }
     }
 
@@ -85,7 +87,7 @@ final readonly class WebhookSubscriptionService
     public function deleteSubscription(int $subscriptionId): void
     {
         try {
-            $this->client->delete(self::PUSH_SUBSCRIPTIONS_ENDPOINT . '/' . $subscriptionId, [
+            $this->client->delete(self::PUSH_SUBSCRIPTIONS_ENDPOINT.'/'.$subscriptionId, [
                 RequestOptions::QUERY => [
                     'client_id' => (string) $this->clientId,
                     'client_secret' => (string) $this->clientSecret,
@@ -96,8 +98,7 @@ final readonly class WebhookSubscriptionService
             if ($response = $e->getResponse()) {
                 $errorMessage = $response->getBody()->getContents();
             }
-            throw new WebhookSubscriptionException('Failed to delete webhook subscription: ' . $errorMessage);
+            throw new WebhookSubscriptionException('Failed to delete webhook subscription: '.$errorMessage);
         }
     }
 }
-

@@ -24,4 +24,3 @@ final readonly class ProcessWebhookEvent extends DomainCommand
         return $this->eventPayload;
     }
 }
-

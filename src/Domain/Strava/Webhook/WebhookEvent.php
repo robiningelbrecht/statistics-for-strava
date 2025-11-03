@@ -76,27 +76,27 @@ final readonly class WebhookEvent
 
     public function isActivityEvent(): bool
     {
-        return $this->objectType === 'activity';
+        return 'activity' === $this->objectType;
     }
 
     public function isAthleteEvent(): bool
     {
-        return $this->objectType === 'athlete';
+        return 'athlete' === $this->objectType;
     }
 
     public function isCreateEvent(): bool
     {
-        return $this->aspectType === 'create';
+        return 'create' === $this->aspectType;
     }
 
     public function isUpdateEvent(): bool
     {
-        return $this->aspectType === 'update';
+        return 'update' === $this->aspectType;
     }
 
     public function isDeleteEvent(): bool
     {
-        return $this->aspectType === 'delete';
+        return 'delete' === $this->aspectType;
     }
 
     public function shouldTriggerImport(): bool
@@ -105,4 +105,3 @@ final readonly class WebhookEvent
         return $this->isActivityEvent() && ($this->isCreateEvent() || $this->isUpdateEvent());
     }
 }
-
