@@ -79,4 +79,3 @@ class StravaWebhookUnsubscribeConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertStringContainsString('Subscription not found', $commandTester->getDisplay());
     }
 }
-

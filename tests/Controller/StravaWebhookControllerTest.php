@@ -145,4 +145,3 @@ class StravaWebhookControllerTest extends ContainerTestCase
         );
     }
 }
-

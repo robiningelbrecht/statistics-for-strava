@@ -84,4 +84,3 @@ class StravaWebhookViewConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertStringContainsString('API error', $commandTester->getDisplay());
     }
 }
-

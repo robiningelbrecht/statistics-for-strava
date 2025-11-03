@@ -36,4 +36,3 @@ class ProcessWebhookEventTest extends TestCase
         $this->assertEquals(ProcessWebhookEvent::class, $serialized['commandName']);
     }
 }
-

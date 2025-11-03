@@ -129,4 +129,3 @@ class StravaWebhookSubscribeConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertStringContainsString('Callback URL not accessible', $commandTester->getDisplay());
     }
 }
-

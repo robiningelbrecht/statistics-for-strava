@@ -53,4 +53,3 @@ class WebhookConfigTest extends TestCase
         $this->assertFalse($configDisabled->isConfigured());
     }
 }
-

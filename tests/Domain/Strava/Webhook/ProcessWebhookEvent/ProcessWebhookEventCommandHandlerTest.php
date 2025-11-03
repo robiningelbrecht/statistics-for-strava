@@ -101,4 +101,3 @@ class ProcessWebhookEventCommandHandlerTest extends TestCase
         );
     }
 }
-

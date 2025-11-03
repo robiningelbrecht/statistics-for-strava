@@ -115,4 +115,3 @@ class WebhookEventTest extends TestCase
         $this->assertFalse($athleteEvent->shouldTriggerImport());
     }
 }
-

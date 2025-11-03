@@ -159,4 +159,3 @@ class WebhookSubscriptionServiceTest extends TestCase
         );
     }
 }
-
