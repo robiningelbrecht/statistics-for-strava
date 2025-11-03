@@ -52,6 +52,7 @@ final readonly class StravaWebhookController
                 'expected' => $this->webhookConfig->getVerifyToken(),
                 'received' => $verifyToken,
             ]);
+
             return new JsonResponse(['error' => 'Invalid verify token'], Response::HTTP_FORBIDDEN);
         }
 
@@ -94,4 +95,3 @@ final readonly class StravaWebhookController
         }
     }
 }
-
