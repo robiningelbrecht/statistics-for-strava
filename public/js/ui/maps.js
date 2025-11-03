@@ -7,6 +7,8 @@ export default class MapManager {
                 scrollWheelZoom: data.scrollWheelZoom || false,
                 minZoom: data.minZoom,
                 maxZoom: data.maxZoom,
+                zoomSnap: .5,
+                zoomDelta: .5,
             });
             if (data.tileLayer) {
                 L.tileLayer(data.tileLayer).addTo(map);
