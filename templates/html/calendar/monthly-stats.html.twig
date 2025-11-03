@@ -46,7 +46,7 @@
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
-                            <div class="pt-0.5 normal-case text-xxs">
+                            <div class="pt-0.5 normal-case text-xxs" title="{{ totals.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                 {{ totals.movingTime|formatSeconds }}
                             </div>
                         </th>
@@ -102,7 +102,7 @@
                                 <td class="px-2 py-2 truncate">
                                     {{ statsForCurrentMonth.elevation|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="px-2 py-2 truncate" title="{{ statsForCurrentMonth.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                     {{ statsForCurrentMonth.movingTime|formatSeconds }}
                                 </td>
                                 <td class="px-2 py-2 truncate">
@@ -135,7 +135,7 @@
                                         <td class="px-2 py-2 truncate">
                                             {{ totalsForSportType.elevation|renderMeasurement(0) }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="px-2 py-2 truncate" title="{{ totalsForSportType.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                             {{ totalsForSportType.movingTime|formatSeconds }}
                                         </td>
                                         <td class="px-2 py-2 truncate">

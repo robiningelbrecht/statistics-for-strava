@@ -6,12 +6,12 @@ namespace App\Domain\Dashboard\Widget;
 
 use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\YearlyDistance\FindYearlyStats\FindYearlyStats;
-use App\Domain\Activity\YearlyDistance\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
-use App\Domain\Activity\YearlyDistance\YearlyDistanceChart;
-use App\Domain\Activity\YearlyDistance\YearlyStatistics;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\StatsContext;
+use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStats;
+use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
+use App\Domain\Dashboard\Widget\YearlyStats\YearlyDistanceChart;
+use App\Domain\Dashboard\Widget\YearlyStats\YearlyStatistics;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;

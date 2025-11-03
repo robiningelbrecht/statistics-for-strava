@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\YearlyDistance\FindYearlyStats;
+namespace App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats;
 
 use App\Infrastructure\CQRS\Query\Query;
 
