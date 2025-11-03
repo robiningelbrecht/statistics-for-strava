@@ -164,6 +164,11 @@ final class Segment implements SupportsAITooling
         return 'rouvy' === strtolower($this->getDeviceName() ?? '');
     }
 
+    public function isMyWhooshSegment(): bool
+    {
+        return 'mywhoosh' === strtolower($this->getDeviceName() ?? '');
+    }
+
     public function getBestEffort(): ?SegmentEffort
     {
         return $this->bestEffort;
