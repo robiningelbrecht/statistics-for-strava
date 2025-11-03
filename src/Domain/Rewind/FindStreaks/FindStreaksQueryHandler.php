@@ -32,7 +32,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 ORDER BY day ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,
@@ -50,7 +50,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 ORDER BY year ASC, week ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,
@@ -58,7 +58,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         )->fetchAllAssociative();
 
         /** @var int[] $months */
-        $months = array_map('intval', $this->connection->executeQuery(
+        $months = array_map(intval(...), $this->connection->executeQuery(
             <<<SQL
                 SELECT CAST(strftime('%Y', startDateTime) AS INTEGER) * 12 + CAST(strftime('%m', startDateTime) AS INTEGER) as month
                 FROM activity
@@ -67,7 +67,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 ORDER BY month ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

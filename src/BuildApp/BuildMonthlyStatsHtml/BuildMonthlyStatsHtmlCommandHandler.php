@@ -10,17 +10,12 @@ use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Calendar\Calendar;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStats;
 use App\Domain\Calendar\Month;
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsChart;
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
 use App\Domain\Calendar\Months;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 
 final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandler
@@ -31,10 +26,8 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ActivityRepository $activityRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
-        private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
-        private TranslatorInterface $translator,
     ) {
     }
 
@@ -80,27 +73,5 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                 ]),
             );
         }
-
-        $monthlyStatChartsPerContext = [];
-        foreach (MonthlyStatsContext::cases() as $monthlyStatsContext) {
-            foreach ($activityTypes as $activityType) {
-                $monthlyStatChartsPerContext[$monthlyStatsContext->value][$activityType->value] = Json::encode(
-                    MonthlyStatsChart::create(
-                        activityType: $activityType,
-                        monthlyStats: $monthlyStats,
-                        context: $monthlyStatsContext,
-                        unitSystem: $this->unitSystem,
-                        translator: $this->translator
-                    )->build()
-                );
-            }
-        }
-
-        $this->buildStorage->write(
-            'monthly-stats/charts.html',
-            $this->twig->load('html/calendar/monthly-charts.html.twig')->render([
-                'monthlyStatsChartsPerContext' => $monthlyStatChartsPerContext,
-            ]),
-        );
     }
 }

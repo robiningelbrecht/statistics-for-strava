@@ -31,7 +31,7 @@ final readonly class FindActivityStartTimesPerHourQueryHandler implements QueryH
                 ORDER BY hour ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

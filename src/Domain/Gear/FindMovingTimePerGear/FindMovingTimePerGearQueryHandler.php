@@ -32,7 +32,7 @@ final readonly class FindMovingTimePerGearQueryHandler implements QueryHandler
                 GROUP BY gearId
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
                 'activityType' => array_map(
                     fn (ActivityType $activityType): string => $activityType->value,
                     $query->getActivityTypes()?->toArray() ?? ActivityType::cases()

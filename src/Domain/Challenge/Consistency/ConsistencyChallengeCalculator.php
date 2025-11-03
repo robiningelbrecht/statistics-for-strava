@@ -53,38 +53,38 @@ final readonly class ConsistencyChallengeCalculator
                 $consistency[$challenge->getId()][$month->getId()] = match ($challenge->getType()) {
                     ChallengeConsistencyType::DISTANCE => [
                         'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
-                            $challengeGoal,
-                            $challengeGoal->convertKilometerToUnit($totalDistance)
+                            goal: $challengeGoal,
+                            actualValue: $challenge->convertKilometerToGoalUnit($totalDistance)
                         ),
-                        'actualValue' => $challengeGoal->convertKilometerToUnit($totalDistance),
+                        'actualValue' => $challenge->convertKilometerToGoalUnit($totalDistance),
                     ],
                     ChallengeConsistencyType::DISTANCE_IN_ONE_ACTIVITY => [
                         'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
-                            $challengeGoal,
-                            $challengeGoal->convertKilometerToUnit($maxDistance)
+                            goal: $challengeGoal,
+                            actualValue: $challenge->convertKilometerToGoalUnit($maxDistance)
                         ),
-                        'actualValue' => $challengeGoal->convertKilometerToUnit($maxDistance),
+                        'actualValue' => $challenge->convertKilometerToGoalUnit($maxDistance),
                     ],
                     ChallengeConsistencyType::ELEVATION => [
                         'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
-                            $challengeGoal,
-                            $challengeGoal->convertMeterToUnit($totalElevation)
+                            goal: $challengeGoal,
+                            actualValue: $challenge->convertMeterToGoalUnit($totalElevation)
                         ),
-                        'actualValue' => $challengeGoal->convertMeterToUnit($totalElevation),
+                        'actualValue' => $challenge->convertMeterToGoalUnit($totalElevation),
                     ],
                     ChallengeConsistencyType::ELEVATION_IN_ONE_ACTIVITY => [
                         'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
-                            $challengeGoal,
-                            $challengeGoal->convertMeterToUnit($maxElevation)
+                            goal: $challengeGoal,
+                            actualValue: $challenge->convertMeterToGoalUnit($maxElevation)
                         ),
-                        'actualValue' => $challengeGoal->convertMeterToUnit($maxElevation),
+                        'actualValue' => $challenge->convertMeterToGoalUnit($maxElevation),
                     ],
                     ChallengeConsistencyType::MOVING_TIME => [
                         'goalHasBeenReached' => $this->checkIfGoalHasBeenReached(
-                            $challengeGoal,
-                            $challengeGoal->convertSecondsToUnit($movingTime)
+                            goal: $challengeGoal,
+                            actualValue: $challenge->convertSecondsToGoalUnit($movingTime)
                         ),
-                        'actualValue' => $challengeGoal->convertSecondsToUnit($movingTime),
+                        'actualValue' => $challenge->convertSecondsToGoalUnit($movingTime),
                     ],
                     ChallengeConsistencyType::NUMBER_OF_ACTIVITIES => [
                         'goalHasBeenReached' => $numberOfActivities >= $challengeGoal->toInt(),
@@ -101,7 +101,7 @@ final readonly class ConsistencyChallengeCalculator
         return $consistency;
     }
 
-    private function checkIfGoalHasBeenReached(ChallengeConsistencyGoal $goal, Unit $actualValue): bool
+    private function checkIfGoalHasBeenReached(Unit $goal, Unit $actualValue): bool
     {
         return $actualValue->toFloat() >= $goal->toFloat();
     }

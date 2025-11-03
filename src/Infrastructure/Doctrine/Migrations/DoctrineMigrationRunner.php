@@ -4,31 +4,38 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Migrations;
 
-use Symfony\Component\Process\Process;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class DoctrineMigrationRunner implements MigrationRunner
 {
-    public function run(): void
+    public function run(Application $application, OutputInterface $output): void
     {
-        $process = new Process(
-            command: ['/var/www/bin/console', 'doctrine:migrations:migrate', '--no-interaction'],
-            timeout: null
+        $input = new ArrayInput([
+            'command' => 'doctrine:migrations:migrate',
+        ]);
+        $input->setInteractive(false);
+        $exitCode = $application->doRun(
+            input: $input,
+            output: $output
         );
-        $process->run();
 
-        if (!$process->isSuccessful()) {
-            throw new CouldNotRunMigrations($process->getErrorOutput());
+        if (0 !== $exitCode) {
+            throw new CouldNotRunMigrations();
         }
     }
 
-    public function isAtLatestVersion(): bool
+    public function isAtLatestVersion(Application $application): bool
     {
-        $process = new Process(
-            command: ['/var/www/bin/console', 'doctrine:migrations:status'],
-            timeout: null
+        $output = new MigrationConsoleOutput();
+        $application->doRun(
+            new ArrayInput([
+                'command' => 'doctrine:migrations:status',
+            ]),
+            $output
         );
-        $process->run();
 
-        return $process->isSuccessful() && str_contains($process->getOutput(), 'Already at latest version');
+        return str_contains($output->getDisplay(), 'Already at latest version');
     }
 }

@@ -28,7 +28,7 @@ final readonly class FindTotalActivityCountQueryHandler implements QueryHandler
                 WHERE strftime('%Y',startDateTime) IN (:years)
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

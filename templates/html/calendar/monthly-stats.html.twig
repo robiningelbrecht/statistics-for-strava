@@ -7,12 +7,6 @@
     <!-- MONTHLY STATS -->
     <div class="grid grid-cols-1 mb-4">
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-            <div class="flex items-center justify-end mb-2">
-                <a href="#" data-model-content-url="{{ relativeUrl('monthly-stats/charts.html') }}"
-                   class="inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-                    {{ "View details"|trans }}
-                </a>
-            </div>
             <div class="overflow-auto max-h-[calc(100vh-200px)] relative">
                 <table class="w-full text-sm text-center text-gray-500" data-accordion="table-months"
                        data-active-classes="text-gray-500" data-inactive-classes="text-gray-500">
@@ -52,7 +46,7 @@
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
-                            <div class="pt-0.5 normal-case text-xxs">
+                            <div class="pt-0.5 normal-case text-xxs" title="{{ totals.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                 {{ totals.movingTime|formatSeconds }}
                             </div>
                         </th>
@@ -108,7 +102,7 @@
                                 <td class="px-2 py-2 truncate">
                                     {{ statsForCurrentMonth.elevation|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="px-2 py-2 truncate" title="{{ statsForCurrentMonth.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                     {{ statsForCurrentMonth.movingTime|formatSeconds }}
                                 </td>
                                 <td class="px-2 py-2 truncate">
@@ -141,7 +135,7 @@
                                         <td class="px-2 py-2 truncate">
                                             {{ totalsForSportType.elevation|renderMeasurement(0) }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="px-2 py-2 truncate" title="{{ totalsForSportType.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                             {{ totalsForSportType.movingTime|formatSeconds }}
                                         </td>
                                         <td class="px-2 py-2 truncate">

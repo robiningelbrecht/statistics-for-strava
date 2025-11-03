@@ -58,6 +58,7 @@ Compare: Compare
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Custom gear disabled'
+Cycling: Cycling
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
 Dashboard: Painel
@@ -69,7 +70,6 @@ Dec: Dez
 Details: Details
 Device: Dispositivo
 Distance: Distância
-'Distance / week': 'Distância / semana'
 'Distance breakdown': 'Divisão da distância'
 'Distance in {unit}': 'Distância em {unit}'
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
@@ -80,7 +80,6 @@ Distribution: Distribuição
 Eddington: Eddington
 Elev: Desnível
 Elevation: Elevação
-'Elevation / week': 'Elevation / week'
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: Elíptica
 Evening: 'Fim da tarde'
@@ -110,6 +109,7 @@ Gear: Equipamento
 'Gear stats': 'Estatísticas do equipamento'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Equipamento não utilizado nos últimos três meses é desativado por padrão.'
 'Gear that is retired is disabled by default.': 'Equipamento não utilizado é desativado por padrão.'
+Goal: Goal
 Golf: Golfe
 'Good training variety': 'Good training variety'
 'Google searches': 'Google searches'
@@ -128,11 +128,10 @@ High: Alta
 'High risk - reduce volume': 'High risk - reduce volume'
 Hikes: Caminhadas
 History: Histórico
-"I burned {caloriesBurned} calories doing so, that's about {numberOfPizzaSlices} pizza slices 🍕.": 'Queimei {caloriesBurned} calorias com isso – isso dá mais ou menos {numberOfPizzaSlices} fatias de pizza! 🍕.'
-'I recorded a total distance of {totalDistance} ({numberOfTripsAroundTheWorld} trips around the world 🌍 and {numberOfTripsToTheMoon} trips to the moon 🌕), an elevation of {totalElevation} ({timesMountEverest} times Mount Everest 🏔) and a total time of {totalTimeRecorded} 🎉.': 'Registei uma distância total de {totalDistance} ({numberOfTripsAroundTheWorld} voltas ao mundo 🌍 e {numberOfTripsToTheMoon} viagens até à lua 🌕), uma elevação total de {totalElevation} ({timesMountEverest} vezes o Monte Everest 🏔) e um tempo total de {totalTimeRecorded} 🎉.'
 'Ice Skate': 'Patinação no Gelo'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A imagem "{imgSrc}" está referenciada no seu arquivo de configuração de manutenção, mas não foi encontrada em "storage/gear-maintenance"'
+"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 'Patinação em Linha'
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Parece que nenhum equipamento válido está vinculado aos componentes. Verifique seu arquivo de configuração.'
@@ -191,6 +190,7 @@ Nov: Nov
 'Number of activities per month': 'Number of activities per month'
 'Number of times completed': 'Number of times completed'
 Oct: Out
+'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'Uma das suas tarefas de manutenção do equipamento está vencida'
 'Optimal training range': 'Optimal training range'
 Other: Outro
@@ -214,6 +214,7 @@ Pilates: Pilates
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Potência
 'Power distribution': 'Distribuição da potência'
+'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Ano anterior'
 Race: Competição
 'Racing Score': 'Pontuação de Corrida'
@@ -221,16 +222,19 @@ Race: Competição
 'Racquet Ball': Racquetball
 Ranking: Ranking
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
+'Relative cost': 'Relative cost'
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'
 'Rest days vs. active days': 'Rest days vs. active days'
+'Retired gear': 'Retired gear'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 Rides: Pedais
 'Rock Climbing': Escalada
 'Roller Ski': 'Esqui de Rodas'
 Rowing: Remo
+Running: Running
 Runs: Corridas
 Sail: Vela
 Sat: Sáb
@@ -242,7 +246,7 @@ Segments: Segmentos
 Sep: Set
 'Show information': 'Mostrar informação'
 Simplified: Simplified
-'Since I began working out {numberOfDaysAgo} ago on {startDate}, I had {totalDaysOfWorkingOut} active days of working out.': 'Desde que comecei a treinar há {numberOfDaysAgo}, em {startDate}, tive {totalDaysOfWorkingOut} dias ativos de treino.'
+"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Patinagem
 'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
@@ -271,7 +275,6 @@ Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'A tag "{maintenanceTaskTag}" foi usada em "{activityName}", mas o equipamento referenciado nessa atividade não está vinculado a este componente.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 Tennis: Ténis
-"That's a daily average of {dailyAverage}, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.": 'Isso dá uma média diária de {dailyAverage}, uma média semanal de {weeklyAverage} e uma média mensal de {monthlyAverage} 🐣.'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 Thinking...: Thinking...
@@ -281,7 +284,6 @@ Thinking...: Thinking...
 Thu: Qui
 Thursday: Quinta-feira
 Time: Time
-'Time / week': 'Tempo / semana'
 'Times completed': 'Vezes concluído'
 To: Até
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para ativar, configure {configFile} e reconstrua os arquivos para que as alterações entrem em vigor'
@@ -313,6 +315,7 @@ Unspecified: 'Não especificado'
 'Virtual Row': 'Remo Virtual'
 'Virtual Runs': 'Corridas Virtuais'
 'Virtual workout assistant': 'Virtual workout assistant'
+Walking: Walking
 Walks: Caminhadas
 'Water Sports': 'Esportes Aquáticos'
 'We detected following issues': 'Detectamos os seguintes problemas'
@@ -321,6 +324,7 @@ Wednesday: Quarta-feira
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
+'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Estatísticas semanais'
 'Weight Training': 'Treino de Força'
 Wheelchair: 'Cadeira de Rodas'
@@ -330,7 +334,7 @@ Wheelchair: 'Cadeira de Rodas'
 Workout: Treino
 'Workout type': 'Tipo de treino'
 Year: Ano
-'Yearly distances': 'Distâncias anuais'
+'Yearly stats': 'Yearly stats'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Você registrou treinos em {numberOfCountriesWithWorkouts} países diferentes, isso é {percentage} de todos os países 🌍'
 'Your PB badge': 'Your PB badge'
@@ -372,6 +376,8 @@ more: more
 n/a: n/d
 never: nunca
 'on': 'on'
+'per activity': 'per activity'
+'per hour': 'per hour'
 to: to
 total: total
 weeks: weeks
@@ -381,6 +387,7 @@ workouts: treinos
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} a cada {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
+'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} rotas com base nos teus filtros ativos'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'

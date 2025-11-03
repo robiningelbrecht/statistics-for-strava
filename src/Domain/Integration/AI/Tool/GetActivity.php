@@ -18,8 +18,10 @@ final class GetActivity extends Tool
         parent::__construct(
             'get_activity_by_id',
             <<<DESC
-            Retrieves a single activity from the database by its unique ID. 
-            Use this tool when the user refers to a specific activity. Requires the activity ID as input.
+            Retrieves detailed information for a single activity, identified by its unique ID.
+            Use this tool when the user refers to a specific activity or asks for details about a particular workout.
+            It requires the activity ID as input and provides the full activity data needed for summaries, comparisons, or insights. 
+            Example requests include “Show details for activity 12345” or “Compare my Sunday ride with activity 67890.”
             DESC
         );
     }
@@ -40,6 +42,12 @@ final class GetActivity extends Tool
                 required: true
             ),
         ];
+    }
+
+    #[\Override]
+    public function getMaxTries(): int
+    {
+        return 100;
     }
 
     /**

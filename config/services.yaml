@@ -33,8 +33,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy:
-        class: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy
+    app.config:
+        public: true # We need to access this service from the container in expressions
+        class: App\Infrastructure\Config\AppConfig
 
     Doctrine\Migrations\Version\DbalMigrationFactory: ~
     App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
@@ -76,10 +77,6 @@ services:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.locale")']
 
-    app.config:
-        public: true # We need to access this service from the container in expressions
-        class: App\Infrastructure\Config\AppConfig
-
     App\BuildApp\AppSubTitle:
         factory: [ null, 'fromOptionalString' ]
         arguments: [ '@=app_config("general.appSubTitle", "")' ]
@@ -99,6 +96,10 @@ services:
             '@=app_config("appearance.heatmap.tileLayerUrl", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")',
             '@=app_config("appearance.heatmap.enableGreyScale", true)'
         ]
+
+    App\BuildApp\BuildPhotosHtml\DefaultEnabledPhotoFilters:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
 
     App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes:
       factory: [ null, 'from' ]
@@ -188,10 +189,6 @@ services:
             '@App\Infrastructure\ValueObject\Measurement\UnitSystem'
         ]
 
-    App\Domain\Challenge\Consistency\ConsistencyChallenges:
-        factory: [ null, 'fromConfiguration' ]
-        arguments: ['@=app_config("metrics.consistencyChallenges", [])']
-
     App\Domain\Ftp\FtpHistory:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("general.athlete.ftpHistory")']
@@ -199,6 +196,10 @@ services:
     App\Domain\Gear\CustomGear\CustomGearConfig:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("customGear", [])']
+
+    App\Domain\Gear\ImportedGear\ImportedGearConfig:
+      factory: [ null, 'fromArray' ]
+      arguments: ['@=app_config("stravaGear", [])']
 
     App\Domain\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, 'fromArray' ]
@@ -216,10 +217,17 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.racingScore")']
 
+    # Autowiring of vendor classes
     League\Flysystem\FilesystemOperator: '@default.storage'
 
+    Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy:
+      class: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy
+
     GuzzleHttp\Client:
-        class: GuzzleHttp\Client
+      class: GuzzleHttp\Client
+
+    Money\MoneyFormatter:
+        factory: '@App\Infrastructure\DependencyInjection\MoneyFormatterFactory'
 
     Inspector\Inspector:
         class: Inspector\Inspector

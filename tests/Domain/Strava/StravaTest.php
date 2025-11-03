@@ -8,12 +8,15 @@ use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
 use App\Domain\Strava\InvalidStravaAccessToken;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
+use App\Tests\SpyOutput;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
@@ -32,6 +35,7 @@ class StravaTest extends TestCase
 
     private MockObject $client;
     private MockObject $filesystemOperator;
+    private NullSleep $sleep;
     private LoggerInterface $logger;
 
     public function testVerifyAccessToken(): void
@@ -124,38 +128,148 @@ class StravaTest extends TestCase
         $this->strava->verifyAccessToken();
     }
 
-    public function testGetRateLimit(): void
+    public function testGetWhenUnexpectedError(): void
+    {
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage('The error');
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
+    public function testGetWhenTooManyRequestsButNoRateLimits(): void
+    {
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage('The error');
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(429, [], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
+    public function testGetWhenTooManyRequestsDailyRateLimitExceeded(): void
+    {
+        $this->expectExceptionObject(StravaRateLimitHasBeenReached::dailyReadLimit());
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(429, ['x-ratelimit-limit' => '200,2000', 'x-ratelimit-usage' => '1,2', 'x-readratelimit-limit' => '100,1000', 'x-readratelimit-usage' => '99,1001'], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
+    public function testGetWhenTooManyRequestsFifteenMinuteRateLimitExceeded(): void
+    {
+        $this->expectExceptionObject(StravaRateLimitHasBeenReached::fifteenMinuteReadLimit(3));
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(429, ['x-ratelimit-limit' => '200,2000', 'x-ratelimit-usage' => '1,2', 'x-readratelimit-limit' => '100,1000', 'x-readratelimit-usage' => '101,998'], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
+    public function testGetFifteenRateLimitIsAboutToBeHit(): void
     {
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
-                    $this->assertMatchesJsonSnapshot($options);
 
                     return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
                 }
-
-                $this->assertEquals('HEAD', $method);
-                $this->assertEquals('api/v3/athlete', $path);
-                $this->assertMatchesJsonSnapshot($options);
 
                 return new Response(200, [
                     'x-ratelimit-limit' => '200,2000',
                     'x-ratelimit-usage' => '1,2',
                     'x-readratelimit-limit' => '100,1000',
-                    'x-readratelimit-usage' => '0,0',
-                ], Json::encode([]));
+                    'x-readratelimit-usage' => '99,98',
+                ], Json::encode(['weight' => 68, 'id' => 10]));
             });
 
         $this->logger
-            ->expects($this->exactly(1))
+            ->expects($this->exactly(2))
             ->method('info');
 
-        $this->assertMatchesJsonSnapshot($this->strava->getRateLimit());
+        $spyOutput = new SpyOutput();
+        $this->strava->setConsoleOutput($spyOutput);
+        $this->strava->getAthlete();
+
+        $this->assertMatchesTextSnapshot((string) $spyOutput);
+
+        $this->assertEquals(
+            180,
+            $this->sleep->getTotalSleptInSeconds(),
+        );
     }
 
     public function testGetAthlete(): void
@@ -177,7 +291,12 @@ class StravaTest extends TestCase
                 $this->assertEquals('api/v3/athlete', $path);
                 $this->assertMatchesJsonSnapshot($options);
 
-                return new Response(200, [], Json::encode(['weight' => 68, 'id' => 10]));
+                return new Response(200, [
+                    'x-ratelimit-limit' => '200,2000',
+                    'x-ratelimit-usage' => '1,2',
+                    'x-readratelimit-limit' => '100,1000',
+                    'x-readratelimit-usage' => '0,0',
+                ], Json::encode(['weight' => 68, 'id' => 10]));
             });
 
         $this->logger
@@ -185,6 +304,11 @@ class StravaTest extends TestCase
             ->method('info');
 
         $this->strava->getAthlete();
+        $this->assertMatchesObjectSnapshot($this->strava->getRateLimit());
+        $this->assertEquals(
+            0,
+            $this->sleep->getTotalSleptInSeconds(),
+        );
     }
 
     public function testGetActivities(): void
@@ -870,8 +994,9 @@ class StravaTest extends TestCase
             stravaClientSecret: StravaClientSecret::fromString('clientSecret'),
             stravaRefreshToken: StravaRefreshToken::fromString('refreshToken'),
             filesystemOperator: $this->filesystemOperator,
-            sleep: new NullSleep(),
-            logger: $this->logger
+            sleep: $this->sleep = new NullSleep(),
+            logger: $this->logger,
+            clock: PausedClock::fromString('2025-11-02 12:43:20')
         );
         $this->strava::$cachedAccessToken = null;
         $this->strava::$cachedActivitiesResponse = null;

@@ -24,4 +24,24 @@ final readonly class CombiningGearRepository implements GearRepository
 
         return $gears;
     }
+
+    public function findAllUsed(): Gears
+    {
+        /** @var Gears $gears */
+        $gears = $this->importedGearRepository->findAllUsed()->mergeWith(
+            $this->customGearRepository->findAllUsed()
+        );
+
+        return $gears;
+    }
+
+    public function hasGear(): bool
+    {
+        $gear = $this->importedGearRepository->findAllUsed();
+        if (!$gear->isEmpty()) {
+            return true;
+        }
+
+        return !$this->customGearRepository->findAllUsed()->isEmpty();
+    }
 }

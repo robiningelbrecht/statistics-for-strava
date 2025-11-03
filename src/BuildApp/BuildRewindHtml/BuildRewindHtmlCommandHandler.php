@@ -71,7 +71,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         $now = $command->getCurrentDateTime();
         $availableRewindOptionsResponse = $this->queryBus->ask(new FindAvailableRewindOptions($now));
         $availableRewindOptions = $availableRewindOptionsResponse->getAvailableOptions();
-        $gears = $this->gearRepository->findAll();
+        $usedGears = $this->gearRepository->findAllUsed();
 
         $rewindItemsPerYear = RewindItemsPerGroup::empty();
         foreach ($availableRewindOptions as $availableRewindOption) {
@@ -144,7 +144,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(MovingTimePerGearChart::create(
                             movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($yearsToQuery, null))->getMovingTimePerGear(),
-                            gears: $gears,
+                            gears: $usedGears,
                         )->build()),
                     ]),
                 ))

@@ -1,0 +1,193 @@
+{% set uniqueId = uniqueNumberForId('yearlyStatsWidget') %}
+{% autoescape false %}
+<div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold">
+        {{ "Yearly stats"|trans }}
+    </h3>
+    <ul class="inline-flex rounded-md shadow-xs divide-x divide-gray-200"
+        id="yearlyStatsTab{{ uniqueId }}" data-tabs="#yearlyStatsTabContent{{ uniqueId }}"
+        data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+        {% for context in metricsDisplayOrder %}
+            <li class="flex gap-x-1 shrink-0 cursor-pointer
+                   bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg" role="presentation">
+                <a href="#" data-tabs-target="#yearlyStats{{ context.value }}{{ uniqueId }}" role="tab"
+                   aria-controls="yearlyStats{{ context.value }}{{ uniqueId }}"
+                   class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
+                    {{ svg(context.getSvgIcon(), 'w-5 h-5') }}
+                    <span class="hidden md:block">{{ context|trans }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div id="yearlyStatsTabContent{{ uniqueId }}">
+    {% for context in metricsDisplayOrder %}
+        <div id="yearlyStats{{ context.value }}{{ uniqueId }}" role="tabpanel"
+             aria-labelledby="yearlyStats{{ context.value }}{{ uniqueId }}">
+            {% set yearlyStatsCharts = yearlyStatsChartsPerContext[context.value] %}
+            {% if yearlyStatistics|length > 1 %}
+                <div class="mb-4 border-b border-gray-200">
+                    <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
+                        id="yearlyStatsActivityType{{ context.value }}Tab{{ uniqueId }}" data-tabs="#yearlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}"
+                        role="tablist">
+                        {% for activityType,chart in yearlyStatsCharts %}
+                            <li class="shrink-0" role="presentation">
+                                <a href="#" data-tabs-target="#yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tab"
+                                   aria-controls="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}"
+                                   class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                    {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div id="yearlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}">
+                {% for activityType,chart in yearlyStatsCharts %}
+                    <div id="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tabpanel"
+                         aria-labelledby="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}-tab">
+                        <div class="mb-4 h-[20rem]" data-echarts-options='{{ chart }}'></div>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-center text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                                        {{ "Year"|trans }}
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('distance') }}
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('delta') }}
+                                            {{ "Prev year"|trans }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('elevation') }}
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('delta') }}
+                                            {{ "Prev year"|trans }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('time') }}
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('delta') }}
+                                            {{ "Prev year"|trans }}
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        <div class="flex items-center justify-center">
+                                            {{ svg('calories') }}
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for statistic in yearlyStatistics[activityType].getStatistics() %}
+                                    <tr class="bg-white border-b">
+                                        <th scope="row"
+                                            class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                            <div>{{ statistic.year }}</div>
+                                        </th>
+                                        <td class="px-2 py-2">
+                                            {{ statistic.totalDistance|renderMeasurement(0) }}
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            <div class="flex items-center justify-center {{ statistic.differenceInDistanceYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                                {% if statistic.differenceInDistanceYearBefore is not null %}
+                                                    {% if statistic.differenceInDistanceYearBefore.toFloat() >= 0 %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                        </svg>
+                                                    {% else %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                        </svg>
+                                                    {% endif %}
+                                                    <div>
+                                                        {{ statistic.differenceInDistanceYearBefore|renderMeasurement(0) }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            {{ statistic.totalElevation|renderMeasurement(0) }}
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center justify-center {{ statistic.differenceInElevationYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                                {% if statistic.differenceInElevationYearBefore is not null %}
+                                                    {% if statistic.differenceInElevationYearBefore.toFloat() >= 0 %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                        </svg>
+                                                    {% else %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                        </svg>
+                                                    {% endif %}
+                                                    <div>
+                                                        {{ statistic.differenceInElevationYearBefore|renderMeasurement(0) }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-2 py-2" title="{{ statistic.movingTimeInHours.toFloat()|formatNumber(1) }}h">
+                                            {{ statistic.movingTime }}
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            <div class="flex items-center justify-center {{ statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                                {% if statistic.differenceInMovingTimeYearBefore is not null %}
+                                                    {% if statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z"></path>
+                                                        </svg>
+                                                    {% else %}
+                                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                                                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                                  d="M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z"></path>
+                                                        </svg>
+                                                    {% endif %}
+                                                    <div>
+                                                        {{ statistic.differenceInMovingTimeYearBefore }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-2 py-2">
+                                            {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endautoescape %}

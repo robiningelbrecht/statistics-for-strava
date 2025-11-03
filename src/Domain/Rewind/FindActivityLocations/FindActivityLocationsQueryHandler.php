@@ -40,7 +40,7 @@ final readonly class FindActivityLocationsQueryHandler implements QueryHandler
                 ORDER BY numberOfActivities DESC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
                 'worldType' => WorldType::REAL_WORLD->value,
             ],
             [

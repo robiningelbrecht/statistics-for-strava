@@ -6,8 +6,10 @@ use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -35,6 +37,8 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         assert($command instanceof ImportGear);
         $command->getOutput()->writeln('Importing gear...');
 
+        $this->strava->setConsoleOutput($command->getOutput());
+
         $stravaGearIds = GearIds::fromArray(array_unique(array_filter(array_map(
             fn (array $activity): ?GearId => GearId::fromOptionalUnprefixed($activity['gear_id']),
             $this->strava->getActivities(),
@@ -60,20 +64,16 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         foreach ($stravaGearIds as $gearId) {
             try {
                 $stravaGear = $this->strava->getGear($gearId);
+            } catch (StravaRateLimitHasBeenReached $exception) {
+                $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+
+                return;
             } catch (ClientException|RequestException $exception) {
                 $this->stravaDataImportStatus->markGearImportAsUncompleted();
 
                 if (!$exception->getResponse()) {
                     // Re-throw, we only want to catch supported error codes.
                     throw $exception;
-                }
-
-                if (429 === $exception->getResponse()->getStatusCode()) {
-                    // This will allow initial imports with a lot of activities to proceed the next day.
-                    // This occurs when we exceed Strava API rate limits or throws an unexpected error.
-                    $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>');
-
-                    return;
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
@@ -90,6 +90,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
                 $gear = ImportedGear::create(
                     gearId: $gearId,
+                    type: GearType::IMPORTED,
                     distanceInMeter: Meter::from($stravaGear['distance']),
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],

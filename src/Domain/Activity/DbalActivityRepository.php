@@ -56,7 +56,7 @@ final class DbalActivityRepository implements ActivityRepository
                 LIMIT 1
             SQL,
             [
-                'years' => array_map('strval', $years->toArray()),
+                'years' => array_map(strval(...), $years->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,
@@ -91,7 +91,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->setMaxResults($limit);
 
         $activities = array_map(
-            fn (array $result): Activity => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         );
         DbalActivityRepository::$cachedActivities[$cacheKey] = Activities::fromArray($activities);
@@ -126,7 +126,7 @@ final class DbalActivityRepository implements ActivityRepository
         }
 
         return Activities::fromArray(array_map(
-            fn (array $result): Activity => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -146,7 +146,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return Activities::fromArray(array_map(
-            fn (array $result): Activity => $this->hydrate($result),
+            $this->hydrate(...),
             $queryBuilder->executeQuery()->fetchAllAssociative()
         ));
     }
@@ -186,7 +186,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return ActivityIds::fromArray(array_map(
-            fn (string $id): ActivityId => ActivityId::fromString($id),
+            ActivityId::fromString(...),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
     }
@@ -200,7 +200,7 @@ final class DbalActivityRepository implements ActivityRepository
             ->orderBy('startDateTime', 'DESC');
 
         return ActivityIds::fromArray(array_map(
-            fn (string $id): ActivityId => ActivityId::fromString($id),
+            ActivityId::fromString(...),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
     }

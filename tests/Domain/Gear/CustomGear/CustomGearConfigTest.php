@@ -67,6 +67,14 @@ class CustomGearConfigTest extends TestCase
         yield 'invalid "customGears[isRetired]" key' => [$yml, '"isRetired" property must be a boolean'];
 
         $yml = self::getValidYml();
+        unset($yml['customGears'][0]['purchasePrice']['amountInCents']);
+        yield 'missing "customGears[purchasePrice][amountInCents]" key' => [$yml, '"purchasePrice.amountInCents" property must be a numeric value'];
+
+        $yml = self::getValidYml();
+        $yml['customGears'][0]['purchasePrice']['amountInCents'] = 'lol';
+        yield 'invalid "customGears[purchasePrice][amountInCents]" key' => [$yml, '"purchasePrice.amountInCents" property must be a numeric value'];
+
+        $yml = self::getValidYml();
         $yml['customGears'][0]['tag'] = 'gearr';
         $yml['customGears'][1]['tag'] = 'gearr';
         yield 'duplicate customGear tags' => [$yml, 'duplicate custom gear tags found: gearr'];
@@ -81,6 +89,9 @@ customGears:
   - tag: 'gear-1'
     label: 'Custom Gear 1'
     isRetired: false
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
   - tag: 'gear-2'
     label: 'Custom Gear 2'
     isRetired: true

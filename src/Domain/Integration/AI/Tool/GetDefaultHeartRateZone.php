@@ -24,9 +24,11 @@ final class GetDefaultHeartRateZone extends Tool
         parent::__construct(
             'get_heart_rate_zones',
             <<<DESC
-            Retrieves the athlete’s personalized heart rate zones from the database.
-            Use this tool when the user asks about their heart rate zones, training intensity, or zone-based performance
-            Returns zone ranges based on the athlete’s max heart rate or custom configuration.
+            Retrieves the athlete’s personalized heart rate zones from the database, including ranges based on the athlete’s maximum heart rate or custom configuration. 
+            You can optionally provide a sportType to fetch zones specific to a particular sport.
+            Use this tool when the user asks about heart rate zones, training intensity, or zone-based performance. If a sportType is specified, the zones returned will correspond to that sport. 
+            It provides the data needed to interpret workouts, plan training, or summarize effort by zone. 
+            Example requests include “Show my heart rate zones” or “What zone was I in during my last ride?”
             DESC
         );
     }

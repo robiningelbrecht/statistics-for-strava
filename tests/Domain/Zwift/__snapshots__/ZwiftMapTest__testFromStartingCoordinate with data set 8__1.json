@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-richmond.jpg",
+    "name": "/assets/images/maps/zwift-richmond.webp",
     "bounds": [
         [
             37.5774,
@@ -9,5 +9,7 @@
             37.5014,
             -77.394
         ]
-    ]
+    ],
+    "label": "Richmond",
+    "background": "#bbbbb7"
 }

@@ -2,20 +2,7 @@
 <tr class="odd:bg-white border-b even:border-b even:bg-gray-50">
     <td class="px-2 py-2 text-left">
         <div class="flex items-center gap-x-1">
-            <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segment.getId() ~ '.html') }}" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">
-                {% if segment.getSportType().isVirtualRide() %}
-                    {% if segment.isZwiftSegment() %}
-                        {{ svg('zwift-logo') }}
-                    {% elseif segment.isRouvySegment() %}
-                        {{ svg('rouvy-logo') }}
-                    {% else %}
-                        {{ svg('indoor-bike') }}
-                    {% endif %}
-                {% else %}
-                    {{ svgSportType(segment.getSportType()) }}
-                {% endif %}
-                <span class="truncate">{{ segment.getName()|ellipses(50) }}</span>
-            </a>
+            {{ segment|segmentLink() }}
         </div>
     </td>
     <td class="px-2 py-2">

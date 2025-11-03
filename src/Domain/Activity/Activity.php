@@ -136,9 +136,11 @@ final class Activity implements SupportsAITooling
         );
 
         $deviceName = $rawData['device_name'] ?? null;
-        $worldType = match (strtolower($deviceName ?? '')) {
-            'zwift' => WorldType::ZWIFT,
-            'rouvy' => WorldType::ROUVY,
+        $worldType = match (true) {
+            'zwift' === strtolower($deviceName ?? '') => WorldType::ZWIFT,
+            'rouvy' === strtolower($deviceName ?? '') => WorldType::ROUVY,
+            'mywhoosh' === strtolower($deviceName ?? '') => WorldType::MY_WHOOSH,
+            str_contains(strtolower($rawData['name'] ?? ''), 'mywhoosh') => WorldType::MY_WHOOSH,
             default => WorldType::REAL_WORLD,
         };
 
@@ -603,6 +605,11 @@ final class Activity implements SupportsAITooling
         return WorldType::ROUVY === $this->getWorldType();
     }
 
+    public function isMyWhooshRide(): bool
+    {
+        return WorldType::MY_WHOOSH === $this->getWorldType();
+    }
+
     public function getLeafletMap(): ?LeafletMap
     {
         if (!$this->getPolyline()) {
@@ -659,7 +666,7 @@ final class Activity implements SupportsAITooling
      */
     public function getSearchables(): array
     {
-        return array_map('strtolower', [$this->getName()]);
+        return array_map(strtolower(...), [$this->getName()]);
     }
 
     /**

@@ -42,9 +42,9 @@ enum ActivityType: string implements TranslatableInterface
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
-            self::RIDE => $translator->trans('Rides', locale: $locale),
-            self::RUN => $translator->trans('Runs', locale: $locale),
-            self::WALK => $translator->trans('Walks', locale: $locale),
+            self::RIDE => $translator->trans('Cycling', locale: $locale),
+            self::RUN => $translator->trans('Running', locale: $locale),
+            self::WALK => $translator->trans('Walking', locale: $locale),
             self::WATER_SPORTS => $translator->trans('Water Sports', locale: $locale),
             self::WINTER_SPORTS => $translator->trans('Winter Sports', locale: $locale),
             self::SKATING => $translator->trans('Skating', locale: $locale),
@@ -78,7 +78,7 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
-    public function supportsYearlyStats(): bool
+    public function supportsDistanceAndElevation(): bool
     {
         return match ($this) {
             self::RUN, self::RIDE, self::WALK, self::WATER_SPORTS, self::SKATING => true,

@@ -16,9 +16,10 @@ final class GetGear extends Tool
         parent::__construct(
             'get_gear',
             <<<DESC
-            Retrieves the athlete’s gear information from the database.
-            Use this tool when the user refers to equipment such as shoes, bikes, or other gear
-            Returns gear details like name, type and usage distance.
+            Retrieves the athlete’s gear information from the database, including name, type, and distance.
+            Use this tool when the user asks about equipment such as shoes, bikes, or other gear. 
+            It provides the details needed to track usage or summarize performance by equipment. 
+            Example requests include “Show my bike details” or “How many kilometers have I ran with my shoes?”
             DESC
         );
     }
@@ -28,7 +29,7 @@ final class GetGear extends Tool
      */
     public function __invoke(): array
     {
-        $gears = $this->gearRepository->findAll();
+        $gears = $this->gearRepository->findAllUsed();
 
         return $gears->map(fn (Gear $gear): array => $gear->exportForAITooling());
     }

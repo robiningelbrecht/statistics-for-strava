@@ -30,7 +30,7 @@ final readonly class FindElevationPerMonthQueryHandler implements QueryHandler
                 WHERE strftime('%Y',startDateTime) IN (:years)
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,
@@ -46,7 +46,7 @@ final readonly class FindElevationPerMonthQueryHandler implements QueryHandler
                 ORDER BY sportType ASC, monthNumber ASC
             SQL,
             [
-                'years' => array_map('strval', $query->getYears()->toArray()),
+                'years' => array_map(strval(...), $query->getYears()->toArray()),
             ],
             [
                 'years' => ArrayParameterType::STRING,

@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-crit-city.jpg",
+    "name": "/assets/images/maps/zwift-crit-city.webp",
     "bounds": [
         [
             -10.3657,
@@ -9,5 +9,7 @@
             -10.4038,
             165.8207
         ]
-    ]
+    ],
+    "label": "Crit city",
+    "background": "#bbbbb7"
 }

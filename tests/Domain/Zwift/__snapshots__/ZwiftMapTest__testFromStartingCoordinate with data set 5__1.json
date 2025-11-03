@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-makuri-islands.jpg",
+    "name": "/assets/images/maps/zwift-makuri-islands.webp",
     "bounds": [
         [
             -10.7375,
@@ -9,5 +9,7 @@
             -10.831,
             165.8772
         ]
-    ]
+    ],
+    "label": "Makuri islands",
+    "background": "#bbbbb7"
 }

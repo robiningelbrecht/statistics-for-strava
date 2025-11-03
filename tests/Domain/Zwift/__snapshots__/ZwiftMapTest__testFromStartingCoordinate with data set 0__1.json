@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-bologna.jpg",
+    "name": "/assets/images/maps/zwift-bologna.webp",
     "bounds": [
         [
             44.5308037,
@@ -9,5 +9,7 @@
             44.45463821,
             11.36991729102076
         ]
-    ]
+    ],
+    "label": "Bologna",
+    "background": "#bbbbb7"
 }

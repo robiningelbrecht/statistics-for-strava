@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace App\Domain\Challenge\Consistency;
 
 use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
+use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\String\Name;
 
 final readonly class ConsistencyChallenge
 {
+    use ProvideUnitFromScalar;
+    use ProvideGoalConverters;
+
     private function __construct(
         private string $label,
         private bool $isEnabled,
         private ChallengeConsistencyType $type,
-        private ChallengeConsistencyGoal $goal,
+        private Unit $goal,
         private SportTypes $sportTypesToInclude,
     ) {
     }
@@ -22,14 +27,18 @@ final readonly class ConsistencyChallenge
         string $label,
         bool $isEnabled,
         ChallengeConsistencyType $type,
-        ChallengeConsistencyGoal $goal,
+        float $goal,
+        string $unit,
         SportTypes $sportTypesToInclude,
     ): self {
         return new self(
             label: $label,
             isEnabled: $isEnabled,
             type: $type,
-            goal: $goal,
+            goal: self::createUnitFromScalars(
+                value: $goal,
+                unit: $unit,
+            ),
             sportTypesToInclude: $sportTypesToInclude,
         );
     }
@@ -54,7 +63,7 @@ final readonly class ConsistencyChallenge
         return $this->type;
     }
 
-    public function getGoal(): ChallengeConsistencyGoal
+    public function getGoal(): Unit
     {
         return $this->goal;
     }

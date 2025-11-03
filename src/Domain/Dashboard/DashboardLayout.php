@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard;
 
-use App\Domain\Calendar\MonthlyStats\MonthlyStatsContext;
-
 final readonly class DashboardLayout implements \IteratorAggregate
 {
     private function __construct(
@@ -27,24 +25,24 @@ final readonly class DashboardLayout implements \IteratorAggregate
         return [
             ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
             ['widget' => 'introText', 'width' => 33, 'enabled' => true],
-            ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true],
+            ['widget' => 'weeklyGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
+            ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
             ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
             ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
-                'context' => MonthlyStatsContext::DISTANCE->value,
-                'enableLastXYearsByDefault' => 10,
+                'enableLastXYearsByDefault' => 10, 'metricsDisplayOrder' => ['distance', 'movingTime', 'elevation'],
             ]],
             ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
             ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
             ['widget' => 'dayTimeStats', 'width' => 50, 'enabled' => true],
             ['widget' => 'distanceBreakdown', 'width' => 100, 'enabled' => true],
             ['widget' => 'bestEfforts', 'width' => 100, 'enabled' => true],
-            ['widget' => 'yearlyDistances', 'width' => 100, 'enabled' => true, 'config' => ['enableLastXYearsByDefault' => 10]],
+            ['widget' => 'yearlyStats', 'width' => 100, 'enabled' => true, 'config' => ['enableLastXYearsByDefault' => 10, 'metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
             ['widget' => 'zwiftStats', 'width' => 50, 'enabled' => true],
             ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
             ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
-            ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true],
+            ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true, 'config' => ['challenges' => []]],
             ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],
             ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
         ];

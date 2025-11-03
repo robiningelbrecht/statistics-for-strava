@@ -41,6 +41,8 @@
                     'maxZoom': leaflet.map.getMaxZoom(),
                     'imageOverlay': leaflet.map.getOverlayImageUrl(),
                     'bounds': leaflet.map.getBounds(),
+                    'showStartMarker': true,
+                    'showEndMarker': true
                 } %}
                 <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>

@@ -1,13 +1,15 @@
 {
-    "name": "/assets/images/maps/zwift-new-york.jpg",
+    "name": "/assets/images/maps/zwift-new-york.webp",
     "bounds": [
         [
             40.81725,
             -74.0227
         ],
         [
-            40.74085,
+            40.58805,
             -73.9222
         ]
-    ]
+    ],
+    "label": "New york",
+    "background": "#bbbbb7"
 }

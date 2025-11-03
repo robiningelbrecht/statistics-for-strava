@@ -94,9 +94,16 @@ appearance:
     # Enables or disables grayscale styling on the heatmap.
     enableGreyScale: true
   photos:
-    # Optional, an array of sport types for which photos should be hidden on the photos page.
+    # Optional, an array of sport types for which photos should be hidden on the photos page. 
+    # They will not be rendered, and they won't show up in the filters. 
     # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
-    hidePhotosForSportTypes: []  
+    hidePhotosForSportTypes: []
+    # Optional, a list of filters that are enabled by default. For example, you can use this to automatically hide all photos from virtual activities.
+    defaultEnabledFilters:
+      # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+      sportTypes: []
+      # A valid ISO2 country code.
+      countryCode: null  
   # With this list you can decide the order the sport types will be rendered in. For example in the tabs on the dashboard.
   # You don't have to include all sport types. Sport types not included in this list will be rendered by the app default.
   # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
@@ -154,10 +161,13 @@ metrics:
       showInNavBar: false
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
-  # The app uses sensible defaults for the monthly consistency challenges. 
-  # Leave this setting unchanged to use the defaults.
-  # For a detailed guide on how to override these defaults, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=consistency-challenges 
-  consistencyChallenges: []
+# Optional, Used to enrich gear with data that cannot be configured in Strava.  
+stravaGear:
+  - gearId: 'g12337767'
+    # Used to calculate the relative cost per workout and hour.
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null

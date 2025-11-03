@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Gear\CustomGear;
 
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
@@ -35,6 +36,7 @@ final class CustomGearBuilder
     {
         return CustomGear::fromState(
             gearId: $this->gearId,
+            type: GearType::CUSTOM,
             distanceInMeter: $this->distanceInMeter,
             createdOn: $this->createdOn,
             name: $this->name,

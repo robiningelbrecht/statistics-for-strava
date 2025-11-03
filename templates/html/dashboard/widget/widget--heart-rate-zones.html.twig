@@ -25,15 +25,15 @@
             </ul>
         </div>
     {% endif %}
-    <div id="hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}">
-        <div id="hearRateZoneStatsAll{{ uniqueId }}" role="tabpanel"
+    <div id="hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}" class="flex flex-col grow">
+        <div class="grow" id="hearRateZoneStatsAll{{ uniqueId }}" role="tabpanel"
              aria-labelledby="hearRateZoneStatsAll{{ uniqueId }}-tab">
-            <div class="h-80" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
+            <div class="h-full min-h-[16rem]" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
         </div>
         {% for activityType,chart in chartsPerActivityType %}
-            <div id="hearRateZoneStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
+            <div class="grow" id="hearRateZoneStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="hearRateZoneStats{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-80" data-echarts-options='{{ chart }}'></div>
+                <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
             </div>
         {% endfor %}
     </div>

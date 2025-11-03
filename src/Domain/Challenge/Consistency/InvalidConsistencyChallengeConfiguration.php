@@ -9,7 +9,7 @@ final class InvalidConsistencyChallengeConfiguration extends \RuntimeException
     public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
         $message = sprintf(
-            'config/app/config.yaml metrics.consistencyChallenges: %s',
+            'config/app/config.yaml dashboard.layout: %s',
             $message,
         );
         parent::__construct($message, $code, $previous);

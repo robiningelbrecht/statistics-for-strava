@@ -16,6 +16,7 @@ use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\Messages\ToolCallMessage;
+use NeuronAI\Chat\Messages\ToolCallResultMessage;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -116,6 +117,9 @@ final readonly class AIChatRequestHandler
             try {
                 foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
                     if ($chunk instanceof ToolCallMessage) {
+                        continue;
+                    }
+                    if ($chunk instanceof ToolCallResultMessage) {
                         continue;
                     }
                     echo new ServerSentEvent(

@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-paris.jpg",
+    "name": "/assets/images/maps/zwift-paris.webp",
     "bounds": [
         [
             48.9058,
@@ -9,5 +9,7 @@
             48.82945,
             2.3722
         ]
-    ]
+    ],
+    "label": "Paris",
+    "background": "#bbbbb7"
 }

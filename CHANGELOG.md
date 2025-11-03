@@ -1,3 +1,120 @@
+# [v3.8.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.4) - 2025-11-02
+
+🔥 This release introduces a new dashboard widget __weeklyGoals__.
+
+> [!NOTE]  
+> This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=weeklygoals
+
+## What's Changed
+* ISSUE #1326: Do not use gear that has no activities referencing it by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1327
+* ISSUE #1300: Weekly Goal Widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1321
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.3...v3.8.4
+
+# [v3.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.3) - 2025-10-31
+
+🔥 This release introduces a new config option __metricsDisplayOrder__ for the following widgets:
+
+* `weeklyStats`
+* `monthlyStats`
+* `yearlyStats`
+
+This option lets you customize the order of the metric buttons __Distance__, __Time__, and __Elevation__ in each widget to match your preferred display order.
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets
+
+## What's Changed
+* Minor change for Ofelia docs example config by @Luen in https://github.com/robiningelbrecht/statistics-for-strava/pull/1314
+* ISSUE #1316: Dashboard chart widgets should have equal height by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1317
+* ISSUE #1311: Allow to configure metricsDisplayOrder on widgets by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1318
+* Fix cron job schedule for 7 PM by @lennon101 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1320
+* ISSUE #1322: Fix wrong unit for average speed in gear state by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1323
+
+## New Contributors
+* @Luen made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1314
+* @lennon101 made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1320
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.2...v3.8.3
+
+# [v3.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.2) - 2025-10-29
+
+> [!WARNING]  
+> The config option `metrics.consistencyChallenges` has been moved to the config of the `challengeConsistency` dashboard widget.
+> If you do not have custom challenges configured, you don't have to do anything
+
+🔥 You can now set the purchase price of your (custom) gear to track its relative cost per hour and per activity. Read more in the documentation:
+
+* https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+* https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear
+
+## What's Changed
+* updated german translations by @Export33 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1294
+* ISSUE #1266: Gear cost-per-use and cost-per-hour statistics by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1291
+* ISSUE #1299: Fix Tool get_activity_streams has been attempted too man… by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1301
+* Refine Swedish translations by @strobit in https://github.com/robiningelbrecht/statistics-for-strava/pull/1298
+* ISSUE #1303: thin horizontal scrollbars by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1304
+* ISSUE #1306: Move consistency challenge config to widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1307
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.1...v3.8.2
+
+# [v3.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.1) - 2025-10-26
+
+## What's Changed
+* ISSUE #1279: Re-introduce photos.hidePhotosForSportTypes by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1280
+* ISSUE #1279: Show activity details on image hover by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1283
+* ISSUE #1281: Add Caddy rule to cache /files/* by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1285
+* ISSUE #1284: Improve agent chat tools by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1286
+* ISSUE #1289: Better MigrationRunner by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1290
+* ISSUE #1287: Fix tool max calls for AI integration by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1292
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.0...v3.8.1
+
+# [v3.8.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.0) - 2025-10-23
+
+🔥 This release introduces a complete overhaul of the “Photos” page.
+
+> [!WARNING]  
+> The config option `photos.hidePhotosForSportTypes` has been removed. Use the new `defaultEnabledFilters` option instead:
+> ```yaml
+>   photos:
+>      # Optional, a list of filters that are enabled by default. For example, you can use this to automatically hide all photos from virtual activities.
+>      defaultEnabledFilters: {}
+> ```
+
+Read more in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* ISSUE #1264: Fix NeuronAI bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1265
+* ISSUE #1268: Redesign photos page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1270
+* ISSUE #1268: Re-organize js files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1271
+* ISSUE #1269: Add start/end of segment on map by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1276
+* ISSUE #1274: Make sure the sport type list in the docs aligns with the list defined in the app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1277
+* ISSUE #1275: Update "Since I began working out ..." template phrasing by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1277
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.4...v3.8.0
+
+# [v3.7.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.4) - 2025-10-21
+
+> [!WARNING]  
+> This release includes updates to the existing `monthlyStats` dashboard widget.
+> The `context` configuration option has been removed, as the widget now displays all data at once. You may need to remove duplicate instances of this widget from your dashboard layout configuration.
+>
+> The same change applies to the `gearStats` dashboard widget.
+
+## What's Changed
+* ISSUE #1243: Try to fix FrankenPHP crash on Synology by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1244
+* ISSUE #1249: Improve tabs on mobile layout by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1250
+* ISSUE #1240 & #1242: Weekday/Daytime stats per activity type by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1253
+* ISSUE #1232: Heart rate zones per activity type by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1254
+* ISSUE #1231: Allow for charts to be rendered in nested tabs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1255
+* ISSUE #1231: Support nested tabs for the monthly stats widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1258
+* ISSUE #1231: Convert yearlyDistances widget to yearlyStats widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1259
+* ISSUE #1260: Only render tabs for sportTypes that have images by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1261
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.7.3...v3.7.4
+
 # [v3.7.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.7.3) - 2025-10-17
 
 ## What's Changed

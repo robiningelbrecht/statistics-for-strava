@@ -1,4 +1,4 @@
 Importing activity streams...
   => Imported activity stream "6 - watts"
   => Imported activity stream "6 - distance"
-<error>You probably reached Strava API rate limits. You will need to import the rest of your activity streams tomorrow</error>
+<error>You reached the daily Strava API rate limit. You will need to import the rest of your data tomorrow</error>

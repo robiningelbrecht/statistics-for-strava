@@ -35,4 +35,17 @@ final readonly class Image
     {
         return $this->activity;
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getFilterables(): array
+    {
+        $activity = $this->getActivity();
+
+        return [
+            'sportType' => $activity->getSportType()->value,
+            'countryCode' => $activity->getLocation()?->getCountryCode(),
+        ];
+    }
 }

@@ -14,6 +14,7 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -42,6 +43,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
     {
         assert($command instanceof ImportSegments);
         $command->getOutput()->writeln('Importing segments and efforts...');
+
+        $this->strava->setConsoleOutput($command->getOutput());
 
         $segmentsProcessedInCurrentRun = [];
 
@@ -128,25 +131,28 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             $segment = $this->segmentRepository->find($segmentId);
             try {
                 $stravaSegment = $this->strava->getSegment($segmentId);
-                $segment->updatePolyline(EncodedPolyline::fromOptionalString($stravaSegment['map']['polyline'] ?? null));
+                $segment->updatePolyline(
+                    EncodedPolyline::fromOptionalString(
+                        $stravaSegment['map']['polyline'] ?? null
+                    )
+                );
                 $segment->flagDetailsAsImported();
                 $this->segmentRepository->update($segment);
 
-                $command->getOutput()->writeln(sprintf(
-                    '  => [%d/%d] Imported segment details: "%s"',
-                    $delta,
-                    $numberOfSegmentIdsMissingDetails,
-                    $segment->getName()
-                ));
+                $command->getOutput()->writeln(
+                    sprintf(
+                        '  => [%d/%d] Imported segment details: "%s"',
+                        $delta,
+                        $numberOfSegmentIdsMissingDetails,
+                        $segment->getName()
+                    )
+                );
                 ++$delta;
-            } catch (ClientException|RequestException $exception) {
-                if (429 === $exception->getResponse()?->getStatusCode()) {
-                    // This will allow initial imports with a lot of activities to proceed the next day.
-                    // This occurs when we exceed Strava API rate limits or throws an unexpected error.
-                    $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your segment details tomorrow</error>');
+            } catch (StravaRateLimitHasBeenReached $exception) {
+                $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 
-                    return;
-                }
+                return;
+            } catch (ClientException|RequestException $exception) {
                 if (404 === $exception->getResponse()?->getStatusCode()) {
                     // Segment does not exist anymore. Mark as imported.
                     $segment->flagDetailsAsImported();

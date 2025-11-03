@@ -14,4 +14,12 @@ class WidgetNameTest extends TestCase
             (string) WidgetName::fromConfigValue('activityIntensity')
         );
     }
+
+    public function testYearlyDistancesBackwardsCompatibility(): void
+    {
+        $this->assertEquals(
+            'yearlyStats',
+            (string) WidgetName::fromConfigValue('yearlyDistances')
+        );
+    }
 }

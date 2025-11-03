@@ -1,14 +1,14 @@
-import {Heatmap} from "./leaflet/heatmap";
-import {DataTableStorage} from "./filter";
+import {Heatmap} from "./ui/heatmap";
+import {DataTableStorage} from "./filters";
 import Router from "./router";
-import Chat from "./chat";
+import Chat from "./ui/chat";
 import {updateGithubLatestRelease} from "./github";
 import Sidebar from "./ui/sidebar";
 import ChartManager from "./ui/charts";
 import ModalManager from "./ui/modals";
+import {PhotoWall} from "./ui/photo-wall";
 import MapManager from "./ui/maps";
 import TabsManager from "./ui/tabs";
-import LightGalleryManager from "./ui/lightgallery";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
 
@@ -24,7 +24,6 @@ const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, dataTableStorage, modalManager);
 const mapManager = new MapManager();
 const tabsManager = new TabsManager(chartManager);
-const lightGalleryManager = new LightGalleryManager();
 const dataTableManager = new DataTableManager(dataTableStorage);
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
@@ -45,7 +44,6 @@ const initElements = (rootNode) => {
     modalManager.init(rootNode);
     chartManager.init(rootNode);
     mapManager.init(rootNode);
-    lightGalleryManager.init(rootNode);
 }
 
 modalManager.setInitElements(initElements)
@@ -66,6 +64,10 @@ document.addEventListener('pageWasLoaded', (e) => {
 document.addEventListener('pageWasLoaded.heatmap', () => {
     const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
     new Heatmap($heatmapWrapper).render();
+});
+document.addEventListener('pageWasLoaded.photos', () => {
+    const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
+    new PhotoWall($photoWallWrapper, dataTableStorage).render();
 });
 document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     if (!e.detail || !e.detail.link) {

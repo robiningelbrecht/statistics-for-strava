@@ -39,10 +39,10 @@ final readonly class GearStatsWidget implements Widget
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
-        if (!$configuration->configItemExists('includeRetiredGear')) {
+        if (!$configuration->exists('includeRetiredGear')) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" is required for GearStatsWidget.');
         }
-        if (!is_bool($configuration->getConfigItem('includeRetiredGear'))) {
+        if (!is_bool($configuration->get('includeRetiredGear'))) {
             throw new InvalidDashboardLayout('Configuration item "includeRetiredGear" must be a boolean.');
         }
     }
@@ -50,15 +50,15 @@ final readonly class GearStatsWidget implements Widget
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $allYears = Years::all($this->clock->getCurrentDateTimeImmutable());
-        $allGears = $this->gearRepository->findAll();
+        $allUsedGears = $this->gearRepository->findAllUsed();
         $importedActivityTypes = $this->activityTypeRepository->findAll();
 
-        if (!$configuration->getConfigItem('includeRetiredGear')) {
-            $allGears = $allGears->filter(fn (Gear $gear): bool => !$gear->isRetired());
+        if (!$configuration->get('includeRetiredGear')) {
+            $allUsedGears = $allUsedGears->filter(fn (Gear $gear): bool => !$gear->isRetired());
         }
 
         $gearsPerActivityType = [];
-        foreach ($allGears as $gear) {
+        foreach ($allUsedGears as $gear) {
             foreach ($gear->getActivityTypes() as $activityType) {
                 $gearsPerActivityType[$activityType->value] ??= Gears::empty();
                 $gearsPerActivityType[$activityType->value]->add($gear);
@@ -86,7 +86,7 @@ final readonly class GearStatsWidget implements Widget
         return $this->twig->load('html/dashboard/widget/widget--gear-stats.html.twig')->render([
             'chartAllGears' => Json::encode(MovingTimePerGearChart::create(
                 movingTimePerGear: $this->queryBus->ask(new FindMovingTimePerGear($allYears, null))->getMovingTimePerGear(),
-                gears: $allGears,
+                gears: $allUsedGears,
             )->build()),
             'chartsPerActivityType' => $chartsPerActivityType,
         ]);

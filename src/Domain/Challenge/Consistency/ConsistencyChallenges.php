@@ -18,7 +18,7 @@ final class ConsistencyChallenges extends Collection
     /**
      * @return array<int, mixed>
      */
-    private static function getDefaultConfig(): array
+    public static function getDefaultConfig(): array
     {
         return [
             [
@@ -107,7 +107,7 @@ final class ConsistencyChallenges extends Collection
     /**
      * @param array<int, mixed> $items
      */
-    public static function fromConfiguration(array $items): self
+    public static function fromConfig(array $items): self
     {
         if (empty($items)) {
             // Make sure this new feature is backwards compatible.
@@ -161,17 +161,17 @@ final class ConsistencyChallenges extends Collection
             }
 
             if (in_array($type, ChallengeConsistencyType::lengthRelated()) && !in_array($challengeConfig['unit'], [
-                ChallengeConsistencyGoal::KILOMETER,
-                ChallengeConsistencyGoal::METER,
-                ChallengeConsistencyGoal::MILES,
-                ChallengeConsistencyGoal::FOOT,
+                ConsistencyChallenge::KILOMETER,
+                ConsistencyChallenge::METER,
+                ConsistencyChallenge::MILES,
+                ConsistencyChallenge::FOOT,
             ])) {
                 throw new InvalidConsistencyChallengeConfiguration(sprintf('The unit "%s" is not valid for challenge type "%s"', $challengeConfig['unit'], $type->value));
             }
 
             if (ChallengeConsistencyType::MOVING_TIME === $type && !in_array($challengeConfig['unit'], [
-                ChallengeConsistencyGoal::HOUR,
-                ChallengeConsistencyGoal::MINUTE,
+                ConsistencyChallenge::HOUR,
+                ConsistencyChallenge::MINUTE,
             ])) {
                 throw new InvalidConsistencyChallengeConfiguration(sprintf('The unit "%s" is not valid for challenge type "%s"', $challengeConfig['unit'], $type->value));
             }
@@ -185,10 +185,8 @@ final class ConsistencyChallenges extends Collection
                 label: $challengeConfig['label'],
                 isEnabled: $challengeConfig['enabled'],
                 type: $type,
-                goal: ChallengeConsistencyGoal::from(
-                    value: (float) $challengeConfig['goal'],
-                    unit: $challengeConfig['unit']
-                ),
+                goal: (float) $challengeConfig['goal'],
+                unit: $challengeConfig['unit'],
                 sportTypesToInclude: $sportTypesToInclude
             );
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\SportType;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Infrastructure\Repository\DbalRepository;
 use Doctrine\DBAL\Connection;
 
@@ -12,11 +13,42 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function __construct(
         Connection $connection,
         private SportTypesSortingOrder $sportTypesSortingOrder,
+        private HidePhotosForSportTypes $hidePhotosForSportTypes,
     ) {
         parent::__construct($connection);
     }
 
     public function findAll(): SportTypes
+    {
+        return SportTypes::fromArray(array_map(
+            SportType::from(...),
+            $this->connection->executeQuery(
+                sprintf('SELECT DISTINCT sportType FROM Activity ORDER BY CASE sportType %s END', $this->buildOrderByStatement())
+            )->fetchFirstColumn()
+        ));
+    }
+
+    public function findForImages(): SportTypes
+    {
+        $notInSportTypes = ['invalid'];
+        /** @var SportType $sportType */
+        foreach ($this->hidePhotosForSportTypes as $sportType) {
+            $notInSportTypes[] = $sportType->value;
+        }
+
+        return SportTypes::fromArray(array_map(
+            SportType::from(...),
+            $this->connection->executeQuery(
+                sprintf(
+                    'SELECT DISTINCT sportType FROM Activity WHERE totalImageCount > 0 AND sportType NOT IN (%s) ORDER BY CASE sportType %s END',
+                    "'".implode("','", $notInSportTypes)."'",
+                    $this->buildOrderByStatement()
+                )
+            )->fetchFirstColumn()
+        ));
+    }
+
+    private function buildOrderByStatement(): string
     {
         $orderByStatement = [];
         foreach ($this->sportTypesSortingOrder as $index => $sportType) {
@@ -24,11 +56,6 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
         }
         $orderByStatement[] = 'ELSE 9999';
 
-        return SportTypes::fromArray(array_map(
-            fn (string $sportType) => SportType::from($sportType),
-            $this->connection->executeQuery(
-                sprintf('SELECT DISTINCT sportType FROM Activity ORDER BY CASE sportType %s END', implode(' ', $orderByStatement))
-            )->fetchFirstColumn()
-        ));
+        return implode(' ', $orderByStatement);
     }
 }

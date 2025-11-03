@@ -19,9 +19,10 @@ final class GetActivityStreams extends Tool
         parent::__construct(
             'get_activity_streams',
             <<<DESC
-            Retrieves detailed stream information for a specific activity from the database.
-            Use this tool when the user asks about stream data within an activity or when a user ask for all details of an activity.
-            Requires the activity ID as input.
+            Retrieves detailed stream information for a specific activity using its unique activity ID.
+            Use this tool when the user asks about stream data within an activity or requests all details for a specific activity. 
+            It requires the activity ID as input and provides the full stream data (e.g., time, distance, heart rate, power) needed for analysis, summaries, or comparisons. 
+            Example requests include “Show the stream data for activity 12345” or “Give me detailed time-series stats for my last ride.”
             DESC
         );
     }
@@ -42,6 +43,12 @@ final class GetActivityStreams extends Tool
                 required: true
             ),
         ];
+    }
+
+    #[\Override]
+    public function getMaxTries(): int
+    {
+        return 100;
     }
 
     /**

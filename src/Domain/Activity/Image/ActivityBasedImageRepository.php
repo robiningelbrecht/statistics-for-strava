@@ -2,6 +2,7 @@
 
 namespace App\Domain\Activity\Image;
 
+use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -12,30 +13,29 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 {
     public function __construct(
         private ActivityRepository $activityRepository,
+        private HidePhotosForSportTypes $hidePhotosForSportTypes,
     ) {
     }
 
-    public function findBySportTypes(SportTypes $sportTypes): Images
+    public function findAll(): Images
     {
         $images = Images::empty();
         $activities = $this->activityRepository->findAll();
         /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
-            if (!$sportTypes->has($activity->getSportType())) {
-                continue;
-            }
             if (0 === $activity->getTotalImageCount()) {
                 continue;
             }
 
+            if ($this->hidePhotosForSportTypes->has($activity->getSportType())) {
+                continue;
+            }
+
             foreach ($activity->getLocalImagePaths() as $localImagePath) {
-                $images->add(
-                    sportType: $activity->getSportType(),
-                    image: Image::create(
-                        imageLocation: $localImagePath,
-                        activity: $activity
-                    )
-                );
+                $images->add(Image::create(
+                    imageLocation: $localImagePath,
+                    activity: $activity
+                ));
             }
         }
 
@@ -71,13 +71,13 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
         throw new EntityNotFound(sprintf('Random image not found'));
     }
 
-    public function countBySportTypes(SportTypes $sportTypes): int
+    public function count(): int
     {
         $activities = $this->activityRepository->findAll();
         $totalImageCount = 0;
 
         foreach ($activities as $activity) {
-            if (!$sportTypes->has($activity->getSportType())) {
+            if ($this->hidePhotosForSportTypes->has($activity->getSportType())) {
                 continue;
             }
             $totalImageCount += $activity->getTotalImageCount();

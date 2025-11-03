@@ -21,11 +21,18 @@ final class GetActivitySplits extends Tool
         parent::__construct(
             'get_activity_splits',
             <<<DESC
-            Retrieves detailed split information for a specific activity from the database.
-            Use this tool when the user asks about splits data within an activity or when a user ask for all details of an activity.
-            Requires the activity ID as input.
+            Retrieves detailed split information for a specific activity using its unique activity ID.
+            Use this tool when the user asks about split data within an activity or requests all details for a specific activity. 
+            It requires the activity ID as input and provides the split-by-split breakdown needed for summaries, analysis, or comparisons. 
+            Example requests include “Show all splits for activity 12345” or “Give me detailed split stats for my last run.”
             DESC
         );
+    }
+
+    #[\Override]
+    public function getMaxTries(): int
+    {
+        return 100;
     }
 
     /**

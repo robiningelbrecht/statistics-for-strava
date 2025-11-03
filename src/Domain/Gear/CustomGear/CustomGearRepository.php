@@ -12,5 +12,7 @@ interface CustomGearRepository
 
     public function findAll(): Gears;
 
+    public function findAllUsed(): Gears;
+
     public function removeAll(): void;
 }

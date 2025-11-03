@@ -24,7 +24,7 @@ final class ActivitiesToSkipDuringImport extends Collection
         }
 
         return self::fromArray(array_map(
-            fn (string $activityId): ActivityId => ActivityId::fromUnprefixed($activityId),
+            ActivityId::fromUnprefixed(...),
             $activityIds
         ));
     }

@@ -23,6 +23,8 @@ class ZwiftMapTest extends TestCase
         $this->assertMatchesJsonSnapshot(Json::encode([
             'name' => $map->getOverlayImageUrl(),
             'bounds' => $map->getBounds(),
+            'label' => $map->getLabel(),
+            'background' => $map->getBackgroundColor(),
         ]));
     }
 
@@ -61,7 +63,7 @@ class ZwiftMapTest extends TestCase
     public function testGetOverlayImageUrl(): void
     {
         $this->assertEquals(
-            '/assets/images/maps/zwift-bologna.jpg',
+            '/assets/images/maps/zwift-bologna.webp',
             ZwiftMap::forStartingCoordinate(Coordinate::createFromLatAndLng(
                 Latitude::fromString('44.5308037'), Longitude::fromString('11.26261748')
             ))->getOverlayImageUrl()

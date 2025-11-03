@@ -25,7 +25,7 @@ final class HidePhotosForSportTypes extends Collection
 
         return self::fromArray(
             array_map(
-                fn (string $sportType) => SportType::from($sportType),
+                SportType::from(...),
                 $sportTypes
             )
         );

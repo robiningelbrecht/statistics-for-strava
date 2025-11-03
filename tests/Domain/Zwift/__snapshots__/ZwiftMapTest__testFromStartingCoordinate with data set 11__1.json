@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-yorkshire.jpg",
+    "name": "/assets/images/maps/zwift-yorkshire.webp",
     "bounds": [
         [
             54.0254,
@@ -9,5 +9,7 @@
             53.9491,
             -1.5022
         ]
-    ]
+    ],
+    "label": "Yorkshire",
+    "background": "#bbbbb7"
 }

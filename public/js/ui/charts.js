@@ -103,12 +103,16 @@ export default class ChartManager {
     }
 
     resizeAll() {
-        this.allCharts.forEach(chart => chart.resize());
+        this.allCharts
+            .filter(chart => chart.getDom().offsetParent)
+            .forEach(chart => chart.resize());
     }
 
     resizeInTab(tabId) {
         if (tabId in this.chartsPerTab) {
-            this.chartsPerTab[tabId].forEach((chart) => chart.resize());
+            this.chartsPerTab[tabId]
+                .filter(chart => chart.getDom().offsetParent)
+                .forEach((chart) => chart.resize());
         }
     }
 }

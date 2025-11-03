@@ -97,7 +97,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 tag: $gearComponentTag,
                 label: Name::fromString($component['label']),
                 attachedTo: GearIds::fromArray(array_map(
-                    fn (string $gearId): GearId => GearId::fromUnprefixed($gearId),
+                    GearId::fromUnprefixed(...),
                     $component['attachedTo']
                 )),
                 imgSrc: $component['imgSrc'] ?? null,
@@ -196,13 +196,13 @@ final readonly class GearMaintenanceConfig implements \Stringable
         return $this->gearOptions;
     }
 
-    public function normalizeGearIds(GearIds $normalizedGearIds): void
+    public function normalizeGearIds(GearIds $gearIds): void
     {
         /** @var GearComponent $gearComponent */
         foreach ($this->getGearComponents() as $gearComponent) {
-            $gearComponent->normalizeGearIds($normalizedGearIds);
+            $gearComponent->normalizeGearIds($gearIds);
         }
-        $this->getGearOptions()->normalizeGearIds($normalizedGearIds);
+        $this->getGearOptions()->normalizeGearIds($gearIds);
     }
 
     /**

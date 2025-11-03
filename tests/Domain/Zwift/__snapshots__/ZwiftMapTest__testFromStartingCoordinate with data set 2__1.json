@@ -1,5 +1,5 @@
 {
-    "name": "/assets/images/maps/zwift-france.jpg",
+    "name": "/assets/images/maps/zwift-france.webp",
     "bounds": [
         [
             -21.64155,
@@ -9,5 +9,7 @@
             -21.7564,
             166.26125
         ]
-    ]
+    ],
+    "label": "France",
+    "background": "#bbbbb7"
 }

@@ -3,7 +3,7 @@
 namespace App\Tests\Domain\Dashboard\Widget;
 
 use App\Domain\Dashboard\InvalidDashboardLayout;
-use App\Domain\Dashboard\Widget\MonthlyStatsWidget;
+use App\Domain\Dashboard\Widget\MonthlyStats\MonthlyStatsWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,27 +22,32 @@ class MonthlyStatsWidgetTest extends ContainerTestCase
     public static function provideInvalidConfig(): iterable
     {
         $config = WidgetConfiguration::empty()
-            ->add('context', 'distance');
+            ->add('metricsDisplayOrder', ['distance', 'duration', 'calories']);
         yield 'missing "enableLastXYearsByDefault" key' => [$config, 'Configuration item "enableLastXYearsByDefault" is required for MonthlyStatsWidget.'];
 
         $config = WidgetConfiguration::empty()
             ->add('enableLastXYearsByDefault', 'invalid')
-            ->add('context', 'distance');
+            ->add('metricsDisplayOrder', ['distance', 'duration', 'calories']);
         yield 'invalid "enableLastXYearsByDefault" key' => [$config, 'Configuration item "enableLastXYearsByDefault" must be an integer.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10);
-        yield 'missing "context" key' => [$config, 'Configuration item "context" is required for MonthlyStatsWidget.'];
+            ->add('enableLastXYearsByDefault', 5);
+        yield 'missing "metricsDisplayOrder" key' => [$config, 'Configuration item "metricsDisplayOrder" is required for MonthlyStatsWidget.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10)
-            ->add('context', 'invalid');
-        yield 'invalid "context" key' => [$config, 'Invalid context "invalid" provided for MonthlyStatsWidget.'];
+            ->add('enableLastXYearsByDefault', 5)
+            ->add('metricsDisplayOrder', 'invalid');
+        yield 'invalid "metricsDisplayOrder" key' => [$config, 'Configuration item "metricsDisplayOrder" must be an array.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('enableLastXYearsByDefault', 10)
-            ->add('context', false);
-        yield '"context" must be string' => [$config, 'Configuration item "context" must be a string.'];
+            ->add('enableLastXYearsByDefault', 5)
+            ->add('metricsDisplayOrder', [1, 2, 3, 4]);
+        yield 'invalid number of items in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" must contain all 3 metrics.'];
+
+        $config = WidgetConfiguration::empty()
+            ->add('enableLastXYearsByDefault', 5)
+            ->add('metricsDisplayOrder', ['test', 2, 3]);
+        yield 'invalid value in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" contains invalid value "test".'];
     }
 
     protected function setUp(): void
