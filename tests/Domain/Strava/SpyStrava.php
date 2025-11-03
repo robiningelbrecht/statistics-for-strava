@@ -8,10 +8,11 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
+use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
-use App\Domain\Strava\StravaRateLimits;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
@@ -20,7 +21,6 @@ use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use App\Tests\NullLogger;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -78,7 +78,7 @@ class SpyStrava extends Strava
     private function throw429IfMaxNumberOfCallsIsExceeded(): void
     {
         if ($this->numberOfCallsExecuted >= $this->maxNumberOfCallsBeforeTriggering429) {
-            throw new ClientException(message: 'too many requests', request: new Request('GET', 'https://www.strava.com'), response: new Response(429));
+            throw StravaRateLimitHasBeenReached::dailyReadLimit();
         }
     }
 

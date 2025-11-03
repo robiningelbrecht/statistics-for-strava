@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -30,21 +31,22 @@ final readonly class ImportActivityStreamsCommandHandler implements CommandHandl
         assert($command instanceof ImportActivityStreams);
         $command->getOutput()->writeln('Importing activity streams...');
 
+        $this->strava->setConsoleOutput($command->getOutput());
+
         foreach ($this->activityRepository->findActivityIdsThatNeedStreamImport() as $activityId) {
             $stravaStreams = [];
             try {
-                $stravaStreams = $this->strava->getAllActivityStreams($activityId);
+                $stravaStreams = $this->strava->getAllActivityStreams(
+                    $activityId
+                );
+            } catch (StravaRateLimitHasBeenReached $exception) {
+                $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+
+                break;
             } catch (ClientException|RequestException $exception) {
                 if (!$exception->getResponse()) {
                     // Re-throw, we only want to catch supported error codes.
                     throw $exception;
-                }
-
-                if (429 === $exception->getResponse()->getStatusCode()) {
-                    // This will allow initial imports with a lot of activities to proceed the next day.
-                    // This occurs when we exceed Strava API rate limits or throws an unexpected error.
-                    $command->getOutput()->writeln('<error>You probably reached Strava API rate limits. You will need to import the rest of your activity streams tomorrow</error>');
-                    break;
                 }
 
                 if (404 !== $exception->getResponse()->getStatusCode()) {

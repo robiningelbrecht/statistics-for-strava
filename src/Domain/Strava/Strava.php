@@ -7,6 +7,9 @@ use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
+use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
+use App\Domain\Strava\RateLimit\StravaRateLimits;
+use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
@@ -23,6 +26,8 @@ use Psr\Log\LoggerInterface;
 #[WithMonologChannel('strava-api')]
 class Strava
 {
+    use ConsoleOutputAware;
+
     public static ?string $cachedAccessToken = null;
     /** @var array<mixed>|null */
     public static ?array $cachedActivitiesResponse = null;
@@ -54,8 +59,34 @@ class Strava
         $options = array_merge([
             'base_uri' => 'https://www.strava.com/',
         ], $options);
+        // An application's 15-minute limit is reset at natural 15-minute intervals corresponding to 0, 15, 30 and 45 minutes after the hour.
+        $minutesUntilNextFifteenMinuteInterval = (15 - ($this->clock->getCurrentDateTimeImmutable()->getMinutesWithoutLeadingZero() % 15)) + 1;
+        $secondsUntilNextFifteenMinuteInterval = $minutesUntilNextFifteenMinuteInterval * 60;
 
-        $response = $this->client->request($method, $path, $options);
+        try {
+            $response = $this->client->request($method, $path, $options);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if (429 !== $response?->getStatusCode()) {
+                // Rethrow exception if it's not a rate limit error.
+                throw $e;
+            }
+
+            if (!$stravaRateLimits = StravaRateLimits::fromResponse($response)) {
+                // No info about rate limits available, rethrow exception.
+                throw $e;
+            }
+
+            if ($stravaRateLimits->dailyReadRateLimitHasBeenReached()) {
+                throw StravaRateLimitHasBeenReached::dailyReadLimit();
+            }
+
+            if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
+                throw StravaRateLimitHasBeenReached::fifteenMinuteReadLimit($minutesUntilNextFifteenMinuteInterval);
+            }
+
+            throw $e;
+        }
 
         $this->logger->info(new Monolog(
             $method,
@@ -70,10 +101,11 @@ class Strava
             self::$stravaRateLimits = $stravaRateLimits;
             if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
                 // The next request will hit the 15-minute rate limit. Pause and make sure the import does not crash.
-                // An application's 15-minute limit is reset at natural 15-minute intervals corresponding to 0, 15, 30 and 45 minutes after the hour.
-                $secondsUntilNextFifteenMinuteInterval = 15 - ($this->clock->getCurrentDateTimeImmutable()->getMinutesWithoutLeadingZero() % 15);
-                // Add a fex extra second to be sure.
-                $this->sleep->sweetDreams($secondsUntilNextFifteenMinuteInterval + 10);
+                $this->getConsoleOutput()?->writeln(sprintf(
+                    '<comment>Whoa there! We are about to hit Strava’s 15-minute API rate limit. Taking a short %s-minute breather before getting back on track. Please be patient</comment>',
+                    $minutesUntilNextFifteenMinuteInterval
+                ));
+                $this->sleep->sweetDreams($secondsUntilNextFifteenMinuteInterval);
             }
         }
 

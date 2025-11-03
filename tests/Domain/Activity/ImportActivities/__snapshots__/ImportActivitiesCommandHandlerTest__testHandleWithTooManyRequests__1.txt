@@ -5,4 +5,4 @@ Status: 1 out of 7 activities imported
   => [2/7] Imported activity: "Watopia Flat Forward in London - 31-08-2023"
   => [3/7] Updated activity: "Night Ride3 - 10-10-2023"
   => [4/7] Imported activity: "Night Ride4 - 11-09-2023"
-<error>You probably reached Strava API rate limits. You will need to import the rest of your activities tomorrow</error>
+<error>You reached the daily Strava API rate limit. You will need to import the rest of your data tomorrow</error>
