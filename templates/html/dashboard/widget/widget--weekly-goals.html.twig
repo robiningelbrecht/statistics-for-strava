@@ -11,7 +11,8 @@
                     <div class="mb-1 flex justify-between">
                         <div class="flex items-center gap-x-0.5 text-sm text-grey-900">
                             <div>{{ svg(weeklyGoal.getType().getSvgIcon(), 'size-4') }}</div>
-                            <div>{{ weeklyGoal.getLabel() }} - {{ calculatedWeeklyGoal.absolute|renderMeasurement(0) }}</div>
+                            {% set presicion = weeklyGoal.getType() == enum('App\\Domain\\Dashboard\\Widget\\WeeklyGoals\\WeeklyGoalType').MOVING_TIME ? 1 : 0 %}
+                            <div>{{ weeklyGoal.getLabel() }} - {{ calculatedWeeklyGoal.absolute|renderMeasurement(presicion) }}</div>
                         </div>
                         <div class="text-sm text-grey-900">{{ "Goal"|trans }}: {{ weeklyGoal.getGoal()|renderMeasurement(0) }}</div>
                     </div>

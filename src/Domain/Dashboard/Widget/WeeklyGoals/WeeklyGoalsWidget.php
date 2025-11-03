@@ -55,7 +55,7 @@ final readonly class WeeklyGoalsWidget implements Widget
                 week: $week
             ));
 
-            $convertedGoal = match ($weeklyGoal->getType()) {
+            $convertedProgress = match ($weeklyGoal->getType()) {
                 WeeklyGoalType::DISTANCE => $weeklyGoal->convertKilometerToGoalUnit($response->getDistance()),
                 WeeklyGoalType::ELEVATION => $weeklyGoal->convertMeterToGoalUnit($response->getElevation()),
                 WeeklyGoalType::MOVING_TIME => $weeklyGoal->convertSecondsToGoalUnit($response->getMovingTime()),
@@ -63,8 +63,8 @@ final readonly class WeeklyGoalsWidget implements Widget
 
             $calculatedGoals[] = [
                 'weeklyGoal' => $weeklyGoal,
-                'absolute' => $convertedGoal,
-                'relative' => min(100, round($convertedGoal->toFloat() / $weeklyGoal->getGoal()->toFloat() * 100)),
+                'absolute' => $convertedProgress,
+                'relative' => min(100, round($convertedProgress->toFloat() / $weeklyGoal->getGoal()->toFloat() * 100)),
             ];
         }
 
