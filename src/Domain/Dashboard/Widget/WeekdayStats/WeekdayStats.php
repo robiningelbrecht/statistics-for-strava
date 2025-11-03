@@ -56,7 +56,7 @@ final readonly class WeekdayStats
                 'movingTime' => 0,
                 'percentage' => 0,
                 'averageDistance' => 0,
-                'movingTimeInHours'=> Hour::zero(),
+                'movingTimeInHours' => Hour::zero(),
             ];
         }
 

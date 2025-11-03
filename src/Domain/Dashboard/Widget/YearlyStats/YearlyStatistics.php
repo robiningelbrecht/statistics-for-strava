@@ -52,7 +52,7 @@ final readonly class YearlyStatistics
                 'differenceInDistanceYearBefore' => null,
                 'movingTime' => CarbonInterval::seconds(0)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
                 'movingTimeInSeconds' => Seconds::zero(),
-                'movingTimeInHours'=> Hour::zero(),
+                'movingTimeInHours' => Hour::zero(),
             ];
 
             if (!$yearlyStats = $this->yearlyStats->getFor(
