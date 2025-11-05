@@ -48,6 +48,9 @@ final readonly class SvgsTwigExtension
         return $svg;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     #[AsTwigFunction('svgSportType', isSafe: ['html'])]
     public function svgSportType(SportType $sportType, ?string $classes = null): string
     {

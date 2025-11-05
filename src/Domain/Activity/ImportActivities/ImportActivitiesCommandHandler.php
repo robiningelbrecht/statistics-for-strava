@@ -17,6 +17,8 @@ use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
@@ -206,14 +208,17 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     }
 
                     if ($sportType->supportsWeather() && $activity->getStartingCoordinate()) {
-                        $weather = Weather::fromRawData(
-                            $this->openMeteo->getWeatherStats(
-                                coordinate: $activity->getStartingCoordinate(),
-                                date: $activity->getStartDate()
-                            ),
-                            on: $activity->getStartDate()
-                        );
-                        $activity->updateWeather($weather);
+                        try {
+                            $weather = Weather::fromRawData(
+                                $this->openMeteo->getWeatherStats(
+                                    coordinate: $activity->getStartingCoordinate(),
+                                    date: $activity->getStartDate()
+                                ),
+                                on: $activity->getStartDate()
+                            );
+                            $activity->updateWeather($weather);
+                        } catch (OpenMeteoForecastApiCallHasFailed|OpenMeteoArchiveApiCallHasFailed) {
+                        }
                     }
 
                     if ($activity->getStartingCoordinate()) {

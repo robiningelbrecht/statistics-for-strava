@@ -6,6 +6,7 @@ namespace App\Infrastructure\Twig;
 
 use App\BuildApp\AppUrl;
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\Image\ImageOrientation;
 use App\Domain\Segment\Segment;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
@@ -31,8 +32,12 @@ final readonly class UrlTwigExtension
     }
 
     #[AsTwigFunction('placeholderImage')]
-    public function placeholderImage(): string
+    public function placeholderImage(?ImageOrientation $imageOrientation = null): string
     {
+        if (ImageOrientation::PORTRAIT === $imageOrientation) {
+            return $this->toRelativeUrl('/assets/placeholder-portrait.webp');
+        }
+
         return $this->toRelativeUrl('/assets/placeholder.webp');
     }
 

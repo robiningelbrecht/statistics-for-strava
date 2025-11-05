@@ -3,6 +3,7 @@
 namespace App\Tests\Infrastructure\Twig;
 
 use App\BuildApp\AppUrl;
+use App\Domain\Activity\Image\ImageOrientation;
 use App\Infrastructure\Twig\StringTwigExtension;
 use App\Infrastructure\Twig\SvgsTwigExtension;
 use App\Infrastructure\Twig\UrlTwigExtension;
@@ -46,6 +47,27 @@ class UrlTwigExtensionTest extends ContainerTestCase
                 stringTwigExtension: $this->stringTwigExtension,
                 svgsTwigExtension: $this->svgsTwigExtension,
             )->toRelativeUrl('/test/path')
+        );
+    }
+
+    public function testPlaceholderImage(): void
+    {
+        $this->assertEquals(
+            '/assets/placeholder.webp',
+            new UrlTwigExtension(
+                appUrl: AppUrl::fromString('http://localhost:8081'),
+                stringTwigExtension: $this->stringTwigExtension,
+                svgsTwigExtension: $this->svgsTwigExtension,
+            )->placeholderImage()
+        );
+
+        $this->assertEquals(
+            '/assets/placeholder-portrait.webp',
+            new UrlTwigExtension(
+                appUrl: AppUrl::fromString('http://localhost:8081'),
+                stringTwigExtension: $this->stringTwigExtension,
+                svgsTwigExtension: $this->svgsTwigExtension,
+            )->placeholderImage(ImageOrientation::PORTRAIT)
         );
     }
 

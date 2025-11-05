@@ -9,16 +9,19 @@ final readonly class Image
     private function __construct(
         private string $imageLocation,
         private Activity $activity,
+        private ImageOrientation $orientation,
     ) {
     }
 
     public static function create(
         string $imageLocation,
         Activity $activity,
+        ImageOrientation $orientation,
     ): self {
         return new self(
             imageLocation: $imageLocation,
-            activity: $activity
+            activity: $activity,
+            orientation: $orientation
         );
     }
 
@@ -34,6 +37,11 @@ final readonly class Image
     public function getActivity(): Activity
     {
         return $this->activity;
+    }
+
+    public function getOrientation(): ImageOrientation
+    {
+        return $this->orientation;
     }
 
     /**

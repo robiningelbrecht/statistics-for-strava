@@ -6,6 +6,7 @@ use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 
@@ -14,6 +15,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
     public function __construct(
         private ActivityRepository $activityRepository,
         private HidePhotosForSportTypes $hidePhotosForSportTypes,
+        private KernelProjectDir $kernelProjectDir,
     ) {
     }
 
@@ -32,9 +34,16 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
             }
 
             foreach ($activity->getLocalImagePaths() as $localImagePath) {
+                $absoluteImagePath = $this->kernelProjectDir.'/storage'.$localImagePath;
+                $imageOrientation = ImageOrientation::LANDSCAPE;
+                if (file_exists($absoluteImagePath) && ($info = @getimagesize($absoluteImagePath)) !== false) {
+                    $imageOrientation = ImageOrientation::fromWidthAndHeight($info[0], $info[1]);
+                }
+
                 $images->add(Image::create(
                     imageLocation: $localImagePath,
-                    activity: $activity
+                    activity: $activity,
+                    orientation: $imageOrientation,
                 ));
             }
         }
@@ -62,9 +71,16 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
             $randomImageIndex = array_rand($localImagePaths);
 
+            $absoluteImagePath = $this->kernelProjectDir.'/storage'.$localImagePaths[$randomImageIndex];
+            $imageOrientation = ImageOrientation::LANDSCAPE;
+            if (file_exists($absoluteImagePath) && ($info = @getimagesize($absoluteImagePath)) !== false) {
+                $imageOrientation = ImageOrientation::fromWidthAndHeight($info[0], $info[1]);
+            }
+
             return Image::create(
                 imageLocation: $localImagePaths[$randomImageIndex],
                 activity: $activity,
+                orientation: $imageOrientation,
             );
         }
 
