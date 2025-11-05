@@ -4,15 +4,13 @@
 }]} %}
 {% autoescape false %}
     {% if bestEffortsCharts|length > 1 %}
-        <div class="mb-4 border-b border-gray-200">
-            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
-                id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
+        <div class="tabs tabs--default">
+            <ul id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
                 role="tablist">
                 {% for activityType,chart in bestEffortsCharts %}
-                    <li class="shrink-0" role="presentation">
+                    <li role="presentation">
                         <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
-                           aria-controls="bestEfforts{{ activityType }}"
-                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                           aria-controls="bestEfforts{{ activityType }}">
                             {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
                         </a>
                     </li>

@@ -52,15 +52,15 @@
         {% if not splits.isEmpty() or not laps.isEmpty() %}
             <div>
                 {% if not splits.isEmpty() and not laps.isEmpty() %}
-                    <div class="mb-4 border-b border-gray-200">
-                        <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center" id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
-                            <li class="shrink-0" role="presentation">
-                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                    <div class="tabs tabs--default">
+                        <ul id="splitsLapsTab" data-tabs="#splitsLapsTabContent" role="tablist">
+                            <li role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabLaps" role="tab" aria-controls="chartsTabDistribution">
                                     {{ "Laps"|trans }}
                                 </a>
                             </li>
-                            <li class="shrink-0" role="presentation">
-                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                            <li role="presentation">
+                                <a href="#" data-tabs-target="#splitsLapsTabSplits" role="tab" aria-controls="chartsTabMetrics">
                                     {{ "Splits"|trans }}
                                 </a>
                             </li>
