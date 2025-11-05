@@ -10,20 +10,18 @@
         </a>
     </div>
     {% if chartsPerActivityType|length > 0 %}
-        <div class="mb-4 border-b border-gray-200">
-            <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
-                id="gearStatsActivityTypeTab{{ uniqueId }}" data-tabs="#gearStatsActivityTypeTabContent{{ uniqueId }}"
+        <div class="tabs tabs--default">
+            <ul id="gearStatsActivityTypeTab{{ uniqueId }}" data-tabs="#gearStatsActivityTypeTabContent{{ uniqueId }}"
                 role="tablist">
-                <li class="shrink-0" role="presentation">
-                    <a href="#" data-tabs-target="#gearStatsAll{{ uniqueId }}" role="tab" aria-controls="all" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                <li role="presentation">
+                    <a href="#" data-tabs-target="#gearStatsAll{{ uniqueId }}" role="tab" aria-controls="all">
                         {{ "All"|trans }}
                     </a>
                 </li>
                 {% for activityType,charts in chartsPerActivityType %}
-                    <li class="shrink-0" role="presentation">
+                    <li role="presentation">
                         <a href="#" data-tabs-target="#gearStats{{ activityType }}{{ uniqueId }}" role="tab"
-                           aria-controls="gearStats{{ activityType }}{{ uniqueId }}"
-                           class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                           aria-controls="gearStats{{ activityType }}{{ uniqueId }}">
                             {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
                         </a>
                     </li>

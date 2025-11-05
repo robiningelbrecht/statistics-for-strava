@@ -26,15 +26,13 @@
              aria-labelledby="yearlyStats{{ context.value }}{{ uniqueId }}">
             {% set yearlyStatsCharts = yearlyStatsChartsPerContext[context.value] %}
             {% if yearlyStatistics|length > 1 %}
-                <div class="mb-4 border-b border-gray-200">
-                    <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center"
-                        id="yearlyStatsActivityType{{ context.value }}Tab{{ uniqueId }}" data-tabs="#yearlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}"
+                <div class="tabs tabs--default">
+                    <ul id="yearlyStatsActivityType{{ context.value }}Tab{{ uniqueId }}" data-tabs="#yearlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}"
                         role="tablist">
                         {% for activityType,chart in yearlyStatsCharts %}
-                            <li class="shrink-0" role="presentation">
+                            <li role="presentation">
                                 <a href="#" data-tabs-target="#yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tab"
-                                   aria-controls="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}"
-                                   class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                                   aria-controls="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}">
                                     {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
                                 </a>
                             </li>

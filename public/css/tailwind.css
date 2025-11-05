@@ -112,4 +112,20 @@
     div.filter-dropdown > button[data-dropdown-toggle]{
         @apply cursor-pointer w-fit text-strava-orange border border-strava-orange [&.active]:text-white [&.active]:bg-strava-orange [&.active]:hover:bg-orange-600 [&.active]:hover:border-orange-600 hover:ring-3 hover:outline-hidden hover:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between
     }
+
+    div.tabs.tabs--default{
+        @apply mb-4 border-b-2 border-gray-100;
+
+        & > ul{
+            @apply flex gap-x-2 overflow-x-auto -mb-[2px] text-sm font-medium text-center;
+
+            & > li {
+                @apply shrink-0;
+
+                & > a {
+                    @apply inline-flex items-center justify-center p-2 border-b-2;
+                }
+            }
+        }
+    }
 }

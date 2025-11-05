@@ -47,15 +47,15 @@
                 <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
-            <div class="border-b border-gray-200">
-                <ul class="flex gap-x-2 overflow-x-auto -mb-px text-sm font-medium text-center" id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
-                    <li class="shrink-0" role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+            <div class="tabs tabs--default">
+                <ul id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen">
                             {{ "Top 10"|trans }}
                         </a>
                     </li>
-                    <li class="shrink-0" role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory" class="inline-flex items-center justify-center p-2 border-b-2 rounded-t-lg group">
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory">
                             {{ "History"|trans }}
                         </a>
                     </li>
