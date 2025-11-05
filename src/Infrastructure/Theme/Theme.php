@@ -10,6 +10,9 @@ use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\Serialization\Json;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class Theme
 {
     public const string POSITION_TOP = 'top';

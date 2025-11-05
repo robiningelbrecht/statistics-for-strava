@@ -87,7 +87,7 @@
                 <a data-image data-filterables='{{ image.getFilterables()|json_encode }}' data-light-gallery-element='{{ lightGalleryElement|json_encode }}'
                    class="grow h-[25vh] relative group/image overflow-hidden rounded-lg shadow-sm" href="{{ image.getActivity().getUrl() }}" target="_blank">
                     <img class="h-full w-full object-cover align-bottom transition-transform duration-500 group-hover/image:scale-105 group-focus/image:scale-105 lazy"
-                         data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage() }}" />
+                         data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ image.getActivity().getName() }}" src="{{ placeholderImage(image.getOrientation()) }}" />
                     <div class="absolute inset-0 bg-black/0 group-hover/image:bg-black/20 group-focus/image:bg-black/20 transition-colors duration-300"></div>
                     <div class="text-white flex flex-col absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3
                     transition-all duration-300 translate-y-full group-hover/image:opacity-100 group-hover/image:translate-y-0 group-focus/image:opacity-100 group-focus/image:translate-y-0">

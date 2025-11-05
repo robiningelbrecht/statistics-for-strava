@@ -12,6 +12,7 @@ use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -108,7 +109,8 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
 
         $this->imageRepository = new ActivityBasedImageRepository(
             $this->getContainer()->get(ActivityRepository::class),
-            HidePhotosForSportTypes::fromArray([])
+            HidePhotosForSportTypes::fromArray([]),
+            KernelProjectDir::fromString('var/www')
         );
     }
 }
