@@ -118,7 +118,16 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
+                                        <div class="flex items-center gap-x-1">
+                                            {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
+                                            <a href="{{ segmentEffort.getActivity().getUrl() }}" target="_blank" rel="nofollow">
+                                                <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 18 18">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+                                                </svg>
+                                            </a>
+                                        </div>
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
@@ -211,7 +220,16 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
+                                        <div class="flex items-center gap-x-1">
+                                            {{ segmentEffort.getActivity()|activityLink(truncate: true) }}
+                                            <a href="{{ segmentEffort.getActivity().getUrl() }}" target="_blank" rel="nofollow">
+                                                <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                     viewBox="0 0 18 18">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+                                                </svg>
+                                            </a>
+                                        </div>
                                     </td>
                                     <td class="px-2 py-2">
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
@@ -254,3 +272,61 @@
         </div>
     </div>
 {% endautoescape %}
+{% macro gearStatisticRow(statistic, loopIndex) %}
+    {% autoescape false %}
+        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loopIndex) }}">
+            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loopIndex) }}">
+                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
+                    {{ statistic.name }}
+                </a>
+            </th>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.numberOfWorkouts }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% if statistic.distance.toFloat() > 0 %}
+                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
+                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
+                {% else %}
+                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.elevation|renderMeasurement(0) }}
+            </td>
+            <td class="px-6 py-2 truncate" title="{{ statistic.movingTimeInHours.tofloat()|formatNumber(1) }}h">
+                {{ statistic.movingTime }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.averageSpeed|renderMeasurement(1) }}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set purchasePrice = statistic.purchasePrice %}
+                {% if purchasePrice %}
+                    {{ purchasePrice|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set relativeCostPerHour = statistic.relativeCostPerHour %}
+                {% if relativeCostPerHour %}
+                    {{ relativeCostPerHour|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="px-6 py-2 truncate">
+                {% set relativeCostPerWorkout = statistic.relativeCostPerWorkout %}
+                {% if relativeCostPerWorkout %}
+                    {{ relativeCostPerWorkout|formatMoney }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+        </tr>
+    {% endautoescape %}
+{% endmacro %}
