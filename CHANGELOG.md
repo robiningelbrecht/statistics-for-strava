@@ -1,3 +1,22 @@
+# [v3.9.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.9.0) - 2025-11-06
+
+🔥 This release includes a complete rewrite of the data import process, making it significantly faster, especially for partial imports.
+
+## What's Changed
+* ISSUE #1302: Add new version of Zwift map of New York by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1332
+* ISSUE #1338: Fix tense inconsistency and improve readability in intro summary widget by @lennon101 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1339
+* ISSUE #1330: Use Strava API rate limit headers to provide a faster data import by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1334
+* ISSUE #1335: Add popover with total hours everywhere we display human readable time notation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1342
+* ISSUE #1337: Do not round the time in weekly by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1343
+* ISSUE #1341: Better support for MyWhoosh by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1344
+* ISSUE #1345: Cache static assets by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1346
+* ISSUE #1347: Reduce file size of Zwift maps by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1348
+* ISSUE #1351: Add Strava activity link to segments efforts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1354
+* ISSUE #1355: Move tabs tailwind classes to separate component by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1356
+* ISSUE #1357: Do not crash import when OpenWeather API fails us by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1358
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.8.4...v3.9.0
+
 # [v3.8.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.8.4) - 2025-11-02
 
 🔥 This release introduces a new dashboard widget __weeklyGoals__.
