@@ -15,19 +15,3 @@ After that, run the import and build commands again to apply the changes:
 > docker compose exec app bin/console app:strava:build-files
 ```
 
-## Check app version
-
-You can verify the version you're running by inspecting the Docker image:
-
-```bash
-> docker image inspect [YOUR-IMAGE-ID] --format '{{.Config.Labels}}' | grep org.opencontainers.image.version
-```
-
-To find the image ID, run:
-
-```bash
-> docker images
-```
-
-Then copy the Image ID of the Statistics for Strava container.
-
