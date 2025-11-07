@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ConfiguredCronActionsTest extends TestCase
 {
-    public function testfromConfig(): void
+    public function testFromConfig(): void
     {
         $this->assertEquals(
             [
