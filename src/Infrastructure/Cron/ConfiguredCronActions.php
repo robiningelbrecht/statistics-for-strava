@@ -36,7 +36,7 @@ readonly class ConfiguredCronActions implements \IteratorAggregate
             }
 
             if (!CronExpression::isValidExpression($configuredCronAction['expression'])) {
-                throw new InvalidCronConfig(sprintf('"%s" is not a valid cron expression', $configuredCronAction['cronExpression']));
+                throw new InvalidCronConfig(sprintf('"%s" is not a valid cron expression', $configuredCronAction['expression']));
             }
         }
 
