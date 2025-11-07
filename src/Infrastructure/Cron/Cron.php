@@ -5,70 +5,49 @@ declare(strict_types=1);
 namespace App\Infrastructure\Cron;
 
 use App\Infrastructure\Console\ConsoleOutputAware;
-use App\Infrastructure\Time\Clock\Clock;
-use React\ChildProcess\Process;
-use React\Promise\PromiseInterface;
-use WyriHaximus\React\Cron\Action;
+use Cron\CronExpression;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
-use function React\Promise\resolve;
-
-final class Cron
+final class Cron implements \IteratorAggregate
 {
     use ConsoleOutputAware;
 
+    /** @var RunnableCronAction[] */
+    private array $runnableCronActions;
+
+    /**
+     * @param iterable<RunnableCronAction> $runnableCronActions
+     */
     public function __construct(
+        #[AutowireIterator('app.cron_action')]
+        iterable $runnableCronActions,
         private readonly ConfiguredCronActions $configuredCronActions,
-        private readonly Clock $clock,
     ) {
+        foreach ($runnableCronActions as $runnableCronAction) {
+            $this->runnableCronActions[$runnableCronAction->getId()] = $runnableCronAction;
+        }
     }
 
-    public function create(): void
+    public function getIterator(): \Traversable
     {
-        $actions = [];
-        $output = $this->getConsoleOutput();
+        $cronItems = [];
 
         foreach ($this->configuredCronActions as $configuredCronAction) {
-            $actions[] = new Action(
-                key: $configuredCronAction->getId(),
-                mutexTtl: 60,
-                expression: (string) $configuredCronAction->getCronExpression(),
-                performer: function () use ($output, $configuredCronAction): PromiseInterface {
-                    $output?->writeln(sprintf(
-                        '<info>[%s] Starting cron action "%s"</info>',
-                        $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
-                        $configuredCronAction->getId()
-                    ));
-                    $process = new Process('bin/console app:cron:action '.$configuredCronAction->getId());
-                    $process->start();
+            $id = $configuredCronAction['action'];
+            $runnable = $this->runnableCronActions[$id] ?? throw new \InvalidArgumentException(sprintf('Cron action "%s" does not exists.', $id));
 
-                    $process->stdout?->on('data', function (string $chunk) use ($output) {
-                        $output?->write($chunk);
-                    });
-
-                    $process->stderr?->on('data', function (string $chunk) use ($output) {
-                        $output?->write(sprintf('<error>%s</error>', $chunk));
-                    });
-
-                    $process->on('exit', function () use ($output, $configuredCronAction) {
-                        $output?->writeln(sprintf(
-                            '<info>[%s] Finished cron action "%s"</info>',
-                            $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
-                            $configuredCronAction->getId()
-                        ));
-                    });
-
-                    return resolve(true);
-                }
+            $cronItems[$id] = CronAction::create(
+                id: $id,
+                expression: new CronExpression($configuredCronAction['expression']),
+                runnable: $runnable,
             );
         }
 
-        $cron = \WyriHaximus\React\Cron::create(...$actions)->on('error', static function (\Throwable $throwable) use ($output): void {
-            $output?->writeln(sprintf('<error>%s</error>', $throwable->getCode()));
-        });
+        return new \ArrayIterator($cronItems);
+    }
 
-        if (empty($actions)) {
-            $output?->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
-            $cron->stop();
-        }
+    public function getRunnable(string $id): RunnableCronAction
+    {
+        return $this->runnableCronActions[$id] ?? throw new \InvalidArgumentException(sprintf('Cron runnable "%s" does not exists.', $id));
     }
 }

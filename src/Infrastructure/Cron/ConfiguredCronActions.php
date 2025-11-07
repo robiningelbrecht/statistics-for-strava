@@ -4,52 +4,47 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cron;
 
-use App\Domain\Gear\Maintenance\InvalidGearMaintenanceConfig;
-use App\Infrastructure\ValueObject\Collection;
 use Cron\CronExpression;
 
-/**
- * @extends Collection<ConfiguredCronAction>
- */
-class ConfiguredCronActions extends Collection
+readonly class ConfiguredCronActions implements \IteratorAggregate
 {
-    public function getItemClassName(): string
+    private function __construct(
+        /** @var list<array{action: string, expression: string}> */
+        private array $config,
+    ) {
+    }
+
+    public function getIterator(): \Traversable
     {
-        return ConfiguredCronAction::class;
+        return new \ArrayIterator($this->config);
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, mixed> $config
      */
-    public static function fromConfig(array $data): self
+    public static function fromConfig(array $config): self
     {
-        $configuredCronActions = [];
-        foreach ($data as $configuredCronAction) {
+        foreach ($config as $configuredCronAction) {
             if (!is_array($configuredCronAction)) {
                 throw new InvalidCronConfig('each configured cron item needs to be an array');
             }
-            foreach (['id', 'cronExpression'] as $requiredKey) {
+            foreach (['action', 'expression'] as $requiredKey) {
                 if (!empty($configuredCronAction[$requiredKey])) {
                     continue;
                 }
                 throw new InvalidCronConfig(sprintf('"%s" property is required', $requiredKey));
             }
 
-            if (!CronExpression::isValidExpression($configuredCronAction['cronExpression'])) {
+            if (!CronExpression::isValidExpression($configuredCronAction['expression'])) {
                 throw new InvalidCronConfig(sprintf('"%s" is not a valid cron expression', $configuredCronAction['cronExpression']));
             }
-
-            $configuredCronActions[] = ConfiguredCronAction::create(
-                cronActionId: $configuredCronAction['id'],
-                cronExpression: new CronExpression($configuredCronAction['cronExpression']),
-            );
         }
 
-        $cronActionIds = array_count_values(array_column($configuredCronActions, 'id'));
+        $cronActionIds = array_count_values(array_column($config, 'action'));
         if (array_keys(array_filter($cronActionIds, fn (int $count): bool => $count > 1))) {
-            throw new InvalidGearMaintenanceConfig('each cron jon can only be configured once');
+            throw new InvalidCronConfig('each cron action can only be configured once');
         }
 
-        return self::fromArray($configuredCronActions);
+        return new self($config);  // @phpstan-ignore argument.type
     }
 }
