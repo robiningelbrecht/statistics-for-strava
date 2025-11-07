@@ -14,6 +14,11 @@ class GearMaintenanceNotificationCronAction implements RunnableCronAction
         return 'gearMaintenanceNotification';
     }
 
+    public function getMutexTtl(): int
+    {
+        return 60;
+    }
+
     public function run(OutputInterface $output): void
     {
         $output->writeln('RunnableCronAction test');

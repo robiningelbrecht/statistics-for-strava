@@ -12,5 +12,7 @@ interface RunnableCronAction
 {
     public function getId(): string;
 
+    public function getMutexTtl(): int;
+
     public function run(OutputInterface $output): void;
 }
