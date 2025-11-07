@@ -7,11 +7,11 @@ namespace App\Domain\Gear\Maintenance;
 use App\Infrastructure\Cron\RunnableCronAction;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GearMaintenanceNotificationCronAction implements RunnableCronAction
+class SendGearMaintenanceNotificationCronAction implements RunnableCronAction
 {
     public function getId(): string
     {
-        return 'gearMaintenanceNotification';
+        return 'sendGearMaintenanceNotification';
     }
 
     public function getMutexTtl(): int
