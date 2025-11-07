@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Tests\Console;
+namespace App\Tests\Console\Debug;
 
-use App\Console\DebugEnvironmentConsoleCommand;
+use App\Console\Debug\DebugEnvironmentConsoleCommand;
 use App\Infrastructure\Config\AppConfig;
+use App\Tests\Console\ConsoleCommandTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;

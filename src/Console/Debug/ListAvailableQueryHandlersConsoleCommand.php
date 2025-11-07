@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console;
+namespace App\Console\Debug;
 
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use Symfony\Component\Console\Attribute\AsCommand;

@@ -6,7 +6,8 @@ WORKDIR /var/www
 RUN apk add --no-cache \
   bash \
   curl \
-  file
+  file \
+  tzdata
 
 RUN set -eux; \
 	install-php-extensions \
