@@ -12,6 +12,7 @@ services:
               required: false
         environment:
             - PHP_IDE_CONFIG=phpstorm
+            - TZ=Europe/Brussels
         profiles: [on-demand]
         networks:
             - statistics-for-strava-network
@@ -26,11 +27,24 @@ services:
             - ./storage/database:/var/www/storage/database
             - ./storage/files:/var/www/storage/files
             - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
-        env_file: ".env.local"
+        env_file: '.env.local'
+        environment:
+          - TZ=Europe/Brussels
         ports:
             - '8081:8080'
         networks:
             - statistics-for-strava-network
+    daemon:
+      build:
+        context: ./
+        dockerfile: docker/app/Dockerfile
+      container_name: 'statistics-for-strava-daemon'
+      env_file: ".env.local"
+      environment:
+        - TZ=Europe/Brussels
+      entrypoint: ['bin/console', 'app:daemon:run']
+      networks:
+        - statistics-for-strava-network
 
 #    ollama:
 #        image: ollama/ollama:latest

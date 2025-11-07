@@ -15,3 +15,9 @@ monolog:
             path: "%kernel.project_dir%/storage/files/logs/console-output.log"
             level: debug
             channels: ["console-output"]
+        daemon:
+          type: rotating_file
+          max_files: 5
+          path: "%kernel.project_dir%/storage/files/logs/daemon.log"
+          level: debug
+          channels: ["daemon"]

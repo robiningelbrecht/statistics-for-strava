@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console;
+namespace App\Console\Debug;
 
 use App\BuildApp\AppVersion;
 use App\Infrastructure\Config\AppConfig;

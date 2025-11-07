@@ -217,6 +217,10 @@ services:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.racingScore")']
 
+    App\Infrastructure\Cron\ConfiguredCronActions:
+        factory: [ null, 'fromConfig' ]
+        arguments: [ '@=app_config("daemon.cron", [])' ]
+
     # Autowiring of vendor classes
     League\Flysystem\FilesystemOperator: '@default.storage'
 
