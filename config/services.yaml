@@ -221,6 +221,9 @@ services:
         factory: [ null, 'fromConfig' ]
         arguments: [ '@=app_config("daemon.cron", [])' ]
 
+    App\Infrastructure\Cron\Cron:
+      class: 'App\Infrastructure\Cron\SystemCron'
+
     # Autowiring of vendor classes
     League\Flysystem\FilesystemOperator: '@default.storage'
 
