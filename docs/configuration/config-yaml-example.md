@@ -208,4 +208,7 @@ daemon:
       expression: '0 14 * * *'
       # Whether this action should be executed (true/false)
       enabled: false
+    - action: 'appUpdateAvailableNotification'
+      expression: '0 14 * * *'
+      enabled: false
 ```
