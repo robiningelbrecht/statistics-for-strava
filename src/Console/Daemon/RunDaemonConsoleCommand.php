@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Daemon;
 
 use App\BuildApp\AppVersion;
-use App\Infrastructure\Cron\Cron;
+use App\Infrastructure\Cron\SystemCron;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;
 use Monolog\Attribute\WithMonologChannel;
@@ -22,13 +22,16 @@ use WyriHaximus\React\Cron\Action;
 
 use function React\Promise\resolve;
 
+/**
+ * @codeCoverageIgnore
+ */
 #[WithMonologChannel('daemon')]
 #[AsCommand(name: 'app:daemon:run', description: 'Start SFS daemon')]
 final class RunDaemonConsoleCommand extends Command
 {
     public function __construct(
         private readonly Clock $clock,
-        private readonly Cron $cron,
+        private readonly SystemCron $cron,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
