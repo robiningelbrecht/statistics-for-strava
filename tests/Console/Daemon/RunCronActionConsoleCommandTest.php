@@ -3,7 +3,7 @@
 namespace App\Tests\Console\Daemon;
 
 use App\Console\Daemon\RunCronActionConsoleCommand;
-use App\Infrastructure\Cron\Cron;
+use App\Infrastructure\Daemon\Cron\Cron;
 use App\Tests\Console\ConsoleCommandTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;

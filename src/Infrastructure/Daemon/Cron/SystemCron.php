@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Cron;
+namespace App\Infrastructure\Daemon\Cron;
 
 use App\Infrastructure\Console\ConsoleOutputAware;
 use Cron\CronExpression;
