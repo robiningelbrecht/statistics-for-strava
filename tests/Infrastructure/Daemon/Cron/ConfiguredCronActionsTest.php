@@ -16,20 +16,24 @@ class ConfiguredCronActionsTest extends TestCase
                 [
                     'action' => 'sendNotification',
                     'expression' => '* * * * *',
+                    'enabled' => true,
                 ],
                 [
                     'action' => 'importData',
                     'expression' => '* * * * *',
+                    'enabled' => false,
                 ],
             ],
             iterator_to_array(ConfiguredCronActions::fromConfig([
                 [
                     'action' => 'sendNotification',
                     'expression' => '* * * * *',
+                    'enabled' => true,
                 ],
                 [
                     'action' => 'importData',
                     'expression' => '* * * * *',
+                    'enabled' => false,
                 ],
             ]))
         );
@@ -55,12 +59,20 @@ class ConfiguredCronActionsTest extends TestCase
         yield 'missing key "expression"' => [$config, '"expression" property is required'];
 
         $config = self::getValidConfig();
+        unset($config[0]['enabled']);
+        yield 'missing key "enabled"' => [$config, '"enabled" property is required'];
+
+        $config = self::getValidConfig();
         $config[0]['expression'] = 'lol';
         yield 'invalid cron expression' => [$config, '"lol" is not a valid cron expression'];
 
         $config = self::getValidConfig();
         $config[1]['action'] = 'sendNotification';
         yield 'duplicate cron action' => [$config, 'each cron action can only be configured once'];
+
+        $config = self::getValidConfig();
+        $config[0]['enabled'] = 'lol';
+        yield 'invalid enabled value' => [$config, 'configuration item "enabled" must be a boolean'];
     }
 
     private static function getValidConfig(): array
@@ -69,10 +81,12 @@ class ConfiguredCronActionsTest extends TestCase
             [
                 'action' => 'sendNotification',
                 'expression' => '* * * * *',
+                'enabled' => true,
             ],
             [
                 'action' => 'importData',
                 'expression' => '* * * * *',
+                'enabled' => false,
             ],
         ];
     }

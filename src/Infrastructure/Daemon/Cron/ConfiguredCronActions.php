@@ -28,11 +28,15 @@ readonly class ConfiguredCronActions implements \IteratorAggregate
             if (!is_array($configuredCronAction)) {
                 throw new InvalidCronConfig('each configured cron item needs to be an array');
             }
-            foreach (['action', 'expression'] as $requiredKey) {
-                if (!empty($configuredCronAction[$requiredKey])) {
+            foreach (['action', 'expression', 'enabled'] as $requiredKey) {
+                if (array_key_exists($requiredKey, $configuredCronAction)) {
                     continue;
                 }
                 throw new InvalidCronConfig(sprintf('"%s" property is required', $requiredKey));
+            }
+
+            if (!is_bool($configuredCronAction['enabled'])) {
+                throw new InvalidCronConfig('configuration item "enabled" must be a boolean');
             }
 
             if (!CronExpression::isValidExpression($configuredCronAction['expression'])) {
