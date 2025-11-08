@@ -2,6 +2,7 @@
 
 namespace App\Tests\Console;
 
+use App\BuildApp\AppUrl;
 use App\Console\BuildAppConsoleCommand;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
@@ -135,6 +136,7 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
             stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             resourceUsage: new FixedResourceUsage(),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
+            appUrl: AppUrl::fromString('https://localhost'),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
             logger: $this->logger
         );

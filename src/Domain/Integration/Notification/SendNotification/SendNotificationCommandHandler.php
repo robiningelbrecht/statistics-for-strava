@@ -24,7 +24,7 @@ final readonly class SendNotificationCommandHandler implements CommandHandler
             title: $command->getTitle(),
             message: $command->getMessage(),
             tags: $command->getTags(),
-            click: null,
+            click: $command->getActionUrl(),
             icon: Url::fromString('https://raw.githubusercontent.com/robiningelbrecht/statistics-for-strava/master/public/assets/images/manifest/icon-192.png')
         );
     }

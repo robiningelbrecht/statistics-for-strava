@@ -86,7 +86,7 @@ final class Daemon
 
         $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'Cron configured'));
         $this->getConsoleOutput()->writeln(array_map(
-            fn (CronAction $action) => \sprintf('<info> * %s: %s</info>', $action->getId(), $action->getExpression()),
+            fn (CronAction $action): string => \sprintf('<info> * %s: %s</info>', $action->getId(), $action->getExpression()),
             iterator_to_array($this->cron)
         ));
     }

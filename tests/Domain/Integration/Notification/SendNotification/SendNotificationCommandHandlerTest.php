@@ -6,6 +6,7 @@ use App\Domain\Integration\Notification\Ntfy\Ntfy;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -21,6 +22,7 @@ class SendNotificationCommandHandlerTest extends ContainerTestCase
             title: 'le title',
             message: 'le message',
             tags: ['tag1', 'tag2'],
+            actionUrl: Url::fromString('https://localhost'),
         ));
 
         /** @var \App\Tests\Domain\Integration\Notification\Ntfy\SpyNotify $ntfy */
