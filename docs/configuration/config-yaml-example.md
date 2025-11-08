@@ -11,10 +11,6 @@ general:
   # Any image can be used; a square format is recommended.
   # Leave empty to disable this feature.
   profilePictureUrl: null
-  # Optional, full URL to ntfy.sh topic (for example https://ntfy.sh/cdd8f660-6b08-4dd8-8b4a-7c4df28642e3). 
-  # This topic will be used to notify you when a new HTML build has run.
-  # Leave empty to disable notifications.
-  ntfyUrl: null
   athlete:
     # Your birthday. Needed to calculate heart rate zones.
     birthday: 'YYYY-MM-DD'
@@ -174,6 +170,11 @@ zwift:
   # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if zwift.level is filled out.
   racingScore: null
 integrations:
+  notifications:
+      # Optional, full URL to ntfy.sh topic (for example https://ntfy.sh/cdd8f660-6b08-4dd8-8b4a-7c4df28642e3). 
+      # This topic will be used to notify you when a new HTML build has run.
+      # Leave empty to disable notifications.
+      ntfyUrl: null
   # All configuration options related to AI integrations.
   # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
   ai:
