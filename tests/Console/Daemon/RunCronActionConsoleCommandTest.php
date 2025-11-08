@@ -5,6 +5,7 @@ namespace App\Tests\Console\Daemon;
 use App\Console\Daemon\RunCronActionConsoleCommand;
 use App\Infrastructure\Daemon\Cron\Cron;
 use App\Tests\Console\ConsoleCommandTestCase;
+use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -33,7 +34,8 @@ class RunCronActionConsoleCommandTest extends ConsoleCommandTestCase
         parent::setUp();
 
         $this->runCronActionCommand = new RunCronActionConsoleCommand(
-            $this->getContainer()->get(Cron::class)
+            $this->getContainer()->get(Cron::class),
+            new VoidMigrationRunner(),
         );
     }
 
