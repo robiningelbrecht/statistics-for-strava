@@ -98,7 +98,8 @@
             "message": "New build of your Strava stats was successful in 10s",
             "tags": [
                 "+1"
-            ]
+            ],
+            "actionUrl": "https://localhost"
         }
     }
 ]

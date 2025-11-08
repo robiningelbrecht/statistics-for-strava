@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\BuildApp\AppUrl;
 use App\BuildApp\AppVersion;
 use App\BuildApp\BuildActivitiesHtml\BuildActivitiesHtml;
 use App\BuildApp\BuildBadgeSvg\BuildBadgeSvg;
@@ -45,6 +46,7 @@ final class BuildAppConsoleCommand extends Command
         private readonly StravaDataImportStatus $stravaDataImportStatus,
         private readonly ResourceUsage $resourceUsage,
         private readonly MigrationRunner $migrationRunner,
+        private readonly AppUrl $appUrl,
         private readonly Clock $clock,
         private readonly LoggerInterface $logger,
     ) {
@@ -118,7 +120,8 @@ final class BuildAppConsoleCommand extends Command
         $this->commandBus->dispatch(new SendNotification(
             title: 'Build successful',
             message: sprintf('New build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
-            tags: ['+1']
+            tags: ['+1'],
+            actionUrl: $this->appUrl
         ));
 
         $output->writeln(sprintf(

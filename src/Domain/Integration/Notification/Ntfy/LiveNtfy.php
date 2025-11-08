@@ -30,17 +30,24 @@ final readonly class LiveNtfy implements Ntfy
         if (!$this->ntfyUrl) {
             return;
         }
+
+        $headers = [
+            'Content-Type' => 'text/plain',
+            'Title' => $title,
+            'Tags' => implode(',', $tags),
+            'Click' => (string) $click,
+            'Icon' => (string) $icon,
+        ];
+
+        if ($click) {
+            $headers['Actions'] = sprintf('view, Open app, %s, clear=true;', $click);
+        }
+
         $this->client->request(
             'POST',
             (string) $this->ntfyUrl,
             [
-                RequestOptions::HEADERS => [
-                    'Content-Type' => 'text/plain',
-                    'Title' => $title,
-                    'Tags' => implode(',', $tags),
-                    'Click' => (string) $click,
-                    'Icon' => (string) $icon,
-                ],
+                RequestOptions::HEADERS => $headers,
                 RequestOptions::BODY => $message,
             ]
         );
