@@ -10,7 +10,6 @@ use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
-use React\EventLoop\Loop;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,11 +44,12 @@ final class RunDaemonConsoleCommand extends Command
             padding: true
         );
 
-        $this->daemon->configureCron($output);
+        $this->daemon->setConsoleOutput($output);
+        $this->daemon->configureCron();
 
-        Loop::addPeriodicTimer(1.0, function (): void {
-            echo '['.date('H:i:s').'] PeriodicTimer'.PHP_EOL;
-        });
+        if ($_ENV['APP_DEBUG']) {
+            $this->daemon->addPeriodicDebugTimer();
+        }
 
         return Command::SUCCESS;
     }

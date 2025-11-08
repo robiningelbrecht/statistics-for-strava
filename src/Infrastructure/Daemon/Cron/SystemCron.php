@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Daemon\Cron;
 
-use App\Infrastructure\Console\ConsoleOutputAware;
 use Cron\CronExpression;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final class SystemCron implements Cron
 {
-    use ConsoleOutputAware;
-
     /** @var RunnableCronAction[] */
     private array $runnableCronActions;
 

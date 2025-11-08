@@ -15,8 +15,12 @@ trait ConsoleOutputAware
         $this->output = $output;
     }
 
-    protected function getConsoleOutput(): ?OutputInterface
+    protected function getConsoleOutput(): OutputInterface
     {
+        if (is_null($this->output)) {
+            throw new \RuntimeException('Call setConsoleOutput() before getConsoleOutput()');
+        }
+
         return $this->output;
     }
 }

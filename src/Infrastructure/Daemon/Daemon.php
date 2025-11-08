@@ -4,24 +4,37 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Daemon;
 
+use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Daemon\Cron\Cron;
 use App\Infrastructure\Time\Clock\Clock;
 use React\ChildProcess\Process;
+use React\EventLoop\Loop;
 use React\Promise\PromiseInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 use WyriHaximus\React\Cron\Action;
+
 use function React\Promise\resolve;
 
-final readonly class Daemon
+final class Daemon
 {
+    use ConsoleOutputAware;
+
     public function __construct(
-        private Clock $clock,
-        private Cron $cron,
+        private readonly Clock $clock,
+        private readonly Cron $cron,
     ) {
     }
 
-    public function configureCron(OutputInterface $output): void
+    public function addPeriodicDebugTimer(): void
+    {
+        Loop::addPeriodicTimer(1.0, function (): void {
+            $this->getConsoleOutput()->writeln(sprintf(
+                '[%s] Periodic debug timer',
+                $this->clock->getCurrentDateTimeImmutable()->format('H:i:s'),
+            ));
+        });
+    }
+
+    public function configureCron(): void
     {
         $actions = [];
         /** @var \App\Infrastructure\Daemon\Cron\CronAction $cronAction */
@@ -30,8 +43,8 @@ final readonly class Daemon
                 key: $cronAction->getId(),
                 mutexTtl: $cronAction->getRunnable()->getMutexTtl(),
                 expression: (string) $cronAction->getExpression(),
-                performer: function () use ($output, $cronAction): PromiseInterface {
-                    $output->writeln(sprintf(
+                performer: function () use ($cronAction): PromiseInterface {
+                    $this->getConsoleOutput()->writeln(sprintf(
                         '<info>[%s] Starting cron action "%s"</info>',
                         $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
                         $cronAction->getId()
@@ -39,16 +52,16 @@ final readonly class Daemon
                     $process = new Process('bin/console app:cron:action '.$cronAction->getId());
                     $process->start();
 
-                    $process->stdout?->on('data', function (string $chunk) use ($output): void {
-                        $output->write($chunk);
+                    $process->stdout?->on('data', function (string $chunk): void {
+                        $this->getConsoleOutput()->write($chunk);
                     });
 
-                    $process->stderr?->on('data', function (string $chunk) use ($output): void {
-                        $output->write(sprintf('<error>%s</error>', $chunk));
+                    $process->stderr?->on('data', function (string $chunk): void {
+                        $this->getConsoleOutput()->write(sprintf('<error>%s</error>', $chunk));
                     });
 
-                    $process->on('exit', function () use ($output, $cronAction): void {
-                        $output->writeln(sprintf(
+                    $process->on('exit', function () use ($cronAction): void {
+                        $this->getConsoleOutput()->writeln(sprintf(
                             '<info>[%s] Finished cron action "%s"</info>',
                             $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
                             $cronAction->getId()
@@ -60,12 +73,12 @@ final readonly class Daemon
             );
         }
 
-        $cron = \WyriHaximus\React\Cron::create(...$actions)->on('error', static function (\Throwable $throwable) use ($output): void {
-            $output->writeln(sprintf('<error>%s</error>', $throwable->getCode()));
+        $cron = \WyriHaximus\React\Cron::create(...$actions)->on('error', function (\Throwable $throwable): void {
+            $this->getConsoleOutput()->writeln(sprintf('<error>%s</error>', $throwable->getMessage()));
         });
 
         if (empty($actions)) {
-            $output->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
+            $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
             $cron->stop();
         }
     }

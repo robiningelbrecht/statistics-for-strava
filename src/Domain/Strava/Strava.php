@@ -101,7 +101,7 @@ class Strava
             self::$stravaRateLimits = $stravaRateLimits;
             if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
                 // The next request will hit the 15-minute rate limit. Pause and make sure the import does not crash.
-                $this->getConsoleOutput()?->writeln(sprintf(
+                $this->getConsoleOutput()->writeln(sprintf(
                     '<comment>Whoa there! We are about to hit Strava’s 15-minute API rate limit. Taking a short %s-minute breather before getting back on track. Please be patient</comment>',
                     $minutesUntilNextFifteenMinuteInterval
                 ));
