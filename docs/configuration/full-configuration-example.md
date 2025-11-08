@@ -16,9 +16,6 @@ general:
   # Any image can be used; a square format is recommended.
   # Leave empty to disable this feature.
   profilePictureUrl: https://<url-to-your-profile-picture>.jpg
-  # Optional, full URL with ntfy topic included. This topic will be used to notify you when a new HTML build has run.
-  # Leave empty to disable notifications.
-  ntfyUrl: https://ntfy.sh/19276c99-771b-4d73-a143-ddd4f7ab6b04
   athlete:
     # Your birthday. Needed to calculate heart rate zones.
     birthday: '<YYYY-MM-DD>'
@@ -289,6 +286,10 @@ zwift:
   # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if zwift.level is filled out.
   racingScore: null
 integrations:
+  notifications:
+      # Optional, full URL with ntfy topic included. This topic will be used to send out the app's notifications.
+      # Leave empty to disable notifications.
+      ntfyUrl: https://ntfy.sh/19276199-771b-4d73-a143-ddd4f7ab6b04
   # All configuration options related to AI integrations.
   # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
   ai:
@@ -349,4 +350,14 @@ integrations:
           message: 'You are my run coach. Review my last 8 weeks of running frequency, volume, and intensity. Comment on my consistency and identify any gaps or strong points.'
         - command: 'summarise-monthly-progress'
           message: 'You are my run coach. Summarise my training for the past month, highlighting total distance, time, average paces, and any key improvements.'
+daemon:
+  # A list of actions that the application runs at regular intervals according to their defined schedule.
+  # Notification-related actions require the integrations.notifications.ntfyUrl setting to be configured.
+  cron:
+    - action: 'gearMaintenanceNotification'
+      expression: '0 14 * * *'
+      enabled: true
+    - action: 'appUpdateAvailableNotification'
+      expression: '0 14 * * *'
+      enabled: true
 ```

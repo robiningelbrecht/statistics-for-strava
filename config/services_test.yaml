@@ -43,3 +43,6 @@ services:
 
     App\Infrastructure\Daemon\Cron\Cron:
       class: App\Tests\Infrastructure\Daemon\Cron\FakeCron
+
+    App\Infrastructure\Daemon\Daemon:
+      class: App\Tests\Infrastructure\Daemon\FakeDaemon
