@@ -127,7 +127,7 @@ services:
 
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("general.ntfyUrl")']
+        arguments: ['@=app_config("integrations.notifications.ntfyUrl")']
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
