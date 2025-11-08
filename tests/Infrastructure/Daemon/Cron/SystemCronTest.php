@@ -16,6 +16,7 @@ class SystemCronTest extends TestCase
             [
                 'action' => 'fake',
                 'expression' => '* * * * *',
+                'enabled' => true,
             ],
         ]);
         $runnableCronActions = [
@@ -45,19 +46,18 @@ class SystemCronTest extends TestCase
             [
                 'action' => 'test',
                 'expression' => '* * * * *',
+                'enabled' => true,
             ],
         ]);
         $runnableCronActions = [
             new FakeRunnableCronAction(),
         ];
 
+        $this->expectExceptionObject(new \InvalidArgumentException('Cron action "test" does not exists.'));
         $cron = new SystemCron(
             runnableCronActions: $runnableCronActions,
             configuredCronActions: $configuredCronActions,
         );
-
-        $this->expectExceptionObject(new \InvalidArgumentException('Cron action "test" does not exists.'));
-        iterator_to_array($cron);
     }
 
     public function testGetRunnable(): void
@@ -66,6 +66,7 @@ class SystemCronTest extends TestCase
             [
                 'action' => 'fake',
                 'expression' => '* * * * *',
+                'enabled' => true,
             ],
         ]);
         $runnableCronActions = [
@@ -89,6 +90,7 @@ class SystemCronTest extends TestCase
             [
                 'action' => 'fake',
                 'expression' => '* * * * *',
+                'enabled' => false,
             ],
         ]);
         $runnableCronActions = [
@@ -100,10 +102,10 @@ class SystemCronTest extends TestCase
             configuredCronActions: $configuredCronActions,
         );
 
-        $this->expectExceptionObject(new \InvalidArgumentException('Cron runnable "test" does not exists.'));
+        $this->expectExceptionObject(new \InvalidArgumentException('Cron runnable "fake" does not exists or is not enabled.'));
         $this->assertEquals(
             new FakeRunnableCronAction(),
-            $cron->getRunnable('test'),
+            $cron->getRunnable('fake'),
         );
     }
 }

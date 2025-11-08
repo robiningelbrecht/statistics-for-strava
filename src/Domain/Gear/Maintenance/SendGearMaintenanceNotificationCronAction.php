@@ -9,6 +9,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SendGearMaintenanceNotificationCronAction implements RunnableCronAction
 {
+    public function __construct()
+    {
+    }
+
     public function getId(): string
     {
         return 'sendGearMaintenanceNotification';

@@ -6,6 +6,7 @@ namespace App\Infrastructure\Daemon;
 
 use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Daemon\Cron\Cron;
+use App\Infrastructure\Daemon\Cron\CronAction;
 use App\Infrastructure\Time\Clock\Clock;
 use React\ChildProcess\Process;
 use React\EventLoop\Loop;
@@ -37,7 +38,7 @@ final class Daemon
     public function configureCron(): void
     {
         $actions = [];
-        /** @var \App\Infrastructure\Daemon\Cron\CronAction $cronAction */
+        /** @var CronAction $cronAction */
         foreach ($this->cron as $cronAction) {
             $actions[] = new Action(
                 key: $cronAction->getId(),
@@ -73,13 +74,20 @@ final class Daemon
             );
         }
 
-        $cron = \WyriHaximus\React\Cron::create(...$actions)->on('error', function (\Throwable $throwable): void {
+        if (empty($actions)) {
+            $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
+
+            return;
+        }
+
+        \WyriHaximus\React\Cron::create(...$actions)->on('error', function (\Throwable $throwable): void {
             $this->getConsoleOutput()->writeln(sprintf('<error>%s</error>', $throwable->getMessage()));
         });
 
-        if (empty($actions)) {
-            $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
-            $cron->stop();
-        }
+        $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'Cron configured'));
+        $this->getConsoleOutput()->writeln(array_map(
+            fn (CronAction $action) => \sprintf('<info> * %s: %s</info>', $action->getId(), $action->getExpression()),
+            iterator_to_array($this->cron)
+        ));
     }
 }
