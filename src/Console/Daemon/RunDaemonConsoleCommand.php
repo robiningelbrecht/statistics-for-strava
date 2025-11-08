@@ -16,9 +16,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-/**
- * @codeCoverageIgnore
- */
 #[WithMonologChannel('daemon')]
 #[AsCommand(name: 'app:daemon:run', description: 'Start SFS daemon')]
 final class RunDaemonConsoleCommand extends Command
