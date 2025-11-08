@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\Cron;
+namespace App\Tests\Infrastructure\Daemon\Cron;
 
-use App\Infrastructure\Cron\RunnableCronAction;
+use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class FakeRunnableCronAction implements RunnableCronAction

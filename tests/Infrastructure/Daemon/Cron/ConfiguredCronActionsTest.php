@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Infrastructure\Cron;
+namespace App\Tests\Infrastructure\Daemon\Cron;
 
-use App\Infrastructure\Cron\ConfiguredCronActions;
-use App\Infrastructure\Cron\InvalidCronConfig;
+use App\Infrastructure\Daemon\Cron\ConfiguredCronActions;
+use App\Infrastructure\Daemon\Cron\InvalidCronConfig;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 

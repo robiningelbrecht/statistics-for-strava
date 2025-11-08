@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Infrastructure\Cron;
+namespace App\Tests\Infrastructure\Daemon\Cron;
 
-use App\Infrastructure\Cron\ConfiguredCronActions;
-use App\Infrastructure\Cron\CronAction;
-use App\Infrastructure\Cron\SystemCron;
+use App\Infrastructure\Daemon\Cron\ConfiguredCronActions;
+use App\Infrastructure\Daemon\Cron\CronAction;
+use App\Infrastructure\Daemon\Cron\SystemCron;
 use Cron\CronExpression;
 use PHPUnit\Framework\TestCase;
 

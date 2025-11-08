@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
-use App\Infrastructure\Cron\Cron;
+use App\Infrastructure\Daemon\Cron\Cron;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

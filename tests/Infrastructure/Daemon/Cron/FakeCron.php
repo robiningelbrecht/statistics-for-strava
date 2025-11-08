@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\Cron;
+namespace App\Tests\Infrastructure\Daemon\Cron;
 
-use App\Infrastructure\Cron\Cron;
-use App\Infrastructure\Cron\RunnableCronAction;
+use App\Infrastructure\Daemon\Cron\Cron;
+use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 
 class FakeCron implements Cron
 {
