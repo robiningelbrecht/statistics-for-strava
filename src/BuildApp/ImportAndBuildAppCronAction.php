@@ -85,8 +85,23 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
             padding: true
         );
 
+        $this->resourceUsage->startTimer();
+
         $this->runImport($output);
         $this->runBuild($output);
+
+        $this->commandBus->dispatch(new SendNotification(
+            title: 'Build successful',
+            message: sprintf('New import and build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
+            tags: ['+1'],
+            actionUrl: $this->appUrl
+        ));
+
+        $this->resourceUsage->stopTimer();
+        $output->writeln(sprintf(
+            '<info>%s</info>',
+            $this->resourceUsage->format(),
+        ));
     }
 
     public function runImport(SymfonyStyle $output): void
@@ -98,8 +113,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
             return;
         }
-
-        $this->resourceUsage->startTimer();
 
         $output->writeln('Running database migrations...');
         $consoleApplication = $this->getConsoleApplication();
@@ -134,12 +147,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
         $this->connection->executeStatement('VACUUM');
         $output->writeln('Database got vacuumed 🧹');
-
-        $this->resourceUsage->stopTimer();
-        $output->writeln(sprintf(
-            '<info>%s</info>',
-            $this->resourceUsage->format(),
-        ));
     }
 
     public function runBuild(SymfonyStyle $output): void
@@ -155,7 +162,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
             return;
         }
-        $this->resourceUsage->startTimer();
 
         $now = $this->clock->getCurrentDateTimeImmutable();
 
@@ -196,18 +202,5 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         $this->commandBus->dispatch(new BuildPhotosHtml());
         $output->writeln('  => Building badges');
         $this->commandBus->dispatch(new BuildBadgeSvg($now));
-
-        $this->resourceUsage->stopTimer();
-        $this->commandBus->dispatch(new SendNotification(
-            title: 'Build successful',
-            message: sprintf('New build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
-            tags: ['+1'],
-            actionUrl: $this->appUrl
-        ));
-
-        $output->writeln(sprintf(
-            '<info>%s</info>',
-            $this->resourceUsage->format(),
-        ));
     }
 }
