@@ -48,7 +48,6 @@ use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Doctrine\DBAL\Connection;
 use League\Flysystem\UnableToCreateDirectory;
 use League\Flysystem\UnableToWriteFile;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class ImportAndBuildAppCronAction implements RunnableCronAction
@@ -78,15 +77,14 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         return 1800;
     }
 
-    public function run(OutputInterface $output): void
+    public function run(SymfonyStyle $output): void
     {
         $this->runImport($output);
         $this->runBuild($output);
     }
 
-    public function runImport(OutputInterface $output): void
+    public function runImport(SymfonyStyle $output): void
     {
-        /* @var SymfonyStyle $output */
         try {
             $this->fileSystemPermissionChecker->ensureWriteAccess();
         } catch (UnableToWriteFile|UnableToCreateDirectory) {
@@ -144,9 +142,8 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         ));
     }
 
-    public function runBuild(OutputInterface $output): void
+    public function runBuild(SymfonyStyle $output): void
     {
-        /** @var SymfonyStyle $output */
         $consoleApplication = $this->getConsoleApplication();
         if (!$this->migrationRunner->isAtLatestVersion($consoleApplication)) {
             $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');

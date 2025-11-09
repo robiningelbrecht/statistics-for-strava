@@ -9,7 +9,7 @@ use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use App\Infrastructure\ValueObject\String\Url;
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class AppUpdateAvailableNotificationCronAction implements RunnableCronAction
 {
@@ -29,7 +29,7 @@ final readonly class AppUpdateAvailableNotificationCronAction implements Runnabl
         return 60;
     }
 
-    public function run(OutputInterface $output): void
+    public function run(SymfonyStyle $output): void
     {
         if (AppVersion::getSemanticVersion() === $this->gitHub->getLatestRelease()) {
             return;
