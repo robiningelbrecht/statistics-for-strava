@@ -69,7 +69,7 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
     public function getId(): string
     {
-        return 'ImportAndBuildApp';
+        return 'importAndBuildApp';
     }
 
     public function getMutexTtl(): int

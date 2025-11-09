@@ -207,13 +207,16 @@ daemon:
   # A list of actions that the application runs at regular intervals according to their defined schedule.
   # Notification-related actions require the integrations.notifications.ntfyUrl setting to be configured.
   cron:
-      # Action name. Allowed values: gearMaintenanceNotification, appUpdateAvailableNotification  
-    - action: 'gearMaintenanceNotification'
+      # Action name. Allowed values: importAndBuildApp, gearMaintenanceNotification, appUpdateAvailableNotification
+    - action: 'importAndBuildApp'
       # Cron expression specifying when the action should run.
       # Example: '0 14 * * *' runs every day at 14:00 (2 PM).
       # See https://crontab.guru/ for help creating or testing cron expressions.
       expression: '0 14 * * *'
       # Whether this action should be executed (true/false)
+      enabled: true
+    - action: 'gearMaintenanceNotification'
+      expression: '0 14 * * *'
       enabled: false
     - action: 'appUpdateAvailableNotification'
       expression: '0 14 * * *'
