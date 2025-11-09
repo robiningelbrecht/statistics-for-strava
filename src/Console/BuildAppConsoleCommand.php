@@ -48,6 +48,7 @@ final class BuildAppConsoleCommand extends Command
         $this->importAndBuildAppCronAction->setConsoleApplication($consoleApplication);
         $this->importAndBuildAppCronAction->runBuild($output);
 
+        $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(
             title: 'Build successful',
             message: sprintf('New build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
@@ -55,7 +56,6 @@ final class BuildAppConsoleCommand extends Command
             actionUrl: $this->appUrl
         ));
 
-        $this->resourceUsage->stopTimer();
         $output->writeln(sprintf(
             '<info>%s</info>',
             $this->resourceUsage->format(),
