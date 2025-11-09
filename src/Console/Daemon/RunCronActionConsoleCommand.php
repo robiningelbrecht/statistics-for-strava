@@ -31,10 +31,10 @@ final class RunCronActionConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $runnableCronActionId = $input->getArgument('cronActionId');
+        /** @var \Symfony\Component\Console\Application $consoleApplication */
+        $consoleApplication = $this->getApplication();
 
         try {
-            /** @var \Symfony\Component\Console\Application $consoleApplication */
-            $consoleApplication = $this->getApplication();
             $databaseIsAtLatestVersion = $this->migrationRunner->isAtLatestVersion($consoleApplication);
         } catch (ConnectionException) {
             $databaseIsAtLatestVersion = false;
@@ -46,7 +46,12 @@ final class RunCronActionConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        $this->cron->getRunnable($runnableCronActionId)->run(new SymfonyStyle($input, $output));
+        $runnable = $this->cron->getRunnable($runnableCronActionId);
+        if (method_exists($runnable, 'setConsoleApplication')) {
+            $runnable->setConsoleApplication($consoleApplication);
+        }
+
+        $runnable->run(new SymfonyStyle($input, $output));
 
         return Command::SUCCESS;
     }
