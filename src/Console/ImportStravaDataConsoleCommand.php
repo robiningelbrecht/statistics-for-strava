@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\BuildApp\AppVersion;
 use App\BuildApp\ImportAndBuildAppCronAction;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use Monolog\Attribute\WithMonologChannel;
@@ -29,6 +30,12 @@ final class ImportStravaDataConsoleCommand extends Command
 
         /** @var \Symfony\Component\Console\Application $consoleApplication */
         $consoleApplication = $this->getApplication();
+
+        $output->block(
+            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
+            style: 'fg=black;bg=green',
+            padding: true
+        );
 
         $this->importAndBuildAppCronAction->setConsoleApplication($consoleApplication);
         $this->importAndBuildAppCronAction->runImport($output);
