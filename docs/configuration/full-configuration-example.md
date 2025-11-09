@@ -238,48 +238,59 @@ metrics:
       showInNavBar: false
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
-# Optional, Used to enrich gear with data that cannot be configured in Strava.  
-stravaGear:
-  - gearId: 'g23671865'   # ASICS Gel-Nimbus 26 Shoe 
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 18999
-      currency: 'AUD'
-  - gearId: 'b5248891'    # Rocky Mountain Altitude 730 Mountain Bike
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 180000
-      currency: 'AUD'
-  - gearId: 'b13795730'   # Frankenstein Road Bike
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 200000
-      currency: 'AUD'
-  - gearId: 'g16767005'  # Nike InfinityRN 4 Shoe
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 16827
-      currency: 'AUD'
-  - gearId: 'g8312694'    # HOKA Bondi 7 Shoe
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 31998
-      currency: 'AUD'
-  - gearId: 'g19471623'    # HOKA Carbon X2 Shoe
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 23199
-      currency: 'AUD'
-  - gearId: 'g26338439'    # ASICS Trabuco Max 3 Shoe
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 18999
-      currency: 'AUD'
-  - gearId: 'g16162886'    # Brooks Adrenaline GTS 23 Shoe
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 25999
-      currency: 'AUD'
+gear:
+  # Optional, Used to enrich gear with data that cannot be configured in Strava.  
+  stravaGear:
+      - gearId: 'g23671865'   # ASICS Gel-Nimbus 26 Shoe 
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 18999
+          currency: 'AUD'
+      - gearId: 'b5248891'    # Rocky Mountain Altitude 730 Mountain Bike
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 180000
+          currency: 'AUD'
+      - gearId: 'b13795730'   # Frankenstein Road Bike
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 200000
+          currency: 'AUD'
+      - gearId: 'g16767005'  # Nike InfinityRN 4 Shoe
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 16827
+          currency: 'AUD'
+      - gearId: 'g8312694'    # HOKA Bondi 7 Shoe
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 31998
+          currency: 'AUD'
+      - gearId: 'g19471623'    # HOKA Carbon X2 Shoe
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 23199
+          currency: 'AUD'
+      - gearId: 'g26338439'    # ASICS Trabuco Max 3 Shoe
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 18999
+          currency: 'AUD'
+      - gearId: 'g16162886'    # Brooks Adrenaline GTS 23 Shoe
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 25999
+          currency: 'AUD'  
+  customGear:
+    enabled: true
+    hashtagPrefix: sfs
+    customGears:
+      - tag: peddle-board
+        label: Peddle Board
+        isRetired: false
+      - tag: workout-shoes
+        label: Fancy workout shoes
+        isRetired: true
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null

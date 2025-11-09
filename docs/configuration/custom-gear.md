@@ -13,8 +13,8 @@ Statistics for Strava allows you to manage custom gear. This is useful for gear 
 
 ## How It Works
 
-Custom gear is configured using a YAML file called `custom-gear.yaml`. You can define any number of gear items and assign them to activities using hashtags in the Strava activity title (e.g. #sfs-peddle-board).
-Custom gears will work just like Strava-imported ones — tracking stats, allowing maintenance setup, and letting you filter them in overviews.
+Custom gear is configured in the main `config.yaml` file. You can define any number of gear items and assign them to activities using hashtags in the Strava activity title (e.g. #sfs-peddle-board).
+Custom gears will work just like Strava-imported ones: tracking stats, allowing maintenance setup, and letting you filter them in overviews.
 
 ## Setup
 
@@ -29,32 +29,34 @@ services:
       # ...
 ```
 
-* Create a new file `custom-gear.yaml` in `./config`
+* Create a new entry in `config/config.yaml`
 
 ## Example
 
 ```yaml
-# Enable or disable custom gear support
-enabled: true
-# Prefix for the hashtags used in the Strava activity title
-hashtagPrefix: sfs
-# List of custom gear entries
-customGears:
-    # Tag to be added to the Strava activity title.
-    # Will be combined with the hashtag-prefix and must be unique across all customGears
-    # Example: #sfs-peddle-board
-  - tag: peddle-board
-    # The readable name to display in the UI
-    label: Peddle Board
-    # If true, marks the gear as retired
-    isRetired: false
-    # Optional, used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 123456
-      currency: 'EUR'
-  - tag: workout-shoes
-    label: Fancy workout shoes
-    isRetired: true
+gear:
+  customGear:
+    # Enable or disable custom gear support
+    enabled: true
+    # Prefix for the hashtags used in the Strava activity title
+    hashtagPrefix: sfs
+    # List of custom gear entries
+    customGears:
+        # Tag to be added to the Strava activity title.
+        # Will be combined with the hashtag-prefix and must be unique across all customGears
+        # Example: #sfs-peddle-board
+      - tag: peddle-board
+        # The readable name to display in the UI
+        label: Peddle Board
+        # If true, marks the gear as retired
+        isRetired: false
+        # Optional, used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 123456
+          currency: 'EUR'
+      - tag: workout-shoes
+        label: Fancy workout shoes
+        isRetired: true
 ```
 
 <div class="alert important">

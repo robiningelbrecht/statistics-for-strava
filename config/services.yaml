@@ -203,11 +203,11 @@ services:
 
     App\Domain\Gear\CustomGear\CustomGearConfig:
         factory: [ null, 'fromArray' ]
-        arguments: ['@=app_config("customGear", [])']
+        arguments: ['@=app_config("gear.customGear", [])']
 
     App\Domain\Gear\ImportedGear\ImportedGearConfig:
       factory: [ null, 'fromArray' ]
-      arguments: ['@=app_config("stravaGear", [])']
+      arguments: ['@=app_config("gear.stravaGear", [])']
 
     App\Domain\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, 'fromArray' ]

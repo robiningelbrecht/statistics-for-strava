@@ -34,12 +34,6 @@ final class AppConfig
                 prefix: null,
             ),
             new YamlConfigFile(
-                filePath: $basePath.($isTest ? 'custom-gear_test.yaml' : 'custom-gear.yaml'),
-                isRequired: false,
-                needsNestedProcessing: false,
-                prefix: 'customGear',
-            ),
-            new YamlConfigFile(
                 filePath: $basePath.($isTest ? 'gear-maintenance_test.yaml' : 'gear-maintenance.yaml'),
                 isRequired: false,
                 needsNestedProcessing: false,
