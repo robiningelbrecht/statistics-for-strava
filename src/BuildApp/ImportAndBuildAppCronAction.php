@@ -79,6 +79,12 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
     public function run(SymfonyStyle $output): void
     {
+        $output->block(
+            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
+            style: 'fg=black;bg=green',
+            padding: true
+        );
+
         $this->runImport($output);
         $this->runBuild($output);
     }
@@ -94,12 +100,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         }
 
         $this->resourceUsage->startTimer();
-
-        $output->block(
-            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
-            style: 'fg=black;bg=green',
-            padding: true
-        );
 
         $output->writeln('Running database migrations...');
         $consoleApplication = $this->getConsoleApplication();
@@ -158,12 +158,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         $this->resourceUsage->startTimer();
 
         $now = $this->clock->getCurrentDateTimeImmutable();
-
-        $output->block(
-            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
-            style: 'fg=black;bg=green',
-            padding: true
-        );
 
         $output->writeln('Configuring locale...');
         $this->commandBus->dispatch(new ConfigureAppLocale());
