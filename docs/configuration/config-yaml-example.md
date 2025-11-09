@@ -157,13 +157,17 @@ metrics:
       showInNavBar: false
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
-# Optional, Used to enrich gear with data that cannot be configured in Strava.  
-stravaGear:
-  - gearId: 'g12337767'
-    # Used to calculate the relative cost per workout and hour.
-    purchasePrice:
-      amountInCents: 123456
-      currency: 'EUR'
+gear:
+    # Optional, Used to enrich gear with data that cannot be configured in Strava.  
+    stravaGear:
+      - gearId: 'g12337767'
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 123456
+          currency: 'EUR'
+    # Optional, this is useful for gear that Strava doesn't allow you to track
+    # Read how to configure on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear      
+    customGear: []
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
