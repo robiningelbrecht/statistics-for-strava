@@ -9,7 +9,7 @@ use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
-use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class GearMaintenanceNotificationCronAction implements RunnableCronAction
 {
@@ -30,7 +30,7 @@ final readonly class GearMaintenanceNotificationCronAction implements RunnableCr
         return 60;
     }
 
-    public function run(OutputInterface $output): void
+    public function run(SymfonyStyle $output): void
     {
         if ($this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty()) {
             return;

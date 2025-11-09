@@ -11,6 +11,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(name: 'app:cron:action', description: 'Run a cron action')]
 final class RunCronActionConsoleCommand extends Command
@@ -45,7 +46,7 @@ final class RunCronActionConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        $this->cron->getRunnable($runnableCronActionId)->run($output);
+        $this->cron->getRunnable($runnableCronActionId)->run(new SymfonyStyle($input, $output));
 
         return Command::SUCCESS;
     }
