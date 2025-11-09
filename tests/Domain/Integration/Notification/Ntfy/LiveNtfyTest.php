@@ -4,7 +4,9 @@ namespace App\Tests\Domain\Integration\Notification\Ntfy;
 
 use App\Domain\Integration\Notification\Ntfy\LiveNtfy;
 use App\Domain\Integration\Notification\Ntfy\Ntfy;
+use App\Domain\Integration\Notification\Ntfy\NtfyPassword;
 use App\Domain\Integration\Notification\Ntfy\NtfyUrl;
+use App\Domain\Integration\Notification\Ntfy\NtfyUsername;
 use App\Infrastructure\ValueObject\String\Url;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
@@ -36,7 +38,7 @@ class LiveNtfyTest extends TestCase
             title: 'The title',
             message: 'The message',
             tags: ['+1'],
-            click: null,
+            click: Url::fromString('https://robiningelbrecht.be'),
             icon: Url::fromString('https://raw.githubusercontent.com/robiningelbrecht/strava-statistics/master/public/assets/images/logo.png')
         );
     }
@@ -44,8 +46,10 @@ class LiveNtfyTest extends TestCase
     public function testSendNotificationWithoutUrl(): void
     {
         $this->ntfy = new LiveNtfy(
-            $this->client,
-            null,
+            client: $this->client,
+            ntfyUrl: null,
+            ntfyUsername: null,
+            ntfyPassword: null
         );
 
         $this->client
@@ -68,8 +72,10 @@ class LiveNtfyTest extends TestCase
         $this->client = $this->createMock(Client::class);
 
         $this->ntfy = new LiveNtfy(
-            $this->client,
-            NtfyUrl::fromString('https://ntfy.com/some-topic'),
+            client: $this->client,
+            ntfyUrl: NtfyUrl::fromString('https://ntfy.com/some-topic'),
+            ntfyUsername: NtfyUsername::fromString('Robin'),
+            ntfyPassword: NtfyPassword::fromString('password')
         );
     }
 }
