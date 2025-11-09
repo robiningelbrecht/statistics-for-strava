@@ -2,9 +2,13 @@
 
 namespace App\Console;
 
+use App\BuildApp\AppUrl;
 use App\BuildApp\AppVersion;
 use App\BuildApp\ImportAndBuildAppCronAction;
+use App\Domain\Integration\Notification\SendNotification\SendNotification;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
+use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -19,6 +23,9 @@ final class BuildAppConsoleCommand extends Command
 {
     public function __construct(
         private readonly ImportAndBuildAppCronAction $importAndBuildAppCronAction,
+        private readonly CommandBus $commandBus,
+        private readonly ResourceUsage $resourceUsage,
+        private readonly AppUrl $appUrl,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
@@ -30,6 +37,8 @@ final class BuildAppConsoleCommand extends Command
         /** @var \Symfony\Component\Console\Application $consoleApplication */
         $consoleApplication = $this->getApplication();
 
+        $this->resourceUsage->startTimer();
+
         $output->block(
             messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
             style: 'fg=black;bg=green',
@@ -38,6 +47,19 @@ final class BuildAppConsoleCommand extends Command
 
         $this->importAndBuildAppCronAction->setConsoleApplication($consoleApplication);
         $this->importAndBuildAppCronAction->runBuild($output);
+
+        $this->commandBus->dispatch(new SendNotification(
+            title: 'Build successful',
+            message: sprintf('New build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
+            tags: ['+1'],
+            actionUrl: $this->appUrl
+        ));
+
+        $this->resourceUsage->stopTimer();
+        $output->writeln(sprintf(
+            '<info>%s</info>',
+            $this->resourceUsage->format(),
+        ));
 
         return Command::SUCCESS;
     }
