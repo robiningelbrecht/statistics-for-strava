@@ -14,6 +14,10 @@ final readonly class LiveNtfy implements Ntfy
         private Client $client,
         #[\SensitiveParameter]
         private ?NtfyUrl $ntfyUrl,
+        #[\SensitiveParameter]
+        private ?NtfyUsername $ntfyUsername,
+        #[\SensitiveParameter]
+        private ?NtfyPassword $ntfyPassword,
     ) {
     }
 
@@ -41,6 +45,10 @@ final readonly class LiveNtfy implements Ntfy
 
         if ($click) {
             $headers['Actions'] = sprintf('view, Open app, %s, clear=true;', $click);
+        }
+
+        if ($this->ntfyUsername && $this->ntfyPassword) {
+            $headers['Authorization'] = 'Basic '.base64_encode($this->ntfyUsername.':'.$this->ntfyPassword);
         }
 
         $this->client->request(

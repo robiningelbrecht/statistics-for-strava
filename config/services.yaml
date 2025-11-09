@@ -127,7 +127,15 @@ services:
 
     App\Domain\Integration\Notification\Ntfy\NtfyUrl:
         factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("integrations.notifications.ntfyUrl")']
+        arguments: ['@=app_config("integrations.notifications.ntfyUrl", "")']
+
+    App\Domain\Integration\Notification\Ntfy\NtfyUsername:
+      factory: [ null, 'fromOptionalString' ]
+      arguments: ['@=app_config("integrations.notifications.ntfyUsername", "")']
+
+    App\Domain\Integration\Notification\Ntfy\NtfyPassword:
+      factory: [ null, 'fromOptionalString' ]
+      arguments: ['@=app_config("integrations.notifications.ntfyPassword", "")']
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]

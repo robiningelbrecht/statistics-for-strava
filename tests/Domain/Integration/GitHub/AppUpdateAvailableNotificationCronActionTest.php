@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Integration\GitHub;
 
+use App\BuildApp\AppVersion;
 use App\Domain\Integration\GitHub\AppUpdateAvailableNotificationCronAction;
 use App\Domain\Integration\GitHub\GitHub;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -30,6 +31,18 @@ class AppUpdateAvailableNotificationCronActionTest extends TestCase
 
         $this->cronAction->run(new SpyOutput());
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+    }
+
+    public function testRunWhenSameVersions(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with('GET', 'https://api.github.com/repos/robiningelbrecht/statistics-for-strava/releases/latest')
+            ->willReturn(new Response(status: 200, body: Json::encode(['name' => AppVersion::getSemanticVersion()])));
+
+        $this->cronAction->run(new SpyOutput());
+        $this->assertEmpty($this->commandBus->getDispatchedCommands());
     }
 
     protected function setUp(): void
