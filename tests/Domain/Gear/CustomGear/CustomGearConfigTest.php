@@ -4,6 +4,8 @@ namespace App\Tests\Domain\Gear\CustomGear;
 
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\InvalidCustomGearConfig;
+use App\Domain\Gear\GearId;
+use Money\Money;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -23,6 +25,67 @@ class CustomGearConfigTest extends TestCase
         $this->assertTrue(
             CustomGearConfig::fromArray($this->getValidYml())->isFeatureEnabled()
         );
+    }
+
+    public function testEnrichGearWithCustomAllData(): void
+    {
+        $customGear = CustomGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed('canyon'))
+            ->build();
+
+        $customGearConfig = CustomGearConfig::fromArray([
+            'enabled' => true,
+            'hashtagPrefix' => 'sfs',
+            'customGears' => [
+                [
+                    'tag' => 'canyon',
+                    'label' => 'canyon',
+                    'isRetired' => false,
+                    'purchasePrice' => [
+                        'amountInCents' => 100,
+                        'currency' => 'EUR',
+                    ],
+                ],
+            ],
+        ]);
+
+        $enrichedGear = $customGearConfig->enrichGearWithCustomData($customGear);
+
+        $this->assertEquals(
+            '#sfs-canyon',
+            $enrichedGear->getTag(),
+        );
+        $this->assertEquals(
+            Money::EUR(100),
+            $enrichedGear->getPurchasePrice(),
+        );
+    }
+
+    public function testEnrichGearWithoutPurchasePrice(): void
+    {
+        $customGear = CustomGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed('canyon'))
+            ->build();
+
+        $customGearConfig = CustomGearConfig::fromArray([
+            'enabled' => true,
+            'hashtagPrefix' => 'sfs',
+            'customGears' => [
+                [
+                    'tag' => 'canyon',
+                    'label' => 'canyon',
+                    'isRetired' => false,
+                ],
+            ],
+        ]);
+
+        $enrichedGear = $customGearConfig->enrichGearWithCustomData($customGear);
+
+        $this->assertEquals(
+            '#sfs-canyon',
+            $enrichedGear->getTag(),
+        );
+        $this->assertNull($enrichedGear->getPurchasePrice());
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
