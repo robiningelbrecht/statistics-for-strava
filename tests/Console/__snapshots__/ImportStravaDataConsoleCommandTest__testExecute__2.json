@@ -1,79 +1,8 @@
 [
     {
-        "commandName": "App\\Domain\\Athlete\\ImportAthlete\\ImportAthlete",
+        "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
         "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Gear\\ImportGear\\ImportGear",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\ImportActivities\\ImportActivities",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Gear\\CustomGear\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Split\\ImportActivitySplits\\ImportActivitySplits",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Lap\\ImportActivityLaps\\ImportActivityLaps",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Stream\\ImportActivityStreams\\ImportActivityStreams",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\BestEffort\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Segment\\ImportSegments\\ImportSegments",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Challenge\\ImportChallenges\\ImportChallenges",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Stream\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Stream\\CalculateNormalizedPower\\CalculateNormalizedPower",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Domain\\Activity\\Stream\\CombinedStream\\CalculateCombinedStreams\\CalculateCombinedStreams",
-        "payload": {
+            "consoleApplication": {},
             "output": {}
         }
     }

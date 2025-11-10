@@ -49,7 +49,6 @@ final class BuildAppConsoleCommand extends Command
         $this->commandBus->dispatch(new BuildApp(
             consoleApplication: $consoleApplication,
             output: $output,
-            now: $this->clock->getCurrentDateTimeImmutable()
         ));
 
         $this->resourceUsage->stopTimer();

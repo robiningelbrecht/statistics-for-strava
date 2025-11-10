@@ -53,7 +53,6 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
         $this->commandBus->dispatch(new BuildApp(
             consoleApplication: $this->getConsoleApplication(),
             output: $output,
-            now: $this->clock->getCurrentDateTimeImmutable()
         ));
 
         $this->commandBus->dispatch(new SendNotification(

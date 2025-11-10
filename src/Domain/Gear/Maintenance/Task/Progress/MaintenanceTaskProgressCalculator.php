@@ -40,7 +40,7 @@ final readonly class MaintenanceTaskProgressCalculator
     public function getGearIdsThatHaveDueTasks(): GearIds
     {
         $gearIdsThatHaveDueTasks = GearIds::empty();
-        if($this->gearMaintenanceConfig->isFeatureEnabled()){
+        if ($this->gearMaintenanceConfig->isFeatureEnabled()) {
             return $gearIdsThatHaveDueTasks;
         }
 

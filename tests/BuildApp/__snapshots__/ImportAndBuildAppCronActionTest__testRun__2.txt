@@ -1,0 +1,2 @@
+<fg=black;bg=green>StatisticsforStravav3.9.0</>
+<info>Time:10s,Memory:45MB</info>

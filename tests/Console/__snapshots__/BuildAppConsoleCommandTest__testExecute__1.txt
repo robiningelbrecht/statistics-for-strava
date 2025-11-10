@@ -1,23 +1,4 @@
 
 StatisticsforStravav3.9.0
 
-Configuringlocale...
-Configuringthemecolors...
-BuildingManifest...
-BuildingApp...
-=>Buildingindex
-=>Buildingdashboard
-=>Buildingactivities
-=>Buildinggpxfiles
-=>Buildingmonthly-stats
-=>Buildinggear-stats
-=>Buildinggear-maintenance
-=>Buildingeddington
-=>Buildingsegments
-=>Buildingheatmap
-=>Buildingbest-efforts
-=>Buildingrewind
-=>Buildingchallenges
-=>Buildingphotos
-=>Buildingbadges
 Time:10s,Memory:45MB
