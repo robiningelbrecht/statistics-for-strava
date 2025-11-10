@@ -4,10 +4,11 @@ namespace App\Console;
 
 use App\BuildApp\AppUrl;
 use App\BuildApp\AppVersion;
-use App\BuildApp\ImportAndBuildAppCronAction;
+use App\BuildApp\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -22,10 +23,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class BuildAppConsoleCommand extends Command
 {
     public function __construct(
-        private readonly ImportAndBuildAppCronAction $importAndBuildAppCronAction,
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
         private readonly AppUrl $appUrl,
+        private readonly Clock $clock,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
@@ -45,8 +46,11 @@ final class BuildAppConsoleCommand extends Command
             padding: true
         );
 
-        $this->importAndBuildAppCronAction->setConsoleApplication($consoleApplication);
-        $this->importAndBuildAppCronAction->runBuild($output);
+        $this->commandBus->dispatch(new BuildApp(
+            consoleApplication: $consoleApplication,
+            output: $output,
+            now: $this->clock->getCurrentDateTimeImmutable()
+        ));
 
         $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(

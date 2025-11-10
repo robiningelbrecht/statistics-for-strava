@@ -3,7 +3,8 @@
 namespace App\Console;
 
 use App\BuildApp\AppVersion;
-use App\BuildApp\ImportAndBuildAppCronAction;
+use App\Domain\Strava\ImportStravaData\ImportStravaData;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
@@ -19,7 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class ImportStravaDataConsoleCommand extends Command
 {
     public function __construct(
-        private readonly ImportAndBuildAppCronAction $importAndBuildAppCronAction,
+        private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
         private readonly LoggerInterface $logger,
     ) {
@@ -41,8 +42,10 @@ final class ImportStravaDataConsoleCommand extends Command
 
         $this->resourceUsage->startTimer();
 
-        $this->importAndBuildAppCronAction->setConsoleApplication($consoleApplication);
-        $this->importAndBuildAppCronAction->runImport($output);
+        $this->commandBus->dispatch(new ImportStravaData(
+            consoleApplication: $consoleApplication,
+            output: $output,
+        ));
 
         $this->resourceUsage->stopTimer();
         $output->writeln(sprintf(
