@@ -14,7 +14,7 @@ use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class ImportAndBuildAppCronAction implements RunnableCronAction
+final class importDataAndBuildAppCronAction implements RunnableCronAction
 {
     use ConsoleApplicationAware;
 
@@ -28,7 +28,7 @@ final class ImportAndBuildAppCronAction implements RunnableCronAction
 
     public function getId(): string
     {
-        return 'importAndBuildApp';
+        return 'importDataAndBuildApp';
     }
 
     public function getMutexTtl(): int

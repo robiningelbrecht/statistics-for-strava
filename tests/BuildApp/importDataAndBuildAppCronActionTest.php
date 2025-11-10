@@ -3,7 +3,7 @@
 namespace App\Tests\BuildApp;
 
 use App\BuildApp\AppUrl;
-use App\BuildApp\ImportAndBuildAppCronAction;
+use App\BuildApp\importDataAndBuildAppCronAction;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
@@ -16,11 +16,11 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class ImportAndBuildAppCronActionTest extends TestCase
+class importDataAndBuildAppCronActionTest extends TestCase
 {
     use MatchesSnapshots;
 
-    private ImportAndBuildAppCronAction $importAndBuildAppCronAction;
+    private importDataAndBuildAppCronAction $importAndBuildAppCronAction;
     private CommandBus $commandBus;
 
     public function testRun(): void
@@ -37,7 +37,7 @@ class ImportAndBuildAppCronActionTest extends TestCase
     {
         parent::setUp();
 
-        $this->importAndBuildAppCronAction = new ImportAndBuildAppCronAction(
+        $this->importAndBuildAppCronAction = new importDataAndBuildAppCronAction(
             $this->commandBus = new SpyCommandBus(),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
