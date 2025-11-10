@@ -8,7 +8,6 @@ use App\Domain\Gear\Gears;
 use App\Domain\Gear\GearType;
 use App\Domain\Gear\ProvideGearRepositoryHelpers;
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\ValueObject\String\Tag;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalCustomGearRepository extends DbalRepository implements CustomGearRepository
@@ -59,16 +58,13 @@ final readonly class DbalCustomGearRepository extends DbalRepository implements 
 
     private function enrichGears(Gears $gears): Gears
     {
-        $gearsWithTags = Gears::empty();
+        $enrichedGears = Gears::empty();
         /** @var CustomGear $gear */
         foreach ($gears as $gear) {
-            $gearsWithTags->add($gear->withFullTag(Tag::fromTags(
-                (string) $this->customGearConfig->getHashtagPrefix(),
-                $gear->getId()->toUnprefixedString()
-            )));
+            $enrichedGears->add($this->customGearConfig->enrichGearWithCustomData($gear));
         }
 
-        return $gearsWithTags;
+        return $enrichedGears;
     }
 
     public function removeAll(): void
