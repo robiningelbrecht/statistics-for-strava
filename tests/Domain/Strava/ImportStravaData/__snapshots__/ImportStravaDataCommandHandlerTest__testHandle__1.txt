@@ -1,0 +1,14 @@
+Runningdatabasemigrations...
+
+
+<comment>STRAVAAPIRATELIMITS</>
+<comment>======================</>
+
+
+*15minrate:20/200
+*15minreadrate:10/100
+*dailyrate:10/2000
+*dailyreadrate:14/1000
+
+
+Databasegotvacuumed🧹

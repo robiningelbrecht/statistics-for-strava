@@ -1,0 +1,1 @@
+<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>

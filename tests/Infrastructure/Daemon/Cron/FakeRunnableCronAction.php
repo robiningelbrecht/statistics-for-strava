@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Infrastructure\Daemon\Cron;
 
+use App\Infrastructure\Console\ConsoleApplicationAware;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final readonly class FakeRunnableCronAction implements RunnableCronAction
+final class FakeRunnableCronAction implements RunnableCronAction
 {
+    use ConsoleApplicationAware;
+
     public function getId(): string
     {
         return 'fake';

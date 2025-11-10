@@ -1,5 +1,12 @@
 [
     {
+        "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
+        "payload": {
+            "consoleApplication": {},
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\BuildApp\\BuildApp\\BuildApp",
         "payload": {
             "consoleApplication": {},
@@ -10,11 +17,11 @@
         "commandName": "App\\Domain\\Integration\\Notification\\SendNotification\\SendNotification",
         "payload": {
             "title": "Build successful",
-            "message": "New build of your Strava stats was successful in 10s",
+            "message": "New import and build of your Strava stats was successful in 10s",
             "tags": [
                 "+1"
             ],
-            "actionUrl": "https://localhost"
+            "actionUrl": "http://localhost"
         }
     }
 ]

@@ -1,1 +1,0 @@
-Make sure the container has write permissions to "storage/database" and "storage/files" on the host system
