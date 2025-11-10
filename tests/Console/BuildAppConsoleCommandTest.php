@@ -7,8 +7,6 @@ use App\Console\BuildAppConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -60,7 +58,6 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
             commandBus: $this->commandBus,
             resourceUsage: new FixedResourceUsage(),
             appUrl: AppUrl::fromString('https://localhost'),
-            clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
             logger: $this->logger
         );
     }
