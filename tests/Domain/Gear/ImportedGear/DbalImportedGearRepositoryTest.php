@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Gear\ImportedGear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\ImportedGear\DbalImportedGearRepository;
+use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -102,7 +103,8 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->importedGearRepository = new DbalImportedGearRepository(
-            $this->getConnection()
+            $this->getConnection(),
+            $this->getContainer()->get(ImportedGearConfig::class),
         );
     }
 }

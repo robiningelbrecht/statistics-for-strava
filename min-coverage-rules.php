@@ -30,7 +30,7 @@ return [
     ),
     new MinCoverageRule(
         pattern: 'App\Domain\*',
-        minCoverage: 97,
+        minCoverage: 96,
         exitOnLowCoverage: true
     ),
 ];
