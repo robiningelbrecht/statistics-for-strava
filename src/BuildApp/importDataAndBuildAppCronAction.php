@@ -10,7 +10,6 @@ use App\Domain\Strava\ImportStravaData\ImportStravaData;
 use App\Infrastructure\Console\ConsoleApplicationAware;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
-use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -22,7 +21,6 @@ final class importDataAndBuildAppCronAction implements RunnableCronAction
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
         private readonly AppUrl $appUrl,
-        private readonly Clock $clock,
     ) {
     }
 
