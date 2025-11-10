@@ -206,6 +206,8 @@ integrations:
 daemon:
   # A list of actions that the application runs at regular intervals according to their defined schedule.
   # Notification-related actions require the integrations.notifications.ntfyUrl setting to be configured.
+  # ⚠️ This configuration only applies if you have set up the daemon container:
+  #   https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml
   cron:
       # Action name. Allowed values: importAndBuildApp, gearMaintenanceNotification, appUpdateAvailableNotification
     - action: 'importAndBuildApp'

@@ -40,6 +40,10 @@ final readonly class MaintenanceTaskProgressCalculator
     public function getGearIdsThatHaveDueTasks(): GearIds
     {
         $gearIdsThatHaveDueTasks = GearIds::empty();
+        if($this->gearMaintenanceConfig->isFeatureEnabled()){
+            return $gearIdsThatHaveDueTasks;
+        }
+
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
         $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
 

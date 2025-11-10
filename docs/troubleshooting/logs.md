@@ -56,3 +56,18 @@ These logs capture all output from the CLI, providing a history of your imports 
 [2025-06-04T05:50:32.359225+00:00] console-output.INFO:   => Building badges [] []
 [2025-06-04T05:50:32.385393+00:00] console-output.INFO: <info>Time: 31.739s, Memory: 206.50 MB, Peak Memory: 212.50 MB</info> [] []
 ```
+
+## Daemon logs
+
+These logs capture all output from the Daemon running recurring background tasks.
+
+```log
+[2025-11-10T09:28:55.650390+00:00] daemon.INFO:   [] []
+[2025-11-10T09:28:55.654875+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
+[2025-11-10T09:28:55.655126+00:00] daemon.INFO: <fg=black;bg=green> Statistics for Strava v3.9.0 | DAEMON                                                                                  </> [] []
+[2025-11-10T09:28:55.655243+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
+[2025-11-10T09:28:55.655363+00:00] daemon.INFO: <fg=black;bg=green> Started on 10-11-2025 10:28:55                                                                                         </> [] []
+[2025-11-10T09:28:55.655504+00:00] daemon.INFO: <fg=black;bg=green>                                                                                                                        </> [] []
+[2025-11-10T09:28:55.655637+00:00] daemon.INFO:   [] []
+[2025-11-10T09:28:55.655723+00:00] daemon.INFO: <info>No cron items configured, shutting down cron...</info> [] []
+```
