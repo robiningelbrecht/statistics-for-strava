@@ -8,7 +8,6 @@ use App\BuildApp\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
-use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -26,7 +25,6 @@ final class BuildAppConsoleCommand extends Command
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
         private readonly AppUrl $appUrl,
-        private readonly Clock $clock,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
