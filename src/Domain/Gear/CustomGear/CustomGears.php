@@ -9,6 +9,9 @@ use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<CustomGear>
+ */
 final class CustomGears extends Collection
 {
     public function getItemClassName(): string
