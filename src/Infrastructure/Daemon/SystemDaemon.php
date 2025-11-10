@@ -77,15 +77,15 @@ final class SystemDaemon implements Daemon
             );
         }
 
+        \WyriHaximus\React\Cron::create(...$actions)->on('error', function (\Throwable $throwable): void {
+            $this->getConsoleOutput()->writeln(sprintf('<error>%s</error>', $throwable->getMessage()));
+        });
+
         if (empty($actions)) {
             $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
 
             return;
         }
-
-        \WyriHaximus\React\Cron::create(...$actions)->on('error', function (\Throwable $throwable): void {
-            $this->getConsoleOutput()->writeln(sprintf('<error>%s</error>', $throwable->getMessage()));
-        });
 
         $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'Cron configured'));
         $this->getConsoleOutput()->writeln(array_map(
