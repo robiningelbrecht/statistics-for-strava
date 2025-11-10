@@ -47,7 +47,7 @@ final class InMemoryCommandBus implements CommandBus
         try {
             $this->bus->dispatch($command);
         } catch (NoHandlerForMessageException) {
-            throw new \InvalidArgumentException(sprintf('The command has not a valid handler: %s', $command::class));
+            throw new NoHandlerForMessageException($command::class);
         } catch (HandlerFailedException $e) {
             if (!is_null($e->getPrevious())) {
                 throw $e->getPrevious();

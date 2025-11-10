@@ -8,6 +8,7 @@ use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation;
 use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperationCommandHandler;
 use App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperationCommand\RunAnOperationCommandCommandHandler;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 
 class InMemoryCommandBusTest extends KernelTestCase
 {
@@ -27,8 +28,8 @@ class InMemoryCommandBusTest extends KernelTestCase
     {
         $commandBus = new InMemoryCommandBus([]);
 
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The command has not a valid handler: App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation');
+        $this->expectException(NoHandlerForMessageException::class);
+        $this->expectExceptionMessage('App\Tests\Infrastructure\CQRS\Command\Bus\RunAnOperation\RunAnOperation');
 
         $commandBus->dispatch(new RunAnOperation('test'));
     }
