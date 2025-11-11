@@ -73,7 +73,7 @@ enum ActivityType: string implements TranslatableInterface
     public function supportsDistanceBreakdownStats(): bool
     {
         return match ($this) {
-            self::RUN, self::RIDE, self::SKATING => true,
+            self::RUN, self::RIDE, self::WALK, self::SKATING => true,
             default => false,
         };
     }
