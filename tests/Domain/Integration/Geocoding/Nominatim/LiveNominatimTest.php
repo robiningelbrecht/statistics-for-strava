@@ -11,6 +11,8 @@ use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -37,6 +39,26 @@ class LiveNominatimTest extends TestCase
                     'address' => [],
                 ]));
             });
+
+        $this->nominatim->reverseGeocode(
+            Coordinate::createFromLatAndLng(
+                latitude: Latitude::fromString('80'),
+                longitude: Longitude::fromString('100'),
+            )
+        );
+    }
+
+    public function testReverseGeocodeWhenException(): void
+    {
+        $this->expectExceptionObject(new CouldNotReverseGeocodeAddress());
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->willThrowException(new ConnectException(
+                message: 'test',
+                request: new Request('GET', 'https://nominatim.openstreetmap.org/reverse'),
+            ));
 
         $this->nominatim->reverseGeocode(
             Coordinate::createFromLatAndLng(
