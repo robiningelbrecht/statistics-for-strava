@@ -41,28 +41,28 @@ services:
     ports:
       - 8080:8080
 
-    # ⚠️ This container is optional, it is not required to run Statistics for Strava.
-    # Its purpose is to handle recurring background tasks, such as:
-    #   - Importing and building Strava data
-    #   - Sending notifications when gear maintenance is due
-    #   - Sending notifications when a new app version becomes available
-    #
-    # These tasks can be configured in the main configuration file under the `daemon` section:
-    #   https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
-    #
-    # If you prefer to trigger these tasks manually, you can omit this container entirely.
-    daemon:
-      image: robiningelbrecht/strava-statistics:latest
-      container_name: statistics-for-strava-daemon
-      restart: unless-stopped
-      volumes:
-        - ./config/app:/var/www/config/app
-        - ./storage/database:/var/www/storage/database
-        - ./storage/files:/var/www/storage/files
-      env_file: ./.env
-      entrypoint: ['bin/console', 'app:daemon:run']
-      networks:
-        - statistics-for-strava-network
+  # ⚠️ This container is optional, it is not required to run Statistics for Strava.
+  # Its purpose is to handle recurring background tasks, such as:
+  #   - Importing and building Strava data
+  #   - Sending notifications when gear maintenance is due
+  #   - Sending notifications when a new app version becomes available
+  #
+  # These tasks can be configured in the main configuration file under the `daemon` section:
+  #   https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+  #
+  # If you prefer to trigger these tasks manually, you can omit this container entirely.
+  daemon:
+    image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava-daemon
+    restart: unless-stopped
+    volumes:
+      - ./config:/var/www/config/app
+      - ./storage/database:/var/www/storage/database
+      - ./storage/files:/var/www/storage/files
+    env_file: ./.env
+    entrypoint: ['bin/console', 'app:daemon:run']
+    networks:
+      - statistics-for-strava-network
 ```
 
 ## .env
