@@ -436,10 +436,15 @@
                                     <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
                                 </div>
                             {% endif %}
+                            {% if velocityDistributionChart %}
+                                <div>
+                                    <h3 class="font-bold mb-1 text-center">{{ "Speed distribution"|trans }}</h3>
+                                    <div class="h-[350px]" data-echarts-options='{{ velocityDistributionChart }}'></div>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endif %}
-            </div>
         </div>
     </div>
 {% endautoescape %}
