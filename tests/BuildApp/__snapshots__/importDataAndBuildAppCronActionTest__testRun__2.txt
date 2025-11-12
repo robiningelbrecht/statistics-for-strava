@@ -1,2 +1,2 @@
-<fg=black;bg=green>StatisticsforStravav3.9.0</>
+<fg=black;bg=green>StatisticsforStravav4.0.0</>
 <info>Time:10s,Memory:45MB</info>

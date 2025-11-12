@@ -1,3 +1,38 @@
+# [v4.0.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.0) - 2025-11-12
+
+> [!WARNING]  
+> New major release, several breaking changes!
+>
+> 1. The config option `general.ntfyUrl` has been moved to `integrations.notifications.ntfyUrl`
+> 2. The config option `stravaGear` has been moved to `gear.stravaGear`
+> 3. The separate config file `custom-gear.yaml` has been removed.
+>    Its configuration has been merged into the main config file under `gear.customGear`
+> 
+> Simply copy/paste your existing values into their new locations.
+> https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+🔥This new release adds several new features and improvements. 
+The highlight is the addition of an internal scheduler, allowing you to define and run recurring background tasks directly within the app.
+
+If you prefer, you can still use external tools to trigger the import and build scripts.
+However, to use the internal scheduler, you’ll need to configure two things:
+
+* An extra container in your `docker-compose.yml` file: https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml
+* The recurring tasks in your main config file under `daemin.cron`: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* syntax fix by @oregonpillow in https://github.com/robiningelbrecht/statistics-for-strava/pull/1362
+* ISSUE #1282: Gear maintenance notifications by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1361
+* ISSUE #1336: Move custom gear config to main config file by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1363
+* ISSUE #1366: Fix Custom Gear Cost Calculation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1367
+* ISSUE #1368: Distance breakdown for walks by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1374
+* ISSUE #1371: Do not crash import when nominatim fails us by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1375
+
+## New Contributors
+* @oregonpillow made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1362
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v3.9.0...v4.0.0
+
 # [v3.9.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v3.9.0) - 2025-11-06
 
 🔥 This release includes a complete rewrite of the data import process, making it significantly faster, especially for partial imports.

@@ -1,4 +1,4 @@
 
-StatisticsforStravav3.9.0
+StatisticsforStravav4.0.0
 
 Time:10s,Memory:45MB
