@@ -4,25 +4,27 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
-final readonly class PowerDistributionChart
+use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+
+final readonly class VelocityDistributionChart
 {
     private function __construct(
-        /** @var array<int, int> */
-        private array $powerData,
-        private int $averagePower,
+        /** @var array<int, float> */
+        private array $velocityData,
+        private KmPerHour $averageSpeed,
     ) {
     }
 
     /**
-     * @param array<int, int> $powerData
+     * @param array<int, float> $velocityData
      */
     public static function create(
-        array $powerData,
-        int $averagePower,
+        array $velocityData,
+        KmPerHour $averageSpeed,
     ): self {
         return new self(
-            powerData: $powerData,
-            averagePower: $averagePower,
+            velocityData: $velocityData,
+            averageSpeed: $averageSpeed,
         );
     }
 
@@ -31,35 +33,34 @@ final readonly class PowerDistributionChart
      */
     public function build(): array
     {
-        // Calculate all data related things.
-        /** @var non-empty-array<int, int> $powerData */
-        $powerData = $this->powerData;
-        $powers = array_keys($powerData);
-        $minPower = 0;
-        $maxPower = (int) ceil(max($powers) / 100) * 100;
+        /** @var non-empty-array<int, int> $velocityData */
+        $velocityData = $this->velocityData;
+        $velocities = array_keys($velocityData);
+        $minVelocity = (int) floor(min($velocities) / 10) * 10;
+        $maxVelocity = (int) ceil(max($velocities) / 10) * 10;
 
-        foreach (range($minPower, $maxPower) as $power) {
-            if (array_key_exists($power, $this->powerData)) {
+        foreach (range($minVelocity, $maxVelocity) as $velocity) {
+            if (array_key_exists($velocity, $this->velocityData)) {
                 continue;
             }
-            $powerData[$power] = 0;
+            $velocityData[$velocity] = 0;
         }
-        ksort($powerData);
+        ksort($velocityData);
 
-        $step = (int) floor(($maxPower - $minPower) / 24) ?: 1;
-        $xAxisValues = range($minPower, $maxPower, $step);
-        if (end($xAxisValues) < $maxPower) {
-            $xAxisValues[] = $maxPower;
+        $step = (int) floor(($maxVelocity - $minVelocity) / 24) ?: 1;
+        $xAxisValues = range($minVelocity, $maxVelocity, $step);
+        if (end($xAxisValues) < $maxVelocity) {
+            $xAxisValues[] = $maxVelocity;
         }
 
-        $totalTimeInSeconds = array_sum($powerData);
+        $totalTimeInSeconds = array_sum($velocityData);
         $data = [];
         foreach ($xAxisValues as $axisValue) {
-            $data[] = array_sum(array_splice($powerData, 0, $step)) / $totalTimeInSeconds * 100;
+            $data[] = array_sum(array_splice($velocityData, 0, $step)) / $totalTimeInSeconds * 100;
         }
         // @phpstan-ignore-next-line
         $yAxisMax = max($data) * 1.2;
-        $xAxisValueAveragePower = array_search(floor($this->averagePower / $step) * $step, $xAxisValues);
+        $xAxisValueAverageVelocity = array_search(floor($this->averageSpeed->toFloat() / $step) * $step, $xAxisValues);
 
         return [
             'grid' => [
@@ -120,8 +121,8 @@ final readonly class PowerDistributionChart
                         ],
                         'data' => [
                             [
-                                'value' => $this->averagePower,
-                                'coord' => [$xAxisValueAveragePower, $yAxisMax * 0.9],
+                                'value' => $this->averageSpeed,
+                                'coord' => [$xAxisValueAverageVelocity, $yAxisMax * 0.9],
                             ],
                         ],
                     ],
@@ -138,8 +139,8 @@ final readonly class PowerDistributionChart
                         ],
                         'data' => [
                             [
-                                ['xAxis' => $xAxisValueAveragePower, 'yAxis' => 0],
-                                ['xAxis' => $xAxisValueAveragePower, 'yAxis' => $yAxisMax * 0.9],
+                                ['xAxis' => $xAxisValueAverageVelocity, 'yAxis' => 0],
+                                ['xAxis' => $xAxisValueAverageVelocity, 'yAxis' => $yAxisMax * 0.9],
                             ],
                         ],
                         'silent' => true,

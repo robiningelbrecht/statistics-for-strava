@@ -23,4 +23,9 @@ interface ActivityPowerRepository
      * @return array<int, int>
      */
     public function findTimeInSecondsPerWattageForActivity(ActivityId $activityId): array;
+
+    /**
+     * @return array<int, float>
+     */
+    public function findTimeInSecondsPerVelocityForActivity(ActivityId $activityId): array;
 }

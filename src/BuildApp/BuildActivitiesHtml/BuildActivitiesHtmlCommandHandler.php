@@ -21,6 +21,7 @@ use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Activity\VelocityDistributionChart;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 use App\Domain\Gear\GearRepository;
@@ -114,11 +115,19 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
             $timeInSecondsPerWattage = null;
             $powerDistributionChart = null;
+            $velocityDistributionChart = null;
             if ($activityType->supportsPowerData() && $activity->getAveragePower()
                 && ($timeInSecondsPerWattage = $this->activityPowerRepository->findTimeInSecondsPerWattageForActivity($activity->getId()))) {
                 $powerDistributionChart = PowerDistributionChart::create(
                     powerData: $timeInSecondsPerWattage,
                     averagePower: $activity->getAveragePower(),
+                );
+            }
+            if ($activity->getAverageSpeed()
+                && ($timeInSecondsPerVelocity = $this->activityPowerRepository->findTimeInSecondsPerVelocityForActivity($activity->getId()))) {
+                $velocityDistributionChart = VelocityDistributionChart::create(
+                    velocityData: $timeInSecondsPerVelocity,
+                    averageSpeed: $activity->getAverageSpeed(),
                 );
             }
 
@@ -191,6 +200,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
             $leafletMap = $activity->getLeafletMap();
             $templateName = sprintf('html/activity/%s.html.twig', $activity->getSportType()->getTemplateName());
+
             $this->buildStorage->write(
                 'activity/'.$activity->getId().'.html',
                 $this->twig->load($templateName)->render([
@@ -201,6 +211,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     ] : null,
                     'heartRateDistributionChart' => $heartRateDistributionChart ? Json::encode($heartRateDistributionChart->build()) : null,
                     'powerDistributionChart' => $powerDistributionChart ? Json::encode($powerDistributionChart->build()) : null,
+                    'velocityDistributionChart'=> $velocityDistributionChart ? Json::encode($velocityDistributionChart->build()) : null,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
