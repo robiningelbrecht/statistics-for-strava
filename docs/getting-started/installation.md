@@ -43,6 +43,8 @@ services:
       start_period: 60s
     ports:
       - 8080:8080
+    networks:
+      - statistics-for-strava-network
 
   # ⚠️ This container is optional, it is not required to run Statistics for Strava.
   # Its purpose is to handle recurring background tasks, such as:
@@ -66,6 +68,9 @@ services:
     entrypoint: ['bin/console', 'app:daemon:run']
     networks:
       - statistics-for-strava-network
+
+networks:
+  statistics-for-strava-network:
 ```
 
 ## .env
