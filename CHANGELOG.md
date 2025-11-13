@@ -1,3 +1,15 @@
+# [v4.0.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.1) - 2025-11-13
+
+## What's Changed
+* Update daemon container configuration in installation.md by @jparnellx in https://github.com/robiningelbrecht/statistics-for-strava/pull/1380
+* ISSUE #1379: Consider cron expression * * * * * as a misconfiguration by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1382
+* ISSUE #1379: Disable Daemon debug mode in Docker image by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1382
+
+## New Contributors
+* @jparnellx made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1380
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.0...v4.0.1
+
 # [v4.0.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.0) - 2025-11-12
 
 > [!WARNING]  
