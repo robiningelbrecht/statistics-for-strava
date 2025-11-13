@@ -100,14 +100,17 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             );
         }
 
-        $gearsThatAttachedToComponents = Gears::empty();
+        $gearsThatIsAttachedToComponents = Gears::empty();
         /** @var GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getAttachedTo() as $attachedToGearId) {
                 if (!$gear = $gears->getByGearId($attachedToGearId)) {
                     continue;
                 }
-                if ($gearsThatAttachedToComponents->has($gear)) {
+                if ($gearsThatIsAttachedToComponents->has($gear)) {
+                    continue;
+                }
+                if ($gear->isRetired() && $this->gearMaintenanceConfig->ignoreRetiredGear()) {
                     continue;
                 }
 
@@ -116,11 +119,11 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
                     $gear->enrichWithImageSrc('/gear-maintenance/'.$imageSrc);
                 }
 
-                $gearsThatAttachedToComponents->add($gear);
+                $gearsThatIsAttachedToComponents->add($gear);
             }
         }
 
-        if ($gearsThatAttachedToComponents->isEmpty()) {
+        if ($gearsThatIsAttachedToComponents->isEmpty()) {
             $errors[] = $this->translator->trans('It looks like no valid gear is attached to any of the components. Please check your config file.');
         }
 
@@ -132,13 +135,13 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
             $this->twig->load('html/gear/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
                 'warnings' => $warnings,
-                'gearsAttachedToComponents' => $gearsThatAttachedToComponents,
+                'gearsAttachedToComponents' => $gearsThatIsAttachedToComponents,
                 'gearComponents' => $allGearComponents,
                 'gearIdsThatHaveDueTasks' => $this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks(),
             ])
         );
 
-        foreach ($gearsThatAttachedToComponents as $gear) {
+        foreach ($gearsThatIsAttachedToComponents as $gear) {
             $this->buildStorage->write(
                 sprintf('gear/maintenance/history/%s.html', $gear->getId()),
                 $this->twig->load('html/gear/gear-maintenance-history.html.twig')->render([

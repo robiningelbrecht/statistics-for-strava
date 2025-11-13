@@ -22,6 +22,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
         private bool $isFeatureEnabled,
         private HashtagPrefix $hashtagPrefix,
         private GearMaintenanceCountersResetMode $resetMode,
+        private bool $ignoreRetiredGear,
     ) {
         $this->gearComponents = GearComponents::empty();
         $this->gearOptions = GearOptions::empty();
@@ -38,6 +39,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),
                 resetMode: GearMaintenanceCountersResetMode::NEXT_ACTIVITY_ONWARDS,
+                ignoreRetiredGear: false,
             );
         }
 
@@ -64,11 +66,16 @@ final readonly class GearMaintenanceConfig implements \Stringable
             }
         }
 
+        if (array_key_exists('ignoreRetiredGear', $config) && !is_bool($config['ignoreRetiredGear'])) {
+            throw new InvalidGearMaintenanceConfig('"ignoreRetiredGear" property must be a boolean');
+        }
+
         $hashtagPrefix = HashtagPrefix::fromString($config['hashtagPrefix']);
         $gearMaintenanceConfig = new self(
             isFeatureEnabled: $config['enabled'],
             hashtagPrefix: $hashtagPrefix,
-            resetMode: $resetMode
+            resetMode: $resetMode,
+            ignoreRetiredGear: !empty($config['ignoreRetiredGear']),
         );
 
         foreach ($config['components'] as $component) {
@@ -172,6 +179,11 @@ final readonly class GearMaintenanceConfig implements \Stringable
     public function getHashtagPrefix(): HashtagPrefix
     {
         return $this->hashtagPrefix;
+    }
+
+    public function ignoreRetiredGear(): bool
+    {
+        return $this->ignoreRetiredGear;
     }
 
     public function getGearComponents(): GearComponents

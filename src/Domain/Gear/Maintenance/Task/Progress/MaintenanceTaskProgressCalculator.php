@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
@@ -19,6 +20,7 @@ final readonly class MaintenanceTaskProgressCalculator
         private iterable $maintenanceTaskProgressCalculations,
         private GearMaintenanceConfig $gearMaintenanceConfig,
         private MaintenanceTaskTagRepository $maintenanceTaskTagRepository,
+        private GearRepository $gearRepository,
     ) {
     }
 
@@ -44,6 +46,7 @@ final readonly class MaintenanceTaskProgressCalculator
             return $gearIdsThatHaveDueTasks;
         }
 
+        $allGears = $this->gearRepository->findAll();
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
         $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
 
@@ -68,6 +71,9 @@ final readonly class MaintenanceTaskProgressCalculator
 
                 if ($maintenanceTaskProgress->isDue()) {
                     foreach ($gearComponent->getAttachedTo() as $gearId) {
+                        if ($this->gearMaintenanceConfig->ignoreRetiredGear() && $allGears->getByGearId($gearId)?->isRetired()) {
+                            continue;
+                        }
                         $gearIdsThatHaveDueTasks->add($gearId);
                     }
                 }

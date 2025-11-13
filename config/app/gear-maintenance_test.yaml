@@ -1,5 +1,6 @@
 enabled: true
 hashtagPrefix: sfs
+ignoreRetiredGear: true
 components:
   - tag: chain
     label: Some cool chain
@@ -7,6 +8,7 @@ components:
     attachedTo:
       - g1233776
       - '10130856'
+      - retired
     maintenance:
       - tag: lubed
         label: Lube

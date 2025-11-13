@@ -44,6 +44,8 @@ hashtagPrefix: 'sfs'
 # If set to "currentActivityOnwards", adding a maintenance hashtag to an activity title will reset the counters from the tagged activity onwards.
 # If you are unsure, set this to "nextActivityOnwards" as this is the most common use case.
 countersResetMode: nextActivityOnwards
+# Set to true to ignore retired gear
+ignoreRetiredGear: false
 components:
   # Tag to be added to the Strava activity title.
   # Will be combined with the hashtag-prefix and must be unique across all components.
