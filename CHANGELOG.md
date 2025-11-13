@@ -1,3 +1,16 @@
+# [v4.0.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.2) - 2025-11-14
+
+## What's Changed
+* ISSUE #1352: Add Pace Distribution Plot In Activity Details Page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1377
+* Ensure docker-compose in documentation is valid by @bastantoine in https://github.com/robiningelbrecht/statistics-for-strava/pull/1387
+* ISSUE #1385: Add an option to hide retired gear from maintenance page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1388
+* ISSUE #1381: Add ability to sort power on best 5s, best 10s etc by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1389
+
+## New Contributors
+* @bastantoine made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1387
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.1...v4.0.2
+
 # [v4.0.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.1) - 2025-11-13
 
 ## What's Changed
