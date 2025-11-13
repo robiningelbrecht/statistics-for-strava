@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Stream;
 
-use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Athlete\AthleteRepository;
@@ -71,29 +70,6 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
             timeInZoneFour: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::FOUR],
             timeInZoneFive: StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays[HeartRateZone::FIVE],
         );
-    }
-
-    /**
-     * @return array<int, int>
-     */
-    public function findTimeInSecondsPerHeartRateForActivity(ActivityId $activityId): array
-    {
-        if (!$this->activityStreamRepository->hasOneForActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::HEART_RATE
-        )) {
-            return [];
-        }
-
-        $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::HEART_RATE
-        );
-        $data = $stream->getData();
-        $heartRateStreamForActivity = array_count_values($data);
-        ksort($heartRateStreamForActivity);
-
-        return $heartRateStreamForActivity;
     }
 
     private function buildHeartRateZoneCache(): void

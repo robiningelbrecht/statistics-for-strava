@@ -391,7 +391,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if (powerDistributionChart or heartRateDistributionChart) and profileCharts is not empty  %}
+            {% if distributionCharts is not empty and profileCharts is not empty  %}
                 <div class="tabs tabs--default">
                     <ul id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
                         <li role="presentation">
@@ -421,27 +421,15 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if powerDistributionChart or heartRateDistributionChart %}
+                {% if distributionCharts is not empty %}
                     <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                            {% if powerDistributionChart %}
+                            {% for distributionChart in distributionCharts %}
                                 <div>
-                                    <h3 class="font-bold mb-1 text-center">{{ "Power distribution"|trans }}</h3>
-                                    <div class="h-[350px]" data-echarts-options='{{ powerDistributionChart }}'></div>
+                                    <h3 class="font-bold mb-1 text-center">{{ distributionChart.title }}</h3>
+                                    <div class="h-[350px]" data-echarts-options='{{ distributionChart.data }}'></div>
                                 </div>
-                            {% endif %}
-                            {% if heartRateDistributionChart %}
-                                <div>
-                                    <h3 class="font-bold mb-1 text-center">{{ "Heart rate distribution"|trans }}</h3>
-                                    <div class="h-[350px]" data-echarts-options='{{ heartRateDistributionChart }}'></div>
-                                </div>
-                            {% endif %}
-                            {% if velocityDistributionChart %}
-                                <div>
-                                    <h3 class="font-bold mb-1 text-center">{{ "Speed distribution"|trans }}</h3>
-                                    <div class="h-[350px]" data-echarts-options='{{ velocityDistributionChart }}'></div>
-                                </div>
-                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
                 {% endif %}

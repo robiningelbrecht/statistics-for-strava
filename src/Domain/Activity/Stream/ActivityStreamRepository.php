@@ -26,4 +26,6 @@ interface ActivityStreamRepository
     public function findWithoutBestAverages(int $limit): ActivityStreams;
 
     public function findWithoutNormalizedPower(int $limit): ActivityStreams;
+
+    public function findWithoutDistributionValues(int $limit): ActivityStreams;
 }

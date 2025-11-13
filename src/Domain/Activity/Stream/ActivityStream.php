@@ -14,8 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 final class ActivityStream implements SupportsAITooling
 {
     /**
-     * @param array<mixed>    $data
-     * @param array<int, int> $bestAverages
+     * @param array<int, mixed> $data
+     * @param array<int, int>   $valueDistribution
+     * @param array<int, int>   $bestAverages
      */
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
@@ -29,12 +30,14 @@ final class ActivityStream implements SupportsAITooling
         #[ORM\Column(type: 'integer', nullable: true)]
         private ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
+        private array $valueDistribution,
+        #[ORM\Column(type: 'json', nullable: true)]
         private array $bestAverages = [],
     ) {
     }
 
     /**
-     * @param array<mixed> $streamData
+     * @param array<int, mixed> $streamData
      */
     public static function create(
         ActivityId $activityId,
@@ -47,19 +50,22 @@ final class ActivityStream implements SupportsAITooling
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
-            normalizedPower: null
+            normalizedPower: null,
+            valueDistribution: []
         );
     }
 
     /**
-     * @param array<mixed>    $streamData
-     * @param array<int, int> $bestAverages
+     * @param array<int, mixed> $streamData
+     * @param array<int, int>   $bestAverages
+     * @param array<int, int>   $valueDistribution
      */
     public static function fromState(
         ActivityId $activityId,
         StreamType $streamType,
         array $streamData,
         SerializableDateTime $createdOn,
+        array $valueDistribution,
         array $bestAverages,
         ?int $normalizedPower,
     ): self {
@@ -69,6 +75,7 @@ final class ActivityStream implements SupportsAITooling
             createdOn: $createdOn,
             data: $streamData,
             normalizedPower: $normalizedPower,
+            valueDistribution: $valueDistribution,
             bestAverages: $bestAverages,
         );
     }
@@ -116,13 +123,14 @@ final class ActivityStream implements SupportsAITooling
             streamType: $this->getStreamType(),
             streamData: $smoothed,
             createdOn: $this->getCreatedOn(),
+            valueDistribution: $this->getValueDistribution(),
             bestAverages: $this->getBestAverages(),
             normalizedPower: $this->getNormalizedPower(),
         );
     }
 
     /**
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     public function getData(): array
     {
@@ -132,6 +140,22 @@ final class ActivityStream implements SupportsAITooling
         }
 
         return $this->data;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getValueDistribution(): array
+    {
+        return $this->valueDistribution;
+    }
+
+    /**
+     * @param array<int, int> $valueDistribution
+     */
+    public function updateValueDistribution(array $valueDistribution): void
+    {
+        $this->valueDistribution = $valueDistribution;
     }
 
     /**

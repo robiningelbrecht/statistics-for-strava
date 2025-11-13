@@ -66,6 +66,12 @@
         }
     },
     {
+        "commandName": "App\\Domain\\Activity\\Stream\\CalculateStreamValueDistribution\\CalculateStreamValueDistribution",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Domain\\Activity\\Stream\\CalculateNormalizedPower\\CalculateNormalizedPower",
         "payload": {
             "output": {}

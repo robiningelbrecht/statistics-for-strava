@@ -38,6 +38,9 @@ services:
       - ./storage/database:/var/www/storage/database
       - ./storage/files:/var/www/storage/files
     env_file: ./.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2019/metrics"]
+      start_period: 60s
     ports:
       - 8080:8080
 

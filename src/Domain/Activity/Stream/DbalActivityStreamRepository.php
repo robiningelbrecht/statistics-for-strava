@@ -8,13 +8,14 @@ use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\DBAL\ArrayParameterType;
 
 final readonly class DbalActivityStreamRepository extends DbalRepository implements ActivityStreamRepository
 {
     public function add(ActivityStream $stream): void
     {
-        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, createdOn, bestAverages, normalizedPower)
-        VALUES (:activityId, :streamType, :data, :createdOn, :bestAverages, :normalizedPower)';
+        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, createdOn, bestAverages, normalizedPower, valueDistribution)
+        VALUES (:activityId, :streamType, :data, :createdOn, :bestAverages, :normalizedPower, :valueDistribution)';
 
         $this->connection->executeStatement($sql, [
             'activityId' => $stream->getActivityId(),
@@ -22,6 +23,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             'data' => Json::encode($stream->getData()),
             'createdOn' => $stream->getCreatedOn(),
             'bestAverages' => !empty($stream->getBestAverages()) ? Json::encode($stream->getBestAverages()) : null,
+            'valueDistribution' => !empty($stream->getValueDistribution()) ? Json::encode($stream->getValueDistribution()) : null,
             'normalizedPower' => $stream->getNormalizedPower(),
         ]);
     }
@@ -30,7 +32,8 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
     {
         $sql = 'UPDATE ActivityStream 
         SET bestAverages = :bestAverages, 
-            normalizedPower = :normalizedPower
+            normalizedPower = :normalizedPower,
+            valueDistribution = :valueDistribution
         WHERE activityId = :activityId
         AND streamType = :streamType';
 
@@ -38,6 +41,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             'activityId' => $stream->getActivityId(),
             'streamType' => $stream->getStreamType()->value,
             'bestAverages' => Json::encode($stream->getBestAverages()),
+            'valueDistribution' => Json::encode($stream->getValueDistribution()),
             'normalizedPower' => $stream->getNormalizedPower(),
         ]);
     }
@@ -158,6 +162,27 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
         ));
     }
 
+    public function findWithoutDistributionValues(int $limit): ActivityStreams
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('*')
+            ->from('ActivityStream')
+            ->andWhere('valueDistribution IS NULL')
+            ->andWhere('streamType IN(:streamTypes)')
+            ->setParameter('streamTypes', [
+                StreamType::WATTS->value,
+                StreamType::HEART_RATE->value,
+                StreamType::VELOCITY->value,
+            ], ArrayParameterType::STRING)
+            ->orderBy('activityId')
+            ->setMaxResults($limit);
+
+        return ActivityStreams::fromArray(array_map(
+            $this->hydrate(...),
+            $queryBuilder->executeQuery()->fetchAllAssociative()
+        ));
+    }
+
     /**
      * @param array<string, mixed> $result
      */
@@ -168,6 +193,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
             streamType: StreamType::from($result['streamType']),
             streamData: Json::decode($result['data']),
             createdOn: SerializableDateTime::fromString($result['createdOn']),
+            valueDistribution: Json::decode($result['valueDistribution'] ?? '[]'),
             bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
             normalizedPower: $result['normalizedPower'] ?? null
         );
