@@ -9,6 +9,12 @@ use PHPUnit\Framework\TestCase;
 
 class ConfiguredCronActionsTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $_ENV['DAEMON_DEBUG'] = 1;
+    }
+
     public function testFromConfig(): void
     {
         $this->assertEquals(
@@ -37,6 +43,20 @@ class ConfiguredCronActionsTest extends TestCase
                 ],
             ]))
         );
+    }
+
+    public function testCronExpressionEveryMinute(): void
+    {
+        $_ENV['DAEMON_DEBUG'] = 0;
+
+        $this->expectExceptionObject(new InvalidCronConfig('The cron expression "* * * * *" is not allowed as it may overload your system.'));
+        ConfiguredCronActions::fromConfig([
+            [
+                'action' => 'sendNotification',
+                'expression' => '* * * * *',
+                'enabled' => true,
+            ],
+        ]);
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]

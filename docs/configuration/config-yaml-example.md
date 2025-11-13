@@ -179,7 +179,7 @@ integrations:
       # This topic will be used to notify you when a new HTML build has run.
       # Leave empty to disable notifications.
       ntfyUrl: null
-      # Optional, use when your ntfy.sh instance is password protetred
+      # Optional, use when your ntfy.sh instance is password protected
       ntfyUsername: null
       ntfyPassword: null
   # All configuration options related to AI integrations.
