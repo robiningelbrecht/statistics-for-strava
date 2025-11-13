@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Gear\Maintenance\Task\Progress;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\IntervalUnit;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTagRepository;
@@ -26,6 +27,7 @@ class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
             ],
                 $this->getContainer()->get(GearMaintenanceConfig::class),
                 $this->getContainer()->get(MaintenanceTaskTagRepository::class),
+                $this->getContainer()->get(GearRepository::class),
             )->calculateProgressFor(
                 ProgressCalculationContext::from(
                     gearIds: GearIds::fromArray([GearId::fromUnprefixed('test')]),
@@ -46,6 +48,7 @@ class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
             [],
             $this->getContainer()->get(GearMaintenanceConfig::class),
             $this->getContainer()->get(MaintenanceTaskTagRepository::class),
+            $this->getContainer()->get(GearRepository::class),
         )->calculateProgressFor(
             ProgressCalculationContext::from(
                 gearIds: GearIds::fromArray([GearId::fromUnprefixed('test')]),

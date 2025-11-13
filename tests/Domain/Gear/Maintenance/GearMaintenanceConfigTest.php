@@ -189,6 +189,10 @@ class GearMaintenanceConfigTest extends TestCase
         $yml = self::getValidYml();
         $yml['gears'][0]['imgSrc'] = '';
         yield '"gears[imgSrc]" is empty' => [$yml, '"imgSrc" property is required for each gear'];
+
+        $yml = self::getValidYml();
+        $yml['ignoreRetiredGear'] = 'lol';
+        yield 'ignoreRetiredGear is invalid' => [$yml, '"ignoreRetiredGear" property must be a boolean'];
     }
 
     private static function getValidYml(): array

@@ -30,11 +30,28 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             ->build();
         $this->getContainer()->get(ImportedGearRepository::class)->save($gear);
 
+        $this->getContainer()->get(
+            ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed('retired'))
+            ->withIsRetired(true)
+            ->build()
+            );
+
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withName(Name::fromString('#sfs-chain-lubed'))
                 ->withGearId($gear->getId())
+                ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
+                ->build(),
+            []
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('10'))
+                ->withName(Name::fromString('#sfs-chain-lubed'))
+                ->withGearId(GearId::fromUnprefixed('retired'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
                 ->build(),
             []
