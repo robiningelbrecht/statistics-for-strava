@@ -10,7 +10,6 @@ use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Athlete\Weight\AthleteWeightHistory;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Carbon\CarbonInterval;
@@ -95,49 +94,6 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         }
     }
 
-    /**
-     * @return array<int, int>
-     */
-    public function findTimeInSecondsPerWattageForActivity(ActivityId $activityId): array
-    {
-        if (!$this->activityStreamRepository->hasOneForActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::WATTS
-        )) {
-            return [];
-        }
-
-        $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::WATTS
-        );
-        $powerStreamForActivity = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
-        ksort($powerStreamForActivity);
-
-        return $powerStreamForActivity;
-    }
-
-    public function findTimeInSecondsPerVelocityForActivity(ActivityId $activityId): array{
-        if (!$this->activityStreamRepository->hasOneForActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::VELOCITY
-        )) {
-            return [];
-        }
-
-        $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
-            activityId: $activityId,
-            streamType: StreamType::VELOCITY
-        );
-        $velocityStreamForActivity = array_count_values(array_map(
-            fn(float $item)=> (int)round(MetersPerSecond::from($item)->toKmPerHour()->toFloat()) ,
-            array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)))
-        );
-        ksort($velocityStreamForActivity);
-
-        return $velocityStreamForActivity;
-    }
-
     public function findBestForSportTypes(SportTypes $sportTypes): PowerOutputs
     {
         return $this->buildBestFor(
@@ -194,6 +150,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 streamType: StreamType::from($result['streamType']),
                 streamData: Json::decode($result['data']),
                 createdOn: SerializableDateTime::fromString($result['createdOn']),
+                valueDistribution: Json::decode($result['valueDistribution'] ?? '[]'),
                 bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
                 normalizedPower: $result['normalizedPower'] ?? null
             );

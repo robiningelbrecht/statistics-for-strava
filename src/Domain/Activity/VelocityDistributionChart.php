@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\SportType\SportType;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
 final readonly class VelocityDistributionChart
 {
@@ -12,6 +16,8 @@ final readonly class VelocityDistributionChart
         /** @var array<int, float> */
         private array $velocityData,
         private KmPerHour $averageSpeed,
+        private SportType $sportType,
+        private UnitSystem $unitSystem,
     ) {
     }
 
@@ -21,10 +27,14 @@ final readonly class VelocityDistributionChart
     public static function create(
         array $velocityData,
         KmPerHour $averageSpeed,
+        SportType $sportType,
+        UnitSystem $unitSystem,
     ): self {
         return new self(
             velocityData: $velocityData,
             averageSpeed: $averageSpeed,
+            sportType: $sportType,
+            unitSystem: $unitSystem,
         );
     }
 
@@ -61,6 +71,15 @@ final readonly class VelocityDistributionChart
         // @phpstan-ignore-next-line
         $yAxisMax = max($data) * 1.2;
         $xAxisValueAverageVelocity = array_search(floor($this->averageSpeed->toFloat() / $step) * $step, $xAxisValues);
+        $velocityUnitPreference = $this->sportType->getVelocityDisplayPreference();
+
+        $convertedAverageVelocity = match (true) {
+            $velocityUnitPreference instanceof SecPer100Meter => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toSecPer100Meter()->toFloat(), 1),
+            $velocityUnitPreference instanceof SecPerKm && UnitSystem::METRIC === $this->unitSystem => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toFloat(), 1),
+            $velocityUnitPreference instanceof SecPerKm && UnitSystem::IMPERIAL === $this->unitSystem => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toSecPerMile()->toFloat(), 1),
+            UnitSystem::IMPERIAL === $this->unitSystem => round($this->averageSpeed->toMph()->toFloat(), 1),
+            default => round($this->averageSpeed->toFloat(), 1),
+        };
 
         return [
             'grid' => [
@@ -121,7 +140,7 @@ final readonly class VelocityDistributionChart
                         ],
                         'data' => [
                             [
-                                'value' => $this->averageSpeed,
+                                'value' => $convertedAverageVelocity,
                                 'coord' => [$xAxisValueAverageVelocity, $yAxisMax * 0.9],
                             ],
                         ],

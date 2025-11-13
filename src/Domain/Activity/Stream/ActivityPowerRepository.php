@@ -18,14 +18,4 @@ interface ActivityPowerRepository
     public function findBestForSportTypes(SportTypes $sportTypes): PowerOutputs;
 
     public function findBestForSportTypesInDateRange(SportTypes $sportTypes, DateRange $dateRange): PowerOutputs;
-
-    /**
-     * @return array<int, int>
-     */
-    public function findTimeInSecondsPerWattageForActivity(ActivityId $activityId): array;
-
-    /**
-     * @return array<int, float>
-     */
-    public function findTimeInSecondsPerVelocityForActivity(ActivityId $activityId): array;
 }

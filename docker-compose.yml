@@ -28,6 +28,9 @@ services:
             - ./storage/files:/var/www/storage/files
             - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
         env_file: '.env.local'
+        healthcheck:
+          test: ["CMD", "curl", "-f", "http://localhost:2019/metrics"]
+          start_period: 60s
         environment:
           - TZ=Europe/Brussels
         ports:

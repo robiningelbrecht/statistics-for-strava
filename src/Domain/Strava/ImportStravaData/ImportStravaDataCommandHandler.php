@@ -10,6 +10,7 @@ use App\Domain\Activity\Lap\ImportActivityLaps\ImportActivityLaps;
 use App\Domain\Activity\Split\ImportActivitySplits\ImportActivitySplits;
 use App\Domain\Activity\Stream\CalculateBestStreamAverages\CalculateBestStreamAverages;
 use App\Domain\Activity\Stream\CalculateNormalizedPower\CalculateNormalizedPower;
+use App\Domain\Activity\Stream\CalculateStreamValueDistribution\CalculateStreamValueDistribution;
 use App\Domain\Activity\Stream\CombinedStream\CalculateCombinedStreams\CalculateCombinedStreams;
 use App\Domain\Activity\Stream\ImportActivityStreams\ImportActivityStreams;
 use App\Domain\Athlete\ImportAthlete\ImportAthlete;
@@ -69,6 +70,7 @@ final readonly class ImportStravaDataCommandHandler implements CommandHandler
         $this->commandBus->dispatch(new ImportSegments($output));
         $this->commandBus->dispatch(new ImportChallenges($output));
         $this->commandBus->dispatch(new CalculateBestStreamAverages($output));
+        $this->commandBus->dispatch(new CalculateStreamValueDistribution($output));
         $this->commandBus->dispatch(new CalculateNormalizedPower($output));
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
