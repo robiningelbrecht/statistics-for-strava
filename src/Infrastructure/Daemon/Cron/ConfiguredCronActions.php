@@ -42,6 +42,9 @@ readonly class ConfiguredCronActions implements \IteratorAggregate
             if (!CronExpression::isValidExpression($configuredCronAction['expression'])) {
                 throw new InvalidCronConfig(sprintf('"%s" is not a valid cron expression', $configuredCronAction['expression']));
             }
+            if (empty($_ENV['DAEMON_DEBUG']) && '* * * * *' === $configuredCronAction['expression']) {
+                throw new InvalidCronConfig('The cron expression "* * * * *" is not allowed as it may overload your system.');
+            }
         }
 
         $cronActionIds = array_count_values(array_column($config, 'action'));

@@ -11,3 +11,4 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 }
 
 libxml_use_internal_errors(true);
+$_ENV['DAEMON_DEBUG'] = 1;
