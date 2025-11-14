@@ -62,6 +62,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./config:/var/www/config/app
+      - ./build:/var/www/build
       - ./storage/database:/var/www/storage/database
       - ./storage/files:/var/www/storage/files
     env_file: ./.env

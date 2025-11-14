@@ -209,7 +209,7 @@ daemon:
   # ⚠️ This configuration only applies if you have set up the daemon container:
   #   https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml
   cron:
-      # Action name. Allowed values: importAndBuildApp, gearMaintenanceNotification, appUpdateAvailableNotification
+      # Action name. Allowed values: importDataAndBuildApp, gearMaintenanceNotification, appUpdateAvailableNotification
     - action: 'importDataAndBuildApp'
       # Cron expression specifying when the action should run.
       # Example: '0 14 * * *' runs every day at 14:00 (2 PM).
