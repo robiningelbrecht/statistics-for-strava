@@ -69,6 +69,11 @@ enum UnitSystem: string
         return Pound::from($value);
     }
 
+    public function weightSymbol(): string
+    {
+        return $this->weight(1)->getSymbol();
+    }
+
     public function carbonSavedSymbol(): string
     {
         return sprintf('%s CO₂', $this->weight(1)->getSymbol());

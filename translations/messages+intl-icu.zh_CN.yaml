@@ -328,7 +328,9 @@ Wednesday: 星期三
 'Weekly TRIMP': 'Weekly TRIMP'
 'Weekly goals': 'Weekly goals'
 'Weekly stats': 每周统计
+Weight: Weight
 'Weight Training': 重量训练
+'Weight history': 'Weight history'
 Wheelchair: 轮椅
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 当功率指标和FTP可用时，将使用这些指标。这个公式意味着以FTP骑行一小时的得分为100，我们认为这是“高强度”
 'Wind Surf': 风帆冲浪

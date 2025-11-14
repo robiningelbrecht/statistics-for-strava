@@ -328,7 +328,9 @@ Wednesday: Wednesday
 'Weekly TRIMP': 'Weekly TRIMP'
 'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Weekly stats'
+Weight: Weight
 'Weight Training': 'Weight Training'
+'Weight history': 'Weight history'
 Wheelchair: Wheelchair
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"'
 'Wind Surf': 'Wind Surf'
