@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportType;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Measurement\Velocity\Pace;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
 final readonly class VelocityDistributionChart
 {
+    use ProvideTimeFormats;
+
     private function __construct(
-        /** @var array<int, float> */
+        /** @var array<int, int> */
         private array $velocityData,
         private KmPerHour $averageSpeed,
         private SportType $sportType,
@@ -22,7 +26,7 @@ final readonly class VelocityDistributionChart
     }
 
     /**
-     * @param array<int, float> $velocityData
+     * @param array<int, int> $velocityData
      */
     public static function create(
         array $velocityData,
@@ -43,14 +47,15 @@ final readonly class VelocityDistributionChart
      */
     public function build(): array
     {
+        // Filter out any possible flukes. Data points with less than 2 occurrences are filtered out.
+        $velocityData = array_filter($this->velocityData, fn (int $distribution): bool => $distribution > 2);
         /** @var non-empty-array<int, int> $velocityData */
-        $velocityData = $this->velocityData;
         $velocities = array_keys($velocityData);
         $minVelocity = (int) floor(min($velocities) / 10) * 10;
         $maxVelocity = (int) ceil(max($velocities) / 10) * 10;
 
         foreach (range($minVelocity, $maxVelocity) as $velocity) {
-            if (array_key_exists($velocity, $this->velocityData)) {
+            if (array_key_exists($velocity, $velocityData)) {
                 continue;
             }
             $velocityData[$velocity] = 0;
@@ -63,6 +68,7 @@ final readonly class VelocityDistributionChart
             $xAxisValues[] = $maxVelocity;
         }
 
+        $velocityUnitPreference = $this->sportType->getVelocityDisplayPreference();
         $totalTimeInSeconds = array_sum($velocityData);
         $data = [];
         foreach ($xAxisValues as $axisValue) {
@@ -70,16 +76,27 @@ final readonly class VelocityDistributionChart
         }
         // @phpstan-ignore-next-line
         $yAxisMax = max($data) * 1.2;
-        $xAxisValueAverageVelocity = array_search(floor($this->averageSpeed->toFloat() / $step) * $step, $xAxisValues);
-        $velocityUnitPreference = $this->sportType->getVelocityDisplayPreference();
+
+        $xAxisValueAverageVelocity = array_search($this->findClosestSteppedValue(
+            min: $minVelocity,
+            max: $maxVelocity,
+            step: $step,
+            target: $velocityUnitPreference instanceof Pace ? $this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toFloat() : $this->averageSpeed->toFloat()
+        ), $xAxisValues);
 
         $convertedAverageVelocity = match (true) {
             $velocityUnitPreference instanceof SecPer100Meter => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toSecPer100Meter()->toFloat(), 1),
-            $velocityUnitPreference instanceof SecPerKm && UnitSystem::METRIC === $this->unitSystem => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toFloat(), 1),
-            $velocityUnitPreference instanceof SecPerKm && UnitSystem::IMPERIAL === $this->unitSystem => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toSecPerMile()->toFloat(), 1),
+            $velocityUnitPreference instanceof SecPerKm => $this->formatDurationForHumans((int) round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toUnitSystem($this->unitSystem)->toFloat())),
             UnitSystem::IMPERIAL === $this->unitSystem => round($this->averageSpeed->toMph()->toFloat(), 1),
             default => round($this->averageSpeed->toFloat(), 1),
         };
+
+        if ($velocityUnitPreference instanceof Pace) {
+            $xAxisValues = array_map(
+                $this->formatDurationForHumans(...),
+                $xAxisValues,
+            );
+        }
 
         return [
             'grid' => [
@@ -182,5 +199,20 @@ final readonly class VelocityDistributionChart
                 ],
             ],
         ];
+    }
+
+    private function findClosestSteppedValue(int $min, int $max, int $step, int|float $target): int
+    {
+        $stepsFromMin = round(($target - $min) / $step);
+        $closest = (int) round($min + ($stepsFromMin * $step));
+
+        if ($closest < $min) {
+            return $min;
+        }
+        if ($closest > $max) {
+            return $max;
+        }
+
+        return $closest;
     }
 }
