@@ -37,6 +37,7 @@ class DashboardLayoutTest extends TestCase
                 ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true, 'config' => ['challenges' => []]],
                 ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],
                 ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
+                ['widget' => 'athleteWeightHistory', 'width' => 50, 'enabled' => true],
             ])
         );
     }

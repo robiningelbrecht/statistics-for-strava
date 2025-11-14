@@ -58,6 +58,14 @@ final class AthleteWeightHistory
     }
 
     /**
+     * @return AthleteWeight[]
+     */
+    public function findAll(): array
+    {
+        return $this->weights;
+    }
+
+    /**
      * @param array<string, float> $values
      */
     public static function fromArray(array $values, UnitSystem $unitSystem): self
