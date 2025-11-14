@@ -59,12 +59,8 @@ final readonly class CalculateStreamValueDistributionCommandHandler implements C
                             fn (float $item): int => (int) round(MetersPerSecond::from($item)->toSecPerKm()->toSecPer100Meter()->toFloat()),
                             $filteredValues
                         ),
-                        $velocityUnitPreference instanceof SecPerKm && UnitSystem::METRIC === $this->unitSystem => array_map(
-                            fn (float $item): int => (int) round(MetersPerSecond::from($item)->toSecPerKm()->toFloat()),
-                            $filteredValues
-                        ),
-                        $velocityUnitPreference instanceof SecPerKm && UnitSystem::IMPERIAL === $this->unitSystem => array_map(
-                            fn (float $item): int => (int) round(MetersPerSecond::from($item)->toSecPerKm()->toSecPerMile()->toFloat()),
+                        $velocityUnitPreference instanceof SecPerKm => array_map(
+                            fn (float $item): int => (int) round(MetersPerSecond::from($item)->toSecPerKm()->toUnitSystem($this->unitSystem)->toFloat()),
                             $filteredValues
                         ),
                         UnitSystem::IMPERIAL === $this->unitSystem => array_map(
