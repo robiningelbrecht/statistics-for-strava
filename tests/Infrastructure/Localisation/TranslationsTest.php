@@ -36,8 +36,8 @@ class TranslationsTest extends ContainerTestCase
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
 
-            $missingTranslationKeys = array_diff($translatableKeys, array_keys($parsedTranslations));  // present in the code, not in the translation file
-            $extraTranslationKeys = array_diff(array_keys($parsedTranslations), $translatableKeys);  // present in the translation file, not in the code.
+            $missingTranslationKeys = array_diff($translatableKeys, array_keys($parsedTranslations));
+            $extraTranslationKeys = array_diff(array_keys($parsedTranslations), $translatableKeys);
 
             if (!empty($missingTranslationKeys) || !empty($extraTranslationKeys)) {
                 $messages[] = sprintf("Translation mismatch for locale '%s':\n", $locale->value);
