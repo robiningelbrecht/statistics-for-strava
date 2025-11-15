@@ -8,6 +8,7 @@ use App\Domain\Activity\Activities;
 use App\Domain\Calendar\Month;
 use App\Domain\Calendar\Months;
 use App\Infrastructure\Serialization\Escape;
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class DistancePerMonthPerGearChart
@@ -78,6 +79,9 @@ final readonly class DistancePerMonthPerGearChart
                 'name' => $gearName,
                 'type' => 'bar',
                 'barGap' => 0,
+                'itemStyle' => [
+                    'color' => Theme::getColorForGear($gear->getId()),
+                ],
                 'emphasis' => [
                     'focus' => 'series',
                 ],
@@ -106,7 +110,6 @@ final readonly class DistancePerMonthPerGearChart
         return [
             'backgroundColor' => '#ffffff',
             'animation' => true,
-            'color' => ['#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
             'grid' => [
                 'left' => '3%',
                 'right' => '4%',
