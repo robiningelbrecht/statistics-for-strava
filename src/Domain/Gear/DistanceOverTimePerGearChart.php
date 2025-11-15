@@ -6,6 +6,7 @@ namespace App\Domain\Gear;
 
 use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDayResponse;
 use App\Infrastructure\Serialization\Escape;
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -80,6 +81,9 @@ final readonly class DistanceOverTimePerGearChart
                 'type' => 'line',
                 'smooth' => true,
                 'showSymbol' => false,
+                'itemStyle' => [
+                    'color' => Theme::getColorForGear($gear->getId()),
+                ],
                 'data' => $distanceOverTimePerGear[(string) $gear->getId()],
             ];
         }
