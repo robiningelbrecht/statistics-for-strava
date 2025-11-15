@@ -27,6 +27,7 @@ class TranslationsTest extends ContainerTestCase
 
         $translatableKeys = array_keys($translatables ?? []);
 
+        $messages = [];
         foreach (Locale::cases() as $locale) {
             $translationFilePath = sprintf('%s/translations/messages%s.%s.yaml', $this->kernelProjectDir, MessageCatalogue::INTL_DOMAIN_SUFFIX, $locale->value);
             if (!file_exists($translationFilePath)) {
@@ -35,12 +36,26 @@ class TranslationsTest extends ContainerTestCase
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
 
-            $this->assertEqualsCanonicalizing(
-                $translatableKeys,
-                array_keys($parsedTranslations),
-                sprintf('Not all translations for locale %s have been exported. Please run "make translation-extract"', $locale->value)
-            );
+            $missingTranslationKeys = array_diff($translatableKeys, array_keys($parsedTranslations));  // present in the code, not in the translation file
+            $extraTranslationKeys = array_diff(array_keys($parsedTranslations), $translatableKeys);  // present in the translation file, not in the code.
+
+            if (!empty($missingTranslationKeys) || !empty($extraTranslationKeys)) {
+                $messages[] = sprintf("Translation mismatch for locale '%s':\n", $locale->value);
+
+                if (!empty($missingTranslationKeys)) {
+                    $messages[] = " Missing keys:\n  - ".implode("\n  - ", $missingTranslationKeys)."\n";
+                }
+                if (!empty($extraTranslationKeys)) {
+                    $messages[] = " Extra keys:\n  - ".implode("\n  - ", $extraTranslationKeys)."\n";
+                }
+            }
         }
+
+        if ([] !== $messages) {
+            $messages[] = 'Run: make translation-extract';
+            $this->fail(implode(PHP_EOL, $messages));
+        }
+        $this->addToAssertionCount(1);
     }
 
     public function testTranslationsContainPlaceholders(): void
