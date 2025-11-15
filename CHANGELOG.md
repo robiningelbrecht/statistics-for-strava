@@ -1,3 +1,17 @@
+# [v4.0.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.3) - 2025-11-15
+
+## What's Changed
+* ISSUE #1391: Pace distribution bug fix by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1395
+* ISSUE #1394: Athlete weight history dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1396
+* ISSUE #1398: Fix gear color inconsistency across charts by @wzharith in https://github.com/robiningelbrecht/statistics-for-strava/pull/1399
+* ISSUE #1400: Heatmap doesn't load when using a subpath by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1402
+* ISSUE #1401: Database migrations are not run in Daemon by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1403
+
+## New Contributors
+* @wzharith made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1399
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.2...v4.0.3
+
 # [v4.0.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.2) - 2025-11-14
 
 ## What's Changed

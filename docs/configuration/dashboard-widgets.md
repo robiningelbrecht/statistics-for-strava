@@ -30,6 +30,7 @@ appearance:
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, 'config': { 'challenges': [] } }
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
       - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
+      - { 'widget': 'athleteWeightHistory', 'width': 50, 'enabled': true }
 ```
 
 <div class="alert info">
@@ -337,3 +338,13 @@ This widget shows your Functional Threshold Power (FTP) history, allowing you to
 ```
 
 ![ftpHistory widget](../assets/images/dashboard-widgets/ftp-history.png)
+
+## athleteWeightHistory
+
+This widget shows your weight history.
+
+```yml
+{ 'widget': 'athleteWeightHistory', 'width': 50, 'enabled': true }
+```
+
+![athleteWeightHistory widget](../assets/images/dashboard-widgets/athlete-weight-history.png)
