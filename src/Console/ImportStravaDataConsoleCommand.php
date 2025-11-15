@@ -31,9 +31,6 @@ final class ImportStravaDataConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
-        /** @var \Symfony\Component\Console\Application $consoleApplication */
-        $consoleApplication = $this->getApplication();
-
         $output->block(
             messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
             style: 'fg=black;bg=green',
@@ -43,7 +40,6 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->resourceUsage->startTimer();
 
         $this->commandBus->dispatch(new ImportStravaData(
-            consoleApplication: $consoleApplication,
             output: $output,
         ));
 

@@ -26,7 +26,6 @@ class importDataAndBuildAppCronActionTest extends TestCase
     public function testRun(): void
     {
         $output = new SpySymfonyStyleOutput(new StringInput('input'), new NullOutput());
-        $this->importAndBuildAppCronAction->setConsoleApplication(new Application('mock', 'v1.0.0'));
         $this->importAndBuildAppCronAction->run($output);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));

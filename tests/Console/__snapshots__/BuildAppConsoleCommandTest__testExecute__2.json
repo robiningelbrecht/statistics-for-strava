@@ -2,7 +2,6 @@
     {
         "commandName": "App\\BuildApp\\BuildApp\\BuildApp",
         "payload": {
-            "consoleApplication": {},
             "output": {}
         }
     },

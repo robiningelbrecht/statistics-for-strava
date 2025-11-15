@@ -42,7 +42,6 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->importStravaDataCommandHandler->handle(new ImportStravaData(
-            consoleApplication: new Application('mock', 'v1.0.0'),
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
@@ -70,7 +69,6 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->importStravaDataCommandHandler->handle(new ImportStravaData(
-            consoleApplication: new Application('mock', 'v1.0.0'),
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));

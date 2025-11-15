@@ -43,9 +43,8 @@ final readonly class BuildAppCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildApp);
 
-        $consoleApplication = $command->getConsoleApplication();
         $output = $command->getOutput();
-        if (!$this->migrationRunner->isAtLatestVersion($consoleApplication)) {
+        if (!$this->migrationRunner->isAtLatestVersion()) {
             $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');
 
             return;

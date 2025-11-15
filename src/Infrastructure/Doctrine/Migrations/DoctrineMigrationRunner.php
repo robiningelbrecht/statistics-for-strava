@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Migrations;
 
-use Symfony\Component\Console\Application;
+use App\Infrastructure\Console\ConsoleApplication;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class DoctrineMigrationRunner implements MigrationRunner
 {
-    public function run(Application $application, OutputInterface $output): void
+    public function run(OutputInterface $output): void
     {
         $input = new ArrayInput([
             'command' => 'doctrine:migrations:migrate',
         ]);
         $input->setInteractive(false);
-        $exitCode = $application->doRun(
+        $exitCode = ConsoleApplication::get()->doRun(
             input: $input,
             output: $output
         );
@@ -26,10 +26,10 @@ final readonly class DoctrineMigrationRunner implements MigrationRunner
         }
     }
 
-    public function isAtLatestVersion(Application $application): bool
+    public function isAtLatestVersion(): bool
     {
         $output = new MigrationConsoleOutput();
-        $application->doRun(
+        ConsoleApplication::get()->doRun(
             new ArrayInput([
                 'command' => 'doctrine:migrations:status',
             ]),

@@ -2,14 +2,12 @@
     {
         "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
         "payload": {
-            "consoleApplication": {},
             "output": {}
         }
     },
     {
         "commandName": "App\\BuildApp\\BuildApp\\BuildApp",
         "payload": {
-            "consoleApplication": {},
             "output": {}
         }
     },

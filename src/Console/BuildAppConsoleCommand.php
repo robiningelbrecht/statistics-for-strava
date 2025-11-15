@@ -33,9 +33,6 @@ final class BuildAppConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
-        /** @var \Symfony\Component\Console\Application $consoleApplication */
-        $consoleApplication = $this->getApplication();
-
         $this->resourceUsage->startTimer();
 
         $output->block(
@@ -45,7 +42,6 @@ final class BuildAppConsoleCommand extends Command
         );
 
         $this->commandBus->dispatch(new BuildApp(
-            consoleApplication: $consoleApplication,
             output: $output,
         ));
 
