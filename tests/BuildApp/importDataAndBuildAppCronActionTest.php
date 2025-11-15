@@ -12,7 +12,6 @@ use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpySymfonyStyleOutput;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 

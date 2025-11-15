@@ -24,6 +24,11 @@ final readonly class AppUpdateAvailableNotificationCronAction implements Runnabl
         return 'appUpdateAvailableNotification';
     }
 
+    public function requiresDatabaseSchemaToBeUpdated(): bool
+    {
+        return true;
+    }
+
     public function getMutexTtl(): int
     {
         return 60;

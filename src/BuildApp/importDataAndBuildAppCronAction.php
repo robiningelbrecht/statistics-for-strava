@@ -26,6 +26,11 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         return 'importDataAndBuildApp';
     }
 
+    public function requiresDatabaseSchemaToBeUpdated(): bool
+    {
+        return false;
+    }
+
     public function getMutexTtl(): int
     {
         return 1800;
