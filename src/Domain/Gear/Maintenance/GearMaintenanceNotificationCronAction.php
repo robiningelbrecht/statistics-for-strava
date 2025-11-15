@@ -25,6 +25,11 @@ final readonly class GearMaintenanceNotificationCronAction implements RunnableCr
         return 'gearMaintenanceNotification';
     }
 
+    public function requiresDatabaseSchemaToBeUpdated(): bool
+    {
+        return true;
+    }
+
     public function getMutexTtl(): int
     {
         return 60;

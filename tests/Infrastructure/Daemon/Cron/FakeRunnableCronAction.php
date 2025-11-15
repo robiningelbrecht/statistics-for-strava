@@ -19,6 +19,11 @@ final class FakeRunnableCronAction implements RunnableCronAction
         return 60;
     }
 
+    public function requiresDatabaseSchemaToBeUpdated(): bool
+    {
+        return true;
+    }
+
     public function run(SymfonyStyle $output): void
     {
         $output->writeln('RunnableCronAction fake has been called');

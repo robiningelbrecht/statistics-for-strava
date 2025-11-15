@@ -7,7 +7,6 @@ namespace App\Tests\Infrastructure\Doctrine\Migrations;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use Doctrine\DBAL\Driver\SQLite3\Exception;
 use Doctrine\DBAL\Exception\ConnectionException;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class VoidMigrationRunner implements MigrationRunner

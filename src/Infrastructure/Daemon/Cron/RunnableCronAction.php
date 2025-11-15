@@ -12,6 +12,8 @@ interface RunnableCronAction
 {
     public function getId(): string;
 
+    public function requiresDatabaseSchemaToBeUpdated(): bool;
+
     /**
      * TTL for the mutex lock, always set this way higher than the expected execution time,
      * but low enough any failures during the run will cause issues.
