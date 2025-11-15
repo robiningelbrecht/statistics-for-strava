@@ -1,0 +1,14 @@
+{
+    "importDataAndBuildApp": {
+        "requiresDatabaseSchemaToBeUpdated": false,
+        "mutexTtl": 1800
+    },
+    "gearMaintenanceNotification": {
+        "requiresDatabaseSchemaToBeUpdated": true,
+        "mutexTtl": 60
+    },
+    "appUpdateAvailableNotification": {
+        "requiresDatabaseSchemaToBeUpdated": true,
+        "mutexTtl": 60
+    }
+}

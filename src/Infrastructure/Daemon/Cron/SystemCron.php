@@ -17,7 +17,7 @@ final class SystemCron implements Cron
      */
     public function __construct(
         #[AutowireIterator('app.cron_action')]
-        iterable $runnableCronActions,
+        private readonly iterable $runnableCronActions,
         private readonly ConfiguredCronActions $configuredCronActions,
     ) {
         $runnableCronActionsKeyedById = [];
@@ -44,6 +44,14 @@ final class SystemCron implements Cron
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->enabledCronActions);
+    }
+
+    /**
+     * @return iterable<RunnableCronAction> $runnableCronActions
+     */
+    public function getAllRunnableCronActions(): iterable
+    {
+        return $this->runnableCronActions;
     }
 
     public function getRunnable(string $id): RunnableCronAction

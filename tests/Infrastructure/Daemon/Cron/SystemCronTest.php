@@ -5,11 +5,32 @@ namespace App\Tests\Infrastructure\Daemon\Cron;
 use App\Infrastructure\Daemon\Cron\ConfiguredCronActions;
 use App\Infrastructure\Daemon\Cron\CronAction;
 use App\Infrastructure\Daemon\Cron\SystemCron;
+use App\Infrastructure\Serialization\Json;
+use App\Tests\ContainerTestCase;
 use Cron\CronExpression;
-use PHPUnit\Framework\TestCase;
+use Spatie\Snapshots\MatchesSnapshots;
 
-class SystemCronTest extends TestCase
+class SystemCronTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
+    public function testItRegistersCronActions(): void
+    {
+        /** @var SystemCron $cron */
+        $cron = $this->getContainer()->get(SystemCron::class);
+
+        $snapshot = [];
+        /** @var \App\Infrastructure\Daemon\Cron\RunnableCronAction $action */
+        foreach ($cron->getAllRunnableCronActions() as $action) {
+            $snapshot[$action->getId()] = [
+                'requiresDatabaseSchemaToBeUpdated' => $action->requiresDatabaseSchemaToBeUpdated(),
+                'mutexTtl' => $action->getMutexTtl(),
+            ];
+        }
+
+        $this->assertMatchesJsonSnapshot(Json::encode($snapshot));
+    }
+
     public function testGetIterator(): void
     {
         $configuredCronActions = ConfiguredCronActions::fromConfig([
