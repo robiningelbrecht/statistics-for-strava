@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\BuildApp\BuildIndexHtml;
 
 use App\BuildApp\AppSubTitle;
+use App\BuildApp\AppUrl;
 use App\BuildApp\ProfilePictureUrl;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
@@ -33,6 +34,7 @@ final readonly class IndexHtml
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private ?ProfilePictureUrl $profilePictureUrl,
         private ?AppSubTitle $appSubTitle,
+        private AppUrl $appUrl,
         private UnitSystem $unitSystem,
         private LocaleSwitcher $localeSwitcher,
     ) {
@@ -67,6 +69,9 @@ final readonly class IndexHtml
             'hasBestEfforts' => $this->activityBestEffortRepository->hasData(),
             'javascriptWindowConstants' => Json::encode([
                 'countries' => Countries::getNames($this->localeSwitcher->getLocale()),
+                'appUrl' => [
+                    'basePath' => $this->appUrl->getBasePath() ?? '',
+                ],
                 'unitSystem' => [
                     'name' => $this->unitSystem->value,
                     'paceSymbol' => $this->unitSystem->paceSymbol(),
