@@ -70,7 +70,10 @@ export default class Router {
         const newNavItems = document.querySelectorAll('main a[data-router-navigate]:not([data-router-disabled])');
         this.registerNavItems(newNavItems);
 
-        const fullPageName = page.replace(/^\/+/, '').replaceAll('/', '-');
+        const fullPageName = page
+            .replace(window.statisticsForStrava.appUrl.basePath, '')
+            .replace(/^\/+/, '')
+            .replaceAll('/', '-');
 
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true,
