@@ -19,7 +19,7 @@ final class VoidMigrationRunner implements MigrationRunner
         $this->throwOnNextRun = true;
     }
 
-    public function run(Application $application, OutputInterface $output): void
+    public function run(OutputInterface $output): void
     {
         if ($this->throwOnNextRun) {
             throw new ConnectionException(new Exception(new \RuntimeException()), null);
@@ -27,7 +27,7 @@ final class VoidMigrationRunner implements MigrationRunner
         $this->throwOnNextRun = false;
     }
 
-    public function isAtLatestVersion(Application $application): bool
+    public function isAtLatestVersion(): bool
     {
         if ($this->throwOnNextRun) {
             throw new ConnectionException(new Exception('test'), null);

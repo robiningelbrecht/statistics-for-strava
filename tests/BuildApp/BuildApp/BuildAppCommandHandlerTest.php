@@ -56,7 +56,6 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new BuildApp(
-            consoleApplication: new Application('mock', 'v1.0.0'),
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
@@ -72,7 +71,6 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new BuildApp(
-            consoleApplication: new Application('mock', 'v1.0.0'),
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
 
@@ -88,7 +86,6 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new BuildApp(
-            consoleApplication: new Application('mock', 'v1.0.0'),
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
 

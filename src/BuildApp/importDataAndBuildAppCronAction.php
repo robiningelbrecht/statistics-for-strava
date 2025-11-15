@@ -7,20 +7,17 @@ namespace App\BuildApp;
 use App\BuildApp\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\ImportStravaData\ImportStravaData;
-use App\Infrastructure\Console\ConsoleApplicationAware;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class importDataAndBuildAppCronAction implements RunnableCronAction
+final readonly class importDataAndBuildAppCronAction implements RunnableCronAction
 {
-    use ConsoleApplicationAware;
-
     public function __construct(
-        private readonly CommandBus $commandBus,
-        private readonly ResourceUsage $resourceUsage,
-        private readonly AppUrl $appUrl,
+        private CommandBus $commandBus,
+        private ResourceUsage $resourceUsage,
+        private AppUrl $appUrl,
     ) {
     }
 
@@ -45,11 +42,9 @@ final class importDataAndBuildAppCronAction implements RunnableCronAction
         $this->resourceUsage->startTimer();
 
         $this->commandBus->dispatch(new ImportStravaData(
-            consoleApplication: $this->getConsoleApplication(),
             output: $output,
         ));
         $this->commandBus->dispatch(new BuildApp(
-            consoleApplication: $this->getConsoleApplication(),
             output: $output,
         ));
 

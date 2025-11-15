@@ -51,11 +51,9 @@ final readonly class ImportStravaDataCommandHandler implements CommandHandler
 
             return;
         }
-        $consoleApplication = $command->getConsoleApplication();
         $output->writeln('Running database migrations...');
 
         $this->migrationRunner->run(
-            application: $consoleApplication,
             output: $output
         );
 
