@@ -765,8 +765,7 @@ final class Activity implements SupportsAITooling
         ];
     }
 
-    public function lol():void
+    public function lol(): void
     {
-
     }
 }
