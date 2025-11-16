@@ -52,6 +52,7 @@ jobs:
         id: code_coverage_report_action
         with:
           filename: 'clover.xml'
+          only_list_changed_files: true
           fail_on_negative_difference: true
           artifact_download_workflow_names: 'CI'
 
