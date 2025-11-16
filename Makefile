@@ -53,7 +53,7 @@ phpunit:
 	@make dcr cmd="vendor/bin/phpunit --order-by=random $(arg)"
 
 phpunit-with-coverage-report:
-	@make phpunit arg="--coverage-clover=clover.xml -d --min-coverage=min-coverage-rules.php"
+	@make phpunit arg="--coverage-clover=clover.xml -d --min-coverage=min-coverage-rules.php -d --clean-up-clover-xml"
 
 phpunit-html-coverage:
 	@make phpunit arg="--coverage-html var/coverage"
