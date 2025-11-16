@@ -7,7 +7,7 @@
     {
         "activityId": "activity-4",
         "streamType": "time",
-        "valueDistribution": null
+        "valueDistribution": "[]"
     },
     {
         "activityId": "activity-4",

@@ -180,6 +180,26 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindWithoutValueDistributions(): void
+    {
+        $streamOne = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStreamType(StreamType::WATTS)
+            ->build();
+        $this->activityStreamRepository->add($streamOne);
+        $streamTwo = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStreamType(StreamType::HEART_RATE)
+            ->withValueDistribution(['lol'])
+            ->build();
+        $this->activityStreamRepository->add($streamTwo);
+
+        $this->assertEquals(
+            ActivityStreams::fromArray([$streamOne]),
+            $this->activityStreamRepository->findWithoutDistributionValues(10)
+        );
+    }
+
     public function testFindWithoutBestAverages(): void
     {
         $streamOne = ActivityStreamBuilder::fromDefaults()
