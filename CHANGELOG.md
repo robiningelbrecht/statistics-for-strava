@@ -1,3 +1,18 @@
+# [v4.0.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.4) - 2025-11-16
+
+> [!WARNING]  
+> If you are using the internal cron to manage your app imports and builds,
+> make sure you configured the correct volumes on the Daemon container.
+> The docs were missing a volume and have been updated:
+> https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml
+
+## What's Changed
+* ISSUE #1410: Build crashes when VelocityDistributionChart has no valid data by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1411
+* ISSUE #1409: Improve gear docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1412
+* ISSUE #1408: Add zoom to athlete weight history widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1413
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.3...v4.0.4
+
 # [v4.0.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.3) - 2025-11-15
 
 ## What's Changed
