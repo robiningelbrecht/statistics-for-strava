@@ -8,6 +8,9 @@ general:
     max_heart_rate_formula: 'fox'
     weight_history:
       "2020-01-01": 68
+      "2019-12-01": 69
+      "2019-08-01": 70
+      "2019-07-01": 71
     ftp_history:
       "2023-01-01": 198
       "2023-03-22": 220

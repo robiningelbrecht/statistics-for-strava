@@ -16,7 +16,7 @@ final class AthleteWeightHistory
     private array $weights;
 
     /**
-     * @param array<string, float> $weightsFromEnv
+     * @param array<string, mixed> $weightsFromEnv
      */
     private function __construct(
         array $weightsFromEnv,
@@ -25,9 +25,13 @@ final class AthleteWeightHistory
         $this->weights = [];
 
         foreach ($weightsFromEnv as $on => $weight) {
-            $weightInGrams = Kilogram::from($weight)->toGram();
+            if (!is_numeric($weight)) {
+                throw new \InvalidArgumentException(sprintf('Invalid weight "%s" set for athlete weightHistory in config.yaml file', $weight));
+            }
+
+            $weightInGrams = Kilogram::from(floatval($weight))->toGram();
             if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                $weightInGrams = Pound::from($weight)->toGram();
+                $weightInGrams = Pound::from(floatval($weight))->toGram();
             }
 
             try {

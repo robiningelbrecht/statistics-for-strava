@@ -36,6 +36,12 @@ class AthleteWeightHistoryTest extends TestCase
         );
     }
 
+    public function testItShouldThrowOnInvalidWeight(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Invalid weight "lol" set for athlete weightHistory in config.yaml file'));
+        AthleteWeightHistory::fromArray(['2025-11-16' => 'lol'], UnitSystem::METRIC);
+    }
+
     public function testItShouldThrowOnInvalidDate(): void
     {
         $this->expectExceptionObject(new \InvalidArgumentException('Invalid date "YYYY-MM-DD" set for athlete weightHistory in config.yaml file'));

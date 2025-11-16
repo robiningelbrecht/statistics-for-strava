@@ -49,6 +49,27 @@ final readonly class AthleteWeightHistoryChart
             $athleteWeights,
         );
 
+        /** @var AthleteWeight $firstAthleteWeight */
+        $firstAthleteWeight = reset($athleteWeights);
+
+        $zoomEndValue = $this->now->format('Y-m-d');
+        $zoomStartValue = $firstAthleteWeight->getOn()->format('Y-m-d');
+        if (count($athleteWeights) >= 2) {
+            // Zoom in on the current year by default, unless there are less than 2 data points.
+            // Make sure there are at least 3 data points visible.
+            $zoomStartValue = $this->now->format('Y-01-01');
+
+            $weightsInCurrentYear = array_filter(
+                $athleteWeights,
+                fn (AthleteWeight $weight): bool => $weight->getOn()->format('Y-m-d') >= $zoomStartValue
+            );
+
+            if (count($weightsInCurrentYear) < 3) {
+                $dates = array_map(fn (AthleteWeight $weight): string => $weight->getOn()->format('Y-m-d'), $athleteWeights);
+                $zoomStartValue = array_slice($dates, -3, 1)[0];
+            }
+        }
+
         /** @var string $lastKey */
         $lastKey = array_key_last($athleteWeights);
 
@@ -64,6 +85,29 @@ final readonly class AthleteWeightHistoryChart
                 'right' => '4%',
                 'bottom' => '3%',
                 'containLabel' => true,
+            ],
+            'toolbox' => [
+                'show' => true,
+                'feature' => [
+                    'dataZoom' => [
+                        'show' => true,
+                        'yAxisIndex' => 'none',
+                    ],
+                    'restore' => [
+                        'show' => true,
+                    ],
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'inside',
+                    'startValue' => $zoomStartValue,
+                    'endValue' => $zoomEndValue,
+                    'brushSelect' => false,
+                    'zoomLock' => true,
+                ],
+                [
+                ],
             ],
             'xAxis' => [
                 [
