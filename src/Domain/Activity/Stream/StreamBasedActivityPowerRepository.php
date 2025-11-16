@@ -150,6 +150,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 streamType: StreamType::from($result['streamType']),
                 streamData: Json::decode($result['data']),
                 createdOn: SerializableDateTime::fromString($result['createdOn']),
+                computedFieldsState: Json::decode($result['computedFieldsState'] ?? '[]'),
                 valueDistribution: Json::decode($result['valueDistribution'] ?? '[]'),
                 bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
                 normalizedPower: $result['normalizedPower'] ?? null

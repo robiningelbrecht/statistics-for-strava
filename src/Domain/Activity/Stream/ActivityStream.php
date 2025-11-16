@@ -13,10 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(name: 'ActivityStream_streamTypeIndex', columns: ['streamType'])]
 final class ActivityStream implements SupportsAITooling
 {
+    public const string COMPUTED_FIELD_BEST_AVERAGES = 'bestAverages';
+    public const string COMPUTED_FIELD_VALUE_DISTRIBUTION = 'valueDistribution';
+    public const string COMPUTED_FIELD_NORMALIZED_POWER = 'normalizedPower';
+
     /**
-     * @param array<int, mixed> $data
-     * @param array<int, int>   $valueDistribution
-     * @param array<int, int>   $bestAverages
+     * @param array<int, mixed>   $data
+     * @param array<string, bool> $computedFieldsState
+     * @param array<int, int>     $valueDistribution
+     * @param array<int, int>     $bestAverages
      */
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
@@ -28,7 +33,7 @@ final class ActivityStream implements SupportsAITooling
         #[ORM\Column(type: 'json')]
         private readonly array $data,
         #[ORM\Column(type: 'json', nullable: true)]
-        private $computedFieldsState,
+        private array $computedFieldsState,
         #[ORM\Column(type: 'integer', nullable: true)]
         private ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
@@ -52,21 +57,24 @@ final class ActivityStream implements SupportsAITooling
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
+            computedFieldsState: [],
             normalizedPower: null,
             valueDistribution: []
         );
     }
 
     /**
-     * @param array<int, mixed> $streamData
-     * @param array<int, int>   $bestAverages
-     * @param array<int, int>   $valueDistribution
+     * @param array<int, mixed>   $streamData
+     * @param array<string, bool> $computedFieldsState
+     * @param array<int, int>     $bestAverages
+     * @param array<int, int>     $valueDistribution
      */
     public static function fromState(
         ActivityId $activityId,
         StreamType $streamType,
         array $streamData,
         SerializableDateTime $createdOn,
+        array $computedFieldsState,
         array $valueDistribution,
         array $bestAverages,
         ?int $normalizedPower,
@@ -76,6 +84,7 @@ final class ActivityStream implements SupportsAITooling
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
+            computedFieldsState: $computedFieldsState,
             normalizedPower: $normalizedPower,
             valueDistribution: $valueDistribution,
             bestAverages: $bestAverages,
@@ -125,6 +134,7 @@ final class ActivityStream implements SupportsAITooling
             streamType: $this->getStreamType(),
             streamData: $smoothed,
             createdOn: $this->getCreatedOn(),
+            computedFieldsState: $this->getComputedFieldsState(),
             valueDistribution: $this->getValueDistribution(),
             bestAverages: $this->getBestAverages(),
             normalizedPower: $this->getNormalizedPower(),
@@ -145,6 +155,14 @@ final class ActivityStream implements SupportsAITooling
     }
 
     /**
+     * @return array<string, bool>
+     */
+    public function getComputedFieldsState(): array
+    {
+        return $this->computedFieldsState;
+    }
+
+    /**
      * @return array<int, int>
      */
     public function getValueDistribution(): array
@@ -158,6 +176,7 @@ final class ActivityStream implements SupportsAITooling
     public function updateValueDistribution(array $valueDistribution): void
     {
         $this->valueDistribution = $valueDistribution;
+        $this->computedFieldsState[self::COMPUTED_FIELD_VALUE_DISTRIBUTION] = true;
     }
 
     /**
@@ -174,6 +193,7 @@ final class ActivityStream implements SupportsAITooling
     public function updateBestAverages(array $averages): void
     {
         $this->bestAverages = $averages;
+        $this->computedFieldsState[self::COMPUTED_FIELD_BEST_AVERAGES] = true;
     }
 
     public function calculateBestAverageForTimeInterval(int $timeIntervalInSeconds): ?int
@@ -205,6 +225,7 @@ final class ActivityStream implements SupportsAITooling
     public function updateNormalizedPower(int $normalizedPower): self
     {
         $this->normalizedPower = $normalizedPower;
+        $this->computedFieldsState[self::COMPUTED_FIELD_NORMALIZED_POWER] = true;
 
         return $this;
     }
