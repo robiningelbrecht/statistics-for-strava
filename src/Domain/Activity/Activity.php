@@ -764,8 +764,4 @@ final class Activity implements SupportsAITooling
             'workoutType' => $this->getWorkoutType()?->value,
         ];
     }
-
-    public function lol(): void
-    {
-    }
 }
