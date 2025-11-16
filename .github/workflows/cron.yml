@@ -2,10 +2,10 @@ name: 'cron'
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 1 * *'
+    - cron: '0 2 * * *'
 jobs:
-  ci:
-    name: Run CI
+  coverage-artifact:
+    name: Generate coverage artifact
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/setup-php-action
