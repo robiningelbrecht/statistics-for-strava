@@ -2,6 +2,11 @@ name: CI
 on:
   workflow_dispatch:
   pull_request:
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  pull-requests: write
 jobs:
   ci:
     name: Run CI
@@ -41,3 +46,18 @@ jobs:
 
       - name: Run test suite
         run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml -d --min-coverage="min-coverage-rules.php"
+
+      - name: Generate coverage report
+        uses: clearlyip/code-coverage-report-action@v6
+        id: code_coverage_report_action
+        with:
+          filename: 'clover.xml'
+          fail_on_negative_difference: true
+          artifact_download_workflow_names: 'CI'
+
+      - name: Add coverage PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: steps.code_coverage_report_action.outputs.file != '' && github.event_name == 'pull_request' && (success() || failure())
+        with:
+          recreate: true
+          path: code-coverage-results.md
