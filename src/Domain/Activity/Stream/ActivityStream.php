@@ -27,6 +27,8 @@ final class ActivityStream implements SupportsAITooling
         private readonly SerializableDateTime $createdOn,
         #[ORM\Column(type: 'json')]
         private readonly array $data,
+        #[ORM\Column(type: 'json', nullable: true)]
+        private $computedFieldsState,
         #[ORM\Column(type: 'integer', nullable: true)]
         private ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
