@@ -1,4 +1,4 @@
-name: CI
+name: ci
 on:
   workflow_dispatch:
   pull_request:
@@ -54,7 +54,7 @@ jobs:
           filename: 'clover.xml'
           only_list_changed_files: true
           fail_on_negative_difference: true
-          artifact_download_workflow_names: 'CI'
+          artifact_download_workflow_names: 'ci,cron'
 
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
