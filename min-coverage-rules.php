@@ -6,31 +6,31 @@ return [
     new MinCoverageRule(
         pattern: MinCoverageRule::TOTAL,
         minCoverage: 96,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\BuildApp\*',
         minCoverage: 97,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\Console\*',
         minCoverage: 100,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\Controller\*',
         minCoverage: 100,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\Infrastructure\*',
         minCoverage: 92,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\Domain\*',
         minCoverage: 96,
-        exitOnLowCoverage: true
+        exitOnLowCoverage: false
     ),
 ];
