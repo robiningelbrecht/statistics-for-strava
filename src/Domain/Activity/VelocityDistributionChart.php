@@ -43,12 +43,14 @@ final readonly class VelocityDistributionChart
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, mixed>|null
      */
-    public function build(): array
+    public function build(): ?array
     {
         // Filter out any possible flukes. Data points with less than 2 occurrences are filtered out.
-        $velocityData = array_filter($this->velocityData, fn (int $distribution): bool => $distribution > 2);
+        if (!$velocityData = array_filter($this->velocityData, fn (int $distribution): bool => $distribution > 2)) {
+            return null;
+        }
         /** @var non-empty-array<int, int> $velocityData */
         $velocities = array_keys($velocityData);
         $minVelocity = (int) floor(min($velocities) / 10) * 10;
