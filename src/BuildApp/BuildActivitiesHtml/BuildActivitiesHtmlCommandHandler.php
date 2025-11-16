@@ -150,12 +150,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             $velocityUnitPreference instanceof KmPerHour => $this->translator->trans('Speed distribution'),
                             default => $this->translator->trans('Pace distribution'),
                         },
-                        'data' => Json::encode(VelocityDistributionChart::create(
-                            velocityData: $velocityStream->getValueDistribution(),
-                            averageSpeed: $activity->getAverageSpeed(),
-                            sportType: $activity->getSportType(),
-                            unitSystem: $this->unitSystem,
-                        )->build()),
+                        'data' => Json::encode($velocityDistributionChart),
                     ];
                 }
             }
