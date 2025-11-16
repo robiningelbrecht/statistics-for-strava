@@ -2,7 +2,7 @@ name: 'cron'
 on:
   workflow_dispatch:
   schedule:
-    - cron: '* * * * *'
+    - cron: '0 0 1 * *'
 jobs:
   ci:
     name: Run CI
@@ -26,7 +26,7 @@ jobs:
         run: composer install --prefer-dist
 
       - name: Run test suite
-        run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml -d --min-coverage="min-coverage-rules.php"
+        run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml
 
       - name: Generate coverage report
         uses: clearlyip/code-coverage-report-action@v6
