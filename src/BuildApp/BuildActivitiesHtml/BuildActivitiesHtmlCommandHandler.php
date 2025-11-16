@@ -136,18 +136,28 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
             if ($velocityStream && !empty($velocityStream->getValueDistribution())) {
                 $velocityUnitPreference = $activity->getSportType()->getVelocityDisplayPreference();
-                $distributionCharts[] = [
-                    'title' => match (true) {
-                        $velocityUnitPreference instanceof KmPerHour => $this->translator->trans('Speed distribution'),
-                        default => $this->translator->trans('Pace distribution'),
-                    },
-                    'data' => Json::encode(VelocityDistributionChart::create(
-                        velocityData: $velocityStream->getValueDistribution(),
-                        averageSpeed: $activity->getAverageSpeed(),
-                        sportType: $activity->getSportType(),
-                        unitSystem: $this->unitSystem,
-                    )->build()),
-                ];
+
+                $velocityDistributionChart = VelocityDistributionChart::create(
+                    velocityData: $velocityStream->getValueDistribution(),
+                    averageSpeed: $activity->getAverageSpeed(),
+                    sportType: $activity->getSportType(),
+                    unitSystem: $this->unitSystem,
+                )->build();
+
+                if (!is_null($velocityDistributionChart)) {
+                    $distributionCharts[] = [
+                        'title' => match (true) {
+                            $velocityUnitPreference instanceof KmPerHour => $this->translator->trans('Speed distribution'),
+                            default => $this->translator->trans('Pace distribution'),
+                        },
+                        'data' => Json::encode(VelocityDistributionChart::create(
+                            velocityData: $velocityStream->getValueDistribution(),
+                            averageSpeed: $activity->getAverageSpeed(),
+                            sportType: $activity->getSportType(),
+                            unitSystem: $this->unitSystem,
+                        )->build()),
+                    ];
+                }
             }
 
             $activitySplits = $this->activitySplitRepository->findBy(
