@@ -56,6 +56,9 @@ jobs:
           fail_on_negative_difference: true
           artifact_download_workflow_names: 'ci,cron'
 
+      - name: Debug
+        uses: raven-actions/debug@v1
+
 #      - name: Add coverage PR comment
 #        uses: marocchino/sticky-pull-request-comment@v2
 #        if: github.repository == 'robiningelbrecht/statistics-for-strava' && steps.code_coverage_report_action.outputs.file != '' && github.event_name == 'pull_request' && (success() || failure())
