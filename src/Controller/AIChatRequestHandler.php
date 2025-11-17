@@ -21,6 +21,7 @@ use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\EventStreamResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,40 +80,31 @@ final readonly class AIChatRequestHandler
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): StreamedResponse
     {
-        return new StreamedResponse(function () use ($request): void {
-            while (ob_get_level() > 0) {
-                ob_end_flush();
-            }
-            ob_implicit_flush();
-
-            header('Content-Type: text/event-stream');
-            header('Cache-Control: no-cache');
-            header('X-Accel-Buffering: no');
-
+        return new EventStreamResponse(function (EventStreamResponse $response) use ($request) {
             /** @var string $message */
             $message = $request->query->get('message');
 
-            echo new ServerSentEvent(
-                eventName: 'fullMessage',
+            $response->sendEvent(new ServerSentEvent(
                 data: $this->twig->render('html/chat/message.html.twig', [
                     'chatMessage' => $this->chatRepository->buildMessage(
                         message: $message,
                         messageRole: MessageRole::USER,
                     ),
                     'isThinking' => false,
-                ])
-            );
+                ]),
+                type: 'fullMessage'
+            ));
 
-            echo new ServerSentEvent(
-                eventName: 'fullMessage',
+            $response->sendEvent(new ServerSentEvent(
                 data: $this->twig->render('html/chat/message.html.twig', [
                     'chatMessage' => $this->chatRepository->buildMessage(
                         message: '__PLACEHOLDER__',
                         messageRole: MessageRole::ASSISTANT,
                     ),
                     'isThinking' => true,
-                ])
-            );
+                ]),
+                type: 'fullMessage'
+            ));
 
             try {
                 foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
@@ -122,22 +114,21 @@ final readonly class AIChatRequestHandler
                     if ($chunk instanceof ToolCallResultMessage) {
                         continue;
                     }
-                    echo new ServerSentEvent(
-                        eventName: 'removeThinking',
-                        data: ''
-                    );
+                    $response->sendEvent(new ServerSentEvent(
+                        data: '',
+                        type: 'removeThinking'
+                    ));
 
-                    echo new ServerSentEvent(
-                        eventName: 'agentResponse',
-                        data: nl2br($chunk)
-                    );
-                    flush();
+                    $response->sendEvent(new ServerSentEvent(
+                        data: nl2br($chunk),
+                        type: 'agentResponse'
+                    ));
                 }
             } catch (\Throwable $e) {
-                echo new ServerSentEvent(
-                    eventName: 'removeThinking',
-                    data: ''
-                );
+                $response->sendEvent(new ServerSentEvent(
+                    data: '',
+                    type: 'removeThinking'
+                ));
 
                 $message = $e->getMessage().': '.$e->getTraceAsString();
                 if ($e instanceof ClientException) {
@@ -145,24 +136,22 @@ final readonly class AIChatRequestHandler
                 }
 
                 $fullMessage = 'Oh no, I made a booboo... <br />'.preg_replace('/\s+/', ' ', $message);
-                echo new ServerSentEvent(
-                    eventName: 'agentResponse',
-                    data: $fullMessage
-                );
+
+                $response->sendEvent(new ServerSentEvent(
+                    data: $fullMessage,
+                    type: 'agentResponse'
+                ));
 
                 $this->commandBus->dispatch(new AddChatMessage(
                     message: $fullMessage,
                     messageRole: MessageRole::ASSISTANT,
                 ));
-
-                flush();
             }
 
-            echo new ServerSentEvent(
-                eventName: 'done',
-                data: 'done'
-            );
-            flush();
+            $response->sendEvent(new ServerSentEvent(
+                data: 'done',
+                type: 'done'
+            ));
         });
     }
 }
