@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http;
 
-final readonly class ServerSentEvent implements \Stringable
+use Symfony\Component\HttpFoundation\ServerEvent;
+
+final class ServerSentEvent extends ServerEvent
 {
     public function __construct(
-        private string $eventName,
-        private string $data,
+        string $data,
+        ?string $type = null,
+        ?int $retry = null,
+        ?string $id = null,
+        ?string $comment = null,
     ) {
-    }
-
-    public function __toString(): string
-    {
-        return implode('', [
-            sprintf('event: %s', $this->eventName).PHP_EOL,
-            'data: '.str_replace("\n", '\\n', $this->data)."\n\n",
-        ]);
+        parent::__construct(
+            data: str_replace("\n", '\\n', $data)."\n\n",
+            type: $type,
+            retry: $retry,
+            id: $id,
+            comment: $comment
+        );
     }
 }
