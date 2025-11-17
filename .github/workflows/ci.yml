@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_CONTEXT: ${{ toJSON(github.event.pull_request) }}
         run: echo "$GITHUB_CONTEXT"
       # https://github.com/marketplace/actions/setup-php-action
       - name: Setup PHP 8.4
