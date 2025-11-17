@@ -80,7 +80,7 @@ final readonly class AIChatRequestHandler
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): StreamedResponse
     {
-        return new EventStreamResponse(function (EventStreamResponse $response) use ($request) {
+        return new EventStreamResponse(function (EventStreamResponse $response) use ($request): void {
             /** @var string $message */
             $message = $request->query->get('message');
 
