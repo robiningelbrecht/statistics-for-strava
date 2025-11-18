@@ -9,15 +9,22 @@ class ServerSentEventTest extends TestCase
 {
     public function testToString(): void
     {
+        $output = null;
+        foreach (new ServerSentEvent(
+            data: 'WAW ERROR',
+            type: 'error'
+        ) as $yield) {
+            $output .= $yield;
+        }
+
         $this->assertEquals(
             'event: error
 data: WAW ERROR
 
+
+
 ',
-            (string) new ServerSentEvent(
-                eventName: 'error',
-                data: 'WAW ERROR'
-            )
+            $output
         );
     }
 }

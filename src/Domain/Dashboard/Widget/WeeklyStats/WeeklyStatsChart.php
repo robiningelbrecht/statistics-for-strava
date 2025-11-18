@@ -117,7 +117,7 @@ final readonly class WeeklyStatsChart
                     'data' => $data[$context->value],
                     'yAxisId' => $context->value,
                     'label' => [
-                        'formatter' => '{@[1]} '.$unitSymbol,
+                        'formatter' => '{@[1]}',
                     ],
                 ],
             );

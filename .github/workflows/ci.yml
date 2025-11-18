@@ -58,7 +58,7 @@ jobs:
 
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: steps.code_coverage_report_action.outputs.file != '' && github.event_name == 'pull_request' && (success() || failure())
+        if: github.event.pull_request.user.login == 'robiningelbrecht' && steps.code_coverage_report_action.outputs.file != '' && github.event_name == 'pull_request' && (success() || failure())
         with:
           recreate: false
           path: code-coverage-results.md
