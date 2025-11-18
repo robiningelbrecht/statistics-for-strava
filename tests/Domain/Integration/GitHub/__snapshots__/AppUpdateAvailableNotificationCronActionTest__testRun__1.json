@@ -3,7 +3,7 @@
         "commandName": "App\\Domain\\Integration\\Notification\\SendNotification\\SendNotification",
         "payload": {
             "title": "New app version available",
-            "message": "We have been busy, v4.0.4 is finally out! Go see what's new.",
+            "message": "We have been busy, v4.0.5 is finally out! Go see what's new.",
             "tags": [
                 "partying_face"
             ],
