@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Gear\CustomGear;
+namespace App\Domain\Strava\Webhook;
 
-final class InvalidCustomGearConfig extends \RuntimeException
+final class InvalidWebhookConfig extends \RuntimeException
 {
     public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
         $message = sprintf(
-            'config/app/config.yaml gear.customGear: %s',
+            'config/app/config.yaml import.webhooks: %s',
             $message,
         );
         parent::__construct($message, $code, $previous);
