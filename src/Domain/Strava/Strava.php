@@ -310,9 +310,6 @@ class Strava
         ]));
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function createWebhookSubscription(string $callbackUrl, string $verifyToken): void
     {
         $this->request('api/v3/push_subscriptions', 'POST', [
