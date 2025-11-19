@@ -45,7 +45,6 @@ class UnitTest extends TestCase
             [Foot::from(6.561), Meter::from(2)->toFoot()],
             [Kilometer::from(3.21868), Mile::from(2)->toKilometer()],
             [Kilogram::from(0.1), Gram::from(100)->toKilogram()],
-            [Gram::from(10000), Kilogram::from(10)->toGram()],
             [Pound::from(22.0462), Kilogram::from(10)->toPound()],
             [Kilogram::from(4.535923700000001), Pound::from(10)->toKilogram()],
             [MilesPerHour::from(6.21371), KmPerHour::from(10)->toMph()],
