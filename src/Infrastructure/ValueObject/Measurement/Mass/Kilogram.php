@@ -17,11 +17,6 @@ final readonly class Kilogram implements Weight, Metric
         return 'kg';
     }
 
-    public function toGram(): Gram
-    {
-        return Gram::from($this->value * 1000);
-    }
-
     public function toPound(): Pound
     {
         return Pound::from($this->value * 2.20462);
