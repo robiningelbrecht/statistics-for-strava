@@ -209,6 +209,37 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
+    public function getWebhookSubscription(): array
+    {
+        return [
+            [
+                'id' => 'le-id',
+                'application_id' => 'le-application-id',
+                'callback_url' => 'le-url',
+                'created_at' => '2025-01-01',
+                'updated_at' => '2025-01-01',
+            ],
+            [
+                'id' => 'le-id-2',
+                'application_id' => 'le-application-id-2',
+                'callback_url' => 'le-url-2',
+                'created_at' => '2025-01-01',
+                'updated_at' => '2025-01-01',
+            ],
+        ];
+    }
+
+    #[\Override]
+    public function createWebhookSubscription(string $callbackUrl, string $verifyToken): void
+    {
+    }
+
+    #[\Override]
+    public function deleteWebhookSubscription(string $subscriptionId): void
+    {
+    }
+
+    #[\Override]
     public function getChallengesOnPublicProfile(string $athleteId): array
     {
         ++$this->numberOfCallsExecuted;
