@@ -8,7 +8,7 @@ use App\Infrastructure\ValueObject\Measurement\Imperial;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
-final readonly class Pound implements Unit, Imperial
+final readonly class Pound implements Weight, Imperial
 {
     use MeasurementFromFloat;
 
@@ -17,13 +17,13 @@ final readonly class Pound implements Unit, Imperial
         return 'lb';
     }
 
-    public function toGram(): Gram
-    {
-        return Gram::from($this->value * 453.59237);
-    }
-
     public function toMetric(): Unit
     {
-        return $this->toGram();
+        return $this->toKilogram();
+    }
+
+    public function toKilogram(): Kilogram
+    {
+        return Kilogram::from($this->value * 0.45359237);
     }
 }

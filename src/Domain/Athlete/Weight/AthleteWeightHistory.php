@@ -24,21 +24,21 @@ final class AthleteWeightHistory
     ) {
         $this->weights = [];
 
-        foreach ($weightsFromEnv as $on => $weight) {
-            if (!is_numeric($weight)) {
-                throw new \InvalidArgumentException(sprintf('Invalid weight "%s" set for athlete weightHistory in config.yaml file', $weight));
+        foreach ($weightsFromEnv as $on => $configuredWeight) {
+            if (!is_numeric($configuredWeight)) {
+                throw new \InvalidArgumentException(sprintf('Invalid weight "%s" set for athlete weightHistory in config.yaml file', $configuredWeight));
             }
 
-            $weightInGrams = Kilogram::from(floatval($weight))->toGram();
+            $weight = Kilogram::from(floatval($configuredWeight));
             if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                $weightInGrams = Pound::from(floatval($weight))->toGram();
+                $weight = Pound::from(floatval($configuredWeight));
             }
 
             try {
                 $onDate = SerializableDateTime::fromString($on);
                 $this->weights[$onDate->getTimestamp()] = AthleteWeight::fromState(
                     on: $onDate,
-                    weightInGrams: $weightInGrams,
+                    weight: $weight,
                 );
             } catch (\DateMalformedStringException) {
                 throw new \InvalidArgumentException(sprintf('Invalid date "%s" set for athlete weightHistory in config.yaml file', $on));

@@ -47,7 +47,7 @@ class UnitTest extends TestCase
             [Kilogram::from(0.1), Gram::from(100)->toKilogram()],
             [Gram::from(10000), Kilogram::from(10)->toGram()],
             [Pound::from(22.0462), Kilogram::from(10)->toPound()],
-            [Gram::from(4535.9237), Pound::from(10)->toGram()],
+            [Kilogram::from(4.535923700000001), Pound::from(10)->toKilogram()],
             [MilesPerHour::from(6.21371), KmPerHour::from(10)->toMph()],
             [KmPerHour::from(16.0934), MilesPerHour::from(10)->toKmH()],
             [Celsius::from(-12.22), Fahrenheit::from(10)->toMetric()],

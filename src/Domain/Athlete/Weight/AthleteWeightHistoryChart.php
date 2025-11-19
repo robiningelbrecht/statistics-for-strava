@@ -45,7 +45,7 @@ final readonly class AthleteWeightHistoryChart
         ksort($athleteWeights);
         /** @var non-empty-array<float> $weights */
         $weights = array_map(
-            fn (AthleteWeight $athleteWeight): float => $athleteWeight->getWeightInKg()->toUnitSystem($this->unitSystem)->toFloat(),
+            fn (AthleteWeight $athleteWeight): float => round($athleteWeight->getWeight()->toFloat(), 1),
             $athleteWeights,
         );
 
@@ -168,14 +168,14 @@ final readonly class AthleteWeightHistoryChart
                         ...array_map(
                             fn (AthleteWeight $weight): array => [
                                 $weight->getOn()->format('Y-m-d'),
-                                $weight->getWeightInKg()->toUnitSystem($this->unitSystem)->toFloat(),
+                                round($weight->getWeight()->toFloat(), 1),
                             ],
                             $athleteWeights,
                         ),
                         $this->now->format('Y-m-d') != $athleteWeights[$lastKey]->getOn()->format('Y-m-d') ?
                         [
                             $this->now->format('Y-m-d'),
-                            $athleteWeights[$lastKey]->getWeightInKg()->toUnitSystem($this->unitSystem)->toFloat(),
+                            round($athleteWeights[$lastKey]->getWeightInKg()->toFloat(), 1),
                         ] : [],
                     ],
                 ],
