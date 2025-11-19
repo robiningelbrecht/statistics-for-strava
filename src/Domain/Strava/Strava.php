@@ -313,16 +313,16 @@ class Strava
     /**
      * @return array<string, mixed>
      */
-    public function createWebhookSubscription(string $callbackUrl, string $verifyToken): array
+    public function createWebhookSubscription(string $callbackUrl, string $verifyToken): void
     {
-        return Json::decode($this->request('api/v3/push_subscriptions', 'POST', [
+        $this->request('api/v3/push_subscriptions', 'POST', [
             RequestOptions::FORM_PARAMS => [
                 'client_id' => (string) $this->stravaClientId,
                 'client_secret' => (string) $this->stravaClientSecret,
                 'callback_url' => $callbackUrl,
                 'verify_token' => $verifyToken,
             ],
-        ]));
+        ]);
     }
 
     public function deleteWebhookSubscription(string $subscriptionId): void
