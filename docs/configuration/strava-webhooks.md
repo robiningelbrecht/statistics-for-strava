@@ -24,7 +24,7 @@ TODO
 To see your current webhook subscription:
 
 ```bash
-docker compose exec app bin/console app:strava:webhook:view
+docker compose exec app bin/console app:strava:webhooks-view
 ```
 
 This will display:
@@ -39,7 +39,7 @@ This will display:
 To delete your webhook subscription:
 
 ```bash
-docker compose exec app bin/console app:strava:webhook:unsubscribe <subscription-id>
+docker compose exec app bin/console app:strava:webhooks-unsubscribe <subscription-id>
 ```
 
 Replace `<subscription-id>` with the ID from the view command.
