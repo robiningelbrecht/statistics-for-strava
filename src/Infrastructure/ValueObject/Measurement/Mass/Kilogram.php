@@ -7,9 +7,8 @@ namespace App\Infrastructure\ValueObject\Measurement\Mass;
 use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\Unit;
-use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
-final readonly class Kilogram implements Unit, Metric
+final readonly class Kilogram implements Weight, Metric
 {
     use MeasurementFromFloat;
 
@@ -33,12 +32,8 @@ final readonly class Kilogram implements Unit, Metric
         return $this->toPound();
     }
 
-    public function toUnitSystem(UnitSystem $unitSystem): Kilogram|Pound
+    public function toKilogram(): Kilogram
     {
-        if (UnitSystem::METRIC === $unitSystem) {
-            return $this;
-        }
-
-        return $this->toPound();
+        return $this;
     }
 }

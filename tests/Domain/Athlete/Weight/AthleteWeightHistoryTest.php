@@ -23,14 +23,14 @@ class AthleteWeightHistoryTest extends TestCase
         $this->assertEquals(
             AthleteWeight::fromState(
                 on: SerializableDateTime::fromString('2024-04-04'),
-                weightInGrams: Kilogram::from(223)->toGram(),
+                weight: Kilogram::from(223),
             ),
             $weightHistory->find(SerializableDateTime::fromString('2024-04-04'))
         );
         $this->assertEquals(
             AthleteWeight::fromState(
                 on: SerializableDateTime::fromString('2024-04-04'),
-                weightInGrams: Kilogram::from(223)->toGram(),
+                weight: Kilogram::from(223),
             ),
             $weightHistory->find(SerializableDateTime::fromString('2025-01-01'))
         );
