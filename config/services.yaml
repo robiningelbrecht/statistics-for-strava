@@ -215,6 +215,10 @@ services:
         factory: [ null, 'fromBool' ]
         arguments: ['@=app_config("import.optInToSegmentDetailImport", false)']
 
+    App\Domain\Strava\Webhook\WebhookConfig:
+      factory: [ null, 'fromArray' ]
+      arguments: ['@=app_config("import.webhooks", [])']
+
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.level")']
