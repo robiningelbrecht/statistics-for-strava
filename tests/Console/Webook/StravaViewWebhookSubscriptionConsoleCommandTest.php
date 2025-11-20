@@ -33,7 +33,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', $commandTester->getDisplay()));
     }
 
     public function testExecuteWhenNoSubscriptions(): void
@@ -56,7 +56,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
         );
         $command->run($this->createMock(Input::class), $output);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', (string) $output));
+        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', (string) $output));
     }
 
     public function testExecuteWhenConfigDisabled(): void
@@ -78,7 +78,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
         );
         $command->run($this->createMock(Input::class), $output);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', (string) $output));
+        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', (string) $output));
     }
 
     protected function setUp(): void
