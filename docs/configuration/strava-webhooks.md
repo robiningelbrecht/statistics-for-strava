@@ -15,11 +15,15 @@ The app automatically runs the import and build processes in the background when
 Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
 </div>
 
-## Configure a Strava webhook
+## Configure a webhook subscription
 
 TODO
 
-## View Current Subscription
+```bash
+docker compose exec app bin/console app:strava:webhooks-create
+```
+
+## View webhook subscriptions
 
 To see your current webhook subscription:
 
@@ -34,7 +38,7 @@ This will display:
 - Callback URL
 - Creation and update timestamps
 
-## Unsubscribe from Webhooks
+## Unsubscribe from webhooks
 
 To delete your webhook subscription:
 
@@ -48,8 +52,35 @@ You can also get the subscription ID from the view command:
 
 ```bash
 # View subscription
-docker compose exec app bin/console app:strava:webhook:view
+docker compose exec app bin/console app:strava:webhooks-view
 
 # Delete subscription (use the ID from above)
-docker compose exec app bin/console app:strava:webhook:unsubscribe 123456
+docker compose exec app bin/console app:strava:webhooks-unsubscribe 123456
+```
+
+## Troubleshooting tips
+
+If you get the following error when trying to create a webhook subscription
+
+```json
+{
+  "message": "Bad Request",
+  "errors": [
+    {
+      "resource": "PushSubscription",
+      "field": "callback url",
+      "code": "not verifiable"
+    }
+  ]
+}
+```
+
+be sure to:
+
+* Check that your Statistics for Strava instance is publicly accessible over the HTTPS
+* Check if there is already a subscription registered for your app. Check with `docker compose exec app bin/console app:strava:webhooks-view`
+* Validate that your https://your-instance.com/strava/webhook responds with a 200 status to a validation request within 2 seconds. You can issue a request like the following to test:
+
+```bash
+$ curl -X GET 'https://your-instance.com/strava/webhook?hub.verify_token=test&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.mode=subscribe'
 ```

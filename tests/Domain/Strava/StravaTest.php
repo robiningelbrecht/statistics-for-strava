@@ -14,6 +14,7 @@ use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use App\Tests\SpyOutput;
@@ -635,7 +636,7 @@ class StravaTest extends TestCase
                     RequestOptions::FORM_PARAMS => [
                         'client_id' => 'clientId',
                         'client_secret' => 'clientSecret',
-                        'callback_url' => 'the-url',
+                        'callback_url' => 'https://example.com/',
                         'verify_token' => 'the-token',
                     ],
                 ]
@@ -643,7 +644,7 @@ class StravaTest extends TestCase
             ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
 
         $this->strava->createWebhookSubscription(
-            callbackUrl: 'the-url',
+            callbackUrl: Url::fromString('https://example.com/'),
             verifyToken: 'the-token',
         );
     }
