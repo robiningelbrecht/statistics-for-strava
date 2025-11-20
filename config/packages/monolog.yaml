@@ -21,3 +21,9 @@ monolog:
           path: "%kernel.project_dir%/storage/files/logs/daemon.log"
           level: debug
           channels: ["daemon"]
+        webhooks:
+          type: rotating_file
+          max_files: 5
+          path: "%kernel.project_dir%/storage/files/logs/webhooks.log"
+          level: debug
+          channels: ["webhooks"]

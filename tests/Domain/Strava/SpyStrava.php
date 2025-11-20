@@ -16,6 +16,7 @@ use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
@@ -230,8 +231,9 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
-    public function createWebhookSubscription(string $callbackUrl, string $verifyToken): void
+    public function createWebhookSubscription(Url $callbackUrl, string $verifyToken): array
     {
+        return ['id' => 'le-id'];
     }
 
     #[\Override]

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Webook;
+namespace App\Console\Webhook;
 
 use App\Domain\Strava\Strava;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
-#[AsCommand(name: 'app:strava:webhooks-view', description: 'View current Strava webhook subscription(s)')]
+#[AsCommand(name: 'app:strava:webhooks-view', description: 'View Strava webhook subscription(s)')]
 final class StravaViewWebhookSubscriptionConsoleCommand extends Command
 {
     public function __construct(
@@ -36,19 +36,16 @@ final class StravaViewWebhookSubscriptionConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        foreach ($subscriptions as $subscription) {
-            $output->success('Webhook Subscription Found');
-            $output->table(
-                ['Property', 'Value'],
-                [
-                    ['ID', $subscription['id']],
-                    ['Application ID', $subscription['application_id']],
-                    ['Callback URL', $subscription['callback_url']],
-                    ['Created At', $subscription['created_at']],
-                    ['Updated At', $subscription['updated_at']],
-                ]
-            );
-        }
+        $output->table(
+            headers: ['ID', 'Application ID', 'Callback URL', 'Created At', 'Updated At'],
+            rows: array_map(fn (array $subscription): array => [
+                $subscription['id'],
+                $subscription['application_id'],
+                $subscription['callback_url'],
+                $subscription['created_at'],
+                $subscription['updated_at'],
+            ], $subscriptions),
+        );
 
         return Command::SUCCESS;
     }

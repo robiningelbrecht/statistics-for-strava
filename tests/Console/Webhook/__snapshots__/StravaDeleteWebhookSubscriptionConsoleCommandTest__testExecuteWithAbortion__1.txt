@@ -1,0 +1,3 @@
+
+AreyousureyouwanttodeletesubscriptionwithID123?(yes/no)[no]:
+>
