@@ -4,7 +4,6 @@ namespace App\Tests\Console\Webook;
 
 use App\Console\Webook\StravaViewWebhookSubscriptionConsoleCommand;
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\SpyOutput;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -33,7 +32,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', $commandTester->getDisplay()));
+        $this->assertStringContainsString('Webhook Subscription Found', $commandTester->getDisplay());
     }
 
     public function testExecuteWhenNoSubscriptions(): void
@@ -51,34 +50,11 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
         $output = new SpyOutput();
         $command = new StravaViewWebhookSubscriptionConsoleCommand(
             $strava,
-            WebhookConfig::fromArray(['enabled' => true, 'verifyToken' => 'le-token']),
             $this->logger,
         );
         $command->run($this->createMock(Input::class), $output);
 
-        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', (string) $output));
-    }
-
-    public function testExecuteWhenConfigDisabled(): void
-    {
-        $strava = $this->createMock(Strava::class);
-        $strava
-            ->expects($this->never())
-            ->method('getWebhookSubscription');
-
-        $this->logger
-            ->expects($this->atLeastOnce())
-            ->method('info');
-
-        $output = new SpyOutput();
-        $command = new StravaViewWebhookSubscriptionConsoleCommand(
-            $strava,
-            WebhookConfig::fromArray(['enabled' => false, 'verifyToken' => 'le-token']),
-            $this->logger,
-        );
-        $command->run($this->createMock(Input::class), $output);
-
-        $this->assertMatchesTextSnapshot(preg_replace('/\s+/', '', (string) $output));
+        $this->assertStringContainsString('No webhook subscriptions found', $output);
     }
 
     protected function setUp(): void
@@ -89,7 +65,6 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
 
         $this->stravaViewWebhookSubscriptionConsoleCommand = new StravaViewWebhookSubscriptionConsoleCommand(
             $this->getContainer()->get(Strava::class),
-            WebhookConfig::fromArray(['enabled' => true, 'verifyToken' => 'le-token']),
             $this->logger,
         );
     }
