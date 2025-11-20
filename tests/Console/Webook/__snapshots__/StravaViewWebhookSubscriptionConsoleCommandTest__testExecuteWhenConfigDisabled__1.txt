@@ -1,1 +1,0 @@
-<fg=black;bg=yellow>[WARNING]Webhooksnotenabled.Enabletheminyourconfigbysettingimport.webhooks.enabled=true</>

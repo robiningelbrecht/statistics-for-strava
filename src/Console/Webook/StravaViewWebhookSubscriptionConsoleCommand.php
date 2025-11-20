@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Console\Webook;
 
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -21,7 +20,6 @@ final class StravaViewWebhookSubscriptionConsoleCommand extends Command
 {
     public function __construct(
         private readonly Strava $strava,
-        private readonly WebhookConfig $webhookConfig,
         private readonly LoggerInterface $logger,
     ) {
         parent::__construct();
@@ -30,12 +28,6 @@ final class StravaViewWebhookSubscriptionConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
-
-        if (!$this->webhookConfig->isEnabled()) {
-            $output->warning('Webhooks not enabled. Enable them in your config by setting import.webhooks.enabled = true');
-
-            return Command::SUCCESS;
-        }
 
         if (!$subscriptions = $this->strava->getWebhookSubscription()) {
             $output->note('No webhook subscriptions found');
