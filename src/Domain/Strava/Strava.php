@@ -14,6 +14,7 @@ use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -310,16 +311,19 @@ class Strava
         ]));
     }
 
-    public function createWebhookSubscription(string $callbackUrl, string $verifyToken): void
+    /**
+     * @return array<string, mixed>
+     */
+    public function createWebhookSubscription(Url $callbackUrl, string $verifyToken): array
     {
-        $this->request('api/v3/push_subscriptions', 'POST', [
+        return Json::decode($this->request('api/v3/push_subscriptions', 'POST', [
             RequestOptions::FORM_PARAMS => [
                 'client_id' => (string) $this->stravaClientId,
                 'client_secret' => (string) $this->stravaClientSecret,
-                'callback_url' => $callbackUrl,
+                'callback_url' => (string) $callbackUrl,
                 'verify_token' => $verifyToken,
             ],
-        ]);
+        ]));
     }
 
     public function deleteWebhookSubscription(string $subscriptionId): void

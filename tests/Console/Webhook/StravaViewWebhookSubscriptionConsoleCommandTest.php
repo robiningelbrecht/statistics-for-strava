@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Console\Webook;
+namespace App\Tests\Console\Webhook;
 
-use App\Console\Webook\StravaViewWebhookSubscriptionConsoleCommand;
+use App\Console\Webhook\StravaViewWebhookSubscriptionConsoleCommand;
 use App\Domain\Strava\Strava;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\SpyOutput;
@@ -32,7 +32,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
             'command' => $command->getName(),
         ]);
 
-        $this->assertStringContainsString('Webhook Subscription Found', $commandTester->getDisplay());
+        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
     }
 
     public function testExecuteWhenNoSubscriptions(): void
@@ -61,11 +61,9 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
     {
         parent::setUp();
 
-        $this->logger = $this->createMock(LoggerInterface::class);
-
         $this->stravaViewWebhookSubscriptionConsoleCommand = new StravaViewWebhookSubscriptionConsoleCommand(
             $this->getContainer()->get(Strava::class),
-            $this->logger,
+            $this->logger = $this->createMock(LoggerInterface::class),
         );
     }
 
