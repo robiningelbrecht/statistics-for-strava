@@ -60,7 +60,6 @@ final readonly class Mutex
         $realKey = $key.self::KEY_SUFFIX;
         $now = $this->clock->getCurrentDateTimeImmutable()->getTimestamp();
 
-
         $this->connection->executeStatement('UPDATE KeyValue SET `value` = :value WHERE `key` = :key', [
             'value' => Json::encode(['isLocked' => true, 'timestamp' => $now]),
             'key' => $realKey,
