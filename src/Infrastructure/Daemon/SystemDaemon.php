@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Daemon;
 
+use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Daemon\Cron\Cron;
 use App\Infrastructure\Daemon\Cron\CronAction;
 use App\Infrastructure\Time\Clock\Clock;
-use React\ChildProcess\Process;
 use React\EventLoop\Loop;
 use React\Promise\PromiseInterface;
 use WyriHaximus\React\Cron\Action;
@@ -25,6 +25,7 @@ final class SystemDaemon implements Daemon
     public function __construct(
         private readonly Clock $clock,
         private readonly Cron $cron,
+        private readonly WebhookConfig $webhookConfig,
     ) {
     }
 
@@ -48,29 +49,32 @@ final class SystemDaemon implements Daemon
                 mutexTtl: $cronAction->getRunnable()->getMutexTtl(),
                 expression: (string) $cronAction->getExpression(),
                 performer: function () use ($cronAction): PromiseInterface {
-                    $this->getConsoleOutput()->writeln(sprintf(
-                        '<info>[%s] Starting cron action "%s"</info>',
-                        $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
-                        $cronAction->getId()
-                    ));
-                    $process = new Process('bin/console app:cron:action '.$cronAction->getId());
+                    $process = new CronProcess(
+                        cronActionId: $cronAction->getId(),
+                        clock: $this->clock,
+                        output: $this->getConsoleOutput(),
+                    );
                     $process->start();
 
-                    $process->stdout?->on('data', function (string $chunk): void {
-                        $this->getConsoleOutput()->write($chunk);
-                    });
+                    return resolve(true);
+                }
+            );
+        }
 
-                    $process->stderr?->on('data', function (string $chunk): void {
-                        $this->getConsoleOutput()->write(sprintf('<error>%s</error>', $chunk));
-                    });
-
-                    $process->on('exit', function () use ($cronAction): void {
-                        $this->getConsoleOutput()->writeln(sprintf(
-                            '<info>[%s] Finished cron action "%s"</info>',
-                            $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s'),
-                            $cronAction->getId()
-                        ));
-                    });
+        $extraConfiguredCronActionsOutput = [];
+        if ($this->webhookConfig->isEnabled()) {
+            $extraConfiguredCronActionsOutput[] = '<info> - processStravaWebhooks: * * * * *</info>';
+            $actions[] = new Action(
+                key: 'processStravaWebhooks',
+                mutexTtl: 60,
+                expression: '* * * * *',
+                performer: function (): PromiseInterface {
+                    $process = new CronProcess(
+                        cronActionId: 'processStravaWebhooks',
+                        clock: $this->clock,
+                        output: $this->getConsoleOutput(),
+                    )->withCommand('bin/console app:cron:process-webhooks');
+                    $process->start();
 
                     return resolve(true);
                 }
@@ -88,9 +92,12 @@ final class SystemDaemon implements Daemon
         }
 
         $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'Cron configured'));
-        $this->getConsoleOutput()->writeln(array_map(
-            fn (CronAction $action): string => \sprintf('<info> - %s: %s</info>', $action->getId(), $action->getExpression()),
-            iterator_to_array($this->cron)
-        ));
+        $this->getConsoleOutput()->writeln([
+            ...array_map(
+                fn (CronAction $action): string => \sprintf('<info> - %s: %s</info>', $action->getId(), $action->getExpression()),
+                iterator_to_array($this->cron)
+            ),
+            ...$extraConfiguredCronActionsOutput,
+        ]);
     }
 }
