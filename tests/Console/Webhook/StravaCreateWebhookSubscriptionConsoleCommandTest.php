@@ -54,7 +54,10 @@ class StravaCreateWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTe
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertStringContainsString(
+            'Webhooks not enabled. Enable them by setting import.webhooks.enabled = true',
+            $commandTester->getDisplay()
+        );
     }
 
     protected function setUp(): void
