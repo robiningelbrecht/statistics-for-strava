@@ -26,6 +26,18 @@ class ProcessWebhookEventCommandHandlerTest extends ContainerTestCase
         );
     }
 
+    public function testHandleWhenNotActivityEvent(): void
+    {
+        $this->commandBus->dispatch(new ProcessWebhookEvent([
+            'object_id' => 1,
+            'object_type' => 'athlete',
+        ]));
+
+        $this->assertEmpty(
+            $this->getConnection()->executeQuery('SELECT * FROM StravaWebhookEvent')->fetchAllAssociative()
+        );
+    }
+
     #[\Override]
     protected function setUp(): void
     {
