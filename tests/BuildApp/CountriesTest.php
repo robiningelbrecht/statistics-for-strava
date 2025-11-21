@@ -18,6 +18,7 @@ class CountriesTest extends ContainerTestCase
         $this->assertNull($this->countries->findCountryCodeByCountryName('Robinstan'));
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

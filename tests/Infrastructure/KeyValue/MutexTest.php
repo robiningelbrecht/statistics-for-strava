@@ -14,6 +14,7 @@ class MutexTest extends ContainerTestCase
 
     }
 
+    #[\Override]
     protected function setUp(): void
     {
 

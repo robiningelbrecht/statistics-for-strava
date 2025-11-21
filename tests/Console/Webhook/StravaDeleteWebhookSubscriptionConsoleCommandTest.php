@@ -56,6 +56,7 @@ class StravaDeleteWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTe
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

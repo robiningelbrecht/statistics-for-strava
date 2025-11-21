@@ -38,7 +38,7 @@ class StravaTest extends TestCase
     private MockObject $client;
     private MockObject $filesystemOperator;
     private NullSleep $sleep;
-    private LoggerInterface $logger;
+    private \PHPUnit\Framework\MockObject\MockObject $logger;
 
     public function testVerifyAccessToken(): void
     {

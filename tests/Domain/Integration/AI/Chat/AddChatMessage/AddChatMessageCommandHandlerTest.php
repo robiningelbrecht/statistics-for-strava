@@ -31,6 +31,7 @@ class AddChatMessageCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot($results);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

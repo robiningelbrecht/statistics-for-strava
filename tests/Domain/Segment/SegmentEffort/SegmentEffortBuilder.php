@@ -16,13 +16,13 @@ final class SegmentEffortBuilder
     private SegmentEffortId $segmentEffortId;
     private SegmentId $segmentId;
     private ActivityId $activityId;
-    private SerializableDateTime $startDateTime;
+    private readonly SerializableDateTime $startDateTime;
     private string $name;
     private float $elapsedTimeInSeconds;
     private Kilometer $distance;
     private ?float $averageWatts;
-    private ?int $maxHeartRate;
-    private ?int $averageHeartRate;
+    private readonly ?int $maxHeartRate;
+    private readonly ?int $averageHeartRate;
     private ?int $rank;
 
     private function __construct()

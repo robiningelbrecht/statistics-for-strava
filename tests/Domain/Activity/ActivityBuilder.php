@@ -48,7 +48,7 @@ final class ActivityBuilder
     private ?GearId $gearId;
     private readonly ?string $gearName;
     private readonly bool $isCommute;
-    private ?WorkoutType $workoutType;
+    private readonly ?WorkoutType $workoutType;
 
     private function __construct()
     {

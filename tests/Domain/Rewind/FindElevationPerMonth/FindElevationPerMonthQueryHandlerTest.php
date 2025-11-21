@@ -84,6 +84,7 @@ class FindElevationPerMonthQueryHandlerTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
