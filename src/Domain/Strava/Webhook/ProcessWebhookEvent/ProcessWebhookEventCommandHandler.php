@@ -22,6 +22,10 @@ final readonly class ProcessWebhookEventCommandHandler implements CommandHandler
 
         $payload = $command->getEventPayload();
 
+        if ('activity' !== $payload['object_type']) {
+            return;
+        }
+
         $this->webhookEventRepository->add(WebhookEvent::create(
             objectId: (string) $payload['object_id'],
             objectType: $payload['object_type'],
