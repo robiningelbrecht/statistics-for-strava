@@ -15,8 +15,8 @@ final class ChatMessageBuilder
     private ChatMessageId $messageId;
     private string $message;
     private MessageRole $messageRole;
-    private SerializableDateTime $on;
-    private ?ProfilePictureUrl $userProfilePictureUrl;
+    private readonly SerializableDateTime $on;
+    private readonly ?ProfilePictureUrl $userProfilePictureUrl;
     private ?string $firstLetterOfFirstName;
 
     public function __construct()

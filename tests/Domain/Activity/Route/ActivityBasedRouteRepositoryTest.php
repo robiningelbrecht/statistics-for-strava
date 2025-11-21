@@ -64,6 +64,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($this->routeRepository->findAll()));
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

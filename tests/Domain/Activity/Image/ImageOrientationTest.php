@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ImageOrientationTest extends TestCase
 {
-    public function testFromWidthAndHeight()
+    public function testFromWidthAndHeight(): void
     {
         $this->assertEquals(
             ImageOrientation::PORTRAIT,

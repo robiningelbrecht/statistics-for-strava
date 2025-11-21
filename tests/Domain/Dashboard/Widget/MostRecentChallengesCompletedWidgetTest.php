@@ -39,6 +39,7 @@ class MostRecentChallengesCompletedWidgetTest extends ContainerTestCase
         yield 'too small "numberOfChallengesToDisplay" key' => [$config, 'Configuration item "numberOfChallengesToDisplay" must be set to a value of 1 or greater.'];
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -80,7 +80,7 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()],
-            $this->activityRepository->findAll()->map(fn (Activity $activity) => $activity->getId())
+            $this->activityRepository->findAll()->map(fn (Activity $activity): \App\Domain\Activity\ActivityId => $activity->getId())
         );
     }
 
@@ -116,12 +116,12 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId()],
-            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity) => $activity->getId())
+            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity): \App\Domain\Activity\ActivityId => $activity->getId())
         );
 
         $this->assertEquals(
             [$activityOne->getId()],
-            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity) => $activity->getId())
+            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity): \App\Domain\Activity\ActivityId => $activity->getId())
         );
     }
 
@@ -159,7 +159,7 @@ class DbalActivityRepositoryTest extends ContainerTestCase
             [$activityTwo->getId(), $activityThree->getId()],
             $this->activityRepository->findBySportTypes(SportTypes::fromArray(
                 [SportType::RUN, SportType::MOUNTAIN_BIKE_RIDE]
-            ))->map(fn (Activity $activity) => $activity->getId())
+            ))->map(fn (Activity $activity): \App\Domain\Activity\ActivityId => $activity->getId())
         );
     }
 

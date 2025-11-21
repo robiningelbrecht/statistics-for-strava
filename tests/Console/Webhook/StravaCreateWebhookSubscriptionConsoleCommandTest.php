@@ -60,6 +60,7 @@ class StravaCreateWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTe
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

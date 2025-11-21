@@ -122,6 +122,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

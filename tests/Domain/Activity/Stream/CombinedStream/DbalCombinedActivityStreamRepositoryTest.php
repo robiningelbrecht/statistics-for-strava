@@ -181,6 +181,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
