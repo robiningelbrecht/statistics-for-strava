@@ -30,6 +30,7 @@ class MostRecentActivitiesWidgetTest extends ContainerTestCase
         yield 'too small "numberOfActivitiesToDisplay" key' => [$config, 'Configuration item "numberOfActivitiesToDisplay" must be set to a value of 1 or greater.'];
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->widget = $this->getContainer()->get(MostRecentActivitiesWidget::class);

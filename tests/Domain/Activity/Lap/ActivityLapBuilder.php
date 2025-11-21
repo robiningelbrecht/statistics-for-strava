@@ -15,16 +15,16 @@ final class ActivityLapBuilder
     private ActivityLapId $lapId;
     private ActivityId $activityId;
     private int $lapNumber;
-    private string $name;
-    private int $elapsedTimeInSeconds;
-    private int $movingTimeInSeconds;
-    private Meter $distance;
+    private readonly string $name;
+    private readonly int $elapsedTimeInSeconds;
+    private readonly int $movingTimeInSeconds;
+    private readonly Meter $distance;
     private MetersPerSecond $averageSpeed;
-    private MetersPerSecond $minAverageSpeed;
-    private MetersPerSecond $maxAverageSpeed;
+    private readonly MetersPerSecond $minAverageSpeed;
+    private readonly MetersPerSecond $maxAverageSpeed;
     private MetersPerSecond $maxSpeed;
-    private Meter $elevationDifference;
-    private ?int $averageHeartRate;
+    private readonly Meter $elevationDifference;
+    private readonly ?int $averageHeartRate;
 
     private function __construct()
     {

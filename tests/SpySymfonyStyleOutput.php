@@ -9,6 +9,7 @@ class SpySymfonyStyleOutput extends SymfonyStyle implements \Stringable
     private array $messages = [];
 
     #[Override]
+    #[\Override]
     public function writeln(string|iterable $messages, int $type = self::OUTPUT_NORMAL): void
     {
         if (!is_iterable($messages)) {
@@ -18,6 +19,7 @@ class SpySymfonyStyleOutput extends SymfonyStyle implements \Stringable
     }
 
     #[Override]
+    #[\Override]
     public function write(string|iterable $messages, bool $newline = false, int $type = self::OUTPUT_NORMAL): void
     {
         if (!is_iterable($messages)) {

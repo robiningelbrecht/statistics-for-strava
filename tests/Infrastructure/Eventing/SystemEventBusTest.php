@@ -11,7 +11,7 @@ class SystemEventBusTest extends KernelTestCase
 {
     use MatchesSnapshots;
 
-    private EventDispatcherInterface $eventDispatcher;
+    private \PHPUnit\Framework\MockObject\MockObject $eventDispatcher;
 
     public function testPublishEvents(): void
     {

@@ -17,7 +17,7 @@ use App\Tests\ContainerTestCase;
 
 class MaintenanceTaskProgressCalculatorTest extends ContainerTestCase
 {
-    public function testCalculateProgress()
+    public function testCalculateProgress(): void
     {
         $this->assertEquals(
             MaintenanceTaskProgress::from(100, 'test'),
