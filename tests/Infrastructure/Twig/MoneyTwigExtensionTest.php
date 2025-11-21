@@ -18,6 +18,7 @@ class MoneyTwigExtensionTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->moneyTwigExtension = $this->getContainer()->get(MoneyTwigExtension::class);

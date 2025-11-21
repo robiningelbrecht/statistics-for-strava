@@ -168,6 +168,7 @@ class StravaWebhookRequestHandlerTest extends ContainerTestCase
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

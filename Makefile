@@ -69,7 +69,7 @@ delete-snapshots:
 	find . -name __snapshots__ -type d -prune -exec rm -rf {} \;
 
 rector:
-	@make dcr cmd="vendor/bin/rector src"
+	@make dcr cmd="vendor/bin/rector"
 
 # Helpers to build the app.
 app-import-data:

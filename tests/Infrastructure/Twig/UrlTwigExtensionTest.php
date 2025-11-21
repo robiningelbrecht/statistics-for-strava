@@ -71,6 +71,7 @@ class UrlTwigExtensionTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->stringTwigExtension = new StringTwigExtension();

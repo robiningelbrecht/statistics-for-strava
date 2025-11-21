@@ -102,6 +102,7 @@ class FindZwiftStatsPerWorldQueryHandlerTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

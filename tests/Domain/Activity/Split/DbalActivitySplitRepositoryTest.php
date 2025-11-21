@@ -110,6 +110,7 @@ class DbalActivitySplitRepositoryTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

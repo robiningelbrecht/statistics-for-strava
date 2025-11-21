@@ -51,7 +51,7 @@ class ConfigureAppLocaleCommandHandlerTest extends ContainerTestCase
         foreach ($fileSystem->listContents('/', true) as $item) {
             $path = $item->path();
 
-            $this->snapshotName = preg_replace('/[^a-zA-Z0-9]/', '-', $path).'-'.$locale->value;
+            $this->snapshotName = preg_replace('/[^a-zA-Z0-9]/', '-', (string) $path).'-'.$locale->value;
             if (!$item instanceof FileAttributes) {
                 continue;
             }
@@ -70,7 +70,7 @@ class ConfigureAppLocaleCommandHandlerTest extends ContainerTestCase
 
     public static function provideLocales(): array
     {
-        return array_map(fn (Locale $locale) => [$locale], Locale::cases());
+        return array_map(fn (Locale $locale): array => [$locale], Locale::cases());
     }
 
     protected function getSnapshotId(): string

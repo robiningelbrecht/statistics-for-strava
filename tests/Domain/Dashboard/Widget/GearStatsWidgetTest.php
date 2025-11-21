@@ -45,6 +45,7 @@ class GearStatsWidgetTest extends ContainerTestCase
         yield 'invalid "includeRetiredGear" key' => [WidgetConfiguration::empty()->add('includeRetiredGear', 'lol'), 'Configuration item "includeRetiredGear" must be a boolean.'];
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

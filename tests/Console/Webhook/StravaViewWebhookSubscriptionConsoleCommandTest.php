@@ -57,6 +57,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
         $this->assertStringContainsString('No webhook subscriptions found', $output);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
