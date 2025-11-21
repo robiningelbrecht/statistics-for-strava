@@ -1,4 +1,4 @@
-FROM php:8.4-cli
+FROM php:8.5-cli
 
 COPY ./php.ini "${PHP_INI_DIR}/conf.d/docker-php-config.ini"
 
@@ -22,11 +22,19 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 
-RUN docker-php-ext-install pdo pdo_mysql zip xsl gd intl opcache exif mbstring sockets
-RUN docker-php-ext-install bcmath pcntl
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install exif
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install intl
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Uncomment when xdebug supports php8.5
+# RUN pecl install xdebug
+# RUN docker-php-ext-enable xdebug
 
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 
