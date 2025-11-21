@@ -50,7 +50,7 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
         while ($i < strlen($encodedPolyline)) {
             $shift = $result = 0x00;
             do {
-                $bit = ord(substr($encodedPolyline, $i++)) - 63;
+                $bit = ord($encodedPolyline[$i++]) - 63;
                 $result |= ($bit & 0x1F) << $shift;
                 $shift += 5;
             } while ($bit >= 0x20);

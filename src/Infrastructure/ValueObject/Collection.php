@@ -65,7 +65,7 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
      */
     public function remove(int|string $index): self
     {
-        if (array_key_exists($index, $this->items)) {
+        if (array_key_exists((string) $index, $this->items)) {
             unset($this->items[$index]);
         }
 
