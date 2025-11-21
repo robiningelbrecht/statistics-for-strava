@@ -8,6 +8,7 @@ use Rector\Php85\Rector\FuncCall\OrdSingleByteRector;
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/src',
+        __DIR__.'/tests',
     ])
     ->withPhpSets(php85: true)
     ->withTypeCoverageLevel(10)

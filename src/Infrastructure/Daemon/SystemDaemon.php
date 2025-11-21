@@ -8,6 +8,7 @@ use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Daemon\Cron\Cron;
 use App\Infrastructure\Daemon\Cron\CronAction;
+use App\Infrastructure\Daemon\Cron\CronProcess;
 use App\Infrastructure\Time\Clock\Clock;
 use React\EventLoop\Loop;
 use React\Promise\PromiseInterface;
