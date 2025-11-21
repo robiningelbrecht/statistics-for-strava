@@ -2,30 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Daemon;
+namespace App\Infrastructure\Daemon\Cron;
 
 use App\Infrastructure\Time\Clock\Clock;
 use React\ChildProcess\Process;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class CronProcess
+/**
+ * @codeCoverageIgnore
+ */
+final readonly class CronProcess
 {
-    private ?Process $process = null;
-
     public function __construct(
-        private readonly string $cronActionId,
-        private readonly Clock $clock,
-        private readonly OutputInterface $output,
+        private string $cronActionId,
+        private Clock $clock,
+        private OutputInterface $output,
+        private ?string $command = null,
     ) {
     }
 
     public function withCommand(string $command): self
     {
-        $cronProcess = clone $this;
-
-        $cronProcess->process = new Process($command);
-
-        return $cronProcess;
+        return new self(
+            cronActionId: $this->cronActionId,
+            clock: $this->clock,
+            output: $this->output,
+            command: $command,
+        );
     }
 
     public function start(): void
@@ -36,8 +39,7 @@ final class CronProcess
             $this->cronActionId
         ));
 
-        $process = $this->process ??
-            new Process('bin/console app:cron:action '.$this->cronActionId);
+        $process = new Process($this->command ?? 'bin/console app:cron:action '.$this->cronActionId);
         $process->start();
 
         $process->stdout?->on('data', function (string $chunk): void {
