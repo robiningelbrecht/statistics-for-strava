@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Strava\Webhook\ProcessWebhookEvent;
 
 use App\Domain\Strava\Webhook\ProcessWebhookEvent\ProcessWebhookEvent;
+use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -21,8 +21,8 @@ class ProcessWebhookEventCommandHandlerTest extends ContainerTestCase
             'object_type' => 'activity',
         ]));
 
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()->executeQuery('SELECT * FROM StravaWebhookEvent')->fetchAllAssociative())
+        $this->assertTrue(
+            $this->getContainer()->get(WebhookEventRepository::class)->grab()
         );
     }
 
@@ -33,8 +33,8 @@ class ProcessWebhookEventCommandHandlerTest extends ContainerTestCase
             'object_type' => 'athlete',
         ]));
 
-        $this->assertEmpty(
-            $this->getConnection()->executeQuery('SELECT * FROM StravaWebhookEvent')->fetchAllAssociative()
+        $this->assertFalse(
+            $this->getContainer()->get(WebhookEventRepository::class)->grab()
         );
     }
 
