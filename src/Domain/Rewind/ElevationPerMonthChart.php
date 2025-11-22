@@ -88,7 +88,8 @@ final readonly class ElevationPerMonthChart
 
         // Enable label only on top series.
         if (!empty($series)) {
-            $series[array_key_last($series)]['label']['show'] = true;
+            $lastKey = array_key_last($series);
+            $series[$lastKey]['label']['show'] = true;
         }
 
         // X axis labels.

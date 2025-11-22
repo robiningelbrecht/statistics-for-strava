@@ -72,6 +72,7 @@ final class AppConfig
         ?string $prefix): void
     {
         if (!$needsNestedProcessing) {
+            // @phpstan-ignore-next-line
             $this->config[$prefix] = $ymlConfig;
 
             return;

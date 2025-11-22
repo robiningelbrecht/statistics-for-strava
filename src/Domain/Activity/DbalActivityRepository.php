@@ -80,7 +80,7 @@ final class DbalActivityRepository implements ActivityRepository
     public function findAll(?int $limit = null): Activities
     {
         $cacheKey = $limit ?? 'all';
-        if (array_key_exists($cacheKey, DbalActivityRepository::$cachedActivities)) {
+        if (array_key_exists((string) $cacheKey, DbalActivityRepository::$cachedActivities)) {
             return DbalActivityRepository::$cachedActivities[$cacheKey];
         }
 
