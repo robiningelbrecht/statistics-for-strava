@@ -52,7 +52,7 @@ RUN cd /tmp/xdebug \
 RUN touch "${PHP_INI_DIR}/conf.d/99-xdebug.ini"
 RUN echo "zend_extension=xdebug" > ${PHP_INI_DIR}/conf.d/99-xdebug.ini
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
-# ---- END TEMPORARY XEDEBUG INSTALL FROM SOURCE
+# ---- END TEMPORARY XDEBUG INSTALL FROM SOURCE
 
 # Install Blackfire.
 RUN mkdir -p /tmp/blackfire \
