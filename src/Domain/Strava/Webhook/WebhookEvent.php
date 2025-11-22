@@ -4,21 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Strava\Webhook;
 
-use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Entity]
-#[ORM\Table(name: 'StravaWebhookEvent')]
 final readonly class WebhookEvent
 {
     /**
      * @param array<string, mixed> $payload
      */
     private function __construct(
-        #[ORM\Id, ORM\Column(type: 'string')]
         private string $objectId,
-        #[ORM\Id, ORM\Column(type: 'string')]
         private string $objectType,
-        #[ORM\Column(type: 'json')]
         private array $payload,
     ) {
     }
