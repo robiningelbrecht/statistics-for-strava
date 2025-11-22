@@ -13,7 +13,7 @@ final class Mutex
     /** @var array<string, bool> */
     private static array $shutdownRegistered = [];
 
-    private const int STALE_THRESHOLD_IN_SECONDS = 900; // 15 minutes.
+    private const int STALE_THRESHOLD_IN_SECONDS = 1200; // 20 minutes.
     private const string HEARTBEAT_KEY = 'heartbeat';
     private const string LOCK_ACQUIRED_BY_KEY = 'lockAcquiredBy';
 
