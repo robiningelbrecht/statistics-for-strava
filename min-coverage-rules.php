@@ -25,12 +25,12 @@ return [
     ),
     new MinCoverageRule(
         pattern: 'App\Infrastructure\*',
-        minCoverage: 92,
+        minCoverage: 93,
         exitOnLowCoverage: false
     ),
     new MinCoverageRule(
         pattern: 'App\Domain\*',
-        minCoverage: 96,
+        minCoverage: 97,
         exitOnLowCoverage: false
     ),
 ];

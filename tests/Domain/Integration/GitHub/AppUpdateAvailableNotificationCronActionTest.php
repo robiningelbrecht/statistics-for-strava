@@ -21,7 +21,7 @@ class AppUpdateAvailableNotificationCronActionTest extends TestCase
     use MatchesSnapshots;
     private AppUpdateAvailableNotificationCronAction $cronAction;
     private CommandBus $commandBus;
-    private Client $client;
+    private \PHPUnit\Framework\MockObject\MockObject $client;
 
     public function testRun(): void
     {

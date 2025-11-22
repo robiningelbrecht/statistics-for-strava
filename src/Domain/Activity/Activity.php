@@ -68,7 +68,7 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'string')]
         private SportType $sportType,
         #[ORM\Column(type: 'string', nullable: true)]
-        private WorldType $worldType,
+        private readonly WorldType $worldType,
         #[ORM\Column(type: 'string')]
         private string $name,
         #[ORM\Column(type: 'string', nullable: true)]

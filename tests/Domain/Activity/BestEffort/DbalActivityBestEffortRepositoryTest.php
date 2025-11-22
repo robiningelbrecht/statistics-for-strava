@@ -82,7 +82,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         foreach ([ActivityType::RIDE, ActivityType::RUN] as $activityType) {
             $this->assertMatchesJsonSnapshot(Json::encode(
                 $this->activityBestEffortRepository->findBestEffortsFor($activityType)->map(
-                    fn (ActivityBestEffort $bestEffort) => [
+                    fn (ActivityBestEffort $bestEffort): array => [
                         'activityId' => $bestEffort->getActivityId(),
                         'sportType' => $bestEffort->getSportType()->value,
                         'distanceInMeter' => $bestEffort->getDistanceInMeter()->toInt(),
@@ -114,7 +114,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         foreach ([ActivityType::RIDE, ActivityType::RUN] as $activityType) {
             $this->assertMatchesJsonSnapshot(Json::encode(
                 $this->activityBestEffortRepository->findBestEffortHistory($activityType)->map(
-                    fn (ActivityBestEffort $bestEffort) => [
+                    fn (ActivityBestEffort $bestEffort): array => [
                         'activityId' => $bestEffort->getActivityId(),
                         'sportType' => $bestEffort->getSportType()->value,
                         'distanceInMeter' => $bestEffort->getDistanceInMeter()->toInt(),
@@ -217,6 +217,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

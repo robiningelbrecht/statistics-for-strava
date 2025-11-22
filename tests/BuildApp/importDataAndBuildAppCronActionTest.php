@@ -7,7 +7,6 @@ use App\BuildApp\importDataAndBuildAppCronAction;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpySymfonyStyleOutput;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +38,6 @@ class importDataAndBuildAppCronActionTest extends TestCase
             $this->commandBus = new SpyCommandBus(),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
-            PausedClock::fromString('2025-11-10 15:24')
         );
     }
 }

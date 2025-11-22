@@ -184,6 +184,7 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->stravaOAuthRequestHandler = new StravaOAuthRequestHandler(

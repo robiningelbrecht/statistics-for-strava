@@ -14,6 +14,7 @@ use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -286,7 +287,7 @@ class Strava
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getSegment(SegmentId $segmentId): array
     {
@@ -295,6 +296,44 @@ class Strava
                 'Authorization' => 'Bearer '.$this->getAccessToken(),
             ],
         ]));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getWebhookSubscription(): array
+    {
+        return Json::decode($this->request('api/v3/push_subscriptions', 'GET', [
+            RequestOptions::QUERY => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+            ],
+        ]));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function createWebhookSubscription(Url $callbackUrl, string $verifyToken): array
+    {
+        return Json::decode($this->request('api/v3/push_subscriptions', 'POST', [
+            RequestOptions::FORM_PARAMS => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+                'callback_url' => (string) $callbackUrl,
+                'verify_token' => $verifyToken,
+            ],
+        ]));
+    }
+
+    public function deleteWebhookSubscription(string $subscriptionId): void
+    {
+        $this->request('api/v3/push_subscriptions/'.$subscriptionId, 'DELETE', [
+            RequestOptions::QUERY => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+            ],
+        ]);
     }
 
     /**

@@ -28,7 +28,7 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->commandBus
             ->expects($this->any())
             ->method('dispatch')
-            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands) {
+            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands): void {
                 $dispatchedCommands[] = $command;
             });
 

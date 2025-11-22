@@ -21,11 +21,11 @@ final class SegmentBuilder
     private float $maxGradient;
     private bool $isFavourite;
     private ?string $deviceName;
-    private ?int $climbCategory;
-    private ?string $countryCode;
+    private readonly ?int $climbCategory;
+    private readonly ?string $countryCode;
     private bool $detailsHaveBeenImported;
-    private ?EncodedPolyline $polyline;
-    private ?Coordinate $startingCoordinate;
+    private readonly ?EncodedPolyline $polyline;
+    private readonly ?Coordinate $startingCoordinate;
 
     private function __construct()
     {
