@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Domain\Athlete\Weight;
 
-use App\Infrastructure\ValueObject\Measurement\Mass\Gram;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
+use App\Infrastructure\ValueObject\Measurement\Mass\Weight;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class AthleteWeight
 {
     private function __construct(
         private SerializableDateTime $on,
-        private Gram $weightInGrams,
+        private Weight $weight,
     ) {
     }
 
     public static function fromState(
         SerializableDateTime $on,
-        Gram $weightInGrams,
+        Weight $weight,
     ): self {
         return new self(
             on: $on,
-            weightInGrams: $weightInGrams
+            weight: $weight,
         );
     }
 
@@ -31,13 +31,13 @@ final readonly class AthleteWeight
         return $this->on;
     }
 
-    public function getWeightInGrams(): Gram
+    public function getWeight(): Weight
     {
-        return $this->weightInGrams;
+        return $this->weight;
     }
 
     public function getWeightInKg(): Kilogram
     {
-        return $this->getWeightInGrams()->toKilogram();
+        return $this->getWeight()->toKilogram();
     }
 }
