@@ -35,8 +35,24 @@ RUN docker-php-ext-install intl
 # Uncomment when xdebug supports php8.5
 # RUN pecl install xdebug
 # RUN docker-php-ext-enable xdebug
+# COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 
+# ---- BEGIN TEMPORARY XEDEBUG INSTALL FROM SOURCE
+RUN mkdir -p /tmp/xdebug
+RUN curl -L https://xdebug.org/files/xdebug-3.5.0alpha3.tgz \
+    | tar -xz -C /tmp/xdebug --strip-components=1
+
+# Build and install Xdebug
+RUN cd /tmp/xdebug \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install
+
+RUN touch "${PHP_INI_DIR}/conf.d/99-xdebug.ini"
+RUN echo "zend_extension=xdebug" > ${PHP_INI_DIR}/conf.d/99-xdebug.ini
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
+# ---- END TEMPORARY XEDEBUG INSTALL FROM SOURCE
 
 # Install Blackfire.
 RUN mkdir -p /tmp/blackfire \
