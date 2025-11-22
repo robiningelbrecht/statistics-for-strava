@@ -9,35 +9,35 @@ use App\Infrastructure\Serialization\Json;
 
 final readonly class DbalWebhookEventRepository extends DbalRepository implements WebhookEventRepository
 {
+    private const string WEBHOOK_EVENT_KEY = 'needsToProcessWebhooks';
+
     public function add(WebhookEvent $webhookEvent): void
     {
-        $sql = 'INSERT INTO StravaWebhookEvent (objectId, objectType, payload)
-        VALUES (:objectId, :objectType, :payload)
-        ON CONFLICT(objectId, objectType) DO NOTHING;';
+        $sql = 'INSERT INTO KeyValue (`key`, `value`)
+        VALUES (:key, :value)
+        ON CONFLICT(`key`) DO NOTHING;';
 
         $this->connection->executeStatement($sql, [
-            'objectId' => $webhookEvent->getObjectId(),
-            'objectType' => $webhookEvent->getObjectType(),
-            'payload' => Json::encode($webhookEvent->getPayload()),
+            'key' => self::WEBHOOK_EVENT_KEY,
+            'value' => Json::encode(true),
         ]);
     }
 
-    public function grab(): array
+    public function grab(): bool
     {
         $this->connection->beginTransaction();
 
-        $results = $this->connection->executeQuery('SELECT * FROM StravaWebhookEvent')->fetchAllAssociative();
-        $this->connection->executeStatement('DELETE FROM StravaWebhookEvent');
+        $value = $this->connection->executeQuery(
+            'SELECT `value` FROM KeyValue WHERE `key`= :key',
+            ['key' => self::WEBHOOK_EVENT_KEY]
+        )->fetchOne();
+
+        $this->connection->executeStatement('DELETE FROM KeyValue WHERE `key`= :key', [
+            'key' => self::WEBHOOK_EVENT_KEY,
+        ]);
 
         $this->connection->commit();
 
-        return array_map(
-            fn (array $result): WebhookEvent => WebhookEvent::create(
-                objectId: $result['objectId'],
-                objectType: $result['objectType'],
-                payload: Json::decode($result['payload'])
-            ),
-            $results,
-        );
+        return (bool) $value;
     }
 }
