@@ -9,6 +9,9 @@ components:
       - g1233776
       - '10130856'
       - retired
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
     maintenance:
       - tag: lubed
         label: Lube

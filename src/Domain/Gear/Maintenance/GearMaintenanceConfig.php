@@ -12,6 +12,8 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
+use Money\Currency;
+use Money\Money;
 
 final readonly class GearMaintenanceConfig implements \Stringable
 {
@@ -108,6 +110,13 @@ final readonly class GearMaintenanceConfig implements \Stringable
                 throw new InvalidGearMaintenanceConfig('"purchasePrice.currency" property is required');
             }
 
+            $purchasePrice = null;
+            if (!empty($component['purchasePrice']['amountInCents'])) {
+                $purchasePrice = new Money(
+                    amount: $component['purchasePrice']['amountInCents'],
+                    currency: new Currency($component['purchasePrice']['currency'])
+                );
+            }
             $gearComponentTag = Tag::fromTags((string) $hashtagPrefix, $component['tag']);
             $gearComponent = GearComponent::create(
                 tag: $gearComponentTag,
@@ -117,6 +126,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
                     $component['attachedTo']
                 )),
                 imgSrc: $component['imgSrc'] ?? null,
+                purchasePrice: $purchasePrice
             );
 
             foreach ($component['maintenance'] as $task) {
