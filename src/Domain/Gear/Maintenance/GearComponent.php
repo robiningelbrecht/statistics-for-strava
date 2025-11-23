@@ -12,6 +12,7 @@ use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
+use Money\Money;
 
 final readonly class GearComponent
 {
@@ -22,6 +23,7 @@ final readonly class GearComponent
         private Name $label,
         private GearIds $attachedTo,
         private ?string $imgSrc,
+        private ?Money $purchasePrice,
     ) {
         $this->maintenanceTasks = MaintenanceTasks::empty();
     }
@@ -31,12 +33,14 @@ final readonly class GearComponent
         Name $label,
         GearIds $attachedTo,
         ?string $imgSrc,
+        ?Money $purchasePrice,
     ): self {
         return new self(
             tag: $tag,
             label: $label,
             attachedTo: $attachedTo,
             imgSrc: $imgSrc,
+            purchasePrice: $purchasePrice,
         );
     }
 
@@ -68,6 +72,11 @@ final readonly class GearComponent
     public function getImgSrc(): ?string
     {
         return $this->imgSrc;
+    }
+
+    public function getPurchasePrice(): ?Money
+    {
+        return $this->purchasePrice;
     }
 
     public function getMaintenanceTasks(): MaintenanceTasks

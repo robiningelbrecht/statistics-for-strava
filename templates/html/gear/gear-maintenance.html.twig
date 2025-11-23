@@ -143,7 +143,15 @@
                                                          alt="{{ gearComponent.getLabel() }}">
                                                 </div>
                                                 <div class="w-full flex flex-col justify-between p-4 leading-normal">
-                                                    <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
+                                                    <div class="flex items-center justify-between">
+                                                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
+                                                        {% set componentPurchasePrice = gearComponent.getPurchasePrice() %}
+                                                        {% if componentPurchasePrice %}
+                                                            <div class="text-gray-700 text-xs px-2">
+                                                                {{ componentPurchasePrice|formatMoney }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="grid grid-cols-1 xl:grid-cols-2 gap-y-4 divide-x *:px-4 -mx-4 font-normal text-gray-700">
                                                         {% for maintenanceTask in gearComponent.getMaintenanceTasks() %}
                                                             {% set mostRecentTaskTag = maintenanceTask.getMostRecentMaintenanceTaskTag() %}

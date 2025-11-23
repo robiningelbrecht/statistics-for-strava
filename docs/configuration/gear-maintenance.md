@@ -61,6 +61,10 @@ components:
     attachedTo:
       - 'gxxxxxxxx' # May not always start with g 
       - 'gxxxxxxxx'
+    # Optional, will be displayed in the UI along your component
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
     # A list of maintenance tasks for this component
     maintenance:
       # Tag to be added to the Strava activity title.
