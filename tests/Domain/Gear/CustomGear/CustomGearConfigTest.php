@@ -138,6 +138,10 @@ class CustomGearConfigTest extends TestCase
         yield 'invalid "customGears[purchasePrice][amountInCents]" key' => [$yml, '"purchasePrice.amountInCents" property must be a numeric value'];
 
         $yml = self::getValidYml();
+        unset($yml['customGears'][0]['purchasePrice']['currency']);
+        yield 'missing "customGears[purchasePrice][currency]" key' => [$yml, '"purchasePrice.currency" property is required'];
+
+        $yml = self::getValidYml();
         $yml['customGears'][0]['tag'] = 'gearr';
         $yml['customGears'][1]['tag'] = 'gearr';
         yield 'duplicate customGear tags' => [$yml, 'duplicate custom gear tags found: gearr'];
