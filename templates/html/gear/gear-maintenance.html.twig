@@ -74,7 +74,7 @@
                                     {{ svg('distance') }}
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3 max-w-120">
                                 <div class="flex items-center justify-center">
                                     {{ svg('components') }}
                                 </div>
@@ -120,8 +120,10 @@
                                 <td class="px-6 py-2 truncate">
                                     {{ gear.getDistance()|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-6 py-2 truncate">
-                                    {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
+                                <td class="px-6 py-2 truncate max-w-120">
+                                    <div class="truncate">
+                                        {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
+                                    </div>
                                 </td>
                                 <td class="px-6 py-2 truncate">
                                     <a href="#" data-model-content-url="{{ relativeUrl('gear/maintenance/history/' ~ gear.getId()) }}.html" class="font-medium text-blue-600 hover:underline">
