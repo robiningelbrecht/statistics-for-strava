@@ -10,8 +10,11 @@ final readonly class WebhookEvent
      * @param array<string, mixed> $payload
      */
     private function __construct(
+        // @phpstan-ignore property.onlyWritten
         private string $objectId,
+        // @phpstan-ignore property.onlyWritten
         private string $objectType,
+        // @phpstan-ignore property.onlyWritten
         private array $payload,
     ) {
     }
@@ -29,23 +32,5 @@ final readonly class WebhookEvent
             objectType: $objectType,
             payload: $payload,
         );
-    }
-
-    public function getObjectId(): string
-    {
-        return $this->objectId;
-    }
-
-    public function getObjectType(): string
-    {
-        return $this->objectType;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public function getPayload(): array
-    {
-        return $this->payload;
     }
 }
