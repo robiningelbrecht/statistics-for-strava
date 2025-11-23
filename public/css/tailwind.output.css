@@ -1890,6 +1890,9 @@
   .max-w-100 {
     max-width: calc(var(--spacing) * 100);
   }
+  .max-w-120 {
+    max-width: calc(var(--spacing) * 120);
+  }
   .max-w-\[30\%\] {
     max-width: 30%;
   }
