@@ -98,6 +98,15 @@ final readonly class GearMaintenanceConfig implements \Stringable
             if (!is_null($component['imgSrc']) && !is_string($component['imgSrc'])) {
                 throw new InvalidGearMaintenanceConfig('"imgSrc" property must be a string');
             }
+            if (isset($component['purchasePrice']) && empty($component['purchasePrice']['amountInCents'])) {
+                throw new InvalidGearMaintenanceConfig('"purchasePrice.amountInCents" property must be a numeric value');
+            }
+            if (isset($component['purchasePrice']) && !is_numeric($component['purchasePrice']['amountInCents'])) {
+                throw new InvalidGearMaintenanceConfig('"purchasePrice.amountInCents" property must be a numeric value');
+            }
+            if (isset($component['purchasePrice']) && empty($component['purchasePrice']['currency'])) {
+                throw new InvalidGearMaintenanceConfig('"purchasePrice.currency" property is required');
+            }
 
             $gearComponentTag = Tag::fromTags((string) $hashtagPrefix, $component['tag']);
             $gearComponent = GearComponent::create(

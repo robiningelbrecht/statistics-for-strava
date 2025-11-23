@@ -133,6 +133,18 @@ class GearMaintenanceConfigTest extends TestCase
         yield '"components[attachedTo]" is not an array' => [$yml, '"attachedTo" property must be an array'];
 
         $yml = self::getValidYml();
+        $yml['components'][0]['purchasePrice'] = [];
+        yield 'missing "purchasePrice[amountInCents]" key' => [$yml, '"purchasePrice.amountInCents" property must be a numeric value'];
+
+        $yml = self::getValidYml();
+        $yml['components'][0]['purchasePrice'] = ['amountInCents' => 'lol'];
+        yield 'invalid "purchasePrice[amountInCents]" key' => [$yml, '"purchasePrice.amountInCents" property must be a numeric value'];
+
+        $yml = self::getValidYml();
+        $yml['components'][0]['purchasePrice'] = ['amountInCents' => 3];
+        yield 'missing "purchasePrice[currency]" key' => [$yml, '"purchasePrice.currency" property is required'];
+
+        $yml = self::getValidYml();
         $yml['components'][0]['maintenance'] = 'string';
         yield '"components[maintenance]" is not an array' => [$yml, '"maintenance" property must be an array'];
 
