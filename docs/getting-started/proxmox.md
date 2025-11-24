@@ -87,7 +87,5 @@ docker-compose stop
 docker-compose start
 ```
 
-<div class="alert success">
-You're all set :partying_face:! You can now <a href="/#/getting-started/installation?id=import-and-build-statistics">import and build</a> your statistics. 
-</div>
-
+> [!TIP]
+> You're all set :partying_face:! You can now <a href="/#/getting-started/installation?id=import-and-build-statistics">import and build</a> your statistics.

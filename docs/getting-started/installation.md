@@ -75,9 +75,8 @@ networks:
 
 ## .env
 
-<div class="alert important">
-    Every time you change the .env file, you need to recreate (for example; docker compose up -d) your container for the changes to take effect (restarting does not update the .env).
-</div>
+> [!IMPORTANT]
+> **Important** Every time you change the .env file, you need to recreate (for example; docker compose up -d) your container for the changes to take effect (restarting does not update the .env).
 
 ```bash
 # The client id of your Strava app.
@@ -122,7 +121,6 @@ The docker container is now running; navigate to `http://localhost:8080/` to acc
 > [!CAUTION]
 > **Caution** Do __not__ use the refresh token displayed on your Strava API settings page, it will not work.
 
-
 The first time you launch the app, you will need to obtain a `Strava refresh token`.
 The app needs this token to be able to access your data and import it into your local database.
 
@@ -141,6 +139,5 @@ after which you can view your statistics.
 > docker compose exec app bin/console app:strava:build-files
 ```
 
-<div class="alert important">
-Everytime you import data, you need to rebuild the HTML files to see the changes.
-</div>
+> [!IMPORTANT]
+> **Important** Everytime you import data, you need to rebuild the HTML files to see the changes.

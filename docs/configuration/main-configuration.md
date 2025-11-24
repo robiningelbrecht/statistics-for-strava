@@ -4,9 +4,8 @@ The main configuration yaml file contains all the settings for you to customize 
 
 [include](config-yaml-example.md ':include')
 
-<div class="alert important">
-After each change to these values, you need to run the <i>app:strava:build-files</i> command again for the changes to take effect
-</div>
+> [!IMPORTANT]
+> **Important** After each change to these values, you need to run the _app:strava:build-files_ command again for the changes to take effect
 
 ## Athlete weight history
 
@@ -25,9 +24,9 @@ general:
 * For activities registered between `2023-04-03` and `2024-11-20` the weight `74.6` will be used
 * For activities registered on or after `2024-11-21` the weight `69.2` will be used
 
-<div class="alert info">
-If you don't care about relative power, you can use <strong>"1970-01-01": YOUR_CURRENT_WEIGHT</strong> as a single entry in the `weightHistory` to set a fixed weight for all activities.
-</div>
+> [!NOTE]
+> **Note** If you don't care about relative power, you can use <strong>"1970-01-01": YOUR_CURRENT_WEIGHT</strong> as a single entry in the `weightHistory` to set a fixed weight for all activities.
+
 
 ## Athlete FTP history
 

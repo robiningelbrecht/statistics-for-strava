@@ -33,9 +33,8 @@ appearance:
       - { 'widget': 'athleteWeightHistory', 'width': 50, 'enabled': true }
 ```
 
-<div class="alert info">
-    🔥 PRO TIP: You can add the same widget multiple times, each with its own configuration.
-</div>
+> [!TIP]
+> **Pro tip** You can add the same widget multiple times, each with its own configuration.
 
 ## mostRecentActivities
 
@@ -65,9 +64,8 @@ It contains a summary of your workout history.
 This widget lets you define and track your weekly goals, helping you stay motivated and monitor your weekly progress.
 For the best experience, place it next to the weeklyStats widget to get a clear overview of your weekly performance.
 
-<div class="alert info">
-This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
-</div>
+> [!NOTE]
+> **Note** This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
 
 * __goals__: An array of goals.
 
@@ -167,10 +165,6 @@ This widget displays your monthly statistics and lets you compare your performan
 ```
 
 ![monthlyStats widget](../assets/images/dashboard-widgets/monthly-stats.png)
-
-<div class="alert info">
-You can add this widget multiple times each with a different configuration.
-</div>
 
 ## trainingLoad
 
@@ -310,10 +304,6 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
   ]
 }
 ```
-<div class="alert info">
-Challenges are always configured for a monthly basis. 
-This will not be made configurable, as allowing other intervals could unintentionally replicate features restricted to Strava’s paid tier.
-</div>
 
 ![challengeConsistency widget](../assets/images/dashboard-widgets/challenge-consistency.png)
 

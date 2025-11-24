@@ -100,6 +100,5 @@ you can use the Task Scheduler to run the import and build commands at regular i
 docker exec statistics-for-strava bin/console app:strava:import-data && docker exec statistics-for-strava bin/console app:strava:build-files
 ```
 
-<div class="alert important">
-Make sure to replace the "statistics-for-strava" with the container name you have defined in the container.
-</div>
+> [!IMPORTANT]
+> **Important** Make sure to replace the "statistics-for-strava" with the container name you have defined in the container.
