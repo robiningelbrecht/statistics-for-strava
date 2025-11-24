@@ -11,9 +11,9 @@ When enabled, your app will receive real-time notifications from Strava whenever
 
 The app automatically runs the import and build processes in the background when receiving activity events.
 
-<div class="alert important">
-Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
-</div>
+> [!IMPORTANT]
+> **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
+
 
 ## Configure a webhook subscription
 
