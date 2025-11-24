@@ -1,8 +1,7 @@
 # Installation
 
-<div class="alert info">
-    Make sure to read the <a href="/#/getting-started/prerequisites">prerequisites</a> before you start installing the app.
-</div>
+> [!NOTE]
+> Make sure to read the <a href="/#/getting-started/prerequisites">prerequisites</a> before you start installing the app.
 
 Start off by showing some :heart: and give this repo a star. Then from your command line:
 
@@ -120,9 +119,9 @@ The docker container is now running; navigate to `http://localhost:8080/` to acc
 
 ## Obtaining a Strava refresh token
 
-<div class="alert danger">
-Do <strong>not</strong> use the refresh token displayed on your Strava API settings page, it will not work.
-</div>
+> [!CAUTION]
+> **Caution** Do __not__ use the refresh token displayed on your Strava API settings page, it will not work.
+
 
 The first time you launch the app, you will need to obtain a `Strava refresh token`.
 The app needs this token to be able to access your data and import it into your local database.

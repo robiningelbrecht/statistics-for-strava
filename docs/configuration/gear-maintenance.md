@@ -91,9 +91,9 @@ gears:
     imgSrc: 'gear1.png'
 ```
 
-<div class="alert important">
-After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
-</div>
+> [!IMPORTANT]
+> **Important** After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
+
 
 ## Components
 

@@ -17,9 +17,8 @@
 
 # :camera_flash: Showcase
 
-<div class="alert info">
-    This app is in no way affiliated with or part of the official Strava software suite.
-</div>
+> [!NOTE]
+> **Note** This app is in no way affiliated with or part of the official Strava software suite.
 
 [Showcase](https://www.youtube.com/embed/UfVLXqAtlX8 ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 

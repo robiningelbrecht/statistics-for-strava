@@ -2,14 +2,12 @@
 
 To start using the AI features in **Statistics for Strava**, you first need to properly configure the integration.
 
-<div class="alert warning">
-Use caution when enabling this feature if your app is publicly accessible
-</div>
+> [!WARNING]
+> **Warning** Use caution when enabling this feature if your app is publicly accessible
 
-<div class="alert important">
-Statistics for Strava uses the <a href="https://docs.neuron-ai.dev">Neuron AI</a> library to interface with AI models.
-Only providers supported by Neuron AI are compatible. See the full list of <a href="https://docs.neuron-ai.dev/components/ai-provider">supported providers</a>
-</div>
+> [!IMPORTANT]
+> **Important** Statistics for Strava uses the <a href="https://docs.neuron-ai.dev">Neuron AI</a> library to interface with AI models.
+> Only providers supported by Neuron AI are compatible. See the full list of <a href="https://docs.neuron-ai.dev/components/ai-provider">supported providers</a>
 
 ## Cloud providers
 
@@ -54,10 +52,9 @@ services:
             - statistics-for-strava-network
 ```
 
-<div class="alert info">
- Looking for more advanced setups? 
-Check out this <a href="https://github.com/mythrantic/ollama-docker">Ollama Docker GitHub repository</a>.
-</div>
+> [!TIP]
+> **Tip**  Looking for more advanced setups?
+> Check out this <a href="https://github.com/mythrantic/ollama-docker">Ollama Docker GitHub repository</a>.
 
 Next, download the model you want to use. For example, to run `llama3.2`:
 
@@ -77,9 +74,8 @@ integrations:
       model: 'MODEL-NAME'
 ```
 
-<div class="alert important">
-Make sure you're running the latest version of Ollama. Streaming responses with tooling has been <a href="https://ollama.com/blog/streaming-tool">added on May 28, 2025.</a>
-</div>
+> [!IMPORTANT]
+> **Important** Make sure you're running the latest version of Ollama. Streaming responses with tooling has been <a href="https://ollama.com/blog/streaming-tool">added on May 28, 2025.</a>
 
 ## Your AI workout assistant
 

@@ -59,15 +59,13 @@ gear:
         isRetired: true
 ```
 
-<div class="alert important">
-After each change to these values, you need to run the both <i>app:strava:import-data</i> 
-and <i>app:strava:build-files</i> commands again for the changes to take effect
-</div>
+> [!IMPORTANT]
+> **Important** After each change to these values, you need to run the both _app:strava:import-data_
+and _app:strava:build-files_ commands again for the changes to take effect
 
-<div class="alert warning">
-Each activity can be linked to only one gear, either a Strava gear or a custom gear. 
+> [!WARNING]
+> **Warning** Each activity can be linked to only one gear, either a Strava gear or a custom gear. 
 If both are present, the Strava gear takes precedence, and the custom gear will be ignored.
-</div>
 
 ## Tips
 
