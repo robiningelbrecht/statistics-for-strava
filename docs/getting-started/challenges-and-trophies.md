@@ -18,7 +18,6 @@ There's a little workaround if you'd still like to import these:
 
 ![Trophy case source code](../assets/images/trophy-case-source-code.png)
 
-<div class="alert warning">
-Make sure before you save the source code, your Strava account is set to be translated in English.
-The app can only handle this export in <strong>English</strong> for now.
-</div>
+> [!WARNING]
+> **Warning** Make sure before you save the source code, your Strava account is set to be translated in English.
+The app can only handle this export in **English** for now.

@@ -39,10 +39,7 @@
 * **User badges** - Shareable badges you can embed on your website, blog, or forum profiles
 * **PWA support** - Use it like a native app on your phone
 
-<div class="alert warning">
-    <ul>
-        <li><strong>Backup before updates</strong>: Always backup your Docker volumes before upgrading.</li>
-        <li><strong>Stay up-to-date</strong>: Make sure you're running the latest version for the best experience.</li>
-        <li><strong>Check the release notes</strong>: Always check the release notes to verify if there are any breaking changes.</li>
-    </ul>
-</div>
+> [!WARNING]
+> * **Backup before updates**: Always backup your Docker volumes before upgrading.
+> * **Stay up-to-date**: Make sure you're running the latest version for the best experience.
+> * **Check the release notes**: Always check the release notes to verify if there are any breaking changes.
