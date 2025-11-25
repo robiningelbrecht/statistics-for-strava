@@ -64,6 +64,16 @@ class AppConfigTest extends TestCase
         );
     }
 
+    public function testItThrowsExceptionWhenFileIsMissing(): void
+    {
+        $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());
+
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString('lol'),
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+    }
+
     public static function provideConfig(): array
     {
         return [
