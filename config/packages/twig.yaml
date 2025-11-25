@@ -6,3 +6,4 @@ twig:
     form_themes: ['form/flowbite-layout.html.twig']
     globals:
         appVersion: '@App\BuildApp\AppVersion'
+        appConfig: '@App\Infrastructure\Config\AppConfig'
