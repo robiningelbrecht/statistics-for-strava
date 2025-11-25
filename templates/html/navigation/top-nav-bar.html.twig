@@ -62,9 +62,9 @@
                     </svg>
                 </a>
             </div>
-            {% if appConfig.AIIntegrationWithUiIsEnabled() or profilePictureUrl %}
+            {% if appConfig.isAIIntegrationWithUIEnabled() or profilePictureUrl %}
                 <div class="flex items-center gap-x-1">
-                    {% if appConfig.AIIntegrationWithUiIsEnabled() %}
+                    {% if appConfig.isAIIntegrationWithUIEnabled() %}
                         <a href="#" data-modal-custom-ai="{{ relativeUrl('/ai/chat') }}"
                            class="p-1 rounded-sm hover:bg-gray-100 hover:text-strava-orange">
                             <svg class="size-5 sm:size-7" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">

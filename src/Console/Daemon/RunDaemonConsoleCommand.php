@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
-use App\BuildApp\AppVersion;
+use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\Daemon\Daemon;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;
@@ -20,6 +20,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:daemon:run', description: 'Start SFS daemon')]
 final class RunDaemonConsoleCommand extends Command
 {
+    use ProvideConsoleIntro;
+
     public function __construct(
         private readonly Clock $clock,
         private readonly Daemon $daemon,
@@ -32,14 +34,7 @@ final class RunDaemonConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
-        $output->block(
-            messages: [
-                sprintf('Statistics for Strava %s | DAEMON', AppVersion::getSemanticVersion()),
-                sprintf('Started on %s', $this->clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s')),
-            ],
-            style: 'fg=black;bg=green',
-            padding: true
-        );
+        $this->outputDaemonConsoleIntro($output, $this->clock);
 
         $this->daemon->setConsoleOutput($output);
         $this->daemon->configureCron();

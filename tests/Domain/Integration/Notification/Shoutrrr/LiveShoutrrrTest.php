@@ -24,7 +24,7 @@ class LiveShoutrrrTest extends TestCase
 
         $this->processFactory
             ->expects(self::once())
-            ->method('createSymfonyProcess')
+            ->method('create')
             ->with(
                 ['shoutrrr', 'send', '--url', 'https://api.live.shoutrr.com', '--message', 'message', '--title', 'title']
             )
@@ -42,7 +42,7 @@ class LiveShoutrrrTest extends TestCase
 
         $this->processFactory
             ->expects(self::once())
-            ->method('createSymfonyProcess')
+            ->method('create')
             ->with(
                 ['shoutrrr', 'send', '--url', 'https://api.live.shoutrr.com', '--message', 'message', '--title', 'title']
             )

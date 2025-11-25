@@ -7,9 +7,9 @@ use Symfony\Component\Process\Process;
 /**
  * @codeCoverageIgnore
  */
-final readonly class DefaultProcessFactory implements ProcessFactory
+final readonly class SymfonyProcessFactory implements ProcessFactory
 {
-    public function createSymfonyProcess(array $command): Process
+    public function create(array $command): Process
     {
         return new Process($command);
     }

@@ -4,6 +4,7 @@ namespace App\Tests\Console\Daemon;
 
 use App\Console\Daemon\RunDaemonConsoleCommand;
 use App\Tests\Console\ConsoleCommandTestCase;
+use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\Infrastructure\Daemon\FakeDaemon;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\NullLogger;
@@ -24,8 +25,7 @@ class RunDaemonConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester->execute([
             'command' => $command->getName(),
         ]);
-
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
     }
 
     #[\Override]

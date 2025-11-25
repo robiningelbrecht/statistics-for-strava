@@ -9,5 +9,5 @@ interface ProcessFactory
     /**
      * @param string[] $command
      */
-    public function createSymfonyProcess(array $command): Process;
+    public function create(array $command): Process;
 }

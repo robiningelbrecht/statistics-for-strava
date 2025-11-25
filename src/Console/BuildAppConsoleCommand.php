@@ -3,9 +3,9 @@
 namespace App\Console;
 
 use App\BuildApp\AppUrl;
-use App\BuildApp\AppVersion;
 use App\BuildApp\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
+use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -21,6 +21,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:strava:build-files', description: 'Build Strava files')]
 final class BuildAppConsoleCommand extends Command
 {
+    use ProvideConsoleIntro;
+
     public function __construct(
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
@@ -35,11 +37,7 @@ final class BuildAppConsoleCommand extends Command
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
         $this->resourceUsage->startTimer();
 
-        $output->block(
-            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
-            style: 'fg=black;bg=green',
-            padding: true
-        );
+        $this->outputConsoleIntro($output);
 
         $this->commandBus->dispatch(new BuildApp(
             output: $output,
