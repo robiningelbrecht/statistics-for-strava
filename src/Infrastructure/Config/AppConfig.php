@@ -31,10 +31,10 @@ final class AppConfig
     private static function buildConfig(): void
     {
         if (null === self::$kernelProjectDir) {
-            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::setServices() before using this method.');
+            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
         }
         if (null === self::$platformEnvironment) {
-            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.');
+            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
         }
         self::$config = [];
         self::$ymlFilesToProcess = [];
