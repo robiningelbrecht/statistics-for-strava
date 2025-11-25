@@ -43,14 +43,15 @@ class AppConfigTest extends TestCase
         );
     }
 
-    public function testItThrowsExceptionWhenConfigFileNotFound(): void
+    public function testGetItShouldThrow(): void
     {
-        $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());
-
         AppConfig::init(
-            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/lol'),
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
             platformEnvironment: PlatformEnvironment::DEV
         );
+
+        $this->expectExceptionObject(new \RuntimeException('Unknown configuration key "non.existent.key"'));
+        AppConfig::get('non.existent.key');
     }
 
     public function testItThrowsExceptionWhenInvalidYml(): void
