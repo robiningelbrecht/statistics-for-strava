@@ -1,14 +1,14 @@
 
 StatisticsforStravav4.0.6
 
--------------------------------------------------------
+
 
 Runtime:PHP8.5.0(cli)onLinux
 
 Configurationfiles:
 config_test.yaml
-gear-maintenance_test.yaml
+gearmaintenance_test.yaml
 
--------------------------------------------------------
+
 
 Time:10s,Memory:45MB
