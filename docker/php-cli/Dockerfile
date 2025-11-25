@@ -52,6 +52,7 @@ RUN cd /tmp/xdebug \
 RUN touch "${PHP_INI_DIR}/conf.d/99-xdebug.ini"
 RUN echo "zend_extension=xdebug" > ${PHP_INI_DIR}/conf.d/99-xdebug.ini
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
+RUN rm -Rf /tmp/xdebug
 # ---- END TEMPORARY XDEBUG INSTALL FROM SOURCE
 
 # Install Blackfire.
@@ -73,4 +74,15 @@ RUN chmod +x /usr/bin/caddy
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash
 RUN apt-get install -y nodejs
 
+# Install Shoutrrr.
+ARG TARGETARCH
+ENV TARGETARCH=${TARGETARCH}
+ARG SHOUTRRR_VERSION="0.12.0"
+
+RUN curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_amd64_${SHOUTRRR_VERSION}.tar.gz";
+RUN tar -xzf shoutrrr.tar.gz
+RUN chmod +x shoutrrr
+RUN mv shoutrrr /usr/bin/shoutrrr
+
+# Add composer.
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

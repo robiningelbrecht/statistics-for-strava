@@ -29,8 +29,8 @@ services:
     App\Domain\Integration\Geocoding\Nominatim\Nominatim:
         class: App\Tests\Domain\Integration\Geocoding\Nominatim\SpyNominatim
 
-    App\Domain\Integration\Notification\Ntfy\Ntfy:
-        class: App\Tests\Domain\Integration\Notification\Ntfy\SpyNotify
+    App\Domain\Integration\Notification\Shoutrrr\Shoutrrr:
+        class: App\Tests\Domain\Integration\Notification\Shoutrrr\SpyShoutrrr
 
     App\Infrastructure\Time\ResourceUsage\ResourceUsage:
         class: App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage

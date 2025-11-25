@@ -137,6 +137,15 @@ services:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("integrations.notifications.ntfyPassword", "")']
 
+    App\Domain\Integration\Notification\Shoutrrr\ConfiguredNotificationServices:
+      factory: [ null, 'fromConfig' ]
+      arguments: [
+        '@=app_config("integrations.notifications.services", [])',
+        '@=app_config("integrations.notifications.ntfyUrl", "")',
+        '@=app_config("integrations.notifications.ntfyUsername", "")',
+        '@=app_config("integrations.notifications.ntfyPassword", "")'
+      ]
+
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
         arguments: ['%env(string:STRAVA_CLIENT_ID)%']
