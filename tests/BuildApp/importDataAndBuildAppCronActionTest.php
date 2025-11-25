@@ -6,16 +6,17 @@ use App\BuildApp\AppUrl;
 use App\BuildApp\importDataAndBuildAppCronAction;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
+use App\Tests\Console\ConsoleOutputSnapshotDriver;
+use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpySymfonyStyleOutput;
-use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class importDataAndBuildAppCronActionTest extends TestCase
+class importDataAndBuildAppCronActionTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
@@ -28,7 +29,7 @@ class importDataAndBuildAppCronActionTest extends TestCase
         $this->importAndBuildAppCronAction->run($output);
 
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
     protected function setUp(): void

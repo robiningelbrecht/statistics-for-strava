@@ -8,8 +8,8 @@ Startedon08-11-202514:47:03
 Runtime:PHP8.5.0(cli)onLinux
 
 Configurationfiles:
-*/var/www/config/app/config_test.yaml
-*/var/www/config/app/gear-maintenance_test.yaml
+config_test.yaml
+gear-maintenance_test.yaml
 
 -------------------------------------------------------
 

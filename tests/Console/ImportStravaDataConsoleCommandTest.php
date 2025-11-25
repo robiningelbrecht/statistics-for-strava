@@ -43,7 +43,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
         $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
     }
 
