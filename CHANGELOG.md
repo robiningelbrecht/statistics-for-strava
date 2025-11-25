@@ -1,3 +1,20 @@
+# [v4.0.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.6) - 2025-11-25
+
+## What's Changed
+* ISSUE #1434: Weights in Imperial (pounds) are rounding to 14 digits by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1436
+* ISSUE #1443: French translations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1444
+* ISSUE #1438: Upgrade to php8.5 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1439
+* ISSUE #1440: Set a max width on gear maintenance components column by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1445
+* Update Chinese translations by @c0j0s in https://github.com/robiningelbrecht/statistics-for-strava/pull/1446
+* ISSUE #1442: Gear component purchase price by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1447
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1450
+* Update documentation pages to Docsify v5 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1452
+
+## New Contributors
+* @effectpears made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1450
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.5...v4.0.6
+
 # [v4.0.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.5) - 2025-11-18
 
 ## What's Changed
