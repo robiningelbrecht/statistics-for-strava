@@ -13,7 +13,7 @@ final readonly class LiveShoutrrr implements Shoutrrr
 
     public function send(ShoutrrrUrl $shoutrrrUrl, string $message, string $title): void
     {
-        $process = $this->processFactory->createSymfonyProcess(['shoutrrr', 'send', '--url', (string) $shoutrrrUrl, '--message', $message, '--title', $title]);
+        $process = $this->processFactory->create(['shoutrrr', 'send', '--url', (string) $shoutrrrUrl, '--message', $message, '--title', $title]);
         $process->run();
 
         if ($process->isSuccessful()) {
