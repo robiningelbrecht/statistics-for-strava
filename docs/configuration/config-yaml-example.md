@@ -180,13 +180,10 @@ zwift:
   racingScore: null
 integrations:
   notifications:
-      # Optional, full URL to ntfy.sh topic (for example https://ntfy.sh/cdd8f660-6b08-4dd8-8b4a-7c4df28642e3). 
-      # This topic will be used to notify you when a new HTML build has run.
-      # Leave empty to disable notifications.
-      ntfyUrl: null
-      # Optional, use when your ntfy.sh instance is password protected
-      ntfyUsername: null
-      ntfyPassword: null
+    # Optional: Specify one or more notification services. For a complete list of available services, see: https://shoutrrr.nickfedor.com/dev/services/overview/
+    # Leave empty to disable notifications entirely.
+    services: []
+    # - 'ntfy://ntfy.sh/topic'
   # All configuration options related to AI integrations.
   # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
   ai:

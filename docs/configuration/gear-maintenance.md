@@ -54,7 +54,7 @@ components:
     # Label for the component
     label: 'Some cool chain'
     # Optional reference to an image. Will be used in the UI.
-    # The image must be in the same directory as this config file.
+    # The image must be located in the `storage/gear-maintenance` volume.
     imgSrc: 'chain.png'
     # List of gear ids this component is attached to
     # See: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance?id=strava-gear-ids to obtain this ID

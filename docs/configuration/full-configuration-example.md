@@ -298,9 +298,9 @@ zwift:
   racingScore: null
 integrations:
   notifications:
-      # Optional, full URL with ntfy topic included. This topic will be used to send out the app's notifications.
-      # Leave empty to disable notifications.
-      ntfyUrl: https://ntfy.sh/19276199-771b-4d73-a143-ddd4f7ab6b04
+    services:
+       - 'ntfy://admin:admin@ntfy.sh/topic'
+       - 'discord://token@webhookid?thread_id=123456789'
   # All configuration options related to AI integrations.
   # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
   ai:

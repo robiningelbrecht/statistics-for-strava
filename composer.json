@@ -25,6 +25,7 @@
         "ext-intl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
+        "ext-uri": "*",
         "adrenalinkin/doctrine-naming-strategy": "^3.0",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",

@@ -58,9 +58,17 @@
         }
 
         /* CHANGELOG */
-        body[data-page="changelog.md"] h1:nth-child(n+3){
-            border-top: 2px solid var(--theme-color);
-            padding-top: 0.5rem;
+        body[data-page="changelog.md"]{
+            h1:nth-child(n+3){
+                border-top: 2px solid var(--theme-color);
+                padding-top: 0.5rem;
+            }
+
+            .callout{
+                br:first-child {
+                    display: none;
+                }
+            }
         }
 
         body[data-page="changelog.md"] h2{
