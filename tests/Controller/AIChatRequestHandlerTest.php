@@ -105,12 +105,13 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler
     {
+        AppConfig::init(
+            kernelProjectDir: $kernelProjectDir,
+            platformEnvironment: PlatformEnvironment::PROD
+        );
+
         return new AIChatRequestHandler(
             $this->buildStorage,
-            new AppConfig(
-                kernelProjectDir: $kernelProjectDir,
-                platformEnvironment: PlatformEnvironment::PROD
-            ),
             $this->neuronAIAgent,
             ChatCommands::fromArray([]),
             $this->chatRepository,

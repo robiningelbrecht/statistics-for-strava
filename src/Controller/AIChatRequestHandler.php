@@ -35,7 +35,6 @@ final readonly class AIChatRequestHandler
 {
     public function __construct(
         private FilesystemOperator $buildStorage,
-        private AppConfig $appConfig,
         private AgentInterface $neuronAIAgent,
         private ChatCommands $chatCommands,
         private ChatRepository $chatRepository,
@@ -52,7 +51,7 @@ final readonly class AIChatRequestHandler
             return new RedirectResponse('/', Response::HTTP_FOUND);
         }
 
-        if (!$this->appConfig->AIIntegrationWithUIIsEnabled()) {
+        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
 

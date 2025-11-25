@@ -7,6 +7,7 @@ namespace App\BuildApp;
 use App\BuildApp\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\ImportStravaData\ImportStravaData;
+use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -14,6 +15,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class importDataAndBuildAppCronAction implements RunnableCronAction
 {
+    use ProvideConsoleIntro;
+
     public function __construct(
         private CommandBus $commandBus,
         private ResourceUsage $resourceUsage,
@@ -38,11 +41,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
 
     public function run(SymfonyStyle $output): void
     {
-        $output->block(
-            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
-            style: 'fg=black;bg=green',
-            padding: true
-        );
+        $this->outputConsoleIntro($output);
 
         $this->resourceUsage->startTimer();
 

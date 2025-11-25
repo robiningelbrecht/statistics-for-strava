@@ -24,7 +24,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class AIAgentChatConsoleCommand extends Command
 {
     public function __construct(
-        private readonly AppConfig $appConfig,
         private readonly AgentInterface $agent,
     ) {
         parent::__construct();
@@ -33,7 +32,7 @@ final class AIAgentChatConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        if (!$this->appConfig->AIIntegrationIsEnabled()) {
+        if (!AppConfig::isAIIntegrationEnabled()) {
             $io->error('The AI feature is not enabled.');
 
             return Command::SUCCESS;
