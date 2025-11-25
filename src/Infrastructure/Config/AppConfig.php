@@ -37,6 +37,7 @@ final class AppConfig
             throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.');
         }
         self::$config = [];
+        self::$ymlFilesToProcess = [];
         $basePath = self::$kernelProjectDir.'/config/app/';
         $isTest = self::$platformEnvironment->isTest();
 
