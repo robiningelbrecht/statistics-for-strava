@@ -84,6 +84,7 @@ class MutexTest extends ContainerTestCase
         $this->mutex->heartbeat('import');
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
