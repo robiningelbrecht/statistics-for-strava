@@ -125,18 +125,6 @@ services:
     App\Domain\Integration\AI\AIProviderFactory:
         arguments: ['@=app_config("integrations.ai", [])']
 
-    App\Domain\Integration\Notification\Ntfy\NtfyUrl:
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("integrations.notifications.ntfyUrl", "")']
-
-    App\Domain\Integration\Notification\Ntfy\NtfyUsername:
-      factory: [ null, 'fromOptionalString' ]
-      arguments: ['@=app_config("integrations.notifications.ntfyUsername", "")']
-
-    App\Domain\Integration\Notification\Ntfy\NtfyPassword:
-      factory: [ null, 'fromOptionalString' ]
-      arguments: ['@=app_config("integrations.notifications.ntfyPassword", "")']
-
     App\Domain\Integration\Notification\Shoutrrr\ConfiguredNotificationServices:
       factory: [ null, 'fromConfig' ]
       arguments: [
