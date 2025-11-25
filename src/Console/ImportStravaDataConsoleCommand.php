@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\BuildApp\AppVersion;
 use App\Domain\Strava\ImportStravaData\ImportStravaData;
+use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -19,6 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:strava:import-data', description: 'Import Strava data')]
 final class ImportStravaDataConsoleCommand extends Command
 {
+    use ProvideConsoleIntro;
+
     public function __construct(
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
@@ -31,11 +33,7 @@ final class ImportStravaDataConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
-        $output->block(
-            messages: sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
-            style: 'fg=black;bg=green',
-            padding: true
-        );
+        $this->outputConsoleIntro($output);
 
         $this->resourceUsage->startTimer();
 

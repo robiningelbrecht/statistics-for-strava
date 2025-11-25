@@ -17,12 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:debug:environment', description: 'Outputs environment related debugging info')]
 final class DebugEnvironmentConsoleCommand extends Command
 {
-    public function __construct(
-        private readonly AppConfig $appConfig,
-    ) {
-        parent::__construct();
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -45,7 +39,7 @@ final class DebugEnvironmentConsoleCommand extends Command
 
         $io->block([
             'CONFIG: ',
-            Json::encodePretty($this->appConfig->getRoot()),
+            Json::encodePretty(AppConfig::getRoot()),
         ]);
 
         return Command::SUCCESS;

@@ -11,20 +11,34 @@ use Symfony\Component\Yaml\Yaml;
 
 final class AppConfig
 {
-    /** @var array<string|int, string|int|float|array<string|int,mixed>|null> */
-    private array $config = [];
+    private static ?KernelProjectDir $kernelProjectDir = null;
+    private static ?PlatformEnvironment $platformEnvironment = null;
+    /** @var YamlConfigFile[] */
+    private static array $ymlFilesToProcess = [];
 
-    public function __construct(
-        private readonly KernelProjectDir $kernelProjectDir,
-        private readonly PlatformEnvironment $platformEnvironment,
-    ) {
-        $this->buildConfig();
+    /** @var array<string|int, string|int|float|array<string|int,mixed>|null> */
+    private static array $config = [];
+
+    public static function init(
+        KernelProjectDir $kernelProjectDir,
+        PlatformEnvironment $platformEnvironment,
+    ): void {
+        self::$kernelProjectDir = $kernelProjectDir;
+        self::$platformEnvironment = $platformEnvironment;
+        self::buildConfig();
     }
 
-    private function buildConfig(): void
+    private static function buildConfig(): void
     {
-        $basePath = $this->kernelProjectDir.'/config/app/';
-        $isTest = $this->platformEnvironment->isTest();
+        if (null === self::$kernelProjectDir) {
+            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::setServices() before using this method.');
+        }
+        if (null === self::$platformEnvironment) {
+            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.');
+        }
+        self::$config = [];
+        $basePath = self::$kernelProjectDir.'/config/app/';
+        $isTest = self::$platformEnvironment->isTest();
 
         $ymlFilesToProcess = [
             new YamlConfigFile(
@@ -51,8 +65,10 @@ final class AppConfig
                 continue;
             }
 
+            self::$ymlFilesToProcess[] = $yamlFile;
+
             try {
-                $this->processYamlConfig(
+                self::processYamlConfig(
                     ymlConfig: Yaml::parseFile($yamlFile->getFilePath()),
                     needsNestedProcessing: $yamlFile->needsNestedProcessing(),
                     prefix: $yamlFile->getPrefix()
@@ -66,14 +82,14 @@ final class AppConfig
     /**
      * @param array<string|int, mixed> $ymlConfig
      */
-    private function processYamlConfig(
+    private static function processYamlConfig(
         array $ymlConfig,
         bool $needsNestedProcessing,
         ?string $prefix): void
     {
         if (!$needsNestedProcessing) {
             // @phpstan-ignore-next-line
-            $this->config[$prefix] = $ymlConfig;
+            self::$config[$prefix] = $ymlConfig;
 
             return;
         }
@@ -85,13 +101,13 @@ final class AppConfig
             }
 
             $fullKey = (string) (null === $prefix ? $key : "$prefix.$key");
-            if (array_key_exists($fullKey, $this->config)) {
+            if (array_key_exists($fullKey, self::$config)) {
                 throw new CouldNotParseYamlConfig(sprintf('Duplicate config key: %s', $fullKey));
             }
-            $this->config[$fullKey] = $value;
+            self::$config[$fullKey] = $value;
 
             if (is_array($value)) {
-                $this->processYamlConfig(
+                self::processYamlConfig(
                     ymlConfig: $value,
                     needsNestedProcessing: true,
                     prefix: $fullKey
@@ -101,11 +117,19 @@ final class AppConfig
     }
 
     /**
+     * @return YamlConfigFile[]
+     */
+    public static function getYamlFilesToProcess(): array
+    {
+        return self::$ymlFilesToProcess;
+    }
+
+    /**
      * @return string|int|float|array<string|int,mixed>|null
      */
-    public function get(string $key, mixed $default = null): string|int|float|array|bool|null
+    public static function get(string $key, mixed $default = null): string|int|float|array|bool|null
     {
-        if (!array_key_exists($key, $this->config)) {
+        if (!array_key_exists($key, self::$config)) {
             if (null !== $default) {
                 return $default;
             }
@@ -113,27 +137,27 @@ final class AppConfig
             throw new \RuntimeException(sprintf('Unknown configuration key "%s"', $key));
         }
 
-        return $this->config[$key];
+        return self::$config[$key];
     }
 
-    public function AIIntegrationIsEnabled(): bool
+    public static function isAIIntegrationEnabled(): bool
     {
-        return !empty($this->get('integrations.ai.enabled', false));
+        return !empty(self::get('integrations.ai.enabled', false));
     }
 
-    public function AIIntegrationWithUIIsEnabled(): bool
+    public static function isAIIntegrationWithUIEnabled(): bool
     {
-        return $this->AIIntegrationIsEnabled() && !empty($this->get('integrations.ai.enableUI', false));
+        return self::isAIIntegrationEnabled() && !empty(self::get('integrations.ai.enableUI', false));
     }
 
     /**
      * @return array<string|int, mixed>
      */
-    public function getRoot(): array
+    public static function getRoot(): array
     {
         $root = [];
 
-        foreach ($this->config as $name => $value) {
+        foreach (self::$config as $name => $value) {
             if (str_contains((string) $name, '.')) {
                 continue;
             }

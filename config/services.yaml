@@ -33,10 +33,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    app.config:
-        public: true # We need to access this service from the container in expressions
-        class: App\Infrastructure\Config\AppConfig
-
     Doctrine\Migrations\Version\DbalMigrationFactory: ~
     App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
@@ -47,10 +43,12 @@ services:
       public: true
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:
+        public: true
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
 
     App\Infrastructure\ValueObject\String\PlatformEnvironment:
+        public: true
         autoconfigure: false
         factory: [ null, 'fromServer' ]
 
