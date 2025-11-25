@@ -2,7 +2,6 @@ general:
   app_url: 'http://localhost:8080/'
   profile_picture_url: null
   appSubTitle: 'Robin The King 👑'
-  ntfy_url: null
   athlete:
     birthday: '1989-08-14'
     max_heart_rate_formula: 'fox'
@@ -45,3 +44,11 @@ gear:
 zwift:
   level: 80
   racing_score: 495
+integrations:
+  notifications:
+    services:
+      - 'ntfy://admin:admin@ntfy.sh/topic'
+      - 'discord://token@webhookid?thread_id=123456789'
+    ntfyUrl: 'https://ntfy.sh/el-test'
+    ntfyUsername: admin
+    ntfyPassword: pass

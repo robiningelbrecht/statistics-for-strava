@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3b9b59f7586f64d6cca9650bda552687",
+    "content-hash": "35c7b7d9d42a8c8a8e10e34c9956af25",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -65,16 +65,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.0",
+            "version": "0.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2"
+                "reference": "f05858549e5f9d7bb45875a75583240a38a281d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2",
-                "reference": "113a8ee2656b882d4c3164fa31aa6e12cbb7aaa2",
+                "url": "https://api.github.com/repos/brick/math/zipball/f05858549e5f9d7bb45875a75583240a38a281d0",
+                "reference": "f05858549e5f9d7bb45875a75583240a38a281d0",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.0"
+                "source": "https://github.com/brick/math/tree/0.14.1"
             },
             "funding": [
                 {
@@ -121,7 +121,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-29T12:40:03+00:00"
+            "time": "2025-11-24T14:40:29+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -2611,16 +2611,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.8.11",
+            "version": "2.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "eb80abcd056e3d961a1d5c27809ec6657b79158a"
+                "reference": "bfa9bccf0f6445c6de2fc6798c8d1449fc3a25db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/eb80abcd056e3d961a1d5c27809ec6657b79158a",
-                "reference": "eb80abcd056e3d961a1d5c27809ec6657b79158a",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/bfa9bccf0f6445c6de2fc6798c8d1449fc3a25db",
+                "reference": "bfa9bccf0f6445c6de2fc6798c8d1449fc3a25db",
                 "shasum": ""
             },
             "require": {
@@ -2674,9 +2674,9 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.8.11"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.8.13"
             },
-            "time": "2025-11-22T11:34:49+00:00"
+            "time": "2025-11-25T09:21:41+00:00"
         },
         {
             "name": "psr/cache",
@@ -11678,7 +11678,8 @@
         "ext-iconv": "*",
         "ext-intl": "*",
         "ext-libxml": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "ext-uri": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
