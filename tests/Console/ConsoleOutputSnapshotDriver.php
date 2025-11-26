@@ -8,11 +8,12 @@ use Spatie\Snapshots\Drivers\TextDriver;
 
 class ConsoleOutputSnapshotDriver extends TextDriver
 {
+    #[\Override]
     public function serialize($data): string
     {
         $data = (string) $data
-                |> (fn ($str) => str_replace([' ', '-'], '', $str))
-                |> (fn ($str) => preg_replace('~\S*/([^/]+\.yaml)~', '$1', $str));
+                |> (fn ($str): string => str_replace([' ', '-'], '', $str))
+                |> (fn ($str): ?string => preg_replace('~\S*/([^/]+\.yaml)~', '$1', $str));
 
         return parent::serialize($data);
     }
