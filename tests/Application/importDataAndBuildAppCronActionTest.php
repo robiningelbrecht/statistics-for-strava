@@ -31,6 +31,7 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
