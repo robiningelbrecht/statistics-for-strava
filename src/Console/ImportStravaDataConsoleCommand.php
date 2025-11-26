@@ -34,7 +34,6 @@ final class ImportStravaDataConsoleCommand extends Command
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
 
         $this->outputConsoleIntro($output);
-
         $this->resourceUsage->startTimer();
 
         $this->commandBus->dispatch(new ImportStravaData(
