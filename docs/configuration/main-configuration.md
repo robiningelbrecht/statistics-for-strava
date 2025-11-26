@@ -7,6 +7,71 @@ The main configuration yaml file contains all the settings for you to customize 
 > [!IMPORTANT]
 > **Important** After each change to these values, you need to run the _app:strava:build-files_ command again for the changes to take effect
 
+## Splitting your configuration into multiple files
+
+To keep your configuration clean and maintainable, you can split it across multiple files.
+Any file inside the config directory matching the pattern `config-*.yaml` will be loaded and merged automatically.
+
+### Example
+
+Suppose your main `config.yaml` contains:
+
+```yaml
+general:
+  appUrl: 'http://localhost:8081'
+  profilePictureUrl: 'https://your-domain.com/logo.png'
+```
+
+You can add additional configuration in separate files.
+
+`config-athlete.yaml`
+```yaml
+general:
+  athlete:
+    birthday: '1989-08-14'
+    maxHeartRateFormula: 'fox'
+    weightHistory:
+      "2024-02-29": 64.5
+      "2023-09-21": 68
+      "2023-01-01": 69
+```
+
+`config-import.yaml`
+```yaml
+import:
+  numberOfNewActivitiesToProcessPerImport: 250
+  sportTypesToImport: ["Ride", "VirtualRide", "MountainBikeRide", "GravelRide"]
+  activityVisibilitiesToImport: []
+  skipActivitiesRecordedBefore: null
+  activitiesToSkipDuringImport: []
+  optInToSegmentDetailImport: true
+```
+
+All matching config files are combined into a single final configuration:
+
+```yaml
+general:
+  appUrl: 'http://localhost:8081'
+  profilePictureUrl: 'https://your-domain.com/logo.png'
+  athlete:
+    birthday: '1989-08-14'
+    maxHeartRateFormula: 'fox'
+    weightHistory:
+      "2024-02-29": 64.5
+      "2023-09-21": 68
+      "2023-01-01": 69
+import:
+  numberOfNewActivitiesToProcessPerImport: 250
+  sportTypesToImport: ["Ride", "VirtualRide", "MountainBikeRide", "GravelRide"]
+  activityVisibilitiesToImport: []
+  skipActivitiesRecordedBefore: null
+  activitiesToSkipDuringImport: []
+  optInToSegmentDetailImport: true
+```
+
+> [!TIP]
+> You can create as many `config-*.yaml` files as you need, as long as the final merged configuration matches the expected schema.
+
 ## Athlete weight history
 
 The `weightHistory` is meant to represent a history or evolution of your body weight. It is needed to be able to calculate your relative power. Consider following example:

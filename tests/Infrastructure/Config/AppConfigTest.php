@@ -54,12 +54,22 @@ class AppConfigTest extends TestCase
         AppConfig::get('non.existent.key');
     }
 
-    public function testItThrowsExceptionWhenInvalidYml(): void
+    public function testItThrowsExceptionWhenInvalidYmlInMainConfigFile(): void
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
 
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config'),
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+    }
+
+    public function testItThrowsExceptionWhenInvalidYmlInSubConfigFile(): void
+    {
+        $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
+
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config-sub'),
             platformEnvironment: PlatformEnvironment::DEV
         );
     }

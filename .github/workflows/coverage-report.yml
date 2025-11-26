@@ -1,4 +1,4 @@
-name: 'cron'
+name: 'coverage-report'
 on:
   workflow_dispatch:
   push:

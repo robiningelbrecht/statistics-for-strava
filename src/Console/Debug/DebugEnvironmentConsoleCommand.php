@@ -6,6 +6,7 @@ namespace App\Console\Debug;
 
 use App\BuildApp\AppVersion;
 use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\Serialization\Json;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,10 +18,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand(name: 'app:debug:environment', description: 'Outputs environment related debugging info')]
 final class DebugEnvironmentConsoleCommand extends Command
 {
+    use ProvideConsoleIntro;
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Statistics for Strava');
+        $this->outputConsoleIntro($io);
+
         $io->text('Please copy all this output into the description of the bug ticket');
         $io->warning('Do not forget to redact sensitive information');
 

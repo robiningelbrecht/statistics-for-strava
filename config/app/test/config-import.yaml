@@ -1,0 +1,7 @@
+import:
+  number_of_new_activities_to_process_per_import: 250
+  sport_types_to_import: []
+  activity_visibilities_to_import: []
+  skip_activities_recorded_before: null
+  activitiesToSkipDuringImport: ['skip']
+  optInToSegmentDetailImport: true
