@@ -6,7 +6,6 @@ namespace App\Infrastructure\Console;
 
 use App\BuildApp\AppVersion;
 use App\Infrastructure\Config\AppConfig;
-use App\Infrastructure\Config\YamlConfigFile;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -41,11 +40,10 @@ trait ProvideConsoleIntro
     private function outputRuntimeAndConfig(SymfonyStyle $output): void
     {
         $configFilesToProcess = array_map(
-            fn (YamlConfigFile $configFile): string => sprintf('  * %s', $configFile->getFilePath()),
+            fn (string $configFile): string => sprintf('  * %s', $configFile),
             AppConfig::getYamlFilesToProcess(),
         );
 
-        // @phpstan-ignore-next-line
         $maxStringLength = max(array_map(Helper::width(...), $configFilesToProcess)) + 5;
 
         $output->writeln(str_repeat('-', $maxStringLength));

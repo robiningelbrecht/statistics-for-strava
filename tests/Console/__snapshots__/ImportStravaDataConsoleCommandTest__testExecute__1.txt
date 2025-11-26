@@ -6,8 +6,10 @@ StatisticsforStravav4.0.6
 Runtime:PHP8.5.0(cli)onLinux
 
 Configurationfiles:
-config_test.yaml
-gearmaintenance_test.yaml
+config.yaml
+configimport.yaml
+configathlete.yaml
+gearmaintenance.yaml
 
 
 
