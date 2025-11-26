@@ -15,7 +15,8 @@ jobs:
       - name: Extract current version from Dockerfile
         id: local
         run: |
-          CURRENT=$(grep -oP 'ARG SHOUTRRR_VERSION=\K.*' docker/app/Dockerfile)
+          RAW=$(grep -oP 'ARG SHOUTRRR_VERSION="?(\K[0-9.]+)(?="?)' docker/app/Dockerfile)
+          CURRENT="v$RAW"
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
 
       - name: Get latest release tag from upstream
@@ -27,22 +28,22 @@ jobs:
       - name: Create issue
         if: steps.local.outputs.current != steps.upstream.outputs.latest
         run: |
-          ISSUE=$(gh issue list \
-            --search "Shoutrrr ${{ steps.upstream.outputs.latest }}" \
-            --json number \
-            --jq '.[0].number')
+          ISSUE=$(gh issue list --search "Shoutrrr ${{ steps.upstream.outputs.latest }}" --json number --jq '.[0].number')
 
           if [[ -z "$ISSUE" ]]; then
-            TITLE="New Shoutrrr release available: $LATEST"
-            BODY="A new version of **Shoutrrr** has been released."
-            gh issue create \
+            ISSUE_LINK=$(gh issue create \
             --title "$TITLE" \
             --assignee "$ASSIGNEES" \
             --label "$LABELS" \
-            --body "$BODY"
+            --body "$BODY")
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LATEST: ${{ steps.upstream.outputs.latest }}
+          TITLE: "New Shoutrrr release available: ${{ steps.upstream.outputs.latest }}"
+          BODY: |
+            A new version of **Shoutrrr** has been released.
+      
+            - Current version: ${{ steps.local.outputs.current }}
+            - Latest version: ${{ steps.upstream.outputs.latest }}
           LABELS: tech debt
           ASSIGNEES: robiningelbrecht
