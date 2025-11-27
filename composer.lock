@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ffdd45759e3c6c53795ffdd66db514c",
+    "content-hash": "b80d8806ff09440954a654dccc168d49",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -3753,16 +3753,16 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
-                "reference": "56c4d9f759247c4e07d8549e3baf7493cb9c3e4b"
+                "reference": "0f7bccb9ffa1f373cbd659774d90629b2773464f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/asset/zipball/56c4d9f759247c4e07d8549e3baf7493cb9c3e4b",
-                "reference": "56c4d9f759247c4e07d8549e3baf7493cb9c3e4b",
+                "url": "https://api.github.com/repos/symfony/asset/zipball/0f7bccb9ffa1f373cbd659774d90629b2773464f",
+                "reference": "0f7bccb9ffa1f373cbd659774d90629b2773464f",
                 "shasum": ""
             },
             "require": {
@@ -3772,9 +3772,9 @@
                 "symfony/http-foundation": "<6.4"
             },
             "require-dev": {
-                "symfony/http-client": "^6.4|^7.0",
-                "symfony/http-foundation": "^6.4|^7.0",
-                "symfony/http-kernel": "^6.4|^7.0"
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/http-foundation": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -3802,7 +3802,7 @@
             "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/asset/tree/v7.3.0"
+                "source": "https://github.com/symfony/asset/tree/v7.4.0"
             },
             "funding": [
                 {
@@ -3814,11 +3814,15 @@
                     "type": "github"
                 },
                 {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
                     "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-05T10:15:41+00:00"
+            "time": "2025-08-04T07:05:15+00:00"
         },
         {
             "name": "symfony/cache",
@@ -10267,16 +10271,16 @@
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",
-            "version": "v1.9.1",
+            "version": "v1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robiningelbrecht/phpunit-coverage-tools.git",
-                "reference": "7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec"
+                "reference": "a10c12518338c256e478a24dba32b80b86905c96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-coverage-tools/zipball/7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec",
-                "reference": "7777bdbe67dd9c01dc2ed798adc9a48efc76b0ec",
+                "url": "https://api.github.com/repos/robiningelbrecht/phpunit-coverage-tools/zipball/a10c12518338c256e478a24dba32b80b86905c96",
+                "reference": "a10c12518338c256e478a24dba32b80b86905c96",
                 "shasum": ""
             },
             "require": {
@@ -10284,11 +10288,11 @@
                 "ext-xmlreader": "*",
                 "php": "^8.1",
                 "phpunit/phpunit": "^10.3||^11.0||^12.0",
-                "symfony/console": "^5.4||^6.2||^7.0"
+                "symfony/console": "^5.4||^6.2||^7.0||^8.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.9",
-                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan": "^2",
                 "spatie/phpunit-snapshot-assertions": "^5.0"
             },
             "type": "library",
@@ -10316,9 +10320,9 @@
             ],
             "support": {
                 "issues": "https://github.com/robiningelbrecht/phpunit-coverage-tools/issues",
-                "source": "https://github.com/robiningelbrecht/phpunit-coverage-tools/tree/v1.9.1"
+                "source": "https://github.com/robiningelbrecht/phpunit-coverage-tools/tree/v1.9.2"
             },
-            "time": "2025-05-28T06:28:42+00:00"
+            "time": "2025-11-27T15:13:35+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-pretty-print",
