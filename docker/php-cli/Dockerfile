@@ -77,12 +77,17 @@ RUN apt-get install -y nodejs
 # Install Shoutrrr.
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
-ARG SHOUTRRR_VERSION="0.12.0"
+ARG SHOUTRRR_VERSION="0.12.1"
 
-RUN curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_amd64_${SHOUTRRR_VERSION}.tar.gz";
+RUN if [ "${TARGETARCH}" = "arm64" ]; then \
+      curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_arm64v8_${SHOUTRRR_VERSION}.tar.gz"; \
+    elif [ "${TARGETARCH}" = "amd64" ]; then \
+      curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_amd64_${SHOUTRRR_VERSION}.tar.gz"; \
+    fi
+
 RUN tar -xzf shoutrrr.tar.gz
 RUN chmod +x shoutrrr
-RUN mv shoutrrr /usr/bin/shoutrrr
+RUN mv shoutrrr /usr/bin/shoutrrr && rm shoutrrr.tar.gz
 
 # Add composer.
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
