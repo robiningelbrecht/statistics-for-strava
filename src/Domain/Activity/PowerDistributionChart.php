@@ -34,17 +34,19 @@ final readonly class PowerDistributionChart
     /**
      * @return array<string, mixed>
      */
-    public function build(): array
+    public function build(): ?array
     {
-        // Calculate all data related things.
+        // Filter out any possible spikes. Data points with less than 2 occurrences are filtered out.
+        if (!$powerData = array_filter($this->powerData, fn (int $distribution): bool => $distribution > 2)) {
+            return null;
+        }
         /** @var non-empty-array<int, int> $powerData */
-        $powerData = $this->powerData;
         $powers = array_keys($powerData);
         $minPower = 0;
         $maxPower = (int) ceil(max($powers) / 100) * 100;
 
         foreach (range($minPower, $maxPower) as $power) {
-            if (array_key_exists($power, $this->powerData)) {
+            if (array_key_exists($power, $powerData)) {
                 continue;
             }
             $powerData[$power] = 0;
@@ -64,7 +66,12 @@ final readonly class PowerDistributionChart
         }
         // @phpstan-ignore-next-line
         $yAxisMax = max($data) * 1.2;
-        $xAxisValueAveragePower = array_search(floor($this->averagePower / $step) * $step, $xAxisValues);
+        $xAxisValueAveragePower =array_search($this->findClosestSteppedValue(
+            min: $minPower,
+            max: $maxPower,
+            step: $step,
+            target: $this->averagePower,
+        ), $xAxisValues);
 
         $markAreas = [
             [
@@ -147,6 +154,7 @@ final readonly class PowerDistributionChart
                         'x' => $ftp * 1.05 * $oneWattPercentage.'%',
                     ],
                     [
+                        'x' => $ftp * 10000 * $oneWattPercentage.'%',
                     ],
                 ],
             ];
@@ -242,5 +250,20 @@ final readonly class PowerDistributionChart
                 ],
             ],
         ];
+    }
+
+    private function findClosestSteppedValue(int $min, int $max, int $step, int|float $target): int
+    {
+        $stepsFromMin = round(($target - $min) / $step);
+        $closest = (int) round($min + ($stepsFromMin * $step));
+
+        if ($closest < $min) {
+            return $min;
+        }
+        if ($closest > $max) {
+            return $max;
+        }
+
+        return $closest;
     }
 }

@@ -134,14 +134,18 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 } catch (EntityNotFound) {
                 }
 
-                $distributionCharts[] = [
-                    'title' => $this->translator->trans('Power distribution'),
-                    'data' => Json::encode(PowerDistributionChart::create(
-                        powerData: $powerStream->getValueDistribution(),
-                        averagePower: $activity->getAveragePower(),
-                        ftp: $ftp,
-                    )->build()),
-                ];
+                $powerDistributionChart = PowerDistributionChart::create(
+                    powerData: $powerStream->getValueDistribution(),
+                    averagePower: $activity->getAveragePower(),
+                    ftp: $ftp,
+                )->build();
+
+                if (!is_null($powerDistributionChart)) {
+                    $distributionCharts[] = [
+                        'title' => $this->translator->trans('Power distribution'),
+                        'data' => Json::encode($powerDistributionChart),
+                    ];
+                }
             }
             if ($velocityStream && !empty($velocityStream->getValueDistribution())) {
                 $velocityUnitPreference = $activity->getSportType()->getVelocityDisplayPreference();
