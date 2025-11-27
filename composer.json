@@ -43,21 +43,21 @@
         "respect/validation": "^2.3",
         "runtime/frankenphp-symfony": "^0.2.0",
         "symfony/asset": "7.3.*",
-        "symfony/console": "v7.3.*",
-        "symfony/dotenv": "7.3.*",
-        "symfony/expression-language": "7.3.*",
+        "symfony/console": "7.4.*",
+        "symfony/dotenv": "7.4.*",
+        "symfony/expression-language": "7.4.*",
         "symfony/flex": "^2",
-        "symfony/form": "7.3.*",
-        "symfony/framework-bundle": "7.3.*",
-        "symfony/intl": "7.3.*",
-        "symfony/lock": "7.3.*",
-        "symfony/messenger": "7.3.*",
+        "symfony/form": "7.4.*",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/intl": "7.4.*",
+        "symfony/lock": "7.4.*",
+        "symfony/messenger": "7.4.*",
         "symfony/monolog-bundle": "^3.10",
-        "symfony/process": "7.3.*",
-        "symfony/runtime": "7.3.*",
-        "symfony/translation": "7.3.*",
-        "symfony/twig-bundle": "7.3.*",
-        "symfony/yaml": "7.3.*",
+        "symfony/process": "7.4.*",
+        "symfony/runtime": "7.4.*",
+        "symfony/translation": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/yaml": "7.4.*",
         "twig/twig": "^3.21",
         "wyrihaximus/react-cron": "^5.3"
     },
@@ -123,7 +123,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.3.*"
+            "require": "7.4.*"
         }
     }
 }
