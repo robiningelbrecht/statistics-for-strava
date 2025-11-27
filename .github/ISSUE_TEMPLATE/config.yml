@@ -1,0 +1,7 @@
+contact_links:
+  - name: Discord - the community chat
+    url: https://discord.gg/p4zpZyCHNc
+    about: Join the Discord community and chat about Statistics for Strava
+  - name: Documentation pages
+    url: https://statistics-for-strava-docs.robiningelbrecht.be/
+    about: Everything you need to setup and configure Statistics for Strava
