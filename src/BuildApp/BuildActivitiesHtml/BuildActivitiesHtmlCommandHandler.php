@@ -23,6 +23,7 @@ use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\VelocityDistributionChart;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
+use App\Domain\Ftp\FtpHistory;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Infrastructure\CQRS\Command\Command;
@@ -49,6 +50,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private SegmentEffortRepository $segmentEffortRepository,
         private GearRepository $gearRepository,
         private DeviceRepository $deviceRepository,
+        private FtpHistory $ftpHistory,
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
@@ -125,12 +127,19 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             if ($activityType->supportsPowerData() && $activity->getAveragePower()
-                && $powerStream && !empty($powerStream->getValueDistribution())) {
+                && $powerStream && count($powerStream->getValueDistribution()) > 1) {
+                $ftp = null;
+                try {
+                    $ftp = $this->ftpHistory->find($activity->getStartDate());
+                } catch (EntityNotFound) {
+                }
+
                 $distributionCharts[] = [
                     'title' => $this->translator->trans('Power distribution'),
                     'data' => Json::encode(PowerDistributionChart::create(
                         powerData: $powerStream->getValueDistribution(),
                         averagePower: $activity->getAveragePower(),
+                        ftp: $ftp,
                     )->build()),
                 ];
             }

@@ -59,6 +59,7 @@ final class AppConfig
                 ->in($basePath)
                 ->depth('== 0')
                 ->files()
+                ->sortByName()
                 ->name('config-*.yaml');
 
             foreach ($finder as $file) {
