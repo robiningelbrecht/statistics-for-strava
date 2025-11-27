@@ -90,6 +90,7 @@ final readonly class HeartRateDistributionChart
         ];
 
         $cumulative = 0;
+        /** @var \App\Domain\Athlete\HeartRateZone\HeartRateZone $zone */
         foreach ($zones as $zone) {
             $cumulative += $zone->getDifferenceBetweenFromAndToPercentage($this->athleteMaxHeartRate);
             $zoneRanges[] = $cumulative;
