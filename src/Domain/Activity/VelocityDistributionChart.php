@@ -15,6 +15,7 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 final readonly class VelocityDistributionChart
 {
     use ProvideTimeFormats;
+    use ProvideSteppedValue;
 
     private function __construct(
         /** @var array<int, int> */
@@ -201,20 +202,5 @@ final readonly class VelocityDistributionChart
                 ],
             ],
         ];
-    }
-
-    private function findClosestSteppedValue(int $min, int $max, int $step, int|float $target): int
-    {
-        $stepsFromMin = round(($target - $min) / $step);
-        $closest = (int) round($min + ($stepsFromMin * $step));
-
-        if ($closest < $min) {
-            return $min;
-        }
-        if ($closest > $max) {
-            return $max;
-        }
-
-        return $closest;
     }
 }

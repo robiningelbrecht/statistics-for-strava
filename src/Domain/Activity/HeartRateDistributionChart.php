@@ -8,6 +8,8 @@ use App\Domain\Athlete\HeartRateZone\HeartRateZones;
 
 final readonly class HeartRateDistributionChart
 {
+    use ProvideSteppedValue;
+
     private function __construct(
         /** @var array<int, int> */
         private array $heartRateData,
@@ -317,20 +319,5 @@ final readonly class HeartRateDistributionChart
                 ],
             ],
         ];
-    }
-
-    private function findClosestSteppedValue(int $min, int $max, int $step, int $target): int
-    {
-        $stepsFromMin = round(($target - $min) / $step);
-        $closest = (int) round($min + ($stepsFromMin * $step));
-
-        if ($closest < $min) {
-            return $min;
-        }
-        if ($closest > $max) {
-            return $max;
-        }
-
-        return $closest;
     }
 }
