@@ -11,14 +11,14 @@ class ProvideSteppedValueTest extends TestCase
     #[DataProvider(methodName: 'provideTestData')]
     public function testFindClosestSteppedValue(int $min, int $max, int $step, int|float $target, int $expectedOutcome): void
     {
-        $class = new class($min, $max, $step, $target) {
+        $class = new readonly class($min, $max, $step, $target) {
             use ProvideSteppedValue;
 
             public function __construct(
-                private readonly int $min,
-                private readonly int $max,
-                private readonly int $step,
-                private readonly int $target)
+                private int $min,
+                private int $max,
+                private int $step,
+                private int $target)
             {
             }
 
