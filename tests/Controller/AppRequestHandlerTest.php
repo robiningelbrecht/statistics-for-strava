@@ -73,6 +73,7 @@ class AppRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->appRequestHandler = new AppRequestHandler(

@@ -68,11 +68,11 @@ class TranslationsTest extends ContainerTestCase
 
             $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
             foreach ($parsedTranslations as $key => $translation) {
-                if (!preg_match_all('/[\s\S]*\{(?<matches>[\S]*)\}[\s\S]*/U', $key, $translationPlaceholdersInKeys)) {
+                if (!preg_match_all('/[\s\S]*\{(?<matches>[\S]*)\}[\s\S]*/U', (string) $key, $translationPlaceholdersInKeys)) {
                     continue;
                 }
 
-                if (!preg_match_all('/[\s\S]*\{(?<matches>[\S]*)\}[\s\S]*/U', $translation, $translationPlaceholdersInTranslations)) {
+                if (!preg_match_all('/[\s\S]*\{(?<matches>[\S]*)\}[\s\S]*/U', (string) $translation, $translationPlaceholdersInTranslations)) {
                     $this->fail(sprintf('The translation "%s" does not contain all placeholders.', $translation));
                 }
 
@@ -85,6 +85,7 @@ class TranslationsTest extends ContainerTestCase
         }
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -9,7 +9,6 @@ use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpySymfonyStyleOutput;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -32,6 +31,7 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -40,7 +40,6 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
             $this->commandBus = new SpyCommandBus(),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
-            PausedClock::fromString('2025-11-10 15:24')
         );
     }
 }

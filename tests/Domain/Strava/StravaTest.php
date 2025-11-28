@@ -14,6 +14,7 @@ use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use App\Tests\SpyOutput;
@@ -21,6 +22,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\RequestOptions;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +38,7 @@ class StravaTest extends TestCase
     private MockObject $client;
     private MockObject $filesystemOperator;
     private NullSleep $sleep;
-    private LoggerInterface $logger;
+    private MockObject $logger;
 
     public function testVerifyAccessToken(): void
     {
@@ -514,6 +516,74 @@ class StravaTest extends TestCase
             ->method('info');
 
         $this->strava->getSegment(SegmentId::fromUnprefixed(3));
+    }
+
+    public function testGetWebhookSubscription(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'GET',
+                'api/v3/push_subscriptions',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::QUERY => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->getWebhookSubscription();
+    }
+
+    public function testCreateWebhookSubscription(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'POST',
+                'api/v3/push_subscriptions',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::FORM_PARAMS => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                        'callback_url' => 'https://example.com/',
+                        'verify_token' => 'the-token',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->createWebhookSubscription(
+            callbackUrl: Url::fromString('https://example.com/'),
+            verifyToken: 'the-token',
+        );
+    }
+
+    public function testDeleteWebhookSubscription(): void
+    {
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'DELETE',
+                'api/v3/push_subscriptions/the-id',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::QUERY => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->deleteWebhookSubscription('the-id');
     }
 
     public function testGetChallengesOnPublicProfile(): void

@@ -50,6 +50,7 @@ class MonthlyStatsWidgetTest extends ContainerTestCase
         yield 'invalid value in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" contains invalid value "test".'];
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->widget = $this->getContainer()->get(MonthlyStatsWidget::class);
