@@ -8,6 +8,8 @@ use App\Domain\Ftp\Ftp;
 
 final readonly class PowerDistributionChart
 {
+    use ProvideSteppedValue;
+
     private function __construct(
         /** @var array<int, int> */
         private array $powerData,
@@ -250,20 +252,5 @@ final readonly class PowerDistributionChart
                 ],
             ],
         ];
-    }
-
-    private function findClosestSteppedValue(int $min, int $max, int $step, int|float $target): int
-    {
-        $stepsFromMin = round(($target - $min) / $step);
-        $closest = (int) round($min + ($stepsFromMin * $step));
-
-        if ($closest < $min) {
-            return $min;
-        }
-        if ($closest > $max) {
-            return $max;
-        }
-
-        return $closest;
     }
 }
