@@ -52,11 +52,13 @@ general:
     weightHistory:
       "YYYY-MM-DD": 100
     # Optional, history of FTP. Needed to calculate activity stress level.
-    # ftpHistory
-    #    "2024-10-03": 198
-    #    "2025-01-10": 220
-    #
-    ftpHistory: []
+    # ftp_history:
+    #   cycling:
+    #     "2023-01-01": 198
+    #     "2023-03-22": 220
+    ftpHistory:
+      cycling: []
+      running: []
 appearance:
   # Allowed options: en_US, fr_FR, it_IT, nl_BE, de_DE, pt_BR, pt_PT sv_SE or zh_CN
   locale: 'en_US'

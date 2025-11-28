@@ -1157,21 +1157,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         html_to_text_converter?: scalar|null, // A service implementing the "Symfony\Component\Mime\HtmlToTextConverter\HtmlToTextConverterInterface". // Default: null
  *     },
  * }
- * @psalm-type InspectorConfig = array{
- *     enabled?: bool, // Default: true
- *     url?: scalar|null, // Default: "https://ingest.inspector.dev"
- *     ingestion_key?: scalar|null, // Default: null
- *     unhandled_exceptions?: bool, // Default: true
- *     messenger?: bool, // Default: true
- *     query?: bool, // Default: true
- *     query_bindings?: bool, // Default: true
- *     templates?: bool, // Default: true
- *     user?: bool, // Default: true
- *     transport?: scalar|null, // Default: "async"
- *     ignore_routes?: list<scalar|null>,
- *     ignore_commands?: list<scalar|null>,
- *     ignore_messages?: list<scalar|null>,
- * }
  * @psalm-type DamaDoctrineTestConfig = array{
  *     enable_static_connection?: mixed, // Default: true
  *     enable_static_meta_data_cache?: bool, // Default: true
@@ -1188,7 +1173,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     doctrine?: DoctrineConfig,
  *     doctrine_migrations?: DoctrineMigrationsConfig,
  *     twig?: TwigConfig,
- *     inspector?: InspectorConfig,
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1199,7 +1183,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         twig?: TwigConfig,
- *         inspector?: InspectorConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1211,7 +1194,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         doctrine?: DoctrineConfig,
  *         doctrine_migrations?: DoctrineMigrationsConfig,
  *         twig?: TwigConfig,
- *         inspector?: InspectorConfig,
  *         dama_doctrine_test?: DamaDoctrineTestConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias

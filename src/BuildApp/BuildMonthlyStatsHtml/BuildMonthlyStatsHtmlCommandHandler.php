@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\BuildApp\BuildMonthlyStatsHtml;
 
 use App\Domain\Activity\ActivityRepository;
-use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Calendar\Calendar;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStats;
@@ -24,7 +23,6 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private ChallengeRepository $challengeRepository,
         private SportTypeRepository $sportTypeRepository,
         private ActivityRepository $activityRepository,
-        private ActivityTypeRepository $activityTypeRepository,
         private QueryBus $queryBus,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -38,7 +36,6 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         $now = $command->getCurrentDateTime();
         $allActivities = $this->activityRepository->findAll();
         $allChallenges = $this->challengeRepository->findAll();
-        $activityTypes = $this->activityTypeRepository->findAll();
 
         $allMonths = Months::create(
             startDate: $allActivities->getFirstActivityStartDate(),

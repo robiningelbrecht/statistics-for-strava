@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
+use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Ftp\FtpHistory;
 use App\Domain\Ftp\FtpHistoryChart;
@@ -17,6 +19,7 @@ final readonly class FtpHistoryWidget implements Widget
     public function __construct(
         private FtpHistory $ftpHistory,
         private AthleteWeightHistory $athleteWeightHistory,
+        private ActivityTypeRepository $activityTypeRepository,
         private Environment $twig,
     ) {
     }
@@ -32,28 +35,40 @@ final readonly class FtpHistoryWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
-        $allFtps = $this->ftpHistory->findAll();
-        if ($allFtps->isEmpty()) {
+        $ftpHistoryCharts = [];
+
+        /** @var ActivityType $activityType */
+        foreach ($this->activityTypeRepository->findAll() as $activityType) {
+            if (!$activityType->supportsPowerData()) {
+                continue; // @codeCoverageIgnore
+            }
+
+            $allFtps = $this->ftpHistory->findAll($activityType);
+            if ($allFtps->isEmpty()) {
+                continue; // @codeCoverageIgnore
+            }
+
+            foreach ($allFtps as $ftp) {
+                try {
+                    $ftp->enrichWithAthleteWeight(
+                        $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
+                    );
+                } catch (EntityNotFound) { // @codeCoverageIgnore
+                }
+            }
+
+            $ftpHistoryCharts[$activityType->value] = Json::encode(FtpHistoryChart::create(
+                ftps: $allFtps,
+                now: $now
+            )->build());
+        }
+
+        if (empty($ftpHistoryCharts)) {
             return null;
         }
 
-        /** @var \App\Domain\Ftp\Ftp $ftp */
-        foreach ($allFtps as $ftp) {
-            try {
-                $ftp->enrichWithAthleteWeight(
-                    $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
-                );
-            } catch (EntityNotFound) {
-            }
-        }
-
         return $this->twig->load('html/dashboard/widget/widget--ftp-history.html.twig')->render([
-            'ftpHistoryChart' => Json::encode(
-                FtpHistoryChart::create(
-                    ftps: $allFtps,
-                    now: $now
-                )->build()
-            ),
+            'ftpHistoryCharts' => $ftpHistoryCharts,
         ]);
     }
 }

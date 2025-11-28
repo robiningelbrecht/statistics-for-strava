@@ -65,7 +65,7 @@ enum ActivityType: string implements TranslatableInterface
     public function supportsPowerData(): bool
     {
         return match ($this) {
-            self::RIDE => true,
+            self::RIDE, self::RUN => true,
             default => false,
         };
     }
