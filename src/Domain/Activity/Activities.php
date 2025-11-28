@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
-use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Collection;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
@@ -40,11 +39,6 @@ final class Activities extends Collection
     public function filterOnActivityType(ActivityType $activityType): Activities
     {
         return $this->filter(fn (Activity $activity): bool => $activityType === $activity->getSportType()->getActivityType());
-    }
-
-    public function filterOnSportType(SportType $sportType): Activities
-    {
-        return $this->filter(fn (Activity $activity): bool => $sportType === $activity->getSportType());
     }
 
     public function getUniqueYears(): Years
