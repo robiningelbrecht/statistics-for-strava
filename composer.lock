@@ -1819,16 +1819,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.16.1",
+            "version": "3.16.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "40c9e72f8f973bb5ca038135f1a0b78b91bc66af"
+                "reference": "4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/40c9e72f8f973bb5ca038135f1a0b78b91bc66af",
-                "reference": "40c9e72f8f973bb5ca038135f1a0b78b91bc66af",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e",
+                "reference": "4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e",
                 "shasum": ""
             },
             "require": {
@@ -1837,13 +1837,19 @@
             "require-dev": {
                 "ext-curl": "*",
                 "friendsofphp/php-cs-fixer": "^3.75",
-                "inspector-apm/neuron-ai": "^1.2.22",
+                "neuron-core/neuron-ai": "^2.8",
                 "phpstan/phpstan": "^2.1",
                 "phpunit/phpunit": "^9.0",
-                "rector/rector": "^2.0",
+                "rector/rector": "^2.2",
                 "tomasvotruba/type-coverage": "^2.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.16.x-dev",
+                    "dev-develop": "3.16.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Inspector\\": "src/"
@@ -1869,9 +1875,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.1"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.2"
             },
-            "time": "2025-07-09T17:22:19+00:00"
+            "time": "2025-11-27T22:04:10+00:00"
         },
         {
             "name": "inspector-apm/inspector-symfony",
