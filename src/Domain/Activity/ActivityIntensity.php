@@ -48,13 +48,13 @@ final class ActivityIntensity
 
     private function calculateForActivity(Activity $activity): ?int
     {
-        if ($activity->getSportType()->getActivityType()->supportsPowerData()) {
+        if (ActivityType::RIDE === $activity->getSportType()->getActivityType()) {
             try {
                 // To calculate intensity, we need
                 // 1) Max and average heart rate
                 // OR
                 // 2) FTP and average power
-                $ftp = $this->ftpHistory->find($activity->getStartDate())->getFtp();
+                $ftp = $this->ftpHistory->find(ActivityType::RIDE, $activity->getStartDate())->getFtp();
                 if ($averagePower = $activity->getAveragePower()) {
                     // Use more complicated and more accurate calculation.
                     // intensityFactor = averagePower / FTP

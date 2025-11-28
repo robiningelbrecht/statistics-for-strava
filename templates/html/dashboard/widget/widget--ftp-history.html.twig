@@ -1,6 +1,27 @@
+{% set uniqueId = uniqueNumberForId('ftpHistoryWidget') %}
 {% autoescape false %}
     <h3 class="mb-4 text-lg font-semibold">
         {{ "FTP history"|trans }}
     </h3>
-    <div class="h-full min-h-[16rem]" data-echarts-options='{{ ftpHistoryChart }}'></div>
+    {% if ftpHistoryCharts|length > 1 %}
+        <div class="tabs tabs--default">
+            <ul id="ftpHistoryActivityTypeTab{{ uniqueId }}" data-tabs="#ftpHistoryActivityTypeTabContent{{ uniqueId }}" role="tablist">
+                {% for activityType,chart in ftpHistoryCharts %}
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#ftpHistory{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="ftpHistory{{ activityType }}{{ uniqueId }}">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="ftpHistoryActivityTypeTabContent{{ uniqueId }}">
+        {% for activityType,ftpHistoryChart in ftpHistoryCharts %}
+            <div id="ftpHistory{{ activityType }}{{ uniqueId }}" role="tabpanel" aria-labelledby="ftpHistory{{ activityType }}{{ uniqueId }}-tab">
+                <div class="h-full min-h-[16rem]" data-echarts-options='{{ ftpHistoryChart }}'></div>
+            </div>
+        {% endfor %}
+    </div>
 {% endautoescape %}

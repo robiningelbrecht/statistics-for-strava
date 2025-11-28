@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\SportType;
 
+use App\Domain\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Collection;
 
 final class SportTypes extends Collection
@@ -13,7 +14,25 @@ final class SportTypes extends Collection
         return SportType::class;
     }
 
-    public static function thatSupportPeakPowerOutputs(): SportTypes
+    public static function thatSupportAllTimePeakPowers(ActivityType $activityType): SportTypes
+    {
+        return match ($activityType) {
+            ActivityType::RIDE => self::fromArray([
+                SportType::RIDE,
+                SportType::MOUNTAIN_BIKE_RIDE,
+                SportType::GRAVEL_RIDE,
+                SportType::VIRTUAL_RIDE,
+            ]),
+            ActivityType::RUN => self::fromArray([
+                SportType::RUN,
+                SportType::TRAIL_RUN,
+                SportType::VIRTUAL_RUN,
+            ]),
+            default => throw new \RuntimeException(sprintf('ActivityType "%s" does not support AllTimePeakPowers', $activityType->value)),
+        };
+    }
+
+    public static function thatSupportPeakPowerOutputChart(): SportTypes
     {
         return self::fromArray([
             SportType::RIDE,
