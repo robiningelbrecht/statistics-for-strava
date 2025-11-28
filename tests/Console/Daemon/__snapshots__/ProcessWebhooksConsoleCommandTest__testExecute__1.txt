@@ -1,4 +1,16 @@
 
-StatisticsforStravav4.0.6
+StatisticsforStravav4.1.0
+
+-------------------------------------------------------
+
+Runtime:PHP8.5.0(cli)onLinux
+
+Configurationfiles:
+*/var/www/config/app/test/config.yaml
+*/var/www/config/app/test/config-athlete.yaml
+*/var/www/config/app/test/config-import.yaml
+*/var/www/config/app/test/gear-maintenance.yaml
+
+-------------------------------------------------------
 
 Time:10s,Memory:45MB
