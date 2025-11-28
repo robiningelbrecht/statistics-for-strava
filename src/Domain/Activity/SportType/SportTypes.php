@@ -14,7 +14,7 @@ final class SportTypes extends Collection
         return SportType::class;
     }
 
-    public static function thatSupportAllTimePeakPowers(ActivityType $activityType): SportTypes
+    public static function thatSupportPeakPowerOutputs(ActivityType $activityType): SportTypes
     {
         return match ($activityType) {
             ActivityType::RIDE => self::fromArray([
@@ -30,16 +30,6 @@ final class SportTypes extends Collection
             ]),
             default => throw new \RuntimeException(sprintf('ActivityType "%s" does not support AllTimePeakPowers', $activityType->value)),
         };
-    }
-
-    public static function thatSupportPeakPowerOutputChart(): SportTypes
-    {
-        return self::fromArray([
-            SportType::RIDE,
-            SportType::MOUNTAIN_BIKE_RIDE,
-            SportType::GRAVEL_RIDE,
-            SportType::VIRTUAL_RIDE,
-        ]);
     }
 
     public static function thatSupportImagesForStravaRewind(): SportTypes

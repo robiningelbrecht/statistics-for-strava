@@ -52,7 +52,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
                 continue; // @codeCoverageIgnore
             }
             $bestAllTimePowerOutputs = $this->activityPowerRepository
-                ->findBestForSportTypes(SportTypes::thatSupportAllTimePeakPowers($activityType));
+                ->findBestForSportTypes(SportTypes::thatSupportPeakPowerOutputs($activityType));
 
             if ($bestAllTimePowerOutputs->isEmpty()) {
                 continue;
@@ -65,6 +65,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
             return null;
         }
 
+        $activityType = ActivityType::from(array_key_first($bestAllTimePowerOutputsPerActivityType));
         $allActivities = $this->activitiesEnricher->getEnrichedActivities();
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
@@ -74,19 +75,19 @@ final readonly class PeakPowerOutputsWidget implements Widget
         $bestPowerOutputs = BestPowerOutputs::empty();
         $bestPowerOutputs->add(
             description: $this->translator->trans('All time'),
-            powerOutputs: array_first($bestAllTimePowerOutputsPerActivityType)
+            powerOutputs: $bestAllTimePowerOutputsPerActivityType[$activityType->value],
         );
         $bestPowerOutputs->add(
             description: $this->translator->trans('Last 45 days'),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                sportTypes: SportTypes::thatSupportPeakPowerOutputChart(),
+                sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 45)
             )
         );
         $bestPowerOutputs->add(
             description: $this->translator->trans('Last 90 days'),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                sportTypes: SportTypes::thatSupportPeakPowerOutputChart(),
+                sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 90)
             )
         );
@@ -94,7 +95,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
             $bestPowerOutputs->add(
                 description: (string) $year,
                 powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
-                    sportTypes: SportTypes::thatSupportPeakPowerOutputChart(),
+                    sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                     dateRange: $year->getRange(),
                 )
             );
