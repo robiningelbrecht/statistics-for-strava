@@ -7,7 +7,6 @@
 		worker {
 			num 2
 			file ./public/index.php
-			env APP_RUNTIME Runtime\FrankenPhpSymfony\Runtime
 		}
 	}
 
