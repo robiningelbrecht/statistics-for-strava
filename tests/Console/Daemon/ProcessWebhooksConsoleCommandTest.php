@@ -10,6 +10,7 @@ use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
+use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -38,7 +39,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
@@ -50,7 +51,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
             'command' => $command->getName(),
         ]);
 
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $commandTester->getDisplay()));
+        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
     }
 
     #[\Override]
