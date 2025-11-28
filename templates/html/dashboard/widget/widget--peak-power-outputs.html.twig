@@ -1,3 +1,4 @@
+{% set uniqueId = uniqueNumberForId('peakPowerOutputs') %}
 {% autoescape false %}
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold">{{ "Peak power outputs"|trans }}</h3>
@@ -6,45 +7,65 @@
             {{ "View details"|trans }}
         </a>
     </div>
-    <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-center text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3 sticky left-0 bg-gray-50">
-                    <div class="flex items-center justify-center">
-                        {{ svg('time') }}
-                    </div>
-                </th>
-                <th scope="col" colspan="2" class="px-2 py-3">
-                    <div class="flex items-center justify-center">
-                        {{ svg('power') }}
-                    </div>
-                </th>
-                <th>
+    {% if powerOutputsPerActicityType|length > 1 %}
+        <div class="tabs tabs--default">
+            <ul id="peakPowerOutputActivityTypeTab{{ uniqueId }}" data-tabs="#peakPowerOutputActivityTypeTabContent{{ uniqueId }}" role="tablist">
+                {% for activityType,powerOutputs in powerOutputsPerActicityType %}
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#powerOutput{{ activityType }}{{ uniqueId }}" role="tab"
+                           aria-controls="powerOutput{{ activityType }}{{ uniqueId }}">
+                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <div id="peakPowerOutputActivityTypeTabContent{{ uniqueId }}">
+        {% for activityType,powerOutputs in powerOutputsPerActicityType %}
+            <div id="powerOutput{{ activityType }}{{ uniqueId }}" role="tabpanel" aria-labelledby="powerOutput{{ activityType }}{{ uniqueId }}-tab">
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-center text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 sticky left-0 bg-gray-50">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('time') }}
+                                </div>
+                            </th>
+                            <th scope="col" colspan="2" class="px-2 py-3">
+                                <div class="flex items-center justify-center">
+                                    {{ svg('power') }}
+                                </div>
+                            </th>
+                            <th>
 
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for powerOutput in powerOutputs %}
-                {% if powerOutput.getTimeIntervalInSeconds() in timeIntervals %}
-                    <tr class="bg-white border-b">
-                        <td class="px-6 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                            {{ powerOutput.getFormattedTimeInterval() }}
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ powerOutput.getPower() }}<span class="text-xs">w</span>
-                        </td>
-                        <td class="px-2 py-2">
-                            {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
-                        </td>
-                        <td class="px-6 py-2 text-left truncate">
-                            {{ powerOutput.getActivity()|activityLink() }}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-            </tbody>
-        </table>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for powerOutput in powerOutputs %}
+                            {% if powerOutput.getTimeIntervalInSeconds() in timeIntervals %}
+                                <tr class="bg-white border-b">
+                                    <td class="px-6 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                        {{ powerOutput.getFormattedTimeInterval() }}
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                    </td>
+                                    <td class="px-2 py-2">
+                                        {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                    </td>
+                                    <td class="px-6 py-2 text-left truncate">
+                                        {{ powerOutput.getActivity()|activityLink() }}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endautoescape %}

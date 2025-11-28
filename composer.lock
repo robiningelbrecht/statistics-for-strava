@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49c8ed9375f2d6904347c22e08c272f2",
+    "content-hash": "36a042f4bfc6eaf06226807a09091498",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -1878,74 +1878,6 @@
                 "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.2"
             },
             "time": "2025-11-27T22:04:10+00:00"
-        },
-        {
-            "name": "inspector-apm/inspector-symfony",
-            "version": "1.9.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/inspector-apm/inspector-symfony.git",
-                "reference": "1a46faeeda7bb83a6ee43b2a4baf6d3a1dbbf13b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-symfony/zipball/1a46faeeda7bb83a6ee43b2a4baf6d3a1dbbf13b",
-                "reference": "1a46faeeda7bb83a6ee43b2a4baf6d3a1dbbf13b",
-                "shasum": ""
-            },
-            "require": {
-                "inspector-apm/inspector-php": "^3.11",
-                "php": ">=8.0",
-                "symfony/config": "^5.2|^6.0|^7.0",
-                "symfony/console": "^5.2|^6.0|^7.0",
-                "symfony/dependency-injection": "^5.2|^6.0|^7.0",
-                "symfony/event-dispatcher": "^5.2|^6.0|^7.0",
-                "symfony/framework-bundle": "^5.2|^6.0|^7.0",
-                "symfony/http-kernel": "^5.2|^6.0|^7.0",
-                "symfony/yaml": "^5.2|^6.0|^7.0"
-            },
-            "require-dev": {
-                "doctrine/doctrine-bundle": "^2.4",
-                "phpunit/phpunit": "^9.5",
-                "symfony/doctrine-messenger": "^5.2|^6.0|^7.0",
-                "symfony/mailer": "^5.2|^6.0|^7.0",
-                "symfony/messenger": "^5.2|^6.0|^7.2",
-                "symfony/notifier": "^5.2|^6.0|^7.0",
-                "symfony/security-bundle": "^5.2|^6.0|^7.0",
-                "symfony/test-pack": "^1.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Inspector\\Symfony\\Bundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Valerio Barbera",
-                    "email": "valerio@inspector.dev"
-                }
-            ],
-            "description": "Code Execution Monitoring for Symfony applications.",
-            "homepage": "https://inspector.dev",
-            "keywords": [
-                "bundle",
-                "error-tracking",
-                "inspector",
-                "messenger-monitoring",
-                "monitoring",
-                "php",
-                "symfony"
-            ],
-            "support": {
-                "issues": "https://github.com/inspector-apm/inspector-symfony/issues",
-                "source": "https://github.com/inspector-apm/inspector-symfony/tree/1.9.0"
-            },
-            "time": "2025-10-08T09:59:59+00:00"
         },
         {
             "name": "lcobucci/clock",

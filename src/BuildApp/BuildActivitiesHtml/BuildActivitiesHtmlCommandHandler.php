@@ -130,7 +130,10 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 && $powerStream && count($powerStream->getValueDistribution()) > 1) {
                 $ftp = null;
                 try {
-                    $ftp = $this->ftpHistory->find($activity->getStartDate());
+                    $ftp = $this->ftpHistory->find(
+                        activityType: $activityType,
+                        on: $activity->getStartDate()
+                    );
                 } catch (EntityNotFound) {
                 }
 

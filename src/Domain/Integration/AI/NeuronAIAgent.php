@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI;
 
-use Inspector\Inspector;
 use NeuronAI\Agent;
 use NeuronAI\Chat\History\ChatHistoryInterface;
-use NeuronAI\Observability\AgentMonitoring;
 use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\SystemPrompt;
 use NeuronAI\Tools\Toolkits\ToolkitInterface;
@@ -21,9 +19,7 @@ final class NeuronAIAgent extends Agent
         private readonly AIProviderFactory $AIProviderFactory,
         private readonly ToolkitInterface $toolkit,
         private readonly ChatHistoryInterface $history,
-        Inspector $inspector,
     ) {
-        $this->observe(new AgentMonitoring($inspector));
     }
 
     protected function provider(): AIProviderInterface
