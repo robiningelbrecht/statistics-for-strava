@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget\WeeklyGoals\FindWeeklyGoalMetrics;
+namespace App\Domain\Dashboard\Widget\TrainingGoals\FindTrainingGoalMetrics;
 
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Calendar\Week;
 use App\Infrastructure\CQRS\Query\Query;
 
 /**
- * @implements Query<\App\Domain\Dashboard\Widget\WeeklyGoals\FindWeeklyGoalMetrics\FindWeeklyGoalMetricsResponse>
+ * @implements Query<\App\Domain\Dashboard\Widget\TrainingGoals\FindTrainingGoalMetrics\FindTrainingGoalMetricsResponse>
  */
-final readonly class FindWeeklyGoalMetrics implements Query
+final readonly class FindTrainingGoalMetrics implements Query
 {
     public function __construct(
         private SportTypes $sportTypes,

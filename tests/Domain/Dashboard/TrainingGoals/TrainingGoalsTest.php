@@ -1,68 +1,68 @@
 <?php
 
-namespace App\Tests\Domain\Dashboard\WeeklyGoals;
+namespace App\Tests\Domain\Dashboard\TrainingGoals;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
-use App\Domain\Dashboard\Widget\WeeklyGoals\InvalidWeeklyGoalsConfiguration;
-use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoal;
-use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoals;
-use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoalType;
+use App\Domain\Dashboard\Widget\TrainingGoals\InvalidTrainingGoalsConfiguration;
+use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoal;
+use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoals;
+use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoalType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class WeeklyGoalsTest extends TestCase
+class TrainingGoalsTest extends TestCase
 {
     public function testFromConfig(): void
     {
         $this->assertEquals(
-            WeeklyGoals::empty(),
-            WeeklyGoals::fromConfig([])
+            TrainingGoals::empty(),
+            TrainingGoals::fromConfig([])
         );
 
         $this->assertEquals(
-            WeeklyGoals::fromArray([
-                WeeklyGoal::create(
+            TrainingGoals::fromArray([
+                TrainingGoal::create(
                     label: 'Cycling',
                     isEnabled: true,
-                    type: WeeklyGoalType::DISTANCE,
+                    type: TrainingGoalType::DISTANCE,
                     goal: 200,
                     unit: 'km',
                     sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
                 ),
-                WeeklyGoal::create(
+                TrainingGoal::create(
                     label: 'Cycling',
                     isEnabled: true,
-                    type: WeeklyGoalType::ELEVATION,
+                    type: TrainingGoalType::ELEVATION,
                     goal: 7500,
                     unit: 'm',
                     sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
                 ),
-                WeeklyGoal::create(
+                TrainingGoal::create(
                     label: 'Cycling',
                     isEnabled: true,
-                    type: WeeklyGoalType::MOVING_TIME,
+                    type: TrainingGoalType::MOVING_TIME,
                     goal: 7500,
                     unit: 'hour',
                     sportTypesToInclude: SportTypes::fromArray([SportType::RIDE, SportType::MOUNTAIN_BIKE_RIDE, SportType::GRAVEL_RIDE, SportType::VIRTUAL_RIDE]),
                 ),
             ]),
-            WeeklyGoals::fromConfig(self::getValidYml())
+            TrainingGoals::fromConfig(self::getValidYml())
         );
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testFromConfigurationItShouldThrow(array $config, string $expectedException): void
     {
-        $this->expectExceptionObject(new InvalidWeeklyGoalsConfiguration($expectedException));
-        WeeklyGoals::fromConfig($config);
+        $this->expectExceptionObject(new InvalidTrainingGoalsConfiguration($expectedException));
+        TrainingGoals::fromConfig($config);
     }
 
     public static function provideInvalidConfig(): iterable
     {
         $yml = self::getValidYml();
         $yml[0] = 'lol';
-        yield 'invalid configuration provided' => [$yml, 'Invalid WeeklyGoals configuration provided'];
+        yield 'invalid configuration provided' => [$yml, 'Invalid TrainingGoals configuration provided'];
 
         $yml = self::getValidYml();
         unset($yml[0]['label']);
