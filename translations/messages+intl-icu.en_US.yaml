@@ -303,6 +303,7 @@ To: To
 'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
+'Training goals': 'Training goals'
 Tue: Tue
 Tuesday: Tuesday
 Unspecified: Unspecified
@@ -326,7 +327,6 @@ Wednesday: Wednesday
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
-'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Weekly stats'
 Weight: Weight
 'Weight Training': 'Weight Training'

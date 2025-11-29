@@ -303,6 +303,7 @@ To: A
 'Training Load Analysis (6 week history)': 'Analisi del carico di allenamento (storico 6 settimane)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': "Monotonia di allenamento - rapporto tra carico giornaliero medio e deviazione standard. Indica la varietà dell'allenamento."
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Forma) – differenza tra forma (CTL) e fatica (ATL). Indica quanto sei pronto a rendere al meglio.'
+'Training goals': 'Training goals'
 Tue: Mar
 Tuesday: Martedì
 Unspecified: 'Non specificato'
@@ -326,7 +327,6 @@ Wednesday: Mercoledì
 'Weekly Strain': 'Sforzo settimanale'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Sforzo settimanale - prodotto tra il carico settimanale e la monotonia. Indica lo stress complessivo.'
 'Weekly TRIMP': 'TRIMP settimanale'
-'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Statistiche settimanali'
 Weight: Weight
 'Weight Training': 'Allenamento con i pesi'

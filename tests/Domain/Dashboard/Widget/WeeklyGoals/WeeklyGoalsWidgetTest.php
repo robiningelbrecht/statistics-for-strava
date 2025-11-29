@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Dashboard\Widget\WeeklyGoals;
 
-use App\Domain\Dashboard\Widget\WeeklyGoals\WeeklyGoalsWidget;
+use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoalsWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -14,7 +14,7 @@ class WeeklyGoalsWidgetTest extends ContainerTestCase
     use ProvideTestData;
     use MatchesSnapshots;
 
-    private WeeklyGoalsWidget $widget;
+    private TrainingGoalsWidget $widget;
 
     public function testGetDefaultConfiguration(): void
     {
@@ -57,6 +57,6 @@ class WeeklyGoalsWidgetTest extends ContainerTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->widget = $this->getContainer()->get(WeeklyGoalsWidget::class);
+        $this->widget = $this->getContainer()->get(TrainingGoalsWidget::class);
     }
 }

@@ -15,7 +15,7 @@
 'ATL (Fatigue)': 'ATL (Fatigue à court terme)'
 'Active days': 'Jours actifs'
 Activities: Activités
-Activity: 'Activité'
+Activity: Activité
 'Activity count': "Nombre d'activités"
 'Activity heatmap': "Carte thermique de l'activité"
 'Activity intensity': "Intensité de l'activité"
@@ -67,7 +67,7 @@ Date: Date
 'Daytime stats': 'Statistiques diurnes'
 Dec: Déc
 'Detailed instructions are available in the documentation on': 'Des instructions détaillées sont disponibles dans la documentation sur'
-Details: 'Détails'
+Details: Détails
 Device: Appareil
 Distance: Distance
 'Distance breakdown': 'Répartition des distances'
@@ -109,7 +109,7 @@ Gear: Matériel
 'Gear stats': 'Statistiques du matériel'
 "Gear that hasn't been used in the last three months, is disabled by default.": "Le matériel qui n'a pas été utilisé au cours des trois derniers mois est désactivé par défaut."
 'Gear that is retired is disabled by default.': 'Le matériel retiré est désactivé par défaut.'
-Goal: 'Objectif'
+Goal: Objectif
 Golf: Golf
 'Good training variety': "Bonne variété d'entraînement"
 'Google searches': 'Recherches Google'
@@ -120,7 +120,7 @@ HR: FC
 'Hand Cycle': Handbike
 'Heart rate': 'Fréquence cardiaque'
 'Heart rate distribution': 'Répartition de la fréquence cardiaque'
-'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Répartition des zones de fréquence cardiaque au cours du mois dernier. Pour un entraînement polarisé efficace, vos séances devraient se situer principalement dans les zones suivantes :'
+'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': "Répartition des zones de fréquence cardiaque au cours du mois dernier. Pour un entraînement polarisé efficace, vos séances devraient se situer principalement dans les zones suivantes\_:"
 'Heart rate zones': 'Zones de fréquence cardiaque'
 Heatmap: 'Carte thermique'
 High: Élevé
@@ -182,9 +182,9 @@ Night: Nuit
 'No activities': 'Aucune activité'
 'No data available': 'Aucune donnée disponible'
 'No other options to compare with': 'Aucune autre option à comparer'
-None: 'Aucun'
+None: Aucun
 'Nordic Ski': 'Ski nordique'
-Normalized: 'Normalisé'
+Normalized: Normalisé
 'Not supported': 'Non pris en charge'
 Nov: Nov
 'Number of activities per month': "Nombre d'activités par mois"
@@ -278,7 +278,7 @@ Tag: Tag
 'Taper sweet-spot (+15)': "Zone optimale d'affûtage (+15)"
 Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Le nombre d'Eddington dans le contexte du cyclisme ou de la course est défini comme le nombre maximum E tel que l'athlète ait parcouru au moins E km lors d'au moins E jours."
-'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ces badges sont créés dynamiquement. Vous pouvez les utiliser dans n''importe quelle balise &lt;img&gt;'
+'These badges are dynamically created. You can use them in any &lt;img&gt; tag': "Ces badges sont créés dynamiquement. Vous pouvez les utiliser dans n'importe quelle balise &lt;img&gt;"
 Thinking...: Thinking...
 'This feature is currently disabled': 'Cette fonctionnalité est actuellement désactivée'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Cette formule signifie que rouler pendant une heure à votre fréquence cardiaque maximale donne un score de 100, ce que nous considérons comme une "intensité élevée".'
@@ -303,11 +303,12 @@ To: À
 'Training Load Analysis (6 week history)': "Analyse de la charge d'entraînement (historique sur 6 semaines)"
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': "Monotonie d'Entraînement - Ratio de la charge quotidienne moyenne à l'écart-type. Indique la variété d'entraînement."
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': "Balance du Stress d'Entraînement (Forme) – La différence entre la forme (CTL) et la fatigue (ATL). Reflète votre niveau de préparation à performer."
+'Training goals': 'Training goals'
 Tue: Mar
 Tuesday: Mardi
 Unspecified: 'Non spécifié'
 'Updated on': 'Mis à jour le'
-'User badge': 'Badge d''utilisateur'
+'User badge': "Badge d'utilisateur"
 'Velo Mobiles': Vélomobiles
 'Very fresh – possible detraining': 'Très frais – risque de désentraînement'
 'Very high': 'Très élevé'
@@ -316,7 +317,7 @@ Unspecified: 'Non spécifié'
 'Virtual Rides': 'Sorties virtuelles'
 'Virtual Row': 'Rameur virtuel'
 'Virtual Runs': 'Courses virtuelles'
-'Virtual workout assistant': 'Assistant d''entraînement virtuel'
+'Virtual workout assistant': "Assistant d'entraînement virtuel"
 Walking: Marche
 Walks: Marches
 'Water Sports': 'Sports nautiques'
@@ -326,7 +327,6 @@ Wednesday: Mercredi
 'Weekly Strain': 'Stress hebdomadaire'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': "Stress Hebdomadaire - Produit de la charge d'entraînement hebdomadaire et de la monotonie. Stress d'entraînement global."
 'Weekly TRIMP': 'TRIMP hebdomadaire'
-'Weekly goals': 'Objectifs hebdomadaires'
 'Weekly stats': 'Statistiques hebdomadaires'
 Weight: Weight
 'Weight Training': 'Entraînement avec poids'
