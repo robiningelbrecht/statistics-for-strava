@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget\WeeklyGoals;
+namespace App\Domain\Dashboard\Widget\TrainingGoals;
 
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Challenge\Consistency\ProvideGoalConverters;
 use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
-final readonly class WeeklyGoal
+final readonly class TrainingGoal
 {
     use ProvideUnitFromScalar;
     use ProvideGoalConverters;
@@ -17,7 +17,8 @@ final readonly class WeeklyGoal
     private function __construct(
         private string $label,
         private bool $isEnabled,
-        private WeeklyGoalType $type,
+        private TrainingGoalType $type,
+        private TrainingGoalPeriod $period,
         private Unit $goal,
         private SportTypes $sportTypesToInclude,
     ) {
@@ -26,7 +27,8 @@ final readonly class WeeklyGoal
     public static function create(
         string $label,
         bool $isEnabled,
-        WeeklyGoalType $type,
+        TrainingGoalType $type,
+        TrainingGoalPeriod $period,
         float $goal,
         string $unit,
         SportTypes $sportTypesToInclude,
@@ -35,6 +37,7 @@ final readonly class WeeklyGoal
             label: $label,
             isEnabled: $isEnabled,
             type: $type,
+            period: $period,
             goal: self::createUnitFromScalars(
                 value: $goal,
                 unit: $unit,
@@ -53,9 +56,14 @@ final readonly class WeeklyGoal
         return $this->isEnabled;
     }
 
-    public function getType(): WeeklyGoalType
+    public function getType(): TrainingGoalType
     {
         return $this->type;
+    }
+
+    public function getPeriod(): TrainingGoalPeriod
+    {
+        return $this->period;
     }
 
     public function getGoal(): Unit

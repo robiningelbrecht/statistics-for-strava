@@ -148,6 +148,7 @@ Laps: Runden
 'Last 90 days': 'Letzten 90 Tage'
 'Last effort': 'Letzte Anstrengung'
 'Last maintenance': 'Letzte Wartung'
+Lifetime: Lifetime
 'Load (CTL/ATL)': 'Lade (CTL/ATL)'
 'Loading data...': 'Daten werden geladen...'
 Loading...: Lädt...
@@ -170,6 +171,7 @@ Metrics: Metriken
 Mon: Mo
 Monday: Montag
 Monotony: Monotonie
+Monthly: Monthly
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
 'Most recent activities': 'Neueste Aktivitäten'
@@ -303,6 +305,7 @@ To: Bis
 'Training Load Analysis (6 week history)': 'Trainingsbelastungsanalyse (6 Wochen Verlauf)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Ermüdung (ATL). Zeigt an, wie leistungsfähig du bist.'
+'Training goals': 'Training goals'
 Tue: Di
 Tuesday: Dienstag
 Unspecified: 'Nicht spezifiziert'
@@ -323,14 +326,14 @@ Walks: Spaziergänge
 'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
 Wed: Mi
 Wednesday: Mittwoch
+Weekly: Weekly
 'Weekly Strain': 'Wöchentliche Belastung (Strain)'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Weekly TRIMP': 'Wöchentlicher TRIMP'
-'Weekly goals': 'Wöchentliche Ziele'
 'Weekly stats': 'Wöchentliche Statistiken'
 Weight: Gewicht
 'Weight Training': Gewichtstraining
-'Weight history': 'Gewichtsverlauf'
+'Weight history': Gewichtsverlauf
 Wheelchair: Rollstuhl
 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Wenn Leistungsmetriken und FTP verfügbar sind, werden diese stattdessen verwendet. Diese Formel bedeutet, dass eine Stunde Fahren mit Ihrer FTP zu einer Punktzahl von 100 führt, was wir als "hohe Intensität" betrachten'
 'Wind Surf': Windsurfen
@@ -338,6 +341,7 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout type': Trainingseinheitstyp
 Year: Jahr
+Yearly: Yearly
 'Yearly stats': 'Jährliche Statistiken'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Lädnern aufgezeichnet, das sind {percentage} aller Länder 🌍'

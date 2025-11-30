@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget\WeeklyGoals\FindWeeklyGoalMetrics;
+namespace App\Domain\Dashboard\Widget\TrainingGoals\FindTrainingGoalMetrics;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\CQRS\Query\Query;
@@ -13,7 +13,7 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
-final readonly class FindWeeklyGoalMetricsQueryHandler implements QueryHandler
+final readonly class FindTrainingGoalMetricsQueryHandler implements QueryHandler
 {
     public function __construct(
         private Connection $connection,
@@ -22,7 +22,7 @@ final readonly class FindWeeklyGoalMetricsQueryHandler implements QueryHandler
 
     public function handle(Query $query): Response
     {
-        assert($query instanceof FindWeeklyGoalMetrics);
+        assert($query instanceof FindTrainingGoalMetrics);
 
         $sportTypes = $query->getSportTypes();
 
@@ -45,7 +45,7 @@ final readonly class FindWeeklyGoalMetricsQueryHandler implements QueryHandler
             ]
         )->fetchAssociative();
 
-        return new FindWeeklyGoalMetricsResponse(
+        return new FindTrainingGoalMetricsResponse(
             distance: Meter::from($result['totalDistance'] ?? 0)->toKilometer(),
             elevation: Meter::from($result['totalElevation'] ?? 0),
             movingTime: Seconds::from($result['movingTime'] ?? 0),

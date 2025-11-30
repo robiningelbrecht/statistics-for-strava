@@ -32,7 +32,7 @@ final readonly class WidgetName implements \Stringable
 
     public function wasRemoved(): bool
     {
-        return 'bestEfforts' === $this->name;
+        return in_array($this->name, ['bestEfforts', 'weeklyGoals']);
     }
 
     public function __toString(): string

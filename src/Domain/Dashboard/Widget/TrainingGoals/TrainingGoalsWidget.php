@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget\WeeklyGoals;
+namespace App\Domain\Dashboard\Widget\TrainingGoals;
 
 use App\Domain\Calendar\Week;
-use App\Domain\Dashboard\Widget\WeeklyGoals\FindWeeklyGoalMetrics\FindWeeklyGoalMetrics;
+use App\Domain\Dashboard\Widget\TrainingGoals\FindTrainingGoalMetrics\FindTrainingGoalMetrics;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Twig\Environment;
 
-final readonly class WeeklyGoalsWidget implements Widget
+final readonly class TrainingGoalsWidget implements Widget
 {
     public function __construct(
         private QueryBus $queryBus,
@@ -30,7 +30,7 @@ final readonly class WeeklyGoalsWidget implements Widget
     {
         /** @var array<int, mixed> $config */
         $config = $configuration->get('goals');
-        WeeklyGoals::fromConfig($config);
+        TrainingGoals::fromConfig($config);
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
@@ -42,35 +42,35 @@ final readonly class WeeklyGoalsWidget implements Widget
         $week = Week::fromYearAndWeekNumber($now->getYear(), $now->getWeekNumber());
         /** @var non-empty-array<int, mixed> $config */
         $config = $configuration->get('goals');
-        $weeklyGoals = WeeklyGoals::fromConfig($config);
+        $trainingGoals = TrainingGoals::fromConfig($config);
 
         $calculatedGoals = [];
-        foreach ($weeklyGoals as $weeklyGoal) {
-            if (!$weeklyGoal->isEnabled()) {
+        foreach ($trainingGoals as $trainingGoal) {
+            if (!$trainingGoal->isEnabled()) {
                 continue;
             }
 
-            $response = $this->queryBus->ask(new FindWeeklyGoalMetrics(
-                sportTypes: $weeklyGoal->getSportTypesToInclude(),
+            $response = $this->queryBus->ask(new FindTrainingGoalMetrics(
+                sportTypes: $trainingGoal->getSportTypesToInclude(),
                 week: $week
             ));
 
-            $convertedProgress = match ($weeklyGoal->getType()) {
-                WeeklyGoalType::DISTANCE => $weeklyGoal->convertKilometerToGoalUnit($response->getDistance()),
-                WeeklyGoalType::ELEVATION => $weeklyGoal->convertMeterToGoalUnit($response->getElevation()),
-                WeeklyGoalType::MOVING_TIME => $weeklyGoal->convertSecondsToGoalUnit($response->getMovingTime()),
+            $convertedProgress = match ($trainingGoal->getType()) {
+                TrainingGoalType::DISTANCE => $trainingGoal->convertKilometerToGoalUnit($response->getDistance()),
+                TrainingGoalType::ELEVATION => $trainingGoal->convertMeterToGoalUnit($response->getElevation()),
+                TrainingGoalType::MOVING_TIME => $trainingGoal->convertSecondsToGoalUnit($response->getMovingTime()),
             };
 
             $calculatedGoals[] = [
-                'weeklyGoal' => $weeklyGoal,
+                'trainingGoal' => $trainingGoal,
                 'absolute' => $convertedProgress,
-                'relative' => min(100, round($convertedProgress->toFloat() / $weeklyGoal->getGoal()->toFloat() * 100)),
+                'relative' => min(100, round($convertedProgress->toFloat() / $trainingGoal->getGoal()->toFloat() * 100)),
             ];
         }
 
-        return $this->twig->load('html/dashboard/widget/widget--weekly-goals.html.twig')->render([
+        return $this->twig->load('html/dashboard/widget/widget--training-goals.html.twig')->render([
             'fromToLabel' => $week->getLabelFromTo(),
-            'calculatedWeeklyGoals' => $calculatedGoals,
+            'calculatedTrainingGoals' => $calculatedGoals,
         ]);
     }
 }

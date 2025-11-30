@@ -280,16 +280,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.10.3",
+            "version": "3.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "65edaca19a752730f290ec2fb89d593cb40afb43"
+                "reference": "63a46cb5aa6f60991186cc98c1d1b50c09311868"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/65edaca19a752730f290ec2fb89d593cb40afb43",
-                "reference": "65edaca19a752730f290ec2fb89d593cb40afb43",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/63a46cb5aa6f60991186cc98c1d1b50c09311868",
+                "reference": "63a46cb5aa6f60991186cc98c1d1b50c09311868",
                 "shasum": ""
             },
             "require": {
@@ -313,8 +313,8 @@
                 "phpunit/phpunit": "9.6.29",
                 "slevomat/coding-standard": "8.24.0",
                 "squizlabs/php_codesniffer": "4.0.0",
-                "symfony/cache": "^5.4|^6.0|^7.0",
-                "symfony/console": "^4.4|^5.4|^6.0|^7.0"
+                "symfony/cache": "^5.4|^6.0|^7.0|^8.0",
+                "symfony/console": "^4.4|^5.4|^6.0|^7.0|^8.0"
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
@@ -374,7 +374,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.10.3"
+                "source": "https://github.com/doctrine/dbal/tree/3.10.4"
             },
             "funding": [
                 {
@@ -390,7 +390,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-09T09:05:12+00:00"
+            "time": "2025-11-29T10:46:08+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1819,16 +1819,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.16.2",
+            "version": "3.16.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e"
+                "reference": "d3183dac9a333f85721b293862698cc9fed76834"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e",
-                "reference": "4a7d9ec3e18d53f866213ba5c1bb7faae5b5747e",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/d3183dac9a333f85721b293862698cc9fed76834",
+                "reference": "d3183dac9a333f85721b293862698cc9fed76834",
                 "shasum": ""
             },
             "require": {
@@ -1875,9 +1875,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.2"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.4"
             },
-            "time": "2025-11-27T22:04:10+00:00"
+            "time": "2025-11-28T13:00:39+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -2549,16 +2549,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.8.15",
+            "version": "2.8.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "5ca4d91ef5d44c59a80d26a4cd734fd805d6355f"
+                "reference": "390742e5891d656768bbfc5402150e40f241d5aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/5ca4d91ef5d44c59a80d26a4cd734fd805d6355f",
-                "reference": "5ca4d91ef5d44c59a80d26a4cd734fd805d6355f",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/390742e5891d656768bbfc5402150e40f241d5aa",
+                "reference": "390742e5891d656768bbfc5402150e40f241d5aa",
                 "shasum": ""
             },
             "require": {
@@ -2612,9 +2612,9 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.8.15"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.8.19"
             },
-            "time": "2025-11-27T11:07:53+00:00"
+            "time": "2025-11-28T18:25:31+00:00"
         },
         {
             "name": "psr/cache",
@@ -8738,16 +8738,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.90.0",
+            "version": "v3.91.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "ad732c2e9299c9743f9c55ae53cc0e7642ab1155"
+                "reference": "c4a25f20390337789c26b693ae46faa125040352"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ad732c2e9299c9743f9c55ae53cc0e7642ab1155",
-                "reference": "ad732c2e9299c9743f9c55ae53cc0e7642ab1155",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c4a25f20390337789c26b693ae46faa125040352",
+                "reference": "c4a25f20390337789c26b693ae46faa125040352",
                 "shasum": ""
             },
             "require": {
@@ -8829,7 +8829,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.90.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.91.0"
             },
             "funding": [
                 {
@@ -8837,7 +8837,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-20T15:15:16+00:00"
+            "time": "2025-11-28T22:07:42+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -9405,23 +9405,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "12.4.0",
+            "version": "12.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "67e8aed88f93d0e6e1cb7effe1a2dfc2fee6022c"
+                "reference": "bca180c050dd3ae15f87c26d25cabb34fe1a0a5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/67e8aed88f93d0e6e1cb7effe1a2dfc2fee6022c",
-                "reference": "67e8aed88f93d0e6e1cb7effe1a2dfc2fee6022c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/bca180c050dd3ae15f87c26d25cabb34fe1a0a5a",
+                "reference": "bca180c050dd3ae15f87c26d25cabb34fe1a0a5a",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-libxml": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^5.6.1",
+                "nikic/php-parser": "^5.6.2",
                 "php": ">=8.3",
                 "phpunit/php-file-iterator": "^6.0",
                 "phpunit/php-text-template": "^5.0",
@@ -9429,10 +9429,10 @@
                 "sebastian/environment": "^8.0.3",
                 "sebastian/lines-of-code": "^4.0",
                 "sebastian/version": "^6.0",
-                "theseer/tokenizer": "^1.2.3"
+                "theseer/tokenizer": "^1.3.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^12.3.7"
+                "phpunit/phpunit": "^12.4.4"
             },
             "suggest": {
                 "ext-pcov": "PHP extension that provides line coverage",
@@ -9441,7 +9441,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "12.4.x-dev"
+                    "dev-main": "12.5.x-dev"
                 }
             },
             "autoload": {
@@ -9470,7 +9470,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.4.0"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.5.0"
             },
             "funding": [
                 {
@@ -9490,7 +9490,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-24T13:44:41+00:00"
+            "time": "2025-11-29T07:15:54+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -10153,16 +10153,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.2.8",
+            "version": "2.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "303aa811649ccd1d32e51e62d5c85949d01b5f1b"
+                "reference": "0b8e49ec234877b83244d2ecd0df7a4c16471f05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/303aa811649ccd1d32e51e62d5c85949d01b5f1b",
-                "reference": "303aa811649ccd1d32e51e62d5c85949d01b5f1b",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/0b8e49ec234877b83244d2ecd0df7a4c16471f05",
+                "reference": "0b8e49ec234877b83244d2ecd0df7a4c16471f05",
                 "shasum": ""
             },
             "require": {
@@ -10201,7 +10201,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.2.8"
+                "source": "https://github.com/rectorphp/rector/tree/2.2.9"
             },
             "funding": [
                 {
@@ -10209,7 +10209,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-12T18:38:00+00:00"
+            "time": "2025-11-28T14:21:22+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",

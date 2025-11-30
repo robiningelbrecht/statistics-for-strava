@@ -148,6 +148,7 @@ Laps: Laps
 'Last 90 days': 'Last 90 days'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
+Lifetime: Lifetime
 'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'Loading data...'
 Loading...: Loading...
@@ -170,6 +171,7 @@ Metrics: Metrics
 Mon: Mon
 Monday: Monday
 Monotony: Monotony
+Monthly: Monthly
 'Monthly stats': 'Monthly stats'
 Morning: Morning
 'Most recent activities': 'Most recent activities'
@@ -303,6 +305,7 @@ To: To
 'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
+'Training goals': 'Training goals'
 Tue: Tue
 Tuesday: Tuesday
 Unspecified: Unspecified
@@ -323,10 +326,10 @@ Walks: Walks
 'We detected following issues': 'We detected following issues'
 Wed: Wed
 Wednesday: Wednesday
+Weekly: Weekly
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
-'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Weekly stats'
 Weight: Weight
 'Weight Training': 'Weight Training'
@@ -338,6 +341,7 @@ Wheelchair: Wheelchair
 Workout: Workout
 'Workout type': 'Workout type'
 Year: Year
+Yearly: Yearly
 'Yearly stats': 'Yearly stats'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"

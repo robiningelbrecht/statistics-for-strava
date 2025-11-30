@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget\WeeklyGoals;
+namespace App\Domain\Dashboard\Widget\TrainingGoals;
 
-enum WeeklyGoalType: string
+enum TrainingGoalType: string
 {
     case DISTANCE = 'distance';
     case ELEVATION = 'elevation';
     case MOVING_TIME = 'movingTime';
 
     /**
-     * @return WeeklyGoalType[]
+     * @return TrainingGoalType[]
      */
     public static function lengthRelated(): array
     {

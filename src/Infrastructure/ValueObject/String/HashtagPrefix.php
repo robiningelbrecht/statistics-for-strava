@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\String;
 
-final readonly class HashtagPrefix extends NonEmptyStringLiteral
+final readonly class HashtagPrefix extends NonEmptyStringLiteral implements \Stringable
 {
     #[\Override]
     protected function validate(string $value): void
