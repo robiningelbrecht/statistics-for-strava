@@ -148,6 +148,7 @@ Laps: 圈
 'Last 90 days': 最近90天
 'Last effort': 最后努力
 'Last maintenance': 最后维护
+Lifetime: Lifetime
 'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
 Loading...: 加载中...
@@ -170,6 +171,7 @@ Metrics: Metrics
 Mon: 周一
 Monday: 星期一
 Monotony: 单调性
+Monthly: Monthly
 'Monthly stats': 每月统计
 Morning: 早晨
 'Most recent activities': 最近的活动
@@ -324,6 +326,7 @@ Walks: 散步
 'We detected following issues': 检测到以下问题
 Wed: 周三
 Wednesday: 星期三
+Weekly: Weekly
 'Weekly Strain': 每周训练负荷
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': '每周训练负荷 - 每周训练量与单调性的乘积。整体训练压力。'
 'Weekly TRIMP': 每周TRIMP
@@ -338,6 +341,7 @@ Wheelchair: 轮椅
 Workout: 锻炼
 'Workout type': 锻炼类型
 Year: 年
+Yearly: Yearly
 'Yearly stats': 年度统计
 Yoga: 瑜伽
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
