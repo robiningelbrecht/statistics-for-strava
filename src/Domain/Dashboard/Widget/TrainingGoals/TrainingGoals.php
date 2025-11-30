@@ -28,6 +28,9 @@ final class TrainingGoals extends Collection
         }
 
         $trainingGoals = [];
+
+        array_keys($items);
+
         foreach ($items as $goalConfig) {
             if (!is_array($goalConfig)) {
                 throw new InvalidTrainingGoalsConfiguration('Invalid TrainingGoals configuration provided');

@@ -148,6 +148,7 @@ Laps: Runden
 'Last 90 days': 'Letzten 90 Tage'
 'Last effort': 'Letzte Anstrengung'
 'Last maintenance': 'Letzte Wartung'
+Lifetime: Lifetime
 'Load (CTL/ATL)': 'Lade (CTL/ATL)'
 'Loading data...': 'Daten werden geladen...'
 Loading...: Lädt...
@@ -170,6 +171,7 @@ Metrics: Metriken
 Mon: Mo
 Monday: Montag
 Monotony: Monotonie
+Monthly: Monthly
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
 'Most recent activities': 'Neueste Aktivitäten'
@@ -324,6 +326,7 @@ Walks: Spaziergänge
 'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
 Wed: Mi
 Wednesday: Mittwoch
+Weekly: Weekly
 'Weekly Strain': 'Wöchentliche Belastung (Strain)'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Weekly TRIMP': 'Wöchentlicher TRIMP'
@@ -338,6 +341,7 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout type': Trainingseinheitstyp
 Year: Jahr
+Yearly: Yearly
 'Yearly stats': 'Jährliche Statistiken'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Lädnern aufgezeichnet, das sind {percentage} aller Länder 🌍'

@@ -148,6 +148,7 @@ Laps: Laps
 'Last 90 days': 'Last 90 days'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
+Lifetime: Lifetime
 'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'Loading data...'
 Loading...: Loading...
@@ -170,6 +171,7 @@ Metrics: Metrics
 Mon: Mon
 Monday: Monday
 Monotony: Monotony
+Monthly: Monthly
 'Monthly stats': 'Monthly stats'
 Morning: Morning
 'Most recent activities': 'Most recent activities'
@@ -324,6 +326,7 @@ Walks: Walks
 'We detected following issues': 'We detected following issues'
 Wed: Wed
 Wednesday: Wednesday
+Weekly: Weekly
 'Weekly Strain': 'Weekly Strain'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
 'Weekly TRIMP': 'Weekly TRIMP'
@@ -338,6 +341,7 @@ Wheelchair: Wheelchair
 Workout: Workout
 'Workout type': 'Workout type'
 Year: Year
+Yearly: Yearly
 'Yearly stats': 'Yearly stats'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍"
