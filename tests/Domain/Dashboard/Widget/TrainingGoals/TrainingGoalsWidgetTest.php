@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain\Dashboard\Widget\WeeklyGoals;
+namespace App\Tests\Domain\Dashboard\Widget\TrainingGoals;
 
 use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoalsWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
@@ -9,7 +9,7 @@ use App\Tests\ContainerTestCase;
 use App\Tests\ProvideTestData;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class WeeklyGoalsWidgetTest extends ContainerTestCase
+class TrainingGoalsWidgetTest extends ContainerTestCase
 {
     use ProvideTestData;
     use MatchesSnapshots;
@@ -31,11 +31,13 @@ class WeeklyGoalsWidgetTest extends ContainerTestCase
 
         $config = WidgetConfiguration::empty()
             ->add('goals', [
-                ['label' => 'Cycling',  'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 200,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
-                ['label' => 'Cycling',  'enabled' => true, 'type' => 'elevation', 'unit' => 'm', 'goal' => 1000,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
-                ['label' => 'Cycling',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
-                ['label' => 'Running',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
-                ['label' => 'Running',  'enabled' => false, 'type' => 'elevation', 'unit' => 'm', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
+                'weekly' => [
+                    ['label' => 'Cycling',  'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 200,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                    ['label' => 'Cycling',  'enabled' => true, 'type' => 'elevation', 'unit' => 'm', 'goal' => 1000,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                    ['label' => 'Cycling',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                    ['label' => 'Running',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
+                    ['label' => 'Running',  'enabled' => false, 'type' => 'elevation', 'unit' => 'm', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
+                ],
             ]);
 
         $render = $this->widget->render(
