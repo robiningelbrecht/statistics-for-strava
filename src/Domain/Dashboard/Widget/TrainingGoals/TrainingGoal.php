@@ -18,6 +18,7 @@ final readonly class TrainingGoal
         private string $label,
         private bool $isEnabled,
         private TrainingGoalType $type,
+        private TrainingGoalPeriod $period,
         private Unit $goal,
         private SportTypes $sportTypesToInclude,
     ) {
@@ -27,6 +28,7 @@ final readonly class TrainingGoal
         string $label,
         bool $isEnabled,
         TrainingGoalType $type,
+        TrainingGoalPeriod $period,
         float $goal,
         string $unit,
         SportTypes $sportTypesToInclude,
@@ -35,6 +37,7 @@ final readonly class TrainingGoal
             label: $label,
             isEnabled: $isEnabled,
             type: $type,
+            period: $period,
             goal: self::createUnitFromScalars(
                 value: $goal,
                 unit: $unit,
@@ -56,6 +59,11 @@ final readonly class TrainingGoal
     public function getType(): TrainingGoalType
     {
         return $this->type;
+    }
+
+    public function getPeriod(): TrainingGoalPeriod
+    {
+        return $this->period;
     }
 
     public function getGoal(): Unit
