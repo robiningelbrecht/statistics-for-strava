@@ -77,6 +77,16 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
         $this->assertNull($render);
     }
 
+    public function testRenderWhenNoGoalsUseCaseTwo(): void
+    {
+        $render = $this->widget->render(
+            now: SerializableDateTime::fromString('2025-10-16'),
+            configuration: WidgetConfiguration::empty()
+            ->add('goals', ['weekly'=> []])
+        );
+        $this->assertNull($render);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
