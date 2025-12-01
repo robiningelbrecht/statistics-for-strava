@@ -17,7 +17,7 @@ class DashboardLayoutTest extends TestCase
             DashboardLayout::fromArray([
                 ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
                 ['widget' => 'introText', 'width' => 33, 'enabled' => true],
-                ['widget' => 'weeklyGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
+                ['widget' => 'trainingGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
                 ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
                 ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
                 ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
@@ -53,15 +53,15 @@ class DashboardLayoutTest extends TestCase
     {
         $yml = self::getValidYml();
         unset($yml[0]['widget']);
-        yield 'missing "widget" key' => [$yml, '"widget" property is required'];
+        yield 'missing "widget" key' => [$yml, '"widget" property is required for each dashboard widget'];
 
         $yml = self::getValidYml();
         unset($yml[0]['width']);
-        yield 'missing "width" key' => [$yml, '"width" property is required'];
+        yield 'missing "width" key' => [$yml, '"width" property is required for each dashboard widget'];
 
         $yml = self::getValidYml();
         unset($yml[0]['enabled']);
-        yield 'missing "enabled" key' => [$yml, '"enabled" property is required'];
+        yield 'missing "enabled" key' => [$yml, '"enabled" property is required for each dashboard widget'];
 
         $yml = self::getValidYml();
         $yml[0]['enabled'] = 'test';

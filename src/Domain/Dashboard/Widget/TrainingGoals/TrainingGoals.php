@@ -19,7 +19,7 @@ final class TrainingGoals extends Collection
     }
 
     /**
-     * @param array<int, mixed> $items
+     * @param array<string, mixed> $items
      */
     public static function fromConfig(array $items): self
     {

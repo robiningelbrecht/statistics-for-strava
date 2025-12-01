@@ -47,6 +47,11 @@ final readonly class PowerDistributionChart
         $minPower = 0;
         $maxPower = (int) ceil(max($powers) / 100) * 100;
 
+        if($maxPower - $minPower <= 0){
+            // Something fishy is going on.
+            return null;
+        }
+
         foreach (range($minPower, $maxPower) as $power) {
             if (array_key_exists($power, $powerData)) {
                 continue;

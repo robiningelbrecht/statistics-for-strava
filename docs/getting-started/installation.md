@@ -65,6 +65,11 @@ services:
       - ./storage/database:/var/www/storage/database
       - ./storage/files:/var/www/storage/files
     env_file: ./.env
+    healthcheck:
+      test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/strava.db && echo 'ok' || exit 1" ]
+      timeout: 5s
+      retries: 3
+      start_period: 5s
     entrypoint: ['bin/console', 'app:daemon:run']
     networks:
       - statistics-for-strava-network

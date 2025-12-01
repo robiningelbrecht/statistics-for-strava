@@ -25,7 +25,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
         return [
             ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
             ['widget' => 'introText', 'width' => 33, 'enabled' => true],
-            ['widget' => 'weeklyGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
+            ['widget' => 'trainingGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
             ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
@@ -64,7 +64,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
                 if (array_key_exists($requiredKey, $widget)) {
                     continue;
                 }
-                throw new InvalidDashboardLayout(sprintf('"%s" property is required for each custom gear', $requiredKey));
+                throw new InvalidDashboardLayout(sprintf('"%s" property is required for each dashboard widget', $requiredKey));
             }
 
             if (!is_bool($widget['enabled'])) {
