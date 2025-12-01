@@ -82,7 +82,7 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
         $render = $this->widget->render(
             now: SerializableDateTime::fromString('2025-10-16'),
             configuration: WidgetConfiguration::empty()
-            ->add('goals', ['weekly'=> []])
+            ->add('goals', ['weekly' => []])
         );
         $this->assertNull($render);
     }
