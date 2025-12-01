@@ -87,6 +87,7 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
         $this->assertNull($render);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
