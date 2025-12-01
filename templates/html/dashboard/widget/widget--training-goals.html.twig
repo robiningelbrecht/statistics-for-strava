@@ -1,34 +1,57 @@
 {% autoescape false %}
-    <div class="flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold">{{ "Training goals"|trans }}</h3>
-        <span class="text-sm">{{ fromToLabel }}</span>
-    </div>
-    <div class="grow flex flex-col justify-center">
-        <div class="flex flex-col overflow-x-auto max-h-[320px] gap-y-4 divide-y divide-gray-200">
-            {% for calculatedtrainingGoal in calculatedTrainingGoals %}
-                {% set trainingGoal = calculatedtrainingGoal.trainingGoal %}
-                <div class="pb-4">
-                    <div class="mb-1 flex justify-between">
-                        <div class="flex items-center gap-x-0.5 text-sm text-grey-900">
-                            <div>{{ svg(trainingGoal.getType().getSvgIcon(), 'size-4') }}</div>
-                            {% set presicion = trainingGoal.getType() == enum('App\\Domain\\Dashboard\\Widget\\TrainingGoals\\TrainingGoalType').MOVING_TIME ? 1 : 0 %}
-                            <div>{{ trainingGoal.getLabel() }} - {{ calculatedtrainingGoal.absolute|renderMeasurement(presicion) }}</div>
-                        </div>
-                        <div class="text-sm text-grey-900">{{ "Goal"|trans }}: {{ trainingGoal.getGoal()|renderMeasurement(0) }}</div>
-                    </div>
-                    <div class="w-full rounded-full bg-gray-200">
-                        {% if calculatedtrainingGoal.relative > 0 %}
-                            <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relative) }}%">
-                                {{ calculatedtrainingGoal.relative }}%
-                            </div>
-                        {% else %}
-                            <div class="rounded-full p-0.5 text-center text-xs leading-none font-medium text-grey-900" style="width: 10%">
-                                0%
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+{% set uniqueId = uniqueNumberForId('trainingGoalsWidget') %}
+<div class="flex items-center justify-between">
+    <h3 class="text-lg font-semibold">{{ "Training goals"|trans }}</h3>
+    {% if calculatedTrainingGoalsPerPeriod|length > 1 %}
+        <ul class="inline-flex rounded-md shadow-xs divide-x divide-gray-200"
+            id="trainingGoalsTab{{ uniqueId }}" data-tabs="#trainingGoalsTabContent{{ uniqueId }}"
+            data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+            {% for period,goals in calculatedTrainingGoalsPerPeriod %}
+                <li class="flex gap-x-1 shrink-0 cursor-pointer
+               bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg" role="presentation">
+                    <a href="#" data-tabs-target="#trainingGoals{{ period }}{{ uniqueId }}" role="tab"
+                       aria-controls="trainingGoals{{ period }}{{ uniqueId }}"
+                       class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
+                        {{ enum('App\\Domain\\Dashboard\\Widget\\TrainingGoals\\TrainingGoalPeriod').from(period)|trans }}
+                    </a>
+                </li>
             {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+<div class="flex flex-col grow" id="trainingGoalsTabContent{{ uniqueId }}">
+    {% for period, calculatedTrainingGoals in calculatedTrainingGoalsPerPeriod %}
+        <div class="flex flex-col grow" id="trainingGoals{{ period }}{{ uniqueId }}" role="tabpanel" aria-labelledby="trainingGoals{{ period }}{{ uniqueId }}">
+            <span class="mb-4 text-sm">{{ fromToLabels[period] }}</span>
+            <div class="grow flex flex-col justify-center">
+                <div class="flex flex-col overflow-x-auto max-h-[320px] gap-y-4 divide-y divide-gray-200">
+                    {% for calculatedtrainingGoal in calculatedTrainingGoals %}
+                        {% set trainingGoal = calculatedtrainingGoal.trainingGoal %}
+                        <div class="pb-4">
+                            <div class="mb-1 flex justify-between">
+                                <div class="flex items-center gap-x-0.5 text-sm text-grey-900">
+                                    <div>{{ svg(trainingGoal.getType().getSvgIcon(), 'size-4') }}</div>
+                                    {% set presicion = trainingGoal.getType() == enum('App\\Domain\\Dashboard\\Widget\\TrainingGoals\\TrainingGoalType').MOVING_TIME ? 1 : 0 %}
+                                    <div>{{ trainingGoal.getLabel() }} - {{ calculatedtrainingGoal.absolute|renderMeasurement(presicion) }}</div>
+                                </div>
+                                <div class="text-sm text-grey-900">{{ "Goal"|trans }}: {{ trainingGoal.getGoal()|renderMeasurement(0) }}</div>
+                            </div>
+                            <div class="w-full rounded-full bg-gray-200">
+                                {% if calculatedtrainingGoal.relative > 0 %}
+                                    <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relative) }}%">
+                                        {{ calculatedtrainingGoal.relative }}%
+                                    </div>
+                                {% else %}
+                                    <div class="rounded-full p-0.5 text-center text-xs leading-none font-medium text-grey-900" style="width: 10%">
+                                        0%
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
+    {% endfor %}
+</div>
 {% endautoescape %}

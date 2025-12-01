@@ -40,8 +40,8 @@ final readonly class Year implements \Stringable
     public function getRange(): DateRange
     {
         return DateRange::fromDates(
-            from: SerializableDateTime::fromString(sprintf('%d-01-01', $this->year)),
-            till: SerializableDateTime::fromString(sprintf('%d-12-31', $this->year)),
+            from: $this->getFrom(),
+            till: $this->getTo(),
         );
     }
 
@@ -56,5 +56,15 @@ final readonly class Year implements \Stringable
             startDate: SerializableDateTime::fromString(sprintf('%d-01-01', $this->year)),
             endDate: SerializableDateTime::fromString(sprintf('%d-12-31', $this->year)),
         );
+    }
+
+    public function getFrom(): SerializableDateTime
+    {
+        return SerializableDateTime::fromString(sprintf('%d-01-01', $this->year));
+    }
+
+    public function getTo(): SerializableDateTime
+    {
+        return SerializableDateTime::fromString(sprintf('%d-12-31', $this->year));
     }
 }

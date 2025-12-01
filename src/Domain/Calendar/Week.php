@@ -34,14 +34,6 @@ final readonly class Week implements \JsonSerializable
         return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber)->translatedFormat('M Y');
     }
 
-    public function getLabelFromTo(): string
-    {
-        return implode(' - ', [
-            $this->getFrom()->translatedFormat('d M'),
-            $this->getTo()->translatedFormat('d M'),
-        ]);
-    }
-
     public function getFrom(): SerializableDateTime
     {
         return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber);

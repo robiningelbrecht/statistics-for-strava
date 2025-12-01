@@ -59,10 +59,9 @@ It contains a summary of your workout history.
 
 ![introText widget](../assets/images/dashboard-widgets/intro-text.png)
 
-## weeklyGoals
+## trainingGoals
 
-This widget lets you define and track your weekly goals, helping you stay motivated and monitor your weekly progress.
-For the best experience, place it next to the weeklyStats widget to get a clear overview of your weekly performance.
+This widget lets you define and track your weekly, monthly yearly and lifetime goals, helping you stay motivated and monitor your progress.
 
 > [!NOTE]
 > **Note** This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
@@ -70,7 +69,7 @@ For the best experience, place it next to the weeklyStats widget to get a clear 
 * __goals__: An array of goals.
 
 ```yml
-{ 'widget': 'weeklyGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
+{ 'widget': 'trainingGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
 ```
 
 Each configured goal should contain the following properties:
@@ -97,19 +96,27 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
 ### Example
 
 ```yaml
-'config': {
-  'goals': [
-    # Cycling
-    { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 200,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
-    { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 8,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
-    { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
-    # Running
-    { label: 'Running', enabled: true, type: 'movingTime', unit: 'hour', goal: 2,  sportTypesToInclude: ['Run'] },
-  ]
+'config': {          
+  'goals': {
+    'weekly': [
+      # Cycling
+      { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 200,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+      { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 8,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+      { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+      # Running
+      { label: 'Running', enabled: true, type: 'movingTime', unit: 'hour', goal: 2,  sportTypesToInclude: ['Run'] },
+    ],
+    'monthly': [
+      # Cycling
+      { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+      { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 30,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+      { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1500,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    ]
+  },
 }
 ```
 
-![weeklyGoals widget](../assets/images/dashboard-widgets/weekly-goals.png)
+![trainingGoals widget](../assets/images/dashboard-widgets/training-goals.png)
 
 ## weeklyStats
 

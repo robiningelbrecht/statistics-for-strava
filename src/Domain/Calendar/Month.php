@@ -10,6 +10,7 @@ final readonly class Month
 {
     public const string MONTH_ID_FORMAT = 'Y-m';
     private SerializableDateTime $firstDay;
+    private SerializableDateTime $lastDay;
 
     private function __construct(
         private int $year,
@@ -19,6 +20,7 @@ final readonly class Month
             format: 'd-n-Y',
             datetime: '01-'.$this->month.'-'.$this->year,
         );
+        $this->lastDay = SerializableDateTime::fromString($this->year.'-'.$this->month.'-'.$this->firstDay->format('t'));
     }
 
     public function getYear(): int
@@ -111,5 +113,15 @@ final readonly class Month
         }
 
         return $this->getMonth() > $other->getMonth();
+    }
+
+    public function getFrom(): SerializableDateTime
+    {
+        return $this->firstDay;
+    }
+
+    public function getTo(): SerializableDateTime
+    {
+        return $this->lastDay;
     }
 }
