@@ -89,15 +89,24 @@ appearance:
     layout:
       - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
-      - { 'widget': 'weeklyGoals', 'width': 33, 'enabled': true, 'config': 
+      - { 'widget': 'trainingGoals', 'width': 33, 'enabled': true, 'config': 
           {
-            'goals': 
-            [
-              # Running
-              { label: 'Run 60km', enabled: true, type: 'distance', unit: 'km', goal: 60,  sportTypesToInclude: ['Run', 'TrailRun'] },
-              { label: 'Run 8hrs', enabled: true, type: 'movingTime', unit: 'hour', goal: 8,  sportTypesToInclude: ['Run', 'TrailRun'] },
-              { label: 'Climb 1500m', enabled: true, type: 'elevation', unit: 'm', goal: 1500,  sportTypesToInclude: ['Run', 'TrailRun'] },
-            ]
+            'goals': {
+              'weekly': [
+                # Cycling
+                { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 200,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+                { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 8,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+                { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+                # Running
+                { label: 'Running', enabled: true, type: 'movingTime', unit: 'hour', goal: 2,  sportTypesToInclude: ['Run'] },
+              ],
+              'monthly': [
+                # Cycling
+                { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+                { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 30,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+                { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1500,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+              ]
+            }
           }
         }
       - { 'widget': 'weeklyStats', 'width': 66, 'enabled': true }

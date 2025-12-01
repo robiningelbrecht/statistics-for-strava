@@ -1,3 +1,17 @@
+# [v4.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.0) - 2025-12-01
+
+> [!WARNING]  
+> The `weeklyGoals` widget has been removed and replaced by the `trainingGoals` widget.
+> If you currently use `weeklyGoals`, update your configuration accordingly:
+> https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=traininggoals
+
+## What's Changed
+* ISSUE #1421: Add running to peak power output and FTP history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1467
+* ISSUE #1428: Monthly, Yearly, Lifetime goals by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1468
+* ISSUE #1470: Divide by Zero error in PowerDistributionChart.php by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1468
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.1.0...v4.2.0
+
 # [v4.1.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.1.0) - 2025-11-28
 
 🔥 Two new features worth mentioning this release:
