@@ -1,4 +1,4 @@
-<fg=black;bg=green>StatisticsforStravav4.1.0</>
+<fg=black;bg=green>StatisticsforStravav4.2.0</>
 
 Runtime:PHP8.5.0(cli)onLinux
 Configurationfiles:

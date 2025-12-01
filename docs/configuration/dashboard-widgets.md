@@ -13,7 +13,7 @@ appearance:
     layout:
       - { 'widget': 'mostRecentActivities', 'width': 66, 'enabled': true, 'config': { 'numberOfActivitiesToDisplay': 5 } }
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
-      - { 'widget': 'weeklyGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
+      - { 'widget': 'trainingGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
@@ -61,7 +61,7 @@ It contains a summary of your workout history.
 
 ## trainingGoals
 
-This widget lets you define and track your weekly, monthly yearly and lifetime goals, helping you stay motivated and monitor your progress.
+This widget lets you define and track your weekly, monthly, yearly and lifetime goals, helping you stay motivated and monitor your progress.
 
 > [!NOTE]
 > **Note** This widget is disabled in the default dashboard layout. If you want to use this widget you need to configure a custom dashboard layout.
@@ -111,7 +111,9 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
       { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 1000,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
       { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 30,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
       { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1500,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
-    ]
+    ],
+    'yearly': [],
+    'lifetime': [],
   },
 }
 ```
