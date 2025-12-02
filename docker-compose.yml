@@ -51,8 +51,6 @@ services:
       env_file: ".env.local"
       healthcheck:
         test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/strava.db && echo 'ok' || exit 1" ]
-        timeout: 5s
-        retries: 3
         start_period: 5s
       environment:
         - TZ=Europe/Brussels

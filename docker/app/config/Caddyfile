@@ -42,7 +42,18 @@
 		}
 	}
 
-	# Serve /files/* from storage
+	# Serve badge SVGs — no cache
+	@badges path /files/*-badge.svg
+	handle @badges {
+		header {
+			Cache-Control "no-cache, no-store, must-revalidate"
+		}
+
+		root * /var/www/storage
+		file_server
+	}
+
+	# Serve other /files/* from storage
 	handle /files/* {
 		header {
 			Cache-Control "public, max-age=31536000, immutable"

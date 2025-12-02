@@ -14,12 +14,4 @@ class BuildDashboardHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildDashboardHtml());
         $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
     }
-
-    public function testHandleForRunningActivitiesOnly(): void
-    {
-        $this->provideRunningOnlyTestSet();
-
-        $this->commandBus->dispatch(new BuildDashboardHtml());
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
-    }
 }

@@ -1,0 +1,13 @@
+name: Improvement
+description: Suggest an idea or improvement
+labels: ["improvement"]
+assignees:
+  - robiningelbrecht
+body:
+  - type: textarea
+    id: the-improvement
+    attributes:
+      label: What would you like to improve?
+      description: A clear and concise description of your improvement
+    validations:
+      required: true

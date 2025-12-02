@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    open-pull-requests-limit: 10
+    schedule:
+      interval: weekly
+    assignees:
+      - "robiningelbrecht"
+    labels:
+      - "tech debt"
+    ignore:
+      - dependency-name: '*'
+        update-types:
+          ['version-update:semver-patch', 'version-update:semver-minor']
