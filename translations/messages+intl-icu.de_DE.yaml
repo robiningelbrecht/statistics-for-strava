@@ -109,7 +109,7 @@ Gear: Ausrüstung
 'Gear stats': Ausrüstungsstatistiken
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Ausrüstung, die in den letzten drei Monaten nicht verwendet wurde, ist standardmäßig deaktiviert.'
 'Gear that is retired is disabled by default.': 'Ausgemusterte Ausrüstung ist standardmäßig deaktiviert.'
-Goal: Goal
+Goal: Ziel
 Golf: Golf
 'Good training variety': 'Gute Abwechslung im Training'
 'Google searches': 'Google Suchanfragen'
@@ -171,7 +171,7 @@ Metrics: Metriken
 Mon: Mo
 Monday: Montag
 Monotony: Monotonie
-Monthly: Monthly
+Monthly: Monatlich
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
 'Most recent activities': 'Neueste Aktivitäten'
@@ -230,7 +230,7 @@ Ranking: Rangliste
 'Rest days': Ruhetage
 'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
 'Rest days vs. active days': 'Ruhetage vs. aktive Tage'
-'Retired gear': 'Retired gear'
+'Retired gear': 'ausgemusterte Ausrüstung'
 Rewind: Rückblick
 'Rewind comparisons are only available on larger screens.': 'Rückblick Vergleiche sind nur auf großen Bildschirmen verfügbar.'
 Rides: Radfahren
@@ -305,7 +305,7 @@ To: Bis
 'Training Load Analysis (6 week history)': 'Trainingsbelastungsanalyse (6 Wochen Verlauf)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Trainingsmonotonie - Verhältnis der durchschnittlichen Tagesbelastung zur Standardabweichung. Gibt die Trainingsvielfalt an.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) - Die Differenz zwischen Fitness (CTL) und Ermüdung (ATL). Zeigt an, wie leistungsfähig du bist.'
-'Training goals': 'Training goals'
+'Training goals': 'Trainingsziele'
 Tue: Di
 Tuesday: Dienstag
 Unspecified: 'Nicht spezifiziert'
@@ -326,7 +326,7 @@ Walks: Spaziergänge
 'We detected following issues': 'Wir haben die folgenden Probleme festgestellt'
 Wed: Mi
 Wednesday: Mittwoch
-Weekly: Weekly
+Weekly: Wöchentlich
 'Weekly Strain': 'Wöchentliche Belastung (Strain)'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Wöchentliche Belastung - Kombination aus wöchentlicher Trainingsbelastung und Monotonie. Gesamttrainingsbelastung. Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Weekly TRIMP': 'Wöchentlicher TRIMP'
@@ -341,7 +341,7 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout type': Trainingseinheitstyp
 Year: Jahr
-Yearly: Yearly
+Yearly: Jährlich
 'Yearly stats': 'Jährliche Statistiken'
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Lädnern aufgezeichnet, das sind {percentage} aller Länder 🌍'
