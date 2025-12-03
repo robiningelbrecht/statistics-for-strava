@@ -26,14 +26,6 @@ class HeatmapDrawer {
             overrideExisting: true,
             detectColors: true,
         };
-        this.highlightedPolylineStyle = {
-            color: this.config.polylineColor,
-            weight: 1.5,
-            opacity: 1,
-            smoothFactor: 1,
-            overrideExisting: true,
-            detectColors: true,
-        };
         this.inactivePolylineStyle = {
             weight: 0,
             opacity: 0,
@@ -54,7 +46,7 @@ class HeatmapDrawer {
         });
     }
 
-    _resetRouteStyles(e) {
+    _resetRouteStyles() {
         this.routePolylines.forEach(entry => {
             entry.polyline.setStyle(this.defaultPolylineStyle);
         });
@@ -74,7 +66,6 @@ class HeatmapDrawer {
 
             if (dist <= NEARBY_DISTANCE_IN_METERS) {
                 nearby.push(entry);
-                entry.polyline.setStyle(this.highlightedPolylineStyle);
             } else {
                 notNearby.push(entry);
             }
@@ -89,26 +80,26 @@ class HeatmapDrawer {
         });
 
         const html = `
-            <div>
-                <div>${nearby.length} nearby route(s):</div>
-                <ul class="max-w-md divide-y divide-default">
+            <div class="max-h-[200px] overflow-y-auto">
+                <div class="text-sm">${nearby.length} nearby route(s):</div>
+                 <ul class="divide-default w-[300px] divide-y divide-gray-200">
                     ${nearby.map(entry => `
                      <li class="py-2">
-                       <div class="truncate">
-                         <a href="#" class="font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html">${entry.route.name}</a>
-                       </div>
-                       <div class="flex items-center justify-between text-xs text-gray-500">
-                         <div> 102km </div>
-                         <div> 12-11-2025 </div>
-                       </div>
-                     </li>`).join("")}
+                      <a href="#" class="block truncate font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html"> ${entry.route.name} </a>
+                      <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div>${entry.route.startDate}</div>
+                        <div>${entry.route.distance}</div>
+                      </div>
+                    </li>`).join("")}
                 </ul>
             </div>`;
 
-        L.popup()
-            .setLatLng(e.latlng)
-            .setContent(html)
-            .openOn(this.map);
+        L.popup(e.latlng,
+            {
+                content: html,
+                maxWidth: 300,
+                minWidth: 300
+            }).openOn(this.map);
     }
 
     redraw(routes) {

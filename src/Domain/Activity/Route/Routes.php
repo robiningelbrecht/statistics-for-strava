@@ -6,6 +6,9 @@ namespace App\Domain\Activity\Route;
 
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<\App\Domain\Activity\Route\Route>
+ */
 final class Routes extends Collection
 {
     public function getItemClassName(): string
