@@ -12,6 +12,8 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final readonly class Route implements \JsonSerializable
 {
     private function __construct(
+        private string $id,
+        private string $name,
         private string $encodedPolyline,
         private Location $location,
         private SportType $sportType,
@@ -22,6 +24,8 @@ final readonly class Route implements \JsonSerializable
     }
 
     public static function create(
+        string $id,
+        string $name,
         string $encodedPolyline,
         Location $location,
         SportType $sportType,
@@ -30,6 +34,8 @@ final readonly class Route implements \JsonSerializable
         SerializableDateTime $on,
     ): self {
         return new self(
+            id: $id,
+            name: $name,
             encodedPolyline: $encodedPolyline,
             location: $location,
             sportType: $sportType,
@@ -37,6 +43,16 @@ final readonly class Route implements \JsonSerializable
             workoutType: $workoutType,
             on: $on
         );
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function getEncodedPolyline(): string
@@ -78,6 +94,8 @@ final readonly class Route implements \JsonSerializable
 
         return [
             'active' => true,
+            'id' => $this->getId(),
+            'name'=> $this->getName(),
             'location' => [
                 'countryCode' => $this->getLocation()->getCountryCode(),
                 'state' => $state ? str_replace(['"', '\''], '', $state) : null, // Fix for ISSUE-287

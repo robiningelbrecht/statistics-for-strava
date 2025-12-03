@@ -63,7 +63,7 @@ document.addEventListener('pageWasLoaded', (e) => {
 });
 document.addEventListener('pageWasLoaded.heatmap', () => {
     const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
-    new Heatmap($heatmapWrapper).render();
+    new Heatmap($heatmapWrapper, modalManager).render();
 });
 document.addEventListener('pageWasLoaded.photos', () => {
     const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
