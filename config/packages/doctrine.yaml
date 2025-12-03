@@ -2,12 +2,8 @@ doctrine:
   dbal:
     url: 'sqlite:///%kernel.project_dir%/storage/database/strava.db?charset=utf8mb4'
     profiling_collect_backtrace: false
-    use_savepoints: true
   orm:
-    auto_generate_proxy_classes: true
-    enable_lazy_ghost_objects: true
     enable_native_lazy_objects: true
-    report_fields_where_declared: true
     validate_xml_mapping: true
     naming_strategy: Linkin\Component\DoctrineNamingStrategy\ORM\Mapping\CamelCaseNamingStrategy
     identity_generation_preferences:
