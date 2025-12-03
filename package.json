@@ -6,9 +6,5 @@
     "tailwindcss": "^4.1.13",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
-  },
-  "dependencies": {
-    "@turf/helpers": "^7.3.1",
-    "@turf/point-to-line-distance": "^7.3.1"
   }
 }

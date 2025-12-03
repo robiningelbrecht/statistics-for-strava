@@ -1063,6 +1063,9 @@
       max-width: 96rem;
     }
   }
+  .m-4 {
+    margin: calc(var(--spacing) * 4);
+  }
   .-mx-4 {
     margin-inline: calc(var(--spacing) * -4);
   }
@@ -1866,9 +1869,6 @@
   .w-\[200px\] {
     width: 200px;
   }
-  .w-\[300px\] {
-    width: 300px;
-  }
   .w-\[rem\] {
     width: rem;
   }
@@ -1880,9 +1880,6 @@
   }
   .w-full {
     width: 100%;
-  }
-  .w-md {
-    width: var(--container-md);
   }
   .max-w-\(--breakpoint-sm\) {
     max-width: var(--breakpoint-sm);
@@ -4426,6 +4423,13 @@
   #heatmap.enable-grey-scale .leaflet-tile-pane {
     -webkit-filter: grayscale(100%) brightness(75%);
     filter: grayscale(100%) brightness(75%);
+  }
+  .leaflet-popup-content-wrapper .leaflet-popup-content {
+    margin: calc(var(--spacing) * 0) !important;
+    font-size: var(--text-base) !important;
+    line-height: var(--tw-leading, var(--text-base--line-height)) !important;
+    --tw-leading: 1 !important;
+    line-height: 1 !important;
   }
   .leaflet-control--fly-to-places {
     :where(& > :not(:last-child)) {

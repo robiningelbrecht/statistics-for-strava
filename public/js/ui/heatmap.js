@@ -1,6 +1,5 @@
 import {DataTableStorage, FilterManager} from "../filters";
-import { pointToLineDistance } from "@turf/point-to-line-distance";
-import { point, lineString } from "@turf/helpers";
+import { pointToLineDistance, point, lineString } from "../../libraries/turf";
 
 class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -80,9 +79,9 @@ class HeatmapDrawer {
         });
 
         const html = `
-            <div class="max-h-[200px] overflow-y-auto">
-                <div class="text-sm">${nearby.length} nearby route(s):</div>
-                 <ul class="divide-default w-[300px] divide-y divide-gray-200">
+            <div class="m-4 text-sm max-h-[200px] overflow-y-auto">
+                <div class="font-medium">${nearby.length} nearby route(s):</div>
+                 <ul class="divide-default divide-y divide-gray-200">
                     ${nearby.map(entry => `
                      <li class="py-2">
                       <a href="#" class="block truncate font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html"> ${entry.route.name} </a>
