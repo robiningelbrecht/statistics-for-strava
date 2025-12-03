@@ -1,6 +1,10 @@
 [
     {
         "active": true,
+        "id": "activity-1",
+        "startDate": "10-10-2023",
+        "distance": "10.0km",
+        "name": "Test activity",
         "location": {
             "countryCode": "BE",
             "state": null

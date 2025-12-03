@@ -1675,6 +1675,9 @@
   .max-h-\[35px\] {
     max-height: 35px;
   }
+  .max-h-\[200px\] {
+    max-height: 200px;
+  }
   .max-h-\[320px\] {
     max-height: 320px;
   }
@@ -1863,6 +1866,9 @@
   .w-\[200px\] {
     width: 200px;
   }
+  .w-\[300px\] {
+    width: 300px;
+  }
   .w-\[rem\] {
     width: rem;
   }
@@ -1874,6 +1880,9 @@
   }
   .w-full {
     width: 100%;
+  }
+  .w-md {
+    width: var(--container-md);
   }
   .max-w-\(--breakpoint-sm\) {
     max-width: var(--breakpoint-sm);
