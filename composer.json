@@ -36,7 +36,7 @@
         "league/flysystem-bundle": "^3.3",
         "league/flysystem-memory": "^3.29",
         "moneyphp/money": "^4.8",
-        "nesbot/carbon": "3.11",
+        "nesbot/carbon": "^3.11",
         "neuron-core/neuron-ai": "^2.0",
         "ramsey/uuid": "^4.7",
         "respect/validation": "^2.3",
