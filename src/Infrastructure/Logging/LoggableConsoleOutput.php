@@ -100,4 +100,9 @@ final readonly class LoggableConsoleOutput implements OutputInterface
     {
         return $this->output->getFormatter();
     }
+
+    public function isSilent(): bool
+    {
+        return $this->output->isSilent();
+    }
 }
