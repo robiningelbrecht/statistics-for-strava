@@ -32,28 +32,12 @@ RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pcntl
 RUN docker-php-ext-install intl
 
-# Uncomment when xdebug supports php8.5
-# RUN pecl install xdebug
-# RUN docker-php-ext-enable xdebug
-# COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
-
-# ---- BEGIN TEMPORARY XEDEBUG INSTALL FROM SOURCE
-RUN mkdir -p /tmp/xdebug
-RUN curl -L https://xdebug.org/files/xdebug-3.5.0alpha3.tgz \
-    | tar -xz -C /tmp/xdebug --strip-components=1
-
-# Build and install Xdebug
-RUN cd /tmp/xdebug \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install
-
-RUN touch "${PHP_INI_DIR}/conf.d/99-xdebug.ini"
-RUN echo "zend_extension=xdebug" > ${PHP_INI_DIR}/conf.d/99-xdebug.ini
+# Install Xdebug
+RUN curl -L -o "pie.phar" https://github.com/php/pie/releases/download/1.3.1/pie.phar
+RUN php pie.phar install xdebug/xdebug
+RUN docker-php-ext-enable xdebug
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
-RUN rm -Rf /tmp/xdebug
-# ---- END TEMPORARY XDEBUG INSTALL FROM SOURCE
+RUN rm pie.phar
 
 # Install Blackfire.
 RUN mkdir -p /tmp/blackfire \
