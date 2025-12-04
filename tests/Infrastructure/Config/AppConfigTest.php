@@ -20,43 +20,66 @@ class AppConfigTest extends TestCase
     #[DataProvider(methodName: 'provideConfig')]
     public function testGet(string $key, mixed $expectedValue, string $dir, PlatformEnvironment $platformEnvironment): void
     {
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString($dir),
+            platformEnvironment: $platformEnvironment
+        );
         $this->assertEquals(
             $expectedValue,
-            new AppConfig(
-                kernelProjectDir: KernelProjectDir::fromString($dir),
-                platformEnvironment: $platformEnvironment
-            )->get($key)
+            AppConfig::get($key)
         );
     }
 
     public function testGetWithDefaultValue(): void
     {
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
+            platformEnvironment: PlatformEnvironment::DEV
+        );
         $default = [];
         $this->assertEquals(
             $default,
-            new AppConfig(
-                kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
-                platformEnvironment: PlatformEnvironment::DEV
-            )->get('non.existent.key', $default)
+            AppConfig::get('non.existent.key', $default)
         );
     }
 
-    public function testItThrowsExceptionWhenConfigFileNotFound(): void
+    public function testGetItShouldThrow(): void
     {
-        $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
+            platformEnvironment: PlatformEnvironment::DEV
+        );
 
-        new AppConfig(
-            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/lol'),
+        $this->expectExceptionObject(new \RuntimeException('Unknown configuration key "non.existent.key"'));
+        AppConfig::get('non.existent.key');
+    }
+
+    public function testItThrowsExceptionWhenInvalidYmlInMainConfigFile(): void
+    {
+        $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
+
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config'),
             platformEnvironment: PlatformEnvironment::DEV
         );
     }
 
-    public function testItThrowsExceptionWhenInvalidYml(): void
+    public function testItThrowsExceptionWhenInvalidYmlInSubConfigFile(): void
     {
         $this->expectExceptionObject(CouldNotParseYamlConfig::invalidYml('Malformed unquoted YAML string at line 1 (near "[}").'));
 
-        new AppConfig(
-            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config'),
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config-sub'),
+            platformEnvironment: PlatformEnvironment::DEV
+        );
+    }
+
+    public function testItThrowsExceptionWhenFileIsMissing(): void
+    {
+        $this->expectExceptionObject(CouldNotParseYamlConfig::configFileNotFound());
+
+        AppConfig::init(
+            kernelProjectDir: KernelProjectDir::fromString('lol'),
             platformEnvironment: PlatformEnvironment::DEV
         );
     }

@@ -52,11 +52,13 @@ general:
     weightHistory:
       "YYYY-MM-DD": 100
     # Optional, history of FTP. Needed to calculate activity stress level.
-    # ftpHistory
-    #    "2024-10-03": 198
-    #    "2025-01-10": 220
-    #
-    ftpHistory: []
+    # ftp_history:
+    #   cycling:
+    #     "2023-01-01": 198
+    #     "2023-03-22": 220
+    ftpHistory:
+      cycling: []
+      running: []
 appearance:
   # Allowed options: en_US, fr_FR, it_IT, nl_BE, de_DE, pt_BR, pt_PT sv_SE or zh_CN
   locale: 'en_US'
@@ -180,13 +182,10 @@ zwift:
   racingScore: null
 integrations:
   notifications:
-      # Optional, full URL to ntfy.sh topic (for example https://ntfy.sh/cdd8f660-6b08-4dd8-8b4a-7c4df28642e3). 
-      # This topic will be used to notify you when a new HTML build has run.
-      # Leave empty to disable notifications.
-      ntfyUrl: null
-      # Optional, use when your ntfy.sh instance is password protected
-      ntfyUsername: null
-      ntfyPassword: null
+    # Optional: Specify one or more notification services. For a complete list of available services, see: https://shoutrrr.nickfedor.com/dev/services/overview/
+    # Leave empty to disable notifications entirely.
+    services: []
+    # - 'ntfy://ntfy.sh/topic'
   # All configuration options related to AI integrations.
   # For a comprehensive explanation on how to set up this integration, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/ai-integration
   ai:

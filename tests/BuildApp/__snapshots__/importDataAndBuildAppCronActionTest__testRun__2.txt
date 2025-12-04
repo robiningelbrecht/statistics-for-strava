@@ -1,2 +1,10 @@
-<fg=black;bg=green>StatisticsforStravav4.0.5</>
+<fg=black;bg=green>StatisticsforStravav4.2.0</>
+
+Runtime:PHP8.5.0(cli)onLinux
+Configurationfiles:
+config.yaml
+configathlete.yaml
+configimport.yaml
+gearmaintenance.yaml
+
 <info>Time:10s,Memory:45MB</info>

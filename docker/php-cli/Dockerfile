@@ -1,4 +1,4 @@
-FROM php:8.4-cli
+FROM php:8.5-cli
 
 COPY ./php.ini "${PHP_INI_DIR}/conf.d/docker-php-config.ini"
 
@@ -22,13 +22,38 @@ RUN apt-get update && apt-get install -y \
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 
-RUN docker-php-ext-install pdo pdo_mysql zip xsl gd intl opcache exif mbstring sockets
-RUN docker-php-ext-install bcmath pcntl
+RUN docker-php-ext-install pdo
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install exif
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install pcntl
+RUN docker-php-ext-install intl
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Uncomment when xdebug supports php8.5
+# RUN pecl install xdebug
+# RUN docker-php-ext-enable xdebug
+# COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 
+# ---- BEGIN TEMPORARY XEDEBUG INSTALL FROM SOURCE
+RUN mkdir -p /tmp/xdebug
+RUN curl -L https://xdebug.org/files/xdebug-3.5.0alpha3.tgz \
+    | tar -xz -C /tmp/xdebug --strip-components=1
+
+# Build and install Xdebug
+RUN cd /tmp/xdebug \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install
+
+RUN touch "${PHP_INI_DIR}/conf.d/99-xdebug.ini"
+RUN echo "zend_extension=xdebug" > ${PHP_INI_DIR}/conf.d/99-xdebug.ini
 COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
+RUN rm -Rf /tmp/xdebug
+# ---- END TEMPORARY XDEBUG INSTALL FROM SOURCE
 
 # Install Blackfire.
 RUN mkdir -p /tmp/blackfire \
@@ -49,4 +74,20 @@ RUN chmod +x /usr/bin/caddy
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash
 RUN apt-get install -y nodejs
 
+# Install Shoutrrr.
+ARG TARGETARCH
+ENV TARGETARCH=${TARGETARCH}
+ARG SHOUTRRR_VERSION="0.12.1"
+
+RUN if [ "${TARGETARCH}" = "arm64" ]; then \
+      curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_arm64v8_${SHOUTRRR_VERSION}.tar.gz"; \
+    elif [ "${TARGETARCH}" = "amd64" ]; then \
+      curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_amd64_${SHOUTRRR_VERSION}.tar.gz"; \
+    fi
+
+RUN tar -xzf shoutrrr.tar.gz
+RUN chmod +x shoutrrr
+RUN mv shoutrrr /usr/bin/shoutrrr && rm shoutrrr.tar.gz
+
+# Add composer.
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

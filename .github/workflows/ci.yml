@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/setup-php-action
-      - name: Setup PHP 8.4
+      - name: Setup PHP 8.5
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
+          php-version: '8.5'
           coverage: xdebug
 
       # https://github.com/marketplace/actions/checkout
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Copy .env file
         run: cp .env.test .env
@@ -54,7 +54,7 @@ jobs:
           filename: 'clover.xml'
           only_list_changed_files: true
           fail_on_negative_difference: true
-          artifact_download_workflow_names: 'ci,cron'
+          artifact_download_workflow_names: 'ci,coverage-report'
 
       - name: Add coverage PR comment
         uses: marocchino/sticky-pull-request-comment@v2

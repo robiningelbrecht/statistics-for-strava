@@ -5,12 +5,21 @@ namespace App\Tests\Domain\Dashboard\Widget;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\Widget\MostRecentChallengesCompletedWidget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class MostRecentChallengesCompletedWidgetTest extends ContainerTestCase
 {
     private MostRecentChallengesCompletedWidget $widget;
+
+    public function testItShouldRenderNull(): void
+    {
+        $this->assertNull($this->widget->render(
+            now: SerializableDateTime::fromString('2025-12-02'),
+            configuration: WidgetConfiguration::empty()
+        ));
+    }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testGuardValidConfigurationItShouldThrow(WidgetConfiguration $config, string $expectedException): void
@@ -32,6 +41,8 @@ class MostRecentChallengesCompletedWidgetTest extends ContainerTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->widget = $this->getContainer()->get(MostRecentChallengesCompletedWidget::class);
     }
 }

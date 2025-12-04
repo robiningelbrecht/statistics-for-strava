@@ -74,7 +74,7 @@
                                     {{ svg('distance') }}
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3 max-w-120">
                                 <div class="flex items-center justify-center">
                                     {{ svg('components') }}
                                 </div>
@@ -120,7 +120,7 @@
                                 <td class="px-6 py-2 truncate">
                                     {{ gear.getDistance()|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-6 py-2 truncate">
+                                <td class="px-6 py-2 truncate max-w-120">
                                     {{ componentsAttachedToGear|map(component => component.getLabel())|join(', ') }}
                                 </td>
                                 <td class="px-6 py-2 truncate">
@@ -143,7 +143,15 @@
                                                          alt="{{ gearComponent.getLabel() }}">
                                                 </div>
                                                 <div class="w-full flex flex-col justify-between p-4 leading-normal">
-                                                    <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
+                                                    <div class="flex items-center justify-between">
+                                                        <h5 class="mb-1 text-2xl font-bold tracking-tight text-gray-900">{{ gearComponent.getLabel() }}</h5>
+                                                        {% set componentPurchasePrice = gearComponent.getPurchasePrice() %}
+                                                        {% if componentPurchasePrice %}
+                                                            <div class="text-gray-700 text-xs px-2">
+                                                                {{ componentPurchasePrice|formatMoney }}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
                                                     <div class="grid grid-cols-1 xl:grid-cols-2 gap-y-4 divide-x *:px-4 -mx-4 font-normal text-gray-700">
                                                         {% for maintenanceTask in gearComponent.getMaintenanceTasks() %}
                                                             {% set mostRecentTaskTag = maintenanceTask.getMostRecentMaintenanceTaskTag() %}

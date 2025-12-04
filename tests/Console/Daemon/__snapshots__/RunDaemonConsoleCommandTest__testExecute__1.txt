@@ -1,7 +1,19 @@
 
-StatisticsforStravav4.0.5|DAEMON
+StatisticsforStravav4.2.0|DAEMON
 
-Startedon08-11-202514:47:03
+Startedon0811202514:47:03
+
+
+
+Runtime:PHP8.5.0(cli)onLinux
+
+Configurationfiles:
+config.yaml
+configathlete.yaml
+configimport.yaml
+gearmaintenance.yaml
+
+
 
 Cronconfigured
 Periodictimeradded

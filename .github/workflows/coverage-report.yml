@@ -1,0 +1,40 @@
+name: 'coverage-report'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 2 * * *'
+jobs:
+  coverage-artifact:
+    name: Generate coverage artifact
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/marketplace/actions/setup-php-action
+      - name: Setup PHP 8.5
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          coverage: xdebug
+
+      # https://github.com/marketplace/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Copy .env file
+        run: cp .env.test .env
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Run test suite
+        run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml
+
+      - name: Generate coverage report
+        uses: clearlyip/code-coverage-report-action@v6
+        id: code_coverage_report_action
+        with:
+          filename: 'clover.xml'
+          only_list_changed_files: true
+          fail_on_negative_difference: true

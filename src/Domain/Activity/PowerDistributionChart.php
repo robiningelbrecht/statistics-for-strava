@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
+use App\Domain\Ftp\Ftp;
+
 final readonly class PowerDistributionChart
 {
+    use ProvideSteppedValue;
+
     private function __construct(
         /** @var array<int, int> */
         private array $powerData,
         private int $averagePower,
+        private ?Ftp $ftp,
     ) {
     }
 
@@ -19,27 +24,36 @@ final readonly class PowerDistributionChart
     public static function create(
         array $powerData,
         int $averagePower,
+        ?Ftp $ftp,
     ): self {
         return new self(
             powerData: $powerData,
             averagePower: $averagePower,
+            ftp: $ftp,
         );
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function build(): array
+    public function build(): ?array
     {
-        // Calculate all data related things.
+        // Filter out any possible spikes. Data points with less than 2 occurrences are filtered out.
+        if (!$powerData = array_filter($this->powerData, fn (int $distribution): bool => $distribution > 2)) {
+            return null;
+        }
         /** @var non-empty-array<int, int> $powerData */
-        $powerData = $this->powerData;
         $powers = array_keys($powerData);
         $minPower = 0;
         $maxPower = (int) ceil(max($powers) / 100) * 100;
 
+        if ($maxPower - $minPower <= 0) {
+            // Something fishy is going on.
+            return null;
+        }
+
         foreach (range($minPower, $maxPower) as $power) {
-            if (array_key_exists($power, $this->powerData)) {
+            if (array_key_exists($power, $powerData)) {
                 continue;
             }
             $powerData[$power] = 0;
@@ -59,7 +73,99 @@ final readonly class PowerDistributionChart
         }
         // @phpstan-ignore-next-line
         $yAxisMax = max($data) * 1.2;
-        $xAxisValueAveragePower = array_search(floor($this->averagePower / $step) * $step, $xAxisValues);
+        $xAxisValueAveragePower = array_search($this->findClosestSteppedValue(
+            min: $minPower,
+            max: $maxPower,
+            step: $step,
+            target: $this->averagePower,
+        ), $xAxisValues);
+
+        $markAreas = [
+            [
+                [
+                    'itemStyle' => [
+                        'color' => '#303030',
+                    ],
+                ],
+                [
+                    'x' => '100%',
+                ],
+            ],
+        ];
+
+        // Calculate the mark areas to display the zones.
+        if ($ftp = $this->ftp?->getFtp()->getValue()) {
+            $oneWattPercentage = 100 / ($maxPower - $minPower);
+
+            $markAreas = [
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#303030',
+                        ],
+                        'x' => '0%',
+                    ],
+                    [
+                        'x' => $ftp * 0.55 * $oneWattPercentage.'%',
+                    ],
+                ],
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#2888FC',
+                        ],
+                        'x' => $ftp * 0.55 * $oneWattPercentage.'%',
+                    ],
+                    [
+                        'x' => $ftp * 0.75 * $oneWattPercentage.'%',
+                    ],
+                ],
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#56C15A',
+                        ],
+                        'x' => $ftp * 0.75 * $oneWattPercentage.'%',
+                    ],
+                    [
+                        'x' => $ftp * 0.87 * $oneWattPercentage.'%',
+                    ],
+                ],
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#FECE38',
+                        ],
+                        'x' => $ftp * 0.87 * $oneWattPercentage.'%',
+                    ],
+                    [
+                        'x' => $ftp * 0.94 * $oneWattPercentage.'%',
+                    ],
+                ],
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#FF6531',
+                        ],
+                        'x' => $ftp * 0.94 * $oneWattPercentage.'%',
+                    ],
+                    [
+                        'x' => $ftp * 1.05 * $oneWattPercentage.'%',
+                    ],
+                ],
+                [
+                    [
+                        'itemStyle' => [
+                            'color' => '#FF2F04',
+                        ],
+                        'x' => $ftp * 1.05 * $oneWattPercentage.'%',
+                    ],
+                    [
+                        'x' => $ftp * 10000 * $oneWattPercentage.'%',
+                    ],
+                ],
+            ];
+        }
 
         return [
             'grid' => [
@@ -145,18 +251,7 @@ final readonly class PowerDistributionChart
                         'silent' => true,
                     ],
                     'markArea' => [
-                        'data' => [
-                            [
-                                [
-                                    'itemStyle' => [
-                                        'color' => '#303030',
-                                    ],
-                                ],
-                                [
-                                    'x' => '100%',
-                                ],
-                            ],
-                        ],
+                        'data' => $markAreas,
                         'silent' => true,
                     ],
                 ],

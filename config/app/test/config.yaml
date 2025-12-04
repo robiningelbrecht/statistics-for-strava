@@ -1,0 +1,34 @@
+general:
+  app_url: 'http://localhost:8080/'
+  profile_picture_url: null
+  appSubTitle: 'Robin The King 👑'
+appearance:
+  locale: 'en_US'
+  unit_system: 'metric'
+  time_format: 24
+  date_format: 'DAY-MONTH-YEAR'
+gear:
+  customGear:
+    enabled: true
+    hashtagPrefix: sfs
+    customGears:
+      - tag: peddle-board
+        label: Peddle Board
+        isRetired: false
+        purchasePrice:
+          amountInCents: 123456
+          currency: 'EUR'
+      - tag: workout-shoes
+        label: Fancy workout shoes
+        isRetired: true
+zwift:
+  level: 80
+  racing_score: 495
+integrations:
+  notifications:
+    services:
+      - 'ntfy://admin:admin@ntfy.sh/topic'
+      - 'discord://token@webhookid?thread_id=123456789'
+    ntfyUrl: 'https://ntfy.sh/el-test'
+    ntfyUsername: admin
+    ntfyPassword: pass

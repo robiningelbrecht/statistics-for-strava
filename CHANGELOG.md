@@ -1,3 +1,54 @@
+# [v4.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.0) - 2025-12-01
+
+> [!WARNING]  
+> The `weeklyGoals` widget has been removed and replaced by the `trainingGoals` widget.
+> If you currently use `weeklyGoals`, update your configuration accordingly:
+> https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=traininggoals
+
+## What's Changed
+* ISSUE #1421: Add running to peak power output and FTP history by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1467
+* ISSUE #1428: Monthly, Yearly, Lifetime goals by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1468
+* ISSUE #1470: Divide by Zero error in PowerDistributionChart.php by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1468
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.1.0...v4.2.0
+
+# [v4.1.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.1.0) - 2025-11-28
+
+🔥 Two new features worth mentioning this release:
+
+* To keep your configuration clean and maintainable, you can split it across multiple files: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=splitting-your-configuration-into-multiple-files
+* An improved notification system. Under the hood we're using *Shoutrrr*, so any service supported by Shoutrrr, will be supported by SFS (https://shoutrrr.nickfedor.com/dev/services/overview/)
+
+> [!NOTE]  
+> The old ntfy.sh config will keep working, the feature is backwards compatible.
+> Read the docs how to configure your notifications: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+
+## What's Changed
+* ISSUE #1448: Implement Shoutrrr to allow other notification providers by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1457
+* ISSUE #1455: Improve console intro output by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1456
+* ISSUE #1458: Allow to split up config by using multiple config files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1460
+* ISSUE #1461: Bumped Shoutrrr version to v0.12.1 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1464
+* ISSUE #1462: Show power zones in power distribution chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1465
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.6...v4.1.0
+
+# [v4.0.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.6) - 2025-11-25
+
+## What's Changed
+* ISSUE #1434: Weights in Imperial (pounds) are rounding to 14 digits by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1436
+* ISSUE #1443: French translations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1444
+* ISSUE #1438: Upgrade to php8.5 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1439
+* ISSUE #1440: Set a max width on gear maintenance components column by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1445
+* Update Chinese translations by @c0j0s in https://github.com/robiningelbrecht/statistics-for-strava/pull/1446
+* ISSUE #1442: Gear component purchase price by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1447
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1450
+* Update documentation pages to Docsify v5 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1452
+
+## New Contributors
+* @effectpears made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1450
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.0.5...v4.0.6
+
 # [v4.0.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.0.5) - 2025-11-18
 
 ## What's Changed

@@ -4,9 +4,73 @@ The main configuration yaml file contains all the settings for you to customize 
 
 [include](config-yaml-example.md ':include')
 
-<div class="alert important">
-After each change to these values, you need to run the <i>app:strava:build-files</i> command again for the changes to take effect
-</div>
+> [!IMPORTANT]
+> **Important** After each change to these values, you need to run the _app:strava:build-files_ command again for the changes to take effect
+
+## Splitting your configuration into multiple files
+
+To keep your configuration clean and maintainable, you can split it across multiple files.
+Any file inside the config directory matching the pattern `config-*.yaml` will be loaded and merged automatically.
+
+### Example
+
+Suppose your main `config.yaml` contains:
+
+```yaml
+general:
+  appUrl: 'http://localhost:8081'
+  profilePictureUrl: 'https://your-domain.com/logo.png'
+```
+
+You can add additional configuration in separate files.
+
+`config-athlete.yaml`
+```yaml
+general:
+  athlete:
+    birthday: '1989-08-14'
+    maxHeartRateFormula: 'fox'
+    weightHistory:
+      "2024-02-29": 64.5
+      "2023-09-21": 68
+      "2023-01-01": 69
+```
+
+`config-import.yaml`
+```yaml
+import:
+  numberOfNewActivitiesToProcessPerImport: 250
+  sportTypesToImport: ["Ride", "VirtualRide", "MountainBikeRide", "GravelRide"]
+  activityVisibilitiesToImport: []
+  skipActivitiesRecordedBefore: null
+  activitiesToSkipDuringImport: []
+  optInToSegmentDetailImport: true
+```
+
+All matching config files are combined into a single final configuration:
+
+```yaml
+general:
+  appUrl: 'http://localhost:8081'
+  profilePictureUrl: 'https://your-domain.com/logo.png'
+  athlete:
+    birthday: '1989-08-14'
+    maxHeartRateFormula: 'fox'
+    weightHistory:
+      "2024-02-29": 64.5
+      "2023-09-21": 68
+      "2023-01-01": 69
+import:
+  numberOfNewActivitiesToProcessPerImport: 250
+  sportTypesToImport: ["Ride", "VirtualRide", "MountainBikeRide", "GravelRide"]
+  activityVisibilitiesToImport: []
+  skipActivitiesRecordedBefore: null
+  activitiesToSkipDuringImport: []
+  optInToSegmentDetailImport: true
+```
+
+> [!TIP]
+> You can create as many `config-*.yaml` files as you need, as long as the final merged configuration matches the expected schema.
 
 ## Athlete weight history
 
@@ -25,9 +89,9 @@ general:
 * For activities registered between `2023-04-03` and `2024-11-20` the weight `74.6` will be used
 * For activities registered on or after `2024-11-21` the weight `69.2` will be used
 
-<div class="alert info">
-If you don't care about relative power, you can use <strong>"1970-01-01": YOUR_CURRENT_WEIGHT</strong> as a single entry in the `weightHistory` to set a fixed weight for all activities.
-</div>
+> [!NOTE]
+> **Note** If you don't care about relative power, you can use <strong>"1970-01-01": YOUR_CURRENT_WEIGHT</strong> as a single entry in the `weightHistory` to set a fixed weight for all activities.
+
 
 ## Athlete FTP history
 

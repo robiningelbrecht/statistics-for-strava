@@ -7,7 +7,6 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
-    env(INSPECTOR_INGESTION_KEY): ''
 
 services:
     # default configuration for services in *this* file
@@ -33,10 +32,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    app.config:
-        public: true # We need to access this service from the container in expressions
-        class: App\Infrastructure\Config\AppConfig
-
     Doctrine\Migrations\Version\DbalMigrationFactory: ~
     App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
@@ -47,10 +42,12 @@ services:
       public: true
 
     App\Infrastructure\ValueObject\String\KernelProjectDir:
+        public: true
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
 
     App\Infrastructure\ValueObject\String\PlatformEnvironment:
+        public: true
         autoconfigure: false
         factory: [ null, 'fromServer' ]
 
@@ -125,17 +122,14 @@ services:
     App\Domain\Integration\AI\AIProviderFactory:
         arguments: ['@=app_config("integrations.ai", [])']
 
-    App\Domain\Integration\Notification\Ntfy\NtfyUrl:
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("integrations.notifications.ntfyUrl", "")']
-
-    App\Domain\Integration\Notification\Ntfy\NtfyUsername:
-      factory: [ null, 'fromOptionalString' ]
-      arguments: ['@=app_config("integrations.notifications.ntfyUsername", "")']
-
-    App\Domain\Integration\Notification\Ntfy\NtfyPassword:
-      factory: [ null, 'fromOptionalString' ]
-      arguments: ['@=app_config("integrations.notifications.ntfyPassword", "")']
+    App\Domain\Integration\Notification\Shoutrrr\ConfiguredNotificationServices:
+      factory: [ null, 'fromConfig' ]
+      arguments: [
+        '@=app_config("integrations.notifications.services", [])',
+        '@=app_config("integrations.notifications.ntfyUrl", "")',
+        '@=app_config("integrations.notifications.ntfyUsername", "")',
+        '@=app_config("integrations.notifications.ntfyPassword", "")'
+      ]
 
     App\Domain\Strava\StravaClientId:
         factory: [ null, 'fromString' ]
@@ -240,6 +234,3 @@ services:
 
     Money\MoneyFormatter:
         factory: '@App\Infrastructure\DependencyInjection\MoneyFormatterFactory'
-
-    Inspector\Inspector:
-        class: Inspector\Inspector

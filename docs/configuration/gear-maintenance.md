@@ -54,13 +54,17 @@ components:
     # Label for the component
     label: 'Some cool chain'
     # Optional reference to an image. Will be used in the UI.
-    # The image must be in the same directory as this config file.
+    # The image must be located in the `storage/gear-maintenance` volume.
     imgSrc: 'chain.png'
     # List of gear ids this component is attached to
     # See: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance?id=strava-gear-ids to obtain this ID
     attachedTo:
       - 'gxxxxxxxx' # May not always start with g 
       - 'gxxxxxxxx'
+    # Optional, will be displayed in the UI along your component
+    purchasePrice:
+      amountInCents: 123456
+      currency: 'EUR'
     # A list of maintenance tasks for this component
     maintenance:
       # Tag to be added to the Strava activity title.
@@ -87,9 +91,9 @@ gears:
     imgSrc: 'gear1.png'
 ```
 
-<div class="alert important">
-After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
-</div>
+> [!IMPORTANT]
+> **Important** After each change to these values, you need to run the <i>app:strava:import-data</i> command again for the changes to take effect
+
 
 ## Components
 

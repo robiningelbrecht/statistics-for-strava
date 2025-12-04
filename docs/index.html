@@ -8,10 +8,76 @@
           href="assets/images/logo.svg">
     <meta name="description" content="Statistics for Strava docs">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@^5.0.0-rc/dist/themes/core.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@^5.0.0-rc/dist/themes/addons/vue.min.css" />
+    <style>
+        :root {
+            --theme-color: #42b983;
+            --content-max-width: 200ch;
+            --callout-note-color: #0b85d7;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .flex{
+            display: flex;
+        }
+
+        .items-center{
+            align-items: center;
+        }
+
+        .justify-center{
+            justify-content: center;
+        }
+
+        img{
+            border-radius: 5px;
+        }
+
+        .markdown-section iframe{
+            margin: 0;
+        }
+
+        .callout {
+            font-size: 16px;
+            &.note {
+                --callout-bg          : color-mix(in srgb, var(--callout-note-color), #fff 90%);
+                --callout-border-color: var(--callout-note-color);
+                --callout-charm-bg    : var(--callout-note-color) center no-repeat url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="14" fill="white"><path d="M9.1 0C10.2 0 10.7 0.7 10.7 1.6 10.7 2.6 9.8 3.6 8.6 3.6 7.6 3.6 7 3 7 2 7 1.1 7.7 0 9.1 0Z"/><path d="M5.8 16C5 16 4.4 15.5 5 13.2L5.9 9.1C6.1 8.5 6.1 8.2 5.9 8.2 5.7 8.2 4.6 8.6 3.9 9.1L3.5 8.4C5.6 6.6 7.9 5.6 8.9 5.6 9.8 5.6 9.9 6.6 9.5 8.2L8.4 12.5C8.2 13.2 8.3 13.5 8.5 13.5 8.7 13.5 9.6 13.2 10.4 12.5L10.9 13.2C8.9 15.2 6.7 16 5.8 16Z"/></svg>');
+            }
+        }
+
+        /* NAVBAR */
+        .app-nav ul li a{
+            display: flex;
+            align-items: center;
+            column-gap: 3px;
+        }
+
+        /* CHANGELOG */
+        body[data-page="changelog.md"]{
+            h1:nth-child(n+3){
+                border-top: 2px solid var(--theme-color);
+                padding-top: 0.5rem;
+            }
+
+            .callout{
+                br:first-child {
+                    display: none;
+                }
+            }
+        }
+
+        body[data-page="changelog.md"] h2{
+            margin: 15px 0 .8rem;
+        }
+
+    </style>
 </head>
-<body>
+<body class="loading sidebar-toggle-chevron sidebar-chevron-right sidebar-group-box sidebar-link-clamp">
 <div id="app">Please wait...</div>
 <script>
     window.$docsify = {
@@ -29,15 +95,16 @@
         search: 'auto',
     }
 </script>
-<!-- Docsify v4 -->
-<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify@^5.0.0-rc/dist/docsify.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify@^5.0.0-rc/dist/plugins/search.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
 <script src="//cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-yaml.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-bash.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-json.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/prismjs@1.30.0/components/prism-log.min.js"></script>
+
 <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify@^5.0.0-rc/dist/plugins/zoom-image.min.js"></script>
 </body>
 </html>

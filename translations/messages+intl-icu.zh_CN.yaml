@@ -1,28 +1,28 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: Moderately fresh. Good balance of fitness and recovery.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
-'0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
-'42-day fitness trend': '42-day fitness trend'
-'7-day fatigue level': '7-day fatigue level'
-'< 0.8: Potential detraining': '< 0.8: Potential detraining'
-'< 1.5: Good variety in training': '< 1.5: Good variety in training'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: Over-fatigued. Risk of injury; require extra recovery'
-'> 1.3: Increased injury risk': '> 1.3: Increased injury risk'
-'> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
-'>+25: Possible detraining': '>+25: Possible detraining'
-'A:C Ratio': 'A:C Ratio'
-'ATL (Fatigue)': 'ATL (Fatigue)'
-'Active days': 'Active days'
+'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: 中等精力充沛。体能和恢复情况良好平衡。'
+'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: 巅峰状态，最佳比赛状态。理想的减量训练状态'
+'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: 疲劳累积。恢复中，适合轻度/技术性训练。'
+'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: 略微恢复。过渡期；建议简短训练。'
+'0.8-1.3: Safe training zone': '0.8-1.3: 健康训练区'
+'42-day fitness trend': 42天健身趋势
+'7-day fatigue level': 7天疲劳水平
+'< 0.8: Potential detraining': '< 0.8: 训练效果可能下降'
+'< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
+'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: 过度疲劳。存在受伤风险；需要额外恢复'
+'> 1.3: Increased injury risk': '> 1.3: 受伤风险增加'
+'> 2.0: High monotony, increased risk': '> 2.0: 单调性高，风险增加'
+'>+25: Possible detraining': '>+25: 训练效果可能下降'
+'A:C Ratio': 'A:C 比值'
+'ATL (Fatigue)': 'ATL (疲劳)'
+'Active days': 训练天数
 Activities: 活动
-Activity: Activity
-'Activity count': 'Activity count'
-'Activity heatmap': 'Activity heatmap'
+Activity: 活动
+'Activity count': 活动量
+'Activity heatmap': 活动热图
 'Activity intensity': 活动强度
-'Activity locations': 'Activity locations'
-'Activity start times': 'Activity start times'
-'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
-'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
+'Activity locations': 活动地点
+'Activity start times': 活动开始时间
+'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
+'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
 Advanced: 高级
 Afternoon: 下午
@@ -30,44 +30,44 @@ All: All
 'All time': 所有时间
 'Alpine Ski': 高山滑雪
 Apr: 四月
-'Ask Mark something...': 'Ask Mark something...'
+'Ask Mark something...': 问问Mark...
 Aug: 八月
 Avg: 平均
 'Back Country Ski': 越野滑雪
 Badminton: 羽毛球
 Best: 最佳
-'Best effort': 'Best effort'
-'Best efforts': 最大努力
-'Best efforts for {sportType}': 'Best efforts for {sportType}'
-'Build zone (–10)': 'Build zone (–10)'
-'CTL (Fitness)': 'CTL (Fitness)'
+'Best effort': 最佳努力
+'Best efforts': 最佳努力
+'Best efforts for {sportType}': '{sportType}最佳努力'
+'Build zone (–10)': '构建区 (–10)'
+'CTL (Fitness)': 'CTL (体能)'
 Cadence: 踏频
 Calories: 卡路里
-'Calories burned': 'Calories burned'
+'Calories burned': 燃烧的卡路里
 Canoeing: 划独木舟
-'Carbon saved': 'Carbon saved'
+'Carbon saved': 碳减排
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
-'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
+'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': '长期训练负荷（体能）— 42天训练的负荷指数加权平均值。代表长期训练适应情况。'
 'Close modal': 关闭模态框
-'Collapse sidebar': 'Collapse sidebar'
+'Collapse sidebar': 折叠侧边栏
 Commutes: 通勤
 'Commutes only': 仅通勤
-Compare: Compare
-'Compare to': 'Compare to'
-'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
+Compare: 对比
+'Compare to': 对比
+'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
 Crossfit: 交叉健身
-'Custom gear disabled': 'Custom gear disabled'
-Cycling: Cycling
-'Daily TRIMP': 'Daily TRIMP'
-'Daily activities': 'Daily activities'
+'Custom gear disabled': 自定义装备已禁用
+Cycling: 骑行
+'Daily TRIMP': 每日TRIMP
+'Daily activities': 每日活动
 Dashboard: 仪表板
-Date: Date
+Date: 日期
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
-'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
-Details: Details
+'Detailed instructions are available in the documentation on': 详细说明
+Details: 详情
 Device: 设备
 Distance: 距离
 'Distance breakdown': 距离分解
@@ -80,162 +80,164 @@ Distribution: 分布
 Eddington: 愛丁頓數
 Elev: 海拔
 Elevation: 海拔高度
-'Elevation in {unit}': 'Elevation in {unit}'
+'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
 Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
-'Fastest times': 'Fastest times'
-'Fatigued – productive heavy-training range': 'Fatigued – productive heavy-training range'
+'Fastest times': 最快时间
+'Fatigued – productive heavy-training range': '疲惫 — 最佳高强度训练范围'
 Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
 'Filter on country': 按国家筛选
-'Filter on device': 'Filter on device'
+'Filter on device': 按设备筛选
 'Filter on gear': 按装备筛选
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
 Fitness: 健身
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 例如，埃丁顿数为70意味着骑行者在至少70天内每天骑行至少70公里或英里。达到高埃丁顿数很困难，因为从70到75可能需要超过五次新的长距离锻炼，因为任何少于75公里或英里的锻炼将不再包括在计算中。
-'Form (TSB)': 'Form (TSB)'
-'Fresh – reduced training load': 'Fresh – reduced training load'
+'Form (TSB)': '状态 (TSB)'
+'Fresh – reduced training load': '精力充沛 — 适合减少训练负荷'
 Fri: 周五
 Friday: 星期五
 From: 从
 Gear: 装备
-'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.'
-'Gear details': 'Gear details'
-'Gear maintenance': 'Gear maintenance'
+'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
+'Gear details': 装备详情
+'Gear maintenance': 装备维护
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
 'Gear that is retired is disabled by default.': 退役的装备默认禁用。
 Goal: Goal
 Golf: 高尔夫
-'Good training variety': 'Good training variety'
-'Google searches': 'Google searches'
+'Good training variety': 良好的训练多样性
+'Google searches': Google搜索
 'Gravel Rides': 砾石骑行
-"Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."
+"Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": '指导原则因人而异；欲了解更多信息，请参阅乔·弗里尔的《自行车训练圣经》或 TrainingPeaks 的研究文档。'
 HIIT: 高强度间歇训练
 HR: 心率
 'Hand Cycle': 手动自行车
 'Heart rate': 心率
 'Heart rate distribution': 心率分布
-'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones'
+'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 过去一个月的心率区间分布。为了进行有效的极化训练，您的训练应主要在以下区间内进行。
 'Heart rate zones': 心率区间
 Heatmap: 热图
 High: 高
-'High monotony - increase variety': 'High monotony - increase variety'
-'High risk - reduce volume': 'High risk - reduce volume'
+'High monotony - increase variety': 单调性高——增加多样性
+'High risk - reduce volume': 风险高——减少运动量
 Hikes: 徒步
 History: 历史
 'Ice Skate': 冰刀
 Id: Id
-'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
-"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
-'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
+'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
+"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": '在那段时间里，我走了{totalDistance}，相当于环游世界{numberOfTripsAroundTheWorld}次🌍，或者说是到达月球的{numberOfTripsToTheMoonPercent}%🌕，并且攀登了{totalElevation}，相当于珠穆朗玛峰的{timesMountEverest}倍🏔。总而言之，我走了{totalTimeRecorded}的路🎉。'
+'Individual thresholds vary based on fitness level.': 个人阈值因体能水平而异。
 'Inline Skate': 直排轮滑
-'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
+'It looks like no valid gear is attached to any of the components. Please check your config file.': 无法在任何组件上找到有效装备。请检查您的配置文件。
 Jan: 一月
 Jul: 七月
 Jun: 六月
 KOM: 赛段王
 Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
-Lap: Lap
-Laps: Laps
+Lap: 圈
+Laps: 圈
 'Last 45 days': 最近45天
-'Last 7 days training load': 'Last 7 days training load'
+'Last 7 days training load': 最近7天训练负荷
 'Last 90 days': 最近90天
-'Last effort': 'Last effort'
-'Last maintenance': 'Last maintenance'
-'Load (CTL/ATL)': 'Load (CTL/ATL)'
+'Last effort': 最后努力
+'Last maintenance': 最后维护
+Lifetime: Lifetime
+'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
 Loading...: 加载中...
-'Locations over the globe': 'Locations over the globe'
-'Long run': 'Long run'
-'Longest activity (h)': 'Longest activity (h)'
-'Longest streaks': 'Longest streaks'
+'Locations over the globe': 全球位置
+'Long run': 长跑
+'Longest activity (h)': '最久运动 (h)'
+'Longest streaks': 最长连续记录
 Low: 低
-'Low stress - potential detraining': 'Low stress - potential detraining'
-Maintenance: Maintenance
-'Maintenance history': 'Maintenance history'
+'Low stress - potential detraining': '轻松 — 训练效果可能下降'
+Maintenance: 维护
+'Maintenance history': 维护历史
 Mar: 三月
 Max: 最大
-'Max gradient': 'Max gradient'
+'Max gradient': 最大坡度
 May: 五月
 Medium: 中等
 Metrics: Metrics
 'Mind & Body Sports': 心灵与身体运动
-'Moderate monotony': 'Moderate monotony'
+'Moderate monotony': 适度单调性
 Mon: 周一
 Monday: 星期一
-Monotony: Monotony
+Monotony: 单调性
+Monthly: Monthly
 'Monthly stats': 每月统计
 Morning: 早晨
 'Most recent activities': 最近的活动
-'Most recent challenges': 'Most recent challenges'
+'Most recent challenges': 最近的挑战
 'Mountain Bike Rides': 山地车骑行
 'Moving time': 移动时间
-Name: Name
-'Neutral – short-term sustainable': 'Neutral – short-term sustainable'
+Name: 名称
+'Neutral – short-term sustainable': '适中 — 适合短期训练'
 Night: 夜晚
 'No activities': 没有活动
-'No data available': 'No data available'
-'No other options to compare with': 'No other options to compare with'
-None: None
+'No data available': 没有可用数据
+'No other options to compare with': 无可供比较的其他选项
+None: 无
 'Nordic Ski': 北欧滑雪
-Normalized: Normalized
-'Not supported': 'Not supported'
+Normalized: 归一化
+'Not supported': 不支持
 Nov: 十一月
-'Number of activities per month': 'Number of activities per month'
-'Number of times completed': 'Number of times completed'
+'Number of activities per month': 每月活动数量
+'Number of times completed': 完成次数
 Oct: 十月
-'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
-'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
-'Optimal training range': 'Optimal training range'
+'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': '平均而言，每天的平均值为 {dailyAverage}，每周的平均值为 {weeklyAverage}，每月的平均值为 {monthlyAverage} 🐣。'
+'One of your gear maintenance tasks is due': 您有装备需维护
+'Optimal training range': 最佳训练范围
 Other: 其他
 'Outdoor Sports': 户外运动
-'Over-fatigued (–30)': 'Over-fatigued (–30)'
-'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
-'Overall weekly training stress': 'Overall weekly training stress'
-'PB badges': 'PB badges'
-'PET bottles produced': 'PET bottles produced'
+'Over-fatigued (–30)': '过度疲劳 （–30）'
+'Over-fatigued – risk of injury or burnout, extra recovery needed': '过度疲劳 – 可能受伤或过度训练，需要额外恢复'
+'Overall weekly training stress': 每周训练负荷总览
+'PB badges': PB徽章
+'PET bottles produced': PET瓶量
 PRs: PRs
-'PRs achieved per month': 'PRs achieved per month'
+'PRs achieved per month': 每月PRs
 Pace: 步速
-'Pace distribution': 'Pace distribution'
+'Pace distribution': 步速分布
 'Peak power outputs': 峰值功率输出
-'Peak-fresh, race-ready – ideal taper sweet spot': 'Peak-fresh, race-ready – ideal taper sweet spot'
-'Personal Records': 'Personal Records'
-Photo: Photo
+'Peak-fresh, race-ready – ideal taper sweet spot': 巅峰状态，最佳比赛状态。理想的减量训练状态
+'Personal Records': 个人记录
+Photo: 照片
 Photos: 照片
 'Pickle Ball': 匹克球
 Pilates: 普拉提
-'Please address these issues': 'Please address these issues'
-'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
+'Please address these issues': 请解决这些问题
+'Polarised training (last 30 days)': 极化训练（过去30天）
 Power: 功率
 'Power distribution': 功率分布
-'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
+'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
 'Prev year': 去年
 Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
 Ranking: Ranking
-'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
-'Relative cost': 'Relative cost'
-'Rest Days': 'Rest Days'
-'Rest days': 'Rest days'
-'Rest days in last 7 days': 'Rest days in last 7 days'
-'Rest days vs. active days': 'Rest days vs. active days'
-'Retired gear': 'Retired gear'
-Rewind: Rewind
-'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
+'Reduced carbon emission by commuting': 通勤减少的碳排放
+'Relative cost': 相对成本
+'Rest Days': 休息日
+'Rest days': 休息日
+'Rest days in last 7 days': 最近7天的休息日
+'Rest days vs. active days': '休息日 训练如 对比'
+'Retired gear': 退役装备
+Rewind: 回顾
+'Rewind comparisons are only available on larger screens.': 回顾对比仅适用于大屏幕。
 Rides: 骑行
 'Rock Climbing': 攀岩
 'Roller Ski': 轮滑
 Rowing: 划船
-Running: Running
+Running: 跑步
 Runs: 跑步
 Sail: 帆船
 Sat: 周六
@@ -247,151 +249,153 @@ Segments: 路段
 Sep: 九月
 'Show information': 显示信息
 Simplified: 简化
-"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
+"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": '从{startDate}算起，我已使用Strava {numberOfDaysAgo}多天​，我已经记录了{totalDaysOfWorkingOut}天的训练和冒险活动。'
 Skateboard: 滑板
 Skating: 滑冰
-'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
+'Slightly fresh – transitional zone': '略微精力充沛 — 适合过渡期'
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
-Socials: Socials
+Socials: 社交
 Speed: 速度
-'Speed distribution': 'Speed distribution'
-Splits: Splits
+'Speed distribution': 速度分布
+Splits: 分段
 Squash: 壁球
 'Stair Stepper': 楼梯机
 'Stand Up Paddling': 站立划桨
 'Start slideshow': 播放幻灯片
-'Start times': 'Start times'
+'Start times': 开始时间
 'Statistics for Strava': 'Statistics for Strava'
-Stats: Stats
+Stats: 统计
 'Stats per weekday': 按工作日统计
-Streaks: Streaks
+Streaks: 连续记录
 Sun: 周日
 Sunday: 星期日
 Surfing: 冲浪
 Swim: 游泳
-'TSB (Form)': 'TSB (Form)'
+'TSB (Form)': 'TSB (状态)'
 'Table Tennis': 乒乓球
-Tag: Tag
-'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
-'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
+Tag: 标签
+'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': '"{maintenanceTaskTag}"标签已在"{activityName}"中使用, 但该活动中引用的装备未附加到此组件。'
+'Taper sweet-spot (+15)': '最佳减量期 (+15)'
 Tennis: 网球
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
-'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
-Thinking...: Thinking...
-'This feature is currently disabled': 'This feature is currently disabled'
-'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是“高强度”
+'These badges are dynamically created. You can use them in any &lt;img&gt; tag': '徽章为动态生成，您可在任意 &lt;img&gt; 标签中使用'
+Thinking...: 思考中...
+'This feature is currently disabled': 功能当前被禁用
+'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': '这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是"高强度"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
 Thu: 周四
 Thursday: 星期四
-Time: Time
+Time: 时间
 'Times completed': 完成次数
 To: 到
-'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
+'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
-'Total distance per month': 'Total distance per month'
-'Total elevation per month': 'Total elevation per month'
-'Total hours': 'Total hours'
-'Total hours spent per gear': 'Total hours spent per gear'
-'Total hours spent per sport type': 'Total hours spent per sport type'
-'Total kudos and comments received': 'Total kudos and comments received'
+'Total distance per month': 每月总距离
+'Total elevation per month': 每月总海拔
+'Total hours': 总时长
+'Total hours spent per gear': 每种装备总时长
+'Total hours spent per sport type': 每种运动的总时长
+'Total kudos and comments received': 收到的总赞和留言
 'Trail Runs': 越野跑
-'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
-'Training Load Analysis': 'Training Load Analysis'
-'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
-'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
-'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
+'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
+'Training Load Analysis': 训练负荷分析
+'Training Load Analysis (6 week history)': '训练负荷分析 (6周)'
+'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': '训练单调性 - 平均每日负荷与标准差的比值，反映训练多样性。'
+'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': '训练压力平衡（状态）- 体能（CTL）与疲劳（ATL）之间的差异，反映您的运动准备程度。'
+'Training goals': 'Training goals'
 Tue: 周二
 Tuesday: 星期二
-Unspecified: Unspecified
+Unspecified: 未指定
 'Updated on': 更新于
-'User badge': 'User badge'
+'User badge': 用户徽章
 'Velo Mobiles': 躺车
-'Very fresh – possible detraining': 'Very fresh – possible detraining'
+'Very fresh – possible detraining': '新鲜 – 可能需要停止训练。'
 'Very high': 非常高
 'View all': 查看全部
 'View details': 查看详情
 'Virtual Rides': 虚拟骑行
 'Virtual Row': 虚拟划船
 'Virtual Runs': 虚拟跑步
-'Virtual workout assistant': 'Virtual workout assistant'
-Walking: Walking
-Walks: 步行
+'Virtual workout assistant': 虚拟锻炼助手
+Walking: 健步
+Walks: 散步
 'Water Sports': 水上运动
-'We detected following issues': 'We detected following issues'
+'We detected following issues': 检测到以下问题
 Wed: 周三
 Wednesday: 星期三
-'Weekly Strain': 'Weekly Strain'
-'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.'
-'Weekly TRIMP': 'Weekly TRIMP'
-'Weekly goals': 'Weekly goals'
+Weekly: Weekly
+'Weekly Strain': 每周训练负荷
+'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': '每周训练负荷 - 每周训练量与单调性的乘积。整体训练压力。'
+'Weekly TRIMP': 每周TRIMP
 'Weekly stats': 每周统计
-Weight: Weight
+Weight: 体重
 'Weight Training': 重量训练
-'Weight history': 'Weight history'
+'Weight history': 历史体重
 Wheelchair: 轮椅
-'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 当功率指标和FTP可用时，将使用这些指标。这个公式意味着以FTP骑行一小时的得分为100，我们认为这是“高强度”
+'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': '当功率指标和FTP可用时，将使用这些指标。这个公式意味着以FTP骑行一小时的得分为100，我们认为这是"高强度"'
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼
-'Workout type': 'Workout type'
+'Workout type': 锻炼类型
 Year: 年
-'Yearly stats': 'Yearly stats'
+Yearly: Yearly
+'Yearly stats': 年度统计
 Yoga: 瑜伽
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
-'Your PB badge': 'Your PB badge'
+'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
-'Your Strava {year} rewind will be available on the 24th of December.': 'Your Strava {year} rewind will be available on the 24th of December.'
+'Your Strava {year} rewind will be available on the 24th of December.': '您的Strava {year}年回顾将于12月24日上线。'
 'Your Zwift badge': Zwift徽章
 'Your badge(s)': 徽章
-'Z1-2 (Low)': 'Z1-2 (Low)'
-'Z3 (Mod)': 'Z3 (Mod)'
-'Z4-5 (High)': 'Z4-5 (High)'
+'Z1-2 (Low)': Z1-2（低）
+'Z3 (Mod)': Z3（中）
+'Z4-5 (High)': Z4-5（高）
 'Zone 1 (recovery)': 区域1（恢复）
 'Zone 2 (aerobic)': 区域2（有氧）
 'Zone 3 (aerobic/anaerobic)': 区域3（有氧/无氧）
 'Zone 4 (anaerobic)': 区域4（无氧）
 'Zone 5 (maximal)': 区域5（最大）
 'Zwift Statistics': Zwift统计
-'Zwift badge': 'Zwift badge'
-'Zwift stats': 'Zwift stats'
-activities: activities
+'Zwift badge': Zwift徽章
+'Zwift stats': Zwift统计
+activities: 活动
 age: 年龄
 and: 和
-avg: avg
+avg: 平均
 bpm: 拍子数
 clear: 清除
-comments: comments
-compare: compare
-days: days
-'days needed for next Eddington': 'days needed for next Eddington'
-history: history
-hours: hours
+comments: 留言
+compare: 对比
+days: 天
+'days needed for next Eddington': '天 - 下一个爱丁顿所需天数'
+history: 历史
+hours: 小时
 hrs: hrs
 intensity: 强度
 intensityFactor: 强度因子
-kudos: kudos
+kudos: 赞
 'max gradient': 最大坡度
 maxHeartRate: 最大心率
-months: months
-more: more
+months: 月
+more: 更多
 n/a: 不适用
-never: never
-'on': 'on'
-'per activity': 'per activity'
-'per hour': 'per hour'
-to: to
-total: total
-weeks: weeks
+never: 从不
+'on': 在
+'per activity': 每项活动
+'per hour': 每小时
+to: 至
+total: 总计
+weeks: 周
 workouts: 锻炼
-'{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
-'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
-'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
-'{numberOfActivities} activities': '{numberOfActivities} activities'
-'{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
+'{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
+'{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'
+'{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel}每{interval}'
+'{numberOfActivities} activities': '{numberOfActivities}活动'
+'{numberOfActivities} activities in {year}': '{year}年内，{numberOfActivities}项活动'
+'{numberOfResults} photos based on your active filters': '{numberOfResults}张照片符合筛选条件'
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'
+'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: 构建/疲劳区。高效的高强度训练范围'

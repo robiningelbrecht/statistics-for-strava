@@ -1,11 +1,14 @@
 import {DataTableStorage, FilterManager} from "../filters";
+import { pointToLineDistance, point, lineString } from "../../libraries/turf";
 
 class HeatmapDrawer {
-    constructor(wrapper, config) {
+    constructor(wrapper, config, modalManager) {
         this.wrapper = wrapper;
         this.config = config;
+        this.modalManager = modalManager;
         this.placesControl = null;
         this.mainFeatureGroup = L.featureGroup();
+        this.routePolylines = [];
         this.map = L.map(this.wrapper, {
             scrollWheelZoom: true,
             minZoom: 1,
@@ -14,12 +17,95 @@ class HeatmapDrawer {
         this.config.tileLayerUrls.forEach((tileLayerUrl) => {
             L.tileLayer(tileLayerUrl).addTo(this.map);
         });
+        this.defaultPolylineStyle = {
+            color: this.config.polylineColor,
+            weight: 1.5,
+            opacity: 0.5,
+            smoothFactor: 1,
+            overrideExisting: true,
+            detectColors: true,
+        };
+        this.inactivePolylineStyle = {
+            weight: 0,
+            opacity: 0,
+        }
+        this.map.on("click", (e) => this._handleMapClick(e));
+        this.map.on("popupclose", () => this._resetRouteStyles());
+        this.map.on("popupopen", (ev) => {
+            const container = ev.popup.getElement();
+            if (!container) return;
+
+            container.querySelectorAll('a[data-model-content-url]').forEach(node => {
+                node.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.modalManager.open(node.getAttribute('data-model-content-url'));
+                });
+            });
+        });
+    }
+
+    _resetRouteStyles() {
+        this.routePolylines.forEach(entry => {
+            entry.polyline.setStyle(this.defaultPolylineStyle);
+        });
+    }
+
+    _handleMapClick(e) {
+        const clickPoint = point([e.latlng.lng, e.latlng.lat]);
+        const NEARBY_DISTANCE_IN_METERS = 100;
+        this._resetRouteStyles();
+
+        const nearby = [];
+        const notNearby = [];
+
+        this.routePolylines.forEach((entry) => {
+            const line = lineString(entry.latlngs.map(ll => [ll.lng, ll.lat]));
+            const dist = pointToLineDistance(clickPoint, line, {units: "meters"});
+
+            if (dist <= NEARBY_DISTANCE_IN_METERS) {
+                nearby.push(entry);
+            } else {
+                notNearby.push(entry);
+            }
+        });
+
+        if (nearby.length === 0) {
+            return;
+        }
+
+        notNearby.forEach(entry => {
+            entry.polyline.setStyle(this.inactivePolylineStyle);
+        });
+
+        const html = `
+            <div class="m-4 text-sm max-h-[200px] overflow-y-auto">
+                <div class="font-medium">${nearby.length} nearby route(s):</div>
+                 <ul class="divide-default divide-y divide-gray-200">
+                    ${nearby.map(entry => `
+                     <li class="py-2">
+                      <a href="#" class="block truncate font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html"> ${entry.route.name} </a>
+                      <div class="flex items-center justify-between text-xs text-gray-500">
+                        <div>${entry.route.startDate}</div>
+                        <div>${entry.route.distance}</div>
+                      </div>
+                    </li>`).join("")}
+                </ul>
+            </div>`;
+
+        L.popup(e.latlng,
+            {
+                content: html,
+                maxWidth: 300,
+                minWidth: 300
+            }).openOn(this.map);
     }
 
     redraw(routes) {
         routes = routes.filter((route) => route.active);
         // First reset map before adding routes and controls.
         this.mainFeatureGroup.clearLayers();
+        this.routePolylines = [];
         if (this.placesControl) {
             this.map.removeControl(this.placesControl);
         }
@@ -47,18 +133,23 @@ class HeatmapDrawer {
                 countryFeatureGroups.set(countryCode, L.featureGroup());
             }
 
-            const polyline = L.Polyline.fromEncoded(route.encodedPolyline).getLatLngs();
-            L.polyline(polyline, {
-                color: this.config.polylineColor,
-                weight: 1.5,
-                opacity: 0.5,
-                smoothFactor: 1,
-                overrideExisting: true,
-                detectColors: true,
-            }).addTo(countryFeatureGroups.get(countryCode));
+            const polylineLatLngs = L.Polyline
+                .fromEncoded(route.encodedPolyline)
+                .getLatLngs();
+
+            const polyline = L.polyline(
+                polylineLatLngs,
+                this.defaultPolylineStyle
+            ).addTo(countryFeatureGroups.get(countryCode));
+
+            this.routePolylines.push({
+                route: route,
+                polyline: polyline,
+                latlngs: polylineLatLngs
+            });
 
             if (mostActiveState === state) {
-                L.polyline(polyline).addTo(fitMapBoundsFeatureGroup);
+                L.polyline(polylineLatLngs).addTo(fitMapBoundsFeatureGroup);
             }
         });
 
@@ -81,14 +172,14 @@ class HeatmapDrawer {
 }
 
 export class Heatmap {
-    constructor(wrapper) {
+    constructor(wrapper, modalManager) {
         this.wrapper = wrapper;
         this.heatmap = wrapper.querySelector('[data-leaflet-routes]');
         this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
         this.config = JSON.parse(this.heatmap.getAttribute('data-heatmap-config'));
 
         this.filterManager = new FilterManager(wrapper, new DataTableStorage());
-        this.drawer = new HeatmapDrawer(this.heatmap, this.config);
+        this.drawer = new HeatmapDrawer(this.heatmap, this.config, modalManager);
     }
 
     async render() {

@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Tests\Domain\Dashboard\Widget;
+
+use App\Domain\Dashboard\Widget\PeakPowerOutputsWidget;
+use App\Domain\Dashboard\Widget\WidgetConfiguration;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Tests\ContainerTestCase;
+
+class PeakPowerOutputsWidgetTest extends ContainerTestCase
+{
+    private PeakPowerOutputsWidget $widget;
+
+    public function testItShouldRenderNull(): void
+    {
+        $this->assertNull($this->widget->render(
+            now: SerializableDateTime::fromString('2025-12-02'),
+            configuration: WidgetConfiguration::empty()
+        ));
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->widget = $this->getContainer()->get(PeakPowerOutputsWidget::class);
+    }
+}

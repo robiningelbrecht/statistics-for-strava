@@ -148,6 +148,7 @@ Laps: Varv
 'Last 90 days': 'Senaste 90 dagarna'
 'Last effort': 'Senaste prestation'
 'Last maintenance': 'Senast underhållet'
+Lifetime: Lifetime
 'Load (CTL/ATL)': 'Belastning (CTL/ATL)'
 'Loading data...': 'Laddar datan...'
 Loading...: Laddar...
@@ -170,6 +171,7 @@ Metrics: Mätvärden
 Mon: Må
 Monday: Måndag
 Monotony: Monotoni
+Monthly: Monthly
 'Monthly stats': Sammanställning
 Morning: Morgon
 'Most recent activities': 'Nyligen loggade aktiviteter'
@@ -303,6 +305,7 @@ To: Till
 'Training Load Analysis (6 week history)': 'Analys av träningsbelastning (6 veckors historik)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Träningsmonotoni - Förhållandet mellan genomsnittlig daglig belastning och standardavvikelse. Indikerar träningsvariation.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Träningsstress Balans (Form) – Skillnaden mellan träningsform (CTL) och utmattning (ATL). Återspeglar hur redo du är att prestera.'
+'Training goals': 'Training goals'
 Tue: Tis
 Tuesday: Tisdag
 Unspecified: Ospecificerad
@@ -323,10 +326,10 @@ Walks: Promenader
 'We detected following issues': 'Vi har upptäckt följande problem'
 Wed: Ons
 Wednesday: Onsdag
+Weekly: Weekly
 'Weekly Strain': Veckobelastning
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Veckobelastning - Produkten av veckovis träningsbelastning och monotoni. Övergripande träningsstress.'
 'Weekly TRIMP': 'TRIMP Veckovis'
-'Weekly goals': 'Weekly goals'
 'Weekly stats': 'Sammanställning Veckovis'
 Weight: Weight
 'Weight Training': Viktträning
@@ -338,6 +341,7 @@ Wheelchair: Rullstol
 Workout: Träning
 'Workout type': Träningsform
 Year: År
+Yearly: Yearly
 'Yearly stats': Årsstatistik
 Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du har registrerat träningspass i {numberOfCountriesWithWorkouts} olika länder, vilket motsvarar {percentage} av alla länder 🌍'

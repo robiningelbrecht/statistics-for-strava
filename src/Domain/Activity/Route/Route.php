@@ -4,24 +4,37 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Route;
 
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Integration\Geocoding\Nominatim\Location;
+use App\Infrastructure\Time\Format\DateAndTimeFormat;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class Route implements \JsonSerializable
+final class Route implements \JsonSerializable
 {
+    private UnitSystem $unitSystem;
+    private DateAndTimeFormat $dateAndTimeFormat;
+
     private function __construct(
-        private string $encodedPolyline,
-        private Location $location,
-        private SportType $sportType,
-        private bool $isCommute,
-        private ?WorkoutType $workoutType,
-        private SerializableDateTime $on,
+        private readonly ActivityId $activityId,
+        private readonly string $name,
+        private readonly Kilometer $distance,
+        private readonly string $encodedPolyline,
+        private readonly Location $location,
+        private readonly SportType $sportType,
+        private readonly bool $isCommute,
+        private readonly ?WorkoutType $workoutType,
+        private readonly SerializableDateTime $on,
     ) {
     }
 
     public static function create(
+        ActivityId $activityId,
+        string $name,
+        Kilometer $distance,
         string $encodedPolyline,
         Location $location,
         SportType $sportType,
@@ -30,6 +43,9 @@ final readonly class Route implements \JsonSerializable
         SerializableDateTime $on,
     ): self {
         return new self(
+            activityId: $activityId,
+            name: $name,
+            distance: $distance,
             encodedPolyline: $encodedPolyline,
             location: $location,
             sportType: $sportType,
@@ -37,6 +53,21 @@ final readonly class Route implements \JsonSerializable
             workoutType: $workoutType,
             on: $on
         );
+    }
+
+    public function getActivityId(): ActivityId
+    {
+        return $this->activityId;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getDistance(): Kilometer
+    {
+        return $this->distance;
     }
 
     public function getEncodedPolyline(): string
@@ -69,6 +100,14 @@ final readonly class Route implements \JsonSerializable
         return $this->on;
     }
 
+    public function enrichWithUnitSystemAndDateTimeFormat(
+        UnitSystem $unitSystem,
+        DateAndTimeFormat $dateAndTimeFormat,
+    ): void {
+        $this->unitSystem = $unitSystem;
+        $this->dateAndTimeFormat = $dateAndTimeFormat;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -76,8 +115,24 @@ final readonly class Route implements \JsonSerializable
     {
         $state = $this->getLocation()->getState();
 
+        $distance = $this->getDistance();
+        if (isset($this->unitSystem)) {
+            $distance = $distance->toUnitSystem($this->unitSystem);
+        }
+        $distanceInScalar = $distance->toFloat();
+        $precision = $distanceInScalar < 100 ? 1 : 0;
+        $distance = number_format(round($distanceInScalar, $precision), $precision, '.', ' ').$distance->getSymbol();
+
+        $startDate = isset($this->dateAndTimeFormat) ?
+            $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal()) :
+            $this->getOn()->format('d-m-Y');
+
         return [
             'active' => true,
+            'id' => $this->getActivityId(),
+            'startDate' => $startDate,
+            'distance' => $distance,
+            'name' => $this->getName(),
             'location' => [
                 'countryCode' => $this->getLocation()->getCountryCode(),
                 'state' => $state ? str_replace(['"', '\''], '', $state) : null, // Fix for ISSUE-287

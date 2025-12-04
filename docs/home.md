@@ -17,9 +17,8 @@
 
 # :camera_flash: Showcase
 
-<div class="alert info">
-    This app is in no way affiliated with or part of the official Strava software suite.
-</div>
+> [!NOTE]
+> **Note** This app is in no way affiliated with or part of the official Strava software suite.
 
 [Showcase](https://www.youtube.com/embed/UfVLXqAtlX8 ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
@@ -40,10 +39,7 @@
 * **User badges** - Shareable badges you can embed on your website, blog, or forum profiles
 * **PWA support** - Use it like a native app on your phone
 
-<div class="alert warning">
-    <ul>
-        <li><strong>Backup before updates</strong>: Always backup your Docker volumes before upgrading.</li>
-        <li><strong>Stay up-to-date</strong>: Make sure you're running the latest version for the best experience.</li>
-        <li><strong>Check the release notes</strong>: Always check the release notes to verify if there are any breaking changes.</li>
-    </ul>
-</div>
+> [!WARNING]
+> * **Backup before updates**: Always backup your Docker volumes before upgrading.
+> * **Stay up-to-date**: Make sure you're running the latest version for the best experience.
+> * **Check the release notes**: Always check the release notes to verify if there are any breaking changes.

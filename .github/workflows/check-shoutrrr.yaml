@@ -1,0 +1,49 @@
+name: Check Shoutrrr version
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Extract current version from Dockerfile
+        id: local
+        run: |
+          RAW=$(grep -oP 'ARG SHOUTRRR_VERSION="?(\K[0-9.]+)(?="?)' docker/app/Dockerfile)
+          CURRENT="v$RAW"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+
+      - name: Get latest release tag from upstream
+        id: upstream
+        run: |
+          LATEST=$(curl -s https://api.github.com/repos/nicholas-fedor/shoutrrr/releases/latest | jq -r '.tag_name')
+          echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+
+      - name: Create issue
+        if: steps.local.outputs.current != steps.upstream.outputs.latest
+        run: |
+          ISSUE=$(gh issue list --search "Shoutrrr ${{ steps.upstream.outputs.latest }}" --json number --jq '.[0].number')
+
+          if [[ -z "$ISSUE" ]]; then
+            ISSUE_LINK=$(gh issue create \
+            --title "$TITLE" \
+            --assignee "$ASSIGNEES" \
+            --label "$LABELS" \
+            --body "$BODY")
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: "New Shoutrrr release available: ${{ steps.upstream.outputs.latest }}"
+          BODY: |
+            A new version of **Shoutrrr** has been released.
+      
+            - Current version: ${{ steps.local.outputs.current }}
+            - Latest version: ${{ steps.upstream.outputs.latest }}
+          LABELS: tech debt
+          ASSIGNEES: robiningelbrecht

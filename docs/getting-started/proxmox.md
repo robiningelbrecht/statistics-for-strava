@@ -3,13 +3,11 @@
 A lot of people use [Proxmox](https://www.proxmox.com/en/) to drive their self-hosted environment.
 This guide will help you set up Statistics for Strava on a Proxmox virtual machine.
 
-<div class="alert important">
-Thanks to <a href="https://github.com/apachelance" target="_blank">apachelance</a> for creating this guide and sharing it with the community.
-</div>
+> [!IMPORTANT]
+> Thanks to <a href="https://github.com/apachelance" target="_blank">apachelance</a> for creating this guide and sharing it with the community.
 
-<div class="alert info">
-Depending on your docker installation or plugin, you may need to use either <i>docker compose</i> or <i>docker-compose</i>.
-</div>
+> [!NOTE]
+> **Note** Depending on your docker installation or plugin, you may need to use either _docker compose_ or _docker-compose_.
 
 ### Create a privileged Proxmox container using the UI
 
@@ -89,7 +87,5 @@ docker-compose stop
 docker-compose start
 ```
 
-<div class="alert success">
-You're all set :partying_face:! You can now <a href="/#/getting-started/installation?id=import-and-build-statistics">import and build</a> your statistics. 
-</div>
-
+> [!TIP]
+> You're all set :partying_face:! You can now <a href="/#/getting-started/installation?id=import-and-build-statistics">import and build</a> your statistics.
