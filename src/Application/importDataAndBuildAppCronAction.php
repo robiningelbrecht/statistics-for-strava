@@ -10,9 +10,12 @@ use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[WithMutex(lockName: 'importDataOrBuildApp')]
 final readonly class importDataAndBuildAppCronAction implements RunnableCronAction
 {
     use ProvideConsoleIntro;
@@ -21,6 +24,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         private CommandBus $commandBus,
         private ResourceUsage $resourceUsage,
         private AppUrl $appUrl,
+        private Mutex $mutex,
     ) {
     }
 
@@ -42,8 +46,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
     public function run(SymfonyStyle $output): void
     {
         $this->outputConsoleIntro($output);
-
         $this->resourceUsage->startTimer();
+        $this->mutex->acquireLock('importDataAndBuildAppCronAction');
 
         $this->commandBus->dispatch(new RunImport(
             output: $output,
@@ -51,13 +55,13 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         $this->commandBus->dispatch(new RunBuild(
             output: $output,
         ));
-
         $this->commandBus->dispatch(new SendNotification(
             title: 'Build successful',
             message: sprintf('New import and build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
             tags: ['+1'],
             actionUrl: $this->appUrl
         ));
+        $this->mutex->releaseLock();
 
         $this->resourceUsage->stopTimer();
         $output->writeln(sprintf(

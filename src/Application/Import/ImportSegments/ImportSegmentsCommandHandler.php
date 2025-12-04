@@ -18,6 +18,8 @@ use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -26,6 +28,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
+#[WithMutex(lockName: 'importDataOrBuildApp')]
 final readonly class ImportSegmentsCommandHandler implements CommandHandler
 {
     public function __construct(
@@ -36,6 +39,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private OptInToSegmentDetailsImport $optInToSegmentDetailsImport,
         private Strava $strava,
         private Countries $countries,
+        private Mutex $mutex,
     ) {
     }
 
@@ -131,6 +135,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             $segment = $this->segmentRepository->find($segmentId);
             try {
                 $stravaSegment = $this->strava->getSegment($segmentId);
+                $this->mutex->heartbeat();
+
                 $segment->updatePolyline(
                     EncodedPolyline::fromOptionalString(
                         $stravaSegment['map']['polyline'] ?? null
@@ -147,6 +153,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                         $segment->getName()
                     )
                 );
+
                 ++$delta;
             } catch (StravaRateLimitHasBeenReached $exception) {
                 $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));

@@ -5,6 +5,8 @@ namespace App\Console;
 use App\Application\RunImport\RunImport;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
@@ -16,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
+#[WithMutex(lockName: 'importDataOrBuildApp')]
 #[AsCommand(name: 'app:strava:import-data', description: 'Import Strava data')]
 final class ImportStravaDataConsoleCommand extends Command
 {
@@ -25,6 +28,7 @@ final class ImportStravaDataConsoleCommand extends Command
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
         private readonly LoggerInterface $logger,
+        private readonly Mutex $mutex,
     ) {
         parent::__construct();
     }
@@ -32,9 +36,10 @@ final class ImportStravaDataConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
+        $this->resourceUsage->startTimer();
+        $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
         $this->outputConsoleIntro($output);
-        $this->resourceUsage->startTimer();
 
         $this->commandBus->dispatch(new RunImport(
             output: $output,

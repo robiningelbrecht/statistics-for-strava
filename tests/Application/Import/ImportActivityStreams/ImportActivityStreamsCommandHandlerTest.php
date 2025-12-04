@@ -74,5 +74,10 @@ class ImportActivityStreamsCommandHandlerTest extends ContainerTestCase
 
         $this->commandBus = $this->getContainer()->get(CommandBus::class);
         $this->strava = $this->getContainer()->get(Strava::class);
+
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
+        );
     }
 }

@@ -6,7 +6,9 @@ use App\Application\AppUrl;
 use App\Console\BuildAppConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -58,7 +60,12 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
             commandBus: $this->commandBus,
             resourceUsage: new FixedResourceUsage(),
             appUrl: AppUrl::fromString('https://localhost'),
-            logger: $this->logger
+            logger: $this->logger,
+            mutex: new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'lockName',
+            )
         );
     }
 
