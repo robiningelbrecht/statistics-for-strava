@@ -25,6 +25,8 @@ use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -37,6 +39,7 @@ use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
+#[WithMutex(lockName: 'importDataOrBuildApp')]
 final readonly class ImportActivitiesCommandHandler implements CommandHandler
 {
     public function __construct(
@@ -53,6 +56,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private StravaDataImportStatus $stravaDataImportStatus,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private ActivityImageDownloader $activityImageDownloader,
+        private Mutex $mutex,
     ) {
     }
 
@@ -265,6 +269,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     return;
                 }
             }
+
+            $this->mutex->heartbeat();
             ++$delta;
         }
 

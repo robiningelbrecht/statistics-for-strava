@@ -11,10 +11,13 @@ use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
+#[WithMutex(lockName: 'importDataOrBuildApp')]
 final readonly class ImportActivityStreamsCommandHandler implements CommandHandler
 {
     public function __construct(
@@ -22,6 +25,7 @@ final readonly class ImportActivityStreamsCommandHandler implements CommandHandl
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityStreamRepository $activityStreamRepository,
+        private Mutex $mutex,
         private Clock $clock,
     ) {
     }
@@ -36,9 +40,8 @@ final readonly class ImportActivityStreamsCommandHandler implements CommandHandl
         foreach ($this->activityRepository->findActivityIdsThatNeedStreamImport() as $activityId) {
             $stravaStreams = [];
             try {
-                $stravaStreams = $this->strava->getAllActivityStreams(
-                    $activityId
-                );
+                $stravaStreams = $this->strava->getAllActivityStreams($activityId);
+                $this->mutex->heartbeat();
             } catch (StravaRateLimitHasBeenReached $exception) {
                 $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 

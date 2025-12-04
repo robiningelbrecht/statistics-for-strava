@@ -30,6 +30,7 @@ use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -51,6 +52,7 @@ use App\Tests\Domain\Segment\SegmentBuilder;
 use App\Tests\Domain\Segment\SegmentEffort\SegmentEffortBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\Infrastructure\FileSystem\provideAssertFileSystem;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -81,10 +83,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 
         $this->assertMatchesTextSnapshot((string) $output);
         $this->assertFileSystemWritesAreEmpty($this->getContainer()->get('file.storage'));
-
-        $this->assertEmpty(
-            $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
-        );
     }
 
     public function testHandleWithTooManyRequests(): void
@@ -337,6 +335,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(StravaDataImportStatus::class),
             $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             $this->getContainer()->get(ActivityImageDownloader::class),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'importDataOrBuildApp',
+            )
         );
 
         $output = new SpyOutput();
@@ -378,6 +381,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(StravaDataImportStatus::class),
             NumberOfNewActivitiesToProcessPerImport::fromInt(1),
             $this->getContainer()->get(ActivityImageDownloader::class),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'importDataOrBuildApp',
+            )
         );
 
         $output = new SpyOutput();
@@ -424,6 +432,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(StravaDataImportStatus::class),
             $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             $this->getContainer()->get(ActivityImageDownloader::class),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'importDataOrBuildApp',
+            )
         );
 
         $output = new SpyOutput();
@@ -450,6 +463,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
+        );
+
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             $this->strava = $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(OpenMeteo::class),
@@ -464,6 +482,11 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(StravaDataImportStatus::class),
             $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             $this->getContainer()->get(ActivityImageDownloader::class),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'importDataOrBuildApp',
+            )
         );
     }
 }

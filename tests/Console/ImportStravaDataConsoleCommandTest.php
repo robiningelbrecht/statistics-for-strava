@@ -5,8 +5,10 @@ namespace App\Tests\Console;
 use App\Console\ImportStravaDataConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -56,6 +58,11 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             $this->commandBus = $this->createMock(CommandBus::class),
             $this->resourceUsage = new FixedResourceUsage(),
             $this->logger = $this->createMock(LoggerInterface::class),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'lockName',
+            )
         );
     }
 

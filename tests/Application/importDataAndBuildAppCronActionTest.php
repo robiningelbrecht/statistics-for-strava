@@ -5,10 +5,12 @@ namespace App\Tests\Application;
 use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpySymfonyStyleOutput;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -40,6 +42,11 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
             $this->commandBus = new SpyCommandBus(),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: 'lockName',
+            )
         );
     }
 }

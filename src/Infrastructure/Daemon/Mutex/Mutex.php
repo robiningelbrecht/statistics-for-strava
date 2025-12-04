@@ -20,12 +20,13 @@ final class Mutex
     public function __construct(
         private readonly Connection $connection,
         private readonly Clock $clock,
+        private readonly string $lockName,
     ) {
     }
 
-    public function acquire(string $lockName, string $lockAcquiredBy): void
+    public function acquireLock(string $lockAcquiredBy): void
     {
-        $key = $this->key($lockName);
+        $key = $this->key($this->lockName);
         $now = $this->clock->getCurrentDateTimeImmutable()->getTimestamp();
 
         $this->connection->beginTransaction();
@@ -40,7 +41,7 @@ final class Mutex
             $this->connection->commit();
 
             // Register release on shutdown.
-            $this->registerShutdownOnce($lockName);
+            $this->registerShutdownOnce();
 
             return;
         }
@@ -53,34 +54,34 @@ final class Mutex
             $this->updateLockRow($key, $now, $lockAcquiredBy);
             $this->connection->commit();
             // Register release on shutdown.
-            $this->registerShutdownOnce($lockName);
+            $this->registerShutdownOnce();
 
             return;
         }
 
         $this->connection->rollBack();
-        throw new LockIsAlreadyAcquired(name: $lockName, lockAcquiredBy: $lockAcquiredBy);
+        throw new LockIsAlreadyAcquired(name: $this->lockName, lockAcquiredBy: $lockAcquiredBy);
     }
 
-    public function heartbeat(string $lockName): void
+    public function heartbeat(): void
     {
-        $key = $this->key($lockName);
+        $key = $this->key($this->lockName);
         $row = $this->connection->fetchOne(
             'SELECT `value` FROM KeyValue WHERE `key` = :key',
             ['key' => $key]
         );
 
         if (false === $row) {
-            throw new \RuntimeException(sprintf('Cannot heartbeat: lock "%s" does not exist', $lockName));
+            throw new \RuntimeException(sprintf('Cannot heartbeat: lock "%s" does not exist', $this->lockName));
         }
 
         $now = $this->clock->getCurrentDateTimeImmutable()->getTimestamp();
         $this->updateLockRow($key, $now, Json::decode($row)[self::LOCK_ACQUIRED_BY_KEY]);
     }
 
-    public function release(string $lockName): void
+    public function releaseLock(): void
     {
-        $key = $this->key($lockName);
+        $key = $this->key($this->lockName);
         $this->connection->executeStatement(
             'DELETE FROM KeyValue WHERE `key` = :key',
             ['key' => $key]
@@ -101,17 +102,17 @@ final class Mutex
         );
     }
 
-    private function registerShutdownOnce(string $lockName): void
+    private function registerShutdownOnce(): void
     {
-        if (isset(self::$shutdownRegistered[$lockName])) {
+        if (isset(self::$shutdownRegistered[$this->lockName])) {
             return;
         }
 
-        self::$shutdownRegistered[$lockName] = true;
+        self::$shutdownRegistered[$this->lockName] = true;
         if ('test' === $_ENV['APP_ENV']) {
             return;
         }
-        register_shutdown_function(fn () => $this->release($lockName)); // @codeCoverageIgnore
+        register_shutdown_function(fn () => $this->releaseLock()); // @codeCoverageIgnore
     }
 
     private function key(string $lockName): string

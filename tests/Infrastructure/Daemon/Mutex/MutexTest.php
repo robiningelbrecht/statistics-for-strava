@@ -12,32 +12,21 @@ class MutexTest extends ContainerTestCase
 {
     private Mutex $mutex;
 
-    public function testAcquireWhenNewLock(): void
+    public function testAcquireLockWhenNewLock(): void
     {
-        $this->mutex->acquire(
-            lockName: 'import',
-            lockAcquiredBy: 'myProcess'
-        );
-
-        $this->mutex->release('import');
-
-        $this->mutex->acquire(
-            lockName: 'import',
-            lockAcquiredBy: 'myProcess'
-        );
+        $this->mutex->acquireLock('myProcess');
+        $this->mutex->releaseLock();
+        $this->mutex->acquireLock('myProcess');
 
         $this->expectExceptionObject(new LockIsAlreadyAcquired(
             name: 'import',
             lockAcquiredBy: 'myProcess',
         ));
 
-        $this->mutex->acquire(
-            lockName: 'import',
-            lockAcquiredBy: 'myProcess'
-        );
+        $this->mutex->acquireLock('myProcess');
     }
 
-    public function testAcquireWhenLockIsStale(): void
+    public function testAcquireLockWhenLockIsStale(): void
     {
         $this->getConnection()->executeStatement('INSERT INTO KeyValue (key, value) VALUES (:key, :value)', [
             'key' => 'lock.import',
@@ -47,10 +36,7 @@ class MutexTest extends ContainerTestCase
             ]),
         ]);
 
-        $this->mutex->acquire(
-            lockName: 'import',
-            lockAcquiredBy: 'myProcess'
-        );
+        $this->mutex->acquireLock('myProcess');
         $this->addToAssertionCount(1);
     }
 
@@ -64,24 +50,21 @@ class MutexTest extends ContainerTestCase
             ]),
         ]);
 
-        $this->mutex->heartbeat('import');
+        $this->mutex->heartbeat();
 
         $this->expectExceptionObject(new LockIsAlreadyAcquired(
             name: 'import',
             lockAcquiredBy: 'myProcess',
         ));
 
-        $this->mutex->acquire(
-            lockName: 'import',
-            lockAcquiredBy: 'myProcess'
-        );
+        $this->mutex->acquireLock('myProcess');
     }
 
     public function testHeartBeatWithUnexistingLock(): void
     {
         $this->expectExceptionObject(new \RuntimeException('Cannot heartbeat: lock "import" does not exist'));
 
-        $this->mutex->heartbeat('import');
+        $this->mutex->heartbeat();
     }
 
     #[\Override]
@@ -90,8 +73,9 @@ class MutexTest extends ContainerTestCase
         parent::setUp();
 
         $this->mutex = new Mutex(
-            $this->getConnection(),
-            PausedClock::fromString('2025-11-01 10:00:00')
+            connection: $this->getConnection(),
+            clock: PausedClock::fromString('2025-11-01 10:00:00'),
+            lockName: 'import',
         );
     }
 }

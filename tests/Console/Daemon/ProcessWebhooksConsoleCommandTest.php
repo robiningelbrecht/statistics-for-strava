@@ -8,10 +8,12 @@ use App\Console\Daemon\ProcessWebhooksConsoleCommand;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -65,6 +67,11 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
                 $this->commandBus = new SpyCommandBus(),
                 new FixedResourceUsage(),
                 AppUrl::fromString('http://localhost'),
+                new Mutex(
+                    connection: $this->getConnection(),
+                    clock: PausedClock::fromString('2025-12-04'),
+                    lockName: 'importDataOrBuildApp',
+                )
             )
         );
     }
