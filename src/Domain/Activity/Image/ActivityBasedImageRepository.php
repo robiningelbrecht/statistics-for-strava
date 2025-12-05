@@ -2,7 +2,7 @@
 
 namespace App\Domain\Activity\Image;
 
-use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
+use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;

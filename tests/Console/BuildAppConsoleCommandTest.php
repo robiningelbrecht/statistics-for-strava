@@ -2,7 +2,7 @@
 
 namespace App\Tests\Console;
 
-use App\BuildApp\AppUrl;
+use App\Application\AppUrl;
 use App\Console\BuildAppConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;

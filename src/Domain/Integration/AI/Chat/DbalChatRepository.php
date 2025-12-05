@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Chat;
 
-use App\BuildApp\ProfilePictureUrl;
+use App\Application\ProfilePictureUrl;
 use App\Domain\Athlete\AthleteRepository;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Time\Clock\Clock;

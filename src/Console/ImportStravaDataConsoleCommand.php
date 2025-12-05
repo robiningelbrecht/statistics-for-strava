@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Domain\Strava\ImportStravaData\ImportStravaData;
+use App\Application\Import\ImportStravaData\ImportStravaData;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;

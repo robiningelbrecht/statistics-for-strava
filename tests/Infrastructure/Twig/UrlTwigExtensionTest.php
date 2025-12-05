@@ -2,7 +2,7 @@
 
 namespace App\Tests\Infrastructure\Twig;
 
-use App\BuildApp\AppUrl;
+use App\Application\AppUrl;
 use App\Domain\Activity\Image\ImageOrientation;
 use App\Infrastructure\Twig\StringTwigExtension;
 use App\Infrastructure\Twig\SvgsTwigExtension;

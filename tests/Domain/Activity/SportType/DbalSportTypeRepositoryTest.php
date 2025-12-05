@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Activity\SportType;
 
-use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
+use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;

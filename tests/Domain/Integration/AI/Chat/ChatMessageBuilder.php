@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Integration\AI\Chat;
 
-use App\BuildApp\ProfilePictureUrl;
+use App\Application\ProfilePictureUrl;
 use App\Domain\Integration\AI\Chat\ChatMessage;
 use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
