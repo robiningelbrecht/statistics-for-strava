@@ -32,14 +32,19 @@
                                 <div class="flex items-center gap-x-0.5 text-sm text-grey-900">
                                     <div>{{ svg(trainingGoal.getType().getSvgIcon(), 'size-4') }}</div>
                                     {% set presicion = trainingGoal.getType() == enum('App\\Domain\\Dashboard\\Widget\\TrainingGoals\\TrainingGoalType').MOVING_TIME ? 1 : 0 %}
-                                    <div>{{ trainingGoal.getLabel() }} - {{ calculatedtrainingGoal.absolute|renderMeasurement(presicion) }}</div>
+                                    {% set leftToDo = calculatedtrainingGoal.progressLeftToDo %}
+                                    {% if not leftToDo.isZeroOrLower() %}
+                                        <div title="{{ leftToDo.toFloat()|formatNumber(presicion) }}{{ leftToDo.getSymbol() }} left">{{ trainingGoal.getLabel() }} - {{ calculatedtrainingGoal.absoluteProgress|renderMeasurement(presicion) }}</div>
+                                    {% else %}
+                                        <div>{{ trainingGoal.getLabel() }} - {{ calculatedtrainingGoal.absoluteProgress|renderMeasurement(presicion) }}</div>
+                                    {% endif %}
                                 </div>
                                 <div class="text-sm text-grey-900">{{ "Goal"|trans }}: {{ trainingGoal.getGoal()|renderMeasurement(0) }}</div>
                             </div>
                             <div class="w-full rounded-full bg-gray-200">
-                                {% if calculatedtrainingGoal.relative > 0 %}
-                                    <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relative) }}%">
-                                        {{ calculatedtrainingGoal.relative }}%
+                                {% if calculatedtrainingGoal.relativeProgress > 0 %}
+                                    <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relativeProgress) }}%">
+                                        {{ calculatedtrainingGoal.relativeProgress }}%
                                     </div>
                                 {% else %}
                                     <div class="rounded-full p-0.5 text-center text-xs leading-none font-medium text-grey-900" style="width: 10%">

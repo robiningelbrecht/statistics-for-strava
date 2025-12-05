@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Measurement\Length;
 
-use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Metric;
+use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class Kilometer implements ConvertableToMeter, Metric
 {
-    use MeasurementFromFloat;
+    use ProvideMeasurementUnit;
+
     public const float FACTOR_TO_MILES = 0.621371;
 
     public function getSymbol(): string

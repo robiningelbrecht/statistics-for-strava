@@ -49,22 +49,21 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
 
     public function testHandleWithInsufficientPermissions(): void
     {
-        $this->importStravaDataCommandHandler = new ImportStravaDataCommandHandler(
-            $this->getContainer()->get(Strava::class),
-            $this->commandBus = new SpyCommandBus(),
-            $this->migrationRunner = $this->createMock(MigrationRunner::class),
-            new UnwritablePermissionChecker(),
-            $this->connection = $this->createMock(Connection::class),
-        );
-
         $this->migrationRunner
             ->expects($this->never())
             ->method('run');
 
         $this->connection
             ->expects($this->never())
-            ->method('executeStatement')
-            ->with('VACUUM');
+            ->method('executeStatement');
+
+        $this->importStravaDataCommandHandler = new ImportStravaDataCommandHandler(
+            $this->getContainer()->get(Strava::class),
+            $this->commandBus = new SpyCommandBus(),
+            $this->migrationRunner,
+            new UnwritablePermissionChecker(),
+            $this->connection,
+        );
 
         $output = new SpyOutput();
         $this->importStravaDataCommandHandler->handle(new ImportStravaData(

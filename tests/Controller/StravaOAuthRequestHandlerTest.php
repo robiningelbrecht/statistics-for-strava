@@ -34,6 +34,10 @@ class StravaOAuthRequestHandlerTest extends ContainerTestCase
             ->expects($this->once())
             ->method('verifyAccessToken');
 
+        $this->client
+            ->expects($this->never())
+            ->method('post');
+
         $this->assertEquals(
             new RedirectResponse('/', \Symfony\Component\HttpFoundation\Response::HTTP_FOUND),
             $this->stravaOAuthRequestHandler->handle(new Request(

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Measurement\Velocity;
 
-use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
+use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class SecPer100Meter implements Pace
 {
-    use MeasurementFromFloat;
+    use ProvideMeasurementUnit;
 
     public function getSymbol(): string
     {

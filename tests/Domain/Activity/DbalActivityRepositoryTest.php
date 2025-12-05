@@ -20,7 +20,6 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class DbalActivityRepositoryTest extends ContainerTestCase
@@ -29,7 +28,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
     private ActivityRepository $activityRepository;
     private ActivityWithRawDataRepository $activityWithRawDataRepository;
-    private MockObject $eventBus;
 
     public function testItShouldSaveAndFind(): void
     {
@@ -366,11 +364,9 @@ class DbalActivityRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->eventBus = $this->createMock(EventBus::class);
-
         $this->activityRepository = new DbalActivityRepository(
             $this->getConnection(),
-            $this->eventBus
+            $this->createStub(EventBus::class)
         );
         $this->activityWithRawDataRepository = new DbalActivityWithRawDataRepository(
             $this->getConnection(),

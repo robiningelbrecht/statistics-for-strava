@@ -59,6 +59,7 @@ final readonly class TrainingGoalsWidget implements Widget
         $month = Month::fromDate($now);
         $year = Year::fromDate($now);
 
+        /** @var non-empty-list<TrainingGoal> $trainingGoals */
         foreach ($trainingGoalsPerPeriod as $period => $trainingGoals) {
             [$from, $to] = match (TrainingGoalPeriod::from($period)) {
                 TrainingGoalPeriod::WEEKLY => [$week->getFrom(), $week->getTo()],
@@ -99,8 +100,9 @@ final readonly class TrainingGoalsWidget implements Widget
 
                 $calculatedGoalsPerPeriod[$period][] = [
                     'trainingGoal' => $trainingGoal,
-                    'absolute' => $convertedProgress,
-                    'relative' => min(100, round($convertedProgress->toFloat() / $trainingGoal->getGoal()->toFloat() * 100)),
+                    'absoluteProgress' => $convertedProgress,
+                    'relativeProgress' => min(100, round($convertedProgress->toFloat() / $trainingGoal->getGoal()->toFloat() * 100)),
+                    'progressLeftToDo' => $trainingGoal->getGoal()->subtract($convertedProgress),
                 ];
             }
         }
