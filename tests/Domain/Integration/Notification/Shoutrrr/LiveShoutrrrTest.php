@@ -17,7 +17,7 @@ class LiveShoutrrrTest extends TestCase
 
     public function testSend(): void
     {
-        $process = $this->createMock(Process::class);
+        $process = $this->createStub(Process::class);
         $process->method('run');
         $process->method('isSuccessful')->willReturn(true);
 
@@ -34,7 +34,7 @@ class LiveShoutrrrTest extends TestCase
 
     public function testSendWhenFailure(): void
     {
-        $process = $this->createMock(Process::class);
+        $process = $this->createStub(Process::class);
         $process->method('run');
         $process->method('isSuccessful')->willReturn(false);
         $process->method('getErrorOutput')->willReturn('Error!');

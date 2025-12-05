@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Measurement;
 
-trait MeasurementFromFloat
+trait ProvideMeasurementUnit
 {
     private function __construct(
         private readonly float $value,
@@ -49,5 +49,14 @@ trait MeasurementFromFloat
     public function jsonSerialize(): float
     {
         return $this->toFloat();
+    }
+
+    public function subtract(Unit $value): self
+    {
+        if (self::class !== $value::class) {
+            throw new \InvalidArgumentException(sprintf('Cannot subtract value of type "%s" with type "%s"', self::class, $value::class));
+        }
+
+        return self::from($this->toFloat() - $value->toFloat());
     }
 }

@@ -17,6 +17,7 @@ use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private FilesystemOperator $buildStorage;
-    private MockObject $neuronAIAgent;
+    private Stub $neuronAIAgent;
     private MockObject $chatRepository;
 
     public function testHandle(): void
@@ -126,7 +127,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         parent::setUp();
 
         $this->buildStorage = $this->getContainer()->get('build.storage');
-        $this->neuronAIAgent = $this->createMock(AgentInterface::class);
+        $this->neuronAIAgent = $this->createStub(AgentInterface::class);
         $this->chatRepository = $this->createMock(ChatRepository::class);
     }
 }

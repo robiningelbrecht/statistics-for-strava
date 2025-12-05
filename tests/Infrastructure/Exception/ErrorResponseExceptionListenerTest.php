@@ -20,7 +20,7 @@ class ErrorResponseExceptionListenerTest extends TestCase
     public function testOnKernelExceptionWithInvalidArgumentException(): void
     {
         $event = new ExceptionEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             0,
             new \InvalidArgumentException()
@@ -35,7 +35,7 @@ class ErrorResponseExceptionListenerTest extends TestCase
     public function testOnKernelExceptionWithAnyException(): void
     {
         $event = new ExceptionEvent(
-            $this->createMock(HttpKernelInterface::class),
+            $this->createStub(HttpKernelInterface::class),
             new Request(),
             0,
             new \RuntimeException('A message')

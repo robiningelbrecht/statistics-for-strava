@@ -3,16 +3,11 @@
 namespace App\Tests\Console;
 
 use App\Tests\ContainerTestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class ConsoleCommandTestCase extends ContainerTestCase
 {
-    private MockObject $input;
-    private MockObject $output;
     private Application $application;
 
     #[\Override]
@@ -20,8 +15,6 @@ abstract class ConsoleCommandTestCase extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->input = $this->createMock(InputInterface::class);
-        $this->output = $this->createMock(OutputInterface::class);
         $this->application = new Application();
     }
 
@@ -35,16 +28,6 @@ abstract class ConsoleCommandTestCase extends ContainerTestCase
         }
 
         return $command;
-    }
-
-    public function getInput()
-    {
-        return $this->input;
-    }
-
-    public function getOutput()
-    {
-        return $this->output;
     }
 
     abstract protected function getConsoleCommand(): Command;

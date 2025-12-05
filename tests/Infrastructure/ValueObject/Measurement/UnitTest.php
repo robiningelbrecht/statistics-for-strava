@@ -37,6 +37,20 @@ class UnitTest extends TestCase
         );
     }
 
+    public function testSubtract(): void
+    {
+        $this->assertEquals(
+            Kilometer::from(10),
+            Kilometer::from(220)->subtract(Kilometer::from(210))
+        );
+    }
+
+    public function testSubtractItShouldThrow(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Cannot subtract value of type "App\Infrastructure\ValueObject\Measurement\Length\Kilometer" with type "App\Infrastructure\ValueObject\Measurement\Length\Mile"'));
+        Kilometer::from(220)->subtract(Mile::from(210));
+    }
+
     public static function provideConversions(): array
     {
         return [

@@ -11,14 +11,13 @@ class SystemEventBusTest extends KernelTestCase
 {
     use MatchesSnapshots;
 
-    private EventDispatcherInterface $eventDispatcher;
-
     public function testPublishEvents(): void
     {
-        $eventBus = new SystemEventBus($this->eventDispatcher);
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $eventBus = new SystemEventBus($eventDispatcher);
 
         $event = new ADomainEvent();
-        $this->eventDispatcher
+        $eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
             ->with(
@@ -52,7 +51,5 @@ class SystemEventBusTest extends KernelTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
     }
 }

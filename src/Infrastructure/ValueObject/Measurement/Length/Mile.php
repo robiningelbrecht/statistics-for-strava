@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Infrastructure\ValueObject\Measurement\Length;
 
 use App\Infrastructure\ValueObject\Measurement\Imperial;
-use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
+use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
 final readonly class Mile implements ConvertableToMeter, Imperial
 {
-    use MeasurementFromFloat;
+    use ProvideMeasurementUnit;
 
     public const float FACTOR_TO_KM = 1.60934;
 

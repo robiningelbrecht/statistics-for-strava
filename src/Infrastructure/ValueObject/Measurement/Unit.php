@@ -19,4 +19,6 @@ interface Unit extends \Stringable, \JsonSerializable
     public function toFloat(): float;
 
     public function toInt(): int;
+
+    public function subtract(Unit $value): self;
 }
