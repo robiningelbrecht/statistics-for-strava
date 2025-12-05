@@ -76,5 +76,23 @@
         "sportType": "Run",
         "distanceInMeter": 42194,
         "timeInSeconds": 1
+    },
+    {
+        "activityId": "activity-Run-50000-1",
+        "sportType": "Run",
+        "distanceInMeter": 50000,
+        "timeInSeconds": 1
+    },
+    {
+        "activityId": "activity-Run-100000-1",
+        "sportType": "Run",
+        "distanceInMeter": 100000,
+        "timeInSeconds": 1
+    },
+    {
+        "activityId": "activity-Run-160934-1",
+        "sportType": "Run",
+        "distanceInMeter": 160934,
+        "timeInSeconds": 1
     }
 ]
