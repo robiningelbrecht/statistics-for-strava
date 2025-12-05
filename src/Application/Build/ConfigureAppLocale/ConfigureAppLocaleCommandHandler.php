@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\ConfigureAppLocale;
+namespace App\Application\Build\ConfigureAppLocale;
 
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;

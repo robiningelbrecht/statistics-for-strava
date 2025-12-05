@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Application\Import\ImportStravaData\ImportStravaData;
+use App\Application\RunImport\RunImport;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
@@ -36,7 +36,7 @@ final class ImportStravaDataConsoleCommand extends Command
         $this->outputConsoleIntro($output);
         $this->resourceUsage->startTimer();
 
-        $this->commandBus->dispatch(new ImportStravaData(
+        $this->commandBus->dispatch(new RunImport(
             output: $output,
         ));
 

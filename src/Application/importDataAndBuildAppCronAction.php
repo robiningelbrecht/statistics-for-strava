@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Application\Build\BuildApp\BuildApp;
-use App\Application\Import\ImportStravaData\ImportStravaData;
+use App\Application\RunBuild\RunBuild;
+use App\Application\RunImport\RunImport;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -45,10 +45,10 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
 
         $this->resourceUsage->startTimer();
 
-        $this->commandBus->dispatch(new ImportStravaData(
+        $this->commandBus->dispatch(new RunImport(
             output: $output,
         ));
-        $this->commandBus->dispatch(new BuildApp(
+        $this->commandBus->dispatch(new RunBuild(
             output: $output,
         ));
 

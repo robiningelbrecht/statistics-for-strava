@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Build\BuildApp;
+namespace App\Tests\Application\RunBuild;
 
-use App\Application\Build\BuildApp\BuildApp;
-use App\Application\Build\BuildApp\BuildAppCommandHandler;
+use App\Application\RunBuild\RunBuild;
+use App\Application\RunBuild\RunBuildCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -26,11 +26,11 @@ use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class BuildAppCommandHandlerTest extends ContainerTestCase
+class RunBuildCommandHandlerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private BuildAppCommandHandler $buildAppCommandHandler;
+    private RunBuildCommandHandler $buildAppCommandHandler;
     private CommandBus $commandBus;
     private MockObject $migrationRunner;
     private MockObject $logger;
@@ -54,7 +54,7 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
             ->willReturn(true);
 
         $output = new SpyOutput();
-        $this->buildAppCommandHandler->handle(new BuildApp(
+        $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
@@ -69,7 +69,7 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
             ->willReturn(true);
 
         $output = new SpyOutput();
-        $this->buildAppCommandHandler->handle(new BuildApp(
+        $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
 
@@ -84,7 +84,7 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
             ->willReturn(false);
 
         $output = new SpyOutput();
-        $this->buildAppCommandHandler->handle(new BuildApp(
+        $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
 
@@ -96,7 +96,7 @@ class BuildAppCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->buildAppCommandHandler = new BuildAppCommandHandler(
+        $this->buildAppCommandHandler = new RunBuildCommandHandler(
             commandBus: $this->commandBus = new SpyCommandBus(),
             stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),

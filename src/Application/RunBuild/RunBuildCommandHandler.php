@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildApp;
+namespace App\Application\RunBuild;
 
 use App\Application\Build\BuildActivitiesHtml\BuildActivitiesHtml;
 use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;
@@ -20,8 +20,8 @@ use App\Application\Build\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
 use App\Application\Build\BuildPhotosHtml\BuildPhotosHtml;
 use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
 use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
-use App\Application\ConfigureAppColors\ConfigureAppColors;
-use App\Application\ConfigureAppLocale\ConfigureAppLocale;
+use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
+use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -29,7 +29,7 @@ use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
 
-final readonly class BuildAppCommandHandler implements CommandHandler
+final readonly class RunBuildCommandHandler implements CommandHandler
 {
     public function __construct(
         private CommandBus $commandBus,
@@ -41,7 +41,7 @@ final readonly class BuildAppCommandHandler implements CommandHandler
 
     public function handle(Command $command): void
     {
-        assert($command instanceof BuildApp);
+        assert($command instanceof RunBuild);
 
         $output = $command->getOutput();
         if (!$this->migrationRunner->isAtLatestVersion()) {

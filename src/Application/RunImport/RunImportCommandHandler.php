@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\ImportStravaData;
+namespace App\Application\RunImport;
 
 use App\Application\Import\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
 use App\Application\Import\CalculateBestStreamAverages\CalculateBestStreamAverages;
@@ -28,7 +28,7 @@ use Doctrine\DBAL\Connection;
 use League\Flysystem\UnableToCreateDirectory;
 use League\Flysystem\UnableToWriteFile;
 
-final readonly class ImportStravaDataCommandHandler implements CommandHandler
+final readonly class RunImportCommandHandler implements CommandHandler
 {
     public function __construct(
         private Strava $strava,
@@ -41,7 +41,7 @@ final readonly class ImportStravaDataCommandHandler implements CommandHandler
 
     public function handle(Command $command): void
     {
-        assert($command instanceof ImportStravaData);
+        assert($command instanceof RunImport);
 
         $output = $command->getOutput();
         try {

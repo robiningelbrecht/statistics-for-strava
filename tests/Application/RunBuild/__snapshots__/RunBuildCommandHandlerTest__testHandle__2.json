@@ -1,10 +1,10 @@
 [
     {
-        "commandName": "App\\Application\\ConfigureAppLocale\\ConfigureAppLocale",
+        "commandName": "App\\Application\\Build\\ConfigureAppLocale\\ConfigureAppLocale",
         "payload": []
     },
     {
-        "commandName": "App\\Application\\ConfigureAppColors\\ConfigureAppColors",
+        "commandName": "App\\Application\\Build\\ConfigureAppColors\\ConfigureAppColors",
         "payload": []
     },
     {
