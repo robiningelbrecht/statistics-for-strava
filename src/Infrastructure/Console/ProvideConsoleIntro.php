@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Console;
 
-use App\BuildApp\AppVersion;
+use App\Application\AppVersion;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\Console\Helper\Helper;

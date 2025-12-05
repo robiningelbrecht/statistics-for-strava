@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Chat;
 
-use App\BuildApp\ProfilePictureUrl;
+use App\Application\ProfilePictureUrl;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 use NeuronAI\Chat\Enums\MessageRole;

@@ -1,6 +1,6 @@
 [
     {
-        "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
+        "commandName": "App\\Application\\Import\\ImportStravaData\\ImportStravaData",
         "payload": {
             "output": {}
         }

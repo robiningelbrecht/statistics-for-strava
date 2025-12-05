@@ -2,8 +2,8 @@
 
 namespace App\Console;
 
-use App\BuildApp\AppUrl;
-use App\BuildApp\BuildApp\BuildApp;
+use App\Application\AppUrl;
+use App\Application\Build\BuildApp\BuildApp;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;

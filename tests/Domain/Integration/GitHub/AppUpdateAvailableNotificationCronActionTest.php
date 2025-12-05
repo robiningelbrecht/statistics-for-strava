@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Integration\GitHub;
 
-use App\BuildApp\AppVersion;
+use App\Application\AppVersion;
 use App\Domain\Integration\GitHub\AppUpdateAvailableNotificationCronAction;
 use App\Domain\Integration\GitHub\GitHub;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;

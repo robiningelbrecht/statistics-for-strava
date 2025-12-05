@@ -2,8 +2,8 @@
 
 namespace App\Tests\Domain\Strava;
 
+use App\Application\Import\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;

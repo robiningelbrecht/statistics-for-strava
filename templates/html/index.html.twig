@@ -30,7 +30,7 @@
         {% set menuLinkClasses = 'flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100' %}
         {% set collapsedMenuLinkClasses = 'group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs' %}
         {% set menulinkSvgIconClasses = 'shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900' %}
-        {% set isSymfonyRouter = router == enum('App\\BuildApp\\Router').SYMFONY %}
+        {% set isSymfonyRouter = router == enum('App\\Application\\Router').SYMFONY %}
         <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
             <ul class="space-y-1 pb-2">
                 <li>

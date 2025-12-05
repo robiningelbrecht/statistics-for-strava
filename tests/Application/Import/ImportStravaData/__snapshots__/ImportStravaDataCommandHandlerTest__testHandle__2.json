@@ -1,0 +1,86 @@
+[
+    {
+        "commandName": "App\\Application\\Import\\ImportAthlete\\ImportAthlete",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportActivities\\ImportActivities",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportActivitySplits\\ImportActivitySplits",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportActivityLaps\\ImportActivityLaps",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportActivityStreams\\ImportActivityStreams",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportSegments\\ImportSegments",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportChallenges\\ImportChallenges",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateBestStreamAverages\\CalculateBestStreamAverages",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateStreamValueDistribution\\CalculateStreamValueDistribution",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateNormalizedPower\\CalculateNormalizedPower",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateCombinedStreams\\CalculateCombinedStreams",
+        "payload": {
+            "output": {}
+        }
+    }
+]

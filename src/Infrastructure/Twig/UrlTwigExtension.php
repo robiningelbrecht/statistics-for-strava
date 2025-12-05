@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Twig;
 
-use App\BuildApp\AppUrl;
+use App\Application\AppUrl;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\Image\ImageOrientation;
 use App\Domain\Segment\Segment;

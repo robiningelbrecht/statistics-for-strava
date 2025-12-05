@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\GitHub;
 
-use App\BuildApp\AppVersion;
+use App\Application\AppVersion;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;

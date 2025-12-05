@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\SportType;
 
-use App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes;
+use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Infrastructure\Repository\DbalRepository;
 use Doctrine\DBAL\Connection;
 
