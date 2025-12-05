@@ -1,6 +1,6 @@
 [
     {
-        "commandName": "App\\Application\\Build\\BuildApp\\BuildApp",
+        "commandName": "App\\Application\\RunBuild\\RunBuild",
         "payload": {
             "output": {}
         }

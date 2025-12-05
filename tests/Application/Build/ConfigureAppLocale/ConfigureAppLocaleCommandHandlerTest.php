@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Application\ConfigureAppLocale;
+namespace App\Tests\Application\Build\ConfigureAppLocale;
 
 use App\Application\Build\BuildIndexHtml\BuildIndexHtml;
-use App\Application\ConfigureAppLocale\ConfigureAppLocale;
-use App\Application\ConfigureAppLocale\ConfigureAppLocaleCommandHandler;
+use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
+use App\Application\Build\ConfigureAppLocale\ConfigureAppLocaleCommandHandler;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Localisation\Locale;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;

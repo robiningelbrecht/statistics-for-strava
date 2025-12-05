@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Application\AppUrl;
-use App\Application\Build\BuildApp\BuildApp;
+use App\Application\RunBuild\RunBuild;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -39,7 +39,7 @@ final class BuildAppConsoleCommand extends Command
 
         $this->outputConsoleIntro($output);
 
-        $this->commandBus->dispatch(new BuildApp(
+        $this->commandBus->dispatch(new RunBuild(
             output: $output,
         ));
 

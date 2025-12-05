@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildApp;
+namespace App\Application\RunImport;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final readonly class BuildApp extends DomainCommand
+final readonly class RunImport extends DomainCommand
 {
     public function __construct(
         private SymfonyStyle $output,

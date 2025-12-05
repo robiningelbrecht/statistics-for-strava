@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Import\ImportStravaData;
+namespace App\Tests\Application\RunImport;
 
-use App\Application\Import\ImportStravaData\ImportStravaData;
-use App\Application\Import\ImportStravaData\ImportStravaDataCommandHandler;
+use App\Application\RunImport\RunImport;
+use App\Application\RunImport\RunImportCommandHandler;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
@@ -19,11 +19,11 @@ use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class ImportStravaDataCommandHandlerTest extends ContainerTestCase
+class RunImportCommandHandlerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private ImportStravaDataCommandHandler $importStravaDataCommandHandler;
+    private RunImportCommandHandler $importStravaDataCommandHandler;
     private CommandBus $commandBus;
     private MockObject $migrationRunner;
     private MockObject $connection;
@@ -40,7 +40,7 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
             ->with('VACUUM');
 
         $output = new SpyOutput();
-        $this->importStravaDataCommandHandler->handle(new ImportStravaData(
+        $this->importStravaDataCommandHandler->handle(new RunImport(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
@@ -57,7 +57,7 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
             ->expects($this->never())
             ->method('executeStatement');
 
-        $this->importStravaDataCommandHandler = new ImportStravaDataCommandHandler(
+        $this->importStravaDataCommandHandler = new RunImportCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->commandBus = new SpyCommandBus(),
             $this->migrationRunner,
@@ -66,7 +66,7 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
         );
 
         $output = new SpyOutput();
-        $this->importStravaDataCommandHandler->handle(new ImportStravaData(
+        $this->importStravaDataCommandHandler->handle(new RunImport(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
@@ -75,7 +75,7 @@ class ImportStravaDataCommandHandlerTest extends ContainerTestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->importStravaDataCommandHandler = new ImportStravaDataCommandHandler(
+        $this->importStravaDataCommandHandler = new RunImportCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->commandBus = new SpyCommandBus(),
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
