@@ -1,3 +1,16 @@
+# [v4.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.1) - 2025-12-06
+
+## What's Changed
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1481
+* ISSUE #1482: Upgrade to Symfony 8 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1483
+* ISSUE #1484: Show route info on heatmap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1485
+* ISSUE #1473: Update to stable xdebug version by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1487
+* ISSUE #1486: Add 50k, 100k, and 100miles to running best efforts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1489
+* ISSUE #1488: Add km/time/distance left to the training goals widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1490
+* ISSUE #1493: New Shoutrrr release available: v0.13.0 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1494
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.0...v4.2.1
+
 # [v4.2.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.0) - 2025-12-01
 
 > [!WARNING]  
