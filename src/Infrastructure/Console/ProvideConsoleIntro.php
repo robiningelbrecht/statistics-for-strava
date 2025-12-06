@@ -9,6 +9,7 @@ use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpKernel\Kernel;
 
 trait ProvideConsoleIntro
 {
@@ -48,7 +49,7 @@ trait ProvideConsoleIntro
 
         $output->writeln(str_repeat('-', $maxStringLength));
         $output->newLine();
-        $output->text(sprintf('Runtime: PHP %s (%s) on %s', PHP_VERSION, PHP_SAPI, PHP_OS));
+        $output->text(sprintf('Runtime: PHP %s (%s) - Symfony %s - %s', PHP_VERSION, PHP_SAPI, Kernel::VERSION, PHP_OS));
         $output->newLine();
         $output->text('Configuration files:');
         $output->writeln($configFilesToProcess);
