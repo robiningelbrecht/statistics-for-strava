@@ -45,5 +45,7 @@ jobs:
       
             - Current version: ${{ steps.local.outputs.current }}
             - Latest version: ${{ steps.upstream.outputs.latest }}
+            
+            https://github.com/nicholas-fedor/shoutrrr/releases/tag/${{ steps.upstream.outputs.latest }}
           LABELS: tech debt
           ASSIGNEES: robiningelbrecht
