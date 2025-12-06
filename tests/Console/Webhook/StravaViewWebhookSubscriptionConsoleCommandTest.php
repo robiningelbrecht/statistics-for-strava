@@ -52,7 +52,7 @@ class StravaViewWebhookSubscriptionConsoleCommandTest extends ConsoleCommandTest
             $strava,
             $this->logger,
         );
-        $command->run($this->createMock(Input::class), $output);
+        $command->run($this->createStub(Input::class), $output);
 
         $this->assertStringContainsString('No webhook subscriptions found', $output);
     }

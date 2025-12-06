@@ -3,3 +3,5 @@
 
 //Theappwillautomaticallyimportandbuildwhenreceivingactivityevents.
 
+//TheconfiguredcallbackURLishttps://localhost/strava/webhook
+
