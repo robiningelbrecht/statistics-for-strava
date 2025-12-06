@@ -2,8 +2,8 @@
 
 namespace App\Tests\Console\Daemon;
 
-use App\BuildApp\AppUrl;
-use App\BuildApp\importDataAndBuildAppCronAction;
+use App\Application\AppUrl;
+use App\Application\importDataAndBuildAppCronAction;
 use App\Console\Daemon\ProcessWebhooksConsoleCommand;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;

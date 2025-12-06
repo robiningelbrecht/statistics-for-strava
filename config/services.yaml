@@ -106,6 +106,26 @@ services:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
 
+    App\Application\Import\ImportActivities\ActivityVisibilitiesToImport:
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("import.activityVisibilitiesToImport")']
+
+    App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
+      factory: [ null, 'fromInt' ]
+      arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
+
+    App\Application\Import\ImportActivities\ActivitiesToSkipDuringImport:
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
+
+    App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore:
+      factory: [ null, 'fromOptionalString' ]
+      arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
+
+    App\Application\Import\ImportSegments\OptInToSegmentDetailsImport:
+      factory: [ null, 'fromBool' ]
+      arguments: [ '@=app_config("import.optInToSegmentDetailImport", false)' ]
+
     NeuronAI\AgentInterface:
         class: App\Domain\Integration\AI\NeuronAIAgent
 
@@ -164,22 +184,6 @@ services:
         factory: [ null, 'fromScalarArray' ]
         arguments: ['@=app_config("metrics.eddington", [])']
 
-    App\Application\Import\ImportActivities\ActivityVisibilitiesToImport:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("import.activityVisibilitiesToImport")']
-
-    App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
-        factory: [ null, 'fromInt' ]
-        arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
-
-    App\Application\Import\ImportActivities\ActivitiesToSkipDuringImport:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
-
-    App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore:
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
-
     App\Domain\Activity\SportType\SportTypesSortingOrder:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.sportTypesSortingOrder", [])']
@@ -210,10 +214,6 @@ services:
     App\Domain\Gear\Maintenance\GearMaintenanceConfig:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gearMaintenance", [])']
-
-    App\Application\Import\ImportSegments\OptInToSegmentDetailsImport:
-        factory: [ null, 'fromBool' ]
-        arguments: ['@=app_config("import.optInToSegmentDetailImport", false)']
 
     App\Domain\Strava\Webhook\WebhookConfig:
       factory: [ null, 'fromArray' ]

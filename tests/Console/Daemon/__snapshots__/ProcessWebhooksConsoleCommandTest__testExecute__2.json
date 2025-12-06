@@ -1,12 +1,12 @@
 [
     {
-        "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
+        "commandName": "App\\Application\\RunImport\\RunImport",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\BuildApp\\BuildApp\\BuildApp",
+        "commandName": "App\\Application\\RunBuild\\RunBuild",
         "payload": {
             "output": {}
         }

@@ -2,7 +2,7 @@
 
 namespace App\Tests\Console\Webhook;
 
-use App\BuildApp\AppUrl;
+use App\Application\AppUrl;
 use App\Console\Webhook\StravaCreateWebhookSubscriptionConsoleCommand;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\Webhook\WebhookConfig;
