@@ -1,5 +1,5 @@
 import {DataTableStorage, FilterManager} from "../filters";
-import { pointToLineDistance, point, lineString } from "../../libraries/turf";
+import {pointToLineDistance, point, lineString} from "../../libraries/turf";
 
 class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -31,18 +31,7 @@ class HeatmapDrawer {
         }
         this.map.on("click", (e) => this._handleMapClick(e));
         this.map.on("popupclose", () => this._resetRouteStyles());
-        this.map.on("popupopen", (ev) => {
-            const container = ev.popup.getElement();
-            if (!container) return;
-
-            container.querySelectorAll('a[data-model-content-url]').forEach(node => {
-                node.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.modalManager.open(node.getAttribute('data-model-content-url'));
-                });
-            });
-        });
+        this.map.on("popupopen", (e) => this._handlePopupOpen(e));
     }
 
     _resetRouteStyles() {
@@ -50,6 +39,19 @@ class HeatmapDrawer {
             entry.polyline.setStyle(this.defaultPolylineStyle);
         });
     }
+
+    _handlePopupOpen(e) {
+        const container = e.popup.getElement();
+        if (!container) return;
+
+        container.querySelectorAll('a[data-model-content-url]').forEach(node => {
+            node.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.modalManager.open(node.getAttribute('data-model-content-url'));
+            });
+        });
+    };
 
     _handleMapClick(e) {
         const clickPoint = point([e.latlng.lng, e.latlng.lat]);
@@ -84,7 +86,10 @@ class HeatmapDrawer {
                  <ul class="divide-default divide-y divide-gray-200">
                     ${nearby.map(entry => `
                      <li class="py-2">
-                      <a href="#" class="block truncate font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html"> ${entry.route.name} </a>
+                      <a href="#" title="${entry.route.name}" class="block truncate font-medium text-blue-600 hover:underline" 
+                        data-model-content-url="/activity/${entry.route.id}.html">
+                        ${entry.route.name}
+                      </a>
                       <div class="flex items-center justify-between text-xs text-gray-500">
                         <div>${entry.route.startDate}</div>
                         <div>${entry.route.distance}</div>
