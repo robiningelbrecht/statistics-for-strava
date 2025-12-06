@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
-use App\BuildApp\importDataAndBuildAppCronAction;
+use App\Application\importDataAndBuildAppCronAction;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
