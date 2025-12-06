@@ -42,13 +42,15 @@ final class StravaCreateWebhookSubscriptionConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
+        $callbackUrl = Url::fromString(rtrim((string) $this->appUrl, '/').StravaWebhookRequestHandler::STRAVA_WEBHOOKS_ENDPOINT);
         $this->strava->createWebhookSubscription(
-            callbackUrl: Url::fromString(rtrim((string) $this->appUrl, '/').StravaWebhookRequestHandler::STRAVA_WEBHOOKS_ENDPOINT),
+            callbackUrl: $callbackUrl,
             verifyToken: $this->webhookConfig->getVerifyToken(),
         );
 
         $output->success('Webhook subscription created successfully!');
         $output->comment('The app will automatically import and build when receiving activity events.');
+        $output->comment(sprintf('The configured callback URL is %s', $callbackUrl));
 
         return Command::SUCCESS;
     }

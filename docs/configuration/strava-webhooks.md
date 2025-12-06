@@ -9,19 +9,38 @@ When enabled, your app will receive real-time notifications from Strava whenever
 - An existing activity is updated
 - An activity is deleted
 
-The app automatically runs the import and build processes in the background when receiving activity events.
+These will trigger the import and build processes in the background.
 
 > [!IMPORTANT]
 > **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
 
+## Enable Strava webbooks
+
+To start using webhooks, you first need to configure them in `config.yaml`.
+
+```yaml
+import:
+  webhooks:
+    enabled: true
+    # Will be used by Strava's validation request for security.
+    verifyToken: 'a-secret-token-chosen-by-you'
+```
 
 ## Configure a webhook subscription
 
-TODO
+Next, you need to tell Strava where it should send its notifications. 
+You can do this by running the following command:
 
 ```bash
 docker compose exec app bin/console app:strava:webhooks-create
 ```
+
+If everything is configured correctly, you should see an output similar to:
+
+![Strava webhook subscription](../assets/images/strava-webhook-subscription.png)
+
+At this point, Strava will begin sending notifications to your Statistics for Strava instance
+All incoming webhooks will be logged to a separate log file located at `storage/files/logs`
 
 ## View webhook subscriptions
 
@@ -40,15 +59,13 @@ This will display:
 
 ## Unsubscribe from webhooks
 
-To delete your webhook subscription:
+To delete your webhook subscription and stop receiving notifications, run
 
 ```bash
 docker compose exec app bin/console app:strava:webhooks-unsubscribe <subscription-id>
 ```
 
-Replace `<subscription-id>` with the ID from the view command.
-
-You can also get the subscription ID from the view command:
+Replace `<subscription-id>` with the ID obtained from `app:strava:webhooks-view` command.
 
 ```bash
 # View subscription

@@ -604,6 +604,14 @@ class StravaTest extends TestCase
 
     public function testGetWebhookSubscription(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -625,6 +633,14 @@ class StravaTest extends TestCase
 
     public function testCreateWebhookSubscription(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -651,6 +667,14 @@ class StravaTest extends TestCase
 
     public function testDeleteWebhookSubscription(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
         $this->client
             ->expects($this->once())
             ->method('request')
