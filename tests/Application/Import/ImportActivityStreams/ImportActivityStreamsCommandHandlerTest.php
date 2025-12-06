@@ -67,6 +67,45 @@ class ImportActivityStreamsCommandHandlerTest extends ContainerTestCase
         );
     }
 
+    public function testHandleOnClientException(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(100);
+        $this->strava->triggerExceptionOnNextCall();
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->withStartDateTime(SerializableDateTime::fromString('2025-01-01'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(5))
+                ->withStartDateTime(SerializableDateTime::fromString('2025-01-10'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(6))
+                ->withStartDateTime(SerializableDateTime::fromString('2025-01-09'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(7))
+                ->withStartDateTime(SerializableDateTime::fromString('2025-01-03'))
+                ->build(),
+            []
+        ));
+
+        $this->commandBus->dispatch(new ImportActivityStreams($output));
+        $this->assertMatchesTextSnapshot($output);
+    }
+
     #[\Override]
     protected function setUp(): void
     {
