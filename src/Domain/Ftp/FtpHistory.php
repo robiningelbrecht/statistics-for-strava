@@ -107,7 +107,7 @@ final class FtpHistory implements SupportsAITooling
      */
     public static function fromArray(array $values): self
     {
-        if (empty($values[self::CYCLING_KEY]) && empty($values[self::RUNNING_KEY])) {
+        if (!array_key_exists(self::CYCLING_KEY, $values) && !array_key_exists(self::RUNNING_KEY, $values)) {
             // This is still an old FTP history when we didn't
             // differentiate between cycling and running yet. Make sure it's BC.
             $values[self::CYCLING_KEY] = $values;
