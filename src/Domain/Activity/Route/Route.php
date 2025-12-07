@@ -133,10 +133,10 @@ final class Route implements \JsonSerializable
             'id' => $this->getActivityId(),
             'startDate' => $startDate,
             'distance' => $distance,
-            'name' => Escape::htmlSpecialChars(str_replace(['"', '\''], '', $this->getName())), // Fix for ISSUE-1498
+            'name' => Escape::forJsonEncode($this->getName()),
             'location' => [
                 'countryCode' => $this->getLocation()->getCountryCode(),
-                'state' => $state ? str_replace(['"', '\''], '', $state) : null, // Fix for ISSUE-287
+                'state' => $state ? Escape::forJsonEncode($state) : null,
             ],
             'filterables' => [
                 'sportType' => $this->getSportType(),

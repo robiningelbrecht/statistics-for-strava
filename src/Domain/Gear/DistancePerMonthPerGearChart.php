@@ -71,7 +71,7 @@ final readonly class DistancePerMonthPerGearChart
         $unitSymbol = $this->unitSystem->distanceSymbol();
 
         foreach ($gears as $gear) {
-            $gearName = Escape::htmlSpecialChars($gear->getName());
+            $gearName = Escape::forJsonEncode($gear->getName());
             $distanceInLastThreeMonths = array_sum(array_slice($distancePerGearAndMonth[(string) $gear->getId()], -3, 3));
             $selectedSeries[$gearName] = $distanceInLastThreeMonths > 0;
 

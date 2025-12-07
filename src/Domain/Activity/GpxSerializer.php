@@ -54,10 +54,10 @@ final readonly class GpxSerializer
         $metadataNode->addChild('time', $activity->getStartDate()->format(self::DATE_TIME_FORMAT));
 
         $trkNode = $rootNode->addChild('trk');
-        $trkNode->addChild('name', Escape::htmlSpecialChars($activity->getName()));
+        $trkNode->addChild('name', Escape::forJsonEncode($activity->getName()));
         $trkNode->addChild('type', $activity->getSportType()->value);
         if ($description = $activity->getDescription()) {
-            $trkNode->addChild('desc', Escape::htmlSpecialChars($description));
+            $trkNode->addChild('desc', Escape::forJsonEncode($description));
         }
         $trksegNode = $trkNode->addChild('trkseg');
 

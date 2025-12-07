@@ -41,7 +41,7 @@ final readonly class MovingTimePerGearChart
             }
             $data[] = [
                 'value' => round($time / 3600),
-                'name' => Escape::htmlSpecialChars($gear->getName()),
+                'name' => Escape::forJsonEncode($gear->getName()),
                 'itemStyle' => [
                     'color' => Theme::getColorForGear($gear->getId()),
                 ],

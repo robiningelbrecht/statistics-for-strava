@@ -6,8 +6,10 @@ namespace App\Infrastructure\Serialization;
 
 final readonly class Escape
 {
-    public static function htmlSpecialChars(string $string): string
+    public static function forJsonEncode(string $string): string
     {
-        return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        return $string
+                |> (fn (string $value): string => str_replace(['"', '\''], '', $value))
+                |> (fn (string $value): string => htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
     }
 }
