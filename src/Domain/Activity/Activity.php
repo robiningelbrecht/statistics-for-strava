@@ -410,7 +410,7 @@ final class Activity implements SupportsAITooling
 
     public function getSanitizedName(): string
     {
-        return Escape::htmlSpecialChars($this->getName());
+        return Escape::forJsonEncode($this->getName());
     }
 
     public function updateName(string $name): self

@@ -126,7 +126,7 @@ final readonly class TrainingLoadChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('Daily TRIMP')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('Daily TRIMP')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 1,
@@ -137,7 +137,7 @@ final readonly class TrainingLoadChart
                 ],
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('Load (CTL/ATL)')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('Load (CTL/ATL)')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 0,
@@ -150,7 +150,7 @@ final readonly class TrainingLoadChart
                 ],
                 [
                     'type' => 'value',
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('Form (TSB)')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('Form (TSB)')),
                     'nameLocation' => 'middle',
                     'nameGap' => 35,
                     'gridIndex' => 0,
@@ -166,7 +166,7 @@ final readonly class TrainingLoadChart
             ],
             'series' => [
                 [
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('CTL (Fitness)')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('CTL (Fitness)')),
                     'type' => 'line',
                     'data' => $this->trainingMetrics->getCtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'smooth' => true,
@@ -175,7 +175,7 @@ final readonly class TrainingLoadChart
                     'yAxisIndex' => 1,
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('ATL (Fatigue)')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('ATL (Fatigue)')),
                     'type' => 'line',
                     'data' => $this->trainingMetrics->getAtlValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'smooth' => true,
@@ -184,7 +184,7 @@ final readonly class TrainingLoadChart
                     'yAxisIndex' => 1,
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('TSB (Form)')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('TSB (Form)')),
                     'type' => 'line',
                     'data' => $tsbValues,
                     'smooth' => true,
@@ -200,21 +200,21 @@ final readonly class TrainingLoadChart
                         'data' => [
                             [
                                 'yAxis' => 15,
-                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Taper sweet-spot (+15)'))],
+                                'label' => ['formatter' => Escape::forJsonEncode($this->translator->trans('Taper sweet-spot (+15)'))],
                             ],
                             [
                                 'yAxis' => -10,
-                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Build zone (–10)'))],
+                                'label' => ['formatter' => Escape::forJsonEncode($this->translator->trans('Build zone (–10)'))],
                             ],
                             [
                                 'yAxis' => -30,
-                                'label' => ['formatter' => Escape::htmlSpecialChars($this->translator->trans('Over-fatigued (–30)'))],
+                                'label' => ['formatter' => Escape::forJsonEncode($this->translator->trans('Over-fatigued (–30)'))],
                             ],
                         ],
                     ],
                 ],
                 [
-                    'name' => Escape::htmlSpecialChars($this->translator->trans('Daily TRIMP')),
+                    'name' => Escape::forJsonEncode($this->translator->trans('Daily TRIMP')),
                     'type' => 'bar',
                     'data' => $this->trainingMetrics->getTrimpValuesForXLastDays(self::NUMBER_OF_DAYS_TO_DISPLAY),
                     'itemStyle' => ['color' => '#FC4C02'],
