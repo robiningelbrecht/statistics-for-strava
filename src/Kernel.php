@@ -19,6 +19,7 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    #[\Override]
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
