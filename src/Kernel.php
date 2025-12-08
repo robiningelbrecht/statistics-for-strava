@@ -26,7 +26,7 @@ class Kernel extends BaseKernel
 
         $container->registerAttributeForAutoconfiguration(WithMutex::class, static function (ChildDefinition $definition, WithMutex $attribute): void {
             $definition->addTag('app.mutex', [
-                'mutex' => sprintf('mutex.%s', $attribute->getLockName()),
+                'mutex' => sprintf('mutex.%s', $attribute->getLockName()->value),
             ]);
         });
 

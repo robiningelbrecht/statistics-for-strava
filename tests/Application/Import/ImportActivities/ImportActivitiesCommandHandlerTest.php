@@ -30,6 +30,7 @@ use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
@@ -338,7 +339,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'importDataOrBuildApp',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
 
@@ -384,7 +385,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'importDataOrBuildApp',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
 
@@ -435,7 +436,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'importDataOrBuildApp',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
 
@@ -485,7 +486,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'importDataOrBuildApp',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
     }

@@ -8,6 +8,7 @@ use App\Console\Daemon\ProcessWebhooksConsoleCommand;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
@@ -70,7 +71,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
                 new Mutex(
                     connection: $this->getConnection(),
                     clock: PausedClock::fromString('2025-12-04'),
-                    lockName: 'importDataOrBuildApp',
+                    lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
                 )
             )
         );

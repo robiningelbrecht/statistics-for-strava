@@ -5,6 +5,7 @@ namespace App\Tests\Application;
 use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
@@ -45,7 +46,7 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'lockName',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
     }

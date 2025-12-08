@@ -5,6 +5,7 @@ namespace App\Tests\Console;
 use App\Console\ImportStravaDataConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
@@ -61,7 +62,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
-                lockName: 'lockName',
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
         );
     }
