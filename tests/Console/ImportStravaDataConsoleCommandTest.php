@@ -44,7 +44,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
 
         $this->migrationRunner
             ->expects($this->once())
-            ->method('isInitialized')
+            ->method('databaseIsInitialized')
             ->willReturn(true);
 
         $this->migrationRunner
@@ -77,7 +77,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
 
         $this->migrationRunner
             ->expects($this->once())
-            ->method('isInitialized')
+            ->method('databaseIsInitialized')
             ->willReturn(false);
 
         $this->migrationRunner
@@ -105,7 +105,6 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            $this->getConnection(),
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
         );
     }

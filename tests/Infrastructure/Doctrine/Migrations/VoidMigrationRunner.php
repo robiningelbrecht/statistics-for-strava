@@ -26,7 +26,7 @@ final class VoidMigrationRunner implements MigrationRunner
         $this->throwOnNextRun = false;
     }
 
-    public function isInitialized(): bool
+    public function databaseIsInitialized(): bool
     {
         return true;
     }

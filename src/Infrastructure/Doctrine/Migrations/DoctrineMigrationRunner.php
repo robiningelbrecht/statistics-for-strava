@@ -26,7 +26,7 @@ final readonly class DoctrineMigrationRunner implements MigrationRunner
         }
     }
 
-    public function isInitialized(): bool
+    public function databaseIsInitialized(): bool
     {
         $output = new MigrationConsoleOutput();
         ConsoleApplication::get()->doRun(
