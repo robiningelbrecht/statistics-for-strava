@@ -30,7 +30,7 @@ class MutexTest extends ContainerTestCase
     public function testAcquireLockWhenLockIsStale(): void
     {
         $this->getConnection()->executeStatement('INSERT INTO KeyValue (key, value) VALUES (:key, :value)', [
-            'key' => 'lock.import',
+            'key' => 'lock.importDataOrBuildApp',
             'value' => Json::encode([
                 'heartbeat' => 1,
                 'lockAcquiredBy' => 'myProcess',
