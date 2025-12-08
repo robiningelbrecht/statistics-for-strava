@@ -1,3 +1,14 @@
+# [v4.2.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.2) - 2025-12-08
+
+## What's Changed
+* ISSUE #1496: Heatmap show full name on hover activity name by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1497
+* ISSUE #1498: Fix double quotes in heatmap route names by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1500
+* ISSUE #1499: Fix BC bug for FtpHistory by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1501
+* ISSUE #1504: Replace Mutex lock names with enums by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1505
+* ISSUE #1503: Fix build time indication in notifications by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1506
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.1...v4.2.2
+
 # [v4.2.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.1) - 2025-12-06
 
 ## What's Changed
