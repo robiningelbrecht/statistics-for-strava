@@ -11,13 +11,14 @@ use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
-#[WithMutex(lockName: 'importDataOrBuildApp')]
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class ImportActivityStreamsCommandHandler implements CommandHandler
 {
     public function __construct(

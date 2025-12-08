@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Application\RunImport\RunImport;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
@@ -18,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
-#[WithMutex(lockName: 'importDataOrBuildApp')]
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[AsCommand(name: 'app:strava:import-data', description: 'Import Strava data')]
 final class ImportStravaDataConsoleCommand extends Command
 {

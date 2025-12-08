@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DependencyInjection\Mutex;
 
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use Symfony\Component\DependencyInjection\Argument\BoundArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -35,7 +36,7 @@ class AutowireWithMutexPass implements CompilerPassInterface
                     /** @var \ReflectionNamedType $type */
                     $type = $param->getType();
                     $definitionArguments[] = match ($param->getName()) {
-                        'lockName' => $lockName,
+                        'lockName' => LockName::from($lockName),
                         default => new Reference($type->getName()),
                     };
                 }

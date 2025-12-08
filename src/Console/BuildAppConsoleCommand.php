@@ -7,6 +7,7 @@ use App\Application\RunBuild\RunBuild;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
@@ -20,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
-#[WithMutex(lockName: 'importDataOrBuildApp')]
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[AsCommand(name: 'app:strava:build-files', description: 'Build Strava files')]
 final class BuildAppConsoleCommand extends Command
 {

@@ -10,12 +10,13 @@ use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
+use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[WithMutex(lockName: 'importDataOrBuildApp')]
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class importDataAndBuildAppCronAction implements RunnableCronAction
 {
     use ProvideConsoleIntro;

@@ -20,24 +20,26 @@ final class Mutex
     public function __construct(
         private readonly Connection $connection,
         private readonly Clock $clock,
-        private readonly string $lockName,
+        private readonly LockName $lockName,
     ) {
     }
 
     public function acquireLock(string $lockAcquiredBy): void
     {
-        $key = $this->key($this->lockName);
         $now = $this->clock->getCurrentDateTimeImmutable()->getTimestamp();
 
         $this->connection->beginTransaction();
 
         $row = $this->connection->fetchOne(
             'SELECT `value` FROM KeyValue WHERE `key` = :key',
-            ['key' => $key]
+            ['key' => $this->lockName->key()]
         );
 
         if (false === $row) {
-            $this->updateLockRow($key, $now, $lockAcquiredBy);
+            $this->updateLockRow(
+                timestamp: $now,
+                lockAcquiredBy: $lockAcquiredBy)
+            ;
             $this->connection->commit();
 
             // Register release on shutdown.
@@ -51,7 +53,10 @@ final class Mutex
         $isStale = $now - $heartbeat > self::STALE_THRESHOLD_IN_SECONDS;
 
         if ($isStale) {
-            $this->updateLockRow($key, $now, $lockAcquiredBy);
+            $this->updateLockRow(
+                timestamp: $now,
+                lockAcquiredBy: $lockAcquiredBy
+            );
             $this->connection->commit();
             // Register release on shutdown.
             $this->registerShutdownOnce();
@@ -60,35 +65,36 @@ final class Mutex
         }
 
         $this->connection->rollBack();
-        throw new LockIsAlreadyAcquired(name: $this->lockName, lockAcquiredBy: $lockAcquiredBy);
+        throw new LockIsAlreadyAcquired(name: $this->lockName->value, lockAcquiredBy: $lockAcquiredBy);
     }
 
     public function heartbeat(): void
     {
-        $key = $this->key($this->lockName);
         $row = $this->connection->fetchOne(
             'SELECT `value` FROM KeyValue WHERE `key` = :key',
-            ['key' => $key]
+            ['key' => $this->lockName->key()]
         );
 
         if (false === $row) {
-            throw new \RuntimeException(sprintf('Cannot heartbeat: lock "%s" does not exist', $this->lockName));
+            throw new \RuntimeException(sprintf('Cannot heartbeat: lock "%s" does not exist', $this->lockName->value));
         }
 
         $now = $this->clock->getCurrentDateTimeImmutable()->getTimestamp();
-        $this->updateLockRow($key, $now, Json::decode($row)[self::LOCK_ACQUIRED_BY_KEY]);
+        $this->updateLockRow(
+            timestamp: $now,
+            lockAcquiredBy: Json::decode($row)[self::LOCK_ACQUIRED_BY_KEY]
+        );
     }
 
     public function releaseLock(): void
     {
-        $key = $this->key($this->lockName);
         $this->connection->executeStatement(
             'DELETE FROM KeyValue WHERE `key` = :key',
-            ['key' => $key]
+            ['key' => $this->lockName->key()]
         );
     }
 
-    private function updateLockRow(string $key, int $timestamp, string $lockAcquiredBy): void
+    private function updateLockRow(int $timestamp, string $lockAcquiredBy): void
     {
         $value = Json::encode([
             self::HEARTBEAT_KEY => $timestamp,
@@ -98,25 +104,20 @@ final class Mutex
         $this->connection->executeStatement(
             'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)
              ON CONFLICT(key) DO UPDATE SET value = :value',
-            ['key' => $key, 'value' => $value]
+            ['key' => $this->lockName->key(), 'value' => $value]
         );
     }
 
     private function registerShutdownOnce(): void
     {
-        if (isset(self::$shutdownRegistered[$this->lockName])) {
+        if (isset(self::$shutdownRegistered[$this->lockName->value])) {
             return;
         }
 
-        self::$shutdownRegistered[$this->lockName] = true;
+        self::$shutdownRegistered[$this->lockName->value] = true;
         if ('test' === $_ENV['APP_ENV']) {
             return;
         }
         register_shutdown_function(fn () => $this->releaseLock()); // @codeCoverageIgnore
-    }
-
-    private function key(string $lockName): string
-    {
-        return 'lock.'.$lockName;
     }
 }
