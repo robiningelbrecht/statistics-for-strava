@@ -48,10 +48,6 @@ final class ImportStravaDataConsoleCommand extends Command
             $this->migrationRunner->run($output);
         }
 
-        // @codeCoverageIgnoreStart
-
-        // @codeCoverageIgnoreEnd
-
         $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
         $this->outputConsoleIntro($output);
