@@ -56,6 +56,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         $this->commandBus->dispatch(new RunBuild(
             output: $output,
         ));
+
+        $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(
             title: 'Build successful',
             message: sprintf('New import and build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
@@ -64,7 +66,6 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         ));
         $this->mutex->releaseLock();
 
-        $this->resourceUsage->stopTimer();
         $output->writeln(sprintf(
             '<info>%s</info>',
             $this->resourceUsage->format(),
