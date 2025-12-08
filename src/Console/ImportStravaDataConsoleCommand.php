@@ -44,6 +44,7 @@ final class ImportStravaDataConsoleCommand extends Command
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
         $this->resourceUsage->startTimer();
 
+        // @codeCoverageIgnoreStart
         try {
             $this->connection->fetchOne('SELECT 1 FROM KeyValue');
         } catch (TableNotFoundException) {
@@ -52,6 +53,7 @@ final class ImportStravaDataConsoleCommand extends Command
             // We need to run the migrations first for the mutex to work.
             $this->runMigrationRunner->run($output);
         }
+        // @codeCoverageIgnoreEnd
 
         $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
