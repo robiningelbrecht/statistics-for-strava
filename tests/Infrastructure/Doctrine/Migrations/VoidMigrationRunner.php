@@ -26,6 +26,11 @@ final class VoidMigrationRunner implements MigrationRunner
         $this->throwOnNextRun = false;
     }
 
+    public function isInitialized(): bool
+    {
+        return true;
+    }
+
     public function isAtLatestVersion(): bool
     {
         if ($this->throwOnNextRun) {

@@ -10,5 +10,7 @@ interface MigrationRunner
 {
     public function run(OutputInterface $output): void;
 
+    public function isInitialized(): bool;
+
     public function isAtLatestVersion(): bool;
 }

@@ -43,6 +43,11 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
             ->method('info');
 
         $this->migrationRunner
+            ->expects($this->once())
+            ->method('isInitialized')
+            ->willReturn(true);
+
+        $this->migrationRunner
             ->expects($this->never())
             ->method('run');
 
@@ -54,6 +59,36 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
 
         $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
         $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
+    }
+
+    public function testExecuteWhenNoMigrationsHaveRun(): void
+    {
+        $dispatchedCommands = [];
+        $this->commandBus
+            ->expects($this->atLeastOnce())
+            ->method('dispatch')
+            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands): void {
+                $dispatchedCommands[] = $command;
+            });
+
+        $this->logger
+            ->expects($this->atLeastOnce())
+            ->method('info');
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('isInitialized')
+            ->willReturn(false);
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('run');
+
+        $command = $this->getCommandInApplication('app:strava:import-data');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+        ]);
     }
 
     #[\Override]

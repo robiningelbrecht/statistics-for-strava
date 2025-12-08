@@ -26,6 +26,19 @@ final readonly class DoctrineMigrationRunner implements MigrationRunner
         }
     }
 
+    public function isInitialized(): bool
+    {
+        $output = new MigrationConsoleOutput();
+        ConsoleApplication::get()->doRun(
+            new ArrayInput([
+                'command' => 'doctrine:migrations:status',
+            ]),
+            $output
+        );
+
+        return !str_contains(str_replace(' ', '', $output->getDisplay()), 'Executed|0');
+    }
+
     public function isAtLatestVersion(): bool
     {
         $output = new MigrationConsoleOutput();
