@@ -8,6 +8,8 @@ use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 
 class MutexTest extends ContainerTestCase
 {
@@ -36,6 +38,17 @@ class MutexTest extends ContainerTestCase
                 'lockAcquiredBy' => 'myProcess',
             ]),
         ]);
+
+        $this->mutex->acquireLock('myProcess');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAcquireLockWhenMigrationsNotExecuted(): void
+    {
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = self::getContainer()->get(EntityManagerInterface::class);
+        $schemaTool = new SchemaTool($entityManager);
+        $schemaTool->dropDatabase();
 
         $this->mutex->acquireLock('myProcess');
         $this->addToAssertionCount(1);
