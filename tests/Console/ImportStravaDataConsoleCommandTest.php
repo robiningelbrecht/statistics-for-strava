@@ -26,7 +26,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
     private MockObject $commandBus;
     private ResourceUsage $resourceUsage;
     private MockObject $logger;
-    private MigrationRunner $migrationRunner;
+    private MockObject $migrationRunner;
 
     public function testExecute(): void
     {
