@@ -9,10 +9,14 @@ When enabled, your app will receive real-time notifications from Strava whenever
 - An existing activity is updated
 - An activity is deleted
 
-These will trigger the import and build processes in the background.
+These will trigger the import and build processes in the background. It may take a few minutes for all updates to fully complete.
 
 > [!IMPORTANT]
 > **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
+
+> [!TIP]
+> **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".
+Cloudflare may incorrectly flag Strava’s requests as bot traffic, causing the webhook integration to fail.
 
 ## Enable Strava webbooks
 
@@ -25,6 +29,9 @@ import:
     # Will be used by Strava's validation request for security.
     verifyToken: 'a-secret-token-chosen-by-you'
 ```
+
+> [!IMPORTANT]
+> **Important** Do not forget to restart your container after enabling the webhooks
 
 ## Configure a webhook subscription
 
@@ -99,5 +106,5 @@ be sure to:
 * Validate that your https://your-instance.com/strava/webhook responds with a 200 status to a validation request within 2 seconds. You can issue a request like the following to test:
 
 ```bash
-$ curl -X GET 'https://your-instance.com/strava/webhook?hub.verify_token=test&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.mode=subscribe'
+curl -X GET 'https://your-instance.com/strava/webhook?hub.verify_token=test&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.mode=subscribe'
 ```

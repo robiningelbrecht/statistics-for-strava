@@ -1,4 +1,6 @@
 
+//TryingtoconfigureStravawebhooksonURLhttps://localhost/strava/webhook
+
 [OK]Webhooksubscriptioncreatedsuccessfully!
 
 //Theappwillautomaticallyimportandbuildwhenreceivingactivityevents.

@@ -168,7 +168,7 @@ class StravaTest extends TestCase
             ->expects($this->never())
             ->method('fileExists');
 
-        $this->expectException(RequestException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('The error');
 
         $matcher = $this->exactly(2);
@@ -184,6 +184,37 @@ class StravaTest extends TestCase
                 }
 
                 throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
+    public function testGetWhenUnexpectedErrorWithoutBody(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage('The error');
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'));
             });
 
         $this->logger
