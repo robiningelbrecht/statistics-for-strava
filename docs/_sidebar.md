@@ -17,6 +17,7 @@
 - Troubleshooting
 
   - [Strava API errors](troubleshooting/strava-api-errors.md "Statistics for Strava | Strava API errors")
+  - [Shoutrrr notifications](troubleshooting/shoutrrr-notifications.md "Statistics for Strava | Shoutrrr notifications")
   - [FAQ](troubleshooting/faq.md "Statistics for Strava | FAQ")
   - [Logs](troubleshooting/logs.md "Statistics for Strava | Logs")
 

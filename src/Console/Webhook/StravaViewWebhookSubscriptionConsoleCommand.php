@@ -36,6 +36,16 @@ final class StravaViewWebhookSubscriptionConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
+        $subscriptions = [
+            [
+                'id'=> '1234567',
+                'application_id'=> '654321',
+                'callback_url'=> 'http://localhost/strava/webhook',
+                'created_at'=> '2025-12-08T09:31:39+00:00',
+                'updated_at'=> '2025-12-08T09:31:39+00:00',
+            ],
+        ];
+
         $output->table(
             headers: ['ID', 'Application ID', 'Callback URL', 'Created At', 'Updated At'],
             rows: array_map(fn (array $subscription): array => [

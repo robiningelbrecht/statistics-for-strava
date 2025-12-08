@@ -44,7 +44,7 @@ docker compose exec app bin/console app:strava:webhooks-create
 
 If everything is configured correctly, you should see an output similar to:
 
-![Strava webhook subscription](../assets/images/strava-webhook-subscription.png)
+![Strava webhook subscription](../assets/images/strava-webhook-create-subscription.png)
 
 At this point, Strava will begin sending notifications to your Statistics for Strava instance
 All incoming webhooks will be logged to a separate log file located at `storage/files/logs`
@@ -57,12 +57,9 @@ To see your current webhook subscription:
 docker compose exec app bin/console app:strava:webhooks-view
 ```
 
-This will display:
+This should display:
 
-- Subscription ID
-- Application ID
-- Callback URL
-- Creation and update timestamps
+![Strava view webhook subscription](../assets/images/strava-webhook-subscriptions.png)
 
 ## Unsubscribe from webhooks
 
