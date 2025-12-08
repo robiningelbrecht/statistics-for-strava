@@ -8,8 +8,11 @@ use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,6 +33,8 @@ final class ImportStravaDataConsoleCommand extends Command
         private readonly ResourceUsage $resourceUsage,
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
+        private readonly Connection $connection,
+        private readonly MigrationRunner $runMigrationRunner,
     ) {
         parent::__construct();
     }
@@ -38,6 +43,16 @@ final class ImportStravaDataConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
         $this->resourceUsage->startTimer();
+
+        try {
+            $this->connection->fetchOne('SELECT 1 FROM KeyValue');
+        } catch (TableNotFoundException) {
+            // This can occur when the import is run for the very first time
+            // and the migrations still need to run for the first time.
+            // We need to run the migrations first for the mutex to work.
+            $this->runMigrationRunner->run($output);
+        }
+
         $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
         $this->outputConsoleIntro($output);

@@ -7,7 +7,6 @@ namespace App\Infrastructure\Daemon\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Exception\TableNotFoundException;
 
 final class Mutex
 {
@@ -31,17 +30,10 @@ final class Mutex
 
         $this->connection->beginTransaction();
 
-        try {
-            $row = $this->connection->fetchOne(
-                'SELECT `value` FROM KeyValue WHERE `key` = :key',
-                ['key' => $this->lockName->key()]
-            );
-        } catch (TableNotFoundException) {
-            // This can occur when the import is run for the very first time
-            // and the migrations still need to run for the first time.
-            // Lock needs to be aquired.
-            return;
-        }
+        $row = $this->connection->fetchOne(
+            'SELECT `value` FROM KeyValue WHERE `key` = :key',
+            ['key' => $this->lockName->key()]
+        );
 
         if (false === $row) {
             $this->updateLockRow(
