@@ -64,7 +64,7 @@ final class SystemDaemon implements Daemon
 
         $extraConfiguredCronActionsOutput = [];
         if ($this->webhookConfig->isEnabled()) {
-            $extraConfiguredCronActionsOutput[] = '<info> - processStravaWebhooks: * * * * *</info>';
+            $extraConfiguredCronActionsOutput[] = sprintf('<info> - processStravaWebhooks: %s</info>', $this->webhookConfig->getCronExpression());
             $actions[] = new Action(
                 key: 'processStravaWebhooks',
                 mutexTtl: 60,
