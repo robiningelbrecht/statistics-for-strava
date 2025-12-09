@@ -1,3 +1,11 @@
+# [v4.2.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.4) - 2025-12-09
+
+## What's Changed
+
+* ISSUE #1520: Bug when trying to start Strava auth flow by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1521
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.3...v4.2.4
+
 # [v4.2.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.3) - 2025-12-09
 
 ## What's Changed
