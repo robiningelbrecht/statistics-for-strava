@@ -168,7 +168,7 @@ class StravaTest extends TestCase
             ->expects($this->never())
             ->method('fileExists');
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RequestException::class);
         $this->expectExceptionMessage('The error');
 
         $matcher = $this->exactly(2);
