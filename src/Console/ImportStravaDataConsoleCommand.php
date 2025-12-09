@@ -8,6 +8,7 @@ use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Monolog\Attribute\WithMonologChannel;
@@ -30,6 +31,7 @@ final class ImportStravaDataConsoleCommand extends Command
         private readonly ResourceUsage $resourceUsage,
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
+        private readonly MigrationRunner $migrationRunner,
     ) {
         parent::__construct();
     }
@@ -38,9 +40,10 @@ final class ImportStravaDataConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
         $this->resourceUsage->startTimer();
-        $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
-
         $this->outputConsoleIntro($output);
+
+        $this->migrationRunner->run($output);
+        $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
         $this->commandBus->dispatch(new RunImport(
             output: $output,

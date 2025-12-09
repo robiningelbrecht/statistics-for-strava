@@ -13,6 +13,7 @@ use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -26,6 +27,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         private ResourceUsage $resourceUsage,
         private AppUrl $appUrl,
         private Mutex $mutex,
+        private MigrationRunner $migrationRunner,
     ) {
     }
 
@@ -48,6 +50,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
     {
         $this->outputConsoleIntro($output);
         $this->resourceUsage->startTimer();
+
+        $this->migrationRunner->run($output);
         $this->mutex->acquireLock('importDataAndBuildAppCronAction');
 
         $this->commandBus->dispatch(new RunImport(
