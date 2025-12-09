@@ -68,7 +68,7 @@ final class SystemDaemon implements Daemon
             $actions[] = new Action(
                 key: 'processStravaWebhooks',
                 mutexTtl: 60,
-                expression: '* * * * *',
+                expression: (string) $this->webhookConfig->getCronExpression(),
                 performer: function (): PromiseInterface {
                     $process = new CronProcess(
                         cronActionId: 'processStravaWebhooks',
