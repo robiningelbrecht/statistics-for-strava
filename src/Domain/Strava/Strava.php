@@ -71,7 +71,7 @@ class Strava
             if (429 !== $response?->getStatusCode()) {
                 // Rethrow exception if it's not a rate limit error.
                 if ($error = $response?->getBody()->getContents()) {
-                    throw new \RuntimeException($error);
+                    throw new RequestException(message: $error, request: $e->getRequest(), response: $e->getResponse());
                 }
                 throw $e;
             }
