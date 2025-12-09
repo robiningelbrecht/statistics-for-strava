@@ -1,3 +1,12 @@
+# [v4.2.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.3) - 2025-12-09
+
+## What's Changed
+* Update messages+intl-icu.de_DE.yaml by @daydreamer77 in https://github.com/robiningelbrecht/statistics-for-strava/pull/1510
+* ISSUE #1513: Add Shoutrrr notifications to troubleshooting section by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1514
+* ISSUE #1515: Mutex crashes when migrations have never run by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1518
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.2...v4.2.3
+
 # [v4.2.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.2) - 2025-12-08
 
 ## What's Changed
