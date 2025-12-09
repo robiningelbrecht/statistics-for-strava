@@ -14,6 +14,7 @@ use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
+use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -72,7 +73,8 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
                     connection: $this->getConnection(),
                     clock: PausedClock::fromString('2025-12-04'),
                     lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-                )
+                ),
+                new VoidMigrationRunner(),
             )
         );
     }

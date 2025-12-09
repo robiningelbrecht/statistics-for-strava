@@ -22,7 +22,6 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use Doctrine\DBAL\Connection;
 use League\Flysystem\UnableToCreateDirectory;
@@ -33,7 +32,6 @@ final readonly class RunImportCommandHandler implements CommandHandler
     public function __construct(
         private Strava $strava,
         private CommandBus $commandBus,
-        private MigrationRunner $migrationRunner,
         private PermissionChecker $fileSystemPermissionChecker,
         private Connection $connection,
     ) {
@@ -51,11 +49,6 @@ final readonly class RunImportCommandHandler implements CommandHandler
 
             return;
         }
-        $output->writeln('Running database migrations...');
-
-        $this->migrationRunner->run(
-            output: $output
-        );
 
         $this->commandBus->dispatch(new ImportAthlete($output));
         $this->commandBus->dispatch(new ImportGear($output));

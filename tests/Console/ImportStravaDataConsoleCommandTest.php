@@ -7,6 +7,7 @@ use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
@@ -25,6 +26,7 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
     private MockObject $commandBus;
     private ResourceUsage $resourceUsage;
     private MockObject $logger;
+    private MockObject $migrationRunner;
 
     public function testExecute(): void
     {
@@ -39,6 +41,10 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
         $this->logger
             ->expects($this->atLeastOnce())
             ->method('info');
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('run');
 
         $command = $this->getCommandInApplication('app:strava:import-data');
         $commandTester = new CommandTester($command);
@@ -63,7 +69,8 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-            )
+            ),
+            $this->migrationRunner = $this->createMock(MigrationRunner::class),
         );
     }
 

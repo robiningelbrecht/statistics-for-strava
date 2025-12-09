@@ -6,7 +6,6 @@ use App\Application\RunImport\RunImport;
 use App\Application\RunImport\RunImportCommandHandler;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
@@ -25,15 +24,10 @@ class RunImportCommandHandlerTest extends ContainerTestCase
 
     private RunImportCommandHandler $importStravaDataCommandHandler;
     private CommandBus $commandBus;
-    private MockObject $migrationRunner;
     private MockObject $connection;
 
     public function testHandle(): void
     {
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('run');
-
         $this->connection
             ->expects($this->once())
             ->method('executeStatement')
@@ -49,10 +43,6 @@ class RunImportCommandHandlerTest extends ContainerTestCase
 
     public function testHandleWithInsufficientPermissions(): void
     {
-        $this->migrationRunner
-            ->expects($this->never())
-            ->method('run');
-
         $this->connection
             ->expects($this->never())
             ->method('executeStatement');
@@ -60,7 +50,6 @@ class RunImportCommandHandlerTest extends ContainerTestCase
         $this->importStravaDataCommandHandler = new RunImportCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->commandBus = new SpyCommandBus(),
-            $this->migrationRunner,
             new UnwritablePermissionChecker(),
             $this->connection,
         );
@@ -78,7 +67,6 @@ class RunImportCommandHandlerTest extends ContainerTestCase
         $this->importStravaDataCommandHandler = new RunImportCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->commandBus = new SpyCommandBus(),
-            $this->migrationRunner = $this->createMock(MigrationRunner::class),
             new SuccessfulPermissionChecker(),
             $this->connection = $this->createMock(Connection::class),
         );
