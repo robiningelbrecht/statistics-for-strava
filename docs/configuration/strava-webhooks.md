@@ -28,6 +28,13 @@ import:
     enabled: true
     # Will be used by Strava's validation request for security.
     verifyToken: 'a-secret-token-chosen-by-you'
+    # The interval that will be used to check if new webhook calls need to be processed.
+    # This must be a valid number between 1 and 60.
+    # * The lower the number the faster your activities will be processed and the faster they will show up in SFS.
+    # The downside is that multiple activity updates might trigger multiple imports which will result in a higher Strava API call count.
+    # * The higher the number the slower your activities will be processed, but multiple activity updates will most likely be processed in one singe import resulting in lesser Strava API calls
+    
+    checkIntervalInMinutes: 1
 ```
 
 > [!IMPORTANT]
