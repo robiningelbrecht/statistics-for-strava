@@ -27,9 +27,9 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT LOWER(JSON_EXTRACT(location, '$.country_code')) as countryCode
+            SELECT DISTINCT LOWER(JSON_EXTRACT(routeGeography, '$.country_code')) as countryCode
             FROM Activity
-            WHERE JSON_EXTRACT(location, '$.country_code') IS NOT NULL
+            WHERE JSON_EXTRACT(routeGeography, '$.country_code') IS NOT NULL
             SQL
         )->fetchFirstColumn();
 
@@ -43,9 +43,9 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT LOWER(JSON_EXTRACT(location, '$.country_code')) as countryCode
+            SELECT DISTINCT LOWER(JSON_EXTRACT(routeGeography, '$.country_code')) as countryCode
             FROM Activity
-            WHERE JSON_EXTRACT(location, '$.country_code') IS NOT NULL
+            WHERE JSON_EXTRACT(routeGeography, '$.country_code') IS NOT NULL
             AND totalImageCount > 0
             SQL
         )->fetchFirstColumn();
