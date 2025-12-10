@@ -134,7 +134,7 @@ final class Route implements \JsonSerializable
             'startDate' => $startDate,
             'distance' => $distance,
             'name' => Escape::forJsonEncode($this->getName()),
-            'location' => [
+            'startLocation' => [
                 'countryCode' => $this->getLocation()->getCountryCode(),
                 'state' => $state ? Escape::forJsonEncode($state) : null,
             ],

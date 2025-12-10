@@ -117,7 +117,7 @@ class HeatmapDrawer {
 
         const determineMostActiveState = (routes) => {
             const stateCounts = routes.reduce((counts, route) => {
-                const state = route.location.state;
+                const state = route.startLocation.state;
                 if (state) counts[state] = (counts[state] || 0) + 1;
                 return counts;
             }, {});
@@ -132,7 +132,7 @@ class HeatmapDrawer {
         const mostActiveState = determineMostActiveState(routes);
 
         routes.forEach(route => {
-            const {countryCode, state} = route.location;
+            const {countryCode, state} = route.startLocation;
 
             if (!countryFeatureGroups.has(countryCode)) {
                 countryFeatureGroups.set(countryCode, L.featureGroup());

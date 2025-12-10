@@ -7,7 +7,7 @@ namespace App\Domain\Integration\Geocoding\Nominatim;
 final readonly class Location implements \JsonSerializable
 {
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
     private function __construct(
         private array $data,
@@ -33,7 +33,7 @@ final readonly class Location implements \JsonSerializable
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {

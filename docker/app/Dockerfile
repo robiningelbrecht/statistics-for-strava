@@ -7,7 +7,8 @@ RUN apk add --no-cache \
   bash \
   curl \
   file \
-  tzdata
+  tzdata \
+  geos
 
 RUN set -eux; \
 	install-php-extensions \
