@@ -25,7 +25,7 @@ final readonly class FindZwiftStatsPerWorldQueryHandler implements QueryHandler
 
         $results = $this->connection->executeQuery(
             <<<SQL
-                SELECT JSON_EXTRACT(location, '$.state') as zwiftWorld,
+                SELECT JSON_EXTRACT(routeGeography, '$.state') as zwiftWorld,
                        COUNT(*) AS numberOfActivities,
                        SUM(distance) AS totalDistance,
                        SUM(elevation) AS totalElevation,

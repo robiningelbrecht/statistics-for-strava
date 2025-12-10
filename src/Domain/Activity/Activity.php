@@ -2,13 +2,13 @@
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\PowerOutput;
 use App\Domain\Activity\Stream\PowerOutputs;
 use App\Domain\Gear\GearId;
 use App\Domain\Integration\AI\SupportsAITooling;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Zwift\CouldNotDetermineZwiftMap;
 use App\Domain\Zwift\ZwiftMap;
@@ -108,7 +108,7 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'text', nullable: true)]
         private ?string $polyline,
         #[ORM\Column(type: 'json', nullable: true)]
-        private ?Location $location,
+        private RouteGeography $routeGeography,
         #[ORM\Column(type: 'json', nullable: true)]
         private ?string $weather,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -172,7 +172,7 @@ final class Activity implements SupportsAITooling
             totalImageCount: $rawData['total_photo_count'] ?? 0,
             localImagePaths: [],
             polyline: $rawData['map']['summary_polyline'] ?? null,
-            location: null,
+            routeGeography: RouteGeography::create([]),
             weather: null,
             gearId: $gearId,
             gearName: $gearName,
@@ -208,7 +208,7 @@ final class Activity implements SupportsAITooling
         int $totalImageCount,
         array $localImagePaths,
         ?string $polyline,
-        ?Location $location,
+        RouteGeography $routeGeography,
         ?string $weather,
         ?GearId $gearId,
         ?string $gearName,
@@ -239,7 +239,7 @@ final class Activity implements SupportsAITooling
             totalImageCount: $totalImageCount,
             localImagePaths: $localImagePaths,
             polyline: $polyline,
-            location: $location,
+            routeGeography: $routeGeography,
             weather: $weather,
             gearId: $gearId,
             gearName: $gearName,
@@ -632,14 +632,14 @@ final class Activity implements SupportsAITooling
         return null;
     }
 
-    public function getLocation(): ?Location
+    public function getRouteGeography(): RouteGeography
     {
-        return $this->location;
+        return $this->routeGeography;
     }
 
-    public function updateLocation(?Location $location = null): self
+    public function updateRouteGeography(RouteGeography $routeGeography): self
     {
-        $this->location = $location;
+        $this->routeGeography = $routeGeography;
 
         return $this;
     }
@@ -678,7 +678,7 @@ final class Activity implements SupportsAITooling
         return array_filter([
             'sportType' => $this->getSportType()->value,
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
-            'countryCode' => $this->getLocation()?->getCountryCode(),
+            'countryCode' => $this->getRouteGeography()->getCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,
@@ -756,7 +756,7 @@ final class Activity implements SupportsAITooling
             'kudoCount' => $this->getKudoCount(),
             'recordedOnDevice' => $this->getDeviceName(),
             'totalImageCount' => $this->getTotalImageCount(),
-            'location' => $this->getLocation()?->jsonSerialize(),
+            'routeGeography' => $this->getRouteGeography()->jsonSerialize(),
             'weather' => $this->getWeather(),
             'gearId' => $this->getGearId()?->toUnprefixedString(),
             'gearName' => $this->getGearName(),

@@ -52,7 +52,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                     fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                 ),
                 'numberOfCountriesWithWorkouts' => count(array_filter(array_unique($routes->map(
-                    fn (Route $route): ?string => $route->getLocation()->getCountryCode()
+                    fn (Route $route): ?string => $route->getRouteGeography()->getCountryCode()
                 )))),
                 'heatmapConfig' => $this->heatmapConfig,
             ]),

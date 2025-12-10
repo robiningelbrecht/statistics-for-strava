@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\Geocoding\Nominatim;
 
+use App\Domain\Activity\Route\RouteGeography;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Sleep;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -20,7 +21,7 @@ final readonly class LiveNominatim implements Nominatim
     ) {
     }
 
-    public function reverseGeocode(Coordinate $coordinate): Location
+    public function reverseGeocode(Coordinate $coordinate): array
     {
         try {
             $response = $this->client->request(
@@ -44,6 +45,13 @@ final readonly class LiveNominatim implements Nominatim
             throw new CouldNotReverseGeocodeAddress();
         }
 
-        return Location::create($response['address'] ?? throw new CouldNotReverseGeocodeAddress());
+        if (!isset($response['address'])) {
+            throw new CouldNotReverseGeocodeAddress();
+        }
+
+        return [
+            ...$response['address'],
+            RouteGeography::IS_REVERSE_GEOCODED => true,
+        ];
     }
 }

@@ -6,8 +6,8 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Route\ActivityBasedRouteRepository;
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteRepository;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -28,7 +28,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('line')
-                ->withLocation(Location::create(['country_code' => 'BE']))
+                ->withRouteGeography(RouteGeography::create(['country_code' => 'BE']))
                 ->build(),
             rawData: []
         ));
@@ -38,7 +38,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(2))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('')
-                ->withLocation(Location::create(['waw']))
+                ->withRouteGeography(RouteGeography::create(['waw']))
                 ->build(),
             rawData: []
         ));
@@ -47,7 +47,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(3))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline(null)
-                ->withLocation(Location::create(['waw']))
+                ->withRouteGeography(RouteGeography::create(['waw']))
                 ->build(),
             rawData: []
         ));
@@ -56,7 +56,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('line')
-                ->withLocation(null)
+                ->withRouteGeography(null)
                 ->build(),
             rawData: []
         ));

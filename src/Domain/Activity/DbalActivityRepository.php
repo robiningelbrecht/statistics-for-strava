@@ -2,10 +2,10 @@
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\GearId;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
@@ -210,8 +210,6 @@ final class DbalActivityRepository implements ActivityRepository
      */
     private function hydrate(array $result): Activity
     {
-        $location = Json::decode($result['location'] ?? '[]');
-
         return Activity::fromState(
             activityId: ActivityId::fromString($result['activityId']),
             startDateTime: SerializableDateTime::fromString($result['startDateTime']),
@@ -239,7 +237,7 @@ final class DbalActivityRepository implements ActivityRepository
             totalImageCount: $result['totalImageCount'] ?: 0,
             localImagePaths: $result['localImagePaths'] ? explode(',', (string) $result['localImagePaths']) : [],
             polyline: $result['polyline'],
-            location: $location ? Location::create($location) : null,
+            routeGeography: RouteGeography::create(Json::decode($result['routeGeography'] ?? '[]')),
             weather: $result['weather'],
             gearId: GearId::fromOptionalString($result['gearId']),
             gearName: $result['gearName'],

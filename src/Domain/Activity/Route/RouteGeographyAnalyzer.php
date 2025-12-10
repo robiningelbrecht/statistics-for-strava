@@ -47,7 +47,10 @@ final readonly class RouteGeographyAnalyzer
         return $countriesGeometry;
     }
 
-    public function analyzeForPolyline(EncodedPolyline $polyline): RouteGeography
+    /**
+     * @return string[]
+     */
+    public function analyzeForPolyline(EncodedPolyline $polyline): array
     {
         $passedCountries = [];
         /** @var Geometry $routeLineString */
@@ -66,6 +69,6 @@ final readonly class RouteGeographyAnalyzer
             $passedCountries[$countryCode] = $countryCode;
         }
 
-        return new RouteGeography(array_values($passedCountries));
+        return array_values($passedCountries);
     }
 }
