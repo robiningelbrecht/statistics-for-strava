@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Tests\Infrastructure\DependencyInjection\Mutex;
+
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\AutowireWithMutexPass;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+class AutowireWithMutexPassTest extends TestCase
+{
+    public function testProcess(): void
+    {
+        $container = $this->getFunctionalContainer();
+
+        $container->registerForAutoconfiguration(DummyService::class)
+            ->setProperty('fake', 'dummy');
+
+        $container->register('dummy_service', DummyService::class)
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(true)
+            ->addTag('app.mutex', ['mutex' => 'mutex.importDataOrBuildApp']);
+        $container->compile();
+
+        $this->assertEquals('mutex.importDataOrBuildApp', (string) $container->getDefinition('dummy_service')->getArgument(0));
+        $this->assertEquals(
+            Mutex::class,
+            $container->getDefinition('mutex.importDataOrBuildApp')->getClass()
+        );
+    }
+
+    private function getFunctionalContainer(): ContainerBuilder
+    {
+        $container = new ContainerBuilder();
+        $container->addCompilerPass(new AutowireWithMutexPass());
+
+        // Disable removing passes to be able to inspect the container before all the inlining optimizations
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
+
+        return $container;
+    }
+}
+
+class DummyService
+{
+    public function __construct(Mutex $mutex)
+    {
+    }
+}
