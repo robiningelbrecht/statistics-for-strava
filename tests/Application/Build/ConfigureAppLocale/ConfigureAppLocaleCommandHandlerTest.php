@@ -66,6 +66,12 @@ class ConfigureAppLocaleCommandHandlerTest extends ContainerTestCase
             $locale->value,
             Carbon::getLocale()
         );
+
+        // Reset to default locale
+        new ConfigureAppLocaleCommandHandler(
+            $this->localeSwitcher,
+            Locale::en_US
+        )->handle(new ConfigureAppLocale());
     }
 
     public static function provideLocales(): array

@@ -160,6 +160,10 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     }
                 }
 
+                if($sportType->supportsReverseGeocoding() && $activity->getPolyline()){
+
+                }
+
                 try {
                     if (!$newTotalImageCount = ($stravaActivity['total_photo_count'] ?? 0)) {
                         // New image count is 0, remove all images.
