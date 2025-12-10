@@ -38,13 +38,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
-            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
+            polyline, routeGeography, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
-            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
+            :polyline, :routeGeography, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
         $activity = $activityWithRawData->getActivity();
@@ -74,7 +74,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
             'polyline' => $activity->getPolyline(),
-            'location' => $activity->getLocation() ? Json::encode($activity->getLocation()) : null,
+            'routeGeography' => Json::encode($activity->getRouteGeography()),
             'weather' => $activity->getWeather() ? Json::encode($activity->getWeather()) : null,
             'gearId' => $activity->getGearId(),
             'gearName' => $activity->getGearName(),
@@ -100,7 +100,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
                     polyline = :polyline,
                     startingCoordinateLatitude = :startingCoordinateLatitude,
                     startingCoordinateLongitude = :startingCoordinateLongitude,
-                    location = :location,
+                    routeGeography = :routeGeography,
                     gearId = :gearId, 
                     gearName = :gearName,
                     totalImageCount = :totalImageCount,
@@ -125,7 +125,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'polyline' => $activity->getPolyline(),
             'startingCoordinateLatitude' => $activity->getStartingCoordinate()?->getLatitude()->toFloat(),
             'startingCoordinateLongitude' => $activity->getStartingCoordinate()?->getLongitude()->toFloat(),
-            'location' => $activity->getLocation() ? Json::encode($activity->getLocation()) : null,
+            'routeGeography' => Json::encode($activity->getRouteGeography()),
             'gearId' => $activity->getGearId(),
             'gearName' => $activity->getGearName(),
             'totalImageCount' => $activity->getTotalImageCount(),

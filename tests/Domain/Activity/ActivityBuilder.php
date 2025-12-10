@@ -6,11 +6,11 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Activity\WorldType;
 use App\Domain\Gear\GearId;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -43,7 +43,7 @@ final class ActivityBuilder
     /** @var array<string> */
     private array $localImagePaths;
     private ?string $polyline;
-    private ?Location $location;
+    private RouteGeography $routeGeography;
     private readonly string $weather;
     private ?GearId $gearId;
     private readonly ?string $gearName;
@@ -77,7 +77,7 @@ final class ActivityBuilder
         $this->polyline = null;
         $this->weather = '';
         $this->gearId = null;
-        $this->location = null;
+        $this->routeGeography = RouteGeography::create([]);
         $this->gearName = null;
         $this->isCommute = false;
         $this->workoutType = null;
@@ -114,7 +114,7 @@ final class ActivityBuilder
             totalImageCount: $this->totalImageCount,
             localImagePaths: $this->localImagePaths,
             polyline: $this->polyline,
-            location: $this->location,
+            routeGeography: $this->routeGeography,
             weather: $this->weather,
             gearId: $this->gearId,
             gearName: $this->gearName,
@@ -186,9 +186,9 @@ final class ActivityBuilder
         return $this;
     }
 
-    public function withLocation(?Location $location): self
+    public function withRouteGeography(RouteGeography $routeGeography): self
     {
-        $this->location = $location;
+        $this->routeGeography = $routeGeography;
 
         return $this;
     }

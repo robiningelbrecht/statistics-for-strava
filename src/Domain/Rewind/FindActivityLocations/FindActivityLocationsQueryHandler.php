@@ -28,10 +28,10 @@ final readonly class FindActivityLocationsQueryHandler implements QueryHandler
                 (
                     SELECT
                            MIN(activityId) as activityId,
-                           COALESCE(JSON_EXTRACT(location, '$.city'), JSON_EXTRACT(location, '$.county'), JSON_EXTRACT(location, '$.municipality')) as selectedLocation,
+                           COALESCE(JSON_EXTRACT(routeGeography, '$.city'), JSON_EXTRACT(routeGeography, '$.county'), JSON_EXTRACT(routeGeography, '$.municipality')) as selectedLocation,
                            COUNT(*) as numberOfActivities
                     FROM Activity
-                    WHERE location IS NOT NULL
+                    WHERE (JSON_EXTRACT(routeGeography, '$.city') IS NOT NULL OR JSON_EXTRACT(routeGeography, '$.county') OR JSON_EXTRACT(routeGeography, '$.municipality'))
                     AND strftime('%Y',startDateTime) IN (:years)
                     AND worldType = :worldType
                     GROUP BY selectedLocation

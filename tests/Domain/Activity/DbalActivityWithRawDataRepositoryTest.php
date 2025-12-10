@@ -7,9 +7,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Gear\GearId;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -88,7 +88,7 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
                 GearId::fromUnprefixed('updated'),
                 'updated gear name',
             )
-            ->updateLocation(Location::create(['state' => 'updated location']))
+            ->updateRouteGeography(RouteGeography::create(['state' => 'updated location']))
             ->updateCommute(true);
 
         $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
@@ -143,8 +143,8 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
             $persistedActivity->getGearName()
         );
         $this->assertEquals(
-            Location::create(['state' => 'updated location']),
-            $persistedActivity->getLocation()
+            RouteGeography::create(['state' => 'updated location']),
+            $persistedActivity->getRouteGeography()
         );
         $this->assertTrue($persistedActivity->isCommute());
         $this->assertEquals(

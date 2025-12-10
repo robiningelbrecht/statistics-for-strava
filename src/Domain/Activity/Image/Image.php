@@ -53,7 +53,7 @@ final readonly class Image
 
         return [
             'sportType' => $activity->getSportType()->value,
-            'countryCode' => $activity->getLocation()?->getCountryCode(),
+            'countryCode' => $activity->getRouteGeography()->getCountryCode() ?: null,
         ];
     }
 }

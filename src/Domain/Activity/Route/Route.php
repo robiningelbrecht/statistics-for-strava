@@ -7,7 +7,6 @@ namespace App\Domain\Activity\Route;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -24,7 +23,7 @@ final class Route implements \JsonSerializable
         private readonly string $name,
         private readonly Kilometer $distance,
         private readonly string $encodedPolyline,
-        private readonly Location $location,
+        private readonly RouteGeography $routeGeography,
         private readonly SportType $sportType,
         private readonly bool $isCommute,
         private readonly ?WorkoutType $workoutType,
@@ -37,7 +36,7 @@ final class Route implements \JsonSerializable
         string $name,
         Kilometer $distance,
         string $encodedPolyline,
-        Location $location,
+        RouteGeography $routeGeography,
         SportType $sportType,
         bool $isCommute,
         ?WorkoutType $workoutType,
@@ -48,7 +47,7 @@ final class Route implements \JsonSerializable
             name: $name,
             distance: $distance,
             encodedPolyline: $encodedPolyline,
-            location: $location,
+            routeGeography: $routeGeography,
             sportType: $sportType,
             isCommute: $isCommute,
             workoutType: $workoutType,
@@ -76,9 +75,9 @@ final class Route implements \JsonSerializable
         return $this->encodedPolyline;
     }
 
-    public function getLocation(): Location
+    public function getRouteGeography(): RouteGeography
     {
-        return $this->location;
+        return $this->routeGeography;
     }
 
     public function getSportType(): SportType
@@ -114,7 +113,7 @@ final class Route implements \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $state = $this->getLocation()->getState();
+        $state = $this->getRouteGeography()->getState();
 
         $distance = $this->getDistance();
         if (isset($this->unitSystem)) {
@@ -135,7 +134,7 @@ final class Route implements \JsonSerializable
             'distance' => $distance,
             'name' => Escape::forJsonEncode($this->getName()),
             'startLocation' => [
-                'countryCode' => $this->getLocation()->getCountryCode(),
+                'countryCode' => $this->getRouteGeography()->getCountryCode(),
                 'state' => $state ? Escape::forJsonEncode($state) : null,
             ],
             'filterables' => [

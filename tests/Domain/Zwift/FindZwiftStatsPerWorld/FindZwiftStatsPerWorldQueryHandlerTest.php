@@ -5,8 +5,8 @@ namespace App\Tests\Domain\Zwift\FindZwiftStatsPerWorld;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\WorldType;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Zwift\FindZwiftStatsPerWorld\FindZwiftStatsPerWorld;
 use App\Domain\Zwift\FindZwiftStatsPerWorld\FindZwiftStatsPerWorldQueryHandler;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -40,7 +40,7 @@ class FindZwiftStatsPerWorldQueryHandlerTest extends ContainerTestCase
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withWorldType(WorldType::ZWIFT)
-                ->withLocation(Location::create(['state' => 'Watopia']))
+                ->withRouteGeography(RouteGeography::create(['state' => 'Watopia']))
                 ->build(),
             []
         ));
@@ -48,7 +48,7 @@ class FindZwiftStatsPerWorldQueryHandlerTest extends ContainerTestCase
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withWorldType(WorldType::ZWIFT)
-                ->withLocation(Location::create(['state' => 'Watopia']))
+                ->withRouteGeography(RouteGeography::create(['state' => 'Watopia']))
                 ->build(),
             []
         ));
@@ -56,7 +56,7 @@ class FindZwiftStatsPerWorldQueryHandlerTest extends ContainerTestCase
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('4'))
                 ->withWorldType(WorldType::ZWIFT)
-                ->withLocation(Location::create(['state' => 'Makuri islands']))
+                ->withRouteGeography(RouteGeography::create(['state' => 'Makuri islands']))
                 ->build(),
             []
         ));
@@ -64,7 +64,7 @@ class FindZwiftStatsPerWorldQueryHandlerTest extends ContainerTestCase
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('8'))
                 ->withWorldType(WorldType::ZWIFT)
-                ->withLocation(Location::create(['state' => 'New York']))
+                ->withRouteGeography(RouteGeography::create(['state' => 'New York']))
                 ->build(),
             []
         ));

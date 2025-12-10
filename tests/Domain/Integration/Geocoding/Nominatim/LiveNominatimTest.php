@@ -2,6 +2,7 @@
 
 namespace App\Tests\Domain\Integration\Geocoding\Nominatim;
 
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Domain\Integration\Geocoding\Nominatim\LiveNominatim;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
@@ -36,14 +37,17 @@ class LiveNominatimTest extends TestCase
                 $this->assertMatchesJsonSnapshot($options);
 
                 return new Response(200, [], Json::encode([
-                    'address' => [],
+                    'address' => ['state' => 'BruHHE'],
                 ]));
             });
 
-        $this->nominatim->reverseGeocode(
-            Coordinate::createFromLatAndLng(
-                latitude: Latitude::fromString('80'),
-                longitude: Longitude::fromString('100'),
+        $this->assertEquals(
+            ['state' => 'BruHHE', RouteGeography::IS_REVERSE_GEOCODED => true],
+            $this->nominatim->reverseGeocode(
+                Coordinate::createFromLatAndLng(
+                    latitude: Latitude::fromString('80'),
+                    longitude: Longitude::fromString('100'),
+                )
             )
         );
     }

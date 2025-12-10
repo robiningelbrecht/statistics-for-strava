@@ -8,13 +8,14 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\Route\RouteGeography;
+use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;
@@ -30,6 +31,7 @@ use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -57,6 +59,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private StravaDataImportStatus $stravaDataImportStatus,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private ActivityImageDownloader $activityImageDownloader,
+        private RouteGeographyAnalyzer $routeGeographyAnalyzer,
         private Mutex $mutex,
     ) {
     }
@@ -145,24 +148,27 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     $activity->updateCommute($stravaActivity['commute']);
                 }
 
-                if (!$activity->getLocation() && $activity->getStartingCoordinate()) {
+                $rawRouteGeographyData = [];
+                if (!$activity->getRouteGeography()->isReversedGeocoded() && $activity->getStartingCoordinate()) {
                     if ($sportType->supportsReverseGeocoding()) {
                         try {
-                            $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                            $activity->updateLocation($reverseGeocodedAddress);
+                            $rawRouteGeographyData = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
                         } catch (CouldNotReverseGeocodeAddress) {
                         }
                     } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
-                        $location = Location::create([
+                        $rawRouteGeographyData = [
                             'state' => $zwiftMap->getLabel(),
-                        ]);
-                        $activity->updateLocation($location);
+                        ];
                     }
                 }
 
-                if($sportType->supportsReverseGeocoding() && $activity->getPolyline()){
-
+                if (!$activity->getRouteGeography()->hasBeenAnalyzedForRouteGeography()
+                    && $sportType->supportsReverseGeocoding() && $activity->getPolyline()) {
+                    $rawRouteGeographyData[RouteGeography::PASSED_TROUGH_COUNTRIES] = $this->routeGeographyAnalyzer->analyzeForPolyline(
+                        EncodedPolyline::fromString($activity->getPolyline())
+                    );
                 }
+                $activity->updateRouteGeography(RouteGeography::create($rawRouteGeographyData));
 
                 try {
                     if (!$newTotalImageCount = ($stravaActivity['total_photo_count'] ?? 0)) {
@@ -230,20 +236,26 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         }
                     }
 
+                    $rawRouteGeographyData = [];
                     if ($activity->getStartingCoordinate()) {
                         if ($sportType->supportsReverseGeocoding()) {
                             try {
-                                $reverseGeocodedAddress = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
-                                $activity->updateLocation($reverseGeocodedAddress);
+                                $rawRouteGeographyData = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
                             } catch (CouldNotReverseGeocodeAddress) {
                             }
                         } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
-                            $location = Location::create([
+                            $rawRouteGeographyData = [
                                 'state' => $zwiftMap->getLabel(),
-                            ]);
-                            $activity->updateLocation($location);
+                            ];
                         }
                     }
+
+                    if ($sportType->supportsReverseGeocoding() && $activity->getPolyline()) {
+                        $rawRouteGeographyData[RouteGeography::PASSED_TROUGH_COUNTRIES] = $this->routeGeographyAnalyzer->analyzeForPolyline(
+                            EncodedPolyline::fromString($activity->getPolyline())
+                        );
+                    }
+                    $activity->updateRouteGeography(RouteGeography::create($rawRouteGeographyData));
 
                     $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
                         activity: $activity,
