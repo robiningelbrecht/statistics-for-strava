@@ -23,12 +23,9 @@ final readonly class CronProcess
 
     public function withCommand(string $command): self
     {
-        return new self(
-            cronActionId: $this->cronActionId,
-            clock: $this->clock,
-            output: $this->output,
-            command: $command,
-        );
+        return clone ($this, [
+            'command' => $command,
+        ]);
     }
 
     public function start(): void
