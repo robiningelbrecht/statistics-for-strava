@@ -30,12 +30,12 @@ final readonly class RouteGeography implements \JsonSerializable
         return empty($this->data);
     }
 
-    public function getCountryCode(): ?string
+    public function getStartingPointCountryCode(): ?string
     {
         return $this->data['country_code'] ?? null;
     }
 
-    public function getState(): ?string
+    public function getStartingPointState(): ?string
     {
         return $this->data['state'] ?? $this->data['county'] ?? null;
     }
@@ -48,6 +48,10 @@ final readonly class RouteGeography implements \JsonSerializable
     public function hasBeenAnalyzedForRouteGeography(): bool
     {
         return array_key_exists(self::PASSED_TROUGH_COUNTRIES, $this->data);
+    }
+
+    public function getPassedThroughCountries(): array{
+        return $this->data['passed_through_countries'] ?? [];
     }
 
     /**
