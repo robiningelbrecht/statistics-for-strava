@@ -30,7 +30,7 @@ final readonly class RouteGeographyAnalyzer
     private function buildCountriesGeometry(): array
     {
         $countriesGeometry = [];
-        $rawCountriesGeoJson = Json::decode(file_get_contents(__DIR__.'/assets/countries.json') ?: '{}');
+        $rawCountriesGeoJson = Json::decode(file_get_contents(__DIR__.'/assets/countries-geography.json') ?: '{}');
 
         foreach ($rawCountriesGeoJson['features'] ?? [] as $feature) {
             if (!isset($feature['properties']['ISO_A2_EH'])) {
