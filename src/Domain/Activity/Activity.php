@@ -678,7 +678,7 @@ final class Activity implements SupportsAITooling
         return array_filter([
             'sportType' => $this->getSportType()->value,
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
-            'countryCode' => $this->getRouteGeography()->getCountryCode(),
+            'countryCode' => $this->getRouteGeography()->getStartingPointCountryCode(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,

@@ -113,7 +113,7 @@ final class Route implements \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $state = $this->getRouteGeography()->getState();
+        $state = $this->getRouteGeography()->getStartingPointState();
 
         $distance = $this->getDistance();
         if (isset($this->unitSystem)) {
@@ -134,7 +134,7 @@ final class Route implements \JsonSerializable
             'distance' => $distance,
             'name' => Escape::forJsonEncode($this->getName()),
             'startLocation' => [
-                'countryCode' => $this->getRouteGeography()->getCountryCode(),
+                'countryCode' => $this->getRouteGeography()->getStartingPointCountryCode(),
                 'state' => $state ? Escape::forJsonEncode($state) : null,
             ],
             'filterables' => [
