@@ -16,6 +16,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Lap\ActivityLapRepository;
+use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -323,20 +324,21 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     public function testHandleWithActivityVisibilitiesToImport(): void
     {
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
-            $this->strava = $this->getContainer()->get(Strava::class),
-            $this->getContainer()->get(OpenMeteo::class),
-            $this->getContainer()->get(Nominatim::class),
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            $this->getContainer()->get(GearRepository::class),
-            $this->getContainer()->get(SportTypesToImport::class),
-            ActivityVisibilitiesToImport::from([ActivityVisibility::EVERYONE->value]),
-            $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
-            $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
-            $this->getContainer()->get(StravaDataImportStatus::class),
-            $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
-            $this->getContainer()->get(ActivityImageDownloader::class),
-            new Mutex(
+            strava: $this->strava = $this->getContainer()->get(Strava::class),
+            openMeteo: $this->getContainer()->get(OpenMeteo::class),
+            nominatim: $this->getContainer()->get(Nominatim::class),
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            gearRepository: $this->getContainer()->get(GearRepository::class),
+            sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
+            activityVisibilitiesToImport: ActivityVisibilitiesToImport::from([ActivityVisibility::EVERYONE->value]),
+            activitiesToSkipDuringImport: $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
+            skipActivitiesRecordedBefore: $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
+            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
+            numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
+            activityImageDownloader: $this->getContainer()->get(ActivityImageDownloader::class),
+            routeGeographyAnalyzer: $this->getContainer()->get(RouteGeographyAnalyzer::class),
+            mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
@@ -369,20 +371,21 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     public function testHandleWithTooManyActivitiesToProcessInOneImport(): void
     {
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
-            $this->strava = $this->getContainer()->get(Strava::class),
-            $this->getContainer()->get(OpenMeteo::class),
-            $this->getContainer()->get(Nominatim::class),
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            $this->getContainer()->get(GearRepository::class),
-            $this->getContainer()->get(SportTypesToImport::class),
-            $this->getContainer()->get(ActivityVisibilitiesToImport::class),
-            $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
-            $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
-            $this->getContainer()->get(StravaDataImportStatus::class),
-            NumberOfNewActivitiesToProcessPerImport::fromInt(1),
-            $this->getContainer()->get(ActivityImageDownloader::class),
-            new Mutex(
+            strava: $this->strava = $this->getContainer()->get(Strava::class),
+            openMeteo: $this->getContainer()->get(OpenMeteo::class),
+            nominatim: $this->getContainer()->get(Nominatim::class),
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            gearRepository: $this->getContainer()->get(GearRepository::class),
+            sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
+            activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
+            activitiesToSkipDuringImport: $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
+            skipActivitiesRecordedBefore: $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
+            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
+            numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
+            activityImageDownloader: $this->getContainer()->get(ActivityImageDownloader::class),
+            routeGeographyAnalyzer: $this->getContainer()->get(RouteGeographyAnalyzer::class),
+            mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
@@ -420,20 +423,21 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     public function testHandleWithSkipActivitiesRecordedBefore(): void
     {
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
-            $this->strava = $this->getContainer()->get(Strava::class),
-            $this->getContainer()->get(OpenMeteo::class),
-            $this->getContainer()->get(Nominatim::class),
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            $this->getContainer()->get(GearRepository::class),
-            $this->getContainer()->get(SportTypesToImport::class),
-            $this->getContainer()->get(ActivityVisibilitiesToImport::class),
-            $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
-            SkipActivitiesRecordedBefore::fromOptionalString('2023-09-01'),
-            $this->getContainer()->get(StravaDataImportStatus::class),
-            $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
-            $this->getContainer()->get(ActivityImageDownloader::class),
-            new Mutex(
+            strava: $this->strava = $this->getContainer()->get(Strava::class),
+            openMeteo: $this->getContainer()->get(OpenMeteo::class),
+            nominatim: $this->getContainer()->get(Nominatim::class),
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            gearRepository: $this->getContainer()->get(GearRepository::class),
+            sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
+            activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
+            activitiesToSkipDuringImport: $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
+            skipActivitiesRecordedBefore: SkipActivitiesRecordedBefore::fromOptionalString('2023-09-01'),
+            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
+            numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
+            activityImageDownloader: $this->getContainer()->get(ActivityImageDownloader::class),
+            routeGeographyAnalyzer: $this->getContainer()->get(RouteGeographyAnalyzer::class),
+            mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
@@ -470,24 +474,25 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         );
 
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
-            $this->strava = $this->getContainer()->get(Strava::class),
-            $this->getContainer()->get(OpenMeteo::class),
-            $this->getContainer()->get(Nominatim::class),
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            $this->getContainer()->get(GearRepository::class),
-            $this->getContainer()->get(SportTypesToImport::class),
-            $this->getContainer()->get(ActivityVisibilitiesToImport::class),
-            $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
-            $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
-            $this->getContainer()->get(StravaDataImportStatus::class),
-            $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
-            $this->getContainer()->get(ActivityImageDownloader::class),
-            new Mutex(
+            strava: $this->strava = $this->getContainer()->get(Strava::class),
+            openMeteo: $this->getContainer()->get(OpenMeteo::class),
+            nominatim: $this->getContainer()->get(Nominatim::class),
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            gearRepository: $this->getContainer()->get(GearRepository::class),
+            sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
+            activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
+            activitiesToSkipDuringImport: $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
+            skipActivitiesRecordedBefore: $this->getContainer()->get(SkipActivitiesRecordedBefore::class),
+            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
+            numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
+            activityImageDownloader: $this->getContainer()->get(ActivityImageDownloader::class),
+            routeGeographyAnalyzer: $this->getContainer()->get(RouteGeographyAnalyzer::class),
+            mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-            )
+            ),
         );
     }
 }
