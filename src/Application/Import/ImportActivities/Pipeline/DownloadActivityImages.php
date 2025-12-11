@@ -22,11 +22,14 @@ final readonly class DownloadActivityImages implements ActivityImportStep
         $activity = $context->getActivity() ?? throw new \RuntimeException('Activity not set on $context');
         $rawStravaData = $context->getRawStravaData();
 
-        if (!$newTotalImageCount = ($rawStravaData['total_photo_count'] ?? 0)) {
+        if (!$totalImageCount = ($rawStravaData['total_photo_count'] ?? 0)) {
             $activity->updateLocalImagePaths([]);
+
+            return $context->withActivity($activity);
         }
 
-        if ($context->isNewActivity() && $newTotalImageCount > 0 || $activity->getTotalImageCount() !== $newTotalImageCount && $newTotalImageCount > 0) {
+        $shouldDownloadImages = $context->isNewActivity() || count($activity->getLocalImagePaths()) !== $totalImageCount;
+        if (!$shouldDownloadImages) {
             return $context->withActivity($activity);
         }
 

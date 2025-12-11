@@ -21,27 +21,32 @@ final readonly class AnalyzeRouteGeography implements ActivityImportStep
         $activity = $context->getActivity() ?? throw new \RuntimeException('Activity not set on $context');
         $sportType = $activity->getSportType();
 
-        $rawRouteGeographyData = [];
-        if (!$activity->getRouteGeography()->isReversedGeocoded() && $activity->getStartingCoordinate()) {
+        $routeGeography = $activity->getRouteGeography();
+        if (!$routeGeography->isReversedGeocoded() && $activity->getStartingCoordinate()) {
             if ($sportType->supportsReverseGeocoding()) {
                 try {
-                    $rawRouteGeographyData = $this->nominatim->reverseGeocode($activity->getStartingCoordinate());
+                    $routeGeography = $routeGeography->updateWith(
+                        $this->nominatim->reverseGeocode($activity->getStartingCoordinate())
+                    );
                 } catch (CouldNotReverseGeocodeAddress) {
                 }
             } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
-                $rawRouteGeographyData = [
+                $routeGeography = $routeGeography->updateWith([
                     'state' => $zwiftMap->getLabel(),
-                ];
+                ]);
             }
         }
 
         if (!$activity->getRouteGeography()->hasBeenAnalyzedForRouteGeography()
             && $sportType->supportsReverseGeocoding() && $activity->getPolyline()) {
-            $rawRouteGeographyData[RouteGeography::PASSED_TROUGH_COUNTRIES] = $this->routeGeographyAnalyzer->analyzeForPolyline(
-                EncodedPolyline::fromString($activity->getPolyline())
-            );
+            $routeGeography = $routeGeography->updateWith([
+                RouteGeography::PASSED_TROUGH_COUNTRIES => $this->routeGeographyAnalyzer->analyzeForPolyline(
+                    EncodedPolyline::fromString($activity->getPolyline())
+                ),
+            ]);
         }
-        $activity->updateRouteGeography(RouteGeography::create($rawRouteGeographyData));
+
+        $activity->updateRouteGeography($routeGeography);
 
         return $context->withActivity($activity);
     }

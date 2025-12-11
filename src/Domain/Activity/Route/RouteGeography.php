@@ -42,12 +42,20 @@ final readonly class RouteGeography implements \JsonSerializable
 
     public function isReversedGeocoded(): bool
     {
-        return $this->data[self::IS_REVERSE_GEOCODED] ?? false;
+        return (bool) ($this->data[self::IS_REVERSE_GEOCODED] ?? false);
     }
 
     public function hasBeenAnalyzedForRouteGeography(): bool
     {
         return array_key_exists(self::PASSED_TROUGH_COUNTRIES, $this->data);
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function updateWith(array $data): self
+    {
+        return self::create(array_replace_recursive($this->data, $data));
     }
 
     /**

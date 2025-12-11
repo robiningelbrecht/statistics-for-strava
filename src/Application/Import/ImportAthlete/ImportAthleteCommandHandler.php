@@ -25,6 +25,8 @@ final readonly class ImportAthleteCommandHandler implements CommandHandler
         assert($command instanceof ImportAthlete);
         $command->getOutput()->writeln('Importing athlete...');
 
+        $this->strava->setConsoleOutput($command->getOutput());
+
         $athlete = $this->strava->getAthlete();
         $this->athleteRepository->save(Athlete::create([
             ...$athlete,
