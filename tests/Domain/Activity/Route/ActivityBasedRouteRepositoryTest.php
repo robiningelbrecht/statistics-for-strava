@@ -56,7 +56,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
                 ->withPolyline('line')
-                ->withRouteGeography(null)
+                ->withRouteGeography(RouteGeography::create([]))
                 ->build(),
             rawData: []
         ));
