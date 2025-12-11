@@ -50,10 +50,6 @@ final readonly class RouteGeography implements \JsonSerializable
         return array_key_exists(self::PASSED_TROUGH_COUNTRIES, $this->data);
     }
 
-    public function getPassedThroughCountries(): array{
-        return $this->data['passed_through_countries'] ?? [];
-    }
-
     /**
      * @return array<string, mixed>
      */
