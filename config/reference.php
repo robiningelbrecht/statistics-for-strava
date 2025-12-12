@@ -687,6 +687,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         options?: list<mixed>,
  *         visibility?: scalar|null, // Default: null
  *         directory_visibility?: scalar|null, // Default: null
+ *         retain_visibility?: bool|null, // Default: null
  *         case_sensitive?: bool, // Default: true
  *         disable_asserts?: bool, // Default: false
  *         public_url?: list<scalar|null>,

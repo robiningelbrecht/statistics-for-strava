@@ -11,11 +11,9 @@ use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Yaml\Yaml;
@@ -30,11 +28,17 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
     public function testHandleWithTooManyRequests(): void
     {
         $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(4);
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(2);
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(
             ImportedGearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build()
+        );
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659792'))
                 ->build()
         );
 
@@ -55,6 +59,12 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ImportedGearRepository::class)->save(
             ImportedGearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build()
+        );
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659792'))
                 ->build()
         );
 
@@ -89,11 +99,16 @@ customGears:
 YML
             )),
             $this->getContainer()->get(StravaDataImportStatus::class),
-            PausedClock::on(SerializableDateTime::some()),
         );
 
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(10000);
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
+                ->build()
+        );
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(
             ImportedGearBuilder::fromDefaults()

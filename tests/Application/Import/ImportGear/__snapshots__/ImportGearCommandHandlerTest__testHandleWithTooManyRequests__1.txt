@@ -1,4 +1,3 @@
 Importing gear...
-  => Imported/updated gear "Retro Race Bike"
-  => Imported/updated gear "Zwift Hub"
+  => Updated gear "Elite Direto XR-T ☠️"
 <error>You reached the daily Strava API rate limit. You will need to import the rest of your data tomorrow</error>
