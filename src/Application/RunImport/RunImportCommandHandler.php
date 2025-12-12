@@ -15,7 +15,7 @@ use App\Application\Import\ImportActivitySplits\ImportActivitySplits;
 use App\Application\Import\ImportActivityStreams\ImportActivityStreams;
 use App\Application\Import\ImportAthlete\ImportAthlete;
 use App\Application\Import\ImportChallenges\ImportChallenges;
-use App\Application\Import\ImportGear\ImportGear;
+use App\Application\Import\ImportExistingGear\ImportExistingGear;
 use App\Application\Import\ImportSegments\ImportSegments;
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Domain\Strava\Strava;
@@ -51,7 +51,7 @@ final readonly class RunImportCommandHandler implements CommandHandler
         }
 
         $this->commandBus->dispatch(new ImportAthlete($output));
-        $this->commandBus->dispatch(new ImportGear($output));
+        $this->commandBus->dispatch(new ImportExistingGear($output));
         $this->commandBus->dispatch(new ImportActivities($output));
         $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
         $this->commandBus->dispatch(new ImportActivitySplits($output));

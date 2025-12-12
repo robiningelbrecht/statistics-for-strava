@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Import\ImportGear;
+namespace App\Application\Import\ImportExistingGear;
 
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
@@ -17,7 +17,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
-final readonly class ImportGearCommandHandler implements CommandHandler
+final readonly class ImportExistingGearCommandHandler implements CommandHandler
 {
     public function __construct(
         private Strava $strava,
@@ -30,7 +30,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
     public function handle(Command $command): void
     {
-        assert($command instanceof ImportGear);
+        assert($command instanceof ImportExistingGear);
         $command->getOutput()->writeln('Importing gear...');
 
         $this->strava->setConsoleOutput($command->getOutput());

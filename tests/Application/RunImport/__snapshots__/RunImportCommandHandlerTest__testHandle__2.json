@@ -6,7 +6,7 @@
         }
     },
     {
-        "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
+        "commandName": "App\\Application\\Import\\ImportExistingGear\\ImportExistingGear",
         "payload": {
             "output": {}
         }

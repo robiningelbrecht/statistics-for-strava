@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Import\ImportGear;
+namespace App\Application\Import\ImportExistingGear;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class ImportGear extends DomainCommand
+final readonly class ImportExistingGear extends DomainCommand
 {
     public function __construct(
         private OutputInterface $output,

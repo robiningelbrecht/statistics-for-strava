@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Import\ImportGear;
+namespace App\Tests\Application\Import\ImportExistingGear;
 
-use App\Application\Import\ImportGear\ImportGear;
-use App\Application\Import\ImportGear\ImportGearCommandHandler;
+use App\Application\Import\ImportExistingGear\ImportExistingGear;
+use App\Application\Import\ImportExistingGear\ImportExistingGearCommandHandler;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
@@ -18,7 +18,7 @@ use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Yaml\Yaml;
 
-class ImportGearCommandHandlerTest extends ContainerTestCase
+class ImportExistingGearCommandHandlerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
@@ -42,7 +42,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->commandBus->dispatch(new ImportGear($output));
+        $this->commandBus->dispatch(new ImportExistingGear($output));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -68,7 +68,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->commandBus->dispatch(new ImportGear($output));
+        $this->commandBus->dispatch(new ImportExistingGear($output));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -79,7 +79,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
 
     public function testHandleWithDuplicateGearIds(): void
     {
-        $ImportGearCommandHandler = new ImportGearCommandHandler(
+        $ImportGearCommandHandler = new ImportExistingGearCommandHandler(
             $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(ImportedGearRepository::class),
             $this->getContainer()->get(CustomGearRepository::class),
@@ -116,7 +116,7 @@ YML
                 ->build()
         );
 
-        $ImportGearCommandHandler->handle(new ImportGear($output));
+        $ImportGearCommandHandler->handle(new ImportExistingGear($output));
 
         $this->assertMatchesTextSnapshot($output);
         $this->assertEmpty(
