@@ -25,11 +25,6 @@ final readonly class RouteGeography implements \JsonSerializable
         return new self($data);
     }
 
-    public function isEmpty(): bool
-    {
-        return empty($this->data);
-    }
-
     public function getStartingPointCountryCode(): ?string
     {
         return $this->data['country_code'] ?? null;
