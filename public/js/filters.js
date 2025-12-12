@@ -125,7 +125,12 @@ export class FilterManager {
                 }
 
                 // Single radio or text filter.
-                row.active = row.active &&  filterValue?.toLowerCase() === activeFilter;
+                row.active = row.active &&
+                    (
+                        Array.isArray(filterValue)
+                            ? filterValue.map(v => v.toLowerCase()).includes(activeFilter)
+                            : filterValue?.toLowerCase() === activeFilter
+                    );
             }
         });
         return rows;

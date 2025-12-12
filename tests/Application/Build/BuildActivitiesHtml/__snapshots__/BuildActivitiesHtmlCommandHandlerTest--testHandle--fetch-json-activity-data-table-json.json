@@ -61,7 +61,9 @@
         "filterables": {
             "sportType": "Ride",
             "start-date": 1693947938000,
-            "countryCode": "be",
+            "countryCode": [
+                "be"
+            ],
             "isCommute": "false",
             "gear": "gear-none",
             "device": "polar-vantage-m"

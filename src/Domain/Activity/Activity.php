@@ -671,14 +671,14 @@ final class Activity implements SupportsAITooling
     }
 
     /**
-     * @return array<string, string|int>
+     * @return array<string, string|int|string[]>
      */
     public function getFilterables(): array
     {
         return array_filter([
             'sportType' => $this->getSportType()->value,
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
-            'countryCode' => $this->getRouteGeography()->getStartingPointCountryCode(),
+            'countryCode' => $this->getRouteGeography()->getPassedThroughCountries(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,

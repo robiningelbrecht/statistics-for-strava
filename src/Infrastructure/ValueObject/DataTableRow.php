@@ -10,7 +10,7 @@ final readonly class DataTableRow implements \JsonSerializable
         private string $markup,
         /** @var string[] */
         private array $searchables,
-        /** @var array<string, string|int> */
+        /** @var array<string, string|int|string[]> */
         private array $filterables,
         /** @var array<string, string|int|float> */
         private array $sortValues,
@@ -20,10 +20,10 @@ final readonly class DataTableRow implements \JsonSerializable
     }
 
     /**
-     * @param string[]                        $searchables
-     * @param array<string, string|int>       $filterables
-     * @param array<string, string|int|float> $sortValues
-     * @param array<string, string|int|float> $summables
+     * @param string[]                           $searchables
+     * @param array<string, string|int|string[]> $filterables
+     * @param array<string, string|int|float>    $sortValues
+     * @param array<string, string|int|float>    $summables
      */
     public static function create(
         string $markup,
@@ -63,7 +63,7 @@ final readonly class DataTableRow implements \JsonSerializable
     }
 
     /**
-     * @return array<string, string|int>
+     * @return array<string, string|int|string[]>
      */
     public function getFilterables(): array
     {
