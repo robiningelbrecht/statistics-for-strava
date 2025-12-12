@@ -42,7 +42,6 @@ final readonly class DownloadActivityImages implements ActivityImportStep
                     continue;
                 }
 
-                /** @var string $urlPath */
                 $uri = new Uri($photo['urls'][5000]);
                 $extension = pathinfo($uri->getPath(), PATHINFO_EXTENSION);
 
