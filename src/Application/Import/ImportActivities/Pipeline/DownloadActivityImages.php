@@ -7,6 +7,7 @@ use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use League\Flysystem\FilesystemOperator;
+use Uri\Rfc3986\Uri;
 
 final readonly class DownloadActivityImages implements ActivityImportStep
 {
@@ -42,8 +43,9 @@ final readonly class DownloadActivityImages implements ActivityImportStep
                 }
 
                 /** @var string $urlPath */
-                $urlPath = parse_url((string) $photo['urls'][5000], PHP_URL_PATH);
-                $extension = pathinfo($urlPath, PATHINFO_EXTENSION);
+                $uri = new Uri($photo['urls'][5000]);
+                $extension = pathinfo($uri->getPath(), PATHINFO_EXTENSION);
+
                 $fileSystemPath = sprintf('activities/%s.%s', $this->uuidFactory->random(), $extension);
                 $this->fileStorage->write(
                     $fileSystemPath,
