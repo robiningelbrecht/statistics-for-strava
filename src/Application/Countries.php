@@ -27,9 +27,18 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT LOWER(JSON_EXTRACT(routeGeography, '$.country_code')) as countryCode
-            FROM Activity
-            WHERE JSON_EXTRACT(routeGeography, '$.country_code') IS NOT NULL
+            SELECT DISTINCT countryCode
+            FROM (
+                 SELECT JSON_EXTRACT(routeGeography, '$.country_code') AS countryCode
+                 FROM Activity
+
+                 UNION ALL
+
+                 SELECT value AS countryCode
+                 FROM Activity,
+                     json_each(JSON_EXTRACT(routeGeography, '$.passed_trough_countries'))
+                 )
+            WHERE countryCode IS NOT NULL
             SQL
         )->fetchFirstColumn();
 
@@ -43,10 +52,19 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT LOWER(JSON_EXTRACT(routeGeography, '$.country_code')) as countryCode
-            FROM Activity
-            WHERE JSON_EXTRACT(routeGeography, '$.country_code') IS NOT NULL
-            AND totalImageCount > 0
+            SELECT DISTINCT countryCode
+            FROM (
+                 SELECT JSON_EXTRACT(routeGeography, '$.country_code') AS countryCode
+                 FROM Activity WHERE totalImageCount > 0
+
+                 UNION ALL
+
+                 SELECT value AS countryCode
+                 FROM Activity, 
+                     JSON_EACH(JSON_EXTRACT(routeGeography, '$.passed_trough_countries'))
+                 WHERE totalImageCount > 0
+                 )
+            WHERE countryCode IS NOT NULL
             SQL
         )->fetchFirstColumn();
 
@@ -60,7 +78,7 @@ final readonly class Countries
     {
         $results = $this->connection->executeQuery(
             <<<SQL
-            SELECT DISTINCT LOWER(countryCode)
+            SELECT DISTINCT countryCode
             FROM Segment
             WHERE countryCode IS NOT NULL
             SQL
@@ -87,7 +105,8 @@ final readonly class Countries
     {
         $countries = [];
         foreach ($results as $countryCode) {
-            if ('xk' === strtolower((string) $countryCode)) {
+            $countryCode = strtolower($countryCode);
+            if ('xk' === $countryCode) {
                 // Currently Symfony does not support Kosovo as a country.
                 // Need to wait until this commit is released in Symfony 7.4:
                 // https://github.com/symfony/symfony/issues/40020
@@ -95,7 +114,7 @@ final readonly class Countries
                 continue;
             }
             $countries[$countryCode] = SymfonyCountries::getName(
-                country: strtoupper((string) $countryCode),
+                country: strtoupper($countryCode),
                 displayLocale: $this->localeSwitcher->getLocale()
             );
         }
