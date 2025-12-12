@@ -54,6 +54,17 @@ final readonly class RouteGeography implements \JsonSerializable
     }
 
     /**
+     * @return string[]
+     */
+    public function getPassedThroughCountries(): array
+    {
+        return array_values(array_unique(array_map(
+            strtolower(...),
+            array_filter([$this->getStartingPointCountryCode() ?? null, ...$this->data[self::PASSED_TROUGH_COUNTRIES] ?? []])
+        )));
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
