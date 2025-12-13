@@ -2,9 +2,5 @@
     {
         "key": "lock.importDataOrBuildApp",
         "value": "{\"heartbeat\":1764806400,\"lockAcquiredBy\":\"test\"}"
-    },
-    {
-        "key": "stravaGearImport",
-        "value": "20205-01_18"
     }
 ]
