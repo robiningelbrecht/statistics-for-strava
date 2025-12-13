@@ -2,18 +2,22 @@
 
 namespace App\Tests\Application\RunBuild;
 
+use App\Application\Import\ImportGear\GearImportStatus;
 use App\Application\RunBuild\RunBuild;
 use App\Application\RunBuild\RunBuildCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Gear\GearId;
+use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
@@ -36,6 +40,34 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->withGearId(GearId::fromUnprefixed(4))
+                ->build(), []
+        ));
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed(4))
+                ->build()
+        );
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('isAtLatestVersion')
+            ->willReturn(true);
+
+        $output = new SpyOutput();
+        $this->buildAppCommandHandler->handle(new RunBuild(
+            output: new SymfonyStyle(new StringInput('input'), $output),
+        ));
+        $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+    }
+
+    public function testHandleWhenNotAllGearHasBeenImportedYet(): void
+    {
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->withGearId(GearId::fromUnprefixed(4))
                 ->build(), []
         ));
 
@@ -49,7 +81,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
-        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
     public function testHandleWhenStravaImportIsNotCompleted(): void
@@ -90,6 +121,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->buildAppCommandHandler = new RunBuildCommandHandler(
             commandBus: $this->commandBus = new SpyCommandBus(),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
         );
