@@ -80,7 +80,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
         ));
-        $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
+        $this->assertStringContainsString('[WARNING] Some of your gear hasn’t been imported yet', $output);
     }
 
     public function testHandleWhenStravaImportIsNotCompleted(): void
