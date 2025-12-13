@@ -91,7 +91,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                 );
             }
             $this->importedGearRepository->save($gear);
-            $command->getOutput()->writeln(sprintf('  => Imported/updated gear "%s"', $gear->getName()));
+            $command->getOutput()->writeln(sprintf('  => Imported gear "%s"', $gear->getName()));
         }
 
         if ($this->customGearConfig->isFeatureEnabled()) {
@@ -103,7 +103,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
             foreach ($customGearsDefinedInConfig as $customGear) {
                 $this->customGearRepository->save($customGear);
-                $command->getOutput()->writeln(sprintf('  => Imported/updated custom gear "%s"', $customGear->getName()));
+                $command->getOutput()->writeln(sprintf('  => Imported custom gear "%s"', $customGear->getName()));
             }
         }
     }
