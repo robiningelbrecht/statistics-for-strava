@@ -25,20 +25,14 @@ use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
-use App\Infrastructure\KeyValue\Key;
-use App\Infrastructure\KeyValue\KeyValue;
-use App\Infrastructure\KeyValue\KeyValueStore;
-use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Repository\Pagination;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -68,36 +62,10 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     private ImportActivitiesCommandHandler $importActivitiesCommandHandler;
     private SpyStrava $strava;
 
-    public function testHandleWithNotAllGearImported(): void
-    {
-        $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
-
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(4))
-                ->withStartingCoordinate(Coordinate::createFromLatAndLng(
-                    Latitude::fromString('51.2'),
-                    Longitude::fromString('3.18')
-                ))
-                ->build(), []
-        ));
-
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
-
-        $this->assertMatchesTextSnapshot((string) $output);
-        $this->assertFileSystemWritesAreEmpty($this->getContainer()->get('file.storage'));
-    }
-
     public function testHandleWithTooManyRequests(): void
     {
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(9);
-
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('20205-01_18'),
-        ));
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromString('gear-b12659861'))
@@ -135,11 +103,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
         $this->strava->triggerExceptionOnNextActivityCall();
 
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('20205-01_18'),
-        ));
-
         $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromString('gear-b12659861'))
             ->build()
@@ -153,11 +116,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     {
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
-
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('20205-01_18'),
-        ));
 
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -279,11 +237,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
 
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('20205-01_18'),
-        ));
-
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(100))
@@ -307,11 +260,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
 
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('2025-01_18'),
-        ));
-
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
@@ -329,8 +277,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            gearRepository: $this->getContainer()->get(GearRepository::class),
-            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             mutex: new Mutex(
                 connection: $this->getConnection(),
@@ -354,11 +300,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
 
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('2025-01-18'),
-        ));
-
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(2))
@@ -380,8 +321,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            gearRepository: $this->getContainer()->get(GearRepository::class),
-            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
             mutex: new Mutex(
                 connection: $this->getConnection(),
@@ -393,11 +332,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
-
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('2025-01-18'),
-        ));
 
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -425,8 +359,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            gearRepository: $this->getContainer()->get(GearRepository::class),
-            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             mutex: new Mutex(
                 connection: $this->getConnection(),
@@ -449,11 +381,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
-
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('2025-01_18'),
-        ));
 
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
@@ -480,8 +407,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            gearRepository: $this->getContainer()->get(GearRepository::class),
-            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             mutex: new Mutex(
                 connection: $this->getConnection(),

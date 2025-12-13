@@ -5,15 +5,11 @@ namespace App\Tests\Application\RunBuild;
 use App\Application\RunBuild\RunBuild;
 use App\Application\RunBuild\RunBuildCommandHandler;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
-use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
-use App\Infrastructure\KeyValue\Key;
-use App\Infrastructure\KeyValue\KeyValue;
-use App\Infrastructure\KeyValue\KeyValueStore;
-use App\Infrastructure\KeyValue\Value;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -37,11 +33,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
     public function testHandle(): void
     {
-        $this->getContainer()->get(KeyValueStore::class)->save(KeyValue::fromState(
-            Key::STRAVA_GEAR_IMPORT,
-            Value::fromString('yes')
-        ));
-
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
@@ -98,7 +89,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
         $this->buildAppCommandHandler = new RunBuildCommandHandler(
             commandBus: $this->commandBus = new SpyCommandBus(),
-            stravaDataImportStatus: $this->getContainer()->get(StravaDataImportStatus::class),
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
         );
