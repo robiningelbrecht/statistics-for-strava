@@ -57,6 +57,9 @@ final readonly class DistancePerMonthPerGearChart
             if (!$activity->getGearId()) {
                 continue;
             }
+            if (!array_key_exists((string) $activity->getGearId(), $distancePerGearAndMonth)) {
+                continue;
+            }
             $month = $activity->getStartDate()->format(Month::MONTH_ID_FORMAT);
             $distancePerGearAndMonth[(string) $activity->getGearId()][$month] += $activity->getDistance()->toUnitSystem($this->unitSystem)->toFloat();
         }
