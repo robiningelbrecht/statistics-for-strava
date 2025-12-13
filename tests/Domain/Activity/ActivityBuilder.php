@@ -117,7 +117,6 @@ final class ActivityBuilder
             routeGeography: $this->routeGeography,
             weather: $this->weather,
             gearId: $this->gearId,
-            gearName: $this->gearName,
             isCommute: $this->isCommute,
             workoutType: $this->workoutType,
         );

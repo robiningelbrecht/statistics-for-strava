@@ -8,6 +8,7 @@ use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
+use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Infrastructure\Exception\EntityNotFound;
 
@@ -24,6 +25,7 @@ final class ActivitiesEnricher
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
+        private readonly GearRepository $gearRepository,
         private readonly GearMaintenanceConfig $gearMaintenanceConfig,
         private readonly CustomGearConfig $customGearConfig,
     ) {
@@ -36,8 +38,12 @@ final class ActivitiesEnricher
         $maintenanceTags = $this->gearMaintenanceConfig->getAllMaintenanceTags();
         $customGearTags = $this->customGearConfig->getAllGearTags();
         $activities = $this->activityRepository->findAll();
+        $gears = $this->gearRepository->findAll();
 
         foreach ($activities as $activity) {
+            if ($gearId = $activity->getGearId()) {
+                $activity->enrichWithGearName($gears->getByGearId($gearId)?->getName());
+            }
             $activity->enrichWithBestPowerOutputs(
                 $this->activityPowerRepository->findBest($activity->getId())
             );

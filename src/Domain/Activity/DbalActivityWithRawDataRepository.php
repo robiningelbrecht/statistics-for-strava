@@ -38,13 +38,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
-            polyline, routeGeography, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
+            polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
-            :polyline, :routeGeography, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
+            :polyline, :routeGeography, :weather, :gearId, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
         $activity = $activityWithRawData->getActivity();
@@ -77,7 +77,6 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'routeGeography' => Json::encode($activity->getRouteGeography()),
             'weather' => $activity->getWeather() ? Json::encode($activity->getWeather()) : null,
             'gearId' => $activity->getGearId(),
-            'gearName' => $activity->getGearName(),
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
             'isCommute' => (int) $activity->isCommute(),
             'streamsAreImported' => 0,
@@ -102,7 +101,6 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
                     startingCoordinateLongitude = :startingCoordinateLongitude,
                     routeGeography = :routeGeography,
                     gearId = :gearId, 
-                    gearName = :gearName,
                     totalImageCount = :totalImageCount,
                     localImagePaths = :localImagePaths,
                     data = :data,
@@ -127,7 +125,6 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'startingCoordinateLongitude' => $activity->getStartingCoordinate()?->getLongitude()->toFloat(),
             'routeGeography' => Json::encode($activity->getRouteGeography()),
             'gearId' => $activity->getGearId(),
-            'gearName' => $activity->getGearName(),
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
             'isCommute' => (int) $activity->isCommute(),

@@ -8,7 +8,6 @@ use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\SkipInvalidActivity;
 use App\Application\Import\ImportActivities\SkipActivityImport;
 use App\Domain\Activity\SportType\SportTypesToImport;
-use App\Domain\Gear\Gears;
 use PHPUnit\Framework\TestCase;
 
 class SkipInvalidActivityTest extends TestCase
@@ -22,7 +21,7 @@ class SkipInvalidActivityTest extends TestCase
             skipActivitiesRecordedBefore: null,
         );
 
-        $context = ActivityImportContext::create(['sport_type' => 'Run'], Gears::empty());
+        $context = ActivityImportContext::create(['sport_type' => 'Run']);
 
         $this->expectExceptionObject(new SkipActivityImport());
 

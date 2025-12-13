@@ -6,6 +6,7 @@ use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearIds;
 use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
@@ -191,6 +192,19 @@ final class DbalActivityRepository implements ActivityRepository
         ));
     }
 
+    public function findUniqueGearIds(): GearIds
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('DISTINGT gearId')
+            ->from('Activity')
+            ->andWhere('gearId IS NOT NULL');
+
+        return GearIds::fromArray(array_map(
+            GearId::fromString(...),
+            $queryBuilder->executeQuery()->fetchFirstColumn(),
+        ));
+    }
+
     public function findActivityIdsThatNeedStreamImport(): ActivityIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
@@ -240,7 +254,6 @@ final class DbalActivityRepository implements ActivityRepository
             routeGeography: RouteGeography::create(Json::decode($result['routeGeography'] ?? '[]')),
             weather: $result['weather'],
             gearId: GearId::fromOptionalString($result['gearId']),
-            gearName: $result['gearName'],
             isCommute: (bool) $result['isCommute'],
             workoutType: WorkoutType::tryFrom($result['workoutType'] ?? ''),
         );

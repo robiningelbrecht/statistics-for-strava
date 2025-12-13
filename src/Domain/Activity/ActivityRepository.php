@@ -3,6 +3,7 @@
 namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportTypes;
+use App\Domain\Gear\GearIds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 
@@ -25,6 +26,8 @@ interface ActivityRepository
     public function delete(Activity $activity): void;
 
     public function findActivityIds(): ActivityIds;
+
+    public function findUniqueGearIds(): GearIds;
 
     public function findActivityIdsThatNeedStreamImport(): ActivityIds;
 }

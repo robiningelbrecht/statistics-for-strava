@@ -95,10 +95,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
                 $activityRawData = $activityWithRawData->getRawData();
 
                 // Link activity to custom gear.
-                $activity->updateGear(
-                    gearId: $customGear->getId(),
-                    gearName: $customGear->getName()
-                );
+                $activity->updateGear($customGear->getId());
 
                 // Keep track of the distance for the custom gear.
                 $customGear->updateDistance(Kilometer::from(

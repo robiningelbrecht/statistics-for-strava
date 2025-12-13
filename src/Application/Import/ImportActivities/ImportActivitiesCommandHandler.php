@@ -9,10 +9,8 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
-use App\Domain\Gear\GearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Daemon\Mutex\LockName;
@@ -28,8 +26,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private Strava $strava,
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
-        private GearRepository $gearRepository,
-        private StravaDataImportStatus $stravaDataImportStatus,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private Mutex $mutex,
         private ActivityImportPipeline $activityImportPipeline,
@@ -43,13 +39,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        if (!$this->stravaDataImportStatus->gearImportIsCompleted()) {
-            $command->getOutput()->writeln('<error>Not all gear has been imported yet, activities cannot be imported</error>');
-
-            return;
-        }
-
-        $allGears = $this->gearRepository->findAll();
         $allActivityIds = $this->activityRepository->findActivityIds();
         $activityIdsToDelete = array_combine(
             $allActivityIds->map(fn (ActivityId $activityId): string => (string) $activityId),
@@ -72,10 +61,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 continue;
             }
 
-            $context = ActivityImportContext::create(
-                rawStravaData: $stravaActivity,
-                allGear: $allGears,
-            );
+            $context = ActivityImportContext::create($stravaActivity);
 
             try {
                 $context = $this->activityImportPipeline->process($context);

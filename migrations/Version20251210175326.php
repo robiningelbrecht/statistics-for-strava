@@ -22,6 +22,7 @@ final class Version20251210175326 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('UPDATE Activity SET location = JSON_SET(location, "$.is_reverse_geocoded", true)');
         $this->addSql('ALTER TABLE Activity RENAME COLUMN location TO routeGeography');
+        $this->addSql('ALTER TABLE Activity DROP COLUMN gearName');
     }
 
     public function down(Schema $schema): void

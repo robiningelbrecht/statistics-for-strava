@@ -5,7 +5,6 @@ namespace App\Tests\Application\Import\ImportActivities\Pipeline;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\DetermineActivityWeather;
 use App\Domain\Activity\SportType\SportType;
-use App\Domain\Gear\Gears;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -22,7 +21,7 @@ class DetermineActivityWeatherTest extends ContainerTestCase
 
     public function testProcessWithoutActivityStartingCoordinate(): void
     {
-        $context = ActivityImportContext::create([], Gears::empty())
+        $context = ActivityImportContext::create([])
             ->withIsNewActivity(true)
             ->withActivity(
                 ActivityBuilder::fromDefaults()
@@ -39,7 +38,7 @@ class DetermineActivityWeatherTest extends ContainerTestCase
 
     public function testProcessWhenApiCallHasFailed(): void
     {
-        $context = ActivityImportContext::create([], Gears::empty())
+        $context = ActivityImportContext::create([])
             ->withIsNewActivity(true)
             ->withActivity(
                 ActivityBuilder::fromDefaults()

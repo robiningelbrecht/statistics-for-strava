@@ -3,14 +3,12 @@
 namespace App\Application\Import\ImportActivities\Pipeline;
 
 use App\Domain\Activity\Activity;
-use App\Domain\Gear\Gears;
 
 final readonly class ActivityImportContext
 {
     private function __construct(
         /** @var array<string, mixed> */
         private array $rawStravaData,
-        private Gears $allGear,
         private ?bool $isNewActivity,
         private ?Activity $activity,
     ) {
@@ -19,11 +17,10 @@ final readonly class ActivityImportContext
     /**
      * @param array<string, mixed> $rawStravaData
      */
-    public static function create(array $rawStravaData, Gears $allGear): self
+    public static function create(array $rawStravaData): self
     {
         return new self(
             rawStravaData: $rawStravaData,
-            allGear: $allGear,
             isNewActivity: null,
             activity: null,
         );
@@ -49,11 +46,6 @@ final readonly class ActivityImportContext
     public function getRawStravaData(): array
     {
         return $this->rawStravaData;
-    }
-
-    public function getAllGear(): Gears
-    {
-        return $this->allGear;
     }
 
     public function isNewActivity(): ?bool

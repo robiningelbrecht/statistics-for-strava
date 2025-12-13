@@ -2,16 +2,15 @@
 
 namespace App\Application\Import\ImportGear;
 
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearIds;
 use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -26,8 +25,8 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         private Strava $strava,
         private ImportedGearRepository $importedGearRepository,
         private CustomGearRepository $customGearRepository,
+        private ActivityRepository $activityRepository,
         private CustomGearConfig $customGearConfig,
-        private StravaDataImportStatus $stravaDataImportStatus,
         private Clock $clock,
     ) {
     }
@@ -39,10 +38,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $stravaGearIds = GearIds::fromArray(array_unique(array_filter(array_map(
-            fn (array $activity): ?GearId => GearId::fromOptionalUnprefixed($activity['gear_id']),
-            $this->strava->getActivities(),
-        ))));
+        $stravaGearIds = $this->activityRepository->findUniqueGearIds();
 
         if ($this->customGearConfig->isFeatureEnabled()) {
             /** @var GearId $customGearId */
@@ -55,7 +51,6 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                     '<error>Custom gear id "%s" conflicts with Strava gear id, please change the custom gear id.</error>',
                     $customGearId
                 ));
-                $this->stravaDataImportStatus->markGearImportAsUncompleted();
 
                 return;
             }
@@ -69,8 +64,6 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
                 return;
             } catch (ClientException|RequestException $exception) {
-                $this->stravaDataImportStatus->markGearImportAsUncompleted();
-
                 if (!$exception->getResponse()) {
                     // Re-throw, we only want to catch supported error codes.
                     throw $exception;
@@ -113,7 +106,5 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                 $command->getOutput()->writeln(sprintf('  => Imported/updated custom gear "%s"', $customGear->getName()));
             }
         }
-
-        $this->stravaDataImportStatus->markGearImportAsCompleted();
     }
 }

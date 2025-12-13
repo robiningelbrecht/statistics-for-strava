@@ -4,7 +4,6 @@ namespace App\Tests\Application\Import\ImportActivities\Pipeline;
 
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\DownloadActivityImages;
-use App\Domain\Gear\Gears;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use App\Tests\ContainerTestCase;
@@ -18,7 +17,7 @@ class DownloadActivityImagesTest extends ContainerTestCase
 
     public function testProcessWhenImagesShouldNotBeDownloaded(): void
     {
-        $context = ActivityImportContext::create(['total_photo_count' => 3], Gears::empty())
+        $context = ActivityImportContext::create(['total_photo_count' => 3])
             ->withIsNewActivity(false)
             ->withActivity(
                 ActivityBuilder::fromDefaults()

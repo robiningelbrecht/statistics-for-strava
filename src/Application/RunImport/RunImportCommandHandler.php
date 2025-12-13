@@ -51,8 +51,8 @@ final readonly class RunImportCommandHandler implements CommandHandler
         }
 
         $this->commandBus->dispatch(new ImportAthlete($output));
-        $this->commandBus->dispatch(new ImportGear($output));
         $this->commandBus->dispatch(new ImportActivities($output));
+        $this->commandBus->dispatch(new ImportGear($output));
         $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
         $this->commandBus->dispatch(new ImportActivitySplits($output));
         $this->commandBus->dispatch(new ImportActivityLaps($output));

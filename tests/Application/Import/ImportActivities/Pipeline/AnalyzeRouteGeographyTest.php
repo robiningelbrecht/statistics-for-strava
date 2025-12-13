@@ -8,7 +8,6 @@ use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorldType;
-use App\Domain\Gear\Gears;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -25,7 +24,7 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
 
     public function testProcessWhenUnableToReverseGeocode(): void
     {
-        $context = ActivityImportContext::create([], Gears::empty())
+        $context = ActivityImportContext::create([])
             ->withActivity(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::RIDE)
@@ -49,7 +48,7 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
 
     public function testProcessZwiftActivity(): void
     {
-        $context = ActivityImportContext::create([], Gears::empty())
+        $context = ActivityImportContext::create([])
             ->withActivity(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::VIRTUAL_RIDE)

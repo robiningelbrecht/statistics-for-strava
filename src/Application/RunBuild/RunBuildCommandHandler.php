@@ -22,7 +22,7 @@ use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
 use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
-use App\Domain\Strava\StravaDataImportStatus;
+use App\Domain\Activity\ActivityRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -33,7 +33,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 {
     public function __construct(
         private CommandBus $commandBus,
-        private StravaDataImportStatus $stravaDataImportStatus,
+        private ActivityRepository $activityRepository,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
     ) {
@@ -49,7 +49,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 
             return;
         }
-        if (!$this->stravaDataImportStatus->isCompleted()) {
+        if ($this->activityRepository->count() <= 0) {
             $output->writeln('<error>Wait until all Strava data has been imported before building the app</error>');
 
             return;
