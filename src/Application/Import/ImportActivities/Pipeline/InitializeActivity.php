@@ -28,7 +28,6 @@ final readonly class InitializeActivity implements ActivityImportStep
     public function process(ActivityImportContext $context): ActivityImportContext
     {
         $rawStravaData = $context->getRawStravaData();
-        $allGears = $context->getAllGear();
         $activityId = ActivityId::fromUnprefixed((string) $rawStravaData['id']);
         $sportType = SportType::from($rawStravaData['sport_type']);
 
@@ -50,10 +49,7 @@ final readonly class InitializeActivity implements ActivityImportStep
                     Longitude::fromOptionalString($rawStravaData['start_latlng'][1] ?? null),
                 ))
                 ->updatePolyline($rawStravaData['map']['summary_polyline'] ?? null)
-                ->updateGear(
-                    $gearId,
-                    $gearId ? $allGears->getByGearId($gearId)?->getName() : null
-                )
+                ->updateGear($gearId)
                 ->updateWorkoutType(WorkoutType::fromStravaInt($rawStravaData['workout_type'] ?? null));
 
             if (array_key_exists('commute', $rawStravaData)) {
@@ -67,12 +63,7 @@ final readonly class InitializeActivity implements ActivityImportStep
         }
 
         $rawStravaData = $this->strava->getActivity($activityId);
-        $gearId = GearId::fromOptionalUnprefixed($rawStravaData['gear_id'] ?? null);
-        $activity = Activity::createFromRawData(
-            rawData: $rawStravaData,
-            gearId: $gearId,
-            gearName: $gearId ? $allGears->getByGearId($gearId)?->getName() : null
-        );
+        $activity = Activity::createFromRawData($rawStravaData);
 
         return $context
             ->withActivity($activity)

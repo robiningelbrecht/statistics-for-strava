@@ -6,13 +6,13 @@
         }
     },
     {
-        "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
+        "commandName": "App\\Application\\Import\\ImportActivities\\ImportActivities",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\Import\\ImportActivities\\ImportActivities",
+        "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
         "payload": {
             "output": {}
         }

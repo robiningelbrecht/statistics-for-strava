@@ -44,6 +44,7 @@ final class Activity implements SupportsAITooling
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
     private ?int $normalizedPower = null;
+    private ?string $gearName = null;
     /** @var string[] */
     private array $tags = [];
 
@@ -113,8 +114,6 @@ final class Activity implements SupportsAITooling
         private ?string $weather,
         #[ORM\Column(type: 'string', nullable: true)]
         private ?GearId $gearId,
-        #[ORM\Column(type: 'string', nullable: true)]
-        private ?string $gearName,
         #[ORM\Column(type: 'boolean', nullable: true)]
         private bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -125,11 +124,8 @@ final class Activity implements SupportsAITooling
     /**
      * @param array<mixed> $rawData
      */
-    public static function createFromRawData(
-        array $rawData,
-        ?GearId $gearId,
-        ?string $gearName,
-    ): self {
+    public static function createFromRawData(array $rawData): self
+    {
         $startDate = SerializableDateTime::createFromFormat(
             format: Activity::DATE_TIME_FORMAT,
             datetime: $rawData['start_date_local'],
@@ -174,8 +170,7 @@ final class Activity implements SupportsAITooling
             polyline: $rawData['map']['summary_polyline'] ?? null,
             routeGeography: RouteGeography::create([]),
             weather: null,
-            gearId: $gearId,
-            gearName: $gearName,
+            gearId: GearId::fromOptionalUnprefixed($rawData['gear_id'] ?? null),
             isCommute: $rawData['commute'] ?? false,
             workoutType: WorkoutType::fromStravaInt($rawData['workout_type'] ?? null),
         );
@@ -211,7 +206,6 @@ final class Activity implements SupportsAITooling
         RouteGeography $routeGeography,
         ?string $weather,
         ?GearId $gearId,
-        ?string $gearName,
         bool $isCommute,
         ?WorkoutType $workoutType,
     ): self {
@@ -242,7 +236,6 @@ final class Activity implements SupportsAITooling
             routeGeography: $routeGeography,
             weather: $weather,
             gearId: $gearId,
-            gearName: $gearName,
             isCommute: $isCommute,
             workoutType: $workoutType
         );
@@ -311,10 +304,8 @@ final class Activity implements SupportsAITooling
 
     public function updateGear(
         ?GearId $gearId = null,
-        ?string $gearName = null,
     ): self {
         $this->gearId = $gearId;
-        $this->gearName = $gearName;
 
         return $this;
     }
@@ -327,6 +318,11 @@ final class Activity implements SupportsAITooling
     public function getGearName(): ?string
     {
         return $this->gearName;
+    }
+
+    public function enrichWithGearName(?string $gearName): void
+    {
+        $this->gearName = $gearName;
     }
 
     public function hasDetailedPowerData(): bool
