@@ -3,9 +3,12 @@
 namespace App\Tests\Application\Import\LinkCustomGearToActivities;
 
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
+use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivitiesCommandHandler;
+use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
@@ -162,6 +165,21 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
 
         $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
         $this->assertMatchesTextSnapshot($output);
+    }
+
+    public function testHandleWhenFeatureIsDisabled(): void
+    {
+        $output = new SpyOutput();
+
+        new LinkCustomGearToActivitiesCommandHandler(
+            $this->getContainer()->get(ImportedGearRepository::class),
+            $this->getContainer()->get(CustomGearRepository::class),
+            $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            $this->getContainer()->get(ActivitiesEnricher::class),
+            CustomGearConfig::fromArray([])
+        )->handle(new LinkCustomGearToActivities($output));
+
+        $this->assertEmpty((string) $output);
     }
 
     #[\Override]
