@@ -4,15 +4,19 @@ namespace App\Tests\Application\Import\ImportGear;
 
 use App\Application\Import\ImportGear\ImportGear;
 use App\Application\Import\ImportGear\ImportGearCommandHandler;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Strava;
-use App\Domain\Strava\StravaDataImportStatus;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
@@ -30,13 +34,34 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
     public function testHandleWithTooManyRequests(): void
     {
         $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(4);
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(3);
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(
             ImportedGearBuilder::fromDefaults()
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('3'))
+                ->withGearId(GearId::fromUnprefixed('b12659792'))
+                ->build(),
+            []
+        ));
 
         $this->commandBus->dispatch(new ImportGear($output));
 
@@ -57,6 +82,27 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('3'))
+                ->withGearId(GearId::fromUnprefixed('b12659792'))
+                ->build(),
+            []
+        ));
 
         $this->commandBus->dispatch(new ImportGear($output));
 
@@ -73,6 +119,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(ImportedGearRepository::class),
             $this->getContainer()->get(CustomGearRepository::class),
+            $this->getContainer()->get(ActivityRepository::class),
             CustomGearConfig::fromArray(Yaml::parse(<<<YML
 enabled: true
 hashtagPrefix: 'sfs'
@@ -88,7 +135,6 @@ customGears:
     isRetired: false
 YML
             )),
-            $this->getContainer()->get(StravaDataImportStatus::class),
             PausedClock::on(SerializableDateTime::some()),
         );
 
@@ -97,9 +143,16 @@ YML
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(
             ImportedGearBuilder::fromDefaults()
-                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build()
         );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
+                ->build(),
+            []
+        ));
 
         $ImportGearCommandHandler->handle(new ImportGear($output));
 

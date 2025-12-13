@@ -195,7 +195,7 @@ final class DbalActivityRepository implements ActivityRepository
     public function findUniqueGearIds(): GearIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('DISTINGT gearId')
+        $queryBuilder->select('DISTINCT gearId')
             ->from('Activity')
             ->andWhere('gearId IS NOT NULL');
 
