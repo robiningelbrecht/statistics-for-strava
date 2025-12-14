@@ -4,6 +4,7 @@ namespace App\Tests\Application\Import\ImportActivities\Pipeline;
 
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\AnalyzeRouteGeography;
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Activity\SportType\SportType;
@@ -24,14 +25,16 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
 
     public function testProcessWhenUnableToReverseGeocode(): void
     {
-        $context = ActivityImportContext::create([])
-            ->withActivity(
-                ActivityBuilder::fromDefaults()
-                    ->withSportType(SportType::RIDE)
-                    ->withRouteGeography(RouteGeography::create(['test' => 'lol']))
-                    ->withStartingCoordinate(Coordinate::createFromLatAndLng(Latitude::fromString('10'), Longitude::fromString('20')))
+        $context = ActivityImportContext::create(
+            activityId: ActivityId::fromUnprefixed(1),
+            rawStravaData: []
+        )->withActivity(
+            ActivityBuilder::fromDefaults()
+                ->withSportType(SportType::RIDE)
+                ->withRouteGeography(RouteGeography::create(['test' => 'lol']))
+                ->withStartingCoordinate(Coordinate::createFromLatAndLng(Latitude::fromString('10'), Longitude::fromString('20')))
                 ->build()
-            );
+        );
 
         $this->nominatim
             ->expects($this->once())
@@ -48,16 +51,18 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
 
     public function testProcessZwiftActivity(): void
     {
-        $context = ActivityImportContext::create([])
-            ->withActivity(
-                ActivityBuilder::fromDefaults()
-                    ->withSportType(SportType::VIRTUAL_RIDE)
-                    ->withRouteGeography(RouteGeography::create(['test' => 'lol']))
-                    ->withWorldType(WorldType::ZWIFT)
-                    ->withStartingCoordinate(Coordinate::createFromLatAndLng(Latitude::fromString('-11.636883'), Longitude::fromString('166.972044')))
-                    ->withPolyline('line')
-                    ->build()
-            );
+        $context = ActivityImportContext::create(
+            activityId: ActivityId::fromUnprefixed(1),
+            rawStravaData: []
+        )->withActivity(
+            ActivityBuilder::fromDefaults()
+                ->withSportType(SportType::VIRTUAL_RIDE)
+                ->withRouteGeography(RouteGeography::create(['test' => 'lol']))
+                ->withWorldType(WorldType::ZWIFT)
+                ->withStartingCoordinate(Coordinate::createFromLatAndLng(Latitude::fromString('-11.636883'), Longitude::fromString('166.972044')))
+                ->withPolyline('line')
+                ->build()
+        );
 
         $this->nominatim
             ->expects($this->never())

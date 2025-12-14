@@ -61,7 +61,10 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 continue;
             }
 
-            $context = ActivityImportContext::create($stravaActivity);
+            $context = ActivityImportContext::create(
+                activityId: ActivityId::fromUnprefixed((string) $stravaActivity['id']),
+                rawStravaData: $stravaActivity
+            );
 
             try {
                 $context = $this->activityImportPipeline->process($context);

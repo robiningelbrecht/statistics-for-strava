@@ -7,6 +7,7 @@ use App\Application\Import\ImportActivities\ActivityVisibilitiesToImport;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\SkipInvalidActivity;
 use App\Application\Import\ImportActivities\SkipActivityImport;
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,10 @@ class SkipInvalidActivityTest extends TestCase
             skipActivitiesRecordedBefore: null,
         );
 
-        $context = ActivityImportContext::create(['sport_type' => 'Run']);
+        $context = ActivityImportContext::create(
+            activityId: ActivityId::fromUnprefixed(1),
+            rawStravaData: ['sport_type' => 'Run']
+        );
 
         $this->expectExceptionObject(new SkipActivityImport());
 

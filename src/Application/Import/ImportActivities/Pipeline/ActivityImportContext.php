@@ -3,27 +3,37 @@
 namespace App\Application\Import\ImportActivities\Pipeline;
 
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityId;
 
 final readonly class ActivityImportContext
 {
     private function __construct(
-        /** @var array<string, mixed> */
-        private array $rawStravaData,
+        private ActivityId $activityId,
+        /** @var array<string, mixed>|null */
+        private ?array $rawStravaData,
         private ?bool $isNewActivity,
         private ?Activity $activity,
     ) {
     }
 
     /**
-     * @param array<string, mixed> $rawStravaData
+     * @param array<string, mixed>|null $rawStravaData
      */
-    public static function create(array $rawStravaData): self
-    {
+    public static function create(
+        ActivityId $activityId,
+        ?array $rawStravaData,
+    ): self {
         return new self(
+            activityId: $activityId,
             rawStravaData: $rawStravaData,
             isNewActivity: null,
             activity: null,
         );
+    }
+
+    public function getActivityId(): ActivityId
+    {
+        return $this->activityId;
     }
 
     public function withIsNewActivity(bool $isNewActivity): self
@@ -45,7 +55,7 @@ final readonly class ActivityImportContext
      */
     public function getRawStravaData(): array
     {
-        return $this->rawStravaData;
+        return $this->rawStravaData ?? throw new RawStravaDataNotSet();
     }
 
     public function isNewActivity(): ?bool
