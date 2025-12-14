@@ -3,7 +3,6 @@
 namespace App\Application\Import\ImportActivities\Pipeline;
 
 use App\Domain\Activity\Activity;
-use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
@@ -28,7 +27,7 @@ final readonly class InitializeActivity implements ActivityImportStep
     public function process(ActivityImportContext $context): ActivityImportContext
     {
         $rawStravaData = $context->getRawStravaData();
-        $activityId = ActivityId::fromUnprefixed((string) $rawStravaData['id']);
+        $activityId = $context->getActivityId();
         $sportType = SportType::from($rawStravaData['sport_type']);
 
         try {

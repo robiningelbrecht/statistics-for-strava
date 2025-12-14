@@ -7,7 +7,6 @@ use App\Application\Import\ImportActivities\ActivityVisibilitiesToImport;
 use App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore;
 use App\Application\Import\ImportActivities\SkipActivityImport;
 use App\Domain\Activity\Activity;
-use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
@@ -46,8 +45,7 @@ final readonly class SkipInvalidActivity implements ActivityImportStep
             throw new SkipActivityImport();
         }
 
-        $activityId = ActivityId::fromUnprefixed((string) $rawStravaData['id']);
-        if ($this->activitiesToSkipDuringImport->has($activityId)) {
+        if ($this->activitiesToSkipDuringImport->has($context->getActivityId())) {
             throw new SkipActivityImport();
         }
 
