@@ -115,6 +115,10 @@ Each component represents a part of your gear that you want to track maintenance
 
 Adding the tag `#sfs-chain-lubed` to your Strava activity title will reset the maintenance task and counters from the next activity onwards.
 
+> [!NOTE]
+> This tag also serves as the initial trigger to start maintenance tracking
+> for a gear that is linked to a component.
+
 ## Gears
 
 Define your Strava gear and associate images to display in the UI.
