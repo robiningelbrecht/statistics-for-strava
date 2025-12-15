@@ -25,6 +25,14 @@ Keep track of your gear and stay on top of maintenance tasks with our **Gear Mai
 services:
   app:
     image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava
+    volumes:
+      - ./config:/var/www/config/app
+      # ...
+      - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
+  daemon:
+    image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava-daemon
     volumes:
       - ./config:/var/www/config/app
       # ...
