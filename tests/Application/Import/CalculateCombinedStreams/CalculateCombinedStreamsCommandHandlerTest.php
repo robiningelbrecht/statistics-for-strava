@@ -13,11 +13,14 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -164,10 +167,15 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         );
 
         new CalculateCombinedStreamsCommandHandler(
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(CombinedActivityStreamRepository::class),
-            $this->getContainer()->get(ActivityStreamRepository::class),
-            UnitSystem::IMPERIAL,
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            combinedActivityStreamRepository: $this->getContainer()->get(CombinedActivityStreamRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            unitSystem: UnitSystem::IMPERIAL,
+            mutex: new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            )
         )->handle(new CalculateCombinedStreams($output));
 
         $this->assertMatchesJsonSnapshot(
@@ -308,5 +316,9 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         parent::setUp();
 
         $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
+        );
     }
 }

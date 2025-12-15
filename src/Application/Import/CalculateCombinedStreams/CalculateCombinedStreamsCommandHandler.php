@@ -15,11 +15,15 @@ use App\Domain\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\Mutex\LockName;
+use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class CalculateCombinedStreamsCommandHandler implements CommandHandler
 {
     use ProvideTimeFormats;
@@ -29,6 +33,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private UnitSystem $unitSystem,
+        private Mutex $mutex,
     ) {
     }
 
@@ -203,7 +208,25 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 )
             );
             ++$activityWithCombinedStreamCalculatedCount;
+            $this->mutex->heartbeat();
+
+            if (0 !== $activityWithCombinedStreamCalculatedCount % 10) {
+                continue;
+            }
+
+            $command->getOutput()->writeln(sprintf(
+                '  => %d/%d combined activity streams calculated',
+                $activityWithCombinedStreamCalculatedCount,
+                count($activityIdsThatNeedCombining)
+            ));
         }
-        $command->getOutput()->writeln(sprintf('  => Calculated combined streams for %d activities', $activityWithCombinedStreamCalculatedCount));
+
+        if (0 !== $activityWithCombinedStreamCalculatedCount % 10) {
+            $command->getOutput()->writeln(sprintf(
+                '  => %d/%d combined activity streams calculated',
+                $activityWithCombinedStreamCalculatedCount,
+                count($activityIdsThatNeedCombining)
+            ));
+        }
     }
 }
