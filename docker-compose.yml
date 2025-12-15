@@ -48,6 +48,7 @@ services:
         - ./build:/var/www/build
         - ./storage/database:/var/www/storage/database
         - ./storage/files:/var/www/storage/files
+        - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
       env_file: ".env.local"
       healthcheck:
         test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/strava.db && echo 'ok' || exit 1" ]
