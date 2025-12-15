@@ -34,6 +34,8 @@ RUN set -eux; \
 
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
 COPY docker/app/config/Caddyfile /etc/frankenphp/Caddyfile
+COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -59,4 +61,5 @@ RUN tar -xzf shoutrrr.tar.gz
 RUN chmod +x shoutrrr
 RUN mv shoutrrr /usr/bin/shoutrrr && rm shoutrrr.tar.gz
 
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile" ]
