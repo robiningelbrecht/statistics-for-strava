@@ -27,7 +27,7 @@ interface ActivityRepository
 
     public function findActivityIds(): ActivityIds;
 
-    public function findUniqueGearIds(): GearIds;
+    public function findUniqueGearIds(?ActivityIds $restrictToActivityIds): GearIds;
 
     public function findActivityIdsThatNeedStreamImport(): ActivityIds;
 }

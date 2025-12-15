@@ -83,7 +83,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ]
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot((string) $output);
         $this->assertFileSystemWrites($this->getContainer()->get('file.storage'));
@@ -104,7 +104,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ->build()
         );
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
         $this->assertMatchesTextSnapshot((string) $output);
     }
 
@@ -185,7 +185,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(1001))
             ->build());
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -248,7 +248,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         ));
 
         $this->expectExceptionObject(new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss'));
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
     }
 
     public function testHandleWithoutActivityDelete(): void
@@ -262,7 +262,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
     }
@@ -295,7 +295,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -332,7 +332,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -374,7 +374,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
     }
@@ -408,7 +408,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->importActivitiesCommandHandler->handle(new ImportActivities($output));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
     }

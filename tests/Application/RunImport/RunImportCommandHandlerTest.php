@@ -36,6 +36,7 @@ class RunImportCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->importStravaDataCommandHandler->handle(new RunImport(
             output: new SymfonyStyle(new StringInput('input'), $output),
+            restrictToActivityIds: null,
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
@@ -57,6 +58,7 @@ class RunImportCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->importStravaDataCommandHandler->handle(new RunImport(
             output: new SymfonyStyle(new StringInput('input'), $output),
+            restrictToActivityIds: null,
         ));
         $this->assertMatchesTextSnapshot(str_replace(' ', '', $output));
     }

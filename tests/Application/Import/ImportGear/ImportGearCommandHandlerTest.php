@@ -63,7 +63,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
             []
         ));
 
-        $this->commandBus->dispatch(new ImportGear($output));
+        $this->commandBus->dispatch(new ImportGear($output, null));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -104,7 +104,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
             []
         ));
 
-        $this->commandBus->dispatch(new ImportGear($output));
+        $this->commandBus->dispatch(new ImportGear($output, null));
 
         $this->assertMatchesTextSnapshot($output);
 
@@ -154,7 +154,7 @@ YML
             []
         ));
 
-        $ImportGearCommandHandler->handle(new ImportGear($output));
+        $ImportGearCommandHandler->handle(new ImportGear($output, null));
 
         $this->assertMatchesTextSnapshot($output);
         $this->assertEmpty(
