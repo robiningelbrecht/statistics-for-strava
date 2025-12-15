@@ -17,6 +17,7 @@ use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\Split\ActivitySplitRepository;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Gear\GearId;
@@ -384,7 +385,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
+            numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: SportTypesToImport::from(['Ride']),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
             activitiesToSkipDuringImport: $this->getContainer()->get(ActivitiesToSkipDuringImport::class),
@@ -403,6 +404,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->withSportType(SportType::VIRTUAL_RIDE)
                 ->build(), []
         ));
 
