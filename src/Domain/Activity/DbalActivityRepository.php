@@ -192,12 +192,21 @@ final class DbalActivityRepository implements ActivityRepository
         ));
     }
 
-    public function findUniqueGearIds(): GearIds
+    public function findUniqueGearIds(?ActivityIds $restrictToActivityIds): GearIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('DISTINCT gearId')
             ->from('Activity')
             ->andWhere('gearId IS NOT NULL');
+
+        if ($restrictToActivityIds && !$restrictToActivityIds->isEmpty()) {
+            $queryBuilder->andWhere('activityId IN (:activityIds)');
+            $queryBuilder->setParameter(
+                key: 'activityIds',
+                value: array_map(strval(...), $restrictToActivityIds->toArray()),
+                type: ArrayParameterType::STRING
+            );
+        }
 
         return GearIds::fromArray(array_map(
             GearId::fromString(...),

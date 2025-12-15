@@ -8,13 +8,15 @@
     {
         "commandName": "App\\Application\\Import\\ImportActivities\\ImportActivities",
         "payload": {
-            "output": {}
+            "output": {},
+            "restrictToActivityIds": null
         }
     },
     {
         "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
         "payload": {
-            "output": {}
+            "output": {},
+            "restrictToActivityIds": null
         }
     },
     {

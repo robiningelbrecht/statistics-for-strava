@@ -53,12 +53,34 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             $allActivityIds->map(fn (ActivityId $activityId): string => (string) $activityId),
             $allActivityIds->toArray(),
         );
-        $stravaActivities = $this->strava->getActivities();
-        $countTotalStravaActivities = count($stravaActivities);
 
-        $command->getOutput()->writeln(
-            sprintf('Status: %d out of %d activities imported', count($allActivityIds), $countTotalStravaActivities)
-        );
+        try {
+            if ($command->isFullImport()) {
+                // No restriction on activity ids, we need to execute a full import.
+                $stravaActivities = $this->strava->getActivities();
+            } else {
+                // Restriction on activity ids, we want to execute a partial import.
+                $stravaActivities = array_map(
+                    $this->strava->getActivity(...),
+                    $command->getRestrictToActivityIds()->toArray()
+                );
+            }
+        } catch (StravaRateLimitHasBeenReached $exception) {
+            $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
+
+            return;
+        } catch (ClientException|RequestException $exception) {
+            $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
+
+            return;
+        }
+
+        $countTotalStravaActivitiesToImport = count($stravaActivities);
+        if ($command->isFullImport()) {
+            $command->getOutput()->writeln(
+                sprintf('Status: %d out of %d activities imported', count($allActivityIds), $countTotalStravaActivitiesToImport)
+            );
+        }
 
         $delta = 1;
         foreach ($stravaActivities as $rawStravaData) {
@@ -94,10 +116,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             }
 
             try {
-                $isNewActivity = false;
-                if (!$this->activityWithRawDataRepository->exists($activityId)) {
+                $isNewActivity = !$this->activityWithRawDataRepository->exists($activityId);
+                if ($isNewActivity && $command->isFullImport()) {
+                    // When a partial import is triggered we fetch the activity from Strava beforehand.
+                    // We only need to fetch activity details when running a full import.
                     $rawStravaData = $this->strava->getActivity($activityId);
-                    $isNewActivity = true;
                 }
 
                 $context = ActivityImportContext::create(
@@ -130,7 +153,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     $command->getOutput()->writeln(sprintf(
                         '  => [%d/%d] Imported activity: "%s - %s"',
                         $delta,
-                        $countTotalStravaActivities,
+                        $countTotalStravaActivitiesToImport,
                         $activity->getName(),
                         $activity->getStartDate()->format('d-m-Y'))
                     );
@@ -151,7 +174,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             $command->getOutput()->writeln(sprintf(
                 '  => [%d/%d] %s activity: "%s - %s"',
                 $delta,
-                $countTotalStravaActivities,
+                $countTotalStravaActivitiesToImport,
                 $context->isNewActivity() ? 'Imported' : 'Updated',
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'))
@@ -166,20 +189,23 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             return;
         }
 
-        if (count($activityIdsToDelete) === count($allActivityIds) && array_values($activityIdsToDelete) == $allActivityIds->toArray()) {
-            throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
-        }
+        if ($command->isFullImport()) {
+            if (count($activityIdsToDelete) === count($allActivityIds) && array_values($activityIdsToDelete) == $allActivityIds->toArray()) {
+                throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
+            }
 
-        foreach ($activityIdsToDelete as $activityId) {
-            $activity = $this->activityRepository->find($activityId);
-            $activity->delete();
-            $this->activityRepository->delete($activity);
+            // Only delete activities during full imports to avoid accidental deletion of data.
+            foreach ($activityIdsToDelete as $activityId) {
+                $activity = $this->activityRepository->find($activityId);
+                $activity->delete();
+                $this->activityRepository->delete($activity);
 
-            $command->getOutput()->writeln(sprintf(
-                '  => Deleted activity "%s - %s"',
-                $activity->getName(),
-                $activity->getStartDate()->format('d-m-Y'))
-            );
+                $command->getOutput()->writeln(sprintf(
+                    '  => Deleted activity "%s - %s"',
+                    $activity->getName(),
+                    $activity->getStartDate()->format('d-m-Y'))
+                );
+            }
         }
     }
 }

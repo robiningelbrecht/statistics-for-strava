@@ -56,6 +56,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
 
         $this->commandBus->dispatch(new RunImport(
             output: $output,
+            restrictToActivityIds: null,
         ));
         $this->commandBus->dispatch(new RunBuild(
             output: $output,

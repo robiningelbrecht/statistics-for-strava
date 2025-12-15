@@ -17,7 +17,7 @@ final readonly class GearImportStatus
 
     public function isComplete(): bool
     {
-        $gearIdsOnActivities = $this->activityRepository->findUniqueGearIds();
+        $gearIdsOnActivities = $this->activityRepository->findUniqueGearIds(null);
         $importedGears = $this->importedGearRepository->findAll();
 
         foreach ($gearIdsOnActivities as $gearId) {
