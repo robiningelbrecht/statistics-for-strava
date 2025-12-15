@@ -4,11 +4,14 @@ namespace App\Application\Import\ImportActivities;
 
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportPipeline;
+use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
@@ -16,6 +19,8 @@ use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
@@ -27,6 +32,10 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
+        private SportTypesToImport $sportTypesToImport,
+        private ActivityVisibilitiesToImport $activityVisibilitiesToImport,
+        private ActivitiesToSkipDuringImport $activitiesToSkipDuringImport,
+        private ?SkipActivitiesRecordedBefore $skipActivitiesRecordedBefore,
         private Mutex $mutex,
         private ActivityImportPipeline $activityImportPipeline,
     ) {
@@ -52,24 +61,52 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         );
 
         $delta = 1;
-        foreach ($stravaActivities as $stravaActivity) {
-            if (!SportType::tryFrom($stravaActivity['sport_type'])) {
+        foreach ($stravaActivities as $rawStravaData) {
+            if (!SportType::tryFrom($rawStravaData['sport_type'])) {
                 $command->getOutput()->writeln(sprintf(
                     '  => Sport type "%s" not supported yet. <a href="https://github.com/robiningelbrecht/statistics-for-strava/issues/new?assignees=robiningelbrecht&labels=new+feature&projects=&template=feature_request.md&title=Add+support+for+sport+type+%s>Open a new GitHub issue</a> to if you want support for this sport type',
-                    $stravaActivity['sport_type'],
-                    $stravaActivity['sport_type']));
+                    $rawStravaData['sport_type'],
+                    $rawStravaData['sport_type']));
                 continue;
             }
 
-            $context = ActivityImportContext::create(
-                activityId: ActivityId::fromUnprefixed((string) $stravaActivity['id']),
-                rawStravaData: $stravaActivity
-            );
+            $sportType = SportType::from($rawStravaData['sport_type']);
+            if (!$this->sportTypesToImport->has($sportType)) {
+                continue;
+            }
+
+            $activityVisibility = ActivityVisibility::from($rawStravaData['visibility']);
+            if (!$this->activityVisibilitiesToImport->has($activityVisibility)) {
+                continue;
+            }
+
+            if ($this->skipActivitiesRecordedBefore?->isAfterOrOn(SerializableDateTime::createFromFormat(
+                format: Activity::DATE_TIME_FORMAT,
+                datetime: $rawStravaData['start_date_local'],
+                timezone: SerializableTimezone::default(),
+            ))) {
+                continue;
+            }
+
+            $activityId = ActivityId::fromUnprefixed((string) $rawStravaData['id']);
+            if ($this->activitiesToSkipDuringImport->has($activityId)) {
+                continue;
+            }
 
             try {
+                $isNewActivity = false;
+                if (!$this->activityWithRawDataRepository->exists($activityId)) {
+                    $rawStravaData = $this->strava->getActivity($activityId);
+                    $isNewActivity = true;
+                }
+
+                $context = ActivityImportContext::create(
+                    activityId: $activityId,
+                    rawStravaData: $rawStravaData,
+                    isNewActivity: $isNewActivity,
+                );
+
                 $context = $this->activityImportPipeline->process($context);
-            } catch (SkipActivityImport) {
-                continue;
             } catch (StravaRateLimitHasBeenReached $exception) {
                 $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 
@@ -104,7 +141,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     activity: $activity,
                     rawData: [
                         ...$this->activityWithRawDataRepository->find($activity->getId())->getRawData(),
-                        ...$stravaActivity,
+                        ...$rawStravaData,
                     ]
                 ));
             }

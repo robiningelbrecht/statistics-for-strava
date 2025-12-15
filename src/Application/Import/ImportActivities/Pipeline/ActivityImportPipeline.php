@@ -19,9 +19,8 @@ final readonly class ActivityImportPipeline
         $steps = iterator_to_array($steps);
 
         $this->steps = [
-            ...array_filter($steps, fn (ActivityImportStep $s): bool => $s instanceof SkipInvalidActivity),
-            ...array_filter($steps, fn (ActivityImportStep $s): bool => $s instanceof InitializeActivity),
-            ...array_filter($steps, fn (ActivityImportStep $s): bool => !($s instanceof SkipInvalidActivity || $s instanceof InitializeActivity)),
+            ...array_filter($steps, fn (ActivityImportStep $step): bool => $step instanceof InitializeActivity),
+            ...array_filter($steps, fn (ActivityImportStep $step): bool => !$step instanceof InitializeActivity),
         ];
     }
 

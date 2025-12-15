@@ -20,9 +20,9 @@ class DownloadActivityImagesTest extends ContainerTestCase
     {
         $context = ActivityImportContext::create(
             activityId: ActivityId::fromUnprefixed(1),
-            rawStravaData: ['total_photo_count' => 3]
+            rawStravaData: ['total_photo_count' => 3],
+            isNewActivity: false,
         )
-            ->withIsNewActivity(false)
             ->withActivity(
                 ActivityBuilder::fromDefaults()
                     ->withLocalImagePaths('one', 'two', 'three')

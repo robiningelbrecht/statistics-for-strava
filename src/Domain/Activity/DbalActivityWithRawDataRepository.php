@@ -31,6 +31,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         );
     }
 
+    public function exists(ActivityId $activityId): bool
+    {
+        return !empty($this->connection->executeQuery('SELECT 1 FROM Activity WHERE activityId = :activityId', [
+            'activityId' => $activityId,
+        ])->fetchOne());
+    }
+
     public function add(ActivityWithRawData $activityWithRawData): void
     {
         $sql = 'INSERT INTO Activity (

@@ -24,9 +24,9 @@ class DetermineActivityWeatherTest extends ContainerTestCase
     {
         $context = ActivityImportContext::create(
             activityId: ActivityId::fromUnprefixed(1),
-            rawStravaData: []
+            rawStravaData: [],
+            isNewActivity: true,
         )
-            ->withIsNewActivity(true)
             ->withActivity(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::RIDE)
@@ -44,9 +44,9 @@ class DetermineActivityWeatherTest extends ContainerTestCase
     {
         $context = ActivityImportContext::create(
             activityId: ActivityId::fromUnprefixed(1),
-            rawStravaData: []
+            rawStravaData: [],
+            isNewActivity: true,
         )
-            ->withIsNewActivity(true)
             ->withActivity(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::RIDE)

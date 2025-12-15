@@ -9,24 +9,25 @@ final readonly class ActivityImportContext
 {
     private function __construct(
         private ActivityId $activityId,
-        /** @var array<string, mixed>|null */
-        private ?array $rawStravaData,
-        private ?bool $isNewActivity,
+        /** @var array<string, mixed> */
+        private array $rawStravaData,
+        private bool $isNewActivity,
         private ?Activity $activity,
     ) {
     }
 
     /**
-     * @param array<string, mixed>|null $rawStravaData
+     * @param array<string, mixed> $rawStravaData
      */
     public static function create(
         ActivityId $activityId,
-        ?array $rawStravaData,
+        array $rawStravaData,
+        bool $isNewActivity,
     ): self {
         return new self(
             activityId: $activityId,
             rawStravaData: $rawStravaData,
-            isNewActivity: null,
+            isNewActivity: $isNewActivity,
             activity: null,
         );
     }
@@ -34,13 +35,6 @@ final readonly class ActivityImportContext
     public function getActivityId(): ActivityId
     {
         return $this->activityId;
-    }
-
-    public function withIsNewActivity(bool $isNewActivity): self
-    {
-        return clone ($this, [
-            'isNewActivity' => $isNewActivity,
-        ]);
     }
 
     public function withActivity(Activity $activity): self
@@ -55,10 +49,10 @@ final readonly class ActivityImportContext
      */
     public function getRawStravaData(): array
     {
-        return $this->rawStravaData ?? throw new RawStravaDataNotSet();
+        return $this->rawStravaData;
     }
 
-    public function isNewActivity(): ?bool
+    public function isNewActivity(): bool
     {
         return $this->isNewActivity;
     }

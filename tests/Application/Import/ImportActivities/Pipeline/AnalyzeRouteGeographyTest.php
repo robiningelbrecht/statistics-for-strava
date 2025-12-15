@@ -27,7 +27,8 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
     {
         $context = ActivityImportContext::create(
             activityId: ActivityId::fromUnprefixed(1),
-            rawStravaData: []
+            rawStravaData: [],
+            isNewActivity: false,
         )->withActivity(
             ActivityBuilder::fromDefaults()
                 ->withSportType(SportType::RIDE)
@@ -53,7 +54,8 @@ class AnalyzeRouteGeographyTest extends ContainerTestCase
     {
         $context = ActivityImportContext::create(
             activityId: ActivityId::fromUnprefixed(1),
-            rawStravaData: []
+            rawStravaData: [],
+            isNewActivity: false,
         )->withActivity(
             ActivityBuilder::fromDefaults()
                 ->withSportType(SportType::VIRTUAL_RIDE)

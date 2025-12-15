@@ -7,7 +7,6 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Gear\GearId;
-use App\Domain\Strava\Strava;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -20,14 +19,14 @@ final readonly class InitializeActivity implements ActivityImportStep
 {
     public function __construct(
         private ActivityRepository $activityRepository,
-        private Strava $strava,
     ) {
     }
 
     public function process(ActivityImportContext $context): ActivityImportContext
     {
-        $rawStravaData = $context->getRawStravaData();
         $activityId = $context->getActivityId();
+        $rawStravaData = $context->getRawStravaData();
+
         $sportType = SportType::from($rawStravaData['sport_type']);
 
         try {
@@ -56,16 +55,13 @@ final readonly class InitializeActivity implements ActivityImportStep
             }
 
             return $context
-                ->withActivity($activity)
-                ->withIsNewActivity(false);
+                ->withActivity($activity);
         } catch (EntityNotFound) {
         }
 
-        $rawStravaData = $this->strava->getActivity($activityId);
         $activity = Activity::createFromRawData($rawStravaData);
 
         return $context
-            ->withActivity($activity)
-            ->withIsNewActivity(true);
+            ->withActivity($activity);
     }
 }
