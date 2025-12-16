@@ -31,7 +31,7 @@ final class ActivityBuilder
     private readonly int $calories;
     private ?int $averagePower;
     private readonly ?int $maxPower;
-    private readonly KmPerHour $averageSpeed;
+    private KmPerHour $averageSpeed;
     private readonly KmPerHour $maxSpeed;
     private ?int $averageHeartRate;
     private readonly ?int $maxHeartRate;
@@ -265,6 +265,13 @@ final class ActivityBuilder
     public function withWorldType(WorldType $worldType): self
     {
         $this->worldType = $worldType;
+
+        return $this;
+    }
+
+    public function withAverageSpeed(KmPerHour $averageSpeed): self
+    {
+        $this->averageSpeed = $averageSpeed;
 
         return $this;
     }

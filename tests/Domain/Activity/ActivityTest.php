@@ -6,6 +6,8 @@ use App\Domain\Activity\WorldType;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
+use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -50,5 +52,17 @@ class ActivityTest extends TestCase
             ->build();
 
         $this->assertNull($activity->getLeafletMap());
+    }
+
+    public function testGetPaceInSecPer100Meter(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withAverageSpeed(KmPerHour::from(10))
+            ->build();
+
+        $this->assertEquals(
+            SecPer100Meter::from(35.9971),
+            $activity->getPaceInSecPer100Meter()
+        );
     }
 }
