@@ -1,7 +1,19 @@
+# [v4.2.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.5) - 2025-12-16
+
+## What's Changed
+* ISSUE #1524: RouteGeographyAnalyzer to determine which countries a route passes through by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1526
+* ISSUE #1529: Rework how gears are imported from strava by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1532
+* ISSUE #1528: Improve Shoutrrr documentation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1535
+* ISSUE #1536: Gear maintenance docs improvement by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1537
+* ISSUE #1534: Set up image as non root by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1541
+* ISSUE #1542: Improve CalculateCombinedStreams feedback in CLI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1547
+* ISSUE #1540: Bugfix difference between CTL and ATL by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1549
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.4...v4.2.5
+
 # [v4.2.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.4) - 2025-12-09
 
 ## What's Changed
-
 * ISSUE #1520: Bug when trying to start Strava auth flow by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1521
 
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.3...v4.2.4
