@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Application\Import\DeleteActivities;
+namespace App\Application\Import\DeleteActivitiesMarkedForDeletion;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class DeleteActivities extends DomainCommand
+final readonly class DeleteActivitiesMarkedForDeletion extends DomainCommand
 {
     public function __construct(
         private OutputInterface $output,

@@ -262,29 +262,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testDelete(): void
-    {
-        $activity = ActivityBuilder::fromDefaults()->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
-            $activity,
-            ['raw' => 'data']
-        ));
-
-        $this->assertEquals(
-            1,
-            $this->getConnection()
-                ->executeQuery('SELECT COUNT(*) FROM Activity')->fetchOne()
-        );
-
-        $this->activityRepository->delete($activity);
-
-        $this->assertEquals(
-            0,
-            $this->getConnection()
-                ->executeQuery('SELECT COUNT(*) FROM Activity')->fetchOne()
-        );
-    }
-
     public function testFindActivityIds(): void
     {
         $activityOne = ActivityBuilder::fromDefaults()

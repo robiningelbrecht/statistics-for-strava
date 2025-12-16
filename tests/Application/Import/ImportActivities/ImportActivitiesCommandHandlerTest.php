@@ -30,7 +30,6 @@ use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
-use App\Infrastructure\Repository\Pagination;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
@@ -209,43 +208,9 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
-
-        $this->assertMatchesJsonSnapshot(
-            $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
-        );
-
         $this->assertCount(
-            5,
-            $this->getContainer()->get(ActivityRepository::class)->findAll()->toArray()
-        );
-        $this->assertCount(
-            0,
-            $this->getContainer()->get(SegmentEffortRepository::class)->findByActivityId(ActivityId::fromUnprefixed(1001))
-        );
-        $this->assertCount(
-            0,
-            $this->getContainer()->get(SegmentRepository::class)->findAll(Pagination::fromOffsetAndLimit(0, 100))
-        );
-        $this->assertCount(
-            0,
-            $this->getContainer()->get(ActivityStreamRepository::class)->findByActivityId(ActivityId::fromUnprefixed(1001))
-        );
-        $this->assertCount(
-            0,
-            $this->getContainer()->get(ActivitySplitRepository::class)->findBy(
-                ActivityId::fromUnprefixed(1001),
-                UnitSystem::IMPERIAL
-            )
-        );
-        $this->assertCount(
-            0,
-            $this->getContainer()->get(ActivityLapRepository::class)->findBy(
-                ActivityId::fromUnprefixed(1001),
-            )
-        );
-        $this->assertEquals(
-            0,
-            $this->getConnection()->executeQuery('SELECT COUNT(*) FROM ActivityBestEffort WHERE activityId = "activity-1001"')->fetchOne()
+            2,
+            $this->getContainer()->get(ActivityRepository::class)->findActivityIdsMarkedForDeletion()
         );
     }
 

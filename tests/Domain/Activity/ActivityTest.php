@@ -3,7 +3,6 @@
 namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\WorldType;
-use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
@@ -13,14 +12,6 @@ use Spatie\Snapshots\MatchesSnapshots;
 class ActivityTest extends TestCase
 {
     use MatchesSnapshots;
-
-    public function testDelete(): void
-    {
-        $activity = ActivityBuilder::fromDefaults()->build();
-        $activity->delete();
-
-        $this->assertMatchesJsonSnapshot(Json::encode($activity->getRecordedEvents()));
-    }
 
     public function testGetName(): void
     {

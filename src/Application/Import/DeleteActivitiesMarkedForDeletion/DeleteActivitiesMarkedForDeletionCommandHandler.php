@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Import\DeleteActivities;
+namespace App\Application\Import\DeleteActivitiesMarkedForDeletion;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -13,7 +13,7 @@ use App\Domain\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 
-final readonly class DeleteActivitiesCommandHandler implements CommandHandler
+final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements CommandHandler
 {
     public function __construct(
         private ActivityRepository $activityRepository,
@@ -29,7 +29,7 @@ final readonly class DeleteActivitiesCommandHandler implements CommandHandler
 
     public function handle(Command $command): void
     {
-        assert($command instanceof DeleteActivities);
+        assert($command instanceof DeleteActivitiesMarkedForDeletion);
 
         $activityIdsToDelete = $this->activityRepository->findActivityIdsMarkedForDeletion();
         if ($activityIdsToDelete->isEmpty()) {
@@ -37,6 +37,8 @@ final readonly class DeleteActivitiesCommandHandler implements CommandHandler
 
             return;
         }
+
+        $command->getOutput()->writeln('Deleting activities...');
 
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activityRepository->find($activityId);

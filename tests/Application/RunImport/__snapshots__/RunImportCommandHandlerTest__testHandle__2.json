@@ -84,5 +84,11 @@
         "payload": {
             "output": {}
         }
+    },
+    {
+        "commandName": "App\\Application\\Import\\DeleteActivitiesMarkedForDeletion\\DeleteActivitiesMarkedForDeletion",
+        "payload": {
+            "output": {}
+        }
     }
 ]

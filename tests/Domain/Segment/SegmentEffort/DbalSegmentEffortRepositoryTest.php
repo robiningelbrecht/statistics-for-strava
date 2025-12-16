@@ -9,11 +9,8 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortRankingMap;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEfforts;
 use App\Domain\Segment\SegmentId;
-use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
-use App\Tests\Infrastructure\Eventing\SpyEventBus;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class DbalSegmentEffortRepositoryTest extends ContainerTestCase
@@ -21,7 +18,6 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private SegmentEffortRepository $segmentEffortRepository;
-    private EventBus $eventBus;
 
     public function testFindAndSave(): void
     {
@@ -178,7 +174,6 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
             1,
             $this->getConnection()->executeQuery('SELECT COUNT(*) FROM SegmentEffort')->fetchOne()
         );
-        $this->assertMatchesJsonSnapshot(Json::encode($this->eventBus->getPublishedEvents()));
     }
 
     #[\Override]
@@ -188,7 +183,6 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
 
         $this->segmentEffortRepository = new DbalSegmentEffortRepository(
             $this->getConnection(),
-            $this->eventBus = new SpyEventBus(),
             $this->getContainer()->get(SegmentEffortRankingMap::class)
         );
     }
