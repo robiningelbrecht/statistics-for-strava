@@ -5,6 +5,7 @@ namespace App\Domain\Activity\Route;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use Brick\Geo\Engine\GeosOpEngine;
+use Brick\Geo\Exception\InvalidGeometryException;
 use Brick\Geo\Geometry;
 use Brick\Geo\Io\GeoJson\Feature;
 use Brick\Geo\Io\GeoJson\FeatureCollection;
@@ -53,11 +54,16 @@ final readonly class RouteGeographyAnalyzer
     public function analyzeForPolyline(EncodedPolyline $polyline): array
     {
         $passedCountries = [];
-        /** @var Geometry $routeLineString */
-        $routeLineString = $this->reader->read(Json::encode([
-            'type' => 'LineString',
-            'coordinates' => $polyline->decodeAndPairLonLat(),
-        ]));
+        /* @var Geometry $routeLineString */
+        try {
+            $routeLineString = $this->reader->read(Json::encode([
+                'type' => 'LineString',
+                'coordinates' => $polyline->decodeAndPairLonLat(),
+            ]));
+        } catch (InvalidGeometryException) {
+            // Given polyline is somehow not a valid LineString.
+            return $passedCountries;
+        }
 
         foreach ($this->countriesGeometry as $countryCode => $countryGeometry) {
             if (!$countryGeometry instanceof Geometry) {
