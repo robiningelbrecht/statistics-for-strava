@@ -190,6 +190,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         }
 
         if (!$command->isFullImport()) {
+            // Only delete activities during full imports to avoid accidental deletion of data.
+            return;
+        }
+
+        if (empty($activityIdsToDelete)) {
             return;
         }
 
@@ -197,14 +202,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
         }
 
-        // Only delete activities during full imports to avoid accidental deletion of data.
+        $this->activityWithRawDataRepository->markActivitiesForDeletion($activityIdsToDelete);
+
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activityRepository->find($activityId);
-            $activity->delete();
-            $this->activityRepository->delete($activity);
 
             $command->getOutput()->writeln(sprintf(
-                '  => Deleted activity "%s - %s"',
+                '  => Marked activity "%s - %s" for deletion',
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'))
             );

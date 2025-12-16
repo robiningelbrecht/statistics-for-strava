@@ -7,7 +7,6 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
@@ -27,7 +26,6 @@ final class DbalActivityRepository implements ActivityRepository
 
     public function __construct(
         private readonly Connection $connection,
-        private readonly EventBus $eventBus,
     ) {
     }
 
@@ -165,18 +163,6 @@ final class DbalActivityRepository implements ActivityRepository
             );
 
         return (bool) $queryBuilder->executeQuery()->fetchOne();
-    }
-
-    public function delete(Activity $activity): void
-    {
-        $sql = 'DELETE FROM Activity 
-        WHERE activityId = :activityId';
-
-        $this->connection->executeStatement($sql, [
-            'activityId' => $activity->getId(),
-        ]);
-
-        $this->eventBus->publishEvents($activity->getRecordedEvents());
     }
 
     public function findActivityIds(): ActivityIds

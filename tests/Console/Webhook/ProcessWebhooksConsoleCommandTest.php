@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Console\Daemon;
+namespace App\Tests\Console\Webhook;
 
 use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
-use App\Console\Daemon\ProcessWebhooksConsoleCommand;
+use App\Console\Webhook\ProcessWebhooksConsoleCommand;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
