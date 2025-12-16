@@ -195,9 +195,9 @@ final class DbalActivityRepository implements ActivityRepository
     public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('DISTINCT JSON_EXTRACT(data, "$.gear_id")')
+        $queryBuilder->select('DISTINCT JSON_EXTRACT(data, "$.gear_id") as stravaGearId')
             ->from('Activity')
-            ->andWhere('JSON_EXTRACT(data, "$.gear_id") IS NOT NULL');
+            ->andWhere('stravaGearId IS NOT NULL');
 
         if ($restrictToActivityIds && !$restrictToActivityIds->isEmpty()) {
             $queryBuilder->andWhere('activityId IN (:activityIds)');
