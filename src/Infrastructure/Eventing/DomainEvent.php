@@ -6,9 +6,6 @@ namespace App\Infrastructure\Eventing;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * @codeCoverageIgnore
- */
 abstract class DomainEvent extends Event implements \JsonSerializable
 {
     /**

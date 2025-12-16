@@ -2,9 +2,6 @@
 
 namespace App\Infrastructure\Eventing;
 
-/**
- * @codeCoverageIgnore
- */
 trait RecordsEvents
 {
     /** @var DomainEvent[] */
