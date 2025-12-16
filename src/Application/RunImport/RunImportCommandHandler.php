@@ -9,7 +9,7 @@ use App\Application\Import\CalculateBestStreamAverages\CalculateBestStreamAverag
 use App\Application\Import\CalculateCombinedStreams\CalculateCombinedStreams;
 use App\Application\Import\CalculateNormalizedPower\CalculateNormalizedPower;
 use App\Application\Import\CalculateStreamValueDistribution\CalculateStreamValueDistribution;
-use App\Application\Import\DeleteActivities\DeleteActivities;
+use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
 use App\Application\Import\ImportActivities\ImportActivities;
 use App\Application\Import\ImportActivityLaps\ImportActivityLaps;
 use App\Application\Import\ImportActivitySplits\ImportActivitySplits;
@@ -71,7 +71,7 @@ final readonly class RunImportCommandHandler implements CommandHandler
         $this->commandBus->dispatch(new CalculateStreamValueDistribution($output));
         $this->commandBus->dispatch(new CalculateNormalizedPower($output));
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
-        $this->commandBus->dispatch(new DeleteActivities($output));
+        $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
 
         if ($rateLimits = $this->strava->getRateLimit()) {
             $output->title('STRAVA API RATE LIMITS');
