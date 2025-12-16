@@ -1,4 +1,4 @@
 Calculating combined activity streams...
-  => Calculated combined streams for 1 activities
+  => 10/16 combined activity streams calculated
+  => 16/16 combined activity streams calculated
 Calculating combined activity streams...
-  => Calculated combined streams for 0 activities

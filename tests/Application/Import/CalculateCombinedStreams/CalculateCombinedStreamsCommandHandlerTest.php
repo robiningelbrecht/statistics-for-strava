@@ -13,11 +13,14 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -29,72 +32,76 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
 
     public function testHandleMetric(): void
     {
+        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
         $output = new SpyOutput();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
-            ActivityWithRawData::fromState(
-                ActivityBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                    ->build(),
-                []
-            )
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::DISTANCE)
-                ->withData([1])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::ALTITUDE)
-                ->withData([2])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::CADENCE)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::WATTS)
-                ->withData([])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::TIME)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::MOVING)
-                ->withData([true])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::VELOCITY)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::LAT_LNG)
-                ->withData([[1, 2]])
-                ->build()
-        );
+        for ($i = 5; $i <= 20; ++$i) {
+            $activityWithRawDataRepository->add(
+                ActivityWithRawData::fromState(
+                    ActivityBuilder::fromDefaults()
+                        ->withActivityId(ActivityId::fromUnprefixed($i))
+                        ->build(),
+                    []
+                )
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::DISTANCE)
+                    ->withData([1])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::ALTITUDE)
+                    ->withData([2])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::CADENCE)
+                    ->withData([3])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::WATTS)
+                    ->withData([])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::TIME)
+                    ->withData([3])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::MOVING)
+                    ->withData([true])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::VELOCITY)
+                    ->withData([3])
+                    ->build()
+            );
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::LAT_LNG)
+                    ->withData([[1, 2]])
+                    ->build()
+            );
+        }
 
         $this->commandBus->dispatch(new CalculateCombinedStreams($output));
 
@@ -164,10 +171,15 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         );
 
         new CalculateCombinedStreamsCommandHandler(
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(CombinedActivityStreamRepository::class),
-            $this->getContainer()->get(ActivityStreamRepository::class),
-            UnitSystem::IMPERIAL,
+            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            combinedActivityStreamRepository: $this->getContainer()->get(CombinedActivityStreamRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            unitSystem: UnitSystem::IMPERIAL,
+            mutex: new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            )
         )->handle(new CalculateCombinedStreams($output));
 
         $this->assertMatchesJsonSnapshot(
@@ -308,5 +320,9 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         parent::setUp();
 
         $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
+        );
     }
 }

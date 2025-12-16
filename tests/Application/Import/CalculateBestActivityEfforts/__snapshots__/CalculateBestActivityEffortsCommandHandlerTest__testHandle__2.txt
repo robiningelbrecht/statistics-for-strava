@@ -1,4 +1,4 @@
 Calculating best activity efforts...
-  => Calculated best efforts for 2 activities
+  => 10/16 best efforts calculated
+  => 16/16 best efforts calculated
 Calculating best activity efforts...
-  => Calculated best efforts for 0 activities

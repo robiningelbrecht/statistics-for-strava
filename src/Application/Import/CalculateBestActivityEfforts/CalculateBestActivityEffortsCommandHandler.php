@@ -79,7 +79,24 @@ final readonly class CalculateBestActivityEffortsCommandHandler implements Comma
                     )
                 );
             }
+
+            if (0 !== $activityWithBestEffortsCalculatedCount % 10) {
+                continue;
+            }
+
+            $command->getOutput()->writeln(sprintf(
+                '  => %d/%d best efforts calculated',
+                $activityWithBestEffortsCalculatedCount,
+                count($activityIdsWithoutBestEfforts)
+            ));
         }
-        $command->getOutput()->writeln(sprintf('  => Calculated best efforts for %d activities', $activityWithBestEffortsCalculatedCount));
+
+        if (0 !== $activityWithBestEffortsCalculatedCount % 10) {
+            $command->getOutput()->writeln(sprintf(
+                '  => %d/%d best efforts calculated',
+                $activityWithBestEffortsCalculatedCount,
+                count($activityIdsWithoutBestEfforts)
+            ));
+        }
     }
 }
