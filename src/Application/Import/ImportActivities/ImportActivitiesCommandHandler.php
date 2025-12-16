@@ -189,23 +189,25 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             return;
         }
 
-        if ($command->isFullImport()) {
-            if (count($activityIdsToDelete) === count($allActivityIds) && array_values($activityIdsToDelete) == $allActivityIds->toArray()) {
-                throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
-            }
+        if (!$command->isFullImport()) {
+            return;
+        }
 
-            // Only delete activities during full imports to avoid accidental deletion of data.
-            foreach ($activityIdsToDelete as $activityId) {
-                $activity = $this->activityRepository->find($activityId);
-                $activity->delete();
-                $this->activityRepository->delete($activity);
+        if (count($activityIdsToDelete) === count($allActivityIds) && array_values($activityIdsToDelete) == $allActivityIds->toArray()) {
+            throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
+        }
 
-                $command->getOutput()->writeln(sprintf(
-                    '  => Deleted activity "%s - %s"',
-                    $activity->getName(),
-                    $activity->getStartDate()->format('d-m-Y'))
-                );
-            }
+        // Only delete activities during full imports to avoid accidental deletion of data.
+        foreach ($activityIdsToDelete as $activityId) {
+            $activity = $this->activityRepository->find($activityId);
+            $activity->delete();
+            $this->activityRepository->delete($activity);
+
+            $command->getOutput()->writeln(sprintf(
+                '  => Deleted activity "%s - %s"',
+                $activity->getName(),
+                $activity->getStartDate()->format('d-m-Y'))
+            );
         }
     }
 }

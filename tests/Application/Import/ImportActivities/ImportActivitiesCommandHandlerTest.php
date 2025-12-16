@@ -10,6 +10,7 @@ use App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImp
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportPipeline;
 use App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
@@ -58,7 +59,17 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     private ImportActivitiesCommandHandler $importActivitiesCommandHandler;
     private SpyStrava $strava;
 
-    public function testHandleWithTooManyRequests(): void
+    public function testHandleWithTooManyRequestsWhileInitializing(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(0);
+
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
+
+        $this->assertMatchesTextSnapshot((string) $output);
+    }
+
+    public function testHandleWithTooManyRequestsWhileFetchingActivities(): void
     {
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(9);
@@ -93,7 +104,17 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         ));
     }
 
-    public function testHandleWithUnexpectedError(): void
+    public function testHandleWithUnexpectedErrorWhileInitializing(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->triggerExceptionOnNextCall();
+
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
+        $this->assertMatchesTextSnapshot((string) $output);
+    }
+
+    public function testHandleWithUnexpectedErrorWhileFetchingActivities(): void
     {
         $output = new SpyOutput();
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
@@ -409,6 +430,58 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         ));
 
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
+
+        $this->assertMatchesTextSnapshot($output);
+    }
+
+    public function testHandlePartialImport(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(4))
+                ->build(),
+            []
+        ));
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(1000))
+                ->withStartingCoordinate(Coordinate::createFromLatAndLng(
+                    Latitude::fromString('51.2'),
+                    Longitude::fromString('3.18')
+                ))
+                ->withKudoCount(1)
+                ->withName('Delete this one')
+                ->build(),
+            [
+                'kudos_count' => 1,
+                'name' => 'Delete this one',
+            ]
+        ));
+
+        $segmentEffortOne = SegmentEffortBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1000))
+            ->build();
+        $this->getContainer()->get(SegmentEffortRepository::class)->add($segmentEffortOne);
+
+        $stream = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1000))
+            ->build();
+        $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withKudoCount(1)
+                ->withName('Delete this one as well')
+                ->withActivityId(ActivityId::fromUnprefixed(1001))
+                ->build(),
+            []
+        ));
+
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, ActivityIds::fromArray([ActivityId::fromUnprefixed(4)])));
 
         $this->assertMatchesTextSnapshot($output);
     }
