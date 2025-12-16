@@ -68,7 +68,10 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withGearId(GearId::fromUnprefixed(4))
-                ->build(), []
+                ->build(),
+            [
+                'gear_id' => '4',
+            ]
         ));
 
         $this->migrationRunner

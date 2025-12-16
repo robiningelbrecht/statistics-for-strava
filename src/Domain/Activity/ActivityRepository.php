@@ -27,7 +27,7 @@ interface ActivityRepository
 
     public function findActivityIds(): ActivityIds;
 
-    public function findUniqueGearIds(?ActivityIds $restrictToActivityIds): GearIds;
+    public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds;
 
     public function findActivityIdsThatNeedStreamImport(): ActivityIds;
 }

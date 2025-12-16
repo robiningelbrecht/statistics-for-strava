@@ -38,7 +38,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $allStravaGearIdsReferencedOnActivities = $this->activityRepository->findUniqueGearIds(null);
+        $allStravaGearIdsReferencedOnActivities = $this->activityRepository->findUniqueStravaGearIds(null);
 
         if ($this->customGearConfig->isFeatureEnabled()) {
             /** @var GearId $customGearId */
@@ -59,7 +59,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         $stravaGearIdsToImport = $allStravaGearIdsReferencedOnActivities;
         if ($command->isPartialImport()) {
             // We only want to update gears that are referenced on the activities to be imported.
-            $stravaGearIdsToImport = $this->activityRepository->findUniqueGearIds($command->getRestrictToActivityIds());
+            $stravaGearIdsToImport = $this->activityRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
         }
 
         foreach ($stravaGearIdsToImport as $gearId) {

@@ -47,21 +47,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659861']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659743']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659792']
         ));
 
         $this->commandBus->dispatch(new ImportGear($output, null));
@@ -85,7 +85,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659861']
         ));
 
         $this->commandBus->dispatch(new ImportGear($output, null));
@@ -108,21 +108,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659861']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659743']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659792']
         ));
 
         $this->commandBus->dispatch(new ImportGear($output, null));
@@ -145,21 +145,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659861']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659743']
         ));
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659792']
         ));
 
         $this->commandBus->dispatch(new ImportGear($output, ActivityIds::fromArray([ActivityId::fromUnprefixed('1')])));
@@ -205,7 +205,7 @@ YML
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
-            []
+            ['gear_id' => 'b12659743']
         ));
 
         $ImportGearCommandHandler->handle(new ImportGear($output, null));

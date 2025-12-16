@@ -17,10 +17,10 @@ final readonly class GearImportStatus
 
     public function isComplete(): bool
     {
-        $gearIdsOnActivities = $this->activityRepository->findUniqueGearIds(null);
+        $stravaGearIdsOnActivities = $this->activityRepository->findUniqueStravaGearIds(null);
         $importedGears = $this->importedGearRepository->findAll();
 
-        foreach ($gearIdsOnActivities as $gearId) {
+        foreach ($stravaGearIdsOnActivities as $gearId) {
             if (!$importedGears->getByGearId($gearId)) {
                 return false;
             }
