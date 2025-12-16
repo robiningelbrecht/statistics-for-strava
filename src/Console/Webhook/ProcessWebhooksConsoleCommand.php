@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Daemon;
+namespace App\Console\Webhook;
 
 use App\Application\importDataAndBuildAppCronAction;
 use App\Domain\Strava\Webhook\WebhookEventRepository;

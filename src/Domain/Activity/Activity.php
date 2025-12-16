@@ -721,11 +721,6 @@ final class Activity implements SupportsAITooling
         ];
     }
 
-    public function delete(): void
-    {
-        $this->recordThat(new ActivityWasDeleted($this->getId()));
-    }
-
     /**
      * @return array<string, mixed>
      */

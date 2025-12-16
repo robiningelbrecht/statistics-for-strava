@@ -23,8 +23,6 @@ interface ActivityRepository
 
     public function hasForSportTypes(SportTypes $sportTypes): bool;
 
-    public function delete(Activity $activity): void;
-
     public function findActivityIds(): ActivityIds;
 
     public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds;
