@@ -54,6 +54,7 @@ class ImportChallengesCommandHandlerTest extends ContainerTestCase
 
         $this->getContainer()->get(ChallengeRepository::class)->add(
             ChallengeBuilder::fromDefaults()
+                ->withName('El challenge')
                 ->withChallengeId(ChallengeId::fromUnprefixed('2023-10_challenge_2'))
                 ->build()
         );

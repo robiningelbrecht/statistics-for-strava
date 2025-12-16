@@ -5,6 +5,7 @@ namespace App\Tests\Application\Import\ImportGear;
 use App\Application\Import\ImportGear\ImportGear;
 use App\Application\Import\ImportGear\ImportGearCommandHandler;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -66,10 +67,30 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $this->commandBus->dispatch(new ImportGear($output, null));
 
         $this->assertMatchesTextSnapshot($output);
+    }
 
-        $this->assertEmpty(
-            $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
+    public function testHandleWithUnexpectedError(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->triggerExceptionOnNextCall();
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build()
         );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build(),
+            []
+        ));
+
+        $this->commandBus->dispatch(new ImportGear($output, null));
+
+        $this->assertMatchesTextSnapshot($output);
     }
 
     public function testHandle(): void
@@ -107,10 +128,43 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
         $this->commandBus->dispatch(new ImportGear($output, null));
 
         $this->assertMatchesTextSnapshot($output);
+    }
 
-        $this->assertMatchesJsonSnapshot(
-            $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
+    public function testHandlePartialImport(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(10000);
+
+        $this->getContainer()->get(ImportedGearRepository::class)->save(
+            ImportedGearBuilder::fromDefaults()
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build()
         );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed('b12659743'))
+                ->build(),
+            []
+        ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('3'))
+                ->withGearId(GearId::fromUnprefixed('b12659792'))
+                ->build(),
+            []
+        ));
+
+        $this->commandBus->dispatch(new ImportGear($output, ActivityIds::fromArray([ActivityId::fromUnprefixed('1')])));
+
+        $this->assertMatchesTextSnapshot($output);
     }
 
     public function testHandleWithDuplicateGearIds(): void

@@ -116,6 +116,11 @@ class SpyStrava extends Strava
     #[\Override]
     public function getActivities(): array
     {
+        if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
+
         ++$this->numberOfCallsExecuted;
         $this->throw429IfMaxNumberOfCallsIsExceeded();
 
@@ -191,6 +196,10 @@ class SpyStrava extends Strava
     #[\Override]
     public function getGear(GearId $gearId): array
     {
+        if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
         ++$this->numberOfCallsExecuted;
         $this->throw429IfMaxNumberOfCallsIsExceeded();
 
@@ -290,6 +299,7 @@ class SpyStrava extends Strava
     public function downloadImage(string $uri): string
     {
         if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
             throw new \RuntimeException('WAW ERROR');
         }
         ++$this->numberOfCallsExecuted;

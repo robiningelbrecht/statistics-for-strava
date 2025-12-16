@@ -56,6 +56,34 @@ class ImportStravaDataConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
     }
 
+    public function testExecuteWithRestrictToActivityId(): void
+    {
+        $dispatchedCommands = [];
+        $this->commandBus
+            ->expects($this->atLeastOnce())
+            ->method('dispatch')
+            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands): void {
+                $dispatchedCommands[] = $command;
+            });
+
+        $this->logger
+            ->expects($this->atLeastOnce())
+            ->method('info');
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('run');
+
+        $command = $this->getCommandInApplication('app:strava:import-data');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'restrictToActivityId' => '100',
+        ]);
+
+        $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
+    }
+
     #[\Override]
     protected function setUp(): void
     {
