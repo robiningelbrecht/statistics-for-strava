@@ -192,12 +192,12 @@ final class DbalActivityRepository implements ActivityRepository
         ));
     }
 
-    public function findUniqueGearIds(?ActivityIds $restrictToActivityIds): GearIds
+    public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('DISTINCT gearId')
+        $queryBuilder->select('DISTINCT JSON_EXTRACT(data, "$.gear_id")')
             ->from('Activity')
-            ->andWhere('gearId IS NOT NULL');
+            ->andWhere('JSON_EXTRACT(data, "$.gear_id") IS NOT NULL');
 
         if ($restrictToActivityIds && !$restrictToActivityIds->isEmpty()) {
             $queryBuilder->andWhere('activityId IN (:activityIds)');
@@ -209,7 +209,7 @@ final class DbalActivityRepository implements ActivityRepository
         }
 
         return GearIds::fromArray(array_map(
-            GearId::fromString(...),
+            GearId::fromUnprefixed(...),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
     }
