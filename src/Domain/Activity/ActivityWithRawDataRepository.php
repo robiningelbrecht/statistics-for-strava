@@ -14,5 +14,9 @@ interface ActivityWithRawDataRepository
 
     public function update(ActivityWithRawData $activityWithRawData): void;
 
+    public function delete(ActivityId $activityId): void;
+
     public function markActivityStreamsAsImported(ActivityId $activityId): void;
+
+    public function markActivitiesForDeletion(ActivityIds $activityIds): void;
 }

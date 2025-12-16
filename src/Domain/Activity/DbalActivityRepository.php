@@ -214,6 +214,19 @@ final class DbalActivityRepository implements ActivityRepository
         ));
     }
 
+    public function findActivityIdsMarkedForDeletion(): ActivityIds
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('activityId')
+            ->from('Activity')
+            ->where('markedForDeletion = 1');
+
+        return ActivityIds::fromArray(array_map(
+            ActivityId::fromString(...),
+            $queryBuilder->executeQuery()->fetchFirstColumn(),
+        ));
+    }
+
     /**
      * @param array<string, mixed> $result
      */

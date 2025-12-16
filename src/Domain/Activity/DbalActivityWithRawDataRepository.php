@@ -6,6 +6,7 @@ namespace App\Domain\Activity;
 
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalActivityWithRawDataRepository extends DbalRepository implements ActivityWithRawDataRepository
@@ -140,6 +141,15 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         ]);
     }
 
+    public function delete(ActivityId $activityId): void
+    {
+        $sql = 'DELETE FROM Activity WHERE activityId = :activityId';
+
+        $this->connection->executeStatement($sql, [
+            'activityId' => $activityId,
+        ]);
+    }
+
     public function markActivityStreamsAsImported(ActivityId $activityId): void
     {
         $sql = 'UPDATE Activity SET streamsAreImported = 1 WHERE activityId = :activityId';
@@ -147,6 +157,18 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         $this->connection->executeStatement($sql, [
             'activityId' => $activityId,
         ]);
+    }
+
+    public function markActivitiesForDeletion(ActivityIds $activityIds): void
+    {
+        $sql = 'UPDATE Activity SET markedForDeletion = 1 WHERE activityId IN (:activityIds)';
+
+        $this->connection->executeStatement($sql, [
+            'activityIds' => array_map(strval(...), $activityIds->toArray()),
+        ],
+            [
+                'activityIds' => ArrayParameterType::STRING,
+            ]);
     }
 
     /**

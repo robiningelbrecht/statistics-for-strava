@@ -3,6 +3,13 @@
 namespace App\Application\Import\DeleteActivities;
 
 use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\Lap\ActivityLapRepository;
+use App\Domain\Activity\Split\ActivitySplitRepository;
+use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
+use App\Domain\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 
@@ -10,6 +17,13 @@ final readonly class DeleteActivitiesCommandHandler implements CommandHandler
 {
     public function __construct(
         private ActivityRepository $activityRepository,
+        private ActivityWithRawDataRepository $activityWithRawDataRepository,
+        private ActivityStreamRepository $activityStreamRepository,
+        private SegmentEffortRepository $segmentEffortRepository,
+        private SegmentRepository $segmentRepository,
+        private ActivitySplitRepository $activitySplitRepository,
+        private ActivityLapRepository $activityLapRepository,
+        private ActivityBestEffortRepository $activityBestEffortRepository,
     ) {
     }
 
@@ -17,24 +31,29 @@ final readonly class DeleteActivitiesCommandHandler implements CommandHandler
     {
         assert($command instanceof DeleteActivities);
 
-        // STEAMS.
-        $streams = $this->activityStreamRepository->findByActivityId($command->getActivityId());
-        if ($streams->isEmpty()) {
+        $activityIdsToDelete = $this->activityRepository->findActivityIdsMarkedForDeletion();
+        if ($activityIdsToDelete->isEmpty()) {
+            $command->getOutput()->writeln('No activities marked for deletion...');
+
             return;
         }
 
-        foreach ($streams as $stream) {
-            $this->activityStreamRepository->delete($stream);
+        foreach ($activityIdsToDelete as $activityId) {
+            $activity = $this->activityRepository->find($activityId);
+
+            $this->activityStreamRepository->deleteForActivity($activityId);
+            $this->segmentEffortRepository->deleteForActivity($activityId);
+            $this->segmentRepository->deleteOrphaned();
+            $this->activitySplitRepository->deleteForActivity($activityId);
+            $this->activityLapRepository->deleteForActivity($activityId);
+            $this->activityBestEffortRepository->deleteForActivity($activityId);
+            $this->activityWithRawDataRepository->delete($activityId);
+
+            $command->getOutput()->writeln(sprintf(
+                '  => Activity "%s - %s" deleted',
+                $activity->getName(),
+                $activity->getStartDate()->format('d-m-Y'))
+            );
         }
-
-        // SEGMENTS.
-        $this->segmentEffortRepository->deleteForActivity($command->getActivityId());
-        $this->segmentRepository->deleteOrphaned();
-
-        $this->activitySplitRepository->deleteForActivity($command->getActivityId());
-        $this->activityLapRepository->deleteForActivity($command->getActivityId());
-        $this->activityBestEffortRepository->deleteForActivity($command->getActivityId());
-
-        $this->activityRepository->delete();
     }
 }
