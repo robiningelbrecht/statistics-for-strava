@@ -51,15 +51,12 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
         ]);
     }
 
-    public function delete(ActivityStream $stream): void
+    public function deleteForActivity(ActivityId $activityId): void
     {
-        $sql = 'DELETE FROM ActivityStream
-        WHERE activityId = :activityId
-        AND streamType = :streamType';
+        $sql = 'DELETE FROM ActivityStream WHERE activityId = :activityId';
 
         $this->connection->executeStatement($sql, [
-            'activityId' => $stream->getActivityId(),
-            'streamType' => $stream->getStreamType()->value,
+            'activityId' => $activityId,
         ]);
     }
 

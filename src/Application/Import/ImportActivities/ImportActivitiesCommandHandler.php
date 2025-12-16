@@ -6,6 +6,7 @@ use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportPipeline;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
@@ -202,13 +203,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
         }
 
-        $this->activityWithRawDataRepository->markActivitiesForDeletion($activityIdsToDelete);
+        $this->activityWithRawDataRepository->markActivitiesForDeletion(ActivityIds::fromArray($activityIdsToDelete));
 
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activityRepository->find($activityId);
 
             $command->getOutput()->writeln(sprintf(
-                '  => Marked activity "%s - %s" for deletion',
+                '  => Activity "%s - %s" marked for deletion',
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'))
             );

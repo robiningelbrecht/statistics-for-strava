@@ -57,6 +57,9 @@ final class Activity implements SupportsAITooling
     #[ORM\Column(type: 'boolean', nullable: true)]
     // @phpstan-ignore-next-line
     private readonly bool $streamsAreImported;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    // @phpstan-ignore-next-line
+    private readonly bool $markedForDeletion;
 
     /**
      * @param array<string> $localImagePaths
