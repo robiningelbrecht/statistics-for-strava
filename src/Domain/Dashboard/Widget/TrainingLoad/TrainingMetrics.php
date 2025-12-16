@@ -54,7 +54,7 @@ final class TrainingMetrics
             } else {
                 $altValues[$delta] = ($intensity * $alphaATL) + ($altValues[$delta - 1] * (1 - $alphaATL));
                 $ctlValues[$delta] = ($intensity * $alphaCTL) + ($ctlValues[$delta - 1] * (1 - $alphaCTL));
-                $tsbValues[$delta] = $ctlValues[$delta - 1] - $altValues[$delta - 1];
+                $tsbValues[$delta] = $ctlValues[$delta] - $altValues[$delta];
             }
 
             if ($delta >= 6) { // Day 6 = first full week
