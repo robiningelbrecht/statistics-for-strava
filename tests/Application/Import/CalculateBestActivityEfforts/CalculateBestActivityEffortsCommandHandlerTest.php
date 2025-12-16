@@ -6,6 +6,7 @@ use App\Application\Import\CalculateBestActivityEfforts\CalculateBestActivityEff
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -118,5 +119,29 @@ class CalculateBestActivityEffortsCommandHandlerTest extends ContainerTestCase
                 ->withData([])
                 ->build()
         );
+
+        for ($i = 6; $i < 20; ++$i) {
+            $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withDistance(Kilometer::from(3))
+                    ->withSportType(SportType::RUN)
+                    ->build(), []
+            ));
+            $this->getContainer()->get(ActivityStreamRepository::class)->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::TIME)
+                    ->withData([288, 296, 303, 309, 316, 323, 330, 340, 347, 349, 350, 351, 352, 353, 354, 356, 357, 362, 368, 374, 380, 383, 388, 390, 396, 403, 410, 416, 425, 427, 429, 432, 440, 449, 450, 458, 459, 463, 466, 473, 481, 487, 493, 500, 509, 510, 518, 526, 535, 541, 547, 555, 562, 570, 576, 582, 583, 587, 591, 593, 599, 600, 602, 603, 604, 606, 607, 608, 611, 613, 619, 622, 624, 627, 634, 635, 637, 645, 648])
+                    ->build()
+            );
+            $this->getContainer()->get(ActivityStreamRepository::class)->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($i))
+                    ->withStreamType(StreamType::DISTANCE)
+                    ->withData([1813.9, 1866, 1911.4, 1948.7, 1991.4, 2034.9, 2076.3, 2134.9, 2176.7, 2189, 2195.3, 2201.4, 2207.5, 2213.8, 2219.8, 2232, 2238, 2269.3, 2306, 2344.5, 2382, 2401.1, 2430.4, 2442.9, 2483.1, 2531.4, 2577.4, 2612.8, 2672, 2685.5, 2699.3])
+                    ->build()
+            );
+        }
     }
 }
