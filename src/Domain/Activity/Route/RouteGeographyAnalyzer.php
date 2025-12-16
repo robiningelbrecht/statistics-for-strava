@@ -54,7 +54,6 @@ final readonly class RouteGeographyAnalyzer
     public function analyzeForPolyline(EncodedPolyline $polyline): array
     {
         $passedCountries = [];
-        /* @var Geometry $routeLineString */
         try {
             $routeLineString = $this->reader->read(Json::encode([
                 'type' => 'LineString',
@@ -67,6 +66,9 @@ final readonly class RouteGeographyAnalyzer
 
         foreach ($this->countriesGeometry as $countryCode => $countryGeometry) {
             if (!$countryGeometry instanceof Geometry) {
+                continue; // @codeCoverageIgnore
+            }
+            if (!$routeLineString instanceof Geometry) {
                 continue; // @codeCoverageIgnore
             }
             if (!$this->engine->intersects($countryGeometry, $routeLineString)) {

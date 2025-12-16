@@ -59,6 +59,7 @@ final readonly class ImportActivityStreamsCommandHandler implements CommandHandl
                 }
             }
 
+            $streamsAdded = false;
             foreach ($stravaStreams as $stravaStream) {
                 if (!$streamType = StreamType::tryFrom($stravaStream['type'])) {
                     continue;
@@ -75,8 +76,13 @@ final readonly class ImportActivityStreamsCommandHandler implements CommandHandl
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                 );
                 $this->activityStreamRepository->add($stream);
-                $command->getOutput()->writeln(sprintf('  => Imported activity stream "%s"', $stream->getName()));
+                $streamsAdded = true;
             }
+
+            if ($streamsAdded) {
+                $command->getOutput()->writeln(sprintf('  => Imported activity streams for activity "%s"', $activityId));
+            }
+
             $this->activityWithRawDataRepository->markActivityStreamsAsImported($activityId);
         }
     }
