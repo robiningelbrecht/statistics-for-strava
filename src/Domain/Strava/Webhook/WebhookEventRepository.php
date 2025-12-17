@@ -12,6 +12,4 @@ interface WebhookEventRepository
      * @return WebhookEvent[]
      */
     public function grab(): array;
-
-    public function guardThatTableExists(): void;
 }
