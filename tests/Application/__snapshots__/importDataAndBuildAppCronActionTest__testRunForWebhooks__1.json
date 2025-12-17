@@ -3,7 +3,10 @@
         "commandName": "App\\Application\\RunImport\\RunImport",
         "payload": {
             "output": {},
-            "restrictToActivityIds": null
+            "restrictToActivityIds": [
+                "activity-1",
+                "activity-2"
+            ]
         }
     },
     {

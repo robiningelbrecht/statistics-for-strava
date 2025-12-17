@@ -3,6 +3,7 @@
 namespace App\Tests\Domain\Strava\Webhook;
 
 use App\Domain\Strava\Webhook\DbalWebhookEventRepository;
+use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Tests\ContainerTestCase;
@@ -19,6 +20,7 @@ class DbalWebhookEventRepositoryTest extends ContainerTestCase
         $event = WebhookEvent::create(
             objectId: '1',
             objectType: 'activity',
+            aspectType: WebhookAspectType::CREATE,
             payload: [],
         );
 
@@ -28,13 +30,14 @@ class DbalWebhookEventRepositoryTest extends ContainerTestCase
         $event = WebhookEvent::create(
             objectId: '2',
             objectType: 'activity',
+            aspectType: WebhookAspectType::UPDATE,
             payload: [],
         );
 
         $this->webhookEventRepository->add($event);
 
-        $this->assertTrue($this->webhookEventRepository->grab());
-        $this->assertFalse($this->webhookEventRepository->grab());
+        $this->assertNotEmpty($this->webhookEventRepository->grab());
+        $this->assertEmpty($this->webhookEventRepository->grab());
     }
 
     #[\Override]
