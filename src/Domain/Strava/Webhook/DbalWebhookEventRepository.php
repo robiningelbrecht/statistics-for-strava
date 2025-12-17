@@ -56,9 +56,4 @@ final readonly class DbalWebhookEventRepository extends DbalRepository implement
 
         return $webhookEvents;
     }
-
-    public function guardThatTableExists(): void
-    {
-        $this->connection->executeQuery('SELECT 1 FROM WebhookEvent');
-    }
 }
