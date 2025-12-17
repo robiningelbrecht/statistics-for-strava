@@ -112,7 +112,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
         );
 
         return $this->twig->load('html/dashboard/widget/widget--peak-power-outputs.html.twig')->render([
-            'powerOutputsPerActicityType' => $bestAllTimePowerOutputsPerActivityType,
+            'powerOutputsPerActivityType' => $bestAllTimePowerOutputsPerActivityType,
             'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
         ]);
     }

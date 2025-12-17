@@ -8,5 +8,8 @@ interface WebhookEventRepository
 {
     public function add(WebhookEvent $webhookEvent): void;
 
-    public function grab(): bool;
+    /**
+     * @return WebhookEvent[]
+     */
+    public function grab(): array;
 }

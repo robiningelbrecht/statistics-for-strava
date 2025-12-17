@@ -4,6 +4,10 @@ namespace App\Tests\Application;
 
 use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
+use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Strava\Webhook\WebhookAspectType;
+use App\Domain\Strava\Webhook\WebhookEvent;
+use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
@@ -42,6 +46,42 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
+    public function testRunForWebhooks(): void
+    {
+        $output = new SpySymfonyStyleOutput(new StringInput('input'), new NullOutput());
+
+        $event = WebhookEvent::create(
+            objectId: '1',
+            objectType: 'activity',
+            aspectType: WebhookAspectType::CREATE,
+            payload: [],
+        );
+        $this->getContainer()->get(WebhookEventRepository::class)->add($event);
+
+        $event = WebhookEvent::create(
+            objectId: '2',
+            objectType: 'activity',
+            aspectType: WebhookAspectType::UPDATE,
+            payload: [],
+        );
+        $this->getContainer()->get(WebhookEventRepository::class)->add($event);
+        $event = WebhookEvent::create(
+            objectId: '3',
+            objectType: 'activity',
+            aspectType: WebhookAspectType::DELETE,
+            payload: [],
+        );
+        $this->getContainer()->get(WebhookEventRepository::class)->add($event);
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('run');
+
+        $this->importAndBuildAppCronAction->runForWebhooks($output);
+
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -49,6 +89,8 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
 
         $this->importAndBuildAppCronAction = new importDataAndBuildAppCronAction(
             $this->commandBus = new SpyCommandBus(),
+            $this->getContainer()->get(WebhookEventRepository::class),
+            $this->getContainer()->get(ActivityWithRawDataRepository::class),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
             new Mutex(

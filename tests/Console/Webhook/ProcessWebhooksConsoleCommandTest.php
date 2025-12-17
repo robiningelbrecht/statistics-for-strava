@@ -2,21 +2,11 @@
 
 namespace App\Tests\Console\Webhook;
 
-use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
 use App\Console\Webhook\ProcessWebhooksConsoleCommand;
-use App\Domain\Strava\Webhook\WebhookEvent;
-use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\Daemon\Mutex\LockName;
-use App\Infrastructure\Daemon\Mutex\Mutex;
-use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
-use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
-use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
-use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -28,26 +18,6 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
     private CommandBus $commandBus;
 
     public function testExecute(): void
-    {
-        $event = WebhookEvent::create(
-            objectId: '1',
-            objectType: 'activity',
-            payload: [],
-        );
-
-        $this->getContainer()->get(WebhookEventRepository::class)->add($event);
-
-        $command = $this->getCommandInApplication('app:cron:process-webhooks');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'command' => $command->getName(),
-        ]);
-
-        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
-        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
-    }
-
-    public function testExecuteWhenNoWebhookEvents(): void
     {
         $command = $this->getCommandInApplication('app:cron:process-webhooks');
         $commandTester = new CommandTester($command);
@@ -64,18 +34,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
         parent::setUp();
 
         $this->processWebhooksConsoleCommand = new ProcessWebhooksConsoleCommand(
-            $this->getContainer()->get(WebhookEventRepository::class),
-            new importDataAndBuildAppCronAction(
-                $this->commandBus = new SpyCommandBus(),
-                new FixedResourceUsage(),
-                AppUrl::fromString('http://localhost'),
-                new Mutex(
-                    connection: $this->getConnection(),
-                    clock: PausedClock::fromString('2025-12-04'),
-                    lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-                ),
-                new VoidMigrationRunner(),
-            )
+            $this->getContainer()->get(importDataAndBuildAppCronAction::class)
         );
     }
 
