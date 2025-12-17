@@ -1,3 +1,13 @@
+# [v4.2.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.6) - 2025-12-17
+
+## What's Changed
+* ISSUE #1530: Allow individual activities to be imported by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1538
+* ISSUE #1553: Import incorrectly flags missing Strava gear when custom gear is used by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1554
+* ISSUE #1552: Simplify activity deletion by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1556
+* ISSUE #1557: Fix A LineString must be composed of at least 2 points by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1558
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.5...v4.2.6
+
 # [v4.2.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.5) - 2025-12-16
 
 ## What's Changed
