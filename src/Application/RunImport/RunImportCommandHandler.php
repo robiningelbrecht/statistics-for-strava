@@ -13,7 +13,6 @@ use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMar
 use App\Application\Import\ImportActivities\ImportActivities;
 use App\Application\Import\ImportActivityLaps\ImportActivityLaps;
 use App\Application\Import\ImportActivitySplits\ImportActivitySplits;
-use App\Application\Import\ImportActivityStreams\ImportActivityStreams;
 use App\Application\Import\ImportAthlete\ImportAthlete;
 use App\Application\Import\ImportChallenges\ImportChallenges;
 use App\Application\Import\ImportGear\ImportGear;
@@ -63,7 +62,6 @@ final readonly class RunImportCommandHandler implements CommandHandler
         $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
         $this->commandBus->dispatch(new ImportActivitySplits($output));
         $this->commandBus->dispatch(new ImportActivityLaps($output));
-        $this->commandBus->dispatch(new ImportActivityStreams($output));
         $this->commandBus->dispatch(new CalculateBestActivityEfforts($output));
         $this->commandBus->dispatch(new ImportSegments($output));
         $this->commandBus->dispatch(new ImportChallenges($output));

@@ -14,7 +14,6 @@ use App\Domain\Activity\DbalActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\GearId;
-use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
@@ -299,43 +298,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testFindActivityIdsThatNeedStreamImport(): void
-    {
-        $activityOne = ActivityBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
-            ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
-            $activityOne,
-            ['raw' => 'data']
-        ));
-        $activityTwo = ActivityBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(2))
-            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
-            ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
-            $activityTwo,
-            ['raw' => 'data']
-        ));
-        $this->activityWithRawDataRepository->markActivityStreamsAsImported($activityTwo->getId());
-        $activityThree = ActivityBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(3))
-            ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
-            ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
-            $activityThree,
-            ['raw' => 'data']
-        ));
-
-        $this->assertEquals(
-            ActivityIds::fromArray([
-                ActivityId::fromUnprefixed(1),
-                ActivityId::fromUnprefixed(3),
-            ]),
-            $this->activityRepository->findActivityIdsThatNeedStreamImport()
-        );
-    }
-
     #[\Override]
     protected function setUp(): void
     {
@@ -343,7 +305,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
 
         $this->activityRepository = new DbalActivityRepository(
             $this->getConnection(),
-            $this->createStub(EventBus::class)
         );
         $this->activityWithRawDataRepository = new DbalActivityWithRawDataRepository(
             $this->getConnection(),

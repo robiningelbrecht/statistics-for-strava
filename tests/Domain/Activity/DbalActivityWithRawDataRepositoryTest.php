@@ -3,6 +3,7 @@
 namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -146,6 +147,29 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             SportType::BADMINTON,
             $persistedActivity->getSportType()
+        );
+    }
+
+    public function testActivityNeedsStreamImport(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()->build();
+        $activityWithRawData = ActivityWithRawData::fromState(
+            $activity,
+            ['raw' => 'data']
+        );
+
+        $this->activityWithRawDataRepository->add($activityWithRawData);
+
+        $this->assertTrue(
+            $this->activityWithRawDataRepository->activityNeedsStreamImport($activity->getId())
+        );
+        $this->assertFalse(
+            $this->activityWithRawDataRepository->activityNeedsStreamImport(ActivityId::fromUnprefixed('test'))
+        );
+
+        $this->activityWithRawDataRepository->markActivityStreamsAsImported($activity->getId());
+        $this->assertFalse(
+            $this->activityWithRawDataRepository->activityNeedsStreamImport($activity->getId())
         );
     }
 

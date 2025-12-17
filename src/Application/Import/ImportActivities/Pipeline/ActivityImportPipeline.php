@@ -18,10 +18,25 @@ final readonly class ActivityImportPipeline
     ) {
         $steps = iterator_to_array($steps);
 
-        $this->steps = [
-            ...array_filter($steps, fn (ActivityImportStep $step): bool => $step instanceof InitializeActivity),
-            ...array_filter($steps, fn (ActivityImportStep $step): bool => !$step instanceof InitializeActivity),
-        ];
+        $first = null;
+        $last = null;
+        $middle = [];
+
+        foreach ($steps as $step) {
+            if ($step instanceof InitializeActivity) {
+                $first = $step;
+            } elseif ($step instanceof DownloadActivityImages) {
+                $last = $step;
+            } else {
+                $middle[] = $step;
+            }
+        }
+
+        $this->steps = array_filter([
+            $first,
+            ...$middle,
+            $last,
+        ]);
     }
 
     public function process(ActivityImportContext $context): ActivityImportContext
