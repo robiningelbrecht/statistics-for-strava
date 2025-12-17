@@ -6,38 +6,59 @@ namespace App\Domain\Strava\Webhook;
 
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
+use Doctrine\DBAL\ArrayParameterType;
 
 final readonly class DbalWebhookEventRepository extends DbalRepository implements WebhookEventRepository
 {
-    private const string WEBHOOK_EVENT_KEY = 'needsToProcessWebhooks';
-
     public function add(WebhookEvent $webhookEvent): void
     {
-        $sql = 'INSERT INTO KeyValue (`key`, `value`)
-        VALUES (:key, :value)
-        ON CONFLICT(`key`) DO NOTHING;';
+        $sql = 'INSERT INTO WebhookEvent (objectId, objectType, aspectType, payload) 
+                VALUES (:objectId, :objectType, :aspectType, :payload)
+                ON CONFLICT(`objectId`) DO NOTHING;';
 
         $this->connection->executeStatement($sql, [
-            'key' => self::WEBHOOK_EVENT_KEY,
-            'value' => Json::encode(true),
+            'objectId' => $webhookEvent->getObjectId(),
+            'objectType' => $webhookEvent->getObjectType(),
+            'aspectType' => $webhookEvent->getAspectType()->value,
+            'payload' => Json::encode($webhookEvent->getPayload()),
         ]);
     }
 
-    public function grab(): bool
+    public function grab(): array
     {
         $this->connection->beginTransaction();
 
-        $value = $this->connection->executeQuery(
-            'SELECT `value` FROM KeyValue WHERE `key`= :key',
-            ['key' => self::WEBHOOK_EVENT_KEY]
-        )->fetchOne();
+        $queryBuilder = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('WebhookEvent');
 
-        $this->connection->executeStatement('DELETE FROM KeyValue WHERE `key`= :key', [
-            'key' => self::WEBHOOK_EVENT_KEY,
-        ]);
+        $webhookEvents = array_map(
+            fn (array $result): WebhookEvent => WebhookEvent::create(
+                objectId: $result['objectId'],
+                objectType: $result['objectType'],
+                aspectType: WebhookAspectType::from($result['aspectType']),
+                payload: Json::decode($result['payload']),
+            ),
+            $queryBuilder->executeQuery()->fetchAllAssociative()
+        );
+
+        $this->connection->executeStatement('DELETE FROM WebhookEvent WHERE objectId IN (:objectIds)',
+            [
+                'objectIds' => array_map(fn (WebhookEvent $webhookEvent): string => $webhookEvent->getObjectId(), $webhookEvents),
+            ],
+            [
+                'objectIds' => ArrayParameterType::STRING,
+            ]
+        );
 
         $this->connection->commit();
 
-        return (bool) $value;
+        return $webhookEvents;
+    }
+
+    public function guardThatTableExists(): void
+    {
+        $this->connection->executeQuery('SELECT 1 FROM WebhookEvent');
     }
 }

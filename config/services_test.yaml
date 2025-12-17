@@ -35,8 +35,8 @@ services:
     App\Infrastructure\Time\ResourceUsage\ResourceUsage:
         class: App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage
 
-    App\Infrastructure\Doctrine\MigrationRunner:
-        class: App\Tests\Infrastructure\Doctrine\VoidMigrationRunner
+    App\Infrastructure\Doctrine\Migrations\MigrationRunner:
+        class: App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner
 
     App\Infrastructure\FileSystem\PermissionChecker:
         class: App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker
