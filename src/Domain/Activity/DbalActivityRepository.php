@@ -200,20 +200,6 @@ final class DbalActivityRepository implements ActivityRepository
         ));
     }
 
-    public function findActivityIdsThatNeedStreamImport(): ActivityIds
-    {
-        $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('activityId')
-            ->from('Activity')
-            ->where('streamsAreImported = 0 OR streamsAreImported IS NULL')
-            ->orderBy('startDateTime', 'DESC');
-
-        return ActivityIds::fromArray(array_map(
-            ActivityId::fromString(...),
-            $queryBuilder->executeQuery()->fetchFirstColumn(),
-        ));
-    }
-
     public function findActivityIdsMarkedForDeletion(): ActivityIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();

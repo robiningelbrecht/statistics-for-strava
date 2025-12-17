@@ -13,6 +13,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
+use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
@@ -32,6 +33,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private Strava $strava,
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
+        private ActivityStreamRepository $activityStreamRepository,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private SportTypesToImport $sportTypesToImport,
         private ActivityVisibilitiesToImport $activityVisibilitiesToImport,
@@ -149,17 +151,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 ));
 
                 $this->numberOfNewActivitiesToProcessPerImport->increaseNumberOfProcessedActivities();
-                if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {
-                    // Stop importing activities, we reached the max number to process for this batch.
-                    $command->getOutput()->writeln(sprintf(
-                        '  => [%d/%d] Imported activity: "%s - %s"',
-                        $delta,
-                        $countTotalStravaActivitiesToImport,
-                        $activity->getName(),
-                        $activity->getStartDate()->format('d-m-Y'))
-                    );
-                    break;
-                }
             } else {
                 $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
                     activity: $activity,
@@ -168,6 +159,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                         ...$rawStravaData,
                     ]
                 ));
+            }
+
+            foreach ($context->getStreams() as $stream) {
+                $this->activityStreamRepository->add($stream);
+                $this->activityWithRawDataRepository->markActivityStreamsAsImported($activityId);
             }
 
             unset($activityIdsToDelete[(string) $context->getActivity()->getId()]);
@@ -180,6 +176,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'))
             );
+
+            if ($this->numberOfNewActivitiesToProcessPerImport->maxNumberProcessed()) {
+                // Stop importing activities, we reached the max number to process for this batch.
+                break;
+            }
 
             $this->mutex->heartbeat();
             ++$delta;

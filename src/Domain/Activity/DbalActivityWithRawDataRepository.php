@@ -150,6 +150,18 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         ]);
     }
 
+    public function activityNeedsStreamImport(ActivityId $activityId): bool
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('activityId')
+            ->from('Activity')
+            ->andWhere('streamsAreImported = 0 OR streamsAreImported IS NULL')
+            ->andWhere('activityId = :activityId')
+            ->setParameter('activityId', $activityId);
+
+        return !empty($queryBuilder->fetchOne());
+    }
+
     public function markActivityStreamsAsImported(ActivityId $activityId): void
     {
         $sql = 'UPDATE Activity SET streamsAreImported = 1 WHERE activityId = :activityId';

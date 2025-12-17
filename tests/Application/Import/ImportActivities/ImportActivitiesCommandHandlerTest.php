@@ -71,7 +71,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
     public function testHandleWithTooManyRequestsWhileFetchingActivities(): void
     {
         $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(9);
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(12);
 
         $this->getContainer()->get(ImportedGearRepository::class)->save(ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromString('gear-b12659861'))
@@ -92,6 +92,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 'start_latlng' => [51.2, 3.18],
             ]
         ));
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->markActivityStreamsAsImported(ActivityId::fromUnprefixed(4));
 
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
@@ -259,6 +260,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: ActivityVisibilitiesToImport::from([ActivityVisibility::EVERYONE->value]),
@@ -296,6 +298,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -338,6 +341,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -371,6 +375,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: SportTypesToImport::from(['Ride']),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -465,6 +470,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),

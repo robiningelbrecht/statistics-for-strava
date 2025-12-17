@@ -38,12 +38,6 @@
         }
     },
     {
-        "commandName": "App\\Application\\Import\\ImportActivityStreams\\ImportActivityStreams",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
         "commandName": "App\\Application\\Import\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
         "payload": {
             "output": {}
