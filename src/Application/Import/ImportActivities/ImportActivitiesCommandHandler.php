@@ -145,6 +145,11 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
             $activity = $context->getActivity() ?? throw new \RuntimeException('Activity not set on $context');
             if ($context->isNewActivity()) {
+                // We always expect "segment_efforts" to be set in raw data.
+                // If not, something is really wrong. Abort import.
+                if (!array_key_exists('segment_efforts', $context->getRawStravaData())) {
+                    throw new \RuntimeException('Activities are expected to include segment_efforts in the raw Strava data. This appears to be a regression introduced in a recent version. Please report this as a bug on GitHub.');
+                }
                 $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
                     activity: $activity,
                     rawData: $context->getRawStravaData()

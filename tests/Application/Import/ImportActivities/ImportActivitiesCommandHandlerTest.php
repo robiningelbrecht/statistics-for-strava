@@ -102,6 +102,9 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(Json::encode(
             $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
         ));
+        $this->assertMatchesJsonSnapshot(Json::encode(
+            $this->getConnection()->executeQuery('SELECT * FROM ActivityStream')->fetchAllAssociative()
+        ));
     }
 
     public function testHandleWithUnexpectedErrorWhileInitializing(): void
