@@ -20,25 +20,13 @@
         }
     },
     {
+        "commandName": "App\\Application\\Import\\ProcessRawActivityData\\ProcessRawActivityData",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
         "commandName": "App\\Application\\Import\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Application\\Import\\ImportActivitySplits\\ImportActivitySplits",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Application\\Import\\ImportActivityLaps\\ImportActivityLaps",
-        "payload": {
-            "output": {}
-        }
-    },
-    {
-        "commandName": "App\\Application\\Import\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
         "payload": {
             "output": {}
         }
@@ -51,6 +39,12 @@
     },
     {
         "commandName": "App\\Application\\Import\\ImportChallenges\\ImportChallenges",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateBestActivityEfforts\\CalculateBestActivityEfforts",
         "payload": {
             "output": {}
         }
