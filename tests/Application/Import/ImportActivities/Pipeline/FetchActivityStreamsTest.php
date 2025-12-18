@@ -16,11 +16,14 @@ use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Override;
+use PHPUnit\Framework\MockObject\MockObject;
+use RuntimeException;
 
 class FetchActivityStreamsTest extends ContainerTestCase
 {
     private FetchActivityStreams $fetchActivityStreams;
-    private Strava $strava;
+    private MockObject $strava;
 
     public function testWhenStreamAlreadyExists(): void
     {
@@ -70,7 +73,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
 
     public function testProcessWhenException(): void
     {
-        $theException = new \RuntimeException('WAW');
+        $theException = new RuntimeException('WAW');
         $this->strava
             ->expects($this->once())
             ->method('getAllActivityStreams')
@@ -86,6 +89,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
         $this->fetchActivityStreams->process($context);
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
