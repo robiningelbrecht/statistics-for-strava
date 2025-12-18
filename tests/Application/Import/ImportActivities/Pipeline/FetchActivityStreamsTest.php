@@ -71,7 +71,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
 
     public function testProcessWhenException(): void
     {
-        $theException = new \RuntimeException('WAW');
+        $theException = new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
         $this->strava
             ->expects($this->once())
             ->method('getAllActivityStreams')
