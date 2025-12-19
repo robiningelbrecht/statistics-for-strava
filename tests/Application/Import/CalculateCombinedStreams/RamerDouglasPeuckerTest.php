@@ -2,8 +2,8 @@
 
 namespace App\Tests\Application\Import\CalculateCombinedStreams;
 
-use App\Application\Import\CalculateCombinedStreams\Epsilon;
-use App\Application\Import\CalculateCombinedStreams\RamerDouglasPeucker;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\Epsilon;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\RamerDouglasPeucker;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Stream\ActivityStreams;
 use App\Domain\Activity\Stream\StreamType;

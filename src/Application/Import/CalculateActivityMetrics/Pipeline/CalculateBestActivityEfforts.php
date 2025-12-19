@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateBestActivityEfforts;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffort;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class CalculateBestActivityEffortsCommandHandler implements CommandHandler
+final readonly class CalculateBestActivityEfforts implements CalculateActivityMetricsStep
 {
     public function __construct(
         private ActivityRepository $activityRepository,
@@ -21,11 +20,8 @@ final readonly class CalculateBestActivityEffortsCommandHandler implements Comma
     ) {
     }
 
-    public function handle(Command $command): void
+    public function process(OutputInterface $output): void
     {
-        assert($command instanceof CalculateBestActivityEfforts);
-        $command->getOutput()->writeln('Calculating best activity efforts...');
-
         $activityIdsWithoutBestEfforts = $this->activityBestEffortRepository->findActivityIdsThatNeedBestEffortsCalculation();
 
         $activityWithBestEffortsCalculatedCount = 0;
@@ -84,7 +80,7 @@ final readonly class CalculateBestActivityEffortsCommandHandler implements Comma
                 continue;
             }
 
-            $command->getOutput()->writeln(sprintf(
+            $output->writeln(sprintf(
                 '  => %d/%d best efforts calculated',
                 $activityWithBestEffortsCalculatedCount,
                 count($activityIdsWithoutBestEfforts)
@@ -92,7 +88,7 @@ final readonly class CalculateBestActivityEffortsCommandHandler implements Comma
         }
 
         if (0 !== $activityWithBestEffortsCalculatedCount % 10) {
-            $command->getOutput()->writeln(sprintf(
+            $output->writeln(sprintf(
                 '  => %d/%d best efforts calculated',
                 $activityWithBestEffortsCalculatedCount,
                 count($activityIdsWithoutBestEfforts)

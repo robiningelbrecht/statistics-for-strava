@@ -2,24 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateNormalizedPower;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\Stream\ActivityStreamRepository;
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class CalculateNormalizedPowerCommandHandler implements CommandHandler
+final readonly class CalculateNormalizedPower implements CalculateActivityMetricsStep
 {
     public function __construct(
         private ActivityStreamRepository $activityStreamRepository,
     ) {
     }
 
-    public function handle(Command $command): void
+    public function process(OutputInterface $output): void
     {
-        assert($command instanceof CalculateNormalizedPower);
-        $command->getOutput()->writeln('Calculating normalized power...');
-
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutNormalizedPower(100);
@@ -49,6 +45,6 @@ final readonly class CalculateNormalizedPowerCommandHandler implements CommandHa
             }
         } while (!$streams->isEmpty());
 
-        $command->getOutput()->writeln(sprintf('  => Calculated normalized power for %d streams', $countCalculatedStreams));
+        $output->writeln(sprintf('  => Calculated normalized power for %d streams', $countCalculatedStreams));
     }
 }

@@ -2,25 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateBestStreamAverages;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class CalculateBestStreamAveragesCommandHandler implements CommandHandler
+final readonly class CalculateBestStreamAverages implements CalculateActivityMetricsStep
 {
     public function __construct(
         private ActivityStreamRepository $activityStreamRepository,
     ) {
     }
 
-    public function handle(Command $command): void
+    public function process(OutputInterface $output): void
     {
-        assert($command instanceof CalculateBestStreamAverages);
-        $command->getOutput()->writeln('Calculating best stream averages...');
-
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutBestAverages(100);
@@ -43,6 +39,6 @@ final readonly class CalculateBestStreamAveragesCommandHandler implements Comman
             }
         } while (!$streams->isEmpty());
 
-        $command->getOutput()->writeln(sprintf('  => Calculated averages for %d streams', $countCalculatedStreams));
+        $output->writeln(sprintf('  => Calculated averages for %d streams', $countCalculatedStreams));
     }
 }

@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateStreamValueDistribution;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class CalculateStreamValueDistributionCommandHandler implements CommandHandler
+final readonly class CalculateStreamValueDistribution implements CalculateActivityMetricsStep
 {
     public function __construct(
         private ActivityStreamRepository $activityStreamRepository,
@@ -23,11 +22,8 @@ final readonly class CalculateStreamValueDistributionCommandHandler implements C
     ) {
     }
 
-    public function handle(Command $command): void
+    public function process(OutputInterface $output): void
     {
-        assert($command instanceof CalculateStreamValueDistribution);
-        $command->getOutput()->writeln('Calculating stream value distributions...');
-
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutDistributionValues(100);
@@ -82,6 +78,6 @@ final readonly class CalculateStreamValueDistributionCommandHandler implements C
             }
         } while (!$streams->isEmpty());
 
-        $command->getOutput()->writeln(sprintf('  => Calculated value distribution for %d streams', $countCalculatedStreams));
+        $output->writeln(sprintf('  => Calculated value distribution for %d streams', $countCalculatedStreams));
     }
 }
