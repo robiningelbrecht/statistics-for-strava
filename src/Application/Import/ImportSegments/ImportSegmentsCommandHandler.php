@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Import\ImportSegments;
 
-use App\Application\Countries;
-use App\Domain\Activity\ActivityRepository;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Segment\Segment;
-use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
@@ -40,6 +36,8 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             return;
         }
         $this->strava->setConsoleOutput($command->getOutput());
+
+        $command->getOutput()->writeln('Importing segments...');
 
         $segmentIdsMissingDetails = $this->segmentRepository->findSegmentsIdsMissingDetails();
         $numberOfSegmentIdsMissingDetails = count($segmentIdsMissingDetails);
