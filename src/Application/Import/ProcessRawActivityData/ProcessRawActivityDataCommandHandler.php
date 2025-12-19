@@ -2,14 +2,19 @@
 
 namespace App\Application\Import\ProcessRawActivityData;
 
-use App\Application\Import\ProcessRawActivityData\Pipeline\ProcessRawActivityDataPipeline;
+use App\Application\Import\ProcessRawActivityData\Pipeline\ProcessRawDataStep;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class ProcessRawActivityDataCommandHandler implements CommandHandler
 {
+    /**
+     * @param iterable<ProcessRawDataStep> $steps
+     */
     public function __construct(
-        private ProcessRawActivityDataPipeline $pipeline,
+        #[AutowireIterator('app.activity_process_raw_data.pipeline_step')]
+        private iterable $steps,
     ) {
     }
 
@@ -17,6 +22,10 @@ final readonly class ProcessRawActivityDataCommandHandler implements CommandHand
     {
         assert($command instanceof ProcessRawActivityData);
 
-        $this->pipeline->process();
+        $command->getOutput()->writeln('Processing raw activity data...');
+
+        foreach ($this->steps as $step) {
+            $step->process($command->getOutput());
+        }
     }
 }
