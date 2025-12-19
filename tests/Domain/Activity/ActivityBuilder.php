@@ -46,7 +46,6 @@ final class ActivityBuilder
     private RouteGeography $routeGeography;
     private readonly string $weather;
     private ?GearId $gearId;
-    private readonly ?string $gearName;
     private readonly bool $isCommute;
     private readonly ?WorkoutType $workoutType;
 
@@ -78,7 +77,6 @@ final class ActivityBuilder
         $this->weather = '';
         $this->gearId = null;
         $this->routeGeography = RouteGeography::create([]);
-        $this->gearName = null;
         $this->isCommute = false;
         $this->workoutType = null;
     }

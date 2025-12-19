@@ -215,6 +215,14 @@ class SpyStrava extends Strava
     #[\Override]
     public function getSegment(SegmentId $segmentId): array
     {
+        if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
+
+        ++$this->numberOfCallsExecuted;
+        $this->throw429IfMaxNumberOfCallsIsExceeded();
+
         $segments = [
             'segment-1' => ['map' => ['polyline' => 'DaLine']],
             'segment-2' => ['map' => ['polyline' => 'DaLine2']],

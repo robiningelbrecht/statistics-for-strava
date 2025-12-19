@@ -3,12 +3,19 @@
 namespace App\Tests\Application\Import\ImportSegments;
 
 use App\Application\Import\ImportSegments\ImportSegments;
+use App\Application\Import\ImportSegments\ImportSegmentsCommandHandler;
+use App\Application\Import\ImportSegments\OptInToSegmentDetailsImport;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
+use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Daemon\Mutex\LockName;
+use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Segment\SegmentBuilder;
+use App\Tests\Domain\Strava\SpyStrava;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -17,10 +24,12 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private CommandBus $commandBus;
+    private SpyStrava $strava;
 
     public function testHandle(): void
     {
         $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(2);
 
         $this->getContainer()->get(SegmentRepository::class)->add(
             SegmentBuilder::fromDefaults()
@@ -37,8 +46,67 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->commandBus->dispatch(new ImportSegments($output));
+        $commandHandler = new ImportSegmentsCommandHandler(
+            $this->getContainer()->get(SegmentRepository::class),
+            OptInToSegmentDetailsImport::fromBool(true),
+            $this->strava,
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            )
+        );
+
+        $commandHandler->handle(new ImportSegments($output));
         $this->assertMatchesTextSnapshot($output);
+    }
+
+    public function testHandleWhenExceptionIsThrown(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->triggerExceptionOnNextCall();
+
+        $this->getContainer()->get(SegmentRepository::class)->add(
+            SegmentBuilder::fromDefaults()
+                ->withSegmentId(SegmentId::fromUnprefixed('1'))
+                ->withName(Name::fromString('⭐️ Segment'))
+                ->withIsFavourite(false)
+                ->build()
+        );
+
+        $commandHandler = new ImportSegmentsCommandHandler(
+            $this->getContainer()->get(SegmentRepository::class),
+            OptInToSegmentDetailsImport::fromBool(true),
+            $this->strava,
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            )
+        );
+
+        $commandHandler->handle(new ImportSegments($output));
+        $this->assertMatchesTextSnapshot($output);
+    }
+
+    public function testHandleWhenSegmentDetailsAreDisabled(): void
+    {
+        $commandHandler = new ImportSegmentsCommandHandler(
+            $this->getContainer()->get(SegmentRepository::class),
+            OptInToSegmentDetailsImport::fromBool(false),
+            $this->strava,
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            )
+        );
+
+        $output = new SpyOutput();
+        $commandHandler->handle(new ImportSegments($output));
+
+        $this->assertEmpty((string) $output);
     }
 
     #[\Override]
@@ -47,6 +115,8 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
         parent::setUp();
 
         $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->strava = $this->getContainer()->get(Strava::class);
+
         $this->getConnection()->executeStatement(
             'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
             ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
