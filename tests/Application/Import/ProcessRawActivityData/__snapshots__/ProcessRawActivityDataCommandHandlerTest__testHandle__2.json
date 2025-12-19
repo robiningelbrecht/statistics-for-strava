@@ -9,10 +9,10 @@
         "climbCategory": null,
         "deviceName": "Polar",
         "countryCode": "BE",
-        "detailsHaveBeenImported": 1,
-        "polyline": "DaLine2",
-        "startingCoordinateLatitude": -3.0e-5,
-        "startingCoordinateLongitude": 0.00209
+        "detailsHaveBeenImported": 0,
+        "polyline": null,
+        "startingCoordinateLatitude": null,
+        "startingCoordinateLongitude": null
     },
     {
         "segmentId": "segment-1",
@@ -24,9 +24,9 @@
         "climbCategory": null,
         "deviceName": "Zwift",
         "countryCode": null,
-        "detailsHaveBeenImported": 1,
-        "polyline": "DaLine",
-        "startingCoordinateLatitude": -3.0e-5,
-        "startingCoordinateLongitude": 0.00209
+        "detailsHaveBeenImported": 0,
+        "polyline": null,
+        "startingCoordinateLatitude": null,
+        "startingCoordinateLongitude": null
     }
 ]
