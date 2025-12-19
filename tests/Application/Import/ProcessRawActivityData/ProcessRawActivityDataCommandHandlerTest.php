@@ -115,6 +115,7 @@ class ProcessRawActivityDataCommandHandlerTest extends ContainerTestCase
                             'name' => 'Segment One',
                             'maximum_grade' => 5.3,
                             'distance' => 1000,
+                            'country' => 'BE',
                         ],
                     ],
                 ],
