@@ -15,7 +15,7 @@ jobs:
       - name: Extract current version from Dockerfile
         id: local
         run: |
-          RAW=$(grep -oP 'ARG SHOUTRRR_VERSION="?(\K[0-9.]+)(?="?)' docker/app/Dockerfile)
+          RAW=$(sed -n 's/.*ARG SHOUTRRR_VERSION="\{0,1\}\([0-9.]*\)".*/\1/p' docker/app/Dockerfile)
           CURRENT="v$RAW"
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
 
@@ -42,7 +42,7 @@ jobs:
           TITLE: "New Shoutrrr release available: ${{ steps.upstream.outputs.latest }}"
           BODY: |
             A new version of **Shoutrrr** has been released.
-      
+            
             - Current version: ${{ steps.local.outputs.current }}
             - Latest version: ${{ steps.upstream.outputs.latest }}
             
