@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateCombinedStreams;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
@@ -13,8 +13,6 @@ use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Command;
-use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -22,9 +20,10 @@ use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use Symfony\Component\Console\Output\OutputInterface;
 
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
-final readonly class CalculateCombinedStreamsCommandHandler implements CommandHandler
+final readonly class CalculateCombinedStreams implements CalculateActivityMetricsStep
 {
     use ProvideTimeFormats;
 
@@ -37,11 +36,8 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
     ) {
     }
 
-    public function handle(Command $command): void
+    public function process(OutputInterface $output): void
     {
-        assert($command instanceof CalculateCombinedStreams);
-        $command->getOutput()->writeln('Calculating combined activity streams...');
-
         $activityIdsThatNeedCombining = $this->combinedActivityStreamRepository->findActivityIdsThatNeedStreamCombining(
             $this->unitSystem
         );
@@ -214,7 +210,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
                 continue;
             }
 
-            $command->getOutput()->writeln(sprintf(
+            $output->writeln(sprintf(
                 '  => %d/%d combined activity streams calculated',
                 $activityWithCombinedStreamCalculatedCount,
                 count($activityIdsThatNeedCombining)
@@ -222,7 +218,7 @@ final readonly class CalculateCombinedStreamsCommandHandler implements CommandHa
         }
 
         if (0 !== $activityWithCombinedStreamCalculatedCount % 10) {
-            $command->getOutput()->writeln(sprintf(
+            $output->writeln(sprintf(
                 '  => %d/%d combined activity streams calculated',
                 $activityWithCombinedStreamCalculatedCount,
                 count($activityIdsThatNeedCombining)

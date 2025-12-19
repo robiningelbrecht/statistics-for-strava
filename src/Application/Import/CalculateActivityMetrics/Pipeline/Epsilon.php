@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\CalculateCombinedStreams;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityType;
 

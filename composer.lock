@@ -2591,16 +2591,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.9.3",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "7f7957a5044c9cc4b8bf641d892abc4c3cc9e765"
+                "reference": "0f0bc7368f197a5468bd7977fe1b5a2dd505eb03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/7f7957a5044c9cc4b8bf641d892abc4c3cc9e765",
-                "reference": "7f7957a5044c9cc4b8bf641d892abc4c3cc9e765",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/0f0bc7368f197a5468bd7977fe1b5a2dd505eb03",
+                "reference": "0f0bc7368f197a5468bd7977fe1b5a2dd505eb03",
                 "shasum": ""
             },
             "require": {
@@ -2615,6 +2615,7 @@
                 "elasticsearch/elasticsearch": "^8.0",
                 "ext-pdo": "*",
                 "friendsofphp/php-cs-fixer": "^3.75",
+                "google/auth": "^1.49",
                 "html2text/html2text": "^4.3",
                 "illuminate/database": "^10.0|^11.0|^12.0",
                 "phpstan/phpstan": "^2.1",
@@ -2654,9 +2655,15 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.9.3"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.10.0"
             },
-            "time": "2025-12-13T19:07:11+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/neuron-core",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-18T08:27:27+00:00"
         },
         {
             "name": "psr/cache",
@@ -8500,16 +8507,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.92.1",
+            "version": "v3.92.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "ed33ad03313a019533ba065eba6c86af0a382873"
+                "reference": "2ba8f5a60f6f42fb65758cfb3768434fa2d1c7e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ed33ad03313a019533ba065eba6c86af0a382873",
-                "reference": "ed33ad03313a019533ba065eba6c86af0a382873",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2ba8f5a60f6f42fb65758cfb3768434fa2d1c7e8",
+                "reference": "2ba8f5a60f6f42fb65758cfb3768434fa2d1c7e8",
                 "shasum": ""
             },
             "require": {
@@ -8592,7 +8599,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.92.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.92.3"
             },
             "funding": [
                 {
@@ -8600,7 +8607,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-15T23:09:01+00:00"
+            "time": "2025-12-18T10:45:02+00:00"
         },
         {
             "name": "myclabs/deep-copy",

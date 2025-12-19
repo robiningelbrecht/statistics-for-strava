@@ -2,8 +2,8 @@
 
 namespace App\Tests\Application\Import\CalculateCombinedStreams;
 
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateCombinedStreams;
 use App\Application\Import\CalculateCombinedStreams\CalculateCombinedStreams;
-use App\Application\Import\CalculateCombinedStreams\CalculateCombinedStreamsCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -170,7 +170,7 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        new CalculateCombinedStreamsCommandHandler(
+        new CalculateCombinedStreams(
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             combinedActivityStreamRepository: $this->getContainer()->get(CombinedActivityStreamRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
