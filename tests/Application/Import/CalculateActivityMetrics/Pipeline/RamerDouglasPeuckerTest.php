@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateCombinedStreams;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Application\Import\CalculateActivityMetrics\Pipeline\Epsilon;
 use App\Application\Import\CalculateActivityMetrics\Pipeline\RamerDouglasPeucker;

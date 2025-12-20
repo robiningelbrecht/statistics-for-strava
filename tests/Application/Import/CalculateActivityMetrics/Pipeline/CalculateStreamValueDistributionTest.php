@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateStreamValueDistribution;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Application\Import\CalculateStreamValueDistribution\CalculateStreamValueDistribution;
-use App\Application\Import\CalculateStreamValueDistribution\CalculateStreamValueDistributionCommandHandler;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateStreamValueDistribution;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -11,7 +10,6 @@ use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -22,14 +20,14 @@ use App\Tests\SpyOutput;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class CalculateStreamValueDistributionCommandHandlerTest extends ContainerTestCase
+class CalculateStreamValueDistributionTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CommandBus $commandBus;
+    private CalculateStreamValueDistribution $calculateStreamValueDistribution;
 
     #[DataProvider(methodName: 'provideUnitSystems')]
-    public function testHandle(UnitSystem $unitSystem): void
+    public function testProcess(UnitSystem $unitSystem): void
     {
         $output = new SpyOutput();
 
@@ -108,13 +106,11 @@ class CalculateStreamValueDistributionCommandHandlerTest extends ContainerTestCa
             ->build();
         $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
 
-        new CalculateStreamValueDistributionCommandHandler(
+        new CalculateStreamValueDistribution(
             $this->getContainer()->get(ActivityStreamRepository::class),
             $this->getContainer()->get(ActivityRepository::class),
             $unitSystem,
-        )->handle(
-            new CalculateStreamValueDistribution($output)
-        );
+        )->process($output);
 
         $this->assertMatchesTextSnapshot($output);
         $this->assertMatchesJsonSnapshot(
@@ -134,6 +130,6 @@ class CalculateStreamValueDistributionCommandHandlerTest extends ContainerTestCa
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->calculateStreamValueDistribution = $this->getContainer()->get(CalculateStreamValueDistribution::class);
     }
 }

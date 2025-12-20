@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateCombinedStreams;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateCombinedStreams;
-use App\Application\Import\CalculateCombinedStreams\CalculateCombinedStreams;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -12,7 +11,6 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
@@ -24,13 +22,13 @@ use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
+class CalculateCombinedStreamsTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CommandBus $commandBus;
+    private CalculateCombinedStreams $calculateCombinedStreams;
 
-    public function testHandleMetric(): void
+    public function testProcess(): void
     {
         $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
         $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
@@ -103,18 +101,18 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
             );
         }
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
 
         $this->assertMatchesJsonSnapshot(
             Json::encode($this->getConnection()
                 ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
         );
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
         $this->assertMatchesTextSnapshot($output);
     }
 
-    public function testHandleImperial(): void
+    public function testProcessImperial(): void
     {
         $output = new SpyOutput();
 
@@ -180,7 +178,7 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             )
-        )->handle(new CalculateCombinedStreams($output));
+        )->process($output);
 
         $this->assertMatchesJsonSnapshot(
             Json::encode($this->getConnection()
@@ -188,7 +186,7 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
         );
     }
 
-    public function testHandleWithEmptyDistanceStream(): void
+    public function testProcessWithEmptyDistanceStream(): void
     {
         $output = new SpyOutput();
 
@@ -236,18 +234,18 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
 
         $this->assertEmpty(
             $this->getConnection()
                 ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative()
         );
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
         $this->assertMatchesTextSnapshot($output);
     }
 
-    public function testHandleForRunWithVelocity(): void
+    public function testProcessForRunWithVelocity(): void
     {
         $output = new SpyOutput();
 
@@ -303,14 +301,14 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
 
         $this->assertMatchesJsonSnapshot(
             Json::encode($this->getConnection()
                 ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
         );
 
-        $this->commandBus->dispatch(new CalculateCombinedStreams($output));
+        $this->calculateCombinedStreams->process($output);
         $this->assertMatchesTextSnapshot($output);
     }
 
@@ -319,7 +317,7 @@ class CalculateCombinedStreamsCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->calculateCombinedStreams = $this->getContainer()->get(CalculateCombinedStreams::class);
         $this->getConnection()->executeStatement(
             'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
             ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']

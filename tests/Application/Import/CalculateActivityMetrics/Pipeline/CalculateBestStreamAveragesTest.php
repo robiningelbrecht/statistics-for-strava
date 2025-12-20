@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateBestStreamAverages;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Application\Import\CalculateBestStreamAverages\CalculateBestStreamAverages;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateBestStreamAverages;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class CalculateBestStreamAveragesCommandHandlerTest extends ContainerTestCase
+class CalculateBestStreamAveragesTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CommandBus $commandBus;
+    private CalculateBestStreamAverages $calculateBestStreamAverages;
 
-    public function testHandle(): void
+    public function testProcess(): void
     {
         $output = new SpyOutput();
 
@@ -43,7 +42,7 @@ class CalculateBestStreamAveragesCommandHandlerTest extends ContainerTestCase
             ->build();
         $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
 
-        $this->commandBus->dispatch(new CalculateBestStreamAverages($output));
+        $this->calculateBestStreamAverages->process($output);
 
         $this->assertMatchesTextSnapshot($output);
         $this->assertMatchesJsonSnapshot(
@@ -57,6 +56,6 @@ class CalculateBestStreamAveragesCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->calculateBestStreamAverages = $this->getContainer()->get(CalculateBestStreamAverages::class);
     }
 }

@@ -1,25 +1,24 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateNormalizedPower;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Application\Import\CalculateNormalizedPower\CalculateNormalizedPower;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateNormalizedPower;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class CalculateNormalizedPowerCommandHandlerTest extends ContainerTestCase
+class CalculateNormalizedPowerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CommandBus $commandBus;
+    private CalculateNormalizedPower $calculateNormalizedPower;
 
-    public function testHandle(): void
+    public function testProcess(): void
     {
         $output = new SpyOutput();
 
@@ -52,7 +51,7 @@ class CalculateNormalizedPowerCommandHandlerTest extends ContainerTestCase
             ->build();
         $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
 
-        $this->commandBus->dispatch(new CalculateNormalizedPower($output));
+        $this->calculateNormalizedPower->process($output);
 
         $this->assertMatchesTextSnapshot($output);
         $this->assertMatchesJsonSnapshot(
@@ -66,6 +65,6 @@ class CalculateNormalizedPowerCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->calculateNormalizedPower = $this->getContainer()->get(CalculateNormalizedPower::class);
     }
 }
