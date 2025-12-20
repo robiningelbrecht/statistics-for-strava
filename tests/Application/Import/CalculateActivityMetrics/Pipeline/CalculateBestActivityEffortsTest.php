@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Tests\Application\Import\CalculateBestActivityEfforts;
+namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Application\Import\CalculateBestActivityEfforts\CalculateBestActivityEfforts;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateBestActivityEfforts;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Tests\ContainerTestCase;
@@ -18,25 +17,25 @@ use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class CalculateBestActivityEffortsCommandHandlerTest extends ContainerTestCase
+class CalculateBestActivityEffortsTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CommandBus $commandBus;
+    private CalculateBestActivityEfforts $calculateBestActivityEfforts;
 
-    public function testHandle(): void
+    public function testProcess(): void
     {
         $output = new SpyOutput();
         $this->provideSomeData();
 
-        $this->commandBus->dispatch(new CalculateBestActivityEfforts($output));
+        $this->calculateBestActivityEfforts->process($output);
 
         $this->assertMatchesJsonSnapshot(
             Json::encode($this->getConnection()
                 ->executeQuery('SELECT * FROM ActivityBestEffort')->fetchAllAssociative())
         );
 
-        $this->commandBus->dispatch(new CalculateBestActivityEfforts($output));
+        $this->calculateBestActivityEfforts->process($output);
         $this->assertMatchesTextSnapshot($output);
     }
 
@@ -45,7 +44,7 @@ class CalculateBestActivityEffortsCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->commandBus = $this->getContainer()->get(CommandBus::class);
+        $this->calculateBestActivityEfforts = $this->getContainer()->get(CalculateBestActivityEfforts::class);
     }
 
     private function provideSomeData(): void
