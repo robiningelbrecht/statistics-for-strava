@@ -114,14 +114,17 @@ import:
   numberOfNewActivitiesToProcessPerImport: 250
   # Sport types to import. Leave empty to import all sport types
   # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities that are not included in this list of sport types.
   sportTypesToImport: []
   # Activity visibilities to import. Leave empty to import all visibilities
   # This list can be combined with sportTypesToImport.
   # Allowed values: ["everyone", "followers_only", "only_me"]
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities that are not included in this list of visibilities.
   activityVisibilitiesToImport: []
   # Optional, the date (YYYY-MM-DD) from which you want to start importing activities. 
   # Any activity recorded before this date, will not be imported.
   # This can be used if you want to skip the import of older activities. Leave empty to disable.
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities recorded before the specified date.
   skipActivitiesRecordedBefore: null
   # An array of activity ids to skip during import. 
   # This allows you to skip specific activities during import.
