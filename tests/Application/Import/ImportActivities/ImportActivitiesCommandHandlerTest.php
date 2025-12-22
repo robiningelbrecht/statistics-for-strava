@@ -263,7 +263,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
         $this->strava->returnActivityWithoutSegmentEfforts();
 
-        $this->expectExceptionObject(new \RuntimeException('Activities are expected to include segment_efforts in the raw Strava data. This appears to be a regression introduced in a recent version. Please report this as a bug on GitHub.'));
+        $this->expectExceptionObject(new \RuntimeException('Activity 2 is expected to include segment_efforts in the raw Strava data. This appears to be a regression introduced in a recent version. Please report this as a bug on GitHub.'));
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
     }
 
