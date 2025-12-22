@@ -16,7 +16,8 @@ These will trigger the import and build processes in the background. It may take
 
 > [!TIP]
 > **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".
-Cloudflare can incorrectly flag Strava’s requests as bot traffic, causing the webhook integration to fail.  This includes hosting through a CLoudflare Tunnel.
+Cloudflare can incorrectly flag Strava’s requests as bot traffic, causing the webhook integration to fail.
+This includes hosting through a Cloudflare Tunnel.
 
 ## Enable Strava webbooks
 
@@ -89,6 +90,8 @@ docker compose exec app bin/console app:strava:webhooks-unsubscribe 123456
 
 ## Troubleshooting tips
 
+### Not verifiable
+
 If you get the following error when trying to create a webhook subscription
 
 ```json
@@ -113,6 +116,8 @@ be sure to:
 ```bash
 curl -X GET 'https://your-instance.com/strava/webhook?hub.verify_token=test&hub.challenge=15f7d1a91c1f40f8a748fd134752feb3&hub.mode=subscribe'
 ```
+
+### GET to callback URL does not return 200
 
 If you get the following error when trying to create a webhook subscription
 
