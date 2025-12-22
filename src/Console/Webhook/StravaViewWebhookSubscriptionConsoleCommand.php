@@ -31,7 +31,7 @@ final class StravaViewWebhookSubscriptionConsoleCommand extends Command
 
         if (!$subscriptions = $this->strava->getWebhookSubscription()) {
             $output->note('No webhook subscriptions found');
-            $output->note('Create a subscription with: docker compose exec app bin/console app:strava:webhooks-subscribe');
+            $output->note('Create a subscription with: docker compose exec app bin/console app:strava:webhooks-create');
 
             return Command::SUCCESS;
         }
