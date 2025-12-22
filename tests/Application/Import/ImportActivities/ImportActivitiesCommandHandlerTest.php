@@ -257,6 +257,16 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesTextSnapshot($output);
     }
 
+    public function testHandleWhenNoSegmentEffortsDefined(): void
+    {
+        $output = new SpyOutput();
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
+        $this->strava->returnActivityWithoutSegmentEfforts();
+
+        $this->expectExceptionObject(new \RuntimeException('Activities are expected to include segment_efforts in the raw Strava data. This appears to be a regression introduced in a recent version. Please report this as a bug on GitHub.'));
+        $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
+    }
+
     public function testHandleWithActivityVisibilitiesToImport(): void
     {
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(

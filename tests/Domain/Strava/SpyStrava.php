@@ -32,9 +32,10 @@ class SpyStrava extends Strava
 {
     private int $numberOfCallsExecuted = 0;
     private int $maxNumberOfCallsBeforeTriggering429 = 0;
-    private readonly array $activities;
+    private array $activities;
     private bool $triggerExceptionOnNextCall = false;
     private bool $triggerExceptionOnNextActivityCall = false;
+    private bool $returnActivityWithoutSegmentEfforts = false;
 
     public function __construct(
         private readonly KernelProjectDir $kernelProjectDir,
@@ -81,6 +82,11 @@ class SpyStrava extends Strava
         if ($this->numberOfCallsExecuted >= $this->maxNumberOfCallsBeforeTriggering429) {
             throw StravaRateLimitHasBeenReached::dailyReadLimit();
         }
+    }
+
+    public function returnActivityWithoutSegmentEfforts(): void
+    {
+        $this->returnActivityWithoutSegmentEfforts = true;
     }
 
     #[\Override]
@@ -136,6 +142,12 @@ class SpyStrava extends Strava
         if ($this->triggerExceptionOnNextActivityCall) {
             $this->triggerExceptionOnNextActivityCall = false;
             throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
+
+        if ($this->returnActivityWithoutSegmentEfforts) {
+            $this->returnActivityWithoutSegmentEfforts = false;
+
+            return Json::decode('{"resource_state":3,"athlete":{"id":62214940,"resource_state":1},"name":"Wrong type","distance":6106.4,"moving_time":1001,"elapsed_time":1157,"total_elevation_gain":9,"type":"Ride","sport_type":"Ride","workout_type":10,"id":1,"start_date":"2023-09-11T19:05:38Z","start_date_local":"2023-09-11T21:05:38Z","timezone":"(GMT+01:00) Europe/Brussels","utc_offset":7200,"location_city":null,"location_state":null,"location_country":null,"achievement_count":3,"kudos_count":0,"comment_count":0,"athlete_count":1,"photo_count":0,"trainer":false,"commute":false,"manual":false,"private":false,"visibility":"everyone","flagged":false,"gear_id":"b12659861","start_latlng":[51.2,3.18],"end_latlng":[51.19,3.24],"average_speed":6.1,"max_speed":14.82,"average_watts":93.4,"kilojoules":93.4,"device_watts":false,"has_heartrate":true,"average_heartrate":133.3,"max_heartrate":159,"heartrate_opt_out":false,"display_hide_heartrate_option":true,"elev_high":11.2,"elev_low":3.3,"upload_id":10537559770,"upload_id_str":"10537559770","external_id":"Robin_Ingelbrecht_2023-09-11_21-05-37.tcx","from_accepted_tag":false,"pr_count":2,"total_photo_count":0,"has_kudoed":false,"description":"","calories":163,"perceived_exertion":null,"prefer_perceived_exertion":false,"gear":{"id":"b12659861","primary":false,"name":"Retro Race Bike","nickname":"Retro Race Bike","resource_state":2,"retired":false,"distance":1242107,"converted_distance":1242.1},"photos":{"primary":null,"count":0},"hide_from_home":true,"device_name":"Polar Vantage M","embed_token":"98606439ab8600a59e9185041262a135ad49ff47","private_note":"","available_zones":[],"athlete_weight":69,"start_date_timestamp":1694459138,"_id":154,"localImagePaths":[]}');
         }
 
         return $this->activities[(string) $activityId];
