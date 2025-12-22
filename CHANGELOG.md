@@ -1,3 +1,18 @@
+# [v4.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.0) - 2025-12-22
+
+### 🥳 Strava Webhook support is here!
+
+Statistics for Strava now supports Strava webhooks to automatically import and build your data when new activities are uploaded. This eliminates the need to manually run import commands or set up cron jobs.
+
+Learn how to enable and configure webhooks in the documentation: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/strava-webhooks
+
+## What's Changed
+* ISSUE #1551: Only import activities that are affected by incoming webhooks by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1560
+* ISSUE #1564: Remove doctrine production config by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1565
+* ISSUE #1570: Do not crash import when call to open-meteo.com fails by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1572
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.2.6...v4.3.0
+
 # [v4.2.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.2.6) - 2025-12-17
 
 ## What's Changed
