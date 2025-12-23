@@ -46,10 +46,6 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $activity = $this->activityRepository->find($activityId);
             $activityType = $activity->getSportType()->getActivityType();
 
-            if (!$activityType->supportsCombinedStreamCalculation()) {
-                continue;
-            }
-
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
             if (!$distanceStream = $streams->filterOnType(StreamType::DISTANCE)) {
                 continue;

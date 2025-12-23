@@ -1,2 +1,2 @@
-  => 10/16 best efforts calculated
-  => 16/16 best efforts calculated
+  => 10/17 best efforts calculated
+  => 16/17 best efforts calculated
