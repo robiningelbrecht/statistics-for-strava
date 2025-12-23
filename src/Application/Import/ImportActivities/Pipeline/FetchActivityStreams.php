@@ -35,7 +35,7 @@ final readonly class FetchActivityStreams implements ActivityImportStep
         } catch (ClientException|RequestException $exception) {
             if (404 === $exception->getResponse()?->getStatusCode()) {
                 // Streams do not exist for this activity.
-                return $context;
+                return $context->withStreamsWereImported();
             }
 
             throw $exception;
@@ -59,6 +59,8 @@ final readonly class FetchActivityStreams implements ActivityImportStep
             ));
         }
 
-        return $context->withStreams($streams);
+        return $context
+            ->withStreams($streams)
+            ->withStreamsWereImported();
     }
 }

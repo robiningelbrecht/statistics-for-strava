@@ -15,6 +15,7 @@ final readonly class ActivityImportContext
         private bool $isNewActivity,
         private ?Activity $activity,
         private ActivityStreams $streams,
+        private bool $streamsWereImported,
     ) {
     }
 
@@ -32,6 +33,7 @@ final readonly class ActivityImportContext
             isNewActivity: $isNewActivity,
             activity: null,
             streams: ActivityStreams::empty(),
+            streamsWereImported: false,
         );
     }
 
@@ -51,6 +53,13 @@ final readonly class ActivityImportContext
     {
         return clone ($this, [
             'streams' => $streams,
+        ]);
+    }
+
+    public function withStreamsWereImported(): self
+    {
+        return clone ($this, [
+            'streamsWereImported' => true,
         ]);
     }
 
@@ -75,5 +84,10 @@ final readonly class ActivityImportContext
     public function getStreams(): ActivityStreams
     {
         return $this->streams;
+    }
+
+    public function streamsWereImported(): bool
+    {
+        return $this->streamsWereImported;
     }
 }

@@ -168,6 +168,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
             foreach ($context->getStreams() as $stream) {
                 $this->activityStreamRepository->add($stream);
+            }
+            if ($context->streamsWereImported()) {
                 $this->activityWithRawDataRepository->markActivityStreamsAsImported($activityId);
             }
 
