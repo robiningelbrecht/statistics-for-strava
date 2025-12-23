@@ -51,6 +51,48 @@ class CalculateBestActivityEffortsTest extends ContainerTestCase
     {
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(-1))
+                ->withSportType(SportType::RUN)
+                ->withDistance(Kilometer::from(200))
+                ->build(), []
+        ));
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(-1))
+                ->withStreamType(StreamType::TIME)
+                ->withData([1, 2, 3])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(-1))
+                ->withStreamType(StreamType::DISTANCE)
+                ->withData([1, 2, 3])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(0))
+                ->withSportType(SportType::ALPINE_SKI)
+                ->withDistance(Kilometer::from(200))
+                ->build(), []
+        ));
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(0))
+                ->withStreamType(StreamType::TIME)
+                ->withData([1, 2, 3])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(0))
+                ->withStreamType(StreamType::DISTANCE)
+                ->withData([1, 2, 3])
+                ->build()
+        );
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withDistance(Kilometer::from(200))
                 ->build(), []

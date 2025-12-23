@@ -33,9 +33,6 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
             $distances = $distanceStream->getData();
             $time = $timeStream->getData();
 
-            if (!$activity->getSportType()->supportsBestEffortsStats()) {
-                continue;
-            }
             $distancesForBestEfforts = $activity->getSportType()->getActivityType()->getDistancesForBestEffortCalculation();
             if ((end($distances) - $distances[0]) < $distancesForBestEfforts[0]->toMeter()->toInt()) {
                 // Activity is too short for best effort calculation.
