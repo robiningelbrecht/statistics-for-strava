@@ -14,6 +14,7 @@ up:
 
 build-containers:
 	@make dc cmd="up -d --build"
+	@make dc cmd="--profile on-demand up -d --build"
 
 down:
 	@make dc cmd="down"
