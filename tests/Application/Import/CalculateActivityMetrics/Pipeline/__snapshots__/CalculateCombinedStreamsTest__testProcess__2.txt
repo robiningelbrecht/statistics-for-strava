@@ -1,2 +1,2 @@
-  => 10/16 combined activity streams calculated
-  => 16/16 combined activity streams calculated
+  => Calculated combined activity streams for 16 activities
+  => Calculated combined activity streams for 0 activities

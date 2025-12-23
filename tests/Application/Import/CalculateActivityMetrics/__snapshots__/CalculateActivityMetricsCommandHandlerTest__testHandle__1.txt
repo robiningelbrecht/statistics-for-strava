@@ -1,4 +1,6 @@
-Calculating activity metrics...
+Calculating activity metrics. Please be patient, this can take a while...
+  => Calculated best efforts for 0 activities
   => Calculated averages for 0 streams
+  => Calculated combined activity streams for 0 activities
   => Calculated normalized power for 0 streams
   => Calculated value distribution for 0 streams

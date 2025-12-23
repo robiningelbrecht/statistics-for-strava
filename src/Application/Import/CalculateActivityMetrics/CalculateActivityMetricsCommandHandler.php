@@ -24,7 +24,7 @@ final readonly class CalculateActivityMetricsCommandHandler implements CommandHa
     {
         assert($command instanceof CalculateActivityMetrics);
 
-        $command->getOutput()->writeln('Calculating activity metrics...');
+        $command->getOutput()->writeln('Calculating activity metrics. Please be patient, this can take a while...');
 
         foreach ($this->steps as $step) {
             $step->process($command->getOutput());

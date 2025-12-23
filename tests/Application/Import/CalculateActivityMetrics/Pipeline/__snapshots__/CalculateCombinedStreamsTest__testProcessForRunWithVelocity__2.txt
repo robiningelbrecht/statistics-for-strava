@@ -1,1 +1,2 @@
-  => 1/1 combined activity streams calculated
+  => Calculated combined activity streams for 1 activities
+  => Calculated combined activity streams for 0 activities
