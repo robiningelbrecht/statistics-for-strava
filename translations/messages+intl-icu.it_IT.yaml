@@ -58,7 +58,7 @@ Compare: Confronta
 'Congrats! You achieved personal bests during this activity.': 'Complimenti! Hai raggiunto record personali durante questa attività.'
 Crossfit: Crossfit
 'Custom gear disabled': 'Attrezzatura personalizzata disattivata'
-Cycling: Cycling
+Cycling: Ciclismo
 'Daily TRIMP': 'TRIMP giornaliero'
 'Daily activities': 'Attività giornaliere'
 Dashboard: 'Schermata iniziale'
@@ -217,7 +217,7 @@ Pilates: Pilates
 'Polarised training (last 30 days)': 'Allenamento polarizzato (ultimi 30 giorni)'
 Power: Potenza
 'Power distribution': 'Distribuzione potenza'
-'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
+'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by {caloriesBurned} calorie, ovvero circa {numberOfPizzaSlices} fette di pizza 🍕.'
 'Prev year': 'Anno precedente'
 Race: Gara
 'Racing Score': 'Punteggio Gara'
@@ -230,7 +230,7 @@ Ranking: Classifica
 'Rest days': 'Giorni di riposo'
 'Rest days in last 7 days': 'Giorni di riposo negli ultimi 7 giorni'
 'Rest days vs. active days': 'Giorni di riposo vs. giorni attivi'
-'Retired gear': 'Retired gear'
+'Retired gear': 'Attrezzatura in disuso'
 Rewind: Indietro
 'Rewind comparisons are only available on larger screens.': 'I confronti Rewind sono disponibili solo su schermi più grandi.'
 Rides: Gare
@@ -249,7 +249,7 @@ Segments: Segmenti
 Sep: Set
 'Show information': 'Mostra Informazione'
 Simplified: Semplificato
-"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
+"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Da quando ho iniziato a usare Strava {numberOfDaysAgo} fa, il {startDate}, ho registrato {totalDaysOfWorkingOut} giorni attivi di allenamento e avventura."
 Skateboard: Skateboard
 Skating: Pattinaggio
 'Slightly fresh – transitional zone': 'Leggermente fresco – zona di transizione'
@@ -258,7 +258,7 @@ Snowshoe: Ciaspolate
 Soccer: Calcio
 Socials: Social
 Speed: Velocità
-'Speed distribution': 'Speed distribution'
+'Speed distribution': 'Distribuzione della velocità'
 Splits: Intertempi
 Squash: Squash
 'Stair Stepper': 'Stepper a gradini'
