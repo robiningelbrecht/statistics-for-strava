@@ -61,7 +61,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
             activityId: ActivityId::fromUnprefixed('test'),
             rawStravaData: [],
             isNewActivity: true
-        );
+        )->withStreamsWereImported();
 
         $this->assertEquals(
             $context,
