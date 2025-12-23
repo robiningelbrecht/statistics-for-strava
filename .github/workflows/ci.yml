@@ -19,7 +19,7 @@ jobs:
       - name: Setup PHP 8.5
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.5.1'
+          php-version: '8.5'
           coverage: xdebug
 
       # https://github.com/marketplace/actions/checkout

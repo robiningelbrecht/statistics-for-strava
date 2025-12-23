@@ -1,6 +1,6 @@
 <fg=black;bg=green>StatisticsforStravav4.3.0</>
 
-Runtime:PHP8.5.1(cli)Symfony8.0.2Linux
+Runtime:PHP8.5.x(cli)Symfony8.0.2Linux
 Configurationfiles:
 config.yaml
 configathlete.yaml
