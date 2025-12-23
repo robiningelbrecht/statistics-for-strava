@@ -13,7 +13,7 @@ class ConsoleOutputSnapshotDriver extends TextDriver
     {
         $data = (string) $data
                 |> (fn ($str): string => str_replace([' ', '-'], '', $str))
-                |> (fn ($str): string => preg_replace('/PHP(\d+\.\d+)\.\d+/', 'PHP$1.x', $str))
+                |> (fn ($str): string => preg_replace('/PHP(\d+\.\d+)\.\d+/', 'PHP$1.x', (string) $str))
                 |> (fn ($str): ?string => preg_replace('~\S*/([^/]+\.yaml)~', '$1', (string) $str));
 
         return parent::serialize($data);
