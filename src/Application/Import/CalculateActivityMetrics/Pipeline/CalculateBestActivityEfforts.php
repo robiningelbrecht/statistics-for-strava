@@ -38,8 +38,8 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
                 // Activity is too short for best effort calculation.
                 continue;
             }
-            ++$activityWithBestEffortsCalculatedCount;
 
+            $bestEffortsCalculated = false;
             foreach ($distancesForBestEfforts as $distance) {
                 if ($activity->getDistance()->toMeter()->toInt() < $distance->toMeter()->toInt()) {
                     // For some reason the Strava distance indicates a longer distance than the actual activity distance.
@@ -63,6 +63,7 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
                     continue;
                 }
 
+                $bestEffortsCalculated = true;
                 $this->activityBestEffortRepository->add(
                     ActivityBestEffort::create(
                         activityId: $activityId,
@@ -73,23 +74,14 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
                 );
             }
 
-            if (0 !== $activityWithBestEffortsCalculatedCount % 10) {
-                continue;
+            if ($bestEffortsCalculated) {
+                ++$activityWithBestEffortsCalculatedCount;
             }
-
-            $output->writeln(sprintf(
-                '  => %d/%d best efforts calculated',
-                $activityWithBestEffortsCalculatedCount,
-                count($activityIdsWithoutBestEfforts)
-            ));
         }
 
-        if (0 !== $activityWithBestEffortsCalculatedCount % 10) {
-            $output->writeln(sprintf(
-                '  => %d/%d best efforts calculated',
-                $activityWithBestEffortsCalculatedCount,
-                count($activityIdsWithoutBestEfforts)
-            ));
-        }
+        $output->writeln(sprintf(
+            '  => Calculated best efforts for %d activities',
+            $activityWithBestEffortsCalculatedCount
+        ));
     }
 }

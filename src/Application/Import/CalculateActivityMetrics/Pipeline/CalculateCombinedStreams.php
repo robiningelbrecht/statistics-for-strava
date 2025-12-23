@@ -201,24 +201,11 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             );
             ++$activityWithCombinedStreamCalculatedCount;
             $this->mutex->heartbeat();
-
-            if (0 !== $activityWithCombinedStreamCalculatedCount % 10) {
-                continue;
-            }
-
-            $output->writeln(sprintf(
-                '  => %d/%d combined activity streams calculated',
-                $activityWithCombinedStreamCalculatedCount,
-                count($activityIdsThatNeedCombining)
-            ));
         }
 
-        if (0 !== $activityWithCombinedStreamCalculatedCount % 10) {
-            $output->writeln(sprintf(
-                '  => %d/%d combined activity streams calculated',
-                $activityWithCombinedStreamCalculatedCount,
-                count($activityIdsThatNeedCombining)
-            ));
-        }
+        $output->writeln(sprintf(
+            '  => Calculated combined activity streams for %d activities',
+            $activityWithCombinedStreamCalculatedCount
+        ));
     }
 }

@@ -1,2 +1,2 @@
-  => 10/17 best efforts calculated
-  => 16/17 best efforts calculated
+  => Calculated best efforts for 16 activities
+  => Calculated best efforts for 0 activities

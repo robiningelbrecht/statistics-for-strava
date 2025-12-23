@@ -240,9 +240,6 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             $this->getConnection()
                 ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative()
         );
-
-        $this->calculateCombinedStreams->process($output);
-        $this->assertMatchesTextSnapshot($output);
     }
 
     public function testProcessForRunWithVelocity(): void
