@@ -1,2 +1,6 @@
-  => Calculated combined activity streams for 1 activities
-  => Calculated combined activity streams for 0 activities
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+  => Calculated combined activity streams for 1 activities (< 1 ms)
+  => Calculated combined activity streams for 1 activities (< 1 ms)
+
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+  => Calculated combined activity streams for 0 activities (< 1 ms)

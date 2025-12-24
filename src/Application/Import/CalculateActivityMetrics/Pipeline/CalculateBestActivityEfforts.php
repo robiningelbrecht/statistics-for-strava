@@ -9,6 +9,7 @@ use App\Domain\Activity\BestEffort\ActivityBestEffort;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
+use App\Infrastructure\Console\ProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class CalculateBestActivityEfforts implements CalculateActivityMetricsStep
@@ -22,6 +23,9 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
 
     public function process(OutputInterface $output): void
     {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated best efforts for 0 activities');
+
         $activityIdsWithoutBestEfforts = $this->activityBestEffortRepository->findActivityIdsThatNeedBestEffortsCalculation();
 
         $activityWithBestEffortsCalculatedCount = 0;
@@ -76,11 +80,15 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
 
             if ($bestEffortsCalculated) {
                 ++$activityWithBestEffortsCalculatedCount;
+                $progressIndicator->updateMessage(sprintf(
+                    '=> Calculated best efforts for %d activities',
+                    $activityWithBestEffortsCalculatedCount
+                ));
             }
         }
 
-        $output->writeln(sprintf(
-            '  => Calculated best efforts for %d activities',
+        $progressIndicator->finish(sprintf(
+            '=> Calculated best efforts for %d activities',
             $activityWithBestEffortsCalculatedCount
         ));
     }

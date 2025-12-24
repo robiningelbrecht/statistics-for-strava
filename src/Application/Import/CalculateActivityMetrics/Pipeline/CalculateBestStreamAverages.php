@@ -6,6 +6,7 @@ namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Infrastructure\Console\ProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class CalculateBestStreamAverages implements CalculateActivityMetricsStep
@@ -17,6 +18,9 @@ final readonly class CalculateBestStreamAverages implements CalculateActivityMet
 
     public function process(OutputInterface $output): void
     {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated averages for 0 streams');
+
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutBestAverages(100);
@@ -36,9 +40,11 @@ final readonly class CalculateBestStreamAverages implements CalculateActivityMet
                 ++$countCalculatedStreams;
                 $stream->updateBestAverages($bestAverages);
                 $this->activityStreamRepository->update($stream);
+
+                $progressIndicator->updateMessage(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));
             }
         } while (!$streams->isEmpty());
 
-        $output->writeln(sprintf('  => Calculated averages for %d streams', $countCalculatedStreams));
+        $progressIndicator->finish(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));
     }
 }
