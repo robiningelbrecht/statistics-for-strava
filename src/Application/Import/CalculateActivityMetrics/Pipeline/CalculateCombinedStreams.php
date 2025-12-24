@@ -13,6 +13,7 @@ use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamTypes;
 use App\Domain\Activity\Stream\StreamType;
+use App\Infrastructure\Console\ProgressIndicator;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -38,6 +39,9 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
     public function process(OutputInterface $output): void
     {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated combined activity streams for 0 activities');
+
         $activityIdsThatNeedCombining = $this->combinedActivityStreamRepository->findActivityIdsThatNeedStreamCombining(
             $this->unitSystem
         );
@@ -200,11 +204,15 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 )
             );
             ++$activityWithCombinedStreamCalculatedCount;
+            $progressIndicator->updateMessage(sprintf(
+                '=> Calculated combined activity streams for %d activities',
+                $activityWithCombinedStreamCalculatedCount
+            ));
             $this->mutex->heartbeat();
         }
 
-        $output->writeln(sprintf(
-            '  => Calculated combined activity streams for %d activities',
+        $progressIndicator->finish(sprintf(
+            '=> Calculated combined activity streams for %d activities',
             $activityWithCombinedStreamCalculatedCount
         ));
     }
