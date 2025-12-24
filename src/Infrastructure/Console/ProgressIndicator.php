@@ -18,7 +18,6 @@ class ProgressIndicator
         $this->symfonyProgressIndicator = new SymfonyProgressIndicator(
             output: $output,
             format: 'verbose',
-            indicatorValues: ['⠏', '⠛', '⠹', '⢸', '⣰', '⣤', '⣆', '⡇'],
             finishedIndicatorValue: ''
         );
     }
