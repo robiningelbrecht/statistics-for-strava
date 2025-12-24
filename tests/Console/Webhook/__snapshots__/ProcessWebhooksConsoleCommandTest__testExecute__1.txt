@@ -1,16 +1,1 @@
-
-StatisticsforStravav4.3.0
-
-
-
-Runtime:PHP8.5.x(cli)Symfony8.0.2Linux
-
-Configurationfiles:
-config.yaml
-configathlete.yaml
-configimport.yaml
-gearmaintenance.yaml
-
-
-
 Nowebhookeventslefttoprocess...

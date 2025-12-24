@@ -68,7 +68,6 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
     public function runForWebhooks(
         SymfonyStyle $output,
     ): void {
-        $this->outputConsoleIntro($output);
         $this->migrationRunner->run($output);
         $this->mutex->acquireLock('importDataAndBuildAppCronAction');
 
