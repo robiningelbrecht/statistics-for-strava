@@ -18,7 +18,7 @@ readonly class ProgressIndicator
         $startTime = time();
 
         SymfonyProgressIndicator::setPlaceholderFormatterDefinition('indicator', static fn (): string => '');
-        SymfonyProgressIndicator::setPlaceholderFormatterDefinition('elapsed', fn () => PlatformEnvironment::fromServer()->isTest() ? '3 s' : Helper::formatTime(time() - $startTime, 2));
+        SymfonyProgressIndicator::setPlaceholderFormatterDefinition('elapsed', fn (): string => PlatformEnvironment::fromServer()->isTest() ? '3 s' : Helper::formatTime(time() - $startTime, 2));
 
         $this->symfonyProgressIndicator = new SymfonyProgressIndicator(
             output: $output,
