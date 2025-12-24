@@ -7,6 +7,7 @@ namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
+use App\Infrastructure\Console\ProgressIndicator;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
@@ -24,6 +25,9 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
 
     public function process(OutputInterface $output): void
     {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated value distribution for 0 streams');
+
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutDistributionValues(100);
@@ -75,9 +79,10 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
                 }
 
                 $this->activityStreamRepository->update($stream);
+                $progressIndicator->updateMessage(sprintf('=> Calculated value distribution for %d streams', $countCalculatedStreams));
             }
         } while (!$streams->isEmpty());
 
-        $output->writeln(sprintf('  => Calculated value distribution for %d streams', $countCalculatedStreams));
+        $progressIndicator->finish(sprintf('=> Calculated value distribution for %d streams', $countCalculatedStreams));
     }
 }

@@ -1,2 +1,21 @@
-  => Calculated combined activity streams for 16 activities
-  => Calculated combined activity streams for 0 activities
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+  => Calculated combined activity streams for 1 activities (< 1 ms)
+  => Calculated combined activity streams for 2 activities (< 1 ms)
+  => Calculated combined activity streams for 3 activities (< 1 ms)
+  => Calculated combined activity streams for 4 activities (< 1 ms)
+  => Calculated combined activity streams for 5 activities (< 1 ms)
+  => Calculated combined activity streams for 6 activities (< 1 ms)
+  => Calculated combined activity streams for 7 activities (< 1 ms)
+  => Calculated combined activity streams for 8 activities (< 1 ms)
+  => Calculated combined activity streams for 9 activities (< 1 ms)
+  => Calculated combined activity streams for 10 activities (< 1 ms)
+  => Calculated combined activity streams for 11 activities (< 1 ms)
+  => Calculated combined activity streams for 12 activities (< 1 ms)
+  => Calculated combined activity streams for 13 activities (< 1 ms)
+  => Calculated combined activity streams for 14 activities (< 1 ms)
+  => Calculated combined activity streams for 15 activities (< 1 ms)
+  => Calculated combined activity streams for 16 activities (< 1 ms)
+  => Calculated combined activity streams for 16 activities (< 1 ms)
+
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+  => Calculated combined activity streams for 0 activities (< 1 ms)

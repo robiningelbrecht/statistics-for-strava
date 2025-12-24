@@ -1,6 +1,15 @@
 Calculating activity metrics. Please be patient, this can take a while...
-  => Calculated best efforts for 0 activities
-  => Calculated averages for 0 streams
-  => Calculated combined activity streams for 0 activities
-  => Calculated normalized power for 0 streams
-  => Calculated value distribution for 0 streams
+  => Calculated best efforts for 0 activities (< 1 ms)
+  => Calculated best efforts for 0 activities (< 1 ms)
+
+  => Calculated averages for 0 streams (< 1 ms)
+  => Calculated best averages for 0 streams (< 1 ms)
+
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+  => Calculated combined activity streams for 0 activities (< 1 ms)
+
+  => Calculated normalized power for 0 streams (< 1 ms)
+  => Calculated normalized power for 0 streams (< 1 ms)
+
+  => Calculated value distribution for 0 streams (< 1 ms)
+  => Calculated value distribution for 0 streams (< 1 ms)

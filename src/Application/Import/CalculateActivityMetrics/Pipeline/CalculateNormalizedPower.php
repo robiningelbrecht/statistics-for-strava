@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Infrastructure\Console\ProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class CalculateNormalizedPower implements CalculateActivityMetricsStep
@@ -16,6 +17,9 @@ final readonly class CalculateNormalizedPower implements CalculateActivityMetric
 
     public function process(OutputInterface $output): void
     {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated normalized power for 0 streams');
+
         $countCalculatedStreams = 0;
         do {
             $streams = $this->activityStreamRepository->findWithoutNormalizedPower(100);
@@ -42,9 +46,10 @@ final readonly class CalculateNormalizedPower implements CalculateActivityMetric
                 ++$countCalculatedStreams;
                 $stream->updateNormalizedPower((int) round($avgPower));
                 $this->activityStreamRepository->update($stream);
+                $progressIndicator->updateMessage(sprintf('=> Calculated normalized power for %d streams', $countCalculatedStreams));
             }
         } while (!$streams->isEmpty());
 
-        $output->writeln(sprintf('  => Calculated normalized power for %d streams', $countCalculatedStreams));
+        $progressIndicator->finish(sprintf('=> Calculated normalized power for %d streams', $countCalculatedStreams));
     }
 }
