@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 readonly class ProgressIndicator
 {
-    private SymfonyProgressIndicator $symfonyProgressIndicator;
+    private SymfonyProgressIndicator $progressIndicator;
 
     public function __construct(OutputInterface $output)
     {
@@ -20,7 +20,7 @@ readonly class ProgressIndicator
         SymfonyProgressIndicator::setPlaceholderFormatterDefinition('indicator', static fn (): string => '');
         SymfonyProgressIndicator::setPlaceholderFormatterDefinition('elapsed', fn (): string => PlatformEnvironment::fromServer()->isTest() ? '3 s' : Helper::formatTime(time() - $startTime, 2));
 
-        $this->symfonyProgressIndicator = new SymfonyProgressIndicator(
+        $this->progressIndicator = new SymfonyProgressIndicator(
             output: $output,
             format: 'verbose',
             finishedIndicatorValue: ''
@@ -29,16 +29,16 @@ readonly class ProgressIndicator
 
     public function start(string $message): void
     {
-        $this->symfonyProgressIndicator->start($message);
+        $this->progressIndicator->start($message);
     }
 
     public function updateMessage(string $message): void
     {
-        $this->symfonyProgressIndicator->setMessage($message);
+        $this->progressIndicator->setMessage($message);
     }
 
     public function finish(string $message): void
     {
-        $this->symfonyProgressIndicator->finish($message);
+        $this->progressIndicator->finish($message);
     }
 }

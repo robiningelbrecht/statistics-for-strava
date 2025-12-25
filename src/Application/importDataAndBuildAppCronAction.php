@@ -12,7 +12,6 @@ use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
-use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use App\Infrastructure\Daemon\Mutex\LockName;
@@ -25,8 +24,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class importDataAndBuildAppCronAction implements RunnableCronAction
 {
-    use ProvideConsoleIntro;
-
     public function __construct(
         private CommandBus $commandBus,
         private WebhookEventRepository $webhookEventRepository,
@@ -55,7 +52,6 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
 
     public function run(SymfonyStyle $output): void
     {
-        $this->outputConsoleIntro($output);
         $this->migrationRunner->run($output);
         $this->mutex->acquireLock('importDataAndBuildAppCronAction');
 
@@ -65,9 +61,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         );
     }
 
-    public function runForWebhooks(
-        SymfonyStyle $output,
-    ): void {
+    public function runForWebhooks(SymfonyStyle $output): void
+    {
         $this->migrationRunner->run($output);
         $this->mutex->acquireLock('importDataAndBuildAppCronAction');
 
