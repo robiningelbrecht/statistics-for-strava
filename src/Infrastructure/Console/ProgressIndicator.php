@@ -9,7 +9,7 @@ use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressIndicator as SymfonyProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
 
-readonly class ProgressIndicator
+final readonly class ProgressIndicator
 {
     private SymfonyProgressIndicator $progressIndicator;
 
