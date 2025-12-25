@@ -45,7 +45,7 @@ final readonly class FindMonthlyStatsQueryHandler implements QueryHandler
         $statsPerMonth = [];
         $activityTypes = ActivityTypes::empty();
         foreach ($results as $result) {
-            $month = Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01', $result['yearAndMonth'])));
+            $month = Month::fromDate(SerializableDateTime::fromString(sprintf('%s-01 00:00:00', $result['yearAndMonth'])));
             $sportType = SportType::from($result['sportType']);
 
             if (!$activityTypes->has($sportType->getActivityType())) {
