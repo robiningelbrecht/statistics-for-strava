@@ -59,6 +59,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
             output: $output,
             restrictToActivityIds: null
         );
+
+        $this->mutex->releaseLock();
     }
 
     public function runForWebhooks(SymfonyStyle $output): void
@@ -92,6 +94,8 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
             output: $output,
             restrictToActivityIds: $createOrUpdateActivityIds
         );
+
+        $this->mutex->releaseLock();
     }
 
     private function doRun(
@@ -115,7 +119,6 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
             tags: ['+1'],
             actionUrl: $this->appUrl
         ));
-        $this->mutex->releaseLock();
 
         $output->writeln(sprintf(
             '<info>%s</info>',
