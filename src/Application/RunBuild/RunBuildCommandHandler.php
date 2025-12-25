@@ -70,9 +70,9 @@ This is not a bug, once all your activities have been imported, your gear statis
         $output->newLine();
 
         $commandsWithMessages = [
-            'Configuring locale...' => new ConfigureAppLocale(),
-            'Configuring theme colors...' => new ConfigureAppColors(),
-            'Building Manifest...' => new BuildManifest(),
+            'Configuring locale' => new ConfigureAppLocale(),
+            'Configuring theme colors' => new ConfigureAppColors(),
+            'Building Manifest' => new BuildManifest(),
             'Building index' => new BuildIndexHtml($now),
             'Building dashboard' => new BuildDashboardHtml(),
             'Building activities' => new BuildActivitiesHtml($now),
