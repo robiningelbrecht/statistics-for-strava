@@ -225,9 +225,9 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     title: $this->translator->trans('Streaks'),
                     subTitle: $this->translator->trans('Longest streaks'),
                     content: $this->twig->render('html/rewind/rewind-streaks.html.twig', [
-                        'dayStreak' => $streaksResponse->getDayStreak(),
-                        'weekStreak' => $streaksResponse->getWeekStreak(),
-                        'monthStreak' => $streaksResponse->getMonthStreak(),
+                        'dayStreak' => $streaksResponse->getLongestDayStreak(),
+                        'weekStreak' => $streaksResponse->getLongestWeekStreak(),
+                        'monthStreak' => $streaksResponse->getLongestMonthStreak(),
                     ])
                 ))
                 ->add(RewindItem::from(

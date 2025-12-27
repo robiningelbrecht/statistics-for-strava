@@ -9,24 +9,42 @@ use App\Infrastructure\CQRS\Query\Response;
 final readonly class FindStreaksResponse implements Response
 {
     public function __construct(
-        private int $dayStreak,
-        private int $weekStreak,
-        private int $monthStreak,
+        private int $longestDayStreak,
+        private int $currentDayStreak,
+        private int $longestWeekStreak,
+        private int $currentWeekStreak,
+        private int $longestMonthStreak,
+        private int $currentMonthStreak,
     ) {
     }
 
-    public function getDayStreak(): int
+    public function getCurrentDayStreak(): int
     {
-        return $this->dayStreak;
+        return $this->currentDayStreak;
     }
 
-    public function getWeekStreak(): int
+    public function getLongestDayStreak(): int
     {
-        return $this->weekStreak;
+        return $this->longestDayStreak;
     }
 
-    public function getMonthStreak(): int
+    public function getCurrentWeekStreak(): int
     {
-        return $this->monthStreak;
+        return $this->currentWeekStreak;
+    }
+
+    public function getLongestWeekStreak(): int
+    {
+        return $this->longestWeekStreak;
+    }
+
+    public function getLongestMonthStreak(): int
+    {
+        return $this->longestMonthStreak;
+    }
+
+    public function getCurrentMonthStreak(): int
+    {
+        return $this->currentMonthStreak;
     }
 }
