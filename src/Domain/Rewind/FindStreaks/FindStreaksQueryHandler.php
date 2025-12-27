@@ -7,6 +7,7 @@ namespace App\Domain\Rewind\FindStreaks;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -15,6 +16,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
 {
     public function __construct(
         private Connection $connection,
+        private Clock $clock,
     ) {
     }
 
@@ -42,8 +44,8 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         /** @var array<int, array{'year': int, 'week': int}> $weeksAndYears */
         $weeksAndYears = $this->connection->executeQuery(
             <<<SQL
-                SELECT CAST(strftime('%W',startDateTime) AS INTEGER) as week,
-                       CAST(strftime('%Y',startDateTime) AS INTEGER) as year
+                SELECT CAST(strftime('%Y', date(startDateTime, '-3 days', 'weekday 4')) AS INTEGER) AS year,
+                       CAST(strftime('%W', date(startDateTime, '-3 days', 'weekday 4')) AS INTEGER) + 1 AS week
                 FROM activity
                 WHERE strftime('%Y',startDateTime) IN (:years)
                 GROUP BY year, week
@@ -75,35 +77,45 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         )->fetchFirstColumn());
 
         return new FindStreaksResponse(
-            dayStreak: $this->findLongestStreakLengthInDays($days),
-            weekStreak: $this->findLongestStreakLengthInWeeks($weeksAndYears),
-            monthStreak: $this->findLongestStreakLengthInMonths($months),
+            longestDayStreak: $this->findLongestStreakLengthInDays($days),
+            currentDayStreak: $this->findCurrentStreakLengthInDays($days),
+            longestWeekStreak: $this->findLongestStreakLengthInWeeks($weeksAndYears),
+            currentWeekStreak: $this->findCurrentStreakLengthInWeeks($weeksAndYears),
+            longestMonthStreak: $this->findLongestStreakLengthInMonths($months),
+            currentMonthStreak: $this->findCurrentStreakLengthInMonths($months),
         );
     }
 
     /**
-     * @param int[] $numbers
+     * @param string[] $days
      */
-    private function findLongestStreakLengthInMonths(array $numbers): int
+    private function findCurrentStreakLengthInDays(array $days): int
     {
-        if (empty($numbers)) {
+        if (empty($days)) {
             return 0;
         }
 
-        sort($numbers);
+        rsort($days);
 
-        $longestStreak = $currentStreak = 1;
+        $today = $this->clock->getCurrentDateTimeImmutable();
+        if ($today->format('Y-m-d') != array_first($days)) {
+            return 0;
+        }
 
-        for ($i = 1; $i < count($numbers); ++$i) {
-            if ($numbers[$i - 1] + 1 === $numbers[$i]) {
-                ++$currentStreak;
-                $longestStreak = max($longestStreak, $currentStreak);
+        $current = 1;
+        for ($i = 1; $i < count($days); ++$i) {
+            $prev = SerializableDateTime::fromString($days[$i - 1]);
+            $curr = SerializableDateTime::fromString($days[$i]);
+
+            $diff = $prev->diff($curr)->days;
+            if (1 === $diff) {
+                ++$current;
             } else {
-                $currentStreak = 1;
+                break;
             }
         }
 
-        return $longestStreak;
+        return $current;
     }
 
     /**
@@ -111,6 +123,10 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
      */
     private function findLongestStreakLengthInDays(array $days): int
     {
+        if (empty($days)) {
+            return 0;
+        }
+
         sort($days);
 
         $longest = $current = 1;
@@ -133,8 +149,61 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
     /**
      * @param array<int, array{'year': int, 'week': int}> $weeksAndYears
      */
+    private function findCurrentStreakLengthInWeeks(array $weeksAndYears): int
+    {
+        if (empty($weeksAndYears)) {
+            return 0;
+        }
+
+        $globalWeeks = [];
+        foreach ($weeksAndYears as $row) {
+            $year = (int) $row['year'];
+            $week = (int) $row['week'];
+            $globalWeeks[] = $year * 100 + $week;
+        }
+
+        // Remove duplicates and sort
+        $globalWeeks = array_unique($globalWeeks);
+        rsort($globalWeeks);
+
+        $today = $this->clock->getCurrentDateTimeImmutable();
+        $currentWeek = $today->getYear() * 100 + (int) $today->format('W');
+
+        if ($currentWeek != array_first($globalWeeks)) {
+            return 0;
+        }
+
+        $current = 1;
+        for ($i = 1; $i < count($globalWeeks); ++$i) {
+            $prev = $globalWeeks[$i - 1];
+            $curr = $globalWeeks[$i];
+
+            // Check if it's the next week
+            [$prevYear, $prevWeek] = [intdiv($prev, 100), $prev % 100];
+            [$currYear, $currWeek] = [intdiv($curr, 100), $curr % 100];
+
+            if (
+                ($currYear === $prevYear && $currWeek === $prevWeek + 1)             // same year, next week
+                || ($currYear === $prevYear + 1 && $prevWeek >= 52 && 0 === $currWeek)  // year rollover: week 52/53 to week 0
+                || ($currYear === $prevYear + 1 && 53 === $prevWeek && 1 === $currWeek)    // alternative rollover handling
+            ) {
+                ++$current;
+            } else {
+                break;
+            }
+        }
+
+        return $current;
+    }
+
+    /**
+     * @param array<int, array{'year': int, 'week': int}> $weeksAndYears
+     */
     private function findLongestStreakLengthInWeeks(array $weeksAndYears): int
     {
+        if (empty($weeksAndYears)) {
+            return 0;
+        }
         $globalWeeks = [];
 
         foreach ($weeksAndYears as $row) {
@@ -170,5 +239,61 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         }
 
         return $longest;
+    }
+
+    /**
+     * @param int[] $numbers
+     */
+    private function findCurrentStreakLengthInMonths(array $numbers): int
+    {
+        if (empty($numbers)) {
+            return 0;
+        }
+
+        $today = $this->clock->getCurrentDateTimeImmutable();
+        $currentMonth = $today->getYear() * 12 + $today->getMonthWithoutLeadingZero();
+
+        rsort($numbers);
+
+        if ($currentMonth != array_first($numbers)) {
+            return 0;
+        }
+
+        $currentStreak = 1;
+
+        for ($i = 1; $i < count($numbers); ++$i) {
+            if ($numbers[$i - 1] - 1 === $numbers[$i]) {
+                ++$currentStreak;
+            } else {
+                break;
+            }
+        }
+
+        return $currentStreak;
+    }
+
+    /**
+     * @param int[] $numbers
+     */
+    private function findLongestStreakLengthInMonths(array $numbers): int
+    {
+        if (empty($numbers)) {
+            return 0;
+        }
+
+        sort($numbers);
+
+        $longestStreak = $currentStreak = 1;
+
+        for ($i = 1; $i < count($numbers); ++$i) {
+            if ($numbers[$i - 1] + 1 === $numbers[$i]) {
+                ++$currentStreak;
+                $longestStreak = max($longestStreak, $currentStreak);
+            } else {
+                $currentStreak = 1;
+            }
+        }
+
+        return $longestStreak;
     }
 }
