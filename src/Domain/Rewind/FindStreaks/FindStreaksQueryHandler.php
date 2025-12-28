@@ -14,6 +14,9 @@ use Doctrine\DBAL\Connection;
 
 final readonly class FindStreaksQueryHandler implements QueryHandler
 {
+    private const string FIRST_DAY_OF_THE_WEEK = 'monday this week';
+    private const string FIRST_DAY_OF_THE_MONTH = 'first day of this month';
+
     public function __construct(
         private Connection $connection,
         private Clock $clock,
@@ -24,276 +27,117 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
     {
         assert($query instanceof FindStreaks);
 
-        /** @var string[] $days */
-        $days = $this->connection->executeQuery(
-            <<<SQL
-                SELECT strftime('%Y-%m-%d', startDateTime) as day
+        /** @var SerializableDateTime[] $days */
+        $days = array_map(
+            SerializableDateTime::fromString(...),
+            $this->connection->executeQuery(
+                <<<SQL
+                SELECT strftime('%Y-%m-%d', startDateTime) AS day
                 FROM activity
-                WHERE strftime('%Y',startDateTime) IN (:years)
+                WHERE strftime('%Y', startDateTime) IN (:years)
                 GROUP BY day
-                ORDER BY day ASC
-            SQL,
-            [
-                'years' => array_map(strval(...), $query->getYears()->toArray()),
-            ],
-            [
-                'years' => ArrayParameterType::STRING,
-            ]
-        )->fetchFirstColumn();
+                ORDER BY day DESC
+                SQL,
+                [
+                    'years' => array_map(strval(...), $query->getYears()->toArray()),
+                ],
+                [
+                    'years' => ArrayParameterType::STRING,
+                ]
+            )->fetchFirstColumn());
 
-        /** @var array<int, array{'year': int, 'week': int}> $weeksAndYears */
-        $weeksAndYears = $this->connection->executeQuery(
-            <<<SQL
-                SELECT CAST(strftime('%Y', date(startDateTime, '-3 days', 'weekday 4')) AS INTEGER) AS year,
-                       CAST(strftime('%W', date(startDateTime, '-3 days', 'weekday 4')) AS INTEGER) + 1 AS week
-                FROM activity
-                WHERE strftime('%Y',startDateTime) IN (:years)
-                GROUP BY year, week
-                ORDER BY year ASC, week ASC
-            SQL,
-            [
-                'years' => array_map(strval(...), $query->getYears()->toArray()),
-            ],
-            [
-                'years' => ArrayParameterType::STRING,
-            ]
-        )->fetchAllAssociative();
+        return $this->computeStreaks($days);
+    }
 
-        /** @var int[] $months */
-        $months = array_map(intval(...), $this->connection->executeQuery(
-            <<<SQL
-                SELECT CAST(strftime('%Y', startDateTime) AS INTEGER) * 12 + CAST(strftime('%m', startDateTime) AS INTEGER) as month
-                FROM activity
-                WHERE strftime('%Y',startDateTime) IN (:years)
-                GROUP BY month
-                ORDER BY month ASC
-            SQL,
-            [
-                'years' => array_map(strval(...), $query->getYears()->toArray()),
-            ],
-            [
-                'years' => ArrayParameterType::STRING,
-            ]
-        )->fetchFirstColumn());
+    /**
+     * @param SerializableDateTime[] $days
+     */
+    private function computeStreaks(array $days): FindStreaksResponse
+    {
+        if (empty($days)) {
+            return new FindStreaksResponse(
+                longestDayStreak: 0,
+                currentDayStreak: 0,
+                longestWeekStreak: 0,
+                currentWeekStreak: 0,
+                longestMonthStreak: 0,
+                currentMonthStreak: 0
+            );
+        }
+
+        $today = $this->clock->getCurrentDateTimeImmutable();
+
+        $longestDayStreak = $runningDayStreak = 1;
+        $longestWeekStreak = $runningWeekStreak = 1;
+        $longestMonthStreak = $runningMonthStreak = 1;
+
+        $previousDay = array_first($days);
+        $keepTrackOfCurrentDayStreak = $previousDay->format('Ymd') === $today->format('Ymd');
+        $currentDayStreak = $keepTrackOfCurrentDayStreak ? 1 : 0;
+
+        $keepTrackOfCurrentWeekStreak = $previousDay->modify(self::FIRST_DAY_OF_THE_WEEK)->format('Ymd') === $today->modify(self::FIRST_DAY_OF_THE_WEEK)->format('Ymd');
+        $currentWeekStreak = $keepTrackOfCurrentWeekStreak ? 1 : 0;
+
+        $keepTrackOfCurrentMonthStreak = $previousDay->modify(self::FIRST_DAY_OF_THE_MONTH)->format('Ymd') === $today->modify(self::FIRST_DAY_OF_THE_MONTH)->format('Ymd');
+        $currentMonthStreak = $keepTrackOfCurrentMonthStreak ? 1 : 0;
+
+        for ($i = 1; $i < count($days); ++$i) {
+            $currentDay = $days[$i];
+            $diffInDays = $previousDay->diff($currentDay)->days;
+
+            if (1 === $diffInDays) {
+                ++$runningDayStreak;
+                if ($keepTrackOfCurrentDayStreak) {
+                    ++$currentDayStreak;
+                }
+                $longestDayStreak = max($longestDayStreak, $runningDayStreak);
+            } else {
+                $runningDayStreak = 1;
+                $keepTrackOfCurrentDayStreak = false;
+            }
+
+            $diffInWeeks = (int) floor($previousDay->modify(self::FIRST_DAY_OF_THE_WEEK)
+                    ->diff($currentDay->modify(self::FIRST_DAY_OF_THE_WEEK))->days / 7);
+            // Skip duplicate weeks (multiple activities in same week).
+            if ($diffInWeeks > 0) {
+                if (1 === $diffInWeeks) {
+                    ++$runningWeekStreak;
+                    if ($keepTrackOfCurrentWeekStreak) {
+                        ++$currentWeekStreak;
+                    }
+                    $longestWeekStreak = max($longestWeekStreak, $runningWeekStreak);
+                } else {
+                    $runningWeekStreak = 1;
+                    $keepTrackOfCurrentWeekStreak = false;
+                }
+            }
+
+            $diffInMonths = (($previousDay->getYear() - $currentDay->getYear()) * 12)
+                + ($previousDay->getMonthWithoutLeadingZero() - $currentDay->getMonthWithoutLeadingZero());
+            // Skip duplicate months (multiple activities in same month).
+            if ($diffInMonths > 0) {
+                if (1 === $diffInMonths) {
+                    ++$runningMonthStreak;
+                    if ($keepTrackOfCurrentMonthStreak) {
+                        ++$currentMonthStreak;
+                    }
+                    $longestMonthStreak = max($longestMonthStreak, $runningMonthStreak);
+                } else {
+                    $runningMonthStreak = 1;
+                    $keepTrackOfCurrentMonthStreak = false;
+                }
+            }
+
+            $previousDay = $currentDay;
+        }
 
         return new FindStreaksResponse(
-            longestDayStreak: $this->findLongestStreakLengthInDays($days),
-            currentDayStreak: $this->findCurrentStreakLengthInDays($days),
-            longestWeekStreak: $this->findLongestStreakLengthInWeeks($weeksAndYears),
-            currentWeekStreak: $this->findCurrentStreakLengthInWeeks($weeksAndYears),
-            longestMonthStreak: $this->findLongestStreakLengthInMonths($months),
-            currentMonthStreak: $this->findCurrentStreakLengthInMonths($months),
+            longestDayStreak: $longestDayStreak,
+            currentDayStreak: $currentDayStreak,
+            longestWeekStreak: $longestWeekStreak,
+            currentWeekStreak: $currentWeekStreak,
+            longestMonthStreak: $longestMonthStreak,
+            currentMonthStreak: $currentMonthStreak,
         );
-    }
-
-    /**
-     * @param string[] $days
-     */
-    private function findCurrentStreakLengthInDays(array $days): int
-    {
-        if (empty($days)) {
-            return 0;
-        }
-
-        rsort($days);
-
-        $today = $this->clock->getCurrentDateTimeImmutable();
-        if ($today->format('Y-m-d') != array_first($days)) {
-            return 0;
-        }
-
-        $current = 1;
-        for ($i = 1; $i < count($days); ++$i) {
-            $prev = SerializableDateTime::fromString($days[$i - 1]);
-            $curr = SerializableDateTime::fromString($days[$i]);
-
-            $diff = $prev->diff($curr)->days;
-            if (1 === $diff) {
-                ++$current;
-            } else {
-                break;
-            }
-        }
-
-        return $current;
-    }
-
-    /**
-     * @param string[] $days
-     */
-    private function findLongestStreakLengthInDays(array $days): int
-    {
-        if (empty($days)) {
-            return 0;
-        }
-
-        sort($days);
-
-        $longest = $current = 1;
-        for ($i = 1; $i < count($days); ++$i) {
-            $prev = SerializableDateTime::fromString($days[$i - 1]);
-            $curr = SerializableDateTime::fromString($days[$i]);
-
-            $diff = $prev->diff($curr)->days;
-            if (1 === $diff) {
-                ++$current;
-                $longest = max($longest, $current);
-            } else {
-                $current = 1;
-            }
-        }
-
-        return $longest;
-    }
-
-    /**
-     * @param array<int, array{'year': int, 'week': int}> $weeksAndYears
-     */
-    private function findCurrentStreakLengthInWeeks(array $weeksAndYears): int
-    {
-        if (empty($weeksAndYears)) {
-            return 0;
-        }
-
-        $globalWeeks = [];
-        foreach ($weeksAndYears as $row) {
-            $year = (int) $row['year'];
-            $week = (int) $row['week'];
-            $globalWeeks[] = $year * 100 + $week;
-        }
-
-        // Remove duplicates and sort
-        $globalWeeks = array_unique($globalWeeks);
-        rsort($globalWeeks);
-
-        $today = $this->clock->getCurrentDateTimeImmutable();
-        $currentWeek = $today->getYear() * 100 + (int) $today->format('W');
-
-        if ($currentWeek != array_first($globalWeeks)) {
-            return 0;
-        }
-
-        $current = 1;
-        for ($i = 1; $i < count($globalWeeks); ++$i) {
-            $prev = $globalWeeks[$i - 1];
-            $curr = $globalWeeks[$i];
-
-            // Check if it's the next week
-            [$prevYear, $prevWeek] = [intdiv($prev, 100), $prev % 100];
-            [$currYear, $currWeek] = [intdiv($curr, 100), $curr % 100];
-
-            if (
-                ($currYear === $prevYear && $currWeek === $prevWeek + 1)             // same year, next week
-                || ($currYear === $prevYear + 1 && $prevWeek >= 52 && 0 === $currWeek)  // year rollover: week 52/53 to week 0
-                || ($currYear === $prevYear + 1 && 53 === $prevWeek && 1 === $currWeek)    // alternative rollover handling
-            ) {
-                ++$current;
-            } else {
-                break;
-            }
-        }
-
-        return $current;
-    }
-
-    /**
-     * @param array<int, array{'year': int, 'week': int}> $weeksAndYears
-     */
-    private function findLongestStreakLengthInWeeks(array $weeksAndYears): int
-    {
-        if (empty($weeksAndYears)) {
-            return 0;
-        }
-        $globalWeeks = [];
-
-        foreach ($weeksAndYears as $row) {
-            $year = (int) $row['year'];
-            $week = (int) $row['week'];
-            $globalWeeks[] = $year * 100 + $week;
-        }
-
-        // Remove duplicates and sort
-        $globalWeeks = array_unique($globalWeeks);
-        sort($globalWeeks);
-
-        // Count the longest streak of consecutive weeks
-        $longest = $current = 1;
-        for ($i = 1; $i < count($globalWeeks); ++$i) {
-            $prev = $globalWeeks[$i - 1];
-            $curr = $globalWeeks[$i];
-
-            // Check if it's the next week
-            [$prevYear, $prevWeek] = [intdiv($prev, 100), $prev % 100];
-            [$currYear, $currWeek] = [intdiv($curr, 100), $curr % 100];
-
-            if (
-                ($currYear === $prevYear && $currWeek === $prevWeek + 1)             // same year, next week
-                || ($currYear === $prevYear + 1 && $prevWeek >= 52 && 0 === $currWeek)  // year rollover: week 52/53 to week 0
-                || ($currYear === $prevYear + 1 && 53 === $prevWeek && 1 === $currWeek)    // alternative rollover handling
-            ) {
-                ++$current;
-                $longest = max($longest, $current);
-            } else {
-                $current = 1;
-            }
-        }
-
-        return $longest;
-    }
-
-    /**
-     * @param int[] $numbers
-     */
-    private function findCurrentStreakLengthInMonths(array $numbers): int
-    {
-        if (empty($numbers)) {
-            return 0;
-        }
-
-        $today = $this->clock->getCurrentDateTimeImmutable();
-        $currentMonth = $today->getYear() * 12 + $today->getMonthWithoutLeadingZero();
-
-        rsort($numbers);
-
-        if ($currentMonth != array_first($numbers)) {
-            return 0;
-        }
-
-        $currentStreak = 1;
-
-        for ($i = 1; $i < count($numbers); ++$i) {
-            if ($numbers[$i - 1] - 1 === $numbers[$i]) {
-                ++$currentStreak;
-            } else {
-                break;
-            }
-        }
-
-        return $currentStreak;
-    }
-
-    /**
-     * @param int[] $numbers
-     */
-    private function findLongestStreakLengthInMonths(array $numbers): int
-    {
-        if (empty($numbers)) {
-            return 0;
-        }
-
-        sort($numbers);
-
-        $longestStreak = $currentStreak = 1;
-
-        for ($i = 1; $i < count($numbers); ++$i) {
-            if ($numbers[$i - 1] + 1 === $numbers[$i]) {
-                ++$currentStreak;
-                $longestStreak = max($longestStreak, $currentStreak);
-            } else {
-                $currentStreak = 1;
-            }
-        }
-
-        return $longestStreak;
     }
 }

@@ -102,7 +102,7 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
                     longestDayStreak: 3,
                     currentDayStreak: 2,
                     longestWeekStreak: 2,
-                    currentWeekStreak: 1,
+                    currentWeekStreak: 2,
                     longestMonthStreak: 2,
                     currentMonthStreak: 2,
                 ),
