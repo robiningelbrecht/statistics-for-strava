@@ -1,3 +1,16 @@
+# [v4.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.1) - 2025-12-28
+
+## What's Changed
+* ISSUE #1577: Improve webhook documentation by @cailloux in https://github.com/robiningelbrecht/statistics-for-strava/pull/1578
+* Change and add some Italian translations by @maramazza in https://github.com/robiningelbrecht/statistics-for-strava/pull/1581
+* ISSUE #1582: Improve docker entrypoint feedback by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1583
+* ISSUE #1561: Move activityStream import to activityImportPipeline by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1566
+* ISSUE #1584: Add progress bar to CLI output by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1585
+* ISSUE #1591 #1592: Rewind bugfix to images and improvement to activity grid by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1593
+* ISSUE #1594: Cap activity title length in segment overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1595
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.0...v4.3.1
+
 # [v4.3.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.0) - 2025-12-22
 
 ### 🥳 Strava Webhook support is here!
