@@ -21,42 +21,14 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
     #[DataProvider(methodName: 'provideData')]
     public function testHandle(Clock $clock, FindStreaksResponse $expected): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(1))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-12-27'))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(2))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-12-26'))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(3))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-12-21'))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(4))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-11-27'))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(5))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-11-26'))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(6))
-                ->withStartDateTime(SerializableDateTime::fromString('2025-11-25'))
-                ->build(), []
-        ));
+        foreach ($this->getSampleDates() as $index => $date) {
+            $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withActivityId(ActivityId::fromUnprefixed($index))
+                    ->withStartDateTime(SerializableDateTime::fromString($date))
+                    ->build(), []
+            ));
+        }
 
         $findStreaksQueryHandler = new FindStreaksQueryHandler(
             $this->getConnection(),
@@ -97,27 +69,77 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
     {
         return [
             [
-                PausedClock::fromString('2025-12-27'),
+                PausedClock::fromString('2025-01-10'),
                 new FindStreaksResponse(
-                    longestDayStreak: 3,
-                    currentDayStreak: 2,
+                    longestDayStreak: 5,
+                    currentDayStreak: 4,
                     longestWeekStreak: 2,
                     currentWeekStreak: 2,
-                    longestMonthStreak: 2,
-                    currentMonthStreak: 2,
+                    longestMonthStreak: 9,
+                    currentMonthStreak: 9,
                 ),
             ],
-            [
-                PausedClock::fromString('2026-01-27'),
-                new FindStreaksResponse(
-                    longestDayStreak: 3,
-                    currentDayStreak: 0,
-                    longestWeekStreak: 2,
-                    currentWeekStreak: 0,
-                    longestMonthStreak: 2,
-                    currentMonthStreak: 0,
-                ),
-            ],
+        ];
+    }
+
+    private function getSampleDates(): array
+    {
+        return [
+            // ───────────── 2025 ─────────────
+            '2025-01-10',
+            '2025-01-09',
+            '2025-01-08',
+            '2025-01-08', // duplicate day
+            '2025-01-07',
+            '2025-01-05', // gap (breaks day streak)
+            '2025-01-03',
+            '2025-01-02',
+            // Same ISO week, earlier days
+            '2024-12-31',
+            '2024-12-30',
+            // ───────────── Week gap ─────────────
+            '2024-12-20',
+            // ───────────── Month boundary ─────────────
+            '2024-12-01',
+            '2024-11-30',
+            '2024-11-29',
+            '2024-11-15',
+            // ───────────── Long month streak ─────────────
+            '2024-10-10',
+            '2024-09-10',
+            '2024-08-10',
+            '2024-07-10',
+            '2024-06-10',
+            '2024-05-10',
+            // ───────────── Broken month streak ─────────────
+            '2024-03-15',
+            // ───────────── Leap year coverage ─────────────
+            '2024-02-29',
+            '2024-02-28',
+            '2024-02-27',
+            // ───────────── More day streaks ─────────────
+            '2024-02-10',
+            '2024-02-09',
+            '2024-02-08',
+            '2024-02-07',
+            '2024-02-06',
+            // ───────────── Year boundary ─────────────
+            '2023-12-31',
+            '2023-12-30',
+            '2023-12-29',
+            // ───────────── ISO week 53 coverage ─────────────
+            '2020-12-31',
+            '2020-12-30',
+            '2020-12-29',
+            '2020-12-28',
+            // ───────────── Earlier random data ─────────────
+            '2019-11-15',
+            '2019-10-10',
+            '2019-09-09',
+            '2018-06-01',
+            '2018-05-31',
+            '2018-05-30',
+            '2017-01-01',
         ];
     }
 }
