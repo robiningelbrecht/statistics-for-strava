@@ -66,7 +66,8 @@ final readonly class DailyActivitiesChart
             'backgroundColor' => null,
             'animation' => false,
             'tooltip' => [
-                'show' => false,
+                'trigger' => 'item',
+                'formatter' => 'formatActivityGridTooltip',
             ],
             'visualMap' => [
                 'type' => 'piecewise',
