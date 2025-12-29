@@ -17,9 +17,7 @@ final readonly class ProgressBar
     ) {
         SymfonyProgressBar::setPlaceholderFormatterDefinition(
             'message',
-            function (SymfonyProgressBar $progressBar): string {
-                return sprintf(' - %s', $progressBar->getMessage());
-            }
+            fn (SymfonyProgressBar $progressBar): string => sprintf(' - %s', $progressBar->getMessage())
         );
 
         $this->progressBar = new SymfonyProgressBar($output, $maxSteps);
