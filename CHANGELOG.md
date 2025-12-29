@@ -1,3 +1,10 @@
+# [v4.3.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.2) - 2025-12-29
+
+## What's Changed
+* ISSUE #1597: Fix weekly stats and goals do not line up in the last week of the year by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1598
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.1...v4.3.2
+
 # [v4.3.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.1) - 2025-12-28
 
 ## What's Changed

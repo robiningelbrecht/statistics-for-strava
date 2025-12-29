@@ -21,14 +21,16 @@ final class Weeks extends Collection
         SerializableDateTime $startDate,
         SerializableDateTime $now,
     ): self {
+        /** @var SerializableDateTime $start */
+        $start = $startDate->modify('monday this week');
+        $end = $now->modify('sunday this week');
+
         $weeks = [];
-        for ($year = $startDate->getYear(); $year <= $now->getYear(); ++$year) {
-            $weekNumberStart = $year === $startDate->getYear() ? $startDate->getWeekNumber() : 1;
-            $weekNumberStop = $year === $now->getYear() ? $now->getWeekNumber() : 52;
-            for ($weekNumber = $weekNumberStart; $weekNumber <= $weekNumberStop; ++$weekNumber) {
-                $week = Week::fromYearAndWeekNumber($year, $weekNumber);
-                $weeks[$week->getId()] = $week;
-            }
+        while ($start <= $end) {
+            $week = Week::fromDate($start);
+            $weeks[$week->getId()] = $week;
+
+            $start = $start->modify('+1 week');
         }
 
         return Weeks::fromArray(array_values($weeks));

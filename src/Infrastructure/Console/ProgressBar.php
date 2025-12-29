@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Console;
 
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use Symfony\Component\Console\Helper\ProgressBar as SymfonyProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -18,13 +17,7 @@ final readonly class ProgressBar
     ) {
         SymfonyProgressBar::setPlaceholderFormatterDefinition(
             'message',
-            function (SymfonyProgressBar $progressBar): string {
-                if ($message = $progressBar->getMessage()) {
-                    return sprintf(' - %s', $message);
-                }
-
-                return '';
-            }
+            fn (SymfonyProgressBar $progressBar): string => sprintf(' - %s', $progressBar->getMessage())
         );
 
         $this->progressBar = new SymfonyProgressBar($output, $maxSteps);
@@ -40,9 +33,7 @@ final readonly class ProgressBar
 
     public function advance(): void
     {
-        if (PlatformEnvironment::fromServer()->isTest()) {
-            usleep(100 * 1000);
-        }
+        usleep(100 * 1000);
         $this->progressBar->advance();
     }
 
