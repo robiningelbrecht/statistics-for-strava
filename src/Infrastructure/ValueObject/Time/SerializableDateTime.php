@@ -101,35 +101,6 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         return (int) $this->format('Y');
     }
 
-    public function getWeekNumber(): int
-    {
-        $weekNumber = (int) $this->format('W');
-        if (1 === $weekNumber && 12 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 52;
-        }
-        if (53 === $weekNumber && 12 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 52;
-        }
-        if (53 === $weekNumber && 1 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 1;
-        }
-
-        return $weekNumber;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getYearAndWeekNumber(): array
-    {
-        return [$this->getYear(), $this->getWeekNumber()];
-    }
-
-    public function getYearAndWeekNumberString(): string
-    {
-        return implode('-', $this->getYearAndWeekNumber());
-    }
-
     public function isAfterOrOn(SerializableDateTime $that): bool
     {
         return $this >= $that;

@@ -55,7 +55,7 @@ final readonly class TrainingGoalsWidget implements Widget
         }
 
         $calculatedGoalsPerPeriod = $fromToLabels = [];
-        $week = Week::fromYearAndWeekNumber($now->getYear(), $now->getWeekNumber());
+        $week = Week::fromDate($now);
         $month = Month::fromDate($now);
         $year = Year::fromDate($now);
 
