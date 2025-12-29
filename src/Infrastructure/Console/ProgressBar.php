@@ -18,11 +18,7 @@ final readonly class ProgressBar
         SymfonyProgressBar::setPlaceholderFormatterDefinition(
             'message',
             function (SymfonyProgressBar $progressBar): string {
-                if ($message = $progressBar->getMessage()) {
-                    return sprintf(' - %s', $message);
-                }
-
-                return '';
+                return sprintf(' - %s', $progressBar->getMessage());
             }
         );
 

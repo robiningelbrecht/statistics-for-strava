@@ -26,19 +26,10 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         return self::fromString('now')->setTimestamp($unixTimestamp);
     }
 
-    public static function fromYearAndWeekNumber(int $year, int $weekNumber, int $dayOfWeek = 1): self
-    {
-        $datetime = new self()->setISODate($year, $weekNumber, $dayOfWeek);
-
-        return self::fromString(
-            $datetime->format('Y-m-d H:i:s')
-        );
-    }
-
     public static function createFromFormat(string $format, string $datetime, ?\DateTimeZone $timezone = null): self
     {
         if (!$datetime = parent::createFromFormat($format, $datetime, $timezone)) {
-            throw new \InvalidArgumentException(sprintf('Invalid date format %s for %s', $format, $datetime));
+            throw new \InvalidArgumentException(sprintf('Invalid date format %s for %s', $format, $datetime)); // @codeCoverageIgnore
         }
 
         return self::fromString(
