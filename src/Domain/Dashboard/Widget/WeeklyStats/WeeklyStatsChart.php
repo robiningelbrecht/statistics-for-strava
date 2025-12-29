@@ -206,7 +206,7 @@ final readonly class WeeklyStatsChart
 
         /** @var Activity $activity */
         foreach ($this->activities as $activity) {
-            $week = $activity->getStartDate()->getYearAndWeekNumberString();
+            $week = Week::fromDate($activity->getStartDate())->getId();
             if (!array_key_exists($week, $distancePerWeek)) {
                 continue;
             }

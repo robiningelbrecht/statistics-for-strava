@@ -8,40 +8,38 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Week implements \JsonSerializable
 {
+    private SerializableDateTime $date;
+
     private function __construct(
-        private int $year,
-        private int $weekNumber,
+        SerializableDateTime $date,
     ) {
+        $this->date = SerializableDateTime::fromString($date->modify('monday this week')->format('Y-m-d'));
     }
 
-    public static function fromYearAndWeekNumber(
-        int $year,
-        int $weekNumber,
+    public static function fromDate(
+        SerializableDateTime $date,
     ): self {
-        return new self(
-            year: $year,
-            weekNumber: $weekNumber,
-        );
+        return new self($date);
     }
 
     public function getId(): string
     {
-        return $this->year.'-'.$this->weekNumber;
+        return sprintf('%s-%s-%s', $this->date->format('Y'), $this->date->format('m'), $this->date->format('d'));
     }
 
     public function getLabel(): string
     {
-        return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber)->translatedFormat('M Y');
+        return $this->date->translatedFormat('M Y');
     }
 
     public function getFrom(): SerializableDateTime
     {
-        return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber);
+        return $this->date;
     }
 
     public function getTo(): SerializableDateTime
     {
-        return SerializableDateTime::fromYearAndWeekNumber($this->year, $this->weekNumber, 7);
+        return SerializableDateTime::fromString($this->date->modify('sunday this week')->format('Y-m-d'));
     }
 
     /**
