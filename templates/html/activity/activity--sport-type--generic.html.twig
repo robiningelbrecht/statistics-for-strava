@@ -98,7 +98,7 @@
                         {% for imagePath in activity.getLocalImagePaths() %}
                             <div class="h-[130px] shrink-0">
                                 <img class="h-full object-cover object-top rounded-lg lazy"
-                                     src="{{ placeholderImage() }}" data-src="{{ imagePath }}"
+                                     src="{{ placeholderImage() }}" data-src="{{ relativeUrl(imagePath) }}"
                                      alt="Activity image"/>
                             </div>
                         {% endfor %}
