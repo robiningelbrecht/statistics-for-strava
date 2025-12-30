@@ -93,7 +93,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
             $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($yearsToQuery));
             $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics($yearsToQuery));
-            $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery));
+            $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery, null));
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
             $activeAndRestDaysResponse = $this->queryBus->ask(new FindActiveAndRestDays($yearsToQuery));
