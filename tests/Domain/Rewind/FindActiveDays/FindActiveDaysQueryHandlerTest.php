@@ -6,17 +6,18 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Rewind\FindActiveDays\FindActiveDays;
-use App\Domain\Rewind\FindActiveDays\FindActiveDaysQueryHandler;
+use App\Domain\Rewind\FindActiveAndRestDays\FindActiveAndRestDays;
+use App\Domain\Rewind\FindActiveAndRestDays\FindActiveAndRestDaysQueryHandler;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
 
 class FindActiveDaysQueryHandlerTest extends ContainerTestCase
 {
-    private FindActiveDaysQueryHandler $queryHandler;
+    private FindActiveAndRestDaysQueryHandler $queryHandler;
 
     public function testHandle(): void
     {
@@ -67,8 +68,8 @@ class FindActiveDaysQueryHandlerTest extends ContainerTestCase
             []
         ));
 
-        /** @var \App\Domain\Rewind\FindActiveDays\FindActiveDaysResponse $response */
-        $response = $this->queryHandler->handle(new FindActiveDays(Years::fromArray([Year::fromInt(2024)])));
+        /** @var \App\Domain\Rewind\FindActiveAndRestDays\FindActiveAndRestDaysResponse $response */
+        $response = $this->queryHandler->handle(new FindActiveAndRestDays(Years::fromArray([Year::fromInt(2024)])));
         $this->assertEquals(
             3,
             $response->getNumberOfActiveDays(),
@@ -80,6 +81,9 @@ class FindActiveDaysQueryHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->queryHandler = new FindActiveDaysQueryHandler($this->getConnection());
+        $this->queryHandler = new FindActiveAndRestDaysQueryHandler(
+            $this->getConnection(),
+            PausedClock::fromString('2025-12-30')
+        );
     }
 }
