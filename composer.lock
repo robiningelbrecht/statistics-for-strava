@@ -3671,16 +3671,16 @@
         },
         {
             "name": "respect/validation",
-            "version": "2.4.4",
+            "version": "2.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Respect/Validation.git",
-                "reference": "f13f10f19978aea33af2a102a2f58f2db1e63619"
+                "reference": "93edad4b3272103ea31a5186970c1bd4bdd58b3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/f13f10f19978aea33af2a102a2f58f2db1e63619",
-                "reference": "f13f10f19978aea33af2a102a2f58f2db1e63619",
+                "url": "https://api.github.com/repos/Respect/Validation/zipball/93edad4b3272103ea31a5186970c1bd4bdd58b3e",
+                "reference": "93edad4b3272103ea31a5186970c1bd4bdd58b3e",
                 "shasum": ""
             },
             "require": {
@@ -3689,7 +3689,7 @@
                 "symfony/polyfill-mbstring": "^1.2"
             },
             "require-dev": {
-                "egulias/email-validator": "^3.0",
+                "egulias/email-validator": "^3.0 || ^4.0",
                 "giggsey/libphonenumber-for-php-lite": "^8.13 || ^9.0",
                 "malukenho/docheader": "^1.0",
                 "mikey179/vfsstream": "^1.6",
@@ -3733,9 +3733,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Respect/Validation/issues",
-                "source": "https://github.com/Respect/Validation/tree/2.4.4"
+                "source": "https://github.com/Respect/Validation/tree/2.4.5"
             },
-            "time": "2025-06-07T00:07:21+00:00"
+            "time": "2025-12-30T08:34:28+00:00"
         },
         {
             "name": "symfony/asset",
