@@ -17,7 +17,7 @@ use App\Domain\Rewind\ActivityStartTimesChart;
 use App\Domain\Rewind\DailyActivitiesChart;
 use App\Domain\Rewind\DistancePerMonthChart;
 use App\Domain\Rewind\ElevationPerMonthChart;
-use App\Domain\Rewind\FindActiveDays\FindActiveDays;
+use App\Domain\Rewind\FindActiveAndRestDays\FindActiveAndRestDays;
 use App\Domain\Rewind\FindActivityCountPerMonth\FindActivityCountPerMonth;
 use App\Domain\Rewind\FindActivityLocations\FindActivityLocations;
 use App\Domain\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHour;
@@ -96,14 +96,9 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery));
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
-            $activeDaysResponse = $this->queryBus->ask(new FindActiveDays($yearsToQuery));
+            $activeAndRestDaysResponse = $this->queryBus->ask(new FindActiveAndRestDays($yearsToQuery));
             $totalActivityCountResponse = $this->queryBus->ask(new FindTotalActivityCount($yearsToQuery));
 
-            $totalNumberOfDays = array_sum(array_map(
-                fn (Year $year): int => $year->getNumberOfDays(),
-                $yearsToQuery->toArray()
-            ));
-            /** @var RewindItems $rewindItems */
             $rewindItems = RewindItems::empty();
 
             if (FindAvailableRewindOptions::ALL_TIME !== $availableRewindOption) {
@@ -236,12 +231,12 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     subTitle: $this->translator->trans('Rest days vs. active days'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(RestDaysVsActiveDaysChart::create(
-                            numberOfActiveDays: $activeDaysResponse->getNumberOfActiveDays(),
-                            numberOfRestDays: $totalNumberOfDays - $activeDaysResponse->getNumberOfActiveDays(),
+                            numberOfActiveDays: $activeAndRestDaysResponse->getNumberOfActiveDays(),
+                            numberOfRestDays: $activeAndRestDaysResponse->getNumberOfRestDays(),
                             translator: $this->translator,
                         )->build()),
                     ]),
-                    totalMetric: (int) round(($activeDaysResponse->getNumberOfActiveDays() / $totalNumberOfDays) * 100),
+                    totalMetric: (int) round(($activeAndRestDaysResponse->getNumberOfActiveDays() / $activeAndRestDaysResponse->getTotalNumberOfDays()) * 100),
                     totalMetricLabel: '%'
                 ))->add(RewindItem::from(
                     icon: 'clock',

@@ -6,6 +6,9 @@ namespace App\Domain\Rewind;
 
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<\App\Domain\Rewind\RewindItem>
+ */
 final class RewindItems extends Collection
 {
     public function getItemClassName(): string

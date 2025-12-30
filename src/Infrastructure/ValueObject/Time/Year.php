@@ -45,11 +45,6 @@ final readonly class Year implements \Stringable
         );
     }
 
-    public function getNumberOfDays(): int
-    {
-        return SerializableDateTime::fromString(sprintf('%d-01-01', $this->year))->format('L') ? 366 : 365;
-    }
-
     public function getMonths(): Months
     {
         return Months::create(
