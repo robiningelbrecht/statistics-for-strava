@@ -42,14 +42,23 @@ final readonly class FindActiveAndRestDaysQueryHandler implements QueryHandler
             ]
         )->fetchOne();
 
-        /** @var \App\Infrastructure\ValueObject\Time\Year $firstYear */
-        $firstYear = $query->getYears()->getFirst();
-        $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
-        $startDate = SerializableDateTime::fromString(sprintf('%s-01-01 00:00:00', $firstYear->toInt()));
-        $endDate = SerializableDateTime::fromString(sprintf('%s 23:59:59', $today));
+        $firstActivityStartDate = SerializableDateTime::fromString($this->connection->executeQuery(
+            <<<SQL
+                SELECT MIN(startDateTime) AS date FROM Activity
+            SQL,
+        )->fetchOne());
+
+        /** @var \App\Infrastructure\ValueObject\Time\Year $mostRecentYearToQuery */
+        $mostRecentYearToQuery = $query->getYears()->getFirst();
+        /** @var \App\Infrastructure\ValueObject\Time\Year $oldestYearToQuery */
+        $oldestYearToQuery = $query->getYears()->getLast();
+        $today = $this->clock->getCurrentDateTimeImmutable();
+
+        $startDate = $oldestYearToQuery->toInt() === $firstActivityStartDate->getYear() ? $firstActivityStartDate : SerializableDateTime::fromString(sprintf('%s-01-01 00:00:00', $oldestYearToQuery->toInt()));
+        $endDate = $mostRecentYearToQuery->toInt() === $today->getYear() ? SerializableDateTime::fromString($today->format('Y-m-d 23:59:59')) : SerializableDateTime::fromString(sprintf('%s-12-31 23:59:59', $mostRecentYearToQuery->toInt()));
 
         return new FindActiveAndRestDaysResponse(
-            totalNumberOfDays: (int) $startDate->diff($endDate)->days,
+            totalNumberOfDays: $startDate->diff($endDate)->days + 1,
             activeDays: $numberOfActiveDays,
         );
     }
