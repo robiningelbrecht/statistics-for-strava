@@ -340,11 +340,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
         }
 
-        if (count($availableRewindOptions) <= 1) {
-            // No data to compare with, no need to render comparison pages.
-            return;
-        }
-
         foreach ($availableRewindOptions as $availableRewindOptionLeft) {
             $defaultRewindYearToCompareWith = $availableRewindOptions[0] != $availableRewindOptionLeft ? $availableRewindOptions[0] : $availableRewindOptions[1];
 
