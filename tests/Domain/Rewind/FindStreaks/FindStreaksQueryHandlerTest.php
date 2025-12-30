@@ -5,6 +5,8 @@ namespace App\Tests\Domain\Rewind\FindStreaks;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
 use App\Domain\Rewind\FindStreaks\FindStreaksQueryHandler;
 use App\Domain\Rewind\FindStreaks\FindStreaksResponse;
@@ -26,9 +28,18 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed($index))
                     ->withStartDateTime(SerializableDateTime::fromString($date))
+                    ->withSportType(SportType::RIDE)
                     ->build(), []
             ));
         }
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('run'))
+                ->withStartDateTime(SerializableDateTime::fromString('2024-02-05'))
+                ->withSportType(SportType::RUN)
+                ->build(), []
+        ));
 
         $findStreaksQueryHandler = new FindStreaksQueryHandler(
             $this->getConnection(),
@@ -38,7 +49,10 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
         $this->assertEquals(
             $expected,
             $findStreaksQueryHandler->handle(
-                new FindStreaks(Years::all($clock->getCurrentDateTimeImmutable()))
+                new FindStreaks(
+                    years: Years::all($clock->getCurrentDateTimeImmutable()),
+                    restrictToSportTypes: SportTypes::fromArray([SportType::RIDE])
+                )
             )
         );
     }
@@ -60,7 +74,10 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
                 currentMonthStreak: 0,
             ),
             $findStreaksQueryHandler->handle(
-                new FindStreaks(Years::all($clock->getCurrentDateTimeImmutable()))
+                new FindStreaks(
+                    years: Years::all($clock->getCurrentDateTimeImmutable()),
+                    restrictToSportTypes: null,
+                )
             )
         );
     }

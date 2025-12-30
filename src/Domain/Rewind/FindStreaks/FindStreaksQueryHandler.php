@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Rewind\FindStreaks;
 
+use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
@@ -27,24 +28,35 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
     {
         assert($query instanceof FindStreaks);
 
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder
+            ->select("strftime('%Y-%m-%d', startDateTime) AS day")
+            ->from('activity')
+            ->andWhere("strftime('%Y', startDateTime) IN (:years)")
+            ->groupBy('day')
+            ->orderBy('day', 'DESC')
+            ->setParameter(
+                key: 'years',
+                value: array_map(strval(...), $query->getYears()->toArray()),
+                type: ArrayParameterType::STRING
+            );
+
+        $restrictToSportTypes = $query->getRestrictToSportTypes();
+        if (!is_null($restrictToSportTypes) && !$restrictToSportTypes->isEmpty()) {
+            $queryBuilder
+                ->andWhere('sportType IN (:sportTypes)')
+                ->setParameter(
+                    key: 'sportTypes',
+                    value: array_map(fn (SportType $sportType) => $sportType->value, $restrictToSportTypes->toArray()),
+                    type: ArrayParameterType::STRING
+                );
+        }
+
         /** @var SerializableDateTime[] $days */
         $days = array_map(
             SerializableDateTime::fromString(...),
-            $this->connection->executeQuery(
-                <<<SQL
-                SELECT strftime('%Y-%m-%d', startDateTime) AS day
-                FROM activity
-                WHERE strftime('%Y', startDateTime) IN (:years)
-                GROUP BY day
-                ORDER BY day DESC
-                SQL,
-                [
-                    'years' => array_map(strval(...), $query->getYears()->toArray()),
-                ],
-                [
-                    'years' => ArrayParameterType::STRING,
-                ]
-            )->fetchFirstColumn());
+            $queryBuilder->fetchFirstColumn()
+        );
 
         return $this->computeStreaks($days);
     }
