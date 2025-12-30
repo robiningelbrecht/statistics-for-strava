@@ -57,6 +57,7 @@ Compare: Confronta
 'Compare to': 'Confronta con'
 'Congrats! You achieved personal bests during this activity.': 'Complimenti! Hai raggiunto record personali durante questa attività.'
 Crossfit: Crossfit
+'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Attrezzatura personalizzata disattivata'
 Cycling: Ciclismo
 'Daily TRIMP': 'TRIMP giornaliero'
@@ -249,7 +250,7 @@ Segments: Segmenti
 Sep: Set
 'Show information': 'Mostra Informazione'
 Simplified: Semplificato
-"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Da quando ho iniziato a usare Strava {numberOfDaysAgo} fa, il {startDate}, ho registrato {totalDaysOfWorkingOut} giorni attivi di allenamento e avventura."
+"Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": 'Da quando ho iniziato a usare Strava {numberOfDaysAgo} fa, il {startDate}, ho registrato {totalDaysOfWorkingOut} giorni attivi di allenamento e avventura.'
 Skateboard: Skateboard
 Skating: Pattinaggio
 'Slightly fresh – transitional zone': 'Leggermente fresco – zona di transizione'
