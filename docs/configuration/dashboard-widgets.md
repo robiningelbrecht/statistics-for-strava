@@ -26,6 +26,7 @@ appearance:
       - { 'widget': 'yearlyStats', 'width': 100, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
       - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+      - { 'widget': 'streaks', 'width': 50, 'enabled': true } 
       - { 'widget': 'eddington', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, 'config': { 'challenges': [] } }
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
@@ -249,6 +250,19 @@ This widget displays your hours spent per gear.
 ```
 
 ![gearStats widget](../assets/images/dashboard-widgets/gear-stats.png)
+
+## streaks
+
+This widget shows your current activity streaks, calculated in days, weeks, and months.
+
+* __sportTypesToInclude__: an array of sport types to include when calculating streaks.
+  Leave this empty to include all sport types.
+
+```yml
+{ 'widget': 'streaks', 'width': 50, 'enabled': true, 'config': { 'sportTypesToInclude': [] } }
+```
+
+![streaks widget](../assets/images/dashboard-widgets/streaks.png)
 
 ## eddington
 

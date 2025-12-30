@@ -83,7 +83,7 @@ final readonly class AthleteWeightHistoryChart
                 'top' => '2%',
                 'left' => '3%',
                 'right' => '4%',
-                'bottom' => '3%',
+                'bottom' => '50px',
                 'containLabel' => true,
             ],
             'toolbox' => [
