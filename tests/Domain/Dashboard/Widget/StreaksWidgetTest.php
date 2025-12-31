@@ -65,6 +65,7 @@ class StreaksWidgetTest extends ContainerTestCase
         $this->widget->guardValidConfiguration($configuration);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
