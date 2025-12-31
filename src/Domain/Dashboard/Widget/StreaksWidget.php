@@ -50,18 +50,30 @@ final readonly class StreaksWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        /** @var string[] $sportTypesToInclude */
-        $sportTypesToInclude = $configuration->get('sportTypesToInclude');
+        $sportTypesToInclude = SportTypes::fromArray(array_map(
+            SportType::from(...),
+            $configuration->get('sportTypesToInclude'),  // @phpstan-ignore argument.type
+        ));
         $findStreaksResponse = $this->queryBus->ask(new FindStreaks(
             years: Years::all($this->clock->getCurrentDateTimeImmutable()),
-            restrictToSportTypes: SportTypes::fromArray(array_map(
-                SportType::from(...),
-                $sportTypesToInclude,
-            )),
+            restrictToSportTypes: $sportTypesToInclude,
         ));
 
+        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $mostRecentActivity = $this->activitiesEnricher->getEnrichedActivities()->getFirst();
+        if (!$sportTypesToInclude->isEmpty()) {
+            foreach ($activities as $activity) {
+                if (!$sportTypesToInclude->has($activity->getSportType())) {
+                    continue;
+                }
+
+                $mostRecentActivity = $activity;
+                break;
+            }
+        }
+
         return $this->twig->load('html/dashboard/widget/widget--streaks.html.twig')->render([
-            'mostRecentActivity' => $this->activitiesEnricher->getEnrichedActivities()->getFirst(),
+            'mostRecentActivity' => $mostRecentActivity,
             'dayStreak' => $findStreaksResponse->getCurrentDayStreak(),
             'weekStreak' => $findStreaksResponse->getCurrentWeekStreak(),
             'monthStreak' => $findStreaksResponse->getCurrentMonthStreak(),
