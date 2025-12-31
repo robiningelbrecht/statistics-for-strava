@@ -27,7 +27,7 @@ final readonly class LoggableConsoleOutput implements OutputInterface
 
         if (!$messages = array_filter(
             $messages,
-            fn (string $message): bool => '[1G' !== $message && '[2K' !== $message
+            fn (string $message): bool => !in_array($message, ['[1G', '[2K'])
         )) {
             return;
         }
