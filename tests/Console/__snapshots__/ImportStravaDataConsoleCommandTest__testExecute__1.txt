@@ -3,7 +3,7 @@ StatisticsforStravav4.3.2
 
 
 
-Runtime:PHP8.5.x(cli)Symfony8.0.2Linux
+Runtime:PHP8.5.x(cli)Symfony8.0.3Linux
 
 Configurationfiles:
 config.yaml
