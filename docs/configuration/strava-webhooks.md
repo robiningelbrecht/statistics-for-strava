@@ -14,6 +14,9 @@ These will trigger the import and build processes in the background. It may take
 > [!IMPORTANT]
 > **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
 
+> [!IMPORTANT]
+> **Important** Processing Strava webhooks requires the daemon Docker container to be configured.
+
 > [!TIP]
 > **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".
 Cloudflare can incorrectly flag Strava’s requests as bot traffic, causing the webhook integration to fail.
