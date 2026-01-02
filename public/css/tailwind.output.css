@@ -1696,6 +1696,9 @@
   .max-h-\[calc\(100vh-285px\)\] {
     max-height: calc(100vh - 285px);
   }
+  .max-h-\[calc\(100vh-585px\)\] {
+    max-height: calc(100vh - 585px);
+  }
   .max-h-full {
     max-height: 100%;
   }
