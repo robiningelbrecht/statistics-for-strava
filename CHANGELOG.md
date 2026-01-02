@@ -1,3 +1,12 @@
+# [v4.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.3) - 2026-01-02
+
+## What's Changed
+* ISSUE #1599: Rewind active vs rest days always takes end of year into account by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1600
+* ISSUE #1587: Current streaks dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1590
+* ISSUE #1605: Improve webhooks documentation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1606
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.2...v4.3.3
+
 # [v4.3.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.2) - 2025-12-29
 
 ## What's Changed
