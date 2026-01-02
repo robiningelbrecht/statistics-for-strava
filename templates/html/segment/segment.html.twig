@@ -167,7 +167,8 @@
                     </div>
                 </div>
                 <div id="segmentListsTabHistory" role="tabpanel" aria-labelledby="segmentListsTabHistory-tab">
-                    <div class="relative overflow-x-auto max-h-[calc(100vh-285px)]">
+                    {% set maxHeight = leaflet ? 'max-h-[calc(100vh-585px)]' : 'max-h-[calc(100vh-285px)]' %}
+                    <div class="relative overflow-x-auto {{ maxHeight }}">
                         <table class="sortable w-full text-sm text-center text-gray-500">
                             <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
