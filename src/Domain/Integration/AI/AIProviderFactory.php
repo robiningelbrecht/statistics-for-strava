@@ -8,10 +8,14 @@ use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
 use NeuronAI\Providers\Deepseek\Deepseek;
 use NeuronAI\Providers\Gemini\Gemini;
+use NeuronAI\Providers\HuggingFace\HuggingFace;
 use NeuronAI\Providers\Mistral\Mistral;
 use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\Providers\OpenAI\AzureOpenAI;
 use NeuronAI\Providers\OpenAI\OpenAI;
+use NeuronAI\Providers\OpenAI\Responses\OpenAIResponses;
+use NeuronAI\Providers\OpenAILike;
+use NeuronAI\Providers\XAI\Grok;
 
 final readonly class AIProviderFactory
 {
@@ -31,6 +35,7 @@ final readonly class AIProviderFactory
         $requiredConfigKeys = match ($providerName) {
             'ollama' => ['model', 'url'],
             'azureOpenAI' => ['key', 'endpoint', 'model', 'version'],
+            'openAILike' => ['baseUri', 'key', 'model'],
             default => ['model', 'key'],
         };
 
@@ -51,7 +56,19 @@ final readonly class AIProviderFactory
                 model: $config['model'],
                 version: $config['version'],
             ),
+            'deepseek' => new Deepseek(
+                key: $config['key'],
+                model: $config['model'],
+            ),
             'gemini' => new Gemini(
+                key: $config['key'],
+                model: $config['model'],
+            ),
+            'grok' => new Grok(
+                key: $config['key'],
+                model: $config['model'],
+            ),
+            'huggingFace' => new HuggingFace(
                 key: $config['key'],
                 model: $config['model'],
             ),
@@ -63,7 +80,12 @@ final readonly class AIProviderFactory
                 key: $config['key'],
                 model: $config['model'],
             ),
-            'deepseek' => new Deepseek(
+            'openAILike' => new OpenAILike(
+                baseUri: $config['baseUri'],
+                key: $config['key'],
+                model: $config['model'],
+            ),
+            'openAIResponses' => new OpenAIResponses(
                 key: $config['key'],
                 model: $config['model'],
             ),
