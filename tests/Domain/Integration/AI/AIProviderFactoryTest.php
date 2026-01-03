@@ -8,10 +8,14 @@ use NeuronAI\Providers\AIProviderInterface;
 use NeuronAI\Providers\Anthropic\Anthropic;
 use NeuronAI\Providers\Deepseek\Deepseek;
 use NeuronAI\Providers\Gemini\Gemini;
+use NeuronAI\Providers\HuggingFace\HuggingFace;
 use NeuronAI\Providers\Mistral\Mistral;
 use NeuronAI\Providers\Ollama\Ollama;
 use NeuronAI\Providers\OpenAI\AzureOpenAI;
 use NeuronAI\Providers\OpenAI\OpenAI;
+use NeuronAI\Providers\OpenAI\Responses\OpenAIResponses;
+use NeuronAI\Providers\OpenAILike;
+use NeuronAI\Providers\XAI\Grok;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -61,6 +65,17 @@ class AIProviderFactoryTest extends TestCase
             new AzureOpenAI('key', 'endpoint', 'model', 'version'),
         ];
 
+        yield 'deepseek' => [
+            [
+                'provider' => 'deepseek',
+                'configuration' => [
+                    'key' => 'key',
+                    'model' => 'model',
+                ],
+            ],
+            new Deepseek('key', 'model'),
+        ];
+
         yield 'gemini' => [
             [
                 'provider' => 'gemini',
@@ -70,6 +85,28 @@ class AIProviderFactoryTest extends TestCase
                 ],
             ],
             new Gemini('key', 'model'),
+        ];
+
+        yield 'grok' => [
+            [
+                'provider' => 'grok',
+                'configuration' => [
+                    'key' => 'key',
+                    'model' => 'model',
+                ],
+            ],
+            new Grok('key', 'model'),
+        ];
+
+        yield 'huggingFace' => [
+            [
+                'provider' => 'huggingFace',
+                'configuration' => [
+                    'key' => 'key',
+                    'model' => 'model',
+                ],
+            ],
+            new HuggingFace('key', 'model'),
         ];
 
         yield 'ollama' => [
@@ -94,15 +131,27 @@ class AIProviderFactoryTest extends TestCase
             new OpenAI('key', 'model'),
         ];
 
-        yield 'deepseek' => [
+        yield 'openAILike' => [
             [
-                'provider' => 'deepseek',
+                'provider' => 'openAILike',
+                'configuration' => [
+                    'baseUri' => 'baseUri',
+                    'key' => 'key',
+                    'model' => 'model',
+                ],
+            ],
+            new OpenAILike('baseUri', 'key', 'model'),
+        ];
+
+        yield 'openAIResponses' => [
+            [
+                'provider' => 'openAIResponses',
                 'configuration' => [
                     'key' => 'key',
                     'model' => 'model',
                 ],
             ],
-            new Deepseek('key', 'model'),
+            new OpenAIResponses('key', 'model'),
         ];
 
         yield 'mistral' => [
@@ -159,6 +208,17 @@ class AIProviderFactoryTest extends TestCase
                 ],
             ],
             'integrations.ai.configuration.url: cannot be empty',
+        ];
+
+        yield 'Invalid configuration missing baseUri' => [
+            [
+                'provider' => 'openAILike',
+                'configuration' => [
+                    'model' => 'lol',
+                    'key' => 'key',
+                ],
+            ],
+            'integrations.ai.configuration.baseUri: cannot be empty',
         ];
 
         yield 'Invalid configuration provider' => [
