@@ -199,7 +199,7 @@ integrations:
     # ⚠️ Use caution when enabling this feature if your app is publicly accessible!
     enableUI: false
     # The provider you want to use. 
-    # Allowed values: ["anthropic", "azureOpenAI", "gemini", "ollama", "openAI", "deepseek", "mistral"]
+    # Allowed values: ["anthropic", "azureOpenAI", "deepseek", "gemini", "grok", "huggingFace", "ollama", "openAI", "openAILike", "openAIResponses", "mistral"]
     provider: 'PROVIDER-YOU-CHOOSE'
     configuration:
       key: 'YOUR-API-KEY'
