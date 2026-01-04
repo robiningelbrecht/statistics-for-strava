@@ -153,15 +153,13 @@ final readonly class WeeklyStatsChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'startValue' => count($weeks),
                     'endValue' => count($weeks) - $minZoomValueSpan,
                     'minValueSpan' => $minZoomValueSpan,
                     'maxValueSpan' => $maxZoomValueSpan,
                     'brushSelect' => false,
                     'zoomLock' => true,
-                ],
-                [
                 ],
             ],
             'xAxis' => [

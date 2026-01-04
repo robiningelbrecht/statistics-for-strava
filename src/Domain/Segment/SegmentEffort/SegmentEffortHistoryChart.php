@@ -21,8 +21,10 @@ final readonly class SegmentEffortHistoryChart
     public function build(): array
     {
         $data = [];
+
         foreach ($this->segmentEfforts as $segmentEffort) {
-            $data[] = [$segmentEffort->getStartDateTime()->format('Y-m-d'), $segmentEffort->getElapsedTimeInSeconds()];
+            $segmentEffortStartDate = $segmentEffort->getStartDateTime();
+            $data[] = [$segmentEffortStartDate->format('Y-m-d'), $segmentEffort->getElapsedTimeInSeconds()];
         }
 
         return [
@@ -35,6 +37,11 @@ final readonly class SegmentEffortHistoryChart
                 'bottom' => '50px',
                 'containLabel' => true,
             ],
+            'tooltip' => [
+                'show' => true,
+                'trigger' => 'axis',
+                'valueFormatter' => 'formatSecondsTrimZero',
+            ],
             'xAxis' => [
                 [
                     'type' => 'time',
@@ -46,7 +53,7 @@ final readonly class SegmentEffortHistoryChart
                         'formatter' => [
                             'year' => '{yyyy}',
                             'month' => '{MMM}',
-                            'day'=> '{d}',
+                            'day' => '{d}',
                             'hour' => '{HH}:{mm}',
                             'minute' => '{HH}:{mm}',
                             'second' => '{HH}:{mm}:{ss}',
@@ -59,6 +66,9 @@ final readonly class SegmentEffortHistoryChart
             'yAxis' => [
                 [
                     'type' => 'value',
+                    'axisLabel' => [
+                        'formatter' => 'formatSecondsTrimZero',
+                    ],
                 ],
             ],
             'series' => [
@@ -80,14 +90,13 @@ final readonly class SegmentEffortHistoryChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
-                    'start' => 0,
+                    'type' => 'slider',
+                    'startValue' => $this->segmentEfforts->getFirst()?->getStartDateTime()->modify('-1 year')->format('Y-m-d'),
                     'end' => 100,
                     'brushSelect' => true,
                     'zoomLock' => false,
                     'zoomOnMouseWheel' => false,
-                ],
-                [
+                    'labelFormatter' => '',
                 ],
             ],
         ];

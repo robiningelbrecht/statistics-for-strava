@@ -100,13 +100,11 @@ final readonly class AthleteWeightHistoryChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'startValue' => $zoomStartValue,
                     'endValue' => $zoomEndValue,
                     'brushSelect' => false,
-                    'zoomLock' => true,
-                ],
-                [
+                    'zoomLock' => false,
                 ],
             ],
             'xAxis' => [

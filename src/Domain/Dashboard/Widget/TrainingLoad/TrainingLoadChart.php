@@ -72,15 +72,13 @@ final readonly class TrainingLoadChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'startValue' => self::NUMBER_OF_DAYS_TO_DISPLAY - self::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST,
                     'endValue' => self::NUMBER_OF_DAYS_TO_DISPLAY,
                     'minValueSpan' => self::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST,
                     'brushSelect' => false,
                     'zoomLock' => true,
                     'xAxisIndex' => 'all',
-                ],
-                [
                 ],
             ],
             'axisPointer' => [

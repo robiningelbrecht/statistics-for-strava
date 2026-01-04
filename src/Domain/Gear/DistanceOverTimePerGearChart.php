@@ -117,14 +117,13 @@ final readonly class DistanceOverTimePerGearChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'start' => 0,
                     'end' => 100,
                     'brushSelect' => true,
                     'zoomLock' => false,
                     'zoomOnMouseWheel' => false,
-                ],
-                [
+                    'labelFormatter' => '',
                 ],
             ],
             'xAxis' => [
