@@ -192,14 +192,12 @@ final readonly class YearlyStatisticsChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'start' => 0,
                     'end' => 100,
                     'brushSelect' => true,
                     'zoomLock' => false,
                     'zoomOnMouseWheel' => false,
-                ],
-                [
                 ],
             ],
             'series' => array_values($series),
