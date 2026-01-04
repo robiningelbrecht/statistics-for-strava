@@ -47,6 +47,7 @@
                 <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
+            <div class="h-64" data-echarts-options='{{ segmentEffortsHistoryChart}}'></div>
             <div class="tabs tabs--default">
                 <ul id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
                     <li role="presentation">

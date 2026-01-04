@@ -22,7 +22,8 @@ export default class ChartManager {
                 'tooltip.valueFormatter',
                 'yAxis.axisLabel.formatter',
                 'yAxis[].axisLabel.formatter',
-                'series.symbolSize'
+                'series.symbolSize',
+                'dataZoom[].labelFormatter'
             ].forEach(path => resolveEchartsCallbacks(chartOptions, path));
 
             chart.setOption(chartOptions);
