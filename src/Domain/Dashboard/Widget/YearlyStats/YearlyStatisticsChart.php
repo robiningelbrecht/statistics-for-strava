@@ -15,7 +15,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class YearlyDistanceChart
+final readonly class YearlyStatisticsChart
 {
     private function __construct(
         private FindYearlyStatsPerDayResponse $yearStats,
