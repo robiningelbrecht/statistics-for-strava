@@ -10,7 +10,7 @@ use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\StatsContext;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStats;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
-use App\Domain\Dashboard\Widget\YearlyStats\YearlyDistanceChart;
+use App\Domain\Dashboard\Widget\YearlyStats\YearlyStatisticsChart;
 use App\Domain\Dashboard\Widget\YearlyStats\YearlyStatistics;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
@@ -92,7 +92,7 @@ final readonly class YearlyStatsWidget implements Widget
                 }
 
                 $yearlyStatChartsPerContext[$yearlyStatsContext->value][$activityType->value] = Json::encode(
-                    YearlyDistanceChart::create(
+                    YearlyStatisticsChart::create(
                         yearStats: $yearlyStatsPerDay,
                         uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
                         activityType: $activityType,

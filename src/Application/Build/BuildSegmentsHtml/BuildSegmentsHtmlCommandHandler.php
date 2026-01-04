@@ -8,6 +8,7 @@ use App\Application\Countries;
 use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Segment\Segment;
+use App\Domain\Segment\SegmentEffort\SegmentEffortHistoryChart;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentRepository;
 use App\Infrastructure\CQRS\Command\Command;
@@ -71,6 +72,9 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                         'segment' => $segment,
                         'segmentEffortsTopTen' => $segmentEffortsTopTen,
                         'segmentEffortsHistory' => $segmentEffortsHistory,
+                        'segmentEffortsHistoryChart' => Json::encode(
+                            SegmentEffortHistoryChart::create($segmentEffortsHistory)->build()
+                        ),
                         'leaflet' => $leafletMap ? [
                             'routes' => [$segment->getPolyline()],
                             'map' => $leafletMap,
