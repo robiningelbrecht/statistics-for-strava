@@ -16,7 +16,6 @@ use Doctrine\DBAL\Connection;
 final readonly class FindStreaksQueryHandler implements QueryHandler
 {
     private const string FIRST_DAY_OF_THE_WEEK = 'monday this week';
-    private const string FIRST_DAY_OF_THE_MONTH = 'first day of this month';
 
     public function __construct(
         private Connection $connection,
@@ -84,7 +83,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         $longestMonthStreak = $runningMonthStreak = 1;
 
         $previousDay = array_first($days);
-       $keepTrackOfCurrentDayStreak = $today->diff($previousDay)->days < 2;
+        $keepTrackOfCurrentDayStreak = $today->diff($previousDay)->days < 2;
         $currentDayStreak = $keepTrackOfCurrentDayStreak ? 1 : 0;
 
         $keepTrackOfCurrentWeekStreak = $today->diff($previousDay)->days < 7;
@@ -93,7 +92,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         $monthDiff =
             (($today->getYear() - $previousDay->getYear()) * 12)
             + ($today->getMonthWithoutLeadingZero() - $previousDay->getMonthWithoutLeadingZero());
-       $keepTrackOfCurrentMonthStreak = $monthDiff <= 1;
+        $keepTrackOfCurrentMonthStreak = $monthDiff <= 1;
         $currentMonthStreak = $keepTrackOfCurrentMonthStreak ? 1 : 0;
 
         for ($i = 1; $i < count($days); ++$i) {

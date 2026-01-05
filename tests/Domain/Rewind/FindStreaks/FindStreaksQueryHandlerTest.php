@@ -86,7 +86,7 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
     {
         return [
             [
-                PausedClock::fromString('2025-01-10'),
+                PausedClock::fromString('2025-01-11'),
                 new FindStreaksResponse(
                     longestDayStreak: 5,
                     currentDayStreak: 4,
