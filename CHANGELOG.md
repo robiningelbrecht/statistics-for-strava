@@ -1,3 +1,12 @@
+# [v4.3.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.4) - 2026-01-05
+
+## What's Changed
+* ISSUE #1579: Add grok, huggingFace, openAILike and openAIResponses as AI providers by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1613
+* ISSUE #1617: Streaks widget not displaying streaks correctly by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1618
+* ISSUE #1608: Segment effort history chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1615
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.3...v4.3.4
+
 # [v4.3.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.3) - 2026-01-02
 
 ## What's Changed
