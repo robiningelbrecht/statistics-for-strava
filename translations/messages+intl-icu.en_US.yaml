@@ -129,6 +129,7 @@ High: High
 'High risk - reduce volume': 'High risk - reduce volume'
 Hikes: Hikes
 History: History
+'History chart': 'History chart'
 'Ice Skate': 'Ice Skate'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'

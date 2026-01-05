@@ -295,6 +295,12 @@
 
             return `${hours}:${minutes}:${seconds}`;
         },
+        formatSecondsTrimZero: (secondsToFormat) => {
+            const time = window.statisticsForStrava.callbacks.formatSeconds(secondsToFormat);
+
+            let [hours, minutes, seconds] = time.split(':');
+            return String(Number(hours)) === "0" ? `${minutes}:${seconds}` : `${hours}:${minutes}:${seconds}`;
+        },
         formatPace: (params) => {
             const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
             const secondsToFormat = params[0].value;
