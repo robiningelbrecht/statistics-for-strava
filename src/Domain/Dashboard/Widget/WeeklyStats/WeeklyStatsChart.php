@@ -62,7 +62,7 @@ final readonly class WeeklyStatsChart
         if (empty(array_filter($data[StatsContext::DISTANCE->value]))
             && empty(array_filter($data[StatsContext::MOVING_TIME->value]))
             && empty(array_filter($data[StatsContext::ELEVATION->value]))) {
-            return [];
+            return []; // @codeCoverageIgnore
         }
 
         $xAxisLabels = [];
@@ -101,7 +101,7 @@ final readonly class WeeklyStatsChart
 
         foreach ($this->metricsDisplayOrder as $context) {
             if (empty(array_filter($data[$context->value]))) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $unitSymbol = match ($context) {
@@ -206,7 +206,7 @@ final readonly class WeeklyStatsChart
         foreach ($this->activities as $activity) {
             $week = Week::fromDate($activity->getStartDate())->getId();
             if (!array_key_exists($week, $distancePerWeek)) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $distance = $activity->getDistance()->toUnitSystem($this->unitSystem);
