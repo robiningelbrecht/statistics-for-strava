@@ -84,13 +84,16 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         $longestMonthStreak = $runningMonthStreak = 1;
 
         $previousDay = array_first($days);
-        $keepTrackOfCurrentDayStreak = $previousDay->format('Ymd') === $today->format('Ymd');
+       $keepTrackOfCurrentDayStreak = $today->diff($previousDay)->days < 2;
         $currentDayStreak = $keepTrackOfCurrentDayStreak ? 1 : 0;
 
-        $keepTrackOfCurrentWeekStreak = $previousDay->modify(self::FIRST_DAY_OF_THE_WEEK)->format('Ymd') === $today->modify(self::FIRST_DAY_OF_THE_WEEK)->format('Ymd');
+        $keepTrackOfCurrentWeekStreak = $today->diff($previousDay)->days < 7;
         $currentWeekStreak = $keepTrackOfCurrentWeekStreak ? 1 : 0;
 
-        $keepTrackOfCurrentMonthStreak = $previousDay->modify(self::FIRST_DAY_OF_THE_MONTH)->format('Ymd') === $today->modify(self::FIRST_DAY_OF_THE_MONTH)->format('Ymd');
+        $monthDiff =
+            (($today->getYear() - $previousDay->getYear()) * 12)
+            + ($today->getMonthWithoutLeadingZero() - $previousDay->getMonthWithoutLeadingZero());
+       $keepTrackOfCurrentMonthStreak = $monthDiff <= 1;
         $currentMonthStreak = $keepTrackOfCurrentMonthStreak ? 1 : 0;
 
         for ($i = 1; $i < count($days); ++$i) {
