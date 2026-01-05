@@ -47,7 +47,6 @@
                 <div class="h-[350px]" style="background-color:{{ leaflet.map.getBackgroundColor() }}"
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
-            <div class="h-64" data-echarts-options='{{ segmentEffortsHistoryChart}}'></div>
             <div class="tabs tabs--default">
                 <ul id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
                     <li role="presentation">
@@ -58,6 +57,11 @@
                     <li role="presentation">
                         <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory">
                             {{ "History"|trans }}
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#segmentListsTabHistoryChart" role="tab" aria-controls="segmentListsTabHistoryChart">
+                            {{ "History chart"|trans }}
                         </a>
                     </li>
                 </ul>
@@ -269,6 +273,9 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div id="segmentListsTabHistoryChart" role="tabpanel" aria-labelledby="segmentListsTabHistoryChart-tab">
+                    <div class="h-64" data-echarts-options='{{ segmentEffortsHistoryChart}}'></div>
                 </div>
             </div>
         </div>
