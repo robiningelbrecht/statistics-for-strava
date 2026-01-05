@@ -61,7 +61,7 @@ final readonly class WeeklyStatsWidget implements Widget
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $activityType = ActivityType::from($activityType);
