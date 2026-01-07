@@ -2,20 +2,20 @@
 
 namespace App\Tests\Console;
 
-use App\Console\FixCorruptedActivitiesConsoleCommand;
+use App\Console\DetectCorruptedActivitiesConsoleCommand;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class FixCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
+class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
 
-    private FixCorruptedActivitiesConsoleCommand $fixCorruptedActivitiesConsoleCommand;
+    private DetectCorruptedActivitiesConsoleCommand $detectCorruptedActivitiesConsoleCommand;
 
     public function testExecuteWithoutCorruptedData(): void
     {
-        $command = $this->getCommandInApplication('app:data:fix-corrupted-activities');
+        $command = $this->getCommandInApplication('app:data:detect-corrupted-activities');
         $commandTester = new CommandTester($command);
         $commandTester->setInputs(['yes']);
         $commandTester->execute([
@@ -30,11 +30,11 @@ class FixCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
     {
         parent::setUp();
 
-        $this->fixCorruptedActivitiesConsoleCommand = $this->getContainer()->get(FixCorruptedActivitiesConsoleCommand::class);
+        $this->detectCorruptedActivitiesConsoleCommand = $this->getContainer()->get(DetectCorruptedActivitiesConsoleCommand::class);
     }
 
     protected function getConsoleCommand(): Command
     {
-        return $this->fixCorruptedActivitiesConsoleCommand;
+        return $this->detectCorruptedActivitiesConsoleCommand;
     }
 }
