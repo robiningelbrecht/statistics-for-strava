@@ -3,9 +3,15 @@
         <h3 class="text-lg font-semibold">
             Total hours spent per gear
         </h3>
-        <a href="#" data-router-navigate="/gear" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-            View details
-        </a>
+        <div class="flex">
+            <a href="#" data-router-navigate="/gear" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                View details
+            </a>
+            <button type="button" data-fullscreen-trigger class="-mt-0.5 cursor-pointer">
+                <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
+                <span class="sr-only">Enter fullscreen mode</span>
+            </button>
+        </div>
     </div>
             <div class="tabs tabs--default">
             <ul id="gearStatsActivityTypeTab--1" data-tabs="#gearStatsActivityTypeTabContent--1" role="tablist">

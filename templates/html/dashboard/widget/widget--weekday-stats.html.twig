@@ -1,8 +1,14 @@
 {% set uniqueId = uniqueNumberForId('weekDayStatsWidget') %}
 {% autoescape false %}
-    <h3 class="mb-4 text-lg font-semibold">
-        {{ "Stats per weekday"|trans }}
-    </h3>
+    <div class="flex items-center mb-4">
+        <h3 class="text-lg font-semibold">
+            {{ "Stats per weekday"|trans }}
+        </h3>
+        <button type="button" data-fullscreen-trigger class="[&.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+            {{ svg('expand') }}
+            <span class="sr-only">{{ "Enter fullscreen mode"|trans }}</span>
+        </button>
+    </div>
     {% if statsPerActivityType|length > 0 %}
         <div class="tabs tabs--default">
             <ul id="weekDayStatsActivityTypeTab{{ uniqueId }}" data-tabs="#weekDayStatsActivityTypeTabContent{{ uniqueId }}"
@@ -23,10 +29,9 @@
             </ul>
         </div>
     {% endif %}
-    <div id="weekDayStatsActivityTypeTabContent{{ uniqueId }}">
-        <div id="weekDayStatsAll{{ uniqueId }}" role="tabpanel"
-             aria-labelledby="weekDayStatsAll{{ uniqueId }}-tab">
-            <div class="h-80" data-echarts-options='{{ allActivities.chart }}'></div>
+    <div class="grow flex flex-col" id="weekDayStatsActivityTypeTabContent{{ uniqueId }}">
+        <div class="grow flex flex-col" id="weekDayStatsAll{{ uniqueId }}" role="tabpanel" aria-labelledby="weekDayStatsAll{{ uniqueId }}-tab">
+            <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{{ allActivities.chart }}'></div>
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-center text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -85,9 +90,8 @@
             </div>
         </div>
         {% for activityType,stats in statsPerActivityType %}
-            <div id="weekDayStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
-                 aria-labelledby="weekDayStats{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-80" data-echarts-options='{{ stats.chart }}'></div>
+            <div class="grow flex flex-col" id="weekDayStats{{ activityType }}{{ uniqueId }}" role="tabpanel" aria-labelledby="weekDayStats{{ activityType }}{{ uniqueId }}-tab">
+                <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{{ stats.chart }}'></div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
