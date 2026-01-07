@@ -41,7 +41,7 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
         $command->getOutput()->writeln('Deleting activities...');
 
         foreach ($activityIdsToDelete as $activityId) {
-            $activity = $this->activityRepository->find($activityId);
+            $activity = $this->activityRepository->findSummary($activityId);
 
             $this->activityStreamRepository->deleteForActivity($activityId);
             $this->segmentEffortRepository->deleteForActivity($activityId);

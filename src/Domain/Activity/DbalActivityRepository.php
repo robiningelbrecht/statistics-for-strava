@@ -44,6 +44,24 @@ final class DbalActivityRepository implements ActivityRepository
         return $this->hydrate($result);
     }
 
+    public function findSummary(ActivityId $activityId): ActivitySummary
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('name, startDateTime')
+            ->from('Activity')
+            ->andWhere('activityId = :activityId')
+            ->setParameter('activityId', $activityId);
+
+        if (!$result = $queryBuilder->executeQuery()->fetchAssociative()) {
+            throw new EntityNotFound(sprintf('Activity "%s" not found', $activityId));
+        }
+
+        return ActivitySummary::create(
+            name: $result['name'],
+            startDateTime: SerializableDateTime::fromString($result['startDateTime']),
+        );
+    }
+
     public function findLongestActivityFor(Years $years): Activity
     {
         if (!$result = $this->connection->executeQuery(

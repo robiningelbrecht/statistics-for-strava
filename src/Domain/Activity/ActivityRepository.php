@@ -11,6 +11,8 @@ interface ActivityRepository
 {
     public function find(ActivityId $activityId): Activity;
 
+    public function findSummary(ActivityId $activityId): ActivitySummary;
+
     public function findLongestActivityFor(Years $years): Activity;
 
     public function count(): int;

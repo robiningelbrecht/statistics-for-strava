@@ -6,6 +6,7 @@ use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivitySummary;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -40,6 +41,25 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $persisted = $this->activityRepository->find($activity->getId());
         $this->assertEquals(
             $activity,
+            $persisted,
+        );
+    }
+
+    public function testItShouldSaveAndFindSummary(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()->build();
+
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activity,
+            ['raw' => 'data']
+        ));
+
+        $persisted = $this->activityRepository->findSummary($activity->getId());
+        $this->assertEquals(
+            ActivitySummary::create(
+                name: $activity->getName(),
+                startDateTime: $activity->getStartDate(),
+            ),
             $persisted,
         );
     }
