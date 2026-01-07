@@ -2,7 +2,7 @@
 {% autoescape false %}
     <div class="flex items-center mb-4">
         <h3 class="font-semibold text-lg">{{ "Activity heatmap"|trans }}</h3>
-        <button class="hidden lg:block" data-popover-target="popover-description" data-popover-placement="right"
+        <button class="hidden lg:block" data-popover-target="popover-description-activity-grid" data-popover-placement="right"
                 type="button">
             <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
                  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -12,8 +12,8 @@
             </svg>
             <span class="sr-only">{{ "Show information"|trans }}</span>
         </button>
-        <div data-popover id="popover-description" role="tooltip"
-             class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+        <div data-popover id="popover-description-activity-grid" role="tooltip"
+             class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
             <div class="p-3 space-y-2">
                 <p>
                     {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}

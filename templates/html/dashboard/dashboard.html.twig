@@ -8,7 +8,7 @@
 {% autoescape false %}
     <div class="grid grid-cols-1 xl:grid-cols-6 gap-4 mb-4">
         {% for renderedWidget in widgets %}
-            <div class="{{ colSpanMap[renderedWidget.getWidth()] }} flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div data-fullscreen-content class="{{ colSpanMap[renderedWidget.getWidth()] }} flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 {{ renderedWidget.getRenderedHtml() }}
             </div>
         {% endfor %}
