@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -92,6 +93,17 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         }
 
         $progressIndicator->finish(sprintf('Found %d activities with corrupted data', count($activityIdsToDelete)));
+        $output->newLine();
+        $output->listing(array_map(function (ActivityId $activityId) {
+            $activity = $this->activityRepository->findSummary($activityId);
+
+            return sprintf(
+                'Activity "%s - %s"',
+                $activity->getName(),
+                $activity->getStartDate()->format('d-m-Y')
+            );
+        }, $activityIdsToDelete->toArray()));
+
         if (!$output->confirm('Do you want to delete these activities so they can be re-imported in the next run?')) {
             return Command::SUCCESS;
         }

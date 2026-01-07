@@ -14,9 +14,16 @@ gearmaintenance.yaml
 
 
 Scanningactivities...
-Found1activitieswithcorrupteddata
+Found3activitieswithcorrupteddata
+
+
+*Activity"Ride06012026"
+*Activity"Testactivity10102023"
+*Activity"Testactivity10102023"
 
 Doyouwanttodeletetheseactivitiessotheycanbereimportedinthenextrun?(yes/no)[yes]:
 >
 Deletingactivities...
 =>Activity"Ride06012026"deleted
+=>Activity"Testactivity10102023"deleted
+=>Activity"Testactivity10102023"deleted
