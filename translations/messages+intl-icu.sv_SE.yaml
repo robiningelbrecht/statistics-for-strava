@@ -31,6 +31,7 @@ All: Alla
 'Alpine Ski': Alpint
 Apr: Apr
 'Ask Mark something...': 'Fråga Mark någonting...'
+'Athlete profile': 'Athlete profile'
 Aug: Aug
 Avg: Med
 'Back Country Ski': Utförsåkning
@@ -56,6 +57,7 @@ Commutes: Pendling
 Compare: Jämför
 'Compare to': 'Jämför med'
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
+Consistency: Consistency
 Crossfit: Crossfit
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
@@ -67,6 +69,7 @@ Date: Datum
 'Days needed': 'Dagar saknade'
 'Daytime stats': 'Sammanställning starttider'
 Dec: Dec
+Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
 Device: Enhet
@@ -76,6 +79,7 @@ Distance: Distans
 'Distance over time per gear': 'Distans över tid per utrustning'
 'Distance per month per gear': 'Distans per månad per utrustning'
 Distribution: Fördelning
+Duration: Duration
 'E-Bike Rides': 'E-Cykel Turer'
 'E-Mountain Bike Rides': 'E-Mountain Bike Turer'
 Eddington: Eddington
@@ -136,6 +140,7 @@ Id: Id
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Individuella trösklar varierar beroende på hur vältränad du är.'
 'Inline Skate': Rullskridskor
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Det verkar som att ingen giltig utrustning är kopplad till någon av komponenterna. Kontrollera din konfigurationsfil.'
 Jan: Jan
 Jul: Jul
@@ -313,6 +318,7 @@ Tuesday: Tisdag
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
 'User badge': Användarmärke
+Variety: Variety
 'Velo Mobiles': Velomobil
 'Very fresh – possible detraining': 'Väldig redo – Potentiell prestationsminskning'
 'Very high': 'Väldigt hög'
@@ -322,6 +328,7 @@ Unspecified: Ospecificerad
 'Virtual Row': 'Virtuell Rodd'
 'Virtual Runs': 'Virtuell Löpning'
 'Virtual workout assistant': 'Virtuell tränings assistent'
+Volume: Volume
 Walking: Promenad
 Walks: Promenader
 'Water Sports': Vattensport

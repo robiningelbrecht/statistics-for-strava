@@ -39,7 +39,7 @@ final readonly class DayTimeStatsWidget implements Widget
                 $dayTimeStats = DaytimeStats::create($activities);
                 $statsPerActivityType[$activityType] = [
                     'chart' => Json::encode(
-                        DaytimeStatsCharts::create(
+                        DaytimeStatsChart::create(
                             daytimeStats: $dayTimeStats,
                             translator: $this->translator,
                         )->build(),
@@ -55,7 +55,7 @@ final readonly class DayTimeStatsWidget implements Widget
         return $this->twig->load('html/dashboard/widget/widget--day-time-stats.html.twig')->render([
             'allActivities' => [
                 'chart' => Json::encode(
-                    DaytimeStatsCharts::create(
+                    DaytimeStatsChart::create(
                         daytimeStats: $allDayTimeStats,
                         translator: $this->translator,
                     )->build(),

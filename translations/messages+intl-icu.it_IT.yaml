@@ -31,6 +31,7 @@ All: Tutti
 'Alpine Ski': 'Sci alpino'
 Apr: Apr
 'Ask Mark something...': 'Chiedi qualcosa a Mark...'
+'Athlete profile': 'Athlete profile'
 Aug: Ago
 Avg: Media
 'Back Country Ski': 'Sci fuoripista'
@@ -56,6 +57,7 @@ Commutes: 'Spostamenti quotidiani'
 Compare: Confronta
 'Compare to': 'Confronta con'
 'Congrats! You achieved personal bests during this activity.': 'Complimenti! Hai raggiunto record personali durante questa attività.'
+Consistency: Consistency
 Crossfit: Crossfit
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Attrezzatura personalizzata disattivata'
@@ -67,6 +69,7 @@ Date: Data
 'Days needed': 'Giorni necessari'
 'Daytime stats': 'Statistiche giornaliere'
 Dec: Dic
+Density: Density
 'Detailed instructions are available in the documentation on': 'Istruzioni dettagliate sono disponibili nella documentazione su'
 Details: Dettagli
 Device: Dispositivo
@@ -76,6 +79,7 @@ Distance: Distanza
 'Distance over time per gear': 'Distanza nel tempo per attrezzatura'
 'Distance per month per gear': 'Distanza per mese per attrezzatura'
 Distribution: Distribuzione
+Duration: Duration
 'E-Bike Rides': 'Uscite in e-bike'
 'E-Mountain Bike Rides': 'Uscite in e-mountain bike'
 Eddington: Eddington
@@ -136,6 +140,7 @@ Id: ID
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Le soglie individuali variano in base al livello di forma.'
 'Inline Skate': 'Pattinaggio in linea'
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Sembra che nessuna attrezzatura valida sia collegata a un componente. Per favore controlla il tuo file di configurazione.'
 Jan: Gen
 Jul: Lug
@@ -313,6 +318,7 @@ Tuesday: Martedì
 Unspecified: 'Non specificato'
 'Updated on': 'Aggiornato il'
 'User badge': 'Badge utente'
+Variety: Variety
 'Velo Mobiles': Velomobili
 'Very fresh – possible detraining': 'Molto fresco – possibile perdita di forma'
 'Very high': 'Molto alto'
@@ -322,6 +328,7 @@ Unspecified: 'Non specificato'
 'Virtual Row': 'Canottaggio virtuale'
 'Virtual Runs': 'Corse virtuali'
 'Virtual workout assistant': 'Assistente virtuale agli allenamenti'
+Volume: Volume
 Walking: Walking
 Walks: Passeggiate
 'Water Sports': 'Sport acquatici'

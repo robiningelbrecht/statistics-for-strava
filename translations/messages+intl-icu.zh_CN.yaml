@@ -31,6 +31,7 @@ All: All
 'Alpine Ski': 高山滑雪
 Apr: 四月
 'Ask Mark something...': 问问Mark...
+'Athlete profile': 'Athlete profile'
 Aug: 八月
 Avg: 平均
 'Back Country Ski': 越野滑雪
@@ -56,6 +57,7 @@ Commutes: 通勤
 Compare: 对比
 'Compare to': 对比
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
+Consistency: Consistency
 Crossfit: 交叉健身
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 自定义装备已禁用
@@ -67,6 +69,7 @@ Date: 日期
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
+Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 Details: 详情
 Device: 设备
@@ -76,6 +79,7 @@ Distance: 距离
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
 Distribution: 分布
+Duration: Duration
 'E-Bike Rides': 电动自行车骑行
 'E-Mountain Bike Rides': 电动山地车骑行
 Eddington: 愛丁頓數
@@ -136,6 +140,7 @@ Id: Id
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": '在那段时间里，我走了{totalDistance}，相当于环游世界{numberOfTripsAroundTheWorld}次🌍，或者说是到达月球的{numberOfTripsToTheMoonPercent}%🌕，并且攀登了{totalElevation}，相当于珠穆朗玛峰的{timesMountEverest}倍🏔。总而言之，我走了{totalTimeRecorded}的路🎉。'
 'Individual thresholds vary based on fitness level.': 个人阈值因体能水平而异。
 'Inline Skate': 直排轮滑
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 无法在任何组件上找到有效装备。请检查您的配置文件。
 Jan: 一月
 Jul: 七月
@@ -313,6 +318,7 @@ Tuesday: 星期二
 Unspecified: 未指定
 'Updated on': 更新于
 'User badge': 用户徽章
+Variety: Variety
 'Velo Mobiles': 躺车
 'Very fresh – possible detraining': '新鲜 – 可能需要停止训练。'
 'Very high': 非常高
@@ -322,6 +328,7 @@ Unspecified: 未指定
 'Virtual Row': 虚拟划船
 'Virtual Runs': 虚拟跑步
 'Virtual workout assistant': 虚拟锻炼助手
+Volume: Volume
 Walking: 健步
 Walks: 散步
 'Water Sports': 水上运动

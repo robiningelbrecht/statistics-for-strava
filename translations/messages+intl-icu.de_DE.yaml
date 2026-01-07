@@ -31,6 +31,7 @@ All: Alle
 'Alpine Ski': 'Ski Alpin'
 Apr: Apr
 'Ask Mark something...': 'Frag Mark etwas...'
+'Athlete profile': 'Athlete profile'
 Aug: Aug
 Avg: Durchschn.
 'Back Country Ski': Skitouren
@@ -56,6 +57,7 @@ Commutes: Pendeln
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
+Consistency: Consistency
 Crossfit: Crossfit
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Eigene Ausrüstung deaktiviert'
@@ -67,6 +69,7 @@ Date: Datum
 'Days needed': 'Benötigte Tage'
 'Daytime stats': Tageszeitstatistiken
 Dec: Dez
+Density: Density
 'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 Details: Details
 Device: Gerät
@@ -76,6 +79,7 @@ Distance: Distanz
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
 'Distance per month per gear': 'Distanz pro Monat pro Ausrüstung'
 Distribution: Verteilung
+Duration: Duration
 'E-Bike Rides': E-Bike-Radfahrten
 'E-Mountain Bike Rides': E-Mountainbike-Fahrten
 Eddington: Eddington
@@ -136,6 +140,7 @@ Id: Id
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": 'In dieser Zeit habe ich {totalDistance} zurückgelegt – das entspricht {numberOfTripsAroundTheWorld} Erdumrundungen 🌍 oder {numberOfTripsToTheMoonPercent}% des Weges zum Mond 🌕. Und ich habe {totalElevation} Höhenmeter überwunden, was {timesMountEverest} Mal dem Mount Everest entspricht 🏔. Insgesamt sind das {totalTimeRecorded} reine Bewegungszeit 🎉.'
 'Individual thresholds vary based on fitness level.': 'Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Inline Skate': Inlineskaten
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Es sieht so aus, als wäre keine gültige Ausrüstung an deinen Komponanten angebracht. Bitte überprüfe die config Datei.'
 Jan: Jan
 Jul: Jul
@@ -313,6 +318,7 @@ Tuesday: Dienstag
 Unspecified: 'Nicht spezifiziert'
 'Updated on': 'Aktualisiert am'
 'User badge': 'Benutzer Abzeichen'
+Variety: Variety
 'Velo Mobiles': Velomobil
 'Very fresh – possible detraining': 'Sehr erholt – möglicher Leistungsabbau'
 'Very high': 'Sehr hoch'
@@ -322,6 +328,7 @@ Unspecified: 'Nicht spezifiziert'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
 'Virtual workout assistant': 'Virtueller Workout Assistent'
+Volume: Volume
 Walking: Gehen
 Walks: Spaziergänge
 'Water Sports': Wassersport

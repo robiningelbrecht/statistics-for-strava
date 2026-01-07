@@ -4,7 +4,7 @@ namespace App\Domain\Dashboard\Widget\DaytimeStats;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-final readonly class DaytimeStatsCharts
+final readonly class DaytimeStatsChart
 {
     private function __construct(
         private DaytimeStats $daytimeStats,
@@ -23,7 +23,7 @@ final readonly class DaytimeStatsCharts
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
