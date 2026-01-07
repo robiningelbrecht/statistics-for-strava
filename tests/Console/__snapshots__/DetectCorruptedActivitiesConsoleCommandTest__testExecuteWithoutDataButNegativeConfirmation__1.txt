@@ -16,5 +16,8 @@ gearmaintenance.yaml
 Scanningactivities...
 Found1activitieswithcorrupteddata
 
+
+*Activity"Ride06012026"
+
 Doyouwanttodeletetheseactivitiessotheycanbereimportedinthenextrun?(yes/no)[yes]:
 >

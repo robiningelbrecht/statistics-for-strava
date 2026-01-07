@@ -3,8 +3,15 @@
 namespace App\Tests\Console;
 
 use App\Console\DetectCorruptedActivitiesConsoleCommand;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
+use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\WorldType;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -86,6 +93,40 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
                 'kudoCount' => 4200,
                 'totalImageCount' => 1,
                 'worldType' => WorldType::REAL_WORLD->value,
+            ]
+        );
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            activity: ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-2'))
+                ->build(),
+            rawData: []
+        ));
+        $this->getConnection()->executeStatement(
+            'INSERT INTO ActivityStream(activityId, streamType, createdOn, data) 
+                VALUES (:activityId, :streamType, :createdOn, :data)',
+            [
+                'activityId' => 'activity-test-2',
+                'streamType' => StreamType::DISTANCE->value,
+                'createdOn' => '2026-01-06',
+                'data' => '{"name": "Ride", "distance": 42,}',
+            ]
+        );
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            activity: ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('test-3'))
+                ->build(),
+            rawData: []
+        ));
+        $this->getConnection()->executeStatement(
+            'INSERT INTO CombinedActivityStream(activityId, unitSystem, streamTypes, data) 
+                VALUES (:activityId, :unitSystem, :streamTypes, :data)',
+            [
+                'activityId' => 'activity-test-3',
+                'unitSystem' => UnitSystem::METRIC->value,
+                'streamTypes' => CombinedStreamType::DISTANCE->value,
+                'data' => '{"name": "Ride", "distance": 42,}',
             ]
         );
 
