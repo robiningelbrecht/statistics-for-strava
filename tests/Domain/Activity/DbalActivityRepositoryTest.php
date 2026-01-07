@@ -45,6 +45,12 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindItShouldThrowWhenNotFound(): void
+    {
+        $this->expectException(EntityNotFound::class);
+        $this->activityRepository->find(ActivityId::fromUnprefixed(1));
+    }
+
     public function testItShouldSaveAndFindSummary(): void
     {
         $activity = ActivityBuilder::fromDefaults()->build();
@@ -64,10 +70,10 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testItShouldThrowWhenNotFound(): void
+    public function testFindSummaryItShouldThrowWhenNotFound(): void
     {
         $this->expectException(EntityNotFound::class);
-        $this->activityRepository->find(ActivityId::fromUnprefixed(1));
+        $this->activityRepository->findSummary(ActivityId::fromUnprefixed(1));
     }
 
     public function testFindAll(): void
