@@ -31,6 +31,7 @@ All: All
 'Alpine Ski': 'Alpine Ski'
 Apr: Apr
 'Ask Mark something...': 'Ask Mark something...'
+'Athlete profile': 'Athlete profile'
 Aug: Aug
 Avg: Avg
 'Back Country Ski': 'Back Country Ski'
@@ -56,6 +57,7 @@ Commutes: Commutes
 Compare: Compare
 'Compare to': 'Compare to'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
+Consistency: Consistency
 Crossfit: Crossfit
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Custom gear disabled'
@@ -67,6 +69,7 @@ Date: Date
 'Days needed': 'Days needed'
 'Daytime stats': 'Daytime stats'
 Dec: Dec
+Density: Density
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Details: Details
 Device: Device
@@ -76,6 +79,7 @@ Distance: Distance
 'Distance over time per gear': 'Distance over time per gear'
 'Distance per month per gear': 'Distance per month per gear'
 Distribution: Distribution
+Duration: Duration
 'E-Bike Rides': 'E-Bike Rides'
 'E-Mountain Bike Rides': 'E-Mountain Bike Rides'
 Eddington: Eddington
@@ -136,6 +140,7 @@ Id: Id
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Individual thresholds vary based on fitness level.'
 'Inline Skate': 'Inline Skate'
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'It looks like no valid gear is attached to any of the components. Please check your config file.'
 Jan: Jan
 Jul: Jul
@@ -313,6 +318,7 @@ Tuesday: Tuesday
 Unspecified: Unspecified
 'Updated on': 'Updated on'
 'User badge': 'User badge'
+Variety: Variety
 'Velo Mobiles': 'Velo Mobiles'
 'Very fresh – possible detraining': 'Very fresh – possible detraining'
 'Very high': 'Very high'
@@ -322,6 +328,7 @@ Unspecified: Unspecified
 'Virtual Row': 'Virtual Row'
 'Virtual Runs': 'Virtual Runs'
 'Virtual workout assistant': 'Virtual workout assistant'
+Volume: Volume
 Walking: Walking
 Walks: Walks
 'Water Sports': 'Water Sports'
