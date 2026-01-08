@@ -10,6 +10,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Minute;
+use Respect\Validation\Rules\Core\Simple;
 
 trait ProvideUnitFromScalar
 {
@@ -19,6 +20,7 @@ trait ProvideUnitFromScalar
     public const string FOOT = 'ft';
     public const string HOUR = 'hour';
     public const string MINUTE = 'minute';
+    public const string SIMPLE = 'simple'; // This is used for "SimpleUnit", units without a symbol
 
     public static function createUnitFromScalars(float $value, string $unit): Unit
     {
@@ -29,6 +31,7 @@ trait ProvideUnitFromScalar
             self::FOOT => Foot::from($value),
             self::HOUR => Hour::from($value),
             self::MINUTE => Minute::from($value),
+            self::SIMPLE => SimpleUnit::from($value),
             default => throw new \InvalidArgumentException('Invalid unit '.$unit),
         };
     }

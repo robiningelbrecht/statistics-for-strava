@@ -43,7 +43,7 @@
                             </div>
                             <div class="w-full rounded-full bg-gray-200">
                                 {% if calculatedtrainingGoal.relativeProgress > 0 %}
-                                    <div class="rounded-full bg-[#F26722] p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relativeProgress) }}%">
+                                    <div class="rounded-full bg-strava-orange p-0.5 text-center text-xs leading-none font-medium text-white" style="width: {{ max(10, calculatedtrainingGoal.relativeProgress) }}%">
                                         {{ calculatedtrainingGoal.relativeProgress }}%
                                     </div>
                                 {% else %}
