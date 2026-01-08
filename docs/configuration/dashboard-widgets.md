@@ -82,10 +82,10 @@ label: 'Cycling'
 # Alternatively, you can remove the entire entry to exclude it completely.
 enabled: true
 # The goal type.
-# Allowed values: ["distance", "elevation", "movingTime"]
+# Allowed values: ["distance", "elevation", "movingTime", "numberOfActivities", "calories"]
 type: 'distance'
 # The unit to use for measuring this goal.
-# Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]
+# Allowed values: ["km", "m", "mi", "ft", "hour", "minute"]. This setting does not apply to types "numberOfActivities" and "calories"
 unit: 'km'
 # The goal.
 goal: 200
@@ -113,7 +113,10 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
       { label: 'Cycling', enabled: true, type: 'movingTime', unit: 'hour', goal: 30,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
       { label: 'Cycling', enabled: true, type: 'elevation', unit: 'm', goal: 1500,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
     ],
-    'yearly': [],
+    'yearly': [
+      # Cycling
+      { label: 'Cycling', enabled: true, type: 'numberOfActivities', unit: 'km', goal: 365,  sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide'] },
+    ],
     'lifetime': [],
   },
 }
