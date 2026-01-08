@@ -138,6 +138,10 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
         ]);
 
         $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
+
+        $this->assertMatchesJsonSnapshot(
+            $this->getConnection()->executeQuery('SELECT * FROM WebhookEvent')->fetchAllAssociative()
+        );
     }
 
     #[\Override]
