@@ -35,8 +35,12 @@ export default class MapManager {
                     }).addTo(featureGroup);
                 };
 
-                if (data.showStartMarker) addMarker(coordinates[0], '#3ba272');
-                if (data.showEndMarker) addMarker(coordinates.at(-1), '#BD2D22');
+                if (data.showStartMarker) {
+                    addMarker(coordinates[0], '#3ba272');
+                }
+                if (data.showEndMarker) {
+                    addMarker(coordinates.at(-1), '#BD2D22');
+                }
             });
 
             if (data.imageOverlay) {
@@ -46,6 +50,11 @@ export default class MapManager {
 
             featureGroup.addTo(map);
             map.fitBounds(featureGroup.getBounds(), {maxZoom: data.maxZoom});
+
+            if (data.gpxLink) {
+                const downloadGpxControl = L.control.downloadGpx({gpxLink: data.gpxLink});
+                downloadGpxControl.addTo(map);
+            }
 
             if (!mapNode.hasAttribute('data-leaflet-echart-connect')) {
                 return;

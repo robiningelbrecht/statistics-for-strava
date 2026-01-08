@@ -4444,7 +4444,7 @@
     --tw-leading: 1 !important;
     line-height: 1 !important;
   }
-  .leaflet-control--fly-to-places {
+  .leaflet-control--custom {
     :where(& > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
       border-bottom-style: var(--tw-border-style);
