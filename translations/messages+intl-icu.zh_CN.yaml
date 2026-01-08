@@ -87,6 +87,7 @@ Elev: 海拔
 Elevation: 海拔高度
 'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
@@ -134,6 +135,12 @@ High: 高
 Hikes: 徒步
 History: 历史
 'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard do you train': 'How hard do you train'
+'How long are your sessions': 'How long are your sessions'
+'How much do you train': 'How much do you train'
+'How often do you train': 'How often do you train'
+'How packed is your training': 'How packed is your training'
 'Ice Skate': 冰刀
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
@@ -150,11 +157,10 @@ Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
 Lap: 圈
 Laps: 圈
-'Last 45 days': 最近45天
 'Last 7 days training load': 最近7天训练负荷
-'Last 90 days': 最近90天
 'Last effort': 最后努力
 'Last maintenance': 最后维护
+'Last {numberOfDays} days': 最近{numberOfDays}天
 Lifetime: Lifetime
 'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
@@ -289,6 +295,7 @@ Tennis: 网球
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': '徽章为动态生成，您可在任意 &lt;img&gt; 标签中使用'
 Thinking...: 思考中...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 功能当前被禁用
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': '这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是"高强度"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
@@ -386,6 +393,7 @@ hrs: hrs
 intensity: 强度
 intensityFactor: 强度因子
 kudos: 赞
+'last {numberOfDays} days': 最近{numberOfDays}天
 'max gradient': 最大坡度
 maxHeartRate: 最大心率
 months: 月

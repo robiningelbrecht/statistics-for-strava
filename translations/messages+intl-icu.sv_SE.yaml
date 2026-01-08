@@ -87,6 +87,7 @@ Elev: Höjd
 Elevation: Höjdmeter
 'Elevation in {unit}': 'Höjdmeter i {unit}'
 Elliptical: Elliptisk
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
@@ -134,6 +135,12 @@ High: Hög
 Hikes: Vandringar
 History: Historik
 'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard do you train': 'How hard do you train'
+'How long are your sessions': 'How long are your sessions'
+'How much do you train': 'How much do you train'
+'How often do you train': 'How often do you train'
+'How packed is your training': 'How packed is your training'
 'Ice Skate': Skridskor
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Bilden "{imgSrc}" refereras till i din underhållskonfigurationsfil, men hittades inte i "storage/gear-maintenance"'
@@ -150,11 +157,10 @@ Kayaking: Kayak
 'Kite Surf': Draksurfning
 Lap: Varv
 Laps: Varv
-'Last 45 days': 'Senaste 45 dagarna'
 'Last 7 days training load': 'Belastning de senaste 7 dagarna'
-'Last 90 days': 'Senaste 90 dagarna'
 'Last effort': 'Senaste prestation'
 'Last maintenance': 'Senast underhållet'
+'Last {numberOfDays} days': 'Senaste {numberOfDays} dagarna'
 Lifetime: Lifetime
 'Load (CTL/ATL)': 'Belastning (CTL/ATL)'
 'Loading data...': 'Laddar datan...'
@@ -289,6 +295,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Eddingtontalet i samband med cykling eller löpning definieras som det maximala antalet E så att idrottaren har tillryggalagt minst E km under minst E dagar.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
 Thinking...: Tänker...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Den här funktionen är avstängd'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Denna uträkning innebär att cykling i en timme med din maxpuls resulterar i en poäng på 100, vilket vi anser vara "högintensivt"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Den här kartan visar den dagliga träningsintensiteten för det senaste året. Träningsintensiteten för en aktivitet beräknas baserat på flera mätvärden.'
@@ -386,6 +393,7 @@ hrs: tim
 intensity: intensitet
 intensityFactor: intensitetsFaktor
 kudos: kudos
+'last {numberOfDays} days': 'senaste {numberOfDays} dagarna'
 'max gradient': 'maximal lutning'
 maxHeartRate: maxPuls
 months: månader

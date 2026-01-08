@@ -2,9 +2,15 @@
 
 namespace App\Domain\Dashboard\Widget\AthleteProfile;
 
+use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Dashboard\Widget\AthleteProfile\FindAthleteProfileMetrics\FindAthleteProfileMetrics;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
+use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -12,6 +18,9 @@ use Twig\Environment;
 final readonly class AthleteProfileWidget implements Widget
 {
     public function __construct(
+        private QueryBus $queryBus,
+        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityIntensity $activityIntensity,
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
@@ -26,40 +35,74 @@ final readonly class AthleteProfileWidget implements Widget
     {
     }
 
-    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
-        // 1. VOLUME - “How much do you train?”
-        // weekly_hours = total_training_hours_in_period / (total_days_in_period / 7)
-        // score = min(100, weekly_hours / 10 * 100)
-        // 10 h/week = very active amateur (works across sports)
+        foreach ([30, 90] as $lastXDays) {
+            $findAthleteProfileMetricsResponse = $this->queryBus->ask(new FindAthleteProfileMetrics(DateRange::lastXDays($now, $lastXDays)));
+            $numberOfActivities = $findAthleteProfileMetricsResponse->getNumberOfActivities();
+            if (0 === $numberOfActivities) {
+                return null;
+            }
 
-        // 2. CONSISTENCY - “How often do you train?”
-        // consistency = active_days_in_period / total_days_in_period
-        // score = min(100, consistency / 0.7 * 100)
-        // 5 days/week ≈ excellent consistency
+            $movingTimeInHours = $findAthleteProfileMetricsResponse->getMovingTime();
+            $numberOfActiveDays = $findAthleteProfileMetricsResponse->getNumberOfActiveDays();
 
-        // 3. INTENSITY - “How hard do you train?”
-        // intensity = activities_with_high_effort / total_activities
-        // score = min(100, intensity / 0.25 * 100)
-        // 0.25 = realistic upper bound for sustainable hard training
+            // VOLUME: 10 h/week = very active amateur (works across sports).
+            $weeklyHours = $movingTimeInHours->toFloat() / ($lastXDays / 7);
+            $volume = min(100, $weeklyHours / 10 * 100);
 
-        // 4. DURATION - “How long are your sessions?”
-        // score = min(100, median_duration_minutes / 90 * 100)
-        // Median > 90 min = endurance-leaning athlete
+            // CONSISTENCY: 5 days/week = excellent consistency.
+            $activeDaysRatio = $numberOfActiveDays / $lastXDays;
+            $consistency = min(100, $activeDaysRatio / 0.7 * 100);
 
-        // 5. DENSITY - “How packed is your training?”
-        // density = training_hours / active_days
-        // score = min(100, hours_per_active_day / 2 * 100)
-        // 2h per training day = high density
+            // INTENSITY: 25% = realistic upper bound for sustainable hard training.
+            $countActivitiesWithHighEffort = 0;
+            foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
+                $activityIntensity = $this->activityIntensity->calculateForActivity($this->activitiesEnricher->getEnrichedActivity($activityId));
+                if (ActivityIntensity::HIGH_THRESHOLD_VALUE > $activityIntensity) {
+                    continue;
+                }
+                ++$countActivitiesWithHighEffort;
+            }
+            $intensity = min(100, ($countActivitiesWithHighEffort / $numberOfActivities) / 0.25 * 100);
 
-        // 6. VARIETY - “How diverse is your training?”
-        // dominant_sport_fraction = max(activities_per_sport_type) / total_activities
-        // variety = 1 - dominant_sport_fraction
-        // score = min(100, variety / 0.5 * 100)
-        // 0.5 is the anchor that defines “max meaningful variety”
+            // DURATION: Median > 90 min = endurance-leaning athlete.
+            $activityMovingTimes = $findAthleteProfileMetricsResponse->getActivityMovingTimesInSeconds();
+            sort($activityMovingTimes);
+
+            $middleIndex = (int) floor(count($activityMovingTimes) / 2);
+            sort($activityMovingTimes, SORT_NUMERIC);
+            $medianInSeconds = $activityMovingTimes[$middleIndex];
+            // Handle the even case by averaging the middle 2 items.
+            if (0 == count($activityMovingTimes) % 2) {
+                $medianInSeconds = ($medianInSeconds + $activityMovingTimes[$middleIndex - 1]) / 2;
+            }
+            $duration = min(100, Seconds::from($medianInSeconds)->toMinute()->toFloat() / 90 * 100);
+
+            // DENSITY: 2h per training day = high density.
+            $averageTrainingDurationPerDay = $movingTimeInHours->toFloat() / $numberOfActiveDays;
+            $density = min(100, $averageTrainingDurationPerDay / 2 * 100);
+
+            // VARIETY: 0.5 is the anchor that defines "max meaningful variety"
+            $dominantSportFraction = $findAthleteProfileMetricsResponse->getNumberOfActivitiesInMostPopularActivityType() / $numberOfActivities;
+            $variety = min(100, (1 - $dominantSportFraction) / 0.5 * 100);
+
+            $chartData[$lastXDays] = [
+                round($volume),
+                round($consistency),
+                round($intensity),
+                round($duration),
+                round($density),
+                round($variety),
+            ];
+        }
+
         return $this->twig->load('html/dashboard/widget/widget--athlete-profile.html.twig')->render([
             'athleteProfileChart' => Json::encode(
-                AthleteProfileChart::create($this->translator)->build()
+                AthleteProfileChart::create(
+                    chartData: $chartData,
+                    translator: $this->translator
+                )->build()
             ),
         ]);
     }

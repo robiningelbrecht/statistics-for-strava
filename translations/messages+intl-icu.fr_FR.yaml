@@ -87,6 +87,7 @@ Elev: Dénivelé
 Elevation: Dénivelé
 'Elevation in {unit}': 'Dénivelé en {unit}'
 Elliptical: Elliptique
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: Soirée
 'Excludes commutes': 'Trajets domicile-travail exclus'
 'FTP history': 'Historique FTP'
@@ -134,6 +135,12 @@ High: Élevé
 Hikes: Randonnées
 History: Historique
 'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard do you train': 'How hard do you train'
+'How long are your sessions': 'How long are your sessions'
+'How much do you train': 'How much do you train'
+'How often do you train': 'How often do you train'
+'How packed is your training': 'How packed is your training'
 'Ice Skate': 'Patin à glace'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''image "{imgSrc}" est référencée dans votre fichier de configuration de maintenance, mais n''a pas été trouvée dans "storage/gear-maintenance"'
@@ -150,11 +157,10 @@ Kayaking: Kayak
 'Kite Surf': 'Kite Surf'
 Lap: Lap
 Laps: Laps
-'Last 45 days': 'Derniers 45 jours'
 'Last 7 days training load': "Charge d'entraînement des 7 derniers jours"
-'Last 90 days': 'Derniers 90 jours'
 'Last effort': 'Dernier effort'
 'Last maintenance': 'Dernière maintenance'
+'Last {numberOfDays} days': 'Derniers {numberOfDays} jours'
 Lifetime: Lifetime
 'Load (CTL/ATL)': 'Charge (CTL/ATL)'
 'Loading data...': 'Chargement des données...'
@@ -289,6 +295,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Le nombre d'Eddington dans le contexte du cyclisme ou de la course est défini comme le nombre maximum E tel que l'athlète ait parcouru au moins E km lors d'au moins E jours."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': "Ces badges sont créés dynamiquement. Vous pouvez les utiliser dans n'importe quelle balise &lt;img&gt;"
 Thinking...: Thinking...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Cette fonctionnalité est actuellement désactivée'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Cette formule signifie que rouler pendant une heure à votre fréquence cardiaque maximale donne un score de 100, ce que nous considérons comme une "intensité élevée".'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': "Cette carte montre l'intensité d'entraînement quotidienne de l'année dernière. L'intensité d'entraînement d'une activité est calculée sur la base de plusieurs métriques."
@@ -386,6 +393,7 @@ hrs: h
 intensity: intensité
 intensityFactor: "facteur d'intensité"
 kudos: kudos
+'last {numberOfDays} days': 'derniers {numberOfDays} jours'
 'max gradient': 'pente maximale'
 maxHeartRate: 'fréquence cardiaque max'
 months: mois

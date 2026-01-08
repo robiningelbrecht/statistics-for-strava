@@ -7,13 +7,23 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class AthleteProfileChart
 {
     private function __construct(
+        /** @var array<int, float[]> */
+        private array $chartData,
         private TranslatorInterface $translator,
     ) {
     }
 
-    public static function create(TranslatorInterface $translator): self
-    {
-        return new self($translator);
+    /**
+     * @param array<int, float[]> $chartData
+     */
+    public static function create(
+        array $chartData,
+        TranslatorInterface $translator,
+    ): self {
+        return new self(
+            chartData: $chartData,
+            translator: $translator
+        );
     }
 
     /**
@@ -21,6 +31,15 @@ final readonly class AthleteProfileChart
      */
     public function build(): array
     {
+        $chartData = [];
+
+        foreach ($this->chartData as $lastXDays => $data) {
+            $chartData[] = [
+                'value' => $data,
+                'name' => $this->translator->trans('last {numberOfDays} days', ['{numberOfDays}' => $lastXDays]),
+            ];
+        }
+
         return [
             'backgroundColor' => null,
             'animation' => true,
@@ -37,6 +56,7 @@ final readonly class AthleteProfileChart
             ],
             'tooltip' => [
                 'show' => true,
+                'valueFormatter' => 'formatPercentage',
             ],
             'radar' => [
                 'indicator' => [
@@ -51,6 +71,7 @@ final readonly class AthleteProfileChart
             'series' => [
                 [
                     'type' => 'radar',
+                    'symbolSize' => 5,
                     'lineStyle' => [
                         'width' => 1,
                         'opacity' => 1,
@@ -58,16 +79,7 @@ final readonly class AthleteProfileChart
                     'areaStyle' => [
                         'opacity' => 0.1,
                     ],
-                    'data' => [
-                        [
-                            'value' => [55, 9, 56, 46, 18, 75, 98],
-                            'name' => $this->translator->trans('last 30 days'),
-                        ],
-                        [
-                            'value' => [55, 9, 56, 46, 18, 75, 98],
-                            'name' => $this->translator->trans('last 90 days'),
-                        ],
-                    ],
+                    'data' => $chartData,
                 ],
             ],
         ];

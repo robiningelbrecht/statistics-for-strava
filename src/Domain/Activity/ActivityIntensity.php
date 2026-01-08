@@ -11,6 +11,8 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class ActivityIntensity
 {
+    public const int HIGH_THRESHOLD_VALUE = 67;
+
     /** @var array<string, int|null> */
     public static array $cachedIntensities = [];
 
@@ -46,8 +48,13 @@ final class ActivityIntensity
         return self::$cachedIntensities[$cacheKey];
     }
 
-    private function calculateForActivity(Activity $activity): ?int
+    public function calculateForActivity(Activity $activity): int
     {
+        $cacheKey = (string) $activity->getId();
+        if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
+            return self::$cachedIntensities[$cacheKey];
+        }
+
         if (ActivityType::RIDE === $activity->getSportType()->getActivityType()) {
             try {
                 // To calculate intensity, we need
@@ -59,7 +66,10 @@ final class ActivityIntensity
                     // Use more complicated and more accurate calculation.
                     // intensityFactor = averagePower / FTP
                     // (durationInSeconds * averagePower * intensityFactor) / (FTP x 3600) * 100
-                    return (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
+                    $intensity = (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
+                    self::$cachedIntensities[$cacheKey] = $intensity;
+
+                    return self::$cachedIntensities[$cacheKey];
                 }
             } catch (EntityNotFound) {
             }
@@ -74,9 +84,14 @@ final class ActivityIntensity
             // (durationInSeconds x averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
             $maxHeartRate = round($athleteMaxHeartRate * 0.92);
 
-            return (int) round(($activity->getMovingTimeInSeconds() * $averageHeartRate * ($averageHeartRate / $maxHeartRate)) / ($maxHeartRate * 3600) * 100);
+            $intensity = (int) round(($activity->getMovingTimeInSeconds() * $averageHeartRate * ($averageHeartRate / $maxHeartRate)) / ($maxHeartRate * 3600) * 100);
+            self::$cachedIntensities[$cacheKey] = $intensity;
+
+            return self::$cachedIntensities[$cacheKey];
         }
 
-        return null;
+        self::$cachedIntensities[$cacheKey] = 0;
+
+        return 0;
     }
 }
