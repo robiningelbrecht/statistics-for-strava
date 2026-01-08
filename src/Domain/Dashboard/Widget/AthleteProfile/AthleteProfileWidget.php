@@ -41,7 +41,7 @@ final readonly class AthleteProfileWidget implements Widget
             $findAthleteProfileMetricsResponse = $this->queryBus->ask(new FindAthleteProfileMetrics(DateRange::lastXDays($now, $lastXDays)));
             $numberOfActivities = $findAthleteProfileMetricsResponse->getNumberOfActivities();
             if (0 === $numberOfActivities) {
-                return null;
+                continue;
             }
 
             $movingTimeInHours = $findAthleteProfileMetricsResponse->getMovingTime();
@@ -95,6 +95,10 @@ final readonly class AthleteProfileWidget implements Widget
                 round($density),
                 round($variety),
             ];
+        }
+
+        if (empty($chartData)) {
+            return null;
         }
 
         return $this->twig->load('html/dashboard/widget/widget--athlete-profile.html.twig')->render([
