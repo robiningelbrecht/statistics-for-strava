@@ -99,6 +99,11 @@ final class TrainingGoals extends Collection
                     throw new InvalidTrainingGoalsConfiguration(sprintf('The unit "%s" is not valid for goal type "%s"', $goalConfig['unit'], $type->value));
                 }
 
+                if (in_array($type, TrainingGoalType::simpleUnitRelated())) {
+                    // Hardcode the unit.
+                    $goalConfig['unit'] = TrainingGoal::SIMPLE;
+                }
+
                 $trainingGoals[] = TrainingGoal::create(
                     label: $goalConfig['label'],
                     isEnabled: $goalConfig['enabled'],

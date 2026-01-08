@@ -96,6 +96,8 @@ final readonly class TrainingGoalsWidget implements Widget
                     TrainingGoalType::DISTANCE => $trainingGoal->convertKilometerToGoalUnit($response->getDistance()),
                     TrainingGoalType::ELEVATION => $trainingGoal->convertMeterToGoalUnit($response->getElevation()),
                     TrainingGoalType::MOVING_TIME => $trainingGoal->convertSecondsToGoalUnit($response->getMovingTime()),
+                    TrainingGoalType::NUMBER_OF_ACTIVITIES => $response->getNumberOfActivities(),
+                    TrainingGoalType::CALORIES => $response->getCalories(),
                 };
 
                 $calculatedGoalsPerPeriod[$period][] = [

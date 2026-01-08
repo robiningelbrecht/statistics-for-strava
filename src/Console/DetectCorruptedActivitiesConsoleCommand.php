@@ -9,6 +9,10 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
+use App\Domain\Strava\Webhook\WebhookAspectType;
+use App\Domain\Strava\Webhook\WebhookConfig;
+use App\Domain\Strava\Webhook\WebhookEvent;
+use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Mutex\LockName;
@@ -34,8 +38,10 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         private readonly ActivityWithRawDataRepository $activityWithRawDataRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly CombinedActivityStreamRepository $combinedActivityStreamRepository,
+        private readonly WebhookEventRepository $webhookEventRepository,
         private readonly CommandBus $commandBus,
         private readonly UnitSystem $unitSystem,
+        private readonly WebhookConfig $webhookConfig,
         private readonly Mutex $mutex,
     ) {
         parent::__construct();
@@ -59,6 +65,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         $activityIds = $this->activityRepository->findActivityIds();
         $activityIdsToDelete = ActivityIds::empty();
         foreach ($activityIds as $activityId) {
+            $progressIndicator->advance();
             try {
                 $this->activityWithRawDataRepository->find($activityId);
             } catch (\JsonException) {
@@ -83,7 +90,6 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
                 $activityIdsToDelete->add($activityId);
                 continue;
             }
-            $progressIndicator->advance();
         }
 
         if ($activityIdsToDelete->isEmpty()) {
@@ -110,6 +116,20 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
 
         $this->activityWithRawDataRepository->markActivitiesForDeletion($activityIdsToDelete);
         $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
+
+        if (!$this->webhookConfig->isEnabled()) {
+            return Command::SUCCESS;
+        }
+
+        foreach ($activityIdsToDelete as $activityId) {
+            // Add activities to the WebhookEvent table so they get imported through the webhook flow.
+            $this->webhookEventRepository->add(WebhookEvent::create(
+                objectId: $activityId->toUnprefixedString(),
+                objectType: 'activity',
+                aspectType: WebhookAspectType::CREATE,
+                payload: [],
+            ));
+        }
 
         return Command::SUCCESS;
     }
