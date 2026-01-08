@@ -78,14 +78,14 @@ final readonly class PeakPowerOutputsWidget implements Widget
             powerOutputs: $bestAllTimePowerOutputsPerActivityType[$activityType->value],
         );
         $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 45 days'),
+            description: $this->translator->trans('Last {numberOfDays} days', ['{numberOfDays}' => 45]),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
                 sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 45)
             )
         );
         $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 90 days'),
+            description: $this->translator->trans('Last {numberOfDays} days', ['{numberOfDays}' => 90]),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
                 sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 90)

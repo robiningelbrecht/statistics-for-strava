@@ -87,6 +87,7 @@ Elev: Elev
 Elevation: Elevation
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: Elliptical
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: Evening
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP history'
@@ -134,6 +135,12 @@ High: High
 Hikes: Hikes
 History: History
 'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard do you train': 'How hard do you train'
+'How long are your sessions': 'How long are your sessions'
+'How much do you train': 'How much do you train'
+'How often do you train': 'How often do you train'
+'How packed is your training': 'How packed is your training'
 'Ice Skate': 'Ice Skate'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"'
@@ -150,11 +157,10 @@ Kayaking: Kayaking
 'Kite Surf': 'Kite Surf'
 Lap: Lap
 Laps: Laps
-'Last 45 days': 'Last 45 days'
 'Last 7 days training load': 'Last 7 days training load'
-'Last 90 days': 'Last 90 days'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
+'Last {numberOfDays} days': 'Last {numberOfDays} days'
 Lifetime: Lifetime
 'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'Loading data...'
@@ -289,6 +295,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 Thinking...: Thinking...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'This feature is currently disabled'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.'
@@ -386,6 +393,7 @@ hrs: hrs
 intensity: intensity
 intensityFactor: intensityFactor
 kudos: kudos
+'last {numberOfDays} days': 'last {numberOfDays} days'
 'max gradient': 'max gradient'
 maxHeartRate: maxHeartRate
 months: months

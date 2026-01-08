@@ -331,6 +331,9 @@
         toInteger: (value) => {
             return value.toFixed(0);
         },
+        formatPercentage: (value)=> {
+            return `${value.toFixed(0)}%`;
+        },
         formatHours: (value) => {
             if (value === undefined || value === null) {
                 return '-';
