@@ -28,7 +28,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
             ['widget' => 'trainingGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
             ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
             ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
-            ['widget' => 'streaks', 'width' => 33, 'enabled' => true],
+            ['widget' => 'streaks', 'width' => 33, 'enabled' => true, 'config' => ['subtitle' => null, 'sportTypesToInclude' => []]],
             ['widget' => 'athleteProfile', 'width' => 33, 'enabled' => true],
             ['widget' => 'eddington', 'width' => 33, 'enabled' => true],
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
@@ -85,6 +85,9 @@ final readonly class DashboardLayout implements \IteratorAggregate
                     throw new InvalidDashboardLayout('"config" property must be an array');
                 }
                 foreach ($widget['config'] as $key => $value) {
+                    if (is_null($value)) {
+                        continue;
+                    }
                     if (!is_int($value) && !is_string($value) && !is_float($value) && !is_bool($value) && !is_array($value)) {
                         throw new InvalidDashboardLayout(sprintf('Invalid type for config item "%s" in widget "%s". Expected int, string, float, bool or array.', $key, $widget['widget']));
                     }

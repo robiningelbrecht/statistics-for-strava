@@ -69,10 +69,13 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
             return new FindStreaksResponse(
                 longestDayStreak: 0,
                 currentDayStreak: 0,
+                currentDayStreakStartDate: null,
                 longestWeekStreak: 0,
                 currentWeekStreak: 0,
+                currentWeekStreakStartDate: null,
                 longestMonthStreak: 0,
-                currentMonthStreak: 0
+                currentMonthStreak: 0,
+                currentMonthStreakStartDate: null,
             );
         }
 
@@ -85,15 +88,18 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         $previousDay = array_first($days);
         $keepTrackOfCurrentDayStreak = $today->diff($previousDay)->days < 2;
         $currentDayStreak = $keepTrackOfCurrentDayStreak ? 1 : 0;
+        $currentDayStreakStartDate = $keepTrackOfCurrentDayStreak ? $previousDay : null;
 
         $keepTrackOfCurrentWeekStreak = $today->diff($previousDay)->days < 7;
         $currentWeekStreak = $keepTrackOfCurrentWeekStreak ? 1 : 0;
+        $currentWeekStreakStartDate = $keepTrackOfCurrentWeekStreak ? $previousDay : null;
 
         $monthDiff =
             (($today->getYear() - $previousDay->getYear()) * 12)
             + ($today->getMonthWithoutLeadingZero() - $previousDay->getMonthWithoutLeadingZero());
         $keepTrackOfCurrentMonthStreak = $monthDiff <= 1;
         $currentMonthStreak = $keepTrackOfCurrentMonthStreak ? 1 : 0;
+        $currentMonthStreakStartDate = $keepTrackOfCurrentMonthStreak ? $previousDay : null;
 
         for ($i = 1; $i < count($days); ++$i) {
             $currentDay = $days[$i];
@@ -103,6 +109,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                 ++$runningDayStreak;
                 if ($keepTrackOfCurrentDayStreak) {
                     ++$currentDayStreak;
+                    $currentDayStreakStartDate = $currentDay;
                 }
                 $longestDayStreak = max($longestDayStreak, $runningDayStreak);
             } else {
@@ -118,6 +125,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                     ++$runningWeekStreak;
                     if ($keepTrackOfCurrentWeekStreak) {
                         ++$currentWeekStreak;
+                        $currentWeekStreakStartDate = $currentDay;
                     }
                     $longestWeekStreak = max($longestWeekStreak, $runningWeekStreak);
                 } else {
@@ -134,6 +142,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
                     ++$runningMonthStreak;
                     if ($keepTrackOfCurrentMonthStreak) {
                         ++$currentMonthStreak;
+                        $currentMonthStreakStartDate = $currentDay;
                     }
                     $longestMonthStreak = max($longestMonthStreak, $runningMonthStreak);
                 } else {
@@ -148,10 +157,13 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         return new FindStreaksResponse(
             longestDayStreak: $longestDayStreak,
             currentDayStreak: $currentDayStreak,
+            currentDayStreakStartDate: $currentDayStreakStartDate,
             longestWeekStreak: $longestWeekStreak,
             currentWeekStreak: $currentWeekStreak,
+            currentWeekStreakStartDate: $currentWeekStreakStartDate,
             longestMonthStreak: $longestMonthStreak,
             currentMonthStreak: $currentMonthStreak,
+            currentMonthStreakStartDate: $currentMonthStreakStartDate,
         );
     }
 }
