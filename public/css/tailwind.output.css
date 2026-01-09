@@ -2602,9 +2602,6 @@
   .bg-\[\#89D7D2\] {
     background-color: #89D7D2;
   }
-  .bg-\[\#F26722\] {
-    background-color: #F26722;
-  }
   .bg-black\/0 {
     background-color: color-mix(in srgb, #000000 0%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
