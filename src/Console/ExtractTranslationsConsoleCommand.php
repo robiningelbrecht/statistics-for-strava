@@ -8,7 +8,6 @@ use App\Infrastructure\Localisation\Locale;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,10 +21,11 @@ class ExtractTranslationsConsoleCommand extends Command
 {
     public function __construct(
         private readonly ExtractorInterface $extractor,
-        private readonly KernelProjectDir $kernelProjectDir
-    ){
+        private readonly KernelProjectDir $kernelProjectDir,
+    ) {
         parent::__construct();
     }
+
     protected function configure(): void
     {
         $this->addOption('removeObsoleteTranslatables', null, InputOption::VALUE_NONE);
@@ -53,18 +53,34 @@ class ExtractTranslationsConsoleCommand extends Command
             $output->writeln(sprintf('<info>Extracted translations for "%s"</info>', $locale->value));
         }
 
-        if($input->getOption('removeObsoleteTranslatables')){
-            $messages = new MessageCatalogue(Locale::en_US->value);
+        if (!$input->getOption('removeObsoleteTranslatables')) {
+            return Command::SUCCESS;
+        }
 
-            $this->extractor->extract($this->kernelProjectDir.'/templates', $messages);
-            $this->extractor->extract($this->kernelProjectDir.'/src', $messages);
-            $translatables = $messages->all()['messages'];
+        $messages = new MessageCatalogue(Locale::en_US->value);
 
-            $translatableKeys = array_keys($translatables ?? []);
+        $this->extractor->extract($this->kernelProjectDir.'/templates', $messages);
+        $this->extractor->extract($this->kernelProjectDir.'/src', $messages);
+        $translatables = $messages->all()['messages'];
 
-            $translationFilePath = sprintf('%s/translations/messages%s.%s.yaml', $this->kernelProjectDir, MessageCatalogue::INTL_DOMAIN_SUFFIX, Locale::en_US->value);
-            $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath));
-            $translationKeysToRemove = array_diff(array_keys($parsedTranslations), $translatableKeys);
+        $translatableKeys = array_keys($translatables ?? []);
+
+        $translationFilePath = sprintf('%s/translations/messages%s.%s.yaml', $this->kernelProjectDir, MessageCatalogue::INTL_DOMAIN_SUFFIX, Locale::en_US->value);
+        $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath) ?: '');
+
+        if (!$translationKeysToRemove = array_diff(array_keys($parsedTranslations), $translatableKeys)) {
+            return Command::SUCCESS;
+        }
+
+        foreach (Locale::cases() as $locale) {
+            $translationFilePath = sprintf('%s/translations/messages%s.%s.yaml', $this->kernelProjectDir, MessageCatalogue::INTL_DOMAIN_SUFFIX, $locale->value);
+            $parsedTranslations = Yaml::parse(file_get_contents($translationFilePath) ?: '');
+
+            foreach ($translationKeysToRemove as $keyToRemove) {
+                unset($parsedTranslations[$keyToRemove]);
+            }
+
+            file_put_contents($translationFilePath, Yaml::dump($parsedTranslations));
         }
 
         return Command::SUCCESS;

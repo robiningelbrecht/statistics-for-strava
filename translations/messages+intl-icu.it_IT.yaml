@@ -136,11 +136,11 @@ Hikes: Escursioni
 History: Cronologia
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
-'How hard do you train': 'How hard do you train'
-'How long are your sessions': 'How long are your sessions'
-'How much do you train': 'How much do you train'
+'How hard is your typical training session': 'How hard is your typical training session'
+'How long is your typical training session': 'How long is your typical training session'
+'How much do you train on average per week': 'How much do you train on average per week'
+'How much training you do in total on days you train.': 'How much training you do in total on days you train.'
 'How often do you train': 'How often do you train'
-'How packed is your training': 'How packed is your training'
 'Ice Skate': 'Pattinaggio su ghiaccio'
 Id: ID
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma non è stata trovata in "storage/gear-maintenance"'
@@ -273,6 +273,7 @@ Socials: Social
 Speed: Velocità
 'Speed distribution': 'Distribuzione della velocità'
 Splits: Intertempi
+'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': 'Stepper a gradini'
 'Stand Up Paddling': 'Stand up paddle'
@@ -281,6 +282,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistiche per Strava'
 Stats: Statistiche
 'Stats per weekday': 'Statistiche giornaliere'
+'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Dom
 Sunday: Domenica
@@ -325,7 +327,6 @@ Tuesday: Martedì
 Unspecified: 'Non specificato'
 'Updated on': 'Aggiornato il'
 'User badge': 'Badge utente'
-Variety: Variety
 'Velo Mobiles': Velomobili
 'Very fresh – possible detraining': 'Molto fresco – possibile perdita di forma'
 'Very high': 'Molto alto'

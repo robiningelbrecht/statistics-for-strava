@@ -136,11 +136,11 @@ Hikes: 徒步
 History: 历史
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
-'How hard do you train': 'How hard do you train'
-'How long are your sessions': 'How long are your sessions'
-'How much do you train': 'How much do you train'
+'How hard is your typical training session': 'How hard is your typical training session'
+'How long is your typical training session': 'How long is your typical training session'
+'How much do you train on average per week': 'How much do you train on average per week'
+'How much training you do in total on days you train.': 'How much training you do in total on days you train.'
 'How often do you train': 'How often do you train'
-'How packed is your training': 'How packed is your training'
 'Ice Skate': 冰刀
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
@@ -160,7 +160,7 @@ Laps: 圈
 'Last 7 days training load': 最近7天训练负荷
 'Last effort': 最后努力
 'Last maintenance': 最后维护
-'Last {numberOfDays} days': 最近{numberOfDays}天
+'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
 'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
@@ -273,6 +273,7 @@ Socials: 社交
 Speed: 速度
 'Speed distribution': 速度分布
 Splits: 分段
+'Sport variety': 'Sport variety'
 Squash: 壁球
 'Stair Stepper': 楼梯机
 'Stand Up Paddling': 站立划桨
@@ -281,6 +282,7 @@ Squash: 壁球
 'Statistics for Strava': 'Statistics for Strava'
 Stats: 统计
 'Stats per weekday': 按工作日统计
+'Streak started on {date}': 'Streak started on {date}'
 Streaks: 连续记录
 Sun: 周日
 Sunday: 星期日
@@ -325,7 +327,6 @@ Tuesday: 星期二
 Unspecified: 未指定
 'Updated on': 更新于
 'User badge': 用户徽章
-Variety: Variety
 'Velo Mobiles': 躺车
 'Very fresh – possible detraining': '新鲜 – 可能需要停止训练。'
 'Very high': 非常高
@@ -393,7 +394,7 @@ hrs: hrs
 intensity: 强度
 intensityFactor: 强度因子
 kudos: 赞
-'last {numberOfDays} days': 最近{numberOfDays}天
+'last {numberOfDays} days': '最近{numberOfDays}天'
 'max gradient': 最大坡度
 maxHeartRate: 最大心率
 months: 月
