@@ -72,7 +72,7 @@ final readonly class FindAthleteProfileMetricsQueryHandler implements QueryHandl
 
         return new FindAthleteProfileMetricsResponse(
             activityIds: ActivityIds::fromArray(array_map(
-                fn (string $activityId): ActivityId => ActivityId::fromString($activityId),
+                ActivityId::fromString(...),
                 array_keys($activityMovingTimes)
             )),
             movingTime: Seconds::from($aggregatedResult['movingTime'] ?? 0)->toHour(),
