@@ -46,6 +46,9 @@ migrate-run:
 translation-extract:
 	@make console arg="app:translations:extract"
 
+translation-extract-with-remove:
+	@make console arg="app:translations:extract --removeObsoleteTranslatables"
+
 translation-debug:
 	@make console arg="debug:translation en_US"
 
