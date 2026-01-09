@@ -1,3 +1,13 @@
+# [v4.3.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.5) - 2026-01-09
+
+## What's Changed
+* ISSUE #1625: Create tool to fix corrupted data by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1626
+* ISSUE #1627: Download GPX from activity pop-up by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1628
+* ISSUE #1624: trainingGoals widget support new types numberOfActivities and calories by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1630
+* ISSUE #1632: Weekly stats X-Axis scaling fix by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1633
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.4...v4.3.5
+
 # [v4.3.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.4) - 2026-01-05
 
 ## What's Changed

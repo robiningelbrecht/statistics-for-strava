@@ -159,7 +159,7 @@ final readonly class WeeklyStatsChart
                     'minValueSpan' => $minZoomValueSpan,
                     'maxValueSpan' => $maxZoomValueSpan,
                     'brushSelect' => false,
-                    'zoomLock' => true,
+                    'zoomLock' => false,
                 ],
             ],
             'xAxis' => [
