@@ -65,7 +65,7 @@ final readonly class AthleteProfileChart
                     ['name' => $this->translator->trans('Intensity'), 'max' => 100],
                     ['name' => $this->translator->trans('Duration'), 'max' => 100],
                     ['name' => $this->translator->trans('Density'), 'max' => 100],
-                    ['name' => $this->translator->trans('Variety'), 'max' => 100],
+                    ['name' => $this->translator->trans('Sport variety'), 'max' => 100],
                 ],
             ],
             'series' => [

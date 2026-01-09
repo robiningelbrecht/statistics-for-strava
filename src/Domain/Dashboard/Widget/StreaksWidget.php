@@ -28,7 +28,8 @@ final readonly class StreaksWidget implements Widget
     public function getDefaultConfiguration(): WidgetConfiguration
     {
         return WidgetConfiguration::empty()
-            ->add('sportTypesToInclude', []);
+            ->add('sportTypesToInclude', [])
+            ->add('subtitle', null);
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
@@ -73,10 +74,14 @@ final readonly class StreaksWidget implements Widget
         }
 
         return $this->twig->load('html/dashboard/widget/widget--streaks.html.twig')->render([
+            'subtitle' => $configuration->get('subtitle'),
             'mostRecentActivity' => $mostRecentActivity,
             'dayStreak' => $findStreaksResponse->getCurrentDayStreak(),
+            'dayStreakStartDate' => $findStreaksResponse->getCurrentDayStreakStartDate(),
             'weekStreak' => $findStreaksResponse->getCurrentWeekStreak(),
+            'weekStreakStartDate' => $findStreaksResponse->getCurrentWeekStreakStartDate(),
             'monthStreak' => $findStreaksResponse->getCurrentMonthStreak(),
+            'monthStreakStartDate' => $findStreaksResponse->getCurrentMonthStreakStartDate(),
         ]);
     }
 }

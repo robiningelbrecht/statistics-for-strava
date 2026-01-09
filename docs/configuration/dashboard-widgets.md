@@ -15,22 +15,23 @@ appearance:
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
       - { 'widget': 'trainingGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
+      - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
+      - { 'widget': 'streaks', 'width': 33, 'enabled': true, config: { 'subtitle': null, 'sportTypesToInclude': [] } }
+      - { 'widget': 'athleteProfile', 'width': 33, 'enabled': true }
+      - { 'widget': 'eddington', 'width': 33, 'enabled': true }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
-      - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
       - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'trainingLoad', 'width': 100, 'enabled': true }
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
-      - { 'widget': 'distanceBreakdown', 'width': 100, 'enabled': true }
+      - { 'widget': 'distanceBreakdown', 'width': 50, 'enabled': true }
+      - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
       - { 'widget': 'yearlyStats', 'width': 100, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
       - { 'widget': 'zwiftStats', 'width': 50, 'enabled': true }
-      - { 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
-      - { 'widget': 'streaks', 'width': 50, 'enabled': true } 
-      - { 'widget': 'eddington', 'width': 50, 'enabled': true }
+      - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
       - { 'widget': 'challengeConsistency', 'width': 50, 'enabled': true, 'config': { 'challenges': [] } }
       - { 'widget': 'mostRecentChallengesCompleted', 'width': 50, 'enabled': true, 'config': { 'numberOfChallengesToDisplay': 5 } }
-      - { 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
       - { 'widget': 'athleteWeightHistory', 'width': 50, 'enabled': true }
 ```
 
@@ -136,6 +137,51 @@ This widget provides a summary of your weekly statistics per sport type, includi
 
 ![weeklyStats widget](../assets/images/dashboard-widgets/weekly-stats.png)
 
+## activityGrid
+
+This widget provides an overview your activities in a GitHub style graph.
+
+```yml
+{ 'widget': 'activityGrid', 'width': 100, 'enabled': true }
+```
+
+![activityGrid widget](../assets/images/dashboard-widgets/activity-intensity.png)$
+
+## streaks
+
+This widget shows your current activity streaks, calculated in days, weeks, and months.
+
+* __subtitle__: optional subtitle displayed on the widget. Useful for distinguishing between multiple instances of the same widget.
+* __sportTypesToInclude__: an array of sport types to include when calculating streaks.
+  Leave this empty to include all sport types.
+
+```yml
+{ 'widget': 'streaks', 'width': 33, 'enabled': true, 'config': { 'subtitle': null, 'sportTypesToInclude': [] } }
+```
+
+![streaks widget](../assets/images/dashboard-widgets/streaks.png)
+
+## athleteProfile
+
+This widget summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.
+
+```yml
+{ 'widget': 'athleteProfile', 'width': 33, 'enabled': true }
+```
+
+![athleteProfile widget](../assets/images/dashboard-widgets/athlete-profile.jpeg)
+
+## eddington
+
+This widget displays your Eddington number(s). To determine which Eddington number(s) to display,
+you can configure this in the Eddington settings using `showInDashboardWidget: true|false`.
+
+```yml
+{ 'widget': 'eddington', 'width': 33, 'enabled': true }
+```
+
+![eddington widget](../assets/images/dashboard-widgets/eddington.png)
+
 ## peakPowerOutputs
 
 This widget displays your peak power outputs, allowing you to track your performance over time.
@@ -155,16 +201,6 @@ This widget shows your heart rate zones, helping you understand your training in
 ```
 
 ![heartRateZones widget](../assets/images/dashboard-widgets/heart-rate-zones.png)
-
-## activityGrid
-
-This widget provides an overview your activities in a GitHub style graph.
-
-```yml
-{ 'widget': 'activityGrid', 'width': 100, 'enabled': true }
-```
-
-![activityGrid widget](../assets/images/dashboard-widgets/activity-intensity.png)$
 
 ## monthlyStats
 
@@ -219,6 +255,18 @@ This widget provides a breakdown of your activities by distance and activity typ
 
 ![distanceBreakdown widget](../assets/images/dashboard-widgets/distance-breakdown.png)
 
+## gearStats
+
+This widget displays your hours spent per gear.
+
+* __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
+
+```yml
+{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+```
+
+![gearStats widget](../assets/images/dashboard-widgets/gear-stats.png)
+
 ## yearlyStats
 
 This widget shows your yearly stats per activity type, allowing you to track your long-term training progress.
@@ -242,41 +290,15 @@ This widget displays detailed stats for your Zwift activities.
 
 ![zwiftStats widget](../assets/images/dashboard-widgets/zwift-stats.png)
 
-## gearStats
+## ftpHistory
 
-This widget displays your hours spent per gear.
-
-* __includeRetiredGear__: flag indicating if the widget needs to include retired gear.
+This widget shows your Functional Threshold Power (FTP) history, allowing you to track your cycling performance over time.
 
 ```yml
-{ 'widget': 'gearStats', 'width': 50, 'enabled': true, 'config': { 'includeRetiredGear': true } }
+{ 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
 ```
 
-![gearStats widget](../assets/images/dashboard-widgets/gear-stats.png)
-
-## streaks
-
-This widget shows your current activity streaks, calculated in days, weeks, and months.
-
-* __sportTypesToInclude__: an array of sport types to include when calculating streaks.
-  Leave this empty to include all sport types.
-
-```yml
-{ 'widget': 'streaks', 'width': 50, 'enabled': true, 'config': { 'sportTypesToInclude': [] } }
-```
-
-![streaks widget](../assets/images/dashboard-widgets/streaks.png)
-
-## eddington
-
-This widget displays your Eddington number(s). To determine which Eddington number(s) to display,
-you can configure this in the Eddington settings using `showInDashboardWidget: true|false`.
-
-```yml
-{ 'widget': 'eddington', 'width': 50, 'enabled': true }
-```
-
-![eddington widget](../assets/images/dashboard-widgets/eddington.png)
+![ftpHistory widget](../assets/images/dashboard-widgets/ftp-history.png)
 
 ## challengeConsistency
 
@@ -344,16 +366,6 @@ This widget displays your most recent challenges.
 ```
 
 ![mostRecentChallengesCompleted widget](../assets/images/dashboard-widgets/most-recent-challenges.png)
-
-## ftpHistory
-
-This widget shows your Functional Threshold Power (FTP) history, allowing you to track your cycling performance over time.
-
-```yml
-{ 'widget': 'ftpHistory', 'width': 50, 'enabled': true }
-```
-
-![ftpHistory widget](../assets/images/dashboard-widgets/ftp-history.png)
 
 ## athleteWeightHistory
 

@@ -10,19 +10,18 @@ use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
 use App\Domain\Rewind\FindStreaks\FindStreaksQueryHandler;
 use App\Domain\Rewind\FindStreaks\FindStreaksResponse;
-use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
-use PHPUnit\Framework\Attributes\DataProvider;
 
 class FindStreaksQueryHandlerTest extends ContainerTestCase
 {
-    #[DataProvider(methodName: 'provideData')]
-    public function testHandle(Clock $clock, FindStreaksResponse $expected): void
+    public function testHandle(): void
     {
+        $clock = PausedClock::fromString('2025-01-11');
+
         foreach ($this->getSampleDates() as $index => $date) {
             $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
@@ -47,7 +46,17 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
         );
 
         $this->assertEquals(
-            $expected,
+            new FindStreaksResponse(
+                longestDayStreak: 5,
+                currentDayStreak: 4,
+                currentDayStreakStartDate: SerializableDateTime::fromString('2025-01-07'),
+                longestWeekStreak: 2,
+                currentWeekStreak: 2,
+                currentWeekStreakStartDate: SerializableDateTime::fromString('2025-01-05'),
+                longestMonthStreak: 9,
+                currentMonthStreak: 9,
+                currentMonthStreakStartDate: SerializableDateTime::fromString('2024-05-10'),
+            ),
             $findStreaksQueryHandler->handle(
                 new FindStreaks(
                     years: Years::all($clock->getCurrentDateTimeImmutable()),
@@ -68,10 +77,13 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
             new FindStreaksResponse(
                 longestDayStreak: 0,
                 currentDayStreak: 0,
+                currentDayStreakStartDate: null,
                 longestWeekStreak: 0,
                 currentWeekStreak: 0,
+                currentWeekStreakStartDate: null,
                 longestMonthStreak: 0,
                 currentMonthStreak: 0,
+                currentMonthStreakStartDate: null,
             ),
             $findStreaksQueryHandler->handle(
                 new FindStreaks(
@@ -80,23 +92,6 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
                 )
             )
         );
-    }
-
-    public static function provideData(): iterable
-    {
-        return [
-            [
-                PausedClock::fromString('2025-01-11'),
-                new FindStreaksResponse(
-                    longestDayStreak: 5,
-                    currentDayStreak: 4,
-                    longestWeekStreak: 2,
-                    currentWeekStreak: 2,
-                    longestMonthStreak: 9,
-                    currentMonthStreak: 9,
-                ),
-            ],
-        ];
     }
 
     private function getSampleDates(): array
