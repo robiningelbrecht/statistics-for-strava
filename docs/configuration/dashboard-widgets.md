@@ -169,7 +169,7 @@ This widget summarizes how you train. Each axis reflects a different normalized 
 { 'widget': 'athleteProfile', 'width': 33, 'enabled': true }
 ```
 
-![athleteProfile widget](../assets/images/dashboard-widgets/athlete-profile.jpeg)
+![athleteProfile widget](../assets/images/dashboard-widgets/athlete-profile.png)
 
 ## eddington
 

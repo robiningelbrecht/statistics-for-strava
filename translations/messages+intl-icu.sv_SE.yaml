@@ -136,11 +136,11 @@ Hikes: Vandringar
 History: Historik
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
-'How hard do you train': 'How hard do you train'
-'How long are your sessions': 'How long are your sessions'
-'How much do you train': 'How much do you train'
+'How hard is your typical training session': 'How hard is your typical training session'
+'How long is your typical training session': 'How long is your typical training session'
+'How much do you train on average per week': 'How much do you train on average per week'
+'How much training you do in total on days you train.': 'How much training you do in total on days you train.'
 'How often do you train': 'How often do you train'
-'How packed is your training': 'How packed is your training'
 'Ice Skate': Skridskor
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Bilden "{imgSrc}" refereras till i din underhållskonfigurationsfil, men hittades inte i "storage/gear-maintenance"'
@@ -273,6 +273,7 @@ Socials: 'Sociala medier'
 Speed: Fart
 'Speed distribution': 'Speed distribution'
 Splits: Delar
+'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': Trappmaskin
 'Stand Up Paddling': 'Stand Up Paddling'
@@ -281,6 +282,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Sammanställning
 'Stats per weekday': 'Sammanställning veckodagar'
+'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Sön
 Sunday: Söndag
@@ -325,7 +327,6 @@ Tuesday: Tisdag
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
 'User badge': Användarmärke
-Variety: Variety
 'Velo Mobiles': Velomobil
 'Very fresh – possible detraining': 'Väldig redo – Potentiell prestationsminskning'
 'Very high': 'Väldigt hög'
