@@ -8,9 +8,9 @@ Several users have reported unexpected "JSON Syntax" errors when importing or bu
 * https://github.com/robiningelbrecht/statistics-for-strava/issues/1288
 * https://github.com/robiningelbrecht/statistics-for-strava/issues/1180
 
-![Import error](../assets/images/troubleshoot-import-error.png)
+![Import error](../assets/images/troubleshoot-import-error.png ':size=700')
 
-![Build error](../assets/images/troubleshoot-build-error.png)
+![Build error](../assets/images/troubleshoot-build-error.png ':size=700')
 
 All of these issues share the same root cause: at some point, data became corrupted. 
 Unfortunately, we still don’t know exactly how or why this corruption occurs.
