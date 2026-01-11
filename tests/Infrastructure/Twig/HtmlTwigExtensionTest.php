@@ -10,6 +10,7 @@ class HtmlTwigExtensionTest extends TestCase
     public function testCleanUniqueId(): void
     {
         $twigExtension = new HtmlTwigExtension();
+        $twigExtension::$seenIds = [];
         $id = 'test';
 
         $this->assertEquals(
