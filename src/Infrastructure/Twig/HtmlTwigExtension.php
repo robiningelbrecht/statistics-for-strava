@@ -9,15 +9,11 @@ use Twig\Attribute\AsTwigFunction;
 final class HtmlTwigExtension
 {
     /** @var array<string, int> */
-    public static array $seenIds;
+    public static array $seenIds = [];
 
     #[AsTwigFunction('uniqueNumberForId')]
     public function uniqueNumberForId(string $id): string
     {
-        if (!isset(HtmlTwigExtension::$seenIds)) {
-            HtmlTwigExtension::$seenIds = [];
-        }
-
         if (isset(HtmlTwigExtension::$seenIds[$id])) {
             ++HtmlTwigExtension::$seenIds[$id];
         } else {
