@@ -3670,16 +3670,16 @@
         },
         {
             "name": "respect/validation",
-            "version": "2.4.8",
+            "version": "2.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Respect/Validation.git",
-                "reference": "79f214c3bc3be17c0f08741516927c4141e79ec2"
+                "reference": "e5542180cf92b45f4c10f3ba3b5fd2cef7d8e17c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/79f214c3bc3be17c0f08741516927c4141e79ec2",
-                "reference": "79f214c3bc3be17c0f08741516927c4141e79ec2",
+                "url": "https://api.github.com/repos/Respect/Validation/zipball/e5542180cf92b45f4c10f3ba3b5fd2cef7d8e17c",
+                "reference": "e5542180cf92b45f4c10f3ba3b5fd2cef7d8e17c",
                 "shasum": ""
             },
             "require": {
@@ -3732,9 +3732,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Respect/Validation/issues",
-                "source": "https://github.com/Respect/Validation/tree/2.4.8"
+                "source": "https://github.com/Respect/Validation/tree/2.4.9"
             },
-            "time": "2026-01-06T06:18:25+00:00"
+            "time": "2026-01-09T08:43:58+00:00"
         },
         {
             "name": "symfony/asset",
