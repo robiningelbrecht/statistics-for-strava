@@ -14,11 +14,7 @@ final class HtmlTwigExtension
     #[AsTwigFunction('uniqueNumberForId')]
     public function uniqueNumberForId(string $id): string
     {
-        if (isset(HtmlTwigExtension::$seenIds[$id])) {
-            ++HtmlTwigExtension::$seenIds[$id];
-        } else {
-            HtmlTwigExtension::$seenIds[$id] = 1;
-        }
+        HtmlTwigExtension::$seenIds[$id] = (HtmlTwigExtension::$seenIds[$id] ?? 0) + 1;
 
         return '--'.HtmlTwigExtension::$seenIds[$id];
     }
