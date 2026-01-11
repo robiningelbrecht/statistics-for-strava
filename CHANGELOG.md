@@ -1,3 +1,12 @@
+# [v4.3.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.6) - 2026-01-11
+
+## What's Changed
+* ISSUE #1610: Radar chart indicating athlete profile by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1622
+* ISSUE #1631: Streaks add start dates and optional subtitle by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1636
+* ISSUE #1638: Adjustable Limit / Width of Eddington Chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1639
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.3.5...v4.3.7
+
 # [v4.3.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.3.5) - 2026-01-09
 
 ## What's Changed
