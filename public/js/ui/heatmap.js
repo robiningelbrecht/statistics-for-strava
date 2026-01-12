@@ -81,13 +81,13 @@ class HeatmapDrawer {
         });
 
         const html = `
-            <div class="m-4 text-sm max-h-[200px] overflow-y-auto">
+            <div class="m-4 text-sm max-h-50 overflow-y-auto">
                 <div class="font-medium">${nearby.length} nearby route(s):</div>
                  <ul class="divide-default divide-y divide-gray-200">
                     ${nearby.map(entry => `
                      <li class="py-2">
                       <a href="#" title="${entry.route.name}" class="block truncate font-medium text-blue-600 hover:underline" 
-                        data-model-content-url="/activity/${entry.route.id}.html">
+                        data-model-content-url="${entry.route.activityUrl}">
                         ${entry.route.name}
                       </a>
                       <div class="flex items-center justify-between text-xs text-gray-500">

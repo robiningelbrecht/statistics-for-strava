@@ -12,6 +12,7 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
+use App\Infrastructure\Twig\UrlTwigExtension;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
@@ -23,6 +24,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private HeatmapConfig $heatmapConfig,
         private Environment $twig,
+        private UrlTwigExtension $urlTwigExtension,
         private UnitSystem $unitSystem,
         private DateAndTimeFormat $dateAndTimeFormat,
         private FilesystemOperator $buildStorage,
@@ -41,6 +43,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                 unitSystem: $this->unitSystem,
                 dateAndTimeFormat: $this->dateAndTimeFormat,
             );
+            $route->enrichWithRelativeActivityUri($this->urlTwigExtension->toRelativeUrl('activity/'.$route->getActivityId().'.html'));
         }
 
         $this->buildStorage->write(
