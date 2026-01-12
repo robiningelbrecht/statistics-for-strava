@@ -1582,6 +1582,10 @@
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
   }
+  .size-7 {
+    width: calc(var(--spacing) * 7);
+    height: calc(var(--spacing) * 7);
+  }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
@@ -1678,14 +1682,14 @@
   .max-h-48 {
     max-height: calc(var(--spacing) * 48);
   }
+  .max-h-50 {
+    max-height: calc(var(--spacing) * 50);
+  }
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
   }
   .max-h-\[35px\] {
     max-height: 35px;
-  }
-  .max-h-\[200px\] {
-    max-height: 200px;
   }
   .max-h-\[320px\] {
     max-height: 320px;
@@ -3127,6 +3131,9 @@
       color: white;
     }
   }
+  .text-\[\#faba00\] {
+    color: #faba00;
+  }
   .text-blue-600 {
     color: var(--color-blue-600);
   }
@@ -3396,12 +3403,12 @@
       opacity: 100%;
     }
   }
-  .group-aria-\[sort\=ascending\]\:text-strava-orange {
+  .group-aria-asc\:text-strava-orange {
     &:is(:where(.group)[aria-sort="ascending"] *) {
       color: var(--color-strava-orange);
     }
   }
-  .group-aria-\[sort\=descending\]\:text-strava-orange {
+  .group-aria-desc\:text-strava-orange {
     &:is(:where(.group)[aria-sort="descending"] *) {
       color: var(--color-strava-orange);
     }

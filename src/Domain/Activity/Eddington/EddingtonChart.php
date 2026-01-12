@@ -2,7 +2,6 @@
 
 namespace App\Domain\Activity\Eddington;
 
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -48,7 +47,7 @@ final readonly class EddingtonChart
             ],
         ];
 
-        $unitDistance = Kilometer::from(1)->toUnitSystem($this->unitSystem)->getSymbol();
+        $unitDistance = $this->unitSystem->distanceSymbol();
 
         return [
             'backgroundColor' => null,

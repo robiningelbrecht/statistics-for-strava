@@ -22,9 +22,12 @@ final readonly class SegmentEffortHistoryChart
     {
         $data = [];
 
+        $minYAxisValue = 100000;
         foreach ($this->segmentEfforts as $segmentEffort) {
+            $segmentEffortElapsedTimeInSeconds = $segmentEffort->getElapsedTimeInSeconds();
             $segmentEffortStartDate = $segmentEffort->getStartDateTime();
-            $data[] = [$segmentEffortStartDate->format('Y-m-d'), $segmentEffort->getElapsedTimeInSeconds()];
+            $data[] = [$segmentEffortStartDate->format('Y-m-d'), $segmentEffortElapsedTimeInSeconds];
+            $minYAxisValue = min($minYAxisValue, $segmentEffortElapsedTimeInSeconds);
         }
 
         return [
@@ -66,6 +69,7 @@ final readonly class SegmentEffortHistoryChart
             'yAxis' => [
                 [
                     'type' => 'value',
+                    'min' => max(0, floor($minYAxisValue / 5) * 5),
                     'axisLabel' => [
                         'formatter' => 'formatSecondsTrimZero',
                     ],

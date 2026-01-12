@@ -17,6 +17,7 @@ final class Route implements \JsonSerializable
 {
     private UnitSystem $unitSystem;
     private DateAndTimeFormat $dateAndTimeFormat;
+    private string $relativeActivityUri;
 
     private function __construct(
         private readonly ActivityId $activityId,
@@ -51,7 +52,7 @@ final class Route implements \JsonSerializable
             sportType: $sportType,
             isCommute: $isCommute,
             workoutType: $workoutType,
-            on: $on
+            on: $on,
         );
     }
 
@@ -108,6 +109,11 @@ final class Route implements \JsonSerializable
         $this->dateAndTimeFormat = $dateAndTimeFormat;
     }
 
+    public function enrichWithRelativeActivityUri(string $uri): void
+    {
+        $this->relativeActivityUri = $uri;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -130,6 +136,7 @@ final class Route implements \JsonSerializable
         return [
             'active' => true,
             'id' => $this->getActivityId(),
+            'activityUrl' => $this->relativeActivityUri ?? null,
             'startDate' => $startDate,
             'distance' => $distance,
             'name' => Escape::forJsonEncode($this->getName()),
