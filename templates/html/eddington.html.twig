@@ -10,9 +10,9 @@
                  <p class="italic leading-relaxed text-gray-600">{{ "For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning."|trans }}</p>
              </blockquote>
          </div>
-         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+         <div>
              {% if eddingtons|length > 1 %}
-                 <div class="tabs tabs--default">
+                 <div class="tabs tabs--default mb-2">
                      <ul id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
                          {% for eddingtonId,eddington in eddingtons %}
                              <li role="presentation">
@@ -26,36 +26,21 @@
              {% endif %}
              <div id="eddingtonTabContent">
                  {% for eddingtonId,eddington in eddingtons %}
-                     <div id="{{ eddingtonId }}" role="tabpanel" aria-labelledby="{{ eddingtonId }}-tab">
-                         <!-- EDDINGTON CHART -->
-                         <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddingtonId] }}'></div>
-                         <!-- HISTORY -->
-                         <h3 class="font-bold mt-6 mb-2">{{ "History"|trans }}</h3>
-                         <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddingtonId] }}'></div>
-                         <!-- DAYS NEEDED -->
-                         <h3 class="font-bold mt-6 mb-2">{{ "Days needed"|trans }}</h3>
-                         <div class="relative overflow-x-auto">
-                             <table class="w-full text-sm text-center text-gray-500">
-                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                 <tr>
-                                     {% for eddingtonNumber,daysNeeded in eddington.getDaysToCompleteForFutureNumbers() %}
-                                         <th scope="col" class="px-6 py-3">
-                                             {{ eddingtonNumber }}<span class="text-xs">{{ distanceUnit }}</span>
-                                         </th>
-                                     {% endfor %}
-                                 </tr>
-                                 </thead>
-                                 <tbody>
-                                 <tr class="bg-white border-b">
-                                     {% for eddingtonNumber,daysNeeded in eddington.getDaysToCompleteForFutureNumbers() %}
-                                         <td class="px-6 py-2">
-                                             {{ daysNeeded }}
-                                         </td>
-                                     {% endfor %}
-                                 </tr>
-                                 </tbody>
-                             </table>
-                         </div>
+                    <div class="grid grid-cols-1 gap-4" id="{{ eddingtonId }}" role="tabpanel" aria-labelledby="{{ eddingtonId }}-tab">
+                        <!-- EDDINGTON CHART -->
+                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddingtonId] }}'></div>
+                        </div>
+                        <!-- HISTORY -->
+                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                            <h3 class="font-bold mb-4">{{ "History"|trans }}</h3>
+                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddingtonId] }}'></div>
+                        </div>
+                        <!-- DAYS NEEDED -->
+                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                            <h3 class="font-bold mb-4">{{ "Days needed"|trans }}</h3>
+                            <div class="h-64" data-echarts-options='{{ eddingtonDaysNeededCharts[eddingtonId] }}'></div>
+                        </div>
                      </div>
                  {% endfor %}
              </div>

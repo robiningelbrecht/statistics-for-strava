@@ -6,11 +6,11 @@ namespace App\Application\Build\BuildEddingtonHtml;
 
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\Eddington\EddingtonChart;
+use App\Domain\Activity\Eddington\EddingtonDaysNeededChart;
 use App\Domain\Activity\Eddington\EddingtonHistoryChart;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -35,6 +35,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
 
         $eddingtonCharts = [];
         $eddingtonHistoryCharts = [];
+        $eddingtonDaysNeededCharts = [];
         foreach ($eddingtons as $id => $eddington) {
             $eddingtonCharts[$id] = Json::encode(
                 EddingtonChart::create(
@@ -48,6 +49,12 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
                     eddington: $eddington,
                 )->build()
             );
+            $eddingtonDaysNeededCharts[$id] = Json::encode(
+                EddingtonDaysNeededChart::create(
+                    eddington: $eddington,
+                    unitSystem: $this->unitSystem,
+                )->build()
+            );
         }
 
         $this->buildStorage->write(
@@ -56,7 +63,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
                 'eddingtons' => $eddingtons,
                 'eddingtonCharts' => $eddingtonCharts,
                 'eddingtonHistoryCharts' => $eddingtonHistoryCharts,
-                'distanceUnit' => Kilometer::from(1)->toUnitSystem($this->unitSystem)->getSymbol(),
+                'eddingtonDaysNeededCharts' => $eddingtonDaysNeededCharts,
             ]),
         );
     }
