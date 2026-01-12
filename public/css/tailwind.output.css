@@ -1582,6 +1582,10 @@
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
   }
+  .size-7 {
+    width: calc(var(--spacing) * 7);
+    height: calc(var(--spacing) * 7);
+  }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
@@ -1686,9 +1690,6 @@
   }
   .max-h-\[35px\] {
     max-height: 35px;
-  }
-  .max-h-\[200px\] {
-    max-height: 200px;
   }
   .max-h-\[320px\] {
     max-height: 320px;
@@ -2771,11 +2772,17 @@
   .fill-orange-500 {
     fill: var(--color-orange-500);
   }
+  .fill-strava-orange {
+    fill: var(--color-strava-orange);
+  }
   .apexcharts-ycrosshairs {
     stroke: var(--color-gray-200) !important;
     .dark & {
       stroke: var(--color-gray-700) !important;
     }
+  }
+  .stroke-strava-orange {
+    stroke: var(--color-strava-orange);
   }
   .object-cover {
     object-fit: cover;
@@ -3399,12 +3406,12 @@
       opacity: 100%;
     }
   }
-  .group-aria-\[sort\=ascending\]\:text-strava-orange {
+  .group-aria-asc\:text-strava-orange {
     &:is(:where(.group)[aria-sort="ascending"] *) {
       color: var(--color-strava-orange);
     }
   }
-  .group-aria-\[sort\=descending\]\:text-strava-orange {
+  .group-aria-desc\:text-strava-orange {
     &:is(:where(.group)[aria-sort="descending"] *) {
       color: var(--color-strava-orange);
     }

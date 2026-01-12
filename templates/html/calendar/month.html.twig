@@ -51,7 +51,7 @@
                     <div>{{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == calendar.getMonth().getId())|length }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('calories', 'w-5 h-5') }}
+                    {{ svg('calories', 'size-5') }}
                     <div>{{ statistics.calories|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">kcal</div>
                 </li>
