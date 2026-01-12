@@ -20,7 +20,7 @@ final readonly class EddingtonHistoryChart
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function build(): array
     {
@@ -72,9 +72,9 @@ final readonly class EddingtonHistoryChart
                 'trigger' => 'axis',
             ],
             'grid' => [
-                'left' => '3%',
-                'right' => '4%',
-                'bottom' => '3%',
+                'left' => '0',
+                'right' => '25px',
+                'bottom' => '10px',
                 'containLabel' => true,
             ],
             'xAxis' => [
