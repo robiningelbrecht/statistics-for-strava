@@ -2772,17 +2772,11 @@
   .fill-orange-500 {
     fill: var(--color-orange-500);
   }
-  .fill-strava-orange {
-    fill: var(--color-strava-orange);
-  }
   .apexcharts-ycrosshairs {
     stroke: var(--color-gray-200) !important;
     .dark & {
       stroke: var(--color-gray-700) !important;
     }
-  }
-  .stroke-strava-orange {
-    stroke: var(--color-strava-orange);
   }
   .object-cover {
     object-fit: cover;
@@ -3136,6 +3130,9 @@
     .dark .datatable-wrapper .datatable-table thead th& .datatable-sorter {
       color: white;
     }
+  }
+  .text-\[\#faba00\] {
+    color: #faba00;
   }
   .text-blue-600 {
     color: var(--color-blue-600);

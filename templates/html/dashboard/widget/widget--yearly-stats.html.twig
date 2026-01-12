@@ -13,7 +13,7 @@
                 <a href="#" data-tabs-target="#yearlyStats{{ context.value }}{{ uniqueId }}" role="tab"
                    aria-controls="yearlyStats{{ context.value }}{{ uniqueId }}"
                    class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
-                    {{ svg(context.getSvgIcon(), 'w-5 h-5') }}
+                    {{ svg(context.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
                     <span class="hidden md:block">{{ context|trans }}</span>
                 </a>
             </li>
