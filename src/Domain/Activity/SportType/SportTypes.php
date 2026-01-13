@@ -39,4 +39,9 @@ final class SportTypes extends Collection
             fn (SportType $sportType): bool => !in_array($sportType, [SportType::VIRTUAL_RIDE, SportType::VIRTUAL_RUN, SportType::VIRTUAL_ROW])
         ));
     }
+
+    public static function all(): SportTypes
+    {
+        return self::fromArray(SportType::cases());
+    }
 }
