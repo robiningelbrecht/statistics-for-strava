@@ -13,7 +13,7 @@
     <td class="px-2 py-2">
         <div class="flex justify-center">
             {% set bestEffort = segment.getBestEffort() %}
-            <div class="w-[13rem]">
+            <div class="w-52">
                 {{ bestEffort.getElapsedTimeFormatted() }}
                 <span class="font-medium">-</span>
                 {{ segment.getBestEffort().getAverageSpeed()|renderMeasurement(1) }}

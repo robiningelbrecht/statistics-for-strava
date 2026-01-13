@@ -20,7 +20,7 @@
     <div class="grow flex flex-col" id="ftpHistoryActivityTypeTabContent{{ uniqueId }}">
         {% for activityType,ftpHistoryChart in ftpHistoryCharts %}
             <div class="grow flex flex-col" id="ftpHistory{{ activityType }}{{ uniqueId }}" role="tabpanel" aria-labelledby="ftpHistory{{ activityType }}{{ uniqueId }}-tab">
-                <div class="grow h-full min-h-[16rem]" data-echarts-options='{{ ftpHistoryChart }}'></div>
+                <div class="grow h-full min-h-64" data-echarts-options='{{ ftpHistoryChart }}'></div>
             </div>
         {% endfor %}
     </div>

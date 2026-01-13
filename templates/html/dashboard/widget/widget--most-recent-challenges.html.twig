@@ -11,7 +11,7 @@
     <div class="flex gap-2 grow items-center overflow-x-auto">
         {% for challenge in challenges %}
             {% set tooltipContent = challenge.getName()|replace({'"':'\''}) %}
-            <a class="h-[130px] shrink-0" href="{{ challenge.getUrl() }}" title="{{ tooltipContent }}">
+            <a class="h-32 shrink-0" href="{{ challenge.getUrl() }}" title="{{ tooltipContent }}">
                 <img src="{{ placeholderImage() }}" data-src="{{ relativeUrl(challenge.getLocalLogoUrl()) }}" alt="{{ tooltipContent }}" class="h-full object-cover object-top lazy rounded-lg" />
             </a>
         {% endfor %}

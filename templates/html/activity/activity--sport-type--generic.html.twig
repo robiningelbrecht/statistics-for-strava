@@ -2,7 +2,7 @@
     <!-- Modal header -->
     <div class="z-10000 sticky top-0 bg-white p-4 md:p-5 border-b rounded-t">
         <div class="flex items-center justify-between">
-            <h3 class="max-w-[30%] sm:max-w-[50%] md:max-w-[100%] truncate text-lg font-semibold text-gray-900">
+            <h3 class="max-w-[30%] sm:max-w-[50%] md:max-w-full truncate text-lg font-semibold text-gray-900">
                 <a class="flex items-center gap-x-1 hover:underline" href="{{ activity.getUrl() }}" target="_blank"
                    rel="nofollow">
                     {{ activity.getName() }}
@@ -30,7 +30,7 @@
             </button>
         </div>
         {% if activity.getDescription() %}
-            <div class="text-xs font-normal text-gray-500 max-h-[35px] overflow-y-auto">{{ activity.getDescription()|nl2br }}</div>
+            <div class="text-xs font-normal text-gray-500 max-h-9 overflow-y-auto">{{ activity.getDescription()|nl2br }}</div>
         {% endif %}
     </div>
     <!-- Modal body -->
@@ -39,31 +39,31 @@
             <div class="grid grid-cols-1 gap-4">
                 {% block mainStatsOnTop %}
                     <div class="flex gap-x-2 overflow-x-auto">
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Distance"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getDistance()|renderMeasurement(activity.getSportType().getActivityType().getDistancePrecision()) }}</dt>
                             </div>
                         </div>
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Moving time"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getMovingTimeFormatted() }}</dt>
                             </div>
                         </div>
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getElevation()|renderMeasurement(0) }}</dt>
                             </div>
                         </div>
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Calories"|trans }}</dd>
                                 <dt class="font-extrabold">{{ activity.getCalories() }}</dt>
                             </div>
                         </div>
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Gear"|trans }}</dd>
                                 <dt class="text-xs font-extrabold">
@@ -73,7 +73,7 @@
                                 </dt>
                             </div>
                         </div>
-                        <div class="w-1/6 min-w-[100px] flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
+                        <div class="w-1/6 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-4 border border-gray-200 rounded-lg shadow-sm">
                             <div class="text-center">
                                 <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
                                 <dt class="text-xs font-extrabold">
@@ -96,7 +96,7 @@
                 {% if activity.getLocalImagePaths() %}
                     <div class="flex gap-2 relative overflow-x-auto">
                         {% for imagePath in activity.getLocalImagePaths() %}
-                            <div class="h-[130px] shrink-0">
+                            <div class="h-32 shrink-0">
                                 <img class="h-full object-cover object-top rounded-lg lazy"
                                      src="{{ placeholderImage() }}" data-src="{{ relativeUrl(imagePath) }}"
                                      alt="Activity image"/>
@@ -414,9 +414,9 @@
                         <div class="flex flex-col gap-y-1">
                             {% for chart in profileCharts %}
                                 {% if loop.last %}
-                                    <div class="h-[145px]" data-echarts-options='{{ chart }}' data-echarts-connect data-leaflet-echart-connect='{{ coordinateMap }}'></div>
+                                    <div class="h-36" data-echarts-options='{{ chart }}' data-echarts-connect data-leaflet-echart-connect='{{ coordinateMap }}'></div>
                                 {% else %}
-                                    <div class="h-[120px]" data-echarts-options='{{ chart }}' data-echarts-connect></div>
+                                    <div class="h-30" data-echarts-options='{{ chart }}' data-echarts-connect></div>
                                 {% endif %}
                             {% endfor %}
                         </div>

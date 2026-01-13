@@ -22,6 +22,15 @@ enum ActivityGridType: string implements TranslatableInterface
         };
     }
 
+    public function getSvgIcon(): string
+    {
+        return match ($this) {
+            self::MOVING_TIME => 'time',
+            self::INTENSITY => 'power',
+            self::CALORIES_BURNED => 'calories',
+        };
+    }
+
     /**
      * @return array<int, array{min: int|float, max?: int|float, color: string, label: string}>
      */
