@@ -13,7 +13,7 @@
             <span class="sr-only">{{ "Show information"|trans }}</span>
         </button>
         <div data-popover id="popover-description-activity-grid" role="tooltip"
-             class="hidden lg:block lg:w-[450px] xl:w-[650px] absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
+             class="hidden lg:block lg:w-md xl:w-162 absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
             <div class="p-3 space-y-2">
                 <p>
                     {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
@@ -44,15 +44,14 @@
                 </blockquote>
             </div>
         </div>
-    </div>
-    <div class="tabs tabs--default">
-        <ul id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
-            role="tablist">
+        <ul class="tabs tabs--pills ml-auto" id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
+            data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
             {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases() %}
                 <li role="presentation">
                     <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
                        aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
-                        {{ activityGridType|trans }}
+                        {{ svg(activityGridType.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
+                        <span class="hidden md:block">{{ activityGridType|trans }}</span>
                     </a>
                 </li>
             {% endfor %}
@@ -63,7 +62,7 @@
             <div id="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
                 <div class="relative overflow-x-auto">
-                    <div class="h-52 min-w-[800px]" data-echarts-options='{{ gridCharts[activityGridType.value] }}' data-echarts-click="handleActivityGridChartClick"></div>
+                    <div class="h-52 min-w-200" data-echarts-options='{{ gridCharts[activityGridType.value] }}' data-echarts-click="handleActivityGridChartClick"></div>
                 </div>
             </div>
         {% endfor %}

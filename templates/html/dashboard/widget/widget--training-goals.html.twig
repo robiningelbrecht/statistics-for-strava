@@ -3,15 +3,12 @@
 <div class="flex items-center justify-between">
     <h3 class="text-lg font-semibold">{{ "Training goals"|trans }}</h3>
     {% if calculatedTrainingGoalsPerPeriod|length > 1 %}
-        <ul class="inline-flex rounded-md shadow-xs divide-x divide-gray-200"
-            id="trainingGoalsTab{{ uniqueId }}" data-tabs="#trainingGoalsTabContent{{ uniqueId }}"
+        <ul class="tabs tabs--pills" id="trainingGoalsTab{{ uniqueId }}" data-tabs="#trainingGoalsTabContent{{ uniqueId }}"
             data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
             {% for period,goals in calculatedTrainingGoalsPerPeriod %}
-                <li class="flex gap-x-1 shrink-0 cursor-pointer
-               bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg" role="presentation">
+                <li role="presentation">
                     <a href="#" data-tabs-target="#trainingGoals{{ period }}{{ uniqueId }}" role="tab"
-                       aria-controls="trainingGoals{{ period }}{{ uniqueId }}"
-                       class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
+                       aria-controls="trainingGoals{{ period }}{{ uniqueId }}">
                         {{ enum('App\\Domain\\Dashboard\\Widget\\TrainingGoals\\TrainingGoalPeriod').from(period)|trans }}
                     </a>
                 </li>
@@ -24,7 +21,7 @@
         <div class="flex flex-col grow" id="trainingGoals{{ period }}{{ uniqueId }}" role="tabpanel" aria-labelledby="trainingGoals{{ period }}{{ uniqueId }}">
             <span class="mb-4 text-sm">{{ fromToLabels[period] }}</span>
             <div class="grow flex flex-col justify-center">
-                <div class="flex flex-col overflow-x-auto max-h-[320px] gap-y-4 divide-y divide-gray-200">
+                <div class="flex flex-col overflow-x-auto max-h-80 gap-y-4 divide-y divide-gray-200">
                     {% for calculatedtrainingGoal in calculatedTrainingGoals %}
                         {% set trainingGoal = calculatedtrainingGoal.trainingGoal %}
                         <div class="pb-4">
