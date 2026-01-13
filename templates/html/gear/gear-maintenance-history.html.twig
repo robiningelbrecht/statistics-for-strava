@@ -20,7 +20,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-2 py-3">
-                        <div class="w-[4.5rem] flex items-center justify-center" title="{{ "Date"|trans }}">
+                        <div class="w-18 flex items-center justify-center" title="{{ "Date"|trans }}">
                             {{ svg('calendar') }}
                         </div>
                     </th>
@@ -41,7 +41,7 @@
                 {% for maintenanceTaskTag in maintenanceTaskTags %}
                     <tr class="border-b {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                         <td class="px-2 py-2 text-center">
-                            <div class="w-[4.5rem]">{{ maintenanceTaskTag.getTaggedOn()|formatDate() }}</div>
+                            <div class="w-18">{{ maintenanceTaskTag.getTaggedOn()|formatDate() }}</div>
                         </td>
                         <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                             {{ maintenanceTaskTag.getTaggedForGearComponentName() }}

@@ -77,7 +77,7 @@
                                 id="table-months-header-{{ loop.index0 }}"
                                 data-accordion-target="#table-months-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-months-content-{{ loop.index0 }}">
-                                <td class="w-[1rem] p-2 text-gray-700">
+                                <td class="w-4 p-2 text-gray-700">
                                     <svg data-accordion-icon class="size-2 rotate-180 shrink-0" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -120,7 +120,7 @@
                                 {% set totalsForSportType = monthlyStatistics.getForMonthAndSportType(month, sportType) %}
                                 {% if totalsForSportType.numberOfActivities > 0 %}
                                     <tr>
-                                        <td class="w-[1rem] p-2 text-gray-700">
+                                        <td class="w-4 p-2 text-gray-700">
 
                                         </td>
                                         <td class="{{ zebraClasses }} text-gray-700 sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">

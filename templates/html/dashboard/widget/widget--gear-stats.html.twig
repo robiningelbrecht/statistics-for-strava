@@ -38,12 +38,12 @@
     <div id="gearStatsActivityTypeTabContent{{ uniqueId }}" class="flex flex-col grow">
         <div class="grow" id="gearStatsAll{{ uniqueId }}" role="tabpanel"
              aria-labelledby="gearStatsAll{{ uniqueId }}-tab">
-            <div class="h-full min-h-[16rem]" data-echarts-options='{{ chartAllGears }}'></div>
+            <div class="h-full min-h-64" data-echarts-options='{{ chartAllGears }}'></div>
         </div>
         {% for activityType,chart in chartsPerActivityType %}
             <div class="grow" id="gearStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="gearStats{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
+                <div class="h-full min-h-64" data-echarts-options='{{ chart }}'></div>
             </div>
         {% endfor %}
     </div>
