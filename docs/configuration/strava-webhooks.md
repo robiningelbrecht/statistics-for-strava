@@ -47,8 +47,8 @@ import:
 
 ## Configure a webhook subscription
 
-> [!IMPORTANT]
-> **Important** The following commands target the main `SFS container` not the daemon container --> note the use of the word `app` in the commands. This is the name given to the main app in the `docker-compose.yaml` file.  If you have changed the name in the `docker-compose.yaml` then you will need to update the commands to reflect. If you are using Portainer to deploy SFS, then exec into the console of the main app, not the daemon. 
+> [!NOTE]
+> **Note** The following commands target the main container not the daemon container. Note the use of the word `app` in the commands. This is the name given to the main app in the `docker-compose.yaml` file.
 
 Next, you need to tell Strava where it should send its notifications. 
 You can do this by running the following command:
