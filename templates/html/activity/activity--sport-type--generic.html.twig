@@ -30,7 +30,7 @@
             </button>
         </div>
         {% if activity.getDescription() %}
-            <div class="text-xs font-normal text-gray-500 max-h-[35px] overflow-y-auto">{{ activity.getDescription()|nl2br }}</div>
+            <div class="text-xs font-normal text-gray-500 max-h-9 overflow-y-auto">{{ activity.getDescription()|nl2br }}</div>
         {% endif %}
     </div>
     <!-- Modal body -->
@@ -96,7 +96,7 @@
                 {% if activity.getLocalImagePaths() %}
                     <div class="flex gap-2 relative overflow-x-auto">
                         {% for imagePath in activity.getLocalImagePaths() %}
-                            <div class="h-[130px] shrink-0">
+                            <div class="h-32 shrink-0">
                                 <img class="h-full object-cover object-top rounded-lg lazy"
                                      src="{{ placeholderImage() }}" data-src="{{ relativeUrl(imagePath) }}"
                                      alt="Activity image"/>
