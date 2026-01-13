@@ -60,7 +60,7 @@
                 {% set activityType =  activity.getSportType().getActivityType() %}
                 <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                     <td class="px-2 py-2">
-                        <div class="w-[4.5rem]">{{ activity.getStartDate()|formatDate() }}</div>
+                        <div class="w-18">{{ activity.getStartDate()|formatDate() }}</div>
                     </td>
                     <td class="px-2 py-2 truncate sticky left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                         {{ activity|activityLink(ellipses: 30) }}
@@ -69,7 +69,7 @@
                         {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
                     </td>
                     <td class="px-6 py-2">
-                        <div class="w-[4rem]"> {{ activity.getElevation()|renderMeasurement(0) }}</div>
+                        <div class="w-16"> {{ activity.getElevation()|renderMeasurement(0) }}</div>
                     </td>
                     <td class="px-6 py-2">
                         {{ activity.getMovingTimeFormatted() }}
