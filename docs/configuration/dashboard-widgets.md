@@ -329,6 +329,7 @@ unit: 'km'
 goal: 200
 # The sport types to include in this challenge.
 # For a complete list of supported sport types, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
+# Leave this empty to include all sport types.
 sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
 ```
 

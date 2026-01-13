@@ -148,10 +148,6 @@ final class ConsistencyChallenges extends Collection
                 throw new InvalidConsistencyChallengeConfiguration('"sportTypesToInclude" property must be an array');
             }
 
-            if (empty($challengeConfig['sportTypesToInclude'])) {
-                throw new InvalidConsistencyChallengeConfiguration('"sportTypesToInclude" property cannot be empty');
-            }
-
             $sportTypesToInclude = SportTypes::empty();
             foreach ($challengeConfig['sportTypesToInclude'] as $sportTypeToInclude) {
                 if (!$sportType = SportType::tryFrom($sportTypeToInclude)) {
@@ -179,6 +175,10 @@ final class ConsistencyChallenges extends Collection
             if (ChallengeConsistencyType::NUMBER_OF_ACTIVITIES === $type) {
                 // Hardcode the unit to a random value, it won't be used anyway.
                 $challengeConfig['unit'] = 'km';
+            }
+
+            if ($sportTypesToInclude->isEmpty()) {
+                $sportTypesToInclude = SportTypes::all();
             }
 
             $consistencyChallenges[] = ConsistencyChallenge::create(
