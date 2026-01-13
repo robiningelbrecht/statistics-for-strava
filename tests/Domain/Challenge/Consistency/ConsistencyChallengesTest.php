@@ -157,6 +157,32 @@ class ConsistencyChallengesTest extends TestCase
         );
     }
 
+    public function testWithEmptySportTypes(): void
+    {
+        $theConfig = ConsistencyChallenges::fromConfig([[
+            'label' => 'A test',
+            'enabled' => true,
+            'type' => 'numberOfActivities',
+            'unit' => '',
+            'goal' => 100,
+            'sportTypesToInclude' => [],
+        ]]);
+
+        $this->assertEquals(
+            $theConfig,
+            ConsistencyChallenges::fromArray([
+                ConsistencyChallenge::create(
+                    label: 'A test',
+                    isEnabled: true,
+                    type: ChallengeConsistencyType::NUMBER_OF_ACTIVITIES,
+                    goal: 100,
+                    unit: ConsistencyChallenge::KILOMETER,
+                    sportTypesToInclude: SportTypes::all(),
+                ),
+            ])
+        );
+    }
+
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testFromConfigurationItShouldThrow(array $config, string $expectedException): void
     {
@@ -213,10 +239,6 @@ class ConsistencyChallengesTest extends TestCase
         $yml = self::getValidYml();
         $yml[0]['sportTypesToInclude'] = 'LOL';
         yield 'invalid "sportTypesToInclude"' => [$yml, '"sportTypesToInclude" property must be an array'];
-
-        $yml = self::getValidYml();
-        $yml[0]['sportTypesToInclude'] = [];
-        yield 'empty "sportTypesToInclude"' => [$yml, '"sportTypesToInclude" property cannot be empty'];
 
         $yml = self::getValidYml();
         $yml[0]['sportTypesToInclude'] = ['test'];
