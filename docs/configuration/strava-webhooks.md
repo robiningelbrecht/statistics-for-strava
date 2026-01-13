@@ -15,7 +15,7 @@ These will trigger the import and build processes in the background. It may take
 > **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
 
 > [!IMPORTANT]
-> **Important** Processing Strava webhooks requires the daemon Docker container to be configured.
+> **Important** Processing Strava webhooks requires the daemon Docker container to be configured. See the compose file [here](https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml) for information about setting it up. 
 
 > [!TIP]
 > **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".
@@ -46,6 +46,9 @@ import:
 > **Important** Do not forget to restart your container after enabling the webhooks
 
 ## Configure a webhook subscription
+
+> [!NOTE]
+> **Note** The following commands target the main container not the daemon container. Note the use of the word `app` in the commands. This is the name given to the main app in the `docker-compose.yaml` file.
 
 Next, you need to tell Strava where it should send its notifications. 
 You can do this by running the following command:
