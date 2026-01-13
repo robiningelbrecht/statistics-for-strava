@@ -36,13 +36,14 @@ final readonly class AppUpdateAvailableNotificationCronAction implements Runnabl
 
     public function run(SymfonyStyle $output): void
     {
-        if (AppVersion::getSemanticVersion() === $this->gitHub->getLatestRelease()) {
+        $latestRelease = $this->gitHub->getLatestRelease();
+        if (AppVersion::getSemanticVersion() === $latestRelease) {
             return;
         }
 
         $this->commandBus->dispatch(new SendNotification(
             title: 'New app version available',
-            message: sprintf("We have been busy, %s is finally out! Go see what's new.", AppVersion::getSemanticVersion()),
+            message: sprintf("We have been busy, %s is finally out! Go see what's new.", $latestRelease),
             tags: ['partying_face'],
             actionUrl: Url::fromString('https://github.com/robiningelbrecht/statistics-for-strava/releases'),
         ));
