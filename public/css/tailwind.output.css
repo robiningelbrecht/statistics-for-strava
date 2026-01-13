@@ -4106,11 +4106,6 @@
       border-color: var(--color-gray-700);
     }
   }
-  .dark\:border-red-500 {
-    @media (prefers-color-scheme: dark) {
-      border-color: var(--color-red-500);
-    }
-  }
   .dark\:border-transparent {
     @media (prefers-color-scheme: dark) {
       border-color: transparent;
@@ -4152,11 +4147,6 @@
       }
     }
   }
-  .dark\:bg-red-100 {
-    @media (prefers-color-scheme: dark) {
-      background-color: var(--color-red-100);
-    }
-  }
   .dark\:text-blue-500 {
     @media (prefers-color-scheme: dark) {
       color: var(--color-blue-500);
@@ -4177,40 +4167,9 @@
       color: var(--color-gray-500);
     }
   }
-  .dark\:text-red-500 {
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-red-500);
-    }
-  }
   .dark\:text-white {
     @media (prefers-color-scheme: dark) {
       color: var(--color-white);
-    }
-  }
-  .dark\:placeholder-gray-400 {
-    @media (prefers-color-scheme: dark) {
-      &::placeholder {
-        color: var(--color-gray-400);
-      }
-    }
-  }
-  .dark\:placeholder-red-500 {
-    @media (prefers-color-scheme: dark) {
-      &::placeholder {
-        color: var(--color-red-500);
-      }
-    }
-  }
-  .dark\:ring-offset-gray-800 {
-    @media (prefers-color-scheme: dark) {
-      --tw-ring-offset-color: var(--color-gray-800);
-    }
-  }
-  .dark\:peer-focus\:ring-blue-800 {
-    @media (prefers-color-scheme: dark) {
-      &:is(:where(.peer):focus ~ *) {
-        --tw-ring-color: var(--color-blue-800);
-      }
     }
   }
   .dark\:hover\:bg-blue-700 {
@@ -4227,15 +4186,6 @@
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-gray-600);
-        }
-      }
-    }
-  }
-  .dark\:hover\:bg-gray-700 {
-    @media (prefers-color-scheme: dark) {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-gray-700);
         }
       }
     }
@@ -4276,34 +4226,6 @@
       }
     }
   }
-  .dark\:focus\:border-blue-500 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        border-color: var(--color-blue-500);
-      }
-    }
-  }
-  .dark\:focus\:border-red-500 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        border-color: var(--color-red-500);
-      }
-    }
-  }
-  .dark\:focus\:ring-blue-500 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        --tw-ring-color: var(--color-blue-500);
-      }
-    }
-  }
-  .dark\:focus\:ring-blue-600 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        --tw-ring-color: var(--color-blue-600);
-      }
-    }
-  }
   .dark\:focus\:ring-blue-800 {
     @media (prefers-color-scheme: dark) {
       &:focus {
@@ -4315,27 +4237,6 @@
     @media (prefers-color-scheme: dark) {
       &:focus {
         --tw-ring-color: var(--color-gray-600);
-      }
-    }
-  }
-  .dark\:focus\:ring-gray-700 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        --tw-ring-color: var(--color-gray-700);
-      }
-    }
-  }
-  .dark\:focus\:ring-red-500 {
-    @media (prefers-color-scheme: dark) {
-      &:focus {
-        --tw-ring-color: var(--color-red-500);
-      }
-    }
-  }
-  .dark\:disabled\:text-gray-400 {
-    @media (prefers-color-scheme: dark) {
-      &:disabled {
-        color: var(--color-gray-400);
       }
     }
   }
