@@ -4,15 +4,12 @@
     <h3 class="text-lg font-semibold">
         {{ "Yearly stats"|trans }}
     </h3>
-    <ul class="inline-flex rounded-md shadow-xs divide-x divide-gray-200"
-        id="yearlyStatsTab{{ uniqueId }}" data-tabs="#yearlyStatsTabContent{{ uniqueId }}"
+    <ul class="tabs tabs--pills" id="yearlyStatsTab{{ uniqueId }}" data-tabs="#yearlyStatsTabContent{{ uniqueId }}"
         data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
         {% for context in metricsDisplayOrder %}
-            <li class="flex gap-x-1 shrink-0 cursor-pointer
-                   bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg" role="presentation">
+            <li role="presentation">
                 <a href="#" data-tabs-target="#yearlyStats{{ context.value }}{{ uniqueId }}" role="tab"
-                   aria-controls="yearlyStats{{ context.value }}{{ uniqueId }}"
-                   class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
+                   aria-controls="yearlyStats{{ context.value }}{{ uniqueId }}">
                     {{ svg(context.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
                     <span class="hidden md:block">{{ context|trans }}</span>
                 </a>
@@ -44,7 +41,7 @@
                 {% for activityType,chart in yearlyStatsCharts %}
                     <div id="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tabpanel"
                          aria-labelledby="yearlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}-tab">
-                        <div class="mb-4 h-[20rem]" data-echarts-options='{{ chart }}'></div>
+                        <div class="mb-4 h-80" data-echarts-options='{{ chart }}'></div>
                         <div class="relative overflow-x-auto">
                             <table class="w-full text-sm text-center text-gray-500">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
