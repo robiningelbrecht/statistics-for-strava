@@ -11,13 +11,14 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class ActivityIntensity
 {
-    public const int HIGH_THRESHOLD_VALUE = 67;
+    public const int ACTIVITY_HIGH_THRESHOLD_VALUE = 88;
 
     /** @var array<string, int|null> */
     public static array $cachedIntensities = [];
 
     public function __construct(
         private readonly ActivityRepository $activityRepository,
+        private readonly ActivitiesEnricher $activitiesEnricher,
         private readonly AthleteRepository $athleteRepository,
         private readonly FtpHistory $ftpHistory,
     ) {
@@ -55,18 +56,14 @@ final class ActivityIntensity
             return self::$cachedIntensities[$cacheKey];
         }
 
+        $activity = $this->activitiesEnricher->getEnrichedActivity($activity->getId());
         if (ActivityType::RIDE === $activity->getSportType()->getActivityType()) {
             try {
-                // To calculate intensity, we need
-                // 1) Max and average heart rate
-                // OR
-                // 2) FTP and average power
                 $ftp = $this->ftpHistory->find(ActivityType::RIDE, $activity->getStartDate())->getFtp();
-                if ($averagePower = $activity->getAveragePower()) {
-                    // Use more complicated and more accurate calculation.
-                    // intensityFactor = averagePower / FTP
-                    // (durationInSeconds * averagePower * intensityFactor) / (FTP x 3600) * 100
-                    $intensity = (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
+                if ($normalizedPower = $activity->getNormalizedPower()) {
+                    // IF = Normalized Power / FTP
+                    // TSS = (seconds * NP * IF) / (FTP * 3600) * 100
+                    $intensity = (int) round(($normalizedPower / $ftp->getValue()) * 100);
                     self::$cachedIntensities[$cacheKey] = $intensity;
 
                     return self::$cachedIntensities[$cacheKey];
@@ -77,14 +74,10 @@ final class ActivityIntensity
 
         $athlete = $this->athleteRepository->find();
         if ($averageHeartRate = $activity->getAverageHeartRate()) {
+            $athleteRestingHeartRate = $athlete->getRestingHeartRate($activity->getStartDate());
             $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
-            // Use simplified, less accurate calculation.
-            // maxHeartRate = = (220 - age) x 0.92
-            // intensityFactor = averageHeartRate / maxHeartRate
-            // (durationInSeconds x averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-            $maxHeartRate = round($athleteMaxHeartRate * 0.92);
 
-            $intensity = (int) round(($activity->getMovingTimeInSeconds() * $averageHeartRate * ($averageHeartRate / $maxHeartRate)) / ($maxHeartRate * 3600) * 100);
+            $intensity = (int) round(($averageHeartRate - $athleteRestingHeartRate) / ($athleteMaxHeartRate - $athleteRestingHeartRate) * 100);
             self::$cachedIntensities[$cacheKey] = $intensity;
 
             return self::$cachedIntensities[$cacheKey];

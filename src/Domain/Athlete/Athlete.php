@@ -50,6 +50,11 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
         return $this->getBirthDate()->diff($on)->y;
     }
 
+    public function getRestingHeartRate(SerializableDateTime $on): int
+    {
+        return max(50, 75 - (int) (0.2 * $this->getAgeInYears($on)));
+    }
+
     public function getMaxHeartRate(SerializableDateTime $on): int
     {
         if (is_null($this->maxHeartRateFormula)) {

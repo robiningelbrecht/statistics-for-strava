@@ -59,7 +59,7 @@ final readonly class AthleteProfileWidget implements Widget
             $countActivitiesWithHighEffort = 0;
             foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
                 $activityIntensity = $this->activityIntensity->calculateForActivity($this->activitiesEnricher->getEnrichedActivity($activityId));
-                if (ActivityIntensity::HIGH_THRESHOLD_VALUE > $activityIntensity) {
+                if (ActivityIntensity::ACTIVITY_HIGH_THRESHOLD_VALUE > $activityIntensity) {
                     continue;
                 }
                 ++$countActivitiesWithHighEffort;

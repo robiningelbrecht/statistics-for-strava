@@ -37,21 +37,21 @@ enum ActivityGridType: string implements TranslatableInterface
                 ],
                 [
                     'min' => 0.01,
-                    'max' => 33,
+                    'max' => 75,
                     'color' => '#68B34B',
-                    'label' => $translator->trans('Low').' (0 - 33)',
+                    'label' => $translator->trans('Low').' (0 - 75)',
                 ],
                 [
-                    'min' => 33.01,
-                    'max' => 66,
+                    'min' => 75.01,
+                    'max' => 88,
                     'color' => '#FAB735',
-                    'label' => $translator->trans('Medium').' (34 - 66)',
+                    'label' => $translator->trans('Medium').' (75 - 88)',
                 ],
                 [
-                    'min' => 66.01,
+                    'min' => 88.01,
                     'max' => 100,
                     'color' => '#FF8E14',
-                    'label' => $translator->trans('High').' (67 - 100)',
+                    'label' => $translator->trans('High').' (88 - 100)',
                 ],
                 [
                     'min' => 100.01,
