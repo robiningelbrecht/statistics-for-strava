@@ -52,6 +52,7 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
 
     public function getRestingHeartRate(SerializableDateTime $on): int
     {
+        // @TODO: Make configurable.
         return max(50, 75 - (int) (0.2 * $this->getAgeInYears($on)));
     }
 
@@ -70,6 +71,11 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
     public function getName(): Name
     {
         return Name::fromString(sprintf('%s %s', $this->data['firstname'] ?? 'John', $this->data['lastname'] ?? 'Doe'));
+    }
+
+    public function getSex(): string
+    {
+        return strtoupper($this->data['sex'] ?? 'M');
     }
 
     /**

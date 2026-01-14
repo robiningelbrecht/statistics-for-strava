@@ -18,7 +18,6 @@ Activities: Atividades
 Activity: Activity
 'Activity count': 'Número de Actividades'
 'Activity heatmap': 'Activity heatmap'
-'Activity intensity': 'Intensidade da atividade'
 'Activity locations': 'Locais de actividade'
 'Activity start times': 'Horas Início Actividade'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carga de treino aguda (Fadiga) - Média de 7-dias ponderada exponencial da carga de treino. Representa fadiga de curto prazo.'
@@ -162,6 +161,7 @@ Laps: Voltas
 'Last maintenance': 'Última manutenção'
 'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': 'Carga (CTL/ATL)'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'

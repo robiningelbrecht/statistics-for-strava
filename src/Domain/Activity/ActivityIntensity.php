@@ -7,49 +7,22 @@ namespace App\Domain\Activity;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Ftp\FtpHistory;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class ActivityIntensity
 {
-    public const int ACTIVITY_HIGH_THRESHOLD_VALUE = 88;
+    public const int HIGH_INTENSITY_THRESHOLD_VALUE = 88;
 
     /** @var array<string, int|null> */
     public static array $cachedIntensities = [];
 
     public function __construct(
-        private readonly ActivityRepository $activityRepository,
         private readonly ActivitiesEnricher $activitiesEnricher,
         private readonly AthleteRepository $athleteRepository,
         private readonly FtpHistory $ftpHistory,
     ) {
     }
 
-    public function calculateForDate(SerializableDateTime $on): int
-    {
-        $cacheKey = $on->format('Y-m-d');
-        if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
-            return self::$cachedIntensities[$cacheKey];
-        }
-
-        $activities = $this->activityRepository->findByStartDate(
-            startDate: $on,
-            activityType: null
-        );
-        self::$cachedIntensities[$cacheKey] = 0;
-
-        /** @var Activity $activity */
-        foreach ($activities as $activity) {
-            if (!$intensity = $this->calculateForActivity($activity)) {
-                continue;
-            }
-
-            self::$cachedIntensities[$cacheKey] += $intensity;
-        }
-
-        return self::$cachedIntensities[$cacheKey];
-    }
-
-    public function calculateForActivity(Activity $activity): int
+    public function calculate(Activity $activity): int
     {
         $cacheKey = (string) $activity->getId();
         if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {

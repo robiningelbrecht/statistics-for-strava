@@ -46,7 +46,7 @@
         </div>
         <ul class="tabs tabs--pills ml-auto" id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
             data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
-            {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases() %}
+            {% for activityGridType in enum('App\\Domain\\Dashboard\\Widget\\ActivityGrid\\ActivityGridType').cases() %}
                 <li role="presentation">
                     <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
                        aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
@@ -58,7 +58,7 @@
         </ul>
     </div>
     <div id="activityGridWidgetTabContent{{ uniqueId }}">
-        {% for activityGridType in enum('App\\Domain\\Activity\\Grid\\ActivityGridType').cases() %}
+        {% for activityGridType in enum('App\\Domain\\Dashboard\\Widget\\ActivityGrid\\ActivityGridType').cases() %}
             <div id="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
                 <div class="relative overflow-x-auto">
