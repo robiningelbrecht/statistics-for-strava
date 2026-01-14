@@ -34,6 +34,6 @@ trait ProvideDateRangeBasedFormula
             }
         }
 
-        throw new InvalidHeartRateFormula(sprintf('HEART_RATE_FORMULA: could not determine max heart rate for given date "%s"', $on->format('Y-m-d')));
+        throw new InvalidHeartRateFormula(sprintf('HEART_RATE_FORMULA: could not determine heart rate for given date "%s"', $on->format('Y-m-d')));
     }
 }
