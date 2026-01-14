@@ -21,6 +21,13 @@ general:
     # maxHeartRateFormula:
     #    "2020-01-01": 198
     #    "2025-01-10": 193
+    # The formula used to calculate your resting heart rate. The default is heuristicAgeBased.
+    # Allowed values: a fixed number, heuristicAgeBased or you can set a fixed number for any given date range.  
+    restingHeartRateFormula: 'heuristicAgeBased'
+    # restingHeartRateFormula: 50
+    # restingHeartRateFormula:
+    #    "2020-01-01": 53
+    #    "2025-01-10": 55
     # If you're not sure about your zones, leave this unchanged, the defaults are sensible.
     heartRateZones:
       # Relative or absolute. 

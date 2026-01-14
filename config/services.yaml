@@ -176,9 +176,12 @@ services:
         arguments: ['@=app_config("general.athlete.heartRateZones", [])']
 
     App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula:
-        class: App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
         arguments: ['@=app_config("general.athlete.maxHeartRateFormula")']
+
+    App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula:
+        factory: [ '@App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormulas', 'determineFormula' ]
+        arguments: ['@=app_config("general.athlete.restingHeartRateFormula", "heuristicAgeBased")']
 
     App\Domain\Activity\Eddington\Config\EddingtonConfiguration:
         factory: [ null, 'fromScalarArray' ]

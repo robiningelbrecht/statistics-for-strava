@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Athlete;
 
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
+use App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -18,6 +19,7 @@ final class KeyValueBasedAthleteRepository implements AthleteRepository
     public function __construct(
         private readonly KeyValueStore $keyValueStore,
         private readonly MaxHeartRateFormula $maxHeartRateFormula,
+        private readonly RestingHeartRateFormula $restingHeartRateFormula,
     ) {
     }
 
@@ -39,7 +41,9 @@ final class KeyValueBasedAthleteRepository implements AthleteRepository
         $data = $this->keyValueStore->find(Key::ATHLETE);
 
         $athlete = Athlete::create(Json::decode((string) $data));
-        $athlete->setMaxHeartRateFormula($this->maxHeartRateFormula);
+        $athlete
+            ->setMaxHeartRateFormula($this->maxHeartRateFormula)
+            ->setRestingHeartRateFormula($this->restingHeartRateFormula);
         $this->cachedAthlete = $athlete;
 
         return $this->cachedAthlete;

@@ -47,7 +47,7 @@ final class ActivityIntensity
 
         $athlete = $this->athleteRepository->find();
         if ($averageHeartRate = $activity->getAverageHeartRate()) {
-            $athleteRestingHeartRate = $athlete->getRestingHeartRate($activity->getStartDate());
+            $athleteRestingHeartRate = $athlete->getRestingHeartRateFormula($activity->getStartDate());
             $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
 
             $intensity = (int) round(($averageHeartRate - $athleteRestingHeartRate) / ($athleteMaxHeartRate - $athleteRestingHeartRate) * 100);

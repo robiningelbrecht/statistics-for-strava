@@ -12,6 +12,7 @@ use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Athlete\KeyValueBasedAthleteRepository;
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
+use App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula;
 use App\Domain\Ftp\FtpHistory;
 use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -110,6 +111,7 @@ class ActivityIntensityTest extends ContainerTestCase
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
+                $this->getContainer()->get(RestingHeartRateFormula::class),
             ),
             $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
         );
