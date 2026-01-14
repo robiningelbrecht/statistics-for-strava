@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Athlete;
 
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
+use App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -12,6 +13,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final class Athlete implements \JsonSerializable, SupportsAITooling
 {
     private ?MaxHeartRateFormula $maxHeartRateFormula = null;
+    private ?RestingHeartRateFormula $restingHeartRateFormula = null;
 
     private function __construct(
         /** @var array<string, mixed> */
@@ -30,9 +32,18 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
         );
     }
 
-    public function setMaxHeartRateFormula(MaxHeartRateFormula $maxHeartRateFormula): void
+    public function setMaxHeartRateFormula(MaxHeartRateFormula $maxHeartRateFormula): self
     {
         $this->maxHeartRateFormula = $maxHeartRateFormula;
+
+        return $this;
+    }
+
+    public function setRestingHeartRateFormula(RestingHeartRateFormula $restingHeartRateFormula): self
+    {
+        $this->restingHeartRateFormula = $restingHeartRateFormula;
+
+        return $this;
     }
 
     public function getAthleteId(): string
@@ -50,10 +61,16 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
         return $this->getBirthDate()->diff($on)->y;
     }
 
-    public function getRestingHeartRate(SerializableDateTime $on): int
+    public function getRestingHeartRateFormula(SerializableDateTime $on): int
     {
-        // @TODO: Make configurable.
-        return max(50, 75 - (int) (0.2 * $this->getAgeInYears($on)));
+        if (is_null($this->restingHeartRateFormula)) {
+            throw new \RuntimeException('Resting heart rate formula not set');
+        }
+
+        return $this->restingHeartRateFormula->calculate(
+            age: $this->getAgeInYears($on),
+            on: $on
+        );
     }
 
     public function getMaxHeartRate(SerializableDateTime $on): int
