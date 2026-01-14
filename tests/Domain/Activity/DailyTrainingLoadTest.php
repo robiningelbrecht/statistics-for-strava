@@ -4,8 +4,10 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\DailyTrainingLoad;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Athlete\Athlete;
@@ -18,9 +20,9 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 
-class ActivityIntensityTest extends ContainerTestCase
+class DailyTrainingLoadTest extends ContainerTestCase
 {
-    private ActivityIntensity $activityIntensity;
+    private DailyTrainingLoad $dailyTrainingLoad;
     private AthleteRepository $athleteRepository;
     private FtpHistory $ftpHistory;
 
@@ -31,7 +33,7 @@ class ActivityIntensityTest extends ContainerTestCase
         ]));
 
         $activity = ActivityBuilder::fromDefaults()
-            ->withAverageHeartRate(250)
+            ->withAveragePower(250)
             ->withMovingTimeInSeconds(3600)
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
@@ -50,7 +52,7 @@ class ActivityIntensityTest extends ContainerTestCase
 
         $this->assertEquals(
             100,
-            $this->activityIntensity->calculate($activity),
+            $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
 
@@ -72,8 +74,8 @@ class ActivityIntensityTest extends ContainerTestCase
         ]));
 
         $this->assertEquals(
-            87,
-            $this->activityIntensity->calculate($activity),
+            277,
+            $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
 
@@ -96,7 +98,7 @@ class ActivityIntensityTest extends ContainerTestCase
 
         $this->assertEquals(
             0,
-            $this->activityIntensity->calculate($activity),
+            $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
 
@@ -105,13 +107,15 @@ class ActivityIntensityTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->activityIntensity = new ActivityIntensity(
+        $this->dailyTrainingLoad = new DailyTrainingLoad(
+            $this->getContainer()->get(ActivityRepository::class),
             $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(ActivityIntensity::class),
+            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
-            ),
-            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
+            )
         );
     }
 }

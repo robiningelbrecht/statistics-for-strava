@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\Grid;
+namespace App\Domain\Dashboard\Widget\ActivityGrid;
 
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 enum ActivityGridType: string implements TranslatableInterface
 {
-    case INTENSITY = 'intensity';
+    case LOAD = 'load';
     case MOVING_TIME = 'movingTime';
     case CALORIES_BURNED = 'caloriesBurned';
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
-            self::INTENSITY => $translator->trans('Activity intensity', locale: $locale),
+            self::LOAD => $translator->trans('Load', locale: $locale),
             self::MOVING_TIME => $translator->trans('Moving time', locale: $locale),
-            self::CALORIES_BURNED => $translator->trans('Calories burned', locale: $locale),
+            self::CALORIES_BURNED => $translator->trans('Calories', locale: $locale),
         };
     }
 
@@ -26,7 +26,7 @@ enum ActivityGridType: string implements TranslatableInterface
     {
         return match ($this) {
             self::MOVING_TIME => 'time',
-            self::INTENSITY => 'power',
+            self::LOAD => 'power',
             self::CALORIES_BURNED => 'calories',
         };
     }
@@ -37,7 +37,7 @@ enum ActivityGridType: string implements TranslatableInterface
     public function getPieces(TranslatorInterface $translator): array
     {
         return match ($this) {
-            self::INTENSITY => [
+            self::LOAD => [
                 [
                     'min' => 0,
                     'max' => 0,
@@ -46,26 +46,26 @@ enum ActivityGridType: string implements TranslatableInterface
                 ],
                 [
                     'min' => 0.01,
-                    'max' => 75,
+                    'max' => 50,
                     'color' => '#68B34B',
-                    'label' => $translator->trans('Low').' (0 - 75)',
+                    'label' => $translator->trans('Low').' (0 - 50)',
                 ],
                 [
-                    'min' => 75.01,
-                    'max' => 88,
-                    'color' => '#FAB735',
-                    'label' => $translator->trans('Medium').' (75 - 88)',
-                ],
-                [
-                    'min' => 88.01,
+                    'min' => 50.01,
                     'max' => 100,
-                    'color' => '#FF8E14',
-                    'label' => $translator->trans('High').' (88 - 100)',
+                    'color' => '#FAB735',
+                    'label' => $translator->trans('Medium').' (50 - 100)',
                 ],
                 [
                     'min' => 100.01,
+                    'max' => 150,
+                    'color' => '#FF8E14',
+                    'label' => $translator->trans('High').' (100 - 150)',
+                ],
+                [
+                    'min' => 150.01,
                     'color' => '#FF0C0C',
-                    'label' => $translator->trans('Very high').' (> 100)',
+                    'label' => $translator->trans('Very high').' (> 150)',
                 ],
             ],
             self::MOVING_TIME => [
@@ -89,14 +89,14 @@ enum ActivityGridType: string implements TranslatableInterface
                 ],
                 [
                     'min' => 60.01,
-                    'max' => 90,
+                    'max' => 120,
                     'color' => '#FF8E14',
-                    'label' => $translator->trans('High').' (1h - 1h30)',
+                    'label' => $translator->trans('High').' (1h - 2h)',
                 ],
                 [
-                    'min' => 90.01,
+                    'min' => 120.01,
                     'color' => '#FF0C0C',
-                    'label' => $translator->trans('Very high').' (> 1h30)',
+                    'label' => $translator->trans('Very high').' (> 2h)',
                 ],
             ],
             self::CALORIES_BURNED => [

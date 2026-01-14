@@ -58,8 +58,8 @@ final readonly class AthleteProfileWidget implements Widget
             // INTENSITY: 25% = realistic upper bound for sustainable hard training.
             $countActivitiesWithHighEffort = 0;
             foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
-                $activityIntensity = $this->activityIntensity->calculateForActivity($this->activitiesEnricher->getEnrichedActivity($activityId));
-                if (ActivityIntensity::ACTIVITY_HIGH_THRESHOLD_VALUE > $activityIntensity) {
+                $activityIntensity = $this->activityIntensity->calculate($this->activitiesEnricher->getEnrichedActivity($activityId));
+                if (ActivityIntensity::HIGH_INTENSITY_THRESHOLD_VALUE > $activityIntensity) {
                     continue;
                 }
                 ++$countActivitiesWithHighEffort;

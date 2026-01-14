@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Activity\Grid;
+namespace App\Domain\Dashboard\Widget\ActivityGrid;
 
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;

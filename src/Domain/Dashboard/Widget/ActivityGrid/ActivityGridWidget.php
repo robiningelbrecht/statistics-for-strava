@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Dashboard\Widget;
+namespace App\Domain\Dashboard\Widget\ActivityGrid;
 
-use App\Domain\Activity\ActivityIntensity;
-use App\Domain\Activity\Grid\ActivityGrid;
-use App\Domain\Activity\Grid\ActivityGridChart;
-use App\Domain\Activity\Grid\ActivityGridType;
-use App\Domain\Activity\Grid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDay;
+use App\Domain\Activity\DailyTrainingLoad;
+use App\Domain\Dashboard\Widget\ActivityGrid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDay;
+use App\Domain\Dashboard\Widget\Widget;
+use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
@@ -20,7 +19,7 @@ use Twig\Environment;
 final readonly class ActivityGridWidget implements Widget
 {
     public function __construct(
-        private ActivityIntensity $activityIntensity,
+        private DailyTrainingLoad $trainingLoad,
         private QueryBus $queryBus,
         private Environment $twig,
         private TranslatorInterface $translator,
@@ -66,9 +65,9 @@ final readonly class ActivityGridWidget implements Widget
 
         foreach ($period as $dt) {
             $on = SerializableDateTime::fromDateTimeImmutable($dt);
-            $activityGrids[ActivityGridType::INTENSITY->value]->add(
+            $activityGrids[ActivityGridType::LOAD->value]->add(
                 on: $on,
-                value: $this->activityIntensity->calculateForDate($on)
+                value: $this->trainingLoad->calculate($on)
             );
             $activityGrids[ActivityGridType::MOVING_TIME->value]->add(
                 on: $on,

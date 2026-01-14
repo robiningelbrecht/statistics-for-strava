@@ -18,7 +18,6 @@ Activities: Aktiviteter
 Activity: Aktivitet
 'Activity count': 'Antal aktiviteter'
 'Activity heatmap': Aktivitskarta
-'Activity intensity': Intensitet
 'Activity locations': 'Aktivitet platser'
 'Activity start times': 'Aktivitet starttider'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
@@ -162,6 +161,7 @@ Laps: Varv
 'Last maintenance': 'Senast underhållet'
 'Last {numberOfDays} days': 'Senaste {numberOfDays} dagarna'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': 'Belastning (CTL/ATL)'
 'Loading data...': 'Laddar datan...'
 Loading...: Laddar...
