@@ -28,7 +28,7 @@ class DateRangeBasedTest extends TestCase
             ->addRange(SerializableDateTime::fromString('2021-02-01'), 110)
             ->addRange(SerializableDateTime::fromString('2021-03-01'), 120);
 
-        $this->expectExceptionObject(new InvalidHeartRateFormula('HEART_RATE_FORMULA: could not determine max heart rate for given date "2020-01-01"'));
+        $this->expectExceptionObject(new InvalidHeartRateFormula('HEART_RATE_FORMULA: could not determine heart rate for given date "2020-01-01"'));
         $dateRangeBased->calculate(30, SerializableDateTime::fromString('2020-01-01'));
     }
 
