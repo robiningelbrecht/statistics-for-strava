@@ -34,8 +34,8 @@ final readonly class BuildGpxFilesCommandHandler implements CommandHandler
                 continue;
             }
             $this->fileStorage->write(
-                $gpxFileLocation,
-                $serializedGpx,
+                location: $gpxFileLocation,
+                contents: $serializedGpx,
             );
         }
     }
