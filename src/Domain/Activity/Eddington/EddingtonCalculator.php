@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Eddington;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\Eddington\Config\EddingtonConfiguration;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class EddingtonCalculator
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
+        private ActivitiesEnricher $activitiesEnricher,
         private EddingtonConfiguration $eddingtonConfiguration,
         private UnitSystem $unitSystem,
     ) {
@@ -25,13 +27,13 @@ final readonly class EddingtonCalculator
         $eddingtons = [];
         /** @var Config\EddingtonConfigItem $eddingtonConfigItem */
         foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
-            $activities = $this->activityRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
-            if ($activities->isEmpty()) {
+            $activityIds = $this->activityIdRepository->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
+            if ($activityIds->isEmpty()) {
                 continue;
             }
 
             $eddington = Eddington::getInstance(
-                activities: $activities,
+                activities: $this->activitiesEnricher->getEnrichedActivitiesByActivityIds($activityIds),
                 config: $eddingtonConfigItem,
                 unitSystem: $this->unitSystem
             );
