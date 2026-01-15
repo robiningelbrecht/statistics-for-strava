@@ -2,13 +2,16 @@
 
 namespace App\Domain\Gear\ImportedGear;
 
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\GearId;
+use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\GearType;
 use App\Domain\Gear\ProvideGearRepositoryHelpers;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalImportedGearRepository extends DbalRepository implements ImportedGearRepository
@@ -87,5 +90,27 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
         }
 
         return $this->hydrate($result);
+    }
+
+    public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('DISTINCT JSON_EXTRACT(data, "$.gear_id") as stravaGearId')
+            ->from('Activity')
+            ->andWhere('stravaGearId IS NOT NULL');
+
+        if ($restrictToActivityIds && !$restrictToActivityIds->isEmpty()) {
+            $queryBuilder->andWhere('activityId IN (:activityIds)');
+            $queryBuilder->setParameter(
+                key: 'activityIds',
+                value: array_map(strval(...), $restrictToActivityIds->toArray()),
+                type: ArrayParameterType::STRING
+            );
+        }
+
+        return GearIds::fromArray(array_map(
+            GearId::fromUnprefixed(...),
+            $queryBuilder->executeQuery()->fetchFirstColumn(),
+        ));
     }
 }

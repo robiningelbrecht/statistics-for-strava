@@ -6,7 +6,6 @@ use App\Application\Import\ImportGear\ImportGear;
 use App\Application\Import\ImportGear\ImportGearCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
@@ -173,7 +172,6 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(ImportedGearRepository::class),
             $this->getContainer()->get(CustomGearRepository::class),
-            $this->getContainer()->get(ActivityRepository::class),
             CustomGearConfig::fromArray(Yaml::parse(<<<YML
 enabled: true
 hashtagPrefix: 'sfs'
