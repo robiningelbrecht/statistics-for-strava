@@ -74,6 +74,24 @@ final class ActivitiesEnricher
         return $this->enrichedActivities;
     }
 
+    public function getEnrichedActivitiesByActivityIds(ActivityIds $activityIds): Activities
+    {
+        $activities = Activities::empty();
+        if ($activityIds->isEmpty()) {
+            return $activities;
+        }
+
+        if ($this->enrichedActivities->isEmpty()) {
+            $this->enrichedActivities = $this->enrichAll();
+        }
+
+        foreach ($activityIds as $activityId) {
+            $activities->add($this->getEnrichedActivity($activityId));
+        }
+
+        return $activities;
+    }
+
     public function getEnrichedActivities(): Activities
     {
         if ($this->enrichedActivities->isEmpty()) {
