@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildRewindHtml;
 
 use App\Domain\Activity\ActivitiesEnricher;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
@@ -52,7 +52,7 @@ use Twig\Environment;
 final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private ActivitiesEnricher $activitiesEnricher,
         private GearRepository $gearRepository,
         private ImageRepository $imageRepository,
@@ -86,7 +86,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             }
 
             $longestActivity = $this->activitiesEnricher->getEnrichedActivity(
-                $this->activityRepository->findLongestActivityFor($yearsToQuery)->getId()
+                $this->activityIdRepository->findLongestFor($yearsToQuery)
             );
             $leafletMap = $longestActivity->getLeafletMap();
 

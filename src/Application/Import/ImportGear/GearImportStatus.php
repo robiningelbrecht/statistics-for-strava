@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace App\Application\Import\ImportGear;
 
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 
 final readonly class GearImportStatus
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
         private ImportedGearRepository $importedGearRepository,
     ) {
     }
 
     public function isComplete(): bool
     {
-        $stravaGearIdsOnActivities = $this->activityRepository->findUniqueStravaGearIds(null);
+        $stravaGearIdsOnActivities = $this->importedGearRepository->findUniqueStravaGearIds(null);
         $importedGears = $this->importedGearRepository->findAll();
 
         foreach ($stravaGearIdsOnActivities as $gearId) {

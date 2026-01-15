@@ -2,6 +2,7 @@
 
 namespace App\Application\Import\DeleteActivitiesMarkedForDeletion;
 
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
@@ -16,6 +17,7 @@ use App\Infrastructure\CQRS\Command\CommandHandler;
 final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements CommandHandler
 {
     public function __construct(
+        private ActivityIdRepository $activityIdRepository,
         private ActivityRepository $activityRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityStreamRepository $activityStreamRepository,
@@ -31,7 +33,7 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
     {
         assert($command instanceof DeleteActivitiesMarkedForDeletion);
 
-        $activityIdsToDelete = $this->activityRepository->findActivityIdsMarkedForDeletion();
+        $activityIdsToDelete = $this->activityIdRepository->findMarkedForDeletion();
         if ($activityIdsToDelete->isEmpty()) {
             $command->getOutput()->writeln('No activities marked for deletion...');
 

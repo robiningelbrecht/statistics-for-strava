@@ -10,6 +10,7 @@ use App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImp
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportPipeline;
 use App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
@@ -214,7 +215,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesTextSnapshot($output);
         $this->assertCount(
             2,
-            $this->getContainer()->get(ActivityRepository::class)->findActivityIdsMarkedForDeletion()
+            $this->getContainer()->get(ActivityIdRepository::class)->findMarkedForDeletion()
         );
     }
 
@@ -272,6 +273,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
@@ -310,6 +312,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
@@ -353,6 +356,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
@@ -387,6 +391,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
@@ -482,6 +487,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler = new ImportActivitiesCommandHandler(
             strava: $this->strava = $this->getContainer()->get(Strava::class),
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityWithRawDataRepository: $this->getContainer()->get(ActivityWithRawDataRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),

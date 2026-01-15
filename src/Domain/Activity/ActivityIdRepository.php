@@ -3,7 +3,6 @@
 namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportTypes;
-use App\Domain\Gear\GearIds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 
@@ -19,9 +18,7 @@ interface ActivityIdRepository
 
     public function hasForSportTypes(SportTypes $sportTypes): bool;
 
-    public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds;
-
-    public function findActivityIdsMarkedForDeletion(): ActivityIds;
+    public function findMarkedForDeletion(): ActivityIds;
 
     public function findLongestFor(Years $years): ActivityId;
 }

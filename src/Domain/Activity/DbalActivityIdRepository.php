@@ -4,8 +4,6 @@ namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
-use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearIds;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
@@ -116,29 +114,7 @@ final class DbalActivityIdRepository implements ActivityIdRepository
         return (bool) $queryBuilder->executeQuery()->fetchOne();
     }
 
-    public function findUniqueStravaGearIds(?ActivityIds $restrictToActivityIds): GearIds
-    {
-        $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('DISTINCT JSON_EXTRACT(data, "$.gear_id") as stravaGearId')
-            ->from('Activity')
-            ->andWhere('stravaGearId IS NOT NULL');
-
-        if ($restrictToActivityIds && !$restrictToActivityIds->isEmpty()) {
-            $queryBuilder->andWhere('activityId IN (:activityIds)');
-            $queryBuilder->setParameter(
-                key: 'activityIds',
-                value: array_map(strval(...), $restrictToActivityIds->toArray()),
-                type: ArrayParameterType::STRING
-            );
-        }
-
-        return GearIds::fromArray(array_map(
-            GearId::fromUnprefixed(...),
-            $queryBuilder->executeQuery()->fetchFirstColumn(),
-        ));
-    }
-
-    public function findActivityIdsMarkedForDeletion(): ActivityIds
+    public function findMarkedForDeletion(): ActivityIds
     {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('activityId')

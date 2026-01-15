@@ -6,7 +6,7 @@ use App\Application\Import\ImportGear\GearImportStatus;
 use App\Application\RunBuild\RunBuild;
 use App\Application\RunBuild\RunBuildCommandHandler;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
@@ -123,7 +123,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
         $this->buildAppCommandHandler = new RunBuildCommandHandler(
             commandBus: $this->commandBus = new SpyCommandBus(),
-            activityRepository: $this->getContainer()->get(ActivityRepository::class),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),

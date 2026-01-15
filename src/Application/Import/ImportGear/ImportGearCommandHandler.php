@@ -2,7 +2,6 @@
 
 namespace App\Application\Import\ImportGear;
 
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
@@ -25,7 +24,6 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         private Strava $strava,
         private ImportedGearRepository $importedGearRepository,
         private CustomGearRepository $customGearRepository,
-        private ActivityRepository $activityRepository,
         private CustomGearConfig $customGearConfig,
         private Clock $clock,
     ) {
@@ -38,7 +36,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $allStravaGearIdsReferencedOnActivities = $this->activityRepository->findUniqueStravaGearIds(null);
+        $allStravaGearIdsReferencedOnActivities = $this->importedGearRepository->findUniqueStravaGearIds(null);
 
         if ($this->customGearConfig->isFeatureEnabled()) {
             /** @var GearId $customGearId */
@@ -59,7 +57,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         $stravaGearIdsToImport = $allStravaGearIdsReferencedOnActivities;
         if ($command->isPartialImport()) {
             // We only want to update gears that are referenced on the activities to be imported.
-            $stravaGearIdsToImport = $this->activityRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
+            $stravaGearIdsToImport = $this->importedGearRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
         }
 
         foreach ($stravaGearIdsToImport as $gearId) {

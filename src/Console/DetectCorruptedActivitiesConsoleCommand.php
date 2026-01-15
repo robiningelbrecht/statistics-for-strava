@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -34,6 +35,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
     use ProvideConsoleIntro;
 
     public function __construct(
+        private readonly ActivityIdRepository $activityIdRepository,
         private readonly ActivityRepository $activityRepository,
         private readonly ActivityWithRawDataRepository $activityWithRawDataRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
@@ -62,7 +64,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         );
         $progressIndicator->start('Scanning activities...');
 
-        $activityIds = $this->activityRepository->findActivityIds();
+        $activityIds = $this->activityIdRepository->findAll();
         $activityIdsToDelete = ActivityIds::empty();
         foreach ($activityIds as $activityId) {
             $progressIndicator->advance();

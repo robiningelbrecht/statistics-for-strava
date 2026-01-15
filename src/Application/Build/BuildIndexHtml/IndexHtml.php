@@ -7,7 +7,7 @@ namespace App\Application\Build\BuildIndexHtml;
 use App\Application\AppSubTitle;
 use App\Application\AppUrl;
 use App\Application\ProfilePictureUrl;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\Image\ImageRepository;
@@ -25,7 +25,7 @@ final readonly class IndexHtml
 {
     public function __construct(
         private AthleteRepository $athleteRepository,
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private GearRepository $gearRepository,
         private ChallengeRepository $challengeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
@@ -56,7 +56,7 @@ final readonly class IndexHtml
         }
 
         return [
-            'totalActivityCount' => $this->activityRepository->count(),
+            'totalActivityCount' => $this->activityIdRepository->count(),
             'eddingtonNumbers' => $eddingtonNumbers,
             'completedChallenges' => $this->challengeRepository->count(),
             'totalPhotoCount' => $this->imageRepository->count(),

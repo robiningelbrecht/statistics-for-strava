@@ -4,7 +4,7 @@ namespace App\Application\Import\ProcessRawActivityData\Pipeline;
 
 use App\Application\Countries;
 use App\Domain\Activity\Activity;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Segment\Segment;
 use App\Domain\Segment\SegmentEffort\SegmentEffort;
@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private SegmentRepository $segmentRepository,
@@ -36,7 +36,7 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
         $countSegmentsAdded = 0;
         $countSegmentEffortsAdded = 0;
 
-        foreach ($this->activityRepository->findActivityIds() as $activityId) {
+        foreach ($this->activityIdRepository->findAll() as $activityId) {
             $activityWithRawData = $this->activityWithRawDataRepository->find($activityId);
             if (!$segmentEfforts = $activityWithRawData->getSegmentEfforts()) {
                 continue;
