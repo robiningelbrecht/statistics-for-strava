@@ -36,6 +36,7 @@ final readonly class AIProviderFactory
             'ollama' => ['model', 'url'],
             'azureOpenAI' => ['key', 'endpoint', 'model', 'version'],
             'openAILike' => ['baseUri', 'key', 'model'],
+            'openRouter' => ['key', 'model'],
             default => ['model', 'key'],
         };
 
@@ -82,6 +83,10 @@ final readonly class AIProviderFactory
             ),
             'openAILike' => new OpenAILike(
                 baseUri: $config['baseUri'],
+                key: $config['key'],
+                model: $config['model'],
+            ),
+            'openRouter' => new OpenRouter(
                 key: $config['key'],
                 model: $config['model'],
             ),

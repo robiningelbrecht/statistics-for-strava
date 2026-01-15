@@ -29,6 +29,32 @@ integrations:
       model: 'MODEL-NAME'
 ```
 
+## OpenRouter
+
+<a href="https://openrouter.ai">OpenRouter</a> provides a unified API to access 400+ models from providers like OpenAI, Anthropic, Google, and more using a single API key. OpenRouter also offers <a href="https://openrouter.ai/collections/free-models">free models</a> to get started without any cost.
+
+To get started:
+
+1. Create an account at <a href="https://openrouter.ai">openrouter.ai</a>
+2. Generate an API key at <a href="https://openrouter.ai/keys">openrouter.ai/keys</a>
+3. Choose a model from the <a href="https://openrouter.ai/models">model list</a>
+
+Then configure your `config.yaml`:
+
+```yaml
+integrations:
+  ai:
+    enabled: true
+    enableUI: true
+    provider: 'openRouter'
+    configuration:
+      key: 'sk-or-v1-your-api-key'
+      model: 'anthropic/claude-sonnet-4.5'
+```
+
+> [!TIP]
+> **Tip** Popular models include `anthropic/claude-sonnet-4.5` and `google/gemini-3-flash-preview`.
+
 ## Locally hosted Ollama
 
 You can also run a local model using Ollama. Start by configuring a Docker container for Ollama:
