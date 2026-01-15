@@ -8,6 +8,7 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\DailyTrainingLoad;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Athlete\Athlete;
@@ -27,7 +28,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
     private AthleteRepository $athleteRepository;
     private FtpHistory $ftpHistory;
 
-    public function testCalculateWithFtp(): void
+    public function testCalculateWithPowerBasedData(): void
     {
         $this->athleteRepository->save(Athlete::create([
             'birthDate' => '1989-08-14',
@@ -36,6 +37,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         $activity = ActivityBuilder::fromDefaults()
             ->withAveragePower(250)
             ->withMovingTimeInSeconds(3600)
+            ->withSportType(SportType::RIDE)
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
 
@@ -53,6 +55,49 @@ class DailyTrainingLoadTest extends ContainerTestCase
 
         $this->assertEquals(
             100,
+            $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
+        );
+    }
+
+    public function testCalculateWhenFtpNotFound(): void
+    {
+        $this->dailyTrainingLoad = new DailyTrainingLoad(
+            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(ActivityIntensity::class),
+            $this->ftpHistory = FtpHistory::fromArray([]),
+            $this->athleteRepository = new KeyValueBasedAthleteRepository(
+                $this->getContainer()->get(KeyValueStore::class),
+                $this->getContainer()->get(MaxHeartRateFormula::class),
+                $this->getContainer()->get(RestingHeartRateFormula::class),
+            )
+        );
+
+        $this->athleteRepository->save(Athlete::create([
+            'birthDate' => '1989-08-14',
+        ]));
+
+        $activity = ActivityBuilder::fromDefaults()
+            ->withAveragePower(250)
+            ->withAverageHeartRate(171)
+            ->withMovingTimeInSeconds(3600)
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
+            ->build();
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            $activity,
+            []
+        ));
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activity->getId())
+                ->withStreamType(StreamType::WATTS)
+                ->withNormalizedPower(250)
+                ->build()
+        );
+
+        $this->assertEquals(
+            277,
             $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
