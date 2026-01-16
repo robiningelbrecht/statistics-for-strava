@@ -64,6 +64,9 @@ class DbalChatRepositoryTest extends ContainerTestCase
             ],
             $this->chatRepository->findAll()
         );
+
+        $this->chatRepository->clear();
+        $this->assertEmpty($this->chatRepository->findAll());
     }
 
     public function testCreate(): void

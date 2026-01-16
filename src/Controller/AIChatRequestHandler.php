@@ -44,14 +44,6 @@ final readonly class AIChatRequestHandler
     ) {
     }
 
-    #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
-    public function clearChat(): Response
-    {
-        $this->chatRepository->clear();
-
-        return new Response('', Response::HTTP_NO_CONTENT);
-    }
-
     #[Route(path: '/ai/chat', methods: ['GET'], priority: 2)]
     public function handle(Request $request): Response
     {
@@ -79,6 +71,14 @@ final readonly class AIChatRequestHandler
             'form' => $form->createView(),
             'chatCommands' => Json::encode($this->chatCommands),
         ]), Response::HTTP_OK);
+    }
+
+    #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
+    public function clearChat(): Response
+    {
+        $this->chatRepository->clear();
+
+        return new Response(status: Response::HTTP_NO_CONTENT);
     }
 
     /**
