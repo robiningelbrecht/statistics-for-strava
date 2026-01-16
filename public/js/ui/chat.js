@@ -1,12 +1,21 @@
 import autoComplete from "../../libraries/autocomplete";
+import { marked } from 'marked';
+
+// Configure marked for better rendering
+marked.setOptions({
+    gfm: true,
+    breaks: true,
+});
 
 export default class Chat {
     constructor(chatModal) {
+        this.chatModal = chatModal;
         this.chatWrapper = chatModal.querySelector('.chat--wrapper');
         this.form = chatModal.querySelector('form');
         this.button = this.form.querySelector('button.send-message');
         this.textInput = this.form.querySelector('input.message');
         this.spinner = this.form.querySelector('div.spinner');
+        this.clearButton = chatModal.querySelector('button.clear-chat');
 
         this.placeholderIdle = this.textInput.getAttribute('data-placeholder-idle');
         this.placeholderProcessing = this.textInput.getAttribute('data-placeholder-processing');
@@ -14,6 +23,7 @@ export default class Chat {
         this.commands = JSON.parse(this.chatWrapper.getAttribute('data-chat-commands') || '{}');
 
         this.autoCompleteJS = null;
+        this.currentMessageRaw = '';
     }
 
     toggleElements(disabled) {
@@ -68,6 +78,13 @@ export default class Chat {
 
         source.addEventListener('fullMessage', event => {
             this.chatWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
+            // Capture any initial content from the message
+            const lastMessage = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
+            if (lastMessage) {
+                this.currentMessageRaw = lastMessage.textContent.trim();
+            } else {
+                this.currentMessageRaw = '';
+            }
         });
 
         source.addEventListener('removeThinking', () => {
@@ -78,12 +95,14 @@ export default class Chat {
         source.addEventListener('agentResponse', event => {
             const lastMessage = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
             if (lastMessage) {
-                lastMessage.innerHTML += event.data.replace(/\\n/g, '\n');
+                this.currentMessageRaw += event.data.replace(/\\n/g, '\n');
+                lastMessage.innerHTML = marked.parse(this.currentMessageRaw);
             }
         });
 
         source.addEventListener('done', () => {
             source.close();
+            this.currentMessageRaw = '';
             this.toggleElements(false);
             this.textInput.focus();
         });
@@ -105,9 +124,50 @@ export default class Chat {
                 this.form.requestSubmit();
             }
         });
+
+        // Clear chat
+        if (this.clearButton) {
+            this.clearButton.addEventListener('click', () => this.clearChat());
+        }
+    }
+
+    async clearChat() {
+        if (!confirm('Are you sure you want to clear the chat history?')) {
+            return;
+        }
+
+        try {
+            await fetch('/chat/clear', { method: 'POST' });
+            this.chatWrapper.innerHTML = '';
+        } catch (error) {
+            console.error('Failed to clear chat:', error);
+        }
+    }
+
+    parseMarkdown(text) {
+        // Remove common leading whitespace from all lines (dedent)
+        const lines = text.split('\n');
+        const nonEmptyLines = lines.filter(line => line.trim());
+        if (nonEmptyLines.length === 0) return '';
+
+        const minIndent = Math.min(...nonEmptyLines.map(line => line.match(/^(\s*)/)[1].length));
+        const dedented = lines.map(line => line.slice(minIndent)).join('\n').trim();
+
+        return marked.parse(dedented);
+    }
+
+    parseExistingMessages() {
+        const messages = this.chatWrapper.querySelectorAll('div.message');
+        messages.forEach(msg => {
+            const raw = msg.textContent;
+            if (raw.trim()) {
+                msg.innerHTML = this.parseMarkdown(raw);
+            }
+        });
     }
 
     render() {
+        this.parseExistingMessages();
         this.initAutoComplete();
         this.bindEvents();
     }

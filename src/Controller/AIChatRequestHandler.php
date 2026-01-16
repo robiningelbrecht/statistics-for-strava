@@ -44,6 +44,14 @@ final readonly class AIChatRequestHandler
     ) {
     }
 
+    #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
+    public function clearChat(): Response
+    {
+        $this->chatRepository->clearHistory();
+
+        return new Response('', Response::HTTP_NO_CONTENT);
+    }
+
     #[Route(path: '/ai/chat', methods: ['GET'], priority: 2)]
     public function handle(Request $request): Response
     {
@@ -119,7 +127,7 @@ final readonly class AIChatRequestHandler
                     ));
 
                     $response->sendEvent(new ServerSentEvent(
-                        data: nl2br($chunk),
+                        data: $chunk,
                         type: 'agentResponse'
                     ));
                 }
