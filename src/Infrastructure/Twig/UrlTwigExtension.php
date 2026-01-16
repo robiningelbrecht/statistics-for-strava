@@ -55,7 +55,8 @@ final readonly class UrlTwigExtension
         $activityTitle = $activity->getName();
 
         return sprintf(
-            '<a href="#" data-model-content-url="%s" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">%s<span class="%s">%s</span></a>',
+            '<a href="#" data-model-content-url="%s" data-link-preview-url="%s" class="flex items-center gap-x-1 font-medium text-blue-600 hover:underline" rel="nofollow">%s<span class="%s">%s</span></a>',
+            $this->toRelativeUrl('activity/'.$activity->getId().'.html'),
             $this->toRelativeUrl('activity/'.$activity->getId().'.html'),
             $activityIcon,
             $truncate ? 'truncate' : '',
