@@ -6,6 +6,8 @@ use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\CouldNotDetermineActivityIntensity;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Athlete\Athlete;
@@ -25,7 +27,7 @@ class ActivityIntensityTest extends ContainerTestCase
     private AthleteRepository $athleteRepository;
     private FtpHistory $ftpHistory;
 
-    public function testCalculateWithFtp(): void
+    public function testCalculateWithPower(): void
     {
         $this->athleteRepository->save(Athlete::create([
             'birthDate' => '1989-08-14',
@@ -49,10 +51,97 @@ class ActivityIntensityTest extends ContainerTestCase
                 ->build()
         );
 
+        $this->assertEmpty(ActivityIntensity::$cachedIntensities);
         $this->assertEquals(
             100,
             $this->activityIntensity->calculate($activity),
         );
+        $this->assertArrayHasKey(
+            (string) $activity->getId(),
+            ActivityIntensity::$cachedIntensities
+        );
+        $this->assertEquals(
+            100,
+            $this->activityIntensity->calculatePowerBased($activity),
+        );
+    }
+
+    public function testCalculateWithPowerWhenEmptyNormalizedPower(): void
+    {
+        $this->athleteRepository->save(Athlete::create([
+            'birthDate' => '1989-08-14',
+        ]));
+
+        $activity = ActivityBuilder::fromDefaults()
+            ->withAverageHeartRate(250)
+            ->withMovingTimeInSeconds(3600)
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
+            ->build();
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            $activity,
+            []
+        ));
+
+        $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Activity has no normalized power'));
+        $this->activityIntensity->calculatePowerBased($activity);
+    }
+
+    public function testCalculateWithPowerWhenActivityIsNotARide(): void
+    {
+        $this->athleteRepository->save(Athlete::create([
+            'birthDate' => '1989-08-14',
+        ]));
+
+        $activity = ActivityBuilder::fromDefaults()
+            ->withSportType(SportType::RUN)
+            ->build();
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            $activity,
+            []
+        ));
+
+        $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Activity is not a ride'));
+        $this->activityIntensity->calculatePowerBased($activity);
+    }
+
+    public function testCalculateWithPowerWhenFtpNotFound(): void
+    {
+        $this->activityIntensity = new ActivityIntensity(
+            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->athleteRepository = new KeyValueBasedAthleteRepository(
+                $this->getContainer()->get(KeyValueStore::class),
+                $this->getContainer()->get(MaxHeartRateFormula::class),
+                $this->getContainer()->get(RestingHeartRateFormula::class),
+            ),
+            $this->ftpHistory = FtpHistory::fromArray([]),
+        );
+
+        $this->athleteRepository->save(Athlete::create([
+            'birthDate' => '1989-08-14',
+        ]));
+
+        $activity = ActivityBuilder::fromDefaults()
+            ->withAverageHeartRate(250)
+            ->withMovingTimeInSeconds(3600)
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
+            ->build();
+
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            $activity,
+            []
+        ));
+        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activity->getId())
+                ->withStreamType(StreamType::WATTS)
+                ->withNormalizedPower(250)
+                ->build()
+        );
+
+        $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Ftp not found'));
+        $this->activityIntensity->calculatePowerBased($activity);
     }
 
     public function testCalculateWithHeartRate(): void
@@ -78,7 +167,7 @@ class ActivityIntensityTest extends ContainerTestCase
         );
     }
 
-    public function testCalculateShouldBeZero(): void
+    public function testCalculateWithoutAnyData(): void
     {
         $activity = ActivityBuilder::fromDefaults()
             ->withMovingTimeInSeconds(3600)
