@@ -64,7 +64,15 @@ class DailyTrainingLoadTest extends ContainerTestCase
         $this->dailyTrainingLoad = new DailyTrainingLoad(
             $this->getContainer()->get(ActivityRepository::class),
             $this->getContainer()->get(ActivitiesEnricher::class),
-            $this->getContainer()->get(ActivityIntensity::class),
+            new ActivityIntensity(
+                $this->getContainer()->get(ActivitiesEnricher::class),
+                $this->athleteRepository = new KeyValueBasedAthleteRepository(
+                    $this->getContainer()->get(KeyValueStore::class),
+                    $this->getContainer()->get(MaxHeartRateFormula::class),
+                    $this->getContainer()->get(RestingHeartRateFormula::class),
+                ),
+                $this->ftpHistory = FtpHistory::fromArray([]),
+            ),
             $this->ftpHistory = FtpHistory::fromArray([]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
