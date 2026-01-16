@@ -36,7 +36,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         ]);
     }
 
-    public function getHistory(): array
+    public function findAll(): array
     {
         $results = $this->connection->executeQuery('SELECT * FROM ChatMessage ORDER BY `on` ASC')
             ->fetchAllAssociative();
@@ -55,7 +55,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         return $history;
     }
 
-    public function clearHistory(): void
+    public function clear(): void
     {
         $this->connection->executeStatement('DELETE FROM ChatMessage');
     }

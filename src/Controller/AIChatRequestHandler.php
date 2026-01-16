@@ -47,7 +47,7 @@ final readonly class AIChatRequestHandler
     #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
     public function clearChat(): Response
     {
-        $this->chatRepository->clearHistory();
+        $this->chatRepository->clear();
 
         return new Response('', Response::HTTP_NO_CONTENT);
     }
@@ -75,7 +75,7 @@ final readonly class AIChatRequestHandler
             ->getForm();
 
         return new Response($this->twig->render('html/chat/chat.html.twig', [
-            'chatHistory' => $this->chatRepository->getHistory(),
+            'chatHistory' => $this->chatRepository->findAll(),
             'form' => $form->createView(),
             'chatCommands' => Json::encode($this->chatCommands),
         ]), Response::HTTP_OK);

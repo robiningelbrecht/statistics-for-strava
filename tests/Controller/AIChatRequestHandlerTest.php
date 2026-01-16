@@ -37,7 +37,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->once())
-            ->method('getHistory')
+            ->method('findAll')
             ->willReturn([new ChatMessage(
                 messageId: ChatMessageId::random(),
                 message: 'message',
@@ -64,7 +64,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     {
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
@@ -87,7 +87,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')

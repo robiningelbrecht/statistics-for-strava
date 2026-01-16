@@ -13,9 +13,9 @@ interface ChatRepository
     /**
      * @return ChatMessage[]
      */
-    public function getHistory(): array;
+    public function findAll(): array;
 
-    public function clearHistory(): void;
+    public function clear(): void;
 
     public function buildMessage(string $message, MessageRole $messageRole): ChatMessage;
 }
