@@ -161,9 +161,18 @@ class ActivityIntensityTest extends ContainerTestCase
             'birthDate' => '1989-08-14',
         ]));
 
+        $this->assertEmpty(ActivityIntensity::$cachedIntensities);
         $this->assertEquals(
             87,
-            $this->activityIntensity->calculate($activity),
+            $this->activityIntensity->calculateHeartRateBased($activity),
+        );
+        $this->assertArrayHasKey(
+            (string) $activity->getId(),
+            ActivityIntensity::$cachedIntensities
+        );
+        $this->assertEquals(
+            87,
+            $this->activityIntensity->calculateHeartRateBased($activity),
         );
     }
 
