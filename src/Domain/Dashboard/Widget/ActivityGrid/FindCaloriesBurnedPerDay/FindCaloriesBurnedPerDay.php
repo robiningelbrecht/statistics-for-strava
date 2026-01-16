@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\Grid\FindCaloriesBurnedPerDay;
+namespace App\Domain\Dashboard\Widget\ActivityGrid\FindCaloriesBurnedPerDay;
 
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\ValueObject\Time\Years;
 
 /**
- * @implements Query<\App\Domain\Activity\Grid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDayResponse>
+ * @implements Query<\App\Domain\Dashboard\Widget\ActivityGrid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDayResponse>
  */
 final readonly class FindCaloriesBurnedPerDay implements Query
 {

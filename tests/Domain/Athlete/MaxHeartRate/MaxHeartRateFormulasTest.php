@@ -2,12 +2,12 @@
 
 namespace App\Tests\Domain\Athlete\MaxHeartRate;
 
+use App\Domain\Athlete\InvalidHeartRateFormula;
 use App\Domain\Athlete\MaxHeartRate\Arena;
 use App\Domain\Athlete\MaxHeartRate\Astrand;
 use App\Domain\Athlete\MaxHeartRate\DateRangeBased;
 use App\Domain\Athlete\MaxHeartRate\Fox;
 use App\Domain\Athlete\MaxHeartRate\Gellish;
-use App\Domain\Athlete\MaxHeartRate\InvalidMaxHeartRateFormula;
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormulas;
 use App\Domain\Athlete\MaxHeartRate\Nes;
@@ -29,25 +29,25 @@ class MaxHeartRateFormulasTest extends TestCase
 
     public function testItShouldThrowWhenMaxHeartRateFormulaIsEmpty(): void
     {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA cannot be empty'));
+        $this->expectExceptionObject(new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA cannot be empty'));
         new MaxHeartRateFormulas()->determineFormula(' ');
     }
 
     public function testItShouldThrowWhenMaxHeartRateFormulaIsNonExistent(): void
     {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('Invalid MAX_HEART_RATE_FORMULA "invalid" detected'));
+        $this->expectExceptionObject(new InvalidHeartRateFormula('Invalid MAX_HEART_RATE_FORMULA "invalid" detected'));
         new MaxHeartRateFormulas()->determineFormula('invalid');
     }
 
     public function testItShouldThrowWhenMaxHeartRateFormulaJsonContainsInvalidDates(): void
     {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('Invalid date "lol" set in MAX_HEART_RATE_FORMULA'));
+        $this->expectExceptionObject(new InvalidHeartRateFormula('Invalid date "lol" set in MAX_HEART_RATE_FORMULA'));
         new MaxHeartRateFormulas()->determineFormula(['lol' => 200]);
     }
 
     public function testItShouldThrowWhenMaxHeartRateFormulaJsonIsEmpty(): void
     {
-        $this->expectExceptionObject(new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty'));
+        $this->expectExceptionObject(new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty'));
         new MaxHeartRateFormulas()->determineFormula([]);
     }
 

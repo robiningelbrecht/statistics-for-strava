@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget\TrainingLoad;
 
-use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\DailyTrainingLoad;
 use App\Domain\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Dashboard\Widget\TrainingLoad\FindNumberOfRestDays\FindNumberOfRestDays;
 use App\Domain\Dashboard\Widget\Widget;
@@ -21,7 +21,7 @@ final readonly class TrainingLoadWidget implements Widget
 {
     public function __construct(
         private ActivityHeartRateRepository $activityHeartRateRepository,
-        private ActivityIntensity $activityIntensity,
+        private DailyTrainingLoad $dailyTrainingLoad,
         private QueryBus $queryBus,
         private FilesystemOperator $buildStorage,
         private Environment $twig,
@@ -45,7 +45,7 @@ final readonly class TrainingLoadWidget implements Widget
         $intensities = [];
         for ($i = (TrainingLoadChart::NUMBER_OF_DAYS_TO_DISPLAY + 210); $i >= 0; --$i) {
             $calculateForDate = $now->modify('- '.$i.' days');
-            $intensities[$calculateForDate->format('Y-m-d')] = $this->activityIntensity->calculateForDate($calculateForDate);
+            $intensities[$calculateForDate->format('Y-m-d')] = $this->dailyTrainingLoad->calculate($calculateForDate);
         }
 
         $trainingMetrics = TrainingMetrics::create($intensities);

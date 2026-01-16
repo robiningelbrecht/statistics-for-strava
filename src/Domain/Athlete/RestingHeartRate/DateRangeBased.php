@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Athlete\MaxHeartRate;
+namespace App\Domain\Athlete\RestingHeartRate;
 
 use App\Domain\Athlete\ProvideDateRangeBasedFormula;
 
-final class DateRangeBased implements MaxHeartRateFormula
+final class DateRangeBased implements RestingHeartRateFormula
 {
     use ProvideDateRangeBasedFormula;
 

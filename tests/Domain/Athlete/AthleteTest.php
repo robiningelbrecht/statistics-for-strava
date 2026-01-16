@@ -39,6 +39,18 @@ class AthleteTest extends TestCase
         $athlete->getMaxHeartRate(SerializableDateTime::fromString('2024-01-01'));
     }
 
+    public function testGetRestingHeartRateItShouldThrowWhenStrategyNotSet(): void
+    {
+        $this->expectExceptionObject(new \RuntimeException('Resting heart rate formula not set'));
+
+        $athlete = Athlete::create(
+            data: [
+                'birthDate' => '2024-01-01',
+            ],
+        );
+        $athlete->getRestingHeartRateFormula(SerializableDateTime::fromString('2024-01-01'));
+    }
+
     public static function provideDataAthleteAgeData(): array
     {
         return [

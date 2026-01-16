@@ -15,7 +15,7 @@ These will trigger the import and build processes in the background. It may take
 > **Important** Your Statistics for Strava instance must be publicly accessible over HTTPS for Strava webhooks to work.
 
 > [!IMPORTANT]
-> **Important** Processing Strava webhooks requires the daemon Docker container to be configured. See the compose file [here](https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml) for information about setting it up. 
+> **Important** Processing Strava webhooks requires the daemon Docker container to be configured. See the compose file [here](/getting-started/installation.md) for information about setting it up. 
 
 > [!TIP]
 > **Tip** If you're hosting your Statistics for Strava instance on Cloudflare, make sure to disable "Bot Fight Mode".

@@ -18,7 +18,6 @@ Activities: 活动
 Activity: 活动
 'Activity count': 活动量
 'Activity heatmap': 活动热图
-'Activity intensity': 活动强度
 'Activity locations': 活动地点
 'Activity start times': 活动开始时间
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
@@ -162,6 +161,7 @@ Laps: 圈
 'Last maintenance': 最后维护
 'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
 Loading...: 加载中...

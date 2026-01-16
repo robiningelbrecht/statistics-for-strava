@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Domain\Athlete\MaxHeartRate;
+namespace App\Tests\Domain\Athlete\RestingHeartRate;
 
 use App\Domain\Athlete\InvalidHeartRateFormula;
-use App\Domain\Athlete\MaxHeartRate\DateRangeBased;
+use App\Domain\Athlete\RestingHeartRate\DateRangeBased;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +13,7 @@ class DateRangeBasedTest extends TestCase
     #[DataProvider(methodName: 'provideCalculateData')]
     public function testCalculate(SerializableDateTime $on, int $expectedHeartRate): void
     {
-        $dateRangeBased = DateRangeBased::empty()
+        $dateRangeBased = \App\Domain\Athlete\MaxHeartRate\DateRangeBased::empty()
             ->addRange(SerializableDateTime::fromString('2021-01-01'), 100)
             ->addRange(SerializableDateTime::fromString('2021-02-01'), 110)
             ->addRange(SerializableDateTime::fromString('2021-03-01'), 120);

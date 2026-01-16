@@ -18,7 +18,6 @@ Activities: Activiteiten
 Activity: Activity
 'Activity count': 'Activity count'
 'Activity heatmap': 'Activity heatmap'
-'Activity intensity': Activiteitsintensiteit
 'Activity locations': 'Activity locations'
 'Activity start times': 'Activity start times'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
@@ -162,6 +161,7 @@ Laps: Laps
 'Last maintenance': 'Last maintenance'
 'Last {numberOfDays} days': 'Last {numberOfDays} days'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'Aan het laden...'
 Loading...: 'Aan het laden...'
