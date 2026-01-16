@@ -104,6 +104,22 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
+    public function testClearChat(): void
+    {
+        $requestHandler = $this->buildRequestHandler(
+            $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
+        );
+
+        $this->chatRepository
+            ->expects($this->once())
+            ->method('clear');
+
+        $this->assertEquals(
+            204,
+            $requestHandler->clearChat()->getStatusCode()
+        );
+    }
+
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler
     {
         AppConfig::init(
