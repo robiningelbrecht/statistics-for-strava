@@ -5,7 +5,6 @@ namespace App\Domain\Activity;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -47,56 +46,6 @@ final class DbalActivityIdRepository implements ActivityIdRepository
         self::$cachedActivityIds = $activityIds;
 
         return self::$cachedActivityIds;
-    }
-
-    public function findByStartDate(SerializableDateTime $startDate, ?ActivityType $activityType): ActivityIds
-    {
-        $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('activityId')
-            ->from('Activity')
-            ->andWhere('startDateTime BETWEEN :startDateTimeStart AND :startDateTimeEnd')
-            ->setParameter(
-                key: 'startDateTimeStart',
-                value: $startDate->format('Y-m-d 00:00:00'),
-            )
-            ->setParameter(
-                key: 'startDateTimeEnd',
-                value: $startDate->format('Y-m-d 23:59:59'),
-            )
-            ->orderBy('startDateTime', 'DESC');
-
-        if ($activityType) {
-            $queryBuilder->andWhere('sportType IN (:sportTypes)')
-                ->setParameter(
-                    key: 'sportTypes',
-                    value: array_map(fn (SportType $sportType) => $sportType->value, $activityType->getSportTypes()->toArray()),
-                    type: ArrayParameterType::STRING
-                );
-        }
-
-        return ActivityIds::fromArray(array_map(
-            ActivityId::fromString(...),
-            $queryBuilder->executeQuery()->fetchFirstColumn()
-        ));
-    }
-
-    public function findBySportTypes(SportTypes $sportTypes): ActivityIds
-    {
-        $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('activityId')
-            ->from('Activity')
-            ->andWhere('sportType IN (:sportTypes)')
-            ->setParameter(
-                key: 'sportTypes',
-                value: $sportTypes->map(fn (SportType $sportType) => $sportType->value),
-                type: ArrayParameterType::STRING
-            )
-            ->orderBy('startDateTime', 'DESC');
-
-        return ActivityIds::fromArray(array_map(
-            ActivityId::fromString(...),
-            $queryBuilder->executeQuery()->fetchFirstColumn()
-        ));
     }
 
     public function hasForSportTypes(SportTypes $sportTypes): bool

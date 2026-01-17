@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityRepository;
 use NeuronAI\Tools\Tool;
 
 final class GetAllActivitiesSummary extends Tool
 {
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivityRepository $activityRepository,
     ) {
         parent::__construct(
             'get_activities_summary',
@@ -29,7 +29,7 @@ final class GetAllActivitiesSummary extends Tool
      */
     public function __invoke(): array
     {
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->activityRepository->findAll();
         $summary = $allActivities
             ->slice(0, 250)
             ->map(fn (Activity $activity): array => [

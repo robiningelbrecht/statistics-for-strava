@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildActivitiesHtml;
 
 use App\Application\Countries;
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Device\DeviceRepository;
@@ -42,6 +42,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private AthleteRepository $athleteRepository,
+        private ActivityRepository $activityRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
@@ -52,7 +53,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
         private ActivityBestEffortRepository $activityBestEffortRepository,
-        private ActivitiesEnricher $activitiesEnricher,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -71,7 +71,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $bestEfforts = $this->activityBestEffortRepository->findAll();
 
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $activities = $this->activityRepository->findAll();
 
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,

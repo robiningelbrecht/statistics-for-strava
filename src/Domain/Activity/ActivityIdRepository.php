@@ -3,7 +3,6 @@
 namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportTypes;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Years;
 
 interface ActivityIdRepository
@@ -12,13 +11,10 @@ interface ActivityIdRepository
 
     public function findAll(): ActivityIds;
 
-    public function findByStartDate(SerializableDateTime $startDate, ?ActivityType $activityType): ActivityIds;
-
-    public function findBySportTypes(SportTypes $sportTypes): ActivityIds;
-
     public function hasForSportTypes(SportTypes $sportTypes): bool;
 
     public function findMarkedForDeletion(): ActivityIds;
 
+    // @TODO: Move to QueryBus.
     public function findLongestFor(Years $years): ActivityId;
 }

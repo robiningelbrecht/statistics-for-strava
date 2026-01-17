@@ -4,28 +4,24 @@ declare(strict_types=1);
 
 namespace App\Domain\Calendar;
 
-use App\Domain\Activity\ActivitiesEnricher;
-use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Calendar
 {
     private function __construct(
         private Month $month,
-        private ActivityIdRepository $activityIdRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
     ) {
     }
 
     public static function create(
         Month $month,
-        ActivityIdRepository $activityIdRepository,
-        ActivitiesEnricher $activitiesEnricher,
+        ActivityRepository $activityRepository,
     ): self {
         return new self(
             month: $month,
-            activityIdRepository: $activityIdRepository,
-            activitiesEnricher: $activitiesEnricher,
+            activityRepository: $activityRepository,
         );
     }
 
@@ -44,30 +40,26 @@ final readonly class Calendar
         for ($i = 1; $i < $this->month->getWeekDayOfFirstDay(); ++$i) {
             // Prepend with days of previous month.
             $dayNumber = $numberOfDaysInPreviousMonth - ($this->month->getWeekDayOfFirstDay() - $i - 1);
-            $activityIds = $this->activityIdRepository->findByStartDate(SerializableDateTime::createFromFormat(
-                format: 'd-n-Y',
-                datetime: $dayNumber.'-'.$previousMonth->getMonth().'-'.$previousMonth->getYear(),
-            ), null);
-
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activitiesEnricher->getEnrichedActivitiesByActivityIds($activityIds)
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                    format: 'd-n-Y',
+                    datetime: $dayNumber.'-'.$previousMonth->getMonth().'-'.$previousMonth->getYear(),
+                ), null)
             ));
         }
 
         for ($i = 0; $i < $this->month->getNumberOfDays(); ++$i) {
             $dayNumber = $i + 1;
 
-            $activityIds = $this->activityIdRepository->findByStartDate(SerializableDateTime::createFromFormat(
-                format: 'd-n-Y',
-                datetime: $dayNumber.'-'.$this->month->getMonth().'-'.$this->month->getYear(),
-            ), null);
-
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: true,
-                activities: $this->activitiesEnricher->getEnrichedActivitiesByActivityIds($activityIds)
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                    format: 'd-n-Y',
+                    datetime: $dayNumber.'-'.$this->month->getMonth().'-'.$this->month->getYear(),
+                ), null)
             ));
         }
 
@@ -75,15 +67,13 @@ final readonly class Calendar
             // Append with days of next month.
             $dayNumber = $i + 1;
 
-            $activityIds = $this->activityIdRepository->findByStartDate(SerializableDateTime::createFromFormat(
-                format: 'd-n-Y',
-                datetime: $dayNumber.'-'.$nextMonth->getMonth().'-'.$nextMonth->getYear(),
-            ), null);
-
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activitiesEnricher->getEnrichedActivitiesByActivityIds($activityIds)
+                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                    format: 'd-n-Y',
+                    datetime: $dayNumber.'-'.$nextMonth->getMonth().'-'.$nextMonth->getYear(),
+                ), null)
             ));
         }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget\WeekdayStats;
 
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Infrastructure\Serialization\Json;
@@ -15,7 +15,7 @@ use Twig\Environment;
 final readonly class WeekdayStatsWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
@@ -33,7 +33,7 @@ final readonly class WeekdayStatsWidget implements Widget
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $statsPerActivityType = [];
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+        $activitiesPerActivityType = $this->activityRepository->findGroupedByActivityType();
         if (count($activitiesPerActivityType) > 1) {
             foreach ($activitiesPerActivityType as $activityType => $activities) {
                 $weekdayStats = WeekdayStats::create(
@@ -49,7 +49,7 @@ final readonly class WeekdayStatsWidget implements Widget
             }
         }
 
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->activityRepository->findAll();
         $allWeekdayStats = WeekdayStats::create(
             activities: $allActivities,
             translator: $this->translator,

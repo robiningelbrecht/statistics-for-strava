@@ -6,7 +6,7 @@ use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMar
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivitySummaryRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
@@ -36,7 +36,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
 
     public function __construct(
         private readonly ActivityIdRepository $activityIdRepository,
-        private readonly ActivityRepository $activityRepository,
+        private readonly ActivitySummaryRepository $activitySummaryRepository,
         private readonly ActivityWithRawDataRepository $activityWithRawDataRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly CombinedActivityStreamRepository $combinedActivityStreamRepository,
@@ -103,7 +103,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         $progressIndicator->finish(sprintf('Found %d activities with corrupted data', count($activityIdsToDelete)));
         $output->newLine();
         $output->listing(array_map(function (ActivityId $activityId) {
-            $activity = $this->activityRepository->findSummary($activityId);
+            $activity = $this->activitySummaryRepository->find($activityId);
 
             return sprintf(
                 'Activity "%s - %s"',

@@ -3,7 +3,7 @@
 namespace App\Application\Import\DeleteActivitiesMarkedForDeletion;
 
 use App\Domain\Activity\ActivityIdRepository;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivitySummaryRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Lap\ActivityLapRepository;
@@ -18,7 +18,7 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
 {
     public function __construct(
         private ActivityIdRepository $activityIdRepository,
-        private ActivityRepository $activityRepository,
+        private ActivitySummaryRepository $activitySummaryRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private SegmentEffortRepository $segmentEffortRepository,
@@ -43,7 +43,7 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
         $command->getOutput()->writeln('Deleting activities...');
 
         foreach ($activityIdsToDelete as $activityId) {
-            $activity = $this->activityRepository->findSummary($activityId);
+            $activity = $this->activitySummaryRepository->find($activityId);
 
             $this->activityStreamRepository->deleteForActivity($activityId);
             $this->segmentEffortRepository->deleteForActivity($activityId);

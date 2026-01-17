@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Dashboard\InvalidDashboardLayout;
@@ -18,7 +18,7 @@ use Twig\Environment;
 final readonly class StreaksWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivityRepository $activityRepository,
         private QueryBus $queryBus,
         private Clock $clock,
         private Environment $twig,
@@ -60,8 +60,8 @@ final readonly class StreaksWidget implements Widget
             restrictToSportTypes: $sportTypesToInclude,
         ));
 
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
-        $mostRecentActivity = $this->activitiesEnricher->getEnrichedActivities()->getFirst();
+        $activities = $this->activityRepository->findAll();
+        $mostRecentActivity = $activities->getFirst();
         if (!$sportTypesToInclude->isEmpty()) {
             foreach ($activities as $activity) {
                 if (!$sportTypesToInclude->has($activity->getSportType())) {

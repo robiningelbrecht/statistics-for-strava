@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Import\LinkCustomGearToActivities;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGear;
@@ -23,7 +23,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
         private ImportedGearRepository $importedGearRepository,
         private CustomGearRepository $customGearRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private CustomGearConfig $customGearConfig,
     ) {
     }
@@ -41,7 +41,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
         $importedGears = $this->importedGearRepository->findAll();
         $customGears = $this->customGearRepository->findAll();
         $allCustomGearTags = $customGears->map(static fn (CustomGear $customGear): string => $customGear->getTag());
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $activities = $this->activityRepository->findAll();
 
         // Filter out activities that have a Strava gear linked,
         // we only want to link custom gear to activities that do not have a Strava gear.
