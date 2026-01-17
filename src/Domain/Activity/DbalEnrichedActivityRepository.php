@@ -168,21 +168,6 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
         return $activities;
     }
 
-    public function findByActivityIds(ActivityIds $activityIds): Activities
-    {
-        if ($activityIds->isEmpty()) {
-            throw new \RuntimeException('ActivityIds cannot be empty');
-        }
-        $this->enrichAll();
-
-        $activities = Activities::empty();
-        foreach ($activityIds as $activityId) {
-            $activities->add(self::$cachedActivities[(string) $activityId] ?? throw new EntityNotFound(sprintf('Activity "%s" not found', $activityId)));
-        }
-
-        return $activities;
-    }
-
     public function findGroupedByActivityType(): array
     {
         if (empty(self::$cachedActivitiesPerActivityType)) {
