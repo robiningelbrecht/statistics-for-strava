@@ -48,7 +48,6 @@ final class ActivityBuilder
     private ?GearId $gearId;
     private readonly bool $isCommute;
     private readonly ?WorkoutType $workoutType;
-    private array $tags;
 
     private function __construct()
     {
@@ -80,7 +79,6 @@ final class ActivityBuilder
         $this->routeGeography = RouteGeography::create([]);
         $this->isCommute = false;
         $this->workoutType = null;
-        $this->tags = [];
     }
 
     public static function fromDefaults(): self
@@ -90,7 +88,7 @@ final class ActivityBuilder
 
     public function build(): Activity
     {
-        $activity = Activity::fromState(
+        return Activity::fromState(
             activityId: $this->activityId,
             startDateTime: $this->startDateTime,
             sportType: $this->sportType,
@@ -120,10 +118,6 @@ final class ActivityBuilder
             isCommute: $this->isCommute,
             workoutType: $this->workoutType,
         );
-
-        $activity->enrichWithTags($this->tags);
-
-        return $activity;
     }
 
     public function withActivityId(ActivityId $activityId): self
@@ -276,13 +270,6 @@ final class ActivityBuilder
     public function withAverageSpeed(KmPerHour $averageSpeed): self
     {
         $this->averageSpeed = $averageSpeed;
-
-        return $this;
-    }
-
-    public function withTags(array $tags): self
-    {
-        $this->tags = $tags;
 
         return $this;
     }

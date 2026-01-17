@@ -16,26 +16,26 @@ final class ActivityIntensity
     public static array $cachedIntensities = [];
 
     public function __construct(
-        private readonly ActivityRepository $activityRepository,
+        private readonly EnrichedActivities $enrichedActivities,
         private readonly AthleteRepository $athleteRepository,
         private readonly FtpHistory $ftpHistory,
     ) {
     }
 
-    public function calculate(Activity $activity): int
+    public function calculate(ActivityId $activityId): int
     {
-        $cacheKey = (string) $activity->getId();
+        $cacheKey = (string) $activityId;
         if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
             return self::$cachedIntensities[$cacheKey];
         }
 
         try {
-            return $this->calculatePowerBased($activity);
+            return $this->calculatePowerBased($activityId);
         } catch (CouldNotDetermineActivityIntensity) {
         }
 
         try {
-            return $this->calculateHeartRateBased($activity);
+            return $this->calculateHeartRateBased($activityId);
         } catch (CouldNotDetermineActivityIntensity) {
         }
 
@@ -44,8 +44,9 @@ final class ActivityIntensity
         return 0;
     }
 
-    public function calculatePowerBased(Activity $activity): int
+    public function calculatePowerBased(ActivityId $activityId): int
     {
+        $activity = $this->enrichedActivities->find($activityId);
         if (ActivityType::RIDE !== $activity->getSportType()->getActivityType()) {
             throw new CouldNotDetermineActivityIntensity('Activity is not a ride');
         }
@@ -55,7 +56,6 @@ final class ActivityIntensity
             return self::$cachedIntensities[$cacheKey];
         }
 
-        $activity = $this->activityRepository->find($activity->getId());
         if (!$normalizedPower = $activity->getNormalizedPower()) {
             throw new CouldNotDetermineActivityIntensity('Activity has no normalized power');
         }
@@ -73,18 +73,19 @@ final class ActivityIntensity
         throw new CouldNotDetermineActivityIntensity('Ftp not found');
     }
 
-    public function calculateHeartRateBased(Activity $activity): int
+    public function calculateHeartRateBased(ActivityId $activityId): int
     {
-        $athlete = $this->athleteRepository->find();
-        $cacheKey = (string) $activity->getId();
+        $cacheKey = (string) $activityId;
         if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
             return self::$cachedIntensities[$cacheKey];
         }
 
+        $activity = $this->enrichedActivities->find($activityId);
         if (!$averageHeartRate = $activity->getAverageHeartRate()) {
             throw new CouldNotDetermineActivityIntensity();
         }
 
+        $athlete = $this->athleteRepository->find();
         $athleteRestingHeartRate = $athlete->getRestingHeartRateFormula($activity->getStartDate());
         $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
 

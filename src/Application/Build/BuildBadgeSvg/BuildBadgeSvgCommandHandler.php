@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildBadgeSvg;
 
 use App\Application\AppUrl;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
@@ -30,7 +30,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private ChallengeRepository $challengeRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
@@ -48,7 +48,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
 
         $now = $command->getCurrentDateTime();
         $athlete = $this->athleteRepository->find();
-        $activities = $this->activityRepository->findAll();
+        $activities = $this->enrichedActivities->findAll();
 
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,

@@ -4,11 +4,10 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
-use App\Domain\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -16,32 +15,31 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
+class EnrichedActivitiesTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private ActivityRepository $activityRepository;
+    private EnrichedActivities $enrichedActivities;
     private ActivityWithRawDataRepository $activityWithRawDataRepository;
 
     public function testItShouldSaveAndFind(): void
     {
-        $activity = ActivityBuilder::fromDefaults()
-            ->withTags([
-                '#sfs-chain-lubed',
-                '#sfs-chain-replaced',
-                '#sfs-chain-cleaned',
-                '#sfs-di-2-charged',
-                '#sfs-peddle-board',
-                '#sfs-workout-shoes',
-            ])
-            ->build();
-
+        $activity = ActivityBuilder::fromDefaults()->build();
         $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
             $activity,
             ['raw' => 'data']
         ));
 
-        $persisted = $this->activityRepository->find($activity->getId());
+        $activity->enrichWithTags([
+            '#sfs-chain-lubed',
+            '#sfs-chain-replaced',
+            '#sfs-chain-cleaned',
+            '#sfs-di-2-charged',
+            '#sfs-peddle-board',
+            '#sfs-workout-shoes',
+        ]);
+
+        $persisted = $this->enrichedActivities->find($activity->getId());
         $this->assertEquals(
             $activity,
             $persisted,
@@ -51,7 +49,7 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
     public function testFindItShouldThrowWhenNotFound(): void
     {
         $this->expectException(EntityNotFound::class);
-        $this->activityRepository->find(ActivityId::fromUnprefixed(1));
+        $this->enrichedActivities->find(ActivityId::fromUnprefixed(1));
     }
 
     public function testFindAll(): void
@@ -83,7 +81,7 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()],
-            $this->activityRepository->findAll()->map(fn (Activity $activity): ActivityId => $activity->getId())
+            $this->enrichedActivities->findAll()->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
     }
 
@@ -119,12 +117,12 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [$activityOne->getId(), $activityTwo->getId()],
-            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity): ActivityId => $activity->getId())
+            $this->enrichedActivities->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
 
         $this->assertEquals(
             [$activityOne->getId()],
-            $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity): ActivityId => $activity->getId())
+            $this->enrichedActivities->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
     }
 
@@ -160,7 +158,7 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             [$activityTwo->getId(), $activityThree->getId()],
-            $this->activityRepository->findBySportTypes(SportTypes::fromArray([SportType::RUN, SportType::MOUNTAIN_BIKE_RIDE]))->map(fn (Activity $activity): ActivityId => $activity->getId())
+            $this->enrichedActivities->findBySportTypes(SportTypes::fromArray([SportType::RUN, SportType::MOUNTAIN_BIKE_RIDE]))->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
     }
 
@@ -169,10 +167,7 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->activityRepository = $this->getContainer()->get(ActivityRepository::class);
-        $this->activityWithRawDataRepository = new DbalActivityWithRawDataRepository(
-            $this->getConnection(),
-            $this->activityRepository
-        );
+        $this->enrichedActivities = $this->getContainer()->get(EnrichedActivities::class);
+        $this->activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\StatsContext;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStats;
@@ -23,7 +23,7 @@ use Twig\Environment;
 final readonly class YearlyStatsWidget implements Widget
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -66,8 +66,8 @@ final readonly class YearlyStatsWidget implements Widget
     {
         $yearlyStatChartsPerContext = [];
         $yearlyStatistics = [];
-        $allActivities = $this->activityRepository->findAll();
-        $activitiesPerActivityType = $this->activityRepository->findGroupedByActivityType();
+        $allActivities = $this->enrichedActivities->findAll();
+        $activitiesPerActivityType = $this->enrichedActivities->findGroupedByActivityType();
 
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
