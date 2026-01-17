@@ -16,7 +16,7 @@ final class ActivityIntensity
     public static array $cachedIntensities = [];
 
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivityRepository $activityRepository,
         private readonly AthleteRepository $athleteRepository,
         private readonly FtpHistory $ftpHistory,
     ) {
@@ -55,7 +55,7 @@ final class ActivityIntensity
             return self::$cachedIntensities[$cacheKey];
         }
 
-        $activity = $this->activitiesEnricher->getEnrichedActivity($activity->getId());
+        $activity = $this->activityRepository->find($activity->getId());
         if (!$normalizedPower = $activity->getNormalizedPower()) {
             throw new CouldNotDetermineActivityIntensity('Activity has no normalized power');
         }
