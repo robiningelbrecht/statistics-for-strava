@@ -15,8 +15,6 @@ interface ActivityRepository
 
     public function findBySportTypes(SportTypes $sportTypes): Activities;
 
-    public function findByActivityIds(ActivityIds $activityIds): Activities;
-
     /**
      * @return array<string, Activities>
      */

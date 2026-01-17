@@ -9,14 +9,11 @@ use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
-final class DbalActivityIdRepository implements ActivityIdRepository
+final readonly class DbalActivityIdRepository implements ActivityIdRepository
 {
-    public static ActivityIds $cachedActivityIds;
-
     public function __construct(
-        private readonly Connection $connection,
+        private Connection $connection,
     ) {
-        self::$cachedActivityIds = ActivityIds::empty();
     }
 
     public function count(): int
@@ -30,22 +27,15 @@ final class DbalActivityIdRepository implements ActivityIdRepository
 
     public function findAll(): ActivityIds
     {
-        if (!self::$cachedActivityIds->isEmpty()) {
-            return self::$cachedActivityIds;
-        }
-
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('activityId')
             ->from('Activity')
             ->orderBy('startDateTime', 'DESC');
 
-        $activityIds = ActivityIds::fromArray(array_map(
+        return ActivityIds::fromArray(array_map(
             ActivityId::fromString(...),
             $queryBuilder->executeQuery()->fetchFirstColumn()
         ));
-        self::$cachedActivityIds = $activityIds;
-
-        return self::$cachedActivityIds;
     }
 
     public function hasForSportTypes(SportTypes $sportTypes): bool
