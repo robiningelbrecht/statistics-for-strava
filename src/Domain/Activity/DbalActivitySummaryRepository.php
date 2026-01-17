@@ -24,7 +24,6 @@ final readonly class DbalActivitySummaryRepository extends DbalRepository implem
         }
 
         return ActivitySummary::create(
-            activityId: $activityId,
             name: $result['name'],
             startDateTime: SerializableDateTime::fromString($result['startDateTime']),
             sportType: SportType::from($result['sportType']),

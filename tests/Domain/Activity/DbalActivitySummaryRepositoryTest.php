@@ -29,7 +29,6 @@ class DbalActivitySummaryRepositoryTest extends ContainerTestCase
         $persisted = $this->activitySummaryRepository->find($activity->getId());
         $this->assertEquals(
             ActivitySummary::create(
-                activityId: $activity->getId(),
                 name: $activity->getName(),
                 startDateTime: $activity->getStartDate(),
                 sportType: $activity->getSportType(),
