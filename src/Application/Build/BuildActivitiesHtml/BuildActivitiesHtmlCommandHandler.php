@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildActivitiesHtml;
 
 use App\Application\Countries;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Device\DeviceRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\PowerDistributionChart;
@@ -42,7 +42,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
         private AthleteRepository $athleteRepository,
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private ActivityStreamRepository $activityStreamRepository,
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
@@ -71,7 +71,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $bestEfforts = $this->activityBestEffortRepository->findAll();
 
-        $activities = $this->activityRepository->findAll();
+        $activities = $this->enrichedActivities->findAll();
 
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,

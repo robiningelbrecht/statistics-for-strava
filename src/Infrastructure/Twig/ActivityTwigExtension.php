@@ -6,19 +6,19 @@ namespace App\Infrastructure\Twig;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
 use Twig\Attribute\AsTwigFunction;
 
 final readonly class ActivityTwigExtension
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
     ) {
     }
 
     #[AsTwigFunction('getActivity')]
     public function getActivity(ActivityId $activityId): Activity
     {
-        return $this->activityRepository->find($activityId);
+        return $this->enrichedActivities->find($activityId);
     }
 }

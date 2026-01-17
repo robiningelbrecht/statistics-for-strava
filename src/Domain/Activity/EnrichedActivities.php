@@ -2,28 +2,20 @@
 
 namespace App\Domain\Activity;
 
-use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
-use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Geography\Coordinate;
-use App\Infrastructure\ValueObject\Geography\Latitude;
-use App\Infrastructure\ValueObject\Geography\Longitude;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
-final class DbalEnrichedActivityRepository implements ActivityRepository
+final class EnrichedActivities
 {
     /** @var array<string, Activity> */
     public static array $cachedActivities = [];
@@ -32,6 +24,7 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
 
     public function __construct(
         private readonly Connection $connection,
+        private readonly ActivityRepository $activityRepository,
         private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
@@ -52,14 +45,14 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
         $gears = $this->gearRepository->findAll();
 
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('*')
+        $queryBuilder->select('activityId')
             ->from('Activity')
             ->orderBy('startDateTime', 'DESC');
 
-        $results = $queryBuilder->executeQuery()->fetchAllAssociative();
+        $results = $queryBuilder->executeQuery()->fetchFirstColumn();
 
         foreach ($results as $result) {
-            $activity = $this->hydrate($result);
+            $activity = $this->activityRepository->find(ActivityId::fromString($result));
             if ($gearId = $activity->getGearId()) {
                 $activity->enrichWithGearName($gears->getByGearId($gearId)?->getName());
             }
@@ -168,6 +161,9 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
         return $activities;
     }
 
+    /**
+     * @return array<string, Activities>
+     */
     public function findGroupedByActivityType(): array
     {
         if (empty(self::$cachedActivitiesPerActivityType)) {
@@ -182,45 +178,5 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
         }
 
         return self::$cachedActivitiesPerActivityType;
-    }
-
-    /**
-     * @param array<string, mixed> $result
-     */
-    private function hydrate(array $result): Activity
-    {
-        return Activity::fromState(
-            activityId: ActivityId::fromString($result['activityId']),
-            startDateTime: SerializableDateTime::fromString($result['startDateTime']),
-            sportType: SportType::from($result['sportType']),
-            worldType: WorldType::from($result['worldType']),
-            name: $result['name'],
-            description: $result['description'] ?: '',
-            distance: Meter::from($result['distance'])->toKilometer(),
-            elevation: Meter::from($result['elevation'] ?: 0),
-            startingCoordinate: Coordinate::createFromOptionalLatAndLng(
-                Latitude::fromOptionalString((string) $result['startingCoordinateLatitude']),
-                Longitude::fromOptionalString((string) $result['startingCoordinateLongitude'])
-            ),
-            calories: (int) ($result['calories'] ?? 0),
-            averagePower: ((int) $result['averagePower']) ?: null,
-            maxPower: ((int) $result['maxPower']) ?: null,
-            averageSpeed: KmPerHour::from($result['averageSpeed']),
-            maxSpeed: KmPerHour::from($result['maxSpeed']),
-            averageHeartRate: isset($result['averageHeartRate']) ? (int) round($result['averageHeartRate']) : null,
-            maxHeartRate: isset($result['maxHeartRate']) ? (int) round($result['maxHeartRate']) : null,
-            averageCadence: isset($result['averageCadence']) ? (int) round($result['averageCadence']) : null,
-            movingTimeInSeconds: $result['movingTimeInSeconds'] ?: 0,
-            kudoCount: $result['kudoCount'] ?: 0,
-            deviceName: $result['deviceName'],
-            totalImageCount: $result['totalImageCount'] ?: 0,
-            localImagePaths: $result['localImagePaths'] ? explode(',', (string) $result['localImagePaths']) : [],
-            polyline: $result['polyline'],
-            routeGeography: RouteGeography::create(Json::decode($result['routeGeography'] ?? '[]')),
-            weather: $result['weather'],
-            gearId: GearId::fromOptionalString($result['gearId']),
-            isCommute: (bool) $result['isCommute'],
-            workoutType: WorkoutType::tryFrom($result['workoutType'] ?? ''),
-        );
     }
 }

@@ -4,13 +4,13 @@ namespace App\Tests\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffort;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\DbalActivityBestEffortRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
@@ -223,7 +223,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         parent::setUp();
         $this->activityBestEffortRepository = new DbalActivityBestEffortRepository(
             $this->getConnection(),
-            $this->getContainer()->get(ActivityRepository::class)
+            $this->getContainer()->get(EnrichedActivities::class)
         );
     }
 }

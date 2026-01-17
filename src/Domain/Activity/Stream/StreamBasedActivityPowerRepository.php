@@ -123,7 +123,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         }
 
         foreach (self::TIME_INTERVALS_IN_SECONDS_ALL as $timeIntervalInSeconds) {
-            $query = 'SELECT ActivityStream.* FROM ActivityStream 
+            $query = 'SELECT ActivityStream.activityId, ActivityStream.bestAverages FROM ActivityStream 
                         INNER JOIN Activity ON Activity.activityId = ActivityStream.activityId 
                         WHERE streamType = :streamType
                         AND Activity.sportType IN(:sportType)
@@ -147,20 +147,9 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
             }
 
             $activityId = ActivityId::fromString($result['activityId']);
-            $stream = ActivityStream::fromState(
-                activityId: $activityId,
-                streamType: StreamType::from($result['streamType']),
-                streamData: Json::decode($result['data']),
-                createdOn: SerializableDateTime::fromString($result['createdOn']),
-                computedFieldsState: Json::decode($result['computedFieldsState'] ?? '[]'),
-                valueDistribution: Json::decode($result['valueDistribution'] ?? '[]'),
-                bestAverages: Json::decode($result['bestAverages'] ?? '[]'),
-                normalizedPower: $result['normalizedPower'] ?? null
-            );
-
-            $activitySummary = $this->activitySummaryRepository->find($stream->getActivityId());
+            $activitySummary = $this->activitySummaryRepository->find($activityId);
             $interval = CarbonInterval::seconds($timeIntervalInSeconds);
-            $bestAverageForTimeInterval = $stream->getBestAverages()[$timeIntervalInSeconds];
+            $bestAverageForTimeInterval = Json::decode($result['bestAverages'])[$timeIntervalInSeconds];
 
             try {
                 $athleteWeight = $this->athleteWeightHistory->find($activitySummary->getStartDate())->getWeightInKg();

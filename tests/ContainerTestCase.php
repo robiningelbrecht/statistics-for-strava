@@ -5,8 +5,8 @@ namespace App\Tests;
 use App\Domain\Activity\ActivityIntensity;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\DailyTrainingLoad;
-use App\Domain\Activity\DbalEnrichedActivityRepository;
 use App\Domain\Activity\Eddington\Eddington;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\Stream\StreamBasedActivityHeartRateRepository;
 use App\Domain\Activity\Stream\StreamBasedActivityPowerRepository;
 use App\Infrastructure\Twig\HtmlTwigExtension;
@@ -37,8 +37,8 @@ abstract class ContainerTestCase extends KernelTestCase
         $this->createTestDatabase();
 
         // Empty the static cache between tests.
-        DbalEnrichedActivityRepository::$cachedActivities = [];
-        DbalEnrichedActivityRepository::$cachedActivitiesPerActivityType = [];
+        EnrichedActivities::$cachedActivities = [];
+        EnrichedActivities::$cachedActivitiesPerActivityType = [];
         DailyTrainingLoad::$cachedLoad = [];
         ActivityIntensity::$cachedIntensities = [];
         StreamBasedActivityPowerRepository::$cachedPowerOutputs = [];

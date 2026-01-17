@@ -2,6 +2,7 @@
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class ActivitySummary
@@ -10,6 +11,7 @@ final readonly class ActivitySummary
         private ActivityId $activityId,
         private string $name,
         private SerializableDateTime $startDateTime,
+        private SportType $sportType,
     ) {
     }
 
@@ -17,11 +19,13 @@ final readonly class ActivitySummary
         ActivityId $activityId,
         string $name,
         SerializableDateTime $startDateTime,
+        SportType $sportType,
     ): self {
         return new self(
             activityId: $activityId,
             name: $name,
             startDateTime: $startDateTime,
+            sportType: $sportType,
         );
     }
 
@@ -38,5 +42,10 @@ final readonly class ActivitySummary
     public function getStartDate(): SerializableDateTime
     {
         return $this->startDateTime;
+    }
+
+    public function getSportType(): SportType
+    {
+        return $this->sportType;
     }
 }

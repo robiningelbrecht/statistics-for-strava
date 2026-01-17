@@ -32,6 +32,7 @@ class DbalActivitySummaryRepositoryTest extends ContainerTestCase
                 activityId: $activity->getId(),
                 name: $activity->getName(),
                 startDateTime: $activity->getStartDate(),
+                sportType: $activity->getSportType(),
             ),
             $persisted,
         );

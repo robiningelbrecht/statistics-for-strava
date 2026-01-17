@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Calendar\Months;
 use App\Domain\Challenge\Consistency\ConsistencyChallengeCalculator;
 use App\Domain\Challenge\Consistency\ConsistencyChallenges;
@@ -14,7 +14,7 @@ use Twig\Environment;
 final readonly class ChallengeConsistencyWidget implements Widget
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private ConsistencyChallengeCalculator $consistencyChallengeCalculator,
         private Environment $twig,
     ) {
@@ -35,7 +35,7 @@ final readonly class ChallengeConsistencyWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $allActivities = $this->activityRepository->findAll();
+        $allActivities = $this->enrichedActivities->findAll();
 
         $allMonths = Months::create(
             startDate: $allActivities->getFirstActivityStartDate(),
