@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\SportType\SportTypes;
@@ -23,7 +23,7 @@ use Twig\Environment;
 final readonly class PeakPowerOutputsWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private ActivityPowerRepository $activityPowerRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private Environment $twig,
@@ -66,7 +66,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
         }
 
         $activityType = ActivityType::from(array_key_first($bestAllTimePowerOutputsPerActivityType));
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->activityRepository->findAll();
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
             endDate: $now

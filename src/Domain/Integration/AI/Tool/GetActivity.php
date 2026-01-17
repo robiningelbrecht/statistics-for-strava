@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use NeuronAI\Tools\PropertyType;
 use NeuronAI\Tools\Tool;
 use NeuronAI\Tools\ToolProperty;
@@ -13,7 +13,7 @@ use NeuronAI\Tools\ToolProperty;
 final class GetActivity extends Tool
 {
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly ActivityRepository $activityRepository,
     ) {
         parent::__construct(
             'get_activity_by_id',
@@ -57,6 +57,6 @@ final class GetActivity extends Tool
     {
         $activityId = ActivityId::fromUnprefixed($activityId);
 
-        return $this->activitiesEnricher->getEnrichedActivity($activityId)->exportForAITooling();
+        return $this->activityRepository->find($activityId)->exportForAITooling();
     }
 }

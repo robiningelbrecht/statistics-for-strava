@@ -2,8 +2,8 @@
 
 namespace App\Domain\Dashboard\Widget\AthleteProfile;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Dashboard\Widget\AthleteProfile\FindAthleteProfileMetrics\FindAthleteProfileMetrics;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
@@ -19,7 +19,7 @@ final readonly class AthleteProfileWidget implements Widget
 {
     public function __construct(
         private QueryBus $queryBus,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private ActivityIntensity $activityIntensity,
         private Environment $twig,
         private TranslatorInterface $translator,
@@ -58,7 +58,7 @@ final readonly class AthleteProfileWidget implements Widget
             // INTENSITY: 25% = realistic upper bound for sustainable hard training.
             $countActivitiesWithHighEffort = 0;
             foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
-                $activityIntensity = $this->activityIntensity->calculate($this->activitiesEnricher->getEnrichedActivity($activityId));
+                $activityIntensity = $this->activityIntensity->calculate($this->activityRepository->find($activityId));
                 if (ActivityIntensity::HIGH_INTENSITY_THRESHOLD_VALUE > $activityIntensity) {
                     continue;
                 }

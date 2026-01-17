@@ -7,7 +7,7 @@ use App\Domain\Activity\ActivityIntensity;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\DbalActivityIdRepository;
 use App\Domain\Activity\DailyTrainingLoad;
-use App\Domain\Activity\DbalActivityRepository;
+use App\Domain\Activity\DbalEnrichedActivityRepository;
 use App\Domain\Activity\Eddington\Eddington;
 use App\Domain\Activity\Stream\StreamBasedActivityHeartRateRepository;
 use App\Domain\Activity\Stream\StreamBasedActivityPowerRepository;
@@ -39,7 +39,8 @@ abstract class ContainerTestCase extends KernelTestCase
         $this->createTestDatabase();
 
         // Empty the static cache between tests.
-        DbalActivityRepository::$cachedActivities = [];
+        DbalEnrichedActivityRepository::$cachedActivities = [];
+        DbalEnrichedActivityRepository::$cachedActivitiesPerActivityType = [];
         DbalActivityIdRepository::$cachedActivityIds = ActivityIds::empty();
         DailyTrainingLoad::$cachedLoad = [];
         ActivityIntensity::$cachedIntensities = [];

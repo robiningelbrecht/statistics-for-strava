@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildMonthlyStatsHtml;
 
-use App\Domain\Activity\ActivitiesEnricher;
-use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Calendar\Calendar;
 use App\Domain\Calendar\FindMonthlyStats\FindMonthlyStats;
@@ -23,8 +22,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
     public function __construct(
         private ChallengeRepository $challengeRepository,
         private SportTypeRepository $sportTypeRepository,
-        private ActivityIdRepository $activityIdRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private ActivityRepository $activityRepository,
         private QueryBus $queryBus,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -36,7 +34,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         assert($command instanceof BuildMonthlyStatsHtml);
 
         $now = $command->getCurrentDateTime();
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->activityRepository->findAll();
         $allChallenges = $this->challengeRepository->findAll();
 
         $allMonths = Months::create(
@@ -67,8 +65,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
                     'challenges' => $allChallenges,
                     'calendar' => Calendar::create(
                         month: $month,
-                        activityIdRepository: $this->activityIdRepository,
-                        activitiesEnricher: $this->activitiesEnricher,
+                        activityRepository: $this->activityRepository,
                     ),
                 ]),
             );
