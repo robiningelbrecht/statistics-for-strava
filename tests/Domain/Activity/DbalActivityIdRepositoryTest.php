@@ -10,11 +10,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\DbalActivityIdRepository;
 use App\Domain\Activity\DbalActivityWithRawDataRepository;
-use App\Domain\Gear\GearId;
-use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Infrastructure\ValueObject\Time\Year;
-use App\Infrastructure\ValueObject\Time\Years;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -56,72 +52,6 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ActivityIds::fromArray([$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()]),
             $this->activityIdRepository->findAll()
         );
-    }
-
-    public function testFindLongestActivityFor(): void
-    {
-        $longestActivity = ActivityBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('0'))
-            ->withMovingTimeInSeconds(10000)
-            ->withStartDateTime(SerializableDateTime::fromString('2024-03-01 00:00:00'))
-            ->build();
-
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            $longestActivity,
-            []
-        ));
-
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('1'))
-                ->withMovingTimeInSeconds(20000)
-                ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('2'))
-                ->withGearId(GearId::fromUnprefixed('3'))
-                ->withStartDateTime(SerializableDateTime::fromString('2023-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('3'))
-                ->withGearId(GearId::fromUnprefixed('2'))
-                ->withStartDateTime(SerializableDateTime::fromString('2024-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('4'))
-                ->withGearId(GearId::fromUnprefixed('5'))
-                ->withStartDateTime(SerializableDateTime::fromString('2024-01-03 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('8'))
-                ->withGearId(GearId::fromUnprefixed('5'))
-                ->withStartDateTime(SerializableDateTime::fromString('2024-01-03 00:00:00'))
-                ->build(),
-            []
-        ));
-
-        $this->assertEquals(
-            $longestActivity->getId(),
-            $this->activityIdRepository->findLongestFor(Years::fromArray([Year::fromInt(2024)])),
-        );
-    }
-
-    public function testFindLongestActivityForYearItShouldThrow(): void
-    {
-        $this->expectExceptionObject(new EntityNotFound('Could not determine longest activity'));
-        $this->activityIdRepository->findLongestFor(Years::fromArray([Year::fromInt(2024)]));
     }
 
     public function testCount(): void

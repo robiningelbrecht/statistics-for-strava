@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildRewindHtml;
 
-use App\Domain\Activity\ActivityIdRepository;
-use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
@@ -25,6 +23,7 @@ use App\Domain\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
 use App\Domain\Rewind\FindCarbonSaved\FindCarbonSaved;
 use App\Domain\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Rewind\FindElevationPerMonth\FindElevationPerMonth;
+use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
 use App\Domain\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonth;
@@ -52,8 +51,6 @@ use Twig\Environment;
 final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityIdRepository $activityIdRepository,
-        private EnrichedActivities $enrichedActivities,
         private GearRepository $gearRepository,
         private ImageRepository $imageRepository,
         private QueryBus $queryBus,
@@ -85,9 +82,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
             }
 
-            $longestActivity = $this->enrichedActivities->find(
-                $this->activityIdRepository->findLongestFor($yearsToQuery)
-            );
+            $longestActivity = $this->queryBus->ask(new FindLongestActivity($yearsToQuery))->getActivity();
             $leafletMap = $longestActivity->getLeafletMap();
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));

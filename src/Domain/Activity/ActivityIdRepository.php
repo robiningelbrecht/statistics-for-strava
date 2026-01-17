@@ -3,7 +3,6 @@
 namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportTypes;
-use App\Infrastructure\ValueObject\Time\Years;
 
 interface ActivityIdRepository
 {
@@ -14,7 +13,4 @@ interface ActivityIdRepository
     public function hasForSportTypes(SportTypes $sportTypes): bool;
 
     public function findMarkedForDeletion(): ActivityIds;
-
-    // @TODO: Move to QueryBus.
-    public function findLongestFor(Years $years): ActivityId;
 }
