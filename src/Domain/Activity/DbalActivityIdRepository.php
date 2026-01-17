@@ -4,8 +4,6 @@ namespace App\Domain\Activity;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
-use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
@@ -64,28 +62,5 @@ final readonly class DbalActivityIdRepository implements ActivityIdRepository
             ActivityId::fromString(...),
             $queryBuilder->executeQuery()->fetchFirstColumn(),
         ));
-    }
-
-    public function findLongestFor(Years $years): ActivityId
-    {
-        if (!$result = $this->connection->executeQuery(
-            <<<SQL
-                SELECT activityId
-                FROM Activity
-                WHERE strftime('%Y',startDateTime) IN (:years)
-                ORDER BY movingTimeInSeconds DESC
-                LIMIT 1
-            SQL,
-            [
-                'years' => array_map(strval(...), $years->toArray()),
-            ],
-            [
-                'years' => ArrayParameterType::STRING,
-            ]
-        )->fetchOne()) {
-            throw new EntityNotFound('Could not determine longest activity');
-        }
-
-        return ActivityId::fromString($result);
     }
 }
