@@ -15,7 +15,6 @@ final class DailyTrainingLoad
 
     public function __construct(
         private readonly ActivityRepository $activityRepository,
-        private readonly ActivitiesEnricher $activitiesEnricher,
         private readonly ActivityIntensity $activityIntensity,
         private readonly FtpHistory $ftpHistory,
         private readonly AthleteRepository $athleteRepository,
@@ -37,9 +36,7 @@ final class DailyTrainingLoad
 
         /** @var Activity $activity */
         foreach ($activities as $activity) {
-            $activity = $this->activitiesEnricher->getEnrichedActivity($activity->getId());
             $movingTimeInSeconds = $activity->getMovingTimeInSeconds();
-
             if (ActivityType::RIDE === $activity->getSportType()->getActivityType() && ($normalizedPower = $activity->getNormalizedPower())) {
                 try {
                     $intensity = $this->activityIntensity->calculatePowerBased($activity);
