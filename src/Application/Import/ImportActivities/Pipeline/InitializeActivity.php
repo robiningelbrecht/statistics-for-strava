@@ -54,14 +54,12 @@ final readonly class InitializeActivity implements ActivityImportStep
                 $activity->updateCommute($rawStravaData['commute']);
             }
 
-            return $context
-                ->withActivity($activity);
+            return $context->withActivity($activity);
         } catch (EntityNotFound) {
         }
 
         $activity = Activity::createFromRawData($rawStravaData);
 
-        return $context
-            ->withActivity($activity);
+        return $context->withActivity($activity);
     }
 }

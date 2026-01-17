@@ -63,9 +63,11 @@ final class DbalEnrichedActivityRepository implements ActivityRepository
             if ($gearId = $activity->getGearId()) {
                 $activity->enrichWithGearName($gears->getByGearId($gearId)?->getName());
             }
-            $activity->enrichWithBestPowerOutputs(
-                $this->activityPowerRepository->findBest($activity->getId())
-            );
+            $bestPowerOutputs = $this->activityPowerRepository->findBest($activity->getId());
+            if (!$bestPowerOutputs->isEmpty()) {
+                $activity->enrichWithBestPowerOutputs($bestPowerOutputs);
+            }
+
             $activity->enrichWithNormalizedPower(
                 $this->activityPowerRepository->findNormalizedPower($activity->getId())
             );

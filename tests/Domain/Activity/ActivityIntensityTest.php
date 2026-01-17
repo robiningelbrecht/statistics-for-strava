@@ -2,8 +2,8 @@
 
 namespace App\Tests\Domain\Activity;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\CouldNotDetermineActivityIntensity;
@@ -109,7 +109,7 @@ class ActivityIntensityTest extends ContainerTestCase
     public function testCalculateWithPowerWhenFtpNotFound(): void
     {
         $this->activityIntensity = new ActivityIntensity(
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(ActivityRepository::class),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
@@ -205,7 +205,7 @@ class ActivityIntensityTest extends ContainerTestCase
         parent::setUp();
 
         $this->activityIntensity = new ActivityIntensity(
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(ActivityRepository::class),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
