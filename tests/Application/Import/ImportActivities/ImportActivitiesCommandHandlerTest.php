@@ -345,9 +345,9 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
         );
 
-        $this->assertCount(
+        $this->assertEquals(
             2,
-            $this->getContainer()->get(ActivityRepository::class)->findAll()->toArray()
+            $this->getConnection()->executeQuery('SELECT COUNT(*) FROM Activity')->fetchOne()
         );
     }
 

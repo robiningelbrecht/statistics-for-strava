@@ -4,7 +4,6 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
@@ -26,7 +25,16 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
 
     public function testItShouldSaveAndFind(): void
     {
-        $activity = ActivityBuilder::fromDefaults()->build();
+        $activity = ActivityBuilder::fromDefaults()
+            ->withTags([
+                '#sfs-chain-lubed',
+                '#sfs-chain-replaced',
+                '#sfs-chain-cleaned',
+                '#sfs-di-2-charged',
+                '#sfs-peddle-board',
+                '#sfs-workout-shoes',
+            ])
+            ->build();
 
         $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
             $activity,
@@ -110,12 +118,12 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            ActivityIds::fromArray([$activityOne->getId(), $activityTwo->getId()]),
+            [$activityOne->getId(), $activityTwo->getId()],
             $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), null)->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
 
         $this->assertEquals(
-            ActivityIds::fromArray([$activityOne->getId()]),
+            [$activityOne->getId()],
             $this->activityRepository->findByStartDate(SerializableDateTime::fromString('2023-10-10'), ActivityType::RACQUET_PADDLE_SPORTS)->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
     }
@@ -151,7 +159,7 @@ class DbalEnrichedActivityRepositoryTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            ActivityIds::fromArray([$activityTwo->getId(), $activityThree->getId()]),
+            [$activityTwo->getId(), $activityThree->getId()],
             $this->activityRepository->findBySportTypes(SportTypes::fromArray([SportType::RUN, SportType::MOUNTAIN_BIKE_RIDE]))->map(fn (Activity $activity): ActivityId => $activity->getId())
         );
     }
