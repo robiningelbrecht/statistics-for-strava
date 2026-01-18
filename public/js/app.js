@@ -12,6 +12,7 @@ import TabsManager from "./ui/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
 import FullscreenManager from "./fullscreen";
+import LinkPreviewManager from "./ui/link-preview";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -27,6 +28,7 @@ const mapManager = new MapManager();
 const tabsManager = new TabsManager(chartManager);
 const dataTableManager = new DataTableManager(dataTableStorage);
 const fullscreenManager = new FullscreenManager(chartManager);
+const linkPreviewManager = new LinkPreviewManager();
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
     callback_error: (img) => {
@@ -45,6 +47,7 @@ const initElements = (rootNode) => {
 
     modalManager.init(rootNode);
     chartManager.init(rootNode);
+    linkPreviewManager.init(rootNode);
     mapManager.init(rootNode);
     fullscreenManager.init(rootNode);
 }

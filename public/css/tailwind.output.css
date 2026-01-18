@@ -1042,6 +1042,9 @@
   .z-10000 {
     z-index: 10000;
   }
+  .z-99999 {
+    z-index: 99999;
+  }
   .col-span-2 {
     grid-column: span 2 / span 2;
   }

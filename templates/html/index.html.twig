@@ -297,6 +297,18 @@
         {% endblock %}
     </main>
 </div>
+<div data-popover id="popover-content" role="tooltip"
+     class="invisible absolute z-99999 inline-block w-64 rounded-lg border border-gray-200 bg-white text-sm text-gray-500 opacity-0 shadow-md transition-opacity duration-300">
+    <div class="rounded-t-lg border-b border-gray-200 bg-gray-100 px-3 py-2">
+        <h3 class="font-semibold text-gray-900 ">
+            Popover title
+        </h3>
+    </div>
+    <div class="px-3 py-2">
+        <p>And here's some amazing content. It's very engaging. Right?</p>
+    </div>
+    <div data-popper-arrow></div>
+</div>
 <script>
     window.statisticsForStrava = {{ javascriptWindowConstants|raw }};
     window.statisticsForStrava.placeholderBrokenImage = "{{ relativeUrl('/assets/placeholder-broken.webp') }}";
