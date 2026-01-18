@@ -77,6 +77,27 @@ integrations:
 > [!IMPORTANT]
 > **Important** Make sure you're running the latest version of Ollama. Streaming responses with tooling has been <a href="https://ollama.com/blog/streaming-tool">added on May 28, 2025.</a>
 
+## OpenRouter
+
+[OpenRouter](https://openrouter.ai) provides access to hundreds of models (OpenAI, Anthropic, Google and more) through a single API key, including free-tier models. This makes it easy to get started or test different models.
+
+To use OpenRouter, configure the `openAILike` provider in your `config.yaml`:
+
+```yaml
+integrations:
+  ai:
+    enabled: true
+    enableUI: true
+    provider: 'openAILike'
+    configuration:
+      baseUri: 'https://openrouter.ai/api/v1'
+      key: 'YOUR-OPENROUTER-API-KEY'
+      model: 'anthropic/claude-sonnet-4.5'  # See openrouter.ai/models for all available models
+```
+
+> [!TIP]
+> OpenRouter offers [free models](https://openrouter.ai/collections/free) which are great for testing without any cost.
+
 ## Your AI workout assistant
 
 The first available AI feature is an AI-powered workout assistant named **Mark**.
