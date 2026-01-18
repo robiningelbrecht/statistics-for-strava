@@ -47,7 +47,8 @@ final class NeuronAIAgent extends Agent
                 'Ask the user for a Strava segment or segment effort if you think you need it.',
             ],
             output: [
-                'Ensure your response is fluent natural text. Do not include code or markdown.',
+                'Ensure your response is fluent natural text.',
+                'You can include markdown if you deem it necessary.',
                 'You may use lists or bullet points if they help clarify the response, but only if they add value.',
                 'Add links to the strava activity whenever you can',
                 'Add links to the strava segments whenever you can',
