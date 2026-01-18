@@ -29,6 +29,24 @@ final class DbalActivityRepository implements ActivityRepository
 
     public function find(ActivityId $activityId): Activity
     {
+        if (empty($this->cachedActivities)) {
+            // Do an initial cache of all activities.
+            $queryBuilder = $this->connection->createQueryBuilder();
+            $results = $queryBuilder->select('*')
+                ->from('Activity')
+                ->executeQuery()->fetchAllAssociative();
+
+            foreach ($results as $result) {
+                $this->cachedActivities[$result['activityId']] = $this->hydrate($result);
+            }
+        }
+
+        if (array_key_exists((string) $activityId, $this->cachedActivities)) {
+            return $this->cachedActivities[(string) $activityId];
+        }
+
+        // Check if the activity has been added after the initial cache build,
+        // Ifo so, hydrate and add it to cache.
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')
             ->from('Activity')
@@ -39,14 +57,9 @@ final class DbalActivityRepository implements ActivityRepository
             throw new EntityNotFound(sprintf('Activity "%s" not found', $activityId));
         }
 
-        $activityId = $result['activityId'];
-        if (array_key_exists((string) $activityId, $this->cachedActivities)) {
-            return $this->cachedActivities[$activityId];
-        }
+        $this->cachedActivities[(string) $activityId] = $this->hydrate($result);
 
-        $this->cachedActivities[$activityId] = $this->hydrate($result);
-
-        return $this->cachedActivities[$activityId];
+        return $this->cachedActivities[(string) $activityId];
     }
 
     public function findAll(): Activities
