@@ -1,15 +1,53 @@
 import autoComplete from "../../libraries/autocomplete";
-import { marked } from 'marked';
+import MarkdownIt from 'markdown-it';
 
-// Configure marked for better rendering
-marked.setOptions({
-    gfm: true,
-    breaks: true,
-});
+class ChatMessageRenderer {
+    constructor(messageEl) {
+        this.el = messageEl;
+        this.buffer = '';
+
+        this.md = new MarkdownIt({
+            html: false,
+            linkify: true,
+            breaks: true,
+        });
+        this.md.linkify.set({ fuzzyLink: false });
+    }
+
+    setText(text) {
+        this.buffer = text;
+    }
+
+    append(chunk) {
+        this.buffer += chunk;
+        this.renderStreaming();
+    }
+
+    renderStreaming() {
+        // VERY lightweight streaming render.
+        const openFences = (this.buffer.match(/```/g) || []).length % 2 === 1;
+
+        let text = this.buffer
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        if (!openFences) {
+            text = text
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        }
+
+        this.el.innerHTML = text.replace(/\n/g, '<br>');
+    }
+
+    renderFinal() {
+        this.el.innerHTML = this.md.render(this.buffer.trim());
+    }
+}
 
 export default class Chat {
     constructor(chatModal) {
-        this.chatModal = chatModal;
         this.chatWrapper = chatModal.querySelector('.chat--wrapper');
         this.form = chatModal.querySelector('form');
         this.button = this.form.querySelector('button.send-message');
@@ -21,9 +59,7 @@ export default class Chat {
         this.placeholderProcessing = this.textInput.getAttribute('data-placeholder-processing');
 
         this.commands = JSON.parse(this.chatWrapper.getAttribute('data-chat-commands') || '{}');
-
         this.autoCompleteJS = null;
-        this.currentMessageRaw = '';
     }
 
     toggleElements(disabled) {
@@ -75,34 +111,31 @@ export default class Chat {
 
     handleSSE(message) {
         const source = new EventSource(`/chat/sse?message=${encodeURIComponent(message)}`);
+        let renderer = null;
 
         source.addEventListener('fullMessage', event => {
-            this.chatWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
-            // Capture any initial content from the message
-            const lastMessage = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
-            if (lastMessage) {
-                this.currentMessageRaw = lastMessage.textContent.trim();
-            } else {
-                this.currentMessageRaw = '';
-            }
+            this.chatWrapper.insertAdjacentHTML(
+                'beforeend',
+                event.data.replace(/\\n/g, '\n')
+            );
+
+            const messageEl = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
+            renderer = new ChatMessageRenderer(messageEl);
         });
 
         source.addEventListener('removeThinking', () => {
-            const thinkingEl = this.chatWrapper.querySelector('.thinking');
-            thinkingEl?.remove();
+            this.chatWrapper.querySelector('.thinking')?.remove();
         });
 
         source.addEventListener('agentResponse', event => {
-            const lastMessage = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
-            if (lastMessage) {
-                this.currentMessageRaw += event.data.replace(/\\n/g, '\n');
-                lastMessage.innerHTML = marked.parse(this.currentMessageRaw);
-            }
+            if (!renderer) return;
+
+            renderer.append(event.data.replace(/\\n/g, '\n'));
         });
 
         source.addEventListener('done', () => {
             source.close();
-            this.currentMessageRaw = '';
+            renderer?.renderFinal();
             this.toggleElements(false);
             this.textInput.focus();
         });
@@ -144,25 +177,18 @@ export default class Chat {
         }
     }
 
-    parseMarkdown(text) {
-        // Remove common leading whitespace from all lines (dedent)
-        const lines = text.split('\n');
-        const nonEmptyLines = lines.filter(line => line.trim());
-        if (nonEmptyLines.length === 0) return '';
-
-        const minIndent = Math.min(...nonEmptyLines.map(line => line.match(/^(\s*)/)[1].length));
-        const dedented = lines.map(line => line.slice(minIndent)).join('\n').trim();
-
-        return marked.parse(dedented);
-    }
-
     parseExistingMessages() {
         const messages = this.chatWrapper.querySelectorAll('div.message');
-        messages.forEach(msg => {
-            const raw = msg.textContent;
-            if (raw.trim()) {
-                msg.innerHTML = this.parseMarkdown(raw);
-            }
+        messages.forEach(messageEl => {
+            if (messageEl.dataset.parsed === 'true') return;
+
+            const rawText = messageEl.textContent;
+            if (!rawText) return;
+
+            const renderer = new ChatMessageRenderer(messageEl);
+            renderer.setText(rawText);
+            renderer.renderFinal();
+            messageEl.dataset.parsed = 'true';
         });
     }
 

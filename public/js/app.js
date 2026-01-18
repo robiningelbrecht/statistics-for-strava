@@ -1,7 +1,6 @@
 import {Heatmap} from "./ui/heatmap";
 import {DataTableStorage} from "./filters";
 import Router from "./router";
-import Chat from "./ui/chat";
 import {updateGithubLatestRelease} from "./github";
 import Sidebar from "./ui/sidebar";
 import ChartManager from "./ui/charts";
@@ -12,6 +11,7 @@ import TabsManager from "./ui/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
 import FullscreenManager from "./fullscreen";
+import Chat from "./ui/chat";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -103,7 +103,7 @@ if ($modalAIChat) {
     });
 }
 
-document.addEventListener('modalWasLoaded.ai-chat', (e) => {
+document.addEventListener('modalWasLoaded.ai-chat', async (e) => {
     const $modal = e.detail.modal;
     new Chat($modal).render();
 });
