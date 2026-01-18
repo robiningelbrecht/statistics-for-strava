@@ -34,7 +34,8 @@ final class DbalActivityRepository implements ActivityRepository
             $queryBuilder = $this->connection->createQueryBuilder();
             $results = $queryBuilder->select('*')
                 ->from('Activity')
-                ->executeQuery()->fetchAllAssociative();
+                ->executeQuery()
+                ->fetchAllAssociative();
 
             foreach ($results as $result) {
                 $this->cachedActivities[$result['activityId']] = $this->hydrate($result);
@@ -46,7 +47,7 @@ final class DbalActivityRepository implements ActivityRepository
         }
 
         // Check if the activity has been added after the initial cache build,
-        // Ifo so, hydrate and add it to cache.
+        // If so, hydrate and add it to cache.
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')
             ->from('Activity')
