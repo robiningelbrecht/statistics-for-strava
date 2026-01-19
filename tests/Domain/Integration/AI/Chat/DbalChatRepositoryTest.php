@@ -62,8 +62,11 @@ class DbalChatRepositoryTest extends ContainerTestCase
                     ->withFirstLetterOfFirstName('r')
                     ->build(),
             ],
-            $this->chatRepository->getHistory()
+            $this->chatRepository->findAll()
         );
+
+        $this->chatRepository->clear();
+        $this->assertEmpty($this->chatRepository->findAll());
     }
 
     public function testCreate(): void

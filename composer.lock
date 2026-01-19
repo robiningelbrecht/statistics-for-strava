@@ -690,16 +690,16 @@
         },
         {
             "name": "doctrine/event-manager",
-            "version": "2.0.1",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/event-manager.git",
-                "reference": "b680156fa328f1dfd874fd48c7026c41570b9c6e"
+                "reference": "c07799fcf5ad362050960a0fd068dded40b1e312"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/b680156fa328f1dfd874fd48c7026c41570b9c6e",
-                "reference": "b680156fa328f1dfd874fd48c7026c41570b9c6e",
+                "url": "https://api.github.com/repos/doctrine/event-manager/zipball/c07799fcf5ad362050960a0fd068dded40b1e312",
+                "reference": "c07799fcf5ad362050960a0fd068dded40b1e312",
                 "shasum": ""
             },
             "require": {
@@ -709,10 +709,10 @@
                 "doctrine/common": "<2.9"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^12",
-                "phpstan/phpstan": "^1.8.8",
-                "phpunit/phpunit": "^10.5",
-                "vimeo/psalm": "^5.24"
+                "doctrine/coding-standard": "^14",
+                "phpdocumentor/guides-cli": "^1.4",
+                "phpstan/phpstan": "^2.1.32",
+                "phpunit/phpunit": "^10.5.58"
             },
             "type": "library",
             "autoload": {
@@ -761,7 +761,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/event-manager/issues",
-                "source": "https://github.com/doctrine/event-manager/tree/2.0.1"
+                "source": "https://github.com/doctrine/event-manager/tree/2.1.0"
             },
             "funding": [
                 {
@@ -777,7 +777,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-22T20:47:39+00:00"
+            "time": "2026-01-17T22:40:21+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -8381,34 +8381,34 @@
         },
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v8.4.1",
+            "version": "v8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "d9f4fb01a43da2e279ca190fa25ab9e26f15a0c8"
+                "reference": "490cdc0df04e2b9f3c4dab93c8302521b1019f6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/d9f4fb01a43da2e279ca190fa25ab9e26f15a0c8",
-                "reference": "d9f4fb01a43da2e279ca190fa25ab9e26f15a0c8",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/490cdc0df04e2b9f3c4dab93c8302521b1019f6f",
+                "reference": "490cdc0df04e2b9f3c4dab93c8302521b1019f6f",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^3.3 || ^4.0",
                 "doctrine/doctrine-bundle": "^2.11.0 || ^3.0",
-                "php": ">= 8.1",
+                "php": ">= 8.2",
                 "psr/cache": "^2.0 || ^3.0",
                 "symfony/cache": "^6.4 || ^7.3 || ^8.0",
                 "symfony/framework-bundle": "^6.4 || ^7.3 || ^8.0"
             },
             "conflict": {
-                "phpunit/phpunit": "<10.0"
+                "phpunit/phpunit": "<11.0"
             },
             "require-dev": {
                 "behat/behat": "^3.0",
                 "friendsofphp/php-cs-fixer": "^3.27",
                 "phpstan/phpstan": "^2.0",
-                "phpunit/phpunit": "^10.5.57 || ^11.5.41|| ^12.3.14",
+                "phpunit/phpunit": "^11.5.41|| ^12.3.14",
                 "symfony/dotenv": "^6.4 || ^7.3 || ^8.0",
                 "symfony/process": "^6.4 || ^7.3 || ^8.0"
             },
@@ -8444,9 +8444,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.4.1"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.5.0"
             },
-            "time": "2025-12-07T21:48:15+00:00"
+            "time": "2026-01-18T12:00:00+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",

@@ -176,7 +176,7 @@ class HeatmapDrawer {
     }
 }
 
-export class Heatmap {
+export default class Heatmap {
     constructor(wrapper, modalManager) {
         this.wrapper = wrapper;
         this.heatmap = wrapper.querySelector('[data-leaflet-routes]');
