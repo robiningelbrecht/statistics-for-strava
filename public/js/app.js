@@ -11,7 +11,6 @@ import TabsManager from "./ui/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
 import FullscreenManager from "./fullscreen";
-import Chat from "./ui/chat";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -104,6 +103,9 @@ if ($modalAIChat) {
 }
 
 document.addEventListener('modalWasLoaded.ai-chat', async (e) => {
+    const { default: Chat } = await import(
+        /* webpackChunkName: "chat" */ './ui/chat'
+        );
     const $modal = e.detail.modal;
     new Chat($modal).render();
 });
