@@ -29,4 +29,19 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildRewindHtml(SerializableDateTime::fromString('2025-10-01T00:00:00+00:00')));
         $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
     }
+
+    public function testHandleWhenNoRewindsToCompare(): void
+    {
+        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::random())
+                ->withSportType(SportType::WALK)
+                ->withStartDateTime(SerializableDateTime::fromString('2023-03-01'))
+                ->build(),
+            []
+        ));
+
+        $this->commandBus->dispatch(new BuildRewindHtml(SerializableDateTime::fromString('2023-10-01T00:00:00+00:00')));
+        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+    }
 }

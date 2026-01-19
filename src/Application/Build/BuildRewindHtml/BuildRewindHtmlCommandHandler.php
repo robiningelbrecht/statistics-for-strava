@@ -339,6 +339,10 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 );
             }
         }
+        if (1 === count($availableRewindOptions)) {
+            // "All time" option is the only one. No need to compare rewinds.
+            return;
+        }
 
         foreach ($availableRewindOptions as $availableRewindOptionLeft) {
             $defaultRewindYearToCompareWith = $availableRewindOptions[0] != $availableRewindOptionLeft ? $availableRewindOptions[0] : $availableRewindOptions[1];
