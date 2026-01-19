@@ -1,5 +1,19 @@
 # [v4.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.4.0) - 2026-01-19
 
+To properly calculate activity intensities, we introduced a new config option:
+
+```yaml
+general:
+  athlete:
+    # The formula used to calculate your resting heart rate. The default is heuristicAgeBased.
+    # Allowed values: a fixed number, heuristicAgeBased or you can set a fixed number for any given date range.  
+    restingHeartRateFormula: 'heuristicAgeBased'
+    # restingHeartRateFormula: 50
+    # restingHeartRateFormula:
+    #    "2020-01-01": 53
+    #    "2025-01-10": 55
+```
+
 ## What's Changed
 * ISSUE #1642: Activity heatmap -> activities link does not use subpath by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1643
 * ISSUE #1644: Improve hover states of context buttons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1645
