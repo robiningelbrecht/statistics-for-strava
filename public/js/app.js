@@ -104,7 +104,7 @@ if ($modalAIChat) {
 
 document.addEventListener('modalWasLoaded.ai-chat', async (e) => {
     const { default: Chat } = await import(
-        /* webpackChunkName: "chat" */ './ui/chat'
+        /* webpackChunkName: "chat.min" */ './ui/chat'
         );
     const $modal = e.detail.modal;
     new Chat($modal).render();
