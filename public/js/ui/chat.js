@@ -40,6 +40,7 @@ class ChatMessageRenderer {
     }
 
     renderFinal() {
+        this.el.dataset.markdownParsed = 'true';
         this.el.innerHTML = this.md.parse(this.buffer.trim());
     }
 }
@@ -186,7 +187,6 @@ export default class Chat {
             const renderer = new ChatMessageRenderer(messageEl);
             renderer.setText(rawText);
             renderer.renderFinal();
-            messageEl.dataset.parsed = 'true';
         });
     }
 
