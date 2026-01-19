@@ -1,17 +1,15 @@
 import autoComplete from "../../libraries/autocomplete";
-import MarkdownIt from 'markdown-it';
+import { marked } from 'marked';
 
 class ChatMessageRenderer {
     constructor(messageEl) {
         this.el = messageEl;
         this.buffer = '';
 
-        this.md = new MarkdownIt({
-            html: false,
-            linkify: true,
+        this.md = marked.setOptions({
+            gfm: true,
             breaks: true,
         });
-        this.md.linkify.set({ fuzzyLink: false });
     }
 
     setText(text) {
@@ -42,7 +40,7 @@ class ChatMessageRenderer {
     }
 
     renderFinal() {
-        this.el.innerHTML = this.md.render(this.buffer.trim());
+        this.el.innerHTML = this.md.parse(this.buffer.trim());
     }
 }
 
