@@ -52,7 +52,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, $output);
-        $this->mutex->acquireLock('BuildAppConsoleCommand');
+        $this->mutex->acquireLock('DetectCorruptedActivitiesConsoleCommand');
 
         $this->outputConsoleIntro($output);
 
