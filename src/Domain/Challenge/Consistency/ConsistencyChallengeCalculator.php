@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Challenge\Consistency;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Calendar\Months;
 use App\Domain\Challenge\Consistency\FindConsistencyMetricsPerMonth\FindConsistencyMetricsPerMonth;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
@@ -13,7 +13,7 @@ use App\Infrastructure\ValueObject\Measurement\Unit;
 final readonly class ConsistencyChallengeCalculator
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private QueryBus $queryBus,
     ) {
     }
@@ -32,7 +32,7 @@ final readonly class ConsistencyChallengeCalculator
                 continue;
             }
 
-            if (!$this->activityRepository->hasForSportTypes($challenge->getSportTypesToInclude())) {
+            if (!$this->activityIdRepository->hasForSportTypes($challenge->getSportTypesToInclude())) {
                 continue;
             }
 

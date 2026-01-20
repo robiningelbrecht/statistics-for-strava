@@ -14,14 +14,14 @@ final readonly class GpxSerializer
     private const string DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.000\Z';
 
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private ActivityStreamRepository $activityStreamRepository,
     ) {
     }
 
     public function serialize(ActivityId $activityId): ?string
     {
-        $activity = $this->activityRepository->find($activityId);
+        $activity = $this->enrichedActivities->find($activityId);
         $activitySteams = $this->activityStreamRepository->findByActivityId($activity->getId());
 
         /** @var Stream\ActivityStream $timeStream */
@@ -54,10 +54,10 @@ final readonly class GpxSerializer
         $metadataNode->addChild('time', $activity->getStartDate()->format(self::DATE_TIME_FORMAT));
 
         $trkNode = $rootNode->addChild('trk');
-        $trkNode->addChild('name', Escape::htmlSpecialChars($activity->getName()));
+        $trkNode->addChild('name', Escape::forJsonEncode($activity->getName()));
         $trkNode->addChild('type', $activity->getSportType()->value);
         if ($description = $activity->getDescription()) {
-            $trkNode->addChild('desc', Escape::htmlSpecialChars($description));
+            $trkNode->addChild('desc', Escape::forJsonEncode($description));
         }
         $trksegNode = $trkNode->addChild('trkseg');
 

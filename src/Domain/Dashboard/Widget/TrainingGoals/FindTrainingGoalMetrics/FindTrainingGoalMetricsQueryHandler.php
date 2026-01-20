@@ -9,6 +9,7 @@ use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\SimpleUnit;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -30,7 +31,9 @@ final readonly class FindTrainingGoalMetricsQueryHandler implements QueryHandler
             <<<SQL
                 SELECT SUM(distance) AS totalDistance,
                        SUM(elevation) AS totalElevation,
-                       SUM(movingTimeInSeconds) AS movingTime
+                       SUM(movingTimeInSeconds) AS movingTime,
+                       COUNT(1) AS numberOfActivities,
+                       SUM(calories) AS calories
                 FROM Activity
                 WHERE SportType IN(:sportTypes)
                 AND strftime('%Y-%m-%d', startDateTime) BETWEEN :startDate AND :endDate
@@ -49,6 +52,8 @@ final readonly class FindTrainingGoalMetricsQueryHandler implements QueryHandler
             distance: Meter::from($result['totalDistance'] ?? 0)->toKilometer(),
             elevation: Meter::from($result['totalElevation'] ?? 0),
             movingTime: Seconds::from($result['movingTime'] ?? 0),
+            numberOfActivities: SimpleUnit::from($result['numberOfActivities'] ?? 0),
+            calories: SimpleUnit::from($result['calories'] ?? 0),
         );
     }
 }

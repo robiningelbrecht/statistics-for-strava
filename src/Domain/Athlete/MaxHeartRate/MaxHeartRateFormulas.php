@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Athlete\MaxHeartRate;
 
+use App\Domain\Athlete\InvalidHeartRateFormula;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class MaxHeartRateFormulas
@@ -15,7 +16,7 @@ final readonly class MaxHeartRateFormulas
     {
         if (is_string($maxHeartRateFormulaFromConfig)) {
             if (empty(trim($maxHeartRateFormulaFromConfig))) {
-                throw new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA cannot be empty');
+                throw new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA cannot be empty');
             }
 
             return match ($maxHeartRateFormulaFromConfig) {
@@ -25,12 +26,12 @@ final readonly class MaxHeartRateFormulas
                 'gellish' => new Gellish(),
                 'nes' => new Nes(),
                 'tanaka' => new Tanaka(),
-                default => throw new InvalidMaxHeartRateFormula(sprintf('Invalid MAX_HEART_RATE_FORMULA "%s" detected', $maxHeartRateFormulaFromConfig)),
+                default => throw new InvalidHeartRateFormula(sprintf('Invalid MAX_HEART_RATE_FORMULA "%s" detected', $maxHeartRateFormulaFromConfig)),
             };
         }
 
         if (empty($maxHeartRateFormulaFromConfig)) {
-            throw new InvalidMaxHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty');
+            throw new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty');
         }
 
         $dateRangeBased = DateRangeBased::empty();
@@ -41,7 +42,7 @@ final readonly class MaxHeartRateFormulas
                     maxHeartRate: $maxHeartRate
                 );
             } catch (\DateMalformedStringException) {
-                throw new InvalidMaxHeartRateFormula(sprintf('Invalid date "%s" set in MAX_HEART_RATE_FORMULA', $on));
+                throw new InvalidHeartRateFormula(sprintf('Invalid date "%s" set in MAX_HEART_RATE_FORMULA', $on));
             }
         }
 

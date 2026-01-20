@@ -4,6 +4,13 @@ labels: ["new feature"]
 assignees:
   - robiningelbrecht
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Before creating a feature request
+        
+        * A feature to customize the order of the sport type tabs on the dashboard already exists. Refer to `sportTypesSortingOrder` in the documentation for details.
+        * If your feature introduces a new chart, please include a visual example.
   - type: textarea
     id: the-feature
     attributes:

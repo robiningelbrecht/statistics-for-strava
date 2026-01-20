@@ -73,7 +73,7 @@ final readonly class DistanceOverTimePerGearChart
         $selectedSeries = [];
         /** @var Gear $gear */
         foreach ($gears as $gear) {
-            $gearName = Escape::htmlSpecialChars($gear->getName());
+            $gearName = Escape::forJsonEncode($gear->getName());
             $selectedSeries[$gearName] = !$gear->isRetired();
 
             $series[] = [
@@ -117,14 +117,13 @@ final readonly class DistanceOverTimePerGearChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'start' => 0,
                     'end' => 100,
                     'brushSelect' => true,
                     'zoomLock' => false,
                     'zoomOnMouseWheel' => false,
-                ],
-                [
+                    'labelFormatter' => '',
                 ],
             ],
             'xAxis' => [

@@ -2,13 +2,13 @@
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\PowerOutput;
 use App\Domain\Activity\Stream\PowerOutputs;
 use App\Domain\Gear\GearId;
 use App\Domain\Integration\AI\SupportsAITooling;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Domain\Zwift\CouldNotDetermineZwiftMap;
 use App\Domain\Zwift\ZwiftMap;
@@ -44,6 +44,7 @@ final class Activity implements SupportsAITooling
     private ?int $maxCadence = null;
     private ?PowerOutputs $bestPowerOutputs = null;
     private ?int $normalizedPower = null;
+    private ?string $gearName = null;
     /** @var string[] */
     private array $tags = [];
 
@@ -56,6 +57,9 @@ final class Activity implements SupportsAITooling
     #[ORM\Column(type: 'boolean', nullable: true)]
     // @phpstan-ignore-next-line
     private readonly bool $streamsAreImported;
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    // @phpstan-ignore-next-line
+    private readonly bool $markedForDeletion;
 
     /**
      * @param array<string> $localImagePaths
@@ -68,7 +72,7 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'string')]
         private SportType $sportType,
         #[ORM\Column(type: 'string', nullable: true)]
-        private WorldType $worldType,
+        private readonly WorldType $worldType,
         #[ORM\Column(type: 'string')]
         private string $name,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -108,13 +112,11 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'text', nullable: true)]
         private ?string $polyline,
         #[ORM\Column(type: 'json', nullable: true)]
-        private ?Location $location,
+        private RouteGeography $routeGeography,
         #[ORM\Column(type: 'json', nullable: true)]
         private ?string $weather,
         #[ORM\Column(type: 'string', nullable: true)]
         private ?GearId $gearId,
-        #[ORM\Column(type: 'string', nullable: true)]
-        private ?string $gearName,
         #[ORM\Column(type: 'boolean', nullable: true)]
         private bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -125,11 +127,8 @@ final class Activity implements SupportsAITooling
     /**
      * @param array<mixed> $rawData
      */
-    public static function createFromRawData(
-        array $rawData,
-        ?GearId $gearId,
-        ?string $gearName,
-    ): self {
+    public static function createFromRawData(array $rawData): self
+    {
         $startDate = SerializableDateTime::createFromFormat(
             format: Activity::DATE_TIME_FORMAT,
             datetime: $rawData['start_date_local'],
@@ -172,10 +171,9 @@ final class Activity implements SupportsAITooling
             totalImageCount: $rawData['total_photo_count'] ?? 0,
             localImagePaths: [],
             polyline: $rawData['map']['summary_polyline'] ?? null,
-            location: null,
+            routeGeography: RouteGeography::create([]),
             weather: null,
-            gearId: $gearId,
-            gearName: $gearName,
+            gearId: GearId::fromOptionalUnprefixed($rawData['gear_id'] ?? null),
             isCommute: $rawData['commute'] ?? false,
             workoutType: WorkoutType::fromStravaInt($rawData['workout_type'] ?? null),
         );
@@ -208,10 +206,9 @@ final class Activity implements SupportsAITooling
         int $totalImageCount,
         array $localImagePaths,
         ?string $polyline,
-        ?Location $location,
+        RouteGeography $routeGeography,
         ?string $weather,
         ?GearId $gearId,
-        ?string $gearName,
         bool $isCommute,
         ?WorkoutType $workoutType,
     ): self {
@@ -239,10 +236,9 @@ final class Activity implements SupportsAITooling
             totalImageCount: $totalImageCount,
             localImagePaths: $localImagePaths,
             polyline: $polyline,
-            location: $location,
+            routeGeography: $routeGeography,
             weather: $weather,
             gearId: $gearId,
-            gearName: $gearName,
             isCommute: $isCommute,
             workoutType: $workoutType
         );
@@ -311,10 +307,8 @@ final class Activity implements SupportsAITooling
 
     public function updateGear(
         ?GearId $gearId = null,
-        ?string $gearName = null,
     ): self {
         $this->gearId = $gearId;
-        $this->gearName = $gearName;
 
         return $this;
     }
@@ -327,6 +321,11 @@ final class Activity implements SupportsAITooling
     public function getGearName(): ?string
     {
         return $this->gearName;
+    }
+
+    public function enrichWithGearName(?string $gearName): void
+    {
+        $this->gearName = $gearName;
     }
 
     public function hasDetailedPowerData(): bool
@@ -410,7 +409,7 @@ final class Activity implements SupportsAITooling
 
     public function getSanitizedName(): string
     {
-        return Escape::htmlSpecialChars($this->getName());
+        return Escape::forJsonEncode($this->getName());
     }
 
     public function updateName(string $name): self
@@ -632,14 +631,14 @@ final class Activity implements SupportsAITooling
         return null;
     }
 
-    public function getLocation(): ?Location
+    public function getRouteGeography(): RouteGeography
     {
-        return $this->location;
+        return $this->routeGeography;
     }
 
-    public function updateLocation(?Location $location = null): self
+    public function updateRouteGeography(RouteGeography $routeGeography): self
     {
-        $this->location = $location;
+        $this->routeGeography = $routeGeography;
 
         return $this;
     }
@@ -671,14 +670,14 @@ final class Activity implements SupportsAITooling
     }
 
     /**
-     * @return array<string, string|int>
+     * @return array<string, string|int|string[]>
      */
     public function getFilterables(): array
     {
         return array_filter([
             'sportType' => $this->getSportType()->value,
             'start-date' => $this->getStartDate()->getTimestamp() * 1000, // JS timestamp is in milliseconds,
-            'countryCode' => $this->getLocation()?->getCountryCode(),
+            'countryCode' => $this->getRouteGeography()->getPassedThroughCountries(),
             'isCommute' => $this->isCommute() ? 'true' : 'false',
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,
@@ -725,11 +724,6 @@ final class Activity implements SupportsAITooling
         ];
     }
 
-    public function delete(): void
-    {
-        $this->recordThat(new ActivityWasDeleted($this->getId()));
-    }
-
     /**
      * @return array<string, mixed>
      */
@@ -756,7 +750,7 @@ final class Activity implements SupportsAITooling
             'kudoCount' => $this->getKudoCount(),
             'recordedOnDevice' => $this->getDeviceName(),
             'totalImageCount' => $this->getTotalImageCount(),
-            'location' => $this->getLocation()?->jsonSerialize(),
+            'routeGeography' => $this->getRouteGeography()->jsonSerialize(),
             'weather' => $this->getWeather(),
             'gearId' => $this->getGearId()?->toUnprefixedString(),
             'gearName' => $this->getGearName(),

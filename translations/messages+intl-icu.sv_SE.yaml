@@ -18,7 +18,6 @@ Activities: Aktiviteter
 Activity: Aktivitet
 'Activity count': 'Antal aktiviteter'
 'Activity heatmap': Aktivitskarta
-'Activity intensity': Intensitet
 'Activity locations': 'Aktivitet platser'
 'Activity start times': 'Aktivitet starttider'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
@@ -31,6 +30,7 @@ All: Alla
 'Alpine Ski': Alpint
 Apr: Apr
 'Ask Mark something...': 'Fråga Mark någonting...'
+'Athlete profile': 'Athlete profile'
 Aug: Aug
 Avg: Med
 'Back Country Ski': Utförsåkning
@@ -49,6 +49,7 @@ Canoeing: Kanot
 'Challenge consistency': Utmaningsihållighet
 Challenges: Utmaningar
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Kronisk träningsbelastning (Träningsform) - 42 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar långsiktig träningsanpassning.'
+'Clear chat': 'Clear chat'
 'Close modal': 'Close modal'
 'Collapse sidebar': Minimera
 Commutes: Pendling
@@ -56,7 +57,9 @@ Commutes: Pendling
 Compare: Jämför
 'Compare to': 'Jämför med'
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
+Consistency: Consistency
 Crossfit: Crossfit
+'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
 Cycling: Cykling
 'Daily TRIMP': 'Daglig TRIMP'
@@ -66,6 +69,7 @@ Date: Datum
 'Days needed': 'Dagar saknade'
 'Daytime stats': 'Sammanställning starttider'
 Dec: Dec
+Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
 Device: Enhet
@@ -75,6 +79,7 @@ Distance: Distans
 'Distance over time per gear': 'Distans över tid per utrustning'
 'Distance per month per gear': 'Distans per månad per utrustning'
 Distribution: Fördelning
+Duration: Duration
 'E-Bike Rides': 'E-Cykel Turer'
 'E-Mountain Bike Rides': 'E-Mountain Bike Turer'
 Eddington: Eddington
@@ -82,6 +87,7 @@ Elev: Höjd
 Elevation: Höjdmeter
 'Elevation in {unit}': 'Höjdmeter i {unit}'
 Elliptical: Elliptisk
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
@@ -128,12 +134,20 @@ High: Hög
 'High risk - reduce volume': 'Hög risk - minska volymen'
 Hikes: Vandringar
 History: Historik
+'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard is your typical training session': 'How hard is your typical training session'
+'How long is your typical training session': 'How long is your typical training session'
+'How much do you train on average per week': 'How much do you train on average per week'
+'How much training you do in total on days you train.': 'How much training you do in total on days you train.'
+'How often do you train': 'How often do you train'
 'Ice Skate': Skridskor
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Bilden "{imgSrc}" refereras till i din underhållskonfigurationsfil, men hittades inte i "storage/gear-maintenance"'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Individuella trösklar varierar beroende på hur vältränad du är.'
 'Inline Skate': Rullskridskor
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Det verkar som att ingen giltig utrustning är kopplad till någon av komponenterna. Kontrollera din konfigurationsfil.'
 Jan: Jan
 Jul: Jul
@@ -143,12 +157,12 @@ Kayaking: Kayak
 'Kite Surf': Draksurfning
 Lap: Varv
 Laps: Varv
-'Last 45 days': 'Senaste 45 dagarna'
 'Last 7 days training load': 'Belastning de senaste 7 dagarna'
-'Last 90 days': 'Senaste 90 dagarna'
 'Last effort': 'Senaste prestation'
 'Last maintenance': 'Senast underhållet'
+'Last {numberOfDays} days': 'Senaste {numberOfDays} dagarna'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': 'Belastning (CTL/ATL)'
 'Loading data...': 'Laddar datan...'
 Loading...: Laddar...
@@ -260,6 +274,7 @@ Socials: 'Sociala medier'
 Speed: Fart
 'Speed distribution': 'Speed distribution'
 Splits: Delar
+'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': Trappmaskin
 'Stand Up Paddling': 'Stand Up Paddling'
@@ -268,6 +283,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Sammanställning
 'Stats per weekday': 'Sammanställning veckodagar'
+'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Sön
 Sunday: Söndag
@@ -282,6 +298,7 @@ Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Eddingtontalet i samband med cykling eller löpning definieras som det maximala antalet E så att idrottaren har tillryggalagt minst E km under minst E dagar.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
 Thinking...: Tänker...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Den här funktionen är avstängd'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Denna uträkning innebär att cykling i en timme med din maxpuls resulterar i en poäng på 100, vilket vi anser vara "högintensivt"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Den här kartan visar den dagliga träningsintensiteten för det senaste året. Träningsintensiteten för en aktivitet beräknas baserat på flera mätvärden.'
@@ -320,6 +337,7 @@ Unspecified: Ospecificerad
 'Virtual Row': 'Virtuell Rodd'
 'Virtual Runs': 'Virtuell Löpning'
 'Virtual workout assistant': 'Virtuell tränings assistent'
+Volume: Volume
 Walking: Promenad
 Walks: Promenader
 'Water Sports': Vattensport
@@ -377,6 +395,7 @@ hrs: tim
 intensity: intensitet
 intensityFactor: intensitetsFaktor
 kudos: kudos
+'last {numberOfDays} days': 'senaste {numberOfDays} dagarna'
 'max gradient': 'maximal lutning'
 maxHeartRate: maxPuls
 months: månader

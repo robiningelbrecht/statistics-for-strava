@@ -8,9 +8,7 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Activity\WorldType;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -20,12 +18,12 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
 {
     public function findAll(): Routes
     {
-        $query = 'SELECT activityId, name, distance, polyline, location, sportType, startDateTime, isCommute, workoutType
+        $query = 'SELECT activityId, name, distance, polyline, routeGeography, sportType, startDateTime, isCommute, workoutType
                     FROM Activity
                     WHERE sportType IN (:sportTypes)
                     AND polyline IS NOT NULL AND polyline <> ""
-                    AND location IS NOT NULL AND location <> ""
-                    AND JSON_EXTRACT(location, "$.country_code") IS NOT NULL
+                    AND routeGeography IS NOT NULL AND routeGeography <> ""
+                    AND JSON_EXTRACT(routeGeography, "$.country_code") IS NOT NULL
                     AND worldType = :worldType';
 
         $results = $this->connection->executeQuery(
@@ -49,10 +47,10 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
         foreach ($results as $result) {
             $routes->add(Route::create(
                 activityId: ActivityId::fromString($result['activityId']),
-                name: Escape::htmlSpecialChars($result['name']),
+                name: $result['name'],
                 distance: Meter::from($result['distance'])->toKilometer(),
                 encodedPolyline: $result['polyline'],
-                location: Location::create(Json::decode($result['location'])),
+                routeGeography: RouteGeography::create(Json::decode($result['routeGeography'])),
                 sportType: SportType::from($result['sportType']),
                 isCommute: (bool) $result['isCommute'],
                 workoutType: WorkoutType::tryFrom($result['workoutType'] ?? ''),

@@ -13,7 +13,7 @@ class FallbackEnvVarProcessorTest extends TestCase
 
         $this->assertEquals(
             'value1',
-            $processor->getEnv('prefix', 'value1', fn (mixed $value) => $value),
+            $processor->getEnv('prefix', 'value1', fn (mixed $value): string => $value),
         );
     }
 
@@ -23,7 +23,7 @@ class FallbackEnvVarProcessorTest extends TestCase
 
         $this->assertEquals(
             'value2',
-            $processor->getEnv('prefix', 'value1:value2:value3', fn (mixed $value) => 'value2' === $value ? $value : null),
+            $processor->getEnv('prefix', 'value1:value2:value3', fn (mixed $value): ?string => 'value2' === $value ? $value : null),
         );
     }
 

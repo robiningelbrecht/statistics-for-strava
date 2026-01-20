@@ -1,0 +1,7 @@
+
+AreyousureyouwanttodeletesubscriptionwithID123?(yes/no)[no]:
+>
+[OK]Webhooksubscriptiondeletedsuccessfully!
+
+//YouwillnolongerreceiveautomaticupdatesfromStrava.
+

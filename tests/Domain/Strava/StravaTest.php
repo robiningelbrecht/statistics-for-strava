@@ -2,8 +2,8 @@
 
 namespace App\Tests\Domain\Strava;
 
+use App\Application\Import\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
@@ -14,6 +14,7 @@ use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Domain\Strava\StravaRefreshToken;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\Sleep\NullSleep;
 use App\Tests\SpyOutput;
@@ -21,6 +22,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\RequestOptions;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -36,10 +38,18 @@ class StravaTest extends TestCase
     private MockObject $client;
     private MockObject $filesystemOperator;
     private NullSleep $sleep;
-    private LoggerInterface $logger;
+    private MockObject $logger;
 
     public function testVerifyAccessToken(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -65,6 +75,14 @@ class StravaTest extends TestCase
 
     public function testVerifyAccessTokenWhenTheTokenIsInvalid(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -80,6 +98,14 @@ class StravaTest extends TestCase
 
     public function testVerifyAccessTokenWhenTheTokenHasInsufficientScopes(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -105,6 +131,14 @@ class StravaTest extends TestCase
 
     public function testVerifyAccessTokenWhenARandomErrorIsThrown(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -130,6 +164,10 @@ class StravaTest extends TestCase
 
     public function testGetWhenUnexpectedError(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->expectException(RequestException::class);
         $this->expectExceptionMessage('The error');
 
@@ -155,8 +193,43 @@ class StravaTest extends TestCase
         $this->strava->getAthlete();
     }
 
+    public function testGetWhenUnexpectedErrorWithoutBody(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->expectException(RequestException::class);
+        $this->expectExceptionMessage('The error');
+
+        $matcher = $this->exactly(2);
+        $this->client
+            ->expects($matcher)
+            ->method('request')
+            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+                if (1 === $matcher->numberOfInvocations()) {
+                    $this->assertEquals('POST', $method);
+                    $this->assertEquals('oauth/token', $path);
+
+                    return new Response(200, [], Json::encode(['access_token' => 'theAccessToken']));
+                }
+
+                throw new RequestException(message: 'The error', request: new Request('GET', 'uri'));
+            });
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->strava->getAthlete();
+    }
+
     public function testGetWhenTooManyRequestsButNoRateLimits(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->expectException(RequestException::class);
         $this->expectExceptionMessage('The error');
 
@@ -184,6 +257,10 @@ class StravaTest extends TestCase
 
     public function testGetWhenTooManyRequestsDailyRateLimitExceeded(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->expectExceptionObject(StravaRateLimitHasBeenReached::dailyReadLimit());
 
         $matcher = $this->exactly(2);
@@ -210,6 +287,10 @@ class StravaTest extends TestCase
 
     public function testGetWhenTooManyRequestsFifteenMinuteRateLimitExceeded(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->expectExceptionObject(StravaRateLimitHasBeenReached::fifteenMinuteReadLimit(3));
 
         $matcher = $this->exactly(2);
@@ -236,6 +317,10 @@ class StravaTest extends TestCase
 
     public function testGetFifteenRateLimitIsAboutToBeHit(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -274,6 +359,10 @@ class StravaTest extends TestCase
 
     public function testGetAthlete(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -313,6 +402,10 @@ class StravaTest extends TestCase
 
     public function testGetActivities(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -344,6 +437,10 @@ class StravaTest extends TestCase
 
     public function testGetActivity(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -373,6 +470,10 @@ class StravaTest extends TestCase
 
     public function testGetActivityZones(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -402,6 +503,10 @@ class StravaTest extends TestCase
 
     public function testGetAllActivityStreams(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -431,6 +536,10 @@ class StravaTest extends TestCase
 
     public function testGetAllActivityPhotos(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -460,6 +569,10 @@ class StravaTest extends TestCase
 
     public function testGetGear(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -489,6 +602,10 @@ class StravaTest extends TestCase
 
     public function testGetSegment(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $matcher = $this->exactly(2);
         $this->client
             ->expects($matcher)
@@ -516,8 +633,104 @@ class StravaTest extends TestCase
         $this->strava->getSegment(SegmentId::fromUnprefixed(3));
     }
 
+    public function testGetWebhookSubscription(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'GET',
+                'api/v3/push_subscriptions',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::QUERY => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->getWebhookSubscription();
+    }
+
+    public function testCreateWebhookSubscription(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'POST',
+                'api/v3/push_subscriptions',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::FORM_PARAMS => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                        'callback_url' => 'https://example.com/',
+                        'verify_token' => 'the-token',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->createWebhookSubscription(
+            callbackUrl: Url::fromString('https://example.com/'),
+            verifyToken: 'the-token',
+        );
+    }
+
+    public function testDeleteWebhookSubscription(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->once())
+            ->method('info');
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'DELETE',
+                'api/v3/push_subscriptions/the-id',
+                [
+                    'base_uri' => 'https://www.strava.com/',
+                    RequestOptions::QUERY => [
+                        'client_id' => 'clientId',
+                        'client_secret' => 'clientSecret',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
+
+        $this->strava->deleteWebhookSubscription('the-id');
+    }
+
     public function testGetChallengesOnPublicProfile(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -538,6 +751,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenInvalidProfile(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -559,6 +776,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenNameNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -580,6 +801,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenTeaserNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -601,6 +826,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenLogoNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -622,6 +851,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenUrlNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -643,6 +876,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenIdNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -662,6 +899,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnPublicProfileWhenTimeNotFound(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -681,8 +922,12 @@ class StravaTest extends TestCase
         $this->strava->getChallengesOnPublicProfile('10');
     }
 
-    public function testGetChallengesOnPublicProfileWhenTimeNIsEmpty(): void
+    public function testGetChallengesOnPublicProfileWhenTimeIsEmpty(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')
@@ -704,6 +949,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCase(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -725,6 +974,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenFileNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -744,6 +997,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWithDefaultHtml(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -765,6 +1022,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenInvalidHtml(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -787,6 +1048,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenInvalidHtmlCaseTwo(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -809,6 +1074,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenNameNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -831,6 +1100,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenTeaserNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -853,6 +1126,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenLogoNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -875,6 +1152,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenUrlNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -897,6 +1178,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenIdNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -919,6 +1204,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWhenTimestampNotFound(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -941,6 +1230,10 @@ class StravaTest extends TestCase
 
     public function testGetChallengesOnTrophyCaseWithEmptyTimestamp(): void
     {
+        $this->client
+            ->expects($this->never())
+            ->method('request');
+
         $this->filesystemOperator
             ->expects($this->once())
             ->method('fileExists')
@@ -963,6 +1256,10 @@ class StravaTest extends TestCase
 
     public function testDownloadImage(): void
     {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
         $this->client
             ->expects($this->once())
             ->method('request')

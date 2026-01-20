@@ -1,0 +1,4 @@
+Importing challenges...
+Could not import challenges from trophy case page: an error
+  => Could not import "Challenge 1", error: WAW ERROR
+  => Imported challenge "Challenge 1"

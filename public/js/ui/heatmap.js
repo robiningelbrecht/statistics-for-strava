@@ -1,5 +1,5 @@
 import {DataTableStorage, FilterManager} from "../filters";
-import { pointToLineDistance, point, lineString } from "../../libraries/turf";
+import {pointToLineDistance, point, lineString} from "../../libraries/turf";
 
 class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -31,18 +31,7 @@ class HeatmapDrawer {
         }
         this.map.on("click", (e) => this._handleMapClick(e));
         this.map.on("popupclose", () => this._resetRouteStyles());
-        this.map.on("popupopen", (ev) => {
-            const container = ev.popup.getElement();
-            if (!container) return;
-
-            container.querySelectorAll('a[data-model-content-url]').forEach(node => {
-                node.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.modalManager.open(node.getAttribute('data-model-content-url'));
-                });
-            });
-        });
+        this.map.on("popupopen", (e) => this._handlePopupOpen(e));
     }
 
     _resetRouteStyles() {
@@ -50,6 +39,19 @@ class HeatmapDrawer {
             entry.polyline.setStyle(this.defaultPolylineStyle);
         });
     }
+
+    _handlePopupOpen(e) {
+        const container = e.popup.getElement();
+        if (!container) return;
+
+        container.querySelectorAll('a[data-model-content-url]').forEach(node => {
+            node.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.modalManager.open(node.getAttribute('data-model-content-url'));
+            });
+        });
+    };
 
     _handleMapClick(e) {
         const clickPoint = point([e.latlng.lng, e.latlng.lat]);
@@ -79,12 +81,15 @@ class HeatmapDrawer {
         });
 
         const html = `
-            <div class="m-4 text-sm max-h-[200px] overflow-y-auto">
+            <div class="m-4 text-sm max-h-50 overflow-y-auto">
                 <div class="font-medium">${nearby.length} nearby route(s):</div>
                  <ul class="divide-default divide-y divide-gray-200">
                     ${nearby.map(entry => `
                      <li class="py-2">
-                      <a href="#" class="block truncate font-medium text-blue-600 hover:underline" data-model-content-url="/activity/${entry.route.id}.html"> ${entry.route.name} </a>
+                      <a href="#" title="${entry.route.name}" class="block truncate font-medium text-blue-600 hover:underline" 
+                        data-model-content-url="${entry.route.activityUrl}">
+                        ${entry.route.name}
+                      </a>
                       <div class="flex items-center justify-between text-xs text-gray-500">
                         <div>${entry.route.startDate}</div>
                         <div>${entry.route.distance}</div>
@@ -112,7 +117,7 @@ class HeatmapDrawer {
 
         const determineMostActiveState = (routes) => {
             const stateCounts = routes.reduce((counts, route) => {
-                const state = route.location.state;
+                const state = route.startLocation.state;
                 if (state) counts[state] = (counts[state] || 0) + 1;
                 return counts;
             }, {});
@@ -127,7 +132,7 @@ class HeatmapDrawer {
         const mostActiveState = determineMostActiveState(routes);
 
         routes.forEach(route => {
-            const {countryCode, state} = route.location;
+            const {countryCode, state} = route.startLocation;
 
             if (!countryFeatureGroups.has(countryCode)) {
                 countryFeatureGroups.set(countryCode, L.featureGroup());
@@ -171,7 +176,7 @@ class HeatmapDrawer {
     }
 }
 
-export class Heatmap {
+export default class Heatmap {
     constructor(wrapper, modalManager) {
         this.wrapper = wrapper;
         this.heatmap = wrapper.querySelector('[data-leaflet-routes]');

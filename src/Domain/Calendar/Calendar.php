@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Domain\Calendar;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Calendar
 {
     private function __construct(
         private Month $month,
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
     ) {
     }
 
     public static function create(
         Month $month,
-        ActivityRepository $activityRepository,
+        EnrichedActivities $enrichedActivities,
     ): self {
         return new self(
             month: $month,
-            activityRepository: $activityRepository
+            enrichedActivities: $enrichedActivities,
         );
     }
 
@@ -43,7 +43,7 @@ final readonly class Calendar
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                activities: $this->enrichedActivities->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$previousMonth->getMonth().'-'.$previousMonth->getYear(),
                 ), null)
@@ -52,10 +52,11 @@ final readonly class Calendar
 
         for ($i = 0; $i < $this->month->getNumberOfDays(); ++$i) {
             $dayNumber = $i + 1;
+
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: true,
-                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                activities: $this->enrichedActivities->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$this->month->getMonth().'-'.$this->month->getYear(),
                 ), null)
@@ -65,10 +66,11 @@ final readonly class Calendar
         for ($i = 0; $i < count($days) % 7; ++$i) {
             // Append with days of next month.
             $dayNumber = $i + 1;
+
             $days->add(Day::create(
                 dayNumber: $dayNumber,
                 isCurrentMonth: false,
-                activities: $this->activityRepository->findByStartDate(SerializableDateTime::createFromFormat(
+                activities: $this->enrichedActivities->findByStartDate(SerializableDateTime::createFromFormat(
                     format: 'd-n-Y',
                     datetime: $dayNumber.'-'.$nextMonth->getMonth().'-'.$nextMonth->getYear(),
                 ), null)

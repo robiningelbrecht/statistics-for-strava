@@ -26,7 +26,7 @@ class LightGallery {
     }
 }
 
-export class PhotoWall {
+export default class PhotoWall {
     constructor(wrapper, dataTableStorage) {
         this.wrapper = wrapper;
         this.dataTableStorage = dataTableStorage;

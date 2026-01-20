@@ -1,0 +1,58 @@
+[
+    {
+        "commandName": "App\\Application\\Import\\ImportAthlete\\ImportAthlete",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportActivities\\ImportActivities",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportGear\\ImportGear",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ProcessRawActivityData\\ProcessRawActivityData",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportSegments\\ImportSegments",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\ImportChallenges\\ImportChallenges",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateActivityMetrics\\CalculateActivityMetrics",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\DeleteActivitiesMarkedForDeletion\\DeleteActivitiesMarkedForDeletion",
+        "payload": {
+            "output": {}
+        }
+    }
+]

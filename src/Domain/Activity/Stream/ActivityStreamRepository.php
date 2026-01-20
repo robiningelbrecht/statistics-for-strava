@@ -11,7 +11,7 @@ interface ActivityStreamRepository
 
     public function update(ActivityStream $stream): void;
 
-    public function delete(ActivityStream $stream): void;
+    public function deleteForActivity(ActivityId $activityId): void;
 
     public function hasOneForActivityAndStreamType(ActivityId $activityId, StreamType $streamType): bool;
 

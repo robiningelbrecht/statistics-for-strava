@@ -1,0 +1,1 @@
+<error>Wait until at least one Strava activity has been imported before building the app</error>

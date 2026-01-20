@@ -7,7 +7,7 @@
             {{ "View details"|trans }}
         </a>
     </div>
-    {% if powerOutputsPerActicityType|length > 1 %}
+    {% if powerOutputsPerActivityType|length > 1 %}
         <div class="tabs tabs--default">
             <ul id="peakPowerOutputActivityTypeTab{{ uniqueId }}" data-tabs="#peakPowerOutputActivityTypeTabContent{{ uniqueId }}" role="tablist">
                 {% for activityType,powerOutputs in powerOutputsPerActicityType %}
@@ -22,7 +22,7 @@
         </div>
     {% endif %}
     <div id="peakPowerOutputActivityTypeTabContent{{ uniqueId }}">
-        {% for activityType,powerOutputs in powerOutputsPerActicityType %}
+        {% for activityType,powerOutputs in powerOutputsPerActivityType %}
             <div id="powerOutput{{ activityType }}{{ uniqueId }}" role="tabpanel" aria-labelledby="powerOutput{{ activityType }}{{ uniqueId }}-tab">
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
@@ -57,7 +57,7 @@
                                         {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
                                     </td>
                                     <td class="px-6 py-2 text-left truncate">
-                                        {{ powerOutput.getActivity()|activityLink() }}
+                                        {{ getActivity(powerOutput.getActivityId())|activityLink() }}
                                     </td>
                                 </tr>
                             {% endif %}

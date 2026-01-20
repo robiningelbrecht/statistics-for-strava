@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Integration\AI\Chat;
 
-use App\BuildApp\ProfilePictureUrl;
+use App\Application\ProfilePictureUrl;
 use App\Domain\Integration\AI\Chat\ChatMessage;
 use App\Domain\Integration\AI\Chat\ChatMessageId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -15,8 +15,8 @@ final class ChatMessageBuilder
     private ChatMessageId $messageId;
     private string $message;
     private MessageRole $messageRole;
-    private SerializableDateTime $on;
-    private ?ProfilePictureUrl $userProfilePictureUrl;
+    private readonly SerializableDateTime $on;
+    private readonly ?ProfilePictureUrl $userProfilePictureUrl;
     private ?string $firstLetterOfFirstName;
 
     public function __construct()

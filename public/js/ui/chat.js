@@ -1,4 +1,49 @@
 import autoComplete from "../../libraries/autocomplete";
+import { marked } from 'marked';
+
+class ChatMessageRenderer {
+    constructor(messageEl) {
+        this.el = messageEl;
+        this.buffer = '';
+
+        this.md = marked.setOptions({
+            gfm: true,
+            breaks: true,
+        });
+    }
+
+    setText(text) {
+        this.buffer = text;
+    }
+
+    append(chunk) {
+        this.buffer += chunk;
+        this.renderStreaming();
+    }
+
+    renderStreaming() {
+        // VERY lightweight streaming render.
+        const openFences = (this.buffer.match(/```/g) || []).length % 2 === 1;
+
+        let text = this.buffer
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+
+        if (!openFences) {
+            text = text
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        }
+
+        this.el.innerHTML = text.replace(/\n/g, '<br>');
+    }
+
+    renderFinal() {
+        this.el.dataset.markdownParsed = 'true';
+        this.el.innerHTML = this.md.parse(this.buffer.trim());
+    }
+}
 
 export default class Chat {
     constructor(chatModal) {
@@ -7,12 +52,12 @@ export default class Chat {
         this.button = this.form.querySelector('button.send-message');
         this.textInput = this.form.querySelector('input.message');
         this.spinner = this.form.querySelector('div.spinner');
+        this.clearButton = chatModal.querySelector('button.clear-chat');
 
         this.placeholderIdle = this.textInput.getAttribute('data-placeholder-idle');
         this.placeholderProcessing = this.textInput.getAttribute('data-placeholder-processing');
 
         this.commands = JSON.parse(this.chatWrapper.getAttribute('data-chat-commands') || '{}');
-
         this.autoCompleteJS = null;
     }
 
@@ -65,25 +110,31 @@ export default class Chat {
 
     handleSSE(message) {
         const source = new EventSource(`/chat/sse?message=${encodeURIComponent(message)}`);
+        let renderer = null;
 
         source.addEventListener('fullMessage', event => {
-            this.chatWrapper.innerHTML += event.data.replace(/\\n/g, '\n');
+            this.chatWrapper.insertAdjacentHTML(
+                'beforeend',
+                event.data.replace(/\\n/g, '\n')
+            );
+
+            const messageEl = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
+            renderer = new ChatMessageRenderer(messageEl);
         });
 
         source.addEventListener('removeThinking', () => {
-            const thinkingEl = this.chatWrapper.querySelector('.thinking');
-            thinkingEl?.remove();
+            this.chatWrapper.querySelector('.thinking')?.remove();
         });
 
         source.addEventListener('agentResponse', event => {
-            const lastMessage = this.chatWrapper.querySelector('div.message-wrapper:last-child > div.message');
-            if (lastMessage) {
-                lastMessage.innerHTML += event.data.replace(/\\n/g, '\n');
-            }
+            if (!renderer) return;
+
+            renderer.append(event.data.replace(/\\n/g, '\n'));
         });
 
         source.addEventListener('done', () => {
             source.close();
+            renderer?.renderFinal();
             this.toggleElements(false);
             this.textInput.focus();
         });
@@ -105,9 +156,42 @@ export default class Chat {
                 this.form.requestSubmit();
             }
         });
+
+        // Clear chat
+        if (this.clearButton) {
+            this.clearButton.addEventListener('click', () => this.clearChat());
+        }
+    }
+
+    async clearChat() {
+        if (!confirm('Are you sure you want to clear the chat history?')) {
+            return;
+        }
+
+        try {
+            await fetch('/chat/clear', { method: 'POST' });
+            this.chatWrapper.innerHTML = '';
+        } catch (error) {
+            console.error('Failed to clear chat:', error);
+        }
+    }
+
+    parseExistingMessages() {
+        const messages = this.chatWrapper.querySelectorAll('div.message');
+        messages.forEach(messageEl => {
+            if (messageEl.dataset.parsed === 'true') return;
+
+            const rawText = messageEl.textContent;
+            if (!rawText) return;
+
+            const renderer = new ChatMessageRenderer(messageEl);
+            renderer.setText(rawText);
+            renderer.renderFinal();
+        });
     }
 
     render() {
+        this.parseExistingMessages();
         this.initAutoComplete();
         this.bindEvents();
     }

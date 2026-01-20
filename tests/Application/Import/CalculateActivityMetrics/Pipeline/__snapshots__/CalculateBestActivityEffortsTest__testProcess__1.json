@@ -1,0 +1,260 @@
+[
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 8046,
+        "sportType": "Ride",
+        "timeInSeconds": 894
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 10000,
+        "sportType": "Ride",
+        "timeInSeconds": 1101
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 16093,
+        "sportType": "Ride",
+        "timeInSeconds": 1813
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 20000,
+        "sportType": "Ride",
+        "timeInSeconds": 2262
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 30000,
+        "sportType": "Ride",
+        "timeInSeconds": 3709
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 40000,
+        "sportType": "Ride",
+        "timeInSeconds": 5540
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 50000,
+        "sportType": "Ride",
+        "timeInSeconds": 7196
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 80000,
+        "sportType": "Ride",
+        "timeInSeconds": 11969
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 80467,
+        "sportType": "Ride",
+        "timeInSeconds": 12048
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 90000,
+        "sportType": "Ride",
+        "timeInSeconds": 14147
+    },
+    {
+        "activityId": "activity-1",
+        "distanceInMeter": 100000,
+        "sportType": "Ride",
+        "timeInSeconds": 15687
+    },
+    {
+        "activityId": "activity-2",
+        "distanceInMeter": 8046,
+        "sportType": "Ride",
+        "timeInSeconds": 1232
+    },
+    {
+        "activityId": "activity-2",
+        "distanceInMeter": 10000,
+        "sportType": "Ride",
+        "timeInSeconds": 1566
+    },
+    {
+        "activityId": "activity-2",
+        "distanceInMeter": 16093,
+        "sportType": "Ride",
+        "timeInSeconds": 11601
+    },
+    {
+        "activityId": "activity-2",
+        "distanceInMeter": 20000,
+        "sportType": "Ride",
+        "timeInSeconds": 12220
+    },
+    {
+        "activityId": "activity-6",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-6",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-7",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-7",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-8",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-8",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-9",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-9",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-10",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-10",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-11",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-11",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-12",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-12",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-13",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-13",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-14",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-14",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-15",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-15",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-16",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-16",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-17",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-17",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-18",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-18",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    },
+    {
+        "activityId": "activity-19",
+        "distanceInMeter": 400,
+        "sportType": "Run",
+        "timeInSeconds": 63
+    },
+    {
+        "activityId": "activity-19",
+        "distanceInMeter": 804,
+        "sportType": "Run",
+        "timeInSeconds": 129
+    }
+]

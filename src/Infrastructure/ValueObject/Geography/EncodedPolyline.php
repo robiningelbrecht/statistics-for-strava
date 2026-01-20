@@ -64,4 +64,15 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
 
         return $points;
     }
+
+    /**
+     * @return array<int, array<float, float>>
+     */
+    public function decodeAndPairLonLat(): array
+    {
+        return array_map(
+            fn (array $pair): array => [$pair[1], $pair[0]],
+            array_chunk($this->decode(), 2)
+        );
+    }
 }

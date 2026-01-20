@@ -17,6 +17,7 @@ use League\Flysystem\FilesystemOperator;
 use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private FilesystemOperator $buildStorage;
-    private MockObject $neuronAIAgent;
+    private Stub $neuronAIAgent;
     private MockObject $chatRepository;
 
     public function testHandle(): void
@@ -36,7 +37,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->once())
-            ->method('getHistory')
+            ->method('findAll')
             ->willReturn([new ChatMessage(
                 messageId: ChatMessageId::random(),
                 message: 'message',
@@ -63,7 +64,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     {
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
@@ -86,7 +87,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
@@ -101,6 +102,22 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             server: [],
             content: [],
         ))->getContent());
+    }
+
+    public function testClearChat(): void
+    {
+        $requestHandler = $this->buildRequestHandler(
+            $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
+        );
+
+        $this->chatRepository
+            ->expects($this->once())
+            ->method('clear');
+
+        $this->assertEquals(
+            204,
+            $requestHandler->clearChat()->getStatusCode()
+        );
     }
 
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler
@@ -121,12 +138,13 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->buildStorage = $this->getContainer()->get('build.storage');
-        $this->neuronAIAgent = $this->createMock(AgentInterface::class);
+        $this->neuronAIAgent = $this->createStub(AgentInterface::class);
         $this->chatRepository = $this->createMock(ChatRepository::class);
     }
 }

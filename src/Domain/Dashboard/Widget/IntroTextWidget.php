@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityTotals;
+use App\Domain\Activity\EnrichedActivities;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -13,7 +13,7 @@ use Twig\Environment;
 final readonly class IntroTextWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
@@ -30,7 +30,7 @@ final readonly class IntroTextWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->enrichedActivities->findAll();
         $activityTotals = ActivityTotals::getInstance(
             activities: $allActivities,
             now: $now,

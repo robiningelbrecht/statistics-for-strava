@@ -1,8 +1,9 @@
 [
     {
-        "commandName": "App\\Domain\\Strava\\ImportStravaData\\ImportStravaData",
+        "commandName": "App\\Application\\RunImport\\RunImport",
         "payload": {
-            "output": {}
+            "output": {},
+            "restrictToActivityIds": null
         }
     }
 ]

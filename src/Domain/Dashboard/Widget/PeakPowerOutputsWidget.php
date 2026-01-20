@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\BestPowerOutputs;
@@ -23,7 +23,7 @@ use Twig\Environment;
 final readonly class PeakPowerOutputsWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
         private ActivityPowerRepository $activityPowerRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private Environment $twig,
@@ -66,7 +66,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
         }
 
         $activityType = ActivityType::from(array_key_first($bestAllTimePowerOutputsPerActivityType));
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->enrichedActivities->findAll();
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
             endDate: $now
@@ -78,14 +78,14 @@ final readonly class PeakPowerOutputsWidget implements Widget
             powerOutputs: $bestAllTimePowerOutputsPerActivityType[$activityType->value],
         );
         $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 45 days'),
+            description: $this->translator->trans('Last {numberOfDays} days', ['{numberOfDays}' => 45]),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
                 sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 45)
             )
         );
         $bestPowerOutputs->add(
-            description: $this->translator->trans('Last 90 days'),
+            description: $this->translator->trans('Last {numberOfDays} days', ['{numberOfDays}' => 90]),
             powerOutputs: $this->activityPowerRepository->findBestForSportTypesInDateRange(
                 sportTypes: SportTypes::thatSupportPeakPowerOutputs($activityType),
                 dateRange: DateRange::lastXDays($now, 90)
@@ -112,7 +112,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
         );
 
         return $this->twig->load('html/dashboard/widget/widget--peak-power-outputs.html.twig')->render([
-            'powerOutputsPerActicityType' => $bestAllTimePowerOutputsPerActivityType,
+            'powerOutputsPerActivityType' => $bestAllTimePowerOutputsPerActivityType,
             'timeIntervals' => ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED,
         ]);
     }

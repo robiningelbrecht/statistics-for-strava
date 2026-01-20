@@ -5,11 +5,12 @@ module.exports = {
     context: __dirname,
     entry: {
         'app.min': './public/js/app.js',
-        'leaflet.fly.to.places.min': './public/js/leaflet.fly.to.places.js',
+        'leaflet.controls.min': './public/js/leaflet.controls.js',
     },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),
         filename: '[name].js',
+        chunkFilename: '[name].min.js',
         clean: true,
     },
     resolve: {

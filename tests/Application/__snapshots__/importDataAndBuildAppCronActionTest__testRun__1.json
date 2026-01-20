@@ -1,0 +1,26 @@
+[
+    {
+        "commandName": "App\\Application\\RunImport\\RunImport",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    },
+    {
+        "commandName": "App\\Application\\RunBuild\\RunBuild",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Domain\\Integration\\Notification\\SendNotification\\SendNotification",
+        "payload": {
+            "title": "Build successful",
+            "message": "New import and build of your Strava stats was successful in 10s",
+            "tags": [
+                "+1"
+            ],
+            "actionUrl": "http://localhost"
+        }
+    }
+]

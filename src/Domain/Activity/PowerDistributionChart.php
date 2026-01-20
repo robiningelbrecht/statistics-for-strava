@@ -71,7 +71,7 @@ final readonly class PowerDistributionChart
         foreach ($xAxisValues as $axisValue) {
             $data[] = array_sum(array_splice($powerData, 0, $step)) / $totalTimeInSeconds * 100;
         }
-        // @phpstan-ignore-next-line
+
         $yAxisMax = max($data) * 1.2;
         $xAxisValueAveragePower = array_search($this->findClosestSteppedValue(
             min: $minPower,

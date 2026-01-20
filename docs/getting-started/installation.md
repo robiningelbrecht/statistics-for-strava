@@ -93,6 +93,10 @@ STRAVA_REFRESH_TOKEN=YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW
 # Valid timezones can found under TZ Identifier column here: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
 TZ=Etc/GMT
 
+# Uncomment and set these to run the container as a non-root user.
+# PUID=your host UID
+# PGID=your host GID
+
 # !! IMPORTANT If you want to serve Statistics for Strava from a custom domain (not localhost), 
 # uncomment the following lines and configure them accordingly:
 

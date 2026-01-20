@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Chat;
 
-use App\BuildApp\ProfilePictureUrl;
+use App\Application\ProfilePictureUrl;
 use App\Domain\Athlete\AthleteRepository;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Time\Clock\Clock;
@@ -36,7 +36,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         ]);
     }
 
-    public function getHistory(): array
+    public function findAll(): array
     {
         $results = $this->connection->executeQuery('SELECT * FROM ChatMessage ORDER BY `on` ASC')
             ->fetchAllAssociative();
@@ -45,7 +45,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         foreach ($results as $result) {
             $history[] = new ChatMessage(
                 messageId: ChatMessageId::fromString($result['messageId']),
-                message: nl2br((string) $result['message']),
+                message: (string) $result['message'],
                 messageRole: MessageRole::from($result['messageRole']),
                 on: SerializableDateTime::fromString($result['on']),
             )->withUserProfilePictureUrl($this->profilePictureUrl)
@@ -53,6 +53,11 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
         }
 
         return $history;
+    }
+
+    public function clear(): void
+    {
+        $this->connection->executeStatement('DELETE FROM ChatMessage');
     }
 
     public function buildMessage(string $message, MessageRole $messageRole): ChatMessage

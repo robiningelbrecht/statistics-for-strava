@@ -15,9 +15,9 @@ final class WidgetConfiguration
     }
 
     /**
-     * @param int|string|float|bool|array<int, int|string|mixed> $value
+     * @param int|string|float|bool|array<int, int|string|mixed>|null $value
      */
-    public function add(string $key, int|string|float|bool|array $value): self
+    public function add(string $key, int|string|float|bool|array|null $value): self
     {
         $this->configuration[$key] = $value;
 

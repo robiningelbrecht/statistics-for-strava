@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Challenge\Consistency;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Calendar\Months;
@@ -130,12 +130,13 @@ class ConsistencyChallengeCalculatorTest extends ContainerTestCase
         ));
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->calculator = new ConsistencyChallengeCalculator(
-            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(ActivityIdRepository::class),
             $this->getContainer()->get(QueryBus::class),
         );
     }

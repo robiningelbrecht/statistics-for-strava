@@ -25,6 +25,14 @@ Keep track of your gear and stay on top of maintenance tasks with our **Gear Mai
 services:
   app:
     image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava
+    volumes:
+      - ./config:/var/www/config/app
+      # ...
+      - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
+  daemon:
+    image: robiningelbrecht/strava-statistics:latest
+    container_name: statistics-for-strava-daemon
     volumes:
       - ./config:/var/www/config/app
       # ...
@@ -81,6 +89,7 @@ components:
           # - km (every x km used),
           # - mi (every x miles used),
           # - hours (every x hours used),
+          # - daysUsed (every x days used),
           # - days (every x days),
           unit: km
 # If you don't want to reference images, set gears to an empty array: `gears: []`       
@@ -114,6 +123,10 @@ Each component represents a part of your gear that you want to track maintenance
 ```
 
 Adding the tag `#sfs-chain-lubed` to your Strava activity title will reset the maintenance task and counters from the next activity onwards.
+
+> [!NOTE]
+> This tag also serves as the initial trigger to start maintenance tracking
+> for a gear that is linked to a component.
 
 ## Gears
 

@@ -26,19 +26,10 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
         return self::fromString('now')->setTimestamp($unixTimestamp);
     }
 
-    public static function fromYearAndWeekNumber(int $year, int $weekNumber, int $dayOfWeek = 1): self
-    {
-        $datetime = new self()->setISODate($year, $weekNumber, $dayOfWeek);
-
-        return self::fromString(
-            $datetime->format('Y-m-d H:i:s')
-        );
-    }
-
     public static function createFromFormat(string $format, string $datetime, ?\DateTimeZone $timezone = null): self
     {
         if (!$datetime = parent::createFromFormat($format, $datetime, $timezone)) {
-            throw new \InvalidArgumentException(sprintf('Invalid date format %s for %s', $format, $datetime));
+            throw new \InvalidArgumentException(sprintf('Invalid date format %s for %s', $format, $datetime)); // @codeCoverageIgnore
         }
 
         return self::fromString(
@@ -99,35 +90,6 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
     public function getYear(): int
     {
         return (int) $this->format('Y');
-    }
-
-    public function getWeekNumber(): int
-    {
-        $weekNumber = (int) $this->format('W');
-        if (1 === $weekNumber && 12 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 52;
-        }
-        if (53 === $weekNumber && 12 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 52;
-        }
-        if (53 === $weekNumber && 1 === $this->getMonthWithoutLeadingZero()) {
-            $weekNumber = 1;
-        }
-
-        return $weekNumber;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getYearAndWeekNumber(): array
-    {
-        return [$this->getYear(), $this->getWeekNumber()];
-    }
-
-    public function getYearAndWeekNumberString(): string
-    {
-        return implode('-', $this->getYearAndWeekNumber());
     }
 
     public function isAfterOrOn(SerializableDateTime $that): bool

@@ -6,11 +6,11 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Domain\Activity\WorldType;
 use App\Domain\Gear\GearId;
-use App\Domain\Integration\Geocoding\Nominatim\Location;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -31,7 +31,7 @@ final class ActivityBuilder
     private readonly int $calories;
     private ?int $averagePower;
     private readonly ?int $maxPower;
-    private readonly KmPerHour $averageSpeed;
+    private KmPerHour $averageSpeed;
     private readonly KmPerHour $maxSpeed;
     private ?int $averageHeartRate;
     private readonly ?int $maxHeartRate;
@@ -43,12 +43,11 @@ final class ActivityBuilder
     /** @var array<string> */
     private array $localImagePaths;
     private ?string $polyline;
-    private ?Location $location;
-    private readonly string $weather;
+    private RouteGeography $routeGeography;
+    private readonly ?string $weather;
     private ?GearId $gearId;
-    private readonly ?string $gearName;
     private readonly bool $isCommute;
-    private ?WorkoutType $workoutType;
+    private readonly ?WorkoutType $workoutType;
 
     private function __construct()
     {
@@ -75,10 +74,9 @@ final class ActivityBuilder
         $this->deviceName = null;
         $this->localImagePaths = [];
         $this->polyline = null;
-        $this->weather = '';
+        $this->weather = null;
         $this->gearId = null;
-        $this->location = null;
-        $this->gearName = null;
+        $this->routeGeography = RouteGeography::create([]);
         $this->isCommute = false;
         $this->workoutType = null;
     }
@@ -114,10 +112,9 @@ final class ActivityBuilder
             totalImageCount: $this->totalImageCount,
             localImagePaths: $this->localImagePaths,
             polyline: $this->polyline,
-            location: $this->location,
+            routeGeography: $this->routeGeography,
             weather: $this->weather,
             gearId: $this->gearId,
-            gearName: $this->gearName,
             isCommute: $this->isCommute,
             workoutType: $this->workoutType,
         );
@@ -186,9 +183,9 @@ final class ActivityBuilder
         return $this;
     }
 
-    public function withLocation(?Location $location): self
+    public function withRouteGeography(RouteGeography $routeGeography): self
     {
-        $this->location = $location;
+        $this->routeGeography = $routeGeography;
 
         return $this;
     }
@@ -266,6 +263,13 @@ final class ActivityBuilder
     public function withWorldType(WorldType $worldType): self
     {
         $this->worldType = $worldType;
+
+        return $this;
+    }
+
+    public function withAverageSpeed(KmPerHour $averageSpeed): self
+    {
+        $this->averageSpeed = $averageSpeed;
 
         return $this;
     }

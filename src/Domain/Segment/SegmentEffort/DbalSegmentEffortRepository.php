@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Segment\SegmentEffort;
 
 use App\Domain\Activity\ActivityId;
-use App\Domain\Segment\SegmentEffort\DeleteActivitySegmentEfforts\SegmentEffortsWereDeleted;
 use App\Domain\Segment\SegmentId;
-use App\Infrastructure\Eventing\EventBus;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -18,7 +16,6 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
 {
     public function __construct(
         Connection $connection,
-        private EventBus $eventBus,
         private SegmentEffortRankingMap $segmentEffortRankingMap,
     ) {
         parent::__construct($connection);
@@ -55,8 +52,6 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
                 'activityId' => $activityId,
             ]
         );
-
-        $this->eventBus->publishEvents([new SegmentEffortsWereDeleted()]);
     }
 
     public function find(SegmentEffortId $segmentEffortId): SegmentEffort

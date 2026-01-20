@@ -55,10 +55,11 @@ final readonly class TrainingGoalsWidget implements Widget
         }
 
         $calculatedGoalsPerPeriod = $fromToLabels = [];
-        $week = Week::fromYearAndWeekNumber($now->getYear(), $now->getWeekNumber());
+        $week = Week::fromDate($now);
         $month = Month::fromDate($now);
         $year = Year::fromDate($now);
 
+        /** @var non-empty-list<TrainingGoal> $trainingGoals */
         foreach ($trainingGoalsPerPeriod as $period => $trainingGoals) {
             [$from, $to] = match (TrainingGoalPeriod::from($period)) {
                 TrainingGoalPeriod::WEEKLY => [$week->getFrom(), $week->getTo()],
@@ -95,12 +96,15 @@ final readonly class TrainingGoalsWidget implements Widget
                     TrainingGoalType::DISTANCE => $trainingGoal->convertKilometerToGoalUnit($response->getDistance()),
                     TrainingGoalType::ELEVATION => $trainingGoal->convertMeterToGoalUnit($response->getElevation()),
                     TrainingGoalType::MOVING_TIME => $trainingGoal->convertSecondsToGoalUnit($response->getMovingTime()),
+                    TrainingGoalType::NUMBER_OF_ACTIVITIES => $response->getNumberOfActivities(),
+                    TrainingGoalType::CALORIES => $response->getCalories(),
                 };
 
                 $calculatedGoalsPerPeriod[$period][] = [
                     'trainingGoal' => $trainingGoal,
-                    'absolute' => $convertedProgress,
-                    'relative' => min(100, round($convertedProgress->toFloat() / $trainingGoal->getGoal()->toFloat() * 100)),
+                    'absoluteProgress' => $convertedProgress,
+                    'relativeProgress' => min(100, round($convertedProgress->toFloat() / $trainingGoal->getGoal()->toFloat() * 100)),
+                    'progressLeftToDo' => $trainingGoal->getGoal()->subtract($convertedProgress),
                 ];
             }
         }

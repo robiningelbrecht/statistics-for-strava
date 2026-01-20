@@ -1,12 +1,13 @@
 @import "tailwindcss" source(none);
 @import "../../node_modules/flowbite/src/themes/default.css";
+@import "./chat.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
 @source "../../public/js/**/*.js";
 @source "../../src/Infrastructure/Twig/*.php";
 
-@plugin 'tailwind-scrollbar';
+@plugin "tailwind-scrollbar";
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
@@ -14,21 +15,6 @@
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
     --color-grey-yo: #cccccc;
-
-    --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
-    @keyframes chat-message {
-        0% {
-            max-height: 100vmax;
-        }
-        80% {
-            transform: scale(1.1);
-        }
-        100% {
-            transform: scale(1);
-            max-height: 100vmax;
-            overflow: visible;
-        }
-    }
 }
 
 @custom-variant aria-asc (&[aria-sort="ascending"]);
@@ -77,37 +63,11 @@
         @apply text-base! m-0! leading-none!;
     }
 
-    .leaflet-control--fly-to-places {
-        @apply rounded-sm border-2 border-black/[.3] bg-white bg-clip-padding divide-y divide-grey-yo;
+    .leaflet-control--custom {
+        @apply rounded-sm border-2 border-black/30 bg-white bg-clip-padding divide-y divide-grey-yo;
 
         & li {
             @apply p-1 cursor-pointer hover:bg-[#f4f4f4];
-        }
-    }
-
-    .autoComplete_wrapper {
-        @apply inline-block relative w-full;
-
-        & > ul {
-            @apply absolute max-h-[250px] overflow-y-scroll left-0 right-0 bottom-[60px] p-0 z-10 list-none rounded-lg bg-white border border-gray-200 shadow-lg outline-none transition-opacity duration-150 ease-in-out;
-
-            &:empty,
-            &[hidden] {
-                @apply block opacity-0 scale-0;
-            }
-
-            & > li {
-                @apply m-1 p-2 text-left text-gray-900 rounded-lg bg-white whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-200 ease-in-out;
-
-                & mark {
-                    @apply bg-transparent text-strava-orange font-bold;
-                }
-
-                &:hover,
-                &[aria-selected="true"] {
-                    @apply cursor-pointer bg-strava-orange/15;
-                }
-            }
         }
     }
 }
@@ -121,7 +81,7 @@
         @apply mb-4 border-b-2 border-gray-100;
 
         & > ul{
-            @apply flex gap-x-2 overflow-x-auto -mb-[2px] text-sm font-medium text-center;
+            @apply flex gap-x-2 overflow-x-auto -mb-0.5 text-sm font-medium text-center;
 
             & > li {
                 @apply shrink-0;
@@ -129,6 +89,18 @@
                 & > a {
                     @apply inline-flex items-center justify-center p-2 border-b-2;
                 }
+            }
+        }
+    }
+
+    ul.tabs.tabs--pills{
+        @apply inline-flex rounded-md shadow-xs divide-x divide-gray-200;
+
+        & > li {
+            @apply flex gap-x-1 shrink-0 cursor-pointer bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg;
+
+            & > a {
+                @apply inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange;
             }
         }
     }

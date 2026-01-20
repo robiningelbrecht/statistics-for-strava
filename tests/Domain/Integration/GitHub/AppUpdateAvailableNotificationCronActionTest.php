@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Integration\GitHub;
 
-use App\BuildApp\AppVersion;
+use App\Application\AppVersion;
 use App\Domain\Integration\GitHub\AppUpdateAvailableNotificationCronAction;
 use App\Domain\Integration\GitHub\GitHub;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -21,7 +21,7 @@ class AppUpdateAvailableNotificationCronActionTest extends TestCase
     use MatchesSnapshots;
     private AppUpdateAvailableNotificationCronAction $cronAction;
     private CommandBus $commandBus;
-    private Client $client;
+    private \PHPUnit\Framework\MockObject\MockObject $client;
 
     public function testRun(): void
     {

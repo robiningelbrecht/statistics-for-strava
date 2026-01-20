@@ -25,6 +25,12 @@ final readonly class LoggableConsoleOutput implements OutputInterface
             $messages = [$messages];
         }
 
+        if (!$messages = array_filter(
+            $messages,
+            fn (string $message): bool => !in_array($message, ['[1G', '[2K'])
+        )) {
+            return;
+        }
         $this->logger->info(new Monolog(...$messages));
     }
 

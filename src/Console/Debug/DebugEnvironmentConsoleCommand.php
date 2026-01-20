@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Debug;
 
-use App\BuildApp\AppVersion;
+use App\Application\AppVersion;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\Serialization\Json;

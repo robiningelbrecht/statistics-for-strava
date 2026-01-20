@@ -20,31 +20,32 @@ final readonly class DashboardLayout implements \IteratorAggregate
     /**
      * @return list<array{widget: string, width: int, enabled: bool}>
      */
-    private static function default(): array
+    public static function default(): array
     {
         return [
             ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
             ['widget' => 'introText', 'width' => 33, 'enabled' => true],
             ['widget' => 'trainingGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
             ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
+            ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
+            ['widget' => 'streaks', 'width' => 33, 'enabled' => true, 'config' => ['subtitle' => null, 'sportTypesToInclude' => []]],
+            ['widget' => 'athleteProfile', 'width' => 33, 'enabled' => true],
+            ['widget' => 'eddington', 'width' => 33, 'enabled' => true],
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
-            ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
             ['widget' => 'monthlyStats', 'width' => 100, 'enabled' => true, 'config' => [
                 'enableLastXYearsByDefault' => 10, 'metricsDisplayOrder' => ['distance', 'movingTime', 'elevation'],
             ]],
             ['widget' => 'trainingLoad', 'width' => 100, 'enabled' => true],
             ['widget' => 'weekdayStats', 'width' => 50, 'enabled' => true],
             ['widget' => 'dayTimeStats', 'width' => 50, 'enabled' => true],
-            ['widget' => 'distanceBreakdown', 'width' => 100, 'enabled' => true],
-            ['widget' => 'bestEfforts', 'width' => 100, 'enabled' => true],
+            ['widget' => 'distanceBreakdown', 'width' => 50, 'enabled' => true],
+            ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
             ['widget' => 'yearlyStats', 'width' => 100, 'enabled' => true, 'config' => ['enableLastXYearsByDefault' => 10, 'metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
             ['widget' => 'zwiftStats', 'width' => 50, 'enabled' => true],
-            ['widget' => 'gearStats', 'width' => 50, 'enabled' => true, 'config' => ['includeRetiredGear' => true]],
-            ['widget' => 'eddington', 'width' => 50, 'enabled' => true],
+            ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
             ['widget' => 'challengeConsistency', 'width' => 50, 'enabled' => true, 'config' => ['challenges' => []]],
             ['widget' => 'mostRecentChallengesCompleted', 'width' => 50, 'enabled' => true, 'config' => ['numberOfChallengesToDisplay' => 5]],
-            ['widget' => 'ftpHistory', 'width' => 50, 'enabled' => true],
             ['widget' => 'athleteWeightHistory', 'width' => 50, 'enabled' => true],
         ];
     }
@@ -84,6 +85,9 @@ final readonly class DashboardLayout implements \IteratorAggregate
                     throw new InvalidDashboardLayout('"config" property must be an array');
                 }
                 foreach ($widget['config'] as $key => $value) {
+                    if (is_null($value)) {
+                        continue;
+                    }
                     if (!is_int($value) && !is_string($value) && !is_float($value) && !is_bool($value) && !is_array($value)) {
                         throw new InvalidDashboardLayout(sprintf('Invalid type for config item "%s" in widget "%s". Expected int, string, float, bool or array.', $key, $widget['widget']));
                     }

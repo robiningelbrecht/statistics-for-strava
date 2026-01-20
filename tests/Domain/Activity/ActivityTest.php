@@ -2,21 +2,18 @@
 
 namespace App\Tests\Domain\Activity;
 
-use App\Infrastructure\Serialization\Json;
+use App\Domain\Activity\WorldType;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Infrastructure\ValueObject\Geography\Latitude;
+use App\Infrastructure\ValueObject\Geography\Longitude;
+use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class ActivityTest extends TestCase
 {
     use MatchesSnapshots;
-
-    public function testDelete(): void
-    {
-        $activity = ActivityBuilder::fromDefaults()->build();
-        $activity->delete();
-
-        $this->assertMatchesJsonSnapshot(Json::encode($activity->getRecordedEvents()));
-    }
 
     public function testGetName(): void
     {
@@ -32,5 +29,40 @@ class ActivityTest extends TestCase
         $activity->enrichWithTags(['#hashtag', '#another-one']);
 
         $this->assertEquals('Test Activity', $activity->getName());
+    }
+
+    public function testLeafletMapWithoutStartingCoordinate(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withPolyline('line')
+            ->withWorldType(WorldType::ZWIFT)
+            ->build();
+
+        $this->assertNull($activity->getLeafletMap());
+    }
+
+    public function testLeafletMapWhenZwiftMapCouldNotBeDetermined(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withWorldType(WorldType::ZWIFT)
+            ->withStartingCoordinate(
+                Coordinate::createFromLatAndLng(Latitude::fromString('1'), Longitude::fromString('1'))
+            )
+            ->withPolyline('line')
+            ->build();
+
+        $this->assertNull($activity->getLeafletMap());
+    }
+
+    public function testGetPaceInSecPer100Meter(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withAverageSpeed(KmPerHour::from(10))
+            ->build();
+
+        $this->assertEquals(
+            SecPer100Meter::from(35.9971),
+            $activity->getPaceInSecPer100Meter()
+        );
     }
 }

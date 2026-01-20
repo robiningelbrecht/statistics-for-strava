@@ -2,9 +2,9 @@
 
 namespace App\Domain\Strava;
 
+use App\Application\Import\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\StreamType;
-use App\Domain\Challenge\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
@@ -14,6 +14,7 @@ use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\ValueObject\String\Url;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -69,6 +70,9 @@ class Strava
             $response = $e->getResponse();
             if (429 !== $response?->getStatusCode()) {
                 // Rethrow exception if it's not a rate limit error.
+                if ($error = $response?->getBody()->getContents()) {
+                    throw new RequestException(message: $error, request: $e->getRequest(), response: $e->getResponse());
+                }
                 throw $e;
             }
 
@@ -286,7 +290,7 @@ class Strava
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getSegment(SegmentId $segmentId): array
     {
@@ -295,6 +299,44 @@ class Strava
                 'Authorization' => 'Bearer '.$this->getAccessToken(),
             ],
         ]));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getWebhookSubscription(): array
+    {
+        return Json::decode($this->request('api/v3/push_subscriptions', 'GET', [
+            RequestOptions::QUERY => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+            ],
+        ]));
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function createWebhookSubscription(Url $callbackUrl, string $verifyToken): array
+    {
+        return Json::decode($this->request('api/v3/push_subscriptions', 'POST', [
+            RequestOptions::FORM_PARAMS => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+                'callback_url' => (string) $callbackUrl,
+                'verify_token' => $verifyToken,
+            ],
+        ]));
+    }
+
+    public function deleteWebhookSubscription(string $subscriptionId): void
+    {
+        $this->request('api/v3/push_subscriptions/'.$subscriptionId, 'DELETE', [
+            RequestOptions::QUERY => [
+                'client_id' => (string) $this->stravaClientId,
+                'client_secret' => (string) $this->stravaClientSecret,
+            ],
+        ]);
     }
 
     /**

@@ -26,6 +26,10 @@ class AppRequestHandlerTest extends ContainerTestCase
         $buildStorage = $this->getContainer()->get('build.storage');
         $buildStorage->write('index.html', 'I am the index', []);
 
+        $this->strava
+            ->expects($this->never())
+            ->method('verifyAccessToken');
+
         $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle(new Request(
             query: [],
             request: [],
@@ -62,6 +66,10 @@ class AppRequestHandlerTest extends ContainerTestCase
 
     public function testHandleWhenValidRefreshTokenButNoBuild(): void
     {
+        $this->strava
+            ->expects($this->once())
+            ->method('verifyAccessToken');
+
         $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle(new Request(
             query: [],
             request: [],
@@ -73,6 +81,7 @@ class AppRequestHandlerTest extends ContainerTestCase
         ))->getContent());
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         $this->appRequestHandler = new AppRequestHandler(

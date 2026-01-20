@@ -37,6 +37,10 @@ services:
         decorates: Doctrine\Migrations\Version\DbalMigrationFactory
         arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
 
+    App\Infrastructure\Daemon\Cron\ConfiguredCronActions:
+      factory: [ null, 'fromConfig' ]
+      arguments: [ '@=app_config("daemon.cron", [])' ]
+
     App\Infrastructure\KeyValue\KeyValueStore:
       class: App\Infrastructure\KeyValue\DbalKeyValueStore
       public: true
@@ -74,19 +78,19 @@ services:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.locale")']
 
-    App\BuildApp\AppSubTitle:
+    App\Application\AppSubTitle:
         factory: [ null, 'fromOptionalString' ]
         arguments: [ '@=app_config("general.appSubTitle", "")' ]
 
-    App\BuildApp\AppUrl:
+    App\Application\AppUrl:
         factory: [ null, 'fromString' ]
         arguments: ['@=app_config("general.appUrl")']
 
-    App\Domain\Dashboard\DashboardLayout:
-        factory: [ null, 'fromArray' ]
-        arguments: ['@=app_config("appearance.dashboard.layout", [])']
+    App\Application\ProfilePictureUrl:
+      factory: [ null, 'fromOptionalString' ]
+      arguments: ['@=app_config("general.profilePictureUrl")']
 
-    App\BuildApp\BuildHeatmapHtml\HeatmapConfig:
+    App\Application\Build\BuildHeatmapHtml\HeatmapConfig:
         factory: [ null, 'create' ]
         arguments: [
             '@=app_config("appearance.heatmap.polylineColor", "#fc6719")',
@@ -94,17 +98,33 @@ services:
             '@=app_config("appearance.heatmap.enableGreyScale", true)'
         ]
 
-    App\BuildApp\BuildPhotosHtml\DefaultEnabledPhotoFilters:
+    App\Application\Build\BuildPhotosHtml\DefaultEnabledPhotoFilters:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
 
-    App\BuildApp\BuildPhotosHtml\HidePhotosForSportTypes:
+    App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
 
-    App\BuildApp\ProfilePictureUrl:
+    App\Application\Import\ImportActivities\ActivityVisibilitiesToImport:
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("import.activityVisibilitiesToImport")']
+
+    App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
+      factory: [ null, 'fromInt' ]
+      arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
+
+    App\Application\Import\ImportActivities\ActivitiesToSkipDuringImport:
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
+
+    App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore:
       factory: [ null, 'fromOptionalString' ]
-      arguments: ['@=app_config("general.profilePictureUrl")']
+      arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
+
+    App\Application\Import\ImportSegments\OptInToSegmentDetailsImport:
+      factory: [ null, 'fromBool' ]
+      arguments: [ '@=app_config("import.optInToSegmentDetailImport", false)' ]
 
     NeuronAI\AgentInterface:
         class: App\Domain\Integration\AI\NeuronAIAgent
@@ -114,6 +134,10 @@ services:
 
     NeuronAI\Tools\Toolkits\ToolkitInterface:
         class: App\Domain\Integration\AI\Tool\Toolkit
+
+    App\Domain\Dashboard\DashboardLayout:
+      factory: [ null, 'fromArray' ]
+      arguments: ['@=app_config("appearance.dashboard.layout", [])']
 
     App\Domain\Integration\AI\Chat\ChatCommands:
         factory: [ null, 'fromArray' ]
@@ -152,29 +176,16 @@ services:
         arguments: ['@=app_config("general.athlete.heartRateZones", [])']
 
     App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula:
-        class: App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula
         factory: [ '@App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormulas', 'determineFormula' ]
         arguments: ['@=app_config("general.athlete.maxHeartRateFormula")']
+
+    App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula:
+        factory: [ '@App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormulas', 'determineFormula' ]
+        arguments: ['@=app_config("general.athlete.restingHeartRateFormula", "heuristicAgeBased")']
 
     App\Domain\Activity\Eddington\Config\EddingtonConfiguration:
         factory: [ null, 'fromScalarArray' ]
         arguments: ['@=app_config("metrics.eddington", [])']
-
-    App\Domain\Activity\ImportActivities\ActivityVisibilitiesToImport:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("import.activityVisibilitiesToImport")']
-
-    App\Domain\Activity\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
-        factory: [ null, 'fromInt' ]
-        arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
-
-    App\Domain\Activity\ImportActivities\ActivitiesToSkipDuringImport:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
-
-    App\Domain\Activity\ImportActivities\SkipActivitiesRecordedBefore:
-        factory: [ null, 'fromOptionalString' ]
-        arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
     App\Domain\Activity\SportType\SportTypesSortingOrder:
         factory: [ null, 'from' ]
@@ -207,9 +218,9 @@ services:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gearMaintenance", [])']
 
-    App\Domain\Segment\ImportSegments\OptInToSegmentDetailsImport:
-        factory: [ null, 'fromBool' ]
-        arguments: ['@=app_config("import.optInToSegmentDetailImport", false)']
+    App\Domain\Strava\Webhook\WebhookConfig:
+      factory: [ null, 'fromArray' ]
+      arguments: ['@=app_config("import.webhooks", [])']
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, 'fromOptionalString' ]
@@ -218,10 +229,6 @@ services:
     App\Domain\Zwift\ZwiftRacingScore:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['@=app_config("zwift.racingScore")']
-
-    App\Infrastructure\Daemon\Cron\ConfiguredCronActions:
-        factory: [ null, 'fromConfig' ]
-        arguments: [ '@=app_config("daemon.cron", [])' ]
 
     # Autowiring of vendor classes
     League\Flysystem\FilesystemOperator: '@default.storage'

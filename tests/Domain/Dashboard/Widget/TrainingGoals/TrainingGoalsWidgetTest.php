@@ -35,6 +35,8 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
                     ['label' => 'Cycling',  'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 200,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
                     ['label' => 'Cycling',  'enabled' => true, 'type' => 'elevation', 'unit' => 'm', 'goal' => 1000,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
                     ['label' => 'Cycling',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                    ['label' => 'Cycling',  'enabled' => true, 'type' => 'calories', 'unit' => 'hour', 'goal' => 250,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                    ['label' => 'Cycling',  'enabled' => true, 'type' => 'numberOfActivities', 'unit' => 'hour', 'goal' => 8,  'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
                     ['label' => 'Running',  'enabled' => true, 'type' => 'movingTime', 'unit' => 'hour', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
                     ['label' => 'Running',  'enabled' => false, 'type' => 'elevation', 'unit' => 'm', 'goal' => 2,  'sportTypesToInclude' => ['Run']],
                 ],
@@ -87,6 +89,7 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
         $this->assertNull($render);
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

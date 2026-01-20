@@ -21,6 +21,13 @@ general:
     # maxHeartRateFormula:
     #    "2020-01-01": 198
     #    "2025-01-10": 193
+    # The formula used to calculate your resting heart rate. The default is heuristicAgeBased.
+    # Allowed values: a fixed number, heuristicAgeBased or you can set a fixed number for any given date range.  
+    restingHeartRateFormula: 'heuristicAgeBased'
+    # restingHeartRateFormula: 50
+    # restingHeartRateFormula:
+    #    "2020-01-01": 53
+    #    "2025-01-10": 55
     # If you're not sure about your zones, leave this unchanged, the defaults are sensible.
     heartRateZones:
       # Relative or absolute. 
@@ -114,14 +121,17 @@ import:
   numberOfNewActivitiesToProcessPerImport: 250
   # Sport types to import. Leave empty to import all sport types
   # A full list of allowed options is available on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types 
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities that are not included in the list of sport types.
   sportTypesToImport: []
   # Activity visibilities to import. Leave empty to import all visibilities
   # This list can be combined with sportTypesToImport.
   # Allowed values: ["everyone", "followers_only", "only_me"]
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities that are not included in the list of visibilities.
   activityVisibilitiesToImport: []
   # Optional, the date (YYYY-MM-DD) from which you want to start importing activities. 
   # Any activity recorded before this date, will not be imported.
   # This can be used if you want to skip the import of older activities. Leave empty to disable.
+  # ⚠️ Changing this setting after activities have already been imported will delete all activities recorded before the specified date.
   skipActivitiesRecordedBefore: null
   # An array of activity ids to skip during import. 
   # This allows you to skip specific activities during import.
@@ -196,7 +206,7 @@ integrations:
     # ⚠️ Use caution when enabling this feature if your app is publicly accessible!
     enableUI: false
     # The provider you want to use. 
-    # Allowed values: ["anthropic", "azureOpenAI", "gemini", "ollama", "openAI", "deepseek", "mistral"]
+    # Allowed values: ["anthropic", "azureOpenAI", "deepseek", "gemini", "grok", "huggingFace", "ollama", "openAI", "openAILike", "openAIResponses", "mistral"]
     provider: 'PROVIDER-YOU-CHOOSE'
     configuration:
       key: 'YOUR-API-KEY'

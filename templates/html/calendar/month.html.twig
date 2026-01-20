@@ -24,7 +24,7 @@
         <div class="flex items-center">
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
                 <li class="flex items-center gap-x-0.5 pr-2">
-                    {{ svg('distance', 'w-5 h-5') }}
+                    {{ svg('distance', 'size-5') }}
                     {% if statistics.distance %}
                         <div>{{ statistics.distance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.distance|convertMeasurement.getSymbol() }}</div>
@@ -33,7 +33,7 @@
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('elevation', 'w-5 h-5') }}
+                    {{ svg('elevation', 'size-5') }}
                     {% if statistics.elevation %}
                         <div>{{ statistics.elevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.elevation|convertMeasurement.getSymbol() }}</div>
@@ -42,16 +42,16 @@
                     {% endif %}
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('time', 'w-5 h-5') }}
+                    {{ svg('time', 'size-5') }}
                     <div>{{ (statistics.movingTime.toHour().toFloat())|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">{{ "hours"|trans }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('challenge', 'w-5 h-5') }}
+                    {{ svg('challenge', 'size-5') }}
                     <div>{{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == calendar.getMonth().getId())|length }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('calories', 'w-5 h-5') }}
+                    {{ svg('calories', 'size-5') }}
                     <div>{{ statistics.calories|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">kcal</div>
                 </li>
@@ -61,7 +61,7 @@
                     <div class="text-xs text-gray-500">{{ "workouts"|trans }}</div>
                 </li>
             </ul>
-            <button type="button" class="close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+            <button type="button" class="cursor-pointer close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
@@ -98,12 +98,12 @@
                 </div>
                 <div class="grid grid-cols-7 gap-px leading-6 text-xs w-full bg-gray-200 border">
                     {#
-                    class="bg-emerald-600/[.1] border-l-emerald-600"
-                    class="bg-orange-500/[.1] border-l-orange-500"
-                    class="bg-yellow-300/[.1] border-l-yellow-300"
-                    class="bg-blue-600/[.1] border-l-blue-600"
-                    class="bg-red-600/[.1] border-l-red-600"
-                    class="bg-slate-600/[.1] border-l-slate-600"
+                    class="bg-emerald-600/10 border-l-emerald-600"
+                    class="bg-orange-500/10 border-l-orange-500"
+                    class="bg-yellow-300/10 border-l-yellow-300"
+                    class="bg-blue-600/10 border-l-blue-600"
+                    class="bg-red-600/10 border-l-red-600"
+                    class="bg-slate-600/10 border-l-slate-600"
                     #}
                     {% for day in calendar.getDays() %}
                         <div class="py-2 px-3 {{ day.isCurrentMonth ? 'bg-white' : 'bg-gray-100' }}">

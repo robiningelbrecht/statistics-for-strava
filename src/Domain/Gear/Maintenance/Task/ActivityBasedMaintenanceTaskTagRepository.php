@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear\Maintenance\Task;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 
 final readonly class ActivityBasedMaintenanceTaskTagRepository implements MaintenanceTaskTagRepository
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private GearMaintenanceConfig $gearMaintenanceConfig,
     ) {
     }
 
     public function findAll(): MaintenanceTaskTags
     {
-        $activities = $this->activityRepository->findAll();
+        $activities = $this->enrichedActivities->findAll();
         $tasks = MaintenanceTaskTags::empty();
 
         /** @var \App\Domain\Gear\Maintenance\GearComponent $gearComponent */

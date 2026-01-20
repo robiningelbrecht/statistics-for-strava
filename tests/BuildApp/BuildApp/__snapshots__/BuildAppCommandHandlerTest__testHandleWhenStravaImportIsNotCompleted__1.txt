@@ -1,1 +1,0 @@
-<error>Wait until all Strava data has been imported before building the app</error>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget\DaytimeStats;
 
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Infrastructure\Serialization\Json;
@@ -15,7 +15,7 @@ use Twig\Environment;
 final readonly class DayTimeStatsWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
         private Environment $twig,
         private TranslatorInterface $translator,
     ) {
@@ -33,13 +33,13 @@ final readonly class DayTimeStatsWidget implements Widget
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
     {
         $statsPerActivityType = [];
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+        $activitiesPerActivityType = $this->enrichedActivities->findGroupedByActivityType();
         if (count($activitiesPerActivityType) > 1) {
             foreach ($activitiesPerActivityType as $activityType => $activities) {
                 $dayTimeStats = DaytimeStats::create($activities);
                 $statsPerActivityType[$activityType] = [
                     'chart' => Json::encode(
-                        DaytimeStatsCharts::create(
+                        DaytimeStatsChart::create(
                             daytimeStats: $dayTimeStats,
                             translator: $this->translator,
                         )->build(),
@@ -49,13 +49,13 @@ final readonly class DayTimeStatsWidget implements Widget
             }
         }
 
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->enrichedActivities->findAll();
         $allDayTimeStats = DaytimeStats::create($allActivities);
 
         return $this->twig->load('html/dashboard/widget/widget--day-time-stats.html.twig')->render([
             'allActivities' => [
                 'chart' => Json::encode(
-                    DaytimeStatsCharts::create(
+                    DaytimeStatsChart::create(
                         daytimeStats: $allDayTimeStats,
                         translator: $this->translator,
                     )->build(),

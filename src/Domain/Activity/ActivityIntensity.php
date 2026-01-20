@@ -7,76 +7,91 @@ namespace App\Domain\Activity;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Ftp\FtpHistory;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class ActivityIntensity
 {
+    public const int HIGH_INTENSITY_THRESHOLD_VALUE = 88;
+
     /** @var array<string, int|null> */
     public static array $cachedIntensities = [];
 
     public function __construct(
-        private readonly ActivityRepository $activityRepository,
+        private readonly EnrichedActivities $enrichedActivities,
         private readonly AthleteRepository $athleteRepository,
         private readonly FtpHistory $ftpHistory,
     ) {
     }
 
-    public function calculateForDate(SerializableDateTime $on): int
+    public function calculate(ActivityId $activityId): int
     {
-        $cacheKey = $on->format('Y-m-d');
+        $cacheKey = (string) $activityId;
         if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
             return self::$cachedIntensities[$cacheKey];
         }
 
-        $activities = $this->activityRepository->findByStartDate(
-            startDate: $on,
-            activityType: null
-        );
-        self::$cachedIntensities[$cacheKey] = 0;
-
-        /** @var Activity $activity */
-        foreach ($activities as $activity) {
-            if (!$intensity = $this->calculateForActivity($activity)) {
-                continue;
-            }
-
-            self::$cachedIntensities[$cacheKey] += $intensity;
+        try {
+            return $this->calculatePowerBased($activityId);
+        } catch (CouldNotDetermineActivityIntensity) {
         }
 
-        return self::$cachedIntensities[$cacheKey];
+        try {
+            return $this->calculateHeartRateBased($activityId);
+        } catch (CouldNotDetermineActivityIntensity) {
+        }
+
+        self::$cachedIntensities[$cacheKey] = 0;
+
+        return 0;
     }
 
-    private function calculateForActivity(Activity $activity): ?int
+    public function calculatePowerBased(ActivityId $activityId): int
     {
-        if (ActivityType::RIDE === $activity->getSportType()->getActivityType()) {
-            try {
-                // To calculate intensity, we need
-                // 1) Max and average heart rate
-                // OR
-                // 2) FTP and average power
-                $ftp = $this->ftpHistory->find(ActivityType::RIDE, $activity->getStartDate())->getFtp();
-                if ($averagePower = $activity->getAveragePower()) {
-                    // Use more complicated and more accurate calculation.
-                    // intensityFactor = averagePower / FTP
-                    // (durationInSeconds * averagePower * intensityFactor) / (FTP x 3600) * 100
-                    return (int) round(($activity->getMovingTimeInSeconds() * $averagePower * ($averagePower / $ftp->getValue())) / ($ftp->getValue() * 3600) * 100);
-                }
-            } catch (EntityNotFound) {
-            }
+        $activity = $this->enrichedActivities->find($activityId);
+        if (ActivityType::RIDE !== $activity->getSportType()->getActivityType()) {
+            throw new CouldNotDetermineActivityIntensity('Activity is not a ride');
+        }
+
+        $cacheKey = (string) $activity->getId();
+        if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
+            return self::$cachedIntensities[$cacheKey];
+        }
+
+        if (!$normalizedPower = $activity->getNormalizedPower()) {
+            throw new CouldNotDetermineActivityIntensity('Activity has no normalized power');
+        }
+
+        try {
+            $ftp = $this->ftpHistory->find(ActivityType::RIDE, $activity->getStartDate())->getFtp();
+            // IF = Normalized Power / FTP
+            $intensity = (int) round(($normalizedPower / $ftp->getValue()) * 100);
+            self::$cachedIntensities[$cacheKey] = $intensity;
+
+            return self::$cachedIntensities[$cacheKey];
+        } catch (EntityNotFound) {
+        }
+
+        throw new CouldNotDetermineActivityIntensity('Ftp not found');
+    }
+
+    public function calculateHeartRateBased(ActivityId $activityId): int
+    {
+        $cacheKey = (string) $activityId;
+        if (array_key_exists($cacheKey, self::$cachedIntensities) && null !== self::$cachedIntensities[$cacheKey]) {
+            return self::$cachedIntensities[$cacheKey];
+        }
+
+        $activity = $this->enrichedActivities->find($activityId);
+        if (!$averageHeartRate = $activity->getAverageHeartRate()) {
+            throw new CouldNotDetermineActivityIntensity();
         }
 
         $athlete = $this->athleteRepository->find();
-        if ($averageHeartRate = $activity->getAverageHeartRate()) {
-            $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
-            // Use simplified, less accurate calculation.
-            // maxHeartRate = = (220 - age) x 0.92
-            // intensityFactor = averageHeartRate / maxHeartRate
-            // (durationInSeconds x averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-            $maxHeartRate = round($athleteMaxHeartRate * 0.92);
+        $athleteRestingHeartRate = $athlete->getRestingHeartRateFormula($activity->getStartDate());
+        $athleteMaxHeartRate = $athlete->getMaxHeartRate($activity->getStartDate());
 
-            return (int) round(($activity->getMovingTimeInSeconds() * $averageHeartRate * ($averageHeartRate / $maxHeartRate)) / ($maxHeartRate * 3600) * 100);
-        }
+        $intensity = (int) round(($averageHeartRate - $athleteRestingHeartRate) / ($athleteMaxHeartRate - $athleteRestingHeartRate) * 100);
+        self::$cachedIntensities[$cacheKey] = $intensity;
 
-        return null;
+        return self::$cachedIntensities[$cacheKey];
     }
 }

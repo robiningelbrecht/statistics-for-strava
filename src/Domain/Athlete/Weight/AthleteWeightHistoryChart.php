@@ -83,7 +83,7 @@ final readonly class AthleteWeightHistoryChart
                 'top' => '2%',
                 'left' => '3%',
                 'right' => '4%',
-                'bottom' => '3%',
+                'bottom' => '50px',
                 'containLabel' => true,
             ],
             'toolbox' => [
@@ -100,13 +100,11 @@ final readonly class AthleteWeightHistoryChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'startValue' => $zoomStartValue,
                     'endValue' => $zoomEndValue,
                     'brushSelect' => false,
-                    'zoomLock' => true,
-                ],
-                [
+                    'zoomLock' => false,
                 ],
             ],
             'xAxis' => [

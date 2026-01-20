@@ -30,7 +30,7 @@
         {% set menuLinkClasses = 'flex items-center gap-x-3 group/menu-item p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100' %}
         {% set collapsedMenuLinkClasses = 'group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs' %}
         {% set menulinkSvgIconClasses = 'shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900' %}
-        {% set isSymfonyRouter = router == enum('App\\BuildApp\\Router').SYMFONY %}
+        {% set isSymfonyRouter = router == enum('App\\Application\\Router').SYMFONY %}
         <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
             <ul class="space-y-1 pb-2">
                 <li>
@@ -246,7 +246,7 @@
                 </div>
             </div>
             <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
-                <img class="h-[12px]" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}"
+                <img class="h-3" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}"
                      alt="Powered by Strava"/>
                 <div class="group-[.sidebar-is-collapsed]:hidden">& ☕</div>
             </div>
@@ -309,6 +309,12 @@
 
             return `${hours}:${minutes}:${seconds}`;
         },
+        formatSecondsTrimZero: (secondsToFormat) => {
+            const time = window.statisticsForStrava.callbacks.formatSeconds(secondsToFormat);
+
+            let [hours, minutes, seconds] = time.split(':');
+            return String(Number(hours)) === "0" ? `${minutes}:${seconds}` : `${hours}:${minutes}:${seconds}`;
+        },
         formatPace: (params) => {
             const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
             const secondsToFormat = params[0].value;
@@ -324,6 +330,9 @@
         },
         toInteger: (value) => {
             return value.toFixed(0);
+        },
+        formatPercentage: (value)=> {
+            return `${value.toFixed(0)}%`;
         },
         formatHours: (value) => {
             if (value === undefined || value === null) {
@@ -367,7 +376,7 @@
 <script src="{{ relativeUrl(asset('libraries/echarts/echarts.world.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.js')) }}"></script>
 <script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.polyline.encoded.js')) }}"></script>
-<script src="{{ relativeUrl(asset('js/dist/leaflet.fly.to.places.min.js')) }}"></script>
+<script src="{{ relativeUrl(asset('js/dist/leaflet.controls.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('js/dist/app.min.js')) }}" type="module"></script>
 {% block customScripts %}
 {% endblock customScripts %}

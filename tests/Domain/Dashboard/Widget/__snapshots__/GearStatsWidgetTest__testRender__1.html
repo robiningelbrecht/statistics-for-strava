@@ -3,9 +3,15 @@
         <h3 class="text-lg font-semibold">
             Total hours spent per gear
         </h3>
-        <a href="#" data-router-navigate="/gear" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-            View details
-        </a>
+        <div class="flex">
+            <a href="#" data-router-navigate="/gear" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                View details
+            </a>
+            <button type="button" data-fullscreen-trigger class="-mt-0.5 cursor-pointer">
+                <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
+                <span class="sr-only">Enter fullscreen mode</span>
+            </button>
+        </div>
     </div>
             <div class="tabs tabs--default">
             <ul id="gearStatsActivityTypeTab--1" data-tabs="#gearStatsActivityTypeTabContent--1" role="tablist">
@@ -28,13 +34,13 @@
         </div>
         <div id="gearStatsActivityTypeTabContent--1" class="flex flex-col grow">
         <div class="grow" id="gearStatsAll--1" role="tabpanel" aria-labelledby="gearStatsAll--1-tab">
-            <div class="h-full min-h-[16rem]" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":7,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}},{"value":1,"name":"Zwift hub","itemStyle":{"color":"#91cc75"}}]}]}'></div>
+            <div class="h-full min-h-64" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":7,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}},{"value":1,"name":"Zwift hub","itemStyle":{"color":"#91cc75"}}]}]}'></div>
         </div>
                     <div class="grow" id="gearStatsRide--1" role="tabpanel" aria-labelledby="gearStatsRide--1-tab">
-                <div class="h-full min-h-[16rem]" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":5,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}},{"value":1,"name":"Zwift hub","itemStyle":{"color":"#91cc75"}}]}]}'></div>
+                <div class="h-full min-h-64" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":5,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}},{"value":1,"name":"Zwift hub","itemStyle":{"color":"#91cc75"}}]}]}'></div>
             </div>
                     <div class="grow" id="gearStatsRun--1" role="tabpanel" aria-labelledby="gearStatsRun--1-tab">
-                <div class="h-full min-h-[16rem]" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":2,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}}]}]}'></div>
+                <div class="h-full min-h-64" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"left":"0%","right":"0%","bottom":"0%","containLabel":true},"center":["50%","50%"],"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{b}: {c}h"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{gear|{b}}\n{sub|{c}h}","lineHeight":15,"rich":{"gear":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":2,"name":"Retro Race Bike","itemStyle":{"color":"#5470c6"}}]}]}'></div>
             </div>
             </div>
 </body></html>

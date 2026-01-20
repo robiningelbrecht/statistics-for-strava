@@ -11,6 +11,9 @@ jobs:
     name: Generate coverage artifact
     runs-on: ubuntu-latest
     steps:
+      - name: Install geos
+        run: sudo apt install -y geos-bin
+
       # https://github.com/marketplace/actions/setup-php-action
       - name: Setup PHP 8.5
         uses: shivammathur/setup-php@v2

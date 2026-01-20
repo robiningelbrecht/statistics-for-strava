@@ -45,6 +45,10 @@ final readonly class MeasurementTwigExtension
         $formattedNumber = self::formatNumber($measurementInScalar, $measurementInScalar < 100 ? $precision : 0);
 
         if (!$symbolSuffix) {
+            if ('' === $convertedMeasurement->getSymbol()) {
+                return $formattedNumber;
+            }
+
             return sprintf(
                 '%s<span class="text-xs">%s</span>',
                 $formattedNumber,

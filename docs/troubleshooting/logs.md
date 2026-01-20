@@ -71,3 +71,16 @@ These logs capture all output from the Daemon running recurring background tasks
 [2025-11-10T09:28:55.655637+00:00] daemon.INFO:   [] []
 [2025-11-10T09:28:55.655723+00:00] daemon.INFO: <info>No cron items configured, shutting down cron...</info> [] []
 ```
+
+
+## Strava webhook logs
+
+These logs capture all incoming notifications from Strava.
+
+```log
+[2025-11-10T09:28:55.650390+00:00] webhooks.INFO: Received Strava webhook validation request
+[2025-11-10T09:28:55.654875+00:00] webhooks.ERROR: Invalid verify token received                                                                                                                       </> [] []
+[2025-11-10T09:28:55.650390+00:00] webhooks.INFO: Received Strava webhook validation request
+[2025-11-10T09:28:55.654875+00:00] webhooks.INFO: Validated Strava webhook request 
+[2025-11-10T09:28:55.654875+00:00] webhooks.INFO: Received Strava webhook event
+```

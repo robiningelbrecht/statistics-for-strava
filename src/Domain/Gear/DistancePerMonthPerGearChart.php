@@ -57,6 +57,9 @@ final readonly class DistancePerMonthPerGearChart
             if (!$activity->getGearId()) {
                 continue;
             }
+            if (!array_key_exists((string) $activity->getGearId(), $distancePerGearAndMonth)) {
+                continue;
+            }
             $month = $activity->getStartDate()->format(Month::MONTH_ID_FORMAT);
             $distancePerGearAndMonth[(string) $activity->getGearId()][$month] += $activity->getDistance()->toUnitSystem($this->unitSystem)->toFloat();
         }
@@ -71,7 +74,7 @@ final readonly class DistancePerMonthPerGearChart
         $unitSymbol = $this->unitSystem->distanceSymbol();
 
         foreach ($gears as $gear) {
-            $gearName = Escape::htmlSpecialChars($gear->getName());
+            $gearName = Escape::forJsonEncode($gear->getName());
             $distanceInLastThreeMonths = array_sum(array_slice($distancePerGearAndMonth[(string) $gear->getId()], -3, 3));
             $selectedSeries[$gearName] = $distanceInLastThreeMonths > 0;
 
@@ -150,15 +153,13 @@ final readonly class DistancePerMonthPerGearChart
             ],
             'dataZoom' => [
                 [
-                    'type' => 'inside',
+                    'type' => 'slider',
                     'startValue' => count($xAxisValues) - 4,
                     'endValue' => count($xAxisValues),
                     'minValueSpan' => 4,
                     'maxValueSpan' => 4,
                     'brushSelect' => false,
                     'zoomLock' => true,
-                ],
-                [
                 ],
             ],
             'series' => $series,

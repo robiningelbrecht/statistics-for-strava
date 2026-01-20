@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Dashboard\Widget;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\StatsContext;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStats;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStatsPerDay\FindYearlyStatsPerDay;
-use App\Domain\Dashboard\Widget\YearlyStats\YearlyDistanceChart;
 use App\Domain\Dashboard\Widget\YearlyStats\YearlyStatistics;
+use App\Domain\Dashboard\Widget\YearlyStats\YearlyStatisticsChart;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -23,7 +23,7 @@ use Twig\Environment;
 final readonly class YearlyStatsWidget implements Widget
 {
     public function __construct(
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -66,8 +66,8 @@ final readonly class YearlyStatsWidget implements Widget
     {
         $yearlyStatChartsPerContext = [];
         $yearlyStatistics = [];
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
-        $activitiesPerActivityType = $this->activitiesEnricher->getActivitiesPerActivityType();
+        $allActivities = $this->enrichedActivities->findAll();
+        $activitiesPerActivityType = $this->enrichedActivities->findGroupedByActivityType();
 
         $allYears = Years::create(
             startDate: $allActivities->getFirstActivityStartDate(),
@@ -92,7 +92,7 @@ final readonly class YearlyStatsWidget implements Widget
                 }
 
                 $yearlyStatChartsPerContext[$yearlyStatsContext->value][$activityType->value] = Json::encode(
-                    YearlyDistanceChart::create(
+                    YearlyStatisticsChart::create(
                         yearStats: $yearlyStatsPerDay,
                         uniqueYears: $activitiesPerActivityType[$activityType->value]->getUniqueYears(),
                         activityType: $activityType,

@@ -6,6 +6,7 @@ namespace App\Domain\Activity;
 
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
 final readonly class DbalActivityWithRawDataRepository extends DbalRepository implements ActivityWithRawDataRepository
@@ -31,6 +32,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         );
     }
 
+    public function exists(ActivityId $activityId): bool
+    {
+        return !empty($this->connection->executeQuery('SELECT 1 FROM Activity WHERE activityId = :activityId', [
+            'activityId' => $activityId,
+        ])->fetchOne());
+    }
+
     public function add(ActivityWithRawData $activityWithRawData): void
     {
         $sql = 'INSERT INTO Activity (
@@ -38,13 +46,13 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
-            polyline, location, weather, gearId, gearName, data, isCommute, streamsAreImported, workoutType
+            polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
-            :polyline, :location, :weather, :gearId, :gearName, :data, :isCommute, :streamsAreImported, :workoutType
+            :polyline, :routeGeography, :weather, :gearId, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
         $activity = $activityWithRawData->getActivity();
@@ -74,10 +82,9 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
             'polyline' => $activity->getPolyline(),
-            'location' => $activity->getLocation() ? Json::encode($activity->getLocation()) : null,
+            'routeGeography' => Json::encode($activity->getRouteGeography()),
             'weather' => $activity->getWeather() ? Json::encode($activity->getWeather()) : null,
             'gearId' => $activity->getGearId(),
-            'gearName' => $activity->getGearName(),
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
             'isCommute' => (int) $activity->isCommute(),
             'streamsAreImported' => 0,
@@ -100,9 +107,8 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
                     polyline = :polyline,
                     startingCoordinateLatitude = :startingCoordinateLatitude,
                     startingCoordinateLongitude = :startingCoordinateLongitude,
-                    location = :location,
+                    routeGeography = :routeGeography,
                     gearId = :gearId, 
-                    gearName = :gearName,
                     totalImageCount = :totalImageCount,
                     localImagePaths = :localImagePaths,
                     data = :data,
@@ -125,15 +131,35 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'polyline' => $activity->getPolyline(),
             'startingCoordinateLatitude' => $activity->getStartingCoordinate()?->getLatitude()->toFloat(),
             'startingCoordinateLongitude' => $activity->getStartingCoordinate()?->getLongitude()->toFloat(),
-            'location' => $activity->getLocation() ? Json::encode($activity->getLocation()) : null,
+            'routeGeography' => Json::encode($activity->getRouteGeography()),
             'gearId' => $activity->getGearId(),
-            'gearName' => $activity->getGearName(),
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
             'isCommute' => (int) $activity->isCommute(),
             'workoutType' => $activity->getWorkoutType()?->value,
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
         ]);
+    }
+
+    public function delete(ActivityId $activityId): void
+    {
+        $sql = 'DELETE FROM Activity WHERE activityId = :activityId';
+
+        $this->connection->executeStatement($sql, [
+            'activityId' => $activityId,
+        ]);
+    }
+
+    public function activityNeedsStreamImport(ActivityId $activityId): bool
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select('activityId')
+            ->from('Activity')
+            ->andWhere('streamsAreImported = 0 OR streamsAreImported IS NULL')
+            ->andWhere('activityId = :activityId')
+            ->setParameter('activityId', $activityId);
+
+        return !empty($queryBuilder->fetchOne());
     }
 
     public function markActivityStreamsAsImported(ActivityId $activityId): void
@@ -143,6 +169,18 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
         $this->connection->executeStatement($sql, [
             'activityId' => $activityId,
         ]);
+    }
+
+    public function markActivitiesForDeletion(ActivityIds $activityIds): void
+    {
+        $sql = 'UPDATE Activity SET markedForDeletion = 1 WHERE activityId IN (:activityIds)';
+
+        $this->connection->executeStatement($sql, [
+            'activityIds' => array_map(strval(...), $activityIds->toArray()),
+        ],
+            [
+                'activityIds' => ArrayParameterType::STRING,
+            ]);
     }
 
     /**

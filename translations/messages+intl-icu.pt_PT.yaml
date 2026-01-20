@@ -18,7 +18,6 @@ Activities: Atividades
 Activity: Activity
 'Activity count': 'Número de Actividades'
 'Activity heatmap': 'Activity heatmap'
-'Activity intensity': 'Intensidade da atividade'
 'Activity locations': 'Locais de actividade'
 'Activity start times': 'Horas Início Actividade'
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carga de treino aguda (Fadiga) - Média de 7-dias ponderada exponencial da carga de treino. Representa fadiga de curto prazo.'
@@ -31,6 +30,7 @@ All: All
 'Alpine Ski': 'Esqui Alpino'
 Apr: Abr
 'Ask Mark something...': 'Ask Mark something...'
+'Athlete profile': 'Athlete profile'
 Aug: Ago
 Avg: Média
 'Back Country Ski': 'Esqui Fora de Pista'
@@ -49,6 +49,7 @@ Canoeing: Canoagem
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carga de Treino Crónica (Forma) - média ponderada exponencial de 42-dias da carga diária de treino. Representa adaptação ao treino de longo prazo.'
+'Clear chat': 'Clear chat'
 'Close modal': 'Fechar modal'
 'Collapse sidebar': 'Fechar barra lateral'
 Commutes: 'Viagens Escritório'
@@ -56,7 +57,9 @@ Commutes: 'Viagens Escritório'
 Compare: Comparar
 'Compare to': 'Comparar com'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
+Consistency: Consistency
 Crossfit: Crossfit
+'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Equipamentos customizados está desactivado'
 Cycling: Cycling
 'Daily TRIMP': 'TRIMP Diário'
@@ -66,6 +69,7 @@ Date: Date
 'Days needed': 'Dias necessários'
 'Daytime stats': 'Estatísticas por períodos do dia'
 Dec: Dez
+Density: Density
 'Detailed instructions are available in the documentation on': 'Instruções detalhadas disponíveis na documentação em'
 Details: Details
 Device: Dispositivo
@@ -75,6 +79,7 @@ Distance: Distância
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
 Distribution: Distribution
+Duration: Duration
 'E-Bike Rides': 'Passeios de E-Bike'
 'E-Mountain Bike Rides': 'Passeios de E-MTB'
 Eddington: Eddington
@@ -82,6 +87,7 @@ Elev: Desnível
 Elevation: Elevação
 'Elevation in {unit}': 'Elevação em {unit}'
 Elliptical: Elíptica
+'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: 'Fim da tarde'
 'Excludes commutes': 'Exclui viagens escritório'
 'FTP history': 'Histórico de FTP'
@@ -128,12 +134,20 @@ High: Alta
 'High risk - reduce volume': 'Risco elevado - reduzir número'
 Hikes: Caminhadas
 History: Histórico
+'History chart': 'History chart'
+'How diverse is your training': 'How diverse is your training'
+'How hard is your typical training session': 'How hard is your typical training session'
+'How long is your typical training session': 'How long is your typical training session'
+'How much do you train on average per week': 'How much do you train on average per week'
+'How much training you do in total on days you train.': 'How much training you do in total on days you train.'
+'How often do you train': 'How often do you train'
 'Ice Skate': 'Patinagem no Gelo'
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Imagem "{imgSrc}" referenciada no ficheiro de configuração de manutenção, mas não foi encontrado em "storage/gear-maintenance"'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Thresholds individuais variam consoante o nível de forma.'
 'Inline Skate': 'Patinagem em Linha'
+Intensity: Intensity
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Parece que nenhum equipamento válido está associado a nenhum dos componentes. Por favor verificar o ficheiro de configuração.'
 Jan: Jan
 Jul: Jul
@@ -143,12 +157,12 @@ Kayaking: Caiaque
 'Kite Surf': Kitesurf
 Lap: Volta
 Laps: Voltas
-'Last 45 days': 'Últimos 45 dias'
 'Last 7 days training load': 'Carga de treino dos últimos 7 dias'
-'Last 90 days': 'Últimos 90 dias'
 'Last effort': 'Last effort'
 'Last maintenance': 'Última manutenção'
+'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
 Lifetime: Lifetime
+Load: Load
 'Load (CTL/ATL)': 'Carga (CTL/ATL)'
 'Loading data...': 'A carregar dados...'
 Loading...: 'A carregar...'
@@ -260,6 +274,7 @@ Socials: Socials
 Speed: Velocidade
 'Speed distribution': 'Speed distribution'
 Splits: Intervalos
+'Sport variety': 'Sport variety'
 Squash: Squash
 'Stair Stepper': 'Subida de Escadas'
 'Stand Up Paddling': 'Stand Up Paddle'
@@ -268,6 +283,7 @@ Squash: Squash
 'Statistics for Strava': 'Estatísticas para o Strava'
 Stats: Stats
 'Stats per weekday': 'Estatísticas por dia da semana'
+'Streak started on {date}': 'Streak started on {date}'
 Streaks: Sequências
 Sun: Dom
 Sunday: Domingo
@@ -282,6 +298,7 @@ Tennis: Ténis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Estas medalhas são criadas dinamicamente. Pode usá-las em qualquer tag de &lt;img&gt;'
 Thinking...: Thinking...
+'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Esta funcionalidade está desabilitada'
 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
@@ -320,6 +337,7 @@ Unspecified: 'Não especificado'
 'Virtual Row': 'Remo Virtual'
 'Virtual Runs': 'Corridas Virtuais'
 'Virtual workout assistant': 'Virtual workout assistant'
+Volume: Volume
 Walking: Walking
 Walks: Passeios
 'Water Sports': 'Desportos Aquáticos'
@@ -377,6 +395,7 @@ hrs: hrs
 intensity: intensidade
 intensityFactor: 'fator de intensidade'
 kudos: kudos
+'last {numberOfDays} days': 'últimos {numberOfDays} dias'
 'max gradient': 'inclinação máxima'
 maxHeartRate: 'frequência cardíaca máxima'
 months: meses

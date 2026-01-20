@@ -86,15 +86,16 @@ class FindMonthlyStatsQueryHandlerTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            Month::fromDate(SerializableDateTime::fromString('2023-01-01')),
+            Month::fromDate(SerializableDateTime::fromString('2023-01-01 00:00:00')),
             $response->getFirstMonthFor(ActivityType::RIDE)
         );
         $this->assertEquals(
-            Month::fromDate(SerializableDateTime::fromString('2025-01-01')),
+            Month::fromDate(SerializableDateTime::fromString('2025-01-01 00:00:00')),
             $response->getLastMonthFor(ActivityType::RIDE)
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -3,9 +3,9 @@
 namespace App\Tests\Domain\Gear\Maintenance\Task;
 
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
@@ -74,12 +74,13 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
         );
     }
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->maintenanceTaskTagRepository = new ActivityBasedMaintenanceTaskTagRepository(
-            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             GearMaintenanceConfig::fromArray($this->getValidYml()),
         );
     }

@@ -153,33 +153,6 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testDelete(): void
-    {
-        $streamOne = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::WATTS)
-            ->build();
-        $this->activityStreamRepository->add($streamOne);
-        $streamTwo = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::CADENCE)
-            ->build();
-        $this->activityStreamRepository->add($streamTwo);
-
-        $this->assertEquals(
-            2,
-            $this->getConnection()
-                ->executeQuery('SELECT COUNT(*) FROM ActivityStream')->fetchOne()
-        );
-
-        $this->activityStreamRepository->delete($streamOne);
-        $this->assertEquals(
-            1,
-            $this->getConnection()
-                ->executeQuery('SELECT COUNT(*) FROM ActivityStream')->fetchOne()
-        );
-    }
-
     public function testFindWithoutValueDistributions(): void
     {
         $streamOne = ActivityStreamBuilder::fromDefaults()

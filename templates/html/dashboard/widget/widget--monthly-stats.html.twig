@@ -3,16 +3,13 @@
     <h3 class="text-lg font-semibold">
         {{ "Monthly stats"|trans }}
     </h3>
-    <ul class="inline-flex rounded-md shadow-xs divide-x divide-gray-200"
-        id="monthlyStatsTab{{ uniqueId }}" data-tabs="#monthlyStatsTabContent{{ uniqueId }}"
+    <ul class="tabs tabs--pills" id="monthlyStatsTab{{ uniqueId }}" data-tabs="#monthlyStatsTabContent{{ uniqueId }}"
         data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
         {% for context in metricsDisplayOrder %}
-            <li class="flex gap-x-1 shrink-0 cursor-pointer
-                   bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg" role="presentation">
+            <li role="presentation">
                 <a href="#" data-tabs-target="#monthlyStats{{ context.value }}{{ uniqueId }}" role="tab"
-                   aria-controls="monthlyStats{{ context.value }}{{ uniqueId }}"
-                   class="inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange">
-                    {{ svg(context.getSvgIcon(), 'w-5 h-5') }}
+                   aria-controls="monthlyStats{{ context.value }}{{ uniqueId }}">
+                    {{ svg(context.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
                     <span class="hidden md:block">{{ context|trans }}</span>
                 </a>
             </li>

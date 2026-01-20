@@ -7,17 +7,18 @@ use App\Domain\Integration\Notification\Shoutrrr\LiveShoutrrr;
 use App\Domain\Integration\Notification\Shoutrrr\Shoutrrr;
 use App\Domain\Integration\Notification\Shoutrrr\ShoutrrrUrl;
 use App\Infrastructure\Daemon\ProcessFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
 class LiveShoutrrrTest extends TestCase
 {
     private Shoutrrr $shoutrrr;
-    private ProcessFactory $processFactory;
+    private MockObject $processFactory;
 
     public function testSend(): void
     {
-        $process = $this->createMock(Process::class);
+        $process = $this->createStub(Process::class);
         $process->method('run');
         $process->method('isSuccessful')->willReturn(true);
 
@@ -34,7 +35,7 @@ class LiveShoutrrrTest extends TestCase
 
     public function testSendWhenFailure(): void
     {
-        $process = $this->createMock(Process::class);
+        $process = $this->createStub(Process::class);
         $process->method('run');
         $process->method('isSuccessful')->willReturn(false);
         $process->method('getErrorOutput')->willReturn('Error!');

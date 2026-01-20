@@ -19,10 +19,10 @@
     "kudoCount": 1,
     "recordedOnDevice": null,
     "totalImageCount": 0,
-    "location": null,
+    "routeGeography": [],
     "weather": null,
     "gearId": "b12659861",
-    "gearName": null,
+    "gearName": "Retro Race Bike",
     "isCommute": false,
     "workoutType": null
 }

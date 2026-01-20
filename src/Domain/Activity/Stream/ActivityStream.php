@@ -91,11 +91,6 @@ final class ActivityStream implements SupportsAITooling
         );
     }
 
-    public function getName(): string
-    {
-        return $this->getActivityId()->toUnprefixedString().' - '.$this->getStreamType()->value;
-    }
-
     public function getCreatedOn(): SerializableDateTime
     {
         return $this->createdOn;

@@ -67,10 +67,18 @@ final readonly class AIChatRequestHandler
             ->getForm();
 
         return new Response($this->twig->render('html/chat/chat.html.twig', [
-            'chatHistory' => $this->chatRepository->getHistory(),
+            'chatHistory' => $this->chatRepository->findAll(),
             'form' => $form->createView(),
             'chatCommands' => Json::encode($this->chatCommands),
         ]), Response::HTTP_OK);
+    }
+
+    #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
+    public function clearChat(): Response
+    {
+        $this->chatRepository->clear();
+
+        return new Response(status: Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -119,7 +127,7 @@ final readonly class AIChatRequestHandler
                     ));
 
                     $response->sendEvent(new ServerSentEvent(
-                        data: nl2br($chunk),
+                        data: $chunk,
                         type: 'agentResponse'
                     ));
                 }

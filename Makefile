@@ -14,6 +14,7 @@ up:
 
 build-containers:
 	@make dc cmd="up -d --build"
+	@make dc cmd="--profile on-demand up -d --build"
 
 down:
 	@make dc cmd="down"
@@ -45,6 +46,9 @@ migrate-run:
 translation-extract:
 	@make console arg="app:translations:extract"
 
+translation-extract-with-remove:
+	@make console arg="app:translations:extract --removeObsoleteTranslatables"
+
 translation-debug:
 	@make console arg="debug:translation en_US"
 
@@ -69,7 +73,7 @@ delete-snapshots:
 	find . -name __snapshots__ -type d -prune -exec rm -rf {} \;
 
 rector:
-	@make dcr cmd="vendor/bin/rector src"
+	@make dcr cmd="vendor/bin/rector"
 
 # Helpers to build the app.
 app-import-data:

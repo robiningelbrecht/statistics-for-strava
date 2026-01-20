@@ -4,10 +4,16 @@
         <h3 class="text-lg font-semibold">
             {{ "Total hours spent per gear"|trans }}
         </h3>
-        <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
-           class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
-            {{ "View details"|trans }}
-        </a>
+        <div class="flex">
+            <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
+               class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+                {{ "View details"|trans }}
+            </a>
+            <button type="button" data-fullscreen-trigger class="-mt-0.5 cursor-pointer">
+                {{ svg('expand') }}
+                <span class="sr-only">{{ "Enter fullscreen mode"|trans }}</span>
+            </button>
+        </div>
     </div>
     {% if chartsPerActivityType|length > 0 %}
         <div class="tabs tabs--default">
@@ -32,12 +38,12 @@
     <div id="gearStatsActivityTypeTabContent{{ uniqueId }}" class="flex flex-col grow">
         <div class="grow" id="gearStatsAll{{ uniqueId }}" role="tabpanel"
              aria-labelledby="gearStatsAll{{ uniqueId }}-tab">
-            <div class="h-full min-h-[16rem]" data-echarts-options='{{ chartAllGears }}'></div>
+            <div class="h-full min-h-64" data-echarts-options='{{ chartAllGears }}'></div>
         </div>
         {% for activityType,chart in chartsPerActivityType %}
             <div class="grow" id="gearStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="gearStats{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
+                <div class="h-full min-h-64" data-echarts-options='{{ chart }}'></div>
             </div>
         {% endfor %}
     </div>

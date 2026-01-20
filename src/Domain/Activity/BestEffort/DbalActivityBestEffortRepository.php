@@ -6,8 +6,8 @@ namespace App\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\StreamType;
@@ -21,7 +21,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 {
     public function __construct(
         Connection $connection,
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
     ) {
         parent::__construct($connection);
     }
@@ -103,7 +103,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
             );
 
             try {
-                $activityBestEffort->enrichWithActivity($this->activityRepository->find($activityId));
+                $activityBestEffort->enrichWithActivity($this->enrichedActivities->find($activityId));
             } catch (EntityNotFound) {
                 // continue;
             }
@@ -157,7 +157,7 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
             );
 
             try {
-                $activityBestEffort->enrichWithActivity($this->activityRepository->find($activityId));
+                $activityBestEffort->enrichWithActivity($this->enrichedActivities->find($activityId));
             } catch (EntityNotFound) {
             }
             $activityBestEfforts->add($activityBestEffort);

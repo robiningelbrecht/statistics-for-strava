@@ -2,7 +2,6 @@
 
 namespace App\Domain\Activity\Eddington;
 
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -48,15 +47,15 @@ final readonly class EddingtonChart
             ],
         ];
 
-        $unitDistance = Kilometer::from(1)->toUnitSystem($this->unitSystem)->getSymbol();
+        $unitDistance = $this->unitSystem->distanceSymbol();
 
         return [
             'backgroundColor' => null,
             'animation' => true,
             'grid' => [
-                'left' => '3%',
-                'right' => '4%',
-                'bottom' => '3%',
+                'left' => '0',
+                'right' => '10px',
+                'bottom' => '50px',
                 'containLabel' => true,
             ],
             'tooltip' => [
@@ -89,6 +88,16 @@ final readonly class EddingtonChart
                     ],
                     'max' => $yAxisMaxValue,
                     'interval' => $yAxisInterval,
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'slider',
+                    'start' => 0,
+                    'end' => 100,
+                    'brushSelect' => false,
+                    'zoomLock' => false,
+                    'zoomOnMouseWheel' => false,
                 ],
             ],
             'series' => [

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Measurement\Temperature;
 
-use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
 use App\Infrastructure\ValueObject\Measurement\Metric;
+use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
 final readonly class Celsius implements Unit, Metric
 {
-    use MeasurementFromFloat;
+    use ProvideMeasurementUnit;
 
     public function getSymbol(): string
     {

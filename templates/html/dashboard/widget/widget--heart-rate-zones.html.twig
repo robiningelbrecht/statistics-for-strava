@@ -1,8 +1,14 @@
 {% set uniqueId = uniqueNumberForId('heartRateZonesWidget') %}
 {% autoescape false %}
-    <h3 class="mb-4 text-lg font-semibold">
-        {{ "Heart rate zones"|trans }}
-    </h3>
+    <div class="flex items-center mb-4">
+        <h3 class="text-lg font-semibold">
+            {{ "Heart rate zones"|trans }}
+        </h3>
+        <button type="button" data-fullscreen-trigger class="[&.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+            {{ svg('expand') }}
+            <span class="sr-only">{{ "Enter fullscreen mode"|trans }}</span>
+        </button>
+    </div>
     {% if chartsPerActivityType|length > 0 %}
         <div class="tabs tabs--default">
             <ul id="hearRateZoneStatsActivityTypeTab{{ uniqueId }}" data-tabs="#hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}"
@@ -26,12 +32,12 @@
     <div id="hearRateZoneStatsActivityTypeTabContent{{ uniqueId }}" class="flex flex-col grow">
         <div class="grow" id="hearRateZoneStatsAll{{ uniqueId }}" role="tabpanel"
              aria-labelledby="hearRateZoneStatsAll{{ uniqueId }}-tab">
-            <div class="h-full min-h-[16rem]" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
+            <div class="h-full min-h-64" data-echarts-options='{{ timeInHeartRateZoneChart }}'></div>
         </div>
         {% for activityType,chart in chartsPerActivityType %}
             <div class="grow" id="hearRateZoneStats{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="hearRateZoneStats{{ activityType }}{{ uniqueId }}-tab">
-                <div class="h-full min-h-[16rem]" data-echarts-options='{{ chart }}'></div>
+                <div class="h-full min-h-64" data-echarts-options='{{ chart }}'></div>
             </div>
         {% endfor %}
     </div>

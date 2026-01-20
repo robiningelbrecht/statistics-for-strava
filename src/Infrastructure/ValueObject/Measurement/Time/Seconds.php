@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\Measurement\Time;
 
-use App\Infrastructure\ValueObject\Measurement\MeasurementFromFloat;
+use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 
 final readonly class Seconds implements Unit
 {
-    use MeasurementFromFloat;
+    use ProvideMeasurementUnit;
 
     public function getSymbol(): string
     {
