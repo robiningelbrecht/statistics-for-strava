@@ -131,7 +131,15 @@ export default class Router {
     }
 
     currentRoute() {
-        return location.pathname.replace('/', '') ? location.pathname : this.defaultRoute;
+        const rawBase = (window.statisticsForStrava && window.statisticsForStrava.appUrl && window.statisticsForStrava.appUrl.basePath) || '';
+        const strippedBase = rawBase.replace(/^\/+|\/+$/g, '');
+        const baseWithLeading = strippedBase ? `/${strippedBase}` : '';
+        const pathname = location.pathname;
+
+        if (pathname === '/' || pathname === '' || pathname === baseWithLeading || pathname === baseWithLeading + '/') {
+            return baseWithLeading + this.defaultRoute;
+        }
+        return pathname;
     }
 
     boot() {
