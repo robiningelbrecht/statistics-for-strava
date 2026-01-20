@@ -77,7 +77,7 @@ final readonly class VelocityDistributionChart
         foreach ($xAxisValues as $axisValue) {
             $data[] = array_sum(array_splice($velocityData, 0, $step)) / $totalTimeInSeconds * 100;
         }
-        // @phpstan-ignore-next-line
+
         $yAxisMax = max($data) * 1.2;
 
         $xAxisValueAverageVelocity = array_search($this->findClosestSteppedValue(
