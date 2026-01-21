@@ -20,6 +20,8 @@ final class Version20260121012500 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        // We need to delete existing laps because we're adding new required columns
+        // and there's no way to calculate historical min/max moving times
         $this->addSql(<<<'SQL'
             DELETE FROM ActivityLap
         SQL);
@@ -30,5 +32,7 @@ final class Version20260121012500 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE ActivityLap DROP COLUMN minMovingTimeInSeconds');
+        $this->addSql('ALTER TABLE ActivityLap DROP COLUMN maxMovingTimeInSeconds');
     }
 }

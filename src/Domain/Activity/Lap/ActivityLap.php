@@ -213,7 +213,7 @@ final readonly class ActivityLap implements SupportsAITooling
     {
         $maxMovingTime = $this->getMaxMovingTimeInSeconds();
 
-        if ($maxMovingTime <= 0) {
+        if ($maxMovingTime === 0) {
             return 0.0;
         }
 
