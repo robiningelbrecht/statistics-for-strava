@@ -133,7 +133,9 @@
                             {% for lap in laps %}
                                 {% set heightPercentage = lap.getRelativeMovingTimePercentage() %}
                                 {% set maxHeight = 80 %}
+                                {% set maxBarHeight = 20 %}
                                 {% set calculatedHeight = (maxHeight * heightPercentage / 100)|round(1) %}
+                                {% set calculatedBarHeight = (maxBarHeight * heightPercentage / 100)|round(1) %}
                                 <div class="flex items-center border-b last:border-b-0" style="height: {{ calculatedHeight }}px; min-height: {{ calculatedHeight }}px;">
                                     <div class="w-8 px-2 py-2 font-bold">
                                         {{ lap.getLapNumber() }}
@@ -148,8 +150,8 @@
                                         {{ lap.getPaceInSecPerKm()|formatPace }}
                                     </div>
                                     <div class="grow min-w-40 px-2 py-2">
-                                        <div class=" bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%"></div>
+                                        <div class="bg-gray-200 rounded-full" style="height: {{ calculatedBarHeight }}px;">
+                                            <div class="bg-strava-orange rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%; height: {{ calculatedBarHeight }}px;"></div>
                                         </div>
                                     </div>
                                     <div class="w-32 px-2 py-2">
