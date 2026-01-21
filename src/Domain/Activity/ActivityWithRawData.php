@@ -98,11 +98,15 @@ final readonly class ActivityWithRawData
     {
         /** @var non-empty-array<float> $averageSpeeds */
         $averageSpeeds = array_column($this->rawData['laps'] ?? [], 'average_speed');
+        /** @var non-empty-array<int> $movingTimes */
+        $movingTimes = array_column($this->rawData['laps'] ?? [], 'moving_time');
 
         return array_map(
             fn (array $split): array => array_merge($split, [
                 'min_average_speed' => min($averageSpeeds),
                 'max_average_speed' => max($averageSpeeds),
+                'min_moving_time' => min($movingTimes),
+                'max_moving_time' => max($movingTimes),
             ]),
             $this->rawData['laps'] ?? [],
         );

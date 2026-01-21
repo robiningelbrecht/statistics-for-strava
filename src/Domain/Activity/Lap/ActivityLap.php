@@ -47,6 +47,10 @@ final readonly class ActivityLap implements SupportsAITooling
         private Meter $elevationDifference,
         #[ORM\Column(type: 'integer', nullable: true)]
         private ?int $averageHeartRate,
+        #[ORM\Column(type: 'integer')]
+        private int $minMovingTimeInSeconds,
+        #[ORM\Column(type: 'integer')]
+        private int $maxMovingTimeInSeconds,
     ) {
     }
 
@@ -64,6 +68,8 @@ final readonly class ActivityLap implements SupportsAITooling
         MetersPerSecond $maxSpeed,
         Meter $elevationDifference,
         ?int $averageHeartRate,
+        int $minMovingTimeInSeconds,
+        int $maxMovingTimeInSeconds,
     ): self {
         return new self(
             lapId: $lapId,
@@ -79,6 +85,8 @@ final readonly class ActivityLap implements SupportsAITooling
             maxSpeed: $maxSpeed,
             elevationDifference: $elevationDifference,
             averageHeartRate: $averageHeartRate,
+            minMovingTimeInSeconds: $minMovingTimeInSeconds,
+            maxMovingTimeInSeconds: $maxMovingTimeInSeconds,
         );
     }
 
@@ -96,6 +104,8 @@ final readonly class ActivityLap implements SupportsAITooling
         MetersPerSecond $maxSpeed,
         Meter $elevationDifference,
         ?int $averageHeartRate,
+        int $minMovingTimeInSeconds,
+        int $maxMovingTimeInSeconds,
     ): self {
         return new self(
             lapId: $lapId,
@@ -111,6 +121,8 @@ final readonly class ActivityLap implements SupportsAITooling
             maxSpeed: $maxSpeed,
             elevationDifference: $elevationDifference,
             averageHeartRate: $averageHeartRate,
+            minMovingTimeInSeconds: $minMovingTimeInSeconds,
+            maxMovingTimeInSeconds: $maxMovingTimeInSeconds,
         );
     }
 
@@ -197,6 +209,21 @@ final readonly class ActivityLap implements SupportsAITooling
         return round($relative, 2);
     }
 
+    public function getRelativeMovingTimePercentage(): float
+    {
+        $maxMovingTime = $this->getMaxMovingTimeInSeconds();
+
+        if ($maxMovingTime <= 0) {
+            return 0.0;
+        }
+
+        $movingTime = $this->getMovingTimeInSeconds();
+        $relative = ($movingTime / $maxMovingTime) * 100;
+        $relative = max(0, min(100, $relative));
+
+        return round($relative, 2);
+    }
+
     public function getMinAverageSpeed(): MetersPerSecond
     {
         return $this->minAverageSpeed;
@@ -220,6 +247,16 @@ final readonly class ActivityLap implements SupportsAITooling
     public function getAverageHeartRate(): ?int
     {
         return $this->averageHeartRate;
+    }
+
+    public function getMinMovingTimeInSeconds(): int
+    {
+        return $this->minMovingTimeInSeconds;
+    }
+
+    public function getMaxMovingTimeInSeconds(): int
+    {
+        return $this->maxMovingTimeInSeconds;
     }
 
     /**

@@ -131,7 +131,7 @@
                                 <div class="w-32 px-2 py-2">{{ "HR"|trans }}</div>
                             </div>
                             {% for lap in laps %}
-                                <div class="flex items-center border-b last:border-b-0">
+                                <div class="flex items-center border-b last:border-b-0" style="height: {{ lap.getRelativeMovingTimePercentage() }}%;">
                                     <div class="w-8 px-2 py-2 font-bold">
                                         {{ lap.getLapNumber() }}
                                     </div>

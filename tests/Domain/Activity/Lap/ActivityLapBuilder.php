@@ -25,6 +25,8 @@ final class ActivityLapBuilder
     private MetersPerSecond $maxSpeed;
     private readonly Meter $elevationDifference;
     private readonly ?int $averageHeartRate;
+    private readonly int $minMovingTimeInSeconds;
+    private readonly int $maxMovingTimeInSeconds;
 
     private function __construct()
     {
@@ -41,6 +43,8 @@ final class ActivityLapBuilder
         $this->maxAverageSpeed = MetersPerSecond::from(8);
         $this->maxSpeed = MetersPerSecond::from(8);
         $this->averageHeartRate = null;
+        $this->minMovingTimeInSeconds = 100;
+        $this->maxMovingTimeInSeconds = 200;
     }
 
     public static function fromDefaults(): self
@@ -64,6 +68,8 @@ final class ActivityLapBuilder
             maxSpeed: $this->maxSpeed,
             elevationDifference: $this->elevationDifference,
             averageHeartRate: $this->averageHeartRate,
+            minMovingTimeInSeconds: $this->minMovingTimeInSeconds,
+            maxMovingTimeInSeconds: $this->maxMovingTimeInSeconds,
         );
     }
 
