@@ -1,3 +1,16 @@
+# [v4.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.4.1) - 2026-01-26
+
+## What's Changed
+* ISSUE #1659: Introduce ActivityIdRepository by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1662
+* ISSUE #1675: Postpone webhooks process when other process is importing data by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1676
+* ISSUE #1677: Webhook fails due to Invalid RESTING_HEART_RATE_FORMULA by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1679
+* Respect app basePath when resolving default route by @luusl in https://github.com/robiningelbrecht/statistics-for-strava/pull/1678
+
+## New Contributors
+* @luusl made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1678
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.4.0...v4.4.1
+
 # [v4.4.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.4.0) - 2026-01-19
 
 To properly calculate activity intensities, we introduced a new config option:
