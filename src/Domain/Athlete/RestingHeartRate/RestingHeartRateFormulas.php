@@ -17,6 +17,10 @@ final readonly class RestingHeartRateFormulas
         }
 
         if (is_string($restingHeartRateFormulaFromConfig)) {
+            if (ctype_digit($restingHeartRateFormulaFromConfig) && '0' !== $restingHeartRateFormulaFromConfig[0]) {
+                return new Fixed((int) $restingHeartRateFormulaFromConfig);
+            }
+
             if ('heuristicAgeBased' !== $restingHeartRateFormulaFromConfig) {
                 throw new InvalidHeartRateFormula(sprintf('Invalid RESTING_HEART_RATE_FORMULA "%s" detected', $restingHeartRateFormulaFromConfig));
             }
