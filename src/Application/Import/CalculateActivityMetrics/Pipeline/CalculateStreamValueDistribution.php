@@ -40,11 +40,13 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
                 $sportType = $activity->getSportType();
 
                 if (StreamType::WATTS === $stream->getStreamType()) {
+                    /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
                     ksort($valueDistribution);
                     $stream->updateValueDistribution($valueDistribution);
                 }
                 if (StreamType::HEART_RATE === $stream->getStreamType()) {
+                    /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values($stream->getData());
                     ksort($valueDistribution);
 
