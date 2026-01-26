@@ -1,11 +1,11 @@
 
-StatisticsforStravav4.4.0|DAEMON
+StatisticsforStravav4.4.1|DAEMON
 
 Startedon0811202514:47:03
 
 
 
-Runtime:PHP8.5.x(cli)Symfony8.0.3Linux
+Runtime:PHP8.5.x(cli)Symfony8.0.4Linux
 
 Configurationfiles:
 config.yaml
