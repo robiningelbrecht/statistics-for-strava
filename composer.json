@@ -61,6 +61,7 @@
         "wyrihaximus/react-cron": "^5.3"
     },
     "require-dev": {
+        "brianium/paratest": "*",
         "dama/doctrine-test-bundle": "^8.3",
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpstan/phpstan": "^2.0",

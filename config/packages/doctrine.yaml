@@ -22,6 +22,5 @@ doctrine:
 when@test:
   doctrine:
     dbal:
-      # "TEST_TOKEN" is typically set by ParaTest
-      dbname_suffix: '_test%env(default::TEST_TOKEN)%'
-      url: 'sqlite:///%kernel.project_dir%/tests/strava.db?charset=utf8mb4'
+      # "TEST_TOKEN" is typically set by ParaTest for parallel test isolation
+      url: 'sqlite:///%kernel.project_dir%/tests/strava%env(default::TEST_TOKEN)%.db'

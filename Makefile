@@ -54,7 +54,7 @@ translation-debug:
 
 # Code quality tools.
 phpunit:
-	@make dcr cmd="vendor/bin/phpunit --order-by=random $(arg)"
+	@make dcr cmd="vendor/bin/paratest --order-by=random --processes=auto $(arg)"
 
 phpunit-with-coverage-report:
 	@make phpunit arg="--coverage-clover=clover.xml -d --min-coverage=min-coverage-rules.php -d --clean-up-clover-xml"
