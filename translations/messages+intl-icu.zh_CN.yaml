@@ -23,7 +23,6 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
-Advanced: 高级
 Afternoon: 下午
 All: All
 'All time': 所有时间
@@ -262,7 +261,6 @@ Search: 搜索
 Segments: 路段
 Sep: 九月
 'Show information': 显示信息
-Simplified: 简化
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": '从{startDate}算起，我已使用Strava {numberOfDaysAgo}多天​，我已经记录了{totalDaysOfWorkingOut}天的训练和冒险活动。'
 Skateboard: 滑板
 Skating: 滑冰
@@ -300,8 +298,6 @@ Tennis: 网球
 Thinking...: 思考中...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 功能当前被禁用
-'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': '这个公式意味着以最大心率骑行一小时的得分为100，我们认为这是"高强度"'
-'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 这张地图显示了过去一年的每日训练强度。活动的训练强度是基于多个指标计算的。
 Thu: 周四
 Thursday: 星期四
 Time: 时间
@@ -353,7 +349,6 @@ Weight: 体重
 'Weight Training': 重量训练
 'Weight history': 历史体重
 Wheelchair: 轮椅
-'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': '当功率指标和FTP可用时，将使用这些指标。这个公式意味着以FTP骑行一小时的得分为100，我们认为这是"高强度"'
 'Wind Surf': 风帆冲浪
 'Winter Sports': 冬季运动
 Workout: 锻炼
@@ -380,7 +375,6 @@ Yoga: 瑜伽
 'Zwift badge': Zwift徽章
 'Zwift stats': Zwift统计
 activities: 活动
-age: 年龄
 and: 和
 avg: 平均
 bpm: 拍子数
@@ -392,12 +386,9 @@ days: 天
 history: 历史
 hours: 小时
 hrs: hrs
-intensity: 强度
-intensityFactor: 强度因子
 kudos: 赞
 'last {numberOfDays} days': '最近{numberOfDays}天'
 'max gradient': 最大坡度
-maxHeartRate: 最大心率
 months: 月
 more: 更多
 n/a: 不适用

@@ -23,7 +23,6 @@ Activity: Activity
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carga de treino aguda (Fadiga) - Média de 7-dias ponderada exponencial da carga de treino. Representa fadiga de curto prazo.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Rácio Agudo:Crónico - Rácio entre ATL e CTL. Indica risco de lesão.'
 'Adaptive & Inclusive Sports': 'Desportos Adaptativos e Inclusivos'
-Advanced: Avançado
 Afternoon: Tarde
 All: All
 'All time': 'Desde sempre'
@@ -262,7 +261,6 @@ Search: Pesquisar
 Segments: Segmentos
 Sep: Set
 'Show information': 'Mostrar informação'
-Simplified: Simplified
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skate
 Skating: Patinagem
@@ -300,8 +298,6 @@ Tennis: Ténis
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Esta funcionalidade está desabilitada'
-'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Esta fórmula significa que um passeio durante uma hora à tua frequência cardíaca máxima resulta numa pontuação de 100, o que consideramos "alta intensidade"'
-'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Este mapa mostra a intensidade diária de treino do último ano. A intensidade do treino para uma atividade é calculada com base em várias métricas.'
 Thu: Qui
 Thursday: Quinta-feira
 Time: Hora
@@ -353,7 +349,6 @@ Weight: Weight
 'Weight Training': 'Treino de Força'
 'Weight history': 'Weight history'
 Wheelchair: 'Cadeira de Rodas'
-'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Quando as métricas de potência e FTP estão disponíveis, estas métricas são usadas. Esta fórmula significa que pedalar durante uma hora no teu FTP resulta numa pontuação de 100, o que consideramos "alta intensidade"'
 'Wind Surf': Windsurf
 'Winter Sports': 'Desportos de Inverno'
 Workout: Treino
@@ -380,7 +375,6 @@ Yoga: Yoga
 'Zwift badge': 'Medalha Zwift'
 'Zwift stats': 'Zwift stats'
 activities: actividades
-age: idade
 and: e
 avg: avg
 bpm: bpm
@@ -392,12 +386,9 @@ days: dias
 history: history
 hours: horas
 hrs: hrs
-intensity: intensidade
-intensityFactor: 'fator de intensidade'
 kudos: kudos
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'
 'max gradient': 'inclinação máxima'
-maxHeartRate: 'frequência cardíaca máxima'
 months: meses
 more: mais
 n/a: n/d

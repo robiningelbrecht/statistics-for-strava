@@ -23,7 +23,6 @@ Activity: Activity
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
 'Adaptive & Inclusive Sports': 'Adaptive & Inclusive Sports'
-Advanced: Gevorderd
 Afternoon: Namiddag
 All: All
 'All time': 'All time'
@@ -262,7 +261,6 @@ Search: Zoeken
 Segments: Segmenten
 Sep: Sep
 'Show information': 'Informatie tonen'
-Simplified: Simplified
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skating
@@ -300,8 +298,6 @@ Tennis: Tennis
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'This feature is currently disabled'
-'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'Deze formule betekent dat een uur fietsen op je maximale hartslag resulteert in een score van 100, wat we beschouwen als “hoge intensiteit”'
-'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'Deze kaart toont de dagelijkse trainingsintensiteit van het afgelopen jaar. De trainingsintensiteit voor een activiteit wordt berekend op basis van verschillende meetgegevens.'
 Thu: Do
 Thursday: Donderdag
 Time: Time
@@ -353,7 +349,6 @@ Weight: Weight
 'Weight Training': Gewichttraining
 'Weight history': 'Weight history'
 Wheelchair: Rolstoel
-'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'Wanneer wattages en FTP beschikbaar zijn, worden in plaats daarvan deze meetgegevens gebruikt. Deze formule betekent dat een uur lang rijden op je FTP resulteert in een score van 100, wat we beschouwen als "hoge intensiteit"'
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Workout
@@ -380,7 +375,6 @@ Yoga: Yoga
 'Zwift badge': 'Zwift badge'
 'Zwift stats': 'Zwift stats'
 activities: activities
-age: leeftijd
 and: and
 avg: avg
 bpm: bpm
@@ -392,12 +386,9 @@ days: days
 history: history
 hours: hours
 hrs: hrs
-intensity: intensity
-intensityFactor: intensityFactor
 kudos: kudos
 'last {numberOfDays} days': 'last {numberOfDays} days'
 'max gradient': 'max gradient'
-maxHeartRate: maxHeartRate
 months: months
 more: more
 n/a: n/a

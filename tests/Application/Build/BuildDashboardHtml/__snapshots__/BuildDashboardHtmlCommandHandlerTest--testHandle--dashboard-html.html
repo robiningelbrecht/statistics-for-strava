@@ -264,38 +264,6 @@
                     <div data-fullscreen-content class="xl:col-span-6 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center mb-4">
         <h3 class="font-semibold text-lg">Activity heatmap</h3>
-        <button class="hidden lg:block" data-popover-target="popover-description-activity-grid" data-popover-placement="right" type="button">
-            <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">Show information</span>
-        </button>
-        <div data-popover id="popover-description-activity-grid" role="tooltip" class="hidden lg:block lg:w-md xl:w-162 absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
-            <div class="p-3 space-y-2">
-                <p>
-                    This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.                </p>
-                <h3 class="font-semibold text-gray-900">Simplified</h3>
-                <p>
-                    This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"                    :
-                </p>
-                <blockquote class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                    <span class="font-bold">maxHeartRate </span>= (220 - age) x 0.92<br>
-                    <span class="font-bold">intensityFactor </span>= averageHeartRate /
-                    maxHeartRate<br>
-                    <span class="font-bold">intensity</span> = (durationInSeconds x
-                    averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-                </blockquote>
-                <h3 class="font-semibold text-gray-900">Advanced</h3>
-                <p>
-                    When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"                    :
-                </p>
-                <blockquote class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                    <span class="font-bold">intensityFactor </span>= (averagePower / FTP)<br>
-                    <span class="font-bold">intensity</span> = (durationInSeconds x averagePower x
-                    intensityFactor) / (FTP x 3600) x 100
-                </blockquote>
-            </div>
-        </div>
         <ul class="tabs tabs--pills ml-auto" id="activityGridWidgetTab--1" data-tabs="#activityGridWidgetTabContent--1" data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
                             <li role="presentation">
                     <a href="#" data-tabs-target="#loadGridWidgetTab--1" role="tab" aria-controls="loadGridWidgetTab--1">
@@ -441,7 +409,7 @@
             <span class="sr-only">Enter fullscreen mode</span>
         </button>
     </div>
-    <div class="h-full min-h-64" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"5px","right":"5px","bottom":"5px","containLabel":true},"legend":{"show":true,"orient":"vertical","right":0},"tooltip":{"show":true,"valueFormatter":"formatPercentage"},"radar":{"indicator":[{"name":"Volume","max":100},{"name":"Consistency","max":100},{"name":"Intensity","max":100},{"name":"Duration","max":100},{"name":"Density","max":100},{"name":"Sport variety","max":100}]},"series":[{"type":"radar","symbolSize":5,"lineStyle":{"width":1,"opacity":1},"areaStyle":{"opacity":0.1},"data":[{"value":[6,14,33,35,44,17],"name":"last 90 days"}]}]}'></div>
+    <div class="h-full min-h-64" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"5px","right":"5px","bottom":"5px","containLabel":true},"legend":{"show":true,"orient":"vertical","right":0},"tooltip":{"show":true,"valueFormatter":"formatPercentage"},"radar":{"indicator":[{"name":"Volume","max":100},{"name":"Consistency","max":100},{"name":"Intensity","max":100},{"name":"Duration","max":100},{"name":"Density","max":100},{"name":"Sport variety","max":100}]},"series":[{"type":"radar","symbolSize":5,"lineStyle":{"width":1,"opacity":1},"areaStyle":{"opacity":0.1},"data":[{"value":[6,14,64,35,44,17],"name":"last 90 days"}]}]}'></div>
 
             </div>
                     <div data-fullscreen-content class="xl:col-span-2 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
