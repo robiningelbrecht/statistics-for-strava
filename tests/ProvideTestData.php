@@ -673,7 +673,7 @@ trait ProvideTestData
         );
     }
 
-    private function buildThemeConfig(): array
+    public function buildThemeConfig(): array
     {
         return [
             'sportType' => [
