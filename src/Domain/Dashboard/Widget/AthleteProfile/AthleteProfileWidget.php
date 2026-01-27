@@ -53,28 +53,16 @@ final readonly class AthleteProfileWidget implements Widget
             $activeDaysRatio = $numberOfActiveDays / $lastXDays;
             $consistency = min(100, $activeDaysRatio / 0.7 * 100);
 
-            // INTENSITY: 25% = realistic upper bound for sustainable hard training.
-            $countActivitiesWithHighEffort = 0;
+            // INTENSITY: Use IF / TRIMP.
+            $intensities = [];
             foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
-                $activityIntensity = $this->activityIntensity->calculate($activityId);
-                if (ActivityIntensity::HIGH_INTENSITY_THRESHOLD_VALUE > $activityIntensity) {
-                    continue;
-                }
-                ++$countActivitiesWithHighEffort;
+                $intensities[] = $this->activityIntensity->calculate($activityId);
             }
-            $intensity = min(100, ($countActivitiesWithHighEffort / $numberOfActivities) / 0.25 * 100);
+            $intensity = min(100, Math::median($intensities));
 
             // DURATION: Median > 90 min = endurance-leaning athlete.
             $activityMovingTimes = $findAthleteProfileMetricsResponse->getActivityMovingTimesInSeconds();
-            sort($activityMovingTimes);
-
-            $middleIndex = (int) floor(count($activityMovingTimes) / 2);
-            sort($activityMovingTimes, SORT_NUMERIC);
-            $medianInSeconds = $activityMovingTimes[$middleIndex];
-            // Handle the even case by averaging the middle 2 items.
-            if (0 == count($activityMovingTimes) % 2) {
-                $medianInSeconds = ($medianInSeconds + $activityMovingTimes[$middleIndex - 1]) / 2;
-            }
+            $medianInSeconds = Math::median($activityMovingTimes);
             $duration = min(100, Seconds::from($medianInSeconds)->toMinute()->toFloat() / 90 * 100);
 
             // DENSITY: 2h per training day = high density.

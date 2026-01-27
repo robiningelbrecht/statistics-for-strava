@@ -10,8 +10,6 @@ use App\Infrastructure\Exception\EntityNotFound;
 
 final class ActivityIntensity
 {
-    public const int HIGH_INTENSITY_THRESHOLD_VALUE = 88;
-
     /** @var array<string, int|null> */
     public static array $cachedIntensities = [];
 
