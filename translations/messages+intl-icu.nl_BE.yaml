@@ -2,6 +2,9 @@
 '7-day fatigue level': '7-day fatigue level'
 '< 1.5: Good variety in training': '< 1.5: Good variety in training'
 '> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
+'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
+'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
+'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
 'A:C Ratio': 'A:C Ratio'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fatigue)'
@@ -74,6 +77,7 @@ Distance: Afstand
 'Distance over time per gear': 'Afstand in tijd per gear'
 'Distance per month per gear': 'Afstand per maand per gear'
 Distribution: Distribution
+'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 'E-Bike Ritten'
 'E-Mountain Bike Rides': 'E-Mountain Bike Ritten'
@@ -156,6 +160,7 @@ Kayaking: Kajakken
 Lap: Lap
 Laps: Laps
 'Last 7 days training load': 'Last 7 days training load'
+'Last activity': 'Last activity'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
 'Last {numberOfDays} days': 'Last {numberOfDays} days'
@@ -276,6 +281,7 @@ Snowboard: Snowboard
 Snowshoe: Snowshoe
 Soccer: Voetbal
 Socials: Socials
+'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Snelheid
 'Speed distribution': 'Speed distribution'
 Splits: Splits
@@ -322,6 +328,7 @@ To: Tot
 'Total hours spent per sport type': 'Total hours spent per sport type'
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 'Trail Runs'
+'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
 'Training Load Analysis': 'Training Load Analysis'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
