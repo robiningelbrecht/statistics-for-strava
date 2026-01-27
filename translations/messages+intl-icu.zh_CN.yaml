@@ -2,6 +2,9 @@
 '7-day fatigue level': 7天疲劳水平
 '< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
 '> 2.0: High monotony, increased risk': '> 2.0: 单调性高，风险增加'
+'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
+'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
+'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
 'A:C Ratio': 'A:C 比值'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
@@ -74,6 +77,7 @@ Distance: 距离
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
 Distribution: 分布
+'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 电动自行车骑行
 'E-Mountain Bike Rides': 电动山地车骑行
@@ -156,6 +160,7 @@ Kayaking: 皮划艇
 Lap: 圈
 Laps: 圈
 'Last 7 days training load': 最近7天训练负荷
+'Last activity': 'Last activity'
 'Last effort': 最后努力
 'Last maintenance': 最后维护
 'Last {numberOfDays} days': '最近{numberOfDays}天'
@@ -276,6 +281,7 @@ Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
 Socials: 社交
+'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: 速度
 'Speed distribution': 速度分布
 Splits: 分段
@@ -322,6 +328,7 @@ To: 到
 'Total hours spent per sport type': 每种运动的总时长
 'Total kudos and comments received': 收到的总赞和留言
 'Trail Runs': 越野跑
+'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
 'Training Load Analysis': 训练负荷分析
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': '训练单调性 - 平均每日负荷与标准差的比值，反映训练多样性。'

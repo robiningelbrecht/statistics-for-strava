@@ -31,6 +31,6 @@
         </div>
     </div>
     <div class="mt-1 text-xs text-center">
-        Last activity <span class="font-bold">{{ mostRecentActivity.getStartDate()|formatDate('normal') }}</span>
+        {{ "Last activity"|trans }} <span class="font-bold">{{ mostRecentActivity.getStartDate()|formatDate('normal') }}</span>
     </div>
 {% endautoescape %}

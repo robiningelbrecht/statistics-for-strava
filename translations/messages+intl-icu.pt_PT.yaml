@@ -2,6 +2,9 @@
 '7-day fatigue level': 'Nível de fadiga 7-dias'
 '< 1.5: Good variety in training': '< 1.5: Boa variedade de treino'
 '> 2.0: High monotony, increased risk': '> 2.0: Monotonia elevada, risco acrescido'
+'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
+'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
+'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
 'A:C Ratio': 'Rácio A:C'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fadiga)'
@@ -74,6 +77,7 @@ Distance: Distância
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
 Distribution: Distribution
+'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 'Passeios de E-Bike'
 'E-Mountain Bike Rides': 'Passeios de E-MTB'
@@ -156,6 +160,7 @@ Kayaking: Caiaque
 Lap: Volta
 Laps: Voltas
 'Last 7 days training load': 'Carga de treino dos últimos 7 dias'
+'Last activity': 'Last activity'
 'Last effort': 'Last effort'
 'Last maintenance': 'Última manutenção'
 'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
@@ -276,6 +281,7 @@ Snowboard: Snowboard
 Snowshoe: 'Raquetes de Neve'
 Soccer: Futebol
 Socials: Socials
+'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Velocidade
 'Speed distribution': 'Speed distribution'
 Splits: Intervalos
@@ -322,6 +328,7 @@ To: Até
 'Total hours spent per sport type': 'Total de horas por desporto'
 'Total kudos and comments received': 'Total de kudos e comentários recebidos'
 'Trail Runs': 'Corridas de Trilho'
+'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Impulso de Treino- Métrica de carga de treino que considera intensidade e duração.'
 'Training Load Analysis': 'Análise de Carga de Treino'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Monotonia de Treino - Rácio da média diária de carga vs. desvio padrão. Indica variedade de treino.'
