@@ -15,9 +15,12 @@ use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\ProvideTestData;
 
 class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
 {
+    use ProvideTestData;
+
     public function testHandle(): void
     {
         $this->provideFullTestSet();
@@ -41,7 +44,7 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $keyValueStore = $this->getContainer()->get(KeyValueStore::class);
         $keyValueStore->save(KeyValue::fromState(
             Key::THEME,
-            Value::fromString(Json::encode([])),
+            Value::fromString(Json::encode($this->buildThemeConfig())),
         ));
 
         $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
