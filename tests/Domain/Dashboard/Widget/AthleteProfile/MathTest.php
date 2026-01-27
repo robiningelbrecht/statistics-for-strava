@@ -17,4 +17,11 @@ class MathTest extends TestCase
             Math::median($values)
         );
     }
+
+    public function testItShouldThrowWhenValuesAreEmpty(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Cannot calculate median of empty array.'));
+
+        Math::median([]);
+    }
 }
