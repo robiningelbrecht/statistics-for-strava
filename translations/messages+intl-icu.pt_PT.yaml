@@ -353,6 +353,7 @@ Wheelchair: 'Cadeira de Rodas'
 'Winter Sports': 'Desportos de Inverno'
 Workout: Treino
 'Workout type': 'Tipo de exercício'
+YTD: YTD
 Year: Ano
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
@@ -405,7 +406,9 @@ workouts: treinos
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} a cada {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} actividades em {year}'
+'{numberOfMonths} months': '{numberOfMonths} months'
 '{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
+'{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Zona de crescimento/fadiga. Intervalo productivo de treino intenso'

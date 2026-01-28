@@ -353,6 +353,7 @@ Wheelchair: Rullstol
 'Winter Sports': Vintersporter
 Workout: Träning
 'Workout type': Träningsform
+YTD: YTD
 Year: År
 Yearly: Yearly
 'Yearly stats': Årsstatistik
@@ -405,7 +406,9 @@ workouts: träningspass
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} varje {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} aktiviteter på {year}'
+'{numberOfMonths} months': '{numberOfMonths} months'
 '{numberOfResults} photos based on your active filters': '{numberOfResults} bilder utifrån dina aktiva filter'
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
+'{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Påbyggnads/utmattnings-fasen. Produktiv massiv träningsbelastning'

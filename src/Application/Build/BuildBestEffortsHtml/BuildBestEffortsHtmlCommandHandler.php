@@ -8,10 +8,12 @@ use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\BestEffortChart;
+use App\Domain\Activity\BestEffort\BestEffortPeriod;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Time\Clock\Clock;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -25,6 +27,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
         private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
+        private Clock $clock,
     ) {
     }
 
@@ -34,6 +37,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
 
         $bestEfforts = $bestEffortsCharts = [];
 
+        $now = $this->clock->getCurrentDateTimeImmutable();
         $importedActivityTypes = $this->activityTypeRepository->findAll();
         $importedSportTypes = $this->sportTypeRepository->findAll();
 
@@ -43,22 +47,30 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
                 continue;
             }
 
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
-            if ($bestEffortsForActivityType->isEmpty()) {
-                continue;
+            foreach (BestEffortPeriod::cases() as $bestEffortPeriod) {
+                $bestEffortsForActivityTypeAndPeriod = $this->activityBestEffortRepository->findBestEffortsFor(
+                    activityType: $activityType,
+                    dateRange: $bestEffortPeriod->getDateRange($now)
+                );
+                if ($bestEffortsForActivityTypeAndPeriod->isEmpty()) {
+                    continue;
+                }
+
+                $bestEfforts[$activityType->value][$bestEffortPeriod->value] = $bestEffortsForActivityTypeAndPeriod;
+                $bestEffortsCharts[$activityType->value][$bestEffortPeriod->value] = Json::encode(
+                    BestEffortChart::create(
+                        activityType: $activityType,
+                        bestEfforts: $bestEffortsForActivityTypeAndPeriod,
+                        sportTypes: $importedSportTypes,
+                        translator: $this->translator,
+                    )->build()
+                );
             }
 
-            $bestEfforts[$activityType->value] = $bestEffortsForActivityType;
-            $bestEffortsCharts[$activityType->value] = Json::encode(
-                BestEffortChart::create(
-                    activityType: $activityType,
-                    bestEfforts: $bestEffortsForActivityType,
-                    sportTypes: $importedSportTypes,
-                    translator: $this->translator,
-                )->build()
-            );
-
             $bestEffortsHistoryForActivityType = $this->activityBestEffortRepository->findBestEffortHistory($activityType);
+            if ($bestEffortsHistoryForActivityType->isEmpty()) {
+                continue;
+            }
 
             foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
                 $this->buildStorage->write(
