@@ -10,7 +10,7 @@
     {% if powerOutputsPerActivityType|length > 1 %}
         <div class="tabs tabs--default">
             <ul id="peakPowerOutputActivityTypeTab{{ uniqueId }}" data-tabs="#peakPowerOutputActivityTypeTabContent{{ uniqueId }}" role="tablist">
-                {% for activityType,powerOutputs in powerOutputsPerActicityType %}
+                {% for activityType,powerOutputs in powerOutputsPerActivityType %}
                     <li role="presentation">
                         <a href="#" data-tabs-target="#powerOutput{{ activityType }}{{ uniqueId }}" role="tab"
                            aria-controls="powerOutput{{ activityType }}{{ uniqueId }}">
