@@ -76,6 +76,11 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                     // Smoothen the power stream to remove noise and have a smooth line.
                     $stream = $stream->applySimpleMovingAverage(3);
                 }
+                if (in_array($activity->getSportType()->getActivityType(), [ActivityType::RUN, ActivityType::WALK])
+                    && StreamType::VELOCITY === $stream->getStreamType()) {
+                    // Smoothen the velocity stream to remove noise and have a smooth line.
+                    $stream = $stream->applySimpleMovingAverage(15);
+                }
 
                 $combinedStreamTypes->add($combinedStreamType);
                 $otherStreams->add($stream);
@@ -139,8 +144,8 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 }
                 if ($cumulativeMovingTime) {
                     // Find corresponding time for distance.
-                    $movingUpUntilThisPoint = $cumulativeMovingTime[$indexForOriginalDistance];
-                    $row[$timeIndex] = $this->formatDurationForHumans($movingUpUntilThisPoint);
+                    $movingTimeUntilThisPoint = $cumulativeMovingTime[$indexForOriginalDistance];
+                    $row[$timeIndex] = $this->formatDurationForHumans($movingTimeUntilThisPoint);
                 }
 
                 $distanceInKm = Meter::from($distance)->toKilometer();

@@ -3,6 +3,7 @@
 namespace App\Domain\Dashboard\Widget\AthleteProfile;
 
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\Math;
 use App\Domain\Dashboard\Widget\AthleteProfile\FindAthleteProfileMetrics\FindAthleteProfileMetrics;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;

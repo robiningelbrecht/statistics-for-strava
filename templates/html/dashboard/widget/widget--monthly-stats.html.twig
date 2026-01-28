@@ -4,12 +4,12 @@
         {{ "Monthly stats"|trans }}
     </h3>
     <ul class="tabs tabs--pills" id="monthlyStatsTab{{ uniqueId }}" data-tabs="#monthlyStatsTabContent{{ uniqueId }}"
-        data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+        data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
         {% for context in metricsDisplayOrder %}
             <li role="presentation">
                 <a href="#" data-tabs-target="#monthlyStats{{ context.value }}{{ uniqueId }}" role="tab"
                    aria-controls="monthlyStats{{ context.value }}{{ uniqueId }}">
-                    {{ svg(context.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
+                    {{ svg(context.getSvgIcon(), 'size-5', 'text-grey-900') }}
                     <span class="hidden md:block">{{ context|trans }}</span>
                 </a>
             </li>

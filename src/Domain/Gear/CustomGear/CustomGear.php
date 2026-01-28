@@ -15,10 +15,9 @@ final class CustomGear extends ImportedGear
 
     public function withFullTag(Tag $fullTag): self
     {
-        $new = clone $this;
-        $new->fullTag = $fullTag;
-
-        return $new;
+        return clone ($this, [
+            'fullTag' => $fullTag,
+        ]);
     }
 
     public function getTag(): string
