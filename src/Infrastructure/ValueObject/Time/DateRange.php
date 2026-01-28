@@ -34,6 +34,14 @@ final readonly class DateRange
         );
     }
 
+    public static function upUntilNow(): self
+    {
+        return new self(
+            from: SerializableDateTime::fromString('1970-01-01 00:00:00'),
+            till: SerializableDateTime::fromString('now'),
+        );
+    }
+
     public function getFrom(): SerializableDateTime
     {
         return $this->from;

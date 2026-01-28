@@ -7,6 +7,7 @@ namespace App\Domain\Activity\BestEffort;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityType;
+use App\Infrastructure\ValueObject\Time\DateRange;
 
 interface ActivityBestEffortRepository
 {
@@ -16,7 +17,7 @@ interface ActivityBestEffortRepository
 
     public function hasData(): bool;
 
-    public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts;
+    public function findBestEffortsFor(ActivityType $activityType, DateRange $dateRange): ActivityBestEfforts;
 
     public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts;
 

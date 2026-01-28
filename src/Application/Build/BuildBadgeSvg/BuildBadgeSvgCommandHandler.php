@@ -18,6 +18,7 @@ use App\Domain\Zwift\ZwiftRacingScore;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
+use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -86,7 +87,10 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 continue;
             }
 
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
+            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor(
+                activityType: $activityType,
+                dateRange: DateRange::upUntilNow()
+            );
             if ($bestEffortsForActivityType->isEmpty()) {
                 continue;
             }
