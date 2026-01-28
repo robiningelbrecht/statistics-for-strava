@@ -4,7 +4,7 @@
     <h3 class="text-lg font-semibold">{{ "Training goals"|trans }}</h3>
     {% if calculatedTrainingGoalsPerPeriod|length > 1 %}
         <ul class="tabs tabs--pills" id="trainingGoalsTab{{ uniqueId }}" data-tabs="#trainingGoalsTabContent{{ uniqueId }}"
-            data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+            data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
             {% for period,goals in calculatedTrainingGoalsPerPeriod %}
                 <li role="presentation">
                     <a href="#" data-tabs-target="#trainingGoals{{ period }}{{ uniqueId }}" role="tab"

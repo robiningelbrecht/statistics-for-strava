@@ -101,6 +101,10 @@
 
             & > a {
                 @apply inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange;
+
+                &.active {
+                    @apply text-strava-orange;
+                }
             }
         }
     }

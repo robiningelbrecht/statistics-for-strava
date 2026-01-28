@@ -3,12 +3,12 @@
     <div class="flex items-center mb-4">
         <h3 class="font-semibold text-lg">{{ "Activity heatmap"|trans }}</h3>
         <ul class="tabs tabs--pills ml-auto" id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
-            data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+            data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
             {% for activityGridType in enum('App\\Domain\\Dashboard\\Widget\\ActivityGrid\\ActivityGridType').cases() %}
                 <li role="presentation">
                     <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
                        aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
-                        {{ svg(activityGridType.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
+                        {{ svg(activityGridType.getSvgIcon(), 'size-5', 'text-grey-900') }}
                         <span class="hidden md:block">{{ activityGridType|trans }}</span>
                     </a>
                 </li>

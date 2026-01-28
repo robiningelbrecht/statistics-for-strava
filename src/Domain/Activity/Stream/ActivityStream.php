@@ -3,6 +3,7 @@
 namespace App\Domain\Activity\Stream;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Math;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -112,28 +113,10 @@ final class ActivityStream implements SupportsAITooling
         if (0 === $count || $windowSize < 1) {
             return $this;
         }
-        $half = intdiv($windowSize, 2);
-        $smoothed = [];
-        for ($i = 0; $i < $count; ++$i) {
-            $start = max(0, $i - $half);
-            $end = min($count - 1, $i + $half);
-            $sum = 0.0;
-            for ($j = $start; $j <= $end; ++$j) {
-                $sum += $this->data[$j];
-            }
-            $smoothed[] = $sum / ($end - $start + 1);
-        }
 
-        return ActivityStream::fromState(
-            activityId: $this->getActivityId(),
-            streamType: $this->getStreamType(),
-            streamData: $smoothed,
-            createdOn: $this->getCreatedOn(),
-            computedFieldsState: $this->getComputedFieldsState(),
-            valueDistribution: $this->getValueDistribution(),
-            bestAverages: $this->getBestAverages(),
-            normalizedPower: $this->getNormalizedPower(),
-        );
+        return clone ($this, [
+            'data' => Math::movingAverage($this->data, $windowSize),
+        ]);
     }
 
     /**
