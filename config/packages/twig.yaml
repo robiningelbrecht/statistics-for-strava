@@ -8,4 +8,4 @@ twig:
         appVersion: '@App\Application\AppVersion'
         appConfig: '@App\Infrastructure\Config\AppConfig'
         enrichedActivities: '@App\Domain\Activity\EnrichedActivities'
-        activityBestEffortsCalculator: '@App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator'
+        bestEffortsCalculator: '@App\Domain\Activity\BestEffort\BestEffortsCalculator'

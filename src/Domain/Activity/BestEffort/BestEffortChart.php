@@ -15,7 +15,7 @@ final readonly class BestEffortChart
     private function __construct(
         private ActivityType $activityType,
         private BestEffortPeriod $period,
-        private ActivityBestEffortsCalculator $activityBestEffortsCalculator,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private TranslatorInterface $translator,
     ) {
     }
@@ -23,13 +23,13 @@ final readonly class BestEffortChart
     public static function create(
         ActivityType $activityType,
         BestEffortPeriod $period,
-        ActivityBestEffortsCalculator $activityBestEffortsCalculator,
+        BestEffortsCalculator $bestEffortsCalculator,
         TranslatorInterface $translator,
     ): self {
         return new self(
             activityType: $activityType,
             period: $period,
-            activityBestEffortsCalculator: $activityBestEffortsCalculator,
+            bestEffortsCalculator: $bestEffortsCalculator,
             translator: $translator
         );
     }
@@ -41,7 +41,7 @@ final readonly class BestEffortChart
     {
         $series = [];
 
-        $sportTypes = $this->activityBestEffortsCalculator->getSportTypesFor(
+        $sportTypes = $this->bestEffortsCalculator->getSportTypesFor(
             period: $this->period,
             activityType: $this->activityType
         );
@@ -62,7 +62,7 @@ final readonly class BestEffortChart
                     'color' => Theme::getColorForSportType($sportType),
                 ],
                 'data' => array_filter(array_map(
-                    fn (ConvertableToMeter $distance) => $this->activityBestEffortsCalculator->for(
+                    fn (ConvertableToMeter $distance): ?int => $this->bestEffortsCalculator->for(
                         period: $this->period,
                         sportType: $sportType,
                         distance: $distance,

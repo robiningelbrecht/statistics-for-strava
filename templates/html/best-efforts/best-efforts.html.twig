@@ -3,8 +3,8 @@
     'label': 'Best efforts'|trans
 }]} %}
 {% autoescape false %}
-    {% set activityTypes = activityBestEffortsCalculator.getActivityTypes() %}
-    {% set periods = activityBestEffortsCalculator.getPeriods() %}
+    {% set activityTypes = bestEffortsCalculator.getActivityTypes() %}
+    {% set periods = bestEffortsCalculator.getPeriods() %}
     {% if activityTypes|length > 1 %}
         <div class="tabs tabs--default">
             <ul id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
@@ -37,7 +37,7 @@
                 <div id="bestEffortsPeriodTabContent{{ activityType.value }}">
                     {% for period in periods %}
                         {% set bestEffortsChart = bestEffortsCharts[activityType.value][period.value] %}
-                        {% set sportTypes = activityBestEffortsCalculator.getSportTypesFor(period, activityType) %}
+                        {% set sportTypes = bestEffortsCalculator.getSportTypesFor(period, activityType) %}
                         <div id="bestEffortsPeriod{{ activityType.value }}{{ period.value }}" role="tabpanel" aria-labelledby="bestEffortsPeriod{{ activityType.value }}{{ period.value }}-tab">
                             <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                                 <div class="mb-4 h-80" data-echarts-options='{{ bestEffortsChart }}'></div>
@@ -72,7 +72,7 @@
                                                     </div>
                                                 </th>
                                                 {% for sportType in sportTypes %}
-                                                    {% set bestEffort = activityBestEffortsCalculator.for(period, sportType, distance) %}
+                                                    {% set bestEffort = bestEffortsCalculator.for(period, sportType, distance) %}
                                                     {% if bestEffort %}
                                                         {% set activity = enrichedActivities.find(bestEffort.getActivityId()) %}
                                                         <td class="px-2 py-2 truncate">

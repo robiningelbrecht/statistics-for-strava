@@ -17,7 +17,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
-final class ActivityBestEffortsCalculator
+final class BestEffortsCalculator
 {
     /** @var array<string, ActivityBestEffort> */
     private array $cachedBestEfforts = [];
@@ -26,6 +26,8 @@ final class ActivityBestEffortsCalculator
     private array $cache = [];
     /** @var array<string, string[]> */
     private array $cachedPerActivity = [];
+    /** @var array<string, array<int, array<int, string>>> */
+    private array $historyCache = [];
     private ActivityTypes $cachedActivityTypes;
 
     public function __construct(
@@ -38,7 +40,7 @@ final class ActivityBestEffortsCalculator
 
     private function buildCache(): void
     {
-        if (!empty($this->cachedBestEfforts)) {
+        if (!empty($this->cache)) {
             return;
         }
 
@@ -98,6 +100,55 @@ final class ActivityBestEffortsCalculator
         }
     }
 
+    private function buildHistoryCache(): void
+    {
+        if (!empty($this->historyCache)) {
+            return;
+        }
+        $sql = 'SELECT activityId, distanceInMeter, sportType, timeInSeconds
+        FROM (
+            SELECT
+                ActivityBestEffort.activityId,
+                distanceInMeter,
+                ActivityBestEffort.sportType,
+                timeInSeconds,
+                ROW_NUMBER() OVER (
+                    PARTITION BY ActivityBestEffort.sportType, distanceInMeter
+                    ORDER BY timeInSeconds ASC
+                ) AS rn
+            FROM ActivityBestEffort
+            INNER JOIN Activity ON ActivityBestEffort.activityId = Activity.activityId
+            WHERE ActivityBestEffort.sportType IN (:sportTypes)
+        ) ranked
+        WHERE rn <= 10
+        ORDER BY sportType, distanceInMeter, rn';
+
+        $results = $this->connection->executeQuery(
+            $sql,
+            [
+                'sportTypes' => array_map(fn (SportType $sportType) => $sportType->value, SportTypes::thatSupportsBestEfforts()->toArray()),
+            ],
+            [
+                'sportTypes' => ArrayParameterType::STRING,
+            ]
+        )->fetchAllAssociative();
+
+        foreach ($results as $result) {
+            $activityId = ActivityId::fromString($result['activityId']);
+            $sportType = SportType::from($result['sportType']);
+            $distance = Meter::from($result['distanceInMeter']);
+            $activityBestEffort = ActivityBestEffort::fromState(
+                activityId: $activityId,
+                distanceInMeter: $distance,
+                sportType: $sportType,
+                timeInSeconds: $result['timeInSeconds']
+            );
+
+            $this->cachedBestEfforts[$activityBestEffort->getId()] = $activityBestEffort;
+            $this->historyCache[$sportType->value][$distance->toInt()][] = $activityBestEffort->getId();
+        }
+    }
+
     public function for(BestEffortPeriod $period, SportType $sportType, ConvertableToMeter $distance): ?ActivityBestEffort
     {
         $this->buildCache();
@@ -115,6 +166,17 @@ final class ActivityBestEffortsCalculator
         $ids = $this->cachedPerActivity[(string) $activityId] ?? [];
 
         return ActivityBestEfforts::fromArray(array_map(fn (string $id) => $this->cachedBestEfforts[$id], $ids));
+    }
+
+    public function historyFor(SportType $sportType, ConvertableToMeter $distance, int $position): ?ActivityBestEffort
+    {
+        $this->buildCache();
+        $this->buildHistoryCache();
+
+        $distance = $distance->toMeter()->toInt();
+        $id = $this->historyCache[$sportType->value][$distance][$position] ?? 'unexisting';
+
+        return $this->cachedBestEfforts[$id] ?? null;
     }
 
     /**
