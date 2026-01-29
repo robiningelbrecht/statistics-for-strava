@@ -19,7 +19,7 @@ final class EnrichedActivities
 {
     /** @var array<string, Activity> */
     public static array $cachedActivities = [];
-    /** @var array<string, Activities> */
+    /** @var array<string, string[]> */
     public static array $cachedActivitiesPerActivityType;
 
     public function __construct(
@@ -128,12 +128,7 @@ final class EnrichedActivities
 
         $activityIds = $queryBuilder->executeQuery()->fetchFirstColumn();
 
-        $activities = Activities::empty();
-        foreach ($activityIds as $activityId) {
-            $activities->add(self::$cachedActivities[(string) $activityId]);
-        }
-
-        return $activities;
+        return Activities::fromArray($this->resolveIds($activityIds));
     }
 
     public function findBySportTypes(SportTypes $sportTypes): Activities
@@ -153,12 +148,7 @@ final class EnrichedActivities
 
         $activityIds = $queryBuilder->executeQuery()->fetchFirstColumn();
 
-        $activities = Activities::empty();
-        foreach ($activityIds as $activityId) {
-            $activities->add(self::$cachedActivities[(string) $activityId]);
-        }
-
-        return $activities;
+        return Activities::fromArray($this->resolveIds($activityIds));
     }
 
     /**
@@ -171,12 +161,28 @@ final class EnrichedActivities
             $activityTypes = $this->activityTypeRepository->findAll();
             $allActivities = $this->findAll();
 
-            /** @var ActivityType $activityType */
             foreach ($activityTypes as $activityType) {
-                self::$cachedActivitiesPerActivityType[$activityType->value] = $allActivities->filterOnActivityType($activityType);
+                $ids = array_map(fn (Activity $activity): string => (string) $activity->getId(), $allActivities->filterOnActivityType($activityType)->toArray());
+                self::$cachedActivitiesPerActivityType[$activityType->value] = $ids;
             }
         }
 
-        return self::$cachedActivitiesPerActivityType;
+        $activitiesPerActivityType = [];
+        foreach (self::$cachedActivitiesPerActivityType as $activityType => $ids) {
+            $activities = $this->resolveIds($ids);
+            $activitiesPerActivityType[$activityType] = Activities::fromArray($activities);
+        }
+
+        return $activitiesPerActivityType;
+    }
+
+    /**
+     * @param string[] $ids
+     *
+     * @return Activity[]
+     */
+    private function resolveIds(array $ids): array
+    {
+        return array_map(fn (string $id) => self::$cachedActivities[$id], $ids);
     }
 }

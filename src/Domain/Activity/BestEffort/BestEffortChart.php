@@ -42,7 +42,7 @@ final readonly class BestEffortChart
     {
         $series = [];
 
-        $uniqueSportTypesInBestEfforts = $this->bestEfforts->getUniqueSportTypes();
+        $uniqueSportTypesInBestEfforts = $this->bestEfforts->getSportTypes();
         /** @var SportType $sportType */
         foreach ($this->sportTypes as $sportType) {
             if (!$uniqueSportTypesInBestEfforts->has($sportType)) {
