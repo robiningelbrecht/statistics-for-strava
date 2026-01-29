@@ -6,11 +6,9 @@ namespace App\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\ArrayParameterType;
 
 final readonly class DbalActivityBestEffortRepository extends DbalRepository implements ActivityBestEffortRepository
@@ -33,58 +31,6 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         $sql = 'SELECT 1 FROM ActivityBestEffort LIMIT 1';
 
         return (bool) $this->connection->executeQuery($sql)->fetchOne();
-    }
-
-    public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts
-    {
-        $sql = 'SELECT
-            activityId,
-            distanceInMeter,
-            sportType,
-            timeInSeconds
-        FROM (
-            SELECT
-                activityId,
-                distanceInMeter,
-                sportType,
-                timeInSeconds,
-                ROW_NUMBER() OVER (
-                    PARTITION BY sportType, distanceInMeter
-                    ORDER BY timeInSeconds ASC
-                ) AS rn
-            FROM ActivityBestEffort
-            WHERE sportType IN (:sportTypes)
-        ) ranked
-        WHERE rn <= 10
-        ORDER BY sportType, distanceInMeter, rn';
-
-        $results = $this->connection->executeQuery(
-            $sql,
-            [
-                'sportTypes' => array_unique(
-                    array_map(
-                        fn (SportType $sportType) => $sportType->value,
-                        $activityType->getSportTypes()->toArray()
-                    )
-                ),
-            ],
-            [
-                'sportTypes' => ArrayParameterType::STRING,
-            ]
-        )->fetchAllAssociative();
-
-        $activityBestEfforts = ActivityBestEfforts::empty();
-
-        foreach ($results as $result) {
-            $activityBestEfforts->add(ActivityBestEffort::fromState(
-                activityId: ActivityId::fromString($result['activityId']),
-                distanceInMeter: Meter::from($result['distanceInMeter']),
-                sportType: SportType::from($result['sportType']),
-                timeInSeconds: $result['timeInSeconds']
-            ));
-        }
-
-        return $activityBestEfforts;
     }
 
     public function findActivityIdsThatNeedBestEffortsCalculation(): ActivityIds

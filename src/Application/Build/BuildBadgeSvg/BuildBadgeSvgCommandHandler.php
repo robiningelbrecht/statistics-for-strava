@@ -7,8 +7,8 @@ namespace App\Application\Build\BuildBadgeSvg;
 use App\Application\AppUrl;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
 use App\Domain\Activity\BestEffort\BestEffortPeriod;
+use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
@@ -29,7 +29,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private AthleteRepository $athleteRepository,
         private ChallengeRepository $challengeRepository,
         private EnrichedActivities $enrichedActivities,
-        private ActivityBestEffortsCalculator $activityBestEffortsCalculator,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
@@ -79,8 +79,8 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
 
         $sportTypesThatHaveBestEfforts = [];
         /** @var ActivityType $activityType */
-        foreach ($this->activityBestEffortsCalculator->getActivityTypes() as $activityType) {
-            $sportTypes = $this->activityBestEffortsCalculator->getSportTypesFor(
+        foreach ($this->bestEffortsCalculator->getActivityTypes() as $activityType) {
+            $sportTypes = $this->bestEffortsCalculator->getSportTypesFor(
                 period: BestEffortPeriod::ALL_TIME,
                 activityType: $activityType,
             );

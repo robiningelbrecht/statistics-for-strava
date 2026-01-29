@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildBestEffortsHtml;
 
-use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
-use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
 use App\Domain\Activity\BestEffort\BestEffortChart;
 use App\Domain\Activity\BestEffort\BestEffortPeriod;
+use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
@@ -18,8 +17,7 @@ use Twig\Environment;
 final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityBestEffortRepository $activityBestEffortRepository,
-        private ActivityBestEffortsCalculator $activityBestEffortCalculator,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -32,21 +30,16 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
 
         $bestEffortsCharts = [];
 
-        foreach ($this->activityBestEffortCalculator->getActivityTypes() as $activityType) {
+        foreach ($this->bestEffortsCalculator->getActivityTypes() as $activityType) {
             foreach (BestEffortPeriod::cases() as $bestEffortPeriod) {
                 $bestEffortsCharts[$activityType->value][$bestEffortPeriod->value] = Json::encode(
                     BestEffortChart::create(
                         activityType: $activityType,
                         period: $bestEffortPeriod,
-                        activityBestEffortsCalculator: $this->activityBestEffortCalculator,
+                        bestEffortsCalculator: $this->bestEffortsCalculator,
                         translator: $this->translator,
                     )->build()
                 );
-            }
-
-            $bestEffortsHistoryForActivityType = $this->activityBestEffortRepository->findBestEffortHistory($activityType);
-            if ($bestEffortsHistoryForActivityType->isEmpty()) {
-                continue;
             }
 
             foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
@@ -59,7 +52,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
                     )),
                     $this->twig->load('html/best-efforts/best-efforts-history.html.twig')->render([
                         'activityType' => $activityType,
-                        'bestEffortsHistory' => $bestEffortsHistoryForActivityType,
+                        'period' => BestEffortPeriod::ALL_TIME,
                         'distance' => $distance,
                     ])
                 );

@@ -13,19 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivityBestEffort_sportTypeIndex', columns: ['sportType'])]
-final class ActivityBestEffort
+final readonly class ActivityBestEffort
 {
     use ProvideTimeFormats;
 
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'integer')]
-        private readonly Meter $distanceInMeter,
+        private Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
-        private readonly SportType $sportType,
+        private SportType $sportType,
         #[ORM\Column(type: 'integer')]
-        private readonly int $timeInSeconds,
+        private int $timeInSeconds,
     ) {
     }
 
