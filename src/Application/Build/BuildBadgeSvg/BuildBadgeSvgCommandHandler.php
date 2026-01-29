@@ -95,7 +95,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 continue;
             }
 
-            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getUniqueSportTypes();
+            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getSportTypes();
             foreach ($uniqueSportTypesInBestEfforts as $sportType) {
                 $bestEffortsForSportType = $bestEffortsForActivityType->getBySportType($sportType);
                 if ($bestEffortsForSportType->isEmpty()) {

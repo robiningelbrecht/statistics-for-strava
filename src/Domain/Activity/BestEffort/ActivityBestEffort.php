@@ -60,6 +60,11 @@ final class ActivityBestEffort
         );
     }
 
+    public function getId(): string
+    {
+        return sprintf('%s-%s', $this->getActivityId(), $this->distanceInMeter);
+    }
+
     public function getActivityId(): ActivityId
     {
         return $this->activityId;
