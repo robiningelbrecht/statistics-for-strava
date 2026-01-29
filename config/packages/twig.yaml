@@ -7,3 +7,4 @@ twig:
     globals:
         appVersion: '@App\Application\AppVersion'
         appConfig: '@App\Infrastructure\Config\AppConfig'
+        activityBestEffortsCalculator: '@App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator'
