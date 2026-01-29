@@ -56,16 +56,13 @@
                                                 <th scope="col" class="px-2 py-3">
                                                     {{ sportType|trans }}
                                                 </th>
-                                                <th scope="col" colspan="2" class="px-2 py-3">
-
-                                                </th>
                                             {% endfor %}
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {% for distance in activityTypeEnum.getDistancesForBestEffortCalculation() %}
                                             <tr class="bg-white border-b">
-                                                <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                                <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium whitespace-nowrap">
                                                     <div>
                                                         <a href="#" class="font-medium text-blue-600 hover:underline"
                                                            data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityTypeEnum.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
@@ -78,17 +75,12 @@
                                                     {% if bestEffort %}
                                                         {% set activity = bestEffort.getActivity() %}
                                                         <td class="px-2 py-2 truncate">
-                                                            {{ activity.getStartDate()|formatDate() }}
-                                                        </td>
-                                                        <td class="px-2 py-2 truncate">
-                                                            {{ bestEffort.getFormattedTime() }}
-                                                        <td class="px-2 py-2 truncate">
-                                                            {{ activity|activityLink(ellipses: 50) }}
+                                                            <div class="font-semibold text-gray-700">{{ bestEffort.getFormattedTime() }}</div>
+                                                            <div class="text-xs">{{ activity.getStartDate()|formatDate() }}</div>
+                                                            <div class="text-xs inline-flex">{{ activity|activityLink(ellipses: 50) }}</div>
                                                         </td>
                                                     {% else %}
-                                                        <td class="px-2 py-2 truncate"></td>
-                                                        <td class="px-2 py-2 truncate"></td>
-                                                        <td class="px-2 py-2 truncate"></td>
+                                                        <td class="px-2 py-2 truncate"> - </td>
                                                     {% endif %}
                                                 {% endfor %}
                                             </tr>
