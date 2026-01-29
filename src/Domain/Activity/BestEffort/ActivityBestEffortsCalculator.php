@@ -8,7 +8,6 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\ActivityTypes;
-use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Activity\SportType\SportTypes;
@@ -31,7 +30,6 @@ final class ActivityBestEffortsCalculator
 
     public function __construct(
         private readonly Connection $connection,
-        private readonly EnrichedActivities $enrichedActivities,
         private readonly SportTypeRepository $sportTypeRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
         private readonly Clock $clock,
@@ -88,9 +86,6 @@ final class ActivityBestEffortsCalculator
                     sportType: $sportType,
                     timeInSeconds: $result['timeInSeconds']
                 );
-
-                // @TODO: Get rid of this and use getActivity() twig function.
-                $activityBestEffort->enrichWithActivity($this->enrichedActivities->find($activityId));
 
                 $this->cachedBestEfforts[$activityBestEffort->getId()] = $activityBestEffort;
                 $this->cache[$period->value][$sportType->value][$distance->toInt()] = $activityBestEffort->getId();

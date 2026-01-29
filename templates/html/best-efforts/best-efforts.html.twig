@@ -74,7 +74,7 @@
                                                 {% for sportType in sportTypes %}
                                                     {% set bestEffort = activityBestEffortsCalculator.for(period, sportType, distance) %}
                                                     {% if bestEffort %}
-                                                        {% set activity = bestEffort.getActivity() %}
+                                                        {% set activity = enrichedActivities.find(bestEffort.getActivityId()) %}
                                                         <td class="px-2 py-2 truncate">
                                                             <div class="font-semibold text-gray-700">{{ bestEffort.getFormattedTime() }}</div>
                                                             <div class="text-xs">{{ activity.getStartDate()|formatDate() }}</div>
