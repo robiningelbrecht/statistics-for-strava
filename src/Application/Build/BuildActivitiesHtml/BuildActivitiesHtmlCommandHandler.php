@@ -6,7 +6,7 @@ namespace App\Application\Build\BuildActivitiesHtml;
 
 use App\Application\Countries;
 use App\Domain\Activity\ActivityTotals;
-use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
 use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\HeartRateDistributionChart;
@@ -52,7 +52,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private GearRepository $gearRepository,
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
-        private ActivityBestEffortRepository $activityBestEffortRepository,
+        private ActivityBestEffortsCalculator $activityBestEffortsCalculator,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -69,7 +69,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $now = $command->getCurrentDateTime();
         $athlete = $this->athleteRepository->find();
         $importedSportTypes = $this->sportTypeRepository->findAll();
-        $bestEfforts = $this->activityBestEffortRepository->findAll();
 
         $activities = $this->enrichedActivities->findAll();
 
@@ -257,7 +256,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'splits' => $activitySplits,
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
                     'profileCharts' => array_reverse($activityProfileCharts),
-                    'bestEfforts' => $bestEfforts->getByActivity($activity->getId()),
+                    'bestEfforts' => $this->activityBestEffortsCalculator->forActivity($activity->getId()),
                     'coordinateMap' => Json::encode($coordinateMap),
                 ]),
             );
