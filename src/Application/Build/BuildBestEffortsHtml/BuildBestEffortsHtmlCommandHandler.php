@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildBestEffortsHtml;
 
-use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
 use App\Domain\Activity\BestEffort\BestEffortChart;
@@ -20,7 +18,6 @@ use Twig\Environment;
 final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityTypeRepository $activityTypeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivityBestEffortsCalculator $activityBestEffortCalculator,
         private TranslatorInterface $translator,
@@ -35,14 +32,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
 
         $bestEffortsCharts = [];
 
-        $importedActivityTypes = $this->activityTypeRepository->findAll();
-
-        /** @var ActivityType $activityType */
-        foreach ($importedActivityTypes as $activityType) {
-            if (!$activityType->supportsBestEffortsStats()) {
-                continue;
-            }
-
+        foreach ($this->activityBestEffortCalculator->getActivityTypes() as $activityType) {
             foreach (BestEffortPeriod::cases() as $bestEffortPeriod) {
                 $bestEffortsCharts[$activityType->value][$bestEffortPeriod->value] = Json::encode(
                     BestEffortChart::create(

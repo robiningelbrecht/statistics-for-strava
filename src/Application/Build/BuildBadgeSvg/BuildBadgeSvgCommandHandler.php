@@ -7,8 +7,8 @@ namespace App\Application\Build\BuildBadgeSvg;
 use App\Application\AppUrl;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\ActivityTypeRepository;
-use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
+use App\Domain\Activity\BestEffort\BestEffortPeriod;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
@@ -18,7 +18,6 @@ use App\Domain\Zwift\ZwiftRacingScore;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
-use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -29,9 +28,8 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
     public function __construct(
         private AthleteRepository $athleteRepository,
         private ChallengeRepository $challengeRepository,
-        private ActivityTypeRepository $activityTypeRepository,
-        private ActivityBestEffortRepository $activityBestEffortRepository,
         private EnrichedActivities $enrichedActivities,
+        private ActivityBestEffortsCalculator $activityBestEffortsCalculator,
         private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
@@ -80,34 +78,20 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         }
 
         $sportTypesThatHaveBestEfforts = [];
-        $importedActivityTypes = $this->activityTypeRepository->findAll();
         /** @var ActivityType $activityType */
-        foreach ($importedActivityTypes as $activityType) {
-            if (!$activityType->supportsBestEffortsStats()) {
-                continue;
-            }
-
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor(
+        foreach ($this->activityBestEffortsCalculator->getActivityTypes() as $activityType) {
+            $sportTypes = $this->activityBestEffortsCalculator->getSportTypesFor(
+                period: BestEffortPeriod::ALL_TIME,
                 activityType: $activityType,
-                dateRange: DateRange::upUntilNow()
             );
-            if ($bestEffortsForActivityType->isEmpty()) {
-                continue;
-            }
-
-            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getSportTypes();
-            foreach ($uniqueSportTypesInBestEfforts as $sportType) {
-                $bestEffortsForSportType = $bestEffortsForActivityType->getBySportType($sportType);
-                if ($bestEffortsForSportType->isEmpty()) {
-                    continue;
-                }
+            foreach ($sportTypes as $sportType) {
                 $sportTypesThatHaveBestEfforts[] = $sportType;
 
                 $this->fileStorage->write(
                     strtolower(sprintf('pb-%s-badge.svg', $sportType->value)),
                     $this->twig->load('svg/badge/svg-pb-badge.html.twig')->render([
                         'sportType' => $sportType,
-                        'bestEfforts' => $bestEffortsForSportType,
+                        'period' => BestEffortPeriod::ALL_TIME,
                     ])
                 );
             }
