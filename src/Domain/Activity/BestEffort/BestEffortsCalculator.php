@@ -91,7 +91,9 @@ final class BestEffortsCalculator
 
                 $this->cachedBestEfforts[$activityBestEffort->getId()] = $activityBestEffort;
                 $this->cache[$period->value][$sportType->value][$distance->toInt()] = $activityBestEffort->getId();
-                $this->cachedPerActivity[(string) $activityId][] = $activityBestEffort->getId();
+                if (BestEffortPeriod::ALL_TIME === $period) {
+                    $this->cachedPerActivity[(string) $activityId][] = $activityBestEffort->getId();
+                }
 
                 if (!$this->cachedActivityTypes->has($sportType->getActivityType())) {
                     $this->cachedActivityTypes->add($sportType->getActivityType());
