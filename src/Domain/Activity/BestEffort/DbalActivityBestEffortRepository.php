@@ -14,6 +14,7 @@ use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Time\DateRange;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 
@@ -41,7 +42,10 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 
     public function findAll(): ActivityBestEfforts
     {
-        return $this->findBestEffortsForSportTypes(SportTypes::fromArray(SportType::cases()));
+        return $this->findBestEffortsForSportTypes(
+            sportTypes: SportTypes::fromArray(SportType::cases()),
+            dateRange: DateRange::upUntilNow()
+        );
     }
 
     public function hasData(): bool
@@ -51,9 +55,12 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         return (bool) $this->connection->executeQuery($sql)->fetchOne();
     }
 
-    public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts
+    public function findBestEffortsFor(ActivityType $activityType, DateRange $dateRange): ActivityBestEfforts
     {
-        return $this->findBestEffortsForSportTypes($activityType->getSportTypes());
+        return $this->findBestEffortsForSportTypes(
+            sportTypes: $activityType->getSportTypes(),
+            dateRange: $dateRange
+        );
     }
 
     public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts
@@ -79,11 +86,14 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         WHERE rn <= 10
         ORDER BY sportType, distanceInMeter, rn';
 
-        $results = $this->connection->executeQuery($sql,
+        $results = $this->connection->executeQuery(
+            $sql,
             [
-                'sportTypes' => array_unique(array_map(
-                    fn (SportType $sportType) => $sportType->value,
-                    $activityType->getSportTypes()->toArray())
+                'sportTypes' => array_unique(
+                    array_map(
+                        fn (SportType $sportType) => $sportType->value,
+                        $activityType->getSportTypes()->toArray()
+                    )
                 ),
             ],
             [
@@ -113,8 +123,10 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         return $activityBestEfforts;
     }
 
-    private function findBestEffortsForSportTypes(SportTypes $sportTypes): ActivityBestEfforts
-    {
+    private function findBestEffortsForSportTypes(
+        SportTypes $sportTypes,
+        DateRange $dateRange,
+    ): ActivityBestEfforts {
         $sql = 'SELECT
                 activityId,
                 sportType,
@@ -122,23 +134,28 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
                 timeInSeconds
                 FROM (
                     SELECT
-                        activityId,
-                        sportType,
+                        ActivityBestEffort.activityId,
+                        ActivityBestEffort.sportType,
                         distanceInMeter,
                         timeInSeconds,
                         ROW_NUMBER() OVER (
-                            PARTITION BY sportType, distanceInMeter
+                            PARTITION BY ActivityBestEffort.sportType, distanceInMeter
                             ORDER BY timeInSeconds ASC
                         ) AS rn
                     FROM ActivityBestEffort
-                    WHERE sportType IN (:sportTypes)
+                    INNER JOIN Activity ON ActivityBestEffort.activityId = Activity.activityId
+                    WHERE ActivityBestEffort.sportType IN (:sportTypes)
+                    AND startDateTime BETWEEN :dateFrom AND :dateTo
                 ) ranked
                 WHERE rn = 1
                 ORDER BY distanceInMeter ASC';
 
-        $results = $this->connection->executeQuery($sql,
+        $results = $this->connection->executeQuery(
+            $sql,
             [
                 'sportTypes' => array_unique(array_map(fn (SportType $sportType) => $sportType->value, $sportTypes->toArray())),
+                'dateFrom' => $dateRange->getFrom()->format('Y-m-d 00:00:00'),
+                'dateTo' => $dateRange->getTill()->format('Y-m-d 23:59:59'),
             ],
             [
                 'sportTypes' => ArrayParameterType::STRING,
@@ -184,7 +201,8 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 
         return ActivityIds::fromArray(array_map(
             ActivityId::fromString(...),
-            $this->connection->executeQuery($sql,
+            $this->connection->executeQuery(
+                $sql,
                 [
                     'timeStreamType' => StreamType::TIME->value,
                     'distanceStreamType' => StreamType::DISTANCE->value,

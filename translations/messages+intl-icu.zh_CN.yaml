@@ -353,6 +353,7 @@ Wheelchair: 轮椅
 'Winter Sports': 冬季运动
 Workout: 锻炼
 'Workout type': 锻炼类型
+YTD: YTD
 Year: 年
 Yearly: Yearly
 'Yearly stats': 年度统计
@@ -405,7 +406,9 @@ workouts: 锻炼
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel}每{interval}'
 '{numberOfActivities} activities': '{numberOfActivities}活动'
 '{numberOfActivities} activities in {year}': '{year}年内，{numberOfActivities}项活动'
+'{numberOfMonths} months': '{numberOfMonths} months'
 '{numberOfResults} photos based on your active filters': '{numberOfResults}张照片符合筛选条件'
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
+'{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: 构建/疲劳区。高效的高强度训练范围'

@@ -353,6 +353,7 @@ Wheelchair: Wheelchair
 'Winter Sports': 'Winter Sports'
 Workout: Workout
 'Workout type': 'Workout type'
+YTD: YTD
 Year: Year
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
@@ -405,7 +406,9 @@ workouts: workouts
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
+'{numberOfMonths} months': '{numberOfMonths} months'
 '{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
 '{numberOfResults} results based on your active filters': '{numberOfResults} results based on your active filters'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes based on your active filters'
+'{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'

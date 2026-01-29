@@ -16,6 +16,7 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
@@ -67,6 +68,14 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
         foreach ([SportType::RIDE, SportType::GRAVEL_RIDE, SportType::RUN] as $sportType) {
             foreach ($sportType->getActivityType()->getDistancesForBestEffortCalculation() as $distance) {
                 for ($i = 10; $i > 0; --$i) {
+                    $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+                        ActivityWithRawData::fromState(
+                            ActivityBuilder::fromDefaults()
+                                ->withActivityId(ActivityId::fromUnprefixed($sportType->value.'-'.$distance->toMeter()->toInt().'-'.$i))
+                                ->build(),
+                            []
+                        )
+                    );
                     $this->activityBestEffortRepository->add(
                         ActivityBestEffortBuilder::fromDefaults()
                             ->withActivityId(ActivityId::fromUnprefixed($sportType->value.'-'.$distance->toMeter()->toInt().'-'.$i))
@@ -81,7 +90,10 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
 
         foreach ([ActivityType::RIDE, ActivityType::RUN] as $activityType) {
             $this->assertMatchesJsonSnapshot(Json::encode(
-                $this->activityBestEffortRepository->findBestEffortsFor($activityType)->map(
+                $this->activityBestEffortRepository->findBestEffortsFor(
+                    activityType: $activityType,
+                    dateRange: DateRange::upUntilNow(),
+                )->map(
                     fn (ActivityBestEffort $bestEffort): array => [
                         'activityId' => $bestEffort->getActivityId(),
                         'sportType' => $bestEffort->getSportType()->value,
@@ -127,7 +139,10 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
 
     public function testFindBestEffortsForEmpty(): void
     {
-        $this->assertEmpty($this->activityBestEffortRepository->findBestEffortsFor(ActivityType::RUN));
+        $this->assertEmpty($this->activityBestEffortRepository->findBestEffortsFor(
+            activityType: ActivityType::RUN,
+            dateRange: DateRange::upUntilNow(),
+        ));
     }
 
     public function testFindActivityIdsThatNeedBestEffortsCalculation(): void
