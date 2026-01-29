@@ -7,13 +7,12 @@ namespace App\Application\Build\BuildBestEffortsHtml;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\BestEffort\ActivityBestEffortsCalculator;
 use App\Domain\Activity\BestEffort\BestEffortChart;
 use App\Domain\Activity\BestEffort\BestEffortPeriod;
-use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\Time\Clock\Clock;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -22,12 +21,11 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
 {
     public function __construct(
         private ActivityTypeRepository $activityTypeRepository,
-        private SportTypeRepository $sportTypeRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
+        private ActivityBestEffortsCalculator $activityBestEffortCalculator,
         private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
-        private Clock $clock,
     ) {
     }
 
@@ -35,11 +33,9 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
     {
         assert($command instanceof BuildBestEffortsHtml);
 
-        $bestEfforts = $bestEffortsCharts = [];
+        $bestEffortsCharts = [];
 
-        $now = $this->clock->getCurrentDateTimeImmutable();
         $importedActivityTypes = $this->activityTypeRepository->findAll();
-        $importedSportTypes = $this->sportTypeRepository->findAll();
 
         /** @var ActivityType $activityType */
         foreach ($importedActivityTypes as $activityType) {
@@ -48,20 +44,11 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
             }
 
             foreach (BestEffortPeriod::cases() as $bestEffortPeriod) {
-                $bestEffortsForActivityTypeAndPeriod = $this->activityBestEffortRepository->findBestEffortsFor(
-                    activityType: $activityType,
-                    dateRange: $bestEffortPeriod->getDateRange($now)
-                );
-                if ($bestEffortsForActivityTypeAndPeriod->isEmpty()) {
-                    continue;
-                }
-
-                $bestEfforts[$activityType->value][$bestEffortPeriod->value] = $bestEffortsForActivityTypeAndPeriod;
                 $bestEffortsCharts[$activityType->value][$bestEffortPeriod->value] = Json::encode(
                     BestEffortChart::create(
                         activityType: $activityType,
-                        bestEfforts: $bestEffortsForActivityTypeAndPeriod,
-                        sportTypes: $importedSportTypes,
+                        period: $bestEffortPeriod,
+                        activityBestEffortsCalculator: $this->activityBestEffortCalculator,
                         translator: $this->translator,
                     )->build()
                 );
@@ -96,7 +83,6 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
         $this->buildStorage->write(
             'best-efforts.html',
             $this->twig->load('html/best-efforts/best-efforts.html.twig')->render([
-                'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
             ])
         );

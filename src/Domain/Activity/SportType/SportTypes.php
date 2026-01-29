@@ -7,6 +7,9 @@ namespace App\Domain\Activity\SportType;
 use App\Domain\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<\App\Domain\Activity\SportType\SportType>
+ */
 final class SportTypes extends Collection
 {
     public function getItemClassName(): string
@@ -38,6 +41,23 @@ final class SportTypes extends Collection
             SportType::cases(),
             fn (SportType $sportType): bool => !in_array($sportType, [SportType::VIRTUAL_RIDE, SportType::VIRTUAL_RUN, SportType::VIRTUAL_ROW])
         ));
+    }
+
+    public static function thatSupportsBestEfforts(): SportTypes
+    {
+        $sportTypes = SportTypes::empty();
+
+        foreach (ActivityType::cases() as $activityType) {
+            if (!$activityType->supportsBestEffortsStats()) {
+                continue;
+            }
+
+            foreach ($activityType->getSportTypes() as $sportType) {
+                $sportTypes->add($sportType);
+            }
+        }
+
+        return $sportTypes;
     }
 
     public static function all(): SportTypes

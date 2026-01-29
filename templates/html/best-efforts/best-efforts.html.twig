@@ -3,15 +3,17 @@
     'label': 'Best efforts'|trans
 }]} %}
 {% autoescape false %}
-    {% if bestEffortsCharts|length > 1 %}
+    {% set activityTypes = activityBestEffortsCalculator.getActivityTypes() %}
+    {% set periods = activityBestEffortsCalculator.getPeriods() %}
+    {% if activityTypes|length > 1 %}
         <div class="tabs tabs--default">
             <ul id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
                 role="tablist">
-                {% for activityType,bestEffortsChartPerPeriod in bestEffortsCharts %}
+                {% for activityType in activityTypes %}
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
-                           aria-controls="bestEfforts{{ activityType }}">
-                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        <a href="#" data-tabs-target="#bestEfforts{{ activityType.value }}" role="tab"
+                           aria-controls="bestEfforts{{ activityType.value }}">
+                            {{ activityType|trans }}
                         </a>
                     </li>
                 {% endfor %}
@@ -19,25 +21,24 @@
         </div>
     {% endif %}
     <div id="bestEffortsActivityTypeTabContent">
-        {% for activityType,bestEffortsChartPerPeriod in bestEffortsCharts %}
-            {% set activityTypeEnum = enum('App\\Domain\\Activity\\ActivityType').from(activityType) %}
-            <div id="bestEfforts{{ activityType }}" role="tabpanel" aria-labelledby="bestEfforts{{ activityType }}-tab">
-                <ul class="tabs tabs--pills mb-4" id="bestEffortsPeriodTab{{ activityType }}" data-tabs="#bestEffortsPeriodTabContent{{ activityType }}"
+        {% for activityType in activityTypes %}
+            <div id="bestEfforts{{ activityType.value }}" role="tabpanel" aria-labelledby="bestEfforts{{ activityType.value }}-tab">
+                <ul class="tabs tabs--pills mb-4" id="bestEffortsPeriodTab{{ activityType.value }}" data-tabs="#bestEffortsPeriodTabContent{{ activityType.value }}"
                     data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
-                    {% for period,chart in bestEffortsChartPerPeriod %}
+                    {% for period in periods %}
                         <li role="presentation">
-                            <a href="#" data-tabs-target="#bestEffortsPeriod{{ activityType }}{{ period }}" role="tab"
-                               aria-controls="bestEffortsPeriod{{ activityType }}{{ period.value }}">
-                                {{ enum('App\\Domain\\Activity\\BestEffort\\BestEffortPeriod').from(period)|trans }}
+                            <a href="#" data-tabs-target="#bestEffortsPeriod{{ activityType.value }}{{ period.value }}" role="tab"
+                               aria-controls="bestEffortsPeriod{{ activityType.value }}{{ period.value }}">
+                                {{  period|trans }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
-                <div id="bestEffortsPeriodTabContent{{ activityType }}">
-                    {% for period,chart in bestEffortsChartPerPeriod %}
-                        {% set bestEffortsForActivityTypeAndPeriod = bestEfforts[activityType][period] %}
-                        {% set bestEffortsChart = bestEffortsCharts[activityType][period] %}
-                        <div id="bestEffortsPeriod{{ activityType }}{{ period }}" role="tabpanel" aria-labelledby="bestEffortsPeriod{{ activityType }}{{ period.value }}-tab">
+                <div id="bestEffortsPeriodTabContent{{ activityType.value }}">
+                    {% for period in periods %}
+                        {% set bestEffortsChart = bestEffortsCharts[activityType.value][period.value] %}
+                        {% set sportTypes = activityBestEffortsCalculator.getSportTypesFor(period, activityType) %}
+                        <div id="bestEffortsPeriod{{ activityType.value }}{{ period.value }}" role="tabpanel" aria-labelledby="bestEffortsPeriod{{ activityType.value }}{{ period.value }}-tab">
                             <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                                 <div class="mb-4 h-80" data-echarts-options='{{ bestEffortsChart }}'></div>
                             </div>
@@ -52,7 +53,7 @@
                                             <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
                                                 {{ "Distance"|trans }}
                                             </th>
-                                            {% for sportType in bestEffortsForActivityTypeAndPeriod.getSportTypes() %}
+                                            {% for sportType in sportTypes %}
                                                 <th scope="col" class="px-2 py-3">
                                                     {{ sportType|trans }}
                                                 </th>
@@ -60,18 +61,18 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for distance in activityTypeEnum.getDistancesForBestEffortCalculation() %}
+                                        {% for distance in activityType.getDistancesForBestEffortCalculation() %}
                                             <tr class="bg-white border-b">
                                                 <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium whitespace-nowrap">
                                                     <div>
                                                         <a href="#" class="font-medium text-blue-600 hover:underline"
-                                                           data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityTypeEnum.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
+                                                           data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityType.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
                                                             {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
                                                         </a>
                                                     </div>
                                                 </th>
-                                                {% for sportType in bestEffortsForActivityTypeAndPeriod.getSportTypes() %}
-                                                    {% set bestEffort = bestEffortsForActivityTypeAndPeriod.getOneBySportTypeAndDistance(sportType, distance) %}
+                                                {% for sportType in sportTypes %}
+                                                    {% set bestEffort = activityBestEffortsCalculator.for(period, sportType, distance) %}
                                                     {% if bestEffort %}
                                                         {% set activity = bestEffort.getActivity() %}
                                                         <td class="px-2 py-2 truncate">
