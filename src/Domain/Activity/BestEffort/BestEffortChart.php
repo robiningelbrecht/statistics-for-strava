@@ -7,6 +7,7 @@ namespace App\Domain\Activity\BestEffort;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\Theme\Theme;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -57,6 +58,9 @@ final readonly class BestEffortChart
                 ],
                 'label' => [
                     'show' => false,
+                ],
+                'itemStyle' => [
+                    'color' => Theme::getColorForSportType($sportType),
                 ],
                 'data' => $this->bestEfforts->getBySportType($sportType)->map(fn (ActivityBestEffort $bestEffort): int => $bestEffort->getTimeInSeconds()),
             ];

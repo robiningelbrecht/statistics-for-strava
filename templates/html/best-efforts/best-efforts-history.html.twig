@@ -29,9 +29,6 @@
                             <th scope="col" class="px-2 py-3">
                                 {{ sportType|trans }}
                             </th>
-                            <th scope="col" colspan="2" class="px-2 py-3">
-
-                            </th>
                         {% endfor %}
                     </tr>
                     </thead>
@@ -48,17 +45,12 @@
                                 {% set activity = bestEffort.getActivity() %}
                                 {% if bestEffort %}
                                     <td class="px-2 py-2 truncate">
-                                        {{ activity.getStartDate()|formatDate() }}
-                                    </td>
-                                    <td class="px-2 py-2 truncate">
-                                        {{ bestEffort.getFormattedTime() }}
-                                    <td class="px-2 py-2 truncate">
-                                        {{ activity|activityLink(ellipses: 50) }}
+                                        <div class="font-semibold text-gray-700">{{ bestEffort.getFormattedTime() }}</div>
+                                        <div class="text-xs">{{ activity.getStartDate()|formatDate() }}</div>
+                                        <div class="text-xs inline-flex">{{ activity|activityLink(ellipses: 50) }}</div>
                                     </td>
                                 {% else %}
                                     <td class="px-2 py-2 truncate"> - </td>
-                                    <td class="px-2 py-2 truncate"></td>
-                                    <td class="px-2 py-2 truncate"></td>
                                 {% endif %}
                             {% endfor %}
                         </tr>
