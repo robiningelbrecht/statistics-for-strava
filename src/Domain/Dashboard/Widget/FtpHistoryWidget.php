@@ -9,6 +9,7 @@ use App\Domain\Activity\ActivityTypeRepository;
 use App\Domain\Athlete\Weight\AthleteWeightHistory;
 use App\Domain\Ftp\FtpHistory;
 use App\Domain\Ftp\FtpHistoryChart;
+use App\Domain\Ftp\Ftps;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -48,17 +49,18 @@ final readonly class FtpHistoryWidget implements Widget
                 continue; // @codeCoverageIgnore
             }
 
+            $ftpsEnrichedWithAthleteWeight = Ftps::empty();
             foreach ($allFtps as $ftp) {
                 try {
-                    $ftp->enrichWithAthleteWeight(
+                    $ftpsEnrichedWithAthleteWeight->add($ftp->withAthleteWeight(
                         $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
-                    );
+                    ));
                 } catch (EntityNotFound) { // @codeCoverageIgnore
                 }
             }
 
             $ftpHistoryCharts[$activityType->value] = Json::encode(FtpHistoryChart::create(
-                ftps: $allFtps,
+                ftps: $ftpsEnrichedWithAthleteWeight,
                 now: $now
             )->build());
         }

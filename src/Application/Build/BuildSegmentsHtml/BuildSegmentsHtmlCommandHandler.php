@@ -45,12 +45,10 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
             foreach ($segments as $segment) {
                 $segmentEffortsTopTen = $this->segmentEffortRepository->findTopXBySegmentId($segment->getId(), 10);
                 $segmentEffortsHistory = $this->segmentEffortRepository->findHistoryBySegmentId($segment->getId());
-                $segment->enrichWithNumberOfTimesRidden($this->segmentEffortRepository->countBySegmentId($segment->getId()));
-                $segment->enrichWithBestEffort($segmentEffortsTopTen->getBestEffort());
-
-                if ($lastEffortDate = $segmentEffortsHistory->getFirst()?->getStartDateTime()) {
-                    $segment->enrichWithLastEffortDate($lastEffortDate);
-                }
+                $segment = $segment
+                    ->withNumberOfTimesRidden($this->segmentEffortRepository->countBySegmentId($segment->getId()))
+                    ->withBestEffort($segmentEffortsTopTen->getBestEffort())
+                    ->withLastEffortDate($segmentEffortsHistory->getFirst()?->getStartDateTime());
 
                 $leafletMap = $segment->getLeafletMap();
                 $this->buildStorage->write(
