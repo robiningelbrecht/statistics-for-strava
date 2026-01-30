@@ -59,21 +59,20 @@ final class EnrichedActivities
 
         foreach ($results as $result) {
             $activity = $this->activityRepository->find(ActivityId::fromString($result));
-            if ($gearId = $activity->getGearId()) {
-                $activity->enrichWithGearName($gears->getByGearId($gearId)?->getName());
-            }
-            $bestPowerOutputs = $this->activityPowerRepository->findBest($activity->getId());
-            if (!$bestPowerOutputs->isEmpty()) {
-                $activity->enrichWithBestPowerOutputs($bestPowerOutputs);
-            }
-
-            $activity->enrichWithNormalizedPower(
-                $this->activityPowerRepository->findNormalizedPower($activity->getId())
-            );
-            $activity->enrichWithTags([
-                ...$maintenanceTags,
-                ...$customGearTags,
-            ]);
+            $activity = $activity
+                ->withNormalizedPower(
+                    $this->activityPowerRepository->findNormalizedPower($activity->getId())
+                )
+                ->withBestPowerOutputs(
+                    $this->activityPowerRepository->findBest($activity->getId())
+                )
+                ->withGearName(
+                    $gears->getByGearId($activity->getGearId())?->getName()
+                )
+                ->withTags([
+                    ...$maintenanceTags,
+                    ...$customGearTags,
+                ]);
 
             try {
                 $cadenceStream = $this->activityStreamRepository->findOneByActivityAndStreamType(
@@ -82,7 +81,7 @@ final class EnrichedActivities
                 );
 
                 if (!empty($cadenceStream->getData())) {
-                    $activity->enrichWithMaxCadence(max($cadenceStream->getData()));
+                    $activity = $activity->withMaxCadence(max($cadenceStream->getData()));
                 }
             } catch (EntityNotFound) {
             }
