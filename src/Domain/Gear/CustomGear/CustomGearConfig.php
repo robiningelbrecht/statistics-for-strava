@@ -90,7 +90,7 @@ final readonly class CustomGearConfig
                 $customGear['tag'])
             );
             if (isset($customGear['purchasePrice'])) {
-                $gear->enrichWithPurchasePrice(new Money(
+                $gear = $gear->withPurchasePrice(new Money(
                     amount: $customGear['purchasePrice']['amountInCents'],
                     currency: new Currency($customGear['purchasePrice']['currency'])
                 ));
@@ -154,8 +154,6 @@ final readonly class CustomGearConfig
             return $gear;
         }
 
-        $gear->enrichWithPurchasePrice($configuredCustomGear->getPurchasePrice());
-
-        return $gear;
+        return $gear->withPurchasePrice($configuredCustomGear->getPurchasePrice());
     }
 }

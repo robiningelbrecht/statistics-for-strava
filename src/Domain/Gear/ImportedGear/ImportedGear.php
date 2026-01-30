@@ -142,11 +142,11 @@ class ImportedGear implements Gear
         return $this->imageSrc;
     }
 
-    public function enrichWithImageSrc(string $imageSrc): self
+    public function withImageSrc(string $imageSrc): self
     {
-        $this->imageSrc = $imageSrc;
-
-        return $this;
+        return clone ($this, [
+            'imageSrc' => $imageSrc,
+        ]);
     }
 
     public function getSportTypes(): SportTypes
@@ -159,20 +159,23 @@ class ImportedGear implements Gear
         return $this->activityTypes;
     }
 
-    public function enrichWithSportTypes(SportTypes $sportTypes): self
+    public function withSportTypes(SportTypes $sportTypes): self
     {
         $this->sportTypes = $sportTypes;
-        $this->activityTypes = ActivityTypes::empty();
+        $activityTypes = ActivityTypes::empty();
         /** @var \App\Domain\Activity\SportType\SportType $sportType */
         foreach ($this->sportTypes as $sportType) {
             $activityType = $sportType->getActivityType();
-            if ($this->activityTypes->has($activityType)) {
+            if ($activityTypes->has($activityType)) {
                 continue;
             }
-            $this->activityTypes->add($activityType);
+            $activityTypes->add($activityType);
         }
 
-        return $this;
+        return clone ($this, [
+            'sportTypes' => $sportTypes,
+            'activityTypes' => $activityTypes,
+        ]);
     }
 
     public function getPurchasePrice(): ?Money
@@ -180,11 +183,11 @@ class ImportedGear implements Gear
         return $this->purchasePrice;
     }
 
-    public function enrichWithPurchasePrice(Money $purchasePrice): Gear
+    public function withPurchasePrice(Money $purchasePrice): self
     {
-        $this->purchasePrice = $purchasePrice;
-
-        return $this;
+        return clone ($this, [
+            'purchasePrice' => $purchasePrice,
+        ]);
     }
 
     /**

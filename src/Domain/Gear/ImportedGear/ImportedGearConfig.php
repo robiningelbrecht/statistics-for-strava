@@ -53,11 +53,9 @@ final readonly class ImportedGearConfig
             return $gear;
         }
 
-        $gear->enrichWithPurchasePrice(new Money(
+        return $gear->withPurchasePrice(new Money(
             amount: $configForGear['purchasePrice']['amountInCents'],
             currency: new Currency($configForGear['purchasePrice']['currency'])
         ));
-
-        return $gear;
     }
 }

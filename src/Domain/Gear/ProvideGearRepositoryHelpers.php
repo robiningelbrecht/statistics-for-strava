@@ -96,8 +96,6 @@ trait ProvideGearRepositoryHelpers
             ));
         }
 
-        $gear->enrichWithSportTypes($sportTypes);
-
-        return $gear;
+        return $gear->withSportTypes($sportTypes);
     }
 }

@@ -116,7 +116,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 
                 if (($imageSrc = $this->gearMaintenanceConfig->getImageReferenceForGear($gear->getId()))
                     && $this->gearMaintenanceStorage->fileExists($imageSrc)) {
-                    $gear->enrichWithImageSrc('/gear-maintenance/'.$imageSrc);
+                    $gear = $gear->withImageSrc('/gear-maintenance/'.$imageSrc);
                 }
 
                 $gearsThatIsAttachedToComponents->add($gear);
