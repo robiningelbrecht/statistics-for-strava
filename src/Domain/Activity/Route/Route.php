@@ -101,17 +101,21 @@ final class Route implements \JsonSerializable
         return $this->on;
     }
 
-    public function enrichWithUnitSystemAndDateTimeFormat(
+    public function withUnitSystemAndDateTimeFormat(
         UnitSystem $unitSystem,
         DateAndTimeFormat $dateAndTimeFormat,
-    ): void {
-        $this->unitSystem = $unitSystem;
-        $this->dateAndTimeFormat = $dateAndTimeFormat;
+    ): self {
+        return clone ($this, [
+            'unitSystem' => $unitSystem,
+            'dateAndTimeFormat' => $dateAndTimeFormat,
+        ]);
     }
 
-    public function enrichWithRelativeActivityUri(string $uri): void
+    public function withRelativeActivityUri(string $uri): self
     {
-        $this->relativeActivityUri = $uri;
+        return clone ($this, [
+            'relativeActivityUri' => $uri,
+        ]);
     }
 
     /**
