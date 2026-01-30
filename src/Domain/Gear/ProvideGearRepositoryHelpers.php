@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Gear;
 
-use App\Domain\Activity\SportType\SportType;
-use App\Domain\Activity\SportType\SportTypes;
+use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\ActivityTypes;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -50,7 +50,7 @@ trait ProvideGearRepositoryHelpers
     private function fetchFindAllResults(GearType $gearType, bool $onlyUsedGear): Gears
     {
         $results = $this->getConnection()->executeQuery('
-            SELECT Gear.*, GROUP_CONCAT(DISTINCT Activity.sportType) AS sportTypes
+            SELECT Gear.*, GROUP_CONCAT(DISTINCT Activity.activityType) AS activityTypes
             FROM Gear
             '.($onlyUsedGear ? 'INNER' : 'LEFT').' JOIN Activity ON Activity.gearId = Gear.gearId
             WHERE Gear.type = :type
@@ -76,7 +76,6 @@ trait ProvideGearRepositoryHelpers
         $gearType = GearType::from($result['type']);
         $args = [
             'gearId' => GearId::fromString($result['gearId']),
-            'type' => $gearType,
             'distanceInMeter' => Meter::from($result['distanceInMeter']),
             'createdOn' => SerializableDateTime::fromString($result['createdOn']),
             'name' => $result['name'],
@@ -88,14 +87,14 @@ trait ProvideGearRepositoryHelpers
             GearType::CUSTOM => CustomGear::fromState(...$args),
         };
 
-        $sportTypes = SportTypes::empty();
-        if (!empty($result['sportTypes'])) {
-            $sportTypes = SportTypes::fromArray(array_map(
-                SportType::from(...),
-                explode(',', (string) $result['sportTypes'])
+        $activityTypes = ActivityTypes::empty();
+        if (!empty($result['activityTypes'])) {
+            $activityTypes = ActivityTypes::fromArray(array_map(
+                ActivityType::from(...),
+                explode(',', (string) $result['activityTypes'])
             ));
         }
 
-        return $gear->withSportTypes($sportTypes);
+        return $gear->withActivityTypes($activityTypes);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Application\Import\ImportGear;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
@@ -87,7 +86,6 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
                 $gear = ImportedGear::create(
                     gearId: $gearId,
-                    type: GearType::IMPORTED,
                     distanceInMeter: Meter::from($stravaGear['distance']),
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],
