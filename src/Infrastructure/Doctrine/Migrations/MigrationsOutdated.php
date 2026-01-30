@@ -9,8 +9,8 @@ final class MigrationsOutdated extends \RuntimeException
     public function __construct()
     {
         parent::__construct(
-            'Your database migrations are outdated. Migrations have been squashed and you need to update to v4.4.2 before upgrading this version. '
-            .'Please pull an older version of the app, run the import there, then update to this version again.'
+            'Database migrations have been squashed. You need to update to version v4.4.2 before upgrading this version. '
+            .'Please pull v4.4.2 of the app, run the import there, then update to this version again.'
         );
     }
 }
