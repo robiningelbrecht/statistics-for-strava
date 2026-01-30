@@ -3,7 +3,6 @@
 namespace App\Domain\Gear\ImportedGear;
 
 use App\Domain\Activity\ActivityTypes;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearType;
@@ -20,7 +19,6 @@ use Money\Money;
 class ImportedGear implements Gear
 {
     private string $imageSrc;
-    private SportTypes $sportTypes;
     private ActivityTypes $activityTypes;
     private ?Money $purchasePrice = null;
 
@@ -35,15 +33,12 @@ class ImportedGear implements Gear
         private string $name,
         #[ORM\Column(type: 'boolean')]
         private bool $isRetired,
-        private readonly GearType $type,
     ) {
-        $this->sportTypes = SportTypes::empty();
         $this->activityTypes = ActivityTypes::empty();
     }
 
     public static function create(
         GearId $gearId,
-        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -55,13 +50,11 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
-            type: $type,
         );
     }
 
     public static function fromState(
         GearId $gearId,
-        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -73,18 +66,12 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
-            type: $type,
         );
     }
 
     public function getId(): GearId
     {
         return $this->gearId;
-    }
-
-    public function getType(): GearType
-    {
-        return $this->type;
     }
 
     public function updateName(string $name): self
@@ -149,31 +136,14 @@ class ImportedGear implements Gear
         ]);
     }
 
-    public function getSportTypes(): SportTypes
-    {
-        return $this->sportTypes;
-    }
-
     public function getActivityTypes(): ActivityTypes
     {
         return $this->activityTypes;
     }
 
-    public function withSportTypes(SportTypes $sportTypes): static
+    public function withActivityTypes(ActivityTypes $activityTypes): static
     {
-        $this->sportTypes = $sportTypes;
-        $activityTypes = ActivityTypes::empty();
-        /** @var \App\Domain\Activity\SportType\SportType $sportType */
-        foreach ($this->sportTypes as $sportType) {
-            $activityType = $sportType->getActivityType();
-            if ($activityTypes->has($activityType)) {
-                continue;
-            }
-            $activityTypes->add($activityType);
-        }
-
         return clone ($this, [
-            'sportTypes' => $sportTypes,
             'activityTypes' => $activityTypes,
         ]);
     }

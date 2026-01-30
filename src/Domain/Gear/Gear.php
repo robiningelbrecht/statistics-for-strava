@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Gear;
 
 use App\Domain\Activity\ActivityTypes;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -15,8 +14,6 @@ use Money\Money;
 interface Gear extends SupportsAITooling
 {
     public function getId(): GearId;
-
-    public function getType(): GearType;
 
     public function updateName(string $name): self;
 
@@ -36,13 +33,11 @@ interface Gear extends SupportsAITooling
 
     public function getImageSrc(): ?string;
 
-    public function getSportTypes(): SportTypes;
-
     public function getPurchasePrice(): ?Money;
 
     public function getActivityTypes(): ActivityTypes;
 
-    public function withSportTypes(SportTypes $sportTypes): self;
+    public function withActivityTypes(ActivityTypes $activityTypes): self;
 
     public function withImageSrc(string $imageSrc): self;
 

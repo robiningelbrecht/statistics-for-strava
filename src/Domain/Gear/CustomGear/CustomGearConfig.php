@@ -6,7 +6,6 @@ namespace App\Domain\Gear\CustomGear;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\GearType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
@@ -79,7 +78,6 @@ final readonly class CustomGearConfig
 
             $gear = CustomGear::create(
                 gearId: GearId::fromUnprefixed($customGear['tag']),
-                type: GearType::CUSTOM,
                 distanceInMeter: Meter::zero(),
                 createdOn: SerializableDateTime::some(),
                 name: (string) Name::fromString($customGear['label']),
