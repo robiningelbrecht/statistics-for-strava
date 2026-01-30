@@ -13,22 +13,22 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class Route implements \JsonSerializable
+final readonly class Route implements \JsonSerializable
 {
     private UnitSystem $unitSystem;
     private DateAndTimeFormat $dateAndTimeFormat;
     private string $relativeActivityUri;
 
     private function __construct(
-        private readonly ActivityId $activityId,
-        private readonly string $name,
-        private readonly Kilometer $distance,
-        private readonly string $encodedPolyline,
-        private readonly RouteGeography $routeGeography,
-        private readonly SportType $sportType,
-        private readonly bool $isCommute,
-        private readonly ?WorkoutType $workoutType,
-        private readonly SerializableDateTime $on,
+        private ActivityId $activityId,
+        private string $name,
+        private Kilometer $distance,
+        private string $encodedPolyline,
+        private RouteGeography $routeGeography,
+        private SportType $sportType,
+        private bool $isCommute,
+        private ?WorkoutType $workoutType,
+        private SerializableDateTime $on,
     ) {
     }
 
