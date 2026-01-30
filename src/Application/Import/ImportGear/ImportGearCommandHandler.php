@@ -69,7 +69,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             } catch (ClientException|RequestException $exception) {
                 if (!$exception->getResponse()) {
                     // Re-throw, we only want to catch supported error codes.
-                    throw $exception;
+                    throw $exception;  // @codeCoverageIgnore
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
