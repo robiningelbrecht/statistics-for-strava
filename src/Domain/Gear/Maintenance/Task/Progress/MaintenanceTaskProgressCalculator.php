@@ -52,7 +52,7 @@ final readonly class MaintenanceTaskProgressCalculator
 
         /** @var \App\Domain\Gear\Maintenance\GearComponent $gearComponent */
         foreach ($allGearComponents as $gearComponent) {
-            $gearComponent->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
+            $gearComponent = $gearComponent->withMaintenanceTaskTags($maintenanceTaskTags);
             /** @var \App\Domain\Gear\Maintenance\Task\MaintenanceTask $maintenanceTask */
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
                 if (!$mostRecentTag = $maintenanceTask->getMostRecentMaintenanceTaskTag()) {

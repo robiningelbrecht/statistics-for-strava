@@ -7,7 +7,7 @@ namespace App\Domain\Activity\Split;
 use App\Infrastructure\ValueObject\Collection;
 
 /**
- * @extends Collection<ActivitySplits>
+ * @extends Collection<ActivitySplit>
  */
 final class ActivitySplits extends Collection
 {
