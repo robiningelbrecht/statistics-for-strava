@@ -51,12 +51,12 @@ final readonly class FtpHistoryWidget implements Widget
 
             $ftpsEnrichedWithAthleteWeight = Ftps::empty();
             foreach ($allFtps as $ftp) {
+                $athleteWeight = null;
                 try {
-                    $ftpsEnrichedWithAthleteWeight->add($ftp->withAthleteWeight(
-                        $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg()
-                    ));
+                    $athleteWeight = $this->athleteWeightHistory->find($ftp->getSetOn())->getWeightInKg();
                 } catch (EntityNotFound) { // @codeCoverageIgnore
                 }
+                $ftpsEnrichedWithAthleteWeight->add($ftp->withAthleteWeight($athleteWeight));
             }
 
             $ftpHistoryCharts[$activityType->value] = Json::encode(FtpHistoryChart::create(

@@ -46,8 +46,12 @@ final class Ftp
         return round($this->getFtp()->getValue() / $this->athleteWeightInKg->toFloat(), 1);
     }
 
-    public function withAthleteWeight(Kilogram $athleteWeight): self
+    public function withAthleteWeight(?Kilogram $athleteWeight): self
     {
+        if (is_null($athleteWeight)) {
+            return $this;
+        }
+
         return clone ($this, [
             'athleteWeightInKg' => $athleteWeight,
         ]);
