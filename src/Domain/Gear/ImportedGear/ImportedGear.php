@@ -159,7 +159,7 @@ class ImportedGear implements Gear
         return $this->activityTypes;
     }
 
-    public function withSportTypes(SportTypes $sportTypes): self
+    public function withSportTypes(SportTypes $sportTypes): static
     {
         $this->sportTypes = $sportTypes;
         $activityTypes = ActivityTypes::empty();
@@ -183,7 +183,7 @@ class ImportedGear implements Gear
         return $this->purchasePrice;
     }
 
-    public function withPurchasePrice(Money $purchasePrice): self
+    public function withPurchasePrice(Money $purchasePrice): static
     {
         return clone ($this, [
             'purchasePrice' => $purchasePrice,

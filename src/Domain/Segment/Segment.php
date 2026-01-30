@@ -174,9 +174,11 @@ final class Segment implements SupportsAITooling
         return $this->bestEffort;
     }
 
-    public function enrichWithBestEffort(SegmentEffort $segmentEffort): void
+    public function withBestEffort(SegmentEffort $segmentEffort): self
     {
-        $this->bestEffort = $segmentEffort;
+        return clone ($this, [
+            'bestEffort' => $segmentEffort,
+        ]);
     }
 
     public function getNumberOfTimesRidden(): int
@@ -184,9 +186,11 @@ final class Segment implements SupportsAITooling
         return $this->numberOfTimesRidden;
     }
 
-    public function enrichWithNumberOfTimesRidden(int $numberOfTimesRidden): void
+    public function withNumberOfTimesRidden(int $numberOfTimesRidden): self
     {
-        $this->numberOfTimesRidden = $numberOfTimesRidden;
+        return clone ($this, [
+            'numberOfTimesRidden' => $numberOfTimesRidden,
+        ]);
     }
 
     public function getLastEffortDate(): ?SerializableDateTime
@@ -194,9 +198,11 @@ final class Segment implements SupportsAITooling
         return $this->lastEffortDate;
     }
 
-    public function enrichWithLastEffortDate(SerializableDateTime $lastEffortDate): void
+    public function withLastEffortDate(?SerializableDateTime $lastEffortDate): self
     {
-        $this->lastEffortDate = $lastEffortDate;
+        return clone ($this, [
+            'lastEffortDate' => $lastEffortDate,
+        ]);
     }
 
     public function isFavourite(): bool
