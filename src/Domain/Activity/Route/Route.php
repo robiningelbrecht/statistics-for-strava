@@ -15,10 +15,6 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Route implements \JsonSerializable
 {
-    private UnitSystem $unitSystem;
-    private DateAndTimeFormat $dateAndTimeFormat;
-    private string $relativeActivityUri;
-
     private function __construct(
         private ActivityId $activityId,
         private string $name,
@@ -29,6 +25,9 @@ final readonly class Route implements \JsonSerializable
         private bool $isCommute,
         private ?WorkoutType $workoutType,
         private SerializableDateTime $on,
+        private ?UnitSystem $unitSystem,
+        private ?DateAndTimeFormat $dateAndTimeFormat,
+        private ?string $relativeActivityUri,
     ) {
     }
 
@@ -53,6 +52,9 @@ final readonly class Route implements \JsonSerializable
             isCommute: $isCommute,
             workoutType: $workoutType,
             on: $on,
+            unitSystem: null,
+            dateAndTimeFormat: null,
+            relativeActivityUri: null,
         );
     }
 
@@ -126,14 +128,14 @@ final readonly class Route implements \JsonSerializable
         $state = $this->getRouteGeography()->getStartingPointState();
 
         $distance = $this->getDistance();
-        if (isset($this->unitSystem)) {
+        if (!is_null($this->unitSystem)) {
             $distance = $distance->toUnitSystem($this->unitSystem);
         }
         $distanceInScalar = $distance->toFloat();
         $precision = $distanceInScalar < 100 ? 1 : 0;
         $distance = number_format(round($distanceInScalar, $precision), $precision, '.', ' ').$distance->getSymbol();
 
-        $startDate = isset($this->dateAndTimeFormat) ?
+        $startDate = !is_null($this->dateAndTimeFormat) ?
             $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal()) :
             $this->getOn()->format('d-m-Y');
 
