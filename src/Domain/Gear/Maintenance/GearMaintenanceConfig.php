@@ -215,8 +215,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
         $enrichedGearComponents = GearComponents::empty();
         /** @var GearComponent $gearComponent */
         foreach ($this->getGearComponents() as $gearComponent) {
-            $gearComponent->enrichWithMaintenanceTaskTags($maintenanceTaskTags);
-            $enrichedGearComponents->add($gearComponent);
+            $enrichedGearComponents->add($gearComponent->withMaintenanceTaskTags($maintenanceTaskTags));
         }
 
         return $enrichedGearComponents;

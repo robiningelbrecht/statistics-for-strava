@@ -8,7 +8,6 @@ use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTask;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTasks;
-use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTag;
 use App\Domain\Gear\Maintenance\Task\MaintenanceTaskTags;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\String\Tag;
@@ -84,12 +83,11 @@ final readonly class GearComponent
         return $this->maintenanceTasks;
     }
 
-    public function enrichWithMaintenanceTaskTags(MaintenanceTaskTags $maintenanceTaskTags): void
+    public function withMaintenanceTaskTags(MaintenanceTaskTags $maintenanceTaskTags): self
     {
-        /** @var MaintenanceTask $maintenanceTask */
+        $maintenanceTasks = MaintenanceTasks::empty();
         foreach ($this->maintenanceTasks as $maintenanceTask) {
             $mostRecentMaintenance = null;
-            /* @var MaintenanceTaskTag $maintenanceTaskTag */
             foreach ($maintenanceTaskTags as $maintenanceTaskTag) {
                 if ($maintenanceTask->getTag() != $maintenanceTaskTag->getTag()) {
                     continue;
@@ -102,9 +100,12 @@ final readonly class GearComponent
                 }
                 $mostRecentMaintenance = $maintenanceTaskTag;
             }
-
-            $maintenanceTask->enrichWithMostRecentMaintenanceTaskTag($mostRecentMaintenance);
+            $maintenanceTasks->add($maintenanceTask->withMostRecentMaintenanceTaskTag($mostRecentMaintenance));
         }
+
+        return clone ($this, [
+            'maintenanceTasks' => $maintenanceTasks,
+        ]);
     }
 
     public function normalizeGearIds(GearIds $normalizedGearIds): void
