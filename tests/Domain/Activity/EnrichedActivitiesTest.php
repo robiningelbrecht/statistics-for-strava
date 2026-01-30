@@ -30,7 +30,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ['raw' => 'data']
         ));
 
-        $activity->enrichWithTags([
+        $activity = $activity->withTags([
             '#sfs-chain-lubed',
             '#sfs-chain-replaced',
             '#sfs-chain-cleaned',

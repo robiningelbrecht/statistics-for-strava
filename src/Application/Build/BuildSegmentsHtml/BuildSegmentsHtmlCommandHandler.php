@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildSegmentsHtml;
 
 use App\Application\Countries;
-use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Segment\Segment;
 use App\Domain\Segment\SegmentEffort\SegmentEffortHistoryChart;
@@ -25,7 +24,6 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private SegmentRepository $segmentRepository,
         private SegmentEffortRepository $segmentEffortRepository,
         private SportTypeRepository $sportTypeRepository,
-        private EnrichedActivities $enrichedActivities,
         private Countries $countries,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -50,17 +48,6 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                 $segment->enrichWithNumberOfTimesRidden($this->segmentEffortRepository->countBySegmentId($segment->getId()));
                 $segment->enrichWithBestEffort($segmentEffortsTopTen->getBestEffort());
 
-                /** @var \App\Domain\Segment\SegmentEffort\SegmentEffort $segmentEffort */
-                foreach ($segmentEffortsTopTen as $segmentEffort) {
-                    $activity = $this->enrichedActivities->find($segmentEffort->getActivityId());
-                    $segmentEffort->enrichWithActivity($activity);
-                }
-
-                /** @var \App\Domain\Segment\SegmentEffort\SegmentEffort $segmentEffort */
-                foreach ($segmentEffortsHistory as $segmentEffort) {
-                    $activity = $this->enrichedActivities->find($segmentEffort->getActivityId());
-                    $segmentEffort->enrichWithActivity($activity);
-                }
                 if ($lastEffortDate = $segmentEffortsHistory->getFirst()?->getStartDateTime()) {
                     $segment->enrichWithLastEffortDate($lastEffortDate);
                 }

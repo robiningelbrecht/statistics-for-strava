@@ -21,8 +21,11 @@ final class Gears extends Collection
         return $this->usort(fn (Gear $a, Gear $b): int => $a->isRetired() <=> $b->isRetired());
     }
 
-    public function getByGearId(GearId $gearId): ?Gear
+    public function getByGearId(?GearId $gearId): ?Gear
     {
+        if (is_null($gearId)) {
+            return null;
+        }
         $gears = $this->filter(fn (Gear $gear): bool => $gearId == $gear->getId())->toArray();
 
         return reset($gears) ?: null;

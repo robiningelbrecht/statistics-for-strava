@@ -113,6 +113,7 @@
                             </thead>
                             <tbody>
                             {% for segmentEffort in segmentEffortsTopTen %}
+                                {% set activity = enrichedActivities.find(segmentEffort.getActivityId()) %}
                                 <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                                     <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                                         {{ loop.index }}
@@ -124,8 +125,8 @@
                                     </td>
                                     <td class="px-2 py-2">
                                         <div class="flex items-center gap-x-1">
-                                            {{ segmentEffort.getActivity()|activityLink(ellipses: 180) }}
-                                            <a href="{{ segmentEffort.getActivity().getUrl() }}" target="_blank" rel="nofollow">
+                                            {{ activity|activityLink(ellipses: 180) }}
+                                            <a href="{{ activity.getUrl() }}" target="_blank" rel="nofollow">
                                                 <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                      viewBox="0 0 18 18">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -138,7 +139,7 @@
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
                                     </td>
                                     <td class="px-2 py-2">
-                                        {% set velocityPreference = segmentEffort.getActivity().getSportType().getVelocityDisplayPreference() %}
+                                        {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
                                         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
                                             {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
                                         {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
@@ -158,9 +159,9 @@
                                         {% endif %}
                                     </td>
                                     <td class="px-2 py-2 truncate">
-                                        {% set gearName = segmentEffort.getActivity().getGearName() %}
+                                        {% set gearName = activity.getGearName() %}
                                         {% if gearName %}
-                                            {{ segmentEffort.getActivity().getGearName() }}
+                                            {{ activity.getGearName() }}
                                         {% else %}
                                             {{ "Unspecified"|trans }}
                                         {% endif %}
@@ -216,6 +217,7 @@
                             </thead>
                             <tbody>
                             {% for segmentEffort in segmentEffortsHistory %}
+                                {% set activity = enrichedActivities.find(segmentEffort.getActivityId()) %}
                                 <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                                     <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                                         {{ loop.index }}
@@ -227,8 +229,8 @@
                                     </td>
                                     <td class="px-2 py-2">
                                         <div class="flex items-center gap-x-1">
-                                            {{ segmentEffort.getActivity()|activityLink(ellipses: 180) }}
-                                            <a href="{{ segmentEffort.getActivity().getUrl() }}" target="_blank" rel="nofollow">
+                                            {{ activity|activityLink(ellipses: 180) }}
+                                            <a href="{{ activity.getUrl() }}" target="_blank" rel="nofollow">
                                                 <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                                      viewBox="0 0 18 18">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -241,7 +243,7 @@
                                         {{ segmentEffort.getElapsedTimeFormatted() }}
                                     </td>
                                     <td class="px-2 py-2">
-                                        {% set velocityPreference = segmentEffort.getActivity().getSportType().getVelocityDisplayPreference() %}
+                                        {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
                                         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
                                             {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
                                         {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
@@ -261,9 +263,9 @@
                                         {% endif %}
                                     </td>
                                     <td class="px-2 py-2 truncate">
-                                        {% set gearName = segmentEffort.getActivity().getGearName() %}
+                                        {% set gearName = activity.getGearName() %}
                                         {% if gearName %}
-                                            {{ segmentEffort.getActivity().getGearName() }}
+                                            {{ activity.getGearName() }}
                                         {% else %}
                                             {{ "Unspecified"|trans }}
                                         {% endif %}
@@ -281,61 +283,3 @@
         </div>
     </div>
 {% endautoescape %}
-{% macro gearStatisticRow(statistic, loopIndex) %}
-    {% autoescape false %}
-        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loopIndex) }}">
-            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loopIndex) }}">
-                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{"activities":{"gear":"{{ statistic.id }}"}}' class="font-medium text-blue-600 hover:underline">
-                    {{ statistic.name }}
-                </a>
-            </th>
-            <td class="px-6 py-2 truncate">
-                {{ statistic.numberOfWorkouts }}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {% if statistic.distance.toFloat() > 0 %}
-                    {{ statistic.averageDistance|renderMeasurement(0, 'avg'|trans) }} /
-                    {{ statistic.distance|renderMeasurement(0, 'total'|trans) }}
-                {% else %}
-                    0<span class="text-xs">{{ statistic.distance.getSymbol() }}</span>
-                {% endif %}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {{ statistic.elevation|renderMeasurement(0) }}
-            </td>
-            <td class="px-6 py-2 truncate" title="{{ statistic.movingTimeInHours.tofloat()|formatNumber(1) }}h">
-                {{ statistic.movingTime }}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {{ statistic.averageSpeed|renderMeasurement(1) }}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {{ statistic.totalCalories|formatNumber(0) }}<span class="text-xs">kcal</span>
-            </td>
-            <td class="px-6 py-2 truncate">
-                {% set purchasePrice = statistic.purchasePrice %}
-                {% if purchasePrice %}
-                    {{ purchasePrice|formatMoney }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {% set relativeCostPerHour = statistic.relativeCostPerHour %}
-                {% if relativeCostPerHour %}
-                    {{ relativeCostPerHour|formatMoney }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-            <td class="px-6 py-2 truncate">
-                {% set relativeCostPerWorkout = statistic.relativeCostPerWorkout %}
-                {% if relativeCostPerWorkout %}
-                    {{ relativeCostPerWorkout|formatMoney }}
-                {% else %}
-                    -
-                {% endif %}
-            </td>
-        </tr>
-    {% endautoescape %}
-{% endmacro %}

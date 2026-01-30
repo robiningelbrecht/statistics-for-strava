@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Segment\SegmentEffort;
 
-use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Domain\Segment\SegmentId;
@@ -20,34 +19,32 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(name: 'SegmentEffort_segmentIndex', columns: ['segmentId'])]
 #[ORM\Index(name: 'SegmentEffort_activityIndex', columns: ['activityId'])]
-final class SegmentEffort implements SupportsAITooling
+final readonly class SegmentEffort implements SupportsAITooling
 {
     use ProvideTimeFormats;
 
-    private ?Activity $activity = null;
-
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
-        private readonly SegmentEffortId $segmentEffortId,
+        private SegmentEffortId $segmentEffortId,
         #[ORM\Column(type: 'string')]
-        private readonly SegmentId $segmentId,
+        private SegmentId $segmentId,
         #[ORM\Column(type: 'string')]
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
         #[ORM\Column(type: 'datetime_immutable')]
-        private readonly SerializableDateTime $startDateTime,
+        private SerializableDateTime $startDateTime,
         #[ORM\Column(type: 'string')]
-        private readonly string $name,
+        private string $name,
         #[ORM\Column(type: 'float')]
-        private readonly float $elapsedTimeInSeconds,
+        private float $elapsedTimeInSeconds,
         #[ORM\Column(type: 'integer')]
-        private readonly Kilometer $distance,
+        private Kilometer $distance,
         #[ORM\Column(type: 'float', nullable: true)]
-        private readonly ?float $averageWatts,
+        private ?float $averageWatts,
         #[ORM\Column(type: 'integer', nullable: true)]
-        private readonly ?int $averageHeartRate,
+        private ?int $averageHeartRate,
         #[ORM\Column(type: 'integer', nullable: true)]
-        private readonly ?int $maxHeartRate,
-        private readonly ?int $rank,
+        private ?int $maxHeartRate,
+        private ?int $rank,
     ) {
     }
 
@@ -184,16 +181,6 @@ final class SegmentEffort implements SupportsAITooling
     public function getRank(): ?int
     {
         return $this->rank;
-    }
-
-    public function getActivity(): ?Activity
-    {
-        return $this->activity;
-    }
-
-    public function enrichWithActivity(Activity $activity): void
-    {
-        $this->activity = $activity;
     }
 
     /**

@@ -323,9 +323,11 @@ final class Activity implements SupportsAITooling
         return $this->gearName;
     }
 
-    public function enrichWithGearName(?string $gearName): void
+    public function withGearName(?string $gearName): self
     {
-        $this->gearName = $gearName;
+        return clone ($this, [
+            'gearName' => $gearName,
+        ]);
     }
 
     public function hasDetailedPowerData(): bool
@@ -346,9 +348,15 @@ final class Activity implements SupportsAITooling
         return $this->bestPowerOutputs->find(fn (PowerOutput $bestPowerOutput): bool => $bestPowerOutput->getTimeIntervalInSeconds() === $timeInterval);
     }
 
-    public function enrichWithBestPowerOutputs(PowerOutputs $bestPowerOutputs): void
+    public function withBestPowerOutputs(PowerOutputs $bestPowerOutputs): self
     {
-        $this->bestPowerOutputs = $bestPowerOutputs;
+        if ($bestPowerOutputs->isEmpty()) {
+            return $this;
+        }
+
+        return clone ($this, [
+            'bestPowerOutputs' => $bestPowerOutputs,
+        ]);
     }
 
     public function getWeather(): ?Weather
@@ -517,9 +525,11 @@ final class Activity implements SupportsAITooling
         return $this->maxCadence;
     }
 
-    public function enrichWithMaxCadence(int $maxCadence): void
+    public function withMaxCadence(int $maxCadence): self
     {
-        $this->maxCadence = $maxCadence;
+        return clone ($this, [
+            'maxCadence' => $maxCadence,
+        ]);
     }
 
     public function getMovingTimeInSeconds(): int
@@ -648,17 +658,21 @@ final class Activity implements SupportsAITooling
         return $this->normalizedPower;
     }
 
-    public function enrichWithNormalizedPower(?int $normalizedPower): void
+    public function withNormalizedPower(?int $normalizedPower): self
     {
-        $this->normalizedPower = $normalizedPower;
+        return clone ($this, [
+            'normalizedPower' => $normalizedPower,
+        ]);
     }
 
     /**
      * @param string[] $tags
      */
-    public function enrichWithTags(array $tags): void
+    public function withTags(array $tags): self
     {
-        $this->tags = $tags;
+        return clone ($this, [
+            'tags' => $tags,
+        ]);
     }
 
     /**
