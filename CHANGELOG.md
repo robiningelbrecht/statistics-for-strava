@@ -1,3 +1,12 @@
+# [v4.4.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.4.2) - 2026-01-30
+
+## What's Changed
+* ISSUE #1688: Revisit how intensity in the Athlete profile chart is calculated by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1689
+* ISSUE #1691: Pace data smoothing for activity charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1692
+* ISSUE #1682: Best effort periods by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1693
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.4.1...v4.4.2
+
 # [v4.4.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.4.1) - 2026-01-26
 
 ## What's Changed
