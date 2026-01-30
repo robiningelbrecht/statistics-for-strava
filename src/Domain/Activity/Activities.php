@@ -36,11 +36,6 @@ final class Activities extends Collection
         return $startDate;
     }
 
-    public function filterOnActivityType(ActivityType $activityType): Activities
-    {
-        return $this->filter(fn (Activity $activity): bool => $activityType === $activity->getSportType()->getActivityType());
-    }
-
     public function getUniqueYears(): Years
     {
         $years = Years::empty();
