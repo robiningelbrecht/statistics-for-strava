@@ -42,9 +42,9 @@ interface Gear extends SupportsAITooling
 
     public function getActivityTypes(): ActivityTypes;
 
-    public function enrichWithSportTypes(SportTypes $sportTypes): self;
+    public function withSportTypes(SportTypes $sportTypes): self;
 
-    public function enrichWithImageSrc(string $imageSrc): self;
+    public function withImageSrc(string $imageSrc): self;
 
-    public function enrichWithPurchasePrice(Money $purchasePrice): self;
+    public function withPurchasePrice(Money $purchasePrice): self;
 }

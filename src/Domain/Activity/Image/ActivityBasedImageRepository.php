@@ -42,8 +42,10 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
                 $images->add(Image::create(
                     imageLocation: $localImagePath,
-                    activity: $activity,
+                    activityId: $activity->getId(),
+                    sportType: $activity->getSportType(),
                     orientation: $imageOrientation,
+                    relatedCountryCodes: $activity->getRouteGeography()->getPassedThroughCountries(),
                 ));
             }
         }
@@ -79,8 +81,10 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
             return Image::create(
                 imageLocation: $localImagePaths[$randomImageIndex],
-                activity: $activity,
+                activityId: $activity->getId(),
+                sportType: $activity->getSportType(),
                 orientation: $imageOrientation,
+                relatedCountryCodes: $activity->getRouteGeography()->getPassedThroughCountries(),
             );
         }
 

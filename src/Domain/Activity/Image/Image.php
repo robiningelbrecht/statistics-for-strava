@@ -2,26 +2,39 @@
 
 namespace App\Domain\Activity\Image;
 
-use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\SportType\SportType;
 
 final readonly class Image
 {
+    /**
+     * @param string[] $relatedCountryCodes
+     */
     private function __construct(
         private string $imageLocation,
-        private Activity $activity,
+        private ActivityId $activityId,
+        private SportType $sportType,
         private ImageOrientation $orientation,
+        private array $relatedCountryCodes,
     ) {
     }
 
+    /**
+     * @param string[] $relatedCountryCodes
+     */
     public static function create(
         string $imageLocation,
-        Activity $activity,
+        ActivityId $activityId,
+        SportType $sportType,
         ImageOrientation $orientation,
+        array $relatedCountryCodes,
     ): self {
         return new self(
             imageLocation: $imageLocation,
-            activity: $activity,
-            orientation: $orientation
+            activityId: $activityId,
+            sportType: $sportType,
+            orientation: $orientation,
+            relatedCountryCodes: $relatedCountryCodes,
         );
     }
 
@@ -34,9 +47,22 @@ final readonly class Image
         return '/'.$this->imageLocation;
     }
 
-    public function getActivity(): Activity
+    public function getActivityId(): ActivityId
     {
-        return $this->activity;
+        return $this->activityId;
+    }
+
+    public function getSportType(): SportType
+    {
+        return $this->sportType;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRelatedCountryCodes(): array
+    {
+        return $this->relatedCountryCodes;
     }
 
     public function getOrientation(): ImageOrientation
@@ -49,11 +75,9 @@ final readonly class Image
      */
     public function getFilterables(): array
     {
-        $activity = $this->getActivity();
-
         return [
-            'sportType' => $activity->getSportType()->value,
-            'countryCode' => $activity->getRouteGeography()->getPassedThroughCountries(),
+            'sportType' => $this->getSportType()->value,
+            'countryCode' => $this->getRelatedCountryCodes(),
         ];
     }
 }

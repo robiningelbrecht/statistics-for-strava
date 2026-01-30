@@ -64,7 +64,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
             $this->imageRepository->findRandomFor(
                 sportTypes: SportTypes::thatSupportImagesForStravaRewind(),
                 years: Years::fromArray([Year::fromInt(2024)]),
-            )->getActivity()->getId()
+            )->getActivityId()
         );
     }
 
