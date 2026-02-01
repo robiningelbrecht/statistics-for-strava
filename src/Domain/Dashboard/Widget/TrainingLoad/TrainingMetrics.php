@@ -189,6 +189,86 @@ final class TrainingMetrics
     }
 
     /**
+     * Returns a 7-day forecast assuming zero training load (rest days).
+     * Shows projected TSB and A:C Ratio recovery, plus days until healthy ranges.
+     *
+     * @return array{
+     *     days: array<int, array{day: int, tsb: float, acRatio: float, tsbStatus: string, acRatioStatus: string}>,
+     *     daysUntilTsbHealthy: int|null,
+     *     daysUntilAcRatioHealthy: int|null
+     * }
+     */
+    public function getForecast(): array
+    {
+        $alphaATL = 1 - exp(-1 / 7);
+        $alphaCTL = 1 - exp(-1 / TrainingLoadChart::ROLLING_WINDOW_TO_CALCULATE_METRICS_AGAINST);
+
+        $currentAtl = $this->getCurrentAtl() ?? 0;
+        $currentCtl = $this->getCurrentCtl() ?? 0;
+
+        $days = [];
+        $daysUntilTsbHealthy = null;
+        $daysUntilAcRatioHealthy = null;
+
+        $atl = $currentAtl;
+        $ctl = $currentCtl;
+
+        for ($day = 1; $day <= 7; ++$day) {
+            // Simulate zero training load for this day
+            $atl = $atl * (1 - $alphaATL);
+            $ctl = $ctl * (1 - $alphaCTL);
+            $tsb = round($ctl - $atl, 1);
+            $acRatio = $ctl > 0 ? round($atl / $ctl, 2) : 0;
+
+            // Determine TSB status
+            if ($tsb > 25) {
+                $tsbStatus = 'detraining';
+            } elseif ($tsb > 10) {
+                $tsbStatus = 'fresh';
+            } elseif ($tsb > 0) {
+                $tsbStatus = 'slightly_fresh';
+            } elseif ($tsb > -10) {
+                $tsbStatus = 'neutral';
+            } elseif ($tsb > -30) {
+                $tsbStatus = 'fatigued';
+            } else {
+                $tsbStatus = 'over_fatigued';
+            }
+
+            // Determine A:C Ratio status
+            if ($acRatio >= 0.8 && $acRatio <= 1.3) {
+                $acRatioStatus = 'optimal';
+            } elseif ($acRatio > 1.3) {
+                $acRatioStatus = 'high_risk';
+            } else {
+                $acRatioStatus = 'low';
+            }
+
+            // Track when metrics reach healthy ranges
+            if (null === $daysUntilTsbHealthy && $tsb > 0) {
+                $daysUntilTsbHealthy = $day;
+            }
+            if (null === $daysUntilAcRatioHealthy && $acRatio >= 0.8 && $acRatio <= 1.3) {
+                $daysUntilAcRatioHealthy = $day;
+            }
+
+            $days[] = [
+                'day' => $day,
+                'tsb' => $tsb,
+                'acRatio' => $acRatio,
+                'tsbStatus' => $tsbStatus,
+                'acRatioStatus' => $acRatioStatus,
+            ];
+        }
+
+        return [
+            'days' => $days,
+            'daysUntilTsbHealthy' => $daysUntilTsbHealthy,
+            'daysUntilAcRatioHealthy' => $daysUntilAcRatioHealthy,
+        ];
+    }
+
+    /**
      * @param array<string, int|float> $values
      */
     private function standardDeviation(array $values): float
