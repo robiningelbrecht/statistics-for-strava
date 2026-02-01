@@ -12,6 +12,7 @@
 '> 2.0: High monotony, increased risk': '> 2.0: 单调性高，风险增加'
 '>+25: Possible detraining': '>+25: 训练效果可能下降'
 'A:C Ratio': 'A:C 比值'
+'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
 'Active days': 训练天数
 Activities: 活动
@@ -58,6 +59,7 @@ Compare: 对比
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
 Consistency: Consistency
 Crossfit: 交叉健身
+'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 自定义装备已禁用
 Cycling: 骑行
@@ -65,12 +67,14 @@ Cycling: 骑行
 'Daily activities': 每日活动
 Dashboard: 仪表板
 Date: 日期
+Day: Day
 'Days needed': 所需天数
 'Daytime stats': 白天统计
 Dec: 十二月
 Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 Details: 详情
+Detraining: Detraining
 Device: 设备
 Distance: 距离
 'Distance breakdown': 距离分解
@@ -91,6 +95,8 @@ Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
 'Fastest times': 最快时间
+Fatigued: Fatigued
+'Fatigued - recovery needed': 'Fatigued - recovery needed'
 'Fatigued – productive heavy-training range': '疲惫 — 最佳高强度训练范围'
 Favourite: 收藏夹
 Feb: 二月
@@ -103,6 +109,8 @@ Feb: 二月
 Fitness: 健身
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 例如，埃丁顿数为70意味着骑行者在至少70天内每天骑行至少70公里或英里。达到高埃丁顿数很困难，因为从70到75可能需要超过五次新的长距离锻炼，因为任何少于75公里或英里的锻炼将不再包括在计算中。
 'Form (TSB)': '状态 (TSB)'
+Fresh: Fresh
+'Fresh - ready to perform': 'Fresh - ready to perform'
 'Fresh – reduced training load': '精力充沛 — 适合减少训练负荷'
 Fri: 周五
 Friday: 星期五
@@ -128,11 +136,15 @@ HR: 心率
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 过去一个月的心率区间分布。为了进行有效的极化训练，您的训练应主要在以下区间内进行。
 'Heart rate zones': 心率区间
 Heatmap: 热图
+'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: 高
+'High injury risk': 'High injury risk'
 'High monotony - increase variety': 单调性高——增加多样性
+'High risk': 'High risk'
 'High risk - reduce volume': 风险高——减少运动量
 Hikes: 徒步
 History: 历史
+'History (6 weeks)': 'History (6 weeks)'
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
 'How hard is your typical training session': 'How hard is your typical training session'
@@ -192,6 +204,8 @@ Morning: 早晨
 'Mountain Bike Rides': 山地车骑行
 'Moving time': 移动时间
 Name: 名称
+Neutral: Neutral
+'Neutral - transitional': 'Neutral - transitional'
 'Neutral – short-term sustainable': '适中 — 适合短期训练'
 Night: 夜晚
 'No activities': 没有活动
@@ -202,14 +216,18 @@ None: 无
 Normalized: 归一化
 'Not supported': 不支持
 Nov: 十一月
+Now: Now
 'Number of activities per month': 每月活动数量
 'Number of times completed': 完成次数
 Oct: 十月
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': '平均而言，每天的平均值为 {dailyAverage}，每周的平均值为 {weeklyAverage}，每月的平均值为 {monthlyAverage} 🐣。'
 'One of your gear maintenance tasks is due': 您有装备需维护
+Optimal: Optimal
 'Optimal training range': 最佳训练范围
+'Optimal training zone': 'Optimal training zone'
 Other: 其他
 'Outdoor Sports': 户外运动
+Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': '过度疲劳 （–30）'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': '过度疲劳 – 可能受伤或过度训练，需要额外恢复'
 'Overall weekly training stress': 每周训练负荷总览
@@ -228,6 +246,7 @@ Photos: 照片
 Pilates: 普拉提
 'Please address these issues': 请解决这些问题
 'Polarised training (last 30 days)': 极化训练（过去30天）
+'Potential detraining': 'Potential detraining'
 Power: 功率
 'Power distribution': 功率分布
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
@@ -237,6 +256,8 @@ Race: 比赛
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
 Ranking: Ranking
+'Recovery Timeline': 'Recovery Timeline'
+'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 通勤减少的碳排放
 'Relative cost': 相对成本
 'Rest Days': 休息日
@@ -261,9 +282,11 @@ Search: 搜索
 Segments: 路段
 Sep: 九月
 'Show information': 显示信息
+'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": '从{startDate}算起，我已使用Strava {numberOfDaysAgo}多天​，我已经记录了{totalDaysOfWorkingOut}天的训练和冒险活动。'
 Skateboard: 滑板
 Skating: 滑冰
+'Slightly fresh': 'Slightly fresh'
 'Slightly fresh – transitional zone': '略微精力充沛 — 适合过渡期'
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
@@ -281,6 +304,7 @@ Squash: 壁球
 'Statistics for Strava': 'Statistics for Strava'
 Stats: 统计
 'Stats per weekday': 按工作日统计
+Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: 连续记录
 Sun: 周日
@@ -288,6 +312,7 @@ Sunday: 星期日
 Surfing: 冲浪
 Swim: 游泳
 'TSB (Form)': 'TSB (状态)'
+'TSB positive in': 'TSB positive in'
 'Table Tennis': 乒乓球
 Tag: 标签
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': '"{maintenanceTaskTag}"标签已在"{activityName}"中使用, 但该活动中引用的装备未附加到此组件。'
@@ -315,7 +340,6 @@ To: 到
 'Trail Runs': 越野跑
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
 'Training Load Analysis': 训练负荷分析
-'Training Load Analysis (6 week history)': '训练负荷分析 (6周)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': '训练单调性 - 平均每日负荷与标准差的比值，反映训练多样性。'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': '训练压力平衡（状态）- 体能（CTL）与疲劳（ATL）之间的差异，反映您的运动准备程度。'
 'Training goals': 'Training goals'
@@ -382,6 +406,7 @@ bpm: 拍子数
 clear: 清除
 comments: 留言
 compare: 对比
+day(s): day(s)
 days: 天
 'days needed for next Eddington': '天 - 下一个爱丁顿所需天数'
 history: 历史
