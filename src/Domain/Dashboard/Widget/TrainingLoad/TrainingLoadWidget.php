@@ -68,6 +68,7 @@ final readonly class TrainingLoadWidget implements Widget
                 'trainingMetrics' => $trainingMetrics,
                 'restDaysInLast7Days' => $numberOfRestDays,
                 'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
+                'now' => $now,
             ])
         );
 
