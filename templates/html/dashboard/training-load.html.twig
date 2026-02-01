@@ -2,7 +2,7 @@
     <!-- Modal header -->
     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
         <h3 class="flex items-center text-lg font-semibold text-gray-900">
-            <span> {{ "Training Load Analysis (6 week history)"|trans }}</span>
+            <span> {{ "Training Load Analysis"|trans }}</span>
         </h3>
         <div class="flex items-center">
             <button type="button" class="cursor-pointer close text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
@@ -15,9 +15,189 @@
     </div>
     <!-- Modal body -->
     <div class="p-4 md:p-5 space-y-4">
-        <div class="h-120" data-echarts-options='{{ trainingLoadChart }}'></div>
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'modal' } %}
+        <!-- Tabs -->
+        <div class="tabs tabs--default mb-2">
+            <ul id="trainingLoadTab" data-tabs="#trainingLoadTabContent" role="tablist">
+                <li role="presentation">
+                    <a href="#" data-tabs-target="#history" role="tab" aria-controls="history">
+                        {{ "History (6 weeks)"|trans }}
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a href="#" data-tabs-target="#forecast" role="tab" aria-controls="forecast">
+                        {{ "Recovery Forecast"|trans }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="trainingLoadTabContent">
+            <!-- History Tab -->
+            <div id="history" role="tabpanel" aria-labelledby="history-tab">
+                <div class="h-120" data-echarts-options='{{ trainingLoadChart }}'></div>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'modal' } %}
+                </div>
+            </div>
+
+            <!-- Forecast Tab -->
+            <div id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <p class="text-sm text-gray-600">{{ "Projection assuming complete rest (no training) for the next 7 days."|trans }}</p>
+                        <button class="hidden lg:block ml-1" data-popover-target="popover-forecast" data-popover-placement="right" type="button">
+                            <svg class="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div data-popover id="popover-forecast" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-80 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
+                            <div class="p-2 space-y-2">
+                                <p>{{ "Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days."|trans }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% set forecast = trainingMetrics.getForecast() %}
+
+                    <!-- Current Status -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">{{ "Current Status"|trans }}</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-xs text-gray-500">{{ "TSB (Form)"|trans }}</div>
+                                    {% set currentTsb = trainingMetrics.getCurrentTsb() %}
+                                    <div class="text-xl font-bold {{ currentTsb > 10 ? 'text-green-500' : (currentTsb > -10 ? 'text-yellow-500' : 'text-red-500') }}">
+                                        {{ currentTsb|formatNumber(1) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-500">{{ "A:C Ratio"|trans }}</div>
+                                    {% set currentAcRatio = trainingMetrics.getCurrentAcRatio() %}
+                                    <div class="text-xl font-bold {{ currentAcRatio > 1.3 ? 'text-red-500' : (currentAcRatio < 0.8 ? 'text-yellow-500' : 'text-green-500') }}">
+                                        {{ currentAcRatio|formatNumber(2) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recovery Summary -->
+                        <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-2">{{ "Recovery Timeline"|trans }}</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-xs text-gray-500">{{ "TSB positive in"|trans }}</div>
+                                    {% if forecast.daysUntilTsbHealthy %}
+                                        <div class="text-xl font-bold text-green-500">{{ forecast.daysUntilTsbHealthy }} {{ "day(s)"|trans }}</div>
+                                    {% elseif trainingMetrics.getCurrentTsb() > 0 %}
+                                        <div class="text-xl font-bold text-green-500">{{ "Now"|trans }}</div>
+                                    {% else %}
+                                        <div class="text-xl font-bold text-yellow-500">&gt; 7 {{ "days"|trans }}</div>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-500">{{ "A:C optimal in"|trans }}</div>
+                                    {% if forecast.daysUntilAcRatioHealthy %}
+                                        <div class="text-xl font-bold text-green-500">{{ forecast.daysUntilAcRatioHealthy }} {{ "day(s)"|trans }}</div>
+                                    {% elseif trainingMetrics.getCurrentAcRatio() >= 0.8 and trainingMetrics.getCurrentAcRatio() <= 1.3 %}
+                                        <div class="text-xl font-bold text-green-500">{{ "Now"|trans }}</div>
+                                    {% else %}
+                                        <div class="text-xl font-bold text-yellow-500">&gt; 7 {{ "days"|trans }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Forecast Table -->
+                    <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                        <table class="w-full text-sm text-left text-gray-500">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">{{ "Day"|trans }}</th>
+                                    <th scope="col" class="px-4 py-3">{{ "TSB (Form)"|trans }}</th>
+                                    <th scope="col" class="px-4 py-3">{{ "Status"|trans }}</th>
+                                    <th scope="col" class="px-4 py-3">{{ "A:C Ratio"|trans }}</th>
+                                    <th scope="col" class="px-4 py-3">{{ "Status"|trans }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for day in forecast.days %}
+                                <tr class="bg-white border-b hover:bg-gray-50">
+                                    <td class="px-4 py-3 font-medium text-gray-900">{{ now.modify("+" ~ day.day ~ " days")|date("M j") }}</td>
+                                    <td class="px-4 py-3">
+                                        {% if day.tsbStatus == 'fresh' or day.tsbStatus == 'slightly_fresh' %}
+                                            <span class="text-green-600 font-semibold">{{ day.tsb }}</span>
+                                        {% elseif day.tsbStatus == 'neutral' %}
+                                            <span class="text-yellow-600 font-semibold">{{ day.tsb }}</span>
+                                        {% elseif day.tsbStatus == 'detraining' %}
+                                            <span class="text-orange-500 font-semibold">{{ day.tsb }}</span>
+                                        {% else %}
+                                            <span class="text-red-600 font-semibold">{{ day.tsb }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {% if day.tsbStatus == 'detraining' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">{{ "Detraining"|trans }}</span>
+                                        {% elseif day.tsbStatus == 'fresh' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">{{ "Fresh"|trans }}</span>
+                                        {% elseif day.tsbStatus == 'slightly_fresh' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">{{ "Slightly fresh"|trans }}</span>
+                                        {% elseif day.tsbStatus == 'neutral' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">{{ "Neutral"|trans }}</span>
+                                        {% elseif day.tsbStatus == 'fatigued' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ "Fatigued"|trans }}</span>
+                                        {% else %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ "Over-fatigued"|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {% if day.acRatioStatus == 'optimal' %}
+                                            <span class="text-green-600 font-semibold">{{ day.acRatio }}</span>
+                                        {% elseif day.acRatioStatus == 'low' %}
+                                            <span class="text-yellow-600 font-semibold">{{ day.acRatio }}</span>
+                                        {% else %}
+                                            <span class="text-red-600 font-semibold">{{ day.acRatio }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {% if day.acRatioStatus == 'optimal' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">{{ "Optimal"|trans }}</span>
+                                        {% elseif day.acRatioStatus == 'low' %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">{{ "Low"|trans }}</span>
+                                        {% else %}
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ "High risk"|trans }}</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-3">{{ "Reference Ranges"|trans }}</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="font-medium text-gray-700 mb-1">{{ "TSB (Form)"|trans }}</div>
+                                <ul class="space-y-1 text-gray-600">
+                                    <li><span class="text-green-600 font-semibold">&gt; +10:</span> {{ "Fresh - ready to perform"|trans }}</li>
+                                    <li><span class="text-yellow-600 font-semibold">0 to +10:</span> {{ "Neutral - transitional"|trans }}</li>
+                                    <li><span class="text-red-600 font-semibold">-10 to 0:</span> {{ "Fatigued - recovery needed"|trans }}</li>
+                                    <li><span class="text-red-600 font-semibold">&lt; -10:</span> {{ "Heavy fatigue - rest recommended"|trans }}</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-700 mb-1">{{ "A:C Ratio"|trans }}</div>
+                                <ul class="space-y-1 text-gray-600">
+                                    <li><span class="text-green-600 font-semibold">0.8 - 1.3:</span> {{ "Optimal training zone"|trans }}</li>
+                                    <li><span class="text-red-600 font-semibold">&gt; 1.3:</span> {{ "High injury risk"|trans }}</li>
+                                    <li><span class="text-yellow-600 font-semibold">&lt; 0.8:</span> {{ "Potential detraining"|trans }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endautoescape %}
