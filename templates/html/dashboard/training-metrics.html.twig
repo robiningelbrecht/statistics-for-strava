@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "CTL (Fitness)"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-ctl-{{ context }}" data-popover-placement="right" type="button">
@@ -13,7 +13,7 @@
     <div class="text-xl font-bold">{{ trainingMetrics.getCurrentCtl()|formatNumber(1) }}</div>
     <div class="text-xs text-gray-500 truncate">{{ "42-day fitness trend"|trans }}</div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "ATL (Fatigue)"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-atl-{{ context }}" data-popover-placement="right" type="button">
@@ -28,7 +28,7 @@
     <div class="text-xl font-bold">{{ trainingMetrics.getCurrentAtl()|formatNumber(1) }}</div>
     <div class="text-xs text-gray-500 truncate">{{ "7-day fatigue level"|trans }}</div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "TSB (Form)"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-tsb-{{ context }}" data-popover-placement="right" type="button">
@@ -77,7 +77,7 @@
         {% endif %}
     </div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "A:C Ratio"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-ac-{{ context }}" data-popover-placement="right" type="button">
@@ -106,14 +106,14 @@
         {% endif %}
     </div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "Rest Days"|trans }}</h4>
     </div>
     <div class="text-xl font-bold">{{ restDaysInLast7Days }} / 7</div>
     <div class="text-xs text-gray-500 truncate">{{ "Rest days in last 7 days"|trans }}</div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "Monotony"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-monotony-{{ context }}" data-popover-placement="right" type="button">
@@ -141,7 +141,7 @@
         {% endif %}
     </div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "Weekly Strain"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-strain-{{ context }}" data-popover-placement="right" type="button">
@@ -157,7 +157,7 @@
     <div class="text-xl font-bold">{{ trainingMetrics.getCurrentStrain() }}</div>
     <div class="text-xs text-gray-500 truncate">{{ "Overall weekly training stress"|trans }}</div>
 </div>
-<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "Weekly TRIMP"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-trimp-{{ context }}" data-popover-placement="right" type="button">
@@ -173,7 +173,7 @@
     <div class="text-xs text-gray-500 truncate">{{ "Last 7 days training load"|trans }}</div>
 </div>
 {% if timeInHeartRateZonesForLast30Days %}
-<div class="col-span-2 lg:col-span-4 flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-sm">
+<div class="col-span-2 lg:col-span-4 flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
         <h4 class="text-sm font-semibold">{{ "Polarised training (last 30 days)"|trans }}</h4>
         <button class="hidden lg:block ml-1" data-popover-target="popover-polarised-{{ context }}" data-popover-placement="right" type="button">
