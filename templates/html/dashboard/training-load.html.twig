@@ -16,7 +16,7 @@
     <!-- Modal body -->
     <div class="p-4 md:p-5 space-y-4">
         <!-- Tabs -->
-        <div class="tabs tabs--default mb-2">
+        <div class="tabs tabs--default">
             <ul id="trainingLoadTab" data-tabs="#trainingLoadTabContent" role="tablist">
                 <li role="presentation">
                     <a href="#" data-tabs-target="#history" role="tab" aria-controls="history">
@@ -32,34 +32,20 @@
         </div>
 
         <div id="trainingLoadTabContent">
-            <!-- History Tab -->
+            <!-- Metrics Tab -->
             <div id="history" role="tabpanel" aria-labelledby="history-tab">
                 <div class="h-120" data-echarts-options='{{ trainingLoadChart }}'></div>
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {% include 'html/dashboard/training-metrics.html.twig' with {'trainingMetrics': trainingMetrics, 'context': 'modal' } %}
                 </div>
             </div>
-
             <!-- Forecast Tab -->
             <div id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
                 <div class="space-y-4">
-                    <div class="flex items-center">
-                        <p class="text-sm text-gray-600">{{ "Projection assuming complete rest (no training) for the next 7 days."|trans }}</p>
-                        <button class="hidden lg:block ml-1" data-popover-target="popover-forecast" data-popover-placement="right" type="button">
-                            <svg class="w-4 h-4 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-                        </button>
-                        <div data-popover id="popover-forecast" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-80 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
-                            <div class="p-2 space-y-2">
-                                <p>{{ "Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days."|trans }}</p>
-                            </div>
-                        </div>
-                    </div>
-
+                    <p class="text-xs text-gray-600">{{ "Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days."|trans }}</p>
                     {% set forecast = trainingMetrics.getForecast() %}
-
-                    <!-- Current Status -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+                        <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
                             <h4 class="text-sm font-semibold text-gray-700 mb-2">{{ "Current Status"|trans }}</h4>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
@@ -78,9 +64,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Recovery Summary -->
-                        <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
+                        <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
                             <h4 class="text-sm font-semibold text-gray-700 mb-2">{{ "Recovery Timeline"|trans }}</h4>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
@@ -106,9 +90,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Daily Forecast Table -->
-                    <div class="border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                    <div class="border border-gray-200 rounded-lg shadow-xs relative overflow-x-auto">
                         <table class="w-full text-sm text-left text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
@@ -121,7 +103,7 @@
                             </thead>
                             <tbody>
                                 {% for day in forecast.days %}
-                                <tr class="bg-white border-b hover:bg-gray-50">
+                                <tr class="bg-white border-b last:border-b-0">
                                     <td class="px-4 py-3 font-medium text-gray-900">{{ now.modify("+" ~ day.day ~ " days")|date("M j") }}</td>
                                     <td class="px-4 py-3">
                                         {% if day.tsbStatus == 'fresh' or day.tsbStatus == 'slightly_fresh' %}
@@ -172,10 +154,7 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- Legend -->
-                    <div class="p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50">
-                        <h4 class="text-sm font-semibold text-gray-700 mb-3">{{ "Reference Ranges"|trans }}</h4>
+                    <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                             <div>
                                 <div class="font-medium text-gray-700 mb-1">{{ "TSB (Form)"|trans }}</div>
