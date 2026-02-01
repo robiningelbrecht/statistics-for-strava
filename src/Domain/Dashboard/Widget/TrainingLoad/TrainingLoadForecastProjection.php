@@ -43,8 +43,8 @@ final class TrainingLoadForecastProjection
 
         $numberOfDaysToForecast = 7;
         for ($day = 1; $day <= $numberOfDaysToForecast; ++$day) {
-            $atl = $atl * (1 - $alphaATL);
-            $ctl = $ctl * (1 - $alphaCTL);
+            $atl *= 1 - $alphaATL;
+            $ctl *= 1 - $alphaCTL;
             $tsb = round($ctl - $atl, 1);
             $acRatio = $ctl > 0 ? round($atl / $ctl, 2) : 0;
 

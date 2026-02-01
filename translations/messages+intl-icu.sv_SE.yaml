@@ -12,6 +12,7 @@
 '> 2.0: High monotony, increased risk': '> 2.0: Hög enformighet, ökad risk'
 '>+25: Possible detraining': '>+25: Möjlig prestationsminskning'
 'A:C Ratio': 'A:C Förhållande'
+'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Utmattning)'
 'Active days': 'Aktiva dagar'
 Activities: Aktiviteter
@@ -58,6 +59,7 @@ Compare: Jämför
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 Consistency: Consistency
 Crossfit: Crossfit
+'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Anpassad utrustning är inaktiverad'
 Cycling: Cykling
@@ -65,12 +67,14 @@ Cycling: Cykling
 'Daily activities': 'Dagliga aktiviteter'
 Dashboard: Översikt
 Date: Datum
+Day: Day
 'Days needed': 'Dagar saknade'
 'Daytime stats': 'Sammanställning starttider'
 Dec: Dec
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
+Detraining: Detraining
 Device: Enhet
 Distance: Distans
 'Distance breakdown': 'Sammanställning av sträckor'
@@ -91,6 +95,8 @@ Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
 'Fastest times': 'Snabbaste tiderna'
+Fatigued: Fatigued
+'Fatigued - recovery needed': 'Fatigued - recovery needed'
 'Fatigued – productive heavy-training range': 'Utmattad – produktiv massiv träningsbelastning'
 Favourite: Favoriter
 Feb: Feb
@@ -103,6 +109,8 @@ Feb: Feb
 Fitness: Träning
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Som ett exempel skulle ett Eddingtontal på 70 innebära att en cyklist har cyklat minst 70 km eller miles under loppet av en dag vid minst 70 tillfällen. Att uppnå ett högt Eddingtontal är svårt, eftersom en övergång från, säg, 70 till 75 (förmodligen) kommer att kräva mer än fem nya långdistanspass, eftersom inga pass som är kortare än 75 km eller miles kommer att inkluderas i beräkningen.'
 'Form (TSB)': 'Träningsform (TSB)'
+Fresh: Fresh
+'Fresh - ready to perform': 'Fresh - ready to perform'
 'Fresh – reduced training load': 'Redo – minskad träningsbelastning'
 Fri: Fre
 Friday: Fredag
@@ -128,11 +136,15 @@ HR: Puls
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Pulszonfördelning under den senaste månaden. För effektiv polariserad träning bör dina träningspass huvudsakligen falla inom följande zoner'
 'Heart rate zones': Pulszoner
 Heatmap: Färgkarta
+'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: Hög
+'High injury risk': 'High injury risk'
 'High monotony - increase variety': 'Hög monotoni - öka variationen'
+'High risk': 'High risk'
 'High risk - reduce volume': 'Hög risk - minska volymen'
 Hikes: Vandringar
 History: Historik
+'History (6 weeks)': 'History (6 weeks)'
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
 'How hard is your typical training session': 'How hard is your typical training session'
@@ -192,6 +204,8 @@ Morning: Morgon
 'Mountain Bike Rides': 'Mountain Bike Cykling'
 'Moving time': 'Tid i rörelse'
 Name: Namn
+Neutral: Neutral
+'Neutral - transitional': 'Neutral - transitional'
 'Neutral – short-term sustainable': 'Neutral – hållbart på kort sikt'
 Night: Natt
 'No activities': 'Inga aktivieter'
@@ -202,14 +216,18 @@ None: Inga
 Normalized: Normaliserad
 'Not supported': 'Inget stöd tillgängligt'
 Nov: Nov
+Now: Now
 'Number of activities per month': 'Antal aktiviteter per månad'
 'Number of times completed': 'Antal gånger avklarat'
 Oct: Okt
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'En av dina underhållsuppgifter behöver uppmärksamhet'
+Optimal: Optimal
 'Optimal training range': 'Optimal träning'
+'Optimal training zone': 'Optimal training zone'
 Other: Annat
 'Outdoor Sports': 'Utomhus sport'
+Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Överdrivet utmattad (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Överdrivet utmattad – risk för skada eller utbrändhet, extra återhämtning behövs'
 'Overall weekly training stress': 'Sammanfattning för träning veckovis'
@@ -228,6 +246,7 @@ Photos: Bilder
 Pilates: Pilates
 'Please address these issues': 'Vänligen ta itu med dessa problem'
 'Polarised training (last 30 days)': 'Polariserad träning (senaste 30 dagarna)'
+'Potential detraining': 'Potential detraining'
 Power: Effekt
 'Power distribution': Effektfördelning
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
@@ -237,6 +256,8 @@ Race: Tävling
 'Racquet & Paddle Sports': 'Rack & Paddel Sporter'
 'Racquet Ball': Racketboll
 Ranking: Rankning
+'Recovery Timeline': 'Recovery Timeline'
+'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Minskade koldioxidutsläpp tack vare pendling'
 'Relative cost': 'Relativ kostnad'
 'Rest Days': Vilodagar
@@ -261,9 +282,11 @@ Search: Sök
 Segments: Segment
 Sep: Sep
 'Show information': 'Visa information'
+'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skridskoåkning
+'Slightly fresh': 'Slightly fresh'
 'Slightly fresh – transitional zone': 'Något redo - Övergångsfas'
 Snowboard: Snowboard
 Snowshoe: Snöskor
@@ -281,6 +304,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Sammanställning
 'Stats per weekday': 'Sammanställning veckodagar'
+Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Sön
@@ -288,6 +312,7 @@ Sunday: Söndag
 Surfing: Surfning
 Swim: Simmning
 'TSB (Form)': 'TSB (Form)'
+'TSB positive in': 'TSB positive in'
 'Table Tennis': Bordtennis
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Taggen "{maintenanceTaskTag}" användes på "{activityName}", men utrustningen som refereras till i den aktiviteten är inte kopplad till denna komponent.'
@@ -315,7 +340,6 @@ To: Till
 'Trail Runs': Stiglöpning
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Träningsimpuls - Träningsbelastningsmått som tar hänsyn till intensitet och varaktighet.'
 'Training Load Analysis': 'Analys av träningsbelastning'
-'Training Load Analysis (6 week history)': 'Analys av träningsbelastning (6 veckors historik)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Träningsmonotoni - Förhållandet mellan genomsnittlig daglig belastning och standardavvikelse. Indikerar träningsvariation.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Träningsstress Balans (Form) – Skillnaden mellan träningsform (CTL) och utmattning (ATL). Återspeglar hur redo du är att prestera.'
 'Training goals': 'Training goals'
@@ -382,6 +406,7 @@ bpm: bpm
 clear: rensa
 comments: kommentarer
 compare: jämför
+day(s): day(s)
 days: dagar
 'days needed for next Eddington': 'dagar till nästa Eddington nivå'
 history: historik

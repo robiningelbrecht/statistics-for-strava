@@ -12,6 +12,7 @@
 '> 2.0: High monotony, increased risk': '> 2,0 : Monotonie élevée, risque accru'
 '>+25: Possible detraining': '>+25 : Désentraînement possible'
 'A:C Ratio': 'Ratio Aiguë:Chronique'
+'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fatigue à court terme)'
 'Active days': 'Jours actifs'
 Activities: Activités
@@ -58,6 +59,7 @@ Compare: Comparer
 'Congrats! You achieved personal bests during this activity.': 'Félicitations ! Vous avez réalisé vos meilleures performances personnelles lors de cette activité.'
 Consistency: Consistency
 Crossfit: Crossfit
+'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Matériel personnalisé désactivé'
 Cycling: Cyclisme
@@ -65,12 +67,14 @@ Cycling: Cyclisme
 'Daily activities': 'Activités quotidiennes'
 Dashboard: 'Tableau de bord'
 Date: Date
+Day: Day
 'Days needed': 'Jours nécessaires'
 'Daytime stats': 'Statistiques diurnes'
 Dec: Déc
 Density: Density
 'Detailed instructions are available in the documentation on': 'Des instructions détaillées sont disponibles dans la documentation sur'
 Details: Détails
+Detraining: Detraining
 Device: Appareil
 Distance: Distance
 'Distance breakdown': 'Répartition des distances'
@@ -91,6 +95,8 @@ Evening: Soirée
 'Excludes commutes': 'Trajets domicile-travail exclus'
 'FTP history': 'Historique FTP'
 'Fastest times': 'Meilleurs temps'
+Fatigued: Fatigued
+'Fatigued - recovery needed': 'Fatigued - recovery needed'
 'Fatigued – productive heavy-training range': 'Zone de fatigue productive – entraînement intensif'
 Favourite: Favori
 Feb: Fév
@@ -103,6 +109,8 @@ Feb: Fév
 Fitness: Forme
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': "Par exemple, un nombre d'Eddington de 70 signifie qu'un cycliste a parcouru au moins 70 km ou miles en une journée à au moins 70 reprises. Atteindre un nombre d'Eddington élevé est difficile, car passer, disons, de 70 à 75 nécessitera probablement plus de cinq nouvelles séances d'entraînement de longue distance, étant donné que toute séance de moins de 75 km ou miles ne sera plus prise en compte dans le calcul."
 'Form (TSB)': 'Forme (TSB)'
+Fresh: Fresh
+'Fresh - ready to perform': 'Fresh - ready to perform'
 'Fresh – reduced training load': "Frais – charge d'entraînement réduite"
 Fri: Ven
 Friday: Vendredi
@@ -128,11 +136,15 @@ HR: FC
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': "Répartition des zones de fréquence cardiaque au cours du mois dernier. Pour un entraînement polarisé efficace, vos séances devraient se situer principalement dans les zones suivantes\_:"
 'Heart rate zones': 'Zones de fréquence cardiaque'
 Heatmap: 'Carte thermique'
+'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: Élevé
+'High injury risk': 'High injury risk'
 'High monotony - increase variety': 'Monotonie élevée - augmenter la variété'
+'High risk': 'High risk'
 'High risk - reduce volume': 'Risque élevé - réduire le volume'
 Hikes: Randonnées
 History: Historique
+'History (6 weeks)': 'History (6 weeks)'
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
 'How hard is your typical training session': 'How hard is your typical training session'
@@ -192,6 +204,8 @@ Morning: Matin
 'Mountain Bike Rides': 'Sorties VTT'
 'Moving time': 'Temps en mouvement'
 Name: Nom
+Neutral: Neutral
+'Neutral - transitional': 'Neutral - transitional'
 'Neutral – short-term sustainable': 'Équilibré – durable à court terme'
 Night: Nuit
 'No activities': 'Aucune activité'
@@ -202,14 +216,18 @@ None: Aucun
 Normalized: Normalisé
 'Not supported': 'Non pris en charge'
 Nov: Nov
+Now: Now
 'Number of activities per month': "Nombre d'activités par mois"
 'Number of times completed': 'Nombre de fois complété'
 Oct: Oct
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'En moyenne, cela représente {dailyAverage} par jour, une moyenne hebdomadaire de {weeklyAverage} et une moyenne mensuelle de {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'Une de vos tâches de maintenance de matériel est à effectuer'
+Optimal: Optimal
 'Optimal training range': "Zone d'entraînement optimale"
+'Optimal training zone': 'Optimal training zone'
 Other: Autre
 'Outdoor Sports': "Sports d'extérieur"
+Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Surentraîné (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': "Surentraîné – risque de blessure ou d'épuisement, récupération supplémentaire nécessaire"
 'Overall weekly training stress': "Stress d'entraînement hebdomadaire global"
@@ -228,6 +246,7 @@ Photos: Photos
 Pilates: Pilates
 'Please address these issues': 'Veuillez résoudre ces problèmes'
 'Polarised training (last 30 days)': 'Entraînement polarisé (30 derniers jours)'
+'Potential detraining': 'Potential detraining'
 Power: Puissance
 'Power distribution': 'Répartition de la puissance'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Alimenté par une estimation de {caloriesBurned} calories, soit environ {numberOfPizzaSlices} parts de pizza 🍕.'
@@ -237,6 +256,8 @@ Race: Course
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
 Ranking: Ranking
+'Recovery Timeline': 'Recovery Timeline'
+'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Réduction des émissions de carbone grâce aux déplacements domicile-travail'
 'Relative cost': 'Coût relatif'
 'Rest Days': 'Jours de repos'
@@ -261,9 +282,11 @@ Search: Rechercher
 Segments: Segments
 Sep: Sep
 'Show information': 'Afficher les informations'
+'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Depuis que j'ai commencé à utiliser Strava il y a {numberOfDaysAgo} le {startDate}, j'ai enregistré {totalDaysOfWorkingOut} jours actifs d'entraînement et d'aventure."
 Skateboard: Skateboard
 Skating: Patinage
+'Slightly fresh': 'Slightly fresh'
 'Slightly fresh – transitional zone': 'Légèrement frais – zone transitionnelle'
 Snowboard: Snowboard
 Snowshoe: 'Raquettes à neige'
@@ -281,6 +304,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistiques pour Strava'
 Stats: Statistiques
 'Stats per weekday': 'Statistiques par jour de la semaine'
+Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Séries
 Sun: Dim
@@ -288,6 +312,7 @@ Sunday: Dimanche
 Surfing: Surf
 Swim: Natation
 'TSB (Form)': 'TSB (État de forme)'
+'TSB positive in': 'TSB positive in'
 'Table Tennis': 'Tennis de table'
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'L''étiquette "{maintenanceTaskTag}" a été utilisée sur "{activityName}", mais le matériel référencé sur cette activité n''est pas attaché à ce composant.'
@@ -315,7 +340,6 @@ To: À
 'Trail Runs': Trail
 'Training Impulse - Training load metric that accounts for intensity and duration.': "Impulsion d'Entraînement - Métrique de charge d'entraînement qui tient compte de l'intensité et de la durée."
 'Training Load Analysis': "Analyse de la charge d'entraînement"
-'Training Load Analysis (6 week history)': "Analyse de la charge d'entraînement (historique sur 6 semaines)"
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': "Monotonie d'Entraînement - Ratio de la charge quotidienne moyenne à l'écart-type. Indique la variété d'entraînement."
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': "Balance du Stress d'Entraînement (Forme) – La différence entre la forme (CTL) et la fatigue (ATL). Reflète votre niveau de préparation à performer."
 'Training goals': 'Training goals'
@@ -382,6 +406,7 @@ bpm: bpm
 clear: effacer
 comments: commentaires
 compare: comparer
+day(s): day(s)
 days: jours
 'days needed for next Eddington': 'jours nécessaires pour le prochain Eddington'
 history: historique

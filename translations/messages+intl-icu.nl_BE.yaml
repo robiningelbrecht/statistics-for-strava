@@ -12,6 +12,7 @@
 '> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
 '>+25: Possible detraining': '>+25: Possible detraining'
 'A:C Ratio': 'A:C Ratio'
+'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fatigue)'
 'Active days': 'Active days'
 Activities: Activiteiten
@@ -58,6 +59,7 @@ Compare: Compare
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 Consistency: Consistency
 Crossfit: Crossfit
+'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Custom gear disabled'
 Cycling: Cycling
@@ -65,12 +67,14 @@ Cycling: Cycling
 'Daily activities': 'Daily activities'
 Dashboard: Dashboard
 Date: Date
+Day: Day
 'Days needed': 'Dagen nodig'
 'Daytime stats': 'Daytime statistieken'
 Dec: Dec
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Details: Details
+Detraining: Detraining
 Device: Apparaat
 Distance: Afstand
 'Distance breakdown': 'Distance breakdown'
@@ -91,6 +95,8 @@ Evening: Avond
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP historiek'
 'Fastest times': 'Fastest times'
+Fatigued: Fatigued
+'Fatigued - recovery needed': 'Fatigued - recovery needed'
 'Fatigued – productive heavy-training range': 'Fatigued – productive heavy-training range'
 Favourite: Favoriet
 Feb: Feb
@@ -103,6 +109,8 @@ Feb: Feb
 Fitness: Fitness
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Een Eddington-getal van 70 betekent bijvoorbeeld dat een fietser minstens 70 keer op een dag minstens 70 km of mijl heeft gefietst. Het is moeilijk om een hoog Eddington-getal te bereiken, want om van bijvoorbeeld 70 naar 75 te gaan, zijn (waarschijnlijk) meer dan vijf nieuwe langeafstandstrainingen nodig, omdat elke training korter dan 75 km niet meer wordt meegerekend.'
 'Form (TSB)': 'Form (TSB)'
+Fresh: Fresh
+'Fresh - ready to perform': 'Fresh - ready to perform'
 'Fresh – reduced training load': 'Fresh – reduced training load'
 Fri: Vr
 Friday: Vrijdag
@@ -128,11 +136,15 @@ HR: HR
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones'
 'Heart rate zones': Hartslagzones
 Heatmap: Heatmap
+'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: Hoog
+'High injury risk': 'High injury risk'
 'High monotony - increase variety': 'High monotony - increase variety'
+'High risk': 'High risk'
 'High risk - reduce volume': 'High risk - reduce volume'
 Hikes: Hikes
 History: Historiek
+'History (6 weeks)': 'History (6 weeks)'
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
 'How hard is your typical training session': 'How hard is your typical training session'
@@ -192,6 +204,8 @@ Morning: Ochtend
 'Mountain Bike Rides': 'Mountain Bike Ritten'
 'Moving time': Beweegtijd
 Name: Name
+Neutral: Neutral
+'Neutral - transitional': 'Neutral - transitional'
 'Neutral – short-term sustainable': 'Neutral – short-term sustainable'
 Night: Nacht
 'No activities': 'Geen activiteiten'
@@ -202,14 +216,18 @@ None: None
 Normalized: Normalized
 'Not supported': 'Not supported'
 Nov: Nov
+Now: Now
 'Number of activities per month': 'Number of activities per month'
 'Number of times completed': 'Number of times completed'
 Oct: Okt
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'One of your gear maintenance tasks is due'
+Optimal: Optimal
 'Optimal training range': 'Optimal training range'
+'Optimal training zone': 'Optimal training zone'
 Other: Other
 'Outdoor Sports': 'Outdoor Sports'
+Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
 'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
 'Overall weekly training stress': 'Overall weekly training stress'
@@ -228,6 +246,7 @@ Photos: Photos
 Pilates: Pilates
 'Please address these issues': 'Please address these issues'
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
+'Potential detraining': 'Potential detraining'
 Power: Kracht
 'Power distribution': Krachtverdeling
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
@@ -237,6 +256,8 @@ Race: Race
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
 Ranking: Ranking
+'Recovery Timeline': 'Recovery Timeline'
+'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
 'Relative cost': 'Relative cost'
 'Rest Days': 'Rest Days'
@@ -261,9 +282,11 @@ Search: Zoeken
 Segments: Segmenten
 Sep: Sep
 'Show information': 'Informatie tonen'
+'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skating
+'Slightly fresh': 'Slightly fresh'
 'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
 Snowboard: Snowboard
 Snowshoe: Snowshoe
@@ -281,6 +304,7 @@ Squash: Squash
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Stats
 'Stats per weekday': 'Stats per weekdag'
+Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Streaks
 Sun: Zon
@@ -288,6 +312,7 @@ Sunday: Zondag
 Surfing: Surfen
 Swim: Zwemmen
 'TSB (Form)': 'TSB (Form)'
+'TSB positive in': 'TSB positive in'
 'Table Tennis': Tafeltennis
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
@@ -315,7 +340,6 @@ To: Tot
 'Trail Runs': 'Trail Runs'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
 'Training Load Analysis': 'Training Load Analysis'
-'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
 'Training goals': 'Training goals'
@@ -382,6 +406,7 @@ bpm: bpm
 clear: clear
 comments: comments
 compare: compare
+day(s): day(s)
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
 history: history
