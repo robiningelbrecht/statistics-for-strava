@@ -1,19 +1,14 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 till +15: Tämligen redo. Bra balans mellan träning och återhämtning.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 till +25: Topp-fräsch, redo för tävling. Idealt  utvilad'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 till 0: Ackumulerad utmattning. Återhämtning pågår. Lämplig för lätt/teknisk träning.'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 till +10: Någorlunda redo. Övergångsfas; kortvarighet är bäst'
 '0.8-1.3: Safe training zone': '0.8-1.3: Riskfri träningsfas'
 '42-day fitness trend': '42-dagars träningstendens'
 '7-day fatigue level': '7-dagars utmattningsnivå'
 '< 0.8: Potential detraining': '< 0.8: Möjlig prestationsminskning'
 '< 1.5: Good variety in training': '< 1.5: Bra variation av träningsformer'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: Överdrivet utmattad. Skaderisk; kräver extra återhämtning'
 '> 1.3: Increased injury risk': '> 1.3: Ökad skaderisk'
 '> 2.0: High monotony, increased risk': '> 2.0: Hög enformighet, ökad risk'
-'>+25: Possible detraining': '>+25: Möjlig prestationsminskning'
 'A:C Ratio': 'A:C Förhållande'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Utmattning)'
+'Accumulated fatigue': 'Accumulated fatigue'
 'Active days': 'Aktiva dagar'
 Activities: Aktiviteter
 Activity: Aktivitet
@@ -74,7 +69,6 @@ Dec: Dec
 Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
-Detraining: Detraining
 Device: Enhet
 Distance: Distans
 'Distance breakdown': 'Sammanställning av sträckor'
@@ -95,9 +89,6 @@ Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
 'Fastest times': 'Snabbaste tiderna'
-Fatigued: Fatigued
-'Fatigued - recovery needed': 'Fatigued - recovery needed'
-'Fatigued – productive heavy-training range': 'Utmattad – produktiv massiv träningsbelastning'
 Favourite: Favoriter
 Feb: Feb
 'Filter on KOM segments': 'Filtrera på KOM segment'
@@ -107,11 +98,9 @@ Feb: Feb
 'Filter on sport type': 'Filtrera på sport'
 'Filter on starred segments': 'Filtrera på favorit segment'
 Fitness: Träning
+'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Som ett exempel skulle ett Eddingtontal på 70 innebära att en cyklist har cyklat minst 70 km eller miles under loppet av en dag vid minst 70 tillfällen. Att uppnå ett högt Eddingtontal är svårt, eftersom en övergång från, säg, 70 till 75 (förmodligen) kommer att kräva mer än fem nya långdistanspass, eftersom inga pass som är kortare än 75 km eller miles kommer att inkluderas i beräkningen.'
 'Form (TSB)': 'Träningsform (TSB)'
-Fresh: Fresh
-'Fresh - ready to perform': 'Fresh - ready to perform'
-'Fresh – reduced training load': 'Redo – minskad träningsbelastning'
 Fri: Fre
 Friday: Fredag
 From: Från
@@ -136,12 +125,12 @@ HR: Puls
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Pulszonfördelning under den senaste månaden. För effektiv polariserad träning bör dina träningspass huvudsakligen falla inom följande zoner'
 'Heart rate zones': Pulszoner
 Heatmap: Färgkarta
-'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: Hög
-'High injury risk': 'High injury risk'
+'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 'Hög monotoni - öka variationen'
 'High risk': 'High risk'
 'High risk - reduce volume': 'Hög risk - minska volymen'
+'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: Vandringar
 History: Historik
 'History (6 weeks)': 'History (6 weeks)'
@@ -173,6 +162,7 @@ Laps: Varv
 'Last maintenance': 'Senast underhållet'
 'Last {numberOfDays} days': 'Senaste {numberOfDays} dagarna'
 Lifetime: Lifetime
+'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
 Load: Load
 'Load (CTL/ATL)': 'Belastning (CTL/ATL)'
 'Loading data...': 'Laddar datan...'
@@ -192,6 +182,7 @@ May: May
 Medium: Mellan
 Metrics: Mätvärden
 'Mind & Body Sports': 'Sinne- och kroppssporter'
+'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Måttlig monotoni'
 Mon: Må
 Monday: Måndag
@@ -205,8 +196,6 @@ Morning: Morgon
 'Moving time': 'Tid i rörelse'
 Name: Namn
 Neutral: Neutral
-'Neutral - transitional': 'Neutral - transitional'
-'Neutral – short-term sustainable': 'Neutral – hållbart på kort sikt'
 Night: Natt
 'No activities': 'Inga aktivieter'
 'No data available': 'Ingen data tillgänglig'
@@ -224,12 +213,10 @@ Oct: Okt
 'One of your gear maintenance tasks is due': 'En av dina underhållsuppgifter behöver uppmärksamhet'
 Optimal: Optimal
 'Optimal training range': 'Optimal träning'
-'Optimal training zone': 'Optimal training zone'
 Other: Annat
 'Outdoor Sports': 'Utomhus sport'
 Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Överdrivet utmattad (–30)'
-'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Överdrivet utmattad – risk för skada eller utbrändhet, extra återhämtning behövs'
 'Overall weekly training stress': 'Sammanfattning för träning veckovis'
 'PB badges': PB-märken
 'PET bottles produced': 'PET flaskor producerade'
@@ -237,8 +224,8 @@ PRs: Rekord
 'PRs achieved per month': 'Rekord nådda per månad'
 Pace: Tempo
 'Pace distribution': 'Pace distribution'
+'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
-'Peak-fresh, race-ready – ideal taper sweet spot': 'Topp-fräsch, tävlings-redo - ideal träningsform'
 'Personal Records': 'Personliga Rekord'
 Photo: Bild
 Photos: Bilder
@@ -246,7 +233,6 @@ Photos: Bilder
 Pilates: Pilates
 'Please address these issues': 'Vänligen ta itu med dessa problem'
 'Polarised training (last 30 days)': 'Polariserad träning (senaste 30 dagarna)'
-'Potential detraining': 'Potential detraining'
 Power: Effekt
 'Power distribution': Effektfördelning
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
@@ -268,6 +254,7 @@ Ranking: Rankning
 Rewind: Tillbakablick
 'Rewind comparisons are only available on larger screens.': 'Tillbakablickar är endast tillgängliga på större skärmar.'
 Rides: Cykling
+'Risk of detraining': 'Risk of detraining'
 'Rock Climbing': Klättring
 'Roller Ski': Rullskidor
 Rowing: Rodd
@@ -287,7 +274,6 @@ Sep: Sep
 Skateboard: Skateboard
 Skating: Skridskoåkning
 'Slightly fresh': 'Slightly fresh'
-'Slightly fresh – transitional zone': 'Något redo - Övergångsfas'
 Snowboard: Snowboard
 Snowshoe: Snöskor
 Soccer: Fotboll
@@ -343,13 +329,13 @@ To: Till
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Träningsmonotoni - Förhållandet mellan genomsnittlig daglig belastning och standardavvikelse. Indikerar träningsvariation.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Träningsstress Balans (Form) – Skillnaden mellan träningsform (CTL) och utmattning (ATL). Återspeglar hur redo du är att prestera.'
 'Training goals': 'Training goals'
+'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: Tis
 Tuesday: Tisdag
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
 'User badge': Användarmärke
 'Velo Mobiles': Velomobil
-'Very fresh – possible detraining': 'Väldig redo – Potentiell prestationsminskning'
 'Very high': 'Väldigt hög'
 'View all': 'Visa alla'
 'View details': 'Visa detaljer'
@@ -436,4 +422,3 @@ workouts: träningspass
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Påbyggnads/utmattnings-fasen. Produktiv massiv träningsbelastning'

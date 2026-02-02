@@ -133,13 +133,13 @@ final class TrainingMetrics
         return array_values(array_slice($this->tsbValues, -$numberOfDays));
     }
 
-    public function getCurrentTsb(): ?float
+    public function getCurrentTsb(): ?TSB
     {
         if (empty($this->tsbValues)) {
             return null;
         }
 
-        return end($this->tsbValues);
+        return TSB::of(end($this->tsbValues));
     }
 
     /**

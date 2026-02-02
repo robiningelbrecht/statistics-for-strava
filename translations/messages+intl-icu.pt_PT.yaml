@@ -1,19 +1,14 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: Moderadamente descansado. Bom balanço entre forma e recuperação.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: Pico de descanso, pronto para competir. Ponto de foco ideal'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Fadiga acumulada. Recuperação em progresso. Adequado para treino leve/técnico.'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Ligeiramente descansado. Em transição; breve é melhor'
 '0.8-1.3: Safe training zone': '0.8-1.3: Zona de treino segura'
 '42-day fitness trend': 'tendência de fitness 42-dias'
 '7-day fatigue level': 'Nível de fadiga 7-dias'
 '< 0.8: Potential detraining': '< 0.8: "Detreino" potencial'
 '< 1.5: Good variety in training': '< 1.5: Boa variedade de treino'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: Sobre-fatigado. Risco de lesão; exige recuperação extra'
 '> 1.3: Increased injury risk': '> 1.3: Risco de lesão acrescido'
 '> 2.0: High monotony, increased risk': '> 2.0: Monotonia elevada, risco acrescido'
-'>+25: Possible detraining': '>+25: "Detreino" provável'
 'A:C Ratio': 'Rácio A:C'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fadiga)'
+'Accumulated fatigue': 'Accumulated fatigue'
 'Active days': 'Dias activo'
 Activities: Atividades
 Activity: Activity
@@ -74,7 +69,6 @@ Dec: Dez
 Density: Density
 'Detailed instructions are available in the documentation on': 'Instruções detalhadas disponíveis na documentação em'
 Details: Details
-Detraining: Detraining
 Device: Dispositivo
 Distance: Distância
 'Distance breakdown': 'Divisão da distância'
@@ -95,9 +89,6 @@ Evening: 'Fim da tarde'
 'Excludes commutes': 'Exclui viagens escritório'
 'FTP history': 'Histórico de FTP'
 'Fastest times': 'Fastest times'
-Fatigued: Fatigued
-'Fatigued - recovery needed': 'Fatigued - recovery needed'
-'Fatigued – productive heavy-training range': 'Fatigado – intervalo de treino intensoe produtivo'
 Favourite: Favorito
 Feb: Fev
 'Filter on KOM segments': 'Filtrar por segmentos KOM'
@@ -107,11 +98,9 @@ Feb: Fev
 'Filter on sport type': 'Filtrar por tipo de desporto'
 'Filter on starred segments': 'Filtrar por segmentos favoritos'
 Fitness: Forma
+'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Por exemplo, um número de Eddington de 70 implica que um ciclista percorreu pelo menos 70 km num dia em pelo menos 70 ocasiões. Atingir um número elevado de Eddington é difícil, pois passar de 70 para 75 exigirá (provavelmente) mais de cinco novos treinos de longa distância, uma vez que qualquer treino inferior a 75 km deixará de ser incluído no cálculo.'
 'Form (TSB)': 'Forma (TSB)'
-Fresh: Fresh
-'Fresh - ready to perform': 'Fresh - ready to perform'
-'Fresh – reduced training load': 'Fresco – carga de treino reduzida'
 Fri: Sex
 Friday: Sexta-feira
 From: De
@@ -136,12 +125,12 @@ HR: FC
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones'
 'Heart rate zones': 'Zonas de frequência cardíaca'
 Heatmap: 'Mapa de calor'
-'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: Alta
-'High injury risk': 'High injury risk'
+'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 'Elevada monotonia - diversificar'
 'High risk': 'High risk'
 'High risk - reduce volume': 'Risco elevado - reduzir número'
+'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: Caminhadas
 History: Histórico
 'History (6 weeks)': 'History (6 weeks)'
@@ -173,6 +162,7 @@ Laps: Voltas
 'Last maintenance': 'Última manutenção'
 'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
 Lifetime: Lifetime
+'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
 Load: Load
 'Load (CTL/ATL)': 'Carga (CTL/ATL)'
 'Loading data...': 'A carregar dados...'
@@ -192,6 +182,7 @@ May: Mai
 Medium: Médio
 Metrics: Métricas
 'Mind & Body Sports': 'Desportos para Corpo e Mente'
+'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Monotonia moderada'
 Mon: Seg
 Monday: Segunda-feira
@@ -205,8 +196,6 @@ Morning: Manhã
 'Moving time': 'Tempo em movimento'
 Name: Name
 Neutral: Neutral
-'Neutral - transitional': 'Neutral - transitional'
-'Neutral – short-term sustainable': 'Neutro – sustentável a curto prazo'
 Night: Noite
 'No activities': 'Sem atividades'
 'No data available': 'No data available'
@@ -224,12 +213,10 @@ Oct: Out
 'One of your gear maintenance tasks is due': 'Uma das tarefas de manutenção de equipamento está atrasada'
 Optimal: Optimal
 'Optimal training range': 'Intervalo de treino ideal'
-'Optimal training zone': 'Optimal training zone'
 Other: Outro
 'Outdoor Sports': 'Desportos ao Ar Livre'
 Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Sobre-fatigado (–30)'
-'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Sobre-fatigado – risco de lesão ou esgotamento, recuperação extra necessária'
 'Overall weekly training stress': 'Stress de treino geral semanal'
 'PB badges': 'Emblemas de Recordes'
 'PET bottles produced': 'PET bottles produced'
@@ -237,8 +224,8 @@ PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
 'Pace distribution': 'Pace distribution'
+'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
-'Peak-fresh, race-ready – ideal taper sweet spot': 'Pico de descanso, pronto para competir– ponto de foco ideal'
 'Personal Records': Recordes
 Photo: Foto
 Photos: Fotos
@@ -246,7 +233,6 @@ Photos: Fotos
 Pilates: Pilates
 'Please address these issues': 'Por favor resolva estas situaçãoes'
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
-'Potential detraining': 'Potential detraining'
 Power: Potência
 'Power distribution': 'Distribuição da potência'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
@@ -268,6 +254,7 @@ Ranking: Ranking
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Comparações Rewind apenas estão disponíveis em ecrãs maiores.'
 Rides: 'Passeios de bicicleta'
+'Risk of detraining': 'Risk of detraining'
 'Rock Climbing': Escalada
 'Roller Ski': 'Esqui de Rodas'
 Rowing: Remo
@@ -287,7 +274,6 @@ Sep: Set
 Skateboard: Skate
 Skating: Patinagem
 'Slightly fresh': 'Slightly fresh'
-'Slightly fresh – transitional zone': 'Frescura moderada – zona de transição'
 Snowboard: Snowboard
 Snowshoe: 'Raquetes de Neve'
 Soccer: Futebol
@@ -343,13 +329,13 @@ To: Até
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Monotonia de Treino - Rácio da média diária de carga vs. desvio padrão. Indica variedade de treino.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Balanço de Stress de Treino (Forma) – A diferença entre (CTL) e fadiga (ATL). Reflecte prontidão para treinar ou competir.'
 'Training goals': 'Training goals'
+'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: Ter
 Tuesday: Terça-feira
 Unspecified: 'Não especificado'
 'Updated on': 'Atualizado em'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Móveis'
-'Very fresh – possible detraining': 'Frescura elevada – "detreino" provável'
 'Very high': 'Muito alta'
 'View all': 'Ver tudo'
 'View details': 'Ver detalhes'
@@ -436,4 +422,3 @@ workouts: treinos
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Zona de crescimento/fadiga. Intervalo productivo de treino intenso'

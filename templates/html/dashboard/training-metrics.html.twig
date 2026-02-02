@@ -37,44 +37,21 @@
         <div data-popover id="popover-tsb-{{ context }}" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
             <div class="p-2 space-y-2">
                 <p>{{ "Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform."|trans }}</p>
-                <p>{{ ">+25: Possible detraining"|trans }}</p>
-                <p>{{ "+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot"|trans }}</p>
-                <p>{{ "+10 to +15: Moderately fresh. Good balance of fitness and recovery."|trans }}</p>
-                <p>{{ "0 to +10: Slightly fresh. Transitional; brief is best"|trans }}</p>
-                <p>{{ "-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training."|trans }}</p>
-                <p>{{ "–10 to –30: Build/fatigue zone. Productive heavy-training range"|trans }}</p>
-                <p>{{ "< –30: Over-fatigued. Risk of injury; require extra recovery"|trans }}</p>
+                <ul class="space-y-2">
+                    {% for tsbStatus in enum('App\\Domain\\Dashboard\\Widget\\TrainingLoad\\TSBStatus').cases() %}
+                        <li><span class="{{ tsbStatus.getTextColor() }} font-semibold">{{ tsbStatus.getRange() }}</span>: {{ tsbStatus|trans }} - {{ tsbStatus|transDescription }}</li>
+                    {% endfor %}
+                </ul>
                 <p class="text-xs italic mt-2">{{ "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."|trans }}</p>
             </div>
         </div>
     </div>
     {% set currentTsb = trainingMetrics.getCurrentTsb() %}
-    {% if currentTsb > 10 %}
-        {% set currentTsbColor = 'text-green-500' %}
-    {% elseif currentTsb > -10 %}
-        {% set currentTsbColor = 'text-yellow-500' %}
-    {% else %}
-        {% set currentTsbColor = 'text-red-500' %}
-    {% endif %}
-    <div class="text-xl font-bold {{ currentTsbColor }}">
-        {{ currentTsb|formatNumber(1) }}
+    <div class="text-xl font-bold {{ currentTsb.getStatus().getTextColor() }}">
+        {{ currentTsb.getValue()|formatNumber(1) }}
     </div>
     <div class="text-xs text-gray-500 truncate">
-        {% if currentTsb > 25 %}
-            {{ "Very fresh – possible detraining"|trans }}
-        {% elseif currentTsb > 15 %}
-            {{ "Peak-fresh, race-ready – ideal taper sweet spot"|trans }}
-        {% elseif currentTsb > 10 %}
-            {{ "Fresh – reduced training load"|trans }}
-        {% elseif currentTsb > 0 %}
-            {{ "Slightly fresh – transitional zone"|trans }}
-        {% elseif currentTsb > -10 %}
-            {{ "Neutral – short-term sustainable"|trans }}
-        {% elseif currentTsb > -30 %}
-            {{ "Fatigued – productive heavy-training range"|trans }}
-        {% else %}
-            {{ "Over-fatigued – risk of injury or burnout, extra recovery needed"|trans }}
-        {% endif %}
+        {{ currentTsb.getStatus()|trans }}
     </div>
 </div>
 <div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
@@ -93,7 +70,7 @@
         </div>
     </div>
     {% set currentAcRatio = trainingMetrics.getCurrentAcRatio() %}
-    <div class="text-xl font-bold {{ currentAcRatio > 1.3 ? 'text-red-500' : (currentAcRatio < 0.8 ? 'text-yellow-500' : 'text-green-500') }}">
+    <div class="text-xl font-bold {{ currentAcRatio > 1.3 ? 'text-red-600' : (currentAcRatio < 0.8 ? 'text-yellow-600' : 'text-green-600') }}">
         {{ currentAcRatio|formatNumber(2) }}
     </div>
     <div class="text-xs text-gray-500 truncate">
@@ -128,7 +105,7 @@
         </div>
     </div>
     {% set currentMonotony = trainingMetrics.getCurrentMonotony() %}
-    <div class="text-xl font-bold {{ currentMonotony > 2.0 ? 'text-red-500' : (currentMonotony > 1.5 ? 'text-yellow-500' : 'text-green-500') }}">
+    <div class="text-xl font-bold {{ currentMonotony > 2.0 ? 'text-red-600' : (currentMonotony > 1.5 ? 'text-yellow-600' : 'text-green-600') }}">
         {{ currentMonotony|formatNumber(2) }}
     </div>
     <div class="text-xs text-gray-500 truncate">
