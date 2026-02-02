@@ -16,7 +16,7 @@ final class SegmentEffortBuilder
     private SegmentEffortId $segmentEffortId;
     private SegmentId $segmentId;
     private ActivityId $activityId;
-    private readonly SerializableDateTime $startDateTime;
+    private SerializableDateTime $startDateTime;
     private string $name;
     private float $elapsedTimeInSeconds;
     private Kilometer $distance;
@@ -114,6 +114,13 @@ final class SegmentEffortBuilder
     public function withRank(?int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function withStartDateTime(SerializableDateTime $startDateTime): self
+    {
+        $this->startDateTime = $startDateTime;
 
         return $this;
     }

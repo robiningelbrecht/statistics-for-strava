@@ -36,11 +36,11 @@ final class ActivityStream implements SupportsAITooling
         #[ORM\Column(type: 'json', nullable: true)]
         private array $computedFieldsState,
         #[ORM\Column(type: 'integer', nullable: true)]
-        private ?int $normalizedPower,
+        private readonly ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
-        private array $valueDistribution,
+        private readonly array $valueDistribution,
         #[ORM\Column(type: 'json', nullable: true)]
-        private array $bestAverages = [],
+        private readonly array $bestAverages = [],
     ) {
     }
 
@@ -151,10 +151,14 @@ final class ActivityStream implements SupportsAITooling
     /**
      * @param array<int, int> $valueDistribution
      */
-    public function updateValueDistribution(array $valueDistribution): void
+    public function withValueDistribution(array $valueDistribution): self
     {
-        $this->valueDistribution = $valueDistribution;
         $this->computedFieldsState[self::COMPUTED_FIELD_VALUE_DISTRIBUTION] = true;
+
+        return clone ($this, [
+            'valueDistribution' => $valueDistribution,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     /**
@@ -168,10 +172,14 @@ final class ActivityStream implements SupportsAITooling
     /**
      * @param array<int, int> $averages
      */
-    public function updateBestAverages(array $averages): void
+    public function withBestAverages(array $averages): self
     {
-        $this->bestAverages = $averages;
         $this->computedFieldsState[self::COMPUTED_FIELD_BEST_AVERAGES] = true;
+
+        return clone ($this, [
+            'bestAverages' => $averages,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     public function calculateBestAverageForTimeInterval(int $timeIntervalInSeconds): ?int
@@ -200,12 +208,14 @@ final class ActivityStream implements SupportsAITooling
         return $this->normalizedPower;
     }
 
-    public function updateNormalizedPower(int $normalizedPower): self
+    public function withNormalizedPower(int $normalizedPower): self
     {
-        $this->normalizedPower = $normalizedPower;
         $this->computedFieldsState[self::COMPUTED_FIELD_NORMALIZED_POWER] = true;
 
-        return $this;
+        return clone ($this, [
+            'normalizedPower' => $normalizedPower,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     public function exportForAITooling(): array

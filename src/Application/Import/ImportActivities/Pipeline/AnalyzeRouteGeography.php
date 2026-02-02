@@ -46,8 +46,6 @@ final readonly class AnalyzeRouteGeography implements ActivityImportStep
             ]);
         }
 
-        $activity->updateRouteGeography($routeGeography);
-
-        return $context->withActivity($activity);
+        return $context->withActivity($activity->withRouteGeography($routeGeography));
     }
 }

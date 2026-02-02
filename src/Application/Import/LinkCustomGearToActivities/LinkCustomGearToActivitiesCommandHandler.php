@@ -78,27 +78,27 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
             $activityRawData = $activityWithRawData->getRawData();
 
             // Make sure any previous linked gear is removed.
-            $activity->emptyGear();
             $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
-                activity: $activity,
+                activity: $activity->withEmptyGear(),
                 rawData: $activityRawData
             ));
         }
 
         /** @var CustomGear $customGear */
         foreach ($customGears as $customGear) {
-            $customGear->updateDistance(Meter::zero());
+            $customGear = $customGear->withDistance(Meter::zero());
             $activitiesTaggedWithCustomGear = $activitiesWithCustomGearTag[$customGear->getTag()] ?? [];
 
+            /** @var Activity $activity */
             foreach ($activitiesTaggedWithCustomGear as $activity) {
                 $activityWithRawData = $this->activityWithRawDataRepository->find($activity->getId());
                 $activityRawData = $activityWithRawData->getRawData();
 
                 // Link activity to custom gear.
-                $activity->updateGear($customGear->getId());
+                $activity = $activity->withGear($customGear->getId());
 
                 // Keep track of the distance for the custom gear.
-                $customGear->updateDistance(Kilometer::from(
+                $customGear = $customGear->withDistance(Kilometer::from(
                     $customGear->getDistance()->toFloat() + $activity->getDistance()->toFloat())->toMeter()
                 );
 

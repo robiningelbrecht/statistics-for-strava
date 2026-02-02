@@ -19,6 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(name: 'SegmentEffort_segmentIndex', columns: ['segmentId'])]
 #[ORM\Index(name: 'SegmentEffort_activityIndex', columns: ['activityId'])]
+#[ORM\Index(name: 'SegmentEffort_segmentElapsedTime', columns: ['segmentId', 'elapsedTimeInSeconds'])]
+#[ORM\Index(name: 'SegmentEffort_segmentStartDateTime', columns: ['segmentId', 'startDateTime'])]
 final readonly class SegmentEffort implements SupportsAITooling
 {
     use ProvideTimeFormats;

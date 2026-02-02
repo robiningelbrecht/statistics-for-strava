@@ -36,9 +36,8 @@ final readonly class DetermineActivityWeather implements ActivityImportStep
                 ),
                 on: $activity->getStartDate()
             );
-            $activity->updateWeather($weather);
 
-            return $context->withActivity($activity);
+            return $context->withActivity($activity->withWeather($weather));
         } catch (OpenMeteoForecastApiCallHasFailed|OpenMeteoArchiveApiCallHasFailed) {
         }
 

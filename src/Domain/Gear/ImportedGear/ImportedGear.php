@@ -14,6 +14,7 @@ use Money\Money;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'Gear')]
+#[ORM\Index(name: 'Gear_type', columns: ['type'])]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string', options: ['default' => GearType::IMPORTED->value])]
 class ImportedGear implements Gear
@@ -28,11 +29,11 @@ class ImportedGear implements Gear
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly SerializableDateTime $createdOn,
         #[ORM\Column(type: 'integer')]
-        private Meter $distanceInMeter,
+        private readonly Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
-        private string $name,
+        private readonly string $name,
         #[ORM\Column(type: 'boolean')]
-        private bool $isRetired,
+        private readonly bool $isRetired,
     ) {
         $this->activityTypes = ActivityTypes::empty();
     }
@@ -74,11 +75,11 @@ class ImportedGear implements Gear
         return $this->gearId;
     }
 
-    public function updateName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
-
-        return $this;
+        return clone ($this, [
+            'name' => $name,
+        ]);
     }
 
     public function getOriginalName(): string
@@ -101,18 +102,18 @@ class ImportedGear implements Gear
         return $this->isRetired;
     }
 
-    public function updateIsRetired(bool $isRetired): self
+    public function withIsRetired(bool $isRetired): static
     {
-        $this->isRetired = $isRetired;
-
-        return $this;
+        return clone ($this, [
+            'isRetired' => $isRetired,
+        ]);
     }
 
-    public function updateDistance(Meter $distance): self
+    public function withDistance(Meter $distance): static
     {
-        $this->distanceInMeter = $distance;
-
-        return $this;
+        return clone ($this, [
+            'distanceInMeter' => $distance,
+        ]);
     }
 
     public function getCreatedOn(): SerializableDateTime
@@ -129,7 +130,7 @@ class ImportedGear implements Gear
         return $this->imageSrc;
     }
 
-    public function withImageSrc(string $imageSrc): self
+    public function withImageSrc(string $imageSrc): static
     {
         return clone ($this, [
             'imageSrc' => $imageSrc,

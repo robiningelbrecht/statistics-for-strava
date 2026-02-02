@@ -19,6 +19,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(name: 'Segment_detailsHaveBeenImported', columns: ['detailsHaveBeenImported'])]
 final class Segment implements SupportsAITooling
 {
     private ?SegmentEffort $bestEffort = null;
@@ -45,11 +46,11 @@ final class Segment implements SupportsAITooling
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $countryCode,
         #[ORM\Column(type: 'boolean', nullable: true)]
-        private bool $detailsHaveBeenImported,
+        private readonly bool $detailsHaveBeenImported,
         #[ORM\Column(type: 'text', nullable: true)]
-        private ?EncodedPolyline $polyline,
+        private readonly ?EncodedPolyline $polyline,
         #[ORM\Embedded(class: Coordinate::class)]
-        private ?Coordinate $startingCoordinate,
+        private readonly ?Coordinate $startingCoordinate,
     ) {
     }
 
@@ -224,9 +225,9 @@ final class Segment implements SupportsAITooling
 
     public function flagDetailsAsImported(): self
     {
-        $this->detailsHaveBeenImported = true;
-
-        return $this;
+        return clone ($this, [
+            'detailsHaveBeenImported' => true,
+        ]);
     }
 
     public function getPolyline(): ?EncodedPolyline
@@ -234,11 +235,11 @@ final class Segment implements SupportsAITooling
         return $this->polyline;
     }
 
-    public function updatePolyline(?EncodedPolyline $polyline): self
+    public function withPolyline(?EncodedPolyline $polyline): self
     {
-        $this->polyline = $polyline;
-
-        return $this;
+        return clone ($this, [
+            'polyline' => $polyline,
+        ]);
     }
 
     public function getStartingCoordinate(): ?Coordinate
