@@ -36,8 +36,8 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         $this->assertEquals([2 => 3.2], $stream->getValueDistribution());
         $this->assertEquals(
             [
-                'bestAverages'=> true,
-                'valueDistribution'=> true,
+                'bestAverages' => true,
+                'valueDistribution' => true,
             ],
             $stream->getComputedFieldsState()
         );
