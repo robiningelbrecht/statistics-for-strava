@@ -17,12 +17,12 @@ final readonly class TranslationTwigExtension
     }
 
     #[AsTwigFilter('transDescription')]
-    public function transDescription(?TranslatableWithDescription $message, array|string $arguments = [], ?string $locale = null): string
+    public function transDescription(TranslatableWithDescription $message): string
     {
         if ($message instanceof TranslatableMessage && '' === $message->getMessage()) {
             return '';
         }
 
-        return $message->transDescription($this->translator, $locale ?? (\is_string($arguments) ? $arguments : null));
+        return $message->transDescription($this->translator);
     }
 }
