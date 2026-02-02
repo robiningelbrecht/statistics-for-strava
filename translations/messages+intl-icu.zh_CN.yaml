@@ -1,19 +1,14 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: 中等精力充沛。体能和恢复情况良好平衡。'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: 巅峰状态，最佳比赛状态。理想的减量训练状态'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: 疲劳累积。恢复中，适合轻度/技术性训练。'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: 略微恢复。过渡期；建议简短训练。'
 '0.8-1.3: Safe training zone': '0.8-1.3: 健康训练区'
 '42-day fitness trend': 42天健身趋势
 '7-day fatigue level': 7天疲劳水平
 '< 0.8: Potential detraining': '< 0.8: 训练效果可能下降'
 '< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: 过度疲劳。存在受伤风险；需要额外恢复'
 '> 1.3: Increased injury risk': '> 1.3: 受伤风险增加'
 '> 2.0: High monotony, increased risk': '> 2.0: 单调性高，风险增加'
-'>+25: Possible detraining': '>+25: 训练效果可能下降'
 'A:C Ratio': 'A:C 比值'
 'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (疲劳)'
+'Accumulated fatigue': 'Accumulated fatigue'
 'Active days': 训练天数
 Activities: 活动
 Activity: 活动
@@ -74,7 +69,6 @@ Dec: 十二月
 Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 Details: 详情
-Detraining: Detraining
 Device: 设备
 Distance: 距离
 'Distance breakdown': 距离分解
@@ -95,9 +89,6 @@ Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
 'Fastest times': 最快时间
-Fatigued: Fatigued
-'Fatigued - recovery needed': 'Fatigued - recovery needed'
-'Fatigued – productive heavy-training range': '疲惫 — 最佳高强度训练范围'
 Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
@@ -107,11 +98,9 @@ Feb: 二月
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
 Fitness: 健身
+'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 例如，埃丁顿数为70意味着骑行者在至少70天内每天骑行至少70公里或英里。达到高埃丁顿数很困难，因为从70到75可能需要超过五次新的长距离锻炼，因为任何少于75公里或英里的锻炼将不再包括在计算中。
 'Form (TSB)': '状态 (TSB)'
-Fresh: Fresh
-'Fresh - ready to perform': 'Fresh - ready to perform'
-'Fresh – reduced training load': '精力充沛 — 适合减少训练负荷'
 Fri: 周五
 Friday: 星期五
 From: 从
@@ -136,12 +125,12 @@ HR: 心率
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 过去一个月的心率区间分布。为了进行有效的极化训练，您的训练应主要在以下区间内进行。
 'Heart rate zones': 心率区间
 Heatmap: 热图
-'Heavy fatigue - rest recommended': 'Heavy fatigue - rest recommended'
 High: 高
-'High injury risk': 'High injury risk'
+'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 单调性高——增加多样性
 'High risk': 'High risk'
 'High risk - reduce volume': 风险高——减少运动量
+'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: 徒步
 History: 历史
 'History (6 weeks)': 'History (6 weeks)'
@@ -173,6 +162,7 @@ Laps: 圈
 'Last maintenance': 最后维护
 'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
+'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
 Load: Load
 'Load (CTL/ATL)': '负荷 (CTL/ATL)'
 'Loading data...': 加载数据中...
@@ -192,6 +182,7 @@ May: 五月
 Medium: 中等
 Metrics: Metrics
 'Mind & Body Sports': 心灵与身体运动
+'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 适度单调性
 Mon: 周一
 Monday: 星期一
@@ -205,8 +196,6 @@ Morning: 早晨
 'Moving time': 移动时间
 Name: 名称
 Neutral: Neutral
-'Neutral - transitional': 'Neutral - transitional'
-'Neutral – short-term sustainable': '适中 — 适合短期训练'
 Night: 夜晚
 'No activities': 没有活动
 'No data available': 没有可用数据
@@ -224,12 +213,10 @@ Oct: 十月
 'One of your gear maintenance tasks is due': 您有装备需维护
 Optimal: Optimal
 'Optimal training range': 最佳训练范围
-'Optimal training zone': 'Optimal training zone'
 Other: 其他
 'Outdoor Sports': 户外运动
 Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': '过度疲劳 （–30）'
-'Over-fatigued – risk of injury or burnout, extra recovery needed': '过度疲劳 – 可能受伤或过度训练，需要额外恢复'
 'Overall weekly training stress': 每周训练负荷总览
 'PB badges': PB徽章
 'PET bottles produced': PET瓶量
@@ -237,8 +224,8 @@ PRs: PRs
 'PRs achieved per month': 每月PRs
 Pace: 步速
 'Pace distribution': 步速分布
+'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
-'Peak-fresh, race-ready – ideal taper sweet spot': 巅峰状态，最佳比赛状态。理想的减量训练状态
 'Personal Records': 个人记录
 Photo: 照片
 Photos: 照片
@@ -246,7 +233,6 @@ Photos: 照片
 Pilates: 普拉提
 'Please address these issues': 请解决这些问题
 'Polarised training (last 30 days)': 极化训练（过去30天）
-'Potential detraining': 'Potential detraining'
 Power: 功率
 'Power distribution': 功率分布
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
@@ -268,6 +254,7 @@ Ranking: Ranking
 Rewind: 回顾
 'Rewind comparisons are only available on larger screens.': 回顾对比仅适用于大屏幕。
 Rides: 骑行
+'Risk of detraining': 'Risk of detraining'
 'Rock Climbing': 攀岩
 'Roller Ski': 轮滑
 Rowing: 划船
@@ -287,7 +274,6 @@ Sep: 九月
 Skateboard: 滑板
 Skating: 滑冰
 'Slightly fresh': 'Slightly fresh'
-'Slightly fresh – transitional zone': '略微精力充沛 — 适合过渡期'
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
@@ -343,13 +329,13 @@ To: 到
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': '训练单调性 - 平均每日负荷与标准差的比值，反映训练多样性。'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': '训练压力平衡（状态）- 体能（CTL）与疲劳（ATL）之间的差异，反映您的运动准备程度。'
 'Training goals': 'Training goals'
+'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: 周二
 Tuesday: 星期二
 Unspecified: 未指定
 'Updated on': 更新于
 'User badge': 用户徽章
 'Velo Mobiles': 躺车
-'Very fresh – possible detraining': '新鲜 – 可能需要停止训练。'
 'Very high': 非常高
 'View all': 查看全部
 'View details': 查看详情
@@ -436,4 +422,3 @@ workouts: 锻炼
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: 构建/疲劳区。高效的高强度训练范围'

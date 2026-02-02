@@ -41,7 +41,7 @@
             <!-- Forecast Tab -->
             <div id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
                 <div class="space-y-4">
-                    <p class="text-xs text-gray-600">{{ "Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days."|trans }}</p>
+                    <p class="text-xs text-gray-500">{{ "Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days."|trans }}</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
                             <h4 class="text-sm font-semibold text-gray-700 mb-2">{{ "Current Status"|trans }}</h4>
@@ -49,14 +49,14 @@
                                 <div>
                                     <div class="text-xs text-gray-500">{{ "TSB (Form)"|trans }}</div>
                                     {% set currentTsb = trainingMetrics.getCurrentTsb() %}
-                                    <div class="text-xl font-bold {{ currentTsb > 10 ? 'text-green-500' : (currentTsb > -10 ? 'text-yellow-500' : 'text-red-500') }}">
-                                        {{ currentTsb|formatNumber(1) }}
+                                    <div class="text-xl font-bold {{ currentTsb.getStatus().getTextColor() }}">
+                                        {{ currentTsb.getValue()|formatNumber(1) }}
                                     </div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">{{ "A:C Ratio"|trans }}</div>
                                     {% set currentAcRatio = trainingMetrics.getCurrentAcRatio() %}
-                                    <div class="text-xl font-bold {{ currentAcRatio > 1.3 ? 'text-red-500' : (currentAcRatio < 0.8 ? 'text-yellow-500' : 'text-green-500') }}">
+                                    <div class="text-xl font-bold {{ currentAcRatio > 1.3 ? 'text-red-600' : (currentAcRatio < 0.8 ? 'text-yellow-600' : 'text-green-600') }}">
                                         {{ currentAcRatio|formatNumber(2) }}
                                     </div>
                                 </div>
@@ -68,21 +68,21 @@
                                 <div>
                                     <div class="text-xs text-gray-500">{{ "TSB positive in"|trans }}</div>
                                     {% if trainingLoadForecast.getDaysUntilTsbHealthy() %}
-                                        <div class="text-xl font-bold text-green-500">{{ trainingLoadForecast.getDaysUntilTsbHealthy() }} {{ "day(s)"|trans }}</div>
+                                        <div class="text-xl font-bold text-green-600">{{ trainingLoadForecast.getDaysUntilTsbHealthy() }} {{ "day(s)"|trans }}</div>
                                     {% elseif trainingMetrics.getCurrentTsb() > 0 %}
-                                        <div class="text-xl font-bold text-green-500">{{ "Now"|trans }}</div>
+                                        <div class="text-xl font-bold text-green-600">{{ "Now"|trans }}</div>
                                     {% else %}
-                                        <div class="text-xl font-bold text-yellow-500">&gt; 7 {{ "days"|trans }}</div>
+                                        <div class="text-xl font-bold text-yellow-600">&gt; 7 {{ "days"|trans }}</div>
                                     {% endif %}
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">{{ "A:C optimal in"|trans }}</div>
                                     {% if trainingLoadForecast.getDaysUntilAcRatioHealthy() %}
-                                        <div class="text-xl font-bold text-green-500">{{ trainingLoadForecast.getDaysUntilAcRatioHealthy() }} {{ "day(s)"|trans }}</div>
+                                        <div class="text-xl font-bold text-green-600">{{ trainingLoadForecast.getDaysUntilAcRatioHealthy() }} {{ "day(s)"|trans }}</div>
                                     {% elseif trainingMetrics.getCurrentAcRatio() >= 0.8 and trainingMetrics.getCurrentAcRatio() <= 1.3 %}
-                                        <div class="text-xl font-bold text-green-500">{{ "Now"|trans }}</div>
+                                        <div class="text-xl font-bold text-green-600">{{ "Now"|trans }}</div>
                                     {% else %}
-                                        <div class="text-xl font-bold text-yellow-500">&gt; 7 {{ "days"|trans }}</div>
+                                        <div class="text-xl font-bold text-yellow-600">&gt; 7 {{ "days"|trans }}</div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -102,32 +102,15 @@
                             <tbody>
                             {% for item in trainingLoadForecast.getProjection() %}
                                 <tr class="bg-white border-b last:border-b-0">
+                                    {% set tsbStatus = item.tsb.getStatus() %}
                                     <td class="px-4 py-3 font-medium text-gray-900">{{ item.day|date("M j") }}</td>
                                     <td class="px-4 py-3">
-                                        {% if item.tsbStatus == 'fresh' or item.tsbStatus == 'slightly_fresh' %}
-                                            <span class="text-green-600 font-semibold">{{ item.tsb }}</span>
-                                        {% elseif item.tsbStatus == 'neutral' %}
-                                            <span class="text-yellow-600 font-semibold">{{ item.tsb }}</span>
-                                        {% elseif item.tsbStatus == 'detraining' %}
-                                            <span class="text-orange-500 font-semibold">{{ item.tsb }}</span>
-                                        {% else %}
-                                            <span class="text-red-600 font-semibold">{{ item.tsb }}</span>
-                                        {% endif %}
+                                        <span class="font-semibold {{ tsbStatus.getTextColor() }}">{{ item.tsb.getValue() }}</span>
                                     </td>
                                     <td class="px-4 py-3">
-                                        {% if item.tsbStatus == 'detraining' %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800">{{ "Detraining"|trans }}</span>
-                                        {% elseif item.tsbStatus == 'fresh' %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">{{ "Fresh"|trans }}</span>
-                                        {% elseif item.tsbStatus == 'slightly_fresh' %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">{{ "Slightly fresh"|trans }}</span>
-                                        {% elseif item.tsbStatus == 'neutral' %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">{{ "Neutral"|trans }}</span>
-                                        {% elseif item.tsbStatus == 'fatigued' %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ "Fatigued"|trans }}</span>
-                                        {% else %}
-                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">{{ "Over-fatigued"|trans }}</span>
-                                        {% endif %}
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ tsbStatus.getPillColors() }}">
+                                            {{ tsbStatus|trans }}
+                                        </span>
                                     </td>
                                     <td class="px-4 py-3">
                                         {% if item.acRatioStatus == 'optimal' %}
@@ -151,27 +134,6 @@
                                 {% endfor %}
                             </tbody>
                         </table>
-                    </div>
-                    <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                            <div>
-                                <div class="font-medium text-gray-700 mb-1">{{ "TSB (Form)"|trans }}</div>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li><span class="text-green-600 font-semibold">&gt; +10:</span> {{ "Fresh - ready to perform"|trans }}</li>
-                                    <li><span class="text-yellow-600 font-semibold">0 to +10:</span> {{ "Neutral - transitional"|trans }}</li>
-                                    <li><span class="text-red-600 font-semibold">-10 to 0:</span> {{ "Fatigued - recovery needed"|trans }}</li>
-                                    <li><span class="text-red-600 font-semibold">&lt; -10:</span> {{ "Heavy fatigue - rest recommended"|trans }}</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="font-medium text-gray-700 mb-1">{{ "A:C Ratio"|trans }}</div>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li><span class="text-green-600 font-semibold">0.8 - 1.3:</span> {{ "Optimal training zone"|trans }}</li>
-                                    <li><span class="text-red-600 font-semibold">&gt; 1.3:</span> {{ "High injury risk"|trans }}</li>
-                                    <li><span class="text-yellow-600 font-semibold">&lt; 0.8:</span> {{ "Potential detraining"|trans }}</li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

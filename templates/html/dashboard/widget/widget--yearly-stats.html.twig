@@ -100,7 +100,7 @@
                                             {{ statistic.totalDistance|renderMeasurement(0) }}
                                         </td>
                                         <td class="px-2 py-2">
-                                            <div class="flex items-center justify-center {{ statistic.differenceInDistanceYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                            <div class="flex items-center justify-center {{ statistic.differenceInDistanceYearBefore.toFloat() >= 0 ? 'text-green-600': 'text-red-600' }}">
                                                 {% if statistic.differenceInDistanceYearBefore is not null %}
                                                     {% if statistic.differenceInDistanceYearBefore.toFloat() >= 0 %}
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -125,7 +125,7 @@
                                             {{ statistic.totalElevation|renderMeasurement(0) }}
                                         </td>
                                         <td>
-                                            <div class="flex items-center justify-center {{ statistic.differenceInElevationYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                            <div class="flex items-center justify-center {{ statistic.differenceInElevationYearBefore.toFloat() >= 0 ? 'text-green-600': 'text-red-600' }}">
                                                 {% if statistic.differenceInElevationYearBefore is not null %}
                                                     {% if statistic.differenceInElevationYearBefore.toFloat() >= 0 %}
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -150,7 +150,7 @@
                                             {{ statistic.movingTime }}
                                         </td>
                                         <td class="px-2 py-2">
-                                            <div class="flex items-center justify-center {{ statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 ? 'text-green-500': 'text-red-600' }}">
+                                            <div class="flex items-center justify-center {{ statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 ? 'text-green-600': 'text-red-600' }}">
                                                 {% if statistic.differenceInMovingTimeYearBefore is not null %}
                                                     {% if statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 %}
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"

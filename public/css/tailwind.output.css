@@ -3185,9 +3185,6 @@
   .text-white {
     color: var(--color-white);
   }
-  .text-yellow-500 {
-    color: var(--color-yellow-500);
-  }
   .text-yellow-600 {
     color: var(--color-yellow-600);
   }

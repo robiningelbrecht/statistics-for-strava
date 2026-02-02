@@ -6,6 +6,7 @@
 @source "../../public/*.html";
 @source "../../public/js/**/*.js";
 @source "../../src/Infrastructure/Twig/*.php";
+@source "../../src/Domain/Dashboard/Widget/TrainingLoad/TSBStatus.php";
 
 @plugin "tailwind-scrollbar";
 @plugin "flowbite/plugin";

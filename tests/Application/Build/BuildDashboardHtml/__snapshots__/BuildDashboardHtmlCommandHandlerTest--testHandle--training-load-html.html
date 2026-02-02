@@ -73,23 +73,30 @@
         <div data-popover id="popover-tsb-modal" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
             <div class="p-2 space-y-2">
                 <p>Training Stress Balance (Form) &acirc;&#128;&#147; The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.</p>
-                <p>&gt;+25: Possible detraining</p>
-                <p>+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot</p>
-                <p>+10 to +15: Moderately fresh. Good balance of fitness and recovery.</p>
-                <p>0 to +10: Slightly fresh. Transitional; brief is best</p>
-                <p>-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.</p>
-                <p>&acirc;&#128;&#147;10 to &acirc;&#128;&#147;30: Build/fatigue zone. Productive heavy-training range</p>
-                <p>&lt; &acirc;&#128;&#147;30: Over-fatigued. Risk of injury; require extra recovery</p>
+                <ul class="space-y-2">
+                                            <li>
+<span class="text-orange-500 font-semibold">&gt; 25</span>: Risk of detraining - Fitness may be declining due to low recent training load</li>
+                                            <li>
+<span class="text-green-600 font-semibold">10 to 25</span>: Peak fresh - Highly recovered and ready to perform</li>
+                                            <li>
+<span class="text-green-600 font-semibold">0 to 10</span>: Slightly fresh - Light fatigue with good readiness. A great balance for quality training or longer efforts</li>
+                                            <li>
+<span class="text-gray-900 font-semibold">-10 to 0</span>: Neutral - Moderate fatigue with stable fitness. Well suited for consistent day-to-day training</li>
+                                            <li>
+<span class="text-yellow-600 font-semibold">-30 to -10</span>: Accumulated fatigue - Training load is accumulating, recovery days are important</li>
+                                            <li>
+<span class="text-red-600 font-semibold">&lt; -30</span>: Over-fatigued - High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery</li>
+                                    </ul>
                 <p class="text-xs italic mt-2">Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.</p>
             </div>
         </div>
     </div>
-                        <div class="text-xl font-bold text-yellow-500">
+        <div class="text-xl font-bold text-green-600">
         6.7
     </div>
     <div class="text-xs text-gray-500 truncate">
-                    Slightly fresh &acirc;&#128;&#147; transitional zone
-            </div>
+        Slightly fresh
+    </div>
 </div>
 <div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
@@ -106,7 +113,7 @@
             </div>
         </div>
     </div>
-        <div class="text-xl font-bold text-yellow-500">
+        <div class="text-xl font-bold text-yellow-600">
         0.02
     </div>
     <div class="text-xs text-gray-500 truncate">
@@ -134,7 +141,7 @@
             </div>
         </div>
     </div>
-        <div class="text-xl font-bold text-green-500">
+        <div class="text-xl font-bold text-green-600">
         0.00
     </div>
     <div class="text-xs text-gray-500 truncate">
@@ -207,20 +214,20 @@
             <!-- Forecast Tab -->
             <div id="forecast" role="tabpanel" aria-labelledby="forecast-tab">
                 <div class="space-y-4">
-                    <p class="text-xs text-gray-600">Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.</p>
+                    <p class="text-xs text-gray-500">Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
                             <h4 class="text-sm font-semibold text-gray-700 mb-2">Current Status</h4>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <div class="text-xs text-gray-500">TSB (Form)</div>
-                                                                        <div class="text-xl font-bold text-yellow-500">
+                                                                        <div class="text-xl font-bold text-green-600">
                                         6.7
                                     </div>
                                 </div>
                                 <div>
                                     <div class="text-xs text-gray-500">A:C Ratio</div>
-                                                                        <div class="text-xl font-bold text-yellow-500">
+                                                                        <div class="text-xl font-bold text-yellow-600">
                                         0.02
                                     </div>
                                 </div>
@@ -231,11 +238,11 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
                                     <div class="text-xs text-gray-500">TSB positive in</div>
-                                                                            <div class="text-xl font-bold text-green-500">1 day(s)</div>
+                                                                            <div class="text-xl font-bold text-green-600">1 day(s)</div>
                                                                     </div>
                                 <div>
                                     <div class="text-xs text-gray-500">A:C optimal in</div>
-                                                                            <div class="text-xl font-bold text-yellow-500">&gt; 7 days</div>
+                                                                            <div class="text-xl font-bold text-yellow-600">&gt; 7 days</div>
                                                                     </div>
                             </div>
                         </div>
@@ -253,28 +260,15 @@
                             </thead>
                             <tbody>
                                                             <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 18</td>
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 18</td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">6.6</span>
-                                                                            </td>
+                                        <span class="font-semibold text-green-600">6.6</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
-                                </tr>
-                                                                <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 19</td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">6.4</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
                                     <td class="px-4 py-3">
                                                                                     <span class="text-yellow-600 font-semibold">0.01</span>
                                                                             </td>
@@ -283,28 +277,15 @@
                                                                             </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 20</td>
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 19</td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">6.3</span>
-                                                                            </td>
+                                        <span class="font-semibold text-green-600">6.4</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
-                                </tr>
-                                                                <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 21</td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">6.1</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
                                     <td class="px-4 py-3">
                                                                                     <span class="text-yellow-600 font-semibold">0.01</span>
                                                                             </td>
@@ -313,28 +294,15 @@
                                                                             </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 22</td>
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 20</td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">6</span>
-                                                                            </td>
+                                        <span class="font-semibold text-green-600">6.3</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
-                                </tr>
-                                                                <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 23</td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">5.9</span>
-                                                                            </td>
-                                    <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
                                     <td class="px-4 py-3">
                                                                                     <span class="text-yellow-600 font-semibold">0.01</span>
                                                                             </td>
@@ -343,13 +311,66 @@
                                                                             </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                    <td class="px-4 py-3 font-medium text-gray-900">Oct 24</td>
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 21</td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-green-600 font-semibold">5.7</span>
+                                        <span class="font-semibold text-green-600">6.1</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
                                                                             </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Slightly fresh</span>
+                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
                                                                             </td>
+                                </tr>
+                                                                <tr class="bg-white border-b last:border-b-0">
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 22</td>
+                                    <td class="px-4 py-3">
+                                        <span class="font-semibold text-green-600">6</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
+                                                                            </td>
+                                    <td class="px-4 py-3">
+                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
+                                                                            </td>
+                                </tr>
+                                                                <tr class="bg-white border-b last:border-b-0">
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 23</td>
+                                    <td class="px-4 py-3">
+                                        <span class="font-semibold text-green-600">5.9</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
+                                                                            </td>
+                                    <td class="px-4 py-3">
+                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
+                                                                            </td>
+                                </tr>
+                                                                <tr class="bg-white border-b last:border-b-0">
+                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 24</td>
+                                    <td class="px-4 py-3">
+                                        <span class="font-semibold text-green-600">5.7</span>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                                            Slightly fresh
+                                        </span>
+                                    </td>
                                     <td class="px-4 py-3">
                                                                                     <span class="text-yellow-600 font-semibold">0.01</span>
                                                                             </td>
@@ -359,34 +380,6 @@
                                 </tr>
                                                             </tbody>
                         </table>
-                    </div>
-                    <div class="p-4 border border-gray-200 rounded-lg shadow-xs">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                            <div>
-                                <div class="font-medium text-gray-700 mb-1">TSB (Form)</div>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li>
-<span class="text-green-600 font-semibold">&gt; +10:</span> Fresh - ready to perform</li>
-                                    <li>
-<span class="text-yellow-600 font-semibold">0 to +10:</span> Neutral - transitional</li>
-                                    <li>
-<span class="text-red-600 font-semibold">-10 to 0:</span> Fatigued - recovery needed</li>
-                                    <li>
-<span class="text-red-600 font-semibold">&lt; -10:</span> Heavy fatigue - rest recommended</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <div class="font-medium text-gray-700 mb-1">A:C Ratio</div>
-                                <ul class="space-y-1 text-gray-600">
-                                    <li>
-<span class="text-green-600 font-semibold">0.8 - 1.3:</span> Optimal training zone</li>
-                                    <li>
-<span class="text-red-600 font-semibold">&gt; 1.3:</span> High injury risk</li>
-                                    <li>
-<span class="text-yellow-600 font-semibold">&lt; 0.8:</span> Potential detraining</li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
