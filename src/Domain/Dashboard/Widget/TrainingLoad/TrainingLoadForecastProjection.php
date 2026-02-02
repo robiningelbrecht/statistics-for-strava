@@ -8,7 +8,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final class TrainingLoadForecastProjection
 {
-    /** @var array<int, array{day: SerializableDateTime, tsb: TSB, acRatio: float, acRatioStatus: string}> */
+    /** @var array<int, array{day: SerializableDateTime, tsb: TSB, acRatio: AcRatio}> */
     private array $forecast = [];
     private ?int $daysUntilTsbHealthy = null;
     private ?int $daysUntilAcRatioHealthy = null;
@@ -48,14 +48,6 @@ final class TrainingLoadForecastProjection
             $tsb = round($ctl - $atl, 1);
             $acRatio = $ctl > 0 ? round($atl / $ctl, 2) : 0;
 
-            if ($acRatio >= 0.8 && $acRatio <= 1.3) {
-                $acRatioStatus = 'optimal';
-            } elseif ($acRatio > 1.3) {
-                $acRatioStatus = 'high_risk';
-            } else {
-                $acRatioStatus = 'low';
-            }
-
             if (null === $this->daysUntilTsbHealthy && $tsb > 0) {
                 $this->daysUntilTsbHealthy = $day;
             }
@@ -66,14 +58,13 @@ final class TrainingLoadForecastProjection
             $this->forecast[] = [
                 'day' => $this->now->modify(sprintf('+ %d days', $day)),
                 'tsb' => TSB::of($tsb),
-                'acRatio' => $acRatio,
-                'acRatioStatus' => $acRatioStatus,
+                'acRatio' => AcRatio::of($acRatio),
             ];
         }
     }
 
     /**
-     * @return array<int, array{day: SerializableDateTime, tsb: TSB, acRatio: float, acRatioStatus: string}>
+     * @return array<int, array{day: SerializableDateTime, tsb: TSB, acRatio: AcRatio}>
      */
     public function getProjection(): array
     {
