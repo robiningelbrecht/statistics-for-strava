@@ -1,9 +1,6 @@
-'0.8-1.3: Safe training zone': '0.8-1.3: 健康训练区'
 '42-day fitness trend': 42天健身趋势
 '7-day fatigue level': 7天疲劳水平
-'< 0.8: Potential detraining': '< 0.8: 训练效果可能下降'
 '< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
-'> 1.3: Increased injury risk': '> 1.3: 受伤风险增加'
 '> 2.0: High monotony, increased risk': '> 2.0: 单调性高，风险增加'
 'A:C Ratio': 'A:C 比值'
 'A:C optimal in': 'A:C optimal in'
@@ -52,6 +49,7 @@ Commutes: 通勤
 Compare: 对比
 'Compare to': 对比
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
+'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Crossfit: 交叉健身
 'Current Status': 'Current Status'
@@ -99,6 +97,7 @@ Feb: 二月
 'Filter on starred segments': 筛选星标路段
 Fitness: 健身
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
+'Fitness may decline': 'Fitness may decline'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 例如，埃丁顿数为70意味着骑行者在至少70天内每天骑行至少70公里或英里。达到高埃丁顿数很困难，因为从70到75可能需要超过五次新的长距离锻炼，因为任何少于75公里或英里的锻炼将不再包括在计算中。
 'Form (TSB)': '状态 (TSB)'
 Fri: 周五
@@ -129,7 +128,6 @@ High: 高
 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 单调性高——增加多样性
 'High risk': 'High risk'
-'High risk - reduce volume': 风险高——减少运动量
 'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: 徒步
 History: 历史
@@ -172,7 +170,8 @@ Loading...: 加载中...
 'Longest activity (h)': '最久运动 (h)'
 'Longest streaks': 最长连续记录
 Low: 低
-'Low stress - potential detraining': '轻松 — 训练效果可能下降'
+'Low risk': 'Low risk'
+'Low training load': 'Low training load'
 Maintenance: 维护
 'Maintenance history': 维护历史
 Mar: 三月
@@ -211,7 +210,6 @@ Now: Now
 Oct: 十月
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': '平均而言，每天的平均值为 {dailyAverage}，每周的平均值为 {weeklyAverage}，每月的平均值为 {monthlyAverage} 🐣。'
 'One of your gear maintenance tasks is due': 您有装备需维护
-Optimal: Optimal
 'Optimal training range': 最佳训练范围
 Other: 其他
 'Outdoor Sports': 户外运动

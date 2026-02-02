@@ -179,13 +179,13 @@ final class TrainingMetrics
         return end($this->strainValues);
     }
 
-    public function getCurrentAcRatio(): ?float
+    public function getCurrentAcRatio(): ?AcRatio
     {
         if (empty($this->acRatioValues)) {
             return null;
         }
 
-        return end($this->acRatioValues);
+        return AcRatio::of(end($this->acRatioValues));
     }
 
     /**

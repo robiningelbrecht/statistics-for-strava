@@ -107,9 +107,14 @@
         <div data-popover id="popover-ac-modal" role="tooltip" class="hidden lg:block absolute z-100 invisible max-w-100 text-xs text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-xs opacity-0">
             <div class="p-2 space-y-2">
                 <p>Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.</p>
-                <p>0.8-1.3: Safe training zone</p>
-                <p>&gt; 1.3: Increased injury risk</p>
-                <p>&lt; 0.8: Potential detraining</p>
+                <ul class="space-y-2">
+                                            <li>
+<span class="text-red-600 font-semibold">&gt; 1.3</span>: High risk - Consider reducing load</li>
+                                            <li>
+<span class="text-green-600 font-semibold">0.8 to 1.3</span>: Low risk - Optimal training range</li>
+                                            <li>
+<span class="text-yellow-600 font-semibold">&lt; 0.8</span>: Low training load - Fitness may decline</li>
+                                    </ul>
             </div>
         </div>
     </div>
@@ -117,8 +122,8 @@
         0.02
     </div>
     <div class="text-xs text-gray-500 truncate">
-                    Low stress - potential detraining
-            </div>
+        Low training load
+    </div>
 </div>
 <div class="flex flex-col justify-between p-3 border border-gray-200 rounded-lg shadow-xs">
     <div class="flex items-center">
@@ -260,7 +265,7 @@
                             </thead>
                             <tbody>
                                                             <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 18</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 18</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">6.6</span>
                                     </td>
@@ -270,14 +275,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 19</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 19</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">6.4</span>
                                     </td>
@@ -287,14 +294,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 20</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 20</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">6.3</span>
                                     </td>
@@ -304,14 +313,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 21</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 21</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">6.1</span>
                                     </td>
@@ -321,14 +332,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 22</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 22</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">6</span>
                                     </td>
@@ -338,14 +351,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 23</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 23</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">5.9</span>
                                     </td>
@@ -355,14 +370,16 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                                 <tr class="bg-white border-b last:border-b-0">
-                                                                        <td class="px-4 py-3 font-medium text-gray-900">Oct 24</td>
+                                                                                                            <td class="px-4 py-3 font-medium text-gray-900">Oct 24</td>
                                     <td class="px-4 py-3">
                                         <span class="font-semibold text-green-600">5.7</span>
                                     </td>
@@ -372,11 +389,13 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="text-yellow-600 font-semibold">0.01</span>
-                                                                            </td>
+                                        <span class="font-semibold text-yellow-600">0.01</span>
+                                    </td>
                                     <td class="px-4 py-3">
-                                                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">Low</span>
-                                                                            </td>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            Low training load
+                                        </span>
+                                    </td>
                                 </tr>
                                                             </tbody>
                         </table>

@@ -1,9 +1,6 @@
-'0.8-1.3: Safe training zone': "0,8-1,3 : Zone d'entraînement sécurisée"
 '42-day fitness trend': 'Tendance forme sur 42 jours'
 '7-day fatigue level': 'Niveau de fatigue sur 7 jours'
-'< 0.8: Potential detraining': '< 0,8 : Désentraînement potentiel'
 '< 1.5: Good variety in training': "< 1,5 : Bonne variété d'entraînement"
-'> 1.3: Increased injury risk': '> 1,3 : Risque de blessure accru'
 '> 2.0: High monotony, increased risk': '> 2,0 : Monotonie élevée, risque accru'
 'A:C Ratio': 'Ratio Aiguë:Chronique'
 'A:C optimal in': 'A:C optimal in'
@@ -52,6 +49,7 @@ Commutes: 'Trajets domicile-travail'
 Compare: Comparer
 'Compare to': 'Comparer à'
 'Congrats! You achieved personal bests during this activity.': 'Félicitations ! Vous avez réalisé vos meilleures performances personnelles lors de cette activité.'
+'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Crossfit: Crossfit
 'Current Status': 'Current Status'
@@ -99,6 +97,7 @@ Feb: Fév
 'Filter on starred segments': 'Filtrer sur les segments favoris'
 Fitness: Forme
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
+'Fitness may decline': 'Fitness may decline'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': "Par exemple, un nombre d'Eddington de 70 signifie qu'un cycliste a parcouru au moins 70 km ou miles en une journée à au moins 70 reprises. Atteindre un nombre d'Eddington élevé est difficile, car passer, disons, de 70 à 75 nécessitera probablement plus de cinq nouvelles séances d'entraînement de longue distance, étant donné que toute séance de moins de 75 km ou miles ne sera plus prise en compte dans le calcul."
 'Form (TSB)': 'Forme (TSB)'
 Fri: Ven
@@ -129,7 +128,6 @@ High: Élevé
 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 'Monotonie élevée - augmenter la variété'
 'High risk': 'High risk'
-'High risk - reduce volume': 'Risque élevé - réduire le volume'
 'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: Randonnées
 History: Historique
@@ -172,7 +170,8 @@ Loading...: Chargement...
 'Longest activity (h)': 'Activité la plus longue (h)'
 'Longest streaks': 'Plus longues séries'
 Low: Bas
-'Low stress - potential detraining': 'Stress faible - désentraînement potentiel'
+'Low risk': 'Low risk'
+'Low training load': 'Low training load'
 Maintenance: Maintenance
 'Maintenance history': 'Historique de maintenance'
 Mar: Mar
@@ -211,7 +210,6 @@ Now: Now
 Oct: Oct
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'En moyenne, cela représente {dailyAverage} par jour, une moyenne hebdomadaire de {weeklyAverage} et une moyenne mensuelle de {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'Une de vos tâches de maintenance de matériel est à effectuer'
-Optimal: Optimal
 'Optimal training range': "Zone d'entraînement optimale"
 Other: Autre
 'Outdoor Sports': "Sports d'extérieur"
