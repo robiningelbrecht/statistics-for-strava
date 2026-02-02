@@ -188,6 +188,10 @@ class SpyStrava extends Strava
     #[\Override]
     public function getActivityPhotos(ActivityId $activityId): array
     {
+        if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
         ++$this->numberOfCallsExecuted;
         $this->throw429IfMaxNumberOfCallsIsExceeded();
 
