@@ -81,8 +81,7 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
             $gear->getDistance()->toMeter()->toFloat()
         );
 
-        $gear->updateDistance(Meter::from(30000));
-        $this->customGearRepository->save($gear);
+        $this->customGearRepository->save($gear->withDistance(Meter::from(30000)));
 
         $this->assertMatchesJsonSnapshot(
             $this->getConnection()->executeQuery('SELECT * FROM GEAR')->fetchAllAssociative()

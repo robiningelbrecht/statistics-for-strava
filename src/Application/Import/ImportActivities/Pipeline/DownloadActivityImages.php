@@ -24,9 +24,7 @@ final readonly class DownloadActivityImages implements ActivityImportStep
         $rawStravaData = $context->getRawStravaData();
 
         if (!$totalImageCount = ($rawStravaData['total_photo_count'] ?? 0)) {
-            $activity->updateLocalImagePaths([]);
-
-            return $context->withActivity($activity);
+            return $context->withActivity($activity->withLocalImagePaths([]));
         }
 
         $shouldDownloadImages = $context->isNewActivity() || count($activity->getLocalImagePaths()) !== $totalImageCount;
@@ -54,7 +52,7 @@ final readonly class DownloadActivityImages implements ActivityImportStep
                 $fileSystemPaths[] = $fileSystemPath;
             }
 
-            $activity->updateLocalImagePaths(array_map(
+            $activity = $activity->withLocalImagePaths(array_map(
                 fn (string $fileSystemPath): string => 'files/'.$fileSystemPath,
                 $fileSystemPaths
             ));

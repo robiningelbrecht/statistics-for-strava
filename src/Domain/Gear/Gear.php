@@ -15,7 +15,7 @@ interface Gear extends SupportsAITooling
 {
     public function getId(): GearId;
 
-    public function updateName(string $name): self;
+    public function withName(string $name): self;
 
     public function getOriginalName(): string;
 
@@ -25,9 +25,9 @@ interface Gear extends SupportsAITooling
 
     public function isRetired(): bool;
 
-    public function updateIsRetired(bool $isRetired): self;
+    public function withIsRetired(bool $isRetired): self;
 
-    public function updateDistance(Meter $distance): self;
+    public function withDistance(Meter $distance): self;
 
     public function getCreatedOn(): SerializableDateTime;
 

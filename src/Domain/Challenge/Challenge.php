@@ -8,21 +8,21 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'Challenge_createdOnIndex', columns: ['createdOn'])]
-final class Challenge implements SupportsAITooling
+final readonly class Challenge implements SupportsAITooling
 {
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
-        private readonly ChallengeId $challengeId,
+        private ChallengeId $challengeId,
         #[ORM\Column(type: 'datetime_immutable')]
-        private readonly SerializableDateTime $createdOn,
+        private SerializableDateTime $createdOn,
         #[ORM\Column(type: 'string')]
-        private readonly string $name,
+        private string $name,
         #[ORM\Column(type: 'string', nullable: true)]
-        private readonly ?string $logoUrl,
+        private ?string $logoUrl,
         #[ORM\Column(type: 'string', nullable: true)]
         private ?string $localLogoUrl,
         #[ORM\Column(type: 'string')]
-        private readonly string $slug,
+        private string $slug,
     ) {
     }
 
@@ -98,9 +98,11 @@ final class Challenge implements SupportsAITooling
         return 'https://www.strava.com/challenges/'.$this->getSlug();
     }
 
-    public function updateLocalLogo(string $path): void
+    public function withLocalLogo(string $path): self
     {
-        $this->localLogoUrl = $path;
+        return clone ($this, [
+            'localLogoUrl' => $path,
+        ]);
     }
 
     public function getCreatedOn(): SerializableDateTime

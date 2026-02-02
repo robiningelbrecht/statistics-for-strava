@@ -88,8 +88,7 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
             $gear->getDistance()->toMeter()->toFloat()
         );
 
-        $gear->updateDistance(Meter::from(30000));
-        $this->importedGearRepository->save($gear);
+        $this->importedGearRepository->save($gear->withDistance(Meter::from(30000)));
 
         $this->assertEquals(
             30000,

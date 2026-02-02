@@ -34,6 +34,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(name: 'Activity_startDateTimeIndex', columns: ['startDateTime'])]
 #[ORM\Index(name: 'Activity_sportType', columns: ['sportType'])]
+#[ORM\Index(name: 'Activity_gearId', columns: ['gearId'])]
+#[ORM\Index(name: 'Activity_markedForDeletion', columns: ['markedForDeletion'])]
+#[ORM\Index(name: 'Activity_streamsAreImported', columns: ['streamsAreImported'])]
 final class Activity implements SupportsAITooling
 {
     use RecordsEvents;
@@ -70,19 +73,19 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly SerializableDateTime $startDateTime,
         #[ORM\Column(type: 'string')]
-        private SportType $sportType,
+        private readonly SportType $sportType,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly WorldType $worldType,
         #[ORM\Column(type: 'string')]
-        private string $name,
+        private readonly string $name,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $description,
         #[ORM\Column(type: 'integer')]
-        private Kilometer $distance,
+        private readonly Kilometer $distance,
         #[ORM\Column(type: 'integer')]
-        private Meter $elevation,
+        private readonly Meter $elevation,
         #[ORM\Embedded(class: Coordinate::class)]
-        private ?Coordinate $startingCoordinate,
+        private readonly ?Coordinate $startingCoordinate,
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $calories,
         #[ORM\Column(type: 'integer', nullable: true)]
@@ -90,9 +93,9 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $maxPower,
         #[ORM\Column(type: 'float')]
-        private KmPerHour $averageSpeed,
+        private readonly KmPerHour $averageSpeed,
         #[ORM\Column(type: 'float')]
-        private KmPerHour $maxSpeed,
+        private readonly KmPerHour $maxSpeed,
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $averageHeartRate,
         #[ORM\Column(type: 'integer', nullable: true)]
@@ -100,27 +103,27 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $averageCadence,
         #[ORM\Column(type: 'integer')]
-        private int $movingTimeInSeconds,
+        private readonly int $movingTimeInSeconds,
         #[ORM\Column(type: 'integer')]
-        private int $kudoCount,
+        private readonly int $kudoCount,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
         #[ORM\Column(type: 'integer')]
-        private int $totalImageCount,
+        private readonly int $totalImageCount,
         #[ORM\Column(type: 'text', nullable: true)]
-        private array $localImagePaths,
+        private readonly array $localImagePaths,
         #[ORM\Column(type: 'text', nullable: true)]
-        private ?string $polyline,
+        private readonly ?string $polyline,
         #[ORM\Column(type: 'json', nullable: true)]
-        private RouteGeography $routeGeography,
+        private readonly RouteGeography $routeGeography,
         #[ORM\Column(type: 'json', nullable: true)]
-        private ?string $weather,
+        private readonly ?string $weather,
         #[ORM\Column(type: 'string', nullable: true)]
-        private ?GearId $gearId,
+        private readonly ?GearId $gearId,
         #[ORM\Column(type: 'boolean', nullable: true)]
-        private bool $isCommute,
+        private readonly bool $isCommute,
         #[ORM\Column(type: 'string', nullable: true)]
-        private ?WorkoutType $workoutType,
+        private readonly ?WorkoutType $workoutType,
     ) {
     }
 
@@ -264,11 +267,11 @@ final class Activity implements SupportsAITooling
         return $this->worldType;
     }
 
-    public function updateSportType(SportType $sportType): self
+    public function withSportType(SportType $sportType): self
     {
-        $this->sportType = $sportType;
-
-        return $this;
+        return clone ($this, [
+            'sportType' => $sportType,
+        ]);
     }
 
     public function getStartingCoordinate(): ?Coordinate
@@ -276,11 +279,11 @@ final class Activity implements SupportsAITooling
         return $this->startingCoordinate;
     }
 
-    public function updateStartingCoordinate(?Coordinate $coordinate): self
+    public function withStartingCoordinate(?Coordinate $coordinate): self
     {
-        $this->startingCoordinate = $coordinate;
-
-        return $this;
+        return clone ($this, [
+            'startingCoordinate' => $coordinate,
+        ]);
     }
 
     public function getKudoCount(): int
@@ -288,11 +291,11 @@ final class Activity implements SupportsAITooling
         return $this->kudoCount;
     }
 
-    public function updateKudoCount(int $count): self
+    public function withKudoCount(int $count): self
     {
-        $this->kudoCount = $count;
-
-        return $this;
+        return clone ($this, [
+            'kudoCount' => $count,
+        ]);
     }
 
     public function getGearId(): ?GearId
@@ -305,17 +308,17 @@ final class Activity implements SupportsAITooling
         return $this->getGearId() ?? GearId::none();
     }
 
-    public function updateGear(
+    public function withGear(
         ?GearId $gearId = null,
     ): self {
-        $this->gearId = $gearId;
-
-        return $this;
+        return clone ($this, [
+            'gearId' => $gearId,
+        ]);
     }
 
-    public function emptyGear(): self
+    public function withEmptyGear(): self
     {
-        return $this->updateGear();
+        return $this->withGear();
     }
 
     public function getGearName(): ?string
@@ -371,9 +374,11 @@ final class Activity implements SupportsAITooling
         return null;
     }
 
-    public function updateWeather(?Weather $weather): void
+    public function withWeather(?Weather $weather): self
     {
-        $this->weather = Json::encode($weather);
+        return clone ($this, [
+            'weather' => Json::encode($weather),
+        ]);
     }
 
     /**
@@ -390,10 +395,12 @@ final class Activity implements SupportsAITooling
     /**
      * @param array<string> $localImagePaths
      */
-    public function updateLocalImagePaths(array $localImagePaths): void
+    public function withLocalImagePaths(array $localImagePaths): self
     {
-        $this->localImagePaths = $localImagePaths;
-        $this->totalImageCount = count($this->localImagePaths);
+        return clone ($this, [
+            'localImagePaths' => $localImagePaths,
+            'totalImageCount' => count($localImagePaths),
+        ]);
     }
 
     public function getTotalImageCount(): int
@@ -420,11 +427,11 @@ final class Activity implements SupportsAITooling
         return Escape::forJsonEncode($this->getName());
     }
 
-    public function updateName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
-
-        return $this;
+        return clone ($this, [
+            'name' => $name,
+        ]);
     }
 
     public function getDescription(): string
@@ -437,11 +444,11 @@ final class Activity implements SupportsAITooling
         return $this->distance;
     }
 
-    public function updateDistance(Kilometer $distance): self
+    public function withDistance(Kilometer $distance): self
     {
-        $this->distance = $distance;
-
-        return $this;
+        return clone ($this, [
+            'distance' => $distance,
+        ]);
     }
 
     public function getElevation(): Meter
@@ -449,11 +456,11 @@ final class Activity implements SupportsAITooling
         return $this->elevation;
     }
 
-    public function updateElevation(Meter $elevation): self
+    public function withElevation(Meter $elevation): self
     {
-        $this->elevation = $elevation;
-
-        return $this;
+        return clone ($this, [
+            'elevation' => $elevation,
+        ]);
     }
 
     public function getCalories(): ?int
@@ -476,11 +483,11 @@ final class Activity implements SupportsAITooling
         return $this->averageSpeed;
     }
 
-    public function updateAverageSpeed(KmPerHour $averageSpeed): self
+    public function withAverageSpeed(KmPerHour $averageSpeed): self
     {
-        $this->averageSpeed = $averageSpeed;
-
-        return $this;
+        return clone ($this, [
+            'averageSpeed' => $averageSpeed,
+        ]);
     }
 
     public function getPaceInSecPerKm(): SecPerKm
@@ -498,11 +505,11 @@ final class Activity implements SupportsAITooling
         return $this->maxSpeed;
     }
 
-    public function updateMaxSpeed(KmPerHour $maxSpeed): self
+    public function withMaxSpeed(KmPerHour $maxSpeed): self
     {
-        $this->maxSpeed = $maxSpeed;
-
-        return $this;
+        return clone ($this, [
+            'maxSpeed' => $maxSpeed,
+        ]);
     }
 
     public function getAverageHeartRate(): ?int
@@ -542,11 +549,11 @@ final class Activity implements SupportsAITooling
         return round($this->movingTimeInSeconds / 3600, 1);
     }
 
-    public function updateMovingTimeInSeconds(int $movingTimeInSeconds): self
+    public function withMovingTimeInSeconds(int $movingTimeInSeconds): self
     {
-        $this->movingTimeInSeconds = $movingTimeInSeconds;
-
-        return $this;
+        return clone ($this, [
+            'movingTimeInSeconds' => $movingTimeInSeconds,
+        ]);
     }
 
     public function getMovingTimeFormatted(): string
@@ -564,11 +571,11 @@ final class Activity implements SupportsAITooling
         return $this->polyline;
     }
 
-    public function updatePolyline(?string $polyline): self
+    public function withPolyline(?string $polyline): self
     {
-        $this->polyline = $polyline;
-
-        return $this;
+        return clone ($this, [
+            'polyline' => $polyline,
+        ]);
     }
 
     public function getDeviceName(): ?string
@@ -586,11 +593,11 @@ final class Activity implements SupportsAITooling
         return $this->isCommute;
     }
 
-    public function updateCommute(bool $isCommute): self
+    public function withCommute(bool $isCommute): self
     {
-        $this->isCommute = $isCommute;
-
-        return $this;
+        return clone ($this, [
+            'isCommute' => $isCommute,
+        ]);
     }
 
     public function getWorkoutType(): ?WorkoutType
@@ -598,11 +605,11 @@ final class Activity implements SupportsAITooling
         return $this->workoutType;
     }
 
-    public function updateWorkoutType(?WorkoutType $workoutType): self
+    public function withWorkoutType(?WorkoutType $workoutType): self
     {
-        $this->workoutType = $workoutType;
-
-        return $this;
+        return clone ($this, [
+            'workoutType' => $workoutType,
+        ]);
     }
 
     public function isZwiftRide(): bool
@@ -646,11 +653,11 @@ final class Activity implements SupportsAITooling
         return $this->routeGeography;
     }
 
-    public function updateRouteGeography(RouteGeography $routeGeography): self
+    public function withRouteGeography(RouteGeography $routeGeography): self
     {
-        $this->routeGeography = $routeGeography;
-
-        return $this;
+        return clone ($this, [
+            'routeGeography' => $routeGeography,
+        ]);
     }
 
     public function getNormalizedPower(): ?int

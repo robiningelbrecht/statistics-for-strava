@@ -43,14 +43,14 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
                     /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
                     ksort($valueDistribution);
-                    $stream->updateValueDistribution($valueDistribution);
+                    $stream = $stream->withValueDistribution($valueDistribution);
                 }
                 if (StreamType::HEART_RATE === $stream->getStreamType()) {
                     /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values($stream->getData());
                     ksort($valueDistribution);
 
-                    $stream->updateValueDistribution($valueDistribution);
+                    $stream = $stream->withValueDistribution($valueDistribution);
                 }
                 if (StreamType::VELOCITY === $stream->getStreamType()) {
                     $velocityUnitPreference = $sportType->getVelocityDisplayPreference();
@@ -77,7 +77,7 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
 
                     $valueDistribution = array_count_values($convertedValues);
                     ksort($valueDistribution, SORT_NUMERIC);
-                    $stream->updateValueDistribution($valueDistribution);
+                    $stream = $stream->withValueDistribution($valueDistribution);
                 }
 
                 $this->activityStreamRepository->update($stream);

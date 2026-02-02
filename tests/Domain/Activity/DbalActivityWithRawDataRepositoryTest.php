@@ -69,23 +69,23 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
 
         $this->activityWithRawDataRepository->add($activityWithRawData);
 
-        $activity
-            ->updateName('Updated name')
-            ->updateSportType(SportType::BADMINTON)
-            ->updateDistance(Kilometer::from(9.99))
-            ->updateAverageSpeed(MetersPerSecond::from(19.99)->toKmPerHour())
-            ->updateMaxSpeed(MetersPerSecond::from(99.99)->toKmPerHour())
-            ->updateMovingTimeInSeconds(999)
-            ->updateElevation(Meter::from(9999))
-            ->updateKudoCount(111)
-            ->updatePolyline('updated polyline')
-            ->updateStartingCoordinate(Coordinate::createFromLatAndLng(
+        $activity = $activity
+            ->withName('Updated name')
+            ->withSportType(SportType::BADMINTON)
+            ->withDistance(Kilometer::from(9.99))
+            ->withAverageSpeed(MetersPerSecond::from(19.99)->toKmPerHour())
+            ->withMaxSpeed(MetersPerSecond::from(99.99)->toKmPerHour())
+            ->withMovingTimeInSeconds(999)
+            ->withElevation(Meter::from(9999))
+            ->withKudoCount(111)
+            ->withPolyline('updated polyline')
+            ->withStartingCoordinate(Coordinate::createFromLatAndLng(
                 latitude: Latitude::fromString('20'),
                 longitude: Longitude::fromString('20'),
             ))
-            ->updateGear(GearId::fromUnprefixed('updated'))
-            ->updateRouteGeography(RouteGeography::create(['state' => 'updated location']))
-            ->updateCommute(true);
+            ->withGear(GearId::fromUnprefixed('updated'))
+            ->withRouteGeography(RouteGeography::create(['state' => 'updated location']))
+            ->withCommute(true);
 
         $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
             activity: $activity,

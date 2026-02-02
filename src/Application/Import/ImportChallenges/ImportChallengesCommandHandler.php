@@ -98,7 +98,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
                         ));
                         continue;
                     }
-                    $challenge->updateLocalLogo('files/'.$fileSystemPath);
+                    $challenge = $challenge->withLocalLogo('files/'.$fileSystemPath);
                 }
                 $this->challengeRepository->add($challenge);
                 $challengesAddedInCurrentRun[(string) $challengeId] = $challengeId;
