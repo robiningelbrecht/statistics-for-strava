@@ -1,0 +1,5 @@
+{
+    "range": "< 0.8",
+    "textColor": "text-yellow-600",
+    "pillColors": "bg-yellow-100 text-yellow-800"
+}
