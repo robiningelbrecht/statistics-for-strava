@@ -35,6 +35,7 @@ export default class DataTableManager {
                     const activeFilters = filterManager.getActiveFilters();
 
                     filterManager.updateDropdownState(activeFilters);
+                    filterManager.updateStorage(settings.name, activeFilters);
                     const rows = filterManager.applyFiltersToRows(dataRows, search);
                     clusterRenderer.update(rows);
                     resetBtn.classList.toggle('hidden', !(Object.keys(activeFilters).length > 0 || search.length > 0));
@@ -53,7 +54,7 @@ export default class DataTableManager {
                     resetBtn.addEventListener('click', e => {
                         e.preventDefault();
                         searchInput.value = '';
-                        filterManager.resetAll();
+                        filterManager.resetAll(settings.name);
                         updateRows();
                     });
                 }
