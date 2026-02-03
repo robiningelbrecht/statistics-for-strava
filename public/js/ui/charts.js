@@ -73,11 +73,9 @@ export default class ChartManager {
                 if (!params.dataIndex in weeks) {
                     return;
                 }
-                this.dataTableStorage.set({
-                    'activities': {
-                        "sportType": clickData.sportTypes,
-                        "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
-                    }
+                this.dataTableStorage.set('activities', {
+                    "sportType": clickData.sportTypes,
+                    "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
                 });
 
                 this.router.navigateTo(`/activities`);
@@ -87,10 +85,8 @@ export default class ChartManager {
                     return;
                 }
 
-                this.dataTableStorage.set({
-                    'activities': {
-                        "start-date": {"from": params.value[0], "to": params.value[0]},
-                    }
+                this.dataTableStorage.set('activities', {
+                    "start-date": {"from": params.value[0], "to": params.value[0]},
                 });
 
                 this.router.navigateTo(`/activities`);
