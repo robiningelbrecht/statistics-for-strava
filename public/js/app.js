@@ -78,7 +78,10 @@ document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     if (!e.detail.link.hasAttribute('data-dataTable-filters')) {
         return;
     }
-    dataTableStorage.set(JSON.parse(e.detail.link.getAttribute('data-dataTable-filters')));
+    const filters = JSON.parse(e.detail.link.getAttribute('data-dataTable-filters'));
+    Object.entries(filters).forEach(([tableName, tableFilters]) => {
+        dataTableStorage.set(tableName, tableFilters);
+    });
 });
 document.addEventListener('dataTableClusterWasChanged', () => {
     modalManager.init(document);

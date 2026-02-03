@@ -254,14 +254,17 @@ export class DataTableStorage {
         localStorage.removeItem(this.storageKey);
     }
 
-    get(name) {
+    get(tableName) {
         const storedJson = localStorage.getItem(this.storageKey);
         if (!storedJson) return {};
         const parsed = JSON.parse(storedJson);
-        return parsed[name] || {};
+        return parsed[tableName] || {};
     }
 
-    set(object) {
-        localStorage.setItem(this.storageKey, JSON.stringify(object));
+    set(tableName, object) {
+        const storedJson = localStorage.getItem(this.storageKey);
+        const existing = storedJson ? JSON.parse(storedJson) : {};
+        existing[tableName] = object;
+        localStorage.setItem(this.storageKey, JSON.stringify(existing));
     }
 }
