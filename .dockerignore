@@ -38,6 +38,4 @@ tailwind.config.js
 logo.xcf
 bin/caddy
 rector.php
-rector-src.php
-rector-tests.php
 webpack.config.js
