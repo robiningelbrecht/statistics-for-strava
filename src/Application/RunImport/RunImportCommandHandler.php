@@ -13,6 +13,7 @@ use App\Application\Import\ImportGear\ImportGear;
 use App\Application\Import\ImportSegments\ImportSegments;
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Application\Import\ProcessRawActivityData\ProcessRawActivityData;
+use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -61,7 +62,7 @@ final readonly class RunImportCommandHandler implements CommandHandler
         $this->commandBus->dispatch(new CalculateActivityMetrics($output));
         $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
 
-        if (($rateLimits = $this->strava->getRateLimit()) instanceof \App\Domain\Strava\RateLimit\StravaRateLimits) {
+        if (($rateLimits = $this->strava->getRateLimit()) instanceof StravaRateLimits) {
             $output->title('STRAVA API RATE LIMITS');
             $output->listing([
                 sprintf('15 min rate: %s/%s', $rateLimits->getFifteenMinRateUsage(), $rateLimits->getFifteenMinRateLimit()),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildRewindHtml;
 
 use App\Domain\Activity\EnrichedActivities;
+use App\Domain\Activity\Image\Image;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
@@ -290,7 +291,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     isPlaceHolderForComparison: true
                 ));
             }
-            if ($randomImage instanceof \App\Domain\Activity\Image\Image) {
+            if ($randomImage instanceof Image) {
                 $activity = $this->enrichedActivities->find($randomImage->getActivityId());
                 $rewindItems->add(RewindItem::from(
                     icon: 'image',

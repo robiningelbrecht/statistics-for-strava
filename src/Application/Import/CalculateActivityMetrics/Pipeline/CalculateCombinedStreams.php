@@ -6,6 +6,7 @@ namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\ActivityStreams;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStream;
@@ -51,7 +52,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $activityType = $activity->getSportType()->getActivityType();
 
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
-            if (!($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof \App\Domain\Activity\Stream\ActivityStream) {
+            if (!($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof ActivityStream) {
                 continue;
             }
             $combinedStreamTypes = CombinedStreamTypes::fromArray([
@@ -61,7 +62,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $otherStreams = ActivityStreams::empty();
             /** @var CombinedStreamType $combinedStreamType */
             foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
-                if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof \App\Domain\Activity\Stream\ActivityStream) {
+                if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof ActivityStream) {
                     continue;
                 }
                 if (!$stream->getData()) {
@@ -94,7 +95,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
             // We need to add these after the CombinedStreamTypes::othersFor() otherwise we'll end up with "Undefined array key" errors.
             // This is because CombinedStreamTypes::othersFor() does not return LAT_LNG and TIME as these are not really "combined" streams.
-            if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof \App\Domain\Activity\Stream\ActivityStream) {
+            if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof ActivityStream) {
                 $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
             }
 

@@ -16,6 +16,7 @@ use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 final readonly class ImportGearCommandHandler implements CommandHandler
 {
@@ -67,7 +68,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
                 return;
             } catch (ClientException|RequestException $exception) {
-                if (!$exception->getResponse() instanceof \Psr\Http\Message\ResponseInterface) {
+                if (!$exception->getResponse() instanceof ResponseInterface) {
                     // Re-throw, we only want to catch supported error codes.
                     throw $exception;  // @codeCoverageIgnore
                 }
