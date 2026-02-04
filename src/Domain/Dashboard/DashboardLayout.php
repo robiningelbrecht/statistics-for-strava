@@ -56,7 +56,7 @@ final readonly class DashboardLayout implements \IteratorAggregate
     public static function fromArray(
         ?array $config,
     ): self {
-        if (empty($config)) {
+        if (null === $config || [] === $config) {
             $config = self::default();
         }
 

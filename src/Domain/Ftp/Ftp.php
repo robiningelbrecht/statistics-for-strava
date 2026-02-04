@@ -39,7 +39,7 @@ final class Ftp
 
     public function getRelativeFtp(): ?float
     {
-        if (!$this->athleteWeightInKg) {
+        if (!$this->athleteWeightInKg instanceof Kilogram) {
             return null;
         }
 

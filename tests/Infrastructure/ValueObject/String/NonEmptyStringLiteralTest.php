@@ -19,7 +19,7 @@ class NonEmptyStringLiteralTest extends TestCase
 
     public function testFromOptionalString(): void
     {
-        self::assertNull(TestNonEmptyStringLiteral::fromOptionalString(null));
+        self::assertNull(TestNonEmptyStringLiteral::fromOptionalString());
         self::assertEquals(
             'test',
             (string) TestNonEmptyStringLiteral::fromOptionalString('test')
@@ -28,7 +28,7 @@ class NonEmptyStringLiteralTest extends TestCase
 
     public function testToString(): void
     {
-        static::assertEquals('a', (string) TestNonEmptyStringLiteral::fromString('a'));
+        self::assertEquals('a', (string) TestNonEmptyStringLiteral::fromString('a'));
     }
 
     public function testItShouldThrowWhenEmpty(): void
@@ -41,69 +41,69 @@ class NonEmptyStringLiteralTest extends TestCase
 
     public function testCamelCase(): void
     {
-        static::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello world')->camelCase());
-        static::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->camelCase());
-        static::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->camelCase());
-        static::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->camelCase());
-        static::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->camelCase());
-        static::assertEquals('leadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->camelCase());
-        static::assertEquals('multipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->camelCase());
-        static::assertEquals('specialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->camelCase());
-        static::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->camelCase());
-        static::assertEquals('mixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->camelCase());
+        self::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello world')->camelCase());
+        self::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->camelCase());
+        self::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->camelCase());
+        self::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->camelCase());
+        self::assertEquals('helloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->camelCase());
+        self::assertEquals('leadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->camelCase());
+        self::assertEquals('multipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->camelCase());
+        self::assertEquals('specialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->camelCase());
+        self::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->camelCase());
+        self::assertEquals('mixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->camelCase());
     }
 
     public function testStudlyCase(): void
     {
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello world')->studlyCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->studlyCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->studlyCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->studlyCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->studlyCase());
-        static::assertEquals('LeadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->studlyCase());
-        static::assertEquals('MultipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->studlyCase());
-        static::assertEquals('SpecialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->studlyCase());
-        static::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->studlyCase());
-        static::assertEquals('MixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->studlyCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello world')->studlyCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->studlyCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->studlyCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->studlyCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->studlyCase());
+        self::assertEquals('LeadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->studlyCase());
+        self::assertEquals('MultipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->studlyCase());
+        self::assertEquals('SpecialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->studlyCase());
+        self::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->studlyCase());
+        self::assertEquals('MixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->studlyCase());
     }
 
     public function testPascalCase(): void
     {
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello world')->pascalCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->pascalCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->pascalCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->pascalCase());
-        static::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->pascalCase());
-        static::assertEquals('LeadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->pascalCase());
-        static::assertEquals('MultipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->pascalCase());
-        static::assertEquals('SpecialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->pascalCase());
-        static::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->pascalCase());
-        static::assertEquals('MixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->pascalCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello world')->pascalCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString(' Hello   World ')->pascalCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello-world')->pascalCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('hello_world')->pascalCase());
+        self::assertEquals('HelloWorld', TestNonEmptyStringLiteral::fromString('helloWorld')->pascalCase());
+        self::assertEquals('LeadingAndTrailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->pascalCase());
+        self::assertEquals('MultipleSpaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->pascalCase());
+        self::assertEquals('SpecialCharacters', TestNonEmptyStringLiteral::fromString('special@#characters!')->pascalCase());
+        self::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->pascalCase());
+        self::assertEquals('MixedCASEStringExample', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->pascalCase());
     }
 
     public function testSnakeCase(): void
     {
-        static::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello world')->snakeCase());
-        static::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString(' Hello   World ')->snakeCase());
-        static::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello-world')->snakeCase());
-        static::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello_world')->snakeCase());
-        static::assertEquals('leading_and_trailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->snakeCase());
-        static::assertEquals('multiple_spaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->snakeCase());
-        static::assertEquals('special_characters', TestNonEmptyStringLiteral::fromString('special@#characters!')->snakeCase());
-        static::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->snakeCase());
-        static::assertEquals('mixed_case_string_example', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->snakeCase());
+        self::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello world')->snakeCase());
+        self::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString(' Hello   World ')->snakeCase());
+        self::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello-world')->snakeCase());
+        self::assertEquals('hello_world', TestNonEmptyStringLiteral::fromString('hello_world')->snakeCase());
+        self::assertEquals('leading_and_trailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->snakeCase());
+        self::assertEquals('multiple_spaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->snakeCase());
+        self::assertEquals('special_characters', TestNonEmptyStringLiteral::fromString('special@#characters!')->snakeCase());
+        self::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->snakeCase());
+        self::assertEquals('mixed_case_string_example', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->snakeCase());
     }
 
     public function testKebabCase(): void
     {
-        static::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello world')->kebabCase());
-        static::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString(' Hello   World ')->kebabCase());
-        static::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello-world')->kebabCase());
-        static::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello_world')->kebabCase());
-        static::assertEquals('leading-and-trailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->kebabCase());
-        static::assertEquals('multiple-spaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->kebabCase());
-        static::assertEquals('special-characters', TestNonEmptyStringLiteral::fromString('special@#characters!')->kebabCase());
-        static::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->kebabCase());
-        static::assertEquals('mixed-case-string-example', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->kebabCase());
+        self::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello world')->kebabCase());
+        self::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString(' Hello   World ')->kebabCase());
+        self::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello-world')->kebabCase());
+        self::assertEquals('hello-world', TestNonEmptyStringLiteral::fromString('hello_world')->kebabCase());
+        self::assertEquals('leading-and-trailing', TestNonEmptyStringLiteral::fromString('  leading and trailing  ')->kebabCase());
+        self::assertEquals('multiple-spaces', TestNonEmptyStringLiteral::fromString('multiple   spaces')->kebabCase());
+        self::assertEquals('special-characters', TestNonEmptyStringLiteral::fromString('special@#characters!')->kebabCase());
+        self::assertEquals('123numbers456', TestNonEmptyStringLiteral::fromString('123numbers456')->kebabCase());
+        self::assertEquals('mixed-case-string-example', TestNonEmptyStringLiteral::fromString('mixed-CASE_string Example')->kebabCase());
     }
 }

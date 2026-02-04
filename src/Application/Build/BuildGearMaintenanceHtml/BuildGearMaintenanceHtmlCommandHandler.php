@@ -104,7 +104,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         /** @var GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getAttachedTo() as $attachedToGearId) {
-                if (!$gear = $gears->getByGearId($attachedToGearId)) {
+                if (!($gear = $gears->getByGearId($attachedToGearId)) instanceof Gear) {
                     continue;
                 }
                 if ($gearsThatIsAttachedToComponents->has($gear)) {

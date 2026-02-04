@@ -76,7 +76,7 @@ final class StreamBasedActivityHeartRateRepository implements ActivityHeartRateR
 
     private function buildHeartRateZoneCache(): void
     {
-        if (!empty(StreamBasedActivityHeartRateRepository::$cachedHeartRateZones)) {
+        if ([] !== StreamBasedActivityHeartRateRepository::$cachedHeartRateZones) {
             // Cache already built, no need to rebuild.
             return;
         }

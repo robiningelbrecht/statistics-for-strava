@@ -56,7 +56,8 @@ final readonly class GpxSerializer
         $trkNode = $rootNode->addChild('trk');
         $trkNode->addChild('name', Escape::forJsonEncode($activity->getName()));
         $trkNode->addChild('type', $activity->getSportType()->value);
-        if ($description = $activity->getDescription()) {
+        $description = $activity->getDescription();
+        if ('' !== $description && '0' !== $description) {
             $trkNode->addChild('desc', Escape::forJsonEncode($description));
         }
         $trksegNode = $trkNode->addChild('trkseg');

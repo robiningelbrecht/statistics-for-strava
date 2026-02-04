@@ -85,7 +85,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
         );
     }
 
-    private static function getValidYml(): array
+    private function getValidYml(): array
     {
         return Yaml::parse(<<<YML
 enabled: true

@@ -12,7 +12,7 @@ final readonly class ShoutrrrUrl extends NonEmptyStringLiteral
      */
     public function withParams(array $params): self
     {
-        if (empty($params)) {
+        if ([] === $params) {
             return $this;
         }
 

@@ -31,7 +31,7 @@ class LiveNominatimTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('https://nominatim.openstreetmap.org/reverse', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -79,7 +79,7 @@ class LiveNominatimTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('https://nominatim.openstreetmap.org/reverse', $path);
 

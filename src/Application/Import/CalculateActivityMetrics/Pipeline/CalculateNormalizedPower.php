@@ -34,8 +34,9 @@ final readonly class CalculateNormalizedPower implements CalculateActivityMetric
 
                 $windowSize = 30;
                 $movingAvg = [];
+                $counter = count($powerData);
 
-                for ($i = $windowSize - 1; $i < count($powerData); ++$i) {
+                for ($i = $windowSize - 1; $i < $counter; ++$i) {
                     $window = array_slice($powerData, $i - $windowSize + 1, $windowSize);
                     $avg = array_sum($window) / $windowSize;
                     $movingAvg[] = $avg ** 4;

@@ -19,7 +19,7 @@ final readonly class GearImportStatus
         $importedGears = $this->importedGearRepository->findAll();
 
         foreach ($stravaGearIdsOnActivities as $gearId) {
-            if (!$importedGears->getByGearId($gearId)) {
+            if (!$importedGears->getByGearId($gearId) instanceof \App\Domain\Gear\Gear) {
                 return false;
             }
         }

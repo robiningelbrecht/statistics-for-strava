@@ -49,7 +49,7 @@ final readonly class ProcessActivityLaps implements ProcessRawDataStep
                     maxAverageSpeed: MetersPerSecond::from($lap['max_average_speed']),
                     maxSpeed: MetersPerSecond::from($lap['max_speed']),
                     elevationDifference: Meter::from($lap['total_elevation_gain'] ?? 0),
-                    averageHeartRate: !empty($lap['average_heartrate']) ? (int) round($lap['average_heartrate']) : null,
+                    averageHeartRate: empty($lap['average_heartrate']) ? null : (int) round($lap['average_heartrate']),
                 ));
                 ++$countLapsAdded;
             }

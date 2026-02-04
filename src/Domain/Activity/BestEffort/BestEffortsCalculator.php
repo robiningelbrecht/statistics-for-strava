@@ -40,7 +40,7 @@ final class BestEffortsCalculator
 
     private function buildCache(): void
     {
-        if (!empty($this->cache)) {
+        if ([] !== $this->cache) {
             return;
         }
 
@@ -104,7 +104,7 @@ final class BestEffortsCalculator
 
     private function buildHistoryCache(): void
     {
-        if (!empty($this->historyCache)) {
+        if ([] !== $this->historyCache) {
             return;
         }
         $sql = 'SELECT activityId, distanceInMeter, sportType, timeInSeconds

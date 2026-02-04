@@ -26,10 +26,10 @@ final readonly class Coordinate implements \JsonSerializable
 
     public static function createFromOptionalLatAndLng(?Latitude $latitude, ?Longitude $longitude): ?Coordinate
     {
-        if (!$latitude) {
+        if (!$latitude instanceof Latitude) {
             return null;
         }
-        if (!$longitude) {
+        if (!$longitude instanceof Longitude) {
             return null;
         }
 

@@ -66,7 +66,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             ])
         );
 
-        if ($this->zwiftLevel) {
+        if ($this->zwiftLevel instanceof ZwiftLevel) {
             $this->fileStorage->write(
                 'zwift-badge.svg',
                 $this->twig->load('svg/badge/svg-zwift-badge.html.twig')->render([

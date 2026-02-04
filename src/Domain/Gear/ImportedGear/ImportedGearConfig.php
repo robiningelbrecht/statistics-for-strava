@@ -21,7 +21,7 @@ final readonly class ImportedGearConfig
     public static function fromArray(
         array $config,
     ): self {
-        if (empty($config)) {
+        if ([] === $config) {
             return new self([]);
         }
 

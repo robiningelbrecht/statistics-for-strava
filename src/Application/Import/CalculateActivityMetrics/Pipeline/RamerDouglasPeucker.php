@@ -31,12 +31,12 @@ final readonly class RamerDouglasPeucker
         $movingIndexes = $this->movingStream?->getData();
         $velocityData = $this->otherStreams->filterOnType(StreamType::VELOCITY)?->getData() ?? [];
         foreach ($distances as $i => $distance) {
-            if (!empty($movingIndexes) && false === $movingIndexes[$i]) {
+            if (null !== $movingIndexes && [] !== $movingIndexes && false === $movingIndexes[$i]) {
                 // Athlete was not moving.
                 continue;
             }
 
-            if (!empty($velocityData) && $velocityData[$i] < 0.5) {
+            if ([] !== $velocityData && $velocityData[$i] < 0.5) {
                 // VERY slow velocity data, athlete was probably not moving.
                 // Consider this invalid data.
                 continue;
@@ -78,7 +78,7 @@ final readonly class RamerDouglasPeucker
         $keep[$first] = true;
         $keep[$last] = true;
 
-        while (!empty($stack)) {
+        while ([] !== $stack) {
             [$start, $end] = array_pop($stack);
 
             $dMax = 0.0;

@@ -20,7 +20,7 @@ final class ConsoleApplication
 
     public static function get(): Application
     {
-        if (null === self::$application) {
+        if (!self::$application instanceof Application) {
             throw new \RuntimeException('Application not set. Call ConsoleApplication::setApplication() before using this method.');
         }
 

@@ -14,16 +14,14 @@ final class CustomGearBuilder
     private GearId $gearId;
     private SerializableDateTime $createdOn;
     private Meter $distanceInMeter;
-    private string $name;
-    private bool $isRetired;
+    private string $name = 'Existing gear';
+    private bool $isRetired = false;
 
     private function __construct()
     {
         $this->gearId = GearId::fromUnprefixed('1');
         $this->createdOn = SerializableDateTime::fromString('2023-10-10');
         $this->distanceInMeter = Meter::from(10023);
-        $this->name = 'Existing gear';
-        $this->isRetired = false;
     }
 
     public static function fromDefaults(): self

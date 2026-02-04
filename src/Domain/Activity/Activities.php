@@ -29,7 +29,7 @@ final class Activities extends Collection
             $startDate = $activity->getStartDate();
         }
 
-        if (!$startDate) {
+        if (!$startDate instanceof SerializableDateTime) {
             throw new \RuntimeException('No activities found');
         }
 

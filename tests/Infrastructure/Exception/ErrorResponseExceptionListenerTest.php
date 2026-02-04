@@ -27,8 +27,8 @@ class ErrorResponseExceptionListenerTest extends TestCase
         );
 
         $this->errorResponseExceptionListener->onKernelException($event);
-        static::assertTrue($event->isAllowingCustomResponseCode());
-        static::assertEquals(HttpStatusCode::BAD_REQUEST->value, $event->getResponse()->getStatusCode());
+        self::assertTrue($event->isAllowingCustomResponseCode());
+        self::assertEquals(HttpStatusCode::BAD_REQUEST->value, $event->getResponse()->getStatusCode());
         $this->assertMatchesJsonSnapshot($event->getResponse()->getContent());
     }
 
@@ -42,8 +42,8 @@ class ErrorResponseExceptionListenerTest extends TestCase
         );
 
         $this->errorResponseExceptionListener->onKernelException($event);
-        static::assertTrue($event->isAllowingCustomResponseCode());
-        static::assertEquals(HttpStatusCode::INTERNAL_SERVER_ERROR->value, $event->getResponse()->getStatusCode());
+        self::assertTrue($event->isAllowingCustomResponseCode());
+        self::assertEquals(HttpStatusCode::INTERNAL_SERVER_ERROR->value, $event->getResponse()->getStatusCode());
         $this->assertMatchesJsonSnapshot($event->getResponse()->getContent());
     }
 

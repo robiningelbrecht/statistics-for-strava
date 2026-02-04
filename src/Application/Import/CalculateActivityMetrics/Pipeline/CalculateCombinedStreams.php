@@ -51,7 +51,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $activityType = $activity->getSportType()->getActivityType();
 
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
-            if (!$distanceStream = $streams->filterOnType(StreamType::DISTANCE)) {
+            if (!($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof \App\Domain\Activity\Stream\ActivityStream) {
                 continue;
             }
             $combinedStreamTypes = CombinedStreamTypes::fromArray([
@@ -61,7 +61,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $otherStreams = ActivityStreams::empty();
             /** @var CombinedStreamType $combinedStreamType */
             foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
-                if (!$stream = $streams->filterOnType($combinedStreamType->getStreamType())) {
+                if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof \App\Domain\Activity\Stream\ActivityStream) {
                     continue;
                 }
                 if (!$stream->getData()) {
@@ -94,7 +94,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
             // We need to add these after the CombinedStreamTypes::othersFor() otherwise we'll end up with "Undefined array key" errors.
             // This is because CombinedStreamTypes::othersFor() does not return LAT_LNG and TIME as these are not really "combined" streams.
-            if ($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) {
+            if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof \App\Domain\Activity\Stream\ActivityStream) {
                 $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
             }
 
@@ -104,7 +104,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $originalMovingData = $streams->filterOnType(StreamType::MOVING)?->getData();
 
             $cumulativeMovingTime = [];
-            if (!empty($originalTimeData) && !empty($originalMovingData)) {
+            if ([] !== $originalTimeData && (null !== $originalMovingData && [] !== $originalMovingData)) {
                 $cumulativeMovingTime = [0];
                 for ($i = 1, $len = count($originalTimeData); $i < $len; ++$i) {
                     $delta = $originalTimeData[$i] - $originalTimeData[$i - 1];
@@ -118,7 +118,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 }
             }
 
-            if (!empty($cumulativeMovingTime)) {
+            if ([] !== $cumulativeMovingTime) {
                 $combinedStreamTypes->add(CombinedStreamType::TIME);
             }
 
@@ -138,11 +138,11 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 $distance = $row[$distanceIndex];
 
                 $indexForOriginalDistance = array_search($distance, $originalDistances);
-                if (false !== $coordinateIndex && !empty($originalCoordinates)) {
+                if (false !== $coordinateIndex && [] !== $originalCoordinates) {
                     // Find corresponding coordinate for distance.
                     $row[$coordinateIndex] = $originalCoordinates[$indexForOriginalDistance];
                 }
-                if ($cumulativeMovingTime) {
+                if ([] !== $cumulativeMovingTime) {
                     // Find corresponding time for distance.
                     $movingTimeUntilThisPoint = $cumulativeMovingTime[$indexForOriginalDistance];
                     $row[$timeIndex] = $this->formatDurationForHumans($movingTimeUntilThisPoint);

@@ -35,7 +35,7 @@ final readonly class GearStatistics
     {
         $statistics = $this->buildStatistics($this->gears->filter(fn (Gear $gear): bool => !$gear->isRetired()));
 
-        $activitiesWithOtherGear = $this->activities->filter(fn (Activity $activity): bool => empty($activity->getGearId()));
+        $activitiesWithOtherGear = $this->activities->filter(fn (Activity $activity): bool => !$activity->getGearId() instanceof GearId);
         $countActivitiesWithOtherGear = count($activitiesWithOtherGear);
         if (0 === $countActivitiesWithOtherGear) {
             return $statistics;
@@ -72,7 +72,7 @@ final readonly class GearStatistics
      */
     private function buildStatistics(Gears $gears): array
     {
-        return $gears->map(function (Gear $gear) {
+        return $gears->map(function (Gear $gear): array {
             $activitiesWithGear = $this->activities->filter(fn (Activity $activity): bool => $activity->getGearId() == $gear->getId());
             $countActivitiesWithGear = count($activitiesWithGear);
             $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());

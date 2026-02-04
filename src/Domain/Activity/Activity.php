@@ -415,7 +415,7 @@ final class Activity implements SupportsAITooling
 
     public function getName(): string
     {
-        if (empty($this->tags)) {
+        if ([] === $this->tags) {
             return $this->getOriginalName();
         }
 
@@ -635,7 +635,7 @@ final class Activity implements SupportsAITooling
         if (!$this->isZwiftRide()) {
             return new RealWorldMap();
         }
-        if (!$startingCoordinate = $this->getStartingCoordinate()) {
+        if (!($startingCoordinate = $this->getStartingCoordinate()) instanceof Coordinate) {
             return null;
         }
 
@@ -713,7 +713,7 @@ final class Activity implements SupportsAITooling
     {
         $bestAveragePowerSortables = [];
         foreach (ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_REDACTED as $interval) {
-            if (!$bestAverage = $this->getBestAveragePowerForTimeInterval($interval)) {
+            if (!($bestAverage = $this->getBestAveragePowerForTimeInterval($interval)) instanceof PowerOutput) {
                 continue;
             }
 

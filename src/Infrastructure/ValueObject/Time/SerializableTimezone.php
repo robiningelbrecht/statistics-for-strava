@@ -18,7 +18,7 @@ class SerializableTimezone extends \DateTimeZone implements \JsonSerializable, \
 
     public static function fromString(string $string): self
     {
-        if (empty(trim($string))) {
+        if (in_array(trim($string), ['', '0'], true)) {
             throw new \RuntimeException('timezone cannot be empty');
         }
 

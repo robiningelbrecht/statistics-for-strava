@@ -29,7 +29,7 @@ class LiveOpenMeteoTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('v1/forecast', $path);
                 $this->assertMatchesJsonSnapshot($options);
@@ -51,7 +51,7 @@ class LiveOpenMeteoTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('v1/archive', $path);
                 $this->assertMatchesJsonSnapshot($options);

@@ -290,7 +290,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     isPlaceHolderForComparison: true
                 ));
             }
-            if ($randomImage) {
+            if ($randomImage instanceof \App\Domain\Activity\Image\Image) {
                 $activity = $this->enrichedActivities->find($randomImage->getActivityId());
                 $rewindItems->add(RewindItem::from(
                     icon: 'image',

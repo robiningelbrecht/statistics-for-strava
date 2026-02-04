@@ -36,7 +36,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
     public static function fromArray(
         ?array $config,
     ): self {
-        if (empty($config)) {
+        if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),

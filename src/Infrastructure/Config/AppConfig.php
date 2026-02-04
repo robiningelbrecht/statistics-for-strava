@@ -32,15 +32,15 @@ final class AppConfig
 
     private static function buildConfig(): void
     {
-        if (null === self::$kernelProjectDir) {
+        if (!self::$kernelProjectDir instanceof KernelProjectDir) {
             throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
         }
-        if (null === self::$platformEnvironment) {
+        if (!self::$platformEnvironment instanceof PlatformEnvironment) {
             throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
         }
         self::$config = [];
         $isTest = self::$platformEnvironment->isTest();
-        $basePath = !$isTest ? self::$kernelProjectDir.'/config/app' : self::$kernelProjectDir.'/config/app/test';
+        $basePath = $isTest ? self::$kernelProjectDir.'/config/app/test' : self::$kernelProjectDir.'/config/app';
 
         $mainConfigFile = $basePath.'/config.yaml';
         if (!file_exists($mainConfigFile)) {

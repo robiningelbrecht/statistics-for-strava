@@ -67,7 +67,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
                 return;
             } catch (ClientException|RequestException $exception) {
-                if (!$exception->getResponse()) {
+                if (!$exception->getResponse() instanceof \Psr\Http\Message\ResponseInterface) {
                     // Re-throw, we only want to catch supported error codes.
                     throw $exception;  // @codeCoverageIgnore
                 }

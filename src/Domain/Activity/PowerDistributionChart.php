@@ -47,7 +47,7 @@ final readonly class PowerDistributionChart
         $minPower = 0;
         $maxPower = (int) ceil(max($powers) / 100) * 100;
 
-        if ($maxPower - $minPower <= 0) {
+        if ($maxPower <= 0) {
             // Something fishy is going on.
             return null;
         }
@@ -60,7 +60,7 @@ final readonly class PowerDistributionChart
         }
         ksort($powerData);
 
-        $step = (int) floor(($maxPower - $minPower) / 24) ?: 1;
+        $step = (int) floor($maxPower / 24) ?: 1;
         $xAxisValues = range($minPower, $maxPower, $step);
         if (end($xAxisValues) < $maxPower) {
             $xAxisValues[] = $maxPower;
@@ -95,7 +95,7 @@ final readonly class PowerDistributionChart
 
         // Calculate the mark areas to display the zones.
         if ($ftp = $this->ftp?->getFtp()->getValue()) {
-            $oneWattPercentage = 100 / ($maxPower - $minPower);
+            $oneWattPercentage = 100 / $maxPower;
 
             $markAreas = [
                 [

@@ -65,7 +65,7 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
      */
     private function computeStreaks(array $days): FindStreaksResponse
     {
-        if (empty($days)) {
+        if ([] === $days) {
             return new FindStreaksResponse(
                 longestDayStreak: 0,
                 currentDayStreak: 0,
@@ -100,8 +100,9 @@ final readonly class FindStreaksQueryHandler implements QueryHandler
         $keepTrackOfCurrentMonthStreak = $monthDiff <= 1;
         $currentMonthStreak = $keepTrackOfCurrentMonthStreak ? 1 : 0;
         $currentMonthStreakStartDate = $keepTrackOfCurrentMonthStreak ? $previousDay : null;
+        $counter = count($days);
 
-        for ($i = 1; $i < count($days); ++$i) {
+        for ($i = 1; $i < $counter; ++$i) {
             $currentDay = $days[$i];
             $diffInDays = $previousDay->diff($currentDay)->days;
 

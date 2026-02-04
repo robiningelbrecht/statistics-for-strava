@@ -25,7 +25,6 @@ class DailyTrainingLoadTest extends ContainerTestCase
 {
     private DailyTrainingLoad $dailyTrainingLoad;
     private AthleteRepository $athleteRepository;
-    private FtpHistory $ftpHistory;
 
     public function testCalculateWithPowerBasedData(): void
     {
@@ -69,9 +68,9 @@ class DailyTrainingLoadTest extends ContainerTestCase
                     $this->getContainer()->get(MaxHeartRateFormula::class),
                     $this->getContainer()->get(RestingHeartRateFormula::class),
                 ),
-                $this->ftpHistory = FtpHistory::fromArray([]),
+                FtpHistory::fromArray([]),
             ),
-            $this->ftpHistory = FtpHistory::fromArray([]),
+            FtpHistory::fromArray([]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
@@ -162,7 +161,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         $this->dailyTrainingLoad = new DailyTrainingLoad(
             $this->getContainer()->get(EnrichedActivities::class),
             $this->getContainer()->get(ActivityIntensity::class),
-            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
+            FtpHistory::fromArray(['2023-04-01' => 250]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),

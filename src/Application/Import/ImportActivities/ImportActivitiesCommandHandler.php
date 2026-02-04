@@ -205,7 +205,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             return;
         }
 
-        if (empty($activityIdsToDelete)) {
+        if ([] === $activityIdsToDelete) {
             return;
         }
 

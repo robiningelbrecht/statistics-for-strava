@@ -102,7 +102,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
 
         $progressIndicator->finish(sprintf('Found %d activities with corrupted data', count($activityIdsToDelete)));
         $output->newLine();
-        $output->listing(array_map(function (ActivityId $activityId) {
+        $output->listing(array_map(function (ActivityId $activityId): string {
             $activity = $this->activitySummaryRepository->find($activityId);
 
             return sprintf(

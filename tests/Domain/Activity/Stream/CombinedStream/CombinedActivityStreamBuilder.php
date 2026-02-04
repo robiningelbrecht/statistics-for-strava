@@ -14,14 +14,13 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 final class CombinedActivityStreamBuilder
 {
     private ActivityId $activityId;
-    private UnitSystem $unitSystem;
+    private UnitSystem $unitSystem = UnitSystem::METRIC;
     private CombinedStreamTypes $streamTypes;
     private array $data;
 
     private function __construct()
     {
         $this->activityId = ActivityId::fromUnprefixed('test');
-        $this->unitSystem = UnitSystem::METRIC;
         $this->streamTypes = CombinedStreamTypes::fromArray([CombinedStreamType::DISTANCE, CombinedStreamType::ALTITUDE]);
         $this->data = Json::decode('[{"distance":0,"altitude":10,"cadence":90,"watts":250,"heartrate":150},{"distance":10,"altitude":10.5,"cadence":87,"watts":260,"heartrate":155},{"distance":15,"altitude":11,"cadence":85,"watts":270,"heartrate":157},{"distance":25,"altitude":12,"cadence":80,"watts":280,"heartrate":162},{"distance":30,"altitude":12.3,"cadence":78,"watts":290,"heartrate":165},{"distance":50,"altitude":13,"cadence":75,"watts":300,"heartrate":168},{"distance":150,"altitude":15,"cadence":65,"watts":340,"heartrate":178}]');
     }

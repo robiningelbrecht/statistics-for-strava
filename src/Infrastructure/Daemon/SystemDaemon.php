@@ -86,7 +86,7 @@ final class SystemDaemon implements Daemon
             $this->getConsoleOutput()->writeln(sprintf('<error>%s</error>', $throwable->getMessage()));
         });
 
-        if (empty($actions)) {
+        if ([] === $actions) {
             $this->getConsoleOutput()->writeln(sprintf('<info>%s</info>', 'No cron items configured, shutting down cron...'));
 
             return;

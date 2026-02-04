@@ -39,13 +39,13 @@ class TranslationsTest extends ContainerTestCase
             $missingTranslationKeys = array_diff($translatableKeys, array_keys($parsedTranslations));
             $extraTranslationKeys = array_diff(array_keys($parsedTranslations), $translatableKeys);
 
-            if (!empty($missingTranslationKeys) || !empty($extraTranslationKeys)) {
+            if ([] !== $missingTranslationKeys || [] !== $extraTranslationKeys) {
                 $messages[] = sprintf("Translation mismatch for locale '%s':\n", $locale->value);
 
-                if (!empty($missingTranslationKeys)) {
+                if ([] !== $missingTranslationKeys) {
                     $messages[] = " Missing keys:\n  - ".implode("\n  - ", $missingTranslationKeys)."\n";
                 }
-                if (!empty($extraTranslationKeys)) {
+                if ([] !== $extraTranslationKeys) {
                     $messages[] = " Extra keys:\n  - ".implode("\n  - ", $extraTranslationKeys)."\n";
                 }
             }

@@ -31,7 +31,7 @@ final readonly class CustomGearConfig
     public static function fromArray(
         ?array $config,
     ): self {
-        if (empty($config)) {
+        if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),

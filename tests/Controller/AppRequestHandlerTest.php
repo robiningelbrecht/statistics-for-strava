@@ -9,7 +9,6 @@ use App\Tests\ContainerTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -30,15 +29,7 @@ class AppRequestHandlerTest extends ContainerTestCase
             ->expects($this->never())
             ->method('verifyAccessToken');
 
-        $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle()->getContent());
     }
 
     public function testHandleWhenInvalidRefreshToken(): void
@@ -48,15 +39,7 @@ class AppRequestHandlerTest extends ContainerTestCase
             ->method('verifyAccessToken')
             ->willThrowException(new InvalidStravaAccessToken());
 
-        $response = $this->appRequestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ));
+        $response = $this->appRequestHandler->handle();
 
         $this->assertEquals(
             new RedirectResponse('/strava-oauth', Response::HTTP_FOUND),
@@ -70,15 +53,7 @@ class AppRequestHandlerTest extends ContainerTestCase
             ->expects($this->once())
             ->method('verifyAccessToken');
 
-        $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($this->appRequestHandler->handle()->getContent());
     }
 
     #[\Override]

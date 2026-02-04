@@ -59,9 +59,9 @@ final readonly class WeeklyStatsChart
         $maxZoomValueSpan = 26;
         $data = $this->getData($weeks);
 
-        if (empty(array_filter($data[StatsContext::DISTANCE->value]))
-            && empty(array_filter($data[StatsContext::MOVING_TIME->value]))
-            && empty(array_filter($data[StatsContext::ELEVATION->value]))) {
+        if ([] === array_filter($data[StatsContext::DISTANCE->value])
+            && [] === array_filter($data[StatsContext::MOVING_TIME->value])
+            && [] === array_filter($data[StatsContext::ELEVATION->value])) {
             return []; // @codeCoverageIgnore
         }
 
@@ -100,7 +100,7 @@ final readonly class WeeklyStatsChart
         $yAxis = [];
 
         foreach ($this->metricsDisplayOrder as $context) {
-            if (empty(array_filter($data[$context->value]))) {
+            if ([] === array_filter($data[$context->value])) {
                 continue; // @codeCoverageIgnore
             }
 

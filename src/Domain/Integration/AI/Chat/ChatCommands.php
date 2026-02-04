@@ -27,10 +27,10 @@ final readonly class ChatCommands implements \JsonSerializable
             }
 
             if (!is_string($commandConfig['command'])) {
-                throw new InvalidChatCommandsConfig(sprintf('command must be a string'));
+                throw new InvalidChatCommandsConfig('command must be a string');
             }
             if (!is_string($commandConfig['message'])) {
-                throw new InvalidChatCommandsConfig(sprintf('message must be a string'));
+                throw new InvalidChatCommandsConfig('message must be a string');
             }
             if (empty($commandConfig['command']) || empty($commandConfig['message'])) {
                 throw new InvalidChatCommandsConfig('command and message cannot be empty.');

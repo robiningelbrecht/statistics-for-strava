@@ -24,7 +24,7 @@ final readonly class DetermineActivityWeather implements ActivityImportStep
         if (!$activity->getSportType()->supportsWeather()) {
             return $context;
         }
-        if (!$activity->getStartingCoordinate()) {
+        if (!$activity->getStartingCoordinate() instanceof \App\Infrastructure\ValueObject\Geography\Coordinate) {
             return $context;
         }
 

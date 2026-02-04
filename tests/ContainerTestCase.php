@@ -29,7 +29,7 @@ abstract class ContainerTestCase extends KernelTestCase
     {
         parent::setUp();
 
-        if (!self::$ourDbalConnection) {
+        if (!self::$ourDbalConnection instanceof Connection) {
             self::bootKernel();
             self::$ourDbalConnection = self::getContainer()->get(Connection::class);
         }
