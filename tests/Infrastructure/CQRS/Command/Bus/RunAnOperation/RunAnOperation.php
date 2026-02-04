@@ -6,6 +6,8 @@ use App\Infrastructure\CQRS\Command\DomainCommand;
 
 final readonly class RunAnOperation extends DomainCommand
 {
+    private readonly string $notInitialized;
+
     public function __construct(
         private ?string $value,
         private ?string $valueTwo = 'defaultValue',
