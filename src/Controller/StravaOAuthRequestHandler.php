@@ -10,10 +10,12 @@ use App\Domain\Strava\Strava;
 use App\Domain\Strava\StravaClientId;
 use App\Domain\Strava\StravaClientSecret;
 use App\Infrastructure\Serialization\Json;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,7 +76,7 @@ final readonly class StravaOAuthRequestHandler
                     ]), Response::HTTP_OK);
                 } catch (ClientException|RequestException $e) {
                     $error = $e->getMessage();
-                    if (($response = $e->getResponse()) instanceof \Psr\Http\Message\ResponseInterface) {
+                    if (($response = $e->getResponse()) instanceof ResponseInterface) {
                         $error = $response->getBody()->getContents();
                     }
                 }

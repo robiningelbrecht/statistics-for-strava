@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
+use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
 use Doctrine\DBAL\ArrayParameterType;
@@ -83,7 +84,7 @@ final readonly class DbalActivityWithRawDataRepository extends DbalRepository im
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
             'polyline' => $activity->getPolyline(),
             'routeGeography' => Json::encode($activity->getRouteGeography()),
-            'weather' => $activity->getWeather() instanceof \App\Domain\Integration\Weather\OpenMeteo\Weather ? Json::encode($activity->getWeather()) : null,
+            'weather' => $activity->getWeather() instanceof Weather ? Json::encode($activity->getWeather()) : null,
             'gearId' => $activity->getGearId(),
             'data' => Json::encode($this->cleanData($activityWithRawData->getRawData())),
             'isCommute' => (int) $activity->isCommute(),

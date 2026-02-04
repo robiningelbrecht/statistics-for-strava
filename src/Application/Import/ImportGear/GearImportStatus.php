@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Import\ImportGear;
 
+use App\Domain\Gear\Gear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 
 final readonly class GearImportStatus
@@ -19,7 +20,7 @@ final readonly class GearImportStatus
         $importedGears = $this->importedGearRepository->findAll();
 
         foreach ($stravaGearIdsOnActivities as $gearId) {
-            if (!$importedGears->getByGearId($gearId) instanceof \App\Domain\Gear\Gear) {
+            if (!$importedGears->getByGearId($gearId) instanceof Gear) {
                 return false;
             }
         }

@@ -6,6 +6,7 @@ use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
 
 final readonly class DetermineActivityWeather implements ActivityImportStep
 {
@@ -24,7 +25,7 @@ final readonly class DetermineActivityWeather implements ActivityImportStep
         if (!$activity->getSportType()->supportsWeather()) {
             return $context;
         }
-        if (!$activity->getStartingCoordinate() instanceof \App\Infrastructure\ValueObject\Geography\Coordinate) {
+        if (!$activity->getStartingCoordinate() instanceof Coordinate) {
             return $context;
         }
 
