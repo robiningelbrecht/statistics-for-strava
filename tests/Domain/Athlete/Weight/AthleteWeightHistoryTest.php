@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Athlete\Weight;
 use App\Domain\Athlete\Weight\AthleteWeight;
 use App\Domain\Athlete\Weight\AthleteWeightHistory;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
+use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use PHPUnit\Framework\TestCase;
@@ -31,6 +32,31 @@ class AthleteWeightHistoryTest extends TestCase
             AthleteWeight::fromState(
                 on: SerializableDateTime::fromString('2024-04-04'),
                 weight: Kilogram::from(223),
+            ),
+            $weightHistory->find(SerializableDateTime::fromString('2025-01-01'))
+        );
+    }
+
+    public function testFindImperial(): void
+    {
+        $weightHistory = AthleteWeightHistory::fromArray([
+            '2024-01-01' => 220,
+            '2024-02-02' => 221,
+            '2024-04-04' => 223,
+            '2024-03-03' => 222,
+        ], UnitSystem::IMPERIAL);
+
+        $this->assertEquals(
+            AthleteWeight::fromState(
+                on: SerializableDateTime::fromString('2024-04-04'),
+                weight: Pound::from(223),
+            ),
+            $weightHistory->find(SerializableDateTime::fromString('2024-04-04'))
+        );
+        $this->assertEquals(
+            AthleteWeight::fromState(
+                on: SerializableDateTime::fromString('2024-04-04'),
+                weight: Pound::from(223),
             ),
             $weightHistory->find(SerializableDateTime::fromString('2025-01-01'))
         );
