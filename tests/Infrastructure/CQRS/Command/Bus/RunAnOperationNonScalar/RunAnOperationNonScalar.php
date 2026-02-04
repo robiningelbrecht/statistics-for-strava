@@ -8,4 +8,8 @@ use App\Infrastructure\CQRS\Command\DomainCommand;
 
 final readonly class RunAnOperationNonScalar extends DomainCommand
 {
+    public function __construct(
+        private readonly Name $value,
+    ) {
+    }
 }
