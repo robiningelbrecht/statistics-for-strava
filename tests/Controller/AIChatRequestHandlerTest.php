@@ -20,7 +20,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class AIChatRequestHandlerTest extends ContainerTestCase
@@ -49,15 +48,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
     }
 
     public function testHandleNoIndexFound(): void
@@ -70,15 +61,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
     }
 
     public function testHandleAINotEnabled(): void
@@ -93,15 +76,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
     }
 
     public function testClearChat(): void

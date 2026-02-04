@@ -59,7 +59,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
             }
         }
 
-        if (empty($bestEffortsCharts)) {
+        if ([] === $bestEffortsCharts) {
             return;
         }
 

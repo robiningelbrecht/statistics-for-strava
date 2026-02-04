@@ -14,7 +14,7 @@ final class ActivityLapBuilder
 {
     private ActivityLapId $lapId;
     private ActivityId $activityId;
-    private int $lapNumber;
+    private int $lapNumber = 1;
     private readonly string $name;
     private readonly int $elapsedTimeInSeconds;
     private readonly int $movingTimeInSeconds;
@@ -30,7 +30,6 @@ final class ActivityLapBuilder
     {
         $this->lapId = ActivityLapId::fromUnprefixed('test');
         $this->activityId = ActivityId::fromUnprefixed('test');
-        $this->lapNumber = 1;
         $this->name = 'test';
         $this->distance = Meter::from(100);
         $this->elapsedTimeInSeconds = 120;

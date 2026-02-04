@@ -23,7 +23,7 @@ final class GearOptions
 
     public function isEmpty(): bool
     {
-        return empty($this->options);
+        return [] === $this->options;
     }
 
     public function add(GearId $gearId, string $imgSrc): void

@@ -12,19 +12,15 @@ final class ChallengeBuilder
 {
     private ChallengeId $challengeId;
     private SerializableDateTime $createdOn;
-    private string $name;
-    private ?string $logoUrl;
-    private ?string $localLogoUrl;
-    private string $slug;
+    private string $name = 'Challenge';
+    private ?string $logoUrl = null;
+    private ?string $localLogoUrl = null;
+    private string $slug = 'challenge';
 
     private function __construct()
     {
         $this->challengeId = ChallengeId::fromUnprefixed('test');
         $this->createdOn = SerializableDateTime::fromString('2023-10-10');
-        $this->name = 'Challenge';
-        $this->logoUrl = null;
-        $this->localLogoUrl = null;
-        $this->slug = 'challenge';
     }
 
     public static function fromDefaults(): self

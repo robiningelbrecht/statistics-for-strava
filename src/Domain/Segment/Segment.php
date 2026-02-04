@@ -259,13 +259,13 @@ final class Segment implements SupportsAITooling
 
     public function getLeafletMap(): ?LeafletMap
     {
-        if (!$this->getPolyline()) {
+        if (!$this->getPolyline() instanceof EncodedPolyline) {
             return null;
         }
         if (!$this->isZwiftSegment()) {
             return new RealWorldMap();
         }
-        if (!$startingCoordinate = $this->getStartingCoordinate()) {
+        if (!($startingCoordinate = $this->getStartingCoordinate()) instanceof Coordinate) {
             return null;
         }
 

@@ -28,7 +28,7 @@ final readonly class RestingHeartRateFormulas
             return new HeuristicAgeBased();
         }
 
-        if (empty($restingHeartRateFormulaFromConfig)) {
+        if ([] === $restingHeartRateFormulaFromConfig) {
             throw new InvalidHeartRateFormula('RESTING_HEART_RATE_FORMULA date range cannot be empty');
         }
 

@@ -135,9 +135,9 @@ final readonly class Route implements \JsonSerializable
         $precision = $distanceInScalar < 100 ? 1 : 0;
         $distance = number_format(round($distanceInScalar, $precision), $precision, '.', ' ').$distance->getSymbol();
 
-        $startDate = !is_null($this->dateAndTimeFormat) ?
-            $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal()) :
-            $this->getOn()->format('d-m-Y');
+        $startDate = is_null($this->dateAndTimeFormat) ?
+            $this->getOn()->format('d-m-Y') :
+            $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal());
 
         return [
             'active' => true,

@@ -96,7 +96,7 @@ enum ActivityType: string implements TranslatableInterface
 
     public function supportsBestEffortsStats(): bool
     {
-        return !empty($this->getDistancesForBestEffortCalculation());
+        return [] !== $this->getDistancesForBestEffortCalculation();
     }
 
     /**

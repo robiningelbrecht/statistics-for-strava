@@ -13,7 +13,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final class AthleteWeightHistory
 {
     /** @var AthleteWeight[] */
-    private array $weights;
+    private array $weights = [];
 
     /**
      * @param array<string, mixed> $weightsFromEnv
@@ -22,8 +22,6 @@ final class AthleteWeightHistory
         array $weightsFromEnv,
         private readonly UnitSystem $unitSystem,
     ) {
-        $this->weights = [];
-
         foreach ($weightsFromEnv as $on => $configuredWeight) {
             if (!is_numeric($configuredWeight)) {
                 throw new \InvalidArgumentException(sprintf('Invalid weight "%s" set for athlete weightHistory in config.yaml file', $configuredWeight));

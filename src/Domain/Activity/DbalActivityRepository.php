@@ -29,7 +29,7 @@ final class DbalActivityRepository implements ActivityRepository
 
     public function find(ActivityId $activityId): Activity
     {
-        if (empty($this->cachedActivities)) {
+        if ([] === $this->cachedActivities) {
             // Do an initial cache of all activities.
             $queryBuilder = $this->connection->createQueryBuilder();
             $results = $queryBuilder->select('*')

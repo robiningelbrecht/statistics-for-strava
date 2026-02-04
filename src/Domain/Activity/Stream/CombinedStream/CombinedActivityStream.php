@@ -130,7 +130,7 @@ final class CombinedActivityStream
         $this->buildChartStreamDataCache();
         $streamTypesForCharts = CombinedStreamTypes::empty();
 
-        foreach ($this->chartStreamDataCache as $streamType => $_) {
+        foreach (array_keys($this->chartStreamDataCache) as $streamType) {
             $streamTypesForCharts->add(CombinedStreamType::from($streamType));
         }
 
@@ -149,7 +149,7 @@ final class CombinedActivityStream
 
     private function buildChartStreamDataCache(): void
     {
-        if (!empty($this->chartStreamDataCache)) {
+        if ([] !== $this->chartStreamDataCache) {
             // Cache has been built already.
             return;
         }

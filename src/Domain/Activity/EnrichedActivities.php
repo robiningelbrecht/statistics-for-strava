@@ -36,7 +36,7 @@ final class EnrichedActivities
 
     private function enrichAll(): void
     {
-        if (!empty(self::$cachedActivities)) {
+        if ([] !== self::$cachedActivities) {
             return;
         }
 
@@ -80,7 +80,7 @@ final class EnrichedActivities
                     streamType: StreamType::CADENCE
                 );
 
-                if (!empty($cadenceStream->getData())) {
+                if ([] !== $cadenceStream->getData()) {
                     $activity = $activity->withMaxCadence(max($cadenceStream->getData()));
                 }
             } catch (EntityNotFound) {
@@ -123,7 +123,7 @@ final class EnrichedActivities
             )
             ->orderBy('startDateTime', 'DESC');
 
-        if ($activityType) {
+        if ($activityType instanceof ActivityType) {
             $queryBuilder->andWhere('sportType IN (:sportTypes)')
                 ->setParameter(
                     key: 'sportTypes',

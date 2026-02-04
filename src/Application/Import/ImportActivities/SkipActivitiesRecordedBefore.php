@@ -10,7 +10,7 @@ final class SkipActivitiesRecordedBefore extends SerializableDateTime
 {
     public static function fromOptionalString(?string $string): ?self
     {
-        if (is_null($string) || empty(trim($string))) {
+        if (is_null($string) || in_array(trim($string), ['', '0'], true)) {
             return null;
         }
 

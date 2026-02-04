@@ -79,7 +79,7 @@ final readonly class ActivityCountPerMonthChart
         }
 
         // Enable label only on top series.
-        if (!empty($series)) {
+        if ([] !== $series) {
             $lastKey = array_key_last($series);
             $series[$lastKey]['label']['show'] = true;
         }

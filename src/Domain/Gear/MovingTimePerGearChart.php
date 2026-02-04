@@ -36,7 +36,7 @@ final readonly class MovingTimePerGearChart
     {
         $data = [];
         foreach ($this->movingTimePerGear as $gearId => $time) {
-            if (!$gear = $this->gears->getByGearId(GearId::fromString($gearId))) {
+            if (!($gear = $this->gears->getByGearId(GearId::fromString($gearId))) instanceof Gear) {
                 continue;
             }
             $data[] = [

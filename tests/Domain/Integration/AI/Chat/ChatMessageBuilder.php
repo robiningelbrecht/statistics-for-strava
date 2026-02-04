@@ -13,20 +13,17 @@ use NeuronAI\Chat\Enums\MessageRole;
 final class ChatMessageBuilder
 {
     private ChatMessageId $messageId;
-    private string $message;
-    private MessageRole $messageRole;
+    private string $message = 'Cool';
+    private MessageRole $messageRole = MessageRole::USER;
     private readonly SerializableDateTime $on;
     private readonly ?ProfilePictureUrl $userProfilePictureUrl;
-    private ?string $firstLetterOfFirstName;
+    private ?string $firstLetterOfFirstName = 'r';
 
     public function __construct()
     {
         $this->messageId = ChatMessageId::fromUnprefixed('test');
-        $this->message = 'Cool';
-        $this->messageRole = MessageRole::USER;
         $this->on = SerializableDateTime::fromString('2025-01-01 15:56:00');
         $this->userProfilePictureUrl = null;
-        $this->firstLetterOfFirstName = 'r';
     }
 
     public static function fromDefaults(): self

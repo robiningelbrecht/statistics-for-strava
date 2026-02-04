@@ -36,6 +36,7 @@ final readonly class AthleteProfileWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
+        $chartData = [];
         foreach ([30, 90] as $lastXDays) {
             $findAthleteProfileMetricsResponse = $this->queryBus->ask(new FindAthleteProfileMetrics(DateRange::lastXDays($now, $lastXDays)));
             $numberOfActivities = $findAthleteProfileMetricsResponse->getNumberOfActivities();
@@ -84,7 +85,7 @@ final readonly class AthleteProfileWidget implements Widget
             ];
         }
 
-        if (empty($chartData)) {
+        if ([] === $chartData) {
             return null;
         }
 

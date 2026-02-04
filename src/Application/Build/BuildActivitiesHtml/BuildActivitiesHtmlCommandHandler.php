@@ -110,7 +110,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $distributionCharts = [];
-            if ($activity->getAverageHeartRate() && $heartRateStream && !empty($heartRateStream->getValueDistribution())) {
+            if ($activity->getAverageHeartRate() && $heartRateStream && [] !== $heartRateStream->getValueDistribution()) {
                 $distributionCharts[] = [
                     'title' => $this->translator->trans('Heart rate distribution'),
                     'data' => Json::encode(HeartRateDistributionChart::create(
@@ -149,7 +149,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     ];
                 }
             }
-            if ($velocityStream && !empty($velocityStream->getValueDistribution())) {
+            if ($velocityStream && [] !== $velocityStream->getValueDistribution()) {
                 $velocityUnitPreference = $activity->getSportType()->getVelocityDisplayPreference();
 
                 $velocityDistributionChart = VelocityDistributionChart::create(
@@ -214,7 +214,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     foreach ($streamTypesForCharts as $index => $combinedStreamType) {
                         $xAxisPosition = match (true) {
                             0 === $index => Theme::POSITION_BOTTOM,
-                            $index === count($streamTypesForCharts) - 1 && !empty($times) => Theme::POSITION_TOP,
+                            $index === count($streamTypesForCharts) - 1 && [] !== $times => Theme::POSITION_TOP,
                             default => null,
                         };
                         $xAxisData = match (true) {
@@ -246,7 +246,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 'activity/'.$activity->getId().'.html',
                 $this->twig->load($templateName)->render([
                     'activity' => $activity,
-                    'leaflet' => $leafletMap ? [
+                    'leaflet' => $leafletMap instanceof \App\Domain\Activity\LeafletMap ? [
                         'routes' => [$activity->getPolyline()],
                         'map' => $leafletMap,
                         'gpxLink' => $activityHasTimeStream ? 'files/'.$gpxFileLocation : null,

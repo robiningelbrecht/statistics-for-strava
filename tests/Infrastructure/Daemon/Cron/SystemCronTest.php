@@ -75,7 +75,7 @@ class SystemCronTest extends ContainerTestCase
         ];
 
         $this->expectExceptionObject(new \InvalidArgumentException('Cron action "test" does not exists.'));
-        $cron = new SystemCron(
+        new SystemCron(
             runnableCronActions: $runnableCronActions,
             configuredCronActions: $configuredCronActions,
         );

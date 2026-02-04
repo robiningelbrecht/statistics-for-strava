@@ -70,11 +70,7 @@ final class TrainingMetrics
                 $strainValues[$delta] = null;
             }
 
-            if (0 == $ctlValues[$delta]) {
-                $acRatioValues[$delta] = 0;
-            } else {
-                $acRatioValues[$delta] = round($altValues[$delta] / $ctlValues[$delta], 2);
-            }
+            $acRatioValues[$delta] = 0 == $ctlValues[$delta] ? 0 : round($altValues[$delta] / $ctlValues[$delta], 2);
 
             ++$delta;
         }
@@ -101,7 +97,7 @@ final class TrainingMetrics
 
     public function getCurrentAtl(): ?float
     {
-        if (empty($this->atlValues)) {
+        if ([] === $this->atlValues) {
             return null;
         }
 
@@ -118,7 +114,7 @@ final class TrainingMetrics
 
     public function getCurrentCtl(): ?float
     {
-        if (empty($this->ctlValues)) {
+        if ([] === $this->ctlValues) {
             return null;
         }
 
@@ -135,7 +131,7 @@ final class TrainingMetrics
 
     public function getCurrentTsb(): ?TSB
     {
-        if (empty($this->tsbValues)) {
+        if ([] === $this->tsbValues) {
             return null;
         }
 
@@ -163,7 +159,7 @@ final class TrainingMetrics
 
     public function getCurrentMonotony(): ?float
     {
-        if (empty($this->monotonyValues)) {
+        if ([] === $this->monotonyValues) {
             return null;
         }
 
@@ -172,7 +168,7 @@ final class TrainingMetrics
 
     public function getCurrentStrain(): ?float
     {
-        if (empty($this->strainValues)) {
+        if ([] === $this->strainValues) {
             return null;
         }
 
@@ -181,7 +177,7 @@ final class TrainingMetrics
 
     public function getCurrentAcRatio(): ?AcRatio
     {
-        if (empty($this->acRatioValues)) {
+        if ([] === $this->acRatioValues) {
             return null;
         }
 

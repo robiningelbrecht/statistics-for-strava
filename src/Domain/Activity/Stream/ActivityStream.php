@@ -124,7 +124,7 @@ final class ActivityStream implements SupportsAITooling
      */
     public function getData(): array
     {
-        if (StreamType::HEART_RATE === $this->getStreamType() && !empty($this->data) && max($this->data) > 300) {
+        if (StreamType::HEART_RATE === $this->getStreamType() && [] !== $this->data && max($this->data) > 300) {
             // Max BPM of 300, WTF? Must be faulty data.
             return [];
         }

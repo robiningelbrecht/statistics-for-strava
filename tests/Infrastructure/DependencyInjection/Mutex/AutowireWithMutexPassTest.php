@@ -42,9 +42,13 @@ class AutowireWithMutexPassTest extends TestCase
     }
 }
 
-class DummyService
+final readonly class DummyService
 {
-    public function __construct(Mutex $mutex)
+    public function __construct(private Mutex $mutex)
     {
+    }
+
+    public function getMutex(): Mutex{
+        return $this->mutex;
     }
 }

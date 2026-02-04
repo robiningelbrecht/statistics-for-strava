@@ -52,7 +52,7 @@ final readonly class CombinedStreamProfileChart
      */
     public function build(): array
     {
-        if (empty($this->yAxisData)) {
+        if ([] === $this->yAxisData) {
             throw new \RuntimeException('yAxisData data cannot be empty');
         }
         $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
@@ -70,8 +70,8 @@ final readonly class CombinedStreamProfileChart
             'grid' => [
                 'left' => '40px',
                 'right' => '0%',
-                'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && !empty($this->xAxisData) ? '20px' : '0%',
-                'top' => Theme::POSITION_TOP === $this->xAxisPosition && !empty($this->xAxisData) ? '20px' : '0%',
+                'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && [] !== $this->xAxisData ? '20px' : '0%',
+                'top' => Theme::POSITION_TOP === $this->xAxisPosition && [] !== $this->xAxisData ? '20px' : '0%',
                 'containLabel' => false,
             ],
             'animation' => false,
@@ -85,7 +85,7 @@ final readonly class CombinedStreamProfileChart
                 'type' => 'category',
                 'boundaryGap' => false,
                 'axisLabel' => [
-                    'show' => !is_null($this->xAxisPosition) && !empty($this->xAxisData),
+                    'show' => !is_null($this->xAxisPosition) && [] !== $this->xAxisData,
                     'formatter' => '{value} '.$this->xAxisLabelSuffix,
                 ],
                 'data' => $this->xAxisData,

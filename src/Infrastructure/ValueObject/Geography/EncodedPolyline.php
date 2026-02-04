@@ -25,10 +25,10 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
                 $shift += 5;
             } while ($bit >= 0x20);
 
-            $diff = ($result & 1) ? ~($result >> 1) : ($result >> 1);
+            $diff = (($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1);
             $number = $previous[$index % 2] + $diff;
             $previous[$index % 2] = $number;
-            $points[] = $number * 1 / 10 ** self::PRECISION;
+            $points[] = $number / 10 ** self::PRECISION;
             ++$index;
         }
 
@@ -55,11 +55,11 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
                 $shift += 5;
             } while ($bit >= 0x20);
 
-            $diff = ($result & 1) ? ~($result >> 1) : ($result >> 1);
+            $diff = (($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1);
             $number = $previous[$index % 2] + $diff;
             $previous[$index % 2] = $number;
             ++$index;
-            $points[] = $number * 1 / 10 ** self::PRECISION;
+            $points[] = $number / 10 ** self::PRECISION;
         }
 
         return $points;

@@ -38,7 +38,7 @@ trait ProvideTimeFormats
         ]));
 
         if ($hours = $interval->hours) {
-            $movingTime = ltrim($hours.':'.$movingTime);
+            return ltrim($hours.':'.$movingTime);
         }
 
         return $movingTime;

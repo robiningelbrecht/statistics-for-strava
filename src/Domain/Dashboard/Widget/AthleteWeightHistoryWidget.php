@@ -34,7 +34,7 @@ final readonly class AthleteWeightHistoryWidget implements Widget
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $allWeights = $this->athleteWeightHistory->findAll();
-        if (empty($allWeights)) {
+        if ([] === $allWeights) {
             return null;
         }
 

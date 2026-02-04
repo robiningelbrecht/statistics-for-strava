@@ -74,7 +74,7 @@ final readonly class StravaOAuthRequestHandler
                     ]), Response::HTTP_OK);
                 } catch (ClientException|RequestException $e) {
                     $error = $e->getMessage();
-                    if ($response = $e->getResponse()) {
+                    if (($response = $e->getResponse()) instanceof \Psr\Http\Message\ResponseInterface) {
                         $error = $response->getBody()->getContents();
                     }
                 }

@@ -76,7 +76,7 @@ class Strava
                 throw $e;
             }
 
-            if (!$stravaRateLimits = StravaRateLimits::fromResponse($response)) {
+            if (!($stravaRateLimits = StravaRateLimits::fromResponse($response)) instanceof StravaRateLimits) {
                 // No info about rate limits available, rethrow exception.
                 throw $e;
             }
@@ -101,7 +101,7 @@ class Strava
             'x-readratelimit-usage: '.$response->getHeaderLine('x-readratelimit-usage'),
         ));
 
-        if ($stravaRateLimits = StravaRateLimits::fromResponse($response)) {
+        if (($stravaRateLimits = StravaRateLimits::fromResponse($response)) instanceof StravaRateLimits) {
             self::$stravaRateLimits = $stravaRateLimits;
             if ($stravaRateLimits->fifteenMinReadRateLimitHasBeenReached()) {
                 // The next request will hit the 15-minute rate limit. Pause and make sure the import does not crash.
@@ -371,7 +371,7 @@ class Strava
             if (!preg_match('/<time[\s\S]*>(?<match>.*?)<\/time>/', $match, $completedOn)) {
                 throw new \RuntimeException('Could not fetch Strava challenge timestamp');
             }
-            if (empty(trim($completedOn['match']))) {
+            if (in_array(trim($completedOn['match']), ['', '0'], true)) {
                 throw new \RuntimeException('Could not fetch Strava challenge timestamp');
             }
 
@@ -397,7 +397,7 @@ class Strava
             return [];
         }
         $contents = $this->filesystemOperator->read('storage/files/strava-challenge-history.html');
-        if (ImportChallengesCommandHandler::DEFAULT_STRAVA_CHALLENGE_HISTORY == trim($contents)) {
+        if (ImportChallengesCommandHandler::DEFAULT_STRAVA_CHALLENGE_HISTORY === trim($contents)) {
             return [];
         }
         if (!preg_match_all('/<ul class=\'list-block-grid list-trophies\'>(?<matches>[\s\S]*)<\/ul>/U', $contents, $matches)) {
@@ -428,7 +428,7 @@ class Strava
             if (!preg_match('/<time class=\'timestamp\'>(?<match>.*?)<\/time>/', $match, $completedOn)) {
                 throw new \RuntimeException('Could not fetch Strava challenge timestamp');
             }
-            if (empty(trim($completedOn['match']))) {
+            if (in_array(trim($completedOn['match']), ['', '0'], true)) {
                 throw new \RuntimeException('Could not fetch Strava challenge timestamp');
             }
 

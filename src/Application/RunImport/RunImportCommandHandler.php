@@ -61,7 +61,7 @@ final readonly class RunImportCommandHandler implements CommandHandler
         $this->commandBus->dispatch(new CalculateActivityMetrics($output));
         $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
 
-        if ($rateLimits = $this->strava->getRateLimit()) {
+        if (($rateLimits = $this->strava->getRateLimit()) instanceof \App\Domain\Strava\RateLimit\StravaRateLimits) {
             $output->title('STRAVA API RATE LIMITS');
             $output->listing([
                 sprintf('15 min rate: %s/%s', $rateLimits->getFifteenMinRateUsage(), $rateLimits->getFifteenMinRateLimit()),

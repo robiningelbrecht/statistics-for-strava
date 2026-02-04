@@ -8,10 +8,6 @@ use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 
 final readonly class FixedResourceUsage implements ResourceUsage
 {
-    public function __construct(
-    ) {
-    }
-
     public function startTimer(): void
     {
         // TODO: Implement startTimer() method.

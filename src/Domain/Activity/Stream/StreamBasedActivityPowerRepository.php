@@ -48,7 +48,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
 
     private function buildStaticCaches(): void
     {
-        if (!empty(StreamBasedActivityPowerRepository::$cachedPowerOutputs)) {
+        if ([] !== StreamBasedActivityPowerRepository::$cachedPowerOutputs) {
             return;
         }
 
@@ -87,7 +87,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 $relativePower = $athleteWeight->toFloat() > 0 ? round($bestAverageForTimeInterval / $athleteWeight->toFloat(), 2) : 0;
                 StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activityId]->add(PowerOutput::fromState(
                     timeIntervalInSeconds: $timeIntervalInSeconds,
-                    formattedTimeInterval: (int) $interval->totalHours ? $interval->totalHours.' h' : ((int) $interval->totalMinutes ? $interval->totalMinutes.' m' : $interval->totalSeconds.' s'),
+                    formattedTimeInterval: 0 !== (int) $interval->totalHours ? $interval->totalHours.' h' : (0 !== (int) $interval->totalMinutes ? $interval->totalMinutes.' m' : $interval->totalSeconds.' s'),
                     power: $bestAverageForTimeInterval,
                     relativePower: $relativePower,
                 ));
@@ -115,7 +115,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
     {
         $powerOutputs = PowerOutputs::empty();
 
-        if (!$dateRange) {
+        if (!$dateRange instanceof DateRange) {
             $dateRange = DateRange::fromDates(
                 from: SerializableDateTime::fromString('1970-01-01 00:00:00'),
                 till: SerializableDateTime::fromString('2100-01-01 00:00:00')
@@ -162,7 +162,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
             $powerOutputs->add(
                 PowerOutput::fromState(
                     timeIntervalInSeconds: $timeIntervalInSeconds,
-                    formattedTimeInterval: (int) $interval->totalHours ? $interval->totalHours.' h' : ((int) $interval->totalMinutes ? $interval->totalMinutes.' m' : $interval->totalSeconds.' s'),
+                    formattedTimeInterval: 0 !== (int) $interval->totalHours ? $interval->totalHours.' h' : (0 !== (int) $interval->totalMinutes ? $interval->totalMinutes.' m' : $interval->totalSeconds.' s'),
                     power: $bestAverageForTimeInterval,
                     relativePower: $relativePower,
                     activityId: $activityId,

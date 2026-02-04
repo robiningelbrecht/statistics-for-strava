@@ -88,7 +88,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
             );
         }
 
-        throw new EntityNotFound(sprintf('Random image not found'));
+        throw new EntityNotFound('Random image not found');
     }
 
     public function count(): int

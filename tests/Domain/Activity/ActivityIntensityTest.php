@@ -25,7 +25,6 @@ class ActivityIntensityTest extends ContainerTestCase
 {
     private ActivityIntensity $activityIntensity;
     private AthleteRepository $athleteRepository;
-    private FtpHistory $ftpHistory;
 
     public function testCalculateWithPower(): void
     {
@@ -115,7 +114,7 @@ class ActivityIntensityTest extends ContainerTestCase
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
             ),
-            $this->ftpHistory = FtpHistory::fromArray([]),
+            FtpHistory::fromArray([]),
         );
 
         $this->athleteRepository->save(Athlete::create([
@@ -211,7 +210,7 @@ class ActivityIntensityTest extends ContainerTestCase
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
             ),
-            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
+            FtpHistory::fromArray(['2023-04-01' => 250]),
         );
     }
 }

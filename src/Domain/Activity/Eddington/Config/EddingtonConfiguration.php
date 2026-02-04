@@ -48,7 +48,7 @@ final class EddingtonConfiguration extends Collection
      */
     public static function fromScalarArray(array $items): self
     {
-        if (empty($items)) {
+        if ([] === $items) {
             // Make sure this new feature is backwards compatible.
             // Use the old default configuration.
             $items = self::getDefaultConfig();

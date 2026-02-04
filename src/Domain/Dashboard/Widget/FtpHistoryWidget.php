@@ -65,7 +65,7 @@ final readonly class FtpHistoryWidget implements Widget
             )->build());
         }
 
-        if (empty($ftpHistoryCharts)) {
+        if ([] === $ftpHistoryCharts) {
             return null;
         }
 

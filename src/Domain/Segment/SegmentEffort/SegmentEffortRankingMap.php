@@ -36,7 +36,7 @@ final class SegmentEffortRankingMap
 
     public function getRankFor(SegmentEffortId $segmentEffortId): ?int
     {
-        if (empty($this->map)) {
+        if ([] === $this->map) {
             $this->map = $this->buildMap();
         }
 

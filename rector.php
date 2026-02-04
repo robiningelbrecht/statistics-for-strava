@@ -11,7 +11,10 @@ return RectorConfig::configure()
         __DIR__.'/tests',
     ])
     ->withPhpSets(php85: true)
-    ->withTypeCoverageLevel(10)
-    ->withDeadCodeLevel(10)
-    ->withCodeQualityLevel(10)
+    ->withPreparedSets(
+        deadCode: true,
+        codeQuality: true,
+        typeDeclarations: true,
+        earlyReturn: true,
+    )
     ->withSkip([OrdSingleByteRector::class]);
