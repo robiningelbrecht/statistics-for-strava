@@ -48,7 +48,8 @@ final readonly class DummyService
     {
     }
 
-    public function getMutex(): Mutex{
+    public function getMutex(): Mutex
+    {
         return $this->mutex;
     }
 }

@@ -11,7 +11,7 @@ use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
-use App\Domain\Activity\PowerDistributionChart;
+use App\Domain\Activity\LeafletMap;use App\Domain\Activity\PowerDistributionChart;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
@@ -246,7 +246,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 'activity/'.$activity->getId().'.html',
                 $this->twig->load($templateName)->render([
                     'activity' => $activity,
-                    'leaflet' => $leafletMap instanceof \App\Domain\Activity\LeafletMap ? [
+                    'leaflet' => $leafletMap instanceof LeafletMap ? [
                         'routes' => [$activity->getPolyline()],
                         'map' => $leafletMap,
                         'gpxLink' => $activityHasTimeStream ? 'files/'.$gpxFileLocation : null,
