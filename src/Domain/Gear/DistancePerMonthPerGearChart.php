@@ -111,7 +111,6 @@ final readonly class DistancePerMonthPerGearChart
         arsort($selectedSeries, SORT_NUMERIC);
 
         return [
-            'backgroundColor' => '#ffffff',
             'animation' => true,
             'grid' => [
                 'left' => '3%',

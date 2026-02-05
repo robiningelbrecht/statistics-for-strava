@@ -91,7 +91,6 @@ final readonly class DistanceOverTimePerGearChart
         arsort($selectedSeries, SORT_NUMERIC);
 
         return [
-            'backgroundColor' => '#ffffff',
             'animation' => true,
             'grid' => [
                 'left' => '3%',
