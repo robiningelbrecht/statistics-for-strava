@@ -11,6 +11,7 @@ import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./ui/data-tables";
 import FullscreenManager from "./fullscreen";
 import Heatmap from "./ui/heatmap";
+import DarkModeManager from "./dark-mode";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -23,9 +24,10 @@ const sidebar = new Sidebar($main);
 const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, dataTableStorage, modalManager);
 const mapManager = new MapManager();
-const tabsManager = new TabsManager(chartManager);
+const tabsManager = new TabsManager();
 const dataTableManager = new DataTableManager(dataTableStorage);
 const fullscreenManager = new FullscreenManager(chartManager);
+const darkModeManager = new DarkModeManager();
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
     callback_error: (img) => {
@@ -43,13 +45,24 @@ const initElements = (rootNode) => {
     initAccordions();
 
     modalManager.init(rootNode);
-    chartManager.init(rootNode);
+    chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
     mapManager.init(rootNode);
     fullscreenManager.init(rootNode);
 }
 
 modalManager.setInitElements(initElements)
 sidebar.init();
+darkModeManager.init();
+
+document.addEventListener('darkModeWasToggled', (e) => {
+    chartManager.toggleDarkTheme(e.detail.darkModeEnabled);
+});
+document.addEventListener('fullScreenModeWasEnabled', () => {
+    chartManager.resizeAll();
+});
+document.addEventListener('tabChangeWasTriggered', (e) => {
+    chartManager.resizeInTab(e.detail.activeTabId)
+});
 
 document.addEventListener('pageWasLoaded', (e) => {
     modalManager.close();
@@ -106,7 +119,7 @@ if ($modalAIChat) {
 }
 
 document.addEventListener('modalWasLoaded.ai-chat', async (e) => {
-    const { default: Chat } = await import(
+    const {default: Chat} = await import(
         /* webpackChunkName: "chat" */ './ui/chat'
         );
     const $modal = e.detail.modal;

@@ -31,7 +31,6 @@ final readonly class SegmentEffortHistoryChart
         }
 
         return [
-            'backgroundColor' => '#ffffff',
             'animation' => false,
             'grid' => [
                 'top' => '30px',

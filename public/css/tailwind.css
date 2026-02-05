@@ -29,6 +29,24 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+
+    .dark{
+        --color-gray-50: #151b23;
+        --color-gray-100: #262C36;
+        --color-gray-200: #3E444D;
+        --color-gray-700: #F0F6FC;
+        --color-gray-800: #F0F6FC;
+        --color-gray-900: #F0F6FC;
+        --color-gray-300: #9198a1;
+        --color-gray-500: #9198a1;
+        --color-gray-600: #9198a1;
+        --color-blue-600: #478be6;
+
+        --color-gray-400: #9CA3AF;
+
+        --color-black: #ffffff;
+        --color-white: #202830;
+    }
 }
 
 @layer utilities {

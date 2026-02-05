@@ -1,6 +1,5 @@
 export default class TabsManager {
-    constructor(chartManager) {
-        this.chartManager = chartManager;
+    constructor() {
     }
 
     init(rootNode) {
@@ -29,7 +28,10 @@ export default class TabsManager {
                 onShow: (tabs, activeTab) => {
                     const activeTabId = activeTab.id.replace('#', '');
                     // Trigger a chart resize to make sure charts are rendered and displayed.
-                    this.chartManager.resizeInTab(activeTabId)
+                    document.dispatchEvent(new CustomEvent('tabChangeWasTriggered', {
+                        bubbles: true,
+                        detail: {activeTabId: activeTabId}
+                    }));
                 },
             });
         });
