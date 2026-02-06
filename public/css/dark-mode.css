@@ -10,12 +10,10 @@
     --color-gray-800: #F0F6FC;
     --color-gray-900: #F0F6FC;
 
-    --color-black: #ffffff;
+    --color-black: #F0F6FC;
     --color-white: #202830;
 
     --color-blue-600: #478be6;
-    --color-orange-800: #F0F6FC;
-    --color-orange-400: var(--color-strava-orange)
 }
 
 .no-dark {
@@ -34,8 +32,6 @@
     --color-white: #ffffff;
 
     --color-blue-600: #2563EB;
-    --color-orange-800: #7B341E;
-    --color-orange-400: #ED8936
 }
 
 .dark-mode-toggle > div::after {
