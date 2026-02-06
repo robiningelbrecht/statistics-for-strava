@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#F26822">
     <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }} | {{ athlete.getName() }}">
     <meta name="mobile-web-app-capable" content="yes">
-    <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="">
+    <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="use-credentials">
     <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
     <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
     <link rel="preload" href="{{ relativeUrl(asset('libraries/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
