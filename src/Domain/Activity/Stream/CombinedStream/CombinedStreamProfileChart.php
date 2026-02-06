@@ -159,6 +159,7 @@ final readonly class CombinedStreamProfileChart
                         'data' => [
                             [
                                 [
+                                    'xAxis' => 'min',
                                     'itemStyle' => [
                                         'color' => '#3E444D',
                                     ],
@@ -167,7 +168,7 @@ final readonly class CombinedStreamProfileChart
                                     ],
                                 ],
                                 [
-                                    'x' => '100%',
+                                    'xAxis' => 'max',
                                 ],
                             ],
                         ],
