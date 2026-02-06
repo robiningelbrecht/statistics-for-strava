@@ -79,7 +79,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 }
                 if (in_array($activity->getSportType()->getActivityType(), [ActivityType::RUN, ActivityType::WALK])
                     && StreamType::VELOCITY === $stream->getStreamType()) {
-                    // Smoothen the velocity stream to remove noise and have a smooth line.
+                    // Smoothen the velocity stream to remove peaks in velocity due to GPS issues.
                     $stream = $stream->applySimpleMovingAverage(15);
                 }
 
@@ -87,11 +87,34 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 $otherStreams->add($stream);
             }
 
-            $combinedData = new RamerDouglasPeucker(
-                distanceStream: $distanceStream,
-                movingStream: $streams->filterOnType(StreamType::MOVING),
-                otherStreams: $otherStreams
-            )->applyWith(Epsilon::create($activityType));
+            $combinedData = [];
+            $movingIndexes = $streams->filterOnType(StreamType::MOVING)?->getData();
+            $velocityData = $otherStreams->filterOnType(StreamType::VELOCITY)?->getData() ?? [];
+            $distances = $distanceStream->getData();
+
+            foreach ($distances as $i => $distance) {
+                if (null !== $movingIndexes && [] !== $movingIndexes && false === $movingIndexes[$i]) {
+                    // Athlete was not moving.
+                    continue;
+                }
+
+                if ([] !== $velocityData && $velocityData[$i] < 0.5) {
+                    // VERY slow velocity data, athlete was probably not moving.
+                    // Consider this invalid data.
+                    continue;
+                }
+
+                $otherPoints = [];
+                /** @var ActivityStream $otherStream */
+                foreach ($otherStreams as $otherStream) {
+                    $otherPoints[] = $otherStream->getData()[$i] ?? 0;
+                }
+
+                $combinedData[] = [
+                    $distance,
+                    ...$otherPoints,
+                ];
+            }
 
             // We need to add these after the CombinedStreamTypes::othersFor() otherwise we'll end up with "Undefined array key" errors.
             // This is because CombinedStreamTypes::othersFor() does not return LAT_LNG and TIME as these are not really "combined" streams.
@@ -99,7 +122,6 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
             }
 
-            $originalDistances = $distanceStream->getData();
             $originalCoordinates = $latLngStream?->getData() ?? [];
             $originalTimeData = $streams->filterOnType(StreamType::TIME)?->getData() ?? [];
             $originalMovingData = $streams->filterOnType(StreamType::MOVING)?->getData();
@@ -138,7 +160,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             foreach ($combinedData as &$row) {
                 $distance = $row[$distanceIndex];
 
-                $indexForOriginalDistance = array_search($distance, $originalDistances);
+                $indexForOriginalDistance = array_search($distance, $distances);
                 if (false !== $coordinateIndex && [] !== $originalCoordinates) {
                     // Find corresponding coordinate for distance.
                     $row[$coordinateIndex] = $originalCoordinates[$indexForOriginalDistance];
