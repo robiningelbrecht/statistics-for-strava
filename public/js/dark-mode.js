@@ -6,12 +6,9 @@ export default class DarkModeManager {
     init() {
         const stored = localStorage.getItem(this.storageKey);
 
+        this.setDark(false);
         if (stored === 'dark') {
             this.setDark(true);
-        } else if (stored === 'light') {
-            this.setDark(false);
-        } else {
-            this.setDark(window.matchMedia('(prefers-color-scheme: dark)'));
         }
     }
 
