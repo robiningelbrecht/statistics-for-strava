@@ -52,7 +52,7 @@ final class DailyTrainingLoad
             try {
                 $intensity = $this->activityIntensity->calculateHeartRateBased($activity->getId());
                 $intensity /= 100;
-                $bannisterKFactor = 'M' === $this->athleteRepository->find()->getSex() ? 1.92 : 1.67;
+                $bannisterKFactor = $this->athleteRepository->find()->isMale() ? 1.92 : 1.67;
                 $load += Seconds::from($movingTimeInSeconds)->toMinute()->toFloat() * $intensity * exp($bannisterKFactor * $intensity);
             } catch (CouldNotDetermineActivityIntensity) {
             }

@@ -92,12 +92,12 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
 
     public function getFirstLetterOfFirstName(): string
     {
-        return substr((string) $this->data['firstname'] ?? 'J', 0, 1);
+        return substr((string) ($this->data['firstname'] ?? 'J'), 0, 1);
     }
 
-    public function getSex(): string
+    public function isMale(): bool
     {
-        return strtoupper($this->data['sex'] ?? 'M');
+        return 'M' === strtoupper($this->data['sex'] ?? 'M');
     }
 
     /**
