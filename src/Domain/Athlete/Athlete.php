@@ -90,7 +90,8 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
         return Name::fromString(sprintf('%s %s', $this->data['firstname'] ?? 'John', $this->data['lastname'] ?? 'Doe'));
     }
 
-    public function getFirstLetterOfFirstName(): string{
+    public function getFirstLetterOfFirstName(): string
+    {
         return substr((string) $this->data['firstname'] ?? 'J', 0, 1);
     }
 

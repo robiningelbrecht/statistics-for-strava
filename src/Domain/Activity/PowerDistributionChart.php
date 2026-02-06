@@ -84,7 +84,10 @@ final readonly class PowerDistributionChart
             [
                 [
                     'itemStyle' => [
-                        'color' => '#303030',
+                        'color' => '#3E444D',
+                    ],
+                    'emphasis' => [
+                        'disabled' => true,
                     ],
                 ],
                 [
@@ -101,7 +104,10 @@ final readonly class PowerDistributionChart
                 [
                     [
                         'itemStyle' => [
-                            'color' => '#303030',
+                            'color' => '#3E444D',
+                        ],
+                        'emphasis' => [
+                            'disabled' => true,
                         ],
                         'x' => '0%',
                     ],
