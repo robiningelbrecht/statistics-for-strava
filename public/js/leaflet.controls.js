@@ -4,7 +4,7 @@ L.Control.FlyToPlaces = L.Control.extend({
         places: {}
     },
     onAdd: function (map) {
-        const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--custom');
+        const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--custom no-dark');
         this.options.places.forEach((place) => {
             const countryCode = place.countryCode.toLowerCase();
             const item = L.DomUtil.create('li', '', container);
@@ -42,7 +42,7 @@ L.Control.DownloadGpx = L.Control.extend({
         places: {}
     },
     onAdd: function (map) {
-        const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--custom');
+        const container = L.DomUtil.create('ul', 'leaflet-control leaflet-control--custom no-dark');
 
         const item = L.DomUtil.create('li', '', container);
         item.innerHTML = `<a href="${this.options.gpxLink}"><img src="assets/images/download-gpx-icon.png" width="20" title="Download GPX"  alt="Download GPX"/></a>`
