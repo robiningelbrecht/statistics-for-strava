@@ -188,7 +188,10 @@ final readonly class HeartRateDistributionChart
                             [
                                 [
                                     'itemStyle' => [
-                                        'color' => '#303030',
+                                        'color' => '#3E444D',
+                                    ],
+                                    'emphasis' => [
+                                        'disabled' => true,
                                     ],
                                 ],
                                 [
