@@ -25,7 +25,7 @@
             </button>
             <a href="#" data-router-navigate="{{ relativeUrl('dashboard') }}" class="flex items-center justify-between mr-4">
                 <img src="{{ relativeUrl('assets/images/logo.svg') }}" class="rounded-full mr-3 h-8" alt="Statistics for Strava Logo"/>
-                <div class="text-lg md:text-2xl font-semibold whitespace-nowrap">
+                <div class="sm:text-lg md:text-2xl font-semibold whitespace-nowrap">
                     {{ "Statistics for Strava"|trans }}
                     {% if subTitle %}
                         | {{ subTitle }}
@@ -63,7 +63,7 @@
                 </a>
             </div>
             {% if inAppContext %}
-                <button id="profileDropdownMenuButton" data-dropdown-toggle="profileDropdownMenu" class="cursor-pointer hidden md:flex rounded-full border" type="button">
+                <button id="profileDropdownMenuButton" data-dropdown-toggle="profileDropdownMenu" class="cursor-pointer flex rounded-full border" type="button">
                     <span class="sr-only">Open user menu</span>
                     {% if profilePictureUrl %}
                         <img class="size-8 rounded-full bg-white" src="{{ profilePictureUrl }}" alt="Profile Picture">
