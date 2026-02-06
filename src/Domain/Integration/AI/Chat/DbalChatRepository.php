@@ -49,7 +49,7 @@ final readonly class DbalChatRepository extends DbalRepository implements ChatRe
                 messageRole: MessageRole::from($result['messageRole']),
                 on: SerializableDateTime::fromString($result['on']),
             )->withUserProfilePictureUrl($this->profilePictureUrl)
-                ->withFirstLetterOfFirstName(substr((string) $this->athleteRepository->find()->getName(), 0, 1));
+                ->withFirstLetterOfFirstName($this->athleteRepository->find()->getFirstLetterOfFirstName());
         }
 
         return $history;

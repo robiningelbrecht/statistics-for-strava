@@ -25,10 +25,11 @@ All: Alle
 'Alpine Ski': 'Ski Alpin'
 Apr: Apr
 'Ask Mark something...': 'Frag Mark etwas...'
-'Athlete profile': 'Sportlerprofil'
+'Athlete profile': Sportlerprofil
 Aug: Aug
 Avg: Durchschn.
 'Back Country Ski': Skitouren
+Badges: Badges
 Badminton: Badminton
 Best: Beste
 'Best effort': Bestzeit
@@ -61,6 +62,7 @@ Crossfit: Crossfit
 Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktiviten'
+'Dark mode': 'Dark mode'
 Dashboard: Dashboard
 Date: Datum
 Day: Tag
@@ -136,7 +138,7 @@ High: Hoch
 Hikes: Wanderungen
 History: Verlauf
 'History (6 weeks)': Verlauf
-'History chart': 'Verlaufsdiagramm'
+'History chart': Verlaufsdiagramm
 'How diverse is your training': 'Wie abwechslungsreich ist dein Training'
 'How hard is your typical training session': 'Wie anstrengend ist dein typisches Training'
 'How long is your typical training session': 'Wie lange dauert deine typische Trainingseinheit'
@@ -227,7 +229,7 @@ PRs: PRs
 'PRs achieved per month': 'PRs erreicht pro Monat'
 Pace: Pace
 'Pace distribution': 'Pace distribution'
-'Peak fresh': 'Topfit'
+'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
 'Personal Records': 'Persönliche Bestzeiten'
 Photo: Foto
@@ -283,9 +285,9 @@ Soccer: Fußball
 Socials: 'Soziale Medien'
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Regelmäßige 90-Minuten-Sessions bringen einen höheren Wert als viele kurze Einheiten.'
 Speed: Geschwindigkeit
-'Speed distribution': 'Geschwindigkeitsverteilung'
+'Speed distribution': Geschwindigkeitsverteilung
 Splits: Zwischenzeiten
-'Sport variety': 'Sportvielfalt'
+'Sport variety': Sportvielfalt
 Squash: Squash
 'Stair Stepper': Stufen-Stepper
 'Stand Up Paddling': Stand-Up-Paddeln
@@ -295,6 +297,7 @@ Squash: Squash
 Stats: Statistiken
 'Stats per weekday': 'Statistiken pro Wochentag'
 Status: Status
+'Strava profile': 'Strava profile'
 'Streak started on {date}': 'Die Serie begann am {date}'
 Streaks: Serien
 Sun: So
@@ -367,6 +370,7 @@ Wheelchair: Rollstuhl
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Training
+'Workout assistant': 'Workout assistant'
 'Workout type': Trainingseinheitstyp
 YTD: YTD
 Year: Jahr

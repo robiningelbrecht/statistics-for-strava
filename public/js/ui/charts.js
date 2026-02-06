@@ -109,7 +109,7 @@ export default class ChartManager {
     toggleDarkTheme(isDarkMode) {
         this.allCharts
             .filter(chart => chart.getDom().offsetParent)
-            .forEach(chart => chart.setTheme(isDarkMode ? 'dark' : 'v5'));
+            .forEach(chart => chart.setTheme(isDarkMode ? 'v5-dark' : 'v5'));
     }
 
     resizeInTab(tabId) {

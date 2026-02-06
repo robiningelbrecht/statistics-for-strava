@@ -29,6 +29,7 @@ Apr: Abr
 Aug: Ago
 Avg: Média
 'Back Country Ski': 'Esqui Fora de Pista'
+Badges: Badges
 Badminton: Badmínton
 Best: Melhor
 'Best effort': 'Best effort'
@@ -61,6 +62,7 @@ Crossfit: Crossfit
 Cycling: Cycling
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
+'Dark mode': 'Dark mode'
 Dashboard: Painel
 Date: Date
 Day: Day
@@ -295,6 +297,7 @@ Squash: Squash
 Stats: Estatísticas
 'Stats per weekday': 'Estatísticas por dia da semana'
 Status: Status
+'Strava profile': 'Strava profile'
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Streaks
 Sun: Dom
@@ -367,6 +370,7 @@ Wheelchair: 'Cadeira de Rodas'
 'Wind Surf': Windsurf
 'Winter Sports': 'Esportes de Inverno'
 Workout: Treino
+'Workout assistant': 'Workout assistant'
 'Workout type': 'Tipo de treino'
 YTD: YTD
 Year: Ano
