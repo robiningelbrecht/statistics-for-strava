@@ -29,6 +29,7 @@ Apr: Apr
 Aug: Aug
 Avg: Med
 'Back Country Ski': Utförsåkning
+Badges: Badges
 Badminton: Badminton
 Best: Bästa
 'Best effort': 'Bästa resultatet'
@@ -61,6 +62,7 @@ Crossfit: Crossfit
 Cycling: Cykling
 'Daily TRIMP': 'Daglig TRIMP'
 'Daily activities': 'Dagliga aktiviteter'
+'Dark mode': 'Dark mode'
 Dashboard: Översikt
 Date: Datum
 Day: Day
@@ -295,6 +297,7 @@ Squash: Squash
 Stats: Sammanställning
 'Stats per weekday': 'Sammanställning veckodagar'
 Status: Status
+'Strava profile': 'Strava profile'
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Sön
@@ -367,6 +370,7 @@ Wheelchair: Rullstol
 'Wind Surf': Vindsurfing
 'Winter Sports': Vintersporter
 Workout: Träning
+'Workout assistant': 'Workout assistant'
 'Workout type': Träningsform
 YTD: YTD
 Year: År
