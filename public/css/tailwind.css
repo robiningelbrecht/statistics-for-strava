@@ -19,6 +19,7 @@
     --color-grey-yo: #cccccc;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
 @custom-variant aria-asc (&[aria-sort="ascending"]);
 @custom-variant aria-desc (&[aria-sort="descending"]);
 

@@ -86,7 +86,7 @@
                     'alt':  activity.getSanitizedName(),
                 } %}
                 <a data-image data-filterables='{{ image.getFilterables()|json_encode }}' data-light-gallery-element='{{ lightGalleryElement|json_encode }}'
-                   class="grow h-[25vh] relative group/image overflow-hidden rounded-lg shadow-sm" href="{{ activity.getUrl() }}" target="_blank">
+                   class="no-dark grow h-[25vh] relative group/image overflow-hidden rounded-lg shadow-sm" href="{{ activity.getUrl() }}" target="_blank">
                     <img class="h-full w-full object-cover align-bottom transition-transform duration-500 group-hover/image:scale-105 group-focus/image:scale-105 lazy"
                          data-src="{{ relativeUrl(image.getImageUrl()) }}" alt="{{ activity.getName() }}" src="{{ placeholderImage(image.getOrientation()) }}" />
                     <div class="absolute inset-0 bg-black/0 group-hover/image:bg-black/20 group-focus/image:bg-black/20 transition-colors duration-300"></div>
