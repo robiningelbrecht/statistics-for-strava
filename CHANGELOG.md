@@ -7,7 +7,7 @@ Because your eyes didn't deserve to burn like they were staring into the sun.
 
 ## New "profile" dropdown
 
-We moved following links to a dropdown in the top-right hand corner when clicking your profile picture:
+We’ve moved the following links into a new dropdown in the top-right corner, accessible by clicking your profile picture:
 
 * Workout assistant
 * Badges
