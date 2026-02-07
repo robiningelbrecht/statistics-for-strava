@@ -17,6 +17,7 @@ final readonly class CombinedStreamProfileChart
         private ?string $xAxisPosition,
         /** @var array<int, int|float> */
         private array $yAxisData,
+        private int $maximumNumberOfDigitsOnYAxis,
         private CombinedStreamType $yAxisStreamType,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -32,6 +33,7 @@ final readonly class CombinedStreamProfileChart
         ?string $xAxisPosition,
         ?string $xAxisLabelSuffix,
         array $yAxisData,
+        int $maximumNumberOfDigitsOnYAxis,
         CombinedStreamType $yAxisStreamType,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
@@ -41,6 +43,7 @@ final readonly class CombinedStreamProfileChart
             xAxisLabelSuffix: $xAxisLabelSuffix,
             xAxisPosition: $xAxisPosition,
             yAxisData: $yAxisData,
+            maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigitsOnYAxis,
             yAxisStreamType: $yAxisStreamType,
             unitSystem: $unitSystem,
             translator: $translator
@@ -68,7 +71,11 @@ final readonly class CombinedStreamProfileChart
 
         return [
             'grid' => [
-                'left' => '40px',
+                'left' => match ($this->maximumNumberOfDigitsOnYAxis) {
+                    default => '65px',
+                    4 => '75px',
+                    5 => '85px',
+                },
                 'right' => '6px',
                 'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && [] !== $this->xAxisData ? '70px' : '0%',
                 'top' => Theme::POSITION_TOP === $this->xAxisPosition && [] !== $this->xAxisData ? '45px' : '0%',
