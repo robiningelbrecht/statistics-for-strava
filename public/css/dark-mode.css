@@ -1,4 +1,4 @@
-.dark{
+html[data-theme=dark] {
     --color-gray-50: #151b23;
     --color-gray-100: #262C36;
     --color-gray-200: #3E444D;

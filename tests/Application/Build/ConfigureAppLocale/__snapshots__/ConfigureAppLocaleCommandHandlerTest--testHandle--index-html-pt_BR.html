@@ -9,6 +9,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link href="/manifest.json?0025176c-5652-11ee-923d-02424dd627d5" rel="manifest" crossorigin="use-credentials">
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
     <link href="/css/dist/tailwind.min.css?0025176c-5652-11ee-923d-02424dd627d5" rel="stylesheet">
     <link rel="preload" href="/libraries/leaflet/leaflet.css?0025176c-5652-11ee-923d-02424dd627d5" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="/libraries/clusterize/clusterize.min.css?0025176c-5652-11ee-923d-02424dd627d5" as="style" onload="this.onload=null;this.rel='stylesheet'">
