@@ -2,28 +2,26 @@ export default class DarkModeManager {
     constructor() {
         this.storageKey = 'theme';
         this.$toggleButton = document.querySelector('.dark-mode-toggle input');
+        this.$themeElement = document.documentElement;
+        this.dataAttributeName = 'data-theme';
     }
 
-    init() {
-        const stored = localStorage.getItem(this.storageKey);
-
-        this.setDark(false);
-        if (stored === 'dark') {
-            this.setDark(true);
-        }
-
+    attachEventListeners() {
         this.$toggleButton.addEventListener('change', () => {
             this.setDark(!this.isDarkModeEnabled());
         });
     }
 
     isDarkModeEnabled() {
-        return document.body.classList.contains('dark');
+        return this.$themeElement.hasAttribute(this.dataAttributeName)
+            && this.$themeElement.getAttribute(this.dataAttributeName) === 'dark';
     }
 
     setDark(enabled) {
-        localStorage.setItem(this.storageKey, enabled ? 'dark' : 'light');
-        document.body.classList.toggle('dark', enabled);
+        const theme = enabled ? 'dark' : 'light';
+        localStorage.setItem(this.storageKey, theme);
+        this.$themeElement.setAttribute(this.dataAttributeName, theme);
+
         this.$toggleButton.checked = enabled;
 
         document.dispatchEvent(new CustomEvent('darkModeWasToggled', {

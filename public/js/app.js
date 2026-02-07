@@ -52,7 +52,7 @@ const initElements = (rootNode) => {
 
 modalManager.setInitElements(initElements)
 sidebar.init();
-darkModeManager.init();
+darkModeManager.attachEventListeners();
 
 document.addEventListener('darkModeWasToggled', (e) => {
     chartManager.toggleDarkTheme(e.detail.darkModeEnabled);
