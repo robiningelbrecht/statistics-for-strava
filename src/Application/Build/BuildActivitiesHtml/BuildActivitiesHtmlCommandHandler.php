@@ -206,6 +206,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         unitSystem: $this->unitSystem
                     );
 
+                    $maximumNumberOfDigits = $combinedActivityStream->getMaximumNumberOfDigits();
                     $distances = $combinedActivityStream->getDistances();
                     $times = $combinedActivityStream->getTimes();
                     $coordinateMap = $combinedActivityStream->getCoordinates();
@@ -228,6 +229,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             xAxisPosition: $xAxisPosition,
                             xAxisLabelSuffix: Theme::POSITION_BOTTOM === $xAxisPosition ? $this->unitSystem->distanceSymbol() : null,
                             yAxisData: $combinedActivityStream->getChartStreamData($combinedStreamType),
+                            maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
                             yAxisStreamType: $combinedStreamType,
                             unitSystem: $this->unitSystem,
                             translator: $this->translator
