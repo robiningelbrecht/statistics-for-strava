@@ -1,3 +1,26 @@
+# [v4.6.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.0) - 2026-02-07
+
+## Dark mode is here!
+
+No more getting flash-banged by the UI at night.
+Because your eyes didn't deserve to burn like they were staring into the sun.
+
+## New "profile" dropdown
+
+We moved following links to a dropdown in the top-right hand corner when clicking your profile picture:
+
+* Workout assistant
+* Badges
+* Strava profile
+
+## What's Changed
+* Update German translations by @luusl in https://github.com/robiningelbrecht/statistics-for-strava/pull/1712
+* ISSUE #1713: Add crossorigin=use-credentials to manifest link by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1717
+* ISSUE #1714: Dark mode by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1715
+* ISSUE #1714: Always show profile drop down by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1719
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.5.0...v4.6.0
+
 # [v4.5.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.5.0) - 2026-02-03
 
 > [!WARNING]  
