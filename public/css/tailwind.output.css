@@ -1021,9 +1021,6 @@
   .z-50 {
     z-index: 50;
   }
-  .z-100 {
-    z-index: 100;
-  }
   .z-1001 {
     z-index: 1001;
   }
@@ -1041,6 +1038,9 @@
   }
   .z-10000 {
     z-index: 10000;
+  }
+  .z-999999 {
+    z-index: 999999;
   }
   .col-span-2 {
     grid-column: span 2 / span 2;
