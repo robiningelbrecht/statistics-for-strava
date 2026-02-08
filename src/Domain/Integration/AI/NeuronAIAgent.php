@@ -22,11 +22,13 @@ final class NeuronAIAgent extends Agent
     ) {
     }
 
+    #[\Override]
     protected function provider(): AIProviderInterface
     {
         return $this->AIProviderFactory->create();
     }
 
+    #[\Override]
     protected function tools(): array
     {
         return [$this->toolkit];
@@ -59,6 +61,7 @@ final class NeuronAIAgent extends Agent
         );
     }
 
+    #[\Override]
     protected function chatHistory(): ChatHistoryInterface
     {
         return $this->history;
