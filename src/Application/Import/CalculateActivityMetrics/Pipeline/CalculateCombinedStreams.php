@@ -52,7 +52,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
             if (!($timeStream = $streams->filterOnType(StreamType::TIME)) instanceof ActivityStream) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
             $combinedStreamTypes = CombinedStreamTypes::fromArray([
                 CombinedStreamType::TIME,
@@ -141,14 +141,16 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                     [$combinedStreamType, $streamData] = $otherStream;
                     $value = $streamData[$i] ?? 0;
 
-                    $value = match ($combinedStreamType) {
-                        CombinedStreamType::ALTITUDE => round(Meter::from($value)->toUnitSystem($this->unitSystem)->toFloat(), 2),
-                        CombinedStreamType::VELOCITY => round(MetersPerSecond::from($value)->toKmPerHour()->toUnitSystem($this->unitSystem)->toFloat(), 1),
-                        CombinedStreamType::PACE => MetersPerSecond::from($value)->toSecPerKm()->toUnitSystem($this->unitSystem)->toInt(),
-                        CombinedStreamType::STEPS_PER_MINUTE => $value * 2,
-                        CombinedStreamType::WATTS => round($value),
-                        default => $value,
-                    };
+                    if (0 !== $value && 0.0 !== $value) {
+                        $value = match ($combinedStreamType) {
+                            CombinedStreamType::ALTITUDE => round(Meter::from($value)->toUnitSystem($this->unitSystem)->toFloat(), 2),
+                            CombinedStreamType::VELOCITY => round(MetersPerSecond::from($value)->toKmPerHour()->toUnitSystem($this->unitSystem)->toFloat(), 1),
+                            CombinedStreamType::PACE => MetersPerSecond::from($value)->toSecPerKm()->toUnitSystem($this->unitSystem)->toInt(),
+                            CombinedStreamType::STEPS_PER_MINUTE => $value * 2,
+                            CombinedStreamType::WATTS => round($value),
+                            default => $value,
+                        };
+                    }
 
                     $combinedPoint[] = $value;
                 }

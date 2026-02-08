@@ -63,7 +63,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream y
-                    WHERE y.activityId = Activity.activityId AND y.streamType = :distanceStreamType AND json_array_length(y.data) > 0
+                    WHERE y.activityId = Activity.activityId AND y.streamType = :timeStreamType AND json_array_length(y.data) > 0
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream x
@@ -79,7 +79,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
             $activityIds = array_merge($activityIds, $this->connection->executeQuery($sql,
                 [
                     'unitSystem' => $unitSystem->value,
-                    'distanceStreamType' => CombinedStreamType::DISTANCE->value,
+                    'timeStreamType' => CombinedStreamType::TIME->value,
                     'otherStreamTypes' => array_map(
                         fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value,
                         CombinedStreamTypes::othersFor($activityType)->toArray()

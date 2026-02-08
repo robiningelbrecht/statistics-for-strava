@@ -1,8 +1,0 @@
-[
-    {
-        "activityId": "activity-test-5",
-        "unitSystem": "metric",
-        "streamTypes": "time,distance,altitude,spm,pace",
-        "data": "[[\"0s\",0,2,6,333]]"
-    }
-]
