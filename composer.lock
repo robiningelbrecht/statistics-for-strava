@@ -121,16 +121,16 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.6",
+            "version": "0.14.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "32498d5e1897e7642c0b961ace2df6d7dc9a3bc3"
+                "reference": "07ff363b16ef8aca9692bba3be9e73fe63f34e50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/32498d5e1897e7642c0b961ace2df6d7dc9a3bc3",
-                "reference": "32498d5e1897e7642c0b961ace2df6d7dc9a3bc3",
+                "url": "https://api.github.com/repos/brick/math/zipball/07ff363b16ef8aca9692bba3be9e73fe63f34e50",
+                "reference": "07ff363b16ef8aca9692bba3be9e73fe63f34e50",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.6"
+                "source": "https://github.com/brick/math/tree/0.14.7"
             },
             "funding": [
                 {
@@ -177,7 +177,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-05T07:59:58+00:00"
+            "time": "2026-02-07T10:57:35+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -442,29 +442,29 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38"
+                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
-                "reference": "459c2f5dd3d6a4633d3b5f46ee2b1c40f57d3f38",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
+                "reference": "d4fe3e6fd9bb9e72557a19674f44d8ac7db4c6ca",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1 || ^8.0"
             },
             "conflict": {
-                "phpunit/phpunit": "<=7.5 || >=13"
+                "phpunit/phpunit": "<=7.5 || >=14"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^9 || ^12 || ^13",
-                "phpstan/phpstan": "1.4.10 || 2.1.11",
+                "doctrine/coding-standard": "^9 || ^12 || ^14",
+                "phpstan/phpstan": "1.4.10 || 2.1.30",
                 "phpstan/phpstan-phpunit": "^1.0 || ^2",
-                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.6 || ^10.5 || ^11.5 || ^12.4 || ^13.0",
                 "psr/log": "^1 || ^2 || ^3"
             },
             "suggest": {
@@ -484,9 +484,9 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/1.1.5"
+                "source": "https://github.com/doctrine/deprecations/tree/1.1.6"
             },
-            "time": "2025-04-07T20:06:18+00:00"
+            "time": "2026-02-07T07:09:04+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -2589,16 +2589,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.11.6",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "087a6be82255cfa6ab263cd8ae83559822d4c67d"
+                "reference": "f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/087a6be82255cfa6ab263cd8ae83559822d4c67d",
-                "reference": "087a6be82255cfa6ab263cd8ae83559822d4c67d",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7",
+                "reference": "f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7",
                 "shasum": ""
             },
             "require": {
@@ -2653,7 +2653,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.11.6"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.12.0"
             },
             "funding": [
                 {
@@ -2661,7 +2661,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-06T11:24:45+00:00"
+            "time": "2026-02-08T11:16:59+00:00"
         },
         {
             "name": "psr/cache",
@@ -3676,16 +3676,16 @@
         },
         {
             "name": "respect/validation",
-            "version": "2.4.10",
+            "version": "2.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Respect/Validation.git",
-                "reference": "5e111c55a0e5347cfe477a9b1bfbc565f735262b"
+                "reference": "f05659faef60b303f194f5e8bc580c288c9699bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Respect/Validation/zipball/5e111c55a0e5347cfe477a9b1bfbc565f735262b",
-                "reference": "5e111c55a0e5347cfe477a9b1bfbc565f735262b",
+                "url": "https://api.github.com/repos/Respect/Validation/zipball/f05659faef60b303f194f5e8bc580c288c9699bf",
+                "reference": "f05659faef60b303f194f5e8bc580c288c9699bf",
                 "shasum": ""
             },
             "require": {
@@ -3738,9 +3738,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Respect/Validation/issues",
-                "source": "https://github.com/Respect/Validation/tree/2.4.10"
+                "source": "https://github.com/Respect/Validation/tree/2.4.12"
             },
-            "time": "2026-01-14T06:38:12+00:00"
+            "time": "2026-02-08T00:13:50+00:00"
         },
         {
             "name": "symfony/asset",
@@ -9495,16 +9495,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.5.9",
+            "version": "12.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "83d4c158526c879b4c5cf7149d27958b6d912373"
+                "reference": "1686e30f6b32d35592f878a7f56fd0421d7d56c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/83d4c158526c879b4c5cf7149d27958b6d912373",
-                "reference": "83d4c158526c879b4c5cf7149d27958b6d912373",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1686e30f6b32d35592f878a7f56fd0421d7d56c5",
+                "reference": "1686e30f6b32d35592f878a7f56fd0421d7d56c5",
                 "shasum": ""
             },
             "require": {
@@ -9518,7 +9518,7 @@
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.3",
-                "phpunit/php-code-coverage": "^12.5.2",
+                "phpunit/php-code-coverage": "^12.5.3",
                 "phpunit/php-file-iterator": "^6.0.1",
                 "phpunit/php-invoker": "^6.0.0",
                 "phpunit/php-text-template": "^5.0.0",
@@ -9573,7 +9573,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.9"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.5.10"
             },
             "funding": [
                 {
@@ -9597,7 +9597,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-02-05T08:01:09+00:00"
+            "time": "2026-02-08T07:06:48+00:00"
         },
         {
             "name": "react/child-process",
@@ -9910,21 +9910,21 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.3.5",
+            "version": "2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "9442f4037de6a5347ae157fe8e6c7cda9d909070"
+                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/9442f4037de6a5347ae157fe8e6c7cda9d909070",
-                "reference": "9442f4037de6a5347ae157fe8e6c7cda9d909070",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ca9ebb81d280cd362ea39474dabd42679e32ca6b",
+                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4|^8.0",
-                "phpstan/phpstan": "^2.1.36"
+                "phpstan/phpstan": "^2.1.38"
             },
             "conflict": {
                 "rector/rector-doctrine": "*",
@@ -9958,7 +9958,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.3.5"
+                "source": "https://github.com/rectorphp/rector/tree/2.3.6"
             },
             "funding": [
                 {
@@ -9966,7 +9966,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-28T15:22:48+00:00"
+            "time": "2026-02-06T14:25:06+00:00"
         },
         {
             "name": "robiningelbrecht/phpunit-coverage-tools",
