@@ -8,6 +8,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
 use App\Infrastructure\ValueObject\Measurement\Unit;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
 final readonly class KmPerHour implements Unit, Metric, Velocity
 {
@@ -30,6 +31,15 @@ final readonly class KmPerHour implements Unit, Metric, Velocity
 
     public function toImperial(): Unit
     {
+        return $this->toMph();
+    }
+
+    public function toUnitSystem(UnitSystem $unitSystem): KmPerHour|MilesPerHour
+    {
+        if (UnitSystem::METRIC === $unitSystem) {
+            return $this;
+        }
+
         return $this->toMph();
     }
 }
