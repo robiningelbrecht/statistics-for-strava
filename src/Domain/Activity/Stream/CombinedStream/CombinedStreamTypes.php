@@ -7,6 +7,9 @@ namespace App\Domain\Activity\Stream\CombinedStream;
 use App\Domain\Activity\ActivityType;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<CombinedStreamType>
+ */
 final class CombinedStreamTypes extends Collection
 {
     public function getItemClassName(): string

@@ -86,6 +86,12 @@ final class CombinedActivityStream
         return $this->data;
     }
 
+    public function getMaximumNumberOfDigits(): int
+    {
+        /* @TODO: Calculate when calculating combinedStreams */
+        return 4;
+    }
+
     /**
      * @return array<int, float>
      */

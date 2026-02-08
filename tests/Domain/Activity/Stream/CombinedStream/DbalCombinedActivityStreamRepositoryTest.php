@@ -131,7 +131,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
         $this->getContainer()->get(ActivityStreamRepository::class)->add(
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::DISTANCE)
+                ->withStreamType(StreamType::TIME)
                 ->withData([1])
                 ->build()
         );

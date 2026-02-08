@@ -413,11 +413,14 @@
                     <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
                         <div class="flex flex-col gap-y-1">
                             {% for chart in profileCharts %}
-                                {% if loop.last %}
-                                    <div class="h-36" data-echarts-options='{{ chart }}' data-echarts-connect data-leaflet-echart-connect='{{ coordinateMap }}'></div>
-                                {% else %}
-                                    <div class="h-30" data-echarts-options='{{ chart }}' data-echarts-connect></div>
-                                {% endif %}
+                                {% set height =
+                                    loop.first ? 'h-[165px]' :
+                                    loop.last  ? 'h-[190px]' :
+                                    'h-[120px]'
+                                %}
+                                <div class="{{ height }}" data-echarts-options='{{ chart }}'  data-echarts-connect
+                                        {{ loop.last ? "data-leaflet-echart-connect='#{coordinateMap}'" : '' }}
+                                ></div>
                             {% endfor %}
                         </div>
                     </div>

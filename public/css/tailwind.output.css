@@ -1617,14 +1617,8 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
-  .h-30 {
-    height: calc(var(--spacing) * 30);
-  }
   .h-32 {
     height: calc(var(--spacing) * 32);
-  }
-  .h-36 {
-    height: calc(var(--spacing) * 36);
   }
   .h-48 {
     height: calc(var(--spacing) * 48);
@@ -1652,6 +1646,15 @@
   }
   .h-\[25vh\] {
     height: 25vh;
+  }
+  .h-\[120px\] {
+    height: 120px;
+  }
+  .h-\[165px\] {
+    height: 165px;
+  }
+  .h-\[190px\] {
+    height: 190px;
   }
   .h-\[350px\] {
     height: 350px;

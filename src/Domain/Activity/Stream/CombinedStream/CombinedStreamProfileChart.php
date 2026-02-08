@@ -17,6 +17,7 @@ final readonly class CombinedStreamProfileChart
         private ?string $xAxisPosition,
         /** @var array<int, int|float> */
         private array $yAxisData,
+        private int $maximumNumberOfDigitsOnYAxis,
         private CombinedStreamType $yAxisStreamType,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -32,6 +33,7 @@ final readonly class CombinedStreamProfileChart
         ?string $xAxisPosition,
         ?string $xAxisLabelSuffix,
         array $yAxisData,
+        int $maximumNumberOfDigitsOnYAxis,
         CombinedStreamType $yAxisStreamType,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
@@ -41,6 +43,7 @@ final readonly class CombinedStreamProfileChart
             xAxisLabelSuffix: $xAxisLabelSuffix,
             xAxisPosition: $xAxisPosition,
             yAxisData: $yAxisData,
+            maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigitsOnYAxis,
             yAxisStreamType: $yAxisStreamType,
             unitSystem: $unitSystem,
             translator: $translator
@@ -68,10 +71,14 @@ final readonly class CombinedStreamProfileChart
 
         return [
             'grid' => [
-                'left' => '40px',
-                'right' => '0%',
-                'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && [] !== $this->xAxisData ? '20px' : '0%',
-                'top' => Theme::POSITION_TOP === $this->xAxisPosition && [] !== $this->xAxisData ? '20px' : '0%',
+                'left' => match ($this->maximumNumberOfDigitsOnYAxis) {
+                    default => '65px',
+                    4 => '75px',
+                    5 => '85px',
+                },
+                'right' => '6px',
+                'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && [] !== $this->xAxisData ? '70px' : '0%',
+                'top' => Theme::POSITION_TOP === $this->xAxisPosition && [] !== $this->xAxisData ? '45px' : '0%',
                 'containLabel' => false,
             ],
             'animation' => false,
@@ -79,6 +86,44 @@ final readonly class CombinedStreamProfileChart
                 'trigger' => 'axis',
                 'formatter' => CombinedStreamType::PACE !== $this->yAxisStreamType ?
                     '<strong>{c}</strong> '.$yAxisSuffix : 'formatPace',
+            ],
+            'toolbox' => [
+                'show' => Theme::POSITION_TOP === $this->xAxisPosition,
+                'top' => '-5px',
+                'feature' => [
+                    'dataZoom' => [
+                        'show' => true,
+                        'yAxisIndex' => 'none',
+                    ],
+                    'restore' => [
+                        'show' => true,
+                    ],
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'slider',
+                    'show' => Theme::POSITION_BOTTOM === $this->xAxisPosition,
+                    'throttle' => 100,
+                    'showDetail' => false,
+                    'minValueSpan' => 60,
+                    'dataBackground' => [
+                        'lineStyle' => [
+                            'opacity' => 0,
+                        ],
+                        'areaStyle' => [
+                            'opacity' => 0,
+                        ],
+                    ],
+                    'selectedDataBackground' => [
+                        'lineStyle' => [
+                            'opacity' => 0,
+                        ],
+                        'areaStyle' => [
+                            'opacity' => 0,
+                        ],
+                    ],
+                ],
             ],
             'xAxis' => [
                 'position' => $this->xAxisPosition,
@@ -121,6 +166,7 @@ final readonly class CombinedStreamProfileChart
                         'data' => [
                             [
                                 [
+                                    'xAxis' => 'min',
                                     'itemStyle' => [
                                         'color' => '#3E444D',
                                     ],
@@ -129,14 +175,16 @@ final readonly class CombinedStreamProfileChart
                                     ],
                                 ],
                                 [
-                                    'x' => '100%',
+                                    'xAxis' => 'max',
                                 ],
                             ],
                         ],
                     ],
                     'data' => $this->yAxisData,
                     'type' => 'line',
-                    'symbol' => 'none',
+                    'showSymbol' => false,
+                    'progressive' => 5000,
+                    'progressiveThreshold' => 10000,
                     'color' => $this->yAxisStreamType->getSeriesColor(),
                     'smooth' => true,
                     'lineStyle' => [
