@@ -8,7 +8,6 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
-use App\Domain\Activity\Stream\ActivityStreams;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStream;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
@@ -52,15 +51,22 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $activityType = $activity->getSportType()->getActivityType();
 
             $streams = $this->activityStreamRepository->findByActivityId($activityId);
-            if (!($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof ActivityStream) {
+            if (!($timeStream = $streams->filterOnType(StreamType::TIME)) instanceof ActivityStream) {
                 continue;
             }
             $combinedStreamTypes = CombinedStreamTypes::fromArray([
-                CombinedStreamType::DISTANCE,
+                CombinedStreamType::TIME,
             ]);
 
-            $otherStreams = ActivityStreams::empty();
-            /** @var CombinedStreamType $combinedStreamType */
+            if (!($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof ActivityStream) {
+                $combinedStreamTypes->add(CombinedStreamType::DISTANCE);
+            }
+            if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof ActivityStream) {
+                $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
+            }
+
+            /** @var array<int, array{0: CombinedStreamType, 1: ActivityStream}> $otherStreams */
+            $otherStreams = [];
             foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
                 if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof ActivityStream) {
                     continue;
@@ -84,143 +90,66 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 }
 
                 $combinedStreamTypes->add($combinedStreamType);
-                $otherStreams->add($stream);
+                $otherStreams[] = [$combinedStreamType, $stream->getData()];
             }
 
             $combinedData = [];
-            $movingIndexes = $streams->filterOnType(StreamType::MOVING)?->getData();
-            $velocityData = $otherStreams->filterOnType(StreamType::VELOCITY)?->getData() ?? [];
-            $distances = $distanceStream->getData();
+            $timeData = $timeStream->getData();
+            $movingData = $streams->filterOnType(StreamType::MOVING)?->getData();
+            $distanceData = $distanceStream?->getData() ?? [];
+            $latLngData = $latLngStream?->getData() ?? [];
 
-            foreach ($distances as $i => $distance) {
-                if (null !== $movingIndexes && [] !== $movingIndexes && false === $movingIndexes[$i]) {
+            $cumulativeMovingTime = 0;
+            foreach ($timeData as $i => $time) {
+                if ($i > 0 && null !== $movingData && [] !== $movingData && true === $movingData[$i - 1]) {
+                    // Update moving time based on the previous interval.
+                    $cumulativeMovingTime += $time - $timeData[$i - 1];
+                }
+
+                if (null !== $movingData && [] !== $movingData && false === $movingData[$i]) {
                     // Athlete was not moving.
                     continue;
                 }
 
-                if ([] !== $velocityData && $velocityData[$i] < 0.5) {
-                    // VERY slow velocity data, athlete was probably not moving.
-                    // Consider this invalid data.
-                    continue;
+                $otherPoints = [];
+                foreach ($otherStreams as $otherStream) {
+                    /** @var CombinedStreamType $combinedStreamType */
+                    /** @var array<int|float> $streamData */
+                    [$combinedStreamType, $streamData] = $otherStream;
+                    $value = $streamData[$i] ?? 0;
+                    if (CombinedStreamType::ALTITUDE === $combinedStreamType) {
+                        $value = round(Meter::from($value)->toUnitSystem($this->unitSystem)->toFloat(), 2);
+                    }
+                    if (CombinedStreamType::VELOCITY === $combinedStreamType) {
+                        $value = round(MetersPerSecond::from($value)->toKmPerHour()
+                            ->toUnitSystem($this->unitSystem)->toFloat(), 1);
+                    }
+                    if (CombinedStreamType::PACE === $combinedStreamType) {
+                        $value = MetersPerSecond::from($value)->toSecPerKm()
+                            ->toUnitSystem($this->unitSystem)->toInt();
+                    }
+                    if (CombinedStreamType::STEPS_PER_MINUTE === $combinedStreamType) {
+                        $value *= 2;
+                    }
+                    if (CombinedStreamType::WATTS === $combinedStreamType) {
+                        $value = round($value);
+                    }
+
+                    $otherPoints[] = $value;
                 }
 
-                $otherPoints = [];
-                /** @var ActivityStream $otherStream */
-                foreach ($otherStreams as $otherStream) {
-                    $otherPoints[] = $otherStream->getData()[$i] ?? 0;
-                }
+                $distance = Meter::from($distanceData[$i])->toKilometer()->toUnitSystem($this->unitSystem)->toFloat();
+                $distance = match ($activityType) {
+                    ActivityType::RIDE => $distance < 1 ? round($distance, 1) : round($distance),
+                    default => round($distance, 1),
+                };
 
                 $combinedData[] = [
+                    $cumulativeMovingTime,
                     $distance,
+                    $latLngData[$i],
                     ...$otherPoints,
                 ];
-            }
-
-            // We need to add these after the CombinedStreamTypes::othersFor() otherwise we'll end up with "Undefined array key" errors.
-            // This is because CombinedStreamTypes::othersFor() does not return LAT_LNG and TIME as these are not really "combined" streams.
-            if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof ActivityStream) {
-                $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
-            }
-
-            $originalCoordinates = $latLngStream?->getData() ?? [];
-            $originalTimeData = $streams->filterOnType(StreamType::TIME)?->getData() ?? [];
-            $originalMovingData = $streams->filterOnType(StreamType::MOVING)?->getData();
-
-            $cumulativeMovingTime = [];
-            if ([] !== $originalTimeData && (null !== $originalMovingData && [] !== $originalMovingData)) {
-                $cumulativeMovingTime = [0];
-                for ($i = 1, $len = count($originalTimeData); $i < $len; ++$i) {
-                    $delta = $originalTimeData[$i] - $originalTimeData[$i - 1];
-                    $cumulativeMovingTime[$i] = $cumulativeMovingTime[$i - 1] + ($originalMovingData[$i] ? $delta : 0);
-                }
-
-                if (abs(end($cumulativeMovingTime) - $activity->getMovingTimeInSeconds()) > 300) {
-                    // For some reason the calculated moving time does not match or reflect the activity moving time.
-                    // This means the Strava time stream is fucked up somehow. Discard it.
-                    $cumulativeMovingTime = [];
-                }
-            }
-
-            if ([] !== $cumulativeMovingTime) {
-                $combinedStreamTypes->add(CombinedStreamType::TIME);
-            }
-
-            $combinedStreamTypesScalar = $combinedStreamTypes->toArray();
-            $distanceIndex = array_search(CombinedStreamType::DISTANCE, $combinedStreamTypesScalar, true);
-            $altitudeIndex = array_search(CombinedStreamType::ALTITUDE, $combinedStreamTypesScalar, true);
-            $paceIndex = array_search(CombinedStreamType::PACE, $combinedStreamTypesScalar, true);
-            $velocityIndex = array_search(CombinedStreamType::VELOCITY, $combinedStreamTypesScalar, true);
-            $powerIndex = array_search(CombinedStreamType::WATTS, $combinedStreamTypesScalar, true);
-            $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $combinedStreamTypesScalar, true);
-            $timeIndex = array_search(CombinedStreamType::TIME, $combinedStreamTypesScalar, true);
-            $stepsPerMinuteIndex = array_search(CombinedStreamType::STEPS_PER_MINUTE, $combinedStreamTypesScalar, true);
-
-            // Make sure necessary streams are converted before saving,
-            // So we do not need to convert it when reading the data.
-            foreach ($combinedData as &$row) {
-                $distance = $row[$distanceIndex];
-
-                $indexForOriginalDistance = array_search($distance, $distances);
-                if (false !== $coordinateIndex && [] !== $originalCoordinates) {
-                    // Find corresponding coordinate for distance.
-                    $row[$coordinateIndex] = $originalCoordinates[$indexForOriginalDistance];
-                }
-                if ([] !== $cumulativeMovingTime) {
-                    // Find corresponding time for distance.
-                    $movingTimeUntilThisPoint = $cumulativeMovingTime[$indexForOriginalDistance];
-                    $row[$timeIndex] = $this->formatDurationForHumans($movingTimeUntilThisPoint);
-                }
-
-                $distanceInKm = Meter::from($distance)->toKilometer();
-                $row[$distanceIndex] = $distanceInKm->toFloat();
-
-                if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                    $row[$distanceIndex] = $distanceInKm->toMiles()->toFloat();
-                }
-
-                if (false !== $altitudeIndex && UnitSystem::IMPERIAL === $this->unitSystem) {
-                    $row[$altitudeIndex] = Meter::from($row[$altitudeIndex])->toFoot()->toFloat();
-                }
-
-                if (false !== $paceIndex) {
-                    $secondsPerKilometer = MetersPerSecond::from($row[$paceIndex])->toSecPerKm();
-                    if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                        $row[$paceIndex] = $secondsPerKilometer->toSecPerMile()->toInt();
-                    }
-                    if (UnitSystem::METRIC === $this->unitSystem) {
-                        $row[$paceIndex] = $secondsPerKilometer->toInt();
-                    }
-                }
-
-                if (false !== $velocityIndex) {
-                    $kmPerHour = MetersPerSecond::from($row[$velocityIndex])->toKmPerHour();
-                    if (UnitSystem::IMPERIAL === $this->unitSystem) {
-                        $row[$velocityIndex] = $kmPerHour->toMph()->toFloat();
-                    }
-                    if (UnitSystem::METRIC === $this->unitSystem) {
-                        $row[$velocityIndex] = $kmPerHour->toFloat();
-                    }
-                }
-
-                if (false !== $stepsPerMinuteIndex) {
-                    // Convert "Stride per minute" to "Steps per minute"
-                    $row[$stepsPerMinuteIndex] *= 2;
-                }
-
-                // Apply rounding rules.
-                $row[$distanceIndex] = match ($activityType) {
-                    ActivityType::RIDE => $row[$distanceIndex] < 1 ? round($row[$distanceIndex], 1) : round($row[$distanceIndex]),
-                    default => round($row[$distanceIndex], 1),
-                };
-                if (false !== $altitudeIndex) {
-                    $row[$altitudeIndex] = round($row[$altitudeIndex], 2);
-                }
-                if (false !== $powerIndex) {
-                    $row[$powerIndex] = round($row[$powerIndex]);
-                }
-                if (false !== $velocityIndex) {
-                    $row[$velocityIndex] = round($row[$velocityIndex], 1);
-                }
             }
 
             $this->combinedActivityStreamRepository->add(
