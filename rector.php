@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Rector\CodeQuality\Rector\If_\CombineIfRector;use Rector\Config\RectorConfig;
+use Rector\CodeQuality\Rector\If_\CombineIfRector;
+use Rector\Config\RectorConfig;
 use Rector\Php85\Rector\FuncCall\OrdSingleByteRector;
 
 return RectorConfig::configure()
@@ -18,5 +19,5 @@ return RectorConfig::configure()
     )
     ->withSkip([
         OrdSingleByteRector::class,
-        CombineIfRector::class
+        CombineIfRector::class,
     ]);
