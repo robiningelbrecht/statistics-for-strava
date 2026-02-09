@@ -26,6 +26,8 @@ final class CombinedActivityStream
         private readonly CombinedStreamTypes $streamTypes,
         #[ORM\Column(type: 'json')]
         private readonly array $data,
+        #[ORM\Column(type: 'integer')]
+        private readonly int $maxYAxisValue,
     ) {
     }
 
@@ -37,12 +39,14 @@ final class CombinedActivityStream
         UnitSystem $unitSystem,
         CombinedStreamTypes $streamTypes,
         array $data,
+        int $maxYAxisValue,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
             streamTypes: $streamTypes,
             data: $data,
+            maxYAxisValue: $maxYAxisValue,
         );
     }
 
@@ -54,12 +58,14 @@ final class CombinedActivityStream
         UnitSystem $unitSystem,
         CombinedStreamTypes $streamTypes,
         array $data,
+        int $maxYAxisValue,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
             streamTypes: $streamTypes,
             data: $data,
+            maxYAxisValue: $maxYAxisValue,
         );
     }
 
@@ -86,10 +92,14 @@ final class CombinedActivityStream
         return $this->data;
     }
 
+    public function getMaxYAxisValue(): int
+    {
+        return $this->maxYAxisValue;
+    }
+
     public function getMaximumNumberOfDigits(): int
     {
-        /* @TODO: Calculate when calculating combinedStreams */
-        return 4;
+        return strlen((string) $this->maxYAxisValue);
     }
 
     /**

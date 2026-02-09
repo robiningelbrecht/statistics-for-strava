@@ -18,14 +18,15 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
 {
     public function add(CombinedActivityStream $combinedActivityStream): void
     {
-        $sql = 'INSERT INTO CombinedActivityStream (activityId, unitSystem, streamTypes, data)
-        VALUES (:activityId, :unitSystem, :streamTypes, :data)';
+        $sql = 'INSERT INTO CombinedActivityStream (activityId, unitSystem, streamTypes, data, maxYAxisValue)
+        VALUES (:activityId, :unitSystem, :streamTypes, :data, :maxYAxisValue)';
 
         $this->connection->executeStatement($sql, [
             'activityId' => $combinedActivityStream->getActivityId(),
             'unitSystem' => $combinedActivityStream->getUnitSystem()->value,
             'streamTypes' => implode(',', $combinedActivityStream->getStreamTypes()->map(fn (CombinedStreamType $streamType) => $streamType->value)),
             'data' => Json::encode($combinedActivityStream->getData()),
+            'maxYAxisValue' => $combinedActivityStream->getMaxYAxisValue(),
         ]);
     }
 
@@ -49,7 +50,8 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 CombinedStreamType::from(...),
                 explode(',', (string) $result['streamTypes'])
             )),
-            data: Json::decode($result['data'])
+            data: Json::decode($result['data']),
+            maxYAxisValue: $result['maxYAxisValue'],
         );
     }
 

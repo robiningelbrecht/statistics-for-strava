@@ -120,13 +120,14 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
             rawData: []
         ));
         $this->getConnection()->executeStatement(
-            'INSERT INTO CombinedActivityStream(activityId, unitSystem, streamTypes, data) 
-                VALUES (:activityId, :unitSystem, :streamTypes, :data)',
+            'INSERT INTO CombinedActivityStream(activityId, unitSystem, streamTypes, data, maxYAxisValue) 
+                VALUES (:activityId, :unitSystem, :streamTypes, :data, :maxYAxisValue)',
             [
                 'activityId' => 'activity-test-3',
                 'unitSystem' => UnitSystem::METRIC->value,
                 'streamTypes' => CombinedStreamType::DISTANCE->value,
                 'data' => '{"name": "Ride", "distance": 42,}',
+                'maxYAxisValue' => 4,
             ]
         );
 
