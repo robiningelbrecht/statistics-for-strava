@@ -33,6 +33,10 @@ RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pcntl
 RUN docker-php-ext-install intl
 
+# Install zstd
+RUN pecl install zstd \
+    && docker-php-ext-enable zstd
+
 # Install Xdebug
 RUN curl -L -o "pie.phar" https://github.com/php/pie/releases/download/1.3.1/pie.phar
 RUN php pie.phar install xdebug/xdebug
