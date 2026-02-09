@@ -86,15 +86,15 @@ final readonly class TrainingLoadChart
             ],
             'grid' => [
                 [
-                    'left' => '50px',
-                    'right' => '50px',
+                    'left' => '65px',
+                    'right' => '65px',
                     'top' => '40px',
                     'height' => '53%',
                     'containLabel' => false,
                 ],
                 [
-                    'left' => '50px',
-                    'right' => '50px',
+                    'left' => '65px',
+                    'right' => '65px',
                     'top' => '65%',
                     'height' => '20%',
                     'bottom' => '0px',
