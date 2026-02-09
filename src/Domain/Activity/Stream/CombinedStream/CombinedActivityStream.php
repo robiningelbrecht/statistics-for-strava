@@ -107,12 +107,7 @@ final class CombinedActivityStream
      */
     public function getDistances(): array
     {
-        $distanceIndex = array_search(CombinedStreamType::DISTANCE, $this->streamTypes->toArray(), true);
-        if (false === $distanceIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $distanceIndex);
+        return $this->getChartStreamData(CombinedStreamType::DISTANCE);
     }
 
     /**
@@ -120,12 +115,7 @@ final class CombinedActivityStream
      */
     public function getTimes(): array
     {
-        $distanceIndex = array_search(CombinedStreamType::TIME, $this->streamTypes->toArray(), true);
-        if (false === $distanceIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $distanceIndex);
+        return $this->getChartStreamData(CombinedStreamType::TIME);
     }
 
     /**
@@ -133,12 +123,7 @@ final class CombinedActivityStream
      */
     public function getCoordinates(): array
     {
-        $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $this->streamTypes->toArray(), true);
-        if (false === $coordinateIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $coordinateIndex);
+        return $this->getChartStreamData(CombinedStreamType::LAT_LNG);
     }
 
     public function getStreamTypesForCharts(): CombinedStreamTypes
@@ -147,6 +132,9 @@ final class CombinedActivityStream
         $streamTypesForCharts = CombinedStreamTypes::empty();
 
         foreach (array_keys($this->chartStreamDataCache) as $streamType) {
+            if (in_array($streamType, [CombinedStreamType::DISTANCE->value, CombinedStreamType::LAT_LNG->value, CombinedStreamType::TIME->value])) {
+                continue;
+            }
             $streamTypesForCharts->add(CombinedStreamType::from($streamType));
         }
 
@@ -173,10 +161,6 @@ final class CombinedActivityStream
         $streamTypes = $this->streamTypes->toArray();
 
         foreach ($this->streamTypes as $streamType) {
-            if (in_array($streamType, [CombinedStreamType::DISTANCE, CombinedStreamType::LAT_LNG, CombinedStreamType::TIME])) {
-                continue;
-            }
-
             $index = array_search($streamType, $streamTypes, true);
             if (false === $index) {
                 continue;
