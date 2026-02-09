@@ -76,7 +76,7 @@ final readonly class CombinedStreamProfileChart
                     4 => '75px',
                     5 => '85px',
                 },
-                'right' => '6px',
+                'right' => '20px',
                 'bottom' => Theme::POSITION_BOTTOM === $this->xAxisPosition && [] !== $this->xAxisData ? '70px' : '0%',
                 'top' => Theme::POSITION_TOP === $this->xAxisPosition && [] !== $this->xAxisData ? '45px' : '0%',
                 'containLabel' => false,
