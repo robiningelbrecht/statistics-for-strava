@@ -123,7 +123,12 @@ final class CombinedActivityStream
      */
     public function getCoordinates(): array
     {
-        return $this->getChartStreamData(CombinedStreamType::LAT_LNG);
+        $coordinateIndex = array_search(CombinedStreamType::LAT_LNG, $this->streamTypes->toArray(), true);
+        if (false === $coordinateIndex) {
+            return [];
+        }
+
+        return array_column($this->data, $coordinateIndex);
     }
 
     public function getStreamTypesForCharts(): CombinedStreamTypes
