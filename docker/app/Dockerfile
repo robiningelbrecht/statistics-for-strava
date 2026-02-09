@@ -32,6 +32,11 @@ RUN set -eux; \
         xmlwriter \
         pcntl;
 
+# Install zstd - compression algorithm
+RUN apk add --no-cache zstd-dev autoconf gcc g++ make
+RUN pecl install zstd && docker-php-ext-enable zstd
+RUN apk del zstd-dev autoconf gcc g++ make
+
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
 COPY docker/app/config/Caddyfile /etc/frankenphp/Caddyfile
 COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh

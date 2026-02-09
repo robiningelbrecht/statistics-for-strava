@@ -15,6 +15,7 @@ use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
@@ -37,11 +38,7 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             omitDistanceStream: false,
         );
         $this->calculateCombinedStreams->process($output);
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
 
         $this->calculateCombinedStreams->process($output);
         $this->assertMatchesTextSnapshot($output);
@@ -68,10 +65,7 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             )
         )->process($output);
 
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
     }
 
     public function testProcessWithEmptyDistanceStream(): void
@@ -83,11 +77,7 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             omitDistanceStream: true,
         );
         $this->calculateCombinedStreams->process($output);
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
     }
 
     public function testProcessForRun(): void
@@ -99,11 +89,7 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             omitDistanceStream: false,
         );
         $this->calculateCombinedStreams->process($output);
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
     }
 
     public function testProcessWhenStreamDataIsMissingOrEmpty(): void
@@ -146,11 +132,7 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
         );
 
         $this->calculateCombinedStreams->process($output);
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
     }
 
     private function provideGeneralTestData(
@@ -246,6 +228,20 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
                     [51.200700, 3.216900],
                 ])
                 ->build()
+        );
+    }
+
+    private function assertDatabaseResults(): void
+    {
+        $results = $this->getConnection()
+            ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative();
+
+        foreach ($results as &$result) {
+            $result['data'] = CompressedString::fromCompressed($result['data'])->uncompress();
+        }
+
+        $this->assertMatchesJsonSnapshot(
+            Json::encode($results)
         );
     }
 

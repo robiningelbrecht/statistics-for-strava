@@ -12,6 +12,7 @@ use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use Doctrine\DBAL\ArrayParameterType;
 
 final readonly class DbalCombinedActivityStreamRepository extends DbalRepository implements CombinedActivityStreamRepository
@@ -25,7 +26,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
             'activityId' => $combinedActivityStream->getActivityId(),
             'unitSystem' => $combinedActivityStream->getUnitSystem()->value,
             'streamTypes' => implode(',', $combinedActivityStream->getStreamTypes()->map(fn (CombinedStreamType $streamType) => $streamType->value)),
-            'data' => Json::encode($combinedActivityStream->getData()),
+            'data' => CompressedString::fromUncompressed(Json::encode($combinedActivityStream->getData())),
             'maxYAxisValue' => $combinedActivityStream->getMaxYAxisValue(),
         ]);
     }
@@ -50,7 +51,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 CombinedStreamType::from(...),
                 explode(',', (string) $result['streamTypes'])
             )),
-            data: Json::decode($result['data']),
+            data: Json::decode(CompressedString::fromCompressed($result['data'])->uncompress()),
             maxYAxisValue: $result['maxYAxisValue'],
         );
     }

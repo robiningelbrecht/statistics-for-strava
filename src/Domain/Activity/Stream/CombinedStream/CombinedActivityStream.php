@@ -24,7 +24,7 @@ final class CombinedActivityStream
         private readonly UnitSystem $unitSystem,
         #[ORM\Column(type: 'string')]
         private readonly CombinedStreamTypes $streamTypes,
-        #[ORM\Column(type: 'json')]
+        #[ORM\Column(type: 'blob')]
         private readonly array $data,
         #[ORM\Column(type: 'integer')]
         private readonly int $maxYAxisValue,
@@ -51,7 +51,7 @@ final class CombinedActivityStream
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
     public static function fromState(
         ActivityId $activityId,
