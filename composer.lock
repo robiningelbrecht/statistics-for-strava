@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0029e2deb95e79e2752262b7ebd390c",
+    "content-hash": "9500c38bd72cf770c2c8ad0dc1238757",
     "packages": [
         {
             "name": "adrenalinkin/doctrine-naming-strategy",
@@ -1301,16 +1301,16 @@
         },
         {
             "name": "doctrine/sql-formatter",
-            "version": "1.5.3",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/sql-formatter.git",
-                "reference": "a8af23a8e9d622505baa2997465782cbe8bb7fc7"
+                "reference": "9563949f5cd3bd12a17d12fb980528bc141c5806"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/a8af23a8e9d622505baa2997465782cbe8bb7fc7",
-                "reference": "a8af23a8e9d622505baa2997465782cbe8bb7fc7",
+                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/9563949f5cd3bd12a17d12fb980528bc141c5806",
+                "reference": "9563949f5cd3bd12a17d12fb980528bc141c5806",
                 "shasum": ""
             },
             "require": {
@@ -1350,9 +1350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/sql-formatter/issues",
-                "source": "https://github.com/doctrine/sql-formatter/tree/1.5.3"
+                "source": "https://github.com/doctrine/sql-formatter/tree/1.5.4"
             },
-            "time": "2025-10-26T09:35:14+00:00"
+            "time": "2026-02-08T16:21:46+00:00"
         },
         {
             "name": "dragonmantank/cron-expression",
@@ -10922,16 +10922,16 @@
         },
         {
             "name": "spatie/phpunit-snapshot-assertions",
-            "version": "5.3.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/phpunit-snapshot-assertions.git",
-                "reference": "7483543a163c1a468ee9fb9301fc15d22e1f1edc"
+                "reference": "8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/phpunit-snapshot-assertions/zipball/7483543a163c1a468ee9fb9301fc15d22e1f1edc",
-                "reference": "7483543a163c1a468ee9fb9301fc15d22e1f1edc",
+                "url": "https://api.github.com/repos/spatie/phpunit-snapshot-assertions/zipball/8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d",
+                "reference": "8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d",
                 "shasum": ""
             },
             "require": {
@@ -10940,7 +10940,7 @@
                 "ext-json": "*",
                 "ext-libxml": "*",
                 "php": "^8.1",
-                "phpunit/phpunit": "^9.6|^10.0|^11.0|^12.0",
+                "phpunit/phpunit": "^9.6|^10.0|^11.0|^12.0|^13.0",
                 "symfony/property-access": "^5.2|^6.2|^7.0|^8.0",
                 "symfony/serializer": "^5.2|^6.2|^7.0|^8.0",
                 "symfony/yaml": "^5.2|^6.2|^7.0|^8.0"
@@ -10987,7 +10987,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/phpunit-snapshot-assertions/issues",
-                "source": "https://github.com/spatie/phpunit-snapshot-assertions/tree/5.3.0"
+                "source": "https://github.com/spatie/phpunit-snapshot-assertions/tree/5.3.1"
             },
             "funding": [
                 {
@@ -10995,7 +10995,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-01-22T18:43:42+00:00"
+            "time": "2026-02-08T22:28:19+00:00"
         },
         {
             "name": "staabm/side-effects-detector",
@@ -11352,7 +11352,8 @@
         "ext-intl": "*",
         "ext-libxml": "*",
         "ext-simplexml": "*",
-        "ext-uri": "*"
+        "ext-uri": "*",
+        "ext-zstd": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

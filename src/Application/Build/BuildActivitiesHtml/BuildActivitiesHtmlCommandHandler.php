@@ -19,7 +19,6 @@ use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
-use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\VelocityDistributionChart;
 use App\Domain\Athlete\AthleteRepository;
@@ -212,22 +211,25 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     $coordinateMap = $combinedActivityStream->getCoordinates();
 
                     $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
-                    /** @var CombinedStreamType $combinedStreamType */
                     foreach ($streamTypesForCharts as $index => $combinedStreamType) {
                         $xAxisPosition = match (true) {
                             0 === $index => Theme::POSITION_BOTTOM,
-                            $index === count($streamTypesForCharts) - 1 && [] !== $times => Theme::POSITION_TOP,
+                            $index === count($streamTypesForCharts) - 1 => Theme::POSITION_TOP,
                             default => null,
                         };
                         $xAxisData = match (true) {
-                            Theme::POSITION_TOP === $xAxisPosition => $times,
-                            default => $distances,
+                            Theme::POSITION_BOTTOM === $xAxisPosition && [] !== $distances => $distances,
+                            default => $times,
+                        };
+                        $xAxisLabelSuffix = match (true) {
+                            Theme::POSITION_BOTTOM === $xAxisPosition && [] !== $distances => $this->unitSystem->distanceSymbol(),
+                            default => null,
                         };
 
                         $chart = CombinedStreamProfileChart::create(
                             xAxisData: $xAxisData,
                             xAxisPosition: $xAxisPosition,
-                            xAxisLabelSuffix: Theme::POSITION_BOTTOM === $xAxisPosition ? $this->unitSystem->distanceSymbol() : null,
+                            xAxisLabelSuffix: $xAxisLabelSuffix,
                             yAxisData: $combinedActivityStream->getChartStreamData($combinedStreamType),
                             maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
                             yAxisStreamType: $combinedStreamType,
