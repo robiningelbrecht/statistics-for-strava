@@ -7,6 +7,7 @@ export default class DarkModeManager {
     }
 
     attachEventListeners() {
+        this.$toggleButton.checked = this.isDarkModeEnabled();
         this.$toggleButton.addEventListener('change', () => {
             this.setDark(!this.isDarkModeEnabled());
         });
