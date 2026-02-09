@@ -108,6 +108,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $hasDistanceData = $combinedStreamTypes->has(CombinedStreamType::DISTANCE);
             $hasLatLngData = $combinedStreamTypes->has(CombinedStreamType::LAT_LNG);
 
+            $maxYAxisValue = PHP_INT_MIN;
             foreach ($timeData as $i => $time) {
                 if ($i > 0 && $hasMovingData && true === $movingData[$i - 1]) {
                     // Update moving time based on the previous interval.
@@ -152,6 +153,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                         };
                     }
 
+                    $maxYAxisValue = max($maxYAxisValue, $value);
                     $combinedPoint[] = $value;
                 }
 
@@ -164,6 +166,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                     unitSystem: $this->unitSystem,
                     streamTypes: $combinedStreamTypes,
                     data: $combinedData,
+                    maxYAxisValue: (int) $maxYAxisValue,
                 )
             );
             ++$activityWithCombinedStreamCalculatedCount;
