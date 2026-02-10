@@ -385,10 +385,12 @@ trait ProvideTestData
                 ->withActivityId(ActivityId::fromUnprefixed('9756441741'))
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->withStreamTypes(CombinedStreamTypes::fromArray([
+                    CombinedStreamType::TIME,
                     CombinedStreamType::DISTANCE,
                     CombinedStreamType::ALTITUDE,
-                    CombinedStreamType::HEART_RATE]))
-                ->withData([[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]])
+                    CombinedStreamType::HEART_RATE,
+                    CombinedStreamType::WATTS]))
+                ->withData([[1, 2, 3, 4, 5], [2, 2, 3, 4, 5], [3, 2, 3, 4, 5], [4, 2, 3, 4, 5], [5, 2, 3, 4, 5]])
                 ->build()
         );
     }
