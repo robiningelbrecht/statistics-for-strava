@@ -5,6 +5,7 @@ namespace App\Tests\Application\Import\LinkCustomGearToActivities;
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivitiesCommandHandler;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
@@ -180,10 +181,10 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
 
         new LinkCustomGearToActivitiesCommandHandler(
-            $this->getContainer()->get(ImportedGearRepository::class),
             $this->getContainer()->get(CustomGearRepository::class),
             $this->getContainer()->get(ActivityWithRawDataRepository::class),
             $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(ActivityIdRepository::class),
             CustomGearConfig::fromArray([])
         )->handle(new LinkCustomGearToActivities($output));
 
