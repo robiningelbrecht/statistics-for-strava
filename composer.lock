@@ -2589,16 +2589,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.12.0",
+            "version": "2.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7"
+                "reference": "73532aa424f6b4735a4c19c34ccb520c254c4305"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7",
-                "reference": "f9f058d79f91b6681fb06c5bf19fb82e03d7e8c7",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/73532aa424f6b4735a4c19c34ccb520c254c4305",
+                "reference": "73532aa424f6b4735a4c19c34ccb520c254c4305",
                 "shasum": ""
             },
             "require": {
@@ -2653,7 +2653,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.12.0"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.12.2"
             },
             "funding": [
                 {
@@ -2661,7 +2661,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-08T11:16:59+00:00"
+            "time": "2026-02-09T15:16:07+00:00"
         },
         {
             "name": "psr/cache",
@@ -10922,16 +10922,16 @@
         },
         {
             "name": "spatie/phpunit-snapshot-assertions",
-            "version": "5.3.1",
+            "version": "5.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/phpunit-snapshot-assertions.git",
-                "reference": "8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d"
+                "reference": "1706bd630c5fa6d0b30aa9023393dbe6f35e4b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/phpunit-snapshot-assertions/zipball/8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d",
-                "reference": "8fcf9a8a34a1c4e94ca9bd5aca18a991897d257d",
+                "url": "https://api.github.com/repos/spatie/phpunit-snapshot-assertions/zipball/1706bd630c5fa6d0b30aa9023393dbe6f35e4b67",
+                "reference": "1706bd630c5fa6d0b30aa9023393dbe6f35e4b67",
                 "shasum": ""
             },
             "require": {
@@ -10987,7 +10987,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/phpunit-snapshot-assertions/issues",
-                "source": "https://github.com/spatie/phpunit-snapshot-assertions/tree/5.3.1"
+                "source": "https://github.com/spatie/phpunit-snapshot-assertions/tree/5.3.2"
             },
             "funding": [
                 {
@@ -10995,7 +10995,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-02-08T22:28:19+00:00"
+            "time": "2026-02-09T20:49:57+00:00"
         },
         {
             "name": "staabm/side-effects-detector",
