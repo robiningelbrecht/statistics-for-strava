@@ -14,6 +14,9 @@ class ChangelogTest extends TestCase
         $changelog = file_get_contents(__DIR__.'/../CHANGELOG.md');
 
         $latestVersion = AppVersion::getSemanticVersion();
-        $this->assertStringContainsString(sprintf('# [%s]', $latestVersion), $changelog);
+        $this->assertStringContainsString(
+            sprintf('# [%s](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/%s', $latestVersion, $latestVersion),
+            $changelog
+        );
     }
 }
