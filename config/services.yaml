@@ -32,11 +32,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    Doctrine\Migrations\Version\DbalMigrationFactory: ~
-    App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory:
-        decorates: Doctrine\Migrations\Version\DbalMigrationFactory
-        arguments: [ '@App\Infrastructure\Doctrine\Migrations\Factory\CommandBusAwareMigrationFactory.inner' ]
-
     App\Infrastructure\Daemon\Cron\ConfiguredCronActions:
       factory: [ null, 'fromConfig' ]
       arguments: [ '@=app_config("daemon.cron", [])' ]
