@@ -1,3 +1,27 @@
+# [v4.6.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.1) - 2026-02-10
+
+> [!NOTE]  
+> This release needs to recalculate the metrics chart on the activity detail pages.
+> Your next import may take a bit longer, but subsequent imports will run at normal speed.
+
+### Revamped metric charts on activity detail pages
+
+* Charts are now zoomable
+* Charts now use the full raw data instead of simplified data
+
+## What's Changed
+* ISSUE #1724: Dark mode: prevent 'flash' on page load by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1725
+* Adding French translations by @BenjaminDiet in https://github.com/robiningelbrecht/statistics-for-strava/pull/1727
+* ISSUE #1728: Add apple-touch-icon for iOS home screen support by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1729
+* ISSUE #1730: Fix mis-aligned cursor training load analysis by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1731
+* ISSUE #1716: Rework activity profile charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1720
+* ISSUE #1716: Fix caching issue while importing activities by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1720
+
+## New Contributors
+* @BenjaminDiet made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1727
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.0...v4.6.1
+
 # [v4.6.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.0) - 2026-02-07
 
 ## Dark mode is here!
