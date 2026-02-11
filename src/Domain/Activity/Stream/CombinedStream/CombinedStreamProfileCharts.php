@@ -181,7 +181,7 @@ final readonly class CombinedStreamProfileCharts
             $seriesData = $yAxisData;
             if (CombinedStreamType::ALTITUDE === $yAxisStreamType && [] !== $this->grades) {
                 $seriesData = array_map(
-                    fn (int|float $elevation, int|float $grade): array => ['value' => $elevation, 'grade' => $grade],
+                    fn (int|float $elevation, int|float $grade): array => ['value' => $elevation, 'extra' => $grade.'%'],
                     $yAxisData,
                     $this->grades,
                 );

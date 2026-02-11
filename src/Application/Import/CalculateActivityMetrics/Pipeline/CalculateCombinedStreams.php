@@ -60,19 +60,19 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
             $distanceData = [];
             if (($distanceStream = $streams->filterOnType(StreamType::DISTANCE)) instanceof ActivityStream) {
-                if ($distanceData = $distanceStream->getData()) {
+                if ($distanceStream->hasValidData() && ($distanceData = $distanceStream->getData())) {
                     $combinedStreamTypes->add(CombinedStreamType::DISTANCE);
                 }
             }
             $latLngData = [];
             if (($latLngStream = $streams->filterOnType(StreamType::LAT_LNG)) instanceof ActivityStream) {
-                if ($latLngData = $latLngStream->getData()) {
+                if ($latLngStream->hasValidData() && ($latLngData = $latLngStream->getData())) {
                     $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
                 }
             }
             $gradeData = [];
             if (($gradeStream = $streams->filterOnType(StreamType::GRADE)) instanceof ActivityStream) {
-                if ($gradeData = $gradeStream->getData()) {
+                if ($gradeStream->hasValidData() && ($gradeData = $gradeStream->getData())) {
                     $combinedStreamTypes->add(CombinedStreamType::GRADE);
                 }
             }
@@ -83,7 +83,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof ActivityStream) {
                     continue;
                 }
-                if (!$stream->getData()) {
+                if (!$stream->hasValidData()) {
                     continue;
                 }
 
