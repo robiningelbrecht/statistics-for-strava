@@ -11,8 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 final readonly class CombinedStreamProfileCharts
 {
     private const int GRID_HEIGHT = 120;
-    private const int TOP_MARGIN = 45;
-    private const int BOTTOM_MARGIN = 70;
+    private const int DATAZOOM_TOP = 30;
+    private const int DATAZOOM_HEIGHT = 25;
+    private const int TOP_MARGIN = 90;
+    private const int BOTTOM_MARGIN = 35;
     private const int GAP = 5;
 
     /**
@@ -27,6 +29,7 @@ final readonly class CombinedStreamProfileCharts
         private array $items,
         private array $topXAxisData,
         private array $bottomXAxisData,
+        private ?string $bottomXAxisSuffix,
         private int $maximumNumberOfDigitsOnYAxis,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -45,6 +48,7 @@ final readonly class CombinedStreamProfileCharts
         array $items,
         array $topXAxisData,
         array $bottomXAxisData,
+        ?string $bottomXAxisSuffix,
         int $maximumNumberOfDigitsOnYAxis,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
@@ -53,6 +57,7 @@ final readonly class CombinedStreamProfileCharts
             items: $items,
             topXAxisData: $topXAxisData,
             bottomXAxisData: $bottomXAxisData,
+            bottomXAxisSuffix: $bottomXAxisSuffix,
             maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigitsOnYAxis,
             unitSystem: $unitSystem,
             translator: $translator,
@@ -125,7 +130,7 @@ final readonly class CombinedStreamProfileCharts
                 default => $this->topXAxisData,
             };
             $xAxisLabelSuffix = match (true) {
-                $isLast && [] !== $this->bottomXAxisData => $this->unitSystem->distanceSymbol(),
+                $isLast && [] !== $this->bottomXAxisData => $this->bottomXAxisSuffix,
                 default => null,
             };
 
@@ -176,6 +181,7 @@ final readonly class CombinedStreamProfileCharts
                         [
                             [
                                 'xAxis' => 'min',
+                                'yAxis' => $maxYAxis,
                                 'itemStyle' => [
                                     'color' => '#3E444D',
                                 ],
@@ -185,6 +191,7 @@ final readonly class CombinedStreamProfileCharts
                             ],
                             [
                                 'xAxis' => 'max',
+                                'yAxis' => $minYAxis,
                             ],
                         ],
                     ],
@@ -218,7 +225,7 @@ final readonly class CombinedStreamProfileCharts
             ],
             'toolbox' => [
                 'show' => true,
-                'top' => '-5px',
+                'top' => '0px',
                 'feature' => [
                     'dataZoom' => [
                         'show' => true,
@@ -237,6 +244,10 @@ final readonly class CombinedStreamProfileCharts
                 [
                     'type' => 'slider',
                     'show' => true,
+                    'top' => self::DATAZOOM_TOP.'px',
+                    'height' => self::DATAZOOM_HEIGHT.'px',
+                    'left' => $gridLeft,
+                    'right' => '20px',
                     'xAxisIndex' => $xAxisIndices,
                     'throttle' => 100,
                     'showDetail' => false,

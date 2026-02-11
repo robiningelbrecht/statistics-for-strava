@@ -223,6 +223,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         items: array_reverse($items),
                         topXAxisData: $times,
                         bottomXAxisData: $distances,
+                        bottomXAxisSuffix: $this->unitSystem->distanceSymbol(),
                         maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
                         unitSystem: $this->unitSystem,
                         translator: $this->translator,
