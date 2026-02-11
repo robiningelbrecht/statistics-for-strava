@@ -347,6 +347,15 @@
             const secs = secondsToFormat % 60;
             return `<strong>${minutes}:${secs.toString().padStart(2, '0')}${paceSymbol}`;
         },
+        formatCombinedProfileTooltip: (params) => {
+            if (!Array.isArray(params)) params = [params];
+            return params.map(p => {
+                if (p.seriesName === '__pace') {
+                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace([p])}`;
+                }
+                return `${p.marker} <strong>${p.value} ${p.seriesName}`;
+            }).join('<br/>');
+        },
         symbolSize: (params) => {
             return (params[2] / 100) * 15 + 5;
         },
