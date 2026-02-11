@@ -1,3 +1,12 @@
+# [v4.6.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.2) - 2026-02-11
+
+Another day, another release imroving the activity metric charts.
+
+## What's Changed
+* ISSUE #1735 & #1736: Activity metrics chart improvements by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1740
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.1...v4.6.2
+
 # [v4.6.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.1) - 2026-02-10
 
 > [!NOTE]  
