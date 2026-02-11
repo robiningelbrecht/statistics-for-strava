@@ -201,4 +201,121 @@ final readonly class CombinedStreamProfileChart
             ],
         ];
     }
+
+    /**
+     * Build partial config for use in a combined multi-grid chart.
+     *
+     * @return array{grid: array<string, mixed>, xAxis: array<string, mixed>, yAxis: array<string, mixed>, series: array<string, mixed>}
+     */
+    public function buildForCombined(int $gridIndex, int $totalCount): array
+    {
+        if ([] === $this->yAxisData) {
+            throw new \RuntimeException('yAxisData data cannot be empty');
+        }
+
+        $yAxisSuffix = $this->yAxisStreamType->getSuffix($this->unitSystem);
+
+        [$min, $max] = [min($this->yAxisData), max($this->yAxisData)];
+        $margin = ($max - $min) * 0.1;
+        $maxYAxis = (int) ceil($max + $margin);
+        $minYAxis = max($min, 0);
+
+        if (CombinedStreamType::ALTITUDE === $this->yAxisStreamType) {
+            $minYAxis = (int) floor($min - $margin);
+        }
+
+        $topMargin = 45;
+        $gridHeight = 120;
+        $gap = 5;
+        $top = $topMargin + $gridIndex * ($gridHeight + $gap);
+
+        return [
+            'grid' => [
+                'left' => match ($this->maximumNumberOfDigitsOnYAxis) {
+                    default => '65px',
+                    4 => '75px',
+                    5 => '85px',
+                },
+                'right' => '20px',
+                'top' => $top.'px',
+                'height' => $gridHeight.'px',
+                'containLabel' => false,
+            ],
+            'xAxis' => [
+                'gridIndex' => $gridIndex,
+                'position' => $this->xAxisPosition,
+                'type' => 'category',
+                'boundaryGap' => false,
+                'axisLabel' => [
+                    'show' => !is_null($this->xAxisPosition) && [] !== $this->xAxisData,
+                    'formatter' => '{value} '.$this->xAxisLabelSuffix,
+                ],
+                'data' => $this->xAxisData,
+                'min' => 0,
+                'axisTick' => [
+                    'show' => false,
+                ],
+            ],
+            'yAxis' => [
+                'gridIndex' => $gridIndex,
+                'type' => 'value',
+                'name' => $this->yAxisStreamType->trans($this->translator),
+                'nameRotate' => 90,
+                'nameLocation' => 'middle',
+                'nameGap' => 10,
+                'min' => $minYAxis,
+                'max' => $maxYAxis,
+                'splitLine' => [
+                    'show' => false,
+                ],
+                'axisLabel' => [
+                    'show' => true,
+                    'customValues' => [$minYAxis, $maxYAxis],
+                    'color' => '#aaa',
+                    'verticalAlignMaxLabel' => 'top',
+                    'verticalAlignMinLabel' => 'bottom',
+                ],
+            ],
+            'series' => [
+                'name' => CombinedStreamType::PACE === $this->yAxisStreamType ? '__pace' : $yAxisSuffix,
+                'xAxisIndex' => $gridIndex,
+                'yAxisIndex' => $gridIndex,
+                'markArea' => [
+                    'data' => [
+                        [
+                            [
+                                'xAxis' => 'min',
+                                'itemStyle' => [
+                                    'color' => '#3E444D',
+                                ],
+                                'emphasis' => [
+                                    'disabled' => true,
+                                ],
+                            ],
+                            [
+                                'xAxis' => 'max',
+                            ],
+                        ],
+                    ],
+                ],
+                'data' => $this->yAxisData,
+                'type' => 'line',
+                'showSymbol' => false,
+                'progressive' => 5000,
+                'progressiveThreshold' => 10000,
+                'color' => $this->yAxisStreamType->getSeriesColor(),
+                'smooth' => true,
+                'lineStyle' => [
+                    'width' => 0,
+                ],
+                'emphasis' => [
+                    'disabled' => true,
+                ],
+                'areaStyle' => [
+                    'opacity' => 1,
+                    'origin' => 'start',
+                ],
+            ],
+        ];
+    }
 }

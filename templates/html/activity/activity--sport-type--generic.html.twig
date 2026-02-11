@@ -392,7 +392,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if distributionCharts is not empty and profileCharts is not empty  %}
+            {% if distributionCharts is not empty and profileChart is not empty  %}
                 <div class="tabs tabs--default">
                     <ul id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
                         <li role="presentation">
@@ -409,20 +409,12 @@
                 </div>
             {% endif %}
             <div id="chartsTabContent">
-                {% if profileCharts is not empty %}
+                {% if profileChart is not empty %}
                     <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
-                        <div class="flex flex-col gap-y-1">
-                            {% for chart in profileCharts %}
-                                {% set height =
-                                    loop.first ? 'h-[165px]' :
-                                    loop.last  ? 'h-[190px]' :
-                                    'h-[120px]'
-                                %}
-                                <div class="{{ height }}" data-echarts-options='{{ chart }}'  data-echarts-connect
-                                        {{ loop.last ? "data-leaflet-echart-connect='#{coordinateMap}'" : '' }}
-                                ></div>
-                            {% endfor %}
-                        </div>
+                        <div style="height: {{ profileChartHeight }}px"
+                             data-echarts-options='{{ profileChart }}'
+                             data-leaflet-echart-connect='{{ coordinateMap }}'
+                        ></div>
                     </div>
                 {% endif %}
                 {% if distributionCharts is not empty %}

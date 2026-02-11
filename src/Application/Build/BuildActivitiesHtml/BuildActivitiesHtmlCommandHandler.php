@@ -19,6 +19,7 @@ use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamProfileChart;
+use App\Domain\Activity\Stream\CombinedStream\CombinedStreamProfileCharts;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\VelocityDistributionChart;
 use App\Domain\Athlete\AthleteRepository;
@@ -196,7 +197,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 }
             }
 
-            $activityProfileCharts = [];
+            $profileChart = null;
+            $profileChartHeight = 0;
             $coordinateMap = [];
             if ($activityType->supportsCombinedStreamCalculation()) {
                 try {
@@ -211,6 +213,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     $coordinateMap = $combinedActivityStream->getCoordinates();
 
                     $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
+                    $charts = [];
                     foreach ($streamTypesForCharts as $index => $combinedStreamType) {
                         $xAxisPosition = match (true) {
                             0 === $index => Theme::POSITION_BOTTOM,
@@ -226,7 +229,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             default => null,
                         };
 
-                        $chart = CombinedStreamProfileChart::create(
+                        $charts[] = CombinedStreamProfileChart::create(
                             xAxisData: $xAxisData,
                             xAxisPosition: $xAxisPosition,
                             xAxisLabelSuffix: $xAxisLabelSuffix,
@@ -236,8 +239,11 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             unitSystem: $this->unitSystem,
                             translator: $this->translator
                         );
-                        $activityProfileCharts[$combinedStreamType->value] = Json::encode($chart->build());
                     }
+
+                    $combinedCharts = CombinedStreamProfileCharts::fromCharts(array_reverse($charts));
+                    $profileChart = Json::encode($combinedCharts->build());
+                    $profileChartHeight = $combinedCharts->getTotalHeight();
                 } catch (EntityNotFound) {
                 }
             }
@@ -260,7 +266,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
-                    'profileCharts' => array_reverse($activityProfileCharts),
+                    'profileChart' => $profileChart,
+                    'profileChartHeight' => $profileChartHeight,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
                     'coordinateMap' => Json::encode($coordinateMap),
                 ]),
