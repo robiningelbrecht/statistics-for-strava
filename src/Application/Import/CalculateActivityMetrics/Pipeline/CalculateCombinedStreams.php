@@ -70,6 +70,12 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                     $combinedStreamTypes->add(CombinedStreamType::LAT_LNG);
                 }
             }
+            $gradeData = [];
+            if (($gradeStream = $streams->filterOnType(StreamType::GRADE)) instanceof ActivityStream) {
+                if ($gradeData = $gradeStream->getData()) {
+                    $combinedStreamTypes->add(CombinedStreamType::GRADE);
+                }
+            }
 
             /** @var array<int, array{0: CombinedStreamType, 1: ActivityStream}> $otherStreams */
             $otherStreams = [];
@@ -107,6 +113,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $hasMovingData = null !== $movingData && [] !== $movingData;
             $hasDistanceData = $combinedStreamTypes->has(CombinedStreamType::DISTANCE);
             $hasLatLngData = $combinedStreamTypes->has(CombinedStreamType::LAT_LNG);
+            $hasGradeData = $combinedStreamTypes->has(CombinedStreamType::GRADE);
 
             $maxYAxisValue = PHP_INT_MIN;
             $maxTimeDataIndex = count($timeData) - 1;
@@ -138,6 +145,10 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 
                 if ($hasLatLngData) {
                     $combinedPoint[] = $latLngData[$i];
+                }
+
+                if ($hasGradeData) {
+                    $combinedPoint[] = $gradeData[$i];
                 }
 
                 foreach ($otherStreams as $otherStream) {

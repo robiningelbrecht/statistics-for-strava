@@ -119,6 +119,14 @@ final class CombinedActivityStream
     }
 
     /**
+     * @return array<int, float>
+     */
+    public function getGrades(): array
+    {
+        return $this->getChartStreamData(CombinedStreamType::GRADE);
+    }
+
+    /**
      * @return array<int, array<float, float>>
      */
     public function getCoordinates(): array
@@ -137,7 +145,7 @@ final class CombinedActivityStream
         $streamTypesForCharts = CombinedStreamTypes::empty();
 
         foreach (array_keys($this->chartStreamDataCache) as $streamType) {
-            if (in_array($streamType, [CombinedStreamType::DISTANCE->value, CombinedStreamType::LAT_LNG->value, CombinedStreamType::TIME->value])) {
+            if (!CombinedStreamType::from($streamType)->isChartable()) {
                 continue;
             }
             $streamTypesForCharts->add(CombinedStreamType::from($streamType));

@@ -11,7 +11,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 enum CombinedStreamType: string implements TranslatableInterface
 {
-    case DISTANCE = 'distance';
     case ALTITUDE = 'altitude';
     case WATTS = 'watts';
     case CADENCE = 'cadence';
@@ -19,14 +18,17 @@ enum CombinedStreamType: string implements TranslatableInterface
     case HEART_RATE = 'heartrate';
     case VELOCITY = 'velocity';
     case PACE = 'pace';
+    case DISTANCE = 'distance';
     case LAT_LNG = 'latlng';
     case TIME = 'time';
+    case GRADE = 'grade';
 
     public function getStreamType(): StreamType
     {
         return match ($this) {
             CombinedStreamType::PACE, CombinedStreamType::VELOCITY => StreamType::VELOCITY,
             CombinedStreamType::STEPS_PER_MINUTE => StreamType::CADENCE,
+            CombinedStreamType::GRADE => StreamType::GRADE,
             default => StreamType::from($this->value),
         };
     }
@@ -71,6 +73,14 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::PACE,
             CombinedStreamType::VELOCITY => '#fac858',
             default => '#cccccc',
+        };
+    }
+
+    public function isChartable(): bool
+    {
+        return match ($this) {
+            self::DISTANCE, self::LAT_LNG, self::TIME, self::GRADE => false,
+            default => true,
         };
     }
 }
