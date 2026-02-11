@@ -109,10 +109,14 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             $hasLatLngData = $combinedStreamTypes->has(CombinedStreamType::LAT_LNG);
 
             $maxYAxisValue = PHP_INT_MIN;
+            $maxTimeDataIndex = count($timeData) - 1;
             foreach ($timeData as $i => $time) {
-                if ($i > 0 && $hasMovingData && true === $movingData[$i - 1]) {
-                    // Update moving time based on the previous interval.
-                    $cumulativeMovingTime += $time - $timeData[$i - 1];
+                if ($hasMovingData && true === $movingData[$i] && $i < $maxTimeDataIndex) {
+                    $delta = $timeData[$i + 1] - $time;
+                    // Ignore session gaps (e.g. activity recorded in multiple sessions).
+                    if (true === $movingData[$i + 1] || $delta <= 60) {
+                        $cumulativeMovingTime += $delta;
+                    }
                 }
 
                 if ($hasMovingData && false === $movingData[$i]) {
