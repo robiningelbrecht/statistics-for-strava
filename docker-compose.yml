@@ -1,6 +1,7 @@
 services:
     php-cli:
         build: docker/php-cli
+        image: strava-statistics:php-cli
         container_name: 'statistics-for-strava-php-cli'
         volumes:
             - './:/var/www/'
@@ -20,6 +21,7 @@ services:
         build:
             context: ./
             dockerfile: docker/app/Dockerfile
+        image: strava-statistics:latest
         container_name: 'statistics-for-strava-app'
         volumes:
             - ./config/app:/var/www/config/app
@@ -41,6 +43,7 @@ services:
       build:
         context: ./
         dockerfile: docker/app/Dockerfile
+      image: strava-statistics:latest
       container_name: 'statistics-for-strava-daemon'
       restart: unless-stopped
       volumes:

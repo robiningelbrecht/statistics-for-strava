@@ -28,7 +28,7 @@ Start off by showing some :heart: and give this repo a star. Then from your comm
 ```yml
 services:
   app:
-    image: robiningelbrecht/strava-statistics:latest
+    image: strava-statistics:latest
     container_name: statistics-for-strava
     restart: unless-stopped
     volumes:
@@ -56,7 +56,7 @@ services:
   #
   # If you prefer to trigger these tasks manually, you can omit this container entirely.
   daemon:
-    image: robiningelbrecht/strava-statistics:latest
+    image: strava-statistics:latest
     container_name: statistics-for-strava-daemon
     restart: unless-stopped
     volumes:
