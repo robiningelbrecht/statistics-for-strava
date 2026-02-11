@@ -54,7 +54,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
             $command->getOutput()->writeln('Could not import challenges from trophy case page: '.$e->getMessage());
         }
 
-        if (empty($challenges)) {
+        if ([] === $challenges) {
             $command->getOutput()->writeln('No Challenges to import...');
 
             return;
@@ -98,7 +98,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
                         ));
                         continue;
                     }
-                    $challenge->updateLocalLogo('files/'.$fileSystemPath);
+                    $challenge = $challenge->withLocalLogo('files/'.$fileSystemPath);
                 }
                 $this->challengeRepository->add($challenge);
                 $challengesAddedInCurrentRun[(string) $challengeId] = $challengeId;

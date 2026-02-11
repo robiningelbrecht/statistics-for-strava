@@ -10,6 +10,7 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEfforts;
 use App\Domain\Segment\SegmentId;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -72,12 +73,14 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
         $segmentEffortOne = SegmentEffortBuilder::fromDefaults()
             ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(1))
             ->withSegmentId(SegmentId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2026-02-02 00:00:00'))
             ->withRank(1)
             ->build();
         $this->segmentEffortRepository->add($segmentEffortOne);
 
         $segmentEffortTwo = SegmentEffortBuilder::fromDefaults()
             ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(2))
+            ->withStartDateTime(SerializableDateTime::fromString('2026-02-01 00:00:00'))
             ->withSegmentId(SegmentId::fromUnprefixed(1))
             ->withRank(2)
             ->build();

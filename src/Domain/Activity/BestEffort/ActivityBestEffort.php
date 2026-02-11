@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\BestEffort;
 
-use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
@@ -14,21 +13,19 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivityBestEffort_sportTypeIndex', columns: ['sportType'])]
-final class ActivityBestEffort
+final readonly class ActivityBestEffort
 {
     use ProvideTimeFormats;
 
-    private ?Activity $activity = null;
-
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'integer')]
-        private readonly Meter $distanceInMeter,
+        private Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
-        private readonly SportType $sportType,
+        private SportType $sportType,
         #[ORM\Column(type: 'integer')]
-        private readonly int $timeInSeconds,
+        private int $timeInSeconds,
     ) {
     }
 
@@ -60,6 +57,11 @@ final class ActivityBestEffort
         );
     }
 
+    public function getId(): string
+    {
+        return sprintf('%s-%s', $this->getActivityId(), $this->distanceInMeter);
+    }
+
     public function getActivityId(): ActivityId
     {
         return $this->activityId;
@@ -85,23 +87,9 @@ final class ActivityBestEffort
         return $this->formatDurationForChartLabel($this->getTimeInSeconds());
     }
 
-    public function getActivity(): ?Activity
-    {
-        return $this->activity;
-    }
-
-    public function enrichWithActivity(Activity $activity): void
-    {
-        $this->activity = $activity;
-    }
-
     public function getBestEffortDistance(): ?ConvertableToMeter
     {
-        if (!$this->getActivity()) {
-            return null;
-        }
-
-        $bestEffortDistances = $this->getActivity()->getSportType()->getActivityType()->getDistancesForBestEffortCalculation();
+        $bestEffortDistances = $this->getSportType()->getActivityType()->getDistancesForBestEffortCalculation();
         foreach ($bestEffortDistances as $bestEffortDistance) {
             if ($this->getDistanceInMeter()->toInt() !== $bestEffortDistance->toMeter()->toInt()) {
                 continue;

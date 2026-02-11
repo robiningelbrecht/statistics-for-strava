@@ -2,7 +2,7 @@
 
 namespace App\Application\Import\ProcessRawActivityData\Pipeline;
 
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Split\ActivitySplit;
 use App\Domain\Activity\Split\ActivitySplitRepository;
@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 final readonly class ProcessActivitySplits implements ProcessRawDataStep
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivitySplitRepository $activitySplitRepository,
     ) {
@@ -24,7 +24,7 @@ final readonly class ProcessActivitySplits implements ProcessRawDataStep
     {
         $countSplitsAdded = 0;
         $countActivitiesProcessed = 0;
-        foreach ($this->activityRepository->findActivityIds() as $activityId) {
+        foreach ($this->activityIdRepository->findAll() as $activityId) {
             $activityWithRawData = $this->activityWithRawDataRepository->find($activityId);
             if (!$activityWithRawData->hasSplits()) {
                 continue;

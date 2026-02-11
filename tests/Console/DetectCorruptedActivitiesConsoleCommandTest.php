@@ -11,6 +11,7 @@ use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\WorldType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -120,13 +121,14 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
             rawData: []
         ));
         $this->getConnection()->executeStatement(
-            'INSERT INTO CombinedActivityStream(activityId, unitSystem, streamTypes, data) 
-                VALUES (:activityId, :unitSystem, :streamTypes, :data)',
+            'INSERT INTO CombinedActivityStream(activityId, unitSystem, streamTypes, data, maxYAxisValue) 
+                VALUES (:activityId, :unitSystem, :streamTypes, :data, :maxYAxisValue)',
             [
                 'activityId' => 'activity-test-3',
                 'unitSystem' => UnitSystem::METRIC->value,
                 'streamTypes' => CombinedStreamType::DISTANCE->value,
-                'data' => '{"name": "Ride", "distance": 42,}',
+                'data' => CompressedString::fromUncompressed('{"name": "Ride", "distance": 42,}'),
+                'maxYAxisValue' => 4,
             ]
         );
 

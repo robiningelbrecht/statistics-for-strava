@@ -38,19 +38,21 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
         $importedSportTypes = $this->sportTypeRepository->findAll();
         $routes = $this->routeRepository->findAll();
 
+        $enrichedRoutes = [];
         foreach ($routes as $route) {
-            $route->enrichWithUnitSystemAndDateTimeFormat(
-                unitSystem: $this->unitSystem,
-                dateAndTimeFormat: $this->dateAndTimeFormat,
-            );
-            $route->enrichWithRelativeActivityUri($this->urlTwigExtension->toRelativeUrl('activity/'.$route->getActivityId().'.html'));
+            $enrichedRoutes[] = $route
+                ->withUnitSystemAndDateTimeFormat(
+                    unitSystem: $this->unitSystem,
+                    dateAndTimeFormat: $this->dateAndTimeFormat,
+                )
+                ->withRelativeActivityUri($this->urlTwigExtension->toRelativeUrl('activity/'.$route->getActivityId().'.html'));
         }
 
         $this->buildStorage->write(
             'heatmap.html',
             $this->twig->load('html/heatmap.html.twig')->render([
-                'numberOfRoutes' => count($routes),
-                'routes' => Json::encode($routes),
+                'numberOfRoutes' => count($enrichedRoutes),
+                'routes' => Json::encode($enrichedRoutes),
                 'sportTypes' => $importedSportTypes->filter(
                     fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                 ),

@@ -20,7 +20,6 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
 class AIChatRequestHandlerTest extends ContainerTestCase
@@ -37,7 +36,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->once())
-            ->method('getHistory')
+            ->method('findAll')
             ->willReturn([new ChatMessage(
                 messageId: ChatMessageId::random(),
                 message: 'message',
@@ -49,36 +48,20 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
     }
 
     public function testHandleNoIndexFound(): void
     {
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
     }
 
     public function testHandleAINotEnabled(): void
@@ -87,21 +70,29 @@ class AIChatRequestHandlerTest extends ContainerTestCase
 
         $this->chatRepository
             ->expects($this->never())
-            ->method('getHistory');
+            ->method('findAll');
 
         $requestHandler = $this->buildRequestHandler(
             $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
         );
 
-        $this->assertMatchesHtmlSnapshot($requestHandler->handle(new Request(
-            query: [],
-            request: [],
-            attributes: [],
-            cookies: [],
-            files: [],
-            server: [],
-            content: [],
-        ))->getContent());
+        $this->assertMatchesHtmlSnapshot($requestHandler->handle()->getContent());
+    }
+
+    public function testClearChat(): void
+    {
+        $requestHandler = $this->buildRequestHandler(
+            $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
+        );
+
+        $this->chatRepository
+            ->expects($this->once())
+            ->method('clear');
+
+        $this->assertEquals(
+            204,
+            $requestHandler->clearChat()->getStatusCode()
+        );
     }
 
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler

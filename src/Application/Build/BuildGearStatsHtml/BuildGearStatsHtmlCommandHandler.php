@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildGearStatsHtml;
 
-use App\Domain\Activity\ActivitiesEnricher;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Calendar\Months;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\DistanceOverTimePerGearChart;
@@ -28,7 +28,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         private GearRepository $gearRepository,
         private CustomGearConfig $customGearConfig,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
         private UnitSystem $unitSystem,
         private QueryBus $queryBus,
         private Environment $twig,
@@ -42,7 +42,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildGearStatsHtml);
 
         $now = $command->getCurrentDateTime();
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $activities = $this->enrichedActivities->findAll();
         $allUsedGear = $this->gearRepository->findAllUsed();
         $gearStats = $this->queryBus->ask(new FindGearStatsPerDay());
         $allMonths = Months::create(

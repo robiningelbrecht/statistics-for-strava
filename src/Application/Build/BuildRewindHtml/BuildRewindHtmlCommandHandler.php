@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildRewindHtml;
 
-use App\Domain\Activity\ActivitiesEnricher;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
+use App\Domain\Activity\Image\Image;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\FindMovingTimePerGear\FindMovingTimePerGear;
@@ -25,6 +25,7 @@ use App\Domain\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
 use App\Domain\Rewind\FindCarbonSaved\FindCarbonSaved;
 use App\Domain\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Rewind\FindElevationPerMonth\FindElevationPerMonth;
+use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
 use App\Domain\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonth;
@@ -52,10 +53,9 @@ use Twig\Environment;
 final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
-        private ActivitiesEnricher $activitiesEnricher,
         private GearRepository $gearRepository,
         private ImageRepository $imageRepository,
+        private EnrichedActivities $enrichedActivities,
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
@@ -85,9 +85,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
             }
 
-            $longestActivity = $this->activitiesEnricher->getEnrichedActivity(
-                $this->activityRepository->findLongestActivityFor($yearsToQuery)->getId()
-            );
+            $longestActivity = $this->queryBus->ask(new FindLongestActivity($yearsToQuery))->getActivity();
             $leafletMap = $longestActivity->getLeafletMap();
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
@@ -293,11 +291,12 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     isPlaceHolderForComparison: true
                 ));
             }
-            if ($randomImage) {
+            if ($randomImage instanceof Image) {
+                $activity = $this->enrichedActivities->find($randomImage->getActivityId());
                 $rewindItems->add(RewindItem::from(
                     icon: 'image',
                     title: $this->translator->trans('Photo'),
-                    subTitle: $randomImage->getActivity()->getStartDate()->translatedFormat('M d, Y'),
+                    subTitle: $activity->getStartDate()->translatedFormat('M d, Y'),
                     content: $this->twig->render('html/rewind/rewind-random-image.html.twig', [
                         'image' => $randomImage,
                     ]),
@@ -338,6 +337,10 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     $this->twig->load('html/rewind/rewind.html.twig')->render($render),
                 );
             }
+        }
+        if (1 === count($availableRewindOptions)) {
+            // "All time" option is the only one. No need to compare rewinds.
+            return;
         }
 
         foreach ($availableRewindOptions as $availableRewindOptionLeft) {

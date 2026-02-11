@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Gear;
 
 use App\Domain\Activity\ActivityTypes;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -16,9 +15,7 @@ interface Gear extends SupportsAITooling
 {
     public function getId(): GearId;
 
-    public function getType(): GearType;
-
-    public function updateName(string $name): self;
+    public function withName(string $name): self;
 
     public function getOriginalName(): string;
 
@@ -28,23 +25,21 @@ interface Gear extends SupportsAITooling
 
     public function isRetired(): bool;
 
-    public function updateIsRetired(bool $isRetired): self;
+    public function withIsRetired(bool $isRetired): self;
 
-    public function updateDistance(Meter $distance): self;
+    public function withDistance(Meter $distance): self;
 
     public function getCreatedOn(): SerializableDateTime;
 
     public function getImageSrc(): ?string;
 
-    public function getSportTypes(): SportTypes;
-
     public function getPurchasePrice(): ?Money;
 
     public function getActivityTypes(): ActivityTypes;
 
-    public function enrichWithSportTypes(SportTypes $sportTypes): self;
+    public function withActivityTypes(ActivityTypes $activityTypes): self;
 
-    public function enrichWithImageSrc(string $imageSrc): self;
+    public function withImageSrc(string $imageSrc): self;
 
-    public function enrichWithPurchasePrice(Money $purchasePrice): self;
+    public function withPurchasePrice(Money $purchasePrice): self;
 }

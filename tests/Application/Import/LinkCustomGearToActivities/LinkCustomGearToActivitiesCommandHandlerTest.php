@@ -4,8 +4,9 @@ namespace App\Tests\Application\Import\LinkCustomGearToActivities;
 
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
 use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivitiesCommandHandler;
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
@@ -56,7 +57,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('with-strava-gear'))
                     ->withGearId(GearId::fromUnprefixed('b12659861'))
                     ->withName('Activity with Strava gear #sfs-custom')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -66,7 +68,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-but-not-tagged'))
                     ->withoutGearId()
                     ->withName('Activity without gear but not tagged')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -76,7 +79,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('with-gear-but-not-tagged'))
                     ->withGearId(GearId::fromUnprefixed('some-gear-id'))
                     ->withName('Activity with gear but not tagged')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -86,7 +90,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged'))
                     ->withoutGearId()
                     ->withName('Activity without gear and tagged #sfs-custom')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -96,7 +101,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged-2'))
                     ->withoutGearId()
                     ->withName('Activity without gear and tagged #sfs-custom-two')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -106,7 +112,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged-3'))
                     ->withoutGearId()
                     ->withName('Activity without gear and tagged #sfs-custom')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -149,7 +156,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-but-not-tagged'))
                     ->withoutGearId()
                     ->withName('Activity without gear but not tagged')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -159,7 +167,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged'))
                     ->withoutGearId()
                     ->withName('Activity without gear and tagged #sfs-custom #sfs-custom-two')
-                    ->build(), []
+                    ->build(),
+                []
             )
         );
 
@@ -172,10 +181,10 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
 
         new LinkCustomGearToActivitiesCommandHandler(
-            $this->getContainer()->get(ImportedGearRepository::class),
             $this->getContainer()->get(CustomGearRepository::class),
             $this->getContainer()->get(ActivityWithRawDataRepository::class),
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(ActivityIdRepository::class),
             CustomGearConfig::fromArray([])
         )->handle(new LinkCustomGearToActivities($output));
 

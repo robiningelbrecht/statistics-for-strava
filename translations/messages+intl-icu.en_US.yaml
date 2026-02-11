@@ -1,18 +1,14 @@
-'+10 to +15: Moderately fresh. Good balance of fitness and recovery.': '+10 to +15: Moderately fresh. Good balance of fitness and recovery.'
-'+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot': '+15 to +25: Peak-fresh, race-ready. Ideal taper sweet spot'
-'-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.': '-10 to 0: Accumulated fatigue. Recovery in progress. Suitable for light/technical training.'
-'0 to +10: Slightly fresh. Transitional; brief is best': '0 to +10: Slightly fresh. Transitional; brief is best'
-'0.8-1.3: Safe training zone': '0.8-1.3: Safe training zone'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
-'< 0.8: Potential detraining': '< 0.8: Potential detraining'
 '< 1.5: Good variety in training': '< 1.5: Good variety in training'
-'< –30: Over-fatigued. Risk of injury; require extra recovery': '< –30: Over-fatigued. Risk of injury; require extra recovery'
-'> 1.3: Increased injury risk': '> 1.3: Increased injury risk'
 '> 2.0: High monotony, increased risk': '> 2.0: High monotony, increased risk'
-'>+25: Possible detraining': '>+25: Possible detraining'
+'A 6-hour week scores higher than a 5-hour week.': 'A 6-hour week scores higher than a 5-hour week.'
+'A high intensity score means a larger share of your training is hard rather than easy.': 'A high intensity score means a larger share of your training is hard rather than easy.'
+'A high score means you concentrate more training into fewer, heavier days.': 'A high score means you concentrate more training into fewer, heavier days.'
 'A:C Ratio': 'A:C Ratio'
+'A:C optimal in': 'A:C optimal in'
 'ATL (Fatigue)': 'ATL (Fatigue)'
+'Accumulated fatigue': 'Accumulated fatigue'
 'Active days': 'Active days'
 Activities: Activities
 Activity: Activity
@@ -23,7 +19,6 @@ Activity: Activity
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
 'Adaptive & Inclusive Sports': 'Adaptive & Inclusive Sports'
-Advanced: Advanced
 Afternoon: Afternoon
 All: All
 'All time': 'All time'
@@ -34,6 +29,7 @@ Apr: Apr
 Aug: Aug
 Avg: Avg
 'Back Country Ski': 'Back Country Ski'
+Badges: Badges
 Badminton: Badminton
 Best: Best
 'Best effort': 'Best effort'
@@ -49,6 +45,7 @@ Canoeing: Canoeing
 'Challenge consistency': 'Challenge consistency'
 Challenges: Challenges
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.'
+'Clear chat': 'Clear chat'
 'Close modal': 'Close modal'
 'Collapse sidebar': 'Collapse sidebar'
 Commutes: Commutes
@@ -56,15 +53,19 @@ Commutes: Commutes
 Compare: Compare
 'Compare to': 'Compare to'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
+'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Crossfit: Crossfit
+'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
 'Custom gear disabled': 'Custom gear disabled'
 Cycling: Cycling
 'Daily TRIMP': 'Daily TRIMP'
 'Daily activities': 'Daily activities'
+'Dark mode': 'Dark mode'
 Dashboard: Dashboard
 Date: Date
+Day: Day
 'Days needed': 'Days needed'
 'Daytime stats': 'Daytime stats'
 Dec: Dec
@@ -78,6 +79,7 @@ Distance: Distance
 'Distance over time per gear': 'Distance over time per gear'
 'Distance per month per gear': 'Distance per month per gear'
 Distribution: Distribution
+'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 'E-Bike Rides'
 'E-Mountain Bike Rides': 'E-Mountain Bike Rides'
@@ -91,7 +93,6 @@ Evening: Evening
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP history'
 'Fastest times': 'Fastest times'
-'Fatigued – productive heavy-training range': 'Fatigued – productive heavy-training range'
 Favourite: Favourite
 Feb: Feb
 'Filter on KOM segments': 'Filter on KOM segments'
@@ -101,9 +102,10 @@ Feb: Feb
 'Filter on sport type': 'Filter on sport type'
 'Filter on starred segments': 'Filter on starred segments'
 Fitness: Fitness
+'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
+'Fitness may decline': 'Fitness may decline'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Form (TSB)'
-'Fresh – reduced training load': 'Fresh – reduced training load'
 Fri: Fri
 Friday: Friday
 From: From
@@ -129,10 +131,13 @@ HR: HR
 'Heart rate zones': 'Heart rate zones'
 Heatmap: Heatmap
 High: High
+'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery'
 'High monotony - increase variety': 'High monotony - increase variety'
-'High risk - reduce volume': 'High risk - reduce volume'
+'High risk': 'High risk'
+'Highly recovered and ready to perform': 'Highly recovered and ready to perform'
 Hikes: Hikes
 History: History
+'History (6 weeks)': 'History (6 weeks)'
 'History chart': 'History chart'
 'How diverse is your training': 'How diverse is your training'
 'How hard is your typical training session': 'How hard is your typical training session'
@@ -157,10 +162,12 @@ Kayaking: Kayaking
 Lap: Lap
 Laps: Laps
 'Last 7 days training load': 'Last 7 days training load'
+'Last activity': 'Last activity'
 'Last effort': 'Last effort'
 'Last maintenance': 'Last maintenance'
 'Last {numberOfDays} days': 'Last {numberOfDays} days'
 Lifetime: Lifetime
+'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
 Load: Load
 'Load (CTL/ATL)': 'Load (CTL/ATL)'
 'Loading data...': 'Loading data...'
@@ -170,7 +177,8 @@ Loading...: Loading...
 'Longest activity (h)': 'Longest activity (h)'
 'Longest streaks': 'Longest streaks'
 Low: Low
-'Low stress - potential detraining': 'Low stress - potential detraining'
+'Low risk': 'Low risk'
+'Low training load': 'Low training load'
 Maintenance: Maintenance
 'Maintenance history': 'Maintenance history'
 Mar: Mar
@@ -180,6 +188,7 @@ May: May
 Medium: Medium
 Metrics: Metrics
 'Mind & Body Sports': 'Mind & Body Sports'
+'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Moderate monotony'
 Mon: Mon
 Monday: Monday
@@ -192,7 +201,7 @@ Morning: Morning
 'Mountain Bike Rides': 'Mountain Bike Rides'
 'Moving time': 'Moving time'
 Name: Name
-'Neutral – short-term sustainable': 'Neutral – short-term sustainable'
+Neutral: Neutral
 Night: Night
 'No activities': 'No activities'
 'No data available': 'No data available'
@@ -202,6 +211,7 @@ None: None
 Normalized: Normalized
 'Not supported': 'Not supported'
 Nov: Nov
+Now: Now
 'Number of activities per month': 'Number of activities per month'
 'Number of times completed': 'Number of times completed'
 Oct: Oct
@@ -210,8 +220,8 @@ Oct: Oct
 'Optimal training range': 'Optimal training range'
 Other: Other
 'Outdoor Sports': 'Outdoor Sports'
+Over-fatigued: Over-fatigued
 'Over-fatigued (–30)': 'Over-fatigued (–30)'
-'Over-fatigued – risk of injury or burnout, extra recovery needed': 'Over-fatigued – risk of injury or burnout, extra recovery needed'
 'Overall weekly training stress': 'Overall weekly training stress'
 'PB badges': 'PB badges'
 'PET bottles produced': 'PET bottles produced'
@@ -219,8 +229,8 @@ PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: Pace
 'Pace distribution': 'Pace distribution'
+'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Peak power outputs'
-'Peak-fresh, race-ready – ideal taper sweet spot': 'Peak-fresh, race-ready – ideal taper sweet spot'
 'Personal Records': 'Personal Records'
 Photo: Photo
 Photos: Photos
@@ -237,6 +247,8 @@ Race: Race
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
 Ranking: Ranking
+'Recovery Timeline': 'Recovery Timeline'
+'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
 'Relative cost': 'Relative cost'
 'Rest Days': 'Rest Days'
@@ -247,6 +259,7 @@ Ranking: Ranking
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 Rides: Rides
+'Risk of detraining': 'Risk of detraining'
 'Rock Climbing': 'Rock Climbing'
 'Roller Ski': 'Roller Ski'
 Rowing: Rowing
@@ -261,15 +274,16 @@ Search: Search
 Segments: Segments
 Sep: Sep
 'Show information': 'Show information'
-Simplified: Simplified
+'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skating
-'Slightly fresh – transitional zone': 'Slightly fresh – transitional zone'
+'Slightly fresh': 'Slightly fresh'
 Snowboard: Snowboard
 Snowshoe: Snowshoe
 Soccer: Soccer
 Socials: Socials
+'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Speed
 'Speed distribution': 'Speed distribution'
 Splits: Splits
@@ -282,6 +296,8 @@ Squash: Squash
 'Statistics for Strava': 'Statistics for Strava'
 Stats: Stats
 'Stats per weekday': 'Stats per weekday'
+Status: Status
+'Strava profile': 'Strava profile'
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Streaks
 Sun: Sun
@@ -289,6 +305,7 @@ Sunday: Sunday
 Surfing: Surfing
 Swim: Swim
 'TSB (Form)': 'TSB (Form)'
+'TSB positive in': 'TSB positive in'
 'Table Tennis': 'Table Tennis'
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.'
@@ -299,8 +316,6 @@ Tennis: Tennis
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'This feature is currently disabled'
-'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"': 'This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"'
-'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.': 'This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.'
 Thu: Thu
 Thursday: Thursday
 Time: Time
@@ -316,19 +331,19 @@ To: To
 'Total hours spent per sport type': 'Total hours spent per sport type'
 'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 'Trail Runs'
+'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
 'Training Load Analysis': 'Training Load Analysis'
-'Training Load Analysis (6 week history)': 'Training Load Analysis (6 week history)'
 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.': 'Training Monotony - Ratio of average daily load to standard deviation. Indicates training variety.'
 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.': 'Training Stress Balance (Form) – The difference between fitness (CTL) and fatigue (ATL). Reflects how ready you are to perform.'
 'Training goals': 'Training goals'
+'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: Tue
 Tuesday: Tuesday
 Unspecified: Unspecified
 'Updated on': 'Updated on'
 'User badge': 'User badge'
 'Velo Mobiles': 'Velo Mobiles'
-'Very fresh – possible detraining': 'Very fresh – possible detraining'
 'Very high': 'Very high'
 'View all': 'View all'
 'View details': 'View details'
@@ -352,11 +367,12 @@ Weight: Weight
 'Weight Training': 'Weight Training'
 'Weight history': 'Weight history'
 Wheelchair: Wheelchair
-'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"': 'When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"'
 'Wind Surf': 'Wind Surf'
 'Winter Sports': 'Winter Sports'
 Workout: Workout
+'Workout assistant': 'Workout assistant'
 'Workout type': 'Workout type'
+YTD: YTD
 Year: Year
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
@@ -379,24 +395,21 @@ Yoga: Yoga
 'Zwift badge': 'Zwift badge'
 'Zwift stats': 'Zwift stats'
 activities: activities
-age: age
 and: and
 avg: avg
 bpm: bpm
 clear: clear
 comments: comments
 compare: compare
+day(s): day(s)
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
 history: history
 hours: hours
 hrs: hrs
-intensity: intensity
-intensityFactor: intensityFactor
 kudos: kudos
 'last {numberOfDays} days': 'last {numberOfDays} days'
 'max gradient': 'max gradient'
-maxHeartRate: maxHeartRate
 months: months
 more: more
 n/a: n/a
@@ -413,7 +426,8 @@ workouts: workouts
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activities in {year}'
+'{numberOfMonths} months': '{numberOfMonths} months'
 '{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
 '{numberOfResults} results based on your active filters': '{numberOfResults} results based on your active filters'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} routes based on your active filters'
-'–10 to –30: Build/fatigue zone. Productive heavy-training range': '–10 to –30: Build/fatigue zone. Productive heavy-training range'
+'{numberOfWeeks} weeks': '{numberOfWeeks} weeks'

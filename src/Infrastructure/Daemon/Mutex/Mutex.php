@@ -49,7 +49,7 @@ final class Mutex
         }
 
         $data = Json::decode($row);
-        $heartbeat = $data[self::HEARTBEAT_KEY];
+        $heartbeat = $data[self::HEARTBEAT_KEY] ?? null;
         $isStale = $now - $heartbeat > self::STALE_THRESHOLD_IN_SECONDS;
 
         if ($isStale) {

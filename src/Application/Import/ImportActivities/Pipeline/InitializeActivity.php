@@ -33,35 +33,33 @@ final readonly class InitializeActivity implements ActivityImportStep
             $activity = $this->activityRepository->find($activityId);
             $gearId = GearId::fromOptionalUnprefixed($rawStravaData['gear_id'] ?? null);
 
-            $activity
-                ->updateName($rawStravaData['name'])
-                ->updateSportType($sportType)
-                ->updateDistance(Kilometer::from(round($rawStravaData['distance'] / 1000, 3)))
-                ->updateAverageSpeed(MetersPerSecond::from($rawStravaData['average_speed'])->toKmPerHour())
-                ->updateMaxSpeed(MetersPerSecond::from($rawStravaData['max_speed'])->toKmPerHour())
-                ->updateMovingTimeInSeconds($rawStravaData['moving_time'] ?? 0)
-                ->updateElevation(Meter::from($rawStravaData['total_elevation_gain']))
-                ->updateKudoCount($rawStravaData['kudos_count'] ?? 0)
-                ->updateStartingCoordinate(Coordinate::createFromOptionalLatAndLng(
+            $activity = $activity
+                ->withName($rawStravaData['name'])
+                ->withSportType($sportType)
+                ->withDistance(Kilometer::from(round($rawStravaData['distance'] / 1000, 3)))
+                ->withAverageSpeed(MetersPerSecond::from($rawStravaData['average_speed'])->toKmPerHour())
+                ->withMaxSpeed(MetersPerSecond::from($rawStravaData['max_speed'])->toKmPerHour())
+                ->withMovingTimeInSeconds($rawStravaData['moving_time'] ?? 0)
+                ->withElevation(Meter::from($rawStravaData['total_elevation_gain']))
+                ->withKudoCount($rawStravaData['kudos_count'] ?? 0)
+                ->withStartingCoordinate(Coordinate::createFromOptionalLatAndLng(
                     Latitude::fromOptionalString($rawStravaData['start_latlng'][0] ?? null),
                     Longitude::fromOptionalString($rawStravaData['start_latlng'][1] ?? null),
                 ))
-                ->updatePolyline($rawStravaData['map']['summary_polyline'] ?? null)
-                ->updateGear($gearId)
-                ->updateWorkoutType(WorkoutType::fromStravaInt($rawStravaData['workout_type'] ?? null));
+                ->withPolyline($rawStravaData['map']['summary_polyline'] ?? null)
+                ->withGear($gearId)
+                ->withWorkoutType(WorkoutType::fromStravaInt($rawStravaData['workout_type'] ?? null));
 
             if (array_key_exists('commute', $rawStravaData)) {
-                $activity->updateCommute($rawStravaData['commute']);
+                $activity = $activity->withCommute($rawStravaData['commute']);
             }
 
-            return $context
-                ->withActivity($activity);
+            return $context->withActivity($activity);
         } catch (EntityNotFound) {
         }
 
         $activity = Activity::createFromRawData($rawStravaData);
 
-        return $context
-            ->withActivity($activity);
+        return $context->withActivity($activity);
     }
 }

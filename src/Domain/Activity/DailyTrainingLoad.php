@@ -14,8 +14,7 @@ final class DailyTrainingLoad
     public static array $cachedLoad = [];
 
     public function __construct(
-        private readonly ActivityRepository $activityRepository,
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly EnrichedActivities $enrichedActivities,
         private readonly ActivityIntensity $activityIntensity,
         private readonly FtpHistory $ftpHistory,
         private readonly AthleteRepository $athleteRepository,
@@ -29,7 +28,7 @@ final class DailyTrainingLoad
             return self::$cachedLoad[$cacheKey];
         }
 
-        $activities = $this->activityRepository->findByStartDate(
+        $activities = $this->enrichedActivities->findByStartDate(
             startDate: $on,
             activityType: null
         );
@@ -37,12 +36,10 @@ final class DailyTrainingLoad
 
         /** @var Activity $activity */
         foreach ($activities as $activity) {
-            $activity = $this->activitiesEnricher->getEnrichedActivity($activity->getId());
             $movingTimeInSeconds = $activity->getMovingTimeInSeconds();
-
             if (ActivityType::RIDE === $activity->getSportType()->getActivityType() && ($normalizedPower = $activity->getNormalizedPower())) {
                 try {
-                    $intensity = $this->activityIntensity->calculatePowerBased($activity);
+                    $intensity = $this->activityIntensity->calculatePowerBased($activity->getId());
                     $intensity /= 100;
                     $ftp = $this->ftpHistory->find(ActivityType::RIDE, $activity->getStartDate())->getFtp();
                     $load += ($movingTimeInSeconds * $normalizedPower * $intensity) / ($ftp->getValue() * 3600) * 100;
@@ -53,9 +50,9 @@ final class DailyTrainingLoad
             }
 
             try {
-                $intensity = $this->activityIntensity->calculateHeartRateBased($activity);
+                $intensity = $this->activityIntensity->calculateHeartRateBased($activity->getId());
                 $intensity /= 100;
-                $bannisterKFactor = 'M' === $this->athleteRepository->find()->getSex() ? 1.92 : 1.67;
+                $bannisterKFactor = $this->athleteRepository->find()->isMale() ? 1.92 : 1.67;
                 $load += Seconds::from($movingTimeInSeconds)->toMinute()->toFloat() * $intensity * exp($bannisterKFactor * $intensity);
             } catch (CouldNotDetermineActivityIntensity) {
             }

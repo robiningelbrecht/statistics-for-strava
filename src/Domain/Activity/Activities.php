@@ -29,16 +29,11 @@ final class Activities extends Collection
             $startDate = $activity->getStartDate();
         }
 
-        if (!$startDate) {
+        if (!$startDate instanceof SerializableDateTime) {
             throw new \RuntimeException('No activities found');
         }
 
         return $startDate;
-    }
-
-    public function filterOnActivityType(ActivityType $activityType): Activities
-    {
-        return $this->filter(fn (Activity $activity): bool => $activityType === $activity->getSportType()->getActivityType());
     }
 
     public function getUniqueYears(): Years

@@ -33,6 +33,10 @@ RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pcntl
 RUN docker-php-ext-install intl
 
+# Install zstd
+RUN pecl install zstd \
+    && docker-php-ext-enable zstd
+
 # Install Xdebug
 RUN curl -L -o "pie.phar" https://github.com/php/pie/releases/download/1.3.1/pie.phar
 RUN php pie.phar install xdebug/xdebug
@@ -62,7 +66,7 @@ RUN apt-get install -y nodejs
 # Install Shoutrrr.
 ARG TARGETARCH
 ENV TARGETARCH=${TARGETARCH}
-ARG SHOUTRRR_VERSION="0.13.1"
+ARG SHOUTRRR_VERSION="0.13.2"
 
 RUN if [ "${TARGETARCH}" = "arm64" ]; then \
       curl -L -o shoutrrr.tar.gz "https://github.com/nicholas-fedor/shoutrrr/releases/download/v$SHOUTRRR_VERSION/shoutrrr_linux_arm64v8_${SHOUTRRR_VERSION}.tar.gz"; \

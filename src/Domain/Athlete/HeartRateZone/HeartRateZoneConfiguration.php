@@ -73,7 +73,7 @@ final class HeartRateZoneConfiguration
         ?SportType $sportType,
         ?SerializableDateTime $on,
     ): void {
-        if ($on) {
+        if ($on instanceof SerializableDateTime) {
             $on = SerializableDateTime::fromString($on->format('Y-m-d'));
         }
         if ($sportType && $on) {
@@ -83,12 +83,12 @@ final class HeartRateZoneConfiguration
 
             return;
         }
-        if ($sportType) {
+        if ($sportType instanceof SportType) {
             $this->hearRateZones[$sportType->value][self::DEFAULT_KEY] = $heartRateZones;
 
             return;
         }
-        if ($on) {
+        if ($on instanceof SerializableDateTime) {
             $this->hearRateZones['defaults'][self::DATE_RANGES_KEY][$on->getTimestamp()] = $heartRateZones;
             // Make sure dates are sorted from new => old
             krsort($this->hearRateZones['defaults'][self::DATE_RANGES_KEY]);
@@ -136,7 +136,7 @@ final class HeartRateZoneConfiguration
      */
     public static function fromArray(array $config): self
     {
-        if (empty($config)) {
+        if ([] === $config) {
             // Make sure this new feature is backwards compatible.
             // Use the old default configuration.
             $config = self::getDefaultConfig();

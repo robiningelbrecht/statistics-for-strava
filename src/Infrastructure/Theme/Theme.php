@@ -32,7 +32,7 @@ final class Theme
      */
     private static function getThemeConfig(): array
     {
-        if (null === self::$keyValueStore) {
+        if (!self::$keyValueStore instanceof KeyValueStore) {
             throw new \RuntimeException('KeyValueStore not set. Please call Theme::setKeyValueStore() before using this method.');
         }
         if (!isset(self::$themeConfig)) {

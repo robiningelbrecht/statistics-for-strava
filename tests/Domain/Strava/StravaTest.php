@@ -54,7 +54,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -110,7 +110,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -143,7 +143,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -175,7 +175,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -206,7 +206,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -237,7 +237,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -267,7 +267,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -297,7 +297,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -325,7 +325,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -367,7 +367,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -410,7 +410,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -445,7 +445,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -478,7 +478,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -511,7 +511,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -544,7 +544,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -577,7 +577,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -610,7 +610,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($matcher)
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher) {
+            ->willReturnCallback(function (string $method, string $path, array $options) use ($matcher): Response {
                 if (1 === $matcher->numberOfInvocations()) {
                     $this->assertEquals('POST', $method);
                     $this->assertEquals('oauth/token', $path);
@@ -734,7 +734,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -758,7 +758,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -783,7 +783,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -808,7 +808,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -833,7 +833,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -858,7 +858,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -883,7 +883,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -906,7 +906,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -931,7 +931,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('athletes/10', $path);
 
@@ -1263,7 +1263,7 @@ class StravaTest extends TestCase
         $this->client
             ->expects($this->once())
             ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options) {
+            ->willReturnCallback(function (string $method, string $path, array $options): Response {
                 $this->assertEquals('GET', $method);
                 $this->assertEquals('uri', $path);
 

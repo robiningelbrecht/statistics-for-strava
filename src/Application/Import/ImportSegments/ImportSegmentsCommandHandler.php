@@ -48,12 +48,12 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                 $stravaSegment = $this->strava->getSegment($segmentId);
                 $this->mutex->heartbeat();
 
-                $segment->updatePolyline(
-                    EncodedPolyline::fromOptionalString(
-                        $stravaSegment['map']['polyline'] ?? null
-                    )
-                );
-                $segment->flagDetailsAsImported();
+                $segment = $segment
+                    ->withPolyline(
+                        EncodedPolyline::fromOptionalString(
+                            $stravaSegment['map']['polyline'] ?? null
+                        ))
+                    ->flagDetailsAsImported();
                 $this->segmentRepository->update($segment);
 
                 $command->getOutput()->writeln(

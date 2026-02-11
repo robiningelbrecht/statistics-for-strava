@@ -6,26 +6,13 @@ namespace App\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
-use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\SportType\SportType;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Repository\DbalRepository;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use Doctrine\DBAL\ArrayParameterType;
-use Doctrine\DBAL\Connection;
 
 final readonly class DbalActivityBestEffortRepository extends DbalRepository implements ActivityBestEffortRepository
 {
-    public function __construct(
-        Connection $connection,
-        private ActivityRepository $activityRepository,
-    ) {
-        parent::__construct($connection);
-    }
-
     public function add(ActivityBestEffort $activityBestEffort): void
     {
         $sql = 'INSERT INTO ActivityBestEffort (activityId, sportType, distanceInMeter, timeInSeconds)
@@ -39,131 +26,11 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
         ]);
     }
 
-    public function findAll(): ActivityBestEfforts
-    {
-        return $this->findBestEffortsForSportTypes(SportTypes::fromArray(SportType::cases()));
-    }
-
     public function hasData(): bool
     {
         $sql = 'SELECT 1 FROM ActivityBestEffort LIMIT 1';
 
         return (bool) $this->connection->executeQuery($sql)->fetchOne();
-    }
-
-    public function findBestEffortsFor(ActivityType $activityType): ActivityBestEfforts
-    {
-        return $this->findBestEffortsForSportTypes($activityType->getSportTypes());
-    }
-
-    public function findBestEffortHistory(ActivityType $activityType): ActivityBestEfforts
-    {
-        $sql = 'SELECT
-            activityId,
-            distanceInMeter,
-            sportType,
-            timeInSeconds
-        FROM (
-            SELECT
-                activityId,
-                distanceInMeter,
-                sportType,
-                timeInSeconds,
-                ROW_NUMBER() OVER (
-                    PARTITION BY sportType, distanceInMeter
-                    ORDER BY timeInSeconds ASC
-                ) AS rn
-            FROM ActivityBestEffort
-            WHERE sportType IN (:sportTypes)
-        ) ranked
-        WHERE rn <= 10
-        ORDER BY sportType, distanceInMeter, rn';
-
-        $results = $this->connection->executeQuery($sql,
-            [
-                'sportTypes' => array_unique(array_map(
-                    fn (SportType $sportType) => $sportType->value,
-                    $activityType->getSportTypes()->toArray())
-                ),
-            ],
-            [
-                'sportTypes' => ArrayParameterType::STRING,
-            ]
-        )->fetchAllAssociative();
-
-        $activityBestEfforts = ActivityBestEfforts::empty();
-
-        foreach ($results as $result) {
-            $activityId = ActivityId::fromString($result['activityId']);
-            $activityBestEffort = ActivityBestEffort::fromState(
-                activityId: $activityId,
-                distanceInMeter: Meter::from($result['distanceInMeter']),
-                sportType: SportType::from($result['sportType']),
-                timeInSeconds: $result['timeInSeconds']
-            );
-
-            try {
-                $activityBestEffort->enrichWithActivity($this->activityRepository->find($activityId));
-            } catch (EntityNotFound) {
-                // continue;
-            }
-            $activityBestEfforts->add($activityBestEffort);
-        }
-
-        return $activityBestEfforts;
-    }
-
-    private function findBestEffortsForSportTypes(SportTypes $sportTypes): ActivityBestEfforts
-    {
-        $sql = 'SELECT
-                activityId,
-                sportType,
-                distanceInMeter,
-                timeInSeconds
-                FROM (
-                    SELECT
-                        activityId,
-                        sportType,
-                        distanceInMeter,
-                        timeInSeconds,
-                        ROW_NUMBER() OVER (
-                            PARTITION BY sportType, distanceInMeter
-                            ORDER BY timeInSeconds ASC
-                        ) AS rn
-                    FROM ActivityBestEffort
-                    WHERE sportType IN (:sportTypes)
-                ) ranked
-                WHERE rn = 1
-                ORDER BY distanceInMeter ASC';
-
-        $results = $this->connection->executeQuery($sql,
-            [
-                'sportTypes' => array_unique(array_map(fn (SportType $sportType) => $sportType->value, $sportTypes->toArray())),
-            ],
-            [
-                'sportTypes' => ArrayParameterType::STRING,
-            ]
-        )->fetchAllAssociative();
-
-        $activityBestEfforts = ActivityBestEfforts::empty();
-
-        foreach ($results as $result) {
-            $activityId = ActivityId::fromString($result['activityId']);
-            $activityBestEffort = ActivityBestEffort::fromState(
-                activityId: $activityId,
-                distanceInMeter: Meter::from($result['distanceInMeter']),
-                sportType: SportType::from($result['sportType']),
-                timeInSeconds: $result['timeInSeconds']
-            );
-
-            try {
-                $activityBestEffort->enrichWithActivity($this->activityRepository->find($activityId));
-            } catch (EntityNotFound) {
-            }
-            $activityBestEfforts->add($activityBestEffort);
-        }
-
-        return $activityBestEfforts;
     }
 
     public function findActivityIdsThatNeedBestEffortsCalculation(): ActivityIds
@@ -184,7 +51,8 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
 
         return ActivityIds::fromArray(array_map(
             ActivityId::fromString(...),
-            $this->connection->executeQuery($sql,
+            $this->connection->executeQuery(
+                $sql,
                 [
                     'timeStreamType' => StreamType::TIME->value,
                     'distanceStreamType' => StreamType::DISTANCE->value,

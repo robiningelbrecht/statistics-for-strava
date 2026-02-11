@@ -10,4 +10,5 @@ enum IntervalUnit: string
     case EVERY_X_MILES_USED = 'mi';
     case EVERY_X_HOURS_USED = 'hours';
     case EVERY_X_DAYS = 'days';
+    case EVERY_X_DAYS_USED = 'daysUsed';
 }

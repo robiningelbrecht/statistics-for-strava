@@ -9,13 +9,14 @@ export default class ChartManager {
         this.chartsPerTab = [];
 
         echarts.registerTheme('v5', v5Theme());
+        echarts.registerTheme('v5-dark', v5DarkTheme());
     }
 
-    init(rootNode) {
+    init(rootNode, isDarkMode) {
         const handlers = this.getClickHandlers();
         const connectedCharts = [];
         rootNode.querySelectorAll('[data-echarts-options]').forEach(chartNode => {
-            const chart = echarts.init(chartNode, 'v5');
+            const chart = echarts.init(chartNode, isDarkMode ? 'v5-dark' : 'v5');
             const chartOptions = JSON.parse(chartNode.getAttribute('data-echarts-options'));
             [
                 'tooltip.formatter',
@@ -73,11 +74,9 @@ export default class ChartManager {
                 if (!params.dataIndex in weeks) {
                     return;
                 }
-                this.dataTableStorage.set({
-                    'activities': {
-                        "sportType": clickData.sportTypes,
-                        "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
-                    }
+                this.dataTableStorage.set('activities', {
+                    "sportType": clickData.sportTypes,
+                    "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
                 });
 
                 this.router.navigateTo(`/activities`);
@@ -87,10 +86,8 @@ export default class ChartManager {
                     return;
                 }
 
-                this.dataTableStorage.set({
-                    'activities': {
-                        "start-date": {"from": params.value[0], "to": params.value[0]},
-                    }
+                this.dataTableStorage.set('activities', {
+                    "start-date": {"from": params.value[0], "to": params.value[0]},
                 });
 
                 this.router.navigateTo(`/activities`);
@@ -109,6 +106,12 @@ export default class ChartManager {
             .forEach(chart => chart.resize());
     }
 
+    toggleDarkTheme(isDarkMode) {
+        this.allCharts
+            .filter(chart => chart.getDom().offsetParent)
+            .forEach(chart => chart.setTheme(isDarkMode ? 'v5-dark' : 'v5'));
+    }
+
     resizeInTab(tabId) {
         if (tabId in this.chartsPerTab) {
             this.chartsPerTab[tabId]
@@ -119,7 +122,9 @@ export default class ChartManager {
 }
 
 const v5Theme = () => {
+    const backgroundColor = 'transparent';
     const gradientColor = ['#f6efa6', '#d88273', '#bf444c'];
+
     const axisCommon = function () {
         return {
             axisLine: {
@@ -147,6 +152,7 @@ const v5Theme = () => {
     };
 
     return {
+        backgroundColor: backgroundColor,
         color: [
             '#5470c6',
             '#91cc75',
@@ -461,3 +467,130 @@ const v5Theme = () => {
         }
     };
 }
+
+const v5DarkTheme = () => {
+    const base = v5Theme();
+    const backgroundColor = 'transparent';
+    const contrastColor = '#B9B8CE';
+
+    const axisCommon = function () {
+        return {
+            axisLine: {
+                lineStyle: {
+                    color: contrastColor
+                }
+            },
+            splitLine: {
+                lineStyle: {
+                    color: '#484753'
+                }
+            },
+            splitArea: {
+                areaStyle: {
+                    color: ['rgba(255,255,255,0.02)', 'rgba(255,255,255,0.05)']
+                }
+            },
+            minorSplitLine: {
+                lineStyle: {
+                    color: '#20203B'
+                }
+            }
+        };
+    };
+
+    // Dark overrides
+    const overrides = {
+        darkMode: true,
+        backgroundColor: backgroundColor,
+        loading: {
+            textColor: '#c9d1d9'
+        },
+        axisPointer: {
+            ...base.axisPointer,
+            lineStyle: {
+                color: '#817f91'
+            },
+            crossStyle: {
+                color: '#817f91'
+            },
+            label: {
+                color: '#fff'
+            }
+        },
+        legend: {
+            ...base.legend,
+            textStyle: {
+                color: contrastColor
+            }
+        },
+        textStyle: {
+            ...base.textStyle,
+            color: contrastColor
+        },
+        title: {
+            ...base.title,
+            textStyle: {
+                color: '#EEF1FA'
+            },
+            subtextStyle: {
+                color: '#B9B8CE'
+            }
+        },
+        toolbox: {
+            ...base.toolbox,
+            iconStyle: {
+                borderColor: contrastColor
+            }
+        },
+        tooltip: {
+            backgroundColor: '#2a313c',
+            borderColor: '#3d444d',
+            textStyle: { color: '#f0f6fc' }
+        },
+        timeAxis: axisCommon(),
+        logAxis: axisCommon(),
+        valueAxis: axisCommon(),
+        categoryAxis: (() => {
+            const axis = axisCommon();
+            axis.axisTick = {
+                show: true
+            };
+            return axis;
+        })(),
+        grid: {
+            ...base.grid,
+            borderColor: '#3d444d'
+        },
+        visualMap: {
+            ...base.visualMap,
+            textStyle: {
+                color: contrastColor
+            }
+        },
+        calendar: {
+            ...base.calendar,
+            itemStyle: {
+                color: backgroundColor
+            },
+            dayLabel: {
+                color: contrastColor
+            },
+            monthLabel: {
+                color: contrastColor
+            },
+            yearLabel: {
+                color: contrastColor
+            }
+        },
+        dataZoom: {
+            ...base.dataZoom,
+            borderColor: '#3d444d',
+            backgroundColor: 'rgba(33,40,48,0)',
+            handleStyle: { color: '#c9d1d9', borderColor: '#656c76' },
+            textStyle: { color: '#c9d1d9' },
+            selectedDataBackground: { areaStyle: { color: '#539bf520', opacity: 0.2 } }
+        }
+    };
+
+    return { ...base, ...overrides };
+};

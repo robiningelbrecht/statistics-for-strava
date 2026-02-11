@@ -47,7 +47,7 @@ final readonly class PowerDistributionChart
         $minPower = 0;
         $maxPower = (int) ceil(max($powers) / 100) * 100;
 
-        if ($maxPower - $minPower <= 0) {
+        if ($maxPower <= 0) {
             // Something fishy is going on.
             return null;
         }
@@ -60,7 +60,7 @@ final readonly class PowerDistributionChart
         }
         ksort($powerData);
 
-        $step = (int) floor(($maxPower - $minPower) / 24) ?: 1;
+        $step = (int) floor($maxPower / 24) ?: 1;
         $xAxisValues = range($minPower, $maxPower, $step);
         if (end($xAxisValues) < $maxPower) {
             $xAxisValues[] = $maxPower;
@@ -71,7 +71,7 @@ final readonly class PowerDistributionChart
         foreach ($xAxisValues as $axisValue) {
             $data[] = array_sum(array_splice($powerData, 0, $step)) / $totalTimeInSeconds * 100;
         }
-        // @phpstan-ignore-next-line
+
         $yAxisMax = max($data) * 1.2;
         $xAxisValueAveragePower = array_search($this->findClosestSteppedValue(
             min: $minPower,
@@ -84,7 +84,10 @@ final readonly class PowerDistributionChart
             [
                 [
                     'itemStyle' => [
-                        'color' => '#303030',
+                        'color' => '#3E444D',
+                    ],
+                    'emphasis' => [
+                        'disabled' => true,
                     ],
                 ],
                 [
@@ -95,13 +98,16 @@ final readonly class PowerDistributionChart
 
         // Calculate the mark areas to display the zones.
         if ($ftp = $this->ftp?->getFtp()->getValue()) {
-            $oneWattPercentage = 100 / ($maxPower - $minPower);
+            $oneWattPercentage = 100 / $maxPower;
 
             $markAreas = [
                 [
                     [
                         'itemStyle' => [
-                            'color' => '#303030',
+                            'color' => '#3E444D',
+                        ],
+                        'emphasis' => [
+                            'disabled' => true,
                         ],
                         'x' => '0%',
                     ],

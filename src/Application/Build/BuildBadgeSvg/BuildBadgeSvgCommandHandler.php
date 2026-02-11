@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Build\BuildBadgeSvg;
 
 use App\Application\AppUrl;
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\ActivityTypeRepository;
-use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\BestEffort\BestEffortPeriod;
+use App\Domain\Activity\BestEffort\BestEffortsCalculator;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
@@ -28,9 +28,8 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
     public function __construct(
         private AthleteRepository $athleteRepository,
         private ChallengeRepository $challengeRepository,
-        private ActivityTypeRepository $activityTypeRepository,
-        private ActivityBestEffortRepository $activityBestEffortRepository,
-        private ActivitiesEnricher $activitiesEnricher,
+        private EnrichedActivities $enrichedActivities,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private AppUrl $appUrl,
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
@@ -48,7 +47,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
 
         $now = $command->getCurrentDateTime();
         $athlete = $this->athleteRepository->find();
-        $activities = $this->activitiesEnricher->getEnrichedActivities();
+        $activities = $this->enrichedActivities->findAll();
 
         $activityTotals = ActivityTotals::getInstance(
             activities: $activities,
@@ -67,7 +66,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             ])
         );
 
-        if ($this->zwiftLevel) {
+        if ($this->zwiftLevel instanceof ZwiftLevel) {
             $this->fileStorage->write(
                 'zwift-badge.svg',
                 $this->twig->load('svg/badge/svg-zwift-badge.html.twig')->render([
@@ -79,31 +78,20 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         }
 
         $sportTypesThatHaveBestEfforts = [];
-        $importedActivityTypes = $this->activityTypeRepository->findAll();
         /** @var ActivityType $activityType */
-        foreach ($importedActivityTypes as $activityType) {
-            if (!$activityType->supportsBestEffortsStats()) {
-                continue;
-            }
-
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
-            if ($bestEffortsForActivityType->isEmpty()) {
-                continue;
-            }
-
-            $uniqueSportTypesInBestEfforts = $bestEffortsForActivityType->getUniqueSportTypes();
-            foreach ($uniqueSportTypesInBestEfforts as $sportType) {
-                $bestEffortsForSportType = $bestEffortsForActivityType->getBySportType($sportType);
-                if ($bestEffortsForSportType->isEmpty()) {
-                    continue;
-                }
+        foreach ($this->bestEffortsCalculator->getActivityTypes() as $activityType) {
+            $sportTypes = $this->bestEffortsCalculator->getSportTypesFor(
+                period: BestEffortPeriod::ALL_TIME,
+                activityType: $activityType,
+            );
+            foreach ($sportTypes as $sportType) {
                 $sportTypesThatHaveBestEfforts[] = $sportType;
 
                 $this->fileStorage->write(
                     strtolower(sprintf('pb-%s-badge.svg', $sportType->value)),
                     $this->twig->load('svg/badge/svg-pb-badge.html.twig')->render([
                         'sportType' => $sportType,
-                        'bestEfforts' => $bestEffortsForSportType,
+                        'period' => BestEffortPeriod::ALL_TIME,
                     ])
                 );
             }

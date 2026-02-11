@@ -14,14 +14,14 @@ class ImportedGearConfigTest extends TestCase
 {
     use MatchesSnapshots;
 
-    public function testEnrichGearWithCustomData(): void
+    public function testWithCustomData(): void
     {
         $config = ImportedGearConfig::fromArray(self::getValidConfig());
 
         $gear = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed('le-id'))
             ->build();
-        $config->enrichGearWithCustomData($gear);
+        $gear = $config->enrichGearWithCustomData($gear);
 
         $this->assertEquals(
             Money::EUR('1000'),

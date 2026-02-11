@@ -82,6 +82,31 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
+    public function testRunForWebhooksWhenLockIsAlreadyAcquired(): void
+    {
+        $output = new SpySymfonyStyleOutput(new StringInput('input'), new NullOutput());
+
+        $event = WebhookEvent::create(
+            objectId: '1',
+            objectType: 'activity',
+            aspectType: WebhookAspectType::CREATE,
+            payload: [],
+        );
+        $this->getContainer()->get(WebhookEventRepository::class)->add($event);
+
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test", "heartbeat": 1764806400}']
+        );
+
+        $this->migrationRunner
+            ->expects($this->once())
+            ->method('run');
+
+        $this->importAndBuildAppCronAction->runForWebhooks($output);
+        $this->assertEmpty($this->commandBus->getDispatchedCommands());
+    }
+
     #[\Override]
     protected function setUp(): void
     {

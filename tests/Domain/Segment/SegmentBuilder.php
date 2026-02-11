@@ -16,14 +16,14 @@ final class SegmentBuilder
 {
     private SegmentId $segmentId;
     private Name $name;
-    private SportType $sportType;
+    private SportType $sportType = SportType::RIDE;
     private Kilometer $distance;
-    private float $maxGradient;
-    private bool $isFavourite;
-    private ?string $deviceName;
+    private float $maxGradient = 5.3;
+    private bool $isFavourite = false;
+    private ?string $deviceName = 'Polar';
     private readonly ?int $climbCategory;
     private readonly ?string $countryCode;
-    private bool $detailsHaveBeenImported;
+    private bool $detailsHaveBeenImported = false;
     private readonly ?EncodedPolyline $polyline;
     private readonly ?Coordinate $startingCoordinate;
 
@@ -31,14 +31,9 @@ final class SegmentBuilder
     {
         $this->segmentId = SegmentId::fromUnprefixed('1');
         $this->name = Name::fromString('Segment');
-        $this->sportType = SportType::RIDE;
         $this->distance = Kilometer::from(1);
-        $this->maxGradient = 5.3;
-        $this->isFavourite = false;
-        $this->deviceName = 'Polar';
         $this->climbCategory = null;
         $this->countryCode = 'BE';
-        $this->detailsHaveBeenImported = false;
         $this->polyline = null;
         $this->startingCoordinate = null;
     }

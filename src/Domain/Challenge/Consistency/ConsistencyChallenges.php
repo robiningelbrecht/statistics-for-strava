@@ -109,7 +109,7 @@ final class ConsistencyChallenges extends Collection
      */
     public static function fromConfig(array $items): self
     {
-        if (empty($items)) {
+        if ([] === $items) {
             // Make sure this new feature is backwards compatible.
             // Use the old default configuration.
             $items = self::getDefaultConfig();

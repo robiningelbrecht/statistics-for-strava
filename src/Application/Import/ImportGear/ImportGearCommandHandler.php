@@ -2,11 +2,9 @@
 
 namespace App\Application\Import\ImportGear;
 
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
@@ -18,6 +16,7 @@ use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 final readonly class ImportGearCommandHandler implements CommandHandler
 {
@@ -25,7 +24,6 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         private Strava $strava,
         private ImportedGearRepository $importedGearRepository,
         private CustomGearRepository $customGearRepository,
-        private ActivityRepository $activityRepository,
         private CustomGearConfig $customGearConfig,
         private Clock $clock,
     ) {
@@ -38,7 +36,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $allStravaGearIdsReferencedOnActivities = $this->activityRepository->findUniqueStravaGearIds(null);
+        $allStravaGearIdsReferencedOnActivities = $this->importedGearRepository->findUniqueStravaGearIds(null);
 
         if ($this->customGearConfig->isFeatureEnabled()) {
             /** @var GearId $customGearId */
@@ -59,7 +57,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         $stravaGearIdsToImport = $allStravaGearIdsReferencedOnActivities;
         if ($command->isPartialImport()) {
             // We only want to update gears that are referenced on the activities to be imported.
-            $stravaGearIdsToImport = $this->activityRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
+            $stravaGearIdsToImport = $this->importedGearRepository->findUniqueStravaGearIds($command->getRestrictToActivityIds());
         }
 
         foreach ($stravaGearIdsToImport as $gearId) {
@@ -70,9 +68,9 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
                 return;
             } catch (ClientException|RequestException $exception) {
-                if (!$exception->getResponse()) {
+                if (!$exception->getResponse() instanceof ResponseInterface) {
                     // Re-throw, we only want to catch supported error codes.
-                    throw $exception;
+                    throw $exception;  // @codeCoverageIgnore
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));
@@ -81,15 +79,13 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             }
 
             try {
-                $gear = $this->importedGearRepository->find($gearId);
-                $gear
-                    ->updateName($stravaGear['name'])
-                    ->updateDistance(Meter::from($stravaGear['distance']))
-                    ->updateIsRetired($stravaGear['retired'] ?? false);
+                $gear = $this->importedGearRepository->find($gearId)
+                    ->withName($stravaGear['name'])
+                    ->withDistance(Meter::from($stravaGear['distance']))
+                    ->withIsRetired($stravaGear['retired'] ?? false);
             } catch (EntityNotFound) {
                 $gear = ImportedGear::create(
                     gearId: $gearId,
-                    type: GearType::IMPORTED,
                     distanceInMeter: Meter::from($stravaGear['distance']),
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],

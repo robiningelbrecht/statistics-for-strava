@@ -6,6 +6,7 @@ use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportPipeline;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
@@ -32,6 +33,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
     public function __construct(
         private Strava $strava,
         private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
@@ -51,7 +53,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $allActivityIds = $this->activityRepository->findActivityIds();
+        $allActivityIds = $this->activityIdRepository->findAll();
         $activityIdsToDelete = array_combine(
             $allActivityIds->map(fn (ActivityId $activityId): string => (string) $activityId),
             $allActivityIds->toArray(),
@@ -203,7 +205,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             return;
         }
 
-        if (empty($activityIdsToDelete)) {
+        if ([] === $activityIdsToDelete) {
             return;
         }
 

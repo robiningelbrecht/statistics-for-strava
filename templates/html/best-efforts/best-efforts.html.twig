@@ -3,15 +3,17 @@
     'label': 'Best efforts'|trans
 }]} %}
 {% autoescape false %}
-    {% if bestEffortsCharts|length > 1 %}
+    {% set activityTypes = bestEffortsCalculator.getActivityTypes() %}
+    {% set periods = bestEffortsCalculator.getPeriods() %}
+    {% if activityTypes|length > 1 %}
         <div class="tabs tabs--default">
             <ul id="bestEffortsActivityTypeTab" data-tabs="#bestEffortsActivityTypeTabContent"
                 role="tablist">
-                {% for activityType,chart in bestEffortsCharts %}
+                {% for activityType in activityTypes %}
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#bestEfforts{{ activityType }}" role="tab"
-                           aria-controls="bestEfforts{{ activityType }}">
-                            {{ enum('App\\Domain\\Activity\\ActivityType').from(activityType)|trans }}
+                        <a href="#" data-tabs-target="#bestEfforts{{ activityType.value }}" role="tab"
+                           aria-controls="bestEfforts{{ activityType.value }}">
+                            {{ activityType|trans }}
                         </a>
                     </li>
                 {% endfor %}
@@ -19,71 +21,77 @@
         </div>
     {% endif %}
     <div id="bestEffortsActivityTypeTabContent">
-        {% for activityType,bestEffortsChart in bestEffortsCharts %}
-            {% set activityTypeEnum = enum('App\\Domain\\Activity\\ActivityType').from(activityType) %}
-            {% set bestEffortsForActivityType = bestEfforts[activityType] %}
-            <div id="bestEfforts{{ activityType }}" role="tabpanel"
-                 aria-labelledby="bestEfforts{{ activityType }}-tab">
-                <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <div class="mb-4 h-80" data-echarts-options='{{ bestEffortsChart }}'></div>
-                </div>
-                <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <h3 class="mb-4 text-lg font-semibold">
-                        {{ "Details"|trans }}
-                    </h3>
-                    <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-center text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
-                                    {{ "Distance"|trans }}
-                                </th>
-                                {% for sportType in bestEffortsForActivityType.getUniqueSportTypes() %}
-                                    <th scope="col" class="px-2 py-3">
-                                        {{ sportType|trans }}
-                                    </th>
-                                    <th scope="col" colspan="2" class="px-2 py-3">
-
-                                    </th>
-                                {% endfor %}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for distance in activityTypeEnum.getDistancesForBestEffortCalculation() %}
-                                <tr class="bg-white border-b">
-                                    <th scope="row"
-                                        class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                        <div>
-                                            <a href="#"
-                                               class="font-medium text-blue-600 hover:underline"
-                                               data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityTypeEnum.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
-                                                {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
-                                            </a>
-                                        </div>
-                                    </th>
-                                    {% for sportType in bestEffortsForActivityType.getUniqueSportTypes() %}
-                                        {% set bestEffort = bestEffortsForActivityType.getOneBySportTypeAndDistance(sportType, distance) %}
-                                        {% if bestEffort %}
-                                            {% set activity = bestEffort.getActivity() %}
-                                            <td class="px-2 py-2 truncate">
-                                                {{ activity.getStartDate()|formatDate() }}
-                                            </td>
-                                            <td class="px-2 py-2 truncate">
-                                                {{ bestEffort.getFormattedTime() }}
-                                            <td class="px-2 py-2 truncate">
-                                                {{ activity|activityLink(ellipses: 50) }}
-                                            </td>
-                                        {% else %}
-                                            <td class="px-2 py-2 truncate"></td>
-                                            <td class="px-2 py-2 truncate"></td>
-                                            <td class="px-2 py-2 truncate"></td>
-                                        {% endif %}
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+        {% for activityType in activityTypes %}
+            <div id="bestEfforts{{ activityType.value }}" role="tabpanel" aria-labelledby="bestEfforts{{ activityType.value }}-tab">
+                <ul class="tabs tabs--pills mb-4" id="bestEffortsPeriodTab{{ activityType.value }}" data-tabs="#bestEffortsPeriodTabContent{{ activityType.value }}"
+                    data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
+                    {% for period in periods %}
+                        <li role="presentation">
+                            <a href="#" data-tabs-target="#bestEffortsPeriod{{ activityType.value }}{{ period.value }}" role="tab"
+                               aria-controls="bestEffortsPeriod{{ activityType.value }}{{ period.value }}">
+                                {{  period|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div id="bestEffortsPeriodTabContent{{ activityType.value }}">
+                    {% for period in periods %}
+                        {% set bestEffortsChart = bestEffortsCharts[activityType.value][period.value] %}
+                        {% set sportTypes = bestEffortsCalculator.getSportTypesFor(period, activityType) %}
+                        <div id="bestEffortsPeriod{{ activityType.value }}{{ period.value }}" role="tabpanel" aria-labelledby="bestEffortsPeriod{{ activityType.value }}{{ period.value }}-tab">
+                            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                <div class="mb-4 h-80" data-echarts-options='{{ bestEffortsChart }}'></div>
+                            </div>
+                            <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                <h3 class="mb-4 text-lg font-semibold">
+                                    {{ "Details"|trans }}
+                                </h3>
+                                <div class="relative overflow-x-auto">
+                                    <table class="w-full text-sm text-center text-gray-500">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                                                {{ "Distance"|trans }}
+                                            </th>
+                                            {% for sportType in sportTypes %}
+                                                <th scope="col" class="px-2 py-3">
+                                                    {{ sportType|trans }}
+                                                </th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for distance in activityType.getDistancesForBestEffortCalculation() %}
+                                            <tr class="bg-white border-b">
+                                                <th scope="row" class="px-2 py-2 sticky left-0 bg-white font-medium whitespace-nowrap">
+                                                    <div>
+                                                        <a href="#" class="font-medium text-blue-600 hover:underline"
+                                                           data-model-content-url="{{ relativeUrl('best-efforts/' ~ activityType.value  ~ '/'  ~ distance.toInt()  ~ '-' ~ distance.getSymbol() ~ '.html')|lower }}">
+                                                            {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
+                                                        </a>
+                                                    </div>
+                                                </th>
+                                                {% for sportType in sportTypes %}
+                                                    {% set bestEffort = bestEffortsCalculator.for(period, sportType, distance) %}
+                                                    {% if bestEffort %}
+                                                        {% set activity = enrichedActivities.find(bestEffort.getActivityId()) %}
+                                                        <td class="px-2 py-2 truncate">
+                                                            <div class="font-semibold text-gray-700">{{ bestEffort.getFormattedTime() }}</div>
+                                                            <div class="text-xs">{{ activity.getStartDate()|formatDate() }}</div>
+                                                            <div class="text-xs inline-flex">{{ activity|activityLink(ellipses: 50) }}</div>
+                                                        </td>
+                                                    {% else %}
+                                                        <td class="px-2 py-2 truncate"> - </td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}

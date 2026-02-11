@@ -2,11 +2,11 @@
 
 namespace App\Tests\Domain\Activity;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\CouldNotDetermineActivityIntensity;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
@@ -25,7 +25,6 @@ class ActivityIntensityTest extends ContainerTestCase
 {
     private ActivityIntensity $activityIntensity;
     private AthleteRepository $athleteRepository;
-    private FtpHistory $ftpHistory;
 
     public function testCalculateWithPower(): void
     {
@@ -54,7 +53,7 @@ class ActivityIntensityTest extends ContainerTestCase
         $this->assertEmpty(ActivityIntensity::$cachedIntensities);
         $this->assertEquals(
             100,
-            $this->activityIntensity->calculate($activity),
+            $this->activityIntensity->calculate($activity->getId()),
         );
         $this->assertArrayHasKey(
             (string) $activity->getId(),
@@ -62,7 +61,7 @@ class ActivityIntensityTest extends ContainerTestCase
         );
         $this->assertEquals(
             100,
-            $this->activityIntensity->calculatePowerBased($activity),
+            $this->activityIntensity->calculatePowerBased($activity->getId()),
         );
     }
 
@@ -84,7 +83,7 @@ class ActivityIntensityTest extends ContainerTestCase
         ));
 
         $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Activity has no normalized power'));
-        $this->activityIntensity->calculatePowerBased($activity);
+        $this->activityIntensity->calculatePowerBased($activity->getId());
     }
 
     public function testCalculateWithPowerWhenActivityIsNotARide(): void
@@ -103,19 +102,19 @@ class ActivityIntensityTest extends ContainerTestCase
         ));
 
         $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Activity is not a ride'));
-        $this->activityIntensity->calculatePowerBased($activity);
+        $this->activityIntensity->calculatePowerBased($activity->getId());
     }
 
     public function testCalculateWithPowerWhenFtpNotFound(): void
     {
         $this->activityIntensity = new ActivityIntensity(
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
             ),
-            $this->ftpHistory = FtpHistory::fromArray([]),
+            FtpHistory::fromArray([]),
         );
 
         $this->athleteRepository->save(Athlete::create([
@@ -141,7 +140,7 @@ class ActivityIntensityTest extends ContainerTestCase
         );
 
         $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Ftp not found'));
-        $this->activityIntensity->calculatePowerBased($activity);
+        $this->activityIntensity->calculatePowerBased($activity->getId());
     }
 
     public function testCalculateWithHeartRate(): void
@@ -164,7 +163,7 @@ class ActivityIntensityTest extends ContainerTestCase
         $this->assertEmpty(ActivityIntensity::$cachedIntensities);
         $this->assertEquals(
             87,
-            $this->activityIntensity->calculateHeartRateBased($activity),
+            $this->activityIntensity->calculateHeartRateBased($activity->getId()),
         );
         $this->assertArrayHasKey(
             (string) $activity->getId(),
@@ -172,7 +171,7 @@ class ActivityIntensityTest extends ContainerTestCase
         );
         $this->assertEquals(
             87,
-            $this->activityIntensity->calculateHeartRateBased($activity),
+            $this->activityIntensity->calculateHeartRateBased($activity->getId()),
         );
     }
 
@@ -195,7 +194,7 @@ class ActivityIntensityTest extends ContainerTestCase
 
         $this->assertEquals(
             0,
-            $this->activityIntensity->calculate($activity),
+            $this->activityIntensity->calculate($activity->getId()),
         );
     }
 
@@ -205,13 +204,13 @@ class ActivityIntensityTest extends ContainerTestCase
         parent::setUp();
 
         $this->activityIntensity = new ActivityIntensity(
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
             ),
-            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
+            FtpHistory::fromArray(['2023-04-01' => 250]),
         );
     }
 }

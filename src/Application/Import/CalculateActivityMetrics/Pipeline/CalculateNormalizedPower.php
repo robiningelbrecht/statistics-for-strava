@@ -27,16 +27,16 @@ final readonly class CalculateNormalizedPower implements CalculateActivityMetric
             foreach ($streams as $stream) {
                 $powerData = $stream->getData();
                 if (count($powerData) < 30) {
-                    $stream->updateNormalizedPower(0);
-                    $this->activityStreamRepository->update($stream);
+                    $this->activityStreamRepository->update($stream->withNormalizedPower(0));
 
                     continue;
                 }
 
                 $windowSize = 30;
                 $movingAvg = [];
+                $counter = count($powerData);
 
-                for ($i = $windowSize - 1; $i < count($powerData); ++$i) {
+                for ($i = $windowSize - 1; $i < $counter; ++$i) {
                     $window = array_slice($powerData, $i - $windowSize + 1, $windowSize);
                     $avg = array_sum($window) / $windowSize;
                     $movingAvg[] = $avg ** 4;
@@ -44,8 +44,7 @@ final readonly class CalculateNormalizedPower implements CalculateActivityMetric
                 $avgPower = (array_sum($movingAvg) / count($movingAvg)) ** 0.25;
 
                 ++$countCalculatedStreams;
-                $stream->updateNormalizedPower((int) round($avgPower));
-                $this->activityStreamRepository->update($stream);
+                $this->activityStreamRepository->update($stream->withNormalizedPower((int) round($avgPower)));
                 $progressIndicator->updateMessage(sprintf('=> Calculated normalized power for %d streams', $countCalculatedStreams));
             }
         } while (!$streams->isEmpty());

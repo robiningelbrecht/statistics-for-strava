@@ -1,8 +1,9 @@
 [
     {
-        "activityId": "activity-test-5",
+        "activityId": "activity-one",
         "unitSystem": "imperial",
-        "streamTypes": "distance,altitude,spm,pace",
-        "data": "[[0,6.56,6,536]]"
+        "streamTypes": "time,distance,latlng,altitude,heartrate,watts,cadence,velocity",
+        "data": "[[\"0s\",0,[51.20008,3.21609],41.25,108,104,78,10.1],[\"1s\",0,[51.20016,3.21618],41.6,122,163,82,10.5],[\"2s\",0,[51.20024,3.21627],42.25,134,172,84,10.3],[\"3s\",0,null,42.71,141,116,83,10.3],[\"5s\",0,[51.2004,3.21645],44.42,145,122,85,10.3],[\"6s\",0,[51.20052,3.21658],45.86,151,122,87,10.5],[\"8s\",0,[51.2007,3.2169],47.35,158,96,89,10.7]]",
+        "maxYAxisValue": 172
     }
 ]

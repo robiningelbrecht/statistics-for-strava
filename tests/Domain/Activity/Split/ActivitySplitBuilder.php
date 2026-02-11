@@ -13,8 +13,8 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 final class ActivitySplitBuilder
 {
     private ActivityId $activityId;
-    private UnitSystem $unitSystem;
-    private int $splitNumber;
+    private UnitSystem $unitSystem = UnitSystem::METRIC;
+    private int $splitNumber = 1;
     private readonly Meter $distance;
     private readonly int $elapsedTimeInSeconds;
     private readonly int $movingTimeInSeconds;
@@ -27,8 +27,6 @@ final class ActivitySplitBuilder
     private function __construct()
     {
         $this->activityId = ActivityId::fromUnprefixed('test');
-        $this->unitSystem = UnitSystem::METRIC;
-        $this->splitNumber = 1;
         $this->distance = Meter::from(100);
         $this->elapsedTimeInSeconds = 120;
         $this->movingTimeInSeconds = 110;

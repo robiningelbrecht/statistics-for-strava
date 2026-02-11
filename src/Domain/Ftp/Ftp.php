@@ -39,15 +39,21 @@ final class Ftp
 
     public function getRelativeFtp(): ?float
     {
-        if (!$this->athleteWeightInKg) {
+        if (!$this->athleteWeightInKg instanceof Kilogram) {
             return null;
         }
 
         return round($this->getFtp()->getValue() / $this->athleteWeightInKg->toFloat(), 1);
     }
 
-    public function enrichWithAthleteWeight(Kilogram $athleteWeight): void
+    public function withAthleteWeight(?Kilogram $athleteWeight): self
     {
-        $this->athleteWeightInKg = $athleteWeight;
+        if (is_null($athleteWeight)) {
+            return $this;
+        }
+
+        return clone ($this, [
+            'athleteWeightInKg' => $athleteWeight,
+        ]);
     }
 }

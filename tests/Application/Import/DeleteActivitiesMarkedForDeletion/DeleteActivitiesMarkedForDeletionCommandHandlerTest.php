@@ -4,8 +4,8 @@ namespace App\Tests\Application\Import\DeleteActivitiesMarkedForDeletion;
 
 use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
@@ -113,9 +113,9 @@ class DeleteActivitiesMarkedForDeletionCommandHandlerTest extends ContainerTestC
         $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
         $this->assertMatchesTextSnapshot($output);
 
-        $this->assertCount(
+        $this->assertEquals(
             1,
-            $this->getContainer()->get(ActivityRepository::class)->findAll()->toArray()
+            $this->getContainer()->get(ActivityIdRepository::class)->count()
         );
         $this->assertCount(
             0,

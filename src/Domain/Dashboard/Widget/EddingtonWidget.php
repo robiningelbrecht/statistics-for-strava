@@ -33,7 +33,7 @@ final readonly class EddingtonWidget implements Widget
             static fn (Eddington $eddington): bool => $eddington->getConfig()->showInDashboardWidget()
         );
 
-        if (!$eddingtons) {
+        if ([] === $eddingtons) {
             return null;
         }
 

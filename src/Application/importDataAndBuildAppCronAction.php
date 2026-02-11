@@ -14,6 +14,7 @@ use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
+use App\Infrastructure\Daemon\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -66,7 +67,12 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
     public function runForWebhooks(SymfonyStyle $output): void
     {
         $this->migrationRunner->run($output);
-        $this->mutex->acquireLock('importDataAndBuildAppCronAction');
+        try {
+            $this->mutex->acquireLock('processWebhooks');
+        } catch (LockIsAlreadyAcquired) {
+            // Another process is importing data, postpone webhook processing.
+            return;
+        }
 
         if (!$webhookEvents = $this->webhookEventRepository->grab()) {
             // No webhooks to process.

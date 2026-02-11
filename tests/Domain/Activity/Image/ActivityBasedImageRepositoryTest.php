@@ -4,9 +4,9 @@ namespace App\Tests\Domain\Activity\Image;
 
 use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\Image\ActivityBasedImageRepository;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportType;
@@ -64,7 +64,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
             $this->imageRepository->findRandomFor(
                 sportTypes: SportTypes::thatSupportImagesForStravaRewind(),
                 years: Years::fromArray([Year::fromInt(2024)]),
-            )->getActivity()->getId()
+            )->getActivityId()
         );
     }
 
@@ -109,7 +109,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->imageRepository = new ActivityBasedImageRepository(
-            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             HidePhotosForSportTypes::fromArray([]),
             KernelProjectDir::fromString('var/www')
         );

@@ -2,55 +2,13 @@
 {% autoescape false %}
     <div class="flex items-center mb-4">
         <h3 class="font-semibold text-lg">{{ "Activity heatmap"|trans }}</h3>
-        <button class="hidden lg:block" data-popover-target="popover-description-activity-grid" data-popover-placement="right"
-                type="button">
-            <svg class="w-4 h-4 ml-1 text-gray-400 hover:text-gray-500" aria-hidden="true" fill="currentColor"
-                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                      clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">{{ "Show information"|trans }}</span>
-        </button>
-        <div data-popover id="popover-description-activity-grid" role="tooltip"
-             class="hidden lg:block lg:w-md xl:w-162 absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
-            <div class="p-3 space-y-2">
-                <p>
-                    {% trans %}This map shows the daily training intensity for the last year. The training intensity for an activity is calculated based on several metrics.{% endtrans %}
-                </p>
-                <h3 class="font-semibold text-gray-900">{{ "Simplified"|trans }}</h3>
-                <p>
-                    {% trans %}This formula means that riding for an hour at your max heart rate results in a score of 100, which we consider "high intensity"{% endtrans %}
-                    :
-                </p>
-                <blockquote
-                        class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                    <span class="font-bold">{{ "maxHeartRate"|trans }} </span>= (220 - {{ "age"|trans }}) x 0.92<br/>
-                    <span class="font-bold">{{ "intensityFactor"|trans }} </span>= averageHeartRate /
-                    maxHeartRate<br/>
-                    <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x
-                    averageHeartRate x intensityFactor) / (maxHeartRate x 3600) x 100
-                </blockquote>
-                <h3 class="font-semibold text-gray-900">{{ "Advanced"|trans }}</h3>
-                <p>
-                    {% trans %}When power metrics and FTP are available, these metrics are used instead. This formula means that riding for an hour at your FTP results in a score of 100, which we consider "high intensity"{% endtrans %}
-                    :
-                </p>
-                <blockquote
-                        class="p-4 my-4 text-xs border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                    <span class="font-bold">{{ "intensityFactor"|trans }} </span>= (averagePower / FTP)<br/>
-                    <span class="font-bold">{{ "intensity"|trans }}</span> = (durationInSeconds x averagePower x
-                    intensityFactor) / (FTP x 3600) x 100
-                </blockquote>
-            </div>
-        </div>
         <ul class="tabs tabs--pills ml-auto" id="activityGridWidgetTab{{ uniqueId }}" data-tabs="#activityGridWidgetTabContent{{ uniqueId }}"
-            data-tabs-active-classes="text-strava-orange" data-tabs-inactive-classes="text-gray-900" role="tablist">
+            data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
             {% for activityGridType in enum('App\\Domain\\Dashboard\\Widget\\ActivityGrid\\ActivityGridType').cases() %}
                 <li role="presentation">
                     <a href="#" data-tabs-target="#{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}" role="tab"
                        aria-controls="{{ activityGridType.value }}GridWidgetTab{{ uniqueId }}">
-                        {{ svg(activityGridType.getSvgIcon(), 'size-5', 'hover:text-strava-orange') }}
+                        {{ svg(activityGridType.getSvgIcon(), 'size-5', 'text-grey-900') }}
                         <span class="hidden md:block">{{ activityGridType|trans }}</span>
                     </a>
                 </li>

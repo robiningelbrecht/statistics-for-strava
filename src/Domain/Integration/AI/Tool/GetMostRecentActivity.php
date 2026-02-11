@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI\Tool;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\EnrichedActivities;
 use NeuronAI\Tools\Tool;
 
 final class GetMostRecentActivity extends Tool
 {
     public function __construct(
-        private readonly ActivitiesEnricher $activitiesEnricher,
+        private readonly EnrichedActivities $enrichedActivities,
     ) {
         parent::__construct(
             'get_most_recent_activity',
@@ -28,7 +28,7 @@ final class GetMostRecentActivity extends Tool
      */
     public function __invoke(): array
     {
-        $allActivities = $this->activitiesEnricher->getEnrichedActivities();
+        $allActivities = $this->enrichedActivities->findAll();
         /** @var Activity $mostRecentActivity */
         $mostRecentActivity = $allActivities->getFirst();
 

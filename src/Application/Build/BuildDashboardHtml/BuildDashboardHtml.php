@@ -8,7 +8,4 @@ use App\Infrastructure\CQRS\Command\DomainCommand;
 
 final readonly class BuildDashboardHtml extends DomainCommand
 {
-    public function __construct(
-    ) {
-    }
 }

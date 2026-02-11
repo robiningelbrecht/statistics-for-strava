@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 final class SystemCron implements Cron
 {
     /** @var CronAction[] */
-    private array $enabledCronActions;
+    private array $enabledCronActions = [];
 
     /**
      * @param iterable<RunnableCronAction> $runnableCronActions
@@ -24,8 +24,6 @@ final class SystemCron implements Cron
         foreach ($runnableCronActions as $runnableCronAction) {
             $runnableCronActionsKeyedById[$runnableCronAction->getId()] = $runnableCronAction;
         }
-
-        $this->enabledCronActions = [];
 
         foreach ($this->configuredCronActions as $configuredCronAction) {
             if (false === $configuredCronAction['enabled']) {

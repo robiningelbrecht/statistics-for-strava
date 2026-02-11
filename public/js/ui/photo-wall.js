@@ -26,7 +26,7 @@ class LightGallery {
     }
 }
 
-export class PhotoWall {
+export default class PhotoWall {
     constructor(wrapper, dataTableStorage) {
         this.wrapper = wrapper;
         this.dataTableStorage = dataTableStorage;
@@ -59,9 +59,7 @@ export class PhotoWall {
             this.lightGallery.refresh(activeImages);
         };
 
-        this.dataTableStorage.set({
-            'photoWall': JSON.parse(this.wrapper.getAttribute('data-default-filters'))
-        });
+        this.dataTableStorage.set('photoWall', JSON.parse(this.wrapper.getAttribute('data-default-filters')));
         // Prefill filters.
         this.filterManager.prefillFromStorage('photoWall');
 

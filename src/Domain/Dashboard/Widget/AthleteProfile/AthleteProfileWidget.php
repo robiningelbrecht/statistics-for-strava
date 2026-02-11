@@ -2,8 +2,8 @@
 
 namespace App\Domain\Dashboard\Widget\AthleteProfile;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\Math;
 use App\Domain\Dashboard\Widget\AthleteProfile\FindAthleteProfileMetrics\FindAthleteProfileMetrics;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
@@ -19,7 +19,6 @@ final readonly class AthleteProfileWidget implements Widget
 {
     public function __construct(
         private QueryBus $queryBus,
-        private ActivitiesEnricher $activitiesEnricher,
         private ActivityIntensity $activityIntensity,
         private Environment $twig,
         private TranslatorInterface $translator,
@@ -37,6 +36,7 @@ final readonly class AthleteProfileWidget implements Widget
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
+        $chartData = [];
         foreach ([30, 90] as $lastXDays) {
             $findAthleteProfileMetricsResponse = $this->queryBus->ask(new FindAthleteProfileMetrics(DateRange::lastXDays($now, $lastXDays)));
             $numberOfActivities = $findAthleteProfileMetricsResponse->getNumberOfActivities();
@@ -55,28 +55,16 @@ final readonly class AthleteProfileWidget implements Widget
             $activeDaysRatio = $numberOfActiveDays / $lastXDays;
             $consistency = min(100, $activeDaysRatio / 0.7 * 100);
 
-            // INTENSITY: 25% = realistic upper bound for sustainable hard training.
-            $countActivitiesWithHighEffort = 0;
+            // INTENSITY: Use IF / TRIMP.
+            $intensities = [];
             foreach ($findAthleteProfileMetricsResponse->getActivityIds() as $activityId) {
-                $activityIntensity = $this->activityIntensity->calculate($this->activitiesEnricher->getEnrichedActivity($activityId));
-                if (ActivityIntensity::HIGH_INTENSITY_THRESHOLD_VALUE > $activityIntensity) {
-                    continue;
-                }
-                ++$countActivitiesWithHighEffort;
+                $intensities[] = $this->activityIntensity->calculate($activityId);
             }
-            $intensity = min(100, ($countActivitiesWithHighEffort / $numberOfActivities) / 0.25 * 100);
+            $intensity = min(100, Math::median($intensities));
 
             // DURATION: Median > 90 min = endurance-leaning athlete.
             $activityMovingTimes = $findAthleteProfileMetricsResponse->getActivityMovingTimesInSeconds();
-            sort($activityMovingTimes);
-
-            $middleIndex = (int) floor(count($activityMovingTimes) / 2);
-            sort($activityMovingTimes, SORT_NUMERIC);
-            $medianInSeconds = $activityMovingTimes[$middleIndex];
-            // Handle the even case by averaging the middle 2 items.
-            if (0 == count($activityMovingTimes) % 2) {
-                $medianInSeconds = ($medianInSeconds + $activityMovingTimes[$middleIndex - 1]) / 2;
-            }
+            $medianInSeconds = Math::median($activityMovingTimes);
             $duration = min(100, Seconds::from($medianInSeconds)->toMinute()->toFloat() / 90 * 100);
 
             // DENSITY: 2h per training day = high density.
@@ -97,7 +85,7 @@ final readonly class AthleteProfileWidget implements Widget
             ];
         }
 
-        if (empty($chartData)) {
+        if ([] === $chartData) {
             return null;
         }
 

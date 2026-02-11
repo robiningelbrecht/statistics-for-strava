@@ -8,7 +8,6 @@ export default class Router {
             'nav a[data-router-navigate]:not([data-router-disabled]), aside li a[data-router-navigate]:not([data-router-disabled])'
         );
         this.mobileNavTriggerEl = document.querySelector('[data-drawer-target="drawer-navigation"]');
-        this.defaultRoute = '/dashboard';
     }
 
     showLoader() {
@@ -41,13 +40,13 @@ export default class Router {
         // Close mobile nav if open
         if (!this.menu.hasAttribute('aria-hidden')) {
             this.mobileNavTriggerEl.dispatchEvent(
-                new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
+                new MouseEvent('click', {bubbles: true, cancelable: true, view: window})
             );
         }
 
         this.showLoader();
 
-        const response = await fetch(`${page}.html`, { cache: 'no-store' });
+        const response = await fetch(`${page}.html`, {cache: 'no-store'});
         this.appContent.innerHTML = await response.text();
         window.scrollTo(0, 0);
 
@@ -77,12 +76,12 @@ export default class Router {
 
         document.dispatchEvent(new CustomEvent('pageWasLoaded', {
             bubbles: true,
-            detail: { page: fullPageName, modalId }
+            detail: {page: fullPageName, modalId}
         }));
 
         document.dispatchEvent(new CustomEvent(`pageWasLoaded.${fullPageName}`, {
             bubbles: true,
-            detail: { page: fullPageName, modalId }
+            detail: {page: fullPageName, modalId}
         }));
     }
 
@@ -94,7 +93,7 @@ export default class Router {
 
                 document.dispatchEvent(new CustomEvent('navigationLinkHasBeenClicked', {
                     bubbles: true,
-                    detail: { link }
+                    detail: {link}
                 }));
 
                 this.navigateTo(
@@ -123,7 +122,7 @@ export default class Router {
 
     pushRouteToHistoryState(route, modal) {
         const fullRoute = modal ? `${route}#${modal}` : route;
-        window.history.pushState({ route, modal }, '', fullRoute);
+        window.history.pushState({route, modal}, '', fullRoute);
     }
 
     pushCurrentRouteToHistoryState(modal) {
@@ -131,7 +130,19 @@ export default class Router {
     }
 
     currentRoute() {
-        return location.pathname.replace('/', '') ? location.pathname : this.defaultRoute;
+        const defaultRoute = '/dashboard';
+        if (window.statisticsForStrava.appUrl.basePath === '') {
+            // App is not served from a subpath.
+            return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
+        }
+
+        // App is served from a subpath.
+        const base = '/' + window.statisticsForStrava.appUrl.basePath.replace(/^\/+|\/+$/g, '');
+        const pathname = location.pathname.replace(/\/+$/, '');
+
+        return pathname === base
+            ? base + defaultRoute
+            : location.pathname;
     }
 
     boot() {
@@ -147,6 +158,6 @@ export default class Router {
         this.registerBrowserBackAndForth();
         this.renderContent(route, modal);
 
-        window.history.replaceState({ route, modal }, '', route + location.hash);
+        window.history.replaceState({route, modal}, '', route + location.hash);
     }
 }

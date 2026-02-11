@@ -254,7 +254,7 @@ YML
         );
     }
 
-    private static function getYmlStringThatNeedsNormalization(): array
+    private function getYmlStringThatNeedsNormalization(): array
     {
         return Yaml::parse(<<<YML
 enabled: true

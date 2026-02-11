@@ -20,7 +20,7 @@ final readonly class ConfiguredNotificationServices implements \IteratorAggregat
         ?string $ntfyPassword): self
     {
         $configuredNotificationServices = [];
-        if (!empty($ntfyUrl)) {
+        if (!in_array($ntfyUrl, [null, '', '0'], true)) {
             // Make sure feature is BC with old ntfy config.
             $configuredNotificationServices[] = ShoutrrrUrl::fromDeprecatedNtfyConfig(
                 ntfyUrl: $ntfyUrl,

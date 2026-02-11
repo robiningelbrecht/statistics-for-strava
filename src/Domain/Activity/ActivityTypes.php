@@ -6,6 +6,9 @@ namespace App\Domain\Activity;
 
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<ActivityType>
+ */
 final class ActivityTypes extends Collection
 {
     public function getItemClassName(): string

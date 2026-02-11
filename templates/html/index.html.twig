@@ -7,18 +7,25 @@
     <meta name="theme-color" content="#F26822">
     <meta name="mobile-web-app-title" content="{{ "Statistics for Strava"|trans }} | {{ athlete.getName() }}">
     <meta name="mobile-web-app-capable" content="yes">
-    <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="">
+    <meta name="apple-mobile-web-app-title" content="{{ "Statistics for Strava"|trans }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ relativeUrl('assets/images/manifest/icon-apple-180.maskable.png') }}">
+    <link href="{{ relativeUrl(asset('manifest.json')) }}" rel="manifest" crossorigin="use-credentials">
     <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
     <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
     <link rel="preload" href="{{ relativeUrl(asset('libraries/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ relativeUrl(asset('libraries/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
-<body>
-<div class="antialiased bg-gray-50">
+<body class="bg-gray-50">
+<div class="antialiased">
     <!-- NAVIGATION -->
     {% autoescape false %}
         {% include 'html/navigation/top-nav-bar.html.twig' with {
+            'inAppContext': true,
             'subTitle': subTitle,
             'profilePictureUrl': profilePictureUrl,
             'athlete': athlete
@@ -31,7 +38,7 @@
         {% set collapsedMenuLinkClasses = 'group-[.sidebar-is-collapsed]:flex-col group-[.sidebar-is-collapsed]:gap-y-0.5 group-[.sidebar-is-collapsed]:text-xs' %}
         {% set menulinkSvgIconClasses = 'shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover/menu-item:text-gray-900' %}
         {% set isSymfonyRouter = router == enum('App\\Application\\Router').SYMFONY %}
-        <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-160px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
+        <div class="group-[.sidebar-is-collapsed]:max-h-full max-h-[calc(100vh-114px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
             <ul class="space-y-1 pb-2">
                 <li>
                     <a href="{{ relativeUrl('dashboard') }}" data-router-navigate="{{ relativeUrl('dashboard') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }}
@@ -54,7 +61,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
                         </svg>
                         <span class="flex-1 whitespace-nowrap">{{ "Activities"|trans|ellipses(19) }}</span>
-                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalActivityCount }}</span>
+                        <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 dark:bg-strava-orange/60 dark:text-[#f0f6fc] text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalActivityCount }}</span>
                     </a>
                 </li>
                 {% if hasGear %}
@@ -106,7 +113,7 @@
                         <span class="flex-1 whitespace-nowrap">Eddington</span>
                         <div class="group-[.sidebar-is-collapsed]:hidden flex gap-x-0.5">
                             {% for eddingtonNumber in eddingtonNumbers|slice(0, 2) %}
-                                <span class="bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ eddingtonNumber }}</span>
+                                <span class="bg-orange-400/40 text-orange-800 dark:bg-strava-orange/60 dark:text-[#f0f6fc] text-xs font-medium px-2.5 py-0.5 rounded-full">{{ eddingtonNumber }}</span>
                             {% endfor %}
                         </div>
                     </a>
@@ -150,7 +157,7 @@
                 </li>
             </ul>
             {% if completedChallenges > 0 or totalPhotoCount > 0 %}
-                <ul class="space-y-1 pt-2">
+                <ul class="space-y-1 py-2">
                     {% if completedChallenges > 0 %}
                         <li>
                             <a href="{{ relativeUrl('challenges') }}" data-router-navigate="{{ relativeUrl('challenges') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }}
@@ -159,7 +166,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"/>
                                 </svg>
                                 <span class="flex-1 whitespace-nowrap">{{ "Challenges"|trans|ellipses(19) }}</span>
-                                <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ completedChallenges }}</span>
+                                <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 dark:bg-strava-orange/60 dark:text-[#f0f6fc] text-xs font-medium px-2.5 py-0.5 rounded-full">{{ completedChallenges }}</span>
                             </a>
                         </li>
                     {% endif %}
@@ -172,86 +179,31 @@
                                     <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                                 </svg>
                                 <span class="flex-1 whitespace-nowrap">{{ "Photos"|trans|ellipses(19) }}</span>
-                                <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalPhotoCount }}</span>
+                                <span class="group-[.sidebar-is-collapsed]:hidden bg-orange-400/40 text-orange-800 dark:bg-strava-orange/60 dark:text-[#f0f6fc] text-xs font-medium px-2.5 py-0.5 rounded-full">{{ totalPhotoCount }}</span>
                             </a>
                         </li>
                     {% endif %}
                 </ul>
             {% endif %}
         </div>
-        <div class="absolute flex flex-col justify-center bottom-0 left-0 w-full bg-white z-20">
-            <div class="group-[.sidebar-is-collapsed]:hidden py-2 px-4 text-xs text-center text-gray-500">
-                <div class="flex justify-center gap-px">
-                    <a href="https://www.strava.com/athletes/{{ athlete.getAthleteId() }}" target="_blank"
-                       class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <g stroke-width="0"></g>
-                            <g stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g>
-                                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"></path>
-                            </g>
-                        </svg>
-                    </a>
-                    <a href="#" data-model-content-url="{{ relativeUrl('badge.html') }}" title="Show badge"
-                       class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-[#fc4c01] hover:bg-gray-100">
-                        <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                             viewBox="0 0 507.9 507.9" xml:space="preserve">
-                    <g stroke-width="0"></g>
-                            <g stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g>
-                                <g>
-                                    <g>
-                                        <path d="M465.7,96.55H324.9v-21.6c0-7.8-6.3-14.1-14.1-14.1H197.2c-7.8,0-14.1,6.3-14.1,14.1v21.6H42.3c-23.3,0-42.3,19-42.3,42.3 v265.9c0,23.3,19,42.3,42.3,42.3h423.3c23.3,0,42.3-19,42.3-42.3v-265.9C508,115.55,489,96.55,465.7,96.55z M296.7,89.05v32.1 h-85.4v-32.1H296.7z M465.7,418.85H42.3c-7.8,0-14.1-6.3-14.1-14.1v-265.9c0-7.8,6.3-14.1,14.1-14.1h140.8v10.5 c0,7.8,6.3,14.1,14.1,14.1h113.6c7.8,0,14.1-6.3,14.1-14.1v-10.5h140.7c7.8,0,14.1,6.3,14.1,14.1v265.9h0.1 C479.8,412.55,473.5,418.85,465.7,418.85z"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M440.6,173.65H254c-7.8,0-14.1,6.3-14.1,14.1s6.3,14.1,14.1,14.1h186.6c7.8,0,14.1-6.3,14.1-14.1 S448.4,173.65,440.6,173.65z"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M440.6,241.95H254c-7.8,0-14.1,6.3-14.1,14.1s6.3,14.1,14.1,14.1h186.6c7.8,0,14.1-6.3,14.1-14.1 C454.7,248.25,448.4,241.95,440.6,241.95z"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M440.6,310.35H254c-7.8,0-14.1,6.3-14.1,14.1c0,7.8,6.3,14.1,14.1,14.1h186.6c7.8,0,14.1-6.3,14.1-14.1 S448.4,310.35,440.6,310.35z"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M180.1,160.45H67.4c-7.8,0-14.1,6.3-14.1,14.1v130.5c0,7.8,6.3,14.1,14.1,14.1h112.7c7.8,0,14.1-6.3,14.1-14.1v-130.5 C194.2,166.85,187.9,160.45,180.1,160.45z M166,290.95H81.6v-102.2H166V290.95z"></path>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M180.1,354.85H67.4c-7.8,0-14.1,6.3-14.1,14.1c0,7.8,6.3,14.1,14.1,14.1h112.7c7.8,0,14.1-6.3,14.1-14.1 S187.9,354.85,180.1,354.85z"></path>
-                                    </g>
-                                </g>
-                            </g>
-                </svg>
-                    </a>
-                </div>
-                <div class="flex justify-center gap-x-1">
-                    <span>{{ appVersion.getSemanticVersion() }}</span>
+        <div class="border-t absolute p-2 flex flex-col gap-y-1 justify-center text-xs text-center text-gray-500 bottom-0 left-0 w-full bg-white z-20">
+            <div class="group-[.sidebar-is-collapsed]:hidden">
+                <div class="flex items-center justify-center gap-x-1">
+                    <span class="bg-gray-100 text-gray-600 font-medium px-2.5 py-0.5 rounded-sm"
+                            title="{{ "Updated on"|trans }} {{ lastUpdate|formatDate('normal') }} {{ lastUpdate|formatTime() }}">{{ appVersion.getSemanticVersion() }}</span>
                     <span class="hidden" data-latest-version
                           data-current-version="{{ appVersion.getSemanticVersion() }}">
                     (latest: <a class="underline"
                                 href="https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/[LATEST_VERSION]">[LATEST_VERSION]</a>)
                 </span>
                 </div>
-                <div>
-                    {{ "Updated on"|trans }} {{ lastUpdate|formatDate('normal') }} {{ lastUpdate|formatTime() }}
-                </div>
             </div>
-            <div class="flex gap-x-1 items-center justify-center border-t py-2 px-4 text-xs text-center text-gray-500">
+            <div class="flex gap-x-1 items-center justify-center">
                 <img class="h-3" src="{{ relativeUrl('assets/images/strava/powered-by-strava.svg') }}"
                      alt="Powered by Strava"/>
                 <div class="group-[.sidebar-is-collapsed]:hidden">& ☕</div>
             </div>
         </div>
-
     </aside>
     <!-- MAIN -->
     <main class="p-4 md:ml-64 [&.sidebar-is-collapsed]:md:ml-32 h-auto min-h-screen pt-20 text-gray-900">

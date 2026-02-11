@@ -19,6 +19,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(name: 'Segment_detailsHaveBeenImported', columns: ['detailsHaveBeenImported'])]
 final class Segment implements SupportsAITooling
 {
     private ?SegmentEffort $bestEffort = null;
@@ -45,11 +46,11 @@ final class Segment implements SupportsAITooling
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $countryCode,
         #[ORM\Column(type: 'boolean', nullable: true)]
-        private bool $detailsHaveBeenImported,
+        private readonly bool $detailsHaveBeenImported,
         #[ORM\Column(type: 'text', nullable: true)]
-        private ?EncodedPolyline $polyline,
+        private readonly ?EncodedPolyline $polyline,
         #[ORM\Embedded(class: Coordinate::class)]
-        private ?Coordinate $startingCoordinate,
+        private readonly ?Coordinate $startingCoordinate,
     ) {
     }
 
@@ -174,9 +175,11 @@ final class Segment implements SupportsAITooling
         return $this->bestEffort;
     }
 
-    public function enrichWithBestEffort(SegmentEffort $segmentEffort): void
+    public function withBestEffort(SegmentEffort $segmentEffort): self
     {
-        $this->bestEffort = $segmentEffort;
+        return clone ($this, [
+            'bestEffort' => $segmentEffort,
+        ]);
     }
 
     public function getNumberOfTimesRidden(): int
@@ -184,9 +187,11 @@ final class Segment implements SupportsAITooling
         return $this->numberOfTimesRidden;
     }
 
-    public function enrichWithNumberOfTimesRidden(int $numberOfTimesRidden): void
+    public function withNumberOfTimesRidden(int $numberOfTimesRidden): self
     {
-        $this->numberOfTimesRidden = $numberOfTimesRidden;
+        return clone ($this, [
+            'numberOfTimesRidden' => $numberOfTimesRidden,
+        ]);
     }
 
     public function getLastEffortDate(): ?SerializableDateTime
@@ -194,9 +199,11 @@ final class Segment implements SupportsAITooling
         return $this->lastEffortDate;
     }
 
-    public function enrichWithLastEffortDate(SerializableDateTime $lastEffortDate): void
+    public function withLastEffortDate(?SerializableDateTime $lastEffortDate): self
     {
-        $this->lastEffortDate = $lastEffortDate;
+        return clone ($this, [
+            'lastEffortDate' => $lastEffortDate,
+        ]);
     }
 
     public function isFavourite(): bool
@@ -218,9 +225,9 @@ final class Segment implements SupportsAITooling
 
     public function flagDetailsAsImported(): self
     {
-        $this->detailsHaveBeenImported = true;
-
-        return $this;
+        return clone ($this, [
+            'detailsHaveBeenImported' => true,
+        ]);
     }
 
     public function getPolyline(): ?EncodedPolyline
@@ -228,11 +235,11 @@ final class Segment implements SupportsAITooling
         return $this->polyline;
     }
 
-    public function updatePolyline(?EncodedPolyline $polyline): self
+    public function withPolyline(?EncodedPolyline $polyline): self
     {
-        $this->polyline = $polyline;
-
-        return $this;
+        return clone ($this, [
+            'polyline' => $polyline,
+        ]);
     }
 
     public function getStartingCoordinate(): ?Coordinate
@@ -252,13 +259,13 @@ final class Segment implements SupportsAITooling
 
     public function getLeafletMap(): ?LeafletMap
     {
-        if (!$this->getPolyline()) {
+        if (!$this->getPolyline() instanceof EncodedPolyline) {
             return null;
         }
         if (!$this->isZwiftSegment()) {
             return new RealWorldMap();
         }
-        if (!$startingCoordinate = $this->getStartingCoordinate()) {
+        if (!($startingCoordinate = $this->getStartingCoordinate()) instanceof Coordinate) {
             return null;
         }
 

@@ -1,6 +1,6 @@
 export default class FullscreenManager {
-    constructor(chartManager) {
-        this.chartManager = chartManager;
+    constructor() {
+
     }
 
     init(rootNode) {
@@ -14,22 +14,15 @@ export default class FullscreenManager {
 
                 const fullScreenContent = el.closest('[data-fullscreen-content]');
                 fullScreenContent.requestFullscreen().then(() => {
-                    this.chartManager.resizeAll();
+                    document.dispatchEvent(new CustomEvent('fullScreenModeWasEnabled', {
+                        bubbles: true,
+                    }));
                 });
 
                 fullScreenContent.addEventListener('fullscreenchange', () => {
-                    el.classList.toggle(
-                        'hidden',
-                        Boolean(document.fullscreenElement)
-                    );
-                    fullScreenContent.classList.toggle(
-                        'fullscreen-is-enabled',
-                        Boolean(document.fullscreenElement)
-                    );
-                    fullScreenContent.classList.toggle(
-                        'group',
-                        Boolean(document.fullscreenElement)
-                    );
+                    el.classList.toggle('hidden', Boolean(document.fullscreenElement));
+                    fullScreenContent.classList.toggle('fullscreen-is-enabled', Boolean(document.fullscreenElement));
+                    fullScreenContent.classList.toggle('group', Boolean(document.fullscreenElement));
                 });
 
             });

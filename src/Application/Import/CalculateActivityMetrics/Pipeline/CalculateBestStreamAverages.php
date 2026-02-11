@@ -38,8 +38,7 @@ final readonly class CalculateBestStreamAverages implements CalculateActivityMet
                     $bestAverages[$timeIntervalInSeconds] = $bestAverage;
                 }
                 ++$countCalculatedStreams;
-                $stream->updateBestAverages($bestAverages);
-                $this->activityStreamRepository->update($stream);
+                $this->activityStreamRepository->update($stream->withBestAverages($bestAverages));
 
                 $progressIndicator->updateMessage(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));
             }

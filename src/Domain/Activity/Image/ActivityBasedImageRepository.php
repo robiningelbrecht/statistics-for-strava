@@ -3,7 +3,7 @@
 namespace App\Domain\Activity\Image;
 
 use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
@@ -13,7 +13,7 @@ use App\Infrastructure\ValueObject\Time\Years;
 final readonly class ActivityBasedImageRepository implements ImageRepository
 {
     public function __construct(
-        private ActivityRepository $activityRepository,
+        private EnrichedActivities $enrichedActivities,
         private HidePhotosForSportTypes $hidePhotosForSportTypes,
         private KernelProjectDir $kernelProjectDir,
     ) {
@@ -22,7 +22,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
     public function findAll(): Images
     {
         $images = Images::empty();
-        $activities = $this->activityRepository->findAll();
+        $activities = $this->enrichedActivities->findAll();
         /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
             if (0 === $activity->getTotalImageCount()) {
@@ -42,8 +42,10 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
                 $images->add(Image::create(
                     imageLocation: $localImagePath,
-                    activity: $activity,
+                    activityId: $activity->getId(),
+                    sportType: $activity->getSportType(),
                     orientation: $imageOrientation,
+                    relatedCountryCodes: $activity->getRouteGeography()->getPassedThroughCountries(),
                 ));
             }
         }
@@ -53,7 +55,7 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
     public function findRandomFor(SportTypes $sportTypes, Years $years): Image
     {
-        $activities = $this->activityRepository->findAll()->toArray();
+        $activities = $this->enrichedActivities->findAll()->toArray();
         shuffle($activities);
 
         foreach ($activities as $activity) {
@@ -79,17 +81,19 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
 
             return Image::create(
                 imageLocation: $localImagePaths[$randomImageIndex],
-                activity: $activity,
+                activityId: $activity->getId(),
+                sportType: $activity->getSportType(),
                 orientation: $imageOrientation,
+                relatedCountryCodes: $activity->getRouteGeography()->getPassedThroughCountries(),
             );
         }
 
-        throw new EntityNotFound(sprintf('Random image not found'));
+        throw new EntityNotFound('Random image not found');
     }
 
     public function count(): int
     {
-        $activities = $this->activityRepository->findAll();
+        $activities = $this->enrichedActivities->findAll();
         $totalImageCount = 0;
 
         foreach ($activities as $activity) {

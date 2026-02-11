@@ -18,8 +18,3 @@ If you hit the daily rate limit, the app will automatically import the remaining
 
 No, the app only supports one Strava account at a time. If you want to use multiple Strava accounts, 
 you will need to run multiple instances of the app, each with its own Strava client ID and secret.
-
-## Is dark mode supported?
-
-No, Dark Mode is not supported (anymore). There were too many issues with rendering the charts.
-If you really want to use the app in dark mode, you can use a browser extension like [Dark Reader](https://darkreader.org/).

@@ -15,7 +15,7 @@ final readonly class MaxHeartRateFormulas
     public function determineFormula(string|array $maxHeartRateFormulaFromConfig): MaxHeartRateFormula
     {
         if (is_string($maxHeartRateFormulaFromConfig)) {
-            if (empty(trim($maxHeartRateFormulaFromConfig))) {
+            if (in_array(trim($maxHeartRateFormulaFromConfig), ['', '0'], true)) {
                 throw new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA cannot be empty');
             }
 
@@ -30,7 +30,7 @@ final readonly class MaxHeartRateFormulas
             };
         }
 
-        if (empty($maxHeartRateFormulaFromConfig)) {
+        if ([] === $maxHeartRateFormulaFromConfig) {
             throw new InvalidHeartRateFormula('MAX_HEART_RATE_FORMULA date range cannot be empty');
         }
 

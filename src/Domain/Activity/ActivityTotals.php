@@ -39,7 +39,7 @@ final class ActivityTotals
         SerializableDateTime $now,
         TranslatorInterface $translator): self
     {
-        if (null === self::$instance) {
+        if (!self::$instance instanceof ActivityTotals) {
             self::$instance = new self(
                 activities: $activities,
                 now: $now,

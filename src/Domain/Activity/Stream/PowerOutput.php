@@ -2,7 +2,7 @@
 
 namespace App\Domain\Activity\Stream;
 
-use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityId;
 
 final readonly class PowerOutput
 {
@@ -11,7 +11,7 @@ final readonly class PowerOutput
         private string $formattedTimeInterval,
         private int $power,
         private float $relativePower,
-        private ?Activity $activity = null,
+        private ?ActivityId $activityId = null,
     ) {
     }
 
@@ -20,14 +20,14 @@ final readonly class PowerOutput
         string $formattedTimeInterval,
         int $power,
         float $relativePower,
-        ?Activity $activity = null,
+        ?ActivityId $activityId = null,
     ): self {
         return new self(
             timeIntervalInSeconds: $timeIntervalInSeconds,
             formattedTimeInterval: $formattedTimeInterval,
             power: $power,
             relativePower: $relativePower,
-            activity: $activity
+            activityId: $activityId
         );
     }
 
@@ -51,8 +51,8 @@ final readonly class PowerOutput
         return $this->relativePower;
     }
 
-    public function getActivity(): ?Activity
+    public function getActivityId(): ?ActivityId
     {
-        return $this->activity;
+        return $this->activityId;
     }
 }

@@ -23,7 +23,7 @@ final class TrainingGoals extends Collection
      */
     public static function fromConfig(array $items): self
     {
-        if (empty($items)) {
+        if ([] === $items) {
             return self::empty();
         }
 

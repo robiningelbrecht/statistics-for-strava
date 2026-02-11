@@ -16,14 +16,14 @@ final class SegmentEffortBuilder
     private SegmentEffortId $segmentEffortId;
     private SegmentId $segmentId;
     private ActivityId $activityId;
-    private readonly SerializableDateTime $startDateTime;
-    private string $name;
-    private float $elapsedTimeInSeconds;
+    private SerializableDateTime $startDateTime;
+    private string $name = 'Segment One';
+    private float $elapsedTimeInSeconds = 9.3;
     private Kilometer $distance;
-    private ?float $averageWatts;
+    private ?float $averageWatts = 200;
     private readonly ?int $maxHeartRate;
     private readonly ?int $averageHeartRate;
-    private ?int $rank;
+    private ?int $rank = 1;
 
     private function __construct()
     {
@@ -31,11 +31,7 @@ final class SegmentEffortBuilder
         $this->segmentId = SegmentId::fromUnprefixed('1');
         $this->activityId = ActivityId::fromUnprefixed('1');
         $this->startDateTime = SerializableDateTime::fromString('2023-10-10');
-        $this->name = 'Segment One';
-        $this->elapsedTimeInSeconds = 9.3;
         $this->distance = Kilometer::from(0.1);
-        $this->averageWatts = 200;
-        $this->rank = 1;
         $this->averageHeartRate = null;
         $this->maxHeartRate = null;
     }
@@ -114,6 +110,13 @@ final class SegmentEffortBuilder
     public function withRank(?int $rank): self
     {
         $this->rank = $rank;
+
+        return $this;
+    }
+
+    public function withStartDateTime(SerializableDateTime $startDateTime): self
+    {
+        $this->startDateTime = $startDateTime;
 
         return $this;
     }

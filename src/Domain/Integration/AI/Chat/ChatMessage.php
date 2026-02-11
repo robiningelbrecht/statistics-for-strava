@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use NeuronAI\Chat\Enums\MessageRole;
 
 #[ORM\Entity]
+#[ORM\Index(name: 'ChatMessage_on', columns: ['on'])]
 final class ChatMessage
 {
     private ?ProfilePictureUrl $userProfilePictureUrl = null;

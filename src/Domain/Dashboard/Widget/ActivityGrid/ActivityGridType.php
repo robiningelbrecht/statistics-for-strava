@@ -41,7 +41,7 @@ enum ActivityGridType: string implements TranslatableInterface
                 [
                     'min' => 0,
                     'max' => 0,
-                    'color' => '#cdd9e5',
+                    'color' => '#9CA3AF',
                     'label' => $translator->trans('No activities'),
                 ],
                 [
@@ -72,7 +72,7 @@ enum ActivityGridType: string implements TranslatableInterface
                 [
                     'min' => 0,
                     'max' => 0,
-                    'color' => '#cdd9e5',
+                    'color' => '#9CA3AF',
                     'label' => $translator->trans('No activities'),
                 ],
                 [
@@ -103,7 +103,7 @@ enum ActivityGridType: string implements TranslatableInterface
                 [
                     'min' => 0,
                     'max' => 0,
-                    'color' => '#cdd9e5',
+                    'color' => '#9CA3AF',
                     'label' => $translator->trans('No activities'),
                 ],
                 [

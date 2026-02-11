@@ -53,9 +53,11 @@ final class MaintenanceTask
         return $this->intervalUnit;
     }
 
-    public function enrichWithMostRecentMaintenanceTaskTag(?MaintenanceTaskTag $maintenanceTaskTag): void
+    public function withMostRecentMaintenanceTaskTag(?MaintenanceTaskTag $maintenanceTaskTag): self
     {
-        $this->mostRecentMaintenanceTaskTag = $maintenanceTaskTag;
+        return clone ($this, [
+            'mostRecentMaintenanceTaskTag' => $maintenanceTaskTag,
+        ]);
     }
 
     public function getMostRecentMaintenanceTaskTag(): ?MaintenanceTaskTag

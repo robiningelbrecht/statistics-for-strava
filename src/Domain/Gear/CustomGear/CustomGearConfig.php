@@ -6,7 +6,6 @@ namespace App\Domain\Gear\CustomGear;
 
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
-use App\Domain\Gear\GearType;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\HashtagPrefix;
 use App\Infrastructure\ValueObject\String\Name;
@@ -32,7 +31,7 @@ final readonly class CustomGearConfig
     public static function fromArray(
         ?array $config,
     ): self {
-        if (empty($config)) {
+        if (null === $config || [] === $config) {
             return new self(
                 isFeatureEnabled: false,
                 hashtagPrefix: HashtagPrefix::fromString('dummy'),
@@ -79,7 +78,6 @@ final readonly class CustomGearConfig
 
             $gear = CustomGear::create(
                 gearId: GearId::fromUnprefixed($customGear['tag']),
-                type: GearType::CUSTOM,
                 distanceInMeter: Meter::zero(),
                 createdOn: SerializableDateTime::some(),
                 name: (string) Name::fromString($customGear['label']),
@@ -90,7 +88,7 @@ final readonly class CustomGearConfig
                 $customGear['tag'])
             );
             if (isset($customGear['purchasePrice'])) {
-                $gear->enrichWithPurchasePrice(new Money(
+                $gear = $gear->withPurchasePrice(new Money(
                     amount: $customGear['purchasePrice']['amountInCents'],
                     currency: new Currency($customGear['purchasePrice']['currency'])
                 ));
@@ -154,8 +152,6 @@ final readonly class CustomGearConfig
             return $gear;
         }
 
-        $gear->enrichWithPurchasePrice($configuredCustomGear->getPurchasePrice());
-
-        return $gear;
+        return $gear->withPurchasePrice($configuredCustomGear->getPurchasePrice());
     }
 }

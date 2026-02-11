@@ -61,11 +61,7 @@ final readonly class MonthlyStatsChart
         $delta = 1;
         /** @var Year $year */
         foreach ($years as $year) {
-            if ($delta <= $this->enableLastXYearsByDefault) {
-                $selectedSeries[$year->toInt()] = true;
-            } else {
-                $selectedSeries[$year->toInt()] = false;
-            }
+            $selectedSeries[$year->toInt()] = $delta <= $this->enableLastXYearsByDefault;
             ++$delta;
 
             $data = [];
@@ -77,11 +73,7 @@ final readonly class MonthlyStatsChart
                 );
 
                 if (is_null($stats)) {
-                    if ($month->isBefore($firstMonth) || $month->isAfter($lastMonth)) {
-                        $data[] = null;
-                    } else {
-                        $data[] = 0;
-                    }
+                    $data[] = $month->isBefore($firstMonth) || $month->isAfter($lastMonth) ? null : 0;
                 } else {
                     $data[] = match ($this->context) {
                         StatsContext::MOVING_TIME => $stats['movingTime']->toHour()->toInt(),

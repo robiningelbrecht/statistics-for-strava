@@ -12,16 +12,14 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 final class ActivityBestEffortBuilder
 {
     private ActivityId $activityId;
-    private SportType $sportType;
+    private SportType $sportType = SportType::RIDE;
     private Meter $distanceInMeter;
-    private int $timeInSeconds;
+    private int $timeInSeconds = 3600;
 
     public function __construct()
     {
         $this->activityId = ActivityId::fromUnprefixed('test');
-        $this->sportType = SportType::RIDE;
         $this->distanceInMeter = Meter::from(10000);
-        $this->timeInSeconds = 3600;
     }
 
     public static function fromDefaults(): self

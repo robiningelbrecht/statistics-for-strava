@@ -3,7 +3,6 @@
 namespace App\Domain\Gear\ImportedGear;
 
 use App\Domain\Activity\ActivityTypes;
-use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Gear\Gear;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearType;
@@ -15,12 +14,12 @@ use Money\Money;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'Gear')]
+#[ORM\Index(name: 'Gear_type', columns: ['type'])]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string', options: ['default' => GearType::IMPORTED->value])]
 class ImportedGear implements Gear
 {
     private string $imageSrc;
-    private SportTypes $sportTypes;
     private ActivityTypes $activityTypes;
     private ?Money $purchasePrice = null;
 
@@ -30,20 +29,17 @@ class ImportedGear implements Gear
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly SerializableDateTime $createdOn,
         #[ORM\Column(type: 'integer')]
-        private Meter $distanceInMeter,
+        private readonly Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
-        private string $name,
+        private readonly string $name,
         #[ORM\Column(type: 'boolean')]
-        private bool $isRetired,
-        private readonly GearType $type,
+        private readonly bool $isRetired,
     ) {
-        $this->sportTypes = SportTypes::empty();
         $this->activityTypes = ActivityTypes::empty();
     }
 
     public static function create(
         GearId $gearId,
-        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -55,13 +51,11 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
-            type: $type,
         );
     }
 
     public static function fromState(
         GearId $gearId,
-        GearType $type,
         Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
@@ -73,7 +67,6 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
-            type: $type,
         );
     }
 
@@ -82,16 +75,11 @@ class ImportedGear implements Gear
         return $this->gearId;
     }
 
-    public function getType(): GearType
+    public function withName(string $name): self
     {
-        return $this->type;
-    }
-
-    public function updateName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
+        return clone ($this, [
+            'name' => $name,
+        ]);
     }
 
     public function getOriginalName(): string
@@ -114,18 +102,18 @@ class ImportedGear implements Gear
         return $this->isRetired;
     }
 
-    public function updateIsRetired(bool $isRetired): self
+    public function withIsRetired(bool $isRetired): static
     {
-        $this->isRetired = $isRetired;
-
-        return $this;
+        return clone ($this, [
+            'isRetired' => $isRetired,
+        ]);
     }
 
-    public function updateDistance(Meter $distance): self
+    public function withDistance(Meter $distance): static
     {
-        $this->distanceInMeter = $distance;
-
-        return $this;
+        return clone ($this, [
+            'distanceInMeter' => $distance,
+        ]);
     }
 
     public function getCreatedOn(): SerializableDateTime
@@ -142,16 +130,11 @@ class ImportedGear implements Gear
         return $this->imageSrc;
     }
 
-    public function enrichWithImageSrc(string $imageSrc): self
+    public function withImageSrc(string $imageSrc): static
     {
-        $this->imageSrc = $imageSrc;
-
-        return $this;
-    }
-
-    public function getSportTypes(): SportTypes
-    {
-        return $this->sportTypes;
+        return clone ($this, [
+            'imageSrc' => $imageSrc,
+        ]);
     }
 
     public function getActivityTypes(): ActivityTypes
@@ -159,20 +142,11 @@ class ImportedGear implements Gear
         return $this->activityTypes;
     }
 
-    public function enrichWithSportTypes(SportTypes $sportTypes): self
+    public function withActivityTypes(ActivityTypes $activityTypes): static
     {
-        $this->sportTypes = $sportTypes;
-        $this->activityTypes = ActivityTypes::empty();
-        /** @var \App\Domain\Activity\SportType\SportType $sportType */
-        foreach ($this->sportTypes as $sportType) {
-            $activityType = $sportType->getActivityType();
-            if ($this->activityTypes->has($activityType)) {
-                continue;
-            }
-            $this->activityTypes->add($activityType);
-        }
-
-        return $this;
+        return clone ($this, [
+            'activityTypes' => $activityTypes,
+        ]);
     }
 
     public function getPurchasePrice(): ?Money
@@ -180,11 +154,11 @@ class ImportedGear implements Gear
         return $this->purchasePrice;
     }
 
-    public function enrichWithPurchasePrice(Money $purchasePrice): Gear
+    public function withPurchasePrice(Money $purchasePrice): static
     {
-        $this->purchasePrice = $purchasePrice;
-
-        return $this;
+        return clone ($this, [
+            'purchasePrice' => $purchasePrice,
+        ]);
     }
 
     /**

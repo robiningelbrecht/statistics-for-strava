@@ -4,9 +4,9 @@
 }]} %}
 {% autoescape false %}
     <div class="grid grid-cols-1 gap-y-2 heatmap-wrapper">
-        <div class="lg:flex items-center justify-between gap-x-[2rem] p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <div class="lg:flex items-center justify-between gap-x-8 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <form class="flex flex-col gap-y-2" autocomplete="off">
-                <div class="flex flex-col sm:flex-row gap-2">
+                <div class="flex flex-wrap gap-2">
                     {% if sportTypes|length > 0 %}
                         <div class="filter-dropdown">
                             <button id="dropdownSportTypesButton"

@@ -2,12 +2,11 @@
 
 namespace App\Tests\Domain\Activity;
 
-use App\Domain\Activity\ActivitiesEnricher;
 use App\Domain\Activity\ActivityIntensity;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\DailyTrainingLoad;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
@@ -26,7 +25,6 @@ class DailyTrainingLoadTest extends ContainerTestCase
 {
     private DailyTrainingLoad $dailyTrainingLoad;
     private AthleteRepository $athleteRepository;
-    private FtpHistory $ftpHistory;
 
     public function testCalculateWithPowerBasedData(): void
     {
@@ -62,18 +60,17 @@ class DailyTrainingLoadTest extends ContainerTestCase
     public function testCalculateWhenFtpNotFound(): void
     {
         $this->dailyTrainingLoad = new DailyTrainingLoad(
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             new ActivityIntensity(
-                $this->getContainer()->get(ActivitiesEnricher::class),
+                $this->getContainer()->get(EnrichedActivities::class),
                 $this->athleteRepository = new KeyValueBasedAthleteRepository(
                     $this->getContainer()->get(KeyValueStore::class),
                     $this->getContainer()->get(MaxHeartRateFormula::class),
                     $this->getContainer()->get(RestingHeartRateFormula::class),
                 ),
-                $this->ftpHistory = FtpHistory::fromArray([]),
+                FtpHistory::fromArray([]),
             ),
-            $this->ftpHistory = FtpHistory::fromArray([]),
+            FtpHistory::fromArray([]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
@@ -162,10 +159,9 @@ class DailyTrainingLoadTest extends ContainerTestCase
         parent::setUp();
 
         $this->dailyTrainingLoad = new DailyTrainingLoad(
-            $this->getContainer()->get(ActivityRepository::class),
-            $this->getContainer()->get(ActivitiesEnricher::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             $this->getContainer()->get(ActivityIntensity::class),
-            $this->ftpHistory = FtpHistory::fromArray(['2023-04-01' => 250]),
+            FtpHistory::fromArray(['2023-04-01' => 250]),
             $this->athleteRepository = new KeyValueBasedAthleteRepository(
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),

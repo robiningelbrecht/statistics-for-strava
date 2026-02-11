@@ -11,6 +11,7 @@ use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Time\DateRange;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use League\Flysystem\FilesystemOperator;
@@ -26,6 +27,7 @@ final readonly class TrainingLoadWidget implements Widget
         private FilesystemOperator $buildStorage,
         private Environment $twig,
         private TranslatorInterface $translator,
+        private Clock $clock,
     ) {
     }
 
@@ -66,6 +68,10 @@ final readonly class TrainingLoadWidget implements Widget
                     )->build()
                 ),
                 'trainingMetrics' => $trainingMetrics,
+                'trainingLoadForecast' => TrainingLoadForecastProjection::create(
+                    metrics: $trainingMetrics,
+                    now: $this->clock->getCurrentDateTimeImmutable()
+                ),
                 'restDaysInLast7Days' => $numberOfRestDays,
                 'timeInHeartRateZonesForLast30Days' => $timeInHeartRateZonesForLast30Days,
             ])

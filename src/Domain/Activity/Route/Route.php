@@ -13,22 +13,21 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final class Route implements \JsonSerializable
+final readonly class Route implements \JsonSerializable
 {
-    private UnitSystem $unitSystem;
-    private DateAndTimeFormat $dateAndTimeFormat;
-    private string $relativeActivityUri;
-
     private function __construct(
-        private readonly ActivityId $activityId,
-        private readonly string $name,
-        private readonly Kilometer $distance,
-        private readonly string $encodedPolyline,
-        private readonly RouteGeography $routeGeography,
-        private readonly SportType $sportType,
-        private readonly bool $isCommute,
-        private readonly ?WorkoutType $workoutType,
-        private readonly SerializableDateTime $on,
+        private ActivityId $activityId,
+        private string $name,
+        private Kilometer $distance,
+        private string $encodedPolyline,
+        private RouteGeography $routeGeography,
+        private SportType $sportType,
+        private bool $isCommute,
+        private ?WorkoutType $workoutType,
+        private SerializableDateTime $on,
+        private ?UnitSystem $unitSystem,
+        private ?DateAndTimeFormat $dateAndTimeFormat,
+        private ?string $relativeActivityUri,
     ) {
     }
 
@@ -53,6 +52,9 @@ final class Route implements \JsonSerializable
             isCommute: $isCommute,
             workoutType: $workoutType,
             on: $on,
+            unitSystem: null,
+            dateAndTimeFormat: null,
+            relativeActivityUri: null,
         );
     }
 
@@ -101,17 +103,21 @@ final class Route implements \JsonSerializable
         return $this->on;
     }
 
-    public function enrichWithUnitSystemAndDateTimeFormat(
+    public function withUnitSystemAndDateTimeFormat(
         UnitSystem $unitSystem,
         DateAndTimeFormat $dateAndTimeFormat,
-    ): void {
-        $this->unitSystem = $unitSystem;
-        $this->dateAndTimeFormat = $dateAndTimeFormat;
+    ): self {
+        return clone ($this, [
+            'unitSystem' => $unitSystem,
+            'dateAndTimeFormat' => $dateAndTimeFormat,
+        ]);
     }
 
-    public function enrichWithRelativeActivityUri(string $uri): void
+    public function withRelativeActivityUri(string $uri): self
     {
-        $this->relativeActivityUri = $uri;
+        return clone ($this, [
+            'relativeActivityUri' => $uri,
+        ]);
     }
 
     /**
@@ -122,16 +128,16 @@ final class Route implements \JsonSerializable
         $state = $this->getRouteGeography()->getStartingPointState();
 
         $distance = $this->getDistance();
-        if (isset($this->unitSystem)) {
+        if (!is_null($this->unitSystem)) {
             $distance = $distance->toUnitSystem($this->unitSystem);
         }
         $distanceInScalar = $distance->toFloat();
         $precision = $distanceInScalar < 100 ? 1 : 0;
         $distance = number_format(round($distanceInScalar, $precision), $precision, '.', ' ').$distance->getSymbol();
 
-        $startDate = isset($this->dateAndTimeFormat) ?
-            $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal()) :
-            $this->getOn()->format('d-m-Y');
+        $startDate = is_null($this->dateAndTimeFormat) ?
+            $this->getOn()->format('d-m-Y') :
+            $this->getOn()->format((string) $this->dateAndTimeFormat->getDateFormatNormal());
 
         return [
             'active' => true,

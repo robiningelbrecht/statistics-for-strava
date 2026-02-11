@@ -42,8 +42,6 @@ export class FilterManager {
                 if (from && range.from) from.valueAsDate = new Date(range.from);
                 if (to && range.to) to.valueAsDate = new Date(range.to);
             });
-
-        this.storage.clearAll();
     }
 
     getActiveFilters() {
@@ -136,7 +134,7 @@ export class FilterManager {
         return rows;
     }
 
-    resetAll() {
+    resetAll(tableName) {
         const elements = this.wrapper.querySelectorAll('[data-dataTable-filter], [data-dataTable-filter*="[]"] input');
         elements.forEach(el => {
             if (el.type === 'radio' || el.type === 'checkbox') {
@@ -145,7 +143,7 @@ export class FilterManager {
                 el.value = '';
             }
         });
-        this.storage.clearAll();
+        this.storage.clearAll(tableName);
     }
 
     resetOne(name) {
@@ -156,6 +154,10 @@ export class FilterManager {
                 el.value = '';
             }
         });
+    }
+
+    updateStorage(tableName, activeFilters) {
+        this.storage.set(tableName, activeFilters);
     }
 }
 
@@ -177,7 +179,6 @@ export class SummableCalculator {
         });
     }
 }
-
 
 export class Sorter {
     constructor(columns) {
@@ -250,18 +251,21 @@ export class DataTableStorage {
         this.storageKey = storageKey;
     }
 
-    clearAll() {
-        localStorage.removeItem(this.storageKey);
+    clearAll(tableName) {
+        this.set(tableName, {});
     }
 
-    get(name) {
+    get(tableName) {
         const storedJson = localStorage.getItem(this.storageKey);
         if (!storedJson) return {};
         const parsed = JSON.parse(storedJson);
-        return parsed[name] || {};
+        return parsed[tableName] || {};
     }
 
-    set(object) {
-        localStorage.setItem(this.storageKey, JSON.stringify(object));
+    set(tableName, object) {
+        const storedJson = localStorage.getItem(this.storageKey);
+        const existing = storedJson ? JSON.parse(storedJson) : {};
+        existing[tableName] = object;
+        localStorage.setItem(this.storageKey, JSON.stringify(existing));
     }
 }

@@ -34,7 +34,7 @@ final class KeyValueBasedAthleteRepository implements AthleteRepository
 
     public function find(): Athlete
     {
-        if (null !== $this->cachedAthlete) {
+        if ($this->cachedAthlete instanceof Athlete) {
             return $this->cachedAthlete;
         }
 

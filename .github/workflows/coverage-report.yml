@@ -20,6 +20,7 @@ jobs:
         with:
           php-version: '8.5'
           coverage: xdebug
+          extensions: zstd
 
       # https://github.com/marketplace/actions/checkout
       - name: Checkout

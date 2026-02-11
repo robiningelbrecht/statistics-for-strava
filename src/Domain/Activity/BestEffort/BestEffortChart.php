@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\SportType\SportType;
-use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\Theme\Theme;
+use App\Infrastructure\ValueObject\Measurement\Length\ConvertableToMeter;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -14,22 +14,22 @@ final readonly class BestEffortChart
 {
     private function __construct(
         private ActivityType $activityType,
-        private ActivityBestEfforts $bestEfforts,
-        private SportTypes $sportTypes,
+        private BestEffortPeriod $period,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private TranslatorInterface $translator,
     ) {
     }
 
     public static function create(
         ActivityType $activityType,
-        ActivityBestEfforts $bestEfforts,
-        SportTypes $sportTypes,
+        BestEffortPeriod $period,
+        BestEffortsCalculator $bestEffortsCalculator,
         TranslatorInterface $translator,
     ): self {
         return new self(
             activityType: $activityType,
-            bestEfforts: $bestEfforts,
-            sportTypes: $sportTypes,
+            period: $period,
+            bestEffortsCalculator: $bestEffortsCalculator,
             translator: $translator
         );
     }
@@ -41,12 +41,12 @@ final readonly class BestEffortChart
     {
         $series = [];
 
-        $uniqueSportTypesInBestEfforts = $this->bestEfforts->getUniqueSportTypes();
-        /** @var SportType $sportType */
-        foreach ($this->sportTypes as $sportType) {
-            if (!$uniqueSportTypesInBestEfforts->has($sportType)) {
-                continue;
-            }
+        $sportTypes = $this->bestEffortsCalculator->getSportTypesFor(
+            period: $this->period,
+            activityType: $this->activityType
+        );
+
+        foreach ($sportTypes as $sportType) {
             $series[] = [
                 'name' => $sportType->trans($this->translator),
                 'type' => 'bar',
@@ -58,12 +58,21 @@ final readonly class BestEffortChart
                 'label' => [
                     'show' => false,
                 ],
-                'data' => $this->bestEfforts->getBySportType($sportType)->map(fn (ActivityBestEffort $bestEffort): int => $bestEffort->getTimeInSeconds()),
+                'itemStyle' => [
+                    'color' => Theme::getColorForSportType($sportType),
+                ],
+                'data' => array_filter(array_map(
+                    fn (ConvertableToMeter $distance): ?int => $this->bestEffortsCalculator->for(
+                        period: $this->period,
+                        sportType: $sportType,
+                        distance: $distance,
+                    )?->getTimeInSeconds(),
+                    $this->activityType->getDistancesForBestEffortCalculation()
+                )),
             ];
         }
 
         return [
-            'backgroundColor' => '#ffffff',
             'animation' => true,
             'color' => ['#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
             'grid' => [

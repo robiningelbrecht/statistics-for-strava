@@ -12,24 +12,18 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final class ActivityStreamBuilder
 {
     private ActivityId $activityId;
-    private StreamType $streamType;
+    private StreamType $streamType = StreamType::WATTS;
     private SerializableDateTime $createdOn;
-    private array $data;
-    private array $computedFieldsState;
-    private array $bestAverages;
-    private array $valueDistribution;
-    private ?int $normalizedPower;
+    private array $data = [];
+    private array $computedFieldsState = [];
+    private array $bestAverages = [];
+    private array $valueDistribution = [];
+    private ?int $normalizedPower = null;
 
     private function __construct()
     {
         $this->activityId = ActivityId::fromUnprefixed('1234');
-        $this->streamType = StreamType::WATTS;
         $this->createdOn = SerializableDateTime::fromString('2023-10-10');
-        $this->data = [];
-        $this->computedFieldsState = [];
-        $this->bestAverages = [];
-        $this->valueDistribution = [];
-        $this->normalizedPower = null;
     }
 
     public static function fromDefaults(): self

@@ -81,7 +81,7 @@ class HeatmapDrawer {
         });
 
         const html = `
-            <div class="m-4 text-sm max-h-50 overflow-y-auto">
+            <div class="m-4 text-sm max-h-50 overflow-y-auto no-dark">
                 <div class="font-medium">${nearby.length} nearby route(s):</div>
                  <ul class="divide-default divide-y divide-gray-200">
                     ${nearby.map(entry => `
@@ -176,7 +176,7 @@ class HeatmapDrawer {
     }
 }
 
-export class Heatmap {
+export default class Heatmap {
     constructor(wrapper, modalManager) {
         this.wrapper = wrapper;
         this.heatmap = wrapper.querySelector('[data-leaflet-routes]');

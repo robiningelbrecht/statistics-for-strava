@@ -14,70 +14,70 @@
             <span class="sr-only">{{ "Show information"|trans }}</span>
         </button>
         <div data-popover id="popover-description-athlete-profile" role="tooltip"
-             class="hidden lg:block lg:w-md xl:w-162 absolute z-100 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
+             class="hidden lg:block lg:w-md xl:w-162 absolute z-999999 invisible text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0">
             <div class="p-3 space-y-2">
                 <p>
-                    {% trans %}This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.{% endtrans %}
+                    {{ "This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis."|trans }}
                 </p>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Volume"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How much do you train on average per week{% endtrans %}
+                        {{ "How much do you train on average per week"|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 italic leading-relaxed text-gray-600">
-                    A 6-hour week scores higher than a 5-hour week.
+                    {{ "A 6-hour week scores higher than a 5-hour week."|trans }}
                 </blockquote>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Consistency"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How often do you train{% endtrans %}
+                        {{ "How often do you train"|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 leading-relaxed text-gray-600">
-                    Training 4–5 days every week scores higher than doing everything in one or two days.
+                    {{ "Training 4–5 days every week scores higher than doing everything in one or two days."|trans }}
                 </blockquote>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Intensity"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How hard is your typical training session{% endtrans %}
+                        {{ "How hard is your typical training session"|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 leading-relaxed text-gray-600">
-                    A high intensity score means a larger share of your training is hard rather than easy.
+                    {{ "A high intensity score means a larger share of your training is hard rather than easy."|trans }}
                 </blockquote>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Duration"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How long is your typical training session{% endtrans %}
+                        {{ "How long is your typical training session"|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 leading-relaxed text-gray-600">
-                    Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.
+                    {{ "Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions."|trans }}
                 </blockquote>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Density"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How much training you do in total on days you train.{% endtrans %}
+                        {{ "How much training you do in total on days you train."|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 leading-relaxed text-gray-600">
-                    A high score means you concentrate more training into fewer, heavier days
+                     {{ "A high score means you concentrate more training into fewer, heavier days."|trans }}
                 </blockquote>
                 <div class="flex gap-x-2">
                     <h3 class="font-semibold text-gray-900">{{ "Sport variety"|trans }}</h3>
                     <span>-</span>
                     <p>
-                        {% trans %}How diverse is your training{% endtrans %}
+                        {{ "How diverse is your training"|trans }}
                     </p>
                 </div>
                 <blockquote class="text-xs px-4 py-2 border-l-4 border-gray-300 bg-gray-50 leading-relaxed text-gray-600">
-                    Doing a mix of cycling, running, swimming, and strength work increases your variety score.
+                    {{ "Doing a mix of cycling, running, swimming, and strength work increases your variety score."|trans }}
                 </blockquote>
             </div>
         </div>

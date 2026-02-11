@@ -89,6 +89,7 @@ components:
           # - km (every x km used),
           # - mi (every x miles used),
           # - hours (every x hours used),
+          # - daysUsed (every x days used),
           # - days (every x days),
           unit: km
 # If you don't want to reference images, set gears to an empty array: `gears: []`       

@@ -10,8 +10,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class DoctrineMigrationRunner implements MigrationRunner
 {
+    public function __construct(
+        private MigrationSquashHandler $migrationSquashHandler,
+    ) {
+    }
+
     public function run(OutputInterface $output): void
     {
+        $this->migrationSquashHandler->handle();
+
         $input = new ArrayInput([
             'command' => 'doctrine:migrations:migrate',
         ]);

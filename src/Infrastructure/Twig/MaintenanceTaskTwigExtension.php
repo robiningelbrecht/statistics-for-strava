@@ -28,7 +28,7 @@ final readonly class MaintenanceTaskTwigExtension
         IntervalUnit $intervalUnit,
         int $intervalValue,
     ): MaintenanceTaskProgress {
-        if (null === $lastTaggedOnActivityId || null === $lastTaggedOn) {
+        if (!$lastTaggedOnActivityId instanceof ActivityId || !$lastTaggedOn instanceof SerializableDateTime) {
             return MaintenanceTaskProgress::from(0, '0');
         }
 

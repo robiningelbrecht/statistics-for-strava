@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Gear\ImportedGear;
 
 use App\Domain\Gear\GearId;
-use App\Domain\Gear\GearType;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -15,16 +14,14 @@ final class ImportedGearBuilder
     private GearId $gearId;
     private SerializableDateTime $createdOn;
     private Meter $distanceInMeter;
-    private string $name;
-    private bool $isRetired;
+    private string $name = 'Existing gear';
+    private bool $isRetired = false;
 
     private function __construct()
     {
         $this->gearId = GearId::fromUnprefixed('1');
         $this->createdOn = SerializableDateTime::fromString('2023-10-10');
         $this->distanceInMeter = Meter::from(10023);
-        $this->name = 'Existing gear';
-        $this->isRetired = false;
     }
 
     public static function fromDefaults(): self
@@ -36,7 +33,6 @@ final class ImportedGearBuilder
     {
         return ImportedGear::fromState(
             gearId: $this->gearId,
-            type: GearType::IMPORTED,
             distanceInMeter: $this->distanceInMeter,
             createdOn: $this->createdOn,
             name: $this->name,

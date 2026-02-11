@@ -45,6 +45,7 @@ class RestingHeartRateFormulasTest extends TestCase
     {
         return [
             [new Fixed(205), 205],
+            [new Fixed(205), '205'],
             [new HeuristicAgeBased(), 'heuristicAgeBased'],
             [
                 DateRangeBased::empty()->addRange(

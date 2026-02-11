@@ -15,6 +15,7 @@ use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
@@ -30,83 +31,14 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
 
     public function testProcess(): void
     {
-        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
-        $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
         $output = new SpyOutput();
 
-        for ($i = 5; $i <= 20; ++$i) {
-            $activityWithRawDataRepository->add(
-                ActivityWithRawData::fromState(
-                    ActivityBuilder::fromDefaults()
-                        ->withActivityId(ActivityId::fromUnprefixed($i))
-                        ->build(),
-                    []
-                )
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::DISTANCE)
-                    ->withData([1])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::ALTITUDE)
-                    ->withData([2])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::CADENCE)
-                    ->withData([3])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::WATTS)
-                    ->withData([])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::TIME)
-                    ->withData([3])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::MOVING)
-                    ->withData([true])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::VELOCITY)
-                    ->withData([3])
-                    ->build()
-            );
-            $streamRepository->add(
-                ActivityStreamBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed($i))
-                    ->withStreamType(StreamType::LAT_LNG)
-                    ->withData([[1, 2]])
-                    ->build()
-            );
-        }
-
-        $this->calculateCombinedStreams->process($output);
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
+        $this->provideGeneralTestData(
+            sportType: SportType::RIDE,
+            omitDistanceStream: false,
         );
+        $this->calculateCombinedStreams->process($output);
+        $this->assertDatabaseResults();
 
         $this->calculateCombinedStreams->process($output);
         $this->assertMatchesTextSnapshot($output);
@@ -116,56 +48,9 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
     {
         $output = new SpyOutput();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
-            ActivityWithRawData::fromState(
-                ActivityBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                    ->withSportType(SportType::RUN)
-                    ->build(),
-                []
-            )
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::DISTANCE)
-                ->withData([1])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::ALTITUDE)
-                ->withData([2])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::CADENCE)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::WATTS)
-                ->withData([])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::TIME)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::VELOCITY)
-                ->withData([3])
-                ->build()
+        $this->provideGeneralTestData(
+            sportType: SportType::RIDE,
+            omitDistanceStream: false,
         );
 
         new CalculateCombinedStreams(
@@ -180,133 +65,184 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
             )
         )->process($output);
 
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
-        );
+        $this->assertDatabaseResults();
     }
 
     public function testProcessWithEmptyDistanceStream(): void
     {
         $output = new SpyOutput();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
-            ActivityWithRawData::fromState(
-                ActivityBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                    ->build(),
-                []
-            )
+        $this->provideGeneralTestData(
+            sportType: SportType::RIDE,
+            omitDistanceStream: true,
         );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::DISTANCE)
-                ->withData([])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::ALTITUDE)
-                ->withData([2])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::CADENCE)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::WATTS)
-                ->withData([])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::TIME)
-                ->withData([3])
-                ->build()
-        );
-
         $this->calculateCombinedStreams->process($output);
-
-        $this->assertEmpty(
-            $this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative()
-        );
+        $this->assertDatabaseResults();
     }
 
-    public function testProcessForRunWithVelocity(): void
+    public function testProcessForRun(): void
     {
         $output = new SpyOutput();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->provideGeneralTestData(
+            sportType: SportType::RUN,
+            omitDistanceStream: false,
+        );
+        $this->calculateCombinedStreams->process($output);
+        $this->assertDatabaseResults();
+    }
+
+    public function testProcessWhenStreamDataIsMissingOrEmpty(): void
+    {
+        $output = new SpyOutput();
+
+        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
+
+        $activityId = ActivityId::fromUnprefixed('one');
+        $activityWithRawDataRepository->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
-                    ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                    ->withSportType(SportType::RUN)
+                    ->withSportType(SportType::RIDE)
+                    ->withActivityId($activityId)
                     ->build(),
                 []
             )
         );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+        $streamRepository->add(
             ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::DISTANCE)
-                ->withData([1])
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::TIME)
+                ->withData([0, 1, 2, 3, 4, 6, 8, 9, 10, 12, 15])
                 ->build()
         );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+        $streamRepository->add(
             ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::ALTITUDE)
-                ->withData([2])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
+                ->withActivityId($activityId)
                 ->withStreamType(StreamType::CADENCE)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::WATTS)
                 ->withData([])
                 ->build()
         );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
+        $streamRepository->add(
             ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::TIME)
-                ->withData([3])
-                ->build()
-        );
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('test-5'))
-                ->withStreamType(StreamType::VELOCITY)
-                ->withData([3])
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::WATTS)
+                ->withData([0, 145, 168, 175, 172, 0, 0, 180, 185, 0, 192])
                 ->build()
         );
 
         $this->calculateCombinedStreams->process($output);
+        $this->assertDatabaseResults();
+    }
+
+    private function provideGeneralTestData(
+        SportType $sportType,
+        bool $omitDistanceStream,
+    ): void {
+        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
+
+        $activityId = ActivityId::fromUnprefixed('one');
+        $activityWithRawDataRepository->add(
+            ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withSportType($sportType)
+                    ->withActivityId($activityId)
+                    ->build(),
+                []
+            )
+        );
+        if (!$omitDistanceStream) {
+            $streamRepository->add(
+                ActivityStreamBuilder::fromDefaults()
+                    ->withActivityId($activityId)
+                    ->withStreamType(StreamType::DISTANCE)
+                    ->withData([0.0, 4.5, 9.2, 13.9, 18.5, 18.7, 18.8, 23.4, 28.1, 28.1, 35.0])
+                    ->build()
+            );
+        }
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::ALTITUDE)
+                ->withData([12.0, 12.3, 12.8, 13.2, 13.1, 13.0, 13.0, 13.6, 14.1, 14.0, 15.2])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::HEART_RATE)
+                ->withData([92, 108, 122, 134, 141, 138, 132, 145, 151, 147, 158])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::CADENCE)
+                ->withData([0, 78, 82, 84, 83, 0, 0, 85, 87, 0, 89])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::WATTS)
+                ->withData([0, 145, 168, 175, 172, 0, 0, 180, 185, 0, 192])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::TIME)
+                ->withData([0, 1, 2, 3, 4, 6, 8, 9, 10, 12, 15])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::MOVING)
+                ->withData([false, true, true, true, true, false, false, true, true, false, true])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::VELOCITY)
+                ->withData([0.0, 4.5, 4.7, 4.6, 4.6, 0.0, 0.0, 4.6, 4.7, 0.0, 4.8])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::LAT_LNG)
+                ->withData([
+                    [51.200000, 3.216000],
+                    [51.200080, 3.216090],
+                    [51.200160, 3.216180],
+                    [51.200240, 3.216270],
+                    null,
+                    null,
+                    null,
+                    [51.200400, 3.216450],
+                    [51.200520, 3.216580],
+                    null,
+                    [51.200700, 3.216900],
+                ])
+                ->build()
+        );
+    }
+
+    private function assertDatabaseResults(): void
+    {
+        $results = $this->getConnection()
+            ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative();
+
+        foreach ($results as &$result) {
+            $result['data'] = CompressedString::fromCompressed($result['data'])->uncompress();
+        }
 
         $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT * FROM CombinedActivityStream')->fetchAllAssociative())
+            Json::encode($results)
         );
-
-        $this->calculateCombinedStreams->process($output);
-        $this->assertMatchesTextSnapshot($output);
     }
 
     #[\Override]

@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Application\Build\BuildBestEffortsHtml;
 
-use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\ActivityTypeRepository;
-use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\BestEffortChart;
-use App\Domain\Activity\SportType\SportTypeRepository;
+use App\Domain\Activity\BestEffort\BestEffortPeriod;
+use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;
@@ -19,9 +17,7 @@ use Twig\Environment;
 final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandler
 {
     public function __construct(
-        private ActivityTypeRepository $activityTypeRepository,
-        private SportTypeRepository $sportTypeRepository,
-        private ActivityBestEffortRepository $activityBestEffortRepository,
+        private BestEffortsCalculator $bestEffortsCalculator,
         private TranslatorInterface $translator,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
@@ -32,33 +28,19 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
     {
         assert($command instanceof BuildBestEffortsHtml);
 
-        $bestEfforts = $bestEffortsCharts = [];
+        $bestEffortsCharts = [];
 
-        $importedActivityTypes = $this->activityTypeRepository->findAll();
-        $importedSportTypes = $this->sportTypeRepository->findAll();
-
-        /** @var ActivityType $activityType */
-        foreach ($importedActivityTypes as $activityType) {
-            if (!$activityType->supportsBestEffortsStats()) {
-                continue;
+        foreach ($this->bestEffortsCalculator->getActivityTypes() as $activityType) {
+            foreach (BestEffortPeriod::cases() as $bestEffortPeriod) {
+                $bestEffortsCharts[$activityType->value][$bestEffortPeriod->value] = Json::encode(
+                    BestEffortChart::create(
+                        activityType: $activityType,
+                        period: $bestEffortPeriod,
+                        bestEffortsCalculator: $this->bestEffortsCalculator,
+                        translator: $this->translator,
+                    )->build()
+                );
             }
-
-            $bestEffortsForActivityType = $this->activityBestEffortRepository->findBestEffortsFor($activityType);
-            if ($bestEffortsForActivityType->isEmpty()) {
-                continue;
-            }
-
-            $bestEfforts[$activityType->value] = $bestEffortsForActivityType;
-            $bestEffortsCharts[$activityType->value] = Json::encode(
-                BestEffortChart::create(
-                    activityType: $activityType,
-                    bestEfforts: $bestEffortsForActivityType,
-                    sportTypes: $importedSportTypes,
-                    translator: $this->translator,
-                )->build()
-            );
-
-            $bestEffortsHistoryForActivityType = $this->activityBestEffortRepository->findBestEffortHistory($activityType);
 
             foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
                 $this->buildStorage->write(
@@ -70,21 +52,20 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
                     )),
                     $this->twig->load('html/best-efforts/best-efforts-history.html.twig')->render([
                         'activityType' => $activityType,
-                        'bestEffortsHistory' => $bestEffortsHistoryForActivityType,
+                        'period' => BestEffortPeriod::ALL_TIME,
                         'distance' => $distance,
                     ])
                 );
             }
         }
 
-        if (empty($bestEffortsCharts)) {
+        if ([] === $bestEffortsCharts) {
             return;
         }
 
         $this->buildStorage->write(
             'best-efforts.html',
             $this->twig->load('html/best-efforts/best-efforts.html.twig')->render([
-                'bestEfforts' => $bestEfforts,
                 'bestEffortsCharts' => $bestEffortsCharts,
             ])
         );

@@ -1,12 +1,15 @@
 @import "tailwindcss" source(none);
 @import "../../node_modules/flowbite/src/themes/default.css";
+@import "./chat.css";
+@import "./dark-mode.css" layer(base);
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
 @source "../../public/js/**/*.js";
 @source "../../src/Infrastructure/Twig/*.php";
+@source "../../src/Domain/Dashboard/Widget/TrainingLoad/*.php";
 
-@plugin 'tailwind-scrollbar';
+@plugin "tailwind-scrollbar";
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 
@@ -14,23 +17,9 @@
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
     --color-grey-yo: #cccccc;
-
-    --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
-    @keyframes chat-message {
-        0% {
-            max-height: 100vmax;
-        }
-        80% {
-            transform: scale(1.1);
-        }
-        100% {
-            transform: scale(1);
-            max-height: 100vmax;
-            overflow: visible;
-        }
-    }
 }
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 @custom-variant aria-asc (&[aria-sort="ascending"]);
 @custom-variant aria-desc (&[aria-sort="descending"]);
 
@@ -84,32 +73,6 @@
             @apply p-1 cursor-pointer hover:bg-[#f4f4f4];
         }
     }
-
-    .autoComplete_wrapper {
-        @apply inline-block relative w-full;
-
-        & > ul {
-            @apply absolute max-h-62 overflow-y-scroll left-0 right-0 bottom-15 p-0 z-10 list-none rounded-lg bg-white border border-gray-200 shadow-lg outline-none transition-opacity duration-150 ease-in-out;
-
-            &:empty,
-            &[hidden] {
-                @apply block opacity-0 scale-0;
-            }
-
-            & > li {
-                @apply m-1 p-2 text-left text-gray-900 rounded-lg bg-white whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-200 ease-in-out;
-
-                & mark {
-                    @apply bg-transparent text-strava-orange font-bold;
-                }
-
-                &:hover,
-                &[aria-selected="true"] {
-                    @apply cursor-pointer bg-strava-orange/15;
-                }
-            }
-        }
-    }
 }
 
 @layer components {
@@ -141,6 +104,10 @@
 
             & > a {
                 @apply inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange;
+
+                &.active {
+                    @apply text-strava-orange;
+                }
             }
         }
     }

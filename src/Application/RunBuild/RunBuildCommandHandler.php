@@ -23,7 +23,7 @@ use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Application\Import\ImportGear\GearImportStatus;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -35,7 +35,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 {
     public function __construct(
         private CommandBus $commandBus,
-        private ActivityRepository $activityRepository,
+        private ActivityIdRepository $activityIdRepository,
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
@@ -52,7 +52,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 
             return;
         }
-        if ($this->activityRepository->count() <= 0) {
+        if ($this->activityIdRepository->count() <= 0) {
             $output->writeln('<error>Wait until at least one Strava activity has been imported before building the app</error>');
 
             return;

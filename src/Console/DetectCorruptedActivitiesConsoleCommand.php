@@ -4,8 +4,9 @@ namespace App\Console;
 
 use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivitySummaryRepository;
 use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
@@ -34,7 +35,8 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
     use ProvideConsoleIntro;
 
     public function __construct(
-        private readonly ActivityRepository $activityRepository,
+        private readonly ActivityIdRepository $activityIdRepository,
+        private readonly ActivitySummaryRepository $activitySummaryRepository,
         private readonly ActivityWithRawDataRepository $activityWithRawDataRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly CombinedActivityStreamRepository $combinedActivityStreamRepository,
@@ -50,7 +52,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, $output);
-        $this->mutex->acquireLock('BuildAppConsoleCommand');
+        $this->mutex->acquireLock('DetectCorruptedActivitiesConsoleCommand');
 
         $this->outputConsoleIntro($output);
 
@@ -62,7 +64,7 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
         );
         $progressIndicator->start('Scanning activities...');
 
-        $activityIds = $this->activityRepository->findActivityIds();
+        $activityIds = $this->activityIdRepository->findAll();
         $activityIdsToDelete = ActivityIds::empty();
         foreach ($activityIds as $activityId) {
             $progressIndicator->advance();
@@ -100,8 +102,8 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
 
         $progressIndicator->finish(sprintf('Found %d activities with corrupted data', count($activityIdsToDelete)));
         $output->newLine();
-        $output->listing(array_map(function (ActivityId $activityId) {
-            $activity = $this->activityRepository->findSummary($activityId);
+        $output->listing(array_map(function (ActivityId $activityId): string {
+            $activity = $this->activitySummaryRepository->find($activityId);
 
             return sprintf(
                 'Activity "%s - %s"',

@@ -3,9 +3,9 @@
 namespace App\Tests\Domain\Gear\Maintenance\Task;
 
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Domain\Gear\Maintenance\Task\ActivityBasedMaintenanceTaskTagRepository;
@@ -80,12 +80,12 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->maintenanceTaskTagRepository = new ActivityBasedMaintenanceTaskTagRepository(
-            $this->getContainer()->get(ActivityRepository::class),
+            $this->getContainer()->get(EnrichedActivities::class),
             GearMaintenanceConfig::fromArray($this->getValidYml()),
         );
     }
 
-    private static function getValidYml(): array
+    private function getValidYml(): array
     {
         return Yaml::parse(<<<YML
 enabled: true

@@ -81,11 +81,7 @@ final readonly class YearlyStatisticsChart
         $delta = 1;
         /** @var \App\Infrastructure\ValueObject\Time\Year $year */
         foreach ($this->uniqueYears as $year) {
-            if ($delta <= $this->enableLastXYearsByDefault) {
-                $selectedSeries[$year->toInt()] = true;
-            } else {
-                $selectedSeries[$year->toInt()] = false;
-            }
+            $selectedSeries[$year->toInt()] = $delta <= $this->enableLastXYearsByDefault;
             ++$delta;
 
             $series[(string) $year] = [
@@ -101,7 +97,7 @@ final readonly class YearlyStatisticsChart
                 StatsContext::DISTANCE => Kilometer::zero()->toUnitSystem($this->unitSystem),
                 StatsContext::ELEVATION => Meter::zero()->toUnitSystem($this->unitSystem),
             };
-            foreach ($months as $month => $label) {
+            foreach (array_keys($months) as $month) {
                 for ($dayOfMonth = 1; $dayOfMonth <= 31; ++$dayOfMonth) {
                     $date = SerializableDateTime::fromString(sprintf(
                         '%04d-%02d-%02d',

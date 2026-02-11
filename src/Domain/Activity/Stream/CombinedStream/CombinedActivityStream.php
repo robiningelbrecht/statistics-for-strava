@@ -24,8 +24,10 @@ final class CombinedActivityStream
         private readonly UnitSystem $unitSystem,
         #[ORM\Column(type: 'string')]
         private readonly CombinedStreamTypes $streamTypes,
-        #[ORM\Column(type: 'json')]
+        #[ORM\Column(type: 'blob')]
         private readonly array $data,
+        #[ORM\Column(type: 'integer')]
+        private readonly int $maxYAxisValue,
     ) {
     }
 
@@ -37,29 +39,33 @@ final class CombinedActivityStream
         UnitSystem $unitSystem,
         CombinedStreamTypes $streamTypes,
         array $data,
+        int $maxYAxisValue,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
             streamTypes: $streamTypes,
             data: $data,
+            maxYAxisValue: $maxYAxisValue,
         );
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      */
     public static function fromState(
         ActivityId $activityId,
         UnitSystem $unitSystem,
         CombinedStreamTypes $streamTypes,
         array $data,
+        int $maxYAxisValue,
     ): self {
         return new self(
             activityId: $activityId,
             unitSystem: $unitSystem,
             streamTypes: $streamTypes,
             data: $data,
+            maxYAxisValue: $maxYAxisValue,
         );
     }
 
@@ -86,17 +92,22 @@ final class CombinedActivityStream
         return $this->data;
     }
 
+    public function getMaxYAxisValue(): int
+    {
+        return $this->maxYAxisValue;
+    }
+
+    public function getMaximumNumberOfDigits(): int
+    {
+        return strlen((string) $this->maxYAxisValue);
+    }
+
     /**
      * @return array<int, float>
      */
     public function getDistances(): array
     {
-        $distanceIndex = array_search(CombinedStreamType::DISTANCE, $this->streamTypes->toArray(), true);
-        if (false === $distanceIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $distanceIndex);
+        return $this->getChartStreamData(CombinedStreamType::DISTANCE);
     }
 
     /**
@@ -104,12 +115,7 @@ final class CombinedActivityStream
      */
     public function getTimes(): array
     {
-        $distanceIndex = array_search(CombinedStreamType::TIME, $this->streamTypes->toArray(), true);
-        if (false === $distanceIndex) {
-            return [];
-        }
-
-        return array_column($this->data, $distanceIndex);
+        return $this->getChartStreamData(CombinedStreamType::TIME);
     }
 
     /**
@@ -130,7 +136,10 @@ final class CombinedActivityStream
         $this->buildChartStreamDataCache();
         $streamTypesForCharts = CombinedStreamTypes::empty();
 
-        foreach ($this->chartStreamDataCache as $streamType => $_) {
+        foreach (array_keys($this->chartStreamDataCache) as $streamType) {
+            if (in_array($streamType, [CombinedStreamType::DISTANCE->value, CombinedStreamType::LAT_LNG->value, CombinedStreamType::TIME->value])) {
+                continue;
+            }
             $streamTypesForCharts->add(CombinedStreamType::from($streamType));
         }
 
@@ -149,7 +158,7 @@ final class CombinedActivityStream
 
     private function buildChartStreamDataCache(): void
     {
-        if (!empty($this->chartStreamDataCache)) {
+        if ([] !== $this->chartStreamDataCache) {
             // Cache has been built already.
             return;
         }
@@ -157,10 +166,6 @@ final class CombinedActivityStream
         $streamTypes = $this->streamTypes->toArray();
 
         foreach ($this->streamTypes as $streamType) {
-            if (in_array($streamType, [CombinedStreamType::DISTANCE, CombinedStreamType::LAT_LNG, CombinedStreamType::TIME])) {
-                continue;
-            }
-
             $index = array_search($streamType, $streamTypes, true);
             if (false === $index) {
                 continue;

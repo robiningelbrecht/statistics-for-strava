@@ -3,6 +3,7 @@
 namespace App\Domain\Activity\Stream;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Math;
 use App\Domain\Integration\AI\SupportsAITooling;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,11 +36,11 @@ final class ActivityStream implements SupportsAITooling
         #[ORM\Column(type: 'json', nullable: true)]
         private array $computedFieldsState,
         #[ORM\Column(type: 'integer', nullable: true)]
-        private ?int $normalizedPower,
+        private readonly ?int $normalizedPower,
         #[ORM\Column(type: 'json', nullable: true)]
-        private array $valueDistribution,
+        private readonly array $valueDistribution,
         #[ORM\Column(type: 'json', nullable: true)]
-        private array $bestAverages = [],
+        private readonly array $bestAverages = [],
     ) {
     }
 
@@ -112,28 +113,10 @@ final class ActivityStream implements SupportsAITooling
         if (0 === $count || $windowSize < 1) {
             return $this;
         }
-        $half = intdiv($windowSize, 2);
-        $smoothed = [];
-        for ($i = 0; $i < $count; ++$i) {
-            $start = max(0, $i - $half);
-            $end = min($count - 1, $i + $half);
-            $sum = 0.0;
-            for ($j = $start; $j <= $end; ++$j) {
-                $sum += $this->data[$j];
-            }
-            $smoothed[] = $sum / ($end - $start + 1);
-        }
 
-        return ActivityStream::fromState(
-            activityId: $this->getActivityId(),
-            streamType: $this->getStreamType(),
-            streamData: $smoothed,
-            createdOn: $this->getCreatedOn(),
-            computedFieldsState: $this->getComputedFieldsState(),
-            valueDistribution: $this->getValueDistribution(),
-            bestAverages: $this->getBestAverages(),
-            normalizedPower: $this->getNormalizedPower(),
-        );
+        return clone ($this, [
+            'data' => Math::movingAverage($this->data, $windowSize),
+        ]);
     }
 
     /**
@@ -141,7 +124,7 @@ final class ActivityStream implements SupportsAITooling
      */
     public function getData(): array
     {
-        if (StreamType::HEART_RATE === $this->getStreamType() && !empty($this->data) && max($this->data) > 300) {
+        if (StreamType::HEART_RATE === $this->getStreamType() && [] !== $this->data && max($this->data) > 300) {
             // Max BPM of 300, WTF? Must be faulty data.
             return [];
         }
@@ -168,10 +151,14 @@ final class ActivityStream implements SupportsAITooling
     /**
      * @param array<int, int> $valueDistribution
      */
-    public function updateValueDistribution(array $valueDistribution): void
+    public function withValueDistribution(array $valueDistribution): self
     {
-        $this->valueDistribution = $valueDistribution;
         $this->computedFieldsState[self::COMPUTED_FIELD_VALUE_DISTRIBUTION] = true;
+
+        return clone ($this, [
+            'valueDistribution' => $valueDistribution,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     /**
@@ -185,10 +172,14 @@ final class ActivityStream implements SupportsAITooling
     /**
      * @param array<int, int> $averages
      */
-    public function updateBestAverages(array $averages): void
+    public function withBestAverages(array $averages): self
     {
-        $this->bestAverages = $averages;
         $this->computedFieldsState[self::COMPUTED_FIELD_BEST_AVERAGES] = true;
+
+        return clone ($this, [
+            'bestAverages' => $averages,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     public function calculateBestAverageForTimeInterval(int $timeIntervalInSeconds): ?int
@@ -217,12 +208,14 @@ final class ActivityStream implements SupportsAITooling
         return $this->normalizedPower;
     }
 
-    public function updateNormalizedPower(int $normalizedPower): self
+    public function withNormalizedPower(int $normalizedPower): self
     {
-        $this->normalizedPower = $normalizedPower;
         $this->computedFieldsState[self::COMPUTED_FIELD_NORMALIZED_POWER] = true;
 
-        return $this;
+        return clone ($this, [
+            'normalizedPower' => $normalizedPower,
+            'computedFieldsState' => $this->computedFieldsState,
+        ]);
     }
 
     public function exportForAITooling(): array

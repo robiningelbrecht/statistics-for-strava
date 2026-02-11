@@ -9,7 +9,6 @@ use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,12 +25,11 @@ final readonly class AppRequestHandler
     }
 
     #[Route(path: '/{wildcard?}', requirements: ['wildcard' => '.*'], methods: ['GET'], priority: -10)]
-    public function handle(Request $request): Response
+    public function handle(): Response
     {
         if ($this->buildStorage->fileExists('index.html')) {
             return new Response($this->buildStorage->read('index.html'), Response::HTTP_OK);
         }
-
         try {
             $this->strava->verifyAccessToken();
         } catch (InvalidStravaAccessToken|InsufficientStravaAccessTokenScopes) {
