@@ -54,7 +54,7 @@ Make sure the path to the shell script matches its location on your system.
 ```yml
 services:
   app:
-    image: robiningelbrecht/strava-statistics:latest
+    image: strava-statistics:latest
     volumes:
       - ./refresh.sh:/bin/refresh.sh
       - # ... other volumes

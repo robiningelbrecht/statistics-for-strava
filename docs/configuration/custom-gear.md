@@ -23,7 +23,7 @@ Custom gears will work just like Strava-imported ones: tracking stats, allowing 
 ```yaml
 services:
   app:
-    image: robiningelbrecht/strava-statistics:latest
+    image: strava-statistics:latest
     volumes:
       - ./config:/var/www/config/app
       # ...
