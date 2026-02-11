@@ -32,6 +32,6 @@
     {
         "activityId": "activity-5",
         "streamType": "watts",
-        "valueDistribution": "{\"4\":3}"
+        "valueDistribution": "{\"4\":3,\"2\":3}"
     }
 ]

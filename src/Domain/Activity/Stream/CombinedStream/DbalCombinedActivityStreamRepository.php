@@ -75,10 +75,6 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
 
         $activityIds = [];
         foreach (ActivityType::cases() as $activityType) {
-            if (!$activityType->supportsCombinedStreamCalculation()) {
-                continue;
-            }
-
             $activityIds = array_merge($activityIds, $this->connection->executeQuery($sql,
                 [
                     'unitSystem' => $unitSystem->value,

@@ -283,10 +283,9 @@
                 if (p.seriesName === '__pace') {
                     return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace([p])}`;
                 }
-                if (p.data && p.data.grade !== undefined) {
-                    return `${p.marker} <strong>${p.value}</strong> ${p.seriesName} (${p.data.grade}%)`;
-                }
-                return `${p.marker} <strong>${p.value}</strong> ${p.seriesName}`;
+
+                const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';
+                return `${p.marker} <strong>${p.value}</strong> ${p.seriesName}${extra}`;
             }).join('<br/>');
         },
         symbolSize: (params) => {

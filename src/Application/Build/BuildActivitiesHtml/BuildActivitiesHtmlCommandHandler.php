@@ -198,42 +198,40 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $profileChart = null;
             $profileChartHeight = 0;
             $coordinateMap = [];
-            if ($activityType->supportsCombinedStreamCalculation()) {
-                try {
-                    $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
-                        activityId: $activity->getId(),
-                        unitSystem: $this->unitSystem
-                    );
+            try {
+                $combinedActivityStream = $this->combinedActivityStreamRepository->findOneForActivityAndUnitSystem(
+                    activityId: $activity->getId(),
+                    unitSystem: $this->unitSystem
+                );
 
-                    $maximumNumberOfDigits = $combinedActivityStream->getMaximumNumberOfDigits();
-                    $distances = $combinedActivityStream->getDistances();
-                    $times = $combinedActivityStream->getTimes();
-                    $grades = $combinedActivityStream->getGrades();
-                    $coordinateMap = $combinedActivityStream->getCoordinates();
+                $maximumNumberOfDigits = $combinedActivityStream->getMaximumNumberOfDigits();
+                $distances = $combinedActivityStream->getDistances();
+                $times = $combinedActivityStream->getTimes();
+                $grades = $combinedActivityStream->getGrades();
+                $coordinateMap = $combinedActivityStream->getCoordinates();
 
-                    $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
-                    $items = [];
-                    foreach ($streamTypesForCharts as $combinedStreamType) {
-                        $items[] = [
-                            'yAxisData' => $combinedActivityStream->getChartStreamData($combinedStreamType),
-                            'yAxisStreamType' => $combinedStreamType,
-                        ];
-                    }
-
-                    $combinedCharts = CombinedStreamProfileCharts::create(
-                        items: array_reverse($items),
-                        topXAxisData: $times,
-                        bottomXAxisData: $distances,
-                        bottomXAxisSuffix: $this->unitSystem->distanceSymbol(),
-                        grades: $grades,
-                        maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
-                        unitSystem: $this->unitSystem,
-                        translator: $this->translator,
-                    );
-                    $profileChart = Json::encode($combinedCharts->build());
-                    $profileChartHeight = $combinedCharts->getTotalHeight();
-                } catch (EntityNotFound) {
+                $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
+                $items = [];
+                foreach ($streamTypesForCharts as $combinedStreamType) {
+                    $items[] = [
+                        'yAxisData' => $combinedActivityStream->getChartStreamData($combinedStreamType),
+                        'yAxisStreamType' => $combinedStreamType,
+                    ];
                 }
+
+                $combinedCharts = CombinedStreamProfileCharts::create(
+                    items: array_reverse($items),
+                    topXAxisData: $times,
+                    bottomXAxisData: $distances,
+                    bottomXAxisSuffix: $this->unitSystem->distanceSymbol(),
+                    grades: $grades,
+                    maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
+                    unitSystem: $this->unitSystem,
+                    translator: $this->translator,
+                );
+                $profileChart = Json::encode($combinedCharts->build());
+                $profileChartHeight = $combinedCharts->getTotalHeight();
+            } catch (EntityNotFound) {
             }
 
             $leafletMap = $activity->getLeafletMap();

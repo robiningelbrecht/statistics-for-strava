@@ -132,6 +132,11 @@ final class ActivityStream implements SupportsAITooling
         return $this->data;
     }
 
+    public function hasValidData(): bool
+    {
+        return [] !== array_filter($this->data);
+    }
+
     /**
      * @return array<string, bool>
      */
@@ -145,6 +150,12 @@ final class ActivityStream implements SupportsAITooling
      */
     public function getValueDistribution(): array
     {
+        if (count($this->valueDistribution) <= 1) {
+            // The value distribution can be one if for example values in the velocity stream have the same value.
+            // In that case it doesn't make sense to render a distribution.
+            return [];
+        }
+
         return $this->valueDistribution;
     }
 
