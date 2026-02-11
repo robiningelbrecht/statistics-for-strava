@@ -22,9 +22,6 @@
     </php>
     <extensions>
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
-        <bootstrap class="RobinIngelbrecht\PHPUnitCoverageTools\PhpUnitExtension">
-            <parameter name="cleanUpCloverXml" value="0"/>
-        </bootstrap>
     </extensions>
     <testsuites>
         <testsuite name="Test Suite">

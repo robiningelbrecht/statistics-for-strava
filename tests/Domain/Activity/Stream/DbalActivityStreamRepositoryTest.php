@@ -25,7 +25,7 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         $this->activityStreamRepository->update(
             $stream
                 ->withBestAverages([1 => 1])
-                ->withValueDistribution([2 => 3.2, 3=> 8])
+                ->withValueDistribution([2 => 3.2, 3 => 8])
         );
 
         $streams = $this->activityStreamRepository->findByActivityId($stream->getActivityId());
@@ -33,7 +33,7 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
         $stream = $streams->getFirst();
 
         $this->assertEquals([1 => 1], $stream->getBestAverages());
-        $this->assertEquals([2 => 3.2, 3=> 8], $stream->getValueDistribution());
+        $this->assertEquals([2 => 3.2, 3 => 8], $stream->getValueDistribution());
         $this->assertEquals(
             [
                 'bestAverages' => true,

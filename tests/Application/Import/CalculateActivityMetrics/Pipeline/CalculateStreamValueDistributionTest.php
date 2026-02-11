@@ -102,7 +102,7 @@ class CalculateStreamValueDistributionTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(5))
             ->withStreamType(StreamType::WATTS)
             ->withData([])
-            ->withValueDistribution([4 => 3, 2=>3])
+            ->withValueDistribution([4 => 3, 2 => 3])
             ->build();
         $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
 
