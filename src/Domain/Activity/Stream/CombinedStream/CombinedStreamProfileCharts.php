@@ -24,12 +24,14 @@ final readonly class CombinedStreamProfileCharts
      * }> $items
      * @param array<int, int|float> $topXAxisData
      * @param array<int, int|float> $bottomXAxisData
+     * @param array<int, int|float> $grades
      */
     private function __construct(
         private array $items,
         private array $topXAxisData,
         private array $bottomXAxisData,
         private ?string $bottomXAxisSuffix,
+        private array $grades,
         private int $maximumNumberOfDigitsOnYAxis,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -43,12 +45,14 @@ final readonly class CombinedStreamProfileCharts
      * }> $items
      * @param array<int, int|float> $topXAxisData
      * @param array<int, int|float> $bottomXAxisData
+     * @param array<int, int|float> $grades
      */
     public static function create(
         array $items,
         array $topXAxisData,
         array $bottomXAxisData,
         ?string $bottomXAxisSuffix,
+        array $grades,
         int $maximumNumberOfDigitsOnYAxis,
         UnitSystem $unitSystem,
         TranslatorInterface $translator,
@@ -58,6 +62,7 @@ final readonly class CombinedStreamProfileCharts
             topXAxisData: $topXAxisData,
             bottomXAxisData: $bottomXAxisData,
             bottomXAxisSuffix: $bottomXAxisSuffix,
+            grades: $grades,
             maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigitsOnYAxis,
             unitSystem: $unitSystem,
             translator: $translator,
@@ -91,6 +96,7 @@ final readonly class CombinedStreamProfileCharts
 
         foreach ($this->items as $index => $item) {
             $yAxisData = $item['yAxisData'];
+            /** @var CombinedStreamType $yAxisStreamType */
             $yAxisStreamType = $item['yAxisStreamType'];
             $isFirst = 0 === $index;
             $isLast = $index === $count - 1;
@@ -172,6 +178,15 @@ final readonly class CombinedStreamProfileCharts
                 ],
             ];
 
+            $seriesData = $yAxisData;
+            if (CombinedStreamType::ALTITUDE === $yAxisStreamType && [] !== $this->grades) {
+                $seriesData = array_map(
+                    fn (int|float $elevation, int|float $grade): array => ['value' => $elevation, 'grade' => $grade],
+                    $yAxisData,
+                    $this->grades,
+                );
+            }
+
             $series[] = [
                 'name' => CombinedStreamType::PACE === $yAxisStreamType ? '__pace' : $yAxisSuffix,
                 'xAxisIndex' => $index,
@@ -196,7 +211,7 @@ final readonly class CombinedStreamProfileCharts
                         ],
                     ],
                 ],
-                'data' => $yAxisData,
+                'data' => $seriesData,
                 'type' => 'line',
                 'showSymbol' => false,
                 'progressive' => 5000,

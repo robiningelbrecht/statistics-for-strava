@@ -208,6 +208,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     $maximumNumberOfDigits = $combinedActivityStream->getMaximumNumberOfDigits();
                     $distances = $combinedActivityStream->getDistances();
                     $times = $combinedActivityStream->getTimes();
+                    $grades = $combinedActivityStream->getGrades();
                     $coordinateMap = $combinedActivityStream->getCoordinates();
 
                     $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
@@ -224,6 +225,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         topXAxisData: $times,
                         bottomXAxisData: $distances,
                         bottomXAxisSuffix: $this->unitSystem->distanceSymbol(),
+                        grades: $grades,
                         maximumNumberOfDigitsOnYAxis: $maximumNumberOfDigits,
                         unitSystem: $this->unitSystem,
                         translator: $this->translator,
