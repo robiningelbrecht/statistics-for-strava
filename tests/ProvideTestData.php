@@ -388,9 +388,11 @@ trait ProvideTestData
                     CombinedStreamType::TIME,
                     CombinedStreamType::DISTANCE,
                     CombinedStreamType::ALTITUDE,
+                    CombinedStreamType::GRADE,
                     CombinedStreamType::HEART_RATE,
+                    CombinedStreamType::VELOCITY,
                     CombinedStreamType::WATTS]))
-                ->withData([[1, 2, 3, 4, 5], [2, 2, 3, 4, 5], [3, 2, 3, 4, 5], [4, 2, 3, 4, 5], [5, 2, 3, 4, 5]])
+                ->withData([[1, 2, 3, 4, 5, 6, 7], [2, 2, 3, 4, 5, 6, 7], [3, 2, 3, 4, 5, 6, 7], [4, 2, 3, 4, 5, 6, 7], [5, 2, 3, 4, 5, 6, 7]])
                 ->build()
         );
     }

@@ -171,6 +171,13 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
         $streamRepository->add(
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId($activityId)
+                ->withStreamType(StreamType::GRADE)
+                ->withData([12.0, 12.3, 12.8, 13.2, 13.1, 13.0, 13.0, 13.6, 14.1, 14.0, 15.2])
+                ->build()
+        );
+        $streamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
                 ->withStreamType(StreamType::HEART_RATE)
                 ->withData([92, 108, 122, 134, 141, 138, 132, 145, 151, 147, 158])
                 ->build()
