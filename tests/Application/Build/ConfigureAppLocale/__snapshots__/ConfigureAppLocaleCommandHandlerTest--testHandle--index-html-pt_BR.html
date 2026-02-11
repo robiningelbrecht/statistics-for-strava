@@ -349,7 +349,7 @@
         },
         formatCombinedProfileTooltip: (params) => {
             if (!Array.isArray(params)) params = [params];
-            return params.map(p => {
+            return [...params].sort((a, b) => a.seriesIndex - b.seriesIndex).map(p => {
                 if (p.seriesName === '__pace') {
                     return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace([p])}`;
                 }
