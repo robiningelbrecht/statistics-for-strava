@@ -74,11 +74,6 @@ enum UnitSystem: string
         return $this->weight(1)->getSymbol();
     }
 
-    public function carbonSavedSymbol(): string
-    {
-        return sprintf('%s CO₂', $this->weight(1)->getSymbol());
-    }
-
     public function paceSymbol(): string
     {
         if (UnitSystem::METRIC === $this) {
