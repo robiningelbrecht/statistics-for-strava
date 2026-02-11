@@ -1,7 +1,7 @@
 @import "tailwindcss" source(none);
 @import "../../node_modules/flowbite/src/themes/default.css";
 @import "./chat.css";
-@import "./dark-mode.css" layer(base);
+@import "./dark-mode.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
