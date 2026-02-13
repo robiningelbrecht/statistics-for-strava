@@ -25,7 +25,8 @@ use NeuronAI\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\Messages\AssistantMessage;
 use NeuronAI\Testing\FakeAIProvider;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -116,10 +117,10 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         ]));
 
         $chatRepository = new DbalChatRepository(
-            connection:$this->getConnection(),
-            profilePictureUrl:null,
-            athleteRepository:$this->getContainer()->get(AthleteRepository::class),
-            clock:PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
+            connection: $this->getConnection(),
+            profilePictureUrl: null,
+            athleteRepository: $this->getContainer()->get(AthleteRepository::class),
+            clock: PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
         );
 
         $agent = Agent::make()->setAiProvider(
@@ -158,10 +159,10 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         ]));
 
         $chatRepository = new DbalChatRepository(
-            connection:$this->getConnection(),
-            profilePictureUrl:null,
-            athleteRepository:$this->getContainer()->get(AthleteRepository::class),
-            clock:PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
+            connection: $this->getConnection(),
+            profilePictureUrl: null,
+            athleteRepository: $this->getContainer()->get(AthleteRepository::class),
+            clock: PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
         );
 
         $agent = Agent::make()->withProvider(
@@ -201,13 +202,13 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
 
         return new AIChatRequestHandler(
-            buildStorage:$this->buildStorage,
-            neuronAIAgent:$this->neuronAIAgent,
-            chatCommands:ChatCommands::fromArray([]),
-            chatRepository:$this->chatRepository,
-            commandBus:$this->getContainer()->get(CommandBus::class),
-            formFactory:$this->getContainer()->get(FormFactoryInterface::class),
-            twig:$this->getContainer()->get(Environment::class),
+            buildStorage: $this->buildStorage,
+            neuronAIAgent: $this->neuronAIAgent,
+            chatCommands: ChatCommands::fromArray([]),
+            chatRepository: $this->chatRepository,
+            commandBus: $this->getContainer()->get(CommandBus::class),
+            formFactory: $this->getContainer()->get(FormFactoryInterface::class),
+            twig: $this->getContainer()->get(Environment::class),
         );
     }
 
@@ -222,13 +223,13 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
 
         return new AIChatRequestHandler(
-            buildStorage:$this->buildStorage,
-            neuronAIAgent:$agent,
-            chatCommands:ChatCommands::fromArray([]),
-            chatRepository:$chatRepository,
-            commandBus:$commandBus,
-            formFactory:$this->getContainer()->get(FormFactoryInterface::class),
-            twig:$this->getContainer()->get(Environment::class),
+            buildStorage: $this->buildStorage,
+            neuronAIAgent: $agent,
+            chatCommands: ChatCommands::fromArray([]),
+            chatRepository: $chatRepository,
+            commandBus: $commandBus,
+            formFactory: $this->getContainer()->get(FormFactoryInterface::class),
+            twig: $this->getContainer()->get(Environment::class),
         );
     }
 
