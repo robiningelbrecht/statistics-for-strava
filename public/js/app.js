@@ -1,17 +1,17 @@
-import {DataTableStorage} from "./filters";
+import {DataTableStorage} from "./data-table/storage";
 import Router from "./router";
-import {updateGithubLatestRelease} from "./github";
-import Sidebar from "./ui/sidebar";
-import ChartManager from "./ui/charts";
-import ModalManager from "./ui/modals";
-import PhotoWall from "./ui/photo-wall";
-import MapManager from "./ui/maps";
-import TabsManager from "./ui/tabs";
+import {updateGithubLatestRelease} from "./services/github";
+import Sidebar from "./components/sidebar";
+import ChartManager from "./components/charts";
+import ModalManager from "./components/modals";
+import PhotoWall from "./components/photo-wall";
+import MapManager from "./components/maps";
+import TabsManager from "./components/tabs";
 import LazyLoad from "../libraries/lazyload.min";
-import DataTableManager from "./ui/data-tables";
-import FullscreenManager from "./fullscreen";
-import Heatmap from "./ui/heatmap";
-import DarkModeManager from "./dark-mode";
+import DataTableManager from "./components/data-tables";
+import FullscreenManager from "./components/fullscreen";
+import Heatmap from "./components/heatmap";
+import DarkModeManager from "./components/dark-mode";
 
 const $main = document.querySelector("main");
 const dataTableStorage = new DataTableStorage();
@@ -120,7 +120,7 @@ if ($modalAIChat) {
 
 document.addEventListener('modalWasLoaded.ai-chat', async (e) => {
     const {default: Chat} = await import(
-        /* webpackChunkName: "chat" */ './ui/chat'
+        /* webpackChunkName: "chat" */ './components/chat'
         );
     const $modal = e.detail.modal;
     new Chat($modal).render();

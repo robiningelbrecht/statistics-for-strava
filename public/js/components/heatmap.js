@@ -1,4 +1,5 @@
-import {DataTableStorage, FilterManager} from "../filters";
+import {DataTableStorage} from "../data-table/storage";
+import {FilterManager} from "../data-table/filter-manager";
 import {pointToLineDistance, point, lineString} from "../../libraries/turf";
 
 class HeatmapDrawer {
