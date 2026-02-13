@@ -1,4 +1,5 @@
-import {DataTableStorage, FilterManager} from "../filters";
+import {DataTableStorage} from "../data-table/storage";
+import {FilterManager} from "../data-table/filter-manager";
 import lightGallery from "../../libraries/lightgallery/lightgallery.umd.min.js";
 import lgZoom from "../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
 import lgFullscreen from "../../libraries/lightgallery/lightgallery.lg-fullscreen.min";

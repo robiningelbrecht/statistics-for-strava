@@ -5,7 +5,7 @@ module.exports = {
     context: __dirname,
     entry: {
         'app.min': './public/js/app.js',
-        'leaflet.controls.min': './public/js/leaflet.controls.js',
+        'leaflet.controls.min': './public/js/leaflet/controls.js',
     },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),
