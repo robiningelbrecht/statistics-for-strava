@@ -1,4 +1,4 @@
-import {parents, resolveEchartsCallbacks} from "../utils";
+import {parents, resolveEchartsCallbacks, deepMerge} from "../utils";
 import {v5Theme, v5DarkTheme} from "../config/echarts-themes";
 
 export default class ChartManager {
@@ -18,17 +18,30 @@ export default class ChartManager {
         const connectedCharts = [];
         rootNode.querySelectorAll('[data-echarts-options]').forEach(chartNode => {
             const chart = echarts.init(chartNode, isDarkMode ? 'v5-dark' : 'v5');
-            const chartOptions = JSON.parse(chartNode.getAttribute('data-echarts-options'));
-            [
-                'tooltip.formatter',
-                'tooltip.valueFormatter',
-                'yAxis.axisLabel.formatter',
-                'yAxis[].axisLabel.formatter',
-                'series.symbolSize',
-                'dataZoom[].labelFormatter'
-            ].forEach(path => resolveEchartsCallbacks(chartOptions, path));
+            const rawChartOptions = chartNode.getAttribute('data-echarts-options');
 
-            chart.setOption(chartOptions);
+            const loadOptions = rawChartOptions.toLowerCase().endsWith('.json')
+                ? this.fetchChartData(rawChartOptions)
+                : Promise.resolve(JSON.parse(rawChartOptions));
+            chart.showLoading();
+
+            loadOptions.then(chartOptions => {
+                [
+                    'tooltip.formatter',
+                    'tooltip.valueFormatter',
+                    'yAxis.axisLabel.formatter',
+                    'yAxis[].axisLabel.formatter',
+                    'series.symbolSize',
+                    'dataZoom[].labelFormatter'
+                ].forEach(path => resolveEchartsCallbacks(chartOptions, path));
+                chart.setOption(chartOptions);
+            })
+                .catch(error => {
+                    console.error('Failed to load chart data:', error);
+                })
+                .finally(() => {
+                    chart.hideLoading();
+                });
 
             const clickHandlerName = chartNode.getAttribute('data-echarts-click');
             if (clickHandlerName && handlers[clickHandlerName]) {
@@ -52,6 +65,16 @@ export default class ChartManager {
 
         });
         echarts.connect(connectedCharts);
+    }
+
+    async fetchChartData(url) {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+
+        return response.json();
     }
 
     getClickHandlers() {
