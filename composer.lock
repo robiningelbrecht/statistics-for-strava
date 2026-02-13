@@ -1859,16 +1859,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.16.12",
+            "version": "3.16.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "34299cdaeded3b67737a83b840030e05d292ef1b"
+                "reference": "4b215e3d34b127174ac0b2f84134eccbe4b3c01f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/34299cdaeded3b67737a83b840030e05d292ef1b",
-                "reference": "34299cdaeded3b67737a83b840030e05d292ef1b",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/4b215e3d34b127174ac0b2f84134eccbe4b3c01f",
+                "reference": "4b215e3d34b127174ac0b2f84134eccbe4b3c01f",
                 "shasum": ""
             },
             "require": {
@@ -1915,9 +1915,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.12"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.13"
             },
-            "time": "2026-01-30T20:31:57+00:00"
+            "time": "2026-02-13T16:58:07+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -2589,16 +2589,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "2.12.3",
+            "version": "2.12.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "18416e8497105916a82bfc9de3b87e8d6efddd1e"
+                "reference": "c45f6d34cd68438bb0b7bb0721da3bda87c0684b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/18416e8497105916a82bfc9de3b87e8d6efddd1e",
-                "reference": "18416e8497105916a82bfc9de3b87e8d6efddd1e",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/c45f6d34cd68438bb0b7bb0721da3bda87c0684b",
+                "reference": "c45f6d34cd68438bb0b7bb0721da3bda87c0684b",
                 "shasum": ""
             },
             "require": {
@@ -2645,7 +2645,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/2.12.3"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/2.12.4"
             },
             "funding": [
                 {
@@ -2653,7 +2653,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-10T09:17:59+00:00"
+            "time": "2026-02-13T11:14:26+00:00"
         },
         {
             "name": "psr/cache",
@@ -8823,16 +8823,16 @@
         },
         {
             "name": "nette/utils",
-            "version": "v4.1.2",
+            "version": "v4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/utils.git",
-                "reference": "f76b5dc3d6c6d3043c8d937df2698515b99cbaf5"
+                "reference": "bb3ea637e3d131d72acc033cfc2746ee893349fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/utils/zipball/f76b5dc3d6c6d3043c8d937df2698515b99cbaf5",
-                "reference": "f76b5dc3d6c6d3043c8d937df2698515b99cbaf5",
+                "url": "https://api.github.com/repos/nette/utils/zipball/bb3ea637e3d131d72acc033cfc2746ee893349fe",
+                "reference": "bb3ea637e3d131d72acc033cfc2746ee893349fe",
                 "shasum": ""
             },
             "require": {
@@ -8844,8 +8844,10 @@
             },
             "require-dev": {
                 "jetbrains/phpstorm-attributes": "^1.2",
+                "nette/phpstan-rules": "^1.0",
                 "nette/tester": "^2.5",
-                "phpstan/phpstan": "^2.0@stable",
+                "phpstan/extension-installer": "^1.4@stable",
+                "phpstan/phpstan": "^2.1@stable",
                 "tracy/tracy": "^2.9"
             },
             "suggest": {
@@ -8906,9 +8908,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/utils/issues",
-                "source": "https://github.com/nette/utils/tree/v4.1.2"
+                "source": "https://github.com/nette/utils/tree/v4.1.3"
             },
-            "time": "2026-02-03T17:21:09+00:00"
+            "time": "2026-02-13T03:05:33+00:00"
         },
         {
             "name": "nikic/php-parser",
