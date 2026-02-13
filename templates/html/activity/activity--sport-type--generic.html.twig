@@ -392,7 +392,7 @@
                     </div>
                 </div>
             {% endif %}
-            {% if distributionCharts is not empty and profileChart is not empty  %}
+            {% if distributionCharts is not empty and hasProfileChart is not empty  %}
                 <div class="tabs tabs--default">
                     <ul id="chartsTab" data-tabs="#chartsTabContent" role="tablist">
                         <li role="presentation">
@@ -409,11 +409,12 @@
                 </div>
             {% endif %}
             <div id="chartsTabContent">
-                {% if profileChart is not empty %}
+                {% if hasProfileChart is not empty %}
+                    {% set unprefixedActivityId = activity.getId().toUnprefixedString() %}
                     <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
                         <div style="height: {{ profileChartHeight }}px"
-                             data-echarts-options='{{ profileChart }}'
-                             data-leaflet-echart-connect='{{ coordinateMap }}'
+                             data-echarts-options='api/activity/{{ unprefixedActivityId }}/metrics.json'
+                             data-leaflet-echart-connect='api/activity/{{ unprefixedActivityId }}/coordinates.json'
                         ></div>
                     </div>
                 {% endif %}

@@ -230,9 +230,21 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     unitSystem: $this->unitSystem,
                     translator: $this->translator,
                 );
-                $profileChart = Json::encode($combinedCharts->build());
+                $profileChart = $combinedCharts->build();
                 $profileChartHeight = $combinedCharts->getTotalHeight();
             } catch (EntityNotFound) {
+            }
+
+            if ($profileChart) {
+                $unprefixedActivityId = $activity->getId()->toUnprefixedString();
+                $this->apiStorage->write(
+                    sprintf('activity/%s/metrics.json', $unprefixedActivityId),
+                    (string) Json::encodeAndCompress($profileChart),
+                );
+                $this->apiStorage->write(
+                    sprintf('activity/%s/coordinates.json', $unprefixedActivityId),
+                    (string) Json::encodeAndCompress($coordinateMap),
+                );
             }
 
             $leafletMap = $activity->getLeafletMap();
@@ -253,10 +265,9 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,
                     'laps' => $this->activityLapRepository->findBy($activity->getId()),
-                    'profileChart' => $profileChart,
                     'profileChartHeight' => $profileChartHeight,
+                    'hasProfileChart' => null !== $profileChart,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
-                    'coordinateMap' => Json::encode($coordinateMap),
                 ]),
             );
 

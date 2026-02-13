@@ -1,6 +1,6 @@
 export default class MapManager {
     init(rootNode) {
-        rootNode.querySelectorAll('[data-leaflet]').forEach(function (mapNode) {
+        rootNode.querySelectorAll('[data-leaflet]').forEach(mapNode => {
             const data = JSON.parse(mapNode.getAttribute('data-leaflet'));
 
             const map = L.map(mapNode, {
@@ -15,7 +15,7 @@ export default class MapManager {
             }
 
             const featureGroup = L.featureGroup();
-            data.routes.forEach((route) => {
+            data.routes.forEach(route => {
                 const coordinates = L.Polyline.fromEncoded(route).getLatLngs();
 
                 L.polyline(coordinates, {
@@ -65,40 +65,56 @@ export default class MapManager {
                 return;
             }
 
-            const coordinateMap = JSON.parse($correspondingEChartNode.getAttribute('data-leaflet-echart-connect'));
-            if (!coordinateMap) {
+            const coordinateMapUrl = $correspondingEChartNode.getAttribute('data-leaflet-echart-connect');
+            if (!coordinateMapUrl) {
                 return;
             }
 
-            // We need to connect this leaflet map with an ECharts instance.
-            // First add a marker to the map.
-            const marker = L.circleMarker([0, 0], {
-                radius: 6,
-                color: '#303030',
-                fillColor: '#F26722',
-                fillOpacity: 0,
-                opacity: 0
-            }).addTo(map);
+            const loadCoordinateMap = this.fetchCoordinateMap(coordinateMapUrl);
+            loadCoordinateMap.then(coordinateMap => {
+                // We need to connect this leaflet map with an ECharts instance.
+                // First add a marker to the map.
+                const marker = L.circleMarker([0, 0], {
+                    radius: 6,
+                    color: '#303030',
+                    fillColor: '#F26722',
+                    fillOpacity: 0,
+                    opacity: 0
+                }).addTo(map);
 
-            const chart = echarts.getInstanceByDom($correspondingEChartNode);
-            const initialZoom = map.getZoom();
+                const chart = echarts.getInstanceByDom($correspondingEChartNode);
+                const initialZoom = map.getZoom();
 
-            chart.on('updateAxisPointer', function (event) {
-                if (!event.dataIndex || !event.dataIndex in coordinateMap) {
-                    marker.setStyle({opacity: 0, fillOpacity: 0});
-                    return;
-                }
+                chart.on('updateAxisPointer', function (event) {
+                    if (!event.dataIndex || !event.dataIndex in coordinateMap) {
+                        marker.setStyle({opacity: 0, fillOpacity: 0});
+                        return;
+                    }
 
-                const coordinate = coordinateMap[event.dataIndex];
-                marker.setLatLng(coordinate);
-                marker.setStyle({opacity: 1, fillOpacity: 1});
+                    const coordinate = coordinateMap[event.dataIndex];
+                    marker.setLatLng(coordinate);
+                    marker.setStyle({opacity: 1, fillOpacity: 1});
 
 
-                const shouldPan = map.getZoom() > initialZoom || !map.getBounds().contains(coordinate);
-                if (shouldPan) {
-                    map.panTo(coordinate);
-                }
-            });
+                    const shouldPan = map.getZoom() > initialZoom || !map.getBounds().contains(coordinate);
+                    if (shouldPan) {
+                        map.panTo(coordinate);
+                    }
+                });
+            })
+                .catch(error => {
+                    console.error('Failed to load coordinate map:', error);
+                });
         });
+    }
+
+    async fetchCoordinateMap(url) {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+
+        return response.json();
     }
 }
