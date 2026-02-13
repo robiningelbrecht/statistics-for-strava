@@ -8,8 +8,8 @@ export default class DataTableManager {
         this.storage = dataTableStorage;
     }
 
-    init(){
-        document.querySelectorAll('div[data-dataTable-settings]').forEach((wrapper) => {
+    init(rootNode){
+        rootNode.querySelectorAll('div[data-dataTable-settings]').forEach((wrapper) => {
             const table = wrapper.querySelector('table');
             const tbody = table?.querySelector('tbody');
             const scrollElem = wrapper.querySelector('.scroll-area');

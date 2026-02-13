@@ -45,6 +45,7 @@ const initElements = (rootNode) => {
     initAccordions();
 
     modalManager.init(rootNode);
+    dataTableManager.init(rootNode);
     chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
     mapManager.init(rootNode);
     fullscreenManager.init(rootNode);
@@ -65,7 +66,6 @@ document.addEventListener('tabChangeWasTriggered', (e) => {
 
 document.addEventListener('pageWasLoaded', (e) => {
     modalManager.close();
-    dataTableManager.init();
 
     chartManager.reset();
     initElements(document);
@@ -99,8 +99,9 @@ document.addEventListener('navigationLinkHasBeenClicked', (e) => {
         dataTableStorage.set(tableName, tableFilters);
     });
 });
-document.addEventListener('dataTableClusterWasChanged', () => {
-    modalManager.init(document);
+document.addEventListener('dataTableClusterWasChanged', (e) => {
+    const node = e.detail.node;
+    modalManager.init(node);
 });
 window.addEventListener('resize', function () {
     chartManager.resizeAll();

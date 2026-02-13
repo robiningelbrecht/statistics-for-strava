@@ -22,7 +22,11 @@ export class ClusterRenderer {
                     const resultCount = this.wrapper.querySelector('[data-dataTable-result-count]');
                     if (resultCount) resultCount.innerText = dataRows.filter(r => r.active).length;
 
-                    document.dispatchEvent(new CustomEvent('dataTableClusterWasChanged', { bubbles: true, cancelable: false, }));
+                    document.dispatchEvent(new CustomEvent('dataTableClusterWasChanged', {
+                        bubbles: true,
+                        cancelable: false,
+                        detail: {node: this.wrapper}
+                    }));
                 }
             }
         });
