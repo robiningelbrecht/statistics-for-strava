@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Serialization;
 
+use App\Infrastructure\ValueObject\String\CompressedString;
+
 final readonly class Json
 {
     public static function encode(mixed $value, int $depth = 512): string
@@ -29,5 +31,15 @@ Please see the troubleshooting guide for steps to resolve the issue: https://sta
     public static function encodeAndDecode(mixed $value, int $depth = 512): mixed
     {
         return self::decode(self::encode($value, $depth));
+    }
+
+    public static function encodeAndCompress(mixed $value, int $depth = 512): CompressedString
+    {
+        return CompressedString::fromUncompressed(Json::encode($value, $depth));
+    }
+
+    public static function uncompressAndDecode(string $json, bool $assoc = true, int $depth = 512): mixed
+    {
+        return Json::decode(CompressedString::fromCompressed($json)->uncompress(), $assoc, $depth);
     }
 }
