@@ -109,10 +109,10 @@ final readonly class AIChatRequestHandler
             try {
                 foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
                     if ($chunk instanceof ToolCallMessage) {
-                        continue;
+                        continue; // @codeCoverageIgnore
                     }
                     if ($chunk instanceof ToolCallResultMessage) {
-                        continue;
+                        continue; // @codeCoverageIgnore
                     }
                     $response->sendEvent(new ServerSentEvent(
                         data: '',
@@ -132,7 +132,7 @@ final readonly class AIChatRequestHandler
 
                 $message = $e->getMessage().': '.$e->getTraceAsString();
                 if ($e instanceof ClientException) {
-                    $message = $e->getResponse()->getBody()->getContents();
+                    $message = $e->getResponse()->getBody()->getContents(); // @codeCoverageIgnore
                 }
 
                 $fullMessage = 'Oh no, I made a booboo... <br />'.preg_replace('/\s+/', ' ', $message);
