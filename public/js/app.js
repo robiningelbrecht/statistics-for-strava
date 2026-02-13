@@ -50,7 +50,6 @@ const initElements = (rootNode) => {
     fullscreenManager.init(rootNode);
 }
 
-modalManager.setInitElements(initElements)
 sidebar.init();
 darkModeManager.attachEventListeners();
 
@@ -75,6 +74,10 @@ document.addEventListener('pageWasLoaded', (e) => {
         // Open modal.
         modalManager.open(e.detail.modalId);
     }
+});
+document.addEventListener('modalWasLoaded', (e) => {
+    const node = e.detail.node;
+    initElements(node);
 });
 document.addEventListener('pageWasLoaded.heatmap', async () => {
     const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
