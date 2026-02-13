@@ -77,9 +77,6 @@ final readonly class AIChatRequestHandler
         return new Response(status: Response::HTTP_NO_CONTENT);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
     public function chatSse(Request $request): EventStreamResponse
     {
