@@ -47,5 +47,9 @@ class BuildSegmentsHtmlCommandHandlerTest extends BuildAppFilesTestCase
 
         $this->commandBus->dispatch(new BuildSegmentsHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
         $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites(
+            fileSystem: $this->getContainer()->get('api.storage'),
+            contentIsCompressed: true
+        );
     }
 }

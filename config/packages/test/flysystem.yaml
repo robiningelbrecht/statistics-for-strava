@@ -17,3 +17,6 @@ flysystem:
 
         build.storage:
             adapter: 'memory'
+
+        api.storage:
+            adapter: 'memory'

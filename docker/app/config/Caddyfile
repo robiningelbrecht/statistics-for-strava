@@ -27,9 +27,9 @@
 		?Permissions-Policy "browsing-topics=()"
 	}
 
-	# Serve static .html and .json from build/html
+	# Serve static .html from build/html
 	@staticBuildFiles {
-		path *.html *.json
+		path *.html
 	}
 	handle @staticBuildFiles {
 		handle /manifest.json {

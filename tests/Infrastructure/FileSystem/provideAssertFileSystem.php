@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Infrastructure\FileSystem;
 
+use App\Infrastructure\ValueObject\String\CompressedString;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\Assert;
@@ -24,7 +25,7 @@ trait provideAssertFileSystem
         Assert::assertTrue(true, 'fileSystem is empty');
     }
 
-    protected function assertFileSystemWrites(FilesystemOperator $fileSystem): void
+    protected function assertFileSystemWrites(FilesystemOperator $fileSystem, bool $contentIsCompressed = false): void
     {
         foreach ($fileSystem->listContents('/', true) as $item) {
             $path = $item->path();
@@ -35,6 +36,9 @@ trait provideAssertFileSystem
 
             $this->snapshotName = preg_replace('/[^a-zA-Z0-9]/', '-', $path);
             $content = $fileSystem->read($path);
+            if ($contentIsCompressed) {
+                $content = CompressedString::fromCompressed($content)->uncompress();
+            }
             if (str_ends_with($path, '.json')) {
                 $this->assertMatchesJsonSnapshot($content);
                 continue;

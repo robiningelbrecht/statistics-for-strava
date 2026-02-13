@@ -57,6 +57,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
+        private FilesystemOperator $apiStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -271,9 +272,9 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             );
         }
 
-        $this->buildStorage->write(
-            'fetch-json/activity-data-table.json',
-            Json::encode($dataDatableRows),
+        $this->apiStorage->write(
+            'activity/data-table.json',
+            (string) Json::encodeAndCompress($dataDatableRows),
         );
     }
 }
