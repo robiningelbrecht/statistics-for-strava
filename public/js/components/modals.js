@@ -1,15 +1,10 @@
 export default class ModalManager {
     constructor(router) {
         this.router = router;
-        this.initElements = null;
         this.modalSkeletonNode = document.getElementById('modal-skeleton');
         this.modalContent = this.modalSkeletonNode.querySelector('#modal-content');
         this.modalSpinner = this.modalSkeletonNode.querySelector('.spinner');
         this.modal = null;
-    }
-
-    setInitElements(initElementsCallback) {
-        this.initElements = initElementsCallback;
     }
 
     init(rootNode) {
@@ -45,8 +40,11 @@ export default class ModalManager {
                 this.modalSpinner.classList.remove('flex');
 
                 this.modalContent.innerHTML = await response.text();
-                // Init elements in modal.
-                this.initElements(this.modalSkeletonNode);
+                document.dispatchEvent(new CustomEvent('modalWasLoaded', {
+                    bubbles: true,
+                    cancelable: false,
+                    detail: {node: this.modalSkeletonNode}
+                }));
                 // Modal close event listeners.
                 const closeButton = this.modalContent.querySelector('button.close');
                 if (closeButton) {
