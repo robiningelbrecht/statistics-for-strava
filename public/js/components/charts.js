@@ -1,4 +1,4 @@
-import {parents, resolveEchartsCallbacks, deepMerge} from "../utils";
+import {parents, resolveEchartsCallbacks} from "../utils";
 import {v5Theme, v5DarkTheme} from "../config/echarts-themes";
 
 export default class ChartManager {
