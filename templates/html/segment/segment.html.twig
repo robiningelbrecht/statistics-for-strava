@@ -55,20 +55,16 @@
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabHistory" role="tab" aria-controls="segmentListsTabHistory">
-                            {{ "History"|trans }}
-                        </a>
-                    </li>
-                    <li role="presentation">
                         <a href="#" data-tabs-target="#segmentListsTabHistoryChart" role="tab" aria-controls="segmentListsTabHistoryChart">
-                            {{ "History chart"|trans }}
+                            {{ "History"|trans }}
                         </a>
                     </li>
                 </ul>
             </div>
             <div id="segmentListsContent">
                 <div id="segmentListsTabTopTen" role="tabpanel" aria-labelledby="segmentListsTabTopTen-tab">
-                    <div class="relative overflow-x-auto">
+                    {% set maxHeight = leaflet ? 'max-h-[calc(100vh-585px)]' : 'max-h-[calc(100vh-285px)]' %}
+                    <div class="relative overflow-x-auto {{ maxHeight }}">
                         <table class="sortable w-full text-sm text-center text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
@@ -113,110 +109,6 @@
                             </thead>
                             <tbody>
                             {% for segmentEffort in segmentEffortsTopTen %}
-                                {% set activity = enrichedActivities.find(segmentEffort.getActivityId()) %}
-                                <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                                    <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                                        {{ loop.index }}
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        <div class="flex justify-center">
-                                            <div class="w-18">{{ segmentEffort.getStartDateTime()|formatDate() }}</div>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        <div class="flex items-center gap-x-1">
-                                            {{ activity|activityLink(ellipses: 180) }}
-                                            <a href="{{ activity.getUrl() }}" target="_blank" rel="nofollow">
-                                                <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                     viewBox="0 0 18 18">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                          d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {{ segmentEffort.getElapsedTimeFormatted() }}
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
-                                        {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
-                                            {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
-                                        {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
-                                            {{ segmentEffort.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
-                                        {% else %}
-                                            {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {{ segmentEffort.getAverageHeartRate() ?? 'n/a' }}
-                                    </td>
-                                    <td class="px-2 py-2">
-                                        {% if segmentEffort.getAverageWatts() %}
-                                            {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
-                                        {% else %}
-                                            {{ "n/a"|trans }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="px-2 py-2 truncate">
-                                        {% set gearName = activity.getGearName() %}
-                                        {% if gearName %}
-                                            {{ activity.getGearName() }}
-                                        {% else %}
-                                            {{ "Unspecified"|trans }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div id="segmentListsTabHistory" role="tabpanel" aria-labelledby="segmentListsTabHistory-tab">
-                    {% set maxHeight = leaflet ? 'max-h-[calc(100vh-585px)]' : 'max-h-[calc(100vh-285px)]' %}
-                    <div class="relative overflow-x-auto {{ maxHeight }}">
-                        <table class="sortable w-full text-sm text-center text-gray-500">
-                            <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-2 py-3 bg-gray-50">
-
-                                </th>
-                                <th scope="col" class="px-2 py-3  lg:sticky lg:left-0">
-                                    <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
-                                        {{ svg('calendar') }}
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
-                                        {{ svg('time') }}
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                        {{ svg('speed') }}
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Heart rate"|trans }}">
-                                        {{ svg('heart-rate') }}
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
-                                        {{ svg('power') }}
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-2 py-3">
-                                    <div class="flex items-center justify-center" title="{{ "Gear"|trans }}">
-                                        {{ svg('rocket') }}
-                                    </div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for segmentEffort in segmentEffortsHistory %}
                                 {% set activity = enrichedActivities.find(segmentEffort.getActivityId()) %}
                                 <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
                                     <td class="px-2 py-2 truncate lg:sticky lg:left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">

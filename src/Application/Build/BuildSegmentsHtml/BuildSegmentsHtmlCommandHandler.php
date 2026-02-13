@@ -57,7 +57,6 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     $this->twig->load('html/segment/segment.html.twig')->render([
                         'segment' => $segment,
                         'segmentEffortsTopTen' => $segmentEffortsTopTen,
-                        'segmentEffortsHistory' => $segmentEffortsHistory,
                         'segmentEffortsHistoryChart' => Json::encode(
                             SegmentEffortHistoryChart::create($segmentEffortsHistory)->build()
                         ),
