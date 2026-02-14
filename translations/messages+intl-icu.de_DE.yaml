@@ -53,7 +53,7 @@ Commutes: Pendeln
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
-'Consider reducing load': 'Consider reducing load'
+'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
 Crossfit: Crossfit
 'Current Status': 'Aktueller Status'
@@ -61,7 +61,7 @@ Crossfit: Crossfit
 'Custom gear disabled': 'Eigene Ausrüstung deaktiviert'
 Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
-'Daily activities': 'Tägliche Aktiviten'
+'Daily activities': 'Tägliche Aktivitäten'
 'Dark mode': 'Dark mode'
 Dashboard: Dashboard
 Date: Datum
@@ -210,7 +210,7 @@ None: Keine
 Normalized: Normalisiert
 'Not supported': 'Nicht unterstützt'
 Nov: Nov
-Now: Now
+Now: Jetzt
 'Number of activities per month': 'Anzahl an Aktivitäten pro Monat'
 'Number of times completed': 'Anzahl abgeschlossen'
 Oct: Okt
@@ -219,7 +219,7 @@ Oct: Okt
 'Optimal training range': 'Optimale Trainingszone'
 Other: Andere
 'Outdoor Sports': Outdoor-Sportarten
-Over-fatigued: Over-fatigued
+Over-fatigued: Übermüdet
 'Over-fatigued (–30)': 'Übermüdet (–30)'
 'Overall weekly training stress': 'Gesamte wöchentliche Trainingsbelastung'
 'PB badges': 'PB Abzeichen'
@@ -227,7 +227,7 @@ Over-fatigued: Over-fatigued
 PRs: PRs
 'PRs achieved per month': 'PRs erreicht pro Monat'
 Pace: Pace
-'Pace distribution': 'Pace distribution'
+'Pace distribution': 'Pace Verteilung'
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
 'Personal Records': 'Persönliche Bestzeiten'
@@ -246,10 +246,10 @@ Race: Wettkampf
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Rangliste
-'Recovery Timeline': 'Recovery Timeline'
-'Recovery forecast': 'Recovery forecast'
+'Recovery Timeline': 'Erholungszeitplan'
+'Recovery forecast': 'Erholungsprognose'
 'Reduced carbon emission by commuting': 'Reduzierter Kohlendioxidausstoß durch Pendler'
-'Relative cost': 'Relative cost'
+'Relative cost': 'Relative Kosten'
 'Rest Days': Ruhetage
 'Rest days': Ruhetage
 'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
@@ -296,7 +296,7 @@ Squash: Squash
 Stats: Statistiken
 'Stats per weekday': 'Statistiken pro Wochentag'
 Status: Status
-'Strava profile': 'Strava profile'
+'Strava profile': 'Strava-Profil'
 'Streak started on {date}': 'Die Serie begann am {date}'
 Streaks: Serien
 Sun: So
@@ -369,7 +369,7 @@ Wheelchair: Rollstuhl
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Training
-'Workout assistant': 'Workout assistant'
+'Workout assistant': 'Trainingsassistent'
 'Workout type': Trainingseinheitstyp
 YTD: YTD
 Year: Jahr
@@ -425,7 +425,7 @@ workouts: Trainingseinheiten
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} alle {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} Aktivitäten im {year}'
-'{numberOfMonths} months': '{numberOfMonths} months'
+'{numberOfMonths} months': '{numberOfMonths} Monate'
 '{numberOfResults} photos based on your active filters': '{numberOfResults} Fotos basierend auf deinen aktiven Filtern'
 '{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
