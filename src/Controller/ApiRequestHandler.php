@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,8 +29,17 @@ final readonly class ApiRequestHandler
                 return new Response('', Response::HTTP_NOT_FOUND);
             }
 
+            $fileContents = $this->apiStorage->read($path);
+
+            if (str_ends_with($path, '.gpx')) {
+                $response = new Response(CompressedString::fromCompressed($fileContents)->uncompress());
+                $response->headers->set('Content-Type', 'application/gpx+xml; charset=UTF-8');
+
+                return $response;
+            }
+
             return new JsonResponse(
-                data: Json::uncompressAndDecode($this->apiStorage->read($path)),
+                data: Json::uncompressAndDecode($fileContents),
                 status: Response::HTTP_OK
             );
         } catch (UnableToReadFile) {
