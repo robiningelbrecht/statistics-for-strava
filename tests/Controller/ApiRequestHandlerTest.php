@@ -4,6 +4,7 @@ namespace App\Tests\Controller;
 
 use App\Controller\ApiRequestHandler;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\UnableToReadFile;
@@ -21,9 +22,31 @@ class ApiRequestHandlerTest extends ContainerTestCase
         $buildStorage = $this->getContainer()->get('api.storage');
         $buildStorage->write('el-file.json', Json::encodeAndCompress(['lol']), []);
 
+        $response = $this->apiRequestHandler->handle('el-file.json');
         $this->assertEquals(
             '["lol"]',
-            $this->apiRequestHandler->handle('el-file.json')->getContent()
+            $response->getContent()
+        );
+        $this->assertEquals(
+            'application/json',
+            $response->headers->get('Content-Type'),
+        );
+    }
+
+    public function testHandleForGpxFile(): void
+    {
+        /** @var \League\Flysystem\InMemory\InMemoryFilesystemAdapter $buildStorage */
+        $buildStorage = $this->getContainer()->get('api.storage');
+        $buildStorage->write('el-file.gpx', CompressedString::fromUncompressed('<xml>'), []);
+
+        $response = $this->apiRequestHandler->handle('el-file.gpx');
+        $this->assertEquals(
+            '<xml>',
+            $response->getContent()
+        );
+        $this->assertEquals(
+            'application/gpx+xml; charset=UTF-8',
+            $response->headers->get('Content-Type'),
         );
     }
 
