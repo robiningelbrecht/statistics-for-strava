@@ -413,8 +413,8 @@
                     {% set unprefixedActivityId = activity.getId().toUnprefixedString() %}
                     <div id="chartsTabMetrics" role="tabpanel" aria-labelledby="chartsTabMetrics-tab">
                         <div style="height: {{ profileChartHeight }}px"
-                             data-echarts-options='api/activity/{{ unprefixedActivityId }}/metrics.json'
-                             data-leaflet-echart-connect='api/activity/{{ unprefixedActivityId }}/coordinates.json'
+                             data-echarts-options='{{ relativeUrl('api/activity/' ~ unprefixedActivityId ~ '/metrics.json') }}'
+                             data-leaflet-echart-connect='{{ relativeUrl('api/activity/' ~ unprefixedActivityId ~ '/coordinates.json') }}'
                         ></div>
                     </div>
                 {% endif %}
