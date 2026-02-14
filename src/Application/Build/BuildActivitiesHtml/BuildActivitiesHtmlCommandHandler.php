@@ -249,7 +249,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
             $leafletMap = $activity->getLeafletMap();
             $templateName = sprintf('html/activity/%s.html.twig', $activity->getSportType()->getTemplateName());
-            $gpxFileLocation = sprintf('activities/gpx/%s.gpx', $activity->getId());
+            $gpxFileLocation = sprintf('api/activity/%s/route.gpx', $activity->getId()->toUnprefixedString());
             $activityHasTimeStream = $this->activityStreamRepository->hasOneForActivityAndStreamType($activity->getId(), StreamType::TIME);
 
             $this->buildStorage->write(
@@ -259,7 +259,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'leaflet' => $leafletMap instanceof LeafletMap ? [
                         'routes' => [$activity->getPolyline()],
                         'map' => $leafletMap,
-                        'gpxLink' => $activityHasTimeStream ? 'files/'.$gpxFileLocation : null,
+                        'gpxLink' => $activityHasTimeStream ? $gpxFileLocation : null,
                     ] : null,
                     'distributionCharts' => $distributionCharts,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),

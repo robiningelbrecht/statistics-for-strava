@@ -14,6 +14,9 @@ class BuildGpxFilesCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildGpxFiles());
         $this->commandBus->dispatch(new BuildGpxFiles());
 
-        $this->assertFileSystemWrites($this->getContainer()->get('file.storage'));
+        $this->assertFileSystemWrites(
+            fileSystem: $this->getContainer()->get('api.storage'),
+            contentIsCompressed: true
+        );
     }
 }
