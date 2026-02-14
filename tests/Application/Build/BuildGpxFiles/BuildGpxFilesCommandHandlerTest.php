@@ -11,12 +11,20 @@ class BuildGpxFilesCommandHandlerTest extends BuildAppFilesTestCase
     {
         $this->provideFullTestSet();
 
+        /** @var \League\Flysystem\FilesystemOperator $fileStorage */
+        $fileStorage = $this->getContainer()->get('file.storage');
+        $fileStorage->write('activities/gpx/el-gpx.gpx', 'content');
+
         $this->commandBus->dispatch(new BuildGpxFiles());
         $this->commandBus->dispatch(new BuildGpxFiles());
 
         $this->assertFileSystemWrites(
             fileSystem: $this->getContainer()->get('api.storage'),
             contentIsCompressed: true
+        );
+
+        $this->assertFalse(
+            $fileStorage->directoryExists('activities/gpx'),
         );
     }
 }
