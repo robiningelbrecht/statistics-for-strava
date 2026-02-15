@@ -1,3 +1,16 @@
+# [v4.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.3) - 2026-02-15
+
+## What's Changed
+* ISSUE #1742: Fix duplicate rendering of gear maintenance rows by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1743
+* ISSUE #1746: Re-arrange javascript files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1747
+* ISSUE #1745: Introduce compressed API calls to reduce file sizes by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1748
+* ISSUE #1745: Introduce compressed API calls to render charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1749
+* ISSUE #1745: compress gpx files by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1753
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1752
+* ISSUE #1754: Reduce Docker image size by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1755
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.2...v4.6.3
+
 # [v4.6.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.2) - 2026-02-11
 
 Another day, another release improving the activity metric charts.
