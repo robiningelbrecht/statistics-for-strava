@@ -49,6 +49,30 @@ class BuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
     }
 
+    public function testExecuteWhenExceptionIsThrown(): void
+    {
+        $dispatchedCommands = [];
+        $this->commandBus
+            ->expects($this->atLeastOnce())
+            ->method('dispatch')
+            ->willThrowException(new \RuntimeException('OH NO ERROR'));
+
+        $this->logger
+            ->expects($this->once())
+            ->method('error');
+
+        $this->expectExceptionObject(new \RuntimeException('OH NO ERROR'));
+
+        $command = $this->getCommandInApplication('app:strava:build-files');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+        ]);
+
+        $this->assertMatchesSnapshot($commandTester->getDisplay(), new ConsoleOutputSnapshotDriver());
+        $this->assertMatchesJsonSnapshot(Json::encode($dispatchedCommands));
+    }
+
     #[\Override]
     protected function setUp(): void
     {

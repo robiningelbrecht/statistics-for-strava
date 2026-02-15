@@ -55,13 +55,18 @@ final class ImportStravaDataConsoleCommand extends Command
             $restrictToActivityIds = ActivityIds::fromArray([ActivityId::fromUnprefixed($restrictToActivityId)]);
         }
 
-        $this->migrationRunner->run($output);
-        $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
+        try {
+            $this->migrationRunner->run($output);
+            $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
 
-        $this->commandBus->dispatch(new RunImport(
-            output: $output,
-            restrictToActivityIds: $restrictToActivityIds,
-        ));
+            $this->commandBus->dispatch(new RunImport(
+                output: $output,
+                restrictToActivityIds: $restrictToActivityIds,
+            ));
+        } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage());
+            throw $e;
+        }
 
         $this->resourceUsage->stopTimer();
         $output->writeln(sprintf(

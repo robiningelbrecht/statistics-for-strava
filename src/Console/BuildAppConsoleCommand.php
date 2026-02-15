@@ -41,13 +41,18 @@ final class BuildAppConsoleCommand extends Command
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
         $this->resourceUsage->startTimer();
-        $this->mutex->acquireLock('BuildAppConsoleCommand');
-
         $this->outputConsoleIntro($output);
 
-        $this->commandBus->dispatch(new RunBuild(
-            output: $output,
-        ));
+        try {
+            $this->mutex->acquireLock('BuildAppConsoleCommand');
+
+            $this->commandBus->dispatch(new RunBuild(
+                output: $output,
+            ));
+        } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage());
+            throw $e;
+        }
 
         $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(
