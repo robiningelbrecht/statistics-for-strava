@@ -33,11 +33,6 @@ RUN set -eux; \
         pcntl \
         zstd;
 
-# Install zstd - compression algorithm
-RUN install-php-extensions zstd;
-
-
-
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
 COPY docker/app/config/Caddyfile /etc/frankenphp/Caddyfile
 COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
