@@ -32,6 +32,18 @@ class GearStatsWidgetTest extends ContainerTestCase
         $this->assertMatchesHtmlSnapshot($render);
     }
 
+    public function testRenderWhenThereAreNoGears(): void
+    {
+        $config = WidgetConfiguration::empty()
+            ->add('includeRetiredGear', false);
+
+        $render = $this->widget->render(
+            now: SerializableDateTime::fromString('2025-10-16'),
+            configuration: $config
+        );
+        $this->assertNull($render);
+    }
+
     #[DataProvider(methodName: 'provideInvalidConfig')]
     public function testGuardValidConfigurationItShouldThrow(WidgetConfiguration $config, string $expectedException): void
     {
