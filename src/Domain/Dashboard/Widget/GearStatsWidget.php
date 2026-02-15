@@ -47,7 +47,7 @@ final readonly class GearStatsWidget implements Widget
         }
     }
 
-    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
+    public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $allYears = Years::all($this->clock->getCurrentDateTimeImmutable());
         $allUsedGears = $this->gearRepository->findAllUsed();
@@ -55,6 +55,10 @@ final readonly class GearStatsWidget implements Widget
 
         if (!$configuration->get('includeRetiredGear')) {
             $allUsedGears = $allUsedGears->filter(fn (Gear $gear): bool => !$gear->isRetired());
+        }
+
+        if ($allUsedGears->isEmpty()) {
+            return null;
         }
 
         $gearsPerActivityType = [];
