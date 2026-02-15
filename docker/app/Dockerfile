@@ -30,12 +30,13 @@ RUN set -eux; \
         xml \
         xmlreader \
         xmlwriter \
-        pcntl;
+        pcntl \
+        zstd;
 
 # Install zstd - compression algorithm
-RUN apk add --no-cache zstd-dev autoconf gcc g++ make
-RUN pecl install zstd && docker-php-ext-enable zstd
-RUN apk del zstd-dev autoconf gcc g++ make
+RUN install-php-extensions zstd;
+
+
 
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
 COPY docker/app/config/Caddyfile /etc/frankenphp/Caddyfile
