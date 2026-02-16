@@ -59,7 +59,7 @@
                             <th scope="row"
                                 class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 <div>
-                                    <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{{ dataFilters(enum(FilterName).ACTIVITIES, {distance: {from: statistic.min, to: statistic.max, multiplier: 10}}) }}' class="text-blue-600 hover:underline">
+                                    <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{{ dataFilters('activities', {distance: {from: statistic.min, to: statistic.max, multiplier: 10}}) }}' class="text-blue-600 hover:underline">
                                         {{ statistic.label }}
                                     </a>
                                 </div>
