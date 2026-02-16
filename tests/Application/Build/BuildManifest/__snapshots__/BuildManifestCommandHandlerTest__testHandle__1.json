@@ -20,7 +20,7 @@
     "background_color": "#f9fafb",
     "icons": [
         {
-        "src": "/assets/images/manifest/icon-apple-180.png",
+        "src": "/assets/images/manifest/icon-apple-180.maskable.png",
         "sizes": "180x180",
         "type": "image/png"
         },
