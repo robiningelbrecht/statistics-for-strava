@@ -7,7 +7,9 @@
             "start-date": 1694552738000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 61,
+            "elevation": 90
         },
         "summables": {
             "distance": 6.11,
@@ -35,7 +37,9 @@
             "start-date": 1694466338000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 61,
+            "elevation": 90
         },
         "summables": {
             "distance": 6.11,
@@ -66,7 +70,9 @@
             ],
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 61,
+            "elevation": 90
         },
         "summables": {
             "distance": 6.11,
@@ -94,7 +100,9 @@
             "start-date": 1693861538000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 61,
+            "elevation": 90
         },
         "summables": {
             "distance": 6.11,
@@ -122,7 +130,9 @@
             "start-date": 1693499735000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "zwift"
+            "device": "zwift",
+            "distance": 335,
+            "elevation": 2780
         },
         "summables": {
             "distance": 33.55,
@@ -150,7 +160,9 @@
             "start-date": 1693499735000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "zwift"
+            "device": "zwift",
+            "distance": 335,
+            "elevation": 2780
         },
         "summables": {
             "distance": 33.55,
@@ -186,7 +198,9 @@
             "start-date": 1690821335000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "rouvy"
+            "device": "rouvy",
+            "distance": 335,
+            "elevation": 2780
         },
         "summables": {
             "distance": 33.55,
@@ -214,7 +228,8 @@
             "start-date": 1690734935000,
             "isCommute": "false",
             "gear": "gear-b12659562",
-            "device": "device-none"
+            "device": "device-none",
+            "elevation": 2780
         },
         "summables": {
             "distance": 0,
@@ -241,7 +256,8 @@
             "start-date": 1690734935000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "device-none"
+            "device": "device-none",
+            "elevation": 2780
         },
         "summables": {
             "distance": 0,
@@ -268,7 +284,9 @@
             "start-date": 1690623243000,
             "isCommute": "true",
             "gear": "gear-b12659861",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 124,
+            "elevation": 150
         },
         "summables": {
             "distance": 12.42,
@@ -296,7 +314,9 @@
             "start-date": 1690616043000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 1124,
+            "elevation": 150
         },
         "summables": {
             "distance": 112.42,
@@ -324,7 +344,9 @@
             "start-date": 1690536843000,
             "isCommute": "false",
             "gear": "gear-b12659862",
-            "device": "polar-vantage-m"
+            "device": "polar-vantage-m",
+            "distance": 124,
+            "elevation": 150
         },
         "summables": {
             "distance": 12.42,
@@ -352,7 +374,9 @@
             "start-date": 1659198935000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "device-none"
+            "device": "device-none",
+            "distance": 500,
+            "elevation": 2780
         },
         "summables": {
             "distance": 50,
@@ -380,7 +404,8 @@
             "start-date": 1659198935000,
             "isCommute": "false",
             "gear": "gear-b12659861",
-            "device": "device-none"
+            "device": "device-none",
+            "elevation": 2780
         },
         "summables": {
             "distance": 0,
@@ -415,7 +440,8 @@
             "start-date": 1596126935000,
             "isCommute": "false",
             "gear": "gear-none",
-            "device": "device-none"
+            "device": "device-none",
+            "elevation": 2780
         },
         "summables": {
             "distance": 0,

@@ -7,6 +7,9 @@ module.exports = {
         'app.min': './public/js/app.js',
         'leaflet.controls.min': './public/js/leaflet/controls.js',
     },
+    optimization: {
+        minimize: true
+    },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),
         filename: '[name].js',

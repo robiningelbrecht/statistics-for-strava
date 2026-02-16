@@ -55,6 +55,7 @@ Compare: 对比
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
+Country: Country
 Crossfit: 交叉健身
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -74,6 +75,7 @@ Density: Density
 Details: 详情
 Device: 设备
 Distance: 距离
+'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 距离分解
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
@@ -97,8 +99,6 @@ Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
 'Filter on country': 按国家筛选
-'Filter on device': 按设备筛选
-'Filter on gear': 按装备筛选
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
 Fitness: 健身
@@ -108,7 +108,6 @@ Fitness: 健身
 'Form (TSB)': '状态 (TSB)'
 Fri: 周五
 Friday: 星期五
-From: 从
 Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
 'Gear details': 装备详情
@@ -319,7 +318,6 @@ Thu: 周四
 Thursday: 星期四
 Time: 时间
 'Times completed': 完成次数
-To: 到
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
@@ -408,7 +406,9 @@ hours: 小时
 hrs: hrs
 kudos: 赞
 'last {numberOfDays} days': '最近{numberOfDays}天'
+max: max
 'max gradient': 最大坡度
+min: min
 months: 月
 more: 更多
 n/a: 不适用

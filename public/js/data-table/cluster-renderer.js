@@ -14,7 +14,8 @@ export class ClusterRenderer {
             rows: dataRows.filter(r => r.active).map(r => r.markup),
             scrollElem: this.scrollElem,
             contentElem: this.tbody,
-            no_data_class: 'clusterize-loading',
+            no_data_class: 'clusterize-data-empty',
+            no_data_text: 'No data found',
             callbacks: {
                 clusterChanged: () => {
                     SummableCalculator.render(this.wrapper, dataRows);

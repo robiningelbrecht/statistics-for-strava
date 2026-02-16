@@ -1841,6 +1841,9 @@
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
+  .w-23 {
+    width: calc(var(--spacing) * 23);
+  }
   .w-24 {
     width: calc(var(--spacing) * 24);
   }
@@ -2290,6 +2293,14 @@
   }
   .rounded-xs {
     border-radius: var(--radius-xs);
+  }
+  .rounded-s-lg {
+    border-start-start-radius: var(--radius-lg);
+    border-end-start-radius: var(--radius-lg);
+  }
+  .rounded-e-lg {
+    border-start-end-radius: var(--radius-lg);
+    border-end-end-radius: var(--radius-lg);
   }
   .rounded-t {
     border-top-left-radius: 0.25rem;
@@ -3412,6 +3423,11 @@
   .group-focus\/image\:opacity-100 {
     &:is(:where(.group\/image):focus *) {
       opacity: 100%;
+    }
+  }
+  .group-has-\[input\:not\(\:placeholder-shown\)\]\/range-filter\:visible {
+    &:is(:where(.group\/range-filter):has(*:is(input:not(:placeholder-shown))) *) {
+      visibility: visible;
     }
   }
   .group-aria-asc\:text-strava-orange {
@@ -4717,6 +4733,26 @@
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
     color: var(--color-strava-orange);
+    &.active {
+      background-color: var(--color-strava-orange);
+    }
+    &.active {
+      color: var(--color-white);
+    }
+    &.active {
+      &:hover {
+        @media (hover: hover) {
+          border-color: var(--color-orange-600);
+        }
+      }
+    }
+    &.active {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-orange-600);
+        }
+      }
+    }
     &:hover {
       @media (hover: hover) {
         --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -4735,26 +4771,6 @@
         @media (forced-colors: active) {
           outline: 2px solid transparent;
           outline-offset: 2px;
-        }
-      }
-    }
-    &.active {
-      background-color: var(--color-strava-orange);
-    }
-    &.active {
-      color: var(--color-white);
-    }
-    &.active {
-      &:hover {
-        @media (hover: hover) {
-          border-color: var(--color-orange-600);
-        }
-      }
-    }
-    &.active {
-      &:hover {
-        @media (hover: hover) {
-          background-color: var(--color-orange-600);
         }
       }
     }
@@ -4847,6 +4863,12 @@
           color: var(--color-strava-orange);
         }
       }
+    }
+  }
+  div[data-datatable-settings] {
+    .clusterize-data-empty td {
+      padding: calc(var(--spacing) * 4);
+      text-align: left;
     }
   }
 }

@@ -55,6 +55,7 @@ Compare: Confronta
 'Congrats! You achieved personal bests during this activity.': 'Complimenti! Hai raggiunto record personali durante questa attività.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
+Country: Country
 Crossfit: Crossfit
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -74,6 +75,7 @@ Density: Density
 Details: Dettagli
 Device: Dispositivo
 Distance: Distanza
+'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Analisi della distanza'
 'Distance in {unit}': 'Distanza in {unit}'
 'Distance over time per gear': 'Distanza nel tempo per attrezzatura'
@@ -97,8 +99,6 @@ Favourite: Preferito
 Feb: Feb
 'Filter on KOM segments': 'Filtra sui segmenti KOM'
 'Filter on country': 'Filtra per paese'
-'Filter on device': 'Filter on device'
-'Filter on gear': 'Filtra per attrezzatura'
 'Filter on sport type': 'Filtra per tipo di sport'
 'Filter on starred segments': 'Filtra sui segmenti preferiti'
 Fitness: 'Forma fisica'
@@ -108,7 +108,6 @@ Fitness: 'Forma fisica'
 'Form (TSB)': 'Forma (TSB)'
 Fri: Ven
 Friday: Venerdì
-From: Da
 Gear: Attrezzatura
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'L''attrezzatura "{gearId}" è presente nel tuo file di configurazione della manutenzione, ma non è stata importata da Strava. Verifica che esista e sia sincronizzata correttamente.'
 'Gear details': 'Dettagli attrezzatura'
@@ -319,7 +318,6 @@ Thu: Gio
 Thursday: Giovedì
 Time: Tempo
 'Times completed': 'Volte completate'
-To: A
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Per abilitarla, configura {configFile} e rigenera i file affinché le modifiche abbiano effetto'
 'Toggle sidebar': 'Mostra/Nascondi barra laterale'
 'Top 10': 'Primi 10'
@@ -408,7 +406,9 @@ hours: ore
 hrs: ore
 kudos: kudos
 'last {numberOfDays} days': 'ultimi {numberOfDays} giorni'
+max: max
 'max gradient': 'pendenza massima'
+min: min
 months: mesi
 more: altro
 n/a: n/d

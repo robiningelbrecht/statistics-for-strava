@@ -277,7 +277,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'activity' => $activity,
                 ]),
                 searchables: $activity->getSearchables(),
-                filterables: $activity->getFilterables(),
+                filterables: $activity->getFilterables($this->unitSystem),
                 sortValues: $activity->getSortables(),
                 summables: $activity->getSummables($this->unitSystem),
             );
