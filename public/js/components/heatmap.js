@@ -1,4 +1,3 @@
-import {DataTableStorage} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
 import {pointToLineDistance, point, lineString} from "../../libraries/turf";
 
@@ -184,16 +183,19 @@ export default class Heatmap {
         this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
         this.config = JSON.parse(this.heatmap.getAttribute('data-heatmap-config'));
 
-        this.filterManager = new FilterManager(wrapper, new DataTableStorage());
+        this.filterManager = new FilterManager(wrapper);
         this.drawer = new HeatmapDrawer(this.heatmap, this.config, modalManager);
     }
 
     async render() {
         const allRoutes = JSON.parse(this.heatmap.getAttribute('data-leaflet-routes'));
 
-        const redraw = () => {
+        const redraw = (updateStorage = true) => {
             const activeFilters = this.filterManager.getActiveFilters();
             this.filterManager.updateDropdownState(activeFilters);
+            if(updateStorage){
+                this.filterManager.updateStorage('heatmap', activeFilters);
+            }
 
             const routes = this.filterManager.applyFiltersToRows(allRoutes);
             this.drawer.redraw(routes);
@@ -203,7 +205,8 @@ export default class Heatmap {
             if (resultCount) resultCount.innerText = routes.filter((route) => route.active).length;
         };
 
-        redraw();
+        this.filterManager.prefillFromStorage('heatmap');
+        redraw(false);
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
 

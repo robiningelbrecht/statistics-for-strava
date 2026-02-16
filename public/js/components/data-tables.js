@@ -4,9 +4,6 @@ import {Sorter} from "../data-table/sorter";
 import {debounce} from "../utils";
 
 export default class DataTableManager {
-    constructor(dataTableStorage) {
-        this.storage = dataTableStorage;
-    }
 
     init(rootNode) {
         rootNode.querySelectorAll('div[data-dataTable-settings]').forEach((wrapper) => {
@@ -17,7 +14,7 @@ export default class DataTableManager {
             const resetBtn = wrapper.querySelector('[data-dataTable-reset]');
             const settings = JSON.parse(wrapper.getAttribute('data-dataTable-settings'));
 
-            const filterManager = new FilterManager(wrapper, this.storage);
+            const filterManager = new FilterManager(wrapper);
             const clusterRenderer = new ClusterRenderer(wrapper, tbody, scrollElem);
             const sorter = new Sorter(wrapper.querySelectorAll('thead th[data-dataTable-sort]'));
 
