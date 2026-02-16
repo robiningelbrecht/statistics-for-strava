@@ -1,3 +1,10 @@
+export const FilterName = Object.freeze({
+    ACTIVITIES: 'activities',
+    SEGMENTS: 'segments',
+    PHOTO_WALL: 'photoWall',
+    HEATMAP: 'heatmap',
+});
+
 export class FilterStorage {
     static storageKey = 'filters';
 

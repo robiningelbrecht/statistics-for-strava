@@ -1,4 +1,4 @@
-import {FilterStorage} from "../data-table/storage";
+import {FilterStorage, FilterName} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
 import lightGallery from "../../libraries/lightgallery/lightgallery.umd.min.js";
 import lgZoom from "../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
@@ -59,8 +59,8 @@ export default class PhotoWall {
             this.lightGallery.refresh(activeImages);
         };
 
-        FilterStorage.set('photoWall', JSON.parse(this.wrapper.getAttribute('data-default-filters')));
-        this.filterManager.prefillFromStorage('photoWall');
+        FilterStorage.set(FilterName.PHOTO_WALL, JSON.parse(this.wrapper.getAttribute('data-default-filters')));
+        this.filterManager.prefillFromStorage(FilterName.PHOTO_WALL);
         redraw();
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));

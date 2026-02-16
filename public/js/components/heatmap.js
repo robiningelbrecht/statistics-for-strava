@@ -1,3 +1,4 @@
+import {FilterName} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
 import {pointToLineDistance, point, lineString} from "../../libraries/turf";
 
@@ -194,7 +195,7 @@ export default class Heatmap {
             const activeFilters = this.filterManager.getActiveFilters();
             this.filterManager.updateDropdownState(activeFilters);
             if(updateStorage){
-                this.filterManager.updateStorage('heatmap', activeFilters);
+                this.filterManager.updateStorage(FilterName.HEATMAP, activeFilters);
             }
 
             const routes = this.filterManager.applyFiltersToRows(allRoutes);
@@ -205,7 +206,7 @@ export default class Heatmap {
             if (resultCount) resultCount.innerText = routes.filter((route) => route.active).length;
         };
 
-        this.filterManager.prefillFromStorage('heatmap');
+        this.filterManager.prefillFromStorage(FilterName.HEATMAP);
         redraw(false);
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
