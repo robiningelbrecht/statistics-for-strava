@@ -90,10 +90,10 @@ document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     if (!e.detail || !e.detail.link) {
         return;
     }
-    if (!e.detail.link.hasAttribute('data-dataTable-filters')) {
+    if (!e.detail.link.hasAttribute('data-filters')) {
         return;
     }
-    const filters = JSON.parse(e.detail.link.getAttribute('data-dataTable-filters'));
+    const filters = JSON.parse(e.detail.link.getAttribute('data-filters'));
     Object.entries(filters).forEach(([tableName, tableFilters]) => {
         FilterStorage.set(tableName, tableFilters);
     });
