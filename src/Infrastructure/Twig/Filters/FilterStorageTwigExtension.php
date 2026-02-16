@@ -13,8 +13,8 @@ final class FilterStorageTwigExtension
      * @param array<string, mixed> $filters
      */
     #[AsTwigFunction('dataFilters', isSafe: ['html'])]
-    public function dataFilters(FilterName $filterName, array $filters): string
+    public function dataFilters(string $filterName, array $filters): string
     {
-        return Json::encode([$filterName->value => $filters]);
+        return Json::encode([FilterName::from($filterName)->value => $filters]);
     }
 }

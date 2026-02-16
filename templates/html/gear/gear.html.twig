@@ -165,7 +165,7 @@
     {% autoescape false %}
         <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loopIndex) }}">
             <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loopIndex) }}">
-                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{{ dataFilters(enum(FilterName).ACTIVITIES, {gear: statistic.id}) }}' class="font-medium text-blue-600 hover:underline">
+                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-dataTable-filters='{{ dataFilters('activities', {gear: statistic.id}) }}' class="font-medium text-blue-600 hover:underline">
                     {{ statistic.name }}
                 </a>
             </th>

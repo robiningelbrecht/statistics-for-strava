@@ -37,7 +37,7 @@
                 <div class="text-center">
                     <dd class="text-xs text-gray-500">{{ "Device"|trans }}</dd>
                     <dt class="text-xs font-extrabold">
-                        <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-router-force-reload data-dataTable-filters='{{ dataFilters(enum(FilterName).ACTIVITIES, {device: activity.getDeviceId()}) }}' class="text-blue-600 hover:underline">
+                        <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-router-force-reload data-dataTable-filters='{{ dataFilters('activities', {device: activity.getDeviceId()}) }}' class="text-blue-600 hover:underline">
                             {{ activity.getDeviceName() ?: 'None'|trans }}
                         </a>
                     </dt>
