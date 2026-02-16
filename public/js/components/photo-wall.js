@@ -1,4 +1,4 @@
-import {DataTableStorage} from "../data-table/storage";
+import {FilterStorage} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
 import lightGallery from "../../libraries/lightgallery/lightgallery.umd.min.js";
 import lgZoom from "../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
@@ -28,11 +28,10 @@ class LightGallery {
 }
 
 export default class PhotoWall {
-    constructor(wrapper, dataTableStorage) {
+    constructor(wrapper) {
         this.wrapper = wrapper;
-        this.dataTableStorage = dataTableStorage;
         this.resetBtn = wrapper.querySelector('[data-dataTable-reset]');
-        this.filterManager = new FilterManager(wrapper, new DataTableStorage());
+        this.filterManager = new FilterManager(wrapper);
         this.allImages = Array.from(this.wrapper.querySelectorAll('[data-image]')).map(el => ({
             element: el,
             filterables: JSON.parse(el.getAttribute('data-filterables')),
@@ -60,10 +59,8 @@ export default class PhotoWall {
             this.lightGallery.refresh(activeImages);
         };
 
-        this.dataTableStorage.set('photoWall', JSON.parse(this.wrapper.getAttribute('data-default-filters')));
-        // Prefill filters.
+        FilterStorage.set('photoWall', JSON.parse(this.wrapper.getAttribute('data-default-filters')));
         this.filterManager.prefillFromStorage('photoWall');
-
         redraw();
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));

@@ -1,4 +1,4 @@
-import {DataTableStorage} from "./data-table/storage";
+import {FilterStorage} from "./data-table/storage";
 import Router from "./router";
 import {updateGithubLatestRelease} from "./services/github";
 import Sidebar from "./components/sidebar";
@@ -14,7 +14,6 @@ import Heatmap from "./components/heatmap";
 import DarkModeManager from "./components/dark-mode";
 
 const $main = document.querySelector("main");
-const dataTableStorage = new DataTableStorage();
 
 // Boot router.
 const router = new Router($main);
@@ -22,10 +21,10 @@ router.boot();
 
 const sidebar = new Sidebar($main);
 const modalManager = new ModalManager(router);
-const chartManager = new ChartManager(router, dataTableStorage, modalManager);
+const chartManager = new ChartManager(router, modalManager);
 const mapManager = new MapManager();
 const tabsManager = new TabsManager();
-const dataTableManager = new DataTableManager(dataTableStorage);
+const dataTableManager = new DataTableManager();
 const fullscreenManager = new FullscreenManager(chartManager);
 const darkModeManager = new DarkModeManager();
 const lazyLoad = new LazyLoad({
@@ -85,7 +84,7 @@ document.addEventListener('pageWasLoaded.heatmap', async () => {
 });
 document.addEventListener('pageWasLoaded.photos', () => {
     const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
-    new PhotoWall($photoWallWrapper, dataTableStorage).render();
+    new PhotoWall($photoWallWrapper).render();
 });
 document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     if (!e.detail || !e.detail.link) {
@@ -96,7 +95,7 @@ document.addEventListener('navigationLinkHasBeenClicked', (e) => {
     }
     const filters = JSON.parse(e.detail.link.getAttribute('data-dataTable-filters'));
     Object.entries(filters).forEach(([tableName, tableFilters]) => {
-        dataTableStorage.set(tableName, tableFilters);
+        FilterStorage.set(tableName, tableFilters);
     });
 });
 document.addEventListener('dataTableClusterWasChanged', (e) => {

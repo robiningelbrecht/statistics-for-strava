@@ -1,7 +1,8 @@
+import {FilterStorage} from "./storage";
+
 export class FilterManager {
-    constructor(wrapper, storage) {
+    constructor(wrapper) {
         this.wrapper = wrapper;
-        this.storage = storage;
         this.filters = {};
     }
 
@@ -10,7 +11,7 @@ export class FilterManager {
     }
 
     prefillFromStorage(tableName) {
-        const stored = this.storage.get(tableName);
+        const stored = FilterStorage.get(tableName);
         if (!stored) return;
 
         Object.keys(stored).forEach(key => {
@@ -172,7 +173,7 @@ export class FilterManager {
                 el.value = '';
             }
         });
-        this.storage.clearAll(tableName);
+        FilterStorage.clearAll(tableName);
     }
 
     resetOne(name) {
@@ -186,6 +187,6 @@ export class FilterManager {
     }
 
     updateStorage(tableName, activeFilters) {
-        this.storage.set(tableName, activeFilters);
+        FilterStorage.set(tableName, activeFilters);
     }
 }

@@ -1,10 +1,10 @@
 import {parents, resolveEchartsCallbacks} from "../utils";
 import {v5Theme, v5DarkTheme} from "../config/echarts-themes";
+import {FilterStorage} from "../data-table/storage";
 
 export default class ChartManager {
-    constructor(router, dataTableStorage, modalManager) {
+    constructor(router, modalManager) {
         this.router = router;
-        this.dataTableStorage = dataTableStorage;
         this.modalManager = modalManager;
         this.allCharts = [];
         this.chartsPerTab = [];
@@ -98,7 +98,7 @@ export default class ChartManager {
                 if (!params.dataIndex in weeks) {
                     return;
                 }
-                this.dataTableStorage.set('activities', {
+                FilterStorage.set('activities', {
                     "sportType": clickData.sportTypes,
                     "start-date": {"from": weeks[params.dataIndex]['from'], "to": weeks[params.dataIndex]['to']},
                 });
@@ -110,7 +110,7 @@ export default class ChartManager {
                     return;
                 }
 
-                this.dataTableStorage.set('activities', {
+                FilterStorage.set('activities', {
                     "start-date": {"from": params.value[0], "to": params.value[0]},
                 });
 
