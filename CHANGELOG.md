@@ -1,3 +1,9 @@
+# [v4.6.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.4) - 2026-02-16
+
+This release fixes a critical issue in the Daemon that was introduced in `v4.6.3`
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.4...v4.6.34
+
 # [v4.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.3) - 2026-02-15
 
 ## What's Changed
