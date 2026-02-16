@@ -9,3 +9,4 @@ twig:
         appConfig: '@App\Infrastructure\Config\AppConfig'
         enrichedActivities: '@App\Domain\Activity\EnrichedActivities'
         bestEffortsCalculator: '@App\Domain\Activity\BestEffort\BestEffortsCalculator'
+        FilterName: 'App\Infrastructure\Twig\Filters\FilterName'
