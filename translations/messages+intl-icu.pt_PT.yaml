@@ -55,6 +55,7 @@ Compare: Comparar
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
+Country: Country
 Crossfit: Crossfit
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -74,6 +75,7 @@ Density: Density
 Details: Details
 Device: Dispositivo
 Distance: Distância
+'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Divisão da distância'
 'Distance in {unit}': 'Distância em {unit}'
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
@@ -97,8 +99,6 @@ Favourite: Favorito
 Feb: Fev
 'Filter on KOM segments': 'Filtrar por segmentos KOM'
 'Filter on country': 'Filtrar por país'
-'Filter on device': 'Filter on device'
-'Filter on gear': 'Filtrar por equipamento'
 'Filter on sport type': 'Filtrar por tipo de desporto'
 'Filter on starred segments': 'Filtrar por segmentos favoritos'
 Fitness: Forma
@@ -108,7 +108,6 @@ Fitness: Forma
 'Form (TSB)': 'Forma (TSB)'
 Fri: Sex
 Friday: Sexta-feira
-From: De
 Gear: Equipamento
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Equipamento "{gearId}" está referenciado no ficheiro de configuração, mas não foi importado do Strava. Por favor verifique se o equipamento existe e foi corretamente sincronizado.'
 'Gear details': 'Detalhes de equipamento'
@@ -319,7 +318,6 @@ Thu: Qui
 Thursday: Quinta-feira
 Time: Hora
 'Times completed': 'Vezes concluído'
-To: Até
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para activar, configurar {configFile} e recriar os ficheiros para que as mudanças sejam efectivas'
 'Toggle sidebar': 'Ativar/desativar barra lateral'
 'Top 10': 'Top 10'
@@ -408,7 +406,9 @@ hours: horas
 hrs: hrs
 kudos: kudos
 'last {numberOfDays} days': 'últimos {numberOfDays} dias'
+max: max
 'max gradient': 'inclinação máxima'
+min: min
 months: meses
 more: mais
 n/a: n/d

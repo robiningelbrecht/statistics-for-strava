@@ -693,7 +693,7 @@ final class Activity implements SupportsAITooling
     /**
      * @return array<string, string|int|string[]>
      */
-    public function getFilterables(): array
+    public function getFilterables(UnitSystem $unitSystem): array
     {
         return array_filter([
             'sportType' => $this->getSportType()->value,
@@ -703,6 +703,8 @@ final class Activity implements SupportsAITooling
             'gear' => $this->getGearIdIncludingNone(),
             'workoutType' => $this->getWorkoutType()?->value,
             'device' => $this->getDeviceId(),
+            'distance' => (int) round($this->getDistance()->toUnitSystem($unitSystem)->toFloat() * 10), // We don't want to filter on float values, but integers instead.
+            'elevation' => (int) round($this->getElevation()->toUnitSystem($unitSystem)->toFloat() * 10),
         ]);
     }
 

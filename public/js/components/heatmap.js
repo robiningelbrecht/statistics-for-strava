@@ -189,9 +189,6 @@ export default class Heatmap {
     }
 
     async render() {
-        // Default date inputs.
-        this.wrapper.querySelectorAll('input[type="date"][data-default-to-today]').forEach(i => i.valueAsDate = new Date());
-
         const allRoutes = JSON.parse(this.heatmap.getAttribute('data-leaflet-routes'));
 
         const redraw = () => {

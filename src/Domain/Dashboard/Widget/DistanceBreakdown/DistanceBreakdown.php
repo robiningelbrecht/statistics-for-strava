@@ -61,8 +61,11 @@ final readonly class DistanceBreakdown
         /** @var int[] $range */
         $range = range($breakdownOnDistance, ceil($longestDistanceForActivity->toFloat() / $breakdownOnDistance) * $breakdownOnDistance, $breakdownOnDistance);
         foreach ($range as $breakdownLimit) {
+            $min = $breakdownLimit - $breakdownOnDistance;
             $statistics[$breakdownLimit] = [
-                'label' => sprintf('%d - %d %s', $breakdownLimit - $breakdownOnDistance, $breakdownLimit, $longestDistanceForActivity->getSymbol()),
+                'label' => sprintf('%d - %d %s', $min, $breakdownLimit, $longestDistanceForActivity->getSymbol()),
+                'min' => $min * 10,
+                'max' => $breakdownLimit * 10,
                 'numberOfWorkouts' => 0,
                 'totalDistance' => 0,
                 'totalElevation' => 0,

@@ -55,6 +55,7 @@ Compare: Vergleich
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
+Country: Country
 Crossfit: Crossfit
 'Current Status': 'Aktueller Status'
 'Current streaks': 'Aktuelle Serien'
@@ -74,6 +75,7 @@ Density: Dichte
 Details: Details
 Device: Gerät
 Distance: Distanz
+'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': Distanzaufschlüsselung
 'Distance in {unit}': 'Distanz in {unit}'
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
@@ -97,8 +99,6 @@ Favourite: Favorit
 Feb: Feb
 'Filter on KOM segments': 'Filter für KOM-Segmente'
 'Filter on country': 'Filter nach Land'
-'Filter on device': 'Filter nach Gerät'
-'Filter on gear': 'Filter nach Ausrüstung'
 'Filter on sport type': 'Filter nach Sportart'
 'Filter on starred segments': 'Filter für markierte Segmente'
 Fitness: Fitness
@@ -108,7 +108,6 @@ Fitness: Fitness
 'Form (TSB)': 'Form (TSB)'
 Fri: Fr
 Friday: Freitag
-From: Von
 Gear: Ausrüstung
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Die Ausrüstung "{gearId}" ist in deiner "gear-maintenance.yaml" referenziert, wurde aber nicht von Strava importiert. Bitte überprüfe, dass die Ausrüstung existiert und korrekt synchronisiert wurde.'
 'Gear details': Ausrüstungsdetails
@@ -246,8 +245,8 @@ Race: Wettkampf
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Rangliste
-'Recovery Timeline': 'Erholungszeitplan'
-'Recovery forecast': 'Erholungsprognose'
+'Recovery Timeline': Erholungszeitplan
+'Recovery forecast': Erholungsprognose
 'Reduced carbon emission by commuting': 'Reduzierter Kohlendioxidausstoß durch Pendler'
 'Relative cost': 'Relative Kosten'
 'Rest Days': Ruhetage
@@ -296,7 +295,7 @@ Squash: Squash
 Stats: Statistiken
 'Stats per weekday': 'Statistiken pro Wochentag'
 Status: Status
-'Strava profile': 'Strava-Profil'
+'Strava profile': Strava-Profil
 'Streak started on {date}': 'Die Serie begann am {date}'
 Streaks: Serien
 Sun: So
@@ -319,7 +318,6 @@ Thu: Do
 Thursday: Donnerstag
 Time: Zeit
 'Times completed': 'Male abgeschlossen'
-To: Bis
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
@@ -369,7 +367,7 @@ Wheelchair: Rollstuhl
 'Wind Surf': Windsurfen
 'Winter Sports': Wintersport
 Workout: Training
-'Workout assistant': 'Trainingsassistent'
+'Workout assistant': Trainingsassistent
 'Workout type': Trainingseinheitstyp
 YTD: YTD
 Year: Jahr
@@ -408,7 +406,9 @@ hours: Stunden
 hrs: h
 kudos: Kudos
 'last {numberOfDays} days': 'letzten {numberOfDays} Tage'
+max: max
 'max gradient': 'max. Steigung'
+min: min
 months: Monate
 more: mehr
 n/a: n/v

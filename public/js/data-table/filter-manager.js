@@ -5,13 +5,16 @@ export class FilterManager {
         this.filters = {};
     }
 
+    _isRangeFilter(value) {
+        return typeof value === 'object' && value !== null && 'from' in value && 'to' in value;
+    }
+
     prefillFromStorage(tableName) {
         const stored = this.storage.get(tableName);
         if (!stored) return;
 
         Object.keys(stored).forEach(key => {
-            if (typeof stored[key] === 'object' && stored[key] !== null && 'from' in stored[key] && 'to' in stored[key]) {
-                // skip date ranges here
+            if (this._isRangeFilter(stored[key])) {
                 return;
             }
             const value = stored[key];
@@ -30,14 +33,21 @@ export class FilterManager {
             });
         });
 
-        // Handle date ranges.
+        // Handle range filters (date and number).
         Object.entries(stored)
-            .filter(([_, v]) => typeof v === 'object' && v !== null && 'from' in v && 'to' in v)
+            .filter(([_, v]) => this._isRangeFilter(v))
             .forEach(([name, range]) => {
                 const from = this.wrapper.querySelector(`input[name="${name}[from]"]`);
                 const to = this.wrapper.querySelector(`input[name="${name}[to]"]`);
-                if (from && range.from) from.valueAsDate = new Date(range.from);
-                if (to && range.to) to.valueAsDate = new Date(range.to);
+
+                if (from?.type === 'date') {
+                    if (from && range.from) from.valueAsDate = new Date(range.from);
+                    if (to && range.to) to.valueAsDate = new Date(range.to);
+                } else if (from?.type === 'number') {
+                    const multiplier = range.multiplier || 1;
+                    if (from && range.from != null) from.value = range.from / multiplier;
+                    if (to && range.to != null) to.value = range.to / multiplier;
+                }
             });
     }
 
@@ -65,10 +75,27 @@ export class FilterManager {
             const to = group.querySelector(`input[name="${name}[to]"]`);
             if (!from || !to) return;
 
-            if (from.valueAsDate && to.valueAsDate) {
-                const fromMs = new Date(from.valueAsNumber).setUTCHours(0, 0, 0);
-                const toMs = new Date(to.valueAsNumber).setUTCHours(23, 59, 59);
-                filters[name] = { from: fromMs, to: toMs };
+            if (from.type === 'date') {
+                const fromMs = from.valueAsDate ? new Date(from.valueAsNumber).setUTCHours(0, 0, 0) : null;
+                const toMs = to.valueAsDate ? new Date(to.valueAsNumber).setUTCHours(23, 59, 59) : null;
+                if (fromMs !== null || toMs !== null) {
+                    filters[name] = { from: fromMs, to: toMs };
+                }
+            } else if (from.type === 'number') {
+                const fromVal = from.value !== '' ? parseFloat(from.value) : null;
+                const toVal = to.value !== '' ? parseFloat(to.value) : null;
+                if (fromVal !== null || toVal !== null) {
+                    const step = Math.min(
+                        parseFloat(from.step) || 1,
+                        parseFloat(to.step) || 1
+                    );
+                    const multiplier = Math.round(1 / step);
+                    filters[name] = {
+                        from: fromVal !== null ? Math.round(fromVal * multiplier) : null,
+                        to: toVal !== null ? Math.round(toVal * multiplier) : null,
+                        multiplier: multiplier,
+                    };
+                }
             }
         });
 
@@ -80,20 +107,19 @@ export class FilterManager {
             el.classList.remove('active');
         });
 
-
         Object.entries(activeFilters).forEach(([key, activeFilter]) => {
-            if (activeFilter && typeof activeFilter === 'object' && 'from' in activeFilter && 'to' in activeFilter) {
+            if (this._isRangeFilter(activeFilter)) {
                 const dropdown = this.wrapper
                     .querySelector(`[data-datatable-filter="${key}[]"]`)
                     ?.closest('.filter-dropdown');
 
-                const toggle = dropdown.querySelector('[data-dropdown-toggle]');
+                const toggle = dropdown?.querySelector('[data-dropdown-toggle]');
                 if (toggle) toggle.classList.add('active');
                 return;
             }
 
             const dropdown = this.wrapper.querySelector(`[data-dataTable-filter="${key}"]:checked`)?.closest('.filter-dropdown');
-            const toggle = dropdown.querySelector('[data-dropdown-toggle]');
+            const toggle = dropdown?.querySelector('[data-dropdown-toggle]');
             if (toggle) toggle.classList.add('active');
         });
     }
@@ -108,8 +134,14 @@ export class FilterManager {
             for (const [key, activeFilter] of Object.entries(filters)) {
                 const filterValue = row.filterables[key];
 
-                if (activeFilter && typeof activeFilter === 'object' && 'from' in activeFilter && 'to' in activeFilter) {
-                    row.active = row.active && filterValue >= activeFilter.from && filterValue <= activeFilter.to;
+                if (this._isRangeFilter(activeFilter)) {
+                    if (activeFilter.from !== null && activeFilter.to !== null) {
+                        row.active = row.active && filterValue >= activeFilter.from && filterValue <= activeFilter.to;
+                    } else if (activeFilter.from !== null) {
+                        row.active = row.active && filterValue >= activeFilter.from;
+                    } else if (activeFilter.to !== null) {
+                        row.active = row.active && filterValue <= activeFilter.to;
+                    }
                     continue;
                 }
 
