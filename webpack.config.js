@@ -5,7 +5,7 @@ module.exports = {
     context: __dirname,
     entry: {
         'app.min': './public/js/app.js',
-        'leaflet.controls.min': './public/js/leaflet/controls.js',
+        'leaflet.controls.min': './public/js/features/maps/leaflet-controls.js',
     },
     optimization: {
         minimize: true

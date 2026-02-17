@@ -1,4 +1,4 @@
-import {numberFormat} from "../utils";
+import {numberFormat} from "../../utils";
 
 export class SummableCalculator {
     static calculate(rows) {

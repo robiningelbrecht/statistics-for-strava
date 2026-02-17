@@ -1,3 +1,5 @@
+import {eventBus, Events} from "../core/event-bus";
+
 export default class ModalManager {
     constructor(router) {
         this.router = router;
@@ -40,11 +42,8 @@ export default class ModalManager {
                 this.modalSpinner.classList.remove('flex');
 
                 this.modalContent.innerHTML = await response.text();
-                document.dispatchEvent(new CustomEvent('modalWasLoaded', {
-                    bubbles: true,
-                    cancelable: false,
-                    detail: {node: this.modalSkeletonNode}
-                }));
+                const modalName = modalId.replace(/^\/+/, '').replaceAll('/', '-');
+                eventBus.emit(Events.MODAL_LOADED, {node: this.modalSkeletonNode, modalName});
                 // Modal close event listeners.
                 const closeButton = this.modalContent.querySelector('button.close');
                 if (closeButton) {
@@ -73,13 +72,6 @@ export default class ModalManager {
                 // Re-register nav items that may have been added dynamically
                 const newNavItems = this.modalSkeletonNode.querySelectorAll('a[data-router-navigate]:not([data-router-disabled])');
                 this.router.registerNavItems(newNavItems);
-
-                const modalName = modalId.replace(/^\/+/, '').replaceAll('/', '-');
-                document.dispatchEvent(new CustomEvent('modalWasLoaded.' + modalName, {
-                    bubbles: true, cancelable: false, detail: {
-                        modal: this.modalSkeletonNode
-                    }
-                }));
             },
             onHide: () => {
                 this.modalContent.innerHTML = '';

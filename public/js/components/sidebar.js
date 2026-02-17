@@ -1,3 +1,5 @@
+import {eventBus, Events} from "../core/event-bus";
+
 export default class Sidebar {
     constructor($main) {
         this.$main = $main;
@@ -16,7 +18,7 @@ export default class Sidebar {
             [this.$sideNav, this.$topNav].forEach(el => el.classList.toggle('sidebar-is-collapsed', collapsed));
 
             localStorage.setItem('sideNavCollapsed', String(collapsed));
-            document.dispatchEvent(new Event('sidebarWasResized'));
+            eventBus.emit(Events.SIDEBAR_RESIZED);
         });
     }
 }

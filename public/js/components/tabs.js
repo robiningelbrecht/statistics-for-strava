@@ -1,7 +1,6 @@
-export default class TabsManager {
-    constructor() {
-    }
+import {eventBus, Events} from "../core/event-bus";
 
+export default class TabsManager {
     init(rootNode) {
         rootNode.querySelectorAll('[data-tabs]').forEach(($triggerEl) => {
             const tabItems = [];
@@ -28,10 +27,7 @@ export default class TabsManager {
                 onShow: (tabs, activeTab) => {
                     const activeTabId = activeTab.id.replace('#', '');
                     // Trigger a chart resize to make sure charts are rendered and displayed.
-                    document.dispatchEvent(new CustomEvent('tabChangeWasTriggered', {
-                        bubbles: true,
-                        detail: {activeTabId: activeTabId}
-                    }));
+                    eventBus.emit(Events.TAB_CHANGED, {activeTabId});
                 },
             });
         });
