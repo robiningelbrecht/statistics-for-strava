@@ -31,6 +31,7 @@ Avg: Moy
 'Back Country Ski': 'Ski de randonnée'
 Badges: Badges
 Badminton: Badminton
+Basketball: Basketball
 Best: Meilleur
 'Best effort': 'Meilleur effort'
 'Best efforts': 'Meilleurs efforts'
@@ -56,6 +57,7 @@ Compare: Comparer
 'Consider reducing load': 'Envisagez de réduire la charge'
 Consistency: Uniformité
 Country: Country
+Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Status actuel'
 'Current streaks': 'Séries actuelles'
@@ -63,6 +65,7 @@ Crossfit: Crossfit
 Cycling: Cyclisme
 'Daily TRIMP': 'TRIMP quotidien'
 'Daily activities': 'Activités quotidiennes'
+Dance: Dance
 'Dark mode': 'Dark mode'
 Dashboard: 'Tableau de bord'
 Date: Date
@@ -227,6 +230,7 @@ PRs: Records
 'PRs achieved per month': 'Records personnels atteints par mois'
 Pace: Allure
 'Pace distribution': 'Distribution du rythme'
+Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Puissances maximales'
 'Personal Records': 'Records personnels'
@@ -308,6 +312,7 @@ Swim: Natation
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'L''étiquette "{maintenanceTaskTag}" a été utilisée sur "{activityName}", mais le matériel référencé sur cette activité n''est pas attaché à ce composant.'
 'Taper sweet-spot (+15)': "Zone optimale d'affûtage (+15)"
+'Team Sports': 'Team Sports'
 Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': "Le nombre d'Eddington dans le contexte du cyclisme ou de la course est défini comme le nombre maximum E tel que l'athlète ait parcouru au moins E km lors d'au moins E jours."
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': "Ces badges sont créés dynamiquement. Vous pouvez les utiliser dans n'importe quelle balise &lt;img&gt;"
@@ -348,6 +353,7 @@ Unspecified: 'Non spécifié'
 'Virtual Row': 'Rameur virtuel'
 'Virtual Runs': 'Courses virtuelles'
 'Virtual workout assistant': "Assistant d'entraînement virtuel"
+Volleyball: Volleyball
 Volume: Volume
 Walking: Marche
 Walks: Marches

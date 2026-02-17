@@ -31,6 +31,7 @@ Avg: Durchschn.
 'Back Country Ski': Skitouren
 Badges: Badges
 Badminton: Badminton
+Basketball: Basketball
 Best: Beste
 'Best effort': Bestzeit
 'Best efforts': Bestzeiten
@@ -56,6 +57,7 @@ Compare: Vergleich
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
 Country: Country
+Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Aktueller Status'
 'Current streaks': 'Aktuelle Serien'
@@ -63,6 +65,7 @@ Crossfit: Crossfit
 Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktivitäten'
+Dance: Dance
 'Dark mode': 'Dark mode'
 Dashboard: Dashboard
 Date: Datum
@@ -227,6 +230,7 @@ PRs: PRs
 'PRs achieved per month': 'PRs erreicht pro Monat'
 Pace: Pace
 'Pace distribution': 'Pace Verteilung'
+Padel: Padel
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
 'Personal Records': 'Persönliche Bestzeiten'
@@ -308,6 +312,7 @@ Swim: Schwimmen
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" wurde in "{activityName}" verwendet, aber die Ausrüstung, die in der Aktivität referenziert wird ist nicht der Komponente zugewiesen.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
+'Team Sports': 'Team Sports'
 Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Die Eddington-Zahl im Kontext des Radfahrens oder Laufens ist definiert als die maximale Zahl E, bei der der Sportler an mindestens E Tagen jeweils mindestens E km zurückgelegt hat.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Diese Abzeichen sind dynamisch erstellt. Du kannst sie in allen &lt;img&gt; Tags verwenden.'
@@ -348,6 +353,7 @@ Unspecified: 'Nicht spezifiziert'
 'Virtual Row': 'Virtuelles Rudern'
 'Virtual Runs': 'Virtuelle Läufe'
 'Virtual workout assistant': 'Virtueller Workout Assistent'
+Volleyball: Volleyball
 Volume: Umfang
 Walking: Gehen
 Walks: Spaziergänge

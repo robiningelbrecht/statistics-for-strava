@@ -110,7 +110,6 @@
     --color-pink-700: #BE185D;
     --color-pink-800: #9D174D;
     --color-pink-900: #831843;
-    --color-slate-600: oklch(44.6% 0.043 257.281);
     --color-gray-50: #F9FAFB;
     --color-gray-100: #F3F4F6;
     --color-gray-200: #E5E7EB;
@@ -2562,14 +2561,14 @@
   .border-l-emerald-600 {
     border-left-color: var(--color-emerald-600);
   }
+  .border-l-gray-600 {
+    border-left-color: var(--color-gray-600);
+  }
   .border-l-orange-500 {
     border-left-color: var(--color-orange-500);
   }
   .border-l-red-600 {
     border-left-color: var(--color-red-600);
-  }
-  .border-l-slate-600 {
-    border-left-color: var(--color-slate-600);
   }
   .border-l-yellow-300 {
     border-left-color: var(--color-yellow-300);
@@ -2646,6 +2645,12 @@
   .bg-gray-400 {
     background-color: var(--color-gray-400);
   }
+  .bg-gray-600\/10 {
+    background-color: color-mix(in srgb, #4B5563 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-gray-600) 10%, transparent);
+    }
+  }
   .bg-gray-900\/50 {
     background-color: color-mix(in srgb, #111827 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2689,12 +2694,6 @@
     background-color: color-mix(in srgb, #DC2626 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
-    }
-  }
-  .bg-slate-600\/10 {
-    background-color: color-mix(in srgb, oklch(44.6% 0.043 257.281) 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-600) 10%, transparent);
     }
   }
   .bg-strava-orange {

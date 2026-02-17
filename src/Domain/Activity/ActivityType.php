@@ -22,6 +22,7 @@ enum ActivityType: string implements TranslatableInterface
     case FITNESS = 'Fitness';
     case MIND_BODY_SPORTS = 'MindBodySports';
     case OUTDOOR_SPORTS = 'OutdoorAdventureSports';
+    case TEAM_SPORTS = 'TeamSports';
     case ADAPTIVE_INCLUSIVE_SPORTS = 'AdaptiveInclusiveSports';
     case OTHER = 'Other';
 
@@ -52,6 +53,7 @@ enum ActivityType: string implements TranslatableInterface
             self::FITNESS => $translator->trans('Fitness', locale: $locale),
             self::MIND_BODY_SPORTS => $translator->trans('Mind & Body Sports', locale: $locale),
             self::OUTDOOR_SPORTS => $translator->trans('Outdoor Sports', locale: $locale),
+            self::TEAM_SPORTS => $translator->trans('Team Sports', locale: $locale),
             self::ADAPTIVE_INCLUSIVE_SPORTS => $translator->trans('Adaptive & Inclusive Sports', locale: $locale),
             self::OTHER => $translator->trans('Other', locale: $locale),
         };
@@ -149,7 +151,7 @@ enum ActivityType: string implements TranslatableInterface
             ActivityType::WALK => 'yellow-300',
             ActivityType::WATER_SPORTS => 'blue-600',
             ActivityType::WINTER_SPORTS => 'red-600',
-            default => 'slate-600',
+            default => 'gray-600',
         };
     }
 }
