@@ -5,6 +5,7 @@
 @import "./components/filter-dropdown.css";
 @import "./components/tabs.css";
 @import "./components/popover.css";
+@import "./components/modal.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
