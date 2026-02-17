@@ -1,3 +1,5 @@
+import {eventBus, Events} from "./event-bus";
+
 export default class Router {
     constructor(app) {
         this.app = app;
@@ -74,15 +76,7 @@ export default class Router {
             .replace(/^\/+/, '')
             .replaceAll('/', '-');
 
-        document.dispatchEvent(new CustomEvent('pageWasLoaded', {
-            bubbles: true,
-            detail: {page: fullPageName, modalId}
-        }));
-
-        document.dispatchEvent(new CustomEvent(`pageWasLoaded.${fullPageName}`, {
-            bubbles: true,
-            detail: {page: fullPageName, modalId}
-        }));
+        eventBus.emit(Events.PAGE_LOADED, {page: fullPageName, modalId});
     }
 
     registerNavItems(items) {
@@ -91,10 +85,7 @@ export default class Router {
                 e.preventDefault();
                 const route = link.getAttribute('data-router-navigate');
 
-                document.dispatchEvent(new CustomEvent('navigationLinkHasBeenClicked', {
-                    bubbles: true,
-                    detail: {link}
-                }));
+                eventBus.emit(Events.NAVIGATION_CLICKED, {link});
 
                 this.navigateTo(
                     route,

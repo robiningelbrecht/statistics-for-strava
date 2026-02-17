@@ -1,5 +1,5 @@
-import {parents, resolveEchartsCallbacks} from "../utils";
-import {v5Theme, v5DarkTheme} from "../config/echarts-themes";
+import {parents, resolveEchartsCallbacks} from "../../utils";
+import {v5Theme, v5DarkTheme} from "./echarts-themes";
 import {FilterStorage, FilterName} from "../data-table/storage";
 
 export default class ChartManager {

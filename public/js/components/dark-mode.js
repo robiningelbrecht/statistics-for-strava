@@ -1,3 +1,5 @@
+import {eventBus, Events} from "../core/event-bus";
+
 export default class DarkModeManager {
     constructor() {
         this.storageKey = 'theme';
@@ -25,9 +27,6 @@ export default class DarkModeManager {
 
         this.$toggleButton.checked = enabled;
 
-        document.dispatchEvent(new CustomEvent('darkModeWasToggled', {
-            bubbles: true,
-            detail: {darkModeEnabled: enabled}
-        }));
+        eventBus.emit(Events.DARK_MODE_TOGGLED, {darkModeEnabled: enabled});
     }
 }

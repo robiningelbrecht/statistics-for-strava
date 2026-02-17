@@ -1,7 +1,7 @@
-import {ClusterRenderer} from "../data-table/cluster-renderer";
-import {FilterManager} from "../data-table/filter-manager";
-import {Sorter} from "../data-table/sorter";
-import {debounce} from "../utils";
+import {ClusterRenderer} from "./cluster-renderer";
+import {FilterManager} from "./filter-manager";
+import {Sorter} from "./sorter";
+import {debounce} from "../../utils";
 
 export default class DataTableManager {
 
