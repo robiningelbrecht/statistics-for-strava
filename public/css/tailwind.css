@@ -4,6 +4,7 @@
 @import "./components/dark-mode.css";
 @import "./components/filter-dropdown.css";
 @import "./components/tabs.css";
+@import "./components/popover.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
