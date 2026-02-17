@@ -1,0 +1,33 @@
+@layer components {
+    div.tabs.tabs--default{
+        @apply mb-4 border-b-2 border-gray-100;
+
+        & > ul{
+            @apply flex gap-x-2 overflow-x-auto -mb-0.5 text-sm font-medium text-center;
+
+            & > li {
+                @apply shrink-0;
+
+                & > a {
+                    @apply inline-flex items-center justify-center p-2 border-b-2;
+                }
+            }
+        }
+    }
+
+    ul.tabs.tabs--pills{
+        @apply inline-flex rounded-md shadow-xs divide-x divide-gray-200;
+
+        & > li {
+            @apply flex gap-x-1 shrink-0 cursor-pointer bg-white border-gray-200 border-t border-b first:border-l last:border-r first:rounded-s-lg last:rounded-e-lg;
+
+            & > a {
+                @apply inline-flex gap-x-1 items-center px-4 py-1 text-sm font-medium hover:text-strava-orange;
+
+                &.active {
+                    @apply text-strava-orange;
+                }
+            }
+        }
+    }
+}

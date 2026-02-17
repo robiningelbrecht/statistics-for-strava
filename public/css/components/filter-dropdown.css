@@ -1,0 +1,33 @@
+@layer components {
+    div.filter-dropdown {
+        & > button[data-dropdown-toggle]{
+            @apply cursor-pointer w-fit text-strava-orange border border-strava-orange font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between;
+            @apply [&.active]:text-white [&.active]:bg-strava-orange [&.active]:hover:bg-orange-600 [&.active]:hover:border-orange-600;
+            @apply hover:ring-3 hover:outline-hidden hover:ring-orange-300;
+        }
+
+        & > div {
+            @apply z-1002 w-fit hidden border border-gray-200 bg-white rounded-lg shadow-xs;
+
+            & > ul {
+                @apply max-h-48 overflow-y-auto px-1 py-2 text-sm text-gray-700;
+            }
+        }
+
+        & li > div {
+            @apply flex items-center gap-x-2 p-2 rounded-xs hover:bg-gray-100;
+        }
+
+        & input:where([type="radio"], [type="checkbox"]) {
+            @apply w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2;
+        }
+
+        & li label {
+            @apply text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100;
+        }
+
+        & li a[data-datatable-filter-clear] {
+            @apply text-strava-orange text-sm underline invisible peer-checked:visible ml-auto;
+        }
+    }
+}
