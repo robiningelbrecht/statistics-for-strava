@@ -31,6 +31,7 @@ Avg: Média
 'Back Country Ski': 'Esqui Fora de Pista'
 Badges: Badges
 Badminton: Badmínton
+Basketball: Basketball
 Best: Melhor
 'Best effort': 'Best effort'
 'Best efforts': 'Melhores esforços'
@@ -56,6 +57,7 @@ Compare: Comparar
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
+Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -63,6 +65,7 @@ Crossfit: Crossfit
 Cycling: Cycling
 'Daily TRIMP': 'TRIMP Diário'
 'Daily activities': 'Actividades diárias'
+Dance: Dance
 'Dark mode': 'Dark mode'
 Dashboard: Painel
 Date: Date
@@ -227,6 +230,7 @@ PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
 'Pace distribution': 'Pace distribution'
+Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
 'Personal Records': Recordes
@@ -308,6 +312,7 @@ Swim: Natação
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" foi usada em "{activityName}", mas o equipamento referenciado na actividade não está associado a este componente.'
 'Taper sweet-spot (+15)': 'Ponto de foco (+15)'
+'Team Sports': 'Team Sports'
 Tennis: Ténis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Estas medalhas são criadas dinamicamente. Pode usá-las em qualquer tag de &lt;img&gt;'
@@ -348,6 +353,7 @@ Unspecified: 'Não especificado'
 'Virtual Row': 'Remo Virtual'
 'Virtual Runs': 'Corridas Virtuais'
 'Virtual workout assistant': 'Virtual workout assistant'
+Volleyball: Volleyball
 Volume: Volume
 Walking: Walking
 Walks: Passeios

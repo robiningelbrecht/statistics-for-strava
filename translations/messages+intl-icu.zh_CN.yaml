@@ -31,6 +31,7 @@ Avg: 平均
 'Back Country Ski': 越野滑雪
 Badges: Badges
 Badminton: 羽毛球
+Basketball: Basketball
 Best: 最佳
 'Best effort': 最佳努力
 'Best efforts': 最佳努力
@@ -56,6 +57,7 @@ Compare: 对比
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
+Cricket: Cricket
 Crossfit: 交叉健身
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -63,6 +65,7 @@ Crossfit: 交叉健身
 Cycling: 骑行
 'Daily TRIMP': 每日TRIMP
 'Daily activities': 每日活动
+Dance: Dance
 'Dark mode': 'Dark mode'
 Dashboard: 仪表板
 Date: 日期
@@ -227,6 +230,7 @@ PRs: PRs
 'PRs achieved per month': 每月PRs
 Pace: 步速
 'Pace distribution': 步速分布
+Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
 'Personal Records': 个人记录
@@ -308,6 +312,7 @@ Swim: 游泳
 Tag: 标签
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': '"{maintenanceTaskTag}"标签已在"{activityName}"中使用, 但该活动中引用的装备未附加到此组件。'
 'Taper sweet-spot (+15)': '最佳减量期 (+15)'
+'Team Sports': 'Team Sports'
 Tennis: 网球
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 在骑行或跑步的场景下，埃丁顿数被定义为运动员在至少E天内至少覆盖E公里的最大数E。
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': '徽章为动态生成，您可在任意 &lt;img&gt; 标签中使用'
@@ -348,6 +353,7 @@ Unspecified: 未指定
 'Virtual Row': 虚拟划船
 'Virtual Runs': 虚拟跑步
 'Virtual workout assistant': 虚拟锻炼助手
+Volleyball: Volleyball
 Volume: Volume
 Walking: 健步
 Walks: 散步

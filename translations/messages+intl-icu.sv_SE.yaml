@@ -31,6 +31,7 @@ Avg: Med
 'Back Country Ski': Utförsåkning
 Badges: Badges
 Badminton: Badminton
+Basketball: Basketball
 Best: Bästa
 'Best effort': 'Bästa resultatet'
 'Best efforts': 'Bästa Insatser'
@@ -56,6 +57,7 @@ Compare: Jämför
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
+Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Current Status'
 'Current streaks': 'Current streaks'
@@ -63,6 +65,7 @@ Crossfit: Crossfit
 Cycling: Cykling
 'Daily TRIMP': 'Daglig TRIMP'
 'Daily activities': 'Dagliga aktiviteter'
+Dance: Dance
 'Dark mode': 'Dark mode'
 Dashboard: Översikt
 Date: Datum
@@ -227,6 +230,7 @@ PRs: Rekord
 'PRs achieved per month': 'Rekord nådda per månad'
 Pace: Tempo
 'Pace distribution': 'Pace distribution'
+Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
 'Personal Records': 'Personliga Rekord'
@@ -308,6 +312,7 @@ Swim: Simmning
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Taggen "{maintenanceTaskTag}" användes på "{activityName}", men utrustningen som refereras till i den aktiviteten är inte kopplad till denna komponent.'
 'Taper sweet-spot (+15)': 'Ideal träningsform (+15)'
+'Team Sports': 'Team Sports'
 Tennis: Tennis
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Eddingtontalet i samband med cykling eller löpning definieras som det maximala antalet E så att idrottaren har tillryggalagt minst E km under minst E dagar.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
@@ -348,6 +353,7 @@ Unspecified: Ospecificerad
 'Virtual Row': 'Virtuell Rodd'
 'Virtual Runs': 'Virtuell Löpning'
 'Virtual workout assistant': 'Virtuell tränings assistent'
+Volleyball: Volleyball
 Volume: Volume
 Walking: Promenad
 Walks: Promenader
