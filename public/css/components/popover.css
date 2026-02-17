@@ -1,0 +1,5 @@
+@layer components {
+    div[data-popover][role="tooltip"] {
+        @apply absolute z-999999 invisible text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-md opacity-0;
+    }
+}
