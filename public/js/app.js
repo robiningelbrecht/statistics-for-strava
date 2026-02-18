@@ -64,7 +64,7 @@ eventBus.on(Events.TAB_CHANGED, ({activeTabId}) => {
     chartManager.resizeInTab(activeTabId);
 });
 
-eventBus.on(Events.PAGE_LOADED, ({modalId}) => {
+eventBus.on(Events.PAGE_LOADED, async ({page, modalId}) => {
     modalManager.close();
 
     chartManager.reset();
@@ -73,19 +73,15 @@ eventBus.on(Events.PAGE_LOADED, ({modalId}) => {
     if (modalId) {
         modalManager.open(modalId);
     }
-});
-eventBus.on(Events.MODAL_LOADED, ({node}) => {
-    initElements(node);
-});
-eventBus.on(Events.PAGE_LOADED, async ({page}) => {
-    if (page !== 'heatmap') return;
-    const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
-    await new Heatmap($heatmapWrapper, modalManager).render();
-});
-eventBus.on(Events.PAGE_LOADED, ({page}) => {
-    if (page !== 'photos') return;
-    const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
-    new PhotoWall($photoWallWrapper).render();
+
+    if (page === 'heatmap') {
+        const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
+        await new Heatmap($heatmapWrapper, modalManager).render();
+    }
+    if (page === 'photos') {
+        const $photoWallWrapper = document.querySelector('.photo-wall-wrapper');
+        await new PhotoWall($photoWallWrapper).render();
+    }
 });
 eventBus.on(Events.NAVIGATION_CLICKED, ({link}) => {
     if (!link || !link.hasAttribute('data-filters')) {
@@ -95,6 +91,16 @@ eventBus.on(Events.NAVIGATION_CLICKED, ({link}) => {
     Object.entries(filters).forEach(([tableName, tableFilters]) => {
         FilterStorage.set(tableName, tableFilters);
     });
+});
+eventBus.on(Events.MODAL_LOADED, async ({node, modalName}) => {
+    initElements(node);
+
+    if (modalName === 'ai-chat') {
+        const {default: Chat} = await import(
+            /* webpackChunkName: "chat" */ './features/chat/chat'
+            );
+        new Chat(node).render();
+    }
 });
 eventBus.on(Events.DATA_TABLE_CLUSTER_CHANGED, ({node}) => {
     modalManager.init(node);
@@ -116,14 +122,6 @@ if ($modalAIChat) {
         router.pushCurrentRouteToHistoryState(modalId);
     });
 }
-
-eventBus.on(Events.MODAL_LOADED, async ({node, modalName}) => {
-    if (modalName !== 'ai-chat') return;
-    const {default: Chat} = await import(
-        /* webpackChunkName: "chat" */ './features/chat/chat'
-        );
-    new Chat(node).render();
-});
 
 (async () => {
     await updateGithubLatestRelease();
