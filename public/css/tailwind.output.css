@@ -4854,8 +4854,8 @@
 }
 @layer components {
   #modal-content > .modal-header {
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+    border-top-left-radius: var(--radius-sm);
+    border-top-right-radius: var(--radius-sm);
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
     padding: calc(var(--spacing) * 4);
