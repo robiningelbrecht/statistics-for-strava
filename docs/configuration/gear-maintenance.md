@@ -27,14 +27,14 @@ services:
     image: robiningelbrecht/strava-statistics:latest
     container_name: statistics-for-strava
     volumes:
-      - ./config:/var/www/config/app # Gear maintenance config volume
+      - ./config:/var/www/config/app
       # ...
       - ./storage/gear-maintenance:/var/www/storage/gear-maintenance # Gear maintenance images
   daemon:
     image: robiningelbrecht/strava-statistics:latest
     container_name: statistics-for-strava-daemon
     volumes:
-      - ./config:/var/www/config/app # Gear maintenance config volume
+      - ./config:/var/www/config/app
       # ...
       - ./storage/gear-maintenance:/var/www/storage/gear-maintenance # Gear maintenance images
 ```
