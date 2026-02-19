@@ -12,35 +12,20 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'ActivityStream')]
 #[ORM\Index(name: 'ActivityStream_activityIndex', columns: ['activityId'])]
 #[ORM\Index(name: 'ActivityStream_streamTypeIndex', columns: ['streamType'])]
-final class ActivityStream implements SupportsAITooling
+final readonly class ActivityStream implements SupportsAITooling
 {
-    public const string COMPUTED_FIELD_BEST_AVERAGES = 'bestAverages';
-    public const string COMPUTED_FIELD_VALUE_DISTRIBUTION = 'valueDistribution';
-    public const string COMPUTED_FIELD_NORMALIZED_POWER = 'normalizedPower';
-
     /**
-     * @param array<int, mixed>   $data
-     * @param array<string, bool> $computedFieldsState
-     * @param array<int, int>     $valueDistribution
-     * @param array<int, int>     $bestAverages
+     * @param array<int, mixed> $data
      */
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly StreamType $streamType,
+        private StreamType $streamType,
         #[ORM\Column(type: 'datetime_immutable')]
-        private readonly SerializableDateTime $createdOn,
+        private SerializableDateTime $createdOn,
         #[ORM\Column(type: 'json')]
-        private readonly array $data,
-        #[ORM\Column(type: 'json', nullable: true)]
-        private array $computedFieldsState,
-        #[ORM\Column(type: 'integer', nullable: true)]
-        private readonly ?int $normalizedPower,
-        #[ORM\Column(type: 'json', nullable: true)]
-        private readonly array $valueDistribution,
-        #[ORM\Column(type: 'json', nullable: true)]
-        private readonly array $bestAverages = [],
+        private array $data,
     ) {
     }
 
@@ -58,37 +43,23 @@ final class ActivityStream implements SupportsAITooling
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
-            computedFieldsState: [],
-            normalizedPower: null,
-            valueDistribution: []
         );
     }
 
     /**
-     * @param array<int, mixed>   $streamData
-     * @param array<string, bool> $computedFieldsState
-     * @param array<int, int>     $bestAverages
-     * @param array<int, int>     $valueDistribution
+     * @param array<int, mixed> $streamData
      */
     public static function fromState(
         ActivityId $activityId,
         StreamType $streamType,
         array $streamData,
         SerializableDateTime $createdOn,
-        array $computedFieldsState,
-        array $valueDistribution,
-        array $bestAverages,
-        ?int $normalizedPower,
     ): self {
         return new self(
             activityId: $activityId,
             streamType: $streamType,
             createdOn: $createdOn,
             data: $streamData,
-            computedFieldsState: $computedFieldsState,
-            normalizedPower: $normalizedPower,
-            valueDistribution: $valueDistribution,
-            bestAverages: $bestAverages,
         );
     }
 
@@ -137,62 +108,6 @@ final class ActivityStream implements SupportsAITooling
         return [] !== array_filter($this->data);
     }
 
-    /**
-     * @return array<string, bool>
-     */
-    public function getComputedFieldsState(): array
-    {
-        return $this->computedFieldsState;
-    }
-
-    /**
-     * @return array<int, int>
-     */
-    public function getValueDistribution(): array
-    {
-        if (count($this->valueDistribution) <= 1) {
-            // The value distribution can be one if for example values in the velocity stream have the same value.
-            // In that case it doesn't make sense to render a distribution.
-            return [];
-        }
-
-        return $this->valueDistribution;
-    }
-
-    /**
-     * @param array<int, int> $valueDistribution
-     */
-    public function withValueDistribution(array $valueDistribution): self
-    {
-        $this->computedFieldsState[self::COMPUTED_FIELD_VALUE_DISTRIBUTION] = true;
-
-        return clone ($this, [
-            'valueDistribution' => $valueDistribution,
-            'computedFieldsState' => $this->computedFieldsState,
-        ]);
-    }
-
-    /**
-     * @return array<int, int>
-     */
-    public function getBestAverages(): array
-    {
-        return $this->bestAverages;
-    }
-
-    /**
-     * @param array<int, int> $averages
-     */
-    public function withBestAverages(array $averages): self
-    {
-        $this->computedFieldsState[self::COMPUTED_FIELD_BEST_AVERAGES] = true;
-
-        return clone ($this, [
-            'bestAverages' => $averages,
-            'computedFieldsState' => $this->computedFieldsState,
-        ]);
-    }
-
     public function calculateBestAverageForTimeInterval(int $timeIntervalInSeconds): ?int
     {
         $data = $this->getData();
@@ -214,21 +129,6 @@ final class ActivityStream implements SupportsAITooling
         return (int) round($maxSum / $timeIntervalInSeconds);
     }
 
-    public function getNormalizedPower(): ?int
-    {
-        return $this->normalizedPower;
-    }
-
-    public function withNormalizedPower(int $normalizedPower): self
-    {
-        $this->computedFieldsState[self::COMPUTED_FIELD_NORMALIZED_POWER] = true;
-
-        return clone ($this, [
-            'normalizedPower' => $normalizedPower,
-            'computedFieldsState' => $this->computedFieldsState,
-        ]);
-    }
-
     public function exportForAITooling(): array
     {
         if (!$data = $this->getData()) {
@@ -245,7 +145,6 @@ final class ActivityStream implements SupportsAITooling
                 'maxPower' => max($data),
                 'minPower' => min($data),
                 'avgPower' => round(array_sum($data) / count($data)),
-                'normalizedPower' => $this->getNormalizedPower(),
             ],
             StreamType::VELOCITY => [
                 'maxMeterPerSecond' => max($data),
@@ -259,7 +158,6 @@ final class ActivityStream implements SupportsAITooling
             'activityId' => $this->getActivityId()->toUnprefixedString(),
             'steamType' => $this->getStreamType()->value,
             'totalPoints' => count($data),
-            'bestAverages' => $this->getBestAverages(),
             ...$streamTypeSpecificStats,
         ];
     }

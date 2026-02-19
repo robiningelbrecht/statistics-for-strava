@@ -8,7 +8,9 @@ use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\CouldNotDetermineActivityIntensity;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
-use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
@@ -19,7 +21,6 @@ use App\Domain\Ftp\FtpHistory;
 use App\Infrastructure\KeyValue\KeyValueStore;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
-use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 
 class ActivityIntensityTest extends ContainerTestCase
 {
@@ -42,13 +43,12 @@ class ActivityIntensityTest extends ContainerTestCase
             $activity,
             []
         ));
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activity->getId())
-                ->withStreamType(StreamType::WATTS)
-                ->withNormalizedPower(250)
-                ->build()
-        );
+        $this->getContainer()->get(ActivityStreamMetricRepository::class)->add(ActivityStreamMetric::create(
+            activityId: $activity->getId(),
+            streamType: StreamType::WATTS,
+            metricType: ActivityStreamMetricType::NORMALIZED_POWER,
+            data: [250],
+        ));
 
         $this->assertEmpty(ActivityIntensity::$cachedIntensities);
         $this->assertEquals(
@@ -131,13 +131,12 @@ class ActivityIntensityTest extends ContainerTestCase
             $activity,
             []
         ));
-        $this->getContainer()->get(ActivityStreamRepository::class)->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activity->getId())
-                ->withStreamType(StreamType::WATTS)
-                ->withNormalizedPower(250)
-                ->build()
-        );
+        $this->getContainer()->get(ActivityStreamMetricRepository::class)->add(ActivityStreamMetric::create(
+            activityId: $activity->getId(),
+            streamType: StreamType::WATTS,
+            metricType: ActivityStreamMetricType::NORMALIZED_POWER,
+            data: [250],
+        ));
 
         $this->expectExceptionObject(new CouldNotDetermineActivityIntensity('Ftp not found'));
         $this->activityIntensity->calculatePowerBased($activity->getId());

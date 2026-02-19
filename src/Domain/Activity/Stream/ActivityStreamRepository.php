@@ -9,8 +9,6 @@ interface ActivityStreamRepository
 {
     public function add(ActivityStream $stream): void;
 
-    public function update(ActivityStream $stream): void;
-
     public function deleteForActivity(ActivityId $activityId): void;
 
     public function hasOneForActivityAndStreamType(ActivityId $activityId, StreamType $streamType): bool;
@@ -22,10 +20,4 @@ interface ActivityStreamRepository
     public function findOneByActivityAndStreamType(ActivityId $activityId, StreamType $streamType): ActivityStream;
 
     public function findByActivityId(ActivityId $activityId): ActivityStreams;
-
-    public function findWithoutBestAverages(int $limit): ActivityStreams;
-
-    public function findWithoutNormalizedPower(int $limit): ActivityStreams;
-
-    public function findWithoutDistributionValues(int $limit): ActivityStreams;
 }

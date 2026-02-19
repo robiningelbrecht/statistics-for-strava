@@ -5,8 +5,10 @@ namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateBestStreamAverages;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 use App\Tests\SpyOutput;
@@ -45,9 +47,22 @@ class CalculateBestStreamAveragesTest extends ContainerTestCase
         $this->calculateBestStreamAverages->process($output);
 
         $this->assertMatchesTextSnapshot($output);
+        $this->assertDatabaseResults();
+    }
+
+    private function assertDatabaseResults(): void
+    {
+        $results = $this->getConnection()
+            ->executeQuery('SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType', [
+                'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
+            ])->fetchAllAssociative();
+
+        foreach ($results as &$result) {
+            $result['data'] = null !== $result['data'] ? CompressedString::fromCompressed($result['data'])->uncompress() : null;
+        }
+
         $this->assertMatchesJsonSnapshot(
-            Json::encode($this->getConnection()
-                ->executeQuery('SELECT bestAverages FROM ActivityStream')->fetchFirstColumn())
+            Json::encode($results)
         );
     }
 

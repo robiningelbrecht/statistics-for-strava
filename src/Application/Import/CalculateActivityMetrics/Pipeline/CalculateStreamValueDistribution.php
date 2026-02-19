@@ -6,8 +6,12 @@ namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Console\ProgressIndicator;
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
@@ -18,6 +22,7 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
 {
     public function __construct(
         private ActivityStreamRepository $activityStreamRepository,
+        private ActivityStreamMetricRepository $activityStreamMetricRepository,
         private ActivityRepository $activityRepository,
         private UnitSystem $unitSystem,
     ) {
@@ -29,30 +34,39 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
         $progressIndicator->start('=> Calculated value distribution for 0 streams');
 
         $countCalculatedStreams = 0;
-        do {
-            $streams = $this->activityStreamRepository->findWithoutDistributionValues(100);
+        $activityIdsToProcess = $this->activityStreamMetricRepository->findActivityIdsWithoutDistributionValues();
+        foreach ($activityIdsToProcess as $activityId) {
+            $activity = $this->activityRepository->find($activityId);
+            $sportType = $activity->getSportType();
 
-            /** @var \App\Domain\Activity\Stream\ActivityStream $stream */
-            foreach ($streams as $stream) {
-                ++$countCalculatedStreams;
+            foreach (StreamType::thatSupportDistributionValues() as $streamType) {
+                $stream = null;
+                try {
+                    $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
+                        activityId: $activityId,
+                        streamType: $streamType,
+                    );
+                } catch (EntityNotFound) {
+                    $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+                        activityId: $activityId,
+                        streamType: $streamType,
+                        metricType: ActivityStreamMetricType::VALUE_DISTRIBUTION,
+                        data: [],
+                    ));
 
-                $activity = $this->activityRepository->find($stream->getActivityId());
-                $sportType = $activity->getSportType();
+                    continue;
+                }
 
-                if (StreamType::WATTS === $stream->getStreamType()) {
+                $valueDistribution = [];
+                if (StreamType::WATTS === $streamType) {
                     /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
                     ksort($valueDistribution);
-                    $stream = $stream->withValueDistribution($valueDistribution);
-                }
-                if (StreamType::HEART_RATE === $stream->getStreamType()) {
+                } elseif (StreamType::HEART_RATE === $streamType) {
                     /** @var array<int, int<1, max>> $valueDistribution */
                     $valueDistribution = array_count_values($stream->getData());
                     ksort($valueDistribution);
-
-                    $stream = $stream->withValueDistribution($valueDistribution);
-                }
-                if (StreamType::VELOCITY === $stream->getStreamType()) {
+                } elseif (StreamType::VELOCITY === $streamType) {
                     $velocityUnitPreference = $sportType->getVelocityDisplayPreference();
                     $filteredValues = array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item));
 
@@ -77,13 +91,21 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
 
                     $valueDistribution = array_count_values($convertedValues);
                     ksort($valueDistribution, SORT_NUMERIC);
-                    $stream = $stream->withValueDistribution($valueDistribution);
                 }
 
-                $this->activityStreamRepository->update($stream);
+                if ([] !== $valueDistribution) {
+                    ++$countCalculatedStreams;
+                }
+
+                $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+                    activityId: $activityId,
+                    streamType: $streamType,
+                    metricType: ActivityStreamMetricType::VALUE_DISTRIBUTION,
+                    data: $valueDistribution,
+                ));
                 $progressIndicator->updateMessage(sprintf('=> Calculated value distribution for %d streams', $countCalculatedStreams));
             }
-        } while (!$streams->isEmpty());
+        }
 
         $progressIndicator->finish(sprintf('=> Calculated value distribution for %d streams', $countCalculatedStreams));
     }
