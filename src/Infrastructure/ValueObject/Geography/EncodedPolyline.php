@@ -10,27 +10,45 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
 {
     private const int PRECISION = 5;
 
+    /**
+     * @param array<array{0: float, 1: float}> $coordinates
+     */
+    public static function fromCoordinates(array $coordinates): self
+    {
+        $encoded = '';
+        $previousLat = 0.0;
+        $previousLng = 0.0;
+
+        foreach ($coordinates as [$lat, $lng]) {
+            $encoded .= self::encodeValue($lat - $previousLat);
+            $encoded .= self::encodeValue($lng - $previousLng);
+
+            $previousLat = $lat;
+            $previousLng = $lng;
+        }
+
+        return self::fromString($encoded);
+    }
+
+    private static function encodeValue(float $value): string
+    {
+        $encoded = '';
+        $value = (int) round($value * 10 ** self::PRECISION);
+        $value = ($value < 0) ? ~($value << 1) : ($value << 1);
+
+        while ($value >= 0x20) {
+            $encoded .= chr((0x20 | ($value & 0x1F)) + 63);
+            $value >>= 5;
+        }
+
+        $encoded .= chr($value + 63);
+
+        return $encoded;
+    }
+
     public function getStartingCoordinate(): Coordinate
     {
-        $encodedPolyline = (string) $this;
-        $points = [];
-        $index = $i = 0;
-        $previous = [0, 0];
-
-        while ($i < strlen($encodedPolyline) && count($points) < 2) {
-            $shift = $result = 0x00;
-            do {
-                $bit = ord($encodedPolyline[$i++]) - 63;
-                $result |= ($bit & 0x1F) << $shift;
-                $shift += 5;
-            } while ($bit >= 0x20);
-
-            $diff = (($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1);
-            $number = $previous[$index % 2] + $diff;
-            $previous[$index % 2] = $number;
-            $points[] = $number / 10 ** self::PRECISION;
-            ++$index;
-        }
+        $points = $this->decodePoints(maxPoints: 2);
 
         return Coordinate::createFromLatAndLng(
             latitude: Latitude::fromString((string) $points[0]),
@@ -43,26 +61,7 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
      */
     public function decode(): array
     {
-        $encodedPolyline = (string) $this;
-        $points = [];
-        $index = $i = 0;
-        $previous = [0, 0];
-        while ($i < strlen($encodedPolyline)) {
-            $shift = $result = 0x00;
-            do {
-                $bit = ord($encodedPolyline[$i++]) - 63;
-                $result |= ($bit & 0x1F) << $shift;
-                $shift += 5;
-            } while ($bit >= 0x20);
-
-            $diff = (($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1);
-            $number = $previous[$index % 2] + $diff;
-            $previous[$index % 2] = $number;
-            ++$index;
-            $points[] = $number / 10 ** self::PRECISION;
-        }
-
-        return $points;
+        return $this->decodePoints();
     }
 
     /**
@@ -74,5 +73,33 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
             fn (array $pair): array => [$pair[1], $pair[0]],
             array_chunk($this->decode(), 2)
         );
+    }
+
+    /**
+     * @return float[]
+     */
+    private function decodePoints(?int $maxPoints = null): array
+    {
+        $encodedPolyline = (string) $this;
+        $points = [];
+        $index = $i = 0;
+        $previous = [0, 0];
+
+        while ($i < strlen($encodedPolyline) && (null === $maxPoints || count($points) < $maxPoints)) {
+            $shift = $result = 0x00;
+            do {
+                $bit = ord($encodedPolyline[$i++]) - 63;
+                $result |= ($bit & 0x1F) << $shift;
+                $shift += 5;
+            } while ($bit >= 0x20);
+
+            $diff = (($result & 1) !== 0) ? ~($result >> 1) : ($result >> 1);
+            $number = $previous[$index % 2] + $diff;
+            $previous[$index % 2] = $number;
+            $points[] = $number / 10 ** self::PRECISION;
+            ++$index;
+        }
+
+        return $points;
     }
 }
