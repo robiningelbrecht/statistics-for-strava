@@ -2,7 +2,7 @@
 
 namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateEncodedPolyline;
+use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateEncodedPolylines;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
@@ -20,7 +20,7 @@ class CalculateEncodedPolylineTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private CalculateEncodedPolyline $calculateEncodedPolyline;
+    private CalculateEncodedPolylines $calculateEncodedPolyline;
 
     public function testProcess(): void
     {
@@ -85,6 +85,6 @@ class CalculateEncodedPolylineTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->calculateEncodedPolyline = $this->getContainer()->get(CalculateEncodedPolyline::class);
+        $this->calculateEncodedPolyline = $this->getContainer()->get(CalculateEncodedPolylines::class);
     }
 }

@@ -13,7 +13,7 @@ use App\Infrastructure\Console\ProgressIndicator;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class CalculateEncodedPolyline implements CalculateActivityMetricsStep
+final readonly class CalculateEncodedPolylines implements CalculateActivityMetricsStep
 {
     public function __construct(
         private ActivityStreamRepository $activityStreamRepository,
