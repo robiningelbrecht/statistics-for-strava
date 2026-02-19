@@ -15,10 +15,6 @@ final class ActivityStreamBuilder
     private StreamType $streamType = StreamType::WATTS;
     private SerializableDateTime $createdOn;
     private array $data = [];
-    private array $computedFieldsState = [];
-    private array $bestAverages = [];
-    private array $valueDistribution = [];
-    private ?int $normalizedPower = null;
 
     private function __construct()
     {
@@ -38,10 +34,6 @@ final class ActivityStreamBuilder
             streamType: $this->streamType,
             streamData: $this->data,
             createdOn: $this->createdOn,
-            computedFieldsState: $this->computedFieldsState,
-            valueDistribution: $this->valueDistribution,
-            bestAverages: $this->bestAverages,
-            normalizedPower: $this->normalizedPower,
         );
     }
 
@@ -69,30 +61,6 @@ final class ActivityStreamBuilder
     public function withData(array $data): self
     {
         $this->data = $data;
-
-        return $this;
-    }
-
-    public function withBestAverages(array $bestAverages): self
-    {
-        $this->bestAverages = $bestAverages;
-        $this->computedFieldsState[ActivityStream::COMPUTED_FIELD_BEST_AVERAGES] = true;
-
-        return $this;
-    }
-
-    public function withNormalizedPower(int $normalizedPower): self
-    {
-        $this->normalizedPower = $normalizedPower;
-        $this->computedFieldsState[ActivityStream::COMPUTED_FIELD_NORMALIZED_POWER] = true;
-
-        return $this;
-    }
-
-    public function withValueDistribution(array $valueDistribution): self
-    {
-        $this->valueDistribution = $valueDistribution;
-        $this->computedFieldsState[ActivityStream::COMPUTED_FIELD_VALUE_DISTRIBUTION] = true;
 
         return $this;
     }

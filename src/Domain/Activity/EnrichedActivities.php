@@ -6,11 +6,13 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
@@ -25,9 +27,9 @@ final class EnrichedActivities
     public function __construct(
         private readonly Connection $connection,
         private readonly ActivityRepository $activityRepository,
-        private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly ActivityStreamRepository $activityStreamRepository,
         private readonly ActivityTypeRepository $activityTypeRepository,
+        private readonly ActivityPowerRepository $activityPowerRepository,
         private readonly GearRepository $gearRepository,
         private readonly GearMaintenanceConfig $gearMaintenanceConfig,
         private readonly CustomGearConfig $customGearConfig,
@@ -44,6 +46,21 @@ final class EnrichedActivities
         $customGearTags = $this->customGearConfig->getAllGearTags();
         $gears = $this->gearRepository->findAll();
 
+        $normalizedPowers = [];
+        $results = $this->connection->executeQuery(
+            'SELECT activityId, data FROM ActivityStreamMetric
+             WHERE streamType = :streamType AND metricType = :metricType',
+            [
+                'streamType' => StreamType::WATTS->value,
+                'metricType' => ActivityStreamMetricType::NORMALIZED_POWER->value,
+            ]
+        )->fetchAllAssociative();
+
+        foreach ($results as $result) {
+            $decoded = Json::uncompressAndDecode($result['data']);
+            $normalizedPowers[$result['activityId']] = $decoded[0] ?? null;
+        }
+
         $activityTypes = $this->activityTypeRepository->findAll();
 
         foreach ($activityTypes as $activityType) {
@@ -58,11 +75,10 @@ final class EnrichedActivities
         $results = $queryBuilder->executeQuery()->fetchFirstColumn();
 
         foreach ($results as $result) {
-            $activity = $this->activityRepository->find(ActivityId::fromString($result));
+            $activityId = ActivityId::fromString($result);
+            $activity = $this->activityRepository->find($activityId);
             $activity = $activity
-                ->withNormalizedPower(
-                    $this->activityPowerRepository->findNormalizedPower($activity->getId())
-                )
+                ->withNormalizedPower($normalizedPowers[(string) $activityId] ?? null)
                 ->withBestPowerOutputs(
                     $this->activityPowerRepository->findBest($activity->getId())
                 )

@@ -15,34 +15,6 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
 {
     private ActivityStreamRepository $activityStreamRepository;
 
-    public function testUpdate(): void
-    {
-        $stream = ActivityStreamBuilder::fromDefaults()->build();
-        $this->activityStreamRepository->add($stream);
-
-        $this->assertEmpty($stream->getBestAverages());
-
-        $this->activityStreamRepository->update(
-            $stream
-                ->withBestAverages([1 => 1])
-                ->withValueDistribution([2 => 3.2, 3 => 8])
-        );
-
-        $streams = $this->activityStreamRepository->findByActivityId($stream->getActivityId());
-        /** @var \App\Domain\Activity\Stream\ActivityStream $stream */
-        $stream = $streams->getFirst();
-
-        $this->assertEquals([1 => 1], $stream->getBestAverages());
-        $this->assertEquals([2 => 3.2, 3 => 8], $stream->getValueDistribution());
-        $this->assertEquals(
-            [
-                'bestAverages' => true,
-                'valueDistribution' => true,
-            ],
-            $stream->getComputedFieldsState()
-        );
-    }
-
     public function testHasOneForActivityAndStreamType(): void
     {
         $stream = ActivityStreamBuilder::fromDefaults()->build();
@@ -159,72 +131,6 @@ class DbalActivityStreamRepositoryTest extends ContainerTestCase
             $this->activityStreamRepository->findByActivityId(
                 activityId: ActivityId::fromUnprefixed(1),
             )
-        );
-    }
-
-    public function testFindWithoutValueDistributions(): void
-    {
-        $streamOne = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::WATTS)
-            ->build();
-        $this->activityStreamRepository->add($streamOne);
-        $streamTwo = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::HEART_RATE)
-            ->withValueDistribution(['lol'])
-            ->build();
-        $this->activityStreamRepository->add($streamTwo);
-
-        $this->assertEquals(
-            ActivityStreams::fromArray([$streamOne]),
-            $this->activityStreamRepository->findWithoutDistributionValues(10)
-        );
-    }
-
-    public function testFindWithoutBestAverages(): void
-    {
-        $streamOne = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::WATTS)
-            ->build();
-        $this->activityStreamRepository->add($streamOne);
-        $streamTwo = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::CADENCE)
-            ->withBestAverages(['lol'])
-            ->build();
-        $this->activityStreamRepository->add($streamTwo);
-
-        $this->assertEquals(
-            ActivityStreams::fromArray([$streamOne]),
-            $this->activityStreamRepository->findWithoutBestAverages(10)
-        );
-    }
-
-    public function testFindWithoutNormalizedPower(): void
-    {
-        $streamOne = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(1))
-            ->withStreamType(StreamType::WATTS)
-            ->build();
-        $this->activityStreamRepository->add($streamOne);
-        $streamTwo = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(2))
-            ->withStreamType(StreamType::WATTS)
-            ->withNormalizedPower(3)
-            ->build();
-        $this->activityStreamRepository->add($streamTwo);
-
-        $streamThree = ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed(3))
-            ->withStreamType(StreamType::CADENCE)
-            ->build();
-        $this->activityStreamRepository->add($streamThree);
-
-        $this->assertEquals(
-            ActivityStreams::fromArray([$streamOne]),
-            $this->activityStreamRepository->findWithoutNormalizedPower(10)
         );
     }
 

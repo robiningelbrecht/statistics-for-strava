@@ -49,7 +49,6 @@ final class AthleteWeightHistory
     public function find(SerializableDateTime $on): AthleteWeight
     {
         $on = SerializableDateTime::fromString($on->format('Y-m-d'));
-        /** @var AthleteWeight $athleteWeight */
         foreach ($this->weights as $athleteWeight) {
             if ($on->isAfterOrOn($athleteWeight->getOn())) {
                 return $athleteWeight;

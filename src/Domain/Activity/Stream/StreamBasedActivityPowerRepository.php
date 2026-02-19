@@ -7,6 +7,7 @@ use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivitySummaryRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
+use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Athlete\Weight\AthleteWeightHistory;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Serialization\Json;
@@ -20,23 +21,13 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
 {
     /** @var array<string, PowerOutputs> */
     public static array $cachedPowerOutputs = [];
-    /** @var array<string, ?int> */
-    public static array $cachedNormalizedPowers = [];
 
     public function __construct(
         private readonly Connection $connection,
         private readonly ActivityIdRepository $activityIdRepository,
         private readonly ActivitySummaryRepository $activitySummaryRepository,
         private readonly AthleteWeightHistory $athleteWeightHistory,
-        private readonly ActivityStreamRepository $activityStreamRepository,
     ) {
-    }
-
-    public function findNormalizedPower(ActivityId $activityId): ?int
-    {
-        $this->buildStaticCaches();
-
-        return StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activityId];
     }
 
     public function findBest(ActivityId $activityId): PowerOutputs
@@ -55,19 +46,21 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         $activityIds = $this->activityIdRepository->findAll();
         foreach ($activityIds as $activityId) {
             StreamBasedActivityPowerRepository::$cachedPowerOutputs[(string) $activityId] = PowerOutputs::empty();
-            StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activityId] = null;
+        }
 
-            try {
-                $powerStreamForActivity = $this->activityStreamRepository->findOneByActivityAndStreamType(
-                    activityId: $activityId,
-                    streamType: StreamType::WATTS
-                );
-                StreamBasedActivityPowerRepository::$cachedNormalizedPowers[(string) $activityId] = $powerStreamForActivity->getNormalizedPower();
-            } catch (EntityNotFound) {
-                continue;
-            }
+        $results = $this->connection->executeQuery(
+            'SELECT activityId, data FROM ActivityStreamMetric
+             WHERE streamType = :streamType AND metricType = :metricType',
+            [
+                'streamType' => StreamType::WATTS->value,
+                'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
+            ]
+        )->fetchAllAssociative();
 
-            $bestAverages = $powerStreamForActivity->getBestAverages();
+        foreach ($results as $result) {
+            $activityId = ActivityId::fromString($result['activityId']);
+            $bestAverages = Json::uncompressAndDecode($result['data']);
+            $activitySummary = $this->activitySummaryRepository->find($activityId);
 
             foreach (self::TIME_INTERVALS_IN_SECONDS_REDACTED as $timeIntervalInSeconds) {
                 $interval = CarbonInterval::seconds($timeIntervalInSeconds);
@@ -76,7 +69,6 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 }
                 $bestAverageForTimeInterval = $bestAverages[$timeIntervalInSeconds];
 
-                $activitySummary = $this->activitySummaryRepository->find($activityId);
                 try {
                     $athleteWeight = $this->athleteWeightHistory->find($activitySummary->getStartDate())->getWeightInKg();
                 } catch (EntityNotFound) {
@@ -122,34 +114,45 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
             );
         }
 
-        foreach (self::TIME_INTERVALS_IN_SECONDS_ALL as $timeIntervalInSeconds) {
-            $query = 'SELECT ActivityStream.activityId, ActivityStream.bestAverages FROM ActivityStream 
-                        INNER JOIN Activity ON Activity.activityId = ActivityStream.activityId 
-                        WHERE streamType = :streamType
-                        AND Activity.sportType IN(:sportType)
-                        AND Activity.startDateTime >= :dateFrom AND Activity.startDateTime <= :dateTill  
-                        AND JSON_EXTRACT(bestAverages, "$.'.$timeIntervalInSeconds.'") IS NOT NULL
-                        ORDER BY JSON_EXTRACT(bestAverages, "$.'.$timeIntervalInSeconds.'") DESC, createdOn DESC LIMIT 1';
+        $sql = 'SELECT m.activityId, m.data FROM ActivityStreamMetric m
+                INNER JOIN Activity a ON a.activityId = m.activityId
+                WHERE m.streamType = :streamType
+                AND m.metricType = :metricType
+                AND a.sportType IN(:sportTypes)
+                AND a.startDateTime >= :dateFrom AND a.startDateTime <= :dateTill';
 
-            if (!$result = $this->connection->executeQuery(
-                $query,
-                [
-                    'streamType' => StreamType::WATTS->value,
-                    'sportType' => $sportTypes->map(fn (SportType $sportType) => $sportType->value),
-                    'dateFrom' => $dateRange->getFrom()->format('Y-m-d 00:00:00'),
-                    'dateTill' => $dateRange->getTill()->format('Y-m-d 23:59:59'),
-                ],
-                [
-                    'sportType' => ArrayParameterType::STRING,
-                ]
-            )->fetchAssociative()) {
-                continue;
+        $results = $this->connection->executeQuery($sql, [
+            'streamType' => StreamType::WATTS->value,
+            'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
+            'sportTypes' => $sportTypes->map(fn (SportType $sportType) => $sportType->value),
+            'dateFrom' => $dateRange->getFrom()->format('Y-m-d 00:00:00'),
+            'dateTill' => $dateRange->getTill()->format('Y-m-d 23:59:59'),
+        ], [
+            'sportTypes' => ArrayParameterType::STRING,
+        ])->fetchAllAssociative();
+
+        /** @var array<int, array{activityId: string, power: int}> $bestPerInterval */
+        $bestPerInterval = [];
+        foreach ($results as $result) {
+            $bestAverages = Json::uncompressAndDecode($result['data']);
+            foreach (self::TIME_INTERVALS_IN_SECONDS_ALL as $timeIntervalInSeconds) {
+                if (!isset($bestAverages[$timeIntervalInSeconds])) {
+                    continue;
+                }
+                $power = $bestAverages[$timeIntervalInSeconds];
+                if (!isset($bestPerInterval[$timeIntervalInSeconds]) || $power > $bestPerInterval[$timeIntervalInSeconds]['power']) {
+                    $bestPerInterval[$timeIntervalInSeconds] = [
+                        'activityId' => $result['activityId'],
+                        'power' => $power,
+                    ];
+                }
             }
+        }
 
-            $activityId = ActivityId::fromString($result['activityId']);
+        foreach ($bestPerInterval as $timeIntervalInSeconds => $best) {
+            $activityId = ActivityId::fromString($best['activityId']);
             $activitySummary = $this->activitySummaryRepository->find($activityId);
             $interval = CarbonInterval::seconds($timeIntervalInSeconds);
-            $bestAverageForTimeInterval = Json::decode($result['bestAverages'])[$timeIntervalInSeconds];
 
             try {
                 $athleteWeight = $this->athleteWeightHistory->find($activitySummary->getStartDate())->getWeightInKg();
@@ -158,12 +161,12 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                     Make sure you configure the proper weights in your config.yaml file. Do not forgot to restart your container after changing the weights', $activitySummary->getName(), $activitySummary->getStartDate()->format('Y-m-d')));
             }
 
-            $relativePower = $athleteWeight->toFloat() > 0 ? round($bestAverageForTimeInterval / $athleteWeight->toFloat(), 2) : 0;
+            $relativePower = $athleteWeight->toFloat() > 0 ? round($best['power'] / $athleteWeight->toFloat(), 2) : 0;
             $powerOutputs->add(
                 PowerOutput::fromState(
                     timeIntervalInSeconds: $timeIntervalInSeconds,
                     formattedTimeInterval: 0 !== (int) $interval->totalHours ? $interval->totalHours.' h' : (0 !== (int) $interval->totalMinutes ? $interval->totalMinutes.' m' : $interval->totalSeconds.' s'),
-                    power: $bestAverageForTimeInterval,
+                    power: $best['power'],
                     relativePower: $relativePower,
                     activityId: $activityId,
                 )
