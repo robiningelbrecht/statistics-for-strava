@@ -36,7 +36,7 @@ final readonly class CalculateBestStreamAverages implements CalculateActivityMet
                 streamType: StreamType::WATTS,
             );
 
-            if (!$stream?->getData()) {
+            if ([] === $stream->getData()) {
                 $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
                     activityId: $activityId,
                     streamType: StreamType::WATTS,
