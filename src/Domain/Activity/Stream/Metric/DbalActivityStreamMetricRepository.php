@@ -44,17 +44,14 @@ final readonly class DbalActivityStreamMetricRepository extends DbalRepository i
                     AND m.streamType = s.streamType
                     AND m.metricType = :metricType
                 )
-                AND s.streamType IN(:streamTypes)
+                AND s.streamType = :streamType
                 ORDER BY s.activityId';
 
         return ActivityIds::fromArray(array_map(
             ActivityId::fromString(...),
             $this->connection->executeQuery($sql, [
                 'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
-                'streamTypes' => array_map(
-                    fn (StreamType $streamType) => $streamType->value,
-                    StreamType::thatSupportBestAverageCalculation()
-                ),
+                'streamType' => StreamType::WATTS->value,
             ], [
                 'streamTypes' => ArrayParameterType::STRING,
             ])->fetchFirstColumn()

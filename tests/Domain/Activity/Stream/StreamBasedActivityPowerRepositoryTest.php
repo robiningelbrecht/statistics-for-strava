@@ -5,6 +5,8 @@ namespace App\Tests\Domain\Activity\Stream;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
@@ -41,6 +43,31 @@ class StreamBasedActivityPowerRepositoryTest extends ContainerTestCase
 
         $this->expectException(EntityNotFound::class);
         $this->streamBasedActivityPowerRepository->findBest($activityOne->getId());
+    }
+
+    public function testFindBestForSportTypesWhenAthleteWeightNotFound(): void
+    {
+        $activityOne = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2015-10-10 14:00:34'))
+            ->withSportType(SportType::RIDE)
+            ->build();
+        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+            $activityOne,
+            ['raw' => 'data']
+        ));
+
+        $this->getContainer()->get(ActivityStreamMetricRepository::class)->add(ActivityStreamMetric::create(
+            activityId: $activityOne->getId(),
+            streamType: StreamType::WATTS,
+            metricType: ActivityStreamMetricType::BEST_AVERAGES,
+            data: Json::decode('{"1":540,"5":493,"10":460,"15":442,"30":412,"45":373,"60":352,"120":293,"180":273,"240":282,"300":273,"390":262,"480":256,"720":246,"960":239,"1200":239,"1800":225,"2400":222,"3000":222,"3600":218}'),
+        ));
+
+        $this->expectException(EntityNotFound::class);
+        $this->streamBasedActivityPowerRepository->findBestForSportTypes(
+            SportTypes::fromArray([SportType::RIDE]),
+        );
     }
 
     #[\Override]
