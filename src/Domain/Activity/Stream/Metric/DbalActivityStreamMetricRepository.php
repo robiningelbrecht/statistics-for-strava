@@ -105,6 +105,27 @@ final readonly class DbalActivityStreamMetricRepository extends DbalRepository i
         ));
     }
 
+    public function findActivityIdsWithoutEncodedPolyline(): ActivityIds
+    {
+        $sql = 'SELECT DISTINCT s.activityId FROM ActivityStream s
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM ActivityStreamMetric m
+                    WHERE m.activityId = s.activityId
+                    AND m.streamType = s.streamType
+                    AND m.metricType = :metricType
+                )
+                AND s.streamType = :streamType
+                ORDER BY s.activityId';
+
+        return ActivityIds::fromArray(array_map(
+            ActivityId::fromString(...),
+            $this->connection->executeQuery($sql, [
+                'metricType' => ActivityStreamMetricType::ENCODED_POLYLINE->value,
+                'streamType' => StreamType::LAT_LNG->value,
+            ])->fetchFirstColumn()
+        ));
+    }
+
     public function findByActivityIdAndMetricType(ActivityId $activityId, ActivityStreamMetricType $metricType): ActivityStreamMetrics
     {
         $sql = 'SELECT * FROM ActivityStreamMetric

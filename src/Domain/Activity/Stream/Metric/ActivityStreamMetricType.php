@@ -9,4 +9,5 @@ enum ActivityStreamMetricType: string
     case BEST_AVERAGES = 'bestAverages';
     case VALUE_DISTRIBUTION = 'valueDistribution';
     case NORMALIZED_POWER = 'normalizedPower';
+    case ENCODED_POLYLINE = 'encodedPolyline';
 }

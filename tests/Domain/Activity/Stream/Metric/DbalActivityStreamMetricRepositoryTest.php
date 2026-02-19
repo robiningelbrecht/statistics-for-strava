@@ -200,6 +200,44 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindActivityIdsWithoutEncodedPolyline(): void
+    {
+        $this->addStream(ActivityId::fromUnprefixed('1'), StreamType::LAT_LNG);
+        $this->addStream(ActivityId::fromUnprefixed('2'), StreamType::LAT_LNG);
+        $this->addStream(ActivityId::fromUnprefixed('3'), StreamType::WATTS);
+
+        $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+            activityId: ActivityId::fromUnprefixed('1'),
+            streamType: StreamType::LAT_LNG,
+            metricType: ActivityStreamMetricType::ENCODED_POLYLINE,
+            data: ['encoded'],
+        ));
+
+        $result = $this->activityStreamMetricRepository->findActivityIdsWithoutEncodedPolyline();
+
+        $this->assertEquals(
+            ActivityIds::fromArray([ActivityId::fromUnprefixed('2')]),
+            $result,
+        );
+    }
+
+    public function testFindActivityIdsWithoutEncodedPolylineWhenAllHaveMetrics(): void
+    {
+        $this->addStream(ActivityId::fromUnprefixed('1'), StreamType::LAT_LNG);
+
+        $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+            activityId: ActivityId::fromUnprefixed('1'),
+            streamType: StreamType::LAT_LNG,
+            metricType: ActivityStreamMetricType::ENCODED_POLYLINE,
+            data: ['encoded'],
+        ));
+
+        $this->assertEquals(
+            ActivityIds::fromArray([]),
+            $this->activityStreamMetricRepository->findActivityIdsWithoutEncodedPolyline(),
+        );
+    }
+
     public function testFindByActivityIdAndMetricType(): void
     {
         $activityId = ActivityId::fromUnprefixed('1');
