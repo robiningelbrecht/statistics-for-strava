@@ -1,0 +1,20 @@
+[
+    {
+        "activityId": "activity-5",
+        "streamType": "latlng",
+        "metricType": "encodedPolyline",
+        "data": "[\"existing\"]"
+    },
+    {
+        "activityId": "activity-1",
+        "streamType": "latlng",
+        "metricType": "encodedPolyline",
+        "data": "[]"
+    },
+    {
+        "activityId": "activity-4",
+        "streamType": "latlng",
+        "metricType": "encodedPolyline",
+        "data": "[\"pr_fA{ybz^_DgJ_NgO\"]"
+    }
+]
