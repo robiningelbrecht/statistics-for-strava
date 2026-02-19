@@ -19,16 +19,6 @@ enum StreamType: string
     /**
      * @return StreamType[]
      */
-    public static function thatSupportBestAverageCalculation(): array
-    {
-        return [
-            self::WATTS,
-        ];
-    }
-
-    /**
-     * @return StreamType[]
-     */
     public static function thatSupportDistributionValues(): array
     {
         return [

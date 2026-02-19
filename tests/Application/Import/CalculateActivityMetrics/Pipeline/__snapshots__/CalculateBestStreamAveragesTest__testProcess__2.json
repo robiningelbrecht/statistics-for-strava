@@ -6,6 +6,12 @@
         "data": "[]"
     },
     {
+        "activityId": "activity-10",
+        "streamType": "watts",
+        "metricType": "bestAverages",
+        "data": "{\"1\":2}"
+    },
+    {
         "activityId": "activity-4",
         "streamType": "watts",
         "metricType": "bestAverages",

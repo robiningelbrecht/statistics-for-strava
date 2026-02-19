@@ -11,7 +11,6 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Console\ProgressIndicator;
-use App\Infrastructure\Exception\EntityNotFound;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class CalculateBestStreamAverages implements CalculateActivityMetricsStep
@@ -31,45 +30,39 @@ final readonly class CalculateBestStreamAverages implements CalculateActivityMet
         $activityIdsToProcess = $this->activityStreamMetricRepository->findActivityIdsWithoutBestAverages();
 
         foreach ($activityIdsToProcess as $activityId) {
-            foreach (StreamType::thatSupportBestAverageCalculation() as $streamType) {
-                $bestAverages = [];
-                $stream = null;
-                try {
-                    $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
-                        activityId: $activityId,
-                        streamType: $streamType,
-                    );
-                } catch (EntityNotFound) {
-                }
+            $bestAverages = [];
+            $stream = $this->activityStreamRepository->findOneByActivityAndStreamType(
+                activityId: $activityId,
+                streamType: StreamType::WATTS,
+            );
 
-                if (!$stream?->getData()) {
-                    $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
-                        activityId: $activityId,
-                        streamType: $streamType,
-                        metricType: ActivityStreamMetricType::BEST_AVERAGES,
-                        data: [],
-                    ));
-
-                    continue;
-                }
-
-                foreach (ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_ALL as $timeIntervalInSeconds) {
-                    if (!$bestAverage = $stream->calculateBestAverageForTimeInterval($timeIntervalInSeconds)) {
-                        continue;
-                    }
-                    $bestAverages[$timeIntervalInSeconds] = $bestAverage;
-                }
-
-                ++$countCalculatedStreams;
+            if (!$stream?->getData()) {
                 $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
                     activityId: $activityId,
-                    streamType: $streamType,
+                    streamType: StreamType::WATTS,
                     metricType: ActivityStreamMetricType::BEST_AVERAGES,
-                    data: $bestAverages,
+                    data: [],
                 ));
 
-                $progressIndicator->updateMessage(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));
+                continue;
             }
+
+            foreach (ActivityPowerRepository::TIME_INTERVALS_IN_SECONDS_ALL as $timeIntervalInSeconds) {
+                if (!$bestAverage = $stream->calculateBestAverageForTimeInterval($timeIntervalInSeconds)) {
+                    continue;
+                }
+                $bestAverages[$timeIntervalInSeconds] = $bestAverage;
+            }
+
+            ++$countCalculatedStreams;
+            $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+                activityId: $activityId,
+                streamType: StreamType::WATTS,
+                metricType: ActivityStreamMetricType::BEST_AVERAGES,
+                data: $bestAverages,
+            ));
+
+            $progressIndicator->updateMessage(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));
         }
 
         $progressIndicator->finish(sprintf('=> Calculated best averages for %d streams', $countCalculatedStreams));

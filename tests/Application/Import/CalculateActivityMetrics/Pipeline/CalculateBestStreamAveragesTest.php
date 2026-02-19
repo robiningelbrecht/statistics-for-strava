@@ -44,6 +44,13 @@ class CalculateBestStreamAveragesTest extends ContainerTestCase
             ->build();
         $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
 
+        $stream = ActivityStreamBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(10))
+            ->withStreamType(StreamType::WATTS)
+            ->withData([1, 2])
+            ->build();
+        $this->getContainer()->get(ActivityStreamRepository::class)->add($stream);
+
         $this->calculateBestStreamAverages->process($output);
 
         $this->assertMatchesTextSnapshot($output);
