@@ -62,6 +62,12 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->activityRepository->find(ActivityId::fromUnprefixed(1));
     }
 
+    public function testFindWithRawDataItShouldThrowWhenNotFound(): void
+    {
+        $this->expectExceptionObject(new EntityNotFound('Activity "activity-1" not found'));
+        $this->activityRepository->findWithRawData(ActivityId::fromUnprefixed(1));
+    }
+
     public function testAddAndFindWithRawData(): void
     {
         $activityWithRawData = ActivityWithRawData::fromState(
