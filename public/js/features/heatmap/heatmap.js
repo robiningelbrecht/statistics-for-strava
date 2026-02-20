@@ -14,7 +14,8 @@ export default class Heatmap {
     }
 
     async render() {
-        const allRoutes = JSON.parse(this.heatmap.getAttribute('data-leaflet-routes'));
+        const apiUrl = this.heatmap.getAttribute('data-leaflet-routes');
+        const allRoutes = await this.fetchJson(apiUrl);
 
         const redraw = (updateStorage = true) => {
             const activeFilters = this.filterManager.getActiveFilters();
@@ -52,5 +53,15 @@ export default class Heatmap {
                 redraw();
             });
         });
+    };
+
+    async fetchJson(url) {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${url}: ${response.status}`);
+        }
+
+        return response.json();
     };
 }

@@ -120,8 +120,8 @@
             </div>
         </div>
         <!-- HEATMAP -->
-        <div id="heatmap" data-heatmap-config='{{ heatmapConfig|json_encode}}' data-leaflet-routes='{{ routes }}'
-             class="grid grid-cols-1 h-[calc(100vh-245px)] {{ heatmapConfig.enableGreyScale() ? 'enable-grey-scale' : '' }}">
+        <div id="heatmap" data-heatmap-config='{{ heatmapConfig|json_encode}}' data-leaflet-routes='{{ relativeUrl('api/heatmap/routes.json') }}'
+             class="grid grid-cols-1 h-[calc(100vh-245px)] rounded-lg {{ heatmapConfig.enableGreyScale() ? 'enable-grey-scale' : '' }}">
         </div>
     </div>
 {% endautoescape %}

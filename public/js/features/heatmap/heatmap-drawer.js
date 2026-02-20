@@ -136,23 +136,19 @@ export default class HeatmapDrawer {
                 countryFeatureGroups.set(countryCode, L.featureGroup());
             }
 
-            const polylineLatLngs = L.Polyline
-                .fromEncoded(route.encodedPolyline)
-                .getLatLngs();
-
             const polyline = L.polyline(
-                polylineLatLngs,
+                route.coordinates,
                 this.defaultPolylineStyle
             ).addTo(countryFeatureGroups.get(countryCode));
 
             this.routePolylines.push({
                 route: route,
                 polyline: polyline,
-                latlngs: polylineLatLngs
+                latlngs: route.coordinates
             });
 
             if (mostActiveState === state) {
-                L.polyline(polylineLatLngs).addTo(fitMapBoundsFeatureGroup);
+                L.polyline(route.coordinates).addTo(fitMapBoundsFeatureGroup);
             }
         });
 
