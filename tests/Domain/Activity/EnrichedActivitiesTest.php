@@ -4,9 +4,9 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
@@ -20,12 +20,12 @@ class EnrichedActivitiesTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private EnrichedActivities $enrichedActivities;
-    private ActivityWithRawDataRepository $activityWithRawDataRepository;
+    private ActivityRepository $activityRepository;
 
     public function testItShouldSaveAndFind(): void
     {
         $activity = ActivityBuilder::fromDefaults()->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activity,
             ['raw' => 'data']
         ));
@@ -58,7 +58,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(1))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -66,7 +66,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(2))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -74,7 +74,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(3))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -92,7 +92,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->withSportType(SportType::BADMINTON)
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -101,7 +101,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->withSportType(SportType::RUN)
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -110,7 +110,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withSportType(SportType::MOUNTAIN_BIKE_RIDE)
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -133,7 +133,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->withSportType(SportType::BADMINTON)
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -142,7 +142,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->withSportType(SportType::RUN)
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -151,7 +151,7 @@ class EnrichedActivitiesTest extends ContainerTestCase
             ->withSportType(SportType::MOUNTAIN_BIKE_RIDE)
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -168,6 +168,6 @@ class EnrichedActivitiesTest extends ContainerTestCase
         parent::setUp();
 
         $this->enrichedActivities = $this->getContainer()->get(EnrichedActivities::class);
-        $this->activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $this->activityRepository = $this->getContainer()->get(ActivityRepository::class);
     }
 }

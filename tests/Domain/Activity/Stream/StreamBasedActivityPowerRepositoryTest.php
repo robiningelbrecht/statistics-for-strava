@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Activity\Stream;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
@@ -21,7 +21,7 @@ use App\Tests\Domain\Activity\ActivityBuilder;
 class StreamBasedActivityPowerRepositoryTest extends ContainerTestCase
 {
     private StreamBasedActivityPowerRepository $streamBasedActivityPowerRepository;
-    private ActivityWithRawDataRepository $activityWithRawDataRepository;
+    private ActivityRepository $activityRepository;
 
     public function testFindBestWhenAthleteWeightNotFound(): void
     {
@@ -29,7 +29,7 @@ class StreamBasedActivityPowerRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(1))
             ->withStartDateTime(SerializableDateTime::fromString('2015-10-10 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -52,7 +52,7 @@ class StreamBasedActivityPowerRepositoryTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2015-10-10 14:00:34'))
             ->withSportType(SportType::RIDE)
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -76,6 +76,6 @@ class StreamBasedActivityPowerRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->streamBasedActivityPowerRepository = $this->getContainer()->get(StreamBasedActivityPowerRepository::class);
-        $this->activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $this->activityRepository = $this->getContainer()->get(ActivityRepository::class);
     }
 }

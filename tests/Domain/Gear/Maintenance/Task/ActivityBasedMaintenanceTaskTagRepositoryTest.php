@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Gear\Maintenance\Task;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
@@ -25,7 +25,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
 
     public function testFindAll(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withName(Name::fromString('#sfs-chain-lubed'))
@@ -33,7 +33,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(2))
                 ->withName(Name::fromString('#sfs-chain-two-lubed'))
@@ -41,7 +41,7 @@ class ActivityBasedMaintenanceTaskTagRepositoryTest extends ContainerTestCase
                 ->build(), []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(3))
                 ->withName(Name::fromString('#sfs-chain-random'))

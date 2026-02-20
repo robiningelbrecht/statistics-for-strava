@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Dashboard\Widget;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\Widget\StreaksWidget;
@@ -22,7 +22,7 @@ class StreaksWidgetTest extends ContainerTestCase
 
     public function testRenderWithSportTypesToInclude(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-03 00:00:00'))
@@ -31,7 +31,7 @@ class StreaksWidgetTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-02 00:00:00'))

@@ -6,8 +6,8 @@ use App\Application\Import\ImportGear\ImportGear;
 use App\Application\Import\ImportGear\ImportGearCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
@@ -41,21 +41,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
             ['gear_id' => 'b12659861']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
             ['gear_id' => 'b12659743']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
@@ -79,7 +79,7 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
@@ -102,21 +102,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
             ['gear_id' => 'b12659861']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
             ['gear_id' => 'b12659743']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
@@ -139,21 +139,21 @@ class ImportGearCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659861'))
                 ->build(),
             ['gear_id' => 'b12659861']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build(),
             ['gear_id' => 'b12659743']
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('b12659792'))
@@ -198,7 +198,7 @@ YML
                 ->withGearId(GearId::fromUnprefixed('b12659743'))
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::fromUnprefixed('b12659743'))

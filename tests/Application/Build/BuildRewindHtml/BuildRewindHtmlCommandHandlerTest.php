@@ -4,8 +4,8 @@ namespace App\Tests\Application\Build\BuildRewindHtml;
 
 use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
@@ -25,7 +25,7 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
     {
         $this->provideFullTestSet();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::random())
                 ->withSportType(SportType::WALK)
@@ -47,7 +47,7 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
             Value::fromString(Json::encode($this->buildThemeConfig())),
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::random())
                 ->withSportType(SportType::WALK)

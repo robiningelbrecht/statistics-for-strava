@@ -4,8 +4,8 @@ namespace App\Tests\Application\Build\BuildBadgeSvg;
 
 use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
@@ -24,7 +24,7 @@ class BuildBadgeSvgCommandHandlerTest extends BuildAppFilesTestCase
                 ->build(),
             rawData: []
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add($activity);
+        $this->getContainer()->get(ActivityRepository::class)->add($activity);
 
         $this->commandBus->dispatch(new BuildBadgeSvg(SerializableDateTime::fromString('2023-10-17 16:15:04')));
 

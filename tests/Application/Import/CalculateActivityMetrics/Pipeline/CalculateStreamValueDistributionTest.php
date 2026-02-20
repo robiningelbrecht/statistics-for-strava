@@ -6,7 +6,6 @@ use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateStreamValu
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
@@ -36,7 +35,7 @@ class CalculateStreamValueDistributionTest extends ContainerTestCase
     {
         $output = new SpyOutput();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withSportType(SportType::RUN)
@@ -44,7 +43,7 @@ class CalculateStreamValueDistributionTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(3))
                 ->withSportType(SportType::RIDE)
@@ -52,7 +51,7 @@ class CalculateStreamValueDistributionTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withSportType(SportType::SWIM)

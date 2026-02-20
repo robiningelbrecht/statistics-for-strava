@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Activity\Route;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Route\ActivityBasedRouteRepository;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteRepository;
@@ -19,11 +19,11 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
     use MatchesSnapshots;
 
     private RouteRepository $routeRepository;
-    private ActivityWithRawDataRepository $activityWithRawDataRepository;
+    private ActivityRepository $activityRepository;
 
     public function testFindAll(): void
     {
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
@@ -33,7 +33,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
             rawData: []
         ));
 
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(2))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
@@ -42,7 +42,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->build(),
             rawData: []
         ));
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(3))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
@@ -51,7 +51,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
                 ->build(),
             rawData: []
         ));
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
@@ -69,7 +69,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $this->activityRepository = $this->getContainer()->get(ActivityRepository::class);
         $this->routeRepository = new ActivityBasedRouteRepository(
             $this->getConnection(),
         );

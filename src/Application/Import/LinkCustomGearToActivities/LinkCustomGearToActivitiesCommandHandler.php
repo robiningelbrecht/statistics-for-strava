@@ -8,7 +8,6 @@ use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
@@ -21,7 +20,6 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
 {
     public function __construct(
         private CustomGearRepository $customGearRepository,
-        private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityRepository $activityRepository,
         private ActivityIdRepository $activityIdRepository,
         private CustomGearConfig $customGearConfig,
@@ -69,10 +67,10 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
         }
 
         foreach ($activitiesWithoutCustomGearTag as $activity) {
-            $activityWithRawData = $this->activityWithRawDataRepository->find($activity->getId());
+            $activityWithRawData = $this->activityRepository->findWithRawData($activity->getId());
 
             // Make sure any previous linked custom gear is removed.
-            $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
+            $this->activityRepository->update(ActivityWithRawData::fromState(
                 activity: $activity->withEmptyGear(),
                 rawData: $activityWithRawData->getRawData()
             ));
@@ -85,7 +83,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
 
             /** @var Activity $activity */
             foreach ($activitiesTaggedWithCustomGear as $activity) {
-                $activityWithRawData = $this->activityWithRawDataRepository->find($activity->getId());
+                $activityWithRawData = $this->activityRepository->findWithRawData($activity->getId());
 
                 // Link activity to custom gear.
                 $activity = $activity->withGear($customGear->getId());
@@ -95,7 +93,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
                     $customGear->getDistance()->toFloat() + $activity->getDistance()->toFloat())->toMeter()
                 );
 
-                $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
+                $this->activityRepository->update(ActivityWithRawData::fromState(
                     activity: $activity,
                     rawData: $activityWithRawData->getRawData()
                 ));

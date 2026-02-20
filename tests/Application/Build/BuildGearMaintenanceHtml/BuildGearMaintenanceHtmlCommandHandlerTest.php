@@ -5,8 +5,8 @@ namespace App\Tests\Application\Build\BuildGearMaintenanceHtml;
 use App\Application\Build\BuildGearMaintenanceHtml\BuildGearMaintenanceHtml;
 use App\Application\Build\BuildGearMaintenanceHtml\BuildGearMaintenanceHtmlCommandHandler;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
@@ -37,7 +37,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             ->build()
             );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withName(Name::fromString('#sfs-chain-lubed'))
@@ -47,7 +47,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('10'))
                 ->withName(Name::fromString('#sfs-chain-lubed'))
@@ -57,7 +57,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId($gear->getId())
@@ -67,7 +67,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId($gear->getId())
@@ -77,7 +77,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('4'))
                 ->withName(Name::fromString('#sfs-chain-lubed wrong'))

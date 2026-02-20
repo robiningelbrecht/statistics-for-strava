@@ -8,7 +8,7 @@ use App\Application\RunBuild\RunBuild;
 use App\Application\RunImport\RunImport;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
-use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
@@ -28,7 +28,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
     public function __construct(
         private CommandBus $commandBus,
         private WebhookEventRepository $webhookEventRepository,
-        private ActivityWithRawDataRepository $activityWithRawDataRepository,
+        private ActivityRepository $activityRepository,
         private ResourceUsage $resourceUsage,
         private AppUrl $appUrl,
         private Mutex $mutex,
@@ -93,7 +93,7 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         }
 
         if (!$activityIdsToDelete->isEmpty()) {
-            $this->activityWithRawDataRepository->markActivitiesForDeletion($activityIdsToDelete);
+            $this->activityRepository->markActivitiesForDeletion($activityIdsToDelete);
         }
 
         $this->doRun(

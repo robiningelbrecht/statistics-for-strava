@@ -4,8 +4,8 @@ namespace App\Tests\Console;
 
 use App\Console\DetectCorruptedActivitiesConsoleCommand;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\CombinedStream\CombinedStreamType;
 use App\Domain\Activity\Stream\StreamType;
@@ -97,7 +97,7 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
             ]
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-2'))
                 ->build(),
@@ -115,7 +115,7 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
             ]
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-3'))
                 ->build(),

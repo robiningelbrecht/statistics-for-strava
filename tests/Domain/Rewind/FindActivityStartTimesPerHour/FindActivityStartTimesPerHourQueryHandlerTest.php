@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Rewind\FindActivityStartTimesPerHour;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHour;
 use App\Domain\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHourQueryHandler;
@@ -21,7 +21,7 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
 
     public function testHandle(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('0'))
                 ->withStartDateTime(SerializableDateTime::fromString('2024-03-01 00:00:00'))
@@ -29,14 +29,14 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('3'))
@@ -44,7 +44,7 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('2'))
@@ -52,7 +52,7 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('4'))
                 ->withGearId(GearId::fromUnprefixed('5'))
@@ -60,7 +60,7 @@ class FindActivityStartTimesPerHourQueryHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('8'))
                 ->withStartDateTime(SerializableDateTime::fromString('2024-01-03 00:00:00'))

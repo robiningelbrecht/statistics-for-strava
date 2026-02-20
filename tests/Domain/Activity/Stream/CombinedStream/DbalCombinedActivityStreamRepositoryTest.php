@@ -4,8 +4,8 @@ namespace App\Tests\Domain\Activity\Stream\CombinedStream;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
@@ -57,7 +57,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->build()
         );
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::RIDE)
@@ -88,7 +88,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-3'))
@@ -97,7 +97,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-4'))
@@ -120,7 +120,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-5'))
@@ -143,7 +143,7 @@ class DbalCombinedActivityStreamRepositoryTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-6'))

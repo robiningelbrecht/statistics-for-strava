@@ -6,7 +6,6 @@ use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateCombinedSt
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
@@ -96,11 +95,11 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
     {
         $output = new SpyOutput();
 
-        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
         $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
 
         $activityId = ActivityId::fromUnprefixed('one');
-        $activityWithRawDataRepository->add(
+        $activityRepository->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withSportType(SportType::RIDE)
@@ -139,11 +138,11 @@ class CalculateCombinedStreamsTest extends ContainerTestCase
         SportType $sportType,
         bool $omitDistanceStream,
     ): void {
-        $activityWithRawDataRepository = $this->getContainer()->get(ActivityWithRawDataRepository::class);
+        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
         $streamRepository = $this->getContainer()->get(ActivityStreamRepository::class);
 
         $activityId = ActivityId::fromUnprefixed('one');
-        $activityWithRawDataRepository->add(
+        $activityRepository->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withSportType($sportType)

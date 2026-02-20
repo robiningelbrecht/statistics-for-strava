@@ -11,7 +11,6 @@ use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -34,7 +33,6 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private Strava $strava,
         private ActivityRepository $activityRepository,
         private ActivityIdRepository $activityIdRepository,
-        private ActivityWithRawDataRepository $activityWithRawDataRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private SportTypesToImport $sportTypesToImport,
@@ -121,7 +119,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             }
 
             try {
-                $isNewActivity = !$this->activityWithRawDataRepository->exists($activityId);
+                $isNewActivity = !$this->activityRepository->exists($activityId);
                 if ($isNewActivity && $command->isFullImport()) {
                     // When a partial import is triggered we fetch the activity from Strava beforehand.
                     // We only need to fetch activity details when running a full import.
@@ -152,17 +150,17 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 if (!array_key_exists('segment_efforts', $context->getRawStravaData())) {
                     throw new \RuntimeException(sprintf('Activity %s is expected to include segment_efforts in the raw Strava data. This appears to be a regression introduced in a recent version. Please report this as a bug on GitHub.', $activityId->toUnprefixedString()));
                 }
-                $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+                $this->activityRepository->add(ActivityWithRawData::fromState(
                     activity: $activity,
                     rawData: $context->getRawStravaData()
                 ));
 
                 $this->numberOfNewActivitiesToProcessPerImport->increaseNumberOfProcessedActivities();
             } else {
-                $this->activityWithRawDataRepository->update(ActivityWithRawData::fromState(
+                $this->activityRepository->update(ActivityWithRawData::fromState(
                     activity: $activity,
                     rawData: [
-                        ...$this->activityWithRawDataRepository->find($activity->getId())->getRawData(),
+                        ...$this->activityRepository->findWithRawData($activity->getId())->getRawData(),
                         ...$rawStravaData,
                     ]
                 ));
@@ -172,7 +170,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                 $this->activityStreamRepository->add($stream);
             }
             if ($context->streamsWereImported()) {
-                $this->activityWithRawDataRepository->markActivityStreamsAsImported($activityId);
+                $this->activityRepository->markActivityStreamsAsImported($activityId);
             }
 
             unset($activityIdsToDelete[(string) $context->getActivity()->getId()]);
@@ -213,7 +211,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             throw new \RuntimeException('All activities appear to be marked for deletion. This seems like a configuration issue. Aborting to prevent data loss');
         }
 
-        $this->activityWithRawDataRepository->markActivitiesForDeletion(ActivityIds::fromArray($activityIdsToDelete));
+        $this->activityRepository->markActivitiesForDeletion(ActivityIds::fromArray($activityIdsToDelete));
 
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activityRepository->find($activityId);

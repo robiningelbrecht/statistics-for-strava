@@ -2,7 +2,7 @@
 
 namespace App\Application\Import\ImportActivities\Pipeline;
 
-use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\ActivityStreams;
@@ -15,7 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 final readonly class FetchActivityStreams implements ActivityImportStep
 {
     public function __construct(
-        private ActivityWithRawDataRepository $activityWithRawDataRepository,
+        private ActivityRepository $activityRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private Strava $strava,
         private Clock $clock,
@@ -26,7 +26,7 @@ final readonly class FetchActivityStreams implements ActivityImportStep
     {
         $activityId = $context->getActivityId();
 
-        if (!$context->isNewActivity() && !$this->activityWithRawDataRepository->activityNeedsStreamImport($activityId)) {
+        if (!$context->isNewActivity() && !$this->activityRepository->activityNeedsStreamImport($activityId)) {
             return $context;
         }
 

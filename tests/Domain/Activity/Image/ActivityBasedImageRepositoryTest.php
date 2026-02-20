@@ -4,8 +4,8 @@ namespace App\Tests\Domain\Activity\Image;
 
 use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\Image\ActivityBasedImageRepository;
 use App\Domain\Activity\Image\ImageRepository;
@@ -25,14 +25,14 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
 
     public function testFindRandomFor(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('0'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-03-01 00:00:00'))
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withSportType(SportType::VIRTUAL_ROW)
@@ -40,7 +40,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withSportType(SportType::RUN)
@@ -49,7 +49,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withSportType(SportType::RUN)
@@ -70,14 +70,14 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
 
     public function testFindRandomForItShouldThrow(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('0'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-03-01 00:00:00'))
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withSportType(SportType::VIRTUAL_ROW)
@@ -85,7 +85,7 @@ class ActivityBasedImageRepositoryTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withSportType(SportType::RUN)

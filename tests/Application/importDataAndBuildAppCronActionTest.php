@@ -4,7 +4,7 @@ namespace App\Tests\Application;
 
 use App\Application\AppUrl;
 use App\Application\importDataAndBuildAppCronAction;
-use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEvent;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
@@ -115,7 +115,7 @@ class importDataAndBuildAppCronActionTest extends ContainerTestCase
         $this->importAndBuildAppCronAction = new importDataAndBuildAppCronAction(
             $this->commandBus = new SpyCommandBus(),
             $this->getContainer()->get(WebhookEventRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            $this->getContainer()->get(ActivityRepository::class),
             new FixedResourceUsage(),
             AppUrl::fromString('http://localhost'),
             new Mutex(

@@ -8,7 +8,6 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
@@ -51,7 +50,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('with-strava-gear'))
@@ -62,7 +61,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-but-not-tagged'))
@@ -73,7 +72,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('with-gear-but-not-tagged'))
@@ -84,7 +83,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged'))
@@ -95,7 +94,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged-2'))
@@ -106,7 +105,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged-3'))
@@ -150,7 +149,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-but-not-tagged'))
@@ -161,7 +160,7 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('without-gear-and-tagged'))
@@ -182,7 +181,6 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
 
         new LinkCustomGearToActivitiesCommandHandler(
             $this->getContainer()->get(CustomGearRepository::class),
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
             $this->getContainer()->get(ActivityRepository::class),
             $this->getContainer()->get(ActivityIdRepository::class),
             CustomGearConfig::fromArray([])

@@ -7,8 +7,8 @@ use App\Application\RunBuild\RunBuild;
 use App\Application\RunBuild\RunBuildCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -37,7 +37,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
     public function testHandle(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withGearId(GearId::fromUnprefixed(4))
@@ -64,7 +64,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
     public function testHandleWhenNotAllGearHasBeenImportedYet(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(4))
                 ->withGearId(GearId::fromUnprefixed(4))

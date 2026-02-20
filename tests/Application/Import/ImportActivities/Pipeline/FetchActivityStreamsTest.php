@@ -5,7 +5,7 @@ namespace App\Tests\Application\Import\ImportActivities\Pipeline;
 use App\Application\Import\ImportActivities\Pipeline\ActivityImportContext;
 use App\Application\Import\ImportActivities\Pipeline\FetchActivityStreams;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Strava\Strava;
@@ -93,7 +93,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
         parent::setUp();
 
         $this->fetchActivityStreams = new FetchActivityStreams(
-            $this->getContainer()->get(ActivityWithRawDataRepository::class),
+            $this->getContainer()->get(ActivityRepository::class),
             $this->getContainer()->get(ActivityStreamRepository::class),
             $this->strava = $this->createMock(Strava::class),
             PausedClock::fromString('2025-12-18'),

@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Activity\Device;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\Device\DbalDeviceRepository;
 use App\Domain\Activity\Device\Device;
 use App\Domain\Activity\Device\DeviceRepository;
@@ -17,7 +17,7 @@ class DbalDeviceRepositoryTest extends ContainerTestCase
 
     public function testFindAll(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test'))
                 ->withDeviceName('Garmin Forerunner 945')
@@ -25,7 +25,7 @@ class DbalDeviceRepositoryTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-2'))
                 ->withoutDeviceName()
@@ -33,7 +33,7 @@ class DbalDeviceRepositoryTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-3'))
                 ->withDeviceName('Garmin Edge 530')
@@ -41,7 +41,7 @@ class DbalDeviceRepositoryTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test-4'))
                 ->withDeviceName('Garmin Edge 530')

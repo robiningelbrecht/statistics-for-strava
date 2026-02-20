@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Rewind\FindSocialsMetrics;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetricsQueryHandler;
@@ -20,7 +20,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
 
     public function testHandle(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('0'))
                 ->withStartDateTime(SerializableDateTime::fromString('2024-03-01 00:00:00'))
@@ -31,7 +31,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
             ]
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
@@ -39,7 +39,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('3'))
@@ -47,7 +47,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
                 ->build(),
             []
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('3'))
                 ->withGearId(GearId::fromUnprefixed('2'))
@@ -58,7 +58,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
                 'comment_count' => 2,
             ]
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('4'))
                 ->withGearId(GearId::fromUnprefixed('5'))
@@ -68,7 +68,7 @@ class FindSocialsMetricsQueryHandlerTest extends ContainerTestCase
             [
             ]
         ));
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('8'))
                 ->withStartDateTime(SerializableDateTime::fromString('2024-01-03 00:00:00'))
