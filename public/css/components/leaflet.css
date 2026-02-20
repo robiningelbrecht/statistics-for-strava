@@ -8,8 +8,7 @@
     }
 
     #heatmap.enable-grey-scale .leaflet-tile-pane {
-        -webkit-filter: grayscale(100%) brightness(75%);
-        filter: grayscale(100%) brightness(75%);
+        @apply grayscale brightness-75
     }
 
     .leaflet-popup-content-wrapper .leaflet-popup-content{
