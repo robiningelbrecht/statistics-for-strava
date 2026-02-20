@@ -1,0 +1,14 @@
+@layer components {
+    .sidebar-menu-link {
+        @apply flex items-center gap-x-3 p-2 text-base font-medium text-gray-900 rounded-lg hover:bg-gray-100 aria-selected:bg-gray-100;
+        @apply sidebar-collapsed:flex-col sidebar-collapsed:gap-y-0.5 sidebar-collapsed:text-xs;
+
+        &:hover .sidebar-menu-link-icon {
+            @apply text-gray-900;
+        }
+    }
+
+    .sidebar-menu-link-icon {
+        @apply shrink-0 w-6 h-6 text-gray-500 transition duration-75;
+    }
+}
