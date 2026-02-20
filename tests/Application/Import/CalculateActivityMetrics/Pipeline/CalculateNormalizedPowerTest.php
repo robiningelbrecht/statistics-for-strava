@@ -10,15 +10,16 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\ProvideSnapshotAssertion;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class CalculateNormalizedPowerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+    use ProvideSnapshotAssertion;
 
     private CalculateNormalizedPower $calculateNormalizedPower;
 
@@ -64,22 +65,9 @@ class CalculateNormalizedPowerTest extends ContainerTestCase
         $this->calculateNormalizedPower->process($output);
 
         $this->assertMatchesTextSnapshot($output);
-        $this->assertDatabaseResults();
-    }
-
-    private function assertDatabaseResults(): void
-    {
-        $results = $this->getConnection()
-            ->executeQuery('SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType', [
-                'metricType' => ActivityStreamMetricType::NORMALIZED_POWER->value,
-            ])->fetchAllAssociative();
-
-        foreach ($results as &$result) {
-            $result['data'] = CompressedString::fromCompressed($result['data'])->uncompress();
-        }
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($results)
+        $this->assertCompressedDatabaseQueryMatchesSnapshot(
+            'SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType',
+            ['metricType' => ActivityStreamMetricType::NORMALIZED_POWER->value],
         );
     }
 

@@ -1859,16 +1859,16 @@
         },
         {
             "name": "inspector-apm/inspector-php",
-            "version": "3.16.13",
+            "version": "3.16.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inspector-apm/inspector-php.git",
-                "reference": "4b215e3d34b127174ac0b2f84134eccbe4b3c01f"
+                "reference": "87321eea79675933a15fd7d6f08d2500f4ce24dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/4b215e3d34b127174ac0b2f84134eccbe4b3c01f",
-                "reference": "4b215e3d34b127174ac0b2f84134eccbe4b3c01f",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/87321eea79675933a15fd7d6f08d2500f4ce24dd",
+                "reference": "87321eea79675933a15fd7d6f08d2500f4ce24dd",
                 "shasum": ""
             },
             "require": {
@@ -1915,9 +1915,9 @@
             ],
             "support": {
                 "issues": "https://github.com/inspector-apm/inspector-php/issues",
-                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.13"
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.14"
             },
-            "time": "2026-02-13T16:58:07+00:00"
+            "time": "2026-02-19T16:06:11+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -9940,16 +9940,16 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.3.6",
+            "version": "2.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b"
+                "reference": "9c46ad17f57963932c9788fd1b0f1d07ff450370"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/ca9ebb81d280cd362ea39474dabd42679e32ca6b",
-                "reference": "ca9ebb81d280cd362ea39474dabd42679e32ca6b",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/9c46ad17f57963932c9788fd1b0f1d07ff450370",
+                "reference": "9c46ad17f57963932c9788fd1b0f1d07ff450370",
                 "shasum": ""
             },
             "require": {
@@ -9988,7 +9988,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.3.6"
+                "source": "https://github.com/rectorphp/rector/tree/2.3.7"
             },
             "funding": [
                 {
@@ -9996,7 +9996,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-06T14:25:06+00:00"
+            "time": "2026-02-19T14:44:16+00:00"
         },
         {
             "name": "sebastian/cli-parser",

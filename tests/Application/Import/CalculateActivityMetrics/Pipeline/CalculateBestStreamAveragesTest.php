@@ -8,15 +8,16 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\ProvideSnapshotAssertion;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class CalculateBestStreamAveragesTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+    use ProvideSnapshotAssertion;
 
     private CalculateBestStreamAverages $calculateBestStreamAverages;
 
@@ -54,22 +55,9 @@ class CalculateBestStreamAveragesTest extends ContainerTestCase
         $this->calculateBestStreamAverages->process($output);
 
         $this->assertMatchesTextSnapshot($output);
-        $this->assertDatabaseResults();
-    }
-
-    private function assertDatabaseResults(): void
-    {
-        $results = $this->getConnection()
-            ->executeQuery('SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType', [
-                'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
-            ])->fetchAllAssociative();
-
-        foreach ($results as &$result) {
-            $result['data'] = null !== $result['data'] ? CompressedString::fromCompressed($result['data'])->uncompress() : null;
-        }
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($results)
+        $this->assertCompressedDatabaseQueryMatchesSnapshot(
+            'SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType',
+            ['metricType' => ActivityStreamMetricType::BEST_AVERAGES->value],
         );
     }
 

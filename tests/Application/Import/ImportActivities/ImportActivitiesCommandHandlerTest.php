@@ -36,7 +36,6 @@ use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\BestEffort\ActivityBestEffortBuilder;
@@ -49,6 +48,7 @@ use App\Tests\Domain\Segment\SegmentEffort\SegmentEffortBuilder;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\Infrastructure\FileSystem\provideAssertFileSystem;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
+use App\Tests\ProvideSnapshotAssertion;
 use App\Tests\SpyOutput;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -56,6 +56,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 {
     use MatchesSnapshots;
     use provideAssertFileSystem;
+    use ProvideSnapshotAssertion;
 
     private ImportActivitiesCommandHandler $importActivitiesCommandHandler;
     private SpyStrava $strava;
@@ -104,7 +105,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(Json::encode(
             $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
         ));
-        $this->assertDatabaseResults();
+        $this->assertCompressedDatabaseQueryMatchesSnapshot('SELECT * FROM ActivityStream');
     }
 
     public function testHandleWithUnexpectedErrorWhileInitializing(): void
@@ -471,20 +472,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, ActivityIds::fromArray([ActivityId::fromUnprefixed(4)])));
 
         $this->assertMatchesTextSnapshot($output);
-    }
-
-    private function assertDatabaseResults(): void
-    {
-        $results = $this->getConnection()
-            ->executeQuery('SELECT * FROM ActivityStream')->fetchAllAssociative();
-
-        foreach ($results as &$result) {
-            $result['data'] = null !== $result['data'] ? CompressedString::fromCompressed($result['data'])->uncompress() : null;
-        }
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($results)
-        );
     }
 
     #[\Override]
