@@ -81,7 +81,7 @@ This is not a bug, once all your activities have been imported, your gear statis
             'Building gear stats' => new BuildGearStatsHtml($now),
             'Building gear maintenance' => new BuildGearMaintenanceHtml(),
             'Building eddington' => new BuildEddingtonHtml($now),
-            'Building segments' => new BuildSegmentsHtml($now),
+            'Building segments' => new BuildSegmentsHtml(),
             'Building heatmap' => new BuildHeatmapHtml($now),
             'Building best efforts' => new BuildBestEffortsHtml(),
             'Building rewind' => new BuildRewindHtml($now),

@@ -24,7 +24,7 @@ final class SegmentBuilder
     private readonly ?int $climbCategory;
     private readonly ?string $countryCode;
     private bool $detailsHaveBeenImported = false;
-    private readonly ?EncodedPolyline $polyline;
+    private ?EncodedPolyline $polyline;
     private readonly ?Coordinate $startingCoordinate;
 
     private function __construct()
@@ -113,6 +113,13 @@ final class SegmentBuilder
     public function withDetailsHaveBeenImported(bool $flag): self
     {
         $this->detailsHaveBeenImported = $flag;
+
+        return $this;
+    }
+
+    public function withPolyline(EncodedPolyline $polyline): self
+    {
+        $this->polyline = $polyline;
 
         return $this;
     }
