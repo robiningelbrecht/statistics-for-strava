@@ -14,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(name: 'ActivityStream_streamTypeIndex', columns: ['streamType'])]
 final readonly class ActivityStream implements SupportsAITooling
 {
+    #[ORM\Column(type: 'integer')]
+    private int $dataSize; // @phpstan-ignore property.onlyWritten
+
     /**
      * @param array<int, mixed> $data
      */
@@ -24,9 +27,10 @@ final readonly class ActivityStream implements SupportsAITooling
         private StreamType $streamType,
         #[ORM\Column(type: 'datetime_immutable')]
         private SerializableDateTime $createdOn,
-        #[ORM\Column(type: 'json')]
+        #[ORM\Column(type: 'blob')]
         private array $data,
     ) {
+        $this->dataSize = 0;
     }
 
     /**

@@ -13,13 +13,14 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
 {
     public function add(ActivityStream $stream): void
     {
-        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, createdOn)
-                VALUES (:activityId, :streamType, :data, :createdOn)';
+        $sql = 'INSERT INTO ActivityStream (activityId, streamType, data, dataSize, createdOn)
+                VALUES (:activityId, :streamType, :data, :dataSize, :createdOn)';
 
         $this->connection->executeStatement($sql, [
             'activityId' => $stream->getActivityId(),
             'streamType' => $stream->getStreamType()->value,
-            'data' => Json::encode($stream->getData()),
+            'data' => Json::encodeAndCompress($stream->getData()),
+            'dataSize' => count($stream->getData()),
             'createdOn' => $stream->getCreatedOn(),
         ]);
     }
@@ -36,14 +37,14 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
     public function hasOneForActivityAndStreamType(ActivityId $activityId, StreamType $streamType): bool
     {
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('*')
+        $queryBuilder->select('COUNT(*)')
             ->from('ActivityStream')
             ->andWhere('activityId = :activityId')
             ->setParameter('activityId', $activityId)
             ->andWhere('streamType = :streamType')
             ->setParameter('streamType', $streamType->value);
 
-        return !empty($queryBuilder->executeQuery()->fetchOne());
+        return $queryBuilder->executeQuery()->fetchOne() > 0;
     }
 
     public function findByStreamType(StreamType $streamType): ActivityStreams
@@ -113,7 +114,7 @@ final readonly class DbalActivityStreamRepository extends DbalRepository impleme
         return ActivityStream::fromState(
             activityId: ActivityId::fromString($result['activityId']),
             streamType: StreamType::from($result['streamType']),
-            streamData: Json::decode($result['data']),
+            streamData: Json::uncompressAndDecode($result['data']),
             createdOn: SerializableDateTime::fromString($result['createdOn']),
         );
     }

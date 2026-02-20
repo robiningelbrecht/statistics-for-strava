@@ -36,6 +36,7 @@ use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\BestEffort\ActivityBestEffortBuilder;
@@ -103,9 +104,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(Json::encode(
             $this->getConnection()->executeQuery('SELECT * FROM KeyValue')->fetchAllAssociative()
         ));
-        $this->assertMatchesJsonSnapshot(Json::encode(
-            $this->getConnection()->executeQuery('SELECT * FROM ActivityStream')->fetchAllAssociative()
-        ));
+        $this->assertDatabaseResults();
     }
 
     public function testHandleWithUnexpectedErrorWhileInitializing(): void
@@ -472,6 +471,20 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, ActivityIds::fromArray([ActivityId::fromUnprefixed(4)])));
 
         $this->assertMatchesTextSnapshot($output);
+    }
+
+    private function assertDatabaseResults(): void
+    {
+        $results = $this->getConnection()
+            ->executeQuery('SELECT * FROM ActivityStream')->fetchAllAssociative();
+
+        foreach ($results as &$result) {
+            $result['data'] = null !== $result['data'] ? CompressedString::fromCompressed($result['data'])->uncompress() : null;
+        }
+
+        $this->assertMatchesJsonSnapshot(
+            Json::encode($results)
+        );
     }
 
     #[\Override]

@@ -29,7 +29,7 @@ class FetchActivityStreamsTest extends ContainerTestCase
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('test'))
                 ->withStreamType(StreamType::DISTANCE)
-            ->build()
+                ->build()
         );
 
         $context = ActivityImportContext::create(

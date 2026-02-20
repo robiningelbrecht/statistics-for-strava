@@ -42,11 +42,11 @@ final readonly class DbalActivityBestEffortRepository extends DbalRepository imp
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream x
-                    WHERE x.activityId = Activity.activityId AND x.streamType = :timeStreamType AND json_array_length(x.data) > 0
+                    WHERE x.activityId = Activity.activityId AND x.streamType = :timeStreamType AND x.dataSize > 0
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream y
-                    WHERE y.activityId = Activity.activityId AND y.streamType = :distanceStreamType AND json_array_length(y.data) > 0
+                    WHERE y.activityId = Activity.activityId AND y.streamType = :distanceStreamType AND y.dataSize > 0
                   )';
 
         return ActivityIds::fromArray(array_map(

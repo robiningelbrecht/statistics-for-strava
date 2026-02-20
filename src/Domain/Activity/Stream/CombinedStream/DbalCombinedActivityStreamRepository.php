@@ -65,11 +65,11 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream y
-                    WHERE y.activityId = Activity.activityId AND y.streamType = :timeStreamType AND json_array_length(y.data) > 0
+                    WHERE y.activityId = Activity.activityId AND y.streamType = :timeStreamType AND y.dataSize > 0
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream x
-                    WHERE x.activityId = Activity.activityId AND x.streamType IN(:otherStreamTypes) AND json_array_length(x.data) > 0
+                    WHERE x.activityId = Activity.activityId AND x.streamType IN(:otherStreamTypes) AND x.dataSize > 0
                   )';
 
         $activityIds = [];
