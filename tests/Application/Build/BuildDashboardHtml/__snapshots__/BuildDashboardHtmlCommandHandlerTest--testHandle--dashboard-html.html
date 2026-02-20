@@ -411,7 +411,7 @@
                 </blockquote>
             </div>
         </div>
-        <button type="button" data-fullscreen-trigger class="[&amp;.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+        <button type="button" data-fullscreen-trigger class="fullscreen-enabled:hidden ml-auto self-start cursor-pointer">
             <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
             <span class="sr-only">Enter fullscreen mode</span>
         </button>
@@ -617,7 +617,7 @@
         <h3 class="text-lg font-semibold">
             Heart rate zones
         </h3>
-        <button type="button" data-fullscreen-trigger class="[&amp;.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+        <button type="button" data-fullscreen-trigger class="fullscreen-enabled:hidden ml-auto self-start cursor-pointer">
             <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
             <span class="sr-only">Enter fullscreen mode</span>
         </button>
@@ -951,7 +951,7 @@
         <h3 class="text-lg font-semibold">
             Stats per weekday
         </h3>
-        <button type="button" data-fullscreen-trigger class="[&amp;.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+        <button type="button" data-fullscreen-trigger class="fullscreen-enabled:hidden ml-auto self-start cursor-pointer">
             <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
             <span class="sr-only">Enter fullscreen mode</span>
         </button>
@@ -977,7 +977,7 @@
         </div>
         <div class="grow flex flex-col" id="weekDayStatsActivityTypeTabContent--1">
         <div class="grow flex flex-col" id="weekDayStatsAll--1" role="tabpanel" aria-labelledby="weekDayStatsAll--1-tab">
-            <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":14.46,"name":"Monday"},{"value":5,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":28.37,"name":"Thursday"},{"value":4.79,"name":"Friday"},{"value":28.48,"name":"Saturday"},{"value":18.91,"name":"Sunday"}]}]}'></div>
+            <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":14.46,"name":"Monday"},{"value":5,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":28.37,"name":"Thursday"},{"value":4.79,"name":"Friday"},{"value":28.48,"name":"Saturday"},{"value":18.91,"name":"Sunday"}]}]}'></div>
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-center text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1135,7 +1135,7 @@
             </div>
         </div>
                     <div class="grow flex flex-col" id="weekDayStatsRide--1" role="tabpanel" aria-labelledby="weekDayStatsRide--1-tab">
-                <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":17.83,"name":"Monday"},{"value":6.17,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":23.32,"name":"Thursday"},{"value":5.9,"name":"Friday"},{"value":23.46,"name":"Saturday"},{"value":23.32,"name":"Sunday"}]}]}'></div>
+                <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":17.83,"name":"Monday"},{"value":6.17,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":23.32,"name":"Thursday"},{"value":5.9,"name":"Friday"},{"value":23.46,"name":"Saturday"},{"value":23.32,"name":"Sunday"}]}]}'></div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1293,7 +1293,7 @@
                 </div>
             </div>
                     <div class="grow flex flex-col" id="weekDayStatsRun--1" role="tabpanel" aria-labelledby="weekDayStatsRun--1-tab">
-                <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Monday"},{"value":0,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":50,"name":"Thursday"},{"value":0,"name":"Friday"},{"value":50,"name":"Saturday"},{"value":0,"name":"Sunday"}]}]}'></div>
+                <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{weekday|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"weekday":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"Monday"},{"value":0,"name":"Tuesday"},{"value":0,"name":"Wednesday"},{"value":50,"name":"Thursday"},{"value":0,"name":"Friday"},{"value":50,"name":"Saturday"},{"value":0,"name":"Sunday"}]}]}'></div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1455,7 +1455,7 @@
         <h3 class="text-lg font-semibold">
             Daytime stats
         </h3>
-        <button type="button" data-fullscreen-trigger class="[&amp;.full-screen-enabled]:hidden ml-auto self-start cursor-pointer">
+        <button type="button" data-fullscreen-trigger class="fullscreen-enabled:hidden ml-auto self-start cursor-pointer">
             <svg class="size-4 text-gray-400 hover:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H4m0 0v4m0-4 5 5m7-5h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5m7 5h4m0 0v-4m0 4-5-5"></path></svg>
             <span class="sr-only">Enter fullscreen mode</span>
         </button>
@@ -1481,7 +1481,7 @@
         </div>
         <div class="grow flex flex-col" id="dayTimeStatsActivityTypeTabContent--1">
         <div class="grow flex flex-col" id="dayTimeStatsAll--1" role="tabpanel" aria-labelledby="dayTimeStatsAll--1-tab">
-            <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":14.36,"name":"\ud83c\udf1e Morning"},{"value":75.64,"name":"\ud83c\udf06 Afternoon"},{"value":10,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
+            <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":14.36,"name":"\ud83c\udf1e Morning"},{"value":75.64,"name":"\ud83c\udf06 Afternoon"},{"value":10,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-center text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1598,7 +1598,7 @@
             </div>
         </div>
                     <div class="grow flex flex-col" id="dayTimeStatsRide--1" role="tabpanel" aria-labelledby="dayTimeStatsRide--1-tab">
-                <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":17.7,"name":"\ud83c\udf1e Morning"},{"value":69.96,"name":"\ud83c\udf06 Afternoon"},{"value":12.33,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
+                <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":17.7,"name":"\ud83c\udf1e Morning"},{"value":69.96,"name":"\ud83c\udf06 Afternoon"},{"value":12.33,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -1715,7 +1715,7 @@
                 </div>
             </div>
                     <div class="grow flex flex-col" id="dayTimeStatsRun--1" role="tabpanel" aria-labelledby="dayTimeStatsRun--1-tab">
-                <div class="h-80 group-[.fullscreen-is-enabled]:grow group-[.fullscreen-is-enabled]:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"\ud83c\udf1e Morning"},{"value":100,"name":"\ud83c\udf06 Afternoon"},{"value":0,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
+                <div class="h-80 fullscreen-enabled:grow fullscreen-enabled:h-full" data-echarts-options='{"backgroundColor":null,"animation":true,"grid":{"left":"3%","right":"4%","bottom":"3%","containLabel":true},"legend":{"show":false},"tooltip":{"trigger":"item","formatter":"{d}%"},"series":[{"type":"pie","itemStyle":{"borderColor":"#fff","borderWidth":2},"label":{"formatter":"{daytime|{b}}\n{sub|{d}%}","lineHeight":15,"rich":{"daytime":{"fontWeight":"bold"},"sub":{"fontSize":12}}},"data":[{"value":0,"name":"\ud83c\udf1e Morning"},{"value":100,"name":"\ud83c\udf06 Afternoon"},{"value":0,"name":"\ud83c\udf03 Evening"},{"value":0,"name":"\ud83c\udf19 Night"}]}]}'></div>
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
