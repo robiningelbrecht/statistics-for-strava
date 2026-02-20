@@ -61,7 +61,7 @@ export default class HeatmapDrawer {
         const notNearby = [];
 
         this.routePolylines.forEach((entry) => {
-            const line = lineString(entry.latlngs.map(ll => [ll.lng, ll.lat]));
+            const line = lineString(entry.coordinates.map(ll => [ll[1], ll[0]]));
             const dist = pointToLineDistance(clickPoint, line, {units: "meters"});
 
             if (dist <= NEARBY_DISTANCE_IN_METERS) {
@@ -144,7 +144,7 @@ export default class HeatmapDrawer {
             this.routePolylines.push({
                 route: route,
                 polyline: polyline,
-                latlngs: route.coordinates
+                coordinates: route.coordinates
             });
 
             if (mostActiveState === state) {

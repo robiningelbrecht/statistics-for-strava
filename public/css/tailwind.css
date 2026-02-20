@@ -7,6 +7,7 @@
 @import "./components/popover.css";
 @import "./components/modal.css";
 @import "./components/badge.css";
+@import "./components/leaflet.css";
 @import "./components/sidebar.css";
 
 @source "../../templates/**/*.html.twig";
@@ -55,32 +56,6 @@
         @apply scrollbar-thin;
     }
 
-    .leaflet-tile-pane {
-        -webkit-filter: grayscale(100%);
-        filter: grayscale(100%);
-    }
-
-    #heatmap .leaflet-tile-pane {
-        -webkit-filter: grayscale(0);
-        filter: grayscale(0);
-    }
-
-    #heatmap.enable-grey-scale .leaflet-tile-pane {
-        -webkit-filter: grayscale(100%) brightness(75%);
-        filter: grayscale(100%) brightness(75%);
-    }
-
-    .leaflet-popup-content-wrapper .leaflet-popup-content{
-        @apply text-base! m-0! leading-none!;
-    }
-
-    .leaflet-control--custom {
-        @apply rounded-sm border-2 border-black/30 bg-white bg-clip-padding divide-y divide-grey-yo;
-
-        & li {
-            @apply p-1 cursor-pointer hover:bg-[#f4f4f4];
-        }
-    }
 }
 
 @layer components {
