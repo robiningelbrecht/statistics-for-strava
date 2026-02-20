@@ -6,6 +6,7 @@
 @import "./components/tabs.css";
 @import "./components/popover.css";
 @import "./components/modal.css";
+@import "./components/sidebar.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../public/*.html";
