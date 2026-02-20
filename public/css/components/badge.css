@@ -1,0 +1,5 @@
+@layer components {
+    .badge-pill {
+        @apply bg-orange-400/40 text-orange-800 dark:bg-strava-orange/60 dark:text-[#f0f6fc] text-xs font-medium px-2.5 py-0.5 rounded-full;
+    }
+}
