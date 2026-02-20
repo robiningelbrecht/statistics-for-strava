@@ -9,6 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -73,9 +74,9 @@ final readonly class Route implements \JsonSerializable
         return $this->distance;
     }
 
-    public function getEncodedPolyline(): string
+    public function getEncodedPolyline(): EncodedPolyline
     {
-        return $this->encodedPolyline;
+        return EncodedPolyline::fromString($this->encodedPolyline);
     }
 
     public function getRouteGeography(): RouteGeography
@@ -156,7 +157,7 @@ final readonly class Route implements \JsonSerializable
                 'isCommute' => $this->isCommute() ? 'true' : 'false',
                 'workoutType' => $this->getWorkoutType()?->value,
             ],
-            'encodedPolyline' => $this->getEncodedPolyline(),
+            'coordinates' => $this->getEncodedPolyline()->decodeAndPairLatLng(),
         ];
     }
 }

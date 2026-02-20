@@ -14,5 +14,6 @@ class BuildHeatmapHtmlCommandHandlerTest extends BuildAppFilesTestCase
 
         $this->commandBus->dispatch(new BuildHeatmapHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
         $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('api.storage'), true);
     }
 }

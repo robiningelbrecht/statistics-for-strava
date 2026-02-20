@@ -28,6 +28,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
         private UnitSystem $unitSystem,
         private DateAndTimeFormat $dateAndTimeFormat,
         private FilesystemOperator $buildStorage,
+        private FilesystemOperator $apiStorage,
     ) {
     }
 
@@ -48,11 +49,15 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                 ->withRelativeActivityUri($this->urlTwigExtension->toRelativeUrl('activity/'.$route->getActivityId().'.html'));
         }
 
+        $this->apiStorage->write(
+            'heatmap/routes.json',
+            (string) Json::encodeAndCompress($enrichedRoutes),
+        );
+
         $this->buildStorage->write(
             'heatmap.html',
             $this->twig->load('html/heatmap.html.twig')->render([
                 'numberOfRoutes' => count($enrichedRoutes),
-                'routes' => Json::encode($enrichedRoutes),
                 'sportTypes' => $importedSportTypes->filter(
                     fn (SportType $sportType): bool => $sportType->supportsReverseGeocoding()
                 ),

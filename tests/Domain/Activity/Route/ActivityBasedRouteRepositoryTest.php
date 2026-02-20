@@ -27,7 +27,7 @@ class ActivityBasedRouteRepositoryTest extends ContainerTestCase
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1))
                 ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
-                ->withPolyline('line')
+                ->withPolyline('tqafAua~y^vG{D')
                 ->withRouteGeography(RouteGeography::create(['country_code' => 'BE']))
                 ->build(),
             rawData: []
