@@ -74,6 +74,16 @@ export const resolveEchartsCallbacks = (obj, path) => {
     resolvePath(obj, parts);
 };
 
+export const fetchJson = async (url) => {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(`Failed to fetch ${url}: ${response.status}`);
+    }
+
+    return response.json();
+}
+
 export const parents = (el, selector) => {
     const matched = [];
     let parent = el.parentElement;

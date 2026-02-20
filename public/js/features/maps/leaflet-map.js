@@ -1,3 +1,5 @@
+import {fetchJson} from "../../utils";
+
 export default class LeafletMap {
     constructor(mapNode, data) {
         this.mapNode = mapNode;
@@ -18,7 +20,7 @@ export default class LeafletMap {
 
     async addRoutes() {
         const featureGroup = L.featureGroup();
-        const polylines = await this.fetchJson(this.data.polylineUrl);
+        const polylines = await fetchJson(this.data.polylineUrl);
 
         for (const coordinates of polylines) {
             L.polyline(coordinates, {
@@ -71,7 +73,7 @@ export default class LeafletMap {
         }
 
         try {
-            const coordinateMap = await this.fetchJson(coordinatesUrl);
+            const coordinateMap = await fetchJson(coordinatesUrl);
             const marker = this.addCircleMarker([0, 0], '#F26722', {radius: 6, opacity: 0}).addTo(this.map);
             const chart = echarts.getInstanceByDom(eChartNode);
             const initialZoom = this.map.getZoom();
@@ -106,13 +108,4 @@ export default class LeafletMap {
         });
     }
 
-    async fetchJson(url) {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch ${url}: ${response.status}`);
-        }
-
-        return response.json();
-    }
 }
