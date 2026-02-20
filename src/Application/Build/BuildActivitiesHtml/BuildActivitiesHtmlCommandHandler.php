@@ -250,10 +250,11 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             }
 
             $polylinesFileLocation = sprintf('activity/%s/polylines.json', $unprefixedActivityId);
-            if (($leafletMap = $activity->getLeafletMap()) && !$this->apiStorage->fileExists($polylinesFileLocation)) {
+            if (($leafletMap = $activity->getLeafletMap()) instanceof LeafletMap) {
+                $coordinates = $coordinateMap ?: $activity->getEncodedPolyline()?->decodeAndPairLatLng();
                 $this->apiStorage->write(
                     $polylinesFileLocation,
-                    (string) Json::encodeAndCompress([$activity->getEncodedPolyline()?->decodeAndPairLatLng()]),
+                    (string) Json::encodeAndCompress([$coordinates]),
                 );
             }
             $templateName = sprintf('html/activity/%s.html.twig', $activity->getSportType()->getTemplateName());
