@@ -1,4 +1,4 @@
-import {parents, resolveEchartsCallbacks} from "../../utils";
+import {parents, resolveEchartsCallbacks, fetchJson} from "../../utils";
 import {v5Theme, v5DarkTheme} from "./echarts-themes";
 import {FilterStorage, FilterName} from "../data-table/storage";
 
@@ -21,7 +21,7 @@ export default class ChartManager {
             const rawChartOptions = chartNode.getAttribute('data-echarts-options');
 
             const loadOptions = rawChartOptions.toLowerCase().endsWith('.json')
-                ? this.fetchChartData(rawChartOptions)
+                ? fetchJson(rawChartOptions)
                 : Promise.resolve(JSON.parse(rawChartOptions));
             chart.showLoading();
 
@@ -65,16 +65,6 @@ export default class ChartManager {
 
         });
         echarts.connect(connectedCharts);
-    }
-
-    async fetchChartData(url) {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch ${url}: ${response.status}`);
-        }
-
-        return response.json();
     }
 
     getClickHandlers() {

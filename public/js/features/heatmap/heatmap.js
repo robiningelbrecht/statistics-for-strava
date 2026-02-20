@@ -1,6 +1,7 @@
 import {FilterName} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
 import HeatmapDrawer from "./heatmap-drawer";
+import {fetchJson} from "../../utils";
 
 export default class Heatmap {
     constructor(wrapper, modalManager) {
@@ -15,7 +16,7 @@ export default class Heatmap {
 
     async render() {
         const apiUrl = this.heatmap.getAttribute('data-leaflet-routes');
-        const allRoutes = await this.fetchJson(apiUrl);
+        const allRoutes = await fetchJson(apiUrl);
 
         const redraw = (updateStorage = true) => {
             const activeFilters = this.filterManager.getActiveFilters();
@@ -55,13 +56,4 @@ export default class Heatmap {
         });
     };
 
-    async fetchJson(url) {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-            throw new Error(`Failed to fetch ${url}: ${response.status}`);
-        }
-
-        return response.json();
-    };
 }
