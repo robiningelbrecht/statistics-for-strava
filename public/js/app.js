@@ -20,7 +20,7 @@ const $main = document.querySelector("main");
 const router = new Router($main);
 router.boot();
 
-const sidebar = new Sidebar($main);
+const sidebar = new Sidebar();
 const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, modalManager);
 const mapManager = new MapManager();

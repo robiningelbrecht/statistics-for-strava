@@ -1,4 +1,4 @@
-/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -984,8 +984,14 @@
   .inset-y-0 {
     inset-block: calc(var(--spacing) * 0);
   }
+  .start {
+    inset-inline-start: var(--spacing);
+  }
   .start-0 {
     inset-inline-start: calc(var(--spacing) * 0);
+  }
+  .end {
+    inset-inline-end: var(--spacing);
   }
   .top-0 {
     top: calc(var(--spacing) * 0);
@@ -1784,13 +1790,13 @@
     width: calc(var(--spacing) * 1.5);
   }
   .w-1\/2 {
-    width: calc(1/2 * 100%);
+    width: calc(1 / 2 * 100%);
   }
   .w-1\/6 {
-    width: calc(1/6 * 100%);
+    width: calc(1 / 6 * 100%);
   }
   .w-1\/7 {
-    width: calc(1/7 * 100%);
+    width: calc(1 / 7 * 100%);
   }
   .w-2 {
     width: calc(var(--spacing) * 2);
@@ -3436,37 +3442,6 @@
       flex-grow: 1;
     }
   }
-  .group-\[\.sidebar-is-collapsed\]\:block {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      display: block;
-    }
-  }
-  .group-\[\.sidebar-is-collapsed\]\:hidden {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      display: none;
-    }
-  }
-  .group-\[\.sidebar-is-collapsed\]\:max-h-full {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      max-height: 100%;
-    }
-  }
-  .group-\[\.sidebar-is-collapsed\]\:flex-col {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      flex-direction: column;
-    }
-  }
-  .group-\[\.sidebar-is-collapsed\]\:gap-y-0\.5 {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      row-gap: calc(var(--spacing) * 0.5);
-    }
-  }
-  .group-\[\.sidebar-is-collapsed\]\:text-xs {
-    &:is(:where(.group):is(.sidebar-is-collapsed) *) {
-      font-size: var(--text-xs);
-      line-height: var(--tw-leading, var(--text-xs--line-height));
-    }
-  }
   .peer-checked\:border-strava-orange {
     &:is(:where(.peer):checked ~ *) {
       border-color: var(--color-strava-orange);
@@ -4314,6 +4289,49 @@
       }
     }
   }
+  .sidebar-collapsed\:block {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      display: block;
+    }
+  }
+  .sidebar-collapsed\:hidden {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      display: none;
+    }
+  }
+  .sidebar-collapsed\:max-h-full {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      max-height: 100%;
+    }
+  }
+  .sidebar-collapsed\:w-32 {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      width: calc(var(--spacing) * 32);
+    }
+  }
+  .sidebar-collapsed\:flex-col {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      flex-direction: column;
+    }
+  }
+  .sidebar-collapsed\:gap-y-0\.5 {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      row-gap: calc(var(--spacing) * 0.5);
+    }
+  }
+  .sidebar-collapsed\:text-xs {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
+    }
+  }
+  .sidebar-collapsed\:md\:ml-32 {
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      @media (width >= 48rem) {
+        margin-left: calc(var(--spacing) * 32);
+      }
+    }
+  }
   .\[\&\.disabled\]\:bg-gray-100 {
     &.disabled {
       background-color: var(--color-gray-100);
@@ -4322,18 +4340,6 @@
   .\[\&\.full-screen-enabled\]\:hidden {
     &.full-screen-enabled {
       display: none;
-    }
-  }
-  .\[\&\.sidebar-is-collapsed\]\:w-32 {
-    &.sidebar-is-collapsed {
-      width: calc(var(--spacing) * 32);
-    }
-  }
-  .\[\&\.sidebar-is-collapsed\]\:md\:ml-32 {
-    &.sidebar-is-collapsed {
-      @media (width >= 48rem) {
-        margin-left: calc(var(--spacing) * 32);
-      }
     }
   }
 }
