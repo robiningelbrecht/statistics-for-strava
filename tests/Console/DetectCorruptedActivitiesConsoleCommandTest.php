@@ -104,13 +104,14 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
             rawData: []
         ));
         $this->getConnection()->executeStatement(
-            'INSERT INTO ActivityStream(activityId, streamType, createdOn, data) 
-                VALUES (:activityId, :streamType, :createdOn, :data)',
+            'INSERT INTO ActivityStream(activityId, streamType, createdOn, data, dataSize) 
+                VALUES (:activityId, :streamType, :createdOn, :data, :dataSize)',
             [
                 'activityId' => 'activity-test-2',
                 'streamType' => StreamType::DISTANCE->value,
                 'createdOn' => '2026-01-06',
-                'data' => '{"name": "Ride", "distance": 42,}',
+                'data' => (string) CompressedString::fromUncompressed('{"name": "Ride", "distance": 42,}'),
+                'dataSize' => 2,
             ]
         );
 
