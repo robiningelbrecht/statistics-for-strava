@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Rewind\FindStreaks;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
@@ -23,7 +23,7 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
         $clock = PausedClock::fromString('2025-01-11');
 
         foreach ($this->getSampleDates() as $index => $date) {
-            $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+            $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed($index))
                     ->withStartDateTime(SerializableDateTime::fromString($date))
@@ -32,7 +32,7 @@ class FindStreaksQueryHandlerTest extends ContainerTestCase
             ));
         }
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('run'))
                 ->withStartDateTime(SerializableDateTime::fromString('2024-02-05'))

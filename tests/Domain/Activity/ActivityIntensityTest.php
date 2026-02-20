@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\ActivityIntensity;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\CouldNotDetermineActivityIntensity;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportType;
@@ -39,7 +39,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));
@@ -77,7 +77,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));
@@ -96,7 +96,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withSportType(SportType::RUN)
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));
@@ -127,7 +127,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));
@@ -150,7 +150,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10'))
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));
@@ -182,7 +182,7 @@ class ActivityIntensityTest extends ContainerTestCase
             ->withAverageHeartRate(0)
             ->build();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             $activity,
             []
         ));

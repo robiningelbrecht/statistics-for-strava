@@ -7,9 +7,8 @@ use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\DbalActivityIdRepository;
-use App\Domain\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Activity\DbalActivityRepository;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
@@ -26,7 +25,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
 
     private ActivityIdRepository $activityIdRepository;
     private GearRepository $gearRepository;
-    private ActivityWithRawDataRepository $activityWithRawDataRepository;
+    private ActivityRepository $activityRepository;
 
     public function testFindAll(): void
     {
@@ -34,7 +33,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(1))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -42,7 +41,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(2))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -50,7 +49,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(3))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -78,7 +77,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->withoutGearId()
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -87,7 +86,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->withGearId(GearId::fromUnprefixed('imported'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -96,7 +95,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->withGearId(GearId::fromUnprefixed('custom'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -113,7 +112,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(1))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityOne,
             ['raw' => 'data']
         ));
@@ -121,7 +120,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(2))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityTwo,
             ['raw' => 'data']
         ));
@@ -129,7 +128,7 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
             ->withActivityId(ActivityId::fromUnprefixed(3))
             ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
             ->build();
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activityThree,
             ['raw' => 'data']
         ));
@@ -148,9 +147,8 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
         $this->activityIdRepository = new DbalActivityIdRepository(
             $this->getConnection(),
         );
-        $this->activityWithRawDataRepository = new DbalActivityWithRawDataRepository(
+        $this->activityRepository = new DbalActivityRepository(
             $this->getConnection(),
-            $this->getContainer()->get(ActivityRepository::class),
         );
     }
 }

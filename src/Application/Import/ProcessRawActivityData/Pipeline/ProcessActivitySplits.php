@@ -3,7 +3,7 @@
 namespace App\Application\Import\ProcessRawActivityData\Pipeline;
 
 use App\Domain\Activity\ActivityIdRepository;
-use App\Domain\Activity\ActivityWithRawDataRepository;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\Split\ActivitySplit;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -15,7 +15,7 @@ final readonly class ProcessActivitySplits implements ProcessRawDataStep
 {
     public function __construct(
         private ActivityIdRepository $activityIdRepository,
-        private ActivityWithRawDataRepository $activityWithRawDataRepository,
+        private ActivityRepository $activityRepository,
         private ActivitySplitRepository $activitySplitRepository,
     ) {
     }
@@ -25,7 +25,7 @@ final readonly class ProcessActivitySplits implements ProcessRawDataStep
         $countSplitsAdded = 0;
         $countActivitiesProcessed = 0;
         foreach ($this->activityIdRepository->findAll() as $activityId) {
-            $activityWithRawData = $this->activityWithRawDataRepository->find($activityId);
+            $activityWithRawData = $this->activityRepository->findWithRawData($activityId);
             if (!$activityWithRawData->hasSplits()) {
                 continue;
             }

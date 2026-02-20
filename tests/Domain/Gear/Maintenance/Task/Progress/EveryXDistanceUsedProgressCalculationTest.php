@@ -3,8 +3,8 @@
 namespace App\Tests\Domain\Gear\Maintenance\Task\Progress;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearIds;
 use App\Domain\Gear\Maintenance\GearMaintenanceConfig;
@@ -24,7 +24,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
 
     public function testCalculateForKilometers(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('last-tagged'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
@@ -32,7 +32,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('include'))
                 ->withGearId(GearId::fromUnprefixed('test'))
@@ -42,7 +42,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('include-2'))
                 ->withGearId(GearId::fromUnprefixed('test'))
@@ -52,7 +52,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::random())
@@ -61,7 +61,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('test'))
@@ -90,7 +90,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
 
     public function testCalculateForMiles(): void
     {
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('last-tagged'))
                 ->withStartDateTime(SerializableDateTime::fromString('2025-01-01 00:00:00'))
@@ -98,7 +98,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('include'))
                 ->withGearId(GearId::fromUnprefixed('test'))
@@ -108,7 +108,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('include-2'))
                 ->withGearId(GearId::fromUnprefixed('test'))
@@ -118,7 +118,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('1'))
                 ->withGearId(GearId::random())
@@ -127,7 +127,7 @@ class EveryXDistanceUsedProgressCalculationTest extends ContainerTestCase
             []
         ));
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('2'))
                 ->withGearId(GearId::fromUnprefixed('test'))

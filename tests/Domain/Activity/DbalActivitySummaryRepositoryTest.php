@@ -7,21 +7,20 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivitySummary;
 use App\Domain\Activity\ActivitySummaryRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
-use App\Domain\Activity\DbalActivityWithRawDataRepository;
+use App\Domain\Activity\DbalActivityRepository;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Tests\ContainerTestCase;
 
 class DbalActivitySummaryRepositoryTest extends ContainerTestCase
 {
     private ActivitySummaryRepository $activitySummaryRepository;
-    private ActivityWithRawDataRepository $activityWithRawDataRepository;
+    private ActivityRepository $activityRepository;
 
     public function testItShouldSaveAndFind(): void
     {
         $activity = ActivityBuilder::fromDefaults()->build();
 
-        $this->activityWithRawDataRepository->add(ActivityWithRawData::fromState(
+        $this->activityRepository->add(ActivityWithRawData::fromState(
             $activity,
             ['raw' => 'data']
         ));
@@ -49,9 +48,8 @@ class DbalActivitySummaryRepositoryTest extends ContainerTestCase
         parent::setUp();
 
         $this->activitySummaryRepository = $this->getContainer()->get(ActivitySummaryRepository::class);
-        $this->activityWithRawDataRepository = new DbalActivityWithRawDataRepository(
+        $this->activityRepository = new DbalActivityRepository(
             $this->getConnection(),
-            $this->getContainer()->get(ActivityRepository::class)
         );
     }
 }

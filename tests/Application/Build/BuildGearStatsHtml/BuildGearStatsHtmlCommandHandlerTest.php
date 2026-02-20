@@ -4,8 +4,8 @@ namespace App\Tests\Application\Build\BuildGearStatsHtml;
 
 use App\Application\Build\BuildGearStatsHtml\BuildGearStatsHtml;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Gear\GearId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Application\BuildAppFilesTestCase;
@@ -17,7 +17,7 @@ class BuildGearStatsHtmlCommandHandlerTest extends BuildAppFilesTestCase
     {
         $this->provideFullTestSet();
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(ActivityWithRawData::fromState(
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             activity: ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('testy'))
                 ->withGearId(GearId::fromUnprefixed('testy'))

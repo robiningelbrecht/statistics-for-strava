@@ -4,8 +4,8 @@ namespace App\Tests\Domain\Activity\BestEffort;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Activity\ActivityWithRawDataRepository;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\BestEffort\DbalActivityBestEffortRepository;
 use App\Domain\Activity\SportType\SportType;
@@ -77,7 +77,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
                 ->build()
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-2'))
@@ -86,7 +86,7 @@ class DbalActivityBestEffortRepositoryTest extends ContainerTestCase
             )
         );
 
-        $this->getContainer()->get(ActivityWithRawDataRepository::class)->add(
+        $this->getContainer()->get(ActivityRepository::class)->add(
             ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
                     ->withActivityId(ActivityId::fromUnprefixed('test-4'))
