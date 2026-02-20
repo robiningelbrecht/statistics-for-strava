@@ -4880,6 +4880,57 @@
     }
   }
 }
+@layer utilities {
+  .leaflet-tile-pane {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+  }
+  #heatmap .leaflet-tile-pane {
+    -webkit-filter: grayscale(0);
+    filter: grayscale(0);
+  }
+  #heatmap.enable-grey-scale .leaflet-tile-pane {
+    -webkit-filter: grayscale(100%) brightness(75%);
+    filter: grayscale(100%) brightness(75%);
+  }
+  .leaflet-popup-content-wrapper .leaflet-popup-content {
+    margin: calc(var(--spacing) * 0) !important;
+    font-size: var(--text-base) !important;
+    line-height: var(--tw-leading, var(--text-base--line-height)) !important;
+    --tw-leading: 1 !important;
+    line-height: 1 !important;
+  }
+  .leaflet-control--custom {
+    :where(& > :not(:last-child)) {
+      --tw-divide-y-reverse: 0;
+      border-bottom-style: var(--tw-border-style);
+      border-top-style: var(--tw-border-style);
+      border-top-width: calc(1px * var(--tw-divide-y-reverse));
+      border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+    }
+    :where(& > :not(:last-child)) {
+      border-color: var(--color-grey-yo);
+    }
+    border-radius: var(--radius-sm);
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+    border-color: color-mix(in srgb, #000000 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-black) 30%, transparent);
+    }
+    background-color: var(--color-white);
+    background-clip: padding-box;
+    & li {
+      cursor: pointer;
+      padding: calc(var(--spacing) * 1);
+      &:hover {
+        @media (hover: hover) {
+          background-color: #f4f4f4;
+        }
+      }
+    }
+  }
+}
 @layer components {
   .sidebar-menu-link {
     display: flex;
@@ -4958,55 +5009,6 @@
       display: block;
       width: 8px;
       height: 8px;
-    }
-  }
-  .leaflet-tile-pane {
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
-  }
-  #heatmap .leaflet-tile-pane {
-    -webkit-filter: grayscale(0);
-    filter: grayscale(0);
-  }
-  #heatmap.enable-grey-scale .leaflet-tile-pane {
-    -webkit-filter: grayscale(100%) brightness(75%);
-    filter: grayscale(100%) brightness(75%);
-  }
-  .leaflet-popup-content-wrapper .leaflet-popup-content {
-    margin: calc(var(--spacing) * 0) !important;
-    font-size: var(--text-base) !important;
-    line-height: var(--tw-leading, var(--text-base--line-height)) !important;
-    --tw-leading: 1 !important;
-    line-height: 1 !important;
-  }
-  .leaflet-control--custom {
-    :where(& > :not(:last-child)) {
-      --tw-divide-y-reverse: 0;
-      border-bottom-style: var(--tw-border-style);
-      border-top-style: var(--tw-border-style);
-      border-top-width: calc(1px * var(--tw-divide-y-reverse));
-      border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-    }
-    :where(& > :not(:last-child)) {
-      border-color: var(--color-grey-yo);
-    }
-    border-radius: var(--radius-sm);
-    border-style: var(--tw-border-style);
-    border-width: 2px;
-    border-color: color-mix(in srgb, #000000 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-black) 30%, transparent);
-    }
-    background-color: var(--color-white);
-    background-clip: padding-box;
-    & li {
-      cursor: pointer;
-      padding: calc(var(--spacing) * 1);
-      &:hover {
-        @media (hover: hover) {
-          background-color: #f4f4f4;
-        }
-      }
     }
   }
 }

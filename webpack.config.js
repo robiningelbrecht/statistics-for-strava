@@ -8,7 +8,7 @@ module.exports = {
         'leaflet.controls.min': './public/js/features/maps/leaflet-controls.js',
     },
     optimization: {
-        minimize: true
+        minimize: false
     },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),
