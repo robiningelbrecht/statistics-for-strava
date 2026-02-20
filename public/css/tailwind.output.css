@@ -3432,16 +3432,6 @@
       color: var(--color-strava-orange);
     }
   }
-  .group-\[\.fullscreen-is-enabled\]\:h-full {
-    &:is(:where(.group):is(.fullscreen-is-enabled) *) {
-      height: 100%;
-    }
-  }
-  .group-\[\.fullscreen-is-enabled\]\:grow {
-    &:is(:where(.group):is(.fullscreen-is-enabled) *) {
-      flex-grow: 1;
-    }
-  }
   .peer-checked\:border-strava-orange {
     &:is(:where(.peer):checked ~ *) {
       border-color: var(--color-strava-orange);
@@ -4332,14 +4322,24 @@
       }
     }
   }
+  .fullscreen-enabled\:hidden {
+    &:where([data-fullscreen-enabled], [data-fullscreen-enabled] *) {
+      display: none;
+    }
+  }
+  .fullscreen-enabled\:h-full {
+    &:where([data-fullscreen-enabled], [data-fullscreen-enabled] *) {
+      height: 100%;
+    }
+  }
+  .fullscreen-enabled\:grow {
+    &:where([data-fullscreen-enabled], [data-fullscreen-enabled] *) {
+      flex-grow: 1;
+    }
+  }
   .\[\&\.disabled\]\:bg-gray-100 {
     &.disabled {
       background-color: var(--color-gray-100);
-    }
-  }
-  .\[\&\.full-screen-enabled\]\:hidden {
-    &.full-screen-enabled {
-      display: none;
     }
   }
 }

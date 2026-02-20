@@ -16,9 +16,7 @@ export default class FullscreenManager {
                 });
 
                 fullScreenContent.addEventListener('fullscreenchange', () => {
-                    el.classList.toggle('hidden', Boolean(document.fullscreenElement));
-                    fullScreenContent.classList.toggle('fullscreen-is-enabled', Boolean(document.fullscreenElement));
-                    fullScreenContent.classList.toggle('group', Boolean(document.fullscreenElement));
+                    fullScreenContent.toggleAttribute('data-fullscreen-enabled', Boolean(document.fullscreenElement))
                 });
 
             });
