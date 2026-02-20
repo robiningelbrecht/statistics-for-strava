@@ -36,6 +36,15 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
         return $this->hydrate($result);
     }
 
+    public function findAll(): Activities
+    {
+        $results = $this->connection->executeQuery(
+            'SELECT * FROM Activity ORDER BY startDateTime DESC'
+        )->fetchAllAssociative();
+
+        return Activities::fromArray(array_map($this->hydrate(...), $results));
+    }
+
     public function findWithRawData(ActivityId $activityId): ActivityWithRawData
     {
         $queryBuilder = $this->connection->createQueryBuilder();

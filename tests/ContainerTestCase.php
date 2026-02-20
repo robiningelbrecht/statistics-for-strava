@@ -37,8 +37,7 @@ abstract class ContainerTestCase extends KernelTestCase
         $this->createTestDatabase();
 
         // Empty the static cache between tests.
-        EnrichedActivities::$cachedActivities = [];
-        EnrichedActivities::$cachedActivitiesPerActivityType = [];
+        EnrichedActivities::reset();
         DailyTrainingLoad::$cachedLoad = [];
         ActivityIntensity::$cachedIntensities = [];
         StreamBasedActivityPowerRepository::$cachedPowerOutputs = [];

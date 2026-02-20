@@ -8,6 +8,8 @@ interface ActivityRepository
 {
     public function find(ActivityId $activityId): Activity;
 
+    public function findAll(): Activities;
+
     public function findWithRawData(ActivityId $activityId): ActivityWithRawData;
 
     public function exists(ActivityId $activityId): bool;
