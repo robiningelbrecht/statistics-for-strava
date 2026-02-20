@@ -15,11 +15,11 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
+use App\Tests\ProvideSnapshotAssertion;
 use App\Tests\SpyOutput;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -27,6 +27,7 @@ use Spatie\Snapshots\MatchesSnapshots;
 class CalculateStreamValueDistributionTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+    use ProvideSnapshotAssertion;
 
     private CalculateStreamValueDistribution $calculateStreamValueDistribution;
 
@@ -124,22 +125,9 @@ class CalculateStreamValueDistributionTest extends ContainerTestCase
         )->process($output);
 
         $this->assertMatchesTextSnapshot($output);
-        $this->assertDatabaseResults();
-    }
-
-    private function assertDatabaseResults(): void
-    {
-        $results = $this->getConnection()
-            ->executeQuery('SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType', [
-                'metricType' => ActivityStreamMetricType::VALUE_DISTRIBUTION->value,
-            ])->fetchAllAssociative();
-
-        foreach ($results as &$result) {
-            $result['data'] = null !== $result['data'] ? CompressedString::fromCompressed($result['data'])->uncompress() : null;
-        }
-
-        $this->assertMatchesJsonSnapshot(
-            Json::encode($results)
+        $this->assertCompressedDatabaseQueryMatchesSnapshot(
+            'SELECT activityId, streamType, metricType, data FROM ActivityStreamMetric WHERE metricType = :metricType',
+            ['metricType' => ActivityStreamMetricType::VALUE_DISTRIBUTION->value],
         );
     }
 
