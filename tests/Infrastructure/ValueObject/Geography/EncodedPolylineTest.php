@@ -32,31 +32,4 @@ class EncodedPolylineTest extends TestCase
 
         $this->assertMatchesJsonSnapshot($polyline->decode());
     }
-
-    public function testFromCoordinates(): void
-    {
-        $coordinates = [
-            [-11.63577, 166.97262],
-            [-11.63497, 166.97442],
-            [-11.63257, 166.97702],
-        ];
-
-        $polyline = EncodedPolyline::fromCoordinates($coordinates);
-
-        $this->assertEquals(
-            Coordinate::createFromLatAndLng(
-                Latitude::fromString('-11.63577'),
-                Longitude::fromString('166.97262'),
-            ),
-            $polyline->getStartingCoordinate(),
-        );
-
-        $decoded = $polyline->decode();
-        $this->assertSame(-11.63577, $decoded[0]);
-        $this->assertSame(166.97262, $decoded[1]);
-        $this->assertSame(-11.63497, $decoded[2]);
-        $this->assertSame(166.97442, $decoded[3]);
-        $this->assertSame(-11.63257, $decoded[4]);
-        $this->assertSame(166.97702, $decoded[5]);
-    }
 }

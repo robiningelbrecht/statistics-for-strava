@@ -237,8 +237,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
             }
 
+            $unprefixedActivityId = $activity->getId()->toUnprefixedString();
             if ($profileChart) {
-                $unprefixedActivityId = $activity->getId()->toUnprefixedString();
                 $this->apiStorage->write(
                     sprintf('activity/%s/metrics.json', $unprefixedActivityId),
                     (string) Json::encodeAndCompress($profileChart),
@@ -249,9 +249,15 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 );
             }
 
-            $leafletMap = $activity->getLeafletMap();
+            $polylinesFileLocation = sprintf('activity/%s/polylines.json', $unprefixedActivityId);
+            if (($leafletMap = $activity->getLeafletMap()) && !$this->apiStorage->fileExists($polylinesFileLocation)) {
+                $this->apiStorage->write(
+                    $polylinesFileLocation,
+                    (string) Json::encodeAndCompress([$activity->getEncodedPolyline()?->decodeAndPairLatLng()]),
+                );
+            }
             $templateName = sprintf('html/activity/%s.html.twig', $activity->getSportType()->getTemplateName());
-            $gpxFileLocation = sprintf('api/activity/%s/route.gpx', $activity->getId()->toUnprefixedString());
+            $gpxFileLocation = sprintf('api/activity/%s/route.gpx', $unprefixedActivityId);
             $activityHasTimeStream = $this->activityStreamRepository->hasOneForActivityAndStreamType($activity->getId(), StreamType::TIME);
 
             $this->buildStorage->write(
@@ -259,7 +265,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 $this->twig->load($templateName)->render([
                     'activity' => $activity,
                     'leaflet' => $leafletMap instanceof LeafletMap ? [
-                        'routes' => [$activity->getPolyline()],
+                        'polylineUrl' => $polylinesFileLocation,
                         'map' => $leafletMap,
                         'gpxLink' => $activityHasTimeStream ? $gpxFileLocation : null,
                     ] : null,

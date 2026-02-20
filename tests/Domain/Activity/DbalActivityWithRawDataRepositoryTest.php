@@ -128,7 +128,7 @@ class DbalActivityWithRawDataRepositoryTest extends ContainerTestCase
         );
         $this->assertEquals(
             'updated polyline',
-            $persistedActivity->getPolyline()
+            (string) $persistedActivity->getEncodedPolyline()
         );
         $this->assertEquals(
             GearId::fromUnprefixed('updated'),

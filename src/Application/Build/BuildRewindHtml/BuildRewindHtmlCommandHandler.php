@@ -148,7 +148,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     content: $this->twig->render('html/rewind/rewind-biggest-activity.html.twig', [
                         'activity' => $longestActivity,
                         'leaflet' => $leafletMap ? [
-                            'routes' => [$longestActivity->getPolyline()],
+                            'polylineUrl' => sprintf('activity/%s/polylines.json', $longestActivity->getId()->toUnprefixedString()),
                             'map' => $leafletMap,
                         ] : null,
                     ])

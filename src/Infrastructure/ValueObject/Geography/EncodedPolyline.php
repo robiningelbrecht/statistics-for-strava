@@ -10,42 +10,6 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
 {
     private const int PRECISION = 5;
 
-    /**
-     * @param array<array{0: float, 1: float}> $coordinates
-     */
-    public static function fromCoordinates(array $coordinates): self
-    {
-        $encoded = '';
-        $previousLat = 0.0;
-        $previousLng = 0.0;
-
-        foreach ($coordinates as [$lat, $lng]) {
-            $encoded .= self::encodeValue($lat - $previousLat);
-            $encoded .= self::encodeValue($lng - $previousLng);
-
-            $previousLat = $lat;
-            $previousLng = $lng;
-        }
-
-        return self::fromString($encoded);
-    }
-
-    private static function encodeValue(float $value): string
-    {
-        $encoded = '';
-        $value = (int) round($value * 10 ** self::PRECISION);
-        $value = ($value < 0) ? ~($value << 1) : ($value << 1);
-
-        while ($value >= 0x20) {
-            $encoded .= chr((0x20 | ($value & 0x1F)) + 63);
-            $value >>= 5;
-        }
-
-        $encoded .= chr($value + 63);
-
-        return $encoded;
-    }
-
     public function getStartingCoordinate(): Coordinate
     {
         $points = $this->decodePoints(maxPoints: 2);
@@ -67,10 +31,21 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
     /**
      * @return array<int, array<float, float>>
      */
-    public function decodeAndPairLonLat(): array
+    public function decodeAndPairLngLat(): array
     {
         return array_map(
             fn (array $pair): array => [$pair[1], $pair[0]],
+            array_chunk($this->decode(), 2)
+        );
+    }
+
+    /**
+     * @return array<int, array<float, float>>
+     */
+    public function decodeAndPairLatLng(): array
+    {
+        return array_map(
+            fn (array $pair): array => [$pair[0], $pair[1]],
             array_chunk($this->decode(), 2)
         );
     }
