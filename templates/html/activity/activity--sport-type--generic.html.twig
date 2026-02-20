@@ -276,7 +276,7 @@
                 {% endblock statsInleftColumn %}
                 {% if leaflet %}
                     {% set leafletOptions = {
-                        'routes': leaflet.routes,
+                        'polylineUrl': relativeUrl('api/' ~ leaflet.polylineUrl),
                         'tileLayer': leaflet.map.getTileLayer(),
                         'minZoom': leaflet.map.getMinZoom(),
                         'maxZoom': leaflet.map.getMaxZoom(),

@@ -6,7 +6,6 @@ use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
-use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 
 final readonly class AnalyzeRouteGeography implements ActivityImportStep
 {
@@ -38,10 +37,10 @@ final readonly class AnalyzeRouteGeography implements ActivityImportStep
         }
 
         if (!$activity->getRouteGeography()->hasBeenAnalyzedForRouteGeography()
-            && $sportType->supportsReverseGeocoding() && $activity->getPolyline()) {
+            && $sportType->supportsReverseGeocoding() && $activity->getEncodedPolyline()) {
             $routeGeography = $routeGeography->updateWith([
                 RouteGeography::PASSED_TROUGH_COUNTRIES => $this->routeGeographyAnalyzer->analyzeForPolyline(
-                    EncodedPolyline::fromString($activity->getPolyline())
+                    $activity->getEncodedPolyline()
                 ),
             ]);
         }
