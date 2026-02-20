@@ -1,3 +1,18 @@
+# [v4.6.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.5) - 2026-02-20
+
+> [!NOTE]  
+> This release introduces another data compression, reducing the disk space used by your database.
+
+## What's Changed
+* ISSUE #1760: Add distance and elevation range filters to the activity overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1764
+* ISSUE #1761: Add support for new Strava sport types by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1768
+* ISSUE #1773: Improve gear maintenance docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1774
+* ISSUE #1766: Move calculated stream values to separate ActivityStreamMetric entity by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1777
+* ISSUE #1766: If available, use coordinate stream to display leaflet polylines by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1780
+* ISSUE #1778: Compress ActivityStream data to reduce DB size by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1781
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.4...v4.6.5
+
 # [v4.6.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.4) - 2026-02-16
 
 This release fixes a critical issue in the Daemon that was introduced in `v4.6.3`
@@ -5,6 +20,9 @@ This release fixes a critical issue in the Daemon that was introduced in `v4.6.3
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.4...v4.6.34
 
 # [v4.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.3) - 2026-02-15
+
+> [!NOTE]  
+> This release primarily focuses on data compression, reducing the disk space used by your build directory and database.
 
 ## What's Changed
 * ISSUE #1742: Fix duplicate rendering of gear maintenance rows by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1743
