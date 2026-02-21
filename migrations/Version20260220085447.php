@@ -38,7 +38,6 @@ final class Version20260220085447 extends AbstractMigration
                 ]
             );
         }
-        $result->free();
 
         $this->connection->executeStatement('ALTER TABLE ActivityStream DROP COLUMN data');
         $this->connection->executeStatement('ALTER TABLE ActivityStream RENAME COLUMN data_compressed TO data');
