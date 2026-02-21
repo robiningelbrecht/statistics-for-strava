@@ -48,21 +48,26 @@
                      data-leaflet='{{ leafletOptions|json_encode }}'></div>
             {% endif %}
             <div class="tabs tabs--default">
-                <ul id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
+                <ul id="segmentTabs" data-tabs="#segmentTabsContent" role="tablist">
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen">
+                        <a href="#" data-tabs-target="#segmentTabsTopTen" role="tab" aria-controls="segmentTabsTopTen">
                             {{ "Top 10"|trans }}
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabHistoryChart" role="tab" aria-controls="segmentListsTabHistoryChart">
+                        <a href="#" data-tabs-target="#segmentTabsEffortHeartRateChart" role="tab" aria-controls="segmentTabsEffortHeartRateChart">
+                            {{ "Effort vs heart rate"|trans }}
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#segmentTabsHistoryChart" role="tab" aria-controls="segmentTabsHistoryChart">
                             {{ "History"|trans }}
                         </a>
                     </li>
                 </ul>
             </div>
-            <div id="segmentListsContent">
-                <div id="segmentListsTabTopTen" role="tabpanel" aria-labelledby="segmentListsTabTopTen-tab">
+            <div id="segmentTabsContent">
+                <div id="segmentTabsTopTen" role="tabpanel" aria-labelledby="segmentTabsTopTen-tab">
                     {% set maxHeight = leaflet ? 'max-h-[calc(100vh-585px)]' : 'max-h-[calc(100vh-285px)]' %}
                     <div class="relative overflow-x-auto {{ maxHeight }}">
                         <table class="sortable w-full text-sm text-center text-gray-500">
@@ -168,8 +173,11 @@
                         </table>
                     </div>
                 </div>
-                <div id="segmentListsTabHistoryChart" role="tabpanel" aria-labelledby="segmentListsTabHistoryChart-tab">
-                    <div class="h-64" data-echarts-options='{{ segmentEffortsHistoryChart}}'></div>
+                <div id="segmentTabsEffortHeartRateChart" role="tabpanel" aria-labelledby="segmentTabsEffortHeartRateChart">
+                    <div class="h-100" data-echarts-options='{{ segmentEffortsVsHeartRateChart }}'></div>
+                </div>
+                <div id="segmentTabsHistoryChart" role="tabpanel" aria-labelledby="segmentTabsHistoryChart-tab">
+                    <div class="h-100" data-echarts-options='{{ segmentEffortsHistoryChart }}'></div>
                 </div>
             </div>
         </div>

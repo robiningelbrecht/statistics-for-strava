@@ -34,21 +34,26 @@
         <div class="grid grid-cols-1 gap-y-1">
                                             <div class="h-[350px]" style="background-color:#bbbbb7" data-leaflet='{"polylineUrl":"\/api\/segment\/10\/polylines.json","tileLayer":"https:\/\/tile.openstreetmap.org\/{z}\/{x}\/{y}.png","minZoom":1,"maxZoom":17,"imageOverlay":null,"bounds":[],"showStartMarker":true,"showEndMarker":true}'></div>
                         <div class="tabs tabs--default">
-                <ul id="segmentListsTab" data-tabs="#segmentListsContent" role="tablist">
+                <ul id="segmentTabs" data-tabs="#segmentTabsContent" role="tablist">
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabTopTen" role="tab" aria-controls="segmentListsTabTopTen">
+                        <a href="#" data-tabs-target="#segmentTabsTopTen" role="tab" aria-controls="segmentTabsTopTen">
                             Top 10
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#" data-tabs-target="#segmentListsTabHistoryChart" role="tab" aria-controls="segmentListsTabHistoryChart">
+                        <a href="#" data-tabs-target="#segmentTabsEffortHeartRateChart" role="tab" aria-controls="segmentTabsEffortHeartRateChart">
+                            Effort vs heart rate
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#" data-tabs-target="#segmentTabsHistoryChart" role="tab" aria-controls="segmentTabsHistoryChart">
                             History
                         </a>
                     </li>
                 </ul>
             </div>
-            <div id="segmentListsContent">
-                <div id="segmentListsTabTopTen" role="tabpanel" aria-labelledby="segmentListsTabTopTen-tab">
+            <div id="segmentTabsContent">
+                <div id="segmentTabsTopTen" role="tabpanel" aria-labelledby="segmentTabsTopTen-tab">
                                         <div class="relative overflow-x-auto max-h-[calc(100vh-585px)]">
                         <table class="sortable w-full text-sm text-center text-gray-500">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -132,8 +137,11 @@
                         </table>
                     </div>
                 </div>
-                <div id="segmentListsTabHistoryChart" role="tabpanel" aria-labelledby="segmentListsTabHistoryChart-tab">
-                    <div class="h-64" data-echarts-options='{"animation":false,"grid":{"top":"30px","left":"10px","right":"10px","bottom":"50px","containLabel":true},"tooltip":{"show":true,"trigger":"axis","valueFormatter":"callback:formatSecondsTrimZero"},"xAxis":[{"type":"time","boundaryGap":false,"axisTick":{"show":false},"axisLabel":{"formatter":{"year":"{yyyy}","month":"{MMM}","day":"{d}","hour":"{HH}:{mm}","minute":"{HH}:{mm}","second":"{HH}:{mm}:{ss}","millisecond":"{hh}:{mm}:{ss} {SSS}","none":"{yyyy}-{MM}-{dd}"}}}],"yAxis":[{"type":"value","min":10,"axisLabel":{"formatter":"callback:formatSecondsTrimZero"}}],"series":[{"color":["#E34902"],"type":"scatter","data":[["2023-10-10",10.3]]}],"toolbox":{"show":true,"feature":{"restore":{"show":true}}},"dataZoom":[{"type":"slider","startValue":"2022-10-10","end":100,"brushSelect":true,"zoomLock":false,"zoomOnMouseWheel":false,"labelFormatter":""}]}'></div>
+                <div id="segmentTabsEffortHeartRateChart" role="tabpanel" aria-labelledby="segmentTabsEffortHeartRateChart">
+                    <div class="h-100" data-echarts-options="[]"></div>
+                </div>
+                <div id="segmentTabsHistoryChart" role="tabpanel" aria-labelledby="segmentTabsHistoryChart-tab">
+                    <div class="h-100" data-echarts-options='{"animation":false,"grid":{"top":"30px","left":"10px","right":"10px","bottom":"50px","containLabel":true},"tooltip":{"show":true,"trigger":"axis","valueFormatter":"callback:formatSecondsTrimZero"},"xAxis":[{"type":"time","boundaryGap":false,"axisTick":{"show":false},"axisLabel":{"formatter":{"year":"{yyyy}","month":"{MMM}","day":"{d}","hour":"{HH}:{mm}","minute":"{HH}:{mm}","second":"{HH}:{mm}:{ss}","millisecond":"{hh}:{mm}:{ss} {SSS}","none":"{yyyy}-{MM}-{dd}"}}}],"yAxis":[{"type":"value","min":10,"axisLabel":{"formatter":"callback:formatSecondsTrimZero"}}],"series":[{"color":["#E34902"],"type":"scatter","data":[["2023-10-10",10.3]]}],"toolbox":{"show":true,"feature":{"restore":{"show":true}}},"dataZoom":[{"type":"slider","startValue":"2022-10-10","end":100,"brushSelect":true,"zoomLock":false,"zoomOnMouseWheel":false,"labelFormatter":""}]}'></div>
                 </div>
             </div>
         </div>

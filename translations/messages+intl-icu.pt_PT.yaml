@@ -89,6 +89,7 @@ Duration: Duration
 'E-Bike Rides': 'Passeios de E-Bike'
 'E-Mountain Bike Rides': 'Passeios de E-MTB'
 Eddington: Eddington
+'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Desnível
 Elevation: Elevação
 'Elevation in {unit}': 'Elevação em {unit}'
@@ -216,6 +217,7 @@ Now: Now
 'Number of activities per month': 'Número de actividades por mês'
 'Number of times completed': 'Number of times completed'
 Oct: Out
+'Older effort': 'Older effort'
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'Uma das tarefas de manutenção de equipamento está atrasada'
 'Optimal training range': 'Intervalo de treino ideal'
@@ -249,6 +251,7 @@ Race: Corrida
 'Racquet & Paddle Sports': 'Desportos de Raquete e Padel'
 'Racquet Ball': Racquetball
 Ranking: Ranking
+'Recent effort': 'Recent effort'
 'Recovery Timeline': 'Recovery Timeline'
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
