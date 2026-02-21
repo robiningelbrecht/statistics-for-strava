@@ -4,41 +4,27 @@ declare(strict_types=1);
 
 namespace App\Application\RunBuild;
 
-use App\Application\Build\BuildActivitiesHtml\BuildActivitiesHtml;
-use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;
-use App\Application\Build\BuildBestEffortsHtml\BuildBestEffortsHtml;
-use App\Application\Build\BuildChallengesHtml\BuildChallengesHtml;
-use App\Application\Build\BuildDashboardHtml\BuildDashboardHtml;
-use App\Application\Build\BuildEddingtonHtml\BuildEddingtonHtml;
-use App\Application\Build\BuildGearMaintenanceHtml\BuildGearMaintenanceHtml;
-use App\Application\Build\BuildGearStatsHtml\BuildGearStatsHtml;
-use App\Application\Build\BuildGpxFiles\BuildGpxFiles;
-use App\Application\Build\BuildHeatmapHtml\BuildHeatmapHtml;
-use App\Application\Build\BuildIndexHtml\BuildIndexHtml;
-use App\Application\Build\BuildManifest\BuildManifest;
-use App\Application\Build\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
-use App\Application\Build\BuildPhotosHtml\BuildPhotosHtml;
-use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
-use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
-use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Application\Import\ImportGear\GearImportStatus;
 use App\Domain\Activity\ActivityIdRepository;
-use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\ProcessFactory;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
-use App\Infrastructure\Time\Clock\Clock;
+use Symfony\Component\Process\Process;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
 {
+    private const int DEFAULT_MAX_CONCURRENCY = 2;
+    private const int PROCESS_TIMEOUT_IN_SECONDS = 600;
+
     public function __construct(
         private CommandBus $commandBus,
         private ActivityIdRepository $activityIdRepository,
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
-        private Clock $clock,
+        private ProcessFactory $processFactory,
     ) {
     }
 
@@ -59,47 +45,73 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         }
 
         if (!$this->gearImportStatus->isComplete()) {
-            $output->block('[WARNING] Some of your gear hasn’t been imported yet. This is most likely due to Strava API rate limits being reached. As a result, your gear statistics may currently be incomplete.
+            $output->block('[WARNING] Some of your gear has not been imported yet. This is most likely due to Strava API rate limits being reached. As a result, your gear statistics may currently be incomplete.
 
 This is not a bug, once all your activities have been imported, your gear statistics will update automatically and be complete.', null, 'fg=black;bg=yellow', ' ', true);
         }
 
-        $now = $this->clock->getCurrentDateTimeImmutable();
-
         $output->writeln('Building app...');
         $output->newLine();
 
-        $commandsWithMessages = [
-            'Configuring locale' => new ConfigureAppLocale(),
-            'Configuring theme colors' => new ConfigureAppColors(),
-            'Building Manifest' => new BuildManifest(),
-            'Building index' => new BuildIndexHtml($now),
-            'Building dashboard' => new BuildDashboardHtml(),
-            'Building activities' => new BuildActivitiesHtml($now),
-            'Building gpx files' => new BuildGpxFiles(),
-            'Building monthly stats' => new BuildMonthlyStatsHtml($now),
-            'Building gear stats' => new BuildGearStatsHtml($now),
-            'Building gear maintenance' => new BuildGearMaintenanceHtml(),
-            'Building eddington' => new BuildEddingtonHtml($now),
-            'Building segments' => new BuildSegmentsHtml(),
-            'Building heatmap' => new BuildHeatmapHtml($now),
-            'Building best efforts' => new BuildBestEffortsHtml(),
-            'Building rewind' => new BuildRewindHtml($now),
-            'Building challenges' => new BuildChallengesHtml($now),
-            'Building photos' => new BuildPhotosHtml(),
-            'Building badges' => new BuildBadgeSvg($now),
-        ];
+        $this->commandBus->dispatch(new ConfigureAppColors());
 
-        $progressBar = new ProgressBar($output, count($commandsWithMessages));
-        $progressBar->start();
+        $steps = BuildStep::cases();
+        $maxLabelLength = max(array_map(fn (BuildStep $step): int => mb_strlen($step->getLabel()), $steps));
+        $maxConcurrency = min(self::DEFAULT_MAX_CONCURRENCY, count($steps));
+        $queue = $steps;
+        /** @var array<string, array{process: Process, step: BuildStep}> $running */
+        $running = [];
+        /** @var array<string, string> $failures */
+        $failures = [];
 
-        foreach ($commandsWithMessages as $message => $command) {
-            $progressBar->updateMessage($message);
-            $progressBar->advance();
-            $this->commandBus->dispatch($command);
+        while ([] !== $queue || [] !== $running) {
+            while (count($running) < $maxConcurrency && [] !== $queue) {
+                $step = array_shift($queue);
+                $process = $this->processFactory->create(
+                    ['bin/console', 'app:strava:build-step', $step->value]
+                );
+                $process->setTimeout(self::PROCESS_TIMEOUT_IN_SECONDS);
+                $process->start();
+                $running[$step->value] = ['process' => $process, 'step' => $step];
+            }
+
+            foreach ($running as $key => ['process' => $process, 'step' => $step]) {
+                if ($process->isRunning()) {
+                    continue;
+                }
+
+                if (!$process->isSuccessful()) {
+                    $output->writeln(sprintf('  <fg=red>×</> %s', $step->getLabel()));
+                    $failures[$step->value] = $process->getErrorOutput() ?: $process->getOutput();
+                    unset($running[$key]);
+
+                    continue;
+                }
+
+                $processOutput = trim($process->getOutput());
+                $paddedLabel = str_pad($step->getLabel(), $maxLabelLength);
+                $stepLabel = '' !== $processOutput && '0' !== $processOutput
+                    ? sprintf('  <info>✓</info> %s <fg=gray>(%s)</>', $paddedLabel, $processOutput)
+                    : sprintf('  <info>✓</info> %s', $step->getLabel());
+                $output->writeln($stepLabel);
+                unset($running[$key]);
+            }
+
+            if ([] !== $running) {
+                usleep(50_000);
+            }
         }
 
-        $progressBar->finish();
         $output->writeln('');
+
+        if ([] !== $failures) {
+            $failedSteps = implode(', ', array_keys($failures));
+            $failureDetails = implode("\n\n", array_map(
+                fn (string $step, string $message): string => sprintf('[%s] %s', $step, $message),
+                array_keys($failures),
+                array_values($failures),
+            ));
+            throw new \RuntimeException(sprintf("Build step(s) \"%s\" failed:\n\n%s", $failedSteps, $failureDetails));
+        }
     }
 }
