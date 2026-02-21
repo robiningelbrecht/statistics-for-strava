@@ -41,7 +41,7 @@ final class BuildStepConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $steps = array_map(
-            fn (string $step): BuildStep => BuildStep::from($step),
+            BuildStep::from(...),
             $input->getArgument('step'),
         );
 
