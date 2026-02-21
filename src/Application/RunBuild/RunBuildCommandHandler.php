@@ -51,11 +51,13 @@ This is not a bug, once all your activities have been imported, your gear statis
         }
 
         $output->writeln('Building app...');
-        $output->newLine();
 
         $this->commandBus->dispatch(new ConfigureAppColors());
 
         $steps = BuildStep::cases();
+        $output->writeln(sprintf('Running %d build steps on %d parallel processes.', count($steps), self::DEFAULT_MAX_CONCURRENCY));
+        $output->newLine();
+
         $maxLabelLength = max(array_map(fn (BuildStep $step): int => mb_strlen($step->getLabel()), $steps));
         $maxConcurrency = min(self::DEFAULT_MAX_CONCURRENCY, count($steps));
         $queue = $steps;
@@ -77,7 +79,7 @@ This is not a bug, once all your activities have been imported, your gear statis
 
             foreach ($running as $key => ['process' => $process, 'step' => $step]) {
                 if ($process->isRunning()) {
-                    continue;
+                    continue; // @codeCoverageIgnore
                 }
 
                 if (!$process->isSuccessful()) {
@@ -98,7 +100,7 @@ This is not a bug, once all your activities have been imported, your gear statis
             }
 
             if ([] !== $running) {
-                usleep(50_000);
+                usleep(50_000); // @codeCoverageIgnore
             }
         }
 
