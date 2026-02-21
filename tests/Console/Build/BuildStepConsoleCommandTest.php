@@ -26,6 +26,7 @@ use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
+use App\Tests\NullLogger;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Command\Command;
@@ -51,11 +52,62 @@ class BuildStepConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            'step' => $step->value,
+            'step' => [$step->value],
         ]);
 
         $this->assertInstanceOf(ConfigureAppLocale::class, $dispatchedCommands[0]);
         $this->assertInstanceOf($expectedCommandClass, $dispatchedCommands[1]);
+    }
+
+    public function testExecuteWithMultipleSteps(): void
+    {
+        $dispatchedCommands = [];
+        $this->commandBus
+            ->expects($this->exactly(3))
+            ->method('dispatch')
+            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands): void {
+                $dispatchedCommands[] = $command;
+            });
+
+        $command = $this->getCommandInApplication('app:strava:build-step');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            'step' => [BuildStep::INDEX->value, BuildStep::MANIFEST->value],
+        ]);
+
+        $this->assertInstanceOf(ConfigureAppLocale::class, $dispatchedCommands[0]);
+        $this->assertInstanceOf(BuildIndexHtml::class, $dispatchedCommands[1]);
+        $this->assertInstanceOf(BuildManifest::class, $dispatchedCommands[2]);
+
+        $display = $commandTester->getDisplay();
+        $this->assertStringContainsString('✓ Built index', $display);
+        $this->assertStringContainsString('✓ Built manifest', $display);
+        $this->assertStringContainsString('Time: 10s, Memory: 45MB', $display);
+    }
+
+    public function testExecuteWhenExceptionIsThrown(): void
+    {
+        $this->commandBus
+            ->expects($this->exactly(2))
+            ->method('dispatch')
+            ->willReturnCallback(function (DomainCommand $command): void {
+                if ($command instanceof ConfigureAppLocale) {
+                    return;
+                }
+                throw new \RuntimeException('Something went wrong');
+            });
+
+        $command = $this->getCommandInApplication('app:strava:build-step');
+        $commandTester = new CommandTester($command);
+        $exitCode = $commandTester->execute([
+            'command' => $command->getName(),
+            'step' => [BuildStep::INDEX->value],
+        ]);
+
+        $this->assertEquals(Command::SUCCESS, $exitCode);
+        $display = $commandTester->getDisplay();
+        $this->assertStringContainsString('× Built index. Check the logs for more info', $display);
     }
 
     public function testExecuteWithInvalidStep(): void
@@ -71,7 +123,7 @@ class BuildStepConsoleCommandTest extends ConsoleCommandTestCase
 
         $commandTester->execute([
             'command' => $command->getName(),
-            'step' => 'invalid-step',
+            'step' => ['invalid-step'],
         ]);
     }
 
@@ -106,6 +158,7 @@ class BuildStepConsoleCommandTest extends ConsoleCommandTestCase
             $this->commandBus = $this->createMock(CommandBus::class),
             PausedClock::fromString('2025-12-04'),
             new FixedResourceUsage(),
+            new NullLogger()
         );
     }
 

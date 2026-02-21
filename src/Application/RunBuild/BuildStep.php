@@ -64,6 +64,47 @@ enum BuildStep: string
         };
     }
 
+    /**
+     * Spreads the heaviest steps (ACTIVITIES, SEGMENTS, DASHBOARD) across groups
+     * to balance total processing time per process.
+     */
+    public function getProcessGroup(): int
+    {
+        return match ($this) {
+            self::ACTIVITIES,
+            self::HEATMAP,
+            self::MONTHLY_STATS,
+            self::GPX_FILES,
+            self::GEAR_STATS,
+            self::REWIND,
+            self::EDDINGTON,
+            self::GEAR_MAINTENANCE => 0,
+            self::INDEX,
+            self::SEGMENTS,
+            self::DASHBOARD,
+            self::CHALLENGES,
+            self::BEST_EFFORTS,
+            self::MANIFEST,
+            self::PHOTOS,
+            self::BADGES => 1,
+        };
+    }
+
+    /**
+     * @return array<int, BuildStep[]>
+     */
+    public static function getProcessGroups(): array
+    {
+        $groups = [];
+        foreach (self::cases() as $step) {
+            $groups[$step->getProcessGroup()][] = $step;
+        }
+
+        ksort($groups);
+
+        return array_values($groups);
+    }
+
     public function createCommand(SerializableDateTime $now): Command
     {
         return match ($this) {

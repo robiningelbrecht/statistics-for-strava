@@ -16,8 +16,7 @@ use Symfony\Component\Process\Process;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
 {
-    private const int DEFAULT_MAX_CONCURRENCY = 2;
-    private const int PROCESS_TIMEOUT_IN_SECONDS = 600;
+    private const int PROCESS_TIMEOUT_PER_STEP_IN_SECONDS = 600;
 
     public function __construct(
         private CommandBus $commandBus,
@@ -54,48 +53,34 @@ This is not a bug, once all your activities have been imported, your gear statis
 
         $this->commandBus->dispatch(new ConfigureAppColors());
 
-        $steps = BuildStep::cases();
-        $output->writeln(sprintf('Running %d build steps on %d parallel processes.', count($steps), self::DEFAULT_MAX_CONCURRENCY));
+        $groups = BuildStep::getProcessGroups();
+        $allSteps = array_merge(...$groups);
+        $output->writeln(sprintf('Running %d build steps on %d parallel processes.', count($allSteps), count($groups)));
         $output->newLine();
 
-        $maxLabelLength = max(array_map(fn (BuildStep $step): int => mb_strlen($step->getLabel()), $steps));
-        $maxConcurrency = min(self::DEFAULT_MAX_CONCURRENCY, count($steps));
-        $queue = $steps;
-        /** @var array<string, array{process: Process, step: BuildStep}> $running */
+        /** @var array<int, array{process: Process, steps: BuildStep[]}> $running */
         $running = [];
-        /** @var array<string, string> $failures */
-        $failures = [];
 
-        while ([] !== $queue || [] !== $running) {
-            while (count($running) < $maxConcurrency && [] !== $queue) {
-                $step = array_shift($queue);
-                $process = $this->processFactory->create(
-                    ['bin/console', 'app:strava:build-step', $step->value]
-                );
-                $process->setTimeout(self::PROCESS_TIMEOUT_IN_SECONDS);
-                $process->start();
-                $running[$step->value] = ['process' => $process, 'step' => $step];
-            }
+        foreach ($groups as $steps) {
+            $stepValues = array_map(fn (BuildStep $step): string => $step->value, $steps);
+            $process = $this->processFactory->create(
+                ['bin/console', '--ansi', 'app:strava:build-step', ...$stepValues]
+            );
+            $process->setTimeout(self::PROCESS_TIMEOUT_PER_STEP_IN_SECONDS * count($steps));
+            $process->start(function (string $type, string $buffer) use ($output): void {
+                if (Process::OUT === $type) {
+                    $output->write($buffer);
+                }
+            });
+            $running[] = ['process' => $process, 'steps' => $steps];
+        }
 
-            foreach ($running as $key => ['process' => $process, 'step' => $step]) {
+        while ([] !== $running) {
+            foreach ($running as $key => ['process' => $process, 'steps' => $groupSteps]) {
                 if ($process->isRunning()) {
                     continue; // @codeCoverageIgnore
                 }
 
-                if (!$process->isSuccessful()) {
-                    $output->writeln(sprintf('  <fg=red>×</> %s', $step->getLabel()));
-                    $failures[$step->value] = $process->getErrorOutput() ?: $process->getOutput();
-                    unset($running[$key]);
-
-                    continue;
-                }
-
-                $processOutput = trim($process->getOutput());
-                $paddedLabel = str_pad($step->getLabel(), $maxLabelLength);
-                $stepLabel = '' !== $processOutput && '0' !== $processOutput
-                    ? sprintf('  <info>✓</info> %s <fg=gray>(%s)</>', $paddedLabel, $processOutput)
-                    : sprintf('  <info>✓</info> %s', $step->getLabel());
-                $output->writeln($stepLabel);
                 unset($running[$key]);
             }
 
@@ -105,15 +90,5 @@ This is not a bug, once all your activities have been imported, your gear statis
         }
 
         $output->writeln('');
-
-        if ([] !== $failures) {
-            $failedSteps = implode(', ', array_keys($failures));
-            $failureDetails = implode("\n\n", array_map(
-                fn (string $step, string $message): string => sprintf('[%s] %s', $step, $message),
-                array_keys($failures),
-                array_values($failures),
-            ));
-            throw new \RuntimeException(sprintf("Build step(s) \"%s\" failed:\n\n%s", $failedSteps, $failureDetails));
-        }
     }
 }

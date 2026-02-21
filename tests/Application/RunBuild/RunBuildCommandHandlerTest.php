@@ -153,38 +153,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->assertMatchesTextSnapshot($output);
     }
 
-    public function testHandleWhenBuildStepFails(): void
-    {
-        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed(4))
-                ->withGearId(GearId::fromUnprefixed(4))
-                ->build(), []
-        ));
-        $this->getContainer()->get(ImportedGearRepository::class)->save(
-            ImportedGearBuilder::fromDefaults()
-                ->withGearId(GearId::fromUnprefixed(4))
-                ->build()
-        );
-
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('isAtLatestVersion')
-            ->willReturn(true);
-
-        $failingStep = BuildStep::INDEX;
-        $this->mockProcessesWithFailure($failingStep, 'Something went wrong');
-
-        $output = new SpyOutput();
-
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageMatches('/Build step\(s\).*failed/');
-
-        $this->buildAppCommandHandler->handle(new RunBuild(
-            output: new SymfonyStyle(new StringInput('input'), $output),
-        ));
-    }
-
     #[\Override]
     protected function setUp(): void
     {
@@ -201,12 +169,20 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         );
     }
 
-    private function mockSuccessfulProcesses(string $processOutput = ''): void
+    private function mockSuccessfulProcesses(string $stepTiming = ''): void
     {
         $this->processFactory
             ->method('create')
-            ->willReturnCallback(function () use ($processOutput): Process {
-                return $this->createSuccessfulProcess($processOutput);
+            ->willReturnCallback(function (array $command) use ($stepTiming): Process {
+                $steps = $this->extractStepValues($command);
+                $lines = array_map(
+                    fn (string $step): string => '' !== $stepTiming
+                        ? sprintf('  ✓ %s (%s)', BuildStep::from($step)->getLabel(), $stepTiming)
+                        : sprintf('  ✓ %s', BuildStep::from($step)->getLabel()),
+                    $steps,
+                );
+
+                return $this->createProcess(output: implode("\n", $lines));
             });
     }
 
@@ -215,31 +191,62 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->processFactory
             ->method('create')
             ->willReturnCallback(function (array $command) use ($failingStep, $errorOutput): Process {
-                if (($command[2] ?? null) === $failingStep->value) {
-                    return $this->createFailedProcess($errorOutput);
+                $steps = $this->extractStepValues($command);
+
+                if (!in_array($failingStep->value, $steps, true)) {
+                    $lines = array_map(
+                        fn (string $step): string => sprintf('  ✓ %s', BuildStep::from($step)->getLabel()),
+                        $steps,
+                    );
+
+                    return $this->createProcess(output: implode("\n", $lines));
                 }
 
-                return $this->createSuccessfulProcess();
+                $lines = [];
+                foreach ($steps as $stepValue) {
+                    if ($stepValue === $failingStep->value) {
+                        $lines[] = sprintf('  × %s', BuildStep::from($stepValue)->getLabel());
+                        break;
+                    }
+                    $lines[] = sprintf('  ✓ %s', BuildStep::from($stepValue)->getLabel());
+                }
+
+                return $this->createProcess(
+                    successful: false,
+                    output: implode("\n", $lines),
+                    errorOutput: $errorOutput,
+                );
             });
     }
 
-    private function createSuccessfulProcess(string $output = ''): Process
+    /**
+     * @param string[] $command
+     *
+     * @return string[]
+     */
+    private function extractStepValues(array $command): array
     {
-        $process = $this->createStub(Process::class);
-        $process->method('isRunning')->willReturn(false);
-        $process->method('isSuccessful')->willReturn(true);
-        $process->method('getOutput')->willReturn($output);
-
-        return $process;
+        return array_values(array_filter(
+            $command,
+            fn (string $arg): bool => null !== BuildStep::tryFrom($arg),
+        ));
     }
 
-    private function createFailedProcess(string $errorOutput): Process
-    {
+    private function createProcess(
+        bool $successful = true,
+        string $output = '',
+        string $errorOutput = '',
+    ): Process {
         $process = $this->createStub(Process::class);
+        $process->method('start')->willReturnCallback(function (?callable $callback = null) use ($output): void {
+            if (null !== $callback && '' !== $output) {
+                $callback(Process::OUT, $output);
+            }
+        });
         $process->method('isRunning')->willReturn(false);
-        $process->method('isSuccessful')->willReturn(false);
+        $process->method('isSuccessful')->willReturn($successful);
+        $process->method('getOutput')->willReturn($output);
         $process->method('getErrorOutput')->willReturn($errorOutput);
-        $process->method('getOutput')->willReturn('');
 
         return $process;
     }

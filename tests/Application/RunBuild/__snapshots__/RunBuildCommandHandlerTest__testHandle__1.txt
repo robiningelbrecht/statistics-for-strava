@@ -2,19 +2,19 @@ Buildingapp...
 Running16buildstepson2parallelprocesses.
 
 
-<info>✓</info>Builtindex
-<info>✓</info>Builtactivities
-<info>✓</info>Builtsegments
-<info>✓</info>Builtdashboard
-<info>✓</info>Builtheatmap
-<info>✓</info>Builtmonthlystats
-<info>✓</info>Builtgpxfiles
-<info>✓</info>Builtgearstats
-<info>✓</info>Builtrewind
-<info>✓</info>Builtchallenges
-<info>✓</info>Builtbestefforts
-<info>✓</info>Builteddington
-<info>✓</info>Builtgearmaintenance
-<info>✓</info>Builtmanifest
-<info>✓</info>Builtphotos
-<info>✓</info>Builtbadges
+✓Builtactivities
+✓Builtheatmap
+✓Builtmonthlystats
+✓Builtgpxfiles
+✓Builtgearstats
+✓Builtrewind
+✓Builteddington
+✓Builtgearmaintenance
+✓Builtindex
+✓Builtsegments
+✓Builtdashboard
+✓Builtchallenges
+✓Builtbestefforts
+✓Builtmanifest
+✓Builtphotos
+✓Builtbadges
