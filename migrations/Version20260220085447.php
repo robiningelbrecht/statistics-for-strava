@@ -25,8 +25,8 @@ final class Version20260220085447 extends AbstractMigration
         $this->connection->executeStatement('UPDATE ActivityStream SET dataSize = json_array_length(data)');
         $this->connection->executeStatement('ALTER TABLE ActivityStream ADD COLUMN data_compressed BLOB DEFAULT NULL');
 
-        $rows = $this->connection->executeQuery('SELECT activityId, streamType, data FROM ActivityStream')->fetchAllAssociative();
-        foreach ($rows as $row) {
+        $result = $this->connection->executeQuery('SELECT activityId, streamType, data FROM ActivityStream');
+        while ($row = $result->fetchAssociative()) {
             $compressed = CompressedString::fromUncompressed($row['data']);
 
             $this->connection->executeStatement(
@@ -38,6 +38,7 @@ final class Version20260220085447 extends AbstractMigration
                 ]
             );
         }
+        $result->free();
 
         $this->connection->executeStatement('ALTER TABLE ActivityStream DROP COLUMN data');
         $this->connection->executeStatement('ALTER TABLE ActivityStream RENAME COLUMN data_compressed TO data');
