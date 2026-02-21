@@ -1,4 +1,4 @@
-# [v4.6.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.5) - 2026-02-20
+# [v4.6.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.5) - 2026-02-21
 
 > [!NOTE]  
 > This release introduces another data compression, reducing the disk space used by your database.
