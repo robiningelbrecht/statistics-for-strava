@@ -22,7 +22,7 @@ final class SegmentEffortBuilder
     private Kilometer $distance;
     private ?float $averageWatts = 200;
     private readonly ?int $maxHeartRate;
-    private readonly ?int $averageHeartRate;
+    private ?int $averageHeartRate;
     private ?int $rank = 1;
 
     private function __construct()
@@ -117,6 +117,13 @@ final class SegmentEffortBuilder
     public function withStartDateTime(SerializableDateTime $startDateTime): self
     {
         $this->startDateTime = $startDateTime;
+
+        return $this;
+    }
+
+    public function withAverageHeartRate(int $heartRate): self
+    {
+        $this->averageHeartRate = $heartRate;
 
         return $this;
     }
