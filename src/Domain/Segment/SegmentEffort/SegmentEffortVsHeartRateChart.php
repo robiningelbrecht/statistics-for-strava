@@ -6,6 +6,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class SegmentEffortVsHeartRateChart
 {
@@ -18,6 +19,7 @@ final readonly class SegmentEffortVsHeartRateChart
         private SegmentEfforts $segmentEfforts,
         private SportType $sportType,
         private UnitSystem $unitSystem,
+        private TranslatorInterface $translator,
     ) {
     }
 
@@ -25,11 +27,13 @@ final readonly class SegmentEffortVsHeartRateChart
         SegmentEfforts $segmentEfforts,
         SportType $sportType,
         UnitSystem $unitSystem,
+        TranslatorInterface $translator,
     ): self {
         return new self(
             segmentEfforts: $segmentEfforts,
             sportType: $sportType,
-            unitSystem: $unitSystem
+            unitSystem: $unitSystem,
+            translator: $translator
         );
     }
 
@@ -38,9 +42,10 @@ final readonly class SegmentEffortVsHeartRateChart
      */
     public function build(): array
     {
+        /** @var SegmentEffort[] $effortsWithHeartRate */
         $effortsWithHeartRate = array_values(array_filter(
             $this->segmentEfforts->toArray(),
-            fn (SegmentEffort $effort) => null !== $effort->getAverageHeartRate(),
+            fn (SegmentEffort $effort): bool => null !== $effort->getAverageHeartRate(),
         ));
 
         if (empty($effortsWithHeartRate)) {
@@ -48,24 +53,43 @@ final readonly class SegmentEffortVsHeartRateChart
         }
 
         $count = count($effortsWithHeartRate);
-        $velocityValues = array_map(fn (SegmentEffort $e) => $this->getVelocityValue($e), $effortsWithHeartRate);
-        $minVelocity = min($velocityValues);
-        $maxVelocity = max($velocityValues);
+        $minVelocity = PHP_FLOAT_MAX;
+        $maxVelocity = PHP_FLOAT_MIN;
+        $minHeartRate = PHP_INT_MAX;
+        $maxHeartRate = PHP_INT_MIN;
 
-        $heartRateValues = array_map(fn (SegmentEffort $e) => $e->getAverageHeartRate(), $effortsWithHeartRate);
-        $minHeartRate = min($heartRateValues);
-        $maxHeartRate = max($heartRateValues);
+        $preference = $this->sportType->getVelocityDisplayPreference();
+        $velocityIsPace = $preference instanceof SecPer100Meter || $preference instanceof SecPerKm;
+        $velocityUnit = match (true) {
+            $preference instanceof SecPer100Meter => '/'.SecPerKm::zero()->getSymbol(),
+            $preference instanceof SecPerKm => $this->unitSystem->paceSymbol(),
+            default => $this->unitSystem->speedSymbol(),
+        };
 
         $data = [];
         foreach ($effortsWithHeartRate as $index => $effort) {
+            $velocity = match (true) {
+                $preference instanceof SecPer100Meter => round($effort->getPaceInSecPer100Meter()->toFloat(), 1),
+                $preference instanceof SecPerKm => $effort->getPaceInSecPerKm()->toFloat(),
+                default => round($effort->getAverageSpeed()->toUnitSystem($this->unitSystem)->toFloat(), 1),
+            };
+            $heartRate = $effort->getAverageHeartRate();
+
+            $minVelocity = min($minVelocity, $velocity);
+            $maxVelocity = max($maxVelocity, $velocity);
+            $minHeartRate = min($minHeartRate, $heartRate);
+            $maxHeartRate = max($maxHeartRate, $heartRate);
+
             $ratio = $count > 1 ? $index / ($count - 1) : 1.0;
 
             $data[] = [
                 'value' => [
-                    $effort->getAverageHeartRate(),
-                    $this->getVelocityValue($effort),
+                    $heartRate,
+                    $velocity,
                     $effort->getElapsedTimeInSeconds(),
                     $effort->getStartDateTime()->format('Y-m-d'),
+                    $velocityIsPace,
+                    $velocityUnit,
                 ],
                 'itemStyle' => [
                     'color' => $this->interpolateColor($ratio),
@@ -85,12 +109,12 @@ final readonly class SegmentEffortVsHeartRateChart
             'tooltip' => [
                 'show' => true,
                 'trigger' => 'item',
-                'formatter' => 'callback:formatEffortVsHrTooltip',
+                'formatter' => 'callback:formatEffortVsHeartRateTooltip',
             ],
             'xAxis' => [
                 [
                     'type' => 'value',
-                    'name' => 'HR',
+                    'name' => $this->translator->trans('Heart rate'),
                     'nameLocation' => 'middle',
                     'nameGap' => 25,
                     'min' => max(0, $minHeartRate - 5),
@@ -113,7 +137,10 @@ final readonly class SegmentEffortVsHeartRateChart
                 'seriesIndex' => -1,
                 'min' => 0,
                 'max' => 1,
-                'text' => ['Recent', 'Older'],
+                'text' => [
+                    $this->translator->trans('Recent effort'),
+                    $this->translator->trans('Older effort'),
+                ],
                 'calculable' => false,
                 'hoverLink' => false,
                 'orient' => 'horizontal',
@@ -155,17 +182,6 @@ final readonly class SegmentEffortVsHeartRateChart
                 ['type' => 'inside', 'yAxisIndex' => 0],
             ],
         ];
-    }
-
-    private function getVelocityValue(SegmentEffort $effort): float
-    {
-        $preference = $this->sportType->getVelocityDisplayPreference();
-
-        return match (true) {
-            $preference instanceof SecPer100Meter => round($effort->getPaceInSecPer100Meter()->toFloat(), 1),
-            $preference instanceof SecPerKm => $effort->getPaceInSecPerKm()->toFloat(),
-            default => round($effort->getAverageSpeed()->toUnitSystem($this->unitSystem)->toFloat(), 1),
-        };
     }
 
     private function interpolateColor(float $ratio): string

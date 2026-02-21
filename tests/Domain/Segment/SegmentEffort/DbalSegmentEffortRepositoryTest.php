@@ -68,7 +68,7 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
         );
     }
 
-    public function testFindHistoryBySegmentId(): void
+    public function testFindBySegmentId(): void
     {
         $segmentEffortOne = SegmentEffortBuilder::fromDefaults()
             ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(1))
@@ -95,7 +95,7 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             SegmentEfforts::fromArray([$segmentEffortOne, $segmentEffortTwo]),
-            $this->segmentEffortRepository->findHistoryBySegmentId($segmentEffortOne->getSegmentId())
+            $this->segmentEffortRepository->findBySegmentId($segmentEffortOne->getSegmentId())
         );
     }
 

@@ -17,7 +17,7 @@ interface SegmentEffortRepository
 
     public function findTopXBySegmentId(SegmentId $segmentId, int $limit): SegmentEfforts;
 
-    public function findHistoryBySegmentId(SegmentId $segmentId): SegmentEfforts;
+    public function findBySegmentId(SegmentId $segmentId): SegmentEfforts;
 
     public function countBySegmentId(SegmentId $segmentId): int;
 

@@ -85,7 +85,7 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
         ));
     }
 
-    public function findHistoryBySegmentId(SegmentId $segmentId): SegmentEfforts
+    public function findBySegmentId(SegmentId $segmentId): SegmentEfforts
     {
         $queryBuilder = $this->connection->createQueryBuilder();
         $queryBuilder->select('*')

@@ -10,7 +10,7 @@ export const resolveEchartsCallbacks = (obj) => {
             if (callbackName in window.statisticsForStrava.callbacks) {
                 obj[key] = window.statisticsForStrava.callbacks[callbackName];
             } else {
-                console.error(`ECharts callback "${callbackName}" not found. Did you register it in window.statisticsForStrava.callbacks?`);
+                console.error(`ECharts callback "${callbackName}" not registered in window.statisticsForStrava.callbacks`);
             }
         } else if (typeof value === 'object' && value !== null) {
             resolveEchartsCallbacks(value);
@@ -55,6 +55,21 @@ export const registerEchartsCallbacks = () => {
                 const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';
                 return `${p.marker} <strong>${p.value}</strong> ${p.seriesName}${extra}`;
             }).join('<br/>');
+        },
+        formatEffortVsHeartRateTooltip: (params) => {
+            const heartRate = params.value[0];
+            const velocityIsPace = params.value[4];
+            const velocityUnit = params.value[5];
+            const velocity = velocityIsPace
+                ? window.statisticsForStrava.callbacks.formatSecondsTrimZero(params.value[1])
+                : params.value[1];
+            const elapsed = window.statisticsForStrava.callbacks.formatSecondsTrimZero(params.value[2]);
+            const date = params.value[3];
+
+            return `${date}<br/>`
+                + `Heart rate: <strong>${heartRate}</strong> bpm<br/>`
+                + `${velocityIsPace ? 'Pace' : 'Speed'}: <strong>${velocity}</strong> ${velocityUnit}<br/>`
+                + `Time: <strong>${elapsed}</strong>`;
         },
         symbolSize: (params) => {
             return (params[2] / 100) * 15 + 5;
