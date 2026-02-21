@@ -1,4 +1,5 @@
-import {parents, resolveEchartsCallbacks, fetchJson} from "../../utils";
+import {parents, fetchJson} from "../../utils";
+import {resolveEchartsCallbacks} from "./echarts-callbacks";
 import {v5Theme, v5DarkTheme} from "./echarts-themes";
 import {FilterStorage, FilterName} from "../data-table/storage";
 
@@ -28,13 +29,11 @@ export default class ChartManager {
             loadOptions.then(chartOptions => {
                 resolveEchartsCallbacks(chartOptions);
                 chart.setOption(chartOptions);
-            })
-                .catch(error => {
-                    console.error('Failed to load chart data:', error);
-                })
-                .finally(() => {
-                    chart.hideLoading();
-                });
+            }).catch(error => {
+                console.error('Failed to load chart data:', error);
+            }).finally(() => {
+                chart.hideLoading();
+            });
 
             const clickHandlerName = chartNode.getAttribute('data-echarts-click');
             if (clickHandlerName && handlers[clickHandlerName]) {

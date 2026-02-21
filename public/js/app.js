@@ -4,6 +4,7 @@ import Router from "./core/router";
 import {updateGithubLatestRelease} from "./services/github";
 import Sidebar from "./components/sidebar";
 import ChartManager from "./features/charts/chart-manager";
+import {registerEchartsCallbacks} from "./features/charts/echarts-callbacks";
 import ModalManager from "./components/modals";
 import PhotoWall from "./features/photos/photo-wall";
 import MapManager from "./features/maps/map-manager";
@@ -19,6 +20,8 @@ const $main = document.querySelector("main");
 // Boot router.
 const router = new Router($main);
 router.boot();
+
+registerEchartsCallbacks();
 
 const sidebar = new Sidebar();
 const modalManager = new ModalManager(router);
