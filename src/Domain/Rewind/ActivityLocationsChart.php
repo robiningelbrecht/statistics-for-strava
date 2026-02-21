@@ -46,7 +46,7 @@ final readonly class ActivityLocationsChart
             'series' => [
                 'type' => 'effectScatter',
                 'coordinateSystem' => 'geo',
-                'symbolSize' => 'symbolSize',
+                'symbolSize' => 'callback:symbolSize',
                 'itemStyle' => [
                     'color' => '#E34902',
                 ],

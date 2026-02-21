@@ -49,7 +49,7 @@ final readonly class ActivityGridChart
             ],
             'tooltip' => [
                 'trigger' => 'item',
-                'formatter' => 'formatActivityGridTooltip',
+                'formatter' => 'callback:formatActivityGridTooltip',
             ],
             'visualMap' => [
                 'type' => 'piecewise',

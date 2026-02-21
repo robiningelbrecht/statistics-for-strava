@@ -26,14 +26,7 @@ export default class ChartManager {
             chart.showLoading();
 
             loadOptions.then(chartOptions => {
-                [
-                    'tooltip.formatter',
-                    'tooltip.valueFormatter',
-                    'yAxis.axisLabel.formatter',
-                    'yAxis[].axisLabel.formatter',
-                    'series.symbolSize',
-                    'dataZoom[].labelFormatter'
-                ].forEach(path => resolveEchartsCallbacks(chartOptions, path));
+                resolveEchartsCallbacks(chartOptions);
                 chart.setOption(chartOptions);
             })
                 .catch(error => {

@@ -42,7 +42,7 @@ final readonly class SegmentEffortHistoryChart
             'tooltip' => [
                 'show' => true,
                 'trigger' => 'axis',
-                'valueFormatter' => 'formatSecondsTrimZero',
+                'valueFormatter' => 'callback:formatSecondsTrimZero',
             ],
             'xAxis' => [
                 [
@@ -70,7 +70,7 @@ final readonly class SegmentEffortHistoryChart
                     'type' => 'value',
                     'min' => max(0, floor($minYAxisValue / 5) * 5),
                     'axisLabel' => [
-                        'formatter' => 'formatSecondsTrimZero',
+                        'formatter' => 'callback:formatSecondsTrimZero',
                     ],
                 ],
             ],
