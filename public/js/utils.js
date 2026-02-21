@@ -41,37 +41,22 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     return s.join(dec)
 }
 
-export const resolveEchartsCallbacks = (obj, path) => {
-    const parts = path.split('.');
+const CALLBACK_PREFIX = 'callback:';
 
-    const resolvePath = (currentObj, remainingParts) => {
-        if (!currentObj || remainingParts.length === 0) return;
+export const resolveEchartsCallbacks = (obj) => {
+    if (!obj || typeof obj !== 'object') return;
 
-        const key = remainingParts[0];
-        const rest = remainingParts.slice(1);
-
-        const isArrayKey = key.endsWith('[]');
-        const rawKey = isArrayKey ? key.slice(0, -2) : key;
-
-        if (isArrayKey) {
-            const arr = currentObj?.[rawKey];
-            if (Array.isArray(arr)) {
-                arr.forEach(item => resolvePath(item, rest));
+    for (const key of Object.keys(obj)) {
+        const value = obj[key];
+        if (typeof value === 'string' && value.startsWith(CALLBACK_PREFIX)) {
+            const callbackName = value.slice(CALLBACK_PREFIX.length);
+            if (callbackName in window.statisticsForStrava.callbacks) {
+                obj[key] = window.statisticsForStrava.callbacks[callbackName];
             }
-        } else if (rest.length === 0) {
-            // final key, do callback replacement
-            if (
-                currentObj?.[rawKey] &&
-                currentObj[rawKey] in window.statisticsForStrava.callbacks
-            ) {
-                currentObj[rawKey] = window.statisticsForStrava.callbacks[currentObj[rawKey]];
-            }
-        } else {
-            resolvePath(currentObj?.[rawKey], rest);
+        } else if (typeof value === 'object' && value !== null) {
+            resolveEchartsCallbacks(value);
         }
-    };
-
-    resolvePath(obj, parts);
+    }
 };
 
 export const fetchJson = async (url) => {

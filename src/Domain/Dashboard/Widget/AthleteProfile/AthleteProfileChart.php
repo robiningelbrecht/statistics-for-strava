@@ -56,7 +56,7 @@ final readonly class AthleteProfileChart
             ],
             'tooltip' => [
                 'show' => true,
-                'valueFormatter' => 'formatPercentage',
+                'valueFormatter' => 'callback:formatPercentage',
             ],
             'radar' => [
                 'indicator' => [

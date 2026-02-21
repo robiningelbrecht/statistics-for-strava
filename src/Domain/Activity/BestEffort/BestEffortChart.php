@@ -87,7 +87,7 @@ final readonly class BestEffortChart
                 'axisPointer' => [
                     'type' => 'none',
                 ],
-                'valueFormatter' => 'formatSeconds',
+                'valueFormatter' => 'callback:formatSeconds',
             ],
             'legend' => [
                 'show' => true,
@@ -107,7 +107,7 @@ final readonly class BestEffortChart
             'yAxis' => [
                 'type' => 'log',
                 'axisLabel' => [
-                    'formatter' => 'formatSeconds',
+                    'formatter' => 'callback:formatSeconds',
                     'showMaxLabel' => false,
                 ],
             ],

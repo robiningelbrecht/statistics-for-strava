@@ -4,7 +4,6 @@ namespace App\Domain\Segment\SegmentEffort;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use App\Infrastructure\ValueObject\Measurement\Velocity\Pace;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
@@ -86,7 +85,7 @@ final readonly class SegmentEffortVsHeartRateChart
             'tooltip' => [
                 'show' => true,
                 'trigger' => 'item',
-                'formatter' => 'formatEffortVsHrTooltip',
+                'formatter' => 'callback:formatEffortVsHrTooltip',
             ],
             'xAxis' => [
                 [
@@ -101,10 +100,10 @@ final readonly class SegmentEffortVsHeartRateChart
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'min' =>  max(0, floor($minVelocity / 5) * 5),
+                    'min' => max(0, floor($minVelocity / 5) * 5),
                     'max' => ceil($maxVelocity / 5) * 5,
                     'axisLabel' => [
-                        'formatter' => 'formatSecondsTrimZero',
+                        'formatter' => 'callback:formatSecondsTrimZero',
                     ],
                 ],
             ],

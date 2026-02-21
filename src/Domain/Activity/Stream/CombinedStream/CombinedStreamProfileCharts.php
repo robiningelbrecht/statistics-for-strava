@@ -253,7 +253,7 @@ final readonly class CombinedStreamProfileCharts
             ],
             'tooltip' => [
                 'trigger' => 'axis',
-                'formatter' => 'formatCombinedProfileTooltip',
+                'formatter' => 'callback:formatCombinedProfileTooltip',
             ],
             'dataZoom' => [
                 [
