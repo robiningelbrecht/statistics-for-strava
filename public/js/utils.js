@@ -41,26 +41,6 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     return s.join(dec)
 }
 
-
-export const resolveEchartsCallbacks = (obj) => {
-    const CALLBACK_PREFIX = 'callback:';
-    if (!obj || typeof obj !== 'object') return;
-
-    for (const key of Object.keys(obj)) {
-        const value = obj[key];
-        if (typeof value === 'string' && value.startsWith(CALLBACK_PREFIX)) {
-            const callbackName = value.slice(CALLBACK_PREFIX.length);
-            if (callbackName in window.statisticsForStrava.callbacks) {
-                obj[key] = window.statisticsForStrava.callbacks[callbackName];
-            } else {
-                console.error(`ECharts callback "${callbackName}" not found. Did you register it in window.statisticsForStrava.callbacks?`);
-            }
-        } else if (typeof value === 'object' && value !== null) {
-            resolveEchartsCallbacks(value);
-        }
-    }
-};
-
 export const fetchJson = async (url) => {
     const response = await fetch(url);
 

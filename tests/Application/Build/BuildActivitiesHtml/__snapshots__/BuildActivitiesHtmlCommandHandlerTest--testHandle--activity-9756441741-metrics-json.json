@@ -22,7 +22,7 @@
     },
     "tooltip": {
         "trigger": "axis",
-        "formatter": "formatCombinedProfileTooltip"
+        "formatter": "callback:formatCombinedProfileTooltip"
     },
     "dataZoom": [
         {
