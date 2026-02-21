@@ -178,8 +178,8 @@ final readonly class SegmentEffortVsHeartRateChart
                 ],
             ],
             'dataZoom' => [
-                ['type' => 'inside', 'xAxisIndex' => 0],
-                ['type' => 'inside', 'yAxisIndex' => 0],
+                ['type' => 'inside', 'zoomOnMouseWheel' => false, 'minValueSpan' => 1, 'xAxisIndex' => 0],
+                ['type' => 'inside', 'zoomOnMouseWheel' => false, 'minValueSpan' => 1, 'yAxisIndex' => 0],
             ],
         ];
     }
