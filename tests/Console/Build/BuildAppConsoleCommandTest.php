@@ -1,14 +1,16 @@
 <?php
 
-namespace App\Tests\Console;
+namespace App\Tests\Console\Build;
 
 use App\Application\AppUrl;
-use App\Console\BuildAppConsoleCommand;
+use App\Console\Build\BuildAppConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Daemon\Mutex\LockName;
 use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
+use App\Tests\Console\ConsoleCommandTestCase;
+use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;

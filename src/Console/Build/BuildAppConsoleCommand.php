@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace App\Console\Build;
 
 use App\Application\AppUrl;
 use App\Application\RunBuild\RunBuild;

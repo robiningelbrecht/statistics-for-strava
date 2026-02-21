@@ -1,0 +1,10 @@
+[
+    {
+        "commandName": "App\\Application\\Build\\ConfigureAppLocale\\ConfigureAppLocale",
+        "payload": []
+    },
+    {
+        "commandName": "App\\Application\\Build\\BuildManifest\\BuildManifest",
+        "payload": []
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "commandName": "App\\Application\\Build\\ConfigureAppLocale\\ConfigureAppLocale",
+        "payload": []
+    },
+    {
+        "commandName": "App\\Application\\Build\\BuildIndexHtml\\BuildIndexHtml",
+        "payload": {
+            "now": "2025-12-04 00:00:00"
+        }
+    }
+]

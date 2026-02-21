@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console;
+namespace App\Console\Build;
 
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Application\RunBuild\BuildStep;
