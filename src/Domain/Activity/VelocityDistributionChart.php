@@ -90,8 +90,7 @@ final readonly class VelocityDistributionChart
         $convertedAverageVelocity = match (true) {
             $velocityUnitPreference instanceof SecPer100Meter => round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toSecPer100Meter()->toFloat(), 1),
             $velocityUnitPreference instanceof SecPerKm => $this->formatDurationForHumans((int) round($this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toUnitSystem($this->unitSystem)->toFloat())),
-            UnitSystem::IMPERIAL === $this->unitSystem => round($this->averageSpeed->toMph()->toFloat(), 1),
-            default => round($this->averageSpeed->toFloat(), 1),
+            default => round($this->averageSpeed->toUnitSystem($this->unitSystem)->toFloat(), 1),
         };
 
         if ($velocityUnitPreference instanceof Pace) {
