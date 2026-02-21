@@ -13,6 +13,28 @@
 
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.4...v4.6.5
 
+<details>
+<summary><h4>Docker Image CVE Report</h4></summary>
+
+| Severity | Count |
+|----------|------:|
+| 🔴 Critical | 1 |
+| 🟠 High | 0 |
+| 🟡 Medium | 0 |
+| 🔵 Low | 0 |
+| **Total** | **1** |
+
+<details>
+<summary>Critical CVEs</summary>
+
+| Package | CVE | Installed | Fixed |
+|---------|-----|-----------|-------|
+| stdlib | [CVE-2025-68121](https://nvd.nist.gov/vuln/detail/CVE-2025-68121) | v1.25.6 | 1.24.13, 1.25.7, 1.26.0-rc.3 |
+
+</details>
+
+</details>
+
 # [v4.6.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.4) - 2026-02-16
 
 This release fixes a critical issue in the Daemon that was introduced in `v4.6.3`
