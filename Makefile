@@ -100,6 +100,10 @@ app-run-docs:
 ollama-run-llama32:
 	docker compose exec ollama ollama pull llama3.2
 
+# CVE scanning for Docker image built from local Dockerfile.
+cve-scan:
+	@bash docker/app/cve-scan.sh
+
 # Helpers for forks and PRs
 fork-fetch-remote:
 	git remote add $(remote-name) $(fork-url)
