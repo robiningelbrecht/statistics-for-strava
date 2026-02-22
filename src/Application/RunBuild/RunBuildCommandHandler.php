@@ -27,6 +27,7 @@ use App\Domain\Activity\ActivityIdRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Daemon\ProcessForker;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\Timer;
@@ -39,6 +40,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
+        private ProcessForker $processForker,
     ) {
     }
 
@@ -105,7 +107,7 @@ This is not a bug, once all your activities have been imported, your gear statis
         $pids = [];
         $printedWarning = false;
         foreach ($commandGroups as $group) {
-            $pid = pcntl_fork();
+            $pid = $this->processForker->fork();
 
             if ($pid > 0) {
                 $output->writeln(sprintf('<fg=gray>Started new parallel process with pid %s</>', $pid));
@@ -145,7 +147,7 @@ This is not a bug, once all your activities have been imported, your gear statis
         }
 
         foreach ($pids as $pid) {
-            pcntl_waitpid($pid, $status);
+            $this->processForker->waitPid($pid, $status);
         }
         $output->newLine();
     }
