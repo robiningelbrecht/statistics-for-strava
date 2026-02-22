@@ -22,10 +22,10 @@ final class Timer
     public function getRunTimeInSeconds(): float
     {
         if (null === $this->timeStart) {
-            throw new \RuntimeException('Timer not started.');
+            throw new \RuntimeException('Timer not started');
         }
         if (null === $this->timeStop) {
-            throw new \RuntimeException('Timer not stopped.');
+            throw new \RuntimeException('Timer not stopped');
         }
 
         return round($this->timeStop - $this->timeStart, 3);
