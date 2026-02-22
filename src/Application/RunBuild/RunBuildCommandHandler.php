@@ -50,7 +50,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 
         $output = $command->getOutput();
         if (!$this->migrationRunner->isAtLatestVersion()) {
-            $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before Built the HTML files</error>');
+            $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');
 
             return;
         }
