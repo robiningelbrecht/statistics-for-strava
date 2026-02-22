@@ -55,7 +55,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
             return;
         }
         if ($this->activityIdRepository->count() <= 0) {
-            $output->writeln('<error>Wait until at least one Strava activity has been imported before Built the app</error>');
+            $output->writeln('<error>Wait until at least one Strava activity has been imported before building the app</error>');
 
             return;
         }
