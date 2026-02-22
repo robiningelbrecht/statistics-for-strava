@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Infrastructure\Time\Sleep;
 
-use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\Time\Sleep\Sleep;
 
 class NullSleep implements Sleep
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Time;
+namespace App\Infrastructure\Time\Sleep;
 
 final readonly class SystemSleep implements Sleep
 {

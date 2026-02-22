@@ -6,7 +6,7 @@ namespace App\Domain\Integration\Geocoding\Nominatim;
 
 use App\Domain\Activity\Route\RouteGeography;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\Time\Sleep\Sleep;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;

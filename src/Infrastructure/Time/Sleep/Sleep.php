@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Time;
+namespace App\Infrastructure\Time\Sleep;
 
 interface Sleep
 {

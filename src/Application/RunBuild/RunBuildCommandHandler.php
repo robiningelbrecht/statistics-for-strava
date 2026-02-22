@@ -29,8 +29,7 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
-use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use App\Infrastructure\Time\ResourceUsage\Timer;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
 {
@@ -40,7 +39,6 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
-        private ResourceUsage $resourceUsage,
     ) {
     }
 
@@ -105,43 +103,50 @@ This is not a bug, once all your activities have been imported, your gear statis
         ));
 
         $pids = [];
+        $printedWarning = false;
         foreach ($commandGroups as $group) {
             $pid = pcntl_fork();
+
+            if ($pid > 0) {
+                $output->writeln(sprintf('<fg=gray>Started new parallel process with pid %s</>', $pid));
+                // Store child process id to be able to use pcntl_waitpid().
+                $pids[] = $pid;
+                continue;
+            }
+
+            foreach ($group as $message => $buildCommand) {
+                $timer = new Timer();
+                $timer->start();
+                $this->commandBus->dispatch($buildCommand);
+                $timer->stop();
+
+                $output->writeln(
+                    sprintf(
+                        '  <info>✓</info> %s  <fg=gray>(time: %ss)</>',
+                        str_pad($message, $maxMessageLength),
+                        number_format($timer->getRunTimeInSeconds(), 3, '.', '')
+                    ));
+            }
+
             if (-1 === $pid) {
-                foreach ($group as $message => $buildCommand) {
-                    $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
+                if (!$printedWarning) {
+                    // Unable to fork new process.
+                    $output->writeln('<comment>Unable to start parallel execution. Falling back to sequential execution.</comment>');
+                    $printedWarning = true;
                 }
             } elseif (0 === $pid) {
-                foreach ($group as $message => $buildCommand) {
-                    $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
-                }
+                // Child process needs to be exited.
                 exit(0);
-            } else {
-                $pids[] = $pid;
             }
+        }
+
+        if ([] !== $pids) {
+            $output->newLine();
         }
 
         foreach ($pids as $pid) {
             pcntl_waitpid($pid, $status);
         }
-    }
-
-    private function dispatchAndReport(Command $buildCommand, string $message, int $maxMessageLength, SymfonyStyle $output): void
-    {
-        $timerName = new \ReflectionClass($buildCommand)->getShortName();
-        $this->resourceUsage->startTimer($timerName);
-        $this->commandBus->dispatch($buildCommand);
-        $this->resourceUsage->stopTimer($timerName);
-
-        $elapsed = number_format($this->resourceUsage->getRunTimeInSeconds($message), 3, '.', '');
-        $peakMemory = $this->resourceUsage->getFormattedPeakMemory($message);
-
-        $output->writeln(
-            sprintf(
-                '  <info>✓</info> %s <fg=gray>(time: %speak memory: %s)</>',
-                str_pad($message, $maxMessageLength),
-                str_pad($elapsed.'s', 9),
-                $peakMemory)
-        );
+        $output->newLine();
     }
 }

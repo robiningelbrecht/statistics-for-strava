@@ -10,7 +10,7 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\Time\Sleep\Sleep;
 use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use League\Flysystem\FilesystemOperator;
 

@@ -13,7 +13,7 @@ use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Logging\Monolog;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
-use App\Infrastructure\Time\Sleep;
+use App\Infrastructure\Time\Sleep\Sleep;
 use App\Infrastructure\ValueObject\String\Url;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use GuzzleHttp\Client;
