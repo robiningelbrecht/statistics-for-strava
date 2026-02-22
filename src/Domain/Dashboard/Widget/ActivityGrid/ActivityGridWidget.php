@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Dashboard\Widget\ActivityGrid;
 
 use App\Domain\Activity\DailyTrainingLoad;
+use App\Domain\Dashboard\InvalidDashboardLayout;
 use App\Domain\Dashboard\Widget\ActivityGrid\FindCaloriesBurnedPerDay\FindCaloriesBurnedPerDay;
 use App\Domain\Dashboard\Widget\Widget;
 use App\Domain\Dashboard\Widget\WidgetConfiguration;
@@ -28,11 +29,26 @@ final readonly class ActivityGridWidget implements Widget
 
     public function getDefaultConfiguration(): WidgetConfiguration
     {
-        return WidgetConfiguration::empty();
+        return WidgetConfiguration::empty()
+            ->add('metricsDisplayOrder', array_map(fn (ActivityGridType $type) => $type->value, ActivityGridType::cases()));
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
     {
+        if (!$configuration->exists('metricsDisplayOrder')) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" is required for ActivityGridWidget.');
+        }
+        if (!is_array($configuration->get('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
+        }
+        if (3 !== count($configuration->get('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 grid types.');
+        }
+        foreach ($configuration->get('metricsDisplayOrder') as $metricDisplayOrder) {
+            if (!ActivityGridType::tryFrom($metricDisplayOrder)) {
+                throw new InvalidDashboardLayout(sprintf('Configuration item "metricsDisplayOrder" contains invalid value "%s".', $metricDisplayOrder));
+            }
+        }
     }
 
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): string
@@ -79,6 +95,9 @@ final readonly class ActivityGridWidget implements Widget
             );
         }
 
+        /** @var string[] $metricsDisplayOrder */
+        $metricsDisplayOrder = $configuration->get('metricsDisplayOrder');
+
         $activityGridsCharts = [];
         foreach (ActivityGridType::cases() as $activityGridType) {
             $activityGridsCharts[$activityGridType->value] = Json::encode(ActivityGridChart::create(
@@ -91,6 +110,10 @@ final readonly class ActivityGridWidget implements Widget
 
         return $this->twig->load('html/dashboard/widget/widget--activity-grid.html.twig')->render([
             'gridCharts' => $activityGridsCharts,
+            'metricsDisplayOrder' => array_map(
+                ActivityGridType::from(...),
+                $metricsDisplayOrder,
+            ),
         ]);
     }
 }

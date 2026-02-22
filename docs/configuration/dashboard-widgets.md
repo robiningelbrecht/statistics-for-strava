@@ -15,7 +15,7 @@ appearance:
       - { 'widget': 'introText', 'width': 33, 'enabled': true }
       - { 'widget': 'trainingGoals', 'width': 33, 'enabled': false, 'config': { 'goals': [] } }
       - { 'widget': 'weeklyStats', 'width': 100, 'enabled': true, 'config': { 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
-      - { 'widget': 'activityGrid', 'width': 100, 'enabled': true }
+      - { 'widget': 'activityGrid', 'width': 100, 'enabled': true, 'config': { 'metricsDisplayOrder': ['load', 'movingTime', 'caloriesBurned'] } }
       - { 'widget': 'streaks', 'width': 33, 'enabled': true, config: { 'subtitle': null, 'sportTypesToInclude': [] } }
       - { 'widget': 'athleteProfile', 'width': 33, 'enabled': true }
       - { 'widget': 'eddington', 'width': 33, 'enabled': true }
@@ -141,8 +141,10 @@ This widget provides a summary of your weekly statistics per sport type, includi
 
 This widget provides an overview your activities in a GitHub style graph.
 
+* __metricsDisplayOrder__: The order in which the metrics are displayed in the widget. Supported metrics are 'load', 'movingTime' and 'caloriesBurned'. All 3 metrics must be included.
+
 ```yml
-{ 'widget': 'activityGrid', 'width': 100, 'enabled': true }
+{ 'widget': 'activityGrid', 'width': 100, 'enabled': true, 'config': { 'metricsDisplayOrder': ['load', 'movingTime', 'caloriesBurned'] } }
 ```
 
 ![activityGrid widget](../assets/images/dashboard-widgets/activity-intensity.png)$
