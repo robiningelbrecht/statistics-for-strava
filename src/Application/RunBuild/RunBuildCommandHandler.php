@@ -147,6 +147,7 @@ This is not a bug, once all your activities have been imported, your gear statis
         }
 
         foreach ($pids as $pid) {
+            $status = 0;
             $this->processForker->waitPid($pid, $status);
         }
         $output->newLine();
