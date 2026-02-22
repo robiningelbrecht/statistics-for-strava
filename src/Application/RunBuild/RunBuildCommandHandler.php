@@ -29,6 +29,8 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
+use App\Infrastructure\Time\ResourceUsage\SystemResourceUsage;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
 {
@@ -97,18 +99,21 @@ This is not a bug, once all your activities have been imported, your gear statis
             ],
         ];
 
+        $maxMessageLength = max(array_map(
+            fn (string $message) => mb_strlen($message),
+            array_keys(array_merge(...$commandGroups)),
+        ));
+
         $pids = [];
         foreach ($commandGroups as $group) {
             $pid = pcntl_fork();
             if ($pid === -1) {
                 foreach ($group as $message => $buildCommand) {
-                    $this->commandBus->dispatch($buildCommand);
-                    $output->writeln(sprintf('  <info>✓</info> %s', $message));
+                    $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
                 }
             } elseif ($pid === 0) {
                 foreach ($group as $message => $buildCommand) {
-                    $this->commandBus->dispatch($buildCommand);
-                    $output->writeln(sprintf('  <info>✓</info> %s', $message));
+                    $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
                 }
                 exit(0);
             } else {
@@ -119,5 +124,24 @@ This is not a bug, once all your activities have been imported, your gear statis
         foreach ($pids as $pid) {
             pcntl_waitpid($pid, $status);
         }
+    }
+
+    private function dispatchAndReport(Command $buildCommand, string $message, int $maxMessageLength, SymfonyStyle $output): void
+    {
+        memory_reset_peak_usage();
+        $timeStart = microtime(true);
+
+        $this->commandBus->dispatch($buildCommand);
+
+        $elapsed = number_format(microtime(true) - $timeStart, 3, '.', '');
+        $peakMemory = SystemResourceUsage::bytesToString(memory_get_peak_usage(true));
+
+        $output->writeln(
+            sprintf(
+                '  <info>✓</info> %s <fg=gray>(time: %speak memory: %s)</>',
+                str_pad($message, $maxMessageLength),
+                str_pad($elapsed.'s', 9),
+                $peakMemory)
+        );
     }
 }

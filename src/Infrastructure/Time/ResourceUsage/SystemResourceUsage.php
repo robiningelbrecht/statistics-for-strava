@@ -41,7 +41,7 @@ final class SystemResourceUsage implements ResourceUsage
         return round($this->timeStop - $this->timeStart, 3);
     }
 
-    private function bytesToString(int $bytes): string
+    public function bytesToString(int $bytes): string
     {
         foreach (self::SIZES as $unit => $value) {
             if ($bytes >= $value) {
