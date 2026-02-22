@@ -20,6 +20,7 @@ use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
+use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use App\Tests\SpyOutput;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -127,6 +128,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
+            resourceUsage: new FixedResourceUsage(),
         );
     }
 }

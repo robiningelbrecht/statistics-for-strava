@@ -8,22 +8,25 @@ use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 
 final readonly class FixedResourceUsage implements ResourceUsage
 {
-    public function startTimer(): void
+    public function startTimer(string $name = 'default'): void
     {
-        // TODO: Implement startTimer() method.
     }
 
-    public function stopTimer(): void
+    public function stopTimer(string $name = 'default'): void
     {
-        // TODO: Implement stopTimer() method.
     }
 
-    public function getRunTimeInSeconds(): float
+    public function getRunTimeInSeconds(string $name = 'default'): float
     {
         return 10;
     }
 
-    public function format(): string
+    public function getFormattedPeakMemory(string $name = 'default'): string
+    {
+        return '45.00 MB';
+    }
+
+    public function format(string $name = 'default'): string
     {
         return 'Time: 10s, Memory: 45MB';
     }

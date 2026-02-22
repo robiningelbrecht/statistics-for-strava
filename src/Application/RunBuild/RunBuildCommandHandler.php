@@ -29,7 +29,7 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
-use App\Infrastructure\Time\ResourceUsage\SystemResourceUsage;
+use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
@@ -40,6 +40,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
+        private ResourceUsage $resourceUsage,
     ) {
     }
 
@@ -78,7 +79,6 @@ This is not a bug, once all your activities have been imported, your gear statis
                 'Built manifest' => new BuildManifest(),
                 'Built index' => new BuildIndexHtml($now),
                 'Built activities' => new BuildActivitiesHtml($now),
-
             ],
             [
                 'Built segments' => new BuildSegmentsHtml(),
@@ -100,18 +100,18 @@ This is not a bug, once all your activities have been imported, your gear statis
         ];
 
         $maxMessageLength = max(array_map(
-            fn (string $message) => mb_strlen($message),
+            mb_strlen(...),
             array_keys(array_merge(...$commandGroups)),
         ));
 
         $pids = [];
         foreach ($commandGroups as $group) {
             $pid = pcntl_fork();
-            if ($pid === -1) {
+            if (-1 === $pid) {
                 foreach ($group as $message => $buildCommand) {
                     $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
                 }
-            } elseif ($pid === 0) {
+            } elseif (0 === $pid) {
                 foreach ($group as $message => $buildCommand) {
                     $this->dispatchAndReport($buildCommand, $message, $maxMessageLength, $output);
                 }
@@ -128,13 +128,13 @@ This is not a bug, once all your activities have been imported, your gear statis
 
     private function dispatchAndReport(Command $buildCommand, string $message, int $maxMessageLength, SymfonyStyle $output): void
     {
-        memory_reset_peak_usage();
-        $timeStart = microtime(true);
-
+        $timerName = new \ReflectionClass($buildCommand)->getShortName();
+        $this->resourceUsage->startTimer($timerName);
         $this->commandBus->dispatch($buildCommand);
+        $this->resourceUsage->stopTimer($timerName);
 
-        $elapsed = number_format(microtime(true) - $timeStart, 3, '.', '');
-        $peakMemory = SystemResourceUsage::bytesToString(memory_get_peak_usage(true));
+        $elapsed = number_format($this->resourceUsage->getRunTimeInSeconds($message), 3, '.', '');
+        $peakMemory = $this->resourceUsage->getFormattedPeakMemory($message);
 
         $output->writeln(
             sprintf(

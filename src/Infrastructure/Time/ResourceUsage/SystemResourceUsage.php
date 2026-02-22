@@ -6,8 +6,8 @@ namespace App\Infrastructure\Time\ResourceUsage;
 
 final class SystemResourceUsage implements ResourceUsage
 {
-    private ?float $timeStart = null;
-    private ?float $timeStop = null;
+    /** @var array<string, array{start?: float, stop: ?float, peakMemory: ?int}> */
+    private array $timers = [];
 
     private const array SIZES = [
         'GB' => 1073741824,
@@ -15,33 +15,52 @@ final class SystemResourceUsage implements ResourceUsage
         'KB' => 1024,
     ];
 
-    public function startTimer(): void
+    public function startTimer(string $name = 'default'): void
     {
-        $this->timeStart = microtime(true);
-        $this->timeStop = null;
+        memory_reset_peak_usage();
+        $this->timers[$name] = [
+            'start' => microtime(true),
+            'stop' => null,
+            'peakMemory' => null,
+        ];
     }
 
-    public function stopTimer(): void
+    public function stopTimer(string $name = 'default'): void
     {
-        $this->timeStop = microtime(true);
+        if (!isset($this->timers[$name]['start'])) {
+            throw new \RuntimeException(sprintf('Timer %s not started.', $name));
+        }
+        $this->timers[$name]['stop'] = microtime(true);
+        $this->timers[$name]['peakMemory'] = memory_get_peak_usage(true);
     }
 
-    public function format(): string
+    public function format(string $name = 'default'): string
     {
         return sprintf(
             'Time: %ss, Memory: %s, Peak Memory: %s',
-            $this->getRunTimeInSeconds(),
-            $this->bytesToString(memory_get_usage(true)),
-            $this->bytesToString(memory_get_peak_usage(true))
+            $this->getRunTimeInSeconds($name),
+            self::bytesToString(memory_get_usage(true)),
+            $this->getFormattedPeakMemory($name),
         );
     }
 
-    public function getRunTimeInSeconds(): float
+    public function getRunTimeInSeconds(string $name = 'default'): float
     {
-        return round($this->timeStop - $this->timeStart, 3);
+        if (!isset($this->timers[$name]['start'])) {
+            throw new \RuntimeException(sprintf('Timer %s not started.', $name));
+        }
+
+        return round($this->timers[$name]['stop'] - $this->timers[$name]['start'], 3);
     }
 
-    public function bytesToString(int $bytes): string
+    public function getFormattedPeakMemory(string $name = 'default'): string
+    {
+        return self::bytesToString(
+            $this->timers[$name]['peakMemory'] ?? memory_get_peak_usage(true),
+        );
+    }
+
+    public static function bytesToString(int $bytes): string
     {
         foreach (self::SIZES as $unit => $value) {
             if ($bytes >= $value) {
