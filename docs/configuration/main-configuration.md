@@ -218,6 +218,7 @@ This is the list of sport types supported in the `config.yaml` file. Make sure t
 * Squash
 * TableTennis
 * Tennis
+* Padel
 
 ### Fitness
 
@@ -228,6 +229,7 @@ This is the list of sport types supported in the `config.yaml` file. Make sure t
 * VirtualRow
 * Elliptical
 * HighIntensityIntervalTraining
+* Dance
 
 ### Mind & Body Sports
 
@@ -239,7 +241,13 @@ This is the list of sport types supported in the `config.yaml` file. Make sure t
 * Golf
 * RockClimbing
 * Sail
+
+### Team Sports
+
+* Basketball
 * Soccer
+* Volleyball
+* Cricket
 
 ### Adaptive & Inclusive Sports
 
