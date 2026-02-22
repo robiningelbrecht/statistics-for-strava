@@ -23,7 +23,7 @@ final class SystemResourceUsage implements ResourceUsage
     public function stopTimer(): void
     {
         if (is_null($this->timer)) {
-            throw new \RuntimeException('Timer not started.');
+            throw new \RuntimeException('Timer not started');
         }
 
         $this->timer->stop();
@@ -32,7 +32,7 @@ final class SystemResourceUsage implements ResourceUsage
     public function format(): string
     {
         if (is_null($this->timer)) {
-            throw new \RuntimeException('Timer not started.');
+            throw new \RuntimeException('Timer not started');
         }
 
         return sprintf(
@@ -46,7 +46,7 @@ final class SystemResourceUsage implements ResourceUsage
     public function getRunTimeInSeconds(): float
     {
         if (is_null($this->timer)) {
-            throw new \RuntimeException('Timer not started.');
+            throw new \RuntimeException('Timer not started');
         }
 
         return $this->timer->getRunTimeInSeconds();
