@@ -14,6 +14,7 @@
 
 > [!NOTE]  
 > This release introduces another data compression, reducing the disk space used by your database.
+> Always create a backup of your database before performing an upgrade.
 
 ## What's Changed
 * ISSUE #1760: Add distance and elevation range filters to the activity overview by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1764
