@@ -26,30 +26,32 @@ const formatSeconds = (secondsToFormat) => {
     return `${hours}:${minutes}:${seconds}`;
 };
 
+const formatPace = (seconds) => {
+    const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
+    const secondsToFormat = seconds;
+    if (secondsToFormat < 60) {
+        return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
+    }
+    const minutes = Math.floor(secondsToFormat / 60);
+    const secs = secondsToFormat % 60;
+    return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
+};
+
 export const registerEchartsCallbacks = () => {
     window.statisticsForStrava.callbacks = {
         formatSeconds,
+        formatPace,
         formatSecondsTrimZero: (secondsToFormat) => {
             const time = formatSeconds(secondsToFormat);
 
             let [hours, minutes, seconds] = time.split(':');
             return String(Number(hours)) === "0" ? `${minutes}:${seconds}` : `${hours}:${minutes}:${seconds}`;
         },
-        formatPace: (params) => {
-            const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
-            const secondsToFormat = params[0].value;
-            if (secondsToFormat < 60) {
-                return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
-            }
-            const minutes = Math.floor(secondsToFormat / 60);
-            const secs = secondsToFormat % 60;
-            return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
-        },
         formatCombinedProfileTooltip: (params) => {
             if (!Array.isArray(params)) params = [params];
             return [...params].sort((a, b) => a.seriesIndex - b.seriesIndex).map(p => {
                 if (p.seriesName === '__pace') {
-                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace([p])}`;
+                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace(p)}`;
                 }
 
                 const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';

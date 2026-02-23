@@ -194,6 +194,7 @@
                     7,
                     7
                 ],
+                "formatter": null,
                 "color": "#aaa",
                 "verticalAlignMaxLabel": "top",
                 "verticalAlignMinLabel": "bottom"
@@ -217,6 +218,7 @@
                     6,
                     6
                 ],
+                "formatter": null,
                 "color": "#aaa",
                 "verticalAlignMaxLabel": "top",
                 "verticalAlignMinLabel": "bottom"
@@ -240,6 +242,7 @@
                     5,
                     5
                 ],
+                "formatter": null,
                 "color": "#aaa",
                 "verticalAlignMaxLabel": "top",
                 "verticalAlignMinLabel": "bottom"
@@ -263,6 +266,7 @@
                     3,
                     3
                 ],
+                "formatter": null,
                 "color": "#aaa",
                 "verticalAlignMaxLabel": "top",
                 "verticalAlignMinLabel": "bottom"
