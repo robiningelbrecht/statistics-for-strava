@@ -23,7 +23,7 @@ final class DebugEnvironmentConsoleCommand extends Command
 
     protected function configure(): void
     {
-        $this->addOption('redactSensitiveInfo', null, InputOption::VALUE_NONE);
+        $this->addOption('redact-sensitive-info', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -31,7 +31,7 @@ final class DebugEnvironmentConsoleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $this->outputConsoleIntro($io);
 
-        $autoRedactSensitiveInfo = $input->getOption('redactSensitiveInfo');
+        $autoRedactSensitiveInfo = $input->getOption('redact-sensitive-info');
         $redactedString = '******';
 
         $io->text('Please copy all this output into the description of the bug ticket');

@@ -39,7 +39,7 @@ body:
     id: environment-config
     attributes:
       label: Environment configuration
-      description: Please run `docker compose exec app bin/console app:debug:environment --redactSensitiveInfo` on your host machine and copy/paste the output here
+      description: Please run `docker compose exec app bin/console app:debug:environment --redact-sensitive-info` on your host machine and copy/paste the output here
       render: yml
     validations:
       required: true

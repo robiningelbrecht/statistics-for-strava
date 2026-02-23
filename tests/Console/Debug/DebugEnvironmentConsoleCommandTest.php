@@ -33,7 +33,7 @@ class DebugEnvironmentConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            '--redactSensitiveInfo' => true,
+            '--redact-sensitive-info' => true,
         ]);
 
         $this->assertStringNotContainsString('Do not forget to redact sensitive information', $commandTester->getDisplay());
