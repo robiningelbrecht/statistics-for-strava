@@ -12,6 +12,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -20,30 +21,47 @@ final class DebugEnvironmentConsoleCommand extends Command
 {
     use ProvideConsoleIntro;
 
+    protected function configure(): void
+    {
+        $this->addOption('redactSensitiveInfo', null, InputOption::VALUE_NONE);
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $this->outputConsoleIntro($io);
 
+        $autoRedactSensitiveInfo = $input->getOption('redactSensitiveInfo');
+        $redactedString = '******';
+
         $io->text('Please copy all this output into the description of the bug ticket');
-        $io->warning('Do not forget to redact sensitive information');
+        if (!$autoRedactSensitiveInfo) {
+            $io->warning('Do not forget to redact sensitive information');
+        }
 
         $table = new Table($output);
         $table
             ->setHeaders(['ENV variable', 'Value'])
             ->setRows([
                 ['APP_VERSION', AppVersion::getSemanticVersion()],
-                ['STRAVA_CLIENT_ID', getenv('STRAVA_CLIENT_ID')],
-                ['STRAVA_CLIENT_SECRET', getenv('STRAVA_CLIENT_SECRET')],
-                ['STRAVA_REFRESH_TOKEN', getenv('STRAVA_REFRESH_TOKEN')],
+                ['STRAVA_CLIENT_ID', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_CLIENT_ID')],
+                ['STRAVA_CLIENT_SECRET', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_CLIENT_SECRET')],
+                ['STRAVA_REFRESH_TOKEN', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_REFRESH_TOKEN')],
                 ['TZ', getenv('TZ')],
-                ['INSPECTOR_INGESTION_KEY', getenv('INSPECTOR_INGESTION_KEY')],
             ]);
         $table->render();
 
+        $config = AppConfig::getRoot();
+        if ($autoRedactSensitiveInfo) {
+            $config['general']['appUrl'] = $redactedString;
+            $config['general']['athlete']['birthday'] = $redactedString;
+            $config['general']['athlete']['weightHistory'] = [$redactedString];
+            $config['import']['webhooks']['verifyToken'] = $redactedString;
+        }
+
         $io->block([
             'CONFIG: ',
-            Json::encodePretty(AppConfig::getRoot()),
+            Json::encodePretty($config),
         ]);
 
         return Command::SUCCESS;

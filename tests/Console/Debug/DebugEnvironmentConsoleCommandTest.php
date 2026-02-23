@@ -23,6 +23,20 @@ class DebugEnvironmentConsoleCommandTest extends ConsoleCommandTestCase
         ]);
 
         $this->assertStringContainsString('Please copy all this output into the description of the bug ticket', $commandTester->getDisplay());
+        $this->assertStringContainsString('Do not forget to redact sensitive information', $commandTester->getDisplay());
+        $this->assertStringContainsString('APP_VERSION', $commandTester->getDisplay());
+    }
+
+    public function testExecuteWhenRedactInfoIsEnabled(): void
+    {
+        $command = $this->getCommandInApplication('app:debug:environment');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--redactSensitiveInfo' => true,
+        ]);
+
+        $this->assertStringNotContainsString('Do not forget to redact sensitive information', $commandTester->getDisplay());
         $this->assertStringContainsString('APP_VERSION', $commandTester->getDisplay());
     }
 
