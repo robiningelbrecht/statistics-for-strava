@@ -2,7 +2,7 @@
 
 ## What's Changed
 * ISSUE #1763: Add SegmentEffort vs heart rate scatter chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1788
-* ISSUE #1778: Make database migration more memory effecient by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1794
+* ISSUE #1778: Make database migration more memory efficient by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1794
 * ISSUE #1795: Add new sports types to docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1798
 * ISSUE #1797: Add config to activityGrid to arrange metricsDisplayOrder by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1799
 * ISSUE #1801: Fix pace Y axis label on activity metric charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1804
