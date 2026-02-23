@@ -1,3 +1,15 @@
+# [v4.6.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.6) - 2026-02-23
+
+## What's Changed
+* ISSUE #1763: Add SegmentEffort vs heart rate scatter chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1788
+* ISSUE #1778: Make database migration more memory effecient by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1794
+* ISSUE #1795: Add new sports types to docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1798
+* ISSUE #1797: Add config to activityGrid to arrange metricsDisplayOrder by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1799
+* ISSUE #1801: Fix pace Y axis label on activity metric charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1804
+* ISSUE #1802: Add option to redact sensitive info to app:debug:environment console command by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1805
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.5...v4.6.6
+
 # [v4.6.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.5) - 2026-02-21
 
 > [!NOTE]  
