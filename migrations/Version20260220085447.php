@@ -20,11 +20,20 @@ final class Version20260220085447 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->connection->executeStatement('ALTER TABLE ActivityStream ADD COLUMN dataSize INTEGER NOT NULL DEFAULT 0');
-        $this->connection->executeStatement('UPDATE ActivityStream SET dataSize = json_array_length(data)');
-        $this->connection->executeStatement('ALTER TABLE ActivityStream ADD COLUMN data_compressed BLOB DEFAULT NULL');
+        $table = $schema->getTable('ActivityStream');
 
+        if (!$table->hasColumn('dataSize')) {
+            $this->addSql('ALTER TABLE ActivityStream ADD COLUMN dataSize INTEGER NOT NULL DEFAULT 0');
+            $this->addSql('UPDATE ActivityStream SET dataSize = json_array_length(data)');
+        }
+
+        if (!$table->hasColumn('data_compressed')) {
+            $this->addSql('ALTER TABLE ActivityStream ADD COLUMN data_compressed BLOB DEFAULT NULL');
+        }
+    }
+
+    public function postUp(Schema $schema): void
+    {
         $result = $this->connection->executeQuery('SELECT activityId, streamType, data FROM ActivityStream');
         while ($row = $result->fetchAssociative()) {
             $compressed = CompressedString::fromUncompressed($row['data']);
