@@ -1,4 +1,4 @@
-# [v4.6.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.6) - 2026-02-23
+# [v4.6.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.6) - 2026-02-24
 
 ## What's Changed
 * ISSUE #1763: Add SegmentEffort vs heart rate scatter chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1788
@@ -30,7 +30,7 @@
 
 This release fixes a critical issue in the Daemon that was introduced in `v4.6.3`
 
-**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.4...v4.6.34
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.3...v4.6.4
 
 # [v4.6.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.3) - 2026-02-15
 
