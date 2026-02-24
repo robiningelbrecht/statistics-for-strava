@@ -96,7 +96,7 @@ final readonly class MonthlyStatsChart
             'animation' => false,
             'grid' => [
                 'top' => '50px',
-                'left' => '0',
+                'left' => '2px',
                 'right' => '10px',
                 'bottom' => '2%',
                 'containLabel' => true,

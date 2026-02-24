@@ -57,7 +57,7 @@ final readonly class PersonalRecordsPerMonthChart
                 'trigger' => 'axis',
             ],
             'grid' => [
-                'left' => '0%',
+                'left' => '2px',
                 'right' => '15px',
                 'bottom' => '0%',
                 'top' => '15px',

@@ -129,7 +129,7 @@ final readonly class YearlyStatisticsChart
             'animation' => true,
             'backgroundColor' => null,
             'grid' => [
-                'left' => '0',
+                'left' => '2px',
                 'right' => '10px',
                 'bottom' => '50px',
                 'containLabel' => true,

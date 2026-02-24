@@ -77,7 +77,7 @@ final readonly class BestEffortChart
             'color' => ['#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
             'grid' => [
                 'top' => '30px',
-                'left' => '0',
+                'left' => '2px',
                 'right' => '0',
                 'bottom' => '2%',
                 'containLabel' => true,

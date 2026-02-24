@@ -51,7 +51,7 @@ final readonly class MovingTimePerSportTypeChart
             'backgroundColor' => null,
             'animation' => true,
             'grid' => [
-                'left' => '0%',
+                'left' => '2px',
                 'right' => '0%',
                 'bottom' => '0%',
                 'containLabel' => true,

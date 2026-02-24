@@ -72,7 +72,7 @@ final readonly class EddingtonHistoryChart
                 'trigger' => 'axis',
             ],
             'grid' => [
-                'left' => '0',
+                'left' => '2px',
                 'right' => '25px',
                 'bottom' => '10px',
                 'containLabel' => true,

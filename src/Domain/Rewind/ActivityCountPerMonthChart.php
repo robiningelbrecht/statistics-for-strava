@@ -103,7 +103,7 @@ final readonly class ActivityCountPerMonthChart
                 ],
             ],
             'grid' => [
-                'left' => '0%',
+                'left' => '2px',
                 'right' => '0%',
                 'bottom' => '0%',
                 'top' => '15px',

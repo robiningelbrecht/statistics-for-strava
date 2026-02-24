@@ -46,7 +46,7 @@ final readonly class PowerOutputChart
             'animation' => true,
             'backgroundColor' => null,
             'grid' => [
-                'left' => '0%',
+                'left' => '2px',
                 'right' => '0%',
                 'bottom' => '3%',
                 'containLabel' => true,
