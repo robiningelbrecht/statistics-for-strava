@@ -43,6 +43,11 @@ final class Eddington
         return $this->config;
     }
 
+    public function getUnitSystem(): UnitSystem
+    {
+        return $this->unitSystem;
+    }
+
     /**
      * @return array<string, float|int>
      */
@@ -175,7 +180,7 @@ final class Eddington
         EddingtonConfigItem $config,
         UnitSystem $unitSystem,
     ): self {
-        $eddingtonId = $config->getId();
+        $eddingtonId = $config->getId().$unitSystem->value;
 
         if (array_key_exists($eddingtonId, self::$instances)) {
             return self::$instances[$eddingtonId];

@@ -30,34 +30,37 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildEddingtonHtml);
 
-        $eddingtons = $this->eddingtonCalculator->calculate();
-
         $eddingtonCharts = [];
         $eddingtonHistoryCharts = [];
-        $eddingtonDaysNeededCharts = [];
-        foreach ($eddingtons as $eddington) {
-            $id = $eddington->getId();
-            $eddingtonCharts[$id] = Json::encode(
-                EddingtonChart::create(
-                    eddington: $eddington,
-                    unitSystem: $this->unitSystem,
-                    translator: $this->translator,
-                )->build()
-            );
-            $eddingtonHistoryCharts[$id] = Json::encode(
-                EddingtonHistoryChart::create(
-                    eddington: $eddington,
-                )->build()
-            );
+        $eddingtons = [];
+
+        foreach (UnitSystem::cases() as $unitSystem) {
+            $eddingtons = [...$eddingtons, ...$this->eddingtonCalculator->calculate($unitSystem)];
+
+            foreach ($eddingtons as $eddington) {
+                $id = $eddington->getId();
+                $eddingtonCharts[$id] = Json::encode(
+                    EddingtonChart::create(
+                        eddington: $eddington,
+                        unitSystem: $unitSystem,
+                        translator: $this->translator,
+                    )->build()
+                );
+                $eddingtonHistoryCharts[$id] = Json::encode(
+                    EddingtonHistoryChart::create(
+                        eddington: $eddington,
+                    )->build()
+                );
+            }
         }
 
         $this->buildStorage->write(
             'eddington.html',
             $this->twig->load('html/eddington.html.twig')->render([
+                'activeUnitSystem' => $this->unitSystem,
                 'eddingtons' => $eddingtons,
                 'eddingtonCharts' => $eddingtonCharts,
                 'eddingtonHistoryCharts' => $eddingtonHistoryCharts,
-                'eddingtonDaysNeededCharts' => $eddingtonDaysNeededCharts,
             ]),
         );
     }

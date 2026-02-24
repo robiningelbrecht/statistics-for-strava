@@ -46,7 +46,7 @@ final readonly class IndexHtml
     public function getContext(SerializableDateTime $now): array
     {
         $eddingtonNumbers = [];
-        $eddingtons = $this->eddingtonCalculator->calculate();
+        $eddingtons = $this->eddingtonCalculator->calculate($this->unitSystem);
 
         foreach ($eddingtons as $eddington) {
             if (!$eddington->getConfig()->showInNavBar()) {

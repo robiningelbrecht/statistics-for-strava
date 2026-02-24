@@ -6,6 +6,7 @@ namespace App\Domain\Dashboard\Widget;
 
 use App\Domain\Activity\Eddington\Eddington;
 use App\Domain\Activity\Eddington\EddingtonCalculator;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Twig\Environment;
 
@@ -13,6 +14,7 @@ final readonly class EddingtonWidget implements Widget
 {
     public function __construct(
         private EddingtonCalculator $eddingtonCalculator,
+        private UnitSystem $unitSystem,
         private Environment $twig,
     ) {
     }
@@ -29,7 +31,7 @@ final readonly class EddingtonWidget implements Widget
     public function render(SerializableDateTime $now, WidgetConfiguration $configuration): ?string
     {
         $eddingtons = array_filter(
-            $this->eddingtonCalculator->calculate(),
+            $this->eddingtonCalculator->calculate($this->unitSystem),
             static fn (Eddington $eddington): bool => $eddington->getConfig()->showInDashboardWidget()
         );
 

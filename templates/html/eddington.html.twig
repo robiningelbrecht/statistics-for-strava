@@ -1,5 +1,5 @@
 <div class="flex items-center justify-between mb-5">
-    <div class="flex items-center gap-x-2">
+    <div class="flex items-center gap-x-1">
         {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
             'url': 'eddington',
             'label': 'Eddington'|trans
@@ -13,39 +13,54 @@
             <p class="p-3">{{ "For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning."|trans }}</p>
         </div>
     </div>
-
+    <ul class="tabs tabs--pills" id="eddingtonUnitSystemTab" data-tabs="#eddingtonUnitSystemTabContent"
+        data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
+        {% for unitSystem in activeUnitSystem.casesWithPreferredFirst() %}
+            <li role="presentation">
+                <a href="#" data-tabs-target="#eddingtonUnitSystem{{ unitSystem.value }}Tab" role="tab" aria-controls="eddingtonUnitSystem{{ unitSystem.value }}Tab">
+                    {{ svg(unitSystem.getSvgIcon(), 'size-5', 'text-grey-900') }}
+                    <span class="hidden md:block">{{ unitSystem|trans }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 {% autoescape false %}
      <div class="grid grid-cols-1 gap-4">
-         <div>
-             {% if eddingtons|length > 1 %}
-                 <div class="tabs tabs--default mb-2">
-                     <ul id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
-                         {% for eddington in eddingtons %}
-                             <li role="presentation">
-                                 <a href="#" data-tabs-target="#{{ eddington.getId() }}" role="tab" aria-controls="{{ eddington.getId() }}">
-                                     {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
-                                 </a>
-                             </li>
+         <div id="eddingtonUnitSystemTabContent">
+             {% for unitSystem in activeUnitSystem.casesWithPreferredFirst() %}
+                 {% set eddingtonsForUnitSystem = eddingtons|filter(e => e.getUnitSystem() == unitSystem) %}
+                 <div id="eddingtonUnitSystem{{ unitSystem.value }}Tab" role="tabpanel" aria-labelledby="eddingtonUnitSystem{{ unitSystem.value }}Tab">
+                     {% if eddingtonsForUnitSystem|length > 1 %}
+                         <div class="tabs tabs--default mb-2">
+                             <ul id="eddington{{ unitSystem.value }}Tab" data-tabs="#eddington{{ unitSystem.value }}TabContent" role="tablist">
+                                 {% for eddington in eddingtonsForUnitSystem %}
+                                     <li role="presentation">
+                                         <a href="#" data-tabs-target="#{{ eddington.getId() }}" role="tab" aria-controls="{{ eddington.getId() }}">
+                                             {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
+                                         </a>
+                                     </li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     {% endif %}
+                     <div id="eddington{{ unitSystem.value }}TabContent">
+                         {% for eddington in eddingtonsForUnitSystem %}
+                             <div class="grid grid-cols-1 gap-4" id="{{ eddington.getId() }}" role="tabpanel" aria-labelledby="{{ eddington.getId() }}-tab">
+                                 <!-- EDDINGTON CHART -->
+                                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                     <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddington.getId()] }}'></div>
+                                 </div>
+                                 <!-- HISTORY -->
+                                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                     <h3 class="font-bold mb-4">{{ "History"|trans }}</h3>
+                                     <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddington.getId()] }}'></div>
+                                 </div>
+                             </div>
                          {% endfor %}
-                     </ul>
-                 </div>
-             {% endif %}
-             <div id="eddingtonTabContent">
-                 {% for eddington in eddingtons %}
-                    <div class="grid grid-cols-1 gap-4" id="{{ eddington.getId() }}" role="tabpanel" aria-labelledby="{{ eddington.getId() }}-tab">
-                        <!-- EDDINGTON CHART -->
-                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddington.getId()] }}'></div>
-                        </div>
-                        <!-- HISTORY -->
-                        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                            <h3 class="font-bold mb-4">{{ "History"|trans }}</h3>
-                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddington.getId()] }}'></div>
-                        </div>
                      </div>
-                 {% endfor %}
-             </div>
+                 </div>
+             {% endfor %}
          </div>
      </div>
  {% endautoescape %}
