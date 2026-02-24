@@ -1,4 +1,4 @@
-import {parents, fetchJson} from "../../utils";
+import {fetchJson} from "../../utils";
 import {resolveEchartsCallbacks} from "./echarts-callbacks";
 import {v5Theme, v5DarkTheme} from "./echarts-themes";
 import {FilterStorage, FilterName} from "../data-table/storage";
@@ -8,7 +8,14 @@ export default class ChartManager {
         this.router = router;
         this.modalManager = modalManager;
         this.allCharts = [];
-        this.chartsPerTab = [];
+        this.resizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const chart = echarts.getInstanceByDom(entry.target);
+                if (chart && entry.target.offsetParent) {
+                    chart.resize();
+                }
+            }
+        });
 
         echarts.registerTheme('v5', v5Theme());
         echarts.registerTheme('v5-dark', v5DarkTheme());
@@ -47,14 +54,7 @@ export default class ChartManager {
             }
 
             this.allCharts.push(chart);
-
-            const tabPanels = parents(chartNode, 'div[role="tabpanel"]');
-            for (const tabPanel of tabPanels) {
-                const tabPanelId = tabPanel.getAttribute('id');
-                this.chartsPerTab[tabPanelId] ??= [];
-                this.chartsPerTab[tabPanelId].push(chart);
-            }
-
+            this.resizeObserver.observe(chartNode);
         });
         echarts.connect(connectedCharts);
     }
@@ -102,27 +102,13 @@ export default class ChartManager {
     }
 
     reset() {
+        this.resizeObserver.disconnect();
         this.allCharts = [];
-        this.chartsPerTab = [];
-    }
-
-    resizeAll() {
-        this.allCharts
-            .filter(chart => chart.getDom().offsetParent)
-            .forEach(chart => chart.resize());
     }
 
     toggleDarkTheme(isDarkMode) {
         this.allCharts
             .filter(chart => chart.getDom().offsetParent)
             .forEach(chart => chart.setTheme(isDarkMode ? 'v5-dark' : 'v5'));
-    }
-
-    resizeInTab(tabId) {
-        if (tabId in this.chartsPerTab) {
-            this.chartsPerTab[tabId]
-                .filter(chart => chart.getDom().offsetParent)
-                .forEach((chart) => chart.resize());
-        }
     }
 }

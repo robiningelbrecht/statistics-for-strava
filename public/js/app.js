@@ -60,12 +60,6 @@ darkModeManager.attachEventListeners();
 eventBus.on(Events.DARK_MODE_TOGGLED, ({darkModeEnabled}) => {
     chartManager.toggleDarkTheme(darkModeEnabled);
 });
-eventBus.on(Events.FULLSCREEN_ENABLED, () => {
-    chartManager.resizeAll();
-});
-eventBus.on(Events.TAB_CHANGED, ({activeTabId}) => {
-    chartManager.resizeInTab(activeTabId);
-});
 
 eventBus.on(Events.PAGE_LOADED, async ({page, modalId}) => {
     modalManager.close();
@@ -107,12 +101,6 @@ eventBus.on(Events.MODAL_LOADED, async ({node, modalName}) => {
 });
 eventBus.on(Events.DATA_TABLE_CLUSTER_CHANGED, ({node}) => {
     modalManager.init(node);
-});
-window.addEventListener('resize', function () {
-    chartManager.resizeAll();
-});
-eventBus.on(Events.SIDEBAR_RESIZED, () => {
-    chartManager.resizeAll();
 });
 
 const $modalAIChat = document.querySelector('a[data-modal-custom-ai]');
