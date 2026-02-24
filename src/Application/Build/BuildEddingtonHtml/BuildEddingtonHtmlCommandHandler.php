@@ -6,7 +6,6 @@ namespace App\Application\Build\BuildEddingtonHtml;
 
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\Eddington\EddingtonChart;
-use App\Domain\Activity\Eddington\EddingtonDaysNeededChart;
 use App\Domain\Activity\Eddington\EddingtonHistoryChart;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
@@ -48,12 +47,6 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
             $eddingtonHistoryCharts[$id] = Json::encode(
                 EddingtonHistoryChart::create(
                     eddington: $eddington,
-                )->build()
-            );
-            $eddingtonDaysNeededCharts[$id] = Json::encode(
-                EddingtonDaysNeededChart::create(
-                    eddington: $eddington,
-                    unitSystem: $this->unitSystem,
                 )->build()
             );
         }

@@ -18,7 +18,7 @@ final readonly class EddingtonCalculator
     }
 
     /**
-     * @return array<string, Eddington>
+     * @return list<Eddington>
      */
     public function calculate(): array
     {

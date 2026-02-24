@@ -47,6 +47,12 @@ final readonly class EddingtonChart
             ],
         ];
 
+        $daysNeededForFutureNumbers = $this->eddington->getDaysToCompleteForFutureNumbers();
+        $daysNeededDataForChart = [];
+        for ($distance = 1; $distance <= $longestDistanceInADay; ++$distance) {
+            $daysNeededDataForChart[] = $daysNeededForFutureNumbers[$distance] ?? null;
+        }
+
         $unitDistance = $this->unitSystem->distanceSymbol();
 
         return [
@@ -64,6 +70,10 @@ final readonly class EddingtonChart
             'legend' => [
                 'show' => true,
                 'selectedMode' => false,
+                'data' => [
+                    $this->translator->trans('Times completed'),
+                    $this->translator->trans('Eddington'),
+                ],
             ],
             'xAxis' => [
                 'data' => array_map(fn (int $distance): string => $distance.$unitDistance, range(1, $longestDistanceInADay)),
@@ -148,6 +158,19 @@ final readonly class EddingtonChart
                         'color' => '#E34902',
                     ],
                     'data' => range(1, $longestDistanceInADay),
+                ],
+                [
+                    'name' => $this->translator->trans('Days needed'),
+                    'yAxisIndex' => 0,
+                    'type' => 'line',
+                    'showSymbol' => false,
+                    'lineStyle' => [
+                        'opacity' => 0,
+                    ],
+                    'itemStyle' => [
+                        'color' => 'transparent',
+                    ],
+                    'data' => $daysNeededDataForChart,
                 ],
             ],
         ];
