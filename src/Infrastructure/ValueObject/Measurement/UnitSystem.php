@@ -11,7 +11,9 @@ use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
 use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
-use App\Infrastructure\ValueObject\Measurement\Velocity\MilesPerHour;use Symfony\Contracts\Translation\TranslatableInterface;use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Infrastructure\ValueObject\Measurement\Velocity\MilesPerHour;
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 enum UnitSystem: string implements TranslatableInterface
 {
@@ -21,8 +23,8 @@ enum UnitSystem: string implements TranslatableInterface
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
-            self::METRIC =>  $translator->trans('Metric', locale: $locale),
-            self::IMPERIAL =>  $translator->trans('Imperial', locale: $locale),
+            self::METRIC => $translator->trans('Metric', locale: $locale),
+            self::IMPERIAL => $translator->trans('Imperial', locale: $locale),
         };
     }
 
