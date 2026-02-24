@@ -35,24 +35,23 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
         $allEddingtons = [];
 
         foreach (UnitSystem::cases() as $unitSystem) {
-            $eddingtonsForUnitSystem = $this->eddingtonCalculator->calculate($unitSystem);
             $allEddingtons = [...$allEddingtons, ...$this->eddingtonCalculator->calculate($unitSystem)];
+        }
 
-            foreach ($eddingtonsForUnitSystem as $eddington) {
-                $id = $eddington->getId();
-                $eddingtonCharts[$id] = Json::encode(
-                    EddingtonChart::create(
-                        eddington: $eddington,
-                        unitSystem: $unitSystem,
-                        translator: $this->translator,
-                    )->build()
-                );
-                $eddingtonHistoryCharts[$id] = Json::encode(
-                    EddingtonHistoryChart::create(
-                        eddington: $eddington,
-                    )->build()
-                );
-            }
+        foreach ($allEddingtons as $eddington) {
+            $id = $eddington->getId();
+            $eddingtonCharts[$id] = Json::encode(
+                EddingtonChart::create(
+                    eddington: $eddington,
+                    unitSystem: $eddington->getUnitSystem(),
+                    translator: $this->translator,
+                )->build()
+            );
+            $eddingtonHistoryCharts[$id] = Json::encode(
+                EddingtonHistoryChart::create(
+                    eddington: $eddington,
+                )->build()
+            );
         }
 
         $this->buildStorage->write(
