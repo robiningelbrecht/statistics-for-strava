@@ -146,7 +146,7 @@ class Strava
             );
         } catch (ClientException|RequestException $e) {
             if (401 === $e->getResponse()?->getStatusCode()) {
-                throw new InsufficientStravaAccessTokenScopes($e->getMessage(), $e->getCode(), $e);
+                throw new InsufficientStravaAccessTokenScopes();
             }
 
             throw $e;
