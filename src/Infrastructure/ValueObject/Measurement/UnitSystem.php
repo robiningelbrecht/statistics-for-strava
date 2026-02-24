@@ -106,6 +106,6 @@ enum UnitSystem: string implements TranslatableInterface
      */
     public function casesWithPreferredFirst(): array
     {
-        return [$this, ...array_filter(self::cases(), fn (self $case) => $case !== $this)];
+        return [$this, ...array_filter(self::cases(), fn (self $case): bool => $case !== $this)];
     }
 }
