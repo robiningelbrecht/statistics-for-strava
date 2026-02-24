@@ -38,7 +38,7 @@ final readonly class EddingtonCalculator
             if ($eddington->getNumber() <= 0) {
                 continue;
             }
-            $eddingtons[$eddingtonConfigItem->getId()] = $eddington;
+            $eddingtons[] = $eddington;
         }
 
         return $eddingtons;

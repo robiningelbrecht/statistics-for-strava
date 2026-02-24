@@ -18,6 +18,7 @@ final class Eddington
     private readonly int $eddingtonNumber;
 
     private function __construct(
+        private readonly string $id,
         private readonly string $label,
         private readonly Activities $activities,
         private readonly UnitSystem $unitSystem,
@@ -25,6 +26,11 @@ final class Eddington
     ) {
         $this->distancesPerDay = $this->buildDistancesPerDay();
         $this->eddingtonNumber = $this->calculateEddingtonNumber();
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function getLabel(): string
@@ -176,6 +182,7 @@ final class Eddington
         }
 
         self::$instances[$eddingtonId] = new self(
+            id: $eddingtonId,
             label: $config->getLabel(),
             activities: $activities,
             unitSystem: $unitSystem,

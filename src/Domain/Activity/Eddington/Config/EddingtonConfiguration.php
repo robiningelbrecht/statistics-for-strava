@@ -9,6 +9,9 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<EddingtonConfigItem>
+ */
 final class EddingtonConfiguration extends Collection
 {
     public function getItemClassName(): string

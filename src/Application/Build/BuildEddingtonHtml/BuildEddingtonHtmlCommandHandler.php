@@ -36,7 +36,8 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
         $eddingtonCharts = [];
         $eddingtonHistoryCharts = [];
         $eddingtonDaysNeededCharts = [];
-        foreach ($eddingtons as $id => $eddington) {
+        foreach ($eddingtons as $eddington) {
+            $id = $eddington->getId();
             $eddingtonCharts[$id] = Json::encode(
                 EddingtonChart::create(
                     eddington: $eddington,

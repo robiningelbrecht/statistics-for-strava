@@ -14,9 +14,9 @@
              {% if eddingtons|length > 1 %}
                  <div class="tabs tabs--default mb-2">
                      <ul id="eddingtonTab" data-tabs="#eddingtonTabContent" role="tablist">
-                         {% for eddingtonId,eddington in eddingtons %}
+                         {% for eddington in eddingtons %}
                              <li role="presentation">
-                                 <a href="#" data-tabs-target="#{{ eddingtonId }}" role="tab" aria-controls="{{ eddingtonId }}">
+                                 <a href="#" data-tabs-target="#{{ eddington.getId() }}" role="tab" aria-controls="{{ eddington.getId() }}">
                                      {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
                                  </a>
                              </li>
@@ -25,21 +25,21 @@
                  </div>
              {% endif %}
              <div id="eddingtonTabContent">
-                 {% for eddingtonId,eddington in eddingtons %}
-                    <div class="grid grid-cols-1 gap-4" id="{{ eddingtonId }}" role="tabpanel" aria-labelledby="{{ eddingtonId }}-tab">
+                 {% for eddington in eddingtons %}
+                    <div class="grid grid-cols-1 gap-4" id="{{ eddington.getId() }}" role="tabpanel" aria-labelledby="{{ eddington.getId() }}-tab">
                         <!-- EDDINGTON CHART -->
                         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddingtonId] }}'></div>
+                            <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddington.getId()] }}'></div>
                         </div>
                         <!-- HISTORY -->
                         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                             <h3 class="font-bold mb-4">{{ "History"|trans }}</h3>
-                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddingtonId] }}'></div>
+                            <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddington.getId()] }}'></div>
                         </div>
                         <!-- DAYS NEEDED -->
                         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                             <h3 class="font-bold mb-4">{{ "Days needed"|trans }}</h3>
-                            <div class="h-64" data-echarts-options='{{ eddingtonDaysNeededCharts[eddingtonId] }}'></div>
+                            <div class="h-64" data-echarts-options='{{ eddingtonDaysNeededCharts[eddington.getId()] }}'></div>
                         </div>
                      </div>
                  {% endfor %}
