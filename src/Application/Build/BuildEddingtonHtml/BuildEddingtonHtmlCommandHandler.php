@@ -32,12 +32,13 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
 
         $eddingtonCharts = [];
         $eddingtonHistoryCharts = [];
-        $eddingtons = [];
+        $allEddingtons = [];
 
         foreach (UnitSystem::cases() as $unitSystem) {
-            $eddingtons = [...$eddingtons, ...$this->eddingtonCalculator->calculate($unitSystem)];
+            $eddingtonsForUnitSystem = $this->eddingtonCalculator->calculate($unitSystem);
+            $allEddingtons = [...$allEddingtons, ...$this->eddingtonCalculator->calculate($unitSystem)];
 
-            foreach ($eddingtons as $eddington) {
+            foreach ($eddingtonsForUnitSystem as $eddington) {
                 $id = $eddington->getId();
                 $eddingtonCharts[$id] = Json::encode(
                     EddingtonChart::create(
@@ -58,7 +59,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
             'eddington.html',
             $this->twig->load('html/eddington.html.twig')->render([
                 'activeUnitSystem' => $this->unitSystem,
-                'eddingtons' => $eddingtons,
+                'eddingtons' => $allEddingtons,
                 'eddingtonCharts' => $eddingtonCharts,
                 'eddingtonHistoryCharts' => $eddingtonHistoryCharts,
             ]),

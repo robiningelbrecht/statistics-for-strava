@@ -52,7 +52,6 @@ final readonly class EddingtonChart
         for ($distance = 1; $distance <= $longestDistanceInADay; ++$distance) {
             $daysNeededDataForChart[] = $daysNeededForFutureNumbers[$distance] ?? null;
         }
-
         $unitDistance = $this->unitSystem->distanceSymbol();
 
         return [
