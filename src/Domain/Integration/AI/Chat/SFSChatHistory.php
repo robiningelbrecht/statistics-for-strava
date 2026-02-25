@@ -21,11 +21,13 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
         parent::__construct();
     }
 
+    #[\Override]
     public function setMessages(array $messages): void
     {
         // TODO: Implement setMessages() method.
     }
 
+    #[\Override]
     protected function clear(): void
     {
         // TODO: Implement clear() method.
@@ -36,7 +38,7 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
     {
         parent::onNewMessage($message);
 
-        if (!empty($message->getContent())) {
+        if (!in_array($message->getContent(), [null, '', '0'], true)) {
             $this->commandBus->dispatch(new AddChatMessage(
                 message: $message->getContent(),
                 messageRole: MessageRole::from($message->getRole()),
