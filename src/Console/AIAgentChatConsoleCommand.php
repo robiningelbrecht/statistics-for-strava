@@ -6,9 +6,8 @@ namespace App\Console;
 
 use App\Infrastructure\Config\AppConfig;
 use GuzzleHttp\Exception\ClientException;
-use NeuronAI\AgentInterface;
-use NeuronAI\Chat\Messages\ToolCallMessage;
-use NeuronAI\Chat\Messages\ToolCallResultMessage;
+use NeuronAI\Agent\AgentInterface;
+use NeuronAI\Chat\Messages\Stream\Chunks\TextChunk;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -65,20 +64,17 @@ final class AIAgentChatConsoleCommand extends Command
             }
 
             try {
-                $stream = $this->agent->stream(new UserMessage($userInput));
+                $handler = $this->agent->stream(new UserMessage($userInput));
                 $first = true;
-                foreach ($stream as $chunk) {
-                    if ($chunk instanceof ToolCallMessage) {
-                        continue;
-                    }
-                    if ($chunk instanceof ToolCallResultMessage) {
+                foreach ($handler->events() as $chunk) {
+                    if (!$chunk instanceof TextChunk) {
                         continue;
                     }
                     if ($first) {
                         $output->write('<comment><Mark></comment> ');
                         $first = false;
                     }
-                    $output->write($chunk);
+                    $output->write($chunk->content);
                 }
                 $output->writeln('');
             } catch (\Exception $e) {

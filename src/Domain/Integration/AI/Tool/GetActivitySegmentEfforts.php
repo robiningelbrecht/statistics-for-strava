@@ -46,7 +46,7 @@ final class GetActivitySegmentEfforts extends Tool
     }
 
     #[\Override]
-    public function getMaxTries(): int
+    public function getMaxRuns(): int
     {
         return 100;
     }

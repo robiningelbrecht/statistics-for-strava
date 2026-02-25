@@ -7,7 +7,6 @@ namespace App\Domain\Integration\AI\Chat;
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use NeuronAI\Chat\Enums\MessageRole;
-use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Chat\History\InMemoryChatHistory as BaseInMemoryChatHistory;
 use NeuronAI\Chat\Messages\Message;
 
@@ -22,18 +21,26 @@ final class SFSChatHistory extends BaseInMemoryChatHistory
         parent::__construct();
     }
 
-    #[\Override]
-    public function addMessage(Message $message): ChatHistoryInterface
+    public function setMessages(array $messages): void
     {
-        parent::addMessage($message);
+        // TODO: Implement setMessages() method.
+    }
 
-        if (!empty($message->getContent()) && is_string($message->getContent())) {
+    protected function clear(): void
+    {
+        // TODO: Implement clear() method.
+    }
+
+    #[\Override]
+    public function onNewMessage(Message $message): void
+    {
+        parent::onNewMessage($message);
+
+        if (!empty($message->getContent())) {
             $this->commandBus->dispatch(new AddChatMessage(
                 message: $message->getContent(),
                 messageRole: MessageRole::from($message->getRole()),
             ));
         }
-
-        return $this;
     }
 }

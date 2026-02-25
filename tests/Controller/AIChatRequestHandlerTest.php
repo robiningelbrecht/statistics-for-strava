@@ -20,9 +20,7 @@ use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use League\Flysystem\FilesystemOperator;
-use NeuronAI\Agent;
-use NeuronAI\AgentInterface;
-use NeuronAI\Chat\Enums\MessageRole;
+use NeuronAI\Agent\Agent;use NeuronAI\Agent\AgentInterface;use NeuronAI\Chat\Enums\MessageRole;
 use NeuronAI\Chat\Messages\AssistantMessage;
 use NeuronAI\Testing\FakeAIProvider;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
@@ -165,7 +163,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             clock: PausedClock::on(SerializableDateTime::fromString('2025-05-05')),
         );
 
-        $agent = Agent::make()->withProvider(
+        $agent = Agent::make()->setAiProvider(
             new FakeAIProvider()
         );
 
