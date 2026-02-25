@@ -125,6 +125,8 @@ final readonly class SegmentEffortVsHeartRateChart
             'yAxis' => [
                 [
                     'type' => 'value',
+                    'min' => max(0, floor($minElapsedTime / 5) * 5),
+                    'max' => ceil($maxElapsedTime / 5) * 5,
                     'axisLabel' => [
                         'formatter' => 'callback:formatSecondsTrimZero',
                     ],
@@ -161,7 +163,7 @@ final readonly class SegmentEffortVsHeartRateChart
                     'data' => $data,
                     'encode' => [
                         'x' => 0,
-                        'y' => 1,
+                        'y' => 2,
                     ],
                 ],
             ],
