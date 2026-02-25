@@ -51,7 +51,7 @@ export const registerEchartsCallbacks = () => {
             if (!Array.isArray(params)) params = [params];
             return [...params].sort((a, b) => a.seriesIndex - b.seriesIndex).map(p => {
                 if (p.seriesName === '__pace') {
-                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace(p)}`;
+                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace(p.value)}`;
                 }
 
                 const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';
