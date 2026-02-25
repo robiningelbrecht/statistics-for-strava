@@ -35,6 +35,14 @@ class EventBus {
         }
         return this;
     }
+
+    async emitAsync(event, detail = {}) {
+        if (!this._listeners[event]) return this;
+        for (const handler of this._listeners[event]) {
+            await handler(detail);
+        }
+        return this;
+    }
 }
 
 export const eventBus = new EventBus();

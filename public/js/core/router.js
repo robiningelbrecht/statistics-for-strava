@@ -81,11 +81,11 @@ export default class Router {
 
     registerNavItems(items) {
         items.forEach(link => {
-            link.addEventListener('click', e => {
+            link.addEventListener('click', async e => {
                 e.preventDefault();
                 const route = link.getAttribute('data-router-navigate');
 
-                eventBus.emit(Events.NAVIGATION_CLICKED, {link});
+                await eventBus.emitAsync(Events.NAVIGATION_CLICKED, {link});
 
                 this.navigateTo(
                     route,
