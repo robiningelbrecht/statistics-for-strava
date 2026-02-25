@@ -53,8 +53,8 @@ final readonly class SegmentEffortVsHeartRateChart
         }
 
         $count = count($effortsWithHeartRate);
-        $minVelocity = PHP_FLOAT_MAX;
-        $maxVelocity = PHP_FLOAT_MIN;
+        $minElapsedTime = PHP_FLOAT_MAX;
+        $maxElapsedTime = PHP_FLOAT_MIN;
         $minHeartRate = PHP_INT_MAX;
         $maxHeartRate = PHP_INT_MIN;
 
@@ -75,18 +75,19 @@ final readonly class SegmentEffortVsHeartRateChart
             };
             $heartRate = $effort->getAverageHeartRate();
 
-            $minVelocity = min($minVelocity, $velocity);
-            $maxVelocity = max($maxVelocity, $velocity);
+            $elapsedTime = $effort->getElapsedTimeInSeconds();
+            $minElapsedTime = min($minElapsedTime, $elapsedTime);
+            $maxElapsedTime = max($maxElapsedTime, $elapsedTime);
             $minHeartRate = min($minHeartRate, $heartRate);
             $maxHeartRate = max($maxHeartRate, $heartRate);
 
-            $ratio = $count > 1 ? $index / ($count - 1) : 1.0;
+            $ratio = $count > 1 ? 1 - $index / ($count - 1) : 1.0;
 
             $data[] = [
                 'value' => [
                     $heartRate,
                     $velocity,
-                    $effort->getElapsedTimeInSeconds(),
+                    $elapsedTime,
                     $effort->getStartDateTime()->format('Y-m-d'),
                     $velocityIsPace,
                     $velocityUnit,
@@ -117,15 +118,13 @@ final readonly class SegmentEffortVsHeartRateChart
                     'name' => $this->translator->trans('Heart rate'),
                     'nameLocation' => 'middle',
                     'nameGap' => 25,
-                    'min' => max(0, $minHeartRate - 5),
-                    'max' => $maxHeartRate + 5,
+                    'min' => max(0, floor($minHeartRate / 5) * 5),
+                    'max' => ceil($maxHeartRate / 5) * 5,
                 ],
             ],
             'yAxis' => [
                 [
                     'type' => 'value',
-                    'min' => max(0, floor($minVelocity / 5) * 5),
-                    'max' => ceil($maxVelocity / 5) * 5,
                     'axisLabel' => [
                         'formatter' => 'callback:formatSecondsTrimZero',
                     ],
