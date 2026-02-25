@@ -69,7 +69,7 @@
                         {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
                     </td>
                     <td class="px-6 py-2">
-                        <div class="w-16"> {{ activity.getElevation()|renderMeasurement(0) }}</div>
+                        {{ activity.getElevation()|renderMeasurement(0) }}
                     </td>
                     <td class="px-6 py-2">
                         {{ activity.getMovingTimeFormatted() }}
