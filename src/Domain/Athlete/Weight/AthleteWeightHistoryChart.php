@@ -173,7 +173,7 @@ final readonly class AthleteWeightHistoryChart
                         $this->now->format('Y-m-d') != $athleteWeights[$lastKey]->getOn()->format('Y-m-d') ?
                         [
                             $this->now->format('Y-m-d'),
-                            round($athleteWeights[$lastKey]->getWeightInKg()->toFloat(), 1),
+                            round($athleteWeights[$lastKey]->getWeight()->toFloat(), 1),
                         ] : [],
                     ],
                 ],
