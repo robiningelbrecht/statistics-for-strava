@@ -13,10 +13,9 @@ use App\Infrastructure\Http\ServerSentEvent;
 use App\Infrastructure\Serialization\Json;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
-use NeuronAI\AgentInterface;
+use NeuronAI\Agent\AgentInterface;
 use NeuronAI\Chat\Enums\MessageRole;
-use NeuronAI\Chat\Messages\ToolCallMessage;
-use NeuronAI\Chat\Messages\ToolCallResultMessage;
+use NeuronAI\Chat\Messages\Stream\Chunks\TextChunk;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -107,12 +106,10 @@ final readonly class AIChatRequestHandler
             ));
 
             try {
-                foreach ($this->neuronAIAgent->stream(new UserMessage($message)) as $chunk) {
-                    if ($chunk instanceof ToolCallMessage) {
-                        continue; // @codeCoverageIgnore
-                    }
-                    if ($chunk instanceof ToolCallResultMessage) {
-                        continue; // @codeCoverageIgnore
+                $handler = $this->neuronAIAgent->stream(new UserMessage($message));
+                foreach ($handler->events() as $chunk) {
+                    if (!$chunk instanceof TextChunk) {
+                        continue;  // @codeCoverageIgnore
                     }
                     $response->sendEvent(new ServerSentEvent(
                         data: '',
@@ -120,7 +117,7 @@ final readonly class AIChatRequestHandler
                     ));
 
                     $response->sendEvent(new ServerSentEvent(
-                        data: $chunk,
+                        data: $chunk->content,
                         type: 'agentResponse'
                     ));
                 }

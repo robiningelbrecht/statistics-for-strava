@@ -121,7 +121,7 @@ services:
       factory: [ null, 'fromBool' ]
       arguments: [ '@=app_config("import.optInToSegmentDetailImport", false)' ]
 
-    NeuronAI\AgentInterface:
+    NeuronAI\Agent\AgentInterface:
         class: App\Domain\Integration\AI\NeuronAIAgent
 
     NeuronAI\Chat\History\ChatHistoryInterface:

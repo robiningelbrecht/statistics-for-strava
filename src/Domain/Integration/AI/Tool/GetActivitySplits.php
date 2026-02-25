@@ -30,7 +30,7 @@ final class GetActivitySplits extends Tool
     }
 
     #[\Override]
-    public function getMaxTries(): int
+    public function getMaxRuns(): int
     {
         return 100;
     }

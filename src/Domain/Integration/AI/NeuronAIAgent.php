@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\AI;
 
-use NeuronAI\Agent;
+use NeuronAI\Agent\Agent;
+use NeuronAI\Agent\SystemPrompt;
 use NeuronAI\Chat\History\ChatHistoryInterface;
 use NeuronAI\Providers\AIProviderInterface;
-use NeuronAI\SystemPrompt;
 use NeuronAI\Tools\Toolkits\ToolkitInterface;
 
 /**
@@ -20,6 +20,7 @@ final class NeuronAIAgent extends Agent
         private readonly ToolkitInterface $toolkit,
         private readonly ChatHistoryInterface $history,
     ) {
+        parent::__construct();
     }
 
     #[\Override]
