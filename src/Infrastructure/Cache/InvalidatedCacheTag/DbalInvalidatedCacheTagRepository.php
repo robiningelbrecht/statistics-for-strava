@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cache\InvalidatedCacheTag;
 
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\Repository\DbalRepository;
 
 final readonly class DbalInvalidatedCacheTagRepository extends DbalRepository implements InvalidatedCacheTagRepository
 {
-    public function invalidate(string ...$tags): void
+    public function invalidate(Tag ...$tags): void
     {
         if ([] === $tags) {
             return;
@@ -18,7 +19,7 @@ final readonly class DbalInvalidatedCacheTagRepository extends DbalRepository im
         $parameters = [];
         foreach (array_values($tags) as $i => $tag) {
             $placeholders[] = "(:tag{$i})";
-            $parameters["tag{$i}"] = $tag;
+            $parameters["tag{$i}"] = (string) $tag;
         }
 
         $this->connection->executeStatement(

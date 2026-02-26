@@ -4,6 +4,7 @@ namespace App\Tests\Infrastructure\Cache\InvalidatedCacheTag;
 
 use App\Infrastructure\Cache\InvalidatedCacheTag\DbalInvalidatedCacheTagRepository;
 use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Tests\ContainerTestCase;
 
 class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
@@ -12,7 +13,7 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
 
     public function testInvalidateSingleTag(): void
     {
-        $this->invalidatedCacheTagCache->invalidate('activity:123');
+        $this->invalidatedCacheTagCache->invalidate(Tag::activity('123'));
 
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('activity:'));
         $this->assertFalse($this->invalidatedCacheTagCache->hasAnyWithPrefix('segment:'));
@@ -21,9 +22,9 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
     public function testInvalidateMultipleTags(): void
     {
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:1',
-            'activity:2',
-            'segment:10',
+            Tag::activity('1'),
+            Tag::activity('2'),
+            Tag::segment('10'),
         );
 
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('activity:'));
@@ -40,8 +41,8 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
 
     public function testInvalidateDuplicateTagIsIdempotent(): void
     {
-        $this->invalidatedCacheTagCache->invalidate('activity:123');
-        $this->invalidatedCacheTagCache->invalidate('activity:123');
+        $this->invalidatedCacheTagCache->invalidate(Tag::activity('123'));
+        $this->invalidatedCacheTagCache->invalidate(Tag::activity('123'));
 
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('activity:'));
     }
@@ -55,7 +56,7 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
 
     public function testHasAnyWithPrefixMatchesExactTag(): void
     {
-        $this->invalidatedCacheTagCache->invalidate('challenges');
+        $this->invalidatedCacheTagCache->invalidate(Tag::challenges());
 
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('challenges'));
         $this->assertFalse($this->invalidatedCacheTagCache->hasAnyWithPrefix('challenge:'));
@@ -63,7 +64,10 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
 
     public function testHasAnyWithPrefixMatchesPartialPrefix(): void
     {
-        $this->invalidatedCacheTagCache->invalidate('best-effort:1000:Run');
+        $this->invalidatedCacheTagCache->invalidate(Tag::bestEffort(
+            distanceInMeter: 1000,
+            sportType: 'Run',
+        ));
 
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('best-effort:'));
         $this->assertTrue($this->invalidatedCacheTagCache->hasAnyWithPrefix('best-effort:1000:'));
@@ -73,9 +77,9 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
     public function testClearAllRemovesAllTags(): void
     {
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:1',
-            'segment:10',
-            'challenges',
+            Tag::activity('1'),
+            Tag::segment('10'),
+            Tag::challenges(),
         );
 
         $this->invalidatedCacheTagCache->clearAll();

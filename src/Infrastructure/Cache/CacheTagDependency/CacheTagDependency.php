@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cache\CacheTagDependency;
 
+use App\Infrastructure\Cache\Tag;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -23,12 +24,12 @@ final readonly class CacheTagDependency
     public static function fromState(
         string $entityType,
         string $entityId,
-        string $dependsOnTag,
+        Tag $dependsOnTag,
     ): self {
         return new self(
             entityType: $entityType,
             entityId: $entityId,
-            dependsOnTag: $dependsOnTag,
+            dependsOnTag: (string) $dependsOnTag,
         );
     }
 

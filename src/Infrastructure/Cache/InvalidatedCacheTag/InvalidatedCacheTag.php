@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cache\InvalidatedCacheTag;
 
+use App\Infrastructure\Cache\Tag;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -16,10 +17,10 @@ final readonly class InvalidatedCacheTag
     }
 
     public static function fromState(
-        string $tag,
+        Tag $tag,
     ): self {
         return new self(
-            tag: $tag,
+            tag: (string) $tag,
         );
     }
 

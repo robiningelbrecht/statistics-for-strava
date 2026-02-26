@@ -7,6 +7,7 @@ use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
 use App\Infrastructure\Cache\CacheTagDependency\DbalCacheTagDependencyRepository;
 use App\Infrastructure\Cache\InvalidatedCacheTag\DbalInvalidatedCacheTagRepository;
 use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Tests\ContainerTestCase;
 
 class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
@@ -19,15 +20,15 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '200',
-            dependsOnTag: 'activity:200',
+            dependsOnTag: Tag::activity('200'),
         ));
 
-        $this->invalidatedCacheTagCache->invalidate('activity:100');
+        $this->invalidatedCacheTagCache->invalidate(Tag::activity('100'));
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
         $this->assertEqualsCanonicalizing(
@@ -41,30 +42,39 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '200',
-            dependsOnTag: 'activity:200',
+            dependsOnTag: Tag::activity('200'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '200',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '300',
-            dependsOnTag: 'activity:300',
+            dependsOnTag: Tag::activity('300'),
         ));
 
-        $this->invalidatedCacheTagCache->invalidate('best-effort:1000:Run');
+        $this->invalidatedCacheTagCache->invalidate(Tag::bestEffort(
+            distanceInMeter: 1000,
+            sportType: 'Run',
+        ));
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
         $this->assertEqualsCanonicalizing(
@@ -78,17 +88,23 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
 
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:100',
-            'best-effort:1000:Run',
+            Tag::activity('100'),
+            Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         );
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
@@ -103,17 +119,17 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'segment',
             entityId: '50',
-            dependsOnTag: 'segment:50',
+            dependsOnTag: Tag::segment('50'),
         ));
 
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:100',
-            'segment:50',
+            Tag::activity('100'),
+            Tag::segment('50'),
         );
 
         $this->assertEqualsCanonicalizing(
@@ -131,7 +147,7 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
@@ -140,7 +156,7 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
 
     public function testFindReturnsEmptyWhenNoDependenciesRegistered(): void
     {
-        $this->invalidatedCacheTagCache->invalidate('activity:100');
+        $this->invalidatedCacheTagCache->invalidate(Tag::activity('100'));
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
         $this->assertEmpty($dirtyIds);
@@ -151,12 +167,15 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
 
         $this->cacheTagDependencyCache->clearForEntity(
@@ -166,10 +185,13 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
 
-        $this->invalidatedCacheTagCache->invalidate('best-effort:1000:Run');
+        $this->invalidatedCacheTagCache->invalidate(Tag::bestEffort(
+            distanceInMeter: 1000,
+            sportType: 'Run',
+        ));
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
         $this->assertEmpty($dirtyIds);
@@ -180,12 +202,12 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '200',
-            dependsOnTag: 'activity:200',
+            dependsOnTag: Tag::activity('200'),
         ));
 
         $this->cacheTagDependencyCache->clearForEntity(
@@ -193,8 +215,8 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
             entityId: '100',
         );
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:100',
-            'activity:200',
+            Tag::activity('100'),
+            Tag::activity('200'),
         );
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
@@ -209,19 +231,19 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: '100',
-            dependsOnTag: 'activity:100',
+            dependsOnTag: Tag::activity('100'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'segment',
             entityId: '100',
-            dependsOnTag: 'segment:100',
+            dependsOnTag: Tag::segment('100'),
         ));
 
         $this->cacheTagDependencyCache->clearForEntity(
             entityType: 'activity',
             entityId: '100',
         );
-        $this->invalidatedCacheTagCache->invalidate('segment:100');
+        $this->invalidatedCacheTagCache->invalidate(Tag::segment('100'));
 
         $this->assertEmpty(
             $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity')
@@ -237,37 +259,49 @@ class DbalCacheTagDependencyRepositoryTest extends ContainerTestCase
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'A',
-            dependsOnTag: 'activity:A',
+            dependsOnTag: Tag::activity('A'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'A',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'B',
-            dependsOnTag: 'activity:B',
+            dependsOnTag: Tag::activity('B'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'B',
-            dependsOnTag: 'best-effort:1000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'C',
-            dependsOnTag: 'activity:C',
+            dependsOnTag: Tag::activity('C'),
         ));
         $this->cacheTagDependencyCache->register(CacheTagDependency::fromState(
             entityType: 'activity',
             entityId: 'C',
-            dependsOnTag: 'best-effort:5000:Run',
+            dependsOnTag: Tag::bestEffort(
+                distanceInMeter: 5000,
+                sportType: 'Run',
+            ),
         ));
 
         $this->invalidatedCacheTagCache->invalidate(
-            'activity:B',
-            'best-effort:1000:Run',
+            Tag::activity('B'),
+            Tag::bestEffort(
+                distanceInMeter: 1000,
+                sportType: 'Run',
+            ),
         );
 
         $dirtyIds = $this->cacheTagDependencyCache->findEntityIdsThatDependOnInvalidatedTags('activity');
