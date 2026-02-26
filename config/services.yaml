@@ -40,12 +40,6 @@ services:
       class: App\Infrastructure\KeyValue\DbalKeyValueStore
       public: true
 
-    App\Infrastructure\Cache\InvalidatedCacheTagCache:
-      class: App\Infrastructure\Cache\DbalInvalidatedCacheTagCache
-
-    App\Infrastructure\Cache\CacheTagDependencyCache:
-      class: App\Infrastructure\Cache\DbalCacheTagDependencyCache
-
     App\Infrastructure\ValueObject\String\KernelProjectDir:
         public: true
         factory: [ null, 'fromString' ]
