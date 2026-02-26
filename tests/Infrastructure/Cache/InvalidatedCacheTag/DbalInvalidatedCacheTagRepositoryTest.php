@@ -31,6 +31,13 @@ class DbalInvalidatedCacheTagRepositoryTest extends ContainerTestCase
         $this->assertFalse($this->invalidatedCacheTagCache->hasAnyWithPrefix('challenges'));
     }
 
+    public function testInvalidateWithNoTagsDoesNotFail(): void
+    {
+        $this->invalidatedCacheTagCache->invalidate();
+
+        $this->assertFalse($this->invalidatedCacheTagCache->hasAnyWithPrefix('activity:'));
+    }
+
     public function testInvalidateDuplicateTagIsIdempotent(): void
     {
         $this->invalidatedCacheTagCache->invalidate('activity:123');
