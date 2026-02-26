@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Infrastructure\Daemon\Mutex;
+namespace App\Tests\Infrastructure\Mutex;
 
-use App\Infrastructure\Daemon\Mutex\LockIsAlreadyAcquired;
-use App\Infrastructure\Daemon\Mutex\LockName;
-use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
+use App\Infrastructure\Mutex\LockName;
+use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\ContainerTestCase;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Daemon\Mutex;
+namespace App\Infrastructure\Mutex;
 
 enum LockName: string
 {

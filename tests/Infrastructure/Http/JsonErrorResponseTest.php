@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Tests\Infrastructure\Exception;
+namespace App\Tests\Infrastructure\Http;
 
-use App\Infrastructure\Exception\JsonErrorResponse;
+use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\Http\HttpStatusCode;
+use App\Infrastructure\Http\JsonErrorResponse;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 

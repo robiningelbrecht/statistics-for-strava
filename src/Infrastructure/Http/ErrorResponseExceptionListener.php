@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Infrastructure\Exception;
+namespace App\Infrastructure\Http;
 
-use App\Infrastructure\Http\HttpStatusCode;
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
+use App\Infrastructure\Config\PlatformEnvironment;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

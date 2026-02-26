@@ -2,8 +2,8 @@
 
 namespace App\Tests\Infrastructure\DependencyInjection\Mutex;
 
-use App\Infrastructure\Daemon\Mutex\Mutex;
 use App\Infrastructure\DependencyInjection\Mutex\AutowireWithMutexPass;
+use App\Infrastructure\Mutex\Mutex;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 

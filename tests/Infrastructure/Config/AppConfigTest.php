@@ -4,8 +4,8 @@ namespace App\Tests\Infrastructure\Config;
 
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\CouldNotParseYamlConfig;
+use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;

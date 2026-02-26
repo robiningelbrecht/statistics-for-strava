@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Daemon;
+namespace App\Infrastructure\Process;
 
 use Symfony\Component\Process\Process;
 

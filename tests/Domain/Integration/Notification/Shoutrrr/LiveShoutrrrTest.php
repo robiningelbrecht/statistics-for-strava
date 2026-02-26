@@ -6,7 +6,7 @@ use App\Domain\Integration\Notification\Shoutrrr\CouldNotSendShoutrrrNotificatio
 use App\Domain\Integration\Notification\Shoutrrr\LiveShoutrrr;
 use App\Domain\Integration\Notification\Shoutrrr\Shoutrrr;
 use App\Domain\Integration\Notification\Shoutrrr\ShoutrrrUrl;
-use App\Infrastructure\Daemon\ProcessFactory;
+use App\Infrastructure\Process\ProcessFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;

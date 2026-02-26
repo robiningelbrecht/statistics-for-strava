@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Console;
 
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
+use App\Infrastructure\Config\PlatformEnvironment;
 use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProgressIndicator as SymfonyProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;

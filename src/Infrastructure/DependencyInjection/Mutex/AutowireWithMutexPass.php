@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DependencyInjection\Mutex;
 
-use App\Infrastructure\Daemon\Mutex\LockName;
-use App\Infrastructure\Daemon\Mutex\Mutex;
+use App\Infrastructure\Mutex\LockName;
+use App\Infrastructure\Mutex\Mutex;
 use Symfony\Component\DependencyInjection\Argument\BoundArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

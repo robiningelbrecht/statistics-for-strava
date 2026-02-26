@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\ValueObject\String;
+namespace App\Infrastructure\Config;
 
 enum PlatformEnvironment: string
 {

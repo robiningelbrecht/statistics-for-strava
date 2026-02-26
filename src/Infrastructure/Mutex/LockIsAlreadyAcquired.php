@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Daemon\Mutex;
+namespace App\Infrastructure\Mutex;
 
 final class LockIsAlreadyAcquired extends \RuntimeException
 {

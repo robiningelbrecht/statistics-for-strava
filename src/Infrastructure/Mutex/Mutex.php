@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Daemon\Mutex;
+namespace App\Infrastructure\Mutex;
 
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;

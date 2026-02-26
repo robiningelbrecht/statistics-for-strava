@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Tests\Infrastructure\Exception;
+namespace App\Tests\Infrastructure\Http;
 
-use App\Infrastructure\Exception\ErrorResponseExceptionListener;
+use App\Infrastructure\Config\PlatformEnvironment;
+use App\Infrastructure\Http\ErrorResponseExceptionListener;
 use App\Infrastructure\Http\HttpStatusCode;
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\HttpFoundation\Request;

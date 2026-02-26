@@ -28,7 +28,7 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Infrastructure\Exception\ErrorResponseExceptionListener:
+    App\Infrastructure\Http\ErrorResponseExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
@@ -45,7 +45,7 @@ services:
         factory: [ null, 'fromString' ]
         arguments: ['%kernel.project_dir%']
 
-    App\Infrastructure\ValueObject\String\PlatformEnvironment:
+    App\Infrastructure\Config\PlatformEnvironment:
         public: true
         autoconfigure: false
         factory: [ null, 'fromServer' ]

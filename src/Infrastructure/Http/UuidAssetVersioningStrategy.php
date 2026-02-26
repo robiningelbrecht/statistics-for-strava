@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Twig;
+namespace App\Infrastructure\Http;
 
 use App\Infrastructure\ValueObject\Identifier\UuidFactory;
 use Symfony\Component\Asset\VersionStrategy\VersionStrategyInterface;

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Infrastructure\Config;
 
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
-use App\Infrastructure\ValueObject\String\PlatformEnvironment;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Exception\ParseException;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DependencyInjection\Mutex;
 
-use App\Infrastructure\Daemon\Mutex\LockName;
+use App\Infrastructure\Mutex\LockName;
 
 #[\Attribute(\Attribute::TARGET_CLASS)]
 final readonly class WithMutex
