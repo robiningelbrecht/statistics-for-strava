@@ -1,6 +1,5 @@
 # [v4.6.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.7) - 2026-02-26
 
-
 ## New features
 * You can now view Eddington metrics in both metric and imperial units, regardless of your default unit system.
 
