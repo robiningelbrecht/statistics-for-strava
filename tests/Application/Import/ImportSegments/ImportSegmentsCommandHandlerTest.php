@@ -8,6 +8,7 @@ use App\Application\Import\ImportSegments\OptInToSegmentDetailsImport;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
@@ -54,7 +55,8 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-            )
+            ),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
 
         $commandHandler->handle(new ImportSegments($output));
@@ -83,7 +85,8 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-            )
+            ),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
 
         $commandHandler->handle(new ImportSegments($output));
@@ -100,7 +103,8 @@ class ImportSegmentsCommandHandlerTest extends ContainerTestCase
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
-            )
+            ),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
 
         $output = new SpyOutput();

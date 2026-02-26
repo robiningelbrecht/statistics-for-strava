@@ -16,6 +16,10 @@ use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependency;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -41,6 +45,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private ?SkipActivitiesRecordedBefore $skipActivitiesRecordedBefore,
         private Mutex $mutex,
         private ActivityImportPipeline $activityImportPipeline,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
+        private CacheTagDependencyRepository $cacheTagDependencyRepository,
     ) {
     }
 
@@ -165,6 +171,13 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     ]
                 ));
             }
+
+            $this->invalidatedCacheTagRepository->invalidate(Tag::activity((string) $activityId));
+            $this->cacheTagDependencyRepository->register(CacheTagDependency::fromState(
+                entityType: 'activity',
+                entityId: (string) $activityId,
+                dependsOnTag: Tag::activity((string) $activityId),
+            ));
 
             foreach ($context->getStreams() as $stream) {
                 $this->activityStreamRepository->add($stream);

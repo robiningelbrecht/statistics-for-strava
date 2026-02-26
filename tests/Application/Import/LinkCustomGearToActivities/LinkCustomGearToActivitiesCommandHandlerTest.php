@@ -12,6 +12,7 @@ use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
@@ -183,7 +184,8 @@ class LinkCustomGearToActivitiesCommandHandlerTest extends ContainerTestCase
             $this->getContainer()->get(CustomGearRepository::class),
             $this->getContainer()->get(ActivityRepository::class),
             $this->getContainer()->get(ActivityIdRepository::class),
-            CustomGearConfig::fromArray([])
+            CustomGearConfig::fromArray([]),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         )->handle(new LinkCustomGearToActivities($output));
 
         $this->assertEmpty((string) $output);

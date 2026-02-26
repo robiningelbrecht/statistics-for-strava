@@ -13,6 +13,7 @@ use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -188,6 +189,7 @@ customGears:
 YML
             )),
             PausedClock::on(SerializableDateTime::some()),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
 
         $output = new SpyOutput();

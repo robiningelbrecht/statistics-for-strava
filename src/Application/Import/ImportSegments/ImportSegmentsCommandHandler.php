@@ -8,6 +8,8 @@ use App\Domain\Segment\Segment;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -25,6 +27,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
         private OptInToSegmentDetailsImport $optInToSegmentDetailsImport,
         private Strava $strava,
         private Mutex $mutex,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -55,6 +58,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
                         ))
                     ->flagDetailsAsImported();
                 $this->segmentRepository->update($segment);
+                $this->invalidatedCacheTagRepository->invalidate(Tag::segment((string) $segmentId));
 
                 $command->getOutput()->writeln(
                     sprintf(
@@ -73,8 +77,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             } catch (ClientException|RequestException $exception) {
                 if (404 === $exception->getResponse()?->getStatusCode()) {
                     // Segment does not exist anymore. Mark as imported.
-                    $segment->flagDetailsAsImported();
-                    $this->segmentRepository->update($segment);
+                    $this->segmentRepository->update($segment->flagDetailsAsImported());
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));

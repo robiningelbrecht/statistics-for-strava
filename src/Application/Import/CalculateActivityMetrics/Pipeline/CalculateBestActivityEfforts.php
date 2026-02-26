@@ -9,6 +9,10 @@ use App\Domain\Activity\BestEffort\ActivityBestEffort;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependency;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\Console\ProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -18,6 +22,8 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
         private ActivityRepository $activityRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
         private ActivityStreamRepository $activityStreamRepository,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
+        private CacheTagDependencyRepository $cacheTagDependencyRepository,
     ) {
     }
 
@@ -76,6 +82,14 @@ final readonly class CalculateBestActivityEfforts implements CalculateActivityMe
                         timeInSeconds: $fastestTime,
                     )
                 );
+
+                $bestEffortTag = Tag::bestEffort($distance->toMeter()->toInt(), $activity->getSportType()->value);
+                $this->invalidatedCacheTagRepository->invalidate($bestEffortTag);
+                $this->cacheTagDependencyRepository->register(CacheTagDependency::fromState(
+                    entityType: 'activity',
+                    entityId: (string) $activityId,
+                    dependsOnTag: $bestEffortTag,
+                ));
             }
 
             if ($bestEffortsCalculated) {

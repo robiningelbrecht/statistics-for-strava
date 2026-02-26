@@ -126,6 +126,20 @@ final readonly class DbalSegmentEffortRepository extends DbalRepository implemen
     }
 
     /**
+     * @return SegmentId[]
+     */
+    public function findUniqueSegmentIdsForActivity(ActivityId $activityId): array
+    {
+        return array_map(
+            SegmentId::fromString(...),
+            $this->connection->executeQuery(
+                'SELECT DISTINCT segmentId FROM SegmentEffort WHERE activityId = :activityId',
+                ['activityId' => $activityId]
+            )->fetchFirstColumn()
+        );
+    }
+
+    /**
      * @param array<string, mixed> $result
      */
     private function hydrate(array $result): SegmentEffort

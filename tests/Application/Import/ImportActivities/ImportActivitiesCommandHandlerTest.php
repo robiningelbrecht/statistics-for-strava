@@ -28,6 +28,8 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
@@ -285,6 +287,8 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
+            cacheTagDependencyRepository: $this->getContainer()->get(CacheTagDependencyRepository::class),
         );
 
         $output = new SpyOutput();
@@ -323,6 +327,8 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
+            cacheTagDependencyRepository: $this->getContainer()->get(CacheTagDependencyRepository::class),
         );
 
         $output = new SpyOutput();
@@ -366,6 +372,8 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
+            cacheTagDependencyRepository: $this->getContainer()->get(CacheTagDependencyRepository::class),
         );
 
         $output = new SpyOutput();
@@ -400,6 +408,8 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
+            cacheTagDependencyRepository: $this->getContainer()->get(CacheTagDependencyRepository::class),
         );
 
         $output = new SpyOutput();
@@ -495,6 +505,8 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
+            cacheTagDependencyRepository: $this->getContainer()->get(CacheTagDependencyRepository::class),
         );
     }
 }

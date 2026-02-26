@@ -12,6 +12,10 @@ use App\Domain\Segment\SegmentEffort\SegmentEffortId;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentId;
 use App\Domain\Segment\SegmentRepository;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependency;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\String\Name;
@@ -26,6 +30,8 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
         private SegmentEffortRepository $segmentEffortRepository,
         private SegmentRepository $segmentRepository,
         private Countries $countries,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
+        private CacheTagDependencyRepository $cacheTagDependencyRepository,
     ) {
     }
 
@@ -61,7 +67,13 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
                         if ($isFavourite !== $segment->isFavourite()) {
                             $segment->updateIsFavourite($isFavourite);
                             $this->segmentRepository->update($segment);
+                            $this->invalidatedCacheTagRepository->invalidate(Tag::segment((string) $segmentId));
                         }
+                        $this->cacheTagDependencyRepository->register(CacheTagDependency::fromState(
+                            entityType: 'segment',
+                            entityId: (string) $segmentId,
+                            dependsOnTag: Tag::segment((string) $segmentId),
+                        ));
                     } catch (EntityNotFound) {
                         $segment = Segment::create(
                             segmentId: $segmentId,
@@ -75,6 +87,12 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
                             countryCode: $countryCode,
                         );
                         $this->segmentRepository->add($segment);
+                        $this->invalidatedCacheTagRepository->invalidate(Tag::segment((string) $segmentId));
+                        $this->cacheTagDependencyRepository->register(CacheTagDependency::fromState(
+                            entityType: 'segment',
+                            entityId: (string) $segmentId,
+                            dependsOnTag: Tag::segment((string) $segmentId),
+                        ));
                         ++$countSegmentsAdded;
                     }
                     $segmentsProcessedInCurrentRun[(string) $segmentId] = $segmentId;
@@ -99,6 +117,7 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
                         averageHeartRate: isset($activitySegmentEffort['average_heartrate']) ? (int) $activitySegmentEffort['average_heartrate'] : null,
                         maxHeartRate: isset($activitySegmentEffort['max_heartrate']) ? (int) $activitySegmentEffort['max_heartrate'] : null,
                     ));
+                    $this->invalidatedCacheTagRepository->invalidate(Tag::segment((string) $segmentId));
                     ++$countSegmentEffortsAdded;
                 }
             }

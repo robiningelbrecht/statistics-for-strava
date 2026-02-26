@@ -12,6 +12,9 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
 use App\Domain\Segment\SegmentEffort\SegmentEffortRepository;
 use App\Domain\Segment\SegmentRepository;
+use App\Infrastructure\Cache\CacheTagDependency\CacheTagDependencyRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 
@@ -28,6 +31,8 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityLapRepository $activityLapRepository,
         private ActivityBestEffortRepository $activityBestEffortRepository,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
+        private CacheTagDependencyRepository $cacheTagDependencyRepository,
     ) {
     }
 
@@ -47,6 +52,8 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
         foreach ($activityIdsToDelete as $activityId) {
             $activity = $this->activitySummaryRepository->find($activityId);
 
+            $affectedSegmentIds = $this->segmentEffortRepository->findUniqueSegmentIdsForActivity($activityId);
+
             $this->activityStreamRepository->deleteForActivity($activityId);
             $this->activityStreamMetricRepository->deleteForActivity($activityId);
             $this->segmentEffortRepository->deleteForActivity($activityId);
@@ -55,6 +62,13 @@ final readonly class DeleteActivitiesMarkedForDeletionCommandHandler implements 
             $this->activityLapRepository->deleteForActivity($activityId);
             $this->activityBestEffortRepository->deleteForActivity($activityId);
             $this->activityRepository->delete($activityId);
+
+            $this->invalidatedCacheTagRepository->invalidate(Tag::activity((string) $activityId));
+            $this->cacheTagDependencyRepository->clearForEntity('activity', (string) $activityId);
+
+            foreach ($affectedSegmentIds as $segmentId) {
+                $this->invalidatedCacheTagRepository->invalidate(Tag::segment((string) $segmentId));
+            }
 
             $command->getOutput()->writeln(sprintf(
                 '  => Activity "%s - %s" deleted',

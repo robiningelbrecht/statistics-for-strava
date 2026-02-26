@@ -11,6 +11,8 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
@@ -23,6 +25,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
         private ActivityRepository $activityRepository,
         private ActivityIdRepository $activityIdRepository,
         private CustomGearConfig $customGearConfig,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -74,6 +77,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
                 activity: $activity->withEmptyGear(),
                 rawData: $activityWithRawData->getRawData()
             ));
+            $this->invalidatedCacheTagRepository->invalidate(Tag::activity((string) $activity->getId()));
         }
 
         /** @var CustomGear $customGear */
@@ -97,6 +101,7 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
                     activity: $activity,
                     rawData: $activityWithRawData->getRawData()
                 ));
+                $this->invalidatedCacheTagRepository->invalidate(Tag::activity((string) $activity->getId()));
             }
 
             $this->customGearRepository->save($customGear);

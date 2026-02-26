@@ -9,6 +9,8 @@ use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Strava\RateLimit\StravaRateLimitHasBeenReached;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -26,6 +28,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
         private CustomGearRepository $customGearRepository,
         private CustomGearConfig $customGearConfig,
         private Clock $clock,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -93,6 +96,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
                 );
             }
             $this->importedGearRepository->save($gear);
+            $this->invalidatedCacheTagRepository->invalidate(Tag::gear());
             $command->getOutput()->writeln(sprintf('  => Imported gear "%s"', $gear->getName()));
         }
 
@@ -105,6 +109,7 @@ final readonly class ImportGearCommandHandler implements CommandHandler
 
             foreach ($customGearsDefinedInConfig as $customGear) {
                 $this->customGearRepository->save($customGear);
+                $this->invalidatedCacheTagRepository->invalidate(Tag::gear());
                 $command->getOutput()->writeln(sprintf('  => Imported custom gear "%s"', $customGear->getName()));
             }
         }

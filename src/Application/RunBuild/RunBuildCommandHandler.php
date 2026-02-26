@@ -24,6 +24,7 @@ use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Application\Import\ImportGear\GearImportStatus;
 use App\Domain\Activity\ActivityIdRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -39,6 +40,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         private GearImportStatus $gearImportStatus,
         private MigrationRunner $migrationRunner,
         private Clock $clock,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -100,6 +102,7 @@ This is not a bug, once all your activities have been imported, your gear statis
         }
 
         $progressBar->finish();
+        $this->invalidatedCacheTagRepository->clearAll();
         $output->writeln('');
     }
 }

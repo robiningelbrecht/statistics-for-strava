@@ -11,6 +11,7 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
@@ -127,6 +128,7 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
             migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
+            invalidatedCacheTagRepository: $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
     }
 }

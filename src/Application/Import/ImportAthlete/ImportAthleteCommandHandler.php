@@ -8,6 +8,8 @@ use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteBirthDate;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 
@@ -17,6 +19,7 @@ final readonly class ImportAthleteCommandHandler implements CommandHandler
         private Strava $strava,
         private AthleteBirthDate $athleteBirthDate,
         private AthleteRepository $athleteRepository,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -32,5 +35,6 @@ final readonly class ImportAthleteCommandHandler implements CommandHandler
             ...$athlete,
             'birthDate' => $this->athleteBirthDate,
         ]));
+        $this->invalidatedCacheTagRepository->invalidate(Tag::athlete());
     }
 }

@@ -7,6 +7,8 @@ use App\Domain\Challenge\Challenge;
 use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
+use App\Infrastructure\Cache\Tag;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
@@ -25,6 +27,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
         private FilesystemOperator $fileStorage,
         private UuidFactory $uuidFactory,
         private Sleep $sleep,
+        private InvalidatedCacheTagRepository $invalidatedCacheTagRepository,
     ) {
     }
 
@@ -101,6 +104,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
                     $challenge = $challenge->withLocalLogo('files/'.$fileSystemPath);
                 }
                 $this->challengeRepository->add($challenge);
+                $this->invalidatedCacheTagRepository->invalidate(Tag::challenges());
                 $challengesAddedInCurrentRun[(string) $challengeId] = $challengeId;
                 $command->getOutput()->writeln(sprintf('  => Imported challenge "%s"', $challenge->getName()));
                 $this->sleep->sweetDreams(1); // Make sure timestamp is increased by at least one second.

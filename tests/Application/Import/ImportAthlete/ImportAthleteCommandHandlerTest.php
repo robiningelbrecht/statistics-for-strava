@@ -7,6 +7,7 @@ use App\Application\Import\ImportAthlete\ImportAthleteCommandHandler;
 use App\Domain\Athlete\AthleteBirthDate;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Cache\InvalidatedCacheTag\InvalidatedCacheTagRepository;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Strava\SpyStrava;
 use App\Tests\SpyOutput;
@@ -36,7 +37,8 @@ class ImportAthleteCommandHandlerTest extends ContainerTestCase
         $this->importAthleteCommandHandler = new ImportAthleteCommandHandler(
             $this->strava = $this->getContainer()->get(Strava::class),
             $this->getContainer()->get(AthleteBirthDate::class),
-            $this->getContainer()->get(AthleteRepository::class)
+            $this->getContainer()->get(AthleteRepository::class),
+            $this->getContainer()->get(InvalidatedCacheTagRepository::class),
         );
     }
 }

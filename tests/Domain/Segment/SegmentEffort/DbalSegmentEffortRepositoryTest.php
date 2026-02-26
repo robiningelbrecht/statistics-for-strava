@@ -157,6 +157,56 @@ class DbalSegmentEffortRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindUniqueSegmentIdsForActivity(): void
+    {
+        $this->segmentEffortRepository->add(
+            SegmentEffortBuilder::fromDefaults()
+                ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(1))
+                ->withActivityId(ActivityId::fromUnprefixed(1))
+                ->withSegmentId(SegmentId::fromUnprefixed(10))
+                ->build()
+        );
+        $this->segmentEffortRepository->add(
+            SegmentEffortBuilder::fromDefaults()
+                ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(2))
+                ->withActivityId(ActivityId::fromUnprefixed(1))
+                ->withSegmentId(SegmentId::fromUnprefixed(10))
+                ->build()
+        );
+        $this->segmentEffortRepository->add(
+            SegmentEffortBuilder::fromDefaults()
+                ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(3))
+                ->withActivityId(ActivityId::fromUnprefixed(1))
+                ->withSegmentId(SegmentId::fromUnprefixed(20))
+                ->build()
+        );
+        $this->segmentEffortRepository->add(
+            SegmentEffortBuilder::fromDefaults()
+                ->withSegmentEffortId(SegmentEffortId::fromUnprefixed(4))
+                ->withActivityId(ActivityId::fromUnprefixed(2))
+                ->withSegmentId(SegmentId::fromUnprefixed(30))
+                ->build()
+        );
+
+        $result = $this->segmentEffortRepository->findUniqueSegmentIdsForActivity(
+            ActivityId::fromUnprefixed(1)
+        );
+
+        $this->assertEqualsCanonicalizing(
+            [SegmentId::fromUnprefixed(10), SegmentId::fromUnprefixed(20)],
+            $result
+        );
+    }
+
+    public function testFindUniqueSegmentIdsForActivityWhenNoneExist(): void
+    {
+        $result = $this->segmentEffortRepository->findUniqueSegmentIdsForActivity(
+            ActivityId::fromUnprefixed(999)
+        );
+
+        $this->assertEmpty($result);
+    }
+
     public function testDelete(): void
     {
         $segmentEffortOne = SegmentEffortBuilder::fromDefaults()->build();

@@ -22,4 +22,9 @@ interface SegmentEffortRepository
     public function countBySegmentId(SegmentId $segmentId): int;
 
     public function findByActivityId(ActivityId $activityId): SegmentEfforts;
+
+    /**
+     * @return SegmentId[]
+     */
+    public function findUniqueSegmentIdsForActivity(ActivityId $activityId): array;
 }
