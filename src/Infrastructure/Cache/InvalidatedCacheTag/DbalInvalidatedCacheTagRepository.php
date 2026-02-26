@@ -10,7 +10,7 @@ final readonly class DbalInvalidatedCacheTagRepository extends DbalRepository im
 {
     public function invalidate(string ...$tags): void
     {
-        if ($tags === []) {
+        if ([] === $tags) {
             return;
         }
 
