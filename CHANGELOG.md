@@ -1,3 +1,26 @@
+# [v4.6.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.7) - 2026-02-26
+
+
+## New features
+* You can now view Eddington metrics in both metric and imperial units, regardless of your default unit system.
+
+## Bug fixes
+* Fixed a small visual issue where Y-axis labels were slightly clipped on charts.
+* Resolved a bug in the Athlete Weight History chart where the unit system wasn’t applied correctly.
+* Fixed an alignment issue with elevation data in the "Most Recent Activities" widget.
+* Corrected inverted colors in the Segment Effort vs Heart Rate chart.
+* Fixed an issue where the pace tooltip displayed incorrect values in the Combined Stream Profile charts.
+
+## Technical details
+* ISSUE #1803: Allow to view Eddington metrics for both unit systems by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1813
+* ISSUE #1808: Fix slight clipping of Y-Labels by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1814
+* ISSUE #1815: Fix AthleteWeightHistoryChart unit system bug by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1817
+* ISSUE #1816: widget:mostRecentActivities - fix elevation alignment by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1818
+* ISSUE #1821: Segment effort vs heart rate chart inverted colors by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1822
+* ISSUE #1823: Fix pace tooltip in CombinedStreamProfileCharts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1824
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.6...V4.6.7
+
 # [v4.6.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.6) - 2026-02-24
 
 ## What's Changed

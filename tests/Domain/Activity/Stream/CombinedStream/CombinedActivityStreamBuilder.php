@@ -17,7 +17,7 @@ final class CombinedActivityStreamBuilder
     private UnitSystem $unitSystem = UnitSystem::METRIC;
     private CombinedStreamTypes $streamTypes;
     private array $data;
-    private int $maxYAxisValue;
+    private readonly int $maxYAxisValue;
 
     private function __construct()
     {
