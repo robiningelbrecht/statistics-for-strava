@@ -48,7 +48,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
             $this->buildStorage->write(
                 'gear/maintenance.html',
-                $this->twig->load('html/gear/gear-maintenance-disabled.html.twig')->render()
+                $this->twig->load('html/gear/maintenance/gear-maintenance-disabled.html.twig')->render()
             );
 
             return;
@@ -134,7 +134,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
 
         $this->buildStorage->write(
             'gear/maintenance.html',
-            $this->twig->load('html/gear/gear-maintenance.html.twig')->render([
+            $this->twig->load('html/gear/maintenance/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
                 'warnings' => $warnings,
                 'gearsAttachedToComponents' => $gearsThatAreAttachedToComponents,
@@ -146,7 +146,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         foreach ($gearsThatAreAttachedToComponents as $gear) {
             $this->buildStorage->write(
                 sprintf('gear/maintenance/history/%s.html', $gear->getId()),
-                $this->twig->load('html/gear/gear-maintenance-history.html.twig')->render([
+                $this->twig->load('html/gear/maintenance/gear-maintenance-history.html.twig')->render([
                     'gear' => $gear,
                     'maintenanceTaskTags' => $validMaintenanceTaskTags->filterOnGear($gear->getId())->sortOnDateDesc(),
                 ])
