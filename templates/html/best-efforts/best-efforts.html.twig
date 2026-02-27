@@ -23,7 +23,7 @@
     <div id="bestEffortsActivityTypeTabContent">
         {% for activityType in activityTypes %}
             <div id="bestEfforts{{ activityType.value }}" role="tabpanel" aria-labelledby="bestEfforts{{ activityType.value }}-tab">
-                <ul class="tabs tabs--pills mb-4" id="bestEffortsPeriodTab{{ activityType.value }}" data-tabs="#bestEffortsPeriodTabContent{{ activityType.value }}"
+                <ul class="tabs tabs--menu-item" id="bestEffortsPeriodTab{{ activityType.value }}" data-tabs="#bestEffortsPeriodTabContent{{ activityType.value }}"
                     data-tabs-active-classes="active" data-tabs-inactive-classes="inactive" role="tablist">
                     {% for period in periods %}
                         <li role="presentation">
