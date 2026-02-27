@@ -13,7 +13,6 @@ use App\Domain\Gear\FindGearStatsPerDay\FindGearStatsPerDay;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\GearStatistics;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\CQRS\Query\Bus\QueryBus;
@@ -28,7 +27,6 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
     public function __construct(
         private GearRepository $gearRepository,
         private CustomGearConfig $customGearConfig,
-        private RecordingDeviceRepository $recordingDeviceRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private EnrichedActivities $enrichedActivities,
         private UnitSystem $unitSystem,
@@ -52,11 +50,10 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             endDate: $now
         );
 
-        $hasDueMaintenanceTasks = !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty();
         $this->buildStorage->write(
             'gear.html',
             $this->twig->load('html/gear/gear.html.twig')->render([
-                'maintenanceTaskIsDue' => $hasDueMaintenanceTasks,
+                'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
                 'customGearConfig' => $this->customGearConfig,
                 'gearStatistics' => GearStatistics::fromActivitiesAndGear(
                     activities: $activities,
@@ -80,14 +77,6 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
                         now: $now,
                     )->build()
                 ),
-            ]),
-        );
-
-        $this->buildStorage->write(
-            'gear/recording-devices.html',
-            $this->twig->load('html/gear/recording-devices.html.twig')->render([
-                'maintenanceTaskIsDue' => $hasDueMaintenanceTasks,
-                'devices' => $this->recordingDeviceRepository->findAll(),
             ]),
         );
     }
