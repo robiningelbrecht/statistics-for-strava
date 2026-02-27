@@ -57,7 +57,7 @@ final readonly class DaytimeStats
             $statistics[$daytime->value]['totalElevation'] = ($statistics[$daytime->value]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
             $statistics[$daytime->value]['movingTime'] = ($statistics[$daytime->value]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$daytime->value]['averageDistance'] = $statistics[$daytime->value]['totalDistance'] / $statistics[$daytime->value]['numberOfWorkouts'];
-            $statistics[$daytime->value]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$daytime->value]['movingTime']);
+            $statistics[$daytime->value]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$daytime->value]['movingTime']);
             $statistics[$daytime->value]['movingTimeInHours'] = Seconds::from($statistics[$daytime->value]['movingTime'])->toHour();
             $statistics[$daytime->value]['percentage'] = round($statistics[$daytime->value]['movingTime'] / $totalMovingTime * 100, 2);
         }

@@ -95,7 +95,7 @@ final readonly class DistanceBreakdown
             if ($statistics[$distanceBreakdown]['movingTime'] > 0) {
                 $statistics[$distanceBreakdown]['averageSpeed'] = ($statistics[$distanceBreakdown]['totalDistance'] / $statistics[$distanceBreakdown]['movingTime']) * 3600;
             }
-            $statistics[$distanceBreakdown]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$distanceBreakdown]['movingTime']);
+            $statistics[$distanceBreakdown]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$distanceBreakdown]['movingTime']);
         }
 
         foreach ($statistics as $distanceBreakdown => $statistic) {

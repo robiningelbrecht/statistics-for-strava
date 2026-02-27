@@ -60,7 +60,7 @@ final readonly class RecordingDevice
 
     public function getTimeTrackedFormatted(): string
     {
-        return $this->formatVeryLongDurationForHumans($this->getTimeTracked()->toInt());
+        return $this->formatDurationAsHumanString($this->getTimeTracked()->toInt());
     }
 
     public function getDistanceTracked(): Kilometer
@@ -76,5 +76,22 @@ final readonly class RecordingDevice
     public function getNumberOfWorkouts(): int
     {
         return $this->numberOfWorkouts;
+    }
+
+    public function getPurchasePrice(): ?Money
+    {
+        return $this->purchasePrice;
+    }
+
+    public function getRelativeCostPerHour(): ?Money
+    {
+        $timeTrackedInHours = $this->getTimeTracked()->toHour()->toInt();
+
+        return $this->getPurchasePrice()?->divide($timeTrackedInHours > 0 ? $timeTrackedInHours : 1);
+    }
+
+    public function getRelativeCostPerWorkout(): ?Money
+    {
+        return $this->getPurchasePrice()?->divide($this->getNumberOfWorkouts() > 0 ? $this->getNumberOfWorkouts() : 1);
     }
 }

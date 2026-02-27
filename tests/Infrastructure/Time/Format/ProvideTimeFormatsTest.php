@@ -15,7 +15,7 @@ class ProvideTimeFormatsTest extends TestCase
     {
         $this->assertEquals(
             $expectedResult,
-            $this->formatDurationForHumans($timeInSeconds)
+            $this->formatDurationAsClock($timeInSeconds)
         );
     }
 
@@ -24,7 +24,7 @@ class ProvideTimeFormatsTest extends TestCase
     {
         $this->assertEquals(
             $expectedResult,
-            $this->formatDurationForChartLabel($timeInSeconds)
+            $this->formatDurationAsPaddedClock($timeInSeconds)
         );
     }
 
@@ -33,7 +33,7 @@ class ProvideTimeFormatsTest extends TestCase
     {
         $this->assertEquals(
             $expectedResult,
-            $this->formatDurationForHumansWithoutTrimming($timeInSeconds)
+            $this->formatDurationAsHHMMSS($timeInSeconds)
         );
     }
 
