@@ -7,7 +7,7 @@ import ChartManager from "./features/charts/chart-manager";
 import {registerEchartsCallbacks} from "./features/charts/echarts-callbacks";
 import ModalManager from "./components/modals";
 import PhotoWall from "./features/photos/photo-wall";
-import MapManager from "./features/maps/map-manager";
+import LeafletMapManager from "./features/maps/map-manager";
 import TabsManager from "./components/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./features/data-table/data-table-manager";
@@ -26,7 +26,7 @@ registerEchartsCallbacks();
 const sidebar = new Sidebar();
 const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, modalManager);
-const mapManager = new MapManager();
+const leafletMapManager = new LeafletMapManager();
 const tabsManager = new TabsManager();
 const dataTableManager = new DataTableManager();
 const fullscreenManager = new FullscreenManager();
@@ -50,7 +50,7 @@ const initElements = (rootNode) => {
     modalManager.init(rootNode);
     dataTableManager.init(rootNode);
     chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
-    mapManager.init(rootNode);
+    leafletMapManager.init(rootNode);
     fullscreenManager.init(rootNode);
 }
 

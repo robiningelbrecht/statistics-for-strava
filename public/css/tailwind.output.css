@@ -4719,6 +4719,22 @@
           border-bottom-style: var(--tw-border-style);
           border-bottom-width: 2px;
           padding: calc(var(--spacing) * 2);
+          border-color: var(--color-gray-100);
+          color: var(--color-gray-500);
+          &:hover {
+            @media (hover: hover) {
+              border-color: var(--color-gray-300);
+            }
+          }
+          &:hover {
+            @media (hover: hover) {
+              color: var(--color-gray-600);
+            }
+          }
+          &.active {
+            border-color: var(--color-strava-orange);
+            color: var(--color-strava-orange);
+          }
         }
       }
     }
