@@ -73,8 +73,7 @@ final readonly class ImportSegmentsCommandHandler implements CommandHandler
             } catch (ClientException|RequestException $exception) {
                 if (404 === $exception->getResponse()?->getStatusCode()) {
                     // Segment does not exist anymore. Mark as imported.
-                    $segment->flagDetailsAsImported();
-                    $this->segmentRepository->update($segment);
+                    $this->segmentRepository->update($segment->flagDetailsAsImported());
                 }
 
                 $command->getOutput()->writeln(sprintf('<error>Strava API threw error: %s</error>', $exception->getMessage()));

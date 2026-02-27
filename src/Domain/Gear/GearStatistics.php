@@ -4,14 +4,16 @@ namespace App\Domain\Gear;
 
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
-use Carbon\CarbonInterval;
 
 final readonly class GearStatistics
 {
+    use ProvideTimeFormats;
+
     private function __construct(
         private Activities $activities,
         private Gears $gears,
@@ -48,7 +50,7 @@ final readonly class GearStatistics
             'name' => 'Unspecified',
             'distance' => $distanceWithOtherGear,
             'numberOfWorkouts' => $countActivitiesWithOtherGear,
-            'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
+            'movingTime' => $this->formatVeryLongDurationForHumans((int) $movingTimeInSeconds),
             'movingTimeInHours' => Seconds::from($movingTimeInSeconds)->toHour(),
             'elevation' => Meter::from($activitiesWithOtherGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
             'averageDistance' => Kilometer::from($distanceWithOtherGear->toFloat() / $countActivitiesWithOtherGear),
@@ -86,7 +88,7 @@ final readonly class GearStatistics
                 'relativeCostPerHour' => $gear->getPurchasePrice()?->divide($movingTimeInHours > 0 ? $movingTimeInHours : 1),
                 'relativeCostPerWorkout' => $gear->getPurchasePrice()?->divide($countActivitiesWithGear > 0 ? $countActivitiesWithGear : 1),
                 'numberOfWorkouts' => $countActivitiesWithGear,
-                'movingTime' => CarbonInterval::seconds($movingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
+                'movingTime'=>  $this->formatVeryLongDurationForHumans((int) $movingTimeInSeconds),
                 'movingTimeInHours' => Seconds::from($movingTimeInSeconds)->toHour(),
                 'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
                 'averageDistance' => $countActivitiesWithGear > 0 ? Kilometer::from($gear->getDistance()->toFloat() / $countActivitiesWithGear) : Kilometer::zero(),

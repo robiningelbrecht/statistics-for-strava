@@ -19,10 +19,6 @@ use Money\Money;
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string', options: ['default' => GearType::IMPORTED->value])]
 class ImportedGear implements Gear
 {
-    private string $imageSrc;
-    private ActivityTypes $activityTypes;
-    private ?Money $purchasePrice = null;
-
     final private function __construct(
         #[ORM\Id, ORM\Column(type: 'string', unique: true)]
         private readonly GearId $gearId,
@@ -34,8 +30,10 @@ class ImportedGear implements Gear
         private readonly string $name,
         #[ORM\Column(type: 'boolean')]
         private readonly bool $isRetired,
+        private readonly ?string $imageSrc,
+        private readonly ActivityTypes $activityTypes,
+        private readonly ?Money $purchasePrice,
     ) {
-        $this->activityTypes = ActivityTypes::empty();
     }
 
     public static function create(
@@ -51,6 +49,9 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
+            imageSrc: null,
+            activityTypes: ActivityTypes::empty(),
+            purchasePrice: null,
         );
     }
 
@@ -67,6 +68,9 @@ class ImportedGear implements Gear
             distanceInMeter: $distanceInMeter,
             name: $name,
             isRetired: $isRetired,
+            imageSrc: null,
+            activityTypes: ActivityTypes::empty(),
+            purchasePrice: null,
         );
     }
 

@@ -9,6 +9,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\String\Name;
+use Money\Money;
 
 final readonly class RecordingDevice
 {
@@ -20,6 +21,7 @@ final readonly class RecordingDevice
         private Kilometer $distanceTracked,
         private Meter $elevationTracked,
         private int $numberOfWorkouts,
+        private ?Money $purchasePrice,
     ) {
     }
 
@@ -29,13 +31,15 @@ final readonly class RecordingDevice
         Kilometer $distanceTracked,
         Meter $elevationTracked,
         int $activityCount,
+        ?Money $purchasePrice,
     ): self {
         return new self(
             name: $name,
             timeTracked: $timeTracked,
             distanceTracked: $distanceTracked,
             elevationTracked: $elevationTracked,
-            numberOfWorkouts: $activityCount
+            numberOfWorkouts: $activityCount,
+            purchasePrice: $purchasePrice,
         );
     }
 
@@ -56,7 +60,7 @@ final readonly class RecordingDevice
 
     public function getTimeTrackedFormatted(): string
     {
-        return $this->formatDurationForHumans($this->getTimeTracked()->toInt());
+        return $this->formatVeryLongDurationForHumans($this->getTimeTracked()->toInt());
     }
 
     public function getDistanceTracked(): Kilometer

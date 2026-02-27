@@ -6,13 +6,15 @@ namespace App\Domain\Dashboard\Widget\DistanceBreakdown;
 
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
-use Carbon\CarbonInterval;
 
 final readonly class DistanceBreakdown
 {
+    use ProvideTimeFormats;
+
     private function __construct(
         private Activities $activities,
         private UnitSystem $unitSystem,
@@ -93,7 +95,7 @@ final readonly class DistanceBreakdown
             if ($statistics[$distanceBreakdown]['movingTime'] > 0) {
                 $statistics[$distanceBreakdown]['averageSpeed'] = ($statistics[$distanceBreakdown]['totalDistance'] / $statistics[$distanceBreakdown]['movingTime']) * 3600;
             }
-            $statistics[$distanceBreakdown]['movingTimeForHumans'] = CarbonInterval::seconds($statistics[$distanceBreakdown]['movingTime'])->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+            $statistics[$distanceBreakdown]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$distanceBreakdown]['movingTime']);
         }
 
         foreach ($statistics as $distanceBreakdown => $statistic) {

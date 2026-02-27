@@ -6,15 +6,17 @@ namespace App\Domain\Dashboard\Widget\WeekdayStats;
 
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
-use Carbon\CarbonInterval;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final readonly class WeekdayStats
 {
+    use ProvideTimeFormats;
+
     private function __construct(
         private Activities $activities,
         private TranslatorInterface $translator,
@@ -70,7 +72,7 @@ final readonly class WeekdayStats
             $statistics[$weekDay]['totalElevation'] = ($statistics[$weekDay]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
             $statistics[$weekDay]['movingTime'] = ($statistics[$weekDay]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$weekDay]['averageDistance'] = $statistics[$weekDay]['totalDistance'] / $statistics[$weekDay]['numberOfWorkouts'];
-            $statistics[$weekDay]['movingTimeForHumans'] = CarbonInterval::seconds($statistics[$weekDay]['movingTime'])->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+            $statistics[$weekDay]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$weekDay]['movingTime']);
             $statistics[$weekDay]['movingTimeInHours'] = Seconds::from($statistics[$weekDay]['movingTime'])->toHour();
             $statistics[$weekDay]['percentage'] = round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2);
         }
