@@ -132,7 +132,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 }
 
                 $combinedPoint = [
-                    $this->formatDurationForHumans($cumulativeMovingTime),
+                    $this->formatDurationAsClock($cumulativeMovingTime),
                 ];
 
                 if ($hasDistanceData) {

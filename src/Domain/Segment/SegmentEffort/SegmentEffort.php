@@ -137,7 +137,7 @@ final readonly class SegmentEffort implements SupportsAITooling
 
     public function getElapsedTimeFormatted(): string
     {
-        return $this->formatDurationForHumans((int) round($this->getElapsedTimeInSeconds()));
+        return $this->formatDurationAsClock((int) round($this->getElapsedTimeInSeconds()));
     }
 
     public function getAverageWatts(): ?float

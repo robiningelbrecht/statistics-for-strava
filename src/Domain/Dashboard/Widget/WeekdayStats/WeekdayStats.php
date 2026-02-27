@@ -72,7 +72,7 @@ final readonly class WeekdayStats
             $statistics[$weekDay]['totalElevation'] = ($statistics[$weekDay]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
             $statistics[$weekDay]['movingTime'] = ($statistics[$weekDay]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$weekDay]['averageDistance'] = $statistics[$weekDay]['totalDistance'] / $statistics[$weekDay]['numberOfWorkouts'];
-            $statistics[$weekDay]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$weekDay]['movingTime']);
+            $statistics[$weekDay]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$weekDay]['movingTime']);
             $statistics[$weekDay]['movingTimeInHours'] = Seconds::from($statistics[$weekDay]['movingTime'])->toHour();
             $statistics[$weekDay]['percentage'] = round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2);
         }

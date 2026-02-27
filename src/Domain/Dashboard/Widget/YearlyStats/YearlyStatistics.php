@@ -52,7 +52,7 @@ final readonly class YearlyStatistics
                 'totalElevation' => Meter::zero(),
                 'totalCalories' => 0,
                 'differenceInDistanceYearBefore' => null,
-                'movingTime' => $this->formatVeryLongDurationForHumans(0),
+                'movingTime' => $this->formatDurationAsHumanString(0),
                 'movingTimeInSeconds' => Seconds::zero(),
                 'movingTimeInHours' => Hour::zero(),
             ];
@@ -70,7 +70,7 @@ final readonly class YearlyStatistics
                 'totalDistance' => $yearlyStats['distance'],
                 'totalElevation' => $yearlyStats['elevation'],
                 'totalCalories' => $yearlyStats['calories'],
-                'movingTime' => $this->formatVeryLongDurationForHumans($yearlyStats['movingTime']->toInt()),
+                'movingTime' => $this->formatDurationAsHumanString($yearlyStats['movingTime']->toInt()),
                 'movingTimeInSeconds' => $yearlyStats['movingTime'],
                 'movingTimeInHours' => $yearlyStats['movingTime']->toHour(),
                 'differenceInDistanceYearBefore' => null,
@@ -95,7 +95,7 @@ final readonly class YearlyStatistics
             $statistics[$year->toInt()]['differenceInDistanceYearBefore'] = Kilometer::from($currentYear['totalDistance']->toFloat() - $previousYear['totalDistance']->toFloat());
             $statistics[$year->toInt()]['differenceInElevationYearBefore'] = Meter::from($currentYear['totalElevation']->toFloat() - $previousYear['totalElevation']->toFloat());
             $statistics[$year->toInt()]['differenceInMovingTimeInSecondsYearBefore'] = Seconds::from($differenceInMovingTime);
-            $statistics[$year->toInt()]['differenceInMovingTimeYearBefore'] = $this->formatVeryLongDurationForHumans(abs($differenceInMovingTime));
+            $statistics[$year->toInt()]['differenceInMovingTimeYearBefore'] = $this->formatDurationAsHumanString(abs($differenceInMovingTime));
         }
 
         return $statistics;

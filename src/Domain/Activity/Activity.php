@@ -559,7 +559,7 @@ final class Activity implements SupportsAITooling
 
     public function getMovingTimeFormatted(): string
     {
-        return $this->formatDurationForHumans($this->getMovingTimeInSeconds());
+        return $this->formatDurationAsClock($this->getMovingTimeInSeconds());
     }
 
     public function getUrl(): string

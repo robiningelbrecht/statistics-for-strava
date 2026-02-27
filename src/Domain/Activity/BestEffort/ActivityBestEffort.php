@@ -84,7 +84,7 @@ final readonly class ActivityBestEffort
 
     public function getFormattedTime(): string
     {
-        return $this->formatDurationForChartLabel($this->getTimeInSeconds());
+        return $this->formatDurationAsPaddedClock($this->getTimeInSeconds());
     }
 
     public function getBestEffortDistance(): ?ConvertableToMeter

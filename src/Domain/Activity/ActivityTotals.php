@@ -75,7 +75,7 @@ final class ActivityTotals
 
     public function getMovingTimeFormatted(): string
     {
-        return $this->formatVeryLongDurationForHumans($this->totalMovingTimeInSeconds);
+        return $this->formatDurationAsHumanString($this->totalMovingTimeInSeconds);
     }
 
     public function getMovingTimeInHours(): int

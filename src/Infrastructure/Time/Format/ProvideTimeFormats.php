@@ -8,12 +8,12 @@ use Carbon\CarbonInterval;
 
 trait ProvideTimeFormats
 {
-    public function formatVeryLongDurationForHumans(int $timeInSeconds): string
+    public function formatDurationAsHumanString(int $timeInSeconds): string
     {
         return CarbonInterval::seconds($timeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
     }
 
-    public function formatDurationForHumans(int $timeInSeconds): string
+    public function formatDurationAsClock(int $timeInSeconds): string
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 
@@ -33,7 +33,7 @@ trait ProvideTimeFormats
         return ltrim($movingTime, '0');
     }
 
-    public function formatDurationForChartLabel(int $timeInSeconds): string
+    public function formatDurationAsPaddedClock(int $timeInSeconds): string
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 
@@ -49,7 +49,7 @@ trait ProvideTimeFormats
         return $movingTime;
     }
 
-    public function formatDurationForHumansWithoutTrimming(int $timeInSeconds): string
+    public function formatDurationAsHHMMSS(int $timeInSeconds): string
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();
 
