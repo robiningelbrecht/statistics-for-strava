@@ -49,7 +49,7 @@
                 @apply inline-block px-4 py-2 rounded-lg hover:text-gray-900;
 
                 &.active {
-                    @apply shadow-xs bg-white text-gray-900;
+                    @apply shadow-xs bg-white text-gray-900 dark:bg-[#151b23];
                 }
             }
         }
