@@ -38,10 +38,13 @@
     }
 
     ul.tabs.tabs--menu-item {
-        @apply inline-flex flex-wrap gap-x-px text-sm font-medium text-center text-gray-500;
+        @apply inline-flex flex-nowrap gap-x-px max-w-full overflow-x-auto scrollbar-thin;;
+        @apply text-sm font-medium text-center text-gray-500;
         @apply p-0.5 border border-gray-200 bg-gray-100 rounded-lg mb-0.5;
 
         & > li {
+            @apply shrink-0;
+
             & > a {
                 @apply inline-block px-4 py-2 rounded-lg hover:text-gray-900;
 

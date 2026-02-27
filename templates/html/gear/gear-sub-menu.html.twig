@@ -3,7 +3,7 @@
         <li>
             <a href="#" data-router-navigate="{{ relativeUrl('gear') }}"
                class="{{ activeMenuItem == 'gear' ? 'active' : '' }}">
-                {{ "Stats"|trans }}
+                {{ "Gear"|trans }}
             </a>
         </li>
         <li>
@@ -14,6 +14,12 @@
                           title="{{ "One of your gear maintenance tasks is due"|trans }}"></span>
                 {% endif %}
                 {{ "Maintenance"|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="#" data-router-navigate="{{ relativeUrl('gear/recording-devices') }}"
+               class="{{ activeMenuItem == 'recordingDevices' ? 'active' : '' }}">
+                {{ "Recording devices"|trans }}
             </a>
         </li>
     </ul>
