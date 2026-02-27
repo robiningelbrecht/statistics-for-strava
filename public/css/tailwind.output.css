@@ -2543,9 +2543,6 @@
   .border-red-500 {
     border-color: var(--color-red-500);
   }
-  .border-strava-orange {
-    border-color: var(--color-strava-orange);
-  }
   .border-yellow-300 {
     border-color: var(--color-yellow-300);
   }
@@ -4802,9 +4799,30 @@
     }
   }
   ul.tabs.tabs--menu-item {
+    &::-webkit-scrollbar-track {
+      background-color: var(--scrollbar-track);
+      border-radius: var(--scrollbar-track-radius);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb);
+      border-radius: var(--scrollbar-thumb-radius);
+    }
+    &::-webkit-scrollbar-corner {
+      background-color: var(--scrollbar-corner);
+      border-radius: var(--scrollbar-corner-radius);
+    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+    &::-webkit-scrollbar {
+      display: block;
+      width: 8px;
+      height: 8px;
+    }
     display: inline-flex;
-    flex-wrap: wrap;
+    max-width: 100%;
+    flex-wrap: nowrap;
     column-gap: 1px;
+    overflow-x: auto;
     text-align: center;
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
@@ -4819,6 +4837,7 @@
     background-color: var(--color-gray-100);
     padding: calc(var(--spacing) * 0.5);
     & > li {
+      flex-shrink: 0;
       & > a {
         display: inline-block;
         border-radius: var(--radius-lg);

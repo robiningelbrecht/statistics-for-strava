@@ -1,0 +1,121 @@
+<div class="flex items-center justify-between mb-5">
+    {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [
+        {
+            'url': 'gear',
+            'label': 'Gear'|trans
+        },
+        {
+            'url': 'gear/recording-devices',
+            'label': 'Recording devices'|trans
+        }],
+        'disableMargin': true} %}
+    <a href="#" data-model-content-url="{{ relativeUrl('gear/info.html') }}">
+        <svg class="size-4 text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/></svg>
+    </a>
+</div>
+{% autoescape false %}
+    <!-- GEAR SUB MENU -->
+    {% include 'html/gear/gear-sub-menu.html.twig' with {activeMenuItem: 'recordingDevices', maintenanceTaskIsDue: maintenanceTaskIsDue} %}
+    <div class="grid grid-cols-1 mb-4">
+        <!-- RECORDING DEVICE STATS -->
+        <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+            <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-lg font-semibold">
+                    {{ "Recording devices"|trans }}
+                </h3>
+            </div>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-center text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th rowspan="2" scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+
+                        </th>
+                        <th rowspan="2" scope="col" class="px-6 py-3">
+                            # {{ "workouts"|trans }}
+                        </th>
+                        <th rowspan="2" scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('distance') }}
+                            </div>
+                        </th>
+                        <th rowspan="2" scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('elevation') }}
+                            </div>
+                        </th>
+                        <th rowspan="2" scope="col" class="px-6 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('time') }}
+                            </div>
+                        </th>
+                        <th rowspan="2" scope="col" class="px-2 py-3">
+                            <div class="flex items-center justify-center">
+                                {{ svg('wallet') }}
+                            </div>
+                        </th>
+                        <th colspan="2" scope="col" class="px-2 py-3">
+                            {{ "Relative cost"|trans }}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                            {{ "per hour"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                            {{ "per activity"|trans }}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for recordingDevice in devices %}
+                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
+                            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loopIndex) }}">
+                                <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-filters='{{ dataFilters('activities', {device: recordingDevice.getId()}) }}' class="font-medium text-blue-600 hover:underline">
+                                    {{ recordingDevice.getName() }}
+                                </a>
+                            </th>
+                            <td class="px-6 py-2 truncate">
+                                {{ recordingDevice.getNumberOfWorkouts() }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ recordingDevice.getDistanceTracked()|renderMeasurement(0) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ recordingDevice.getElevationTracked()|renderMeasurement(0) }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {{ recordingDevice.getTimeTrackedFormatted() }}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% set purchasePrice = recordingDevice.getPurchasePrice() %}
+                                {% if purchasePrice %}
+                                    {{ purchasePrice|formatMoney }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% set relativeCostPerHour = recordingDevice.getRelativeCostPerHour() %}
+                                {% if relativeCostPerHour %}
+                                    {{ relativeCostPerHour|formatMoney }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% set relativeCostPerWorkout = recordingDevice.getRelativeCostPerWorkout() %}
+                                {% if relativeCostPerWorkout %}
+                                    {{ relativeCostPerWorkout|formatMoney }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endautoescape %}
