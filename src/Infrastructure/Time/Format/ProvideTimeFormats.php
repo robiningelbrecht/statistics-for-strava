@@ -8,6 +8,11 @@ use Carbon\CarbonInterval;
 
 trait ProvideTimeFormats
 {
+    public function formatVeryLongDurationForHumans(int $timeInSeconds): string
+    {
+        return CarbonInterval::seconds($timeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+    }
+
     public function formatDurationForHumans(int $timeInSeconds): string
     {
         $interval = CarbonInterval::seconds($timeInSeconds)->cascade();

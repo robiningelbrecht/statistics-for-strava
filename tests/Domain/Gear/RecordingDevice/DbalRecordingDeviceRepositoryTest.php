@@ -74,6 +74,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
                     distanceTracked: Meter::from(30000)->toKilometer(),
                     elevationTracked: Meter::from(300),
                     activityCount: 2,
+                    purchasePrice: null,
                 ),
                 RecordingDevice::fromState(
                     name: 'Garmin Forerunner 945',
@@ -81,6 +82,7 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
                     distanceTracked: Meter::from(5000)->toKilometer(),
                     elevationTracked: Meter::from(50),
                     activityCount: 1,
+                    purchasePrice: null,
                 ),
             ]),
             $devices,

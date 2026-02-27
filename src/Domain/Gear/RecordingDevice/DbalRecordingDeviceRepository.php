@@ -31,6 +31,7 @@ final readonly class DbalRecordingDeviceRepository extends DbalRepository implem
                 distanceTracked: Meter::from((float) $result['totalDistance'])->toKilometer(),
                 elevationTracked: Meter::from((float) $result['totalElevation']),
                 activityCount: (int) $result['activityCount'],
+                purchasePrice: null
             ),
             $results,
         ));

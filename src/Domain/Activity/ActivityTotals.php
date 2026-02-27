@@ -2,6 +2,7 @@
 
 namespace App\Domain\Activity;
 
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -10,6 +11,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ActivityTotals
 {
+    use ProvideTimeFormats;
+
     public static ?ActivityTotals $instance = null;
 
     private readonly Kilometer $totalDistance;
@@ -72,7 +75,7 @@ final class ActivityTotals
 
     public function getMovingTimeFormatted(): string
     {
-        return CarbonInterval::seconds($this->totalMovingTimeInSeconds)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+        return $this->formatVeryLongDurationForHumans($this->totalMovingTimeInSeconds);
     }
 
     public function getMovingTimeInHours(): int

@@ -6,14 +6,16 @@ namespace App\Domain\Dashboard\Widget\DaytimeStats;
 
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
-use Carbon\CarbonInterval;
 
 final readonly class DaytimeStats
 {
+    use ProvideTimeFormats;
+
     private function __construct(
         private Activities $activities,
     ) {
@@ -55,7 +57,7 @@ final readonly class DaytimeStats
             $statistics[$daytime->value]['totalElevation'] = ($statistics[$daytime->value]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
             $statistics[$daytime->value]['movingTime'] = ($statistics[$daytime->value]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
             $statistics[$daytime->value]['averageDistance'] = $statistics[$daytime->value]['totalDistance'] / $statistics[$daytime->value]['numberOfWorkouts'];
-            $statistics[$daytime->value]['movingTimeForHumans'] = CarbonInterval::seconds($statistics[$daytime->value]['movingTime'])->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+            $statistics[$daytime->value]['movingTimeForHumans'] = $this->formatVeryLongDurationForHumans($statistics[$daytime->value]['movingTime']);
             $statistics[$daytime->value]['movingTimeInHours'] = Seconds::from($statistics[$daytime->value]['movingTime'])->toHour();
             $statistics[$daytime->value]['percentage'] = round($statistics[$daytime->value]['movingTime'] / $totalMovingTime * 100, 2);
         }

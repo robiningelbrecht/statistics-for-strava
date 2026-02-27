@@ -96,6 +96,6 @@ final readonly class MeasurementTwigExtension
     #[AsTwigFilter('formatSeconds')]
     public function formatSeconds(Seconds $seconds): string
     {
-        return CarbonInterval::seconds($seconds->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+        return $this->formatVeryLongDurationForHumans($seconds->toInt());
     }
 }

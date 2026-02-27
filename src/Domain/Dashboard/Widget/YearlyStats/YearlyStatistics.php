@@ -6,15 +6,17 @@ namespace App\Domain\Dashboard\Widget\YearlyStats;
 
 use App\Domain\Activity\ActivityType;
 use App\Domain\Dashboard\Widget\YearlyStats\FindYearlyStats\FindYearlyStatsResponse;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\Years;
-use Carbon\CarbonInterval;
 
 final readonly class YearlyStatistics
 {
+    use ProvideTimeFormats;
+
     private function __construct(
         private FindYearlyStatsResponse $yearlyStats,
         private ActivityType $activityType,
@@ -50,7 +52,7 @@ final readonly class YearlyStatistics
                 'totalElevation' => Meter::zero(),
                 'totalCalories' => 0,
                 'differenceInDistanceYearBefore' => null,
-                'movingTime' => CarbonInterval::seconds(0)->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
+                'movingTime' => $this->formatVeryLongDurationForHumans(0),
                 'movingTimeInSeconds' => Seconds::zero(),
                 'movingTimeInHours' => Hour::zero(),
             ];
@@ -68,7 +70,7 @@ final readonly class YearlyStatistics
                 'totalDistance' => $yearlyStats['distance'],
                 'totalElevation' => $yearlyStats['elevation'],
                 'totalCalories' => $yearlyStats['calories'],
-                'movingTime' => CarbonInterval::seconds($yearlyStats['movingTime']->toInt())->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']),
+                'movingTime' => $this->formatVeryLongDurationForHumans($yearlyStats['movingTime']->toInt()),
                 'movingTimeInSeconds' => $yearlyStats['movingTime'],
                 'movingTimeInHours' => $yearlyStats['movingTime']->toHour(),
                 'differenceInDistanceYearBefore' => null,
@@ -93,7 +95,7 @@ final readonly class YearlyStatistics
             $statistics[$year->toInt()]['differenceInDistanceYearBefore'] = Kilometer::from($currentYear['totalDistance']->toFloat() - $previousYear['totalDistance']->toFloat());
             $statistics[$year->toInt()]['differenceInElevationYearBefore'] = Meter::from($currentYear['totalElevation']->toFloat() - $previousYear['totalElevation']->toFloat());
             $statistics[$year->toInt()]['differenceInMovingTimeInSecondsYearBefore'] = Seconds::from($differenceInMovingTime);
-            $statistics[$year->toInt()]['differenceInMovingTimeYearBefore'] = CarbonInterval::seconds(abs($differenceInMovingTime))->cascade()->forHumans(['short' => true, 'minimumUnit' => 'minute']);
+            $statistics[$year->toInt()]['differenceInMovingTimeYearBefore'] = $this->formatVeryLongDurationForHumans(abs($differenceInMovingTime));
         }
 
         return $statistics;
