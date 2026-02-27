@@ -1,8 +1,8 @@
 @layer components {
-    div.tabs.tabs--default{
+    div.tabs.tabs--default {
         @apply mb-4 border-b-2 border-gray-100;
 
-        & > ul{
+        & > ul {
             @apply flex gap-x-2 overflow-x-auto -mb-0.5 text-sm font-medium text-center;
 
             & > li {
@@ -15,7 +15,7 @@
         }
     }
 
-    ul.tabs.tabs--pills{
+    ul.tabs.tabs--pills {
         @apply inline-flex rounded-md shadow-xs divide-x divide-gray-200;
 
         & > li {
@@ -26,6 +26,21 @@
 
                 &.active {
                     @apply text-strava-orange;
+                }
+            }
+        }
+    }
+
+    ul.tabs.tabs--menu-item {
+        @apply inline-flex flex-wrap gap-x-px text-sm font-medium text-center text-gray-500;
+        @apply p-0.5 border border-gray-200 bg-gray-100 rounded-lg mb-0.5;
+
+        & > li {
+            & > a {
+                @apply inline-block px-4 py-2 rounded-lg hover:text-gray-900;
+
+                &.active {
+                    @apply shadow-xs bg-white text-gray-900;
                 }
             }
         }

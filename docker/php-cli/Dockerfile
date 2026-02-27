@@ -45,13 +45,12 @@ COPY ./xdebug.ini "${PHP_INI_DIR}/conf.d"
 RUN rm pie.phar
 
 # Install Blackfire.
-RUN mkdir -p /tmp/blackfire \
-    && architecture=$(uname -m) \
-    && curl -A "Docker" -L https://blackfire.io/api/v1/releases/cli/linux/$architecture | tar zxp -C /tmp/blackfire \
-    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
-    && rm -Rf /tmp/blackfire
-
-RUN blackfire php:install
+#RUN mkdir -p /tmp/blackfire \
+#    && architecture=$(uname -m) \
+#    && curl -A "Docker" -L https://blackfire.io/api/v1/releases/cli/linux/$architecture | tar zxp -C /tmp/blackfire \
+#    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
+#    && rm -Rf /tmp/blackfire
+# RUN blackfire php:install
 
 # Download Caddy to be able to format config file.
 RUN curl -L -o "/tmp/caddy.tar.gz" https://github.com/caddyserver/caddy/releases/download/v2.10.2/caddy_2.10.2_linux_amd64.tar.gz

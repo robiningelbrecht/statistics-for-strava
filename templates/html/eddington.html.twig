@@ -32,17 +32,16 @@
                  {% set eddingtonsForUnitSystem = eddingtons|filter(e => e.getUnitSystem() == unitSystem) %}
                  <div id="eddingtonUnitSystem{{ unitSystem.value }}Tab" role="tabpanel" aria-labelledby="eddingtonUnitSystem{{ unitSystem.value }}Tab">
                      {% if eddingtonsForUnitSystem|length > 1 %}
-                         <div class="tabs tabs--default mb-2">
-                             <ul id="eddington{{ unitSystem.value }}Tab" data-tabs="#eddington{{ unitSystem.value }}TabContent" role="tablist">
-                                 {% for eddington in eddingtonsForUnitSystem %}
-                                     <li role="presentation">
-                                         <a href="#" data-tabs-target="#{{ eddington.getId() }}" role="tab" aria-controls="{{ eddington.getId() }}">
-                                             {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
-                                         </a>
-                                     </li>
-                                 {% endfor %}
-                             </ul>
-                         </div>
+                         <ul class="tabs tabs--menu-item" id="eddington{{ unitSystem.value }}Tab" data-tabs="#eddington{{ unitSystem.value }}TabContent" role="tablist"
+                             data-tabs-active-classes="active" data-tabs-inactive-classes="inactive">
+                             {% for eddington in eddingtonsForUnitSystem %}
+                                 <li role="presentation">
+                                     <a href="#" data-tabs-target="#{{ eddington.getId() }}" role="tab" aria-controls="{{ eddington.getId() }}">
+                                         {{ eddington.getLabel() }} ({{ eddington.getNumber() }})
+                                     </a>
+                                 </li>
+                             {% endfor %}
+                         </ul>
                      {% endif %}
                      <div id="eddington{{ unitSystem.value }}TabContent">
                          {% for eddington in eddingtonsForUnitSystem %}

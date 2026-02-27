@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.0 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.2.1 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -4781,6 +4781,43 @@
         }
         &.active {
           color: var(--color-strava-orange);
+        }
+      }
+    }
+  }
+  ul.tabs.tabs--menu-item {
+    display: inline-flex;
+    flex-wrap: wrap;
+    column-gap: 1px;
+    text-align: center;
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-500);
+    margin-bottom: calc(var(--spacing) * 0.5);
+    border-radius: var(--radius-lg);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    border-color: var(--color-gray-200);
+    background-color: var(--color-gray-100);
+    padding: calc(var(--spacing) * 0.5);
+    & > li {
+      & > a {
+        display: inline-block;
+        border-radius: var(--radius-lg);
+        padding-inline: calc(var(--spacing) * 4);
+        padding-block: calc(var(--spacing) * 2);
+        &:hover {
+          @media (hover: hover) {
+            color: var(--color-gray-900);
+          }
+        }
+        &.active {
+          background-color: var(--color-white);
+          color: var(--color-gray-900);
+          --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
+          box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
         }
       }
     }
