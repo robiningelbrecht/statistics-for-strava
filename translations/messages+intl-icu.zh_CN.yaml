@@ -53,6 +53,7 @@ Commutes: 通勤
 'Commutes only': 仅通勤
 Compare: 对比
 'Compare to': 对比
+'Completed activity number {threshold} (total: {totalCount})': 'Completed activity number {threshold} (total: {totalCount})'
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -105,6 +106,7 @@ Feb: 二月
 'Filter on country': 按国家筛选
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
+'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Fitness: 健身
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
@@ -191,6 +193,7 @@ May: 五月
 Medium: 中等
 Metric: Metric
 Metrics: Metrics
+Milestones: Milestones
 'Mind & Body Sports': 心灵与身体运动
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 适度单调性
@@ -206,9 +209,11 @@ Morning: 早晨
 'Moving time': 移动时间
 Name: 名称
 Neutral: Neutral
+'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
 Night: 夜晚
 'No activities': 没有活动
 'No data available': 没有可用数据
+'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 无可供比较的其他选项
 None: 无
 'Nordic Ski': 北欧滑雪
@@ -248,11 +253,16 @@ Power: 功率
 'Power distribution': 功率分布
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
 'Prev year': 去年
+'Previous: {label} on {date}': 'Previous: {label} on {date}'
 Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
 Ranking: Ranking
+'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} total distance (actual: {totalDistance})': 'Reached {threshold} total distance (actual: {totalDistance})'
+'Reached {threshold} total elevation (actual: {totalElevation})': 'Reached {threshold} total elevation (actual: {totalElevation})'
+'Reached {threshold} total moving time (actual: {totalMovingTime})': 'Reached {threshold} total moving time (actual: {totalMovingTime})'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -428,11 +438,13 @@ never: 从不
 'on': 在
 'per activity': 每项活动
 'per hour': 每小时
+'previous: {previousValue}': 'previous: {previousValue}'
 to: 至
 total: 总计
 weeks: 周
 workouts: 锻炼
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
+'{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel}每{interval}'
 '{numberOfActivities} activities': '{numberOfActivities}活动'

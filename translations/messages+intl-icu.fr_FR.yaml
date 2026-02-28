@@ -53,6 +53,7 @@ Commutes: 'Trajets domicile-travail'
 'Commutes only': 'Trajets domicile-travail uniquement'
 Compare: Comparer
 'Compare to': 'Comparer à'
+'Completed activity number {threshold} (total: {totalCount})': 'Completed activity number {threshold} (total: {totalCount})'
 'Congrats! You achieved personal bests during this activity.': 'Félicitations ! Vous avez réalisé vos meilleures performances personnelles lors de cette activité.'
 'Consider reducing load': 'Envisagez de réduire la charge'
 Consistency: Uniformité
@@ -105,6 +106,7 @@ Feb: Fév
 'Filter on country': 'Filtrer par pays'
 'Filter on sport type': 'Filtrer par type de sport'
 'Filter on starred segments': 'Filtrer sur les segments favoris'
+'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Fitness: Forme
 'Fitness may be declining due to low recent training load': "La forme physique peut diminuer en raison d'une charge d'entraînement récente basse."
 'Fitness may decline': 'La forme physique peut diminuer'
@@ -191,6 +193,7 @@ May: Mai
 Medium: Moyen
 Metric: Metric
 Metrics: Métriques
+Milestones: Milestones
 'Mind & Body Sports': "Sports du corps et de l'esprit"
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Monotonie modérée'
@@ -206,9 +209,11 @@ Morning: Matin
 'Moving time': 'Temps en mouvement'
 Name: Nom
 Neutral: Neutral
+'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
 Night: Nuit
 'No activities': 'Aucune activité'
 'No data available': 'Aucune donnée disponible'
+'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'Aucune autre option à comparer'
 None: Aucun
 'Nordic Ski': 'Ski nordique'
@@ -248,11 +253,16 @@ Power: Puissance
 'Power distribution': 'Répartition de la puissance'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Alimenté par une estimation de {caloriesBurned} calories, soit environ {numberOfPizzaSlices} parts de pizza 🍕.'
 'Prev year': 'Année précédente'
+'Previous: {label} on {date}': 'Previous: {label} on {date}'
 Race: Course
 'Racing Score': 'Score de course'
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
 Ranking: Ranking
+'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} total distance (actual: {totalDistance})': 'Reached {threshold} total distance (actual: {totalDistance})'
+'Reached {threshold} total elevation (actual: {totalElevation})': 'Reached {threshold} total elevation (actual: {totalElevation})'
+'Reached {threshold} total moving time (actual: {totalMovingTime})': 'Reached {threshold} total moving time (actual: {totalMovingTime})'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -428,11 +438,13 @@ never: jamais
 'on': 'on'
 'per activity': 'par activité'
 'per hour': 'par heure'
+'previous: {previousValue}': 'previous: {previousValue}'
 to: à
 total: total
 weeks: semaines
 workouts: entraînements
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} jours'
+'{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} heures'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} toutes les {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activités'

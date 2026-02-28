@@ -53,6 +53,7 @@ Commutes: Commutes
 'Commutes only': 'Commutes only'
 Compare: Compare
 'Compare to': 'Compare to'
+'Completed activity number {threshold} (total: {totalCount})': 'Completed activity number {threshold} (total: {totalCount})'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -105,6 +106,7 @@ Feb: Feb
 'Filter on country': 'Filter on country'
 'Filter on sport type': 'Filter on sport type'
 'Filter on starred segments': 'Filter on starred segments'
+'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Fitness: Fitness
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
@@ -191,6 +193,7 @@ May: May
 Medium: Medium
 Metric: Metric
 Metrics: Metrics
+Milestones: Milestones
 'Mind & Body Sports': 'Mind & Body Sports'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Moderate monotony'
@@ -206,9 +209,11 @@ Morning: Morning
 'Moving time': 'Moving time'
 Name: Name
 Neutral: Neutral
+'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
 Night: Night
 'No activities': 'No activities'
 'No data available': 'No data available'
+'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'No other options to compare with'
 None: None
 'Nordic Ski': 'Nordic Ski'
@@ -248,11 +253,16 @@ Power: Power
 'Power distribution': 'Power distribution'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Prev year'
+'Previous: {label} on {date}': 'Previous: {label} on {date}'
 Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
 Ranking: Ranking
+'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} total distance (actual: {totalDistance})': 'Reached {threshold} total distance (actual: {totalDistance})'
+'Reached {threshold} total elevation (actual: {totalElevation})': 'Reached {threshold} total elevation (actual: {totalElevation})'
+'Reached {threshold} total moving time (actual: {totalMovingTime})': 'Reached {threshold} total moving time (actual: {totalMovingTime})'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -428,11 +438,13 @@ never: never
 'on': 'on'
 'per activity': 'per activity'
 'per hour': 'per hour'
+'previous: {previousValue}': 'previous: {previousValue}'
 to: to
 total: total
 weeks: weeks
 workouts: workouts
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
+'{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} every {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
