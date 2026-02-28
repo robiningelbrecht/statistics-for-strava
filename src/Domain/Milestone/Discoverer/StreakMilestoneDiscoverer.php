@@ -4,12 +4,108 @@ declare(strict_types=1);
 
 namespace App\Domain\Milestone\Discoverer;
 
+use App\Domain\Milestone\Context\StreakContext;
+use App\Domain\Milestone\FunComparison\StreakFunComparison;
+use App\Domain\Milestone\Milestone;
+use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
+use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use Doctrine\DBAL\Connection;
 
 final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
 {
+    public function __construct(
+        private Connection $connection,
+    ) {
+    }
+
+    private const array THRESHOLDS = [
+        7, 14, 21, 30, 45, 60, 90, 100,
+        120, 150, 180, 250, 365, 500, 730,
+    ];
+
     public function discover(): Milestones
     {
-        return Milestones::empty();
+        $rows = $this->connection->executeQuery(
+            'SELECT DISTINCT DATE(startDateTime) as activityDate
+             FROM Activity
+             ORDER BY activityDate ASC'
+        )->fetchAllAssociative();
+
+        $milestones = [];
+        $streakDays = 0;
+        $longestStreakReached = 0;
+        $previousDate = null;
+        $thresholdIndex = 0;
+        /** @var ?Milestone $previousMilestone */
+        $previousMilestone = null;
+
+        foreach ($rows as $row) {
+            $currentDate = new \DateTimeImmutable($row['activityDate']);
+
+            if (!$previousDate instanceof \DateTimeImmutable) {
+                $streakDays = 1;
+            } else {
+                $diff = (int) $previousDate->diff($currentDate)->days;
+                if (1 === $diff) {
+                    ++$streakDays;
+                } else {
+                    $streakDays = 1;
+                    $thresholdIndex = $this->findThresholdIndex($longestStreakReached);
+                }
+            }
+
+            if ($streakDays > $longestStreakReached) {
+                $longestStreakReached = $streakDays;
+            }
+
+            while ($thresholdIndex < count(self::THRESHOLDS) && $streakDays >= self::THRESHOLDS[$thresholdIndex]) {
+                $threshold = self::THRESHOLDS[$thresholdIndex];
+                $achievedOn = SerializableDateTime::fromString($row['activityDate']);
+
+                $previous = null;
+                if ($previousMilestone) {
+                    $previousContext = $previousMilestone->getContext();
+                    assert($previousContext instanceof StreakContext);
+                    $previous = PreviousMilestone::create(
+                        label: $previousContext->days.' days',
+                        achievedOn: $previousMilestone->getAchievedOn(),
+                    );
+                }
+
+                $milestone = Milestone::create(
+                    achievedOn: $achievedOn,
+                    category: MilestoneCategory::STREAK,
+                    sportType: null,
+                    activityId: null,
+                    title: $threshold.' day streak',
+                    context: new StreakContext(
+                        days: $threshold,
+                    ),
+                    previous: $previous,
+                    funComparison: StreakFunComparison::resolve($threshold),
+                );
+
+                $milestones[] = $milestone;
+                $previousMilestone = $milestone;
+                ++$thresholdIndex;
+            }
+
+            $previousDate = $currentDate;
+        }
+
+        return Milestones::fromArray($milestones);
+    }
+
+    private function findThresholdIndex(int $longestStreakReached): int
+    {
+        foreach (self::THRESHOLDS as $index => $threshold) {
+            if ($threshold > $longestStreakReached) {
+                return $index;
+            }
+        }
+
+        return count(self::THRESHOLDS);
     }
 }
