@@ -11,7 +11,7 @@ use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
@@ -49,19 +49,19 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
         $symbol = $this->unitSystem->distanceSymbol();
 
         $milestones = [];
-        $cumulativeDistanceKm = 0.0;
+        $cumulativeDistanceM = 0.0;
         $thresholdIndex = 0;
         /** @var ?Milestone $previousMilestone */
         $previousMilestone = null;
 
         foreach ($rows as $row) {
-            $distanceKm = (float) $row['distance'];
-            if ($distanceKm <= 0) {
+            $distanceM = (float) $row['distance'];
+            if ($distanceM <= 0) {
                 continue;
             }
 
-            $cumulativeDistanceKm += $distanceKm;
-            $cumulativeInUnit = Kilometer::from($cumulativeDistanceKm)->toUnitSystem($this->unitSystem);
+            $cumulativeDistanceM += $distanceM;
+            $cumulativeInUnit = Meter::from($cumulativeDistanceM)->toKilometer()->toUnitSystem($this->unitSystem);
 
             while ($thresholdIndex < count($thresholds) && $cumulativeInUnit->toFloat() >= $thresholds[$thresholdIndex]) {
                 $threshold = $thresholds[$thresholdIndex];
