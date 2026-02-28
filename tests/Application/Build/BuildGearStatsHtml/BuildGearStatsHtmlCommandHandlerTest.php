@@ -28,4 +28,29 @@ class BuildGearStatsHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildGearStatsHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
         $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
     }
+
+    public function testHandleWithoutUnspecifiedGear(): void
+    {
+        $this->addGeneralFixtures();
+        $this->addGearFixtures();
+
+        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
+        $activityRepository->add(ActivityWithRawData::fromState(
+            activity: ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed('b12659861'))
+                ->build(),
+            rawData: []
+        ));
+        $activityRepository->add(ActivityWithRawData::fromState(
+            activity: ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed('b12659862'))
+                ->build(),
+            rawData: []
+        ));
+
+        $this->commandBus->dispatch(new BuildGearStatsHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
+        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+    }
 }
