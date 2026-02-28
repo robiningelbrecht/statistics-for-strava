@@ -170,7 +170,7 @@ metrics:
       showInDashboardWidget: false
       sportTypesToInclude: ['Walk', 'Hike']
 gear:
-    # Optional, Used to enrich gear with data that cannot be configured in Strava.  
+    # Optional, used to enrich gear with data that cannot be configured in Strava.  
     stravaGear:
       # The Strava gear ID.
       # ⚠️ Do NOT copy the gear ID from the Strava URL, that value will not work.
@@ -185,6 +185,16 @@ gear:
     # Optional, this is useful for gear that Strava doesn't allow you to track
     # Read how to configure on https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear      
     customGear: []
+    # Optional, used to enrich recording devices with data that cannot be configured in Strava.  
+    recordingDevices:
+      # The recording device ID.
+      # Open the recording device details popup (click the question-mark icon in the top-right corner of the recording device page) 
+      # and copy the ID shown there.
+      - gearId: 'garmin-forerunner-265'
+        # Used to calculate the relative cost per workout and hour.
+        purchasePrice:
+          amountInCents: 29950
+          currency: EUR
 zwift:
   # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
