@@ -2,15 +2,23 @@
 
 namespace App\Tests\Domain\Gear\CustomGear;
 
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\ActivityTypes;
+use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\CustomGear\DbalCustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\String\Tag;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -35,6 +43,8 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
 
     public function testFindAll(): void
     {
+        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
+
         $gearOne = CustomGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
@@ -57,9 +67,34 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
             ->build();
         $this->customGearRepository->save($gearFour);
 
+        $activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed(2))
+                ->withDistance(Kilometer::from(15))
+                ->withElevation(Meter::from(150))
+                ->withMovingTimeInSeconds(5400)
+                ->build(),
+            []
+        ));
+        $activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed(2))
+                ->withDistance(Kilometer::from(25))
+                ->withElevation(Meter::from(250))
+                ->withMovingTimeInSeconds(9000)
+                ->build(),
+            []
+        ));
+
         $this->assertEquals(
             Gears::fromArray([
-                $gearTwo->withFullTag(Tag::fromString('#sfs-2')),
+                $gearTwo->withFullTag(Tag::fromString('#sfs-2'))
+                    ->withMovingTime(Seconds::from(14400))
+                    ->withElevation(Meter::from(400))
+                    ->withNumberOfActivities(2)
+                    ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
                 $gearOne->withFullTag(Tag::fromString('#sfs-1')),
                 $gearThree->withFullTag(Tag::fromString('#sfs-3')),
                 $gearFour->withFullTag(Tag::fromString('#sfs-4')),

@@ -2,14 +2,22 @@
 
 namespace App\Tests\Domain\Gear\ImportedGear;
 
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\ActivityTypes;
+use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\Gears;
 use App\Domain\Gear\ImportedGear\DbalImportedGearRepository;
 use App\Domain\Gear\ImportedGear\ImportedGearConfig;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\CustomGear\CustomGearBuilder;
 
 class DbalImportedGearRepositoryTest extends ContainerTestCase
@@ -47,6 +55,8 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
 
     public function testFindAll(): void
     {
+        $activityRepository = $this->getContainer()->get(ActivityRepository::class);
+
         $gearOne = ImportedGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
             ->withDistanceInMeter(Meter::from(1230))
@@ -69,9 +79,55 @@ class DbalImportedGearRepositoryTest extends ContainerTestCase
             ->build();
         $this->importedGearRepository->save($gearFour);
 
+        $activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('1'))
+                ->withGearId(GearId::fromUnprefixed(1))
+                ->withDistance(Kilometer::from(10))
+                ->withElevation(Meter::from(100))
+                ->withMovingTimeInSeconds(3600)
+                ->build(),
+            []
+        ));
+        $activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('2'))
+                ->withGearId(GearId::fromUnprefixed(1))
+                ->withDistance(Kilometer::from(20))
+                ->withElevation(Meter::from(200))
+                ->withMovingTimeInSeconds(7200)
+                ->build(),
+            []
+        ));
+        $activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('3'))
+                ->withGearId(GearId::fromUnprefixed(2))
+                ->withDistance(Kilometer::from(5))
+                ->withElevation(Meter::from(50))
+                ->withMovingTimeInSeconds(1800)
+                ->build(),
+            []
+        ));
+
+        $result = $this->importedGearRepository->findAll();
+
         $this->assertEquals(
-            Gears::fromArray([$gearTwo, $gearOne, $gearThree, $gearFour]),
-            $this->importedGearRepository->findAll()
+            Gears::fromArray([
+                $gearTwo
+                    ->withMovingTime(Seconds::from(1800))
+                    ->withElevation(Meter::from(50))
+                    ->withNumberOfActivities(1)
+                    ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
+                $gearOne
+                    ->withMovingTime(Seconds::from(10800))
+                    ->withElevation(Meter::from(300))
+                    ->withNumberOfActivities(2)
+                    ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
+                $gearThree,
+                $gearFour,
+            ]),
+            $result
         );
     }
 

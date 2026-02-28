@@ -4,19 +4,16 @@ namespace App\Domain\Gear;
 
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
-use App\Infrastructure\Time\Format\ProvideTimeFormats;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
-use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class GearStatistics
 {
-    use ProvideTimeFormats;
-
     private function __construct(
-        private Activities $activities,
         private Gears $gears,
+        private Activities $activities,
     ) {
     }
 
@@ -25,76 +22,52 @@ final readonly class GearStatistics
         Gears $gears): self
     {
         return new self(
-            activities: $activities,
-            gears: $gears
+            gears: $gears,
+            activities: $activities
         );
     }
 
-    /**
-     * @return array<int, mixed>
-     */
-    public function getForActiveGear(): array
+    public function getActiveGear(): Gears
     {
-        $statistics = $this->buildStatistics($this->gears->filter(fn (Gear $gear): bool => !$gear->isRetired()));
+        $activeGear = $this->gears->filter(fn (Gear $gear): bool => !$gear->isRetired());
 
-        $activitiesWithOtherGear = $this->activities->filter(fn (Activity $activity): bool => !$activity->getGearId() instanceof GearId);
-        $countActivitiesWithOtherGear = count($activitiesWithOtherGear);
-        if (0 === $countActivitiesWithOtherGear) {
-            return $statistics;
+        $unspecifiedGear = $this->buildUnspecifiedGear();
+        if ($unspecifiedGear instanceof Gear) {
+            $activeGear->add($unspecifiedGear);
         }
-        $distanceWithOtherGear = Kilometer::from($activitiesWithOtherGear->sum(fn (Activity $activity): float => $activity->getDistance()->toFloat()));
-        $movingTimeInSeconds = $activitiesWithOtherGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
 
-        $statistics[] = [
-            'id' => GearId::none(),
-            'name' => 'Unspecified',
-            'distance' => $distanceWithOtherGear,
-            'numberOfWorkouts' => $countActivitiesWithOtherGear,
-            'movingTime' => $this->formatDurationAsHumanString((int) $movingTimeInSeconds),
-            'movingTimeInHours' => Seconds::from($movingTimeInSeconds)->toHour(),
-            'elevation' => Meter::from($activitiesWithOtherGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
-            'averageDistance' => Kilometer::from($distanceWithOtherGear->toFloat() / $countActivitiesWithOtherGear),
-            'averageSpeed' => KmPerHour::from(($distanceWithOtherGear->toFloat() / $movingTimeInSeconds) * 3600),
-            'totalCalories' => $activitiesWithOtherGear->sum(fn (Activity $activity): ?int => $activity->getCalories()),
-        ];
-
-        return $statistics;
+        return $activeGear;
     }
 
-    /**
-     * @return array<int, mixed>
-     */
-    public function getForRetiredGear(): array
+    public function getRetiredGear(): Gears
     {
-        return $this->buildStatistics($this->gears->filter(fn (Gear $gear): bool => $gear->isRetired()));
+        return $this->gears->filter(fn (Gear $gear): bool => $gear->isRetired());
     }
 
-    /**
-     * @return array<int, mixed>
-     */
-    private function buildStatistics(Gears $gears): array
+    private function buildUnspecifiedGear(): ?Gear
     {
-        return $gears->map(function (Gear $gear): array {
-            $activitiesWithGear = $this->activities->filter(fn (Activity $activity): bool => $activity->getGearId() == $gear->getId());
-            $countActivitiesWithGear = count($activitiesWithGear);
-            $movingTimeInSeconds = $activitiesWithGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
-            $movingTimeInHours = Seconds::from($movingTimeInSeconds)->toHour()->toInt();
+        $activitiesWithoutGear = $this->activities->filter(fn (Activity $activity): bool => !$activity->getGearId() instanceof GearId);
+        $count = count($activitiesWithoutGear);
 
-            return [
-                'id' => $gear->getId(),
-                'name' => $gear->getName(),
-                'distance' => $gear->getDistance(),
-                'purchasePrice' => $gear->getPurchasePrice(),
-                'relativeCostPerHour' => $gear->getPurchasePrice()?->divide($movingTimeInHours > 0 ? $movingTimeInHours : 1),
-                'relativeCostPerWorkout' => $gear->getPurchasePrice()?->divide($countActivitiesWithGear > 0 ? $countActivitiesWithGear : 1),
-                'numberOfWorkouts' => $countActivitiesWithGear,
-                'movingTime' => $this->formatDurationAsHumanString((int) $movingTimeInSeconds),
-                'movingTimeInHours' => Seconds::from($movingTimeInSeconds)->toHour(),
-                'elevation' => Meter::from($activitiesWithGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat())),
-                'averageDistance' => $countActivitiesWithGear > 0 ? Kilometer::from($gear->getDistance()->toFloat() / $countActivitiesWithGear) : Kilometer::zero(),
-                'averageSpeed' => $movingTimeInSeconds > 0 ? KmPerHour::from(($gear->getDistance()->toFloat() / $movingTimeInSeconds) * 3600) : Kilometer::zero(),
-                'totalCalories' => $activitiesWithGear->sum(fn (Activity $activity): ?int => $activity->getCalories()),
-            ];
-        });
+        if (0 === $count) {
+            return null;
+        }
+
+        $distanceInMeter = Meter::from($activitiesWithoutGear->sum(fn (Activity $activity): float => $activity->getDistance()->toMeter()->toFloat()));
+        $movingTimeInSeconds = (int) $activitiesWithoutGear->sum(fn (Activity $activity): int => $activity->getMovingTimeInSeconds());
+        $elevation = Meter::from($activitiesWithoutGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat()));
+        $totalCalories = (int) $activitiesWithoutGear->sum(fn (Activity $activity): ?int => $activity->getCalories());
+
+        return ImportedGear::create(
+            gearId: GearId::none(),
+            distanceInMeter: $distanceInMeter,
+            createdOn: SerializableDateTime::fromString('1970-01-01'),
+            name: 'Unspecified',
+            isRetired: false,
+        )
+            ->withMovingTime(Seconds::from($movingTimeInSeconds))
+            ->withElevation($elevation)
+            ->withNumberOfActivities($count)
+            ->withTotalCalories($totalCalories);
     }
 }

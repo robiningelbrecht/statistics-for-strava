@@ -9,6 +9,7 @@ use App\Domain\Activity\ActivityTypes;
 use App\Domain\Gear\CustomGear\CustomGear;
 use App\Domain\Gear\ImportedGear\ImportedGear;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -50,7 +51,12 @@ trait ProvideGearRepositoryHelpers
     private function fetchFindAllResults(GearType $gearType, bool $onlyUsedGear): Gears
     {
         $results = $this->getConnection()->executeQuery('
-            SELECT Gear.*, GROUP_CONCAT(DISTINCT Activity.activityType) AS activityTypes
+            SELECT Gear.*,
+                   SUM(Activity.movingTimeInSeconds) as totalMovingTime,
+                   SUM(Activity.elevation) as totalElevation,
+                   SUM(Activity.calories) as totalCalories,
+                   COUNT(Activity.activityId) as numberOfActivities,
+                   GROUP_CONCAT(DISTINCT Activity.activityType) AS activityTypes
             FROM Gear
             '.($onlyUsedGear ? 'INNER' : 'LEFT').' JOIN Activity ON Activity.gearId = Gear.gearId
             WHERE Gear.type = :type
@@ -86,6 +92,19 @@ trait ProvideGearRepositoryHelpers
             GearType::IMPORTED => ImportedGear::fromState(...$args),
             GearType::CUSTOM => CustomGear::fromState(...$args),
         };
+
+        if (!empty($result['totalMovingTime'])) {
+            $gear = $gear->withMovingTime(Seconds::from((float) $result['totalMovingTime']));
+        }
+        if (!empty($result['totalElevation'])) {
+            $gear = $gear->withElevation(Meter::from((float) $result['totalElevation']));
+        }
+        if (!empty($result['totalCalories'])) {
+            $gear = $gear->withTotalCalories((int) $result['totalCalories']);
+        }
+        if (!empty($result['numberOfActivities'])) {
+            $gear = $gear->withNumberOfActivities((int) $result['numberOfActivities']);
+        }
 
         $activityTypes = ActivityTypes::empty();
         if (!empty($result['activityTypes'])) {
