@@ -1,0 +1,86 @@
+{% macro milestoneDescription(milestone) %}
+    {% set context = milestone.getContext() %}
+    {% set category = milestone.getCategory().value %}
+
+    {% if category == 'first' %}
+        {{ "First {sportType} activity: {activityName}"|trans({
+            '{sportType}': context.sportType|trans,
+            '{activityName}': context.activityName
+        }) }}
+    {% elseif category == 'cumulativeDistance' %}
+        {{ "Reached {threshold} total distance (actual: {totalDistance})"|trans({
+            '{threshold}': context.threshold,
+            '{totalDistance}': context.totalDistance
+        }) }}
+    {% elseif category == 'cumulativeElevation' %}
+        {{ "Reached {threshold} total elevation (actual: {totalElevation})"|trans({
+            '{threshold}': context.threshold,
+            '{totalElevation}': context.totalElevation
+        }) }}
+    {% elseif category == 'cumulativeMovingTime' %}
+        {{ "Reached {threshold} total moving time (actual: {totalMovingTime})"|trans({
+            '{threshold}': context.threshold,
+            '{totalMovingTime}': context.totalMovingTime
+        }) }}
+    {% elseif category == 'activityCount' %}
+        {{ "Completed activity number {threshold} (total: {totalCount})"|trans({
+            '{threshold}': context.threshold,
+            '{totalCount}': context.totalCount
+        }) }}
+    {% elseif category == 'personalBest' %}
+        {{ "New personal best for {metric}: {value}"|trans({
+            '{metric}': context.metric,
+            '{value}': context.value
+        }) }}
+        {% if context.previousValue %}
+            <span class="text-xs text-gray-400">({{ "previous: {previousValue}"|trans({'{previousValue}': context.previousValue}) }})</span>
+        {% endif %}
+    {% elseif category == 'eddington' %}
+        {{ "Reached Eddington number {number}"|trans({'{number}': context.number}) }}
+    {% elseif category == 'streak' %}
+        {{ "{days} consecutive days of activity"|trans({'{days}': context.days}) }}
+    {% endif %}
+{% endmacro %}
+
+{% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
+    'url': 'milestones',
+    'label': 'Milestones'|trans
+}]} %}
+
+{% if milestones is empty %}
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs text-center text-gray-500">
+        {{ "No milestones achieved yet"|trans }}
+    </div>
+{% else %}
+    <div class="relative border-l-2 border-gray-200 ml-4">
+        {% for milestone in milestones %}
+            <div class="mb-8 ml-6">
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="text-sm font-semibold">{{ milestone.getTitle() }}</h3>
+                        <time class="text-xs text-gray-500">{{ milestone.getAchievedOn()|formatDate('normal') }}</time>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        {{ _self.milestoneDescription(milestone) }}
+                    </div>
+                    {% if milestone.getFunComparison() %}
+                        <div class="mt-1 text-sm italic text-gray-500">
+                            {{ milestone.getFunComparison()|trans }}
+                        </div>
+                    {% endif %}
+                    {% if milestone.getPrevious() %}
+                        <div class="mt-1 text-xs text-gray-400">
+                            {{ "Previous: {label} on {date}"|trans({
+                                '{label}': milestone.getPrevious().getLabel(),
+                                '{date}': milestone.getPrevious().getAchievedOn()|formatDate('normal')
+                            }) }}
+                        </div>
+                    {% endif %}
+                    {% if milestone.getSportType() %}
+                        <span class="mt-2 inline-block text-xs text-gray-400">{{ milestone.getSportType()|trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -53,6 +53,7 @@ Commutes: Pendling
 'Commutes only': 'Endast pendling'
 Compare: Jämför
 'Compare to': 'Jämför med'
+'Completed activity number {threshold} (total: {totalCount})': 'Completed activity number {threshold} (total: {totalCount})'
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -105,6 +106,7 @@ Feb: Feb
 'Filter on country': 'Filtrera på land'
 'Filter on sport type': 'Filtrera på sport'
 'Filter on starred segments': 'Filtrera på favorit segment'
+'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Fitness: Träning
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
@@ -191,6 +193,7 @@ May: May
 Medium: Mellan
 Metric: Metric
 Metrics: Mätvärden
+Milestones: Milestones
 'Mind & Body Sports': 'Sinne- och kroppssporter'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Måttlig monotoni'
@@ -206,9 +209,11 @@ Morning: Morgon
 'Moving time': 'Tid i rörelse'
 Name: Namn
 Neutral: Neutral
+'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
 Night: Natt
 'No activities': 'Inga aktivieter'
 'No data available': 'Ingen data tillgänglig'
+'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 'Inga andra alternativ att jämföra med'
 None: Inga
 'Nordic Ski': 'Telemark skidåkning'
@@ -248,11 +253,16 @@ Power: Effekt
 'Power distribution': Effektfördelning
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Tidigare år'
+'Previous: {label} on {date}': 'Previous: {label} on {date}'
 Race: Tävling
 'Racing Score': Tävlingspoäng
 'Racquet & Paddle Sports': 'Rack & Paddel Sporter'
 'Racquet Ball': Racketboll
 Ranking: Rankning
+'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} total distance (actual: {totalDistance})': 'Reached {threshold} total distance (actual: {totalDistance})'
+'Reached {threshold} total elevation (actual: {totalElevation})': 'Reached {threshold} total elevation (actual: {totalElevation})'
+'Reached {threshold} total moving time (actual: {totalMovingTime})': 'Reached {threshold} total moving time (actual: {totalMovingTime})'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -428,11 +438,13 @@ never: aldrig
 'on': på
 'per activity': 'per aktivitet'
 'per hour': 'per timma'
+'previous: {previousValue}': 'previous: {previousValue}'
 to: till
 total: totalt
 weeks: veckor
 workouts: träningspass
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dagar'
+'{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} timmar'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} varje {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
