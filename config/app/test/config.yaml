@@ -8,6 +8,11 @@ appearance:
   time_format: 24
   date_format: 'DAY-MONTH-YEAR'
 gear:
+  recordingDevices:
+    - gearId: polar-vantage-m
+      purchasePrice:
+        amountInCents: 29950
+        currency: EUR
   customGear:
     enabled: true
     hashtagPrefix: sfs

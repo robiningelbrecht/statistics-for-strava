@@ -9,6 +9,7 @@ use App\Domain\Gear\RecordingDevice\DbalRecordingDeviceRepository;
 use App\Domain\Gear\RecordingDevice\RecordingDevice;
 use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Domain\Gear\RecordingDevice\RecordingDevices;
+use App\Domain\Gear\RecordingDevice\RecordingDevicesConfig;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
@@ -74,7 +75,6 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
                     distanceTracked: Meter::from(30000)->toKilometer(),
                     elevationTracked: Meter::from(300),
                     activityCount: 2,
-                    purchasePrice: null,
                 ),
                 RecordingDevice::fromState(
                     name: 'Garmin Forerunner 945',
@@ -82,7 +82,6 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
                     distanceTracked: Meter::from(5000)->toKilometer(),
                     elevationTracked: Meter::from(50),
                     activityCount: 1,
-                    purchasePrice: null,
                 ),
             ]),
             $devices,
@@ -128,6 +127,9 @@ class DbalRecordingDeviceRepositoryTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->recordingDeviceRepository = new DbalRecordingDeviceRepository($this->getConnection());
+        $this->recordingDeviceRepository = new DbalRecordingDeviceRepository(
+            $this->getConnection(),
+            $this->getContainer()->get(RecordingDevicesConfig::class),
+        );
     }
 }
