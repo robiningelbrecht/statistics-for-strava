@@ -49,7 +49,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::FIRST,
                 sportType: $sportType,
-                activityId: ActivityId::fromUnprefixed($row['activityId']),
+                activityId: ActivityId::fromString($row['activityId']),
                 title: $sportType->value,
                 context: new FirstContext(
                     sportType: $sportType,

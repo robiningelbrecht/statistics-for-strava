@@ -53,7 +53,7 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
                     achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                     category: MilestoneCategory::ACTIVITY_MOVING_TIME,
                     sportType: $sportType,
-                    activityId: ActivityId::fromUnprefixed($row['activityId']),
+                    activityId: ActivityId::fromString($row['activityId']),
                     title: 'Longest activity',
                     context: new ActivityRecordContext(
                         value: $seconds,

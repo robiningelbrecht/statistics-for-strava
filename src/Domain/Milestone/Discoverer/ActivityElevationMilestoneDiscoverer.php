@@ -53,7 +53,7 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                     achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                     category: MilestoneCategory::ACTIVITY_ELEVATION,
                     sportType: $sportType,
-                    activityId: ActivityId::fromUnprefixed($row['activityId']),
+                    activityId: ActivityId::fromString($row['activityId']),
                     title: 'Most elevation',
                     context: new ActivityRecordContext(
                         value: $elevation,

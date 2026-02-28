@@ -51,7 +51,7 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
                     achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                     category: MilestoneCategory::ACTIVITY_DISTANCE,
                     sportType: $sportType,
-                    activityId: ActivityId::fromUnprefixed($row['activityId']),
+                    activityId: ActivityId::fromString($row['activityId']),
                     title: 'Longest distance',
                     context: new ActivityRecordContext(
                         value: $distanceInKm,

@@ -65,7 +65,7 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
                     achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                     category: MilestoneCategory::PERSONAL_BEST,
                     sportType: $sportType,
-                    activityId: ActivityId::fromUnprefixed($row['activityId']),
+                    activityId: ActivityId::fromString($row['activityId']),
                     title: $distanceLabel,
                     context: new PersonalBestContext(
                         distance: $distance,
