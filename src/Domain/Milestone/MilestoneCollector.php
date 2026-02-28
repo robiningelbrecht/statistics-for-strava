@@ -30,6 +30,8 @@ final readonly class MilestoneCollector
             $milestones = array_merge($milestones, $discoverer->discover()->toArray());
         }
 
+        usort($milestones, fn (Milestone $a, Milestone $b) => $b->getAchievedOn() <=> $a->getAchievedOn());
+
         return Milestones::fromArray($milestones);
     }
 }

@@ -47,7 +47,7 @@
     'label': 'Milestones'|trans
 }]} %}
 
-{% if milestones is empty %}
+{% if milestones.isEmpty() %}
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs text-center text-gray-500">
         {{ "No milestones achieved yet"|trans }}
     </div>

@@ -16,6 +16,7 @@ use App\Application\Build\BuildGpxFiles\BuildGpxFiles;
 use App\Application\Build\BuildHeatmapHtml\BuildHeatmapHtml;
 use App\Application\Build\BuildIndexHtml\BuildIndexHtml;
 use App\Application\Build\BuildManifest\BuildManifest;
+use App\Application\Build\BuildMilestonesHtml\BuildMilestonesHtml;
 use App\Application\Build\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
 use App\Application\Build\BuildPhotosHtml\BuildPhotosHtml;
 use App\Application\Build\BuildRecordingDevices\BuildRecordingDevices;
@@ -83,6 +84,7 @@ This is not a bug, once all your activities have been imported, your gear statis
             'Building gear maintenance' => new BuildGearMaintenanceHtml(),
             'Building recording devices' => new BuildRecordingDevices(),
             'Building eddington' => new BuildEddingtonHtml($now),
+            'Building milestones' => new BuildMilestonesHtml(),
             'Building segments' => new BuildSegmentsHtml(),
             'Building heatmap' => new BuildHeatmapHtml($now),
             'Building best efforts' => new BuildBestEffortsHtml(),
