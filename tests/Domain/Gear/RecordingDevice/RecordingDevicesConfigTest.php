@@ -4,6 +4,8 @@ namespace App\Tests\Domain\Gear\RecordingDevice;
 
 use App\Domain\Gear\RecordingDevice\InvalidRecordingDevicesConfig;
 use App\Domain\Gear\RecordingDevice\RecordingDevicesConfig;
+use Money\Currency;
+use Money\Money;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -36,6 +38,30 @@ class RecordingDevicesConfigTest extends TestCase
         $config = self::getValidConfig();
         unset($config[1]['purchasePrice']['currency']);
         yield 'missing "currency" key' => [$config, '"purchasePrice.currency" property is required'];
+    }
+
+    public function testGetPurchasePriceForUnknownDevice(): void
+    {
+        $config = RecordingDevicesConfig::fromArray(self::getValidConfig());
+
+        $this->assertNull($config->getPurchasePrice('unknown-device'));
+    }
+
+    public function testGetPurchasePriceForDeviceWithoutPrice(): void
+    {
+        $config = RecordingDevicesConfig::fromArray(self::getValidConfig());
+
+        $this->assertNull($config->getPurchasePrice('le-id-not'));
+    }
+
+    public function testGetPurchasePriceForDeviceWithPrice(): void
+    {
+        $config = RecordingDevicesConfig::fromArray(self::getValidConfig());
+
+        $this->assertEquals(
+            new Money(1000, new Currency('EUR')),
+            $config->getPurchasePrice('le-id')
+        );
     }
 
     private static function getValidConfig(): array
