@@ -81,11 +81,10 @@
                     </thead>
                     <tbody>
                     {% set globalLoopIndex = 0 %}
-                    {% for gear in gearStatistics.getActiveGear() %}
+                    {% for gear in activeGear %}
                         {{ _self.gearStatisticRow(gear, globalLoopIndex) }}
                         {% set globalLoopIndex = globalLoopIndex + 1 %}
                     {% endfor %}
-                    {% set retiredGear = gearStatistics.getRetiredGear() %}
                     {% if retiredGear is not empty %}
                         <tr class="cursor-pointer {{ cycle(['bg-white border-b', 'border-b bg-gray-50'], globalLoopIndex) }}"
                             id="table-retired-gear-header"
@@ -109,7 +108,7 @@
                         <tbody class="hidden"
                                id="table-retired-gear-content"
                                aria-labelledby="table-retired-gear-header">
-                        {% for gear in gearStatistics.getRetiredGear() %}
+                        {% for gear in retiredGear %}
                             {{ _self.gearStatisticRow(gear, globalLoopIndex) }}
                             {% set globalLoopIndex = globalLoopIndex + 1 %}
                         {% endfor %}
