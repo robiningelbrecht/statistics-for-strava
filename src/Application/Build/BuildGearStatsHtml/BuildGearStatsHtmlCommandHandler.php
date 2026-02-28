@@ -59,7 +59,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
 
         $activeGear = $allUsedGear->filter(fn (Gear $gear): bool => !$gear->isRetired());
         $unspecifiedGear = $this->buildUnspecifiedGear($activities);
-        if ($unspecifiedGear) {
+        if ($unspecifiedGear instanceof Gear) {
             $activeGear->add($unspecifiedGear);
         }
 
