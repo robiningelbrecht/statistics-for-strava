@@ -7,9 +7,17 @@ namespace App\Domain\Gear\RecordingDevice;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use Doctrine\DBAL\Connection;
 
 final readonly class DbalRecordingDeviceRepository extends DbalRepository implements RecordingDeviceRepository
 {
+    public function __construct(
+        Connection $connection,
+        private RecordingDevicesConfig $recordingDevicesConfig,
+    ) {
+        parent::__construct($connection);
+    }
+
     public function findAll(): RecordingDevices
     {
         $results = $this->connection->executeQuery(
@@ -25,14 +33,19 @@ final readonly class DbalRecordingDeviceRepository extends DbalRepository implem
         )->fetchAllAssociative();
 
         return RecordingDevices::fromArray(array_map(
-            fn (array $result): RecordingDevice => RecordingDevice::fromState(
-                name: $result['deviceName'],
-                timeTracked: Seconds::from((float) $result['totalMovingTime']),
-                distanceTracked: Meter::from((float) $result['totalDistance'])->toKilometer(),
-                elevationTracked: Meter::from((float) $result['totalElevation']),
-                activityCount: (int) $result['activityCount'],
-                purchasePrice: null
-            ),
+            function (array $result): RecordingDevice {
+                $recordingDevice = RecordingDevice::fromState(
+                    name: $result['deviceName'],
+                    timeTracked: Seconds::from((float) $result['totalMovingTime']),
+                    distanceTracked: Meter::from((float) $result['totalDistance'])->toKilometer(),
+                    elevationTracked: Meter::from((float) $result['totalElevation']),
+                    activityCount: (int) $result['activityCount'],
+                );
+
+                return $recordingDevice->withPurchasePrice(
+                    $this->recordingDevicesConfig->getPurchasePrice($recordingDevice->getId())
+                );
+            },
             $results,
         ));
     }

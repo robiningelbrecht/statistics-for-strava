@@ -213,6 +213,10 @@ services:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gearMaintenance", [])']
 
+    App\Domain\Gear\RecordingDevice\RecordingDevicesConfig:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("gear.recordingDevices", [])']
+
     App\Domain\Strava\Webhook\WebhookConfig:
       factory: [ null, 'fromArray' ]
       arguments: ['@=app_config("import.webhooks", [])']

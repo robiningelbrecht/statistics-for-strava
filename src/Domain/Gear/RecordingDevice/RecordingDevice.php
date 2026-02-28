@@ -31,7 +31,6 @@ final readonly class RecordingDevice
         Kilometer $distanceTracked,
         Meter $elevationTracked,
         int $activityCount,
-        ?Money $purchasePrice,
     ): self {
         return new self(
             name: $name,
@@ -39,7 +38,7 @@ final readonly class RecordingDevice
             distanceTracked: $distanceTracked,
             elevationTracked: $elevationTracked,
             numberOfWorkouts: $activityCount,
-            purchasePrice: $purchasePrice,
+            purchasePrice: null,
         );
     }
 
@@ -76,6 +75,13 @@ final readonly class RecordingDevice
     public function getNumberOfWorkouts(): int
     {
         return $this->numberOfWorkouts;
+    }
+
+    public function withPurchasePrice(?Money $purchasePrice): self
+    {
+        return clone ($this, [
+            'purchasePrice' => $purchasePrice,
+        ]);
     }
 
     public function getPurchasePrice(): ?Money
