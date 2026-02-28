@@ -73,7 +73,7 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof CumulativeDistanceContext);
                     $previous = PreviousMilestone::create(
-                        label: number_format((int) $previousContext->threshold->toFloat()).' '.$symbol,
+                        label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }

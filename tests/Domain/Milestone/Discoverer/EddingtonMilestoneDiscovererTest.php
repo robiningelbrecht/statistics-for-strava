@@ -57,7 +57,7 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $first->getContext();
         $this->assertInstanceOf(EddingtonContext::class, $context);
-        $this->assertEquals(5, $context->number);
+        $this->assertEquals(5, $context->getNumber());
     }
 
     public function testDiscoverPreviousMilestoneTracking(): void

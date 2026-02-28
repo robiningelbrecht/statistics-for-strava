@@ -53,7 +53,7 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof ActivityCountContext);
                     $previous = PreviousMilestone::create(
-                        label: number_format($previousContext->threshold),
+                        label: number_format($previousContext->getThreshold()),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }

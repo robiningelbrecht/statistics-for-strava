@@ -15,4 +15,21 @@ final class Milestones extends Collection
     {
         return Milestone::class;
     }
+
+    /**
+     * @return MilestoneFilterGroup[]
+     */
+    public function getUniqueFilterGroups(): array
+    {
+        $groups = [];
+        /** @var Milestone $milestone */
+        foreach ($this as $milestone) {
+            $group = $milestone->getCategory()->getFilterGroup();
+            $groups[$group->value] = $group;
+        }
+
+        ksort($groups);
+
+        return array_values($groups);
+    }
 }

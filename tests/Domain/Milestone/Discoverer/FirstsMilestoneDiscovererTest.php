@@ -42,8 +42,8 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $first->getContext();
         $this->assertInstanceOf(FirstContext::class, $context);
-        $this->assertEquals(SportType::RIDE, $context->sportType);
-        $this->assertEquals('Morning ride', $context->activityName);
+        $this->assertEquals(SportType::RIDE, $context->getSportType());
+        $this->assertEquals('Morning ride', $context->getActivityName());
 
         $second = $milestones->toArray()[1];
         $this->assertEquals(SportType::RUN, $second->getSportType());
@@ -61,7 +61,7 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestones->toArray()[0]->getContext();
         $this->assertInstanceOf(FirstContext::class, $context);
-        $this->assertEquals('First ride', $context->activityName);
+        $this->assertEquals('First ride', $context->getActivityName());
     }
 
     private function insertActivity(int $id, string $date, SportType $sportType, string $name): void

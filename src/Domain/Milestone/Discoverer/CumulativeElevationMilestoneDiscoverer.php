@@ -73,7 +73,7 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof CumulativeElevationContext);
                     $previous = PreviousMilestone::create(
-                        label: number_format((int) $previousContext->threshold->toFloat()).' '.$symbol,
+                        label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }

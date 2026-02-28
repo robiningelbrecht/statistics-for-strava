@@ -6,6 +6,7 @@ namespace App\Domain\Milestone;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Milestone\Context\MilestoneContext;
 use App\Domain\Milestone\FunComparison\FunComparison;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 

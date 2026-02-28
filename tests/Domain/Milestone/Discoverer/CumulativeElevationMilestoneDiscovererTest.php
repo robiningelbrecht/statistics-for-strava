@@ -45,8 +45,8 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(CumulativeElevationContext::class, $context);
-        $this->assertInstanceOf(Meter::class, $context->threshold);
-        $this->assertEquals(500.0, $context->threshold->toFloat());
+        $this->assertInstanceOf(Meter::class, $context->getThreshold());
+        $this->assertEquals(500.0, $context->getThreshold()->toFloat());
     }
 
     public function testDiscoverMultipleThresholds(): void

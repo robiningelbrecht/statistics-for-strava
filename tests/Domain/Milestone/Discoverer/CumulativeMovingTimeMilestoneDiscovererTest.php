@@ -38,7 +38,7 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(CumulativeMovingTimeContext::class, $context);
-        $this->assertEquals(24.0, $context->threshold->toFloat());
+        $this->assertEquals(24.0, $context->getThreshold()->toFloat());
     }
 
     public function testDiscoverMultipleThresholds(): void

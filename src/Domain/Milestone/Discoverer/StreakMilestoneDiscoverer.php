@@ -69,7 +69,7 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof StreakContext);
                     $previous = PreviousMilestone::create(
-                        label: $previousContext->days.' days',
+                        label: $previousContext->getDays().' days',
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
