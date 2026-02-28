@@ -5,9 +5,14 @@ namespace App\Tests\Domain\Milestone;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\BestEffort\ActivityBestEffort;
+use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Discoverer\ActivityCountMilestoneDiscoverer;
+use App\Domain\Milestone\Discoverer\ActivityDistanceMilestoneDiscoverer;
+use App\Domain\Milestone\Discoverer\ActivityElevationMilestoneDiscoverer;
+use App\Domain\Milestone\Discoverer\ActivityMovingTimeMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\CumulativeDistanceMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\CumulativeElevationMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\CumulativeMovingTimeMilestoneDiscoverer;
@@ -39,6 +44,8 @@ class MilestoneCollectorTest extends ContainerTestCase
             $this->insertActivity($i, sprintf('2024-01-%02d', $i), SportType::RIDE, 20.0, 100.0, 3600, 20.0);
         }
 
+        $this->insertBestEffort(1, SportType::RIDE, 10000, 1800);
+
         $collector = $this->createCollector();
         $milestones = $collector->discoverAll();
 
@@ -52,6 +59,9 @@ class MilestoneCollectorTest extends ContainerTestCase
         $this->assertContains('first', $categories);
         $this->assertContains('activityCount', $categories);
         $this->assertContains('personalBest', $categories);
+        $this->assertContains('activityDistance', $categories);
+        $this->assertContains('activityElevation', $categories);
+        $this->assertContains('activityMovingTime', $categories);
     }
 
     public function testDiscoverAllSortsNewestFirst(): void
@@ -172,6 +182,18 @@ class MilestoneCollectorTest extends ContainerTestCase
         ));
     }
 
+    private function insertBestEffort(int $activityId, SportType $sportType, int $distanceInMeter, int $timeInSeconds): void
+    {
+        $this->getContainer()->get(ActivityBestEffortRepository::class)->add(
+            ActivityBestEffort::create(
+                activityId: ActivityId::fromUnprefixed($activityId),
+                distanceInMeter: Meter::from($distanceInMeter),
+                sportType: $sportType,
+                timeInSeconds: $timeInSeconds,
+            )
+        );
+    }
+
     private function createCollector(): MilestoneCollector
     {
         $connection = $this->getConnection();
@@ -179,6 +201,9 @@ class MilestoneCollectorTest extends ContainerTestCase
 
         return new MilestoneCollector([
             new ActivityCountMilestoneDiscoverer($connection),
+            new ActivityDistanceMilestoneDiscoverer($connection),
+            new ActivityElevationMilestoneDiscoverer($connection),
+            new ActivityMovingTimeMilestoneDiscoverer($connection),
             new CumulativeDistanceMilestoneDiscoverer($connection, $unitSystem),
             new CumulativeElevationMilestoneDiscoverer($connection, $unitSystem),
             new CumulativeMovingTimeMilestoneDiscoverer($connection),

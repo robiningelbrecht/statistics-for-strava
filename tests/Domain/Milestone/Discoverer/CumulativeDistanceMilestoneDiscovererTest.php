@@ -47,8 +47,8 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(CumulativeDistanceContext::class, $context);
-        $this->assertInstanceOf(Kilometer::class, $context->threshold);
-        $this->assertEquals(100.0, $context->threshold->toFloat());
+        $this->assertInstanceOf(Kilometer::class, $context->getThreshold());
+        $this->assertEquals(100.0, $context->getThreshold()->toFloat());
     }
 
     public function testDiscoverMultipleThresholds(): void

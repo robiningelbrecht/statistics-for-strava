@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Milestone\Discoverer;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\PersonalBestContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
+use App\Infrastructure\ValueObject\Measurement\Length\ConvertableToMeter;
+use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -23,13 +26,16 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
     public function discover(): Milestones
     {
         $rows = $this->connection->executeQuery(
-            'SELECT activityId, startDateTime, sportType, distance, elevation, movingTimeInSeconds, averageSpeed
-             FROM Activity
-             ORDER BY startDateTime ASC'
+            'SELECT be.activityId, be.sportType, be.distanceInMeter, be.timeInSeconds, a.startDateTime
+             FROM ActivityBestEffort be
+             INNER JOIN Activity a ON a.activityId = be.activityId
+             ORDER BY a.startDateTime ASC, be.distanceInMeter ASC'
         )->fetchAllAssociative();
 
+        $distanceMap = $this->buildDistanceMap();
+
         $milestones = [];
-        /** @var array<string, array{value: float, formatted: string}> $records */
+        /** @var array<string, array{time: int, seconds: Seconds}> $records */
         $records = [];
 
         foreach ($rows as $row) {
@@ -37,34 +43,41 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
             if (null === $sportType) {
                 continue;
             }
+            $distanceInMeter = (int) $row['distanceInMeter'];
+            $timeInSeconds = (int) $row['timeInSeconds'];
 
-            $activityId = ActivityId::fromUnprefixed($row['activityId']);
-            $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
-            $sportKey = $sportType->value;
+            $distance = $distanceMap[$distanceInMeter] ?? null;
+            if (null === $distance) {
+                continue;
+            }
 
-            $metrics = $this->extractMetrics($row);
+            $recordKey = $sportType->value.'_'.$distanceInMeter;
+            $seconds = Seconds::from($timeInSeconds);
 
-            foreach ($metrics as $metric => $data) {
-                $recordKey = $sportKey.'_'.$metric;
+            if (!isset($records[$recordKey]) || $timeInSeconds < $records[$recordKey]['time']) {
+                $previousTime = $records[$recordKey]['seconds'] ?? null;
 
-                if (!isset($records[$recordKey]) || $data['value'] > $records[$recordKey]['value']) {
-                    $previousValue = $records[$recordKey]['formatted'] ?? null;
+                $distanceLabel = ($distance->isLowerThanOne()
+                    ? round($distance->toFloat(), 1)
+                    : $distance->toInt()).$distance->getSymbol();
 
-                    $milestones[] = Milestone::create(
-                        achievedOn: $achievedOn,
-                        category: MilestoneCategory::PERSONAL_BEST,
-                        sportType: $sportType,
-                        activityId: $activityId,
-                        title: $metric,
-                        context: new PersonalBestContext(
-                            metric: $metric,
-                            value: $data['formatted'],
-                            previousValue: $previousValue,
-                        ),
-                    );
+                $milestones[] = Milestone::create(
+                    achievedOn: SerializableDateTime::fromString($row['startDateTime']),
+                    category: MilestoneCategory::PERSONAL_BEST,
+                    sportType: $sportType,
+                    activityId: ActivityId::fromUnprefixed($row['activityId']),
+                    title: $distanceLabel,
+                    context: new PersonalBestContext(
+                        distance: $distance,
+                        time: $seconds,
+                        previousTime: $previousTime,
+                    ),
+                );
 
-                    $records[$recordKey] = $data;
-                }
+                $records[$recordKey] = [
+                    'time' => $timeInSeconds,
+                    'seconds' => $seconds,
+                ];
             }
         }
 
@@ -72,48 +85,21 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
     }
 
     /**
-     * @param array<string, mixed> $row
-     *
-     * @return array<string, array{value: float, formatted: string}>
+     * @return array<int, ConvertableToMeter>
      */
-    private function extractMetrics(array $row): array
+    private function buildDistanceMap(): array
     {
-        $metrics = [];
+        $map = [];
 
-        $distance = (float) $row['distance'];
-        if ($distance > 0) {
-            $metrics['Longest distance'] = [
-                'value' => $distance,
-                'formatted' => round($distance, 1).' km',
-            ];
+        foreach (ActivityType::cases() as $activityType) {
+            foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
+                $meter = $distance->toMeter()->toInt();
+                if (!isset($map[$meter])) {
+                    $map[$meter] = $distance;
+                }
+            }
         }
 
-        $elevation = (float) $row['elevation'];
-        if ($elevation > 0) {
-            $metrics['Most elevation'] = [
-                'value' => $elevation,
-                'formatted' => (int) $elevation.' m',
-            ];
-        }
-
-        $movingTime = (int) $row['movingTimeInSeconds'];
-        if ($movingTime > 0) {
-            $hours = floor($movingTime / 3600);
-            $minutes = floor(($movingTime % 3600) / 60);
-            $metrics['Longest activity'] = [
-                'value' => (float) $movingTime,
-                'formatted' => sprintf('%dh %dm', $hours, $minutes),
-            ];
-        }
-
-        $averageSpeed = (float) $row['averageSpeed'];
-        if ($averageSpeed > 0) {
-            $metrics['Fastest average speed'] = [
-                'value' => $averageSpeed,
-                'formatted' => round($averageSpeed, 1).' km/h',
-            ];
-        }
-
-        return $metrics;
+        return $map;
     }
 }

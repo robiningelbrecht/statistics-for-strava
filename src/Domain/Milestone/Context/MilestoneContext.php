@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Milestone;
+namespace App\Domain\Milestone\Context;
 
 interface MilestoneContext
 {

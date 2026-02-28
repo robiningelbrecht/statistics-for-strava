@@ -107,6 +107,7 @@ Feb: Feb
 'Filter on sport type': 'Filtrera på sport'
 'Filter on starred segments': 'Filtrera på favorit segment'
 'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
+Firsts: Firsts
 Fitness: Träning
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
@@ -179,7 +180,9 @@ Load: Load
 Loading...: Laddar...
 'Locations over the globe': 'Platser runt jorden'
 'Long run': Långdistanslöpning
+'Longest activity': 'Longest activity'
 'Longest activity (h)': 'Längsta aktiviteten (h)'
+'Longest distance': 'Longest distance'
 'Longest streaks': 'Längsta obrutna serie'
 Low: Låg
 'Low risk': 'Low risk'
@@ -203,13 +206,14 @@ Monotony: Monotoni
 Monthly: Monthly
 'Monthly stats': Sammanställning
 Morning: Morgon
+'Most elevation': 'Most elevation'
 'Most recent activities': 'Nyligen loggade aktiviteter'
 'Most recent challenges': 'Senaste utmaningar'
 'Mountain Bike Rides': 'Mountain Bike Cykling'
 'Moving time': 'Tid i rörelse'
 Name: Namn
 Neutral: Neutral
-'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
+'New personal best for': 'New personal best for'
 Night: Natt
 'No activities': 'Inga aktivieter'
 'No data available': 'Ingen data tillgänglig'
@@ -243,6 +247,7 @@ Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
 'Personal Records': 'Personliga Rekord'
+'Personal bests': 'Personal bests'
 Photo: Bild
 Photos: Bilder
 'Pickle Ball': 'Pickle Ball'
@@ -515,7 +520,7 @@ never: aldrig
 'on': på
 'per activity': 'per aktivitet'
 'per hour': 'per timma'
-'previous: {previousValue}': 'previous: {previousValue}'
+previous: previous
 to: till
 total: totalt
 weeks: veckor

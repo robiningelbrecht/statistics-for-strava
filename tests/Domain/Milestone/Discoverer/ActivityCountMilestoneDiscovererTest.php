@@ -40,8 +40,8 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(ActivityCountContext::class, $context);
-        $this->assertEquals(10, $context->threshold);
-        $this->assertEquals(10, $context->totalCount);
+        $this->assertEquals(10, $context->getThreshold());
+        $this->assertEquals(10, $context->getTotalCount());
     }
 
     public function testDiscoverMultipleThresholds(): void

@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Milestone\Context;
 
-use App\Domain\Milestone\MilestoneContext;
-
 final readonly class StreakContext implements MilestoneContext
 {
     public function __construct(
-        public int $days,
+        private int $days,
     ) {
+    }
+
+    public function getDays(): int
+    {
+        return $this->days;
     }
 }

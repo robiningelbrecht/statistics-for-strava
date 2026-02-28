@@ -12,28 +12,40 @@
             '{threshold}': context.threshold,
             '{totalDistance}': context.totalDistance
         }) }}
+    {% elseif category == 'activityDistance' %}
+        {{ "Longest distance"|trans }}: {{ context.value|renderMeasurement(1)|raw }}
+        {% if context.previousValue %}
+            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.previousValue|renderMeasurement(1)|raw }})</span>
+        {% endif %}
     {% elseif category == 'cumulativeElevation' %}
         {{ "Reached {threshold} total elevation (actual: {totalElevation})"|trans({
             '{threshold}': context.threshold,
             '{totalElevation}': context.totalElevation
         }) }}
+    {% elseif category == 'activityElevation' %}
+        {{ "Most elevation"|trans }}: {{ context.value|renderMeasurement(0)|raw }}
+        {% if context.previousValue %}
+            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.previousValue|renderMeasurement(0)|raw }})</span>
+        {% endif %}
     {% elseif category == 'cumulativeMovingTime' %}
         {{ "Reached {threshold} total moving time (actual: {totalMovingTime})"|trans({
             '{threshold}': context.threshold,
             '{totalMovingTime}': context.totalMovingTime
         }) }}
+    {% elseif category == 'activityMovingTime' %}
+        {{ "Longest activity"|trans }}: {{ context.value|formatSeconds }}
+        {% if context.previousValue %}
+            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.previousValue|formatSeconds }})</span>
+        {% endif %}
     {% elseif category == 'activityCount' %}
         {{ "Completed activity number {threshold} (total: {totalCount})"|trans({
             '{threshold}': context.threshold,
             '{totalCount}': context.totalCount
         }) }}
     {% elseif category == 'personalBest' %}
-        {{ "New personal best for {metric}: {value}"|trans({
-            '{metric}': context.metric,
-            '{value}': context.value
-        }) }}
-        {% if context.previousValue %}
-            <span class="text-xs text-gray-400">({{ "previous: {previousValue}"|trans({'{previousValue}': context.previousValue}) }})</span>
+        {{ "New personal best for"|trans }} {{ context.distance|renderMeasurement(1)|raw }}: {{ context.time|formatSeconds }}
+        {% if context.previousTime %}
+            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.previousTime|formatSeconds }})</span>
         {% endif %}
     {% elseif category == 'eddington' %}
         {{ "Reached Eddington number {number}"|trans({'{number}': context.number}) }}
@@ -52,9 +64,21 @@
         {{ "No milestones achieved yet"|trans }}
     </div>
 {% else %}
+    {% if milestones.getUniqueFilterGroups()|length > 1 %}
+        <div class="flex flex-wrap gap-2 mb-6" data-milestone-filters>
+            <button data-milestone-filter="" class="px-3 py-1 text-sm rounded-full bg-blue-600 text-white">
+                {{ "All"|trans }}
+            </button>
+            {% for group in milestones.getUniqueFilterGroups() %}
+                <button data-milestone-filter="{{ group.value }}" class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
+                    {{ group|trans }}
+                </button>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="relative border-l-2 border-gray-200 ml-4">
         {% for milestone in milestones %}
-            <div class="mb-8 ml-6">
+            <div class="mb-8 ml-6" data-milestone-category="{{ milestone.getCategory().getFilterGroup().value }}">
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center justify-between mb-1">
                         <h3 class="text-sm font-semibold">{{ milestone.getTitle() }}</h3>

@@ -107,6 +107,7 @@ Feb: Feb
 'Filter on sport type': 'Filter nach Sportart'
 'Filter on starred segments': 'Filter für markierte Segmente'
 'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
+Firsts: Firsts
 Fitness: Fitness
 'Fitness may be declining due to low recent training load': 'Rückgang der Fitness durch zu niedriges Trainingspensum.'
 'Fitness may decline': 'Fitness lässt nach'
@@ -179,7 +180,9 @@ Load: Belastung
 Loading...: Lädt...
 'Locations over the globe': 'Orte auf der Welt'
 'Long run': 'Langer Lauf'
+'Longest activity': 'Longest activity'
 'Longest activity (h)': 'Längste Aktivität (h)'
+'Longest distance': 'Longest distance'
 'Longest streaks': 'Längste Serie'
 Low: Niedrig
 'Low risk': 'Geringes Risiko'
@@ -203,13 +206,14 @@ Monotony: Monotonie
 Monthly: Monatlich
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
+'Most elevation': 'Most elevation'
 'Most recent activities': 'Neueste Aktivitäten'
 'Most recent challenges': 'Neueste Herausforderungen'
 'Mountain Bike Rides': Mountainbike-Fahrten
 'Moving time': Bewegungszeit
 Name: Name
 Neutral: Neutral
-'New personal best for {metric}: {value}': 'New personal best for {metric}: {value}'
+'New personal best for': 'New personal best for'
 Night: Nacht
 'No activities': 'Keine Aktivitäten'
 'No data available': 'Keine Daten verfügbar'
@@ -243,6 +247,7 @@ Padel: Padel
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
 'Personal Records': 'Persönliche Bestzeiten'
+'Personal bests': 'Personal bests'
 Photo: Foto
 Photos: Fotos
 'Pickle Ball': Pickleball
@@ -515,7 +520,7 @@ never: nie
 'on': am
 'per activity': 'pro Aktivität'
 'per hour': 'pro Stunde'
-'previous: {previousValue}': 'previous: {previousValue}'
+previous: previous
 to: mit
 total: gesamt
 weeks: Wochen

@@ -41,7 +41,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(StreakContext::class, $context);
-        $this->assertEquals(7, $context->days);
+        $this->assertEquals(7, $context->getDays());
     }
 
     public function testDiscoverMultipleThresholds(): void
