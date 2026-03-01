@@ -66,7 +66,7 @@
     {% endif %}
     <div class="relative border-l-2 border-gray-200 ml-6">
         {% for milestone in milestones %}
-            <div class="mb-8 ml-10" data-milestone-category="{{ milestone.getCategory().getFilterGroup().value }}">
+            <div class="mb-8 ml-10" id="{{ milestone.getId() }}" data-milestone-category="{{ milestone.getCategory().getFilterGroup().value }}">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -87,10 +87,11 @@
                     {% endif %}
                     {% if milestone.getPrevious() %}
                         <div class="mt-1 text-xs text-gray-400">
-                            {{ "Previous: {label} on {date}"|trans({
-                                '{label}': milestone.getPrevious().getLabel(),
-                                '{date}': milestone.getPrevious().getAchievedOn()|formatDate('normal')
-                            }) }}
+                            {{ "Previous"|trans }}:
+                            <a href="javascript:void(0)" data-scroll-to="{{ milestone.getPrevious().getMilestoneId() }}" class="underline hover:text-gray-600">
+                                {{ milestone.getPrevious().getLabel() }}
+                            </a>
+                            {{ "on"|trans }} {{ milestone.getPrevious().getAchievedOn()|formatDate('normal') }}
                         </div>
                     {% endif %}
                     {% if milestone.getActivityId() %}

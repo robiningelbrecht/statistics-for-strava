@@ -9,6 +9,7 @@ use App\Domain\Milestone\Context\EddingtonContext;
 use App\Domain\Milestone\FunComparison\EddingtonFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -47,12 +48,14 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof EddingtonContext);
                     $previous = PreviousMilestone::create(
+                        milestoneId: $previousMilestone->getId(),
                         label: 'E'.$previousContext->getNumber(),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
 
                 $milestone = Milestone::create(
+                    id: MilestoneId::fromParts('eddington', $eddington->getId(), (string) $threshold),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::EDDINGTON,
                     sportType: null,

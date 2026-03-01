@@ -9,6 +9,7 @@ use App\Domain\Milestone\Context\CumulativeMovingTimeContext;
 use App\Domain\Milestone\FunComparison\MovingTimeFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
@@ -62,12 +63,14 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof CumulativeMovingTimeContext);
                     $previous = PreviousMilestone::create(
+                        milestoneId: $previousMilestone->getId(),
                         label: number_format((int) $previousContext->getThreshold()->toFloat()).' h',
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
 
                 $milestone = Milestone::create(
+                    id: MilestoneId::fromParts('cumulativeMovingTime', (string) $threshold),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
                     sportType: SportType::tryFrom($row['sportType']),

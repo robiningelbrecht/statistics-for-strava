@@ -10,6 +10,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\PersonalBestContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
@@ -75,16 +76,19 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
             $previous = null;
             if (null !== $previousTime) {
                 $previous = PreviousMilestone::create(
+                    milestoneId: $records[$recordKey]->getId(),
                     label: $this->formatDurationAsHumanString($previousTime),
                     achievedOn: $records[$recordKey]->getAchievedOn(),
                 );
             }
 
+            $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
+                id: MilestoneId::fromParts('personalBest', $sportType->value, (string) $distanceInMeter, (string) $activityId),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::PERSONAL_BEST,
                 sportType: $sportType,
-                activityId: ActivityId::fromString($row['activityId']),
+                activityId: $activityId,
                 title: $distanceLabel,
                 context: new PersonalBestContext(
                     distance: $distance,

@@ -13,6 +13,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final readonly class Milestone
 {
     private function __construct(
+        private MilestoneId $id,
         private SerializableDateTime $achievedOn,
         private MilestoneCategory $category,
         private ?SportType $sportType,
@@ -25,6 +26,7 @@ final readonly class Milestone
     }
 
     public static function create(
+        MilestoneId $id,
         SerializableDateTime $achievedOn,
         MilestoneCategory $category,
         ?SportType $sportType,
@@ -35,6 +37,7 @@ final readonly class Milestone
         ?FunComparison $funComparison = null,
     ): self {
         return new self(
+            id: $id,
             achievedOn: $achievedOn,
             category: $category,
             sportType: $sportType,
@@ -44,6 +47,11 @@ final readonly class Milestone
             previous: $previous,
             funComparison: $funComparison,
         );
+    }
+
+    public function getId(): MilestoneId
+    {
+        return $this->id;
     }
 
     public function getAchievedOn(): SerializableDateTime
