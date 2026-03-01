@@ -10,6 +10,7 @@ use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
+use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
@@ -30,12 +31,12 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
         )->fetchAllAssociative();
 
         $milestones = [];
-        /** @var array<string, array{raw: float, unit: Meter}> $records */
+        /** @var array<string, array{raw: float, milestone: Milestone}> $records */
         $records = [];
 
         foreach ($rows as $row) {
-            $elevationInMeter = (float) $row['elevation'];
-            if ($elevationInMeter <= 0) {
+            $elevationRaw = (float) $row['elevation'];
+            if ($elevationRaw <= 0) {
                 continue;
             }
 
@@ -44,28 +45,42 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 continue;
             }
             $sportKey = $sportType->value;
-            $elevation = Meter::from($elevationInMeter);
 
-            if (!isset($records[$sportKey]) || $elevationInMeter > $records[$sportKey]['raw']) {
-                $previousValue = $records[$sportKey]['unit'] ?? null;
-
-                $milestones[] = Milestone::create(
-                    achievedOn: SerializableDateTime::fromString($row['startDateTime']),
-                    category: MilestoneCategory::ACTIVITY_ELEVATION,
-                    sportType: $sportType,
-                    activityId: ActivityId::fromString($row['activityId']),
-                    title: 'Most elevation',
-                    context: new ActivityRecordContext(
-                        value: $elevation,
-                        previousValue: $previousValue,
-                    ),
-                );
-
-                $records[$sportKey] = [
-                    'raw' => $elevationInMeter,
-                    'unit' => $elevation,
-                ];
+            if (isset($records[$sportKey]) && $elevationRaw <= $records[$sportKey]['raw']) {
+                continue;
             }
+
+            $elevation = Meter::from($elevationRaw);
+
+            $previous = null;
+            if (isset($records[$sportKey])) {
+                $previousMilestone = $records[$sportKey]['milestone'];
+                $previousContext = $previousMilestone->getContext();
+                assert($previousContext instanceof ActivityRecordContext);
+                $previousUnit = $previousContext->getValue();
+                $previous = PreviousMilestone::create(
+                    label: $previousUnit->toInt().$previousUnit->getSymbol(),
+                    achievedOn: $previousMilestone->getAchievedOn(),
+                );
+            }
+
+            $milestone = Milestone::create(
+                achievedOn: SerializableDateTime::fromString($row['startDateTime']),
+                category: MilestoneCategory::ACTIVITY_ELEVATION,
+                sportType: $sportType,
+                activityId: ActivityId::fromString($row['activityId']),
+                title: 'Most elevation',
+                context: new ActivityRecordContext(
+                    value: $elevation,
+                ),
+                previous: $previous,
+            );
+
+            $milestones[] = $milestone;
+            $records[$sportKey] = [
+                'raw' => $elevationRaw,
+                'milestone' => $milestone,
+            ];
         }
 
         return Milestones::fromArray($milestones);

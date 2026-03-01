@@ -10,12 +10,16 @@ use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
+use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
 final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneDiscoverer
 {
+    use ProvideTimeFormats;
+
     public function __construct(
         private Connection $connection,
     ) {
@@ -30,7 +34,7 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
         )->fetchAllAssociative();
 
         $milestones = [];
-        /** @var array<string, array{raw: int, unit: Seconds}> $records */
+        /** @var array<string, array{raw: int, milestone: Milestone}> $records */
         $records = [];
 
         foreach ($rows as $row) {
@@ -44,28 +48,37 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
                 continue;
             }
             $sportKey = $sportType->value;
-            $seconds = Seconds::from($movingTime);
 
-            if (!isset($records[$sportKey]) || $movingTime > $records[$sportKey]['raw']) {
-                $previousValue = $records[$sportKey]['unit'] ?? null;
-
-                $milestones[] = Milestone::create(
-                    achievedOn: SerializableDateTime::fromString($row['startDateTime']),
-                    category: MilestoneCategory::ACTIVITY_MOVING_TIME,
-                    sportType: $sportType,
-                    activityId: ActivityId::fromString($row['activityId']),
-                    title: 'Longest activity',
-                    context: new ActivityRecordContext(
-                        value: $seconds,
-                        previousValue: $previousValue,
-                    ),
-                );
-
-                $records[$sportKey] = [
-                    'raw' => $movingTime,
-                    'unit' => $seconds,
-                ];
+            if (isset($records[$sportKey]) && $movingTime <= $records[$sportKey]['raw']) {
+                continue;
             }
+
+            $previous = null;
+            if (isset($records[$sportKey])) {
+                $previousMilestone = $records[$sportKey]['milestone'];
+                $previous = PreviousMilestone::create(
+                    label: $this->formatDurationAsHumanString($records[$sportKey]['raw']),
+                    achievedOn: $previousMilestone->getAchievedOn(),
+                );
+            }
+
+            $milestone = Milestone::create(
+                achievedOn: SerializableDateTime::fromString($row['startDateTime']),
+                category: MilestoneCategory::ACTIVITY_MOVING_TIME,
+                sportType: $sportType,
+                activityId: ActivityId::fromString($row['activityId']),
+                title: 'Longest activity',
+                context: new ActivityRecordContext(
+                    value: Seconds::from($movingTime),
+                ),
+                previous: $previous,
+            );
+
+            $milestones[] = $milestone;
+            $records[$sportKey] = [
+                'raw' => $movingTime,
+                'milestone' => $milestone,
+            ];
         }
 
         return Milestones::fromArray($milestones);

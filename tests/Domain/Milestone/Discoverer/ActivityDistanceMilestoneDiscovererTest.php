@@ -42,7 +42,7 @@ class ActivityDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->assertInstanceOf(ActivityRecordContext::class, $context);
         $this->assertInstanceOf(Kilometer::class, $context->getValue());
         $this->assertEquals(50.0, $context->getValue()->toFloat());
-        $this->assertNull($context->getPreviousValue());
+        $this->assertNull($milestone->getPrevious());
     }
 
     public function testDiscoverTracksImprovements(): void
@@ -59,8 +59,8 @@ class ActivityDistanceMilestoneDiscovererTest extends ContainerTestCase
         $context = $second->getContext();
         $this->assertInstanceOf(ActivityRecordContext::class, $context);
         $this->assertEquals(80.0, $context->getValue()->toFloat());
-        $this->assertNotNull($context->getPreviousValue());
-        $this->assertEquals(50.0, $context->getPreviousValue()->toFloat());
+        $this->assertNotNull($second->getPrevious());
+        $this->assertEquals('2024-01-01', $second->getPrevious()->getAchievedOn()->format('Y-m-d'));
     }
 
     public function testDiscoverDoesNotCreateMilestoneForNonImprovement(): void

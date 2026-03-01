@@ -42,7 +42,7 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->assertInstanceOf(ActivityRecordContext::class, $context);
         $this->assertInstanceOf(Seconds::class, $context->getValue());
         $this->assertEquals(7200, $context->getValue()->toInt());
-        $this->assertNull($context->getPreviousValue());
+        $this->assertNull($milestone->getPrevious());
     }
 
     public function testDiscoverTracksImprovements(): void
@@ -59,8 +59,8 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $context = $second->getContext();
         $this->assertInstanceOf(ActivityRecordContext::class, $context);
         $this->assertEquals(10800, $context->getValue()->toInt());
-        $this->assertNotNull($context->getPreviousValue());
-        $this->assertEquals(7200, $context->getPreviousValue()->toInt());
+        $this->assertNotNull($second->getPrevious());
+        $this->assertEquals('2024-01-01', $second->getPrevious()->getAchievedOn()->format('Y-m-d'));
     }
 
     public function testDiscoverDoesNotCreateMilestoneForNonImprovement(): void

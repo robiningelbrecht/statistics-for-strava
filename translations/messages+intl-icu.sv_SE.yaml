@@ -339,13 +339,19 @@ Tennis: Tennis
 "That's 2 activities per week for nearly 5 years": "That's 2 activities per week for nearly 5 years"
 "That's 2 full days of non-stop activity": "That's 2 full days of non-stop activity"
 "That's 2 full weeks of non-stop activity": "That's 2 full weeks of non-stop activity"
+"That's 2 full years of daily activity, incredible!": "That's 2 full years of daily activity, incredible!"
 "That's 2 months without missing a day": "That's 2 months without missing a day"
 "That's 2 months without stopping": "That's 2 months without stopping"
 "That's 25 days of 25+ km, building serious consistency": "That's 25 days of 25+ km, building serious consistency"
+"That's 250 days, over two thirds of a year": "That's 250 days, over two thirds of a year"
 "That's 3 activities per week for nearly 5 years": "That's 3 activities per week for nearly 5 years"
 "That's 3 full days of non-stop movement": "That's 3 full days of non-stop movement"
 "That's 3 weeks straight, they say it takes 21 days to build a habit": "That's 3 weeks straight, they say it takes 21 days to build a habit"
+"That's 4 months of unbroken daily activity": "That's 4 months of unbroken daily activity"
+"That's 45 days, halfway to a full quarter": "That's 45 days, halfway to a full quarter"
+"That's 5 months, nearly half a year without a rest day": "That's 5 months, nearly half a year without a rest day"
 "That's 50 days of at least 50 km, impressive dedication": "That's 50 days of at least 50 km, impressive dedication"
+"That's 500 days, well beyond a year of daily activity": "That's 500 days, well beyond a year of daily activity"
 "That's a century ride": "That's a century ride"
 "That's a full day of non-stop movement": "That's a full day of non-stop movement"
 "That's a full fortnight of daily activity": "That's a full fortnight of daily activity"
@@ -353,8 +359,8 @@ Tennis: Tennis
 "That's a full month without a rest day": "That's a full month without a rest day"
 "That's a full quarter of daily activity": "That's a full quarter of daily activity"
 "That's a full week of non-stop movement": "That's a full week of non-stop movement"
-"That's a full week without a rest day": "That's a full week without a rest day"
 "That's a full work day of exercise": "That's a full work day of exercise"
+"That's a full year of daily activity": "That's a full year of daily activity"
 "That's about 3 months of continuous activity": "That's about 3 months of continuous activity"
 "That's about one activity per week for a year": "That's about one activity per week for a year"
 "That's almost 2 activities per week for a year": "That's almost 2 activities per week for a year"
@@ -364,7 +370,6 @@ Tennis: Tennis
 "That's an activity every day for almost 7 years": "That's an activity every day for almost 7 years"
 "That's an activity every day for nearly 14 years": "That's an activity every day for nearly 14 years"
 "That's at least 100 days of 100+ km, a true centurion": "That's at least 100 days of 100+ km, a true centurion"
-"That's at least one full year of daily activity": "That's at least one full year of daily activity"
 "That's climbing Mount Everest 10 times": "That's climbing Mount Everest 10 times"
 "That's climbing Mount Everest 3 times": "That's climbing Mount Everest 3 times"
 "That's climbing Mount Everest 6 times": "That's climbing Mount Everest 6 times"
@@ -520,7 +525,6 @@ never: aldrig
 'on': på
 'per activity': 'per aktivitet'
 'per hour': 'per timma'
-previous: previous
 to: till
 total: totalt
 weeks: veckor

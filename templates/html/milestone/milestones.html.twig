@@ -14,9 +14,6 @@
         }) }}
     {% elseif category == 'activityDistance' %}
         {{ "Longest distance"|trans }}: {{ context.getValue()|renderMeasurement(1)|raw }}
-        {% if context.getPreviousValue() %}
-            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.getPreviousValue()|renderMeasurement(1)|raw }})</span>
-        {% endif %}
     {% elseif category == 'cumulativeElevation' %}
         {{ "Reached {threshold} total elevation (actual: {totalElevation})"|trans({
             '{threshold}': context.getThreshold(),
@@ -24,9 +21,6 @@
         }) }}
     {% elseif category == 'activityElevation' %}
         {{ "Most elevation"|trans }}: {{ context.getValue()|renderMeasurement(0)|raw }}
-        {% if context.getPreviousValue() %}
-            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.getPreviousValue()|renderMeasurement(0)|raw }})</span>
-        {% endif %}
     {% elseif category == 'cumulativeMovingTime' %}
         {{ "Reached {threshold} total moving time (actual: {totalMovingTime})"|trans({
             '{threshold}': context.getThreshold(),
@@ -34,9 +28,6 @@
         }) }}
     {% elseif category == 'activityMovingTime' %}
         {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
-        {% if context.getPreviousValue() %}
-            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.getPreviousValue()|formatSeconds }})</span>
-        {% endif %}
     {% elseif category == 'activityCount' %}
         {{ "Completed activity number {threshold} (total: {totalCount})"|trans({
             '{threshold}': context.getThreshold(),
@@ -44,9 +35,6 @@
         }) }}
     {% elseif category == 'personalBest' %}
         {{ "New personal best for"|trans }} {{ context.getDistance()|renderMeasurement(1)|raw }}: {{ context.getTime()|formatSeconds }}
-        {% if context.getPreviousTime() %}
-            <span class="text-xs text-gray-400">({{ "previous"|trans }}: {{ context.getPreviousTime()|formatSeconds }})</span>
-        {% endif %}
     {% elseif category == 'eddington' %}
         {{ "Reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif category == 'streak' %}
@@ -76,14 +64,19 @@
             {% endfor %}
         </div>
     {% endif %}
-    <div class="relative border-l-2 border-gray-200 ml-4">
+    <div class="relative border-l-2 border-gray-200 ml-6">
         {% for milestone in milestones %}
-            <div class="mb-8 ml-6" data-milestone-category="{{ milestone.getCategory().getFilterGroup().value }}">
-                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                    <div class="flex items-center justify-between mb-1">
-                        <h3 class="text-sm font-semibold">{{ milestone.getTitle() }}</h3>
-                        <time class="text-xs text-gray-500">{{ milestone.getAchievedOn()|formatDate('normal') }}</time>
+            <div class="mb-8 ml-10" data-milestone-category="{{ milestone.getCategory().getFilterGroup().value }}">
+                <div class="absolute -inset-s-10">
+                    <div class="flex flex-col items-center gap-y-1 w-20">
+                        <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
+                            <svg class="size-4 text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path></svg>
+                        </div>
+                        <time class="text-xs text-gray-400 bg-gray-50 pb-1.25">{{ milestone.getAchievedOn()|formatDate('normal') }}</time>
                     </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <h3 class="text-sm font-semibold mb-1">{{ milestone.getTitle() }}</h3>
                     <div class="text-sm text-gray-600">
                         {{ _self.milestoneDescription(milestone) }}
                     </div>
