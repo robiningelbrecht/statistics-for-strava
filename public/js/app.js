@@ -14,6 +14,7 @@ import DataTableManager from "./features/data-table/data-table-manager";
 import FullscreenManager from "./components/fullscreen";
 import ScrollTo from "./components/scroll-to";
 import Heatmap from "./features/heatmap/heatmap";
+import MilestoneFilter from "./features/milestones/milestone-filter";
 import DarkModeManager from "./components/dark-mode";
 
 const $main = document.querySelector("main");
@@ -74,6 +75,9 @@ eventBus.on(Events.PAGE_LOADED, async ({page, modalId}) => {
         modalManager.open(modalId);
     }
 
+    if (page === 'milestones') {
+        new MilestoneFilter(document).init();
+    }
     if (page === 'heatmap') {
         const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
         await new Heatmap($heatmapWrapper, modalManager).render();
