@@ -2284,9 +2284,6 @@
   .overflow-y-auto {
     overflow-y: auto;
   }
-  .scroll-smooth {
-    scroll-behavior: smooth;
-  }
   .rounded {
     border-radius: 0.25rem;
   }
@@ -3459,6 +3456,11 @@
   .peer-checked\:bg-gray-100 {
     &:is(:where(.peer):checked ~ *) {
       background-color: var(--color-gray-100);
+    }
+  }
+  .peer-checked\:text-strava-orange {
+    &:is(:where(.peer):checked ~ *) {
+      color: var(--color-strava-orange);
     }
   }
   .peer-focus\:ring-2 {
