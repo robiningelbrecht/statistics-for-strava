@@ -147,6 +147,14 @@
                     </li>
                 {% endif %}
                 <li>
+                    <a href="{{ relativeUrl('milestones') }}" data-router-navigate="{{ relativeUrl('milestones') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }}
+                       class="sidebar-menu-link">
+
+                        <svg class="sidebar-menu-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="M80-200v-80h240v-240h240v-240h320v80H640v240H400v240H80Z"/></svg>
+                        <span class="flex-1 whitespace-nowrap">{{ "Milestones"|trans|ellipses(23) }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ relativeUrl('rewind') }}" data-router-navigate="{{ relativeUrl('rewind') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }}
                        class="sidebar-menu-link">
                         <svg class="sidebar-menu-link-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
