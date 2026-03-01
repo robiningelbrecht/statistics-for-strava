@@ -9,6 +9,7 @@ use App\Domain\Milestone\Context\CumulativeDistanceContext;
 use App\Domain\Milestone\FunComparison\DistanceFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -73,12 +74,14 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof CumulativeDistanceContext);
                     $previous = PreviousMilestone::create(
+                        milestoneId: $previousMilestone->getId(),
                         label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
 
                 $milestone = Milestone::create(
+                    id: MilestoneId::fromParts('cumulativeDistance', (string) $threshold),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_DISTANCE,
                     sportType: SportType::tryFrom($row['sportType']),

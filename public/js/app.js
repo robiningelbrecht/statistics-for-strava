@@ -12,6 +12,7 @@ import TabsManager from "./components/tabs";
 import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./features/data-table/data-table-manager";
 import FullscreenManager from "./components/fullscreen";
+import ScrollTo from "./components/scroll-to";
 import Heatmap from "./features/heatmap/heatmap";
 import DarkModeManager from "./components/dark-mode";
 
@@ -30,6 +31,7 @@ const leafletMapManager = new LeafletMapManager();
 const tabsManager = new TabsManager();
 const dataTableManager = new DataTableManager();
 const fullscreenManager = new FullscreenManager();
+const scrollTo = new ScrollTo();
 const darkModeManager = new DarkModeManager();
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
@@ -52,6 +54,7 @@ const initElements = (rootNode) => {
     chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
     leafletMapManager.init(rootNode);
     fullscreenManager.init(rootNode);
+    scrollTo.init(rootNode);
 }
 
 sidebar.init();

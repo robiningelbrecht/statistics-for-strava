@@ -8,6 +8,7 @@ use App\Domain\Milestone\Context\StreakContext;
 use App\Domain\Milestone\FunComparison\StreakFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -69,12 +70,14 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof StreakContext);
                     $previous = PreviousMilestone::create(
+                        milestoneId: $previousMilestone->getId(),
                         label: $previousContext->getDays().' days',
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
 
                 $milestone = Milestone::create(
+                    id: MilestoneId::fromParts('streak', (string) $threshold, $achievedOn->format('Y-m-d')),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::STREAK,
                     sportType: null,

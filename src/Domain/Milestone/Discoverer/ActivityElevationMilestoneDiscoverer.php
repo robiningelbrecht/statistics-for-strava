@@ -9,6 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -59,16 +60,19 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 assert($previousContext instanceof ActivityRecordContext);
                 $previousUnit = $previousContext->getValue();
                 $previous = PreviousMilestone::create(
+                    milestoneId: $previousMilestone->getId(),
                     label: $previousUnit->toInt().$previousUnit->getSymbol(),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }
 
+            $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
+                id: MilestoneId::fromParts('activityElevation', $sportKey, (string) $activityId),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_ELEVATION,
                 sportType: $sportType,
-                activityId: ActivityId::fromString($row['activityId']),
+                activityId: $activityId,
                 title: 'Most elevation',
                 context: new ActivityRecordContext(
                     value: $elevation,

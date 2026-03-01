@@ -9,6 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
@@ -57,16 +58,19 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
             if (isset($records[$sportKey])) {
                 $previousMilestone = $records[$sportKey]['milestone'];
                 $previous = PreviousMilestone::create(
+                    milestoneId: $previousMilestone->getId(),
                     label: $this->formatDurationAsHumanString($records[$sportKey]['raw']),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }
 
+            $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
+                id: MilestoneId::fromParts('activityMovingTime', $sportKey, (string) $activityId),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_MOVING_TIME,
                 sportType: $sportType,
-                activityId: ActivityId::fromString($row['activityId']),
+                activityId: $activityId,
                 title: 'Longest activity',
                 context: new ActivityRecordContext(
                     value: Seconds::from($movingTime),

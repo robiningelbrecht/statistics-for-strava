@@ -9,6 +9,7 @@ use App\Domain\Milestone\Context\ActivityCountContext;
 use App\Domain\Milestone\FunComparison\ActivityCountFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -53,12 +54,14 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof ActivityCountContext);
                     $previous = PreviousMilestone::create(
+                        milestoneId: $previousMilestone->getId(),
                         label: number_format($previousContext->getThreshold()),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
 
                 $milestone = Milestone::create(
+                    id: MilestoneId::fromParts('activityCount', (string) $threshold),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::ACTIVITY_COUNT,
                     sportType: SportType::tryFrom($row['sportType']),

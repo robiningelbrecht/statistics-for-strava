@@ -9,6 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Domain\Milestone\MilestoneId;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -56,16 +57,19 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
                 assert($previousContext instanceof ActivityRecordContext);
                 $previousUnit = $previousContext->getValue();
                 $previous = PreviousMilestone::create(
+                    milestoneId: $previousMilestone->getId(),
                     label: round($previousUnit->toFloat(), 1).$previousUnit->getSymbol(),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }
 
+            $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
+                id: MilestoneId::fromParts('activityDistance', $sportKey, (string) $activityId),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_DISTANCE,
                 sportType: $sportType,
-                activityId: ActivityId::fromString($row['activityId']),
+                activityId: $activityId,
                 title: 'Longest distance',
                 context: new ActivityRecordContext(
                     value: $distanceInKm,
