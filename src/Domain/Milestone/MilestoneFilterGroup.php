@@ -31,4 +31,18 @@ enum MilestoneFilterGroup: string implements TranslatableInterface
             self::STREAK => $translator->trans('Streaks', locale: $locale),
         };
     }
+
+    public function getSvgIcon(): string
+    {
+        return match ($this) {
+            self::FIRST => 'number-one',
+            self::DISTANCE => 'distance',
+            self::ELEVATION => 'elevation',
+            self::MOVING_TIME => 'time',
+            self::ACTIVITY => 'muscle',
+            self::PERSONAL_BEST => 'trophy',
+            self::EDDINGTON => 'eddington',
+            self::STREAK => 'fire',
+        };
+    }
 }
