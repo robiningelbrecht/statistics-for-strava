@@ -18,10 +18,13 @@ class StreakFunComparisonTest extends TestCase
         }
     }
 
-    public function testResolveReturnsNullBelowMinimum(): void
+    public function testResolveReturnsNullForThresholdsWithoutComparison(): void
     {
         $this->assertNull(StreakFunComparison::resolve(1));
         $this->assertNull(StreakFunComparison::resolve(6));
+        $this->assertNull(StreakFunComparison::resolve(7));
+        $this->assertNull(StreakFunComparison::resolve(15));
+        $this->assertNull(StreakFunComparison::resolve(31));
     }
 
     #[DataProvider(methodName: 'resolveProvider')]
@@ -35,14 +38,19 @@ class StreakFunComparisonTest extends TestCase
      */
     public static function resolveProvider(): \Generator
     {
-        yield 'full week' => [7, StreakFunComparison::FULL_WEEK];
         yield 'fortnight' => [14, StreakFunComparison::FORTNIGHT];
-        yield '21 days' => [21, StreakFunComparison::TWENTY_ONE_DAYS_HABIT];
+        yield '21 days habit' => [21, StreakFunComparison::TWENTY_ONE_DAYS_HABIT];
         yield 'full month' => [30, StreakFunComparison::FULL_MONTH];
+        yield '45 days' => [45, StreakFunComparison::FORTY_FIVE_DAYS];
         yield 'two months' => [60, StreakFunComparison::TWO_MONTHS];
         yield 'full quarter' => [90, StreakFunComparison::FULL_QUARTER];
         yield '100 days' => [100, StreakFunComparison::HUNDRED_DAYS];
+        yield 'four months' => [120, StreakFunComparison::FOUR_MONTHS];
+        yield 'five months' => [150, StreakFunComparison::FIVE_MONTHS];
         yield 'half year' => [180, StreakFunComparison::HALF_YEAR];
+        yield '250 days' => [250, StreakFunComparison::TWO_HUNDRED_FIFTY_DAYS];
         yield 'full year' => [365, StreakFunComparison::FULL_YEAR];
+        yield '500 days' => [500, StreakFunComparison::FIVE_HUNDRED_DAYS];
+        yield 'two years' => [730, StreakFunComparison::TWO_YEARS];
     }
 }
