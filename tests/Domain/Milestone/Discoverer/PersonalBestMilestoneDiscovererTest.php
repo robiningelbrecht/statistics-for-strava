@@ -49,7 +49,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->assertEquals(5.0, $context->getDistance()->toFloat());
         $this->assertInstanceOf(Seconds::class, $context->getTime());
         $this->assertEquals(1200, $context->getTime()->toInt());
-        $this->assertNull($context->getPreviousTime());
+        $this->assertNull($milestone->getPrevious());
     }
 
     public function testDiscoverTracksImprovements(): void
@@ -69,8 +69,8 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $context = $second->getContext();
         $this->assertInstanceOf(PersonalBestContext::class, $context);
         $this->assertEquals(1100, $context->getTime()->toInt());
-        $this->assertNotNull($context->getPreviousTime());
-        $this->assertEquals(1200, $context->getPreviousTime()->toInt());
+        $this->assertNotNull($second->getPrevious());
+        $this->assertEquals('2024-01-01', $second->getPrevious()->getAchievedOn()->format('Y-m-d'));
     }
 
     public function testDiscoverDoesNotCreateMilestoneForSlowerTime(): void

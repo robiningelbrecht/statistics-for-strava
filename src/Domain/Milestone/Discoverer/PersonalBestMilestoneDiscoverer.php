@@ -11,6 +11,8 @@ use App\Domain\Milestone\Context\PersonalBestContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
+use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\ConvertableToMeter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -18,6 +20,8 @@ use Doctrine\DBAL\Connection;
 
 final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscoverer
 {
+    use ProvideTimeFormats;
+
     public function __construct(
         private Connection $connection,
     ) {
@@ -35,7 +39,7 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
         $distanceMap = $this->buildDistanceMap();
 
         $milestones = [];
-        /** @var array<string, array{time: int, seconds: Seconds}> $records */
+        /** @var array<string, Milestone> $records */
         $records = [];
 
         foreach ($rows as $row) {
@@ -52,33 +56,45 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
             }
 
             $recordKey = $sportType->value.'_'.$distanceInMeter;
-            $seconds = Seconds::from($timeInSeconds);
 
-            if (!isset($records[$recordKey]) || $timeInSeconds < $records[$recordKey]['time']) {
-                $previousTime = $records[$recordKey]['seconds'] ?? null;
-
-                $distanceLabel = ($distance->isLowerThanOne()
-                    ? round($distance->toFloat(), 1)
-                    : $distance->toInt()).$distance->getSymbol();
-
-                $milestones[] = Milestone::create(
-                    achievedOn: SerializableDateTime::fromString($row['startDateTime']),
-                    category: MilestoneCategory::PERSONAL_BEST,
-                    sportType: $sportType,
-                    activityId: ActivityId::fromString($row['activityId']),
-                    title: $distanceLabel,
-                    context: new PersonalBestContext(
-                        distance: $distance,
-                        time: $seconds,
-                        previousTime: $previousTime,
-                    ),
-                );
-
-                $records[$recordKey] = [
-                    'time' => $timeInSeconds,
-                    'seconds' => $seconds,
-                ];
+            $previousTime = null;
+            if (isset($records[$recordKey])) {
+                $previousContext = $records[$recordKey]->getContext();
+                assert($previousContext instanceof PersonalBestContext);
+                $previousTime = $previousContext->getTime()->toInt();
             }
+
+            if (null !== $previousTime && $timeInSeconds >= $previousTime) {
+                continue;
+            }
+
+            $distanceLabel = ($distance->isLowerThanOne()
+                ? round($distance->toFloat(), 1)
+                : $distance->toInt()).$distance->getSymbol();
+
+            $previous = null;
+            if (null !== $previousTime) {
+                $previous = PreviousMilestone::create(
+                    label: $this->formatDurationAsHumanString($previousTime),
+                    achievedOn: $records[$recordKey]->getAchievedOn(),
+                );
+            }
+
+            $milestone = Milestone::create(
+                achievedOn: SerializableDateTime::fromString($row['startDateTime']),
+                category: MilestoneCategory::PERSONAL_BEST,
+                sportType: $sportType,
+                activityId: ActivityId::fromString($row['activityId']),
+                title: $distanceLabel,
+                context: new PersonalBestContext(
+                    distance: $distance,
+                    time: Seconds::from($timeInSeconds),
+                ),
+                previous: $previous,
+            );
+
+            $milestones[] = $milestone;
+            $records[$recordKey] = $milestone;
         }
 
         return Milestones::fromArray($milestones);

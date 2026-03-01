@@ -10,17 +10,11 @@ final readonly class ActivityRecordContext implements MilestoneContext
 {
     public function __construct(
         private Unit $value,
-        private ?Unit $previousValue,
     ) {
     }
 
     public function getValue(): Unit
     {
         return $this->value;
-    }
-
-    public function getPreviousValue(): ?Unit
-    {
-        return $this->previousValue;
     }
 }

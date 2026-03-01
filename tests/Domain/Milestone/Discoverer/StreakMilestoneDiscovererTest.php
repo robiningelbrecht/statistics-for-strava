@@ -109,14 +109,22 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
     public function testFunComparisonIsSet(): void
     {
-        for ($i = 0; $i < 7; ++$i) {
+        for ($i = 0; $i < 21; ++$i) {
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }
 
         $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
         $milestones = $discoverer->discover();
 
-        $this->assertNotNull($milestones->toArray()[0]->getFunComparison());
+        $twentyOneDayMilestone = null;
+        foreach ($milestones->toArray() as $milestone) {
+            if (21 === $milestone->getContext()->getDays()) {
+                $twentyOneDayMilestone = $milestone;
+            }
+        }
+
+        $this->assertNotNull($twentyOneDayMilestone);
+        $this->assertNotNull($twentyOneDayMilestone->getFunComparison());
     }
 
     private function insertActivity(int $id, string $date): void

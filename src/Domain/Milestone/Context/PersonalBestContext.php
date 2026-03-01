@@ -12,7 +12,6 @@ final readonly class PersonalBestContext implements MilestoneContext
     public function __construct(
         private Unit $distance,
         private Seconds $time,
-        private ?Seconds $previousTime,
     ) {
     }
 
@@ -24,10 +23,5 @@ final readonly class PersonalBestContext implements MilestoneContext
     public function getTime(): Seconds
     {
         return $this->time;
-    }
-
-    public function getPreviousTime(): ?Seconds
-    {
-        return $this->previousTime;
     }
 }

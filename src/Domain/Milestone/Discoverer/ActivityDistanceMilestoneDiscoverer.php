@@ -10,7 +10,7 @@ use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\Milestones;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
@@ -31,39 +31,53 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
         )->fetchAllAssociative();
 
         $milestones = [];
-        /** @var array<string, array{raw: float, unit: Kilometer}> $records */
+        /** @var array<string, array{raw: float, milestone: Milestone}> $records */
         $records = [];
 
         foreach ($rows as $row) {
-            $distanceInMeter = (float) $row['distance'];
-            if ($distanceInMeter <= 0) {
+            $distanceRaw = (float) $row['distance'];
+            if ($distanceRaw <= 0) {
                 continue;
             }
 
             $sportType = SportType::from($row['sportType']);
             $sportKey = $sportType->value;
-            $distanceInKm = Meter::from($distanceInMeter)->toKilometer();
 
-            if (!isset($records[$sportKey]) || $distanceInMeter > $records[$sportKey]['raw']) {
-                $previousValue = $records[$sportKey]['unit'] ?? null;
-
-                $milestones[] = Milestone::create(
-                    achievedOn: SerializableDateTime::fromString($row['startDateTime']),
-                    category: MilestoneCategory::ACTIVITY_DISTANCE,
-                    sportType: $sportType,
-                    activityId: ActivityId::fromString($row['activityId']),
-                    title: 'Longest distance',
-                    context: new ActivityRecordContext(
-                        value: $distanceInKm,
-                        previousValue: $previousValue,
-                    ),
-                );
-
-                $records[$sportKey] = [
-                    'raw' => $distanceInMeter,
-                    'unit' => $distanceInKm,
-                ];
+            if (isset($records[$sportKey]) && $distanceRaw <= $records[$sportKey]['raw']) {
+                continue;
             }
+
+            $distanceInKm = Meter::from($distanceRaw)->toKilometer();
+
+            $previous = null;
+            if (isset($records[$sportKey])) {
+                $previousMilestone = $records[$sportKey]['milestone'];
+                $previousContext = $previousMilestone->getContext();
+                assert($previousContext instanceof ActivityRecordContext);
+                $previousUnit = $previousContext->getValue();
+                $previous = PreviousMilestone::create(
+                    label: round($previousUnit->toFloat(), 1).$previousUnit->getSymbol(),
+                    achievedOn: $previousMilestone->getAchievedOn(),
+                );
+            }
+
+            $milestone = Milestone::create(
+                achievedOn: SerializableDateTime::fromString($row['startDateTime']),
+                category: MilestoneCategory::ACTIVITY_DISTANCE,
+                sportType: $sportType,
+                activityId: ActivityId::fromString($row['activityId']),
+                title: 'Longest distance',
+                context: new ActivityRecordContext(
+                    value: $distanceInKm,
+                ),
+                previous: $previous,
+            );
+
+            $milestones[] = $milestone;
+            $records[$sportKey] = [
+                'raw' => $distanceRaw,
+                'milestone' => $milestone,
+            ];
         }
 
         return Milestones::fromArray($milestones);
