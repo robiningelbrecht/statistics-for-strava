@@ -27,7 +27,7 @@ final readonly class BuildMilestonesHtmlCommandHandler implements CommandHandler
 
         $this->buildStorage->write(
             'milestones.html',
-            $this->twig->load('html/milestone/milestones.html.twig')->render([
+            $this->twig->load('html/milestones.html.twig')->render([
                 'milestones' => $milestones,
             ]),
         );
