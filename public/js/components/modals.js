@@ -10,17 +10,15 @@ export default class ModalManager {
     }
 
     init(rootNode) {
-        const modalLinks = rootNode.querySelectorAll('a[data-model-content-url]');
+        rootNode.addEventListener('click', (e) => {
+            const node = e.target.closest('a[data-model-content-url]');
+            if (!node) return;
 
-        modalLinks.forEach(node => {
-            node.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const modalId = node.getAttribute('data-model-content-url');
-                this.open(modalId);
-                // Add modal to history state.
-                this.router.pushCurrentRouteToHistoryState(modalId);
-            });
+            e.preventDefault();
+            e.stopPropagation();
+            const modalId = node.getAttribute('data-model-content-url');
+            this.open(modalId);
+            this.router.pushCurrentRouteToHistoryState(modalId);
         });
     }
 
