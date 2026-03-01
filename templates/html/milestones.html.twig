@@ -9,13 +9,20 @@
 {% else %}
     {% if milestones.getUniqueFilterGroups()|length > 1 %}
         <div class="flex flex-wrap gap-2 mb-6" data-milestone-filters>
-            <button data-milestone-filter="" class="px-3 py-1 text-sm rounded-full bg-blue-600 text-white">
-                {{ "All"|trans }}
-            </button>
+            <div>
+                <input type="radio" id="all" value="all" name="filter-group" class="hidden peer" required="" checked>
+                <label for="all" class="inline-flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-4 py-1 text-sm font-medium shadow-xs text-gray-700 bg-white border border-gray-200 hover:text-strava-orange peer-checked:text-strava-orange">
+                    {{ "All"|trans }}
+                </label>
+            </div>
             {% for group in milestones.getUniqueFilterGroups() %}
-                <button data-milestone-filter="{{ group.value }}" class="px-3 py-1 text-sm rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200">
-                    {{ group|trans }}
-                </button>
+                <div>
+                    <input type="radio" id="{{ group.value }}" value="{{ group.value }}" name="filter-group" class="hidden peer" required="">
+                    <label for="{{ group.value }}" class="flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-4 py-1 text-sm font-medium shadow-xs text-gray-700 bg-white border border-gray-200 hover:text-strava-orange peer-checked:text-strava-orange">
+                        {{ svg(group.getSvgIcon(), 'size-4', '') }}
+                        <span>{{ group|trans }}</span>
+                    </label>
+                </div>
             {% endfor %}
         </div>
     {% endif %}
