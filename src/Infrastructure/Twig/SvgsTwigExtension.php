@@ -34,14 +34,14 @@ final class SvgsTwigExtension
             }, $svg);
         }
 
-        if ($iconColor) {
+        if (null !== $iconColor) {
             /** @var non-empty-string $svg */
             $svg = preg_replace_callback('/class="([^"]+)"/', function (array $matches) use ($iconColor): string {
                 $classes = explode(' ', $matches[1]);
                 $classes = array_filter($classes, fn (string $class): bool => !preg_match('/^(text-|hover:text|fill-|stroke-)/', $class));
                 $classes[] = $iconColor;
 
-                return 'class="'.implode(' ', $classes).'"';
+                return 'class="'.trim(implode(' ', $classes)).'"';
             }, $svg);
         }
 
