@@ -13,17 +13,15 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 {
+    private CumulativeDistanceMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new CumulativeDistanceMilestoneDiscoverer(
-            $this->getConnection(),
-            UnitSystem::METRIC,
-        );
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverFirstMetricThreshold(): void
@@ -31,11 +29,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         // 100 km threshold: insert exactly 100 km
         $this->insertActivity(1, '2024-01-01', 100.0);
 
-        $discoverer = new CumulativeDistanceMilestoneDiscoverer(
-            $this->getConnection(),
-            UnitSystem::METRIC,
-        );
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -58,11 +52,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         // Second activity: 260 km → total 510 km → hits 500
         $this->insertActivity(2, '2024-01-02', 260.0);
 
-        $discoverer = new CumulativeDistanceMilestoneDiscoverer(
-            $this->getConnection(),
-            UnitSystem::METRIC,
-        );
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
         $this->assertEquals(['100 km', '250 km', '500 km'], $titles);
@@ -76,12 +66,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivity(1, '2024-01-01', 0.0);
 
-        $discoverer = new CumulativeDistanceMilestoneDiscoverer(
-            $this->getConnection(),
-            UnitSystem::METRIC,
-        );
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverWithImperialUnits(): void
@@ -92,6 +77,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $discoverer = new CumulativeDistanceMilestoneDiscoverer(
             $this->getConnection(),
             UnitSystem::IMPERIAL,
+            new IncrementingMilestoneIdFactory(),
         );
         $milestones = $discoverer->discover();
 
@@ -103,14 +89,20 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivity(1, '2024-01-01', 500.0);
 
-        $discoverer = new CumulativeDistanceMilestoneDiscoverer(
-            $this->getConnection(),
-            UnitSystem::METRIC,
-        );
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $last = $milestones->toArray()[count($milestones) - 1];
         $this->assertNotNull($last->getFunComparison());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new CumulativeDistanceMilestoneDiscoverer(
+            $this->getConnection(),
+            UnitSystem::METRIC,
+            new IncrementingMilestoneIdFactory(),
+        );
     }
 
     private function insertActivity(int $id, string $date, float $distanceKm): void

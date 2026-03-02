@@ -49,3 +49,6 @@ services:
 
     App\Infrastructure\Daemon\Daemon:
       class: App\Tests\Infrastructure\Daemon\FakeDaemon
+
+    App\Domain\Milestone\MilestoneIdFactory:
+        class: App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory

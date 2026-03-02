@@ -9,7 +9,7 @@ use App\Domain\Milestone\Context\CumulativeElevationContext;
 use App\Domain\Milestone\FunComparison\ElevationFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -22,6 +22,7 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
     public function __construct(
         private Connection $connection,
         private UnitSystem $unitSystem,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -81,7 +82,7 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::random(),
+                    id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_ELEVATION,
                     sportType: SportType::tryFrom($row['sportType']),

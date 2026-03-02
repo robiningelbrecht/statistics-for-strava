@@ -13,22 +13,22 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 {
+    private ActivityMovingTimeMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverCreatesPersonalBestForFirstActivity(): void
     {
         $this->insertActivity(1, '2024-01-01', SportType::RIDE, 7200);
 
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -50,8 +50,7 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', SportType::RIDE, 7200);
         $this->insertActivity(2, '2024-01-02', SportType::RIDE, 10800);
 
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -68,8 +67,7 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', SportType::RIDE, 7200);
         $this->insertActivity(2, '2024-01-02', SportType::RIDE, 3600);
 
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
     }
@@ -79,8 +77,7 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', SportType::RIDE, 7200);
         $this->insertActivity(2, '2024-01-02', SportType::RUN, 3600);
 
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
         $this->assertEquals(SportType::RIDE, $milestones->toArray()[0]->getSportType());
@@ -91,9 +88,13 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivity(1, '2024-01-01', SportType::RIDE, 0);
 
-        $discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
+    }
 
-        $this->assertTrue($discoverer->discover()->isEmpty());
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new ActivityMovingTimeMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date, SportType $sportType, int $movingTimeInSeconds): void

@@ -17,14 +17,15 @@ use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
 {
+    private PersonalBestMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverCreatesPersonalBestForFirstBestEffort(): void
@@ -32,8 +33,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', SportType::RUN);
         $this->insertBestEffort(1, SportType::RUN, 5000, 1200);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -60,8 +60,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', SportType::RUN);
         $this->insertBestEffort(2, SportType::RUN, 5000, 1100);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -81,8 +80,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', SportType::RUN);
         $this->insertBestEffort(2, SportType::RUN, 5000, 1500);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
     }
@@ -95,8 +93,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', SportType::RIDE);
         $this->insertBestEffort(2, SportType::RIDE, 10000, 1800);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
         $this->assertEquals(SportType::RUN, $milestones->toArray()[0]->getSportType());
@@ -109,8 +106,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertBestEffort(1, SportType::RUN, 5000, 1200);
         $this->insertBestEffort(1, SportType::RUN, 10000, 2700);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -123,10 +119,15 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', SportType::RUN);
         $this->insertBestEffort(1, SportType::RUN, 7777, 2000);
 
-        $discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertTrue($milestones->isEmpty());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new PersonalBestMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date, SportType $sportType): void

@@ -9,7 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\FirstContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
@@ -18,6 +18,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
 {
     public function __construct(
         private Connection $connection,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -47,7 +48,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
             $seenSportTypes[$sportTypeValue] = true;
 
             $milestones[] = Milestone::create(
-                id: MilestoneId::random(),
+                id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::FIRST,
                 sportType: $sportType,

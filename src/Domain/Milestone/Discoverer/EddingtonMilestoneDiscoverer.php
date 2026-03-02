@@ -9,7 +9,7 @@ use App\Domain\Milestone\Context\EddingtonContext;
 use App\Domain\Milestone\FunComparison\EddingtonFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -19,6 +19,7 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
     public function __construct(
         private EddingtonCalculator $eddingtonCalculator,
         private UnitSystem $unitSystem,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -55,7 +56,7 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::random(),
+                    id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::EDDINGTON,
                     sportType: null,
