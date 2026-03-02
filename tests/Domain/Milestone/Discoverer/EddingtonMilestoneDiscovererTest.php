@@ -15,17 +15,15 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 {
+    private EddingtonMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new EddingtonMilestoneDiscoverer(
-            $this->getContainer()->get(EddingtonCalculator::class),
-            UnitSystem::METRIC,
-        );
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverWithSufficientActivities(): void
@@ -42,11 +40,7 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
             ));
         }
 
-        $discoverer = new EddingtonMilestoneDiscoverer(
-            $this->getContainer()->get(EddingtonCalculator::class),
-            UnitSystem::METRIC,
-        );
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertGreaterThanOrEqual(1, count($milestones));
 
@@ -74,16 +68,22 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
             ));
         }
 
-        $discoverer = new EddingtonMilestoneDiscoverer(
-            $this->getContainer()->get(EddingtonCalculator::class),
-            UnitSystem::METRIC,
-        );
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertGreaterThanOrEqual(2, count($milestones));
 
         $secondMilestone = $milestones->toArray()[1];
         $this->assertNotNull($secondMilestone->getPrevious());
         $this->assertStringContainsString('E', $secondMilestone->getPrevious()->getLabel());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new EddingtonMilestoneDiscoverer(
+            $this->getContainer()->get(EddingtonCalculator::class),
+            UnitSystem::METRIC,
+            new IncrementingMilestoneIdFactory(),
+        );
     }
 }

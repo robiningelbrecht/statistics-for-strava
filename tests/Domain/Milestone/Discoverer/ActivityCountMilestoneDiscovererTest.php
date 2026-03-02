@@ -12,14 +12,15 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
 {
+    private ActivityCountMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertTrue($milestones->isEmpty());
     }
@@ -28,8 +29,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivities(10);
 
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -48,8 +48,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivities(50);
 
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(3, $milestones);
 
@@ -72,8 +71,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
             ));
         }
 
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
         $this->assertNotNull($milestones->toArray()[0]->getSportType());
@@ -83,8 +81,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivities(50);
 
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $milestone50 = $milestones->toArray()[2];
         $this->assertNotNull($milestone50->getFunComparison());
@@ -94,10 +91,15 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivities(10);
 
-        $discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertNull($milestones->toArray()[0]->getFunComparison());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new ActivityCountMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivities(int $count): void

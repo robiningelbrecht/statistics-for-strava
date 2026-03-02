@@ -198,22 +198,24 @@ class MilestoneCollectorTest extends ContainerTestCase
     {
         $connection = $this->getConnection();
         $unitSystem = UnitSystem::METRIC;
+        $milestoneIdFactory = new IncrementingMilestoneIdFactory();
 
         return new MilestoneCollector([
-            new ActivityCountMilestoneDiscoverer($connection),
-            new ActivityDistanceMilestoneDiscoverer($connection),
-            new ActivityElevationMilestoneDiscoverer($connection),
-            new ActivityMovingTimeMilestoneDiscoverer($connection),
-            new CumulativeDistanceMilestoneDiscoverer($connection, $unitSystem),
-            new CumulativeElevationMilestoneDiscoverer($connection, $unitSystem),
-            new CumulativeMovingTimeMilestoneDiscoverer($connection),
+            new ActivityCountMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new ActivityDistanceMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new ActivityElevationMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new ActivityMovingTimeMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new CumulativeDistanceMilestoneDiscoverer($connection, $unitSystem, $milestoneIdFactory),
+            new CumulativeElevationMilestoneDiscoverer($connection, $unitSystem, $milestoneIdFactory),
+            new CumulativeMovingTimeMilestoneDiscoverer($connection, $milestoneIdFactory),
             new EddingtonMilestoneDiscoverer(
                 $this->getContainer()->get(EddingtonCalculator::class),
                 $unitSystem,
+                $milestoneIdFactory,
             ),
-            new FirstsMilestoneDiscoverer($connection),
-            new PersonalBestMilestoneDiscoverer($connection),
-            new StreakMilestoneDiscoverer($connection),
+            new FirstsMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new PersonalBestMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new StreakMilestoneDiscoverer($connection, $milestoneIdFactory),
         ]);
     }
 }

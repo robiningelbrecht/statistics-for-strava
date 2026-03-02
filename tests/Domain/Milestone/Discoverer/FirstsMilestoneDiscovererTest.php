@@ -12,14 +12,15 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class FirstsMilestoneDiscovererTest extends ContainerTestCase
 {
+    private FirstsMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new FirstsMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverFirstOfEachSportType(): void
@@ -28,8 +29,7 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', SportType::RUN, 'Evening run');
         $this->insertActivity(3, '2024-01-03', SportType::RIDE, 'Another ride');
 
-        $discoverer = new FirstsMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -54,14 +54,19 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-02', SportType::RIDE, 'Second ride');
         $this->insertActivity(2, '2024-01-01', SportType::RIDE, 'First ride');
 
-        $discoverer = new FirstsMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
         $context = $milestones->toArray()[0]->getContext();
         $this->assertInstanceOf(FirstContext::class, $context);
         $this->assertEquals('First ride', $context->getActivityName());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new FirstsMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date, SportType $sportType, string $name): void

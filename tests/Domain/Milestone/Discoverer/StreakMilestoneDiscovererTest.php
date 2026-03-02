@@ -11,14 +11,15 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class StreakMilestoneDiscovererTest extends ContainerTestCase
 {
+    private StreakMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverSevenDayStreak(): void
@@ -27,8 +28,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -50,8 +50,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -69,9 +68,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverResetsStreakOnGap(): void
@@ -85,8 +82,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
             $this->insertActivity($i + 10, sprintf('2024-01-%02d', $i + 7));
         }
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
         $this->assertEquals('7 day streak', $milestones->toArray()[0]->getTitle());
@@ -100,8 +96,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         }
         $this->insertActivity(100, '2024-01-03');
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
         $this->assertEquals('7 day streak', $milestones->toArray()[0]->getTitle());
@@ -113,8 +108,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }
 
-        $discoverer = new StreakMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $twentyOneDayMilestone = null;
         foreach ($milestones->toArray() as $milestone) {
@@ -125,6 +119,12 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
         $this->assertNotNull($twentyOneDayMilestone);
         $this->assertNotNull($twentyOneDayMilestone->getFunComparison());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new StreakMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date): void

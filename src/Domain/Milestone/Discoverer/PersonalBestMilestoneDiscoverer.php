@@ -10,7 +10,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\PersonalBestContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\Time\Format\ProvideTimeFormats;
@@ -25,6 +25,7 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
 
     public function __construct(
         private Connection $connection,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -84,7 +85,7 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: MilestoneId::random(),
+                id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::PERSONAL_BEST,
                 sportType: $sportType,

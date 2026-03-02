@@ -9,7 +9,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\ActivityRecordContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
@@ -20,6 +20,7 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
 {
     public function __construct(
         private Connection $connection,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -65,7 +66,7 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: MilestoneId::random(),
+                id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_DISTANCE,
                 sportType: $sportType,

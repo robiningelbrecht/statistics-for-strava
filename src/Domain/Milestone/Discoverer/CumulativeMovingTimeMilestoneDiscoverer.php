@@ -9,7 +9,7 @@ use App\Domain\Milestone\Context\CumulativeMovingTimeContext;
 use App\Domain\Milestone\FunComparison\MovingTimeFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
@@ -20,6 +20,7 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
 {
     public function __construct(
         private Connection $connection,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -70,7 +71,7 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::random(),
+                    id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
                     sportType: SportType::tryFrom($row['sportType']),

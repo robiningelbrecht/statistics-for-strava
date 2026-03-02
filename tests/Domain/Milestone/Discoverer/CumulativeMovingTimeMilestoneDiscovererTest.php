@@ -11,14 +11,15 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 
 class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 {
+    private CumulativeMovingTimeMilestoneDiscoverer $discoverer;
+
     public function testDiscoverWithNoActivities(): void
     {
-        $discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testDiscoverFirstThreshold(): void
@@ -26,8 +27,7 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         // 24 hours = 86400 seconds
         $this->insertActivity(1, '2024-01-01', 86400);
 
-        $discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
 
@@ -47,8 +47,7 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', 100000);
         $this->insertActivity(2, '2024-01-02', 80000);
 
-        $discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
 
@@ -64,9 +63,7 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivity(1, '2024-01-01', 0);
 
-        $discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection());
-
-        $this->assertTrue($discoverer->discover()->isEmpty());
+        $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
     public function testFunComparisonIsNullForSmallThreshold(): void
@@ -75,10 +72,15 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         // Actually 24h >= 8, so it should have one
         $this->insertActivity(1, '2024-01-01', 86400);
 
-        $discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection());
-        $milestones = $discoverer->discover();
+        $milestones = $this->discoverer->discover();
 
         $this->assertNotNull($milestones->toArray()[0]->getFunComparison());
+    }
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->discoverer = new CumulativeMovingTimeMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date, int $movingTimeInSeconds): void

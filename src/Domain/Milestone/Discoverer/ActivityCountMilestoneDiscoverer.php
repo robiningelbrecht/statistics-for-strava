@@ -9,7 +9,7 @@ use App\Domain\Milestone\Context\ActivityCountContext;
 use App\Domain\Milestone\FunComparison\ActivityCountFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
-use App\Domain\Milestone\MilestoneId;
+use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -19,6 +19,7 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
 {
     public function __construct(
         private Connection $connection,
+        private MilestoneIdFactory $milestoneIdFactory,
     ) {
     }
 
@@ -61,7 +62,7 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::random(),
+                    id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::ACTIVITY_COUNT,
                     sportType: SportType::tryFrom($row['sportType']),
