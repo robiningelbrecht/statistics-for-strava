@@ -65,7 +65,7 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: MilestoneId::fromParts('activityDistance', $sportKey, (string) $activityId),
+                id: MilestoneId::random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_DISTANCE,
                 sportType: $sportType,

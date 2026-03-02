@@ -55,7 +55,7 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('eddington', $eddington->getId(), (string) $threshold),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::EDDINGTON,
                     sportType: null,

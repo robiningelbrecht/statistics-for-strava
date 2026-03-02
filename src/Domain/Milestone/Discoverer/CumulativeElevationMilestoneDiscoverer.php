@@ -81,7 +81,7 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('cumulativeElevation', (string) $threshold),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_ELEVATION,
                     sportType: SportType::tryFrom($row['sportType']),

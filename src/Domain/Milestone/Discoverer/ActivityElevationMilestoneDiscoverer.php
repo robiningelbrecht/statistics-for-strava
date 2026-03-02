@@ -68,7 +68,7 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: MilestoneId::fromParts('activityElevation', $sportKey, (string) $activityId),
+                id: MilestoneId::random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_ELEVATION,
                 sportType: $sportType,

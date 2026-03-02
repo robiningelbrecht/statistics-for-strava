@@ -47,7 +47,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
             $seenSportTypes[$sportTypeValue] = true;
 
             $milestones[] = Milestone::create(
-                id: MilestoneId::fromParts('first', $sportType->value),
+                id: MilestoneId::random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::FIRST,
                 sportType: $sportType,

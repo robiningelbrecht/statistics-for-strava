@@ -70,7 +70,7 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('cumulativeMovingTime', (string) $threshold),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
                     sportType: SportType::tryFrom($row['sportType']),
