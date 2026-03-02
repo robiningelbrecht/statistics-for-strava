@@ -2589,16 +2589,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "3.0.3",
+            "version": "3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "6c9113506ac50aec6f3ebecda79e3c50153af5f1"
+                "reference": "773893753337c068df7321865b3b27f2e4842336"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/6c9113506ac50aec6f3ebecda79e3c50153af5f1",
-                "reference": "6c9113506ac50aec6f3ebecda79e3c50153af5f1",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/773893753337c068df7321865b3b27f2e4842336",
+                "reference": "773893753337c068df7321865b3b27f2e4842336",
                 "shasum": ""
             },
             "require": {
@@ -2649,7 +2649,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/3.0.3"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/3.0.7"
             },
             "funding": [
                 {
@@ -2657,7 +2657,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-25T18:07:12+00:00"
+            "time": "2026-03-02T14:26:34+00:00"
         },
         {
             "name": "psr/cache",
