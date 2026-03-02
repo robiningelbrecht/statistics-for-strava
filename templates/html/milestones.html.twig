@@ -32,7 +32,7 @@
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
-                            {{ svg(milestone.getCategory().getFilterGroup().getSvgIcon(), 'size-4') }}
+                            {{ svg(milestone.getCategory().getFilterGroup().getSvgIcon(), 'size-4', 'text-gray-900') }}
                         </div>
                         <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">{{ milestone.getAchievedOn()|formatDate('normal') }}</time>
                     </div>
