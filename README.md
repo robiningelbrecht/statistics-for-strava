@@ -46,6 +46,7 @@ https://github.com/user-attachments/assets/81554f32-31be-4899-afd6-681ce3e7bcb6
 * **Eddington** - For your distance milestones
 * **Segments & Efforts** - Dive into your segment history and times
 * **Heatmap** - Visualize where you’ve been active the most
+* **Milestones** - A timeline view of your key achievements and milestones over time
 * **Strava Rewind** - A fun way to look back on your year in motion
 * **Challenges** - See which Strava challenges you've conquered
 * **Activity Photos** - Relive your moments with a photo archive
