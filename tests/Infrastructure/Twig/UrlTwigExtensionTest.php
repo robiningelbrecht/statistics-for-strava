@@ -7,6 +7,7 @@ use App\Domain\Activity\Image\ImageOrientation;
 use App\Infrastructure\Twig\StringTwigExtension;
 use App\Infrastructure\Twig\SvgsTwigExtension;
 use App\Infrastructure\Twig\UrlTwigExtension;
+use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\ContainerTestCase;
 
 class UrlTwigExtensionTest extends ContainerTestCase
@@ -75,6 +76,6 @@ class UrlTwigExtensionTest extends ContainerTestCase
     protected function setUp(): void
     {
         $this->stringTwigExtension = new StringTwigExtension();
-        $this->svgsTwigExtension = new SvgsTwigExtension();
+        $this->svgsTwigExtension = new SvgsTwigExtension($this->getContainer()->get(KernelProjectDir::class));
     }
 }
