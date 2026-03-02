@@ -42,6 +42,11 @@ final readonly class RewindItem
         return $this->icon;
     }
 
+    public function getIconSize(): string
+    {
+        return 'muscle' === $this->getIcon() ? 'w-6 h-5' : 'size-6';
+    }
+
     public function getTitle(): string
     {
         return $this->title;

@@ -2,7 +2,7 @@
     <div class="flex items-center justify-between">
         <div class="overflow-hidden whitespace-nowrap">
             <h5 class="flex items-center gap-x-0.5 text-lg font-medium text-gray-900">
-                {% include 'html/rewind/svg/svg-' ~ item.getIcon() ~ '.html.twig' %}
+                {{ svg(item.getIcon(), item.getIconSize(), '') }}
                 <span class="block">{{ item.getTitle() }}</span>
             </h5>
             {% if item.getSubTitle() %}
