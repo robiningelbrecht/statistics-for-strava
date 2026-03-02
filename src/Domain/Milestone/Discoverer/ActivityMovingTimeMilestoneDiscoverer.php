@@ -66,7 +66,7 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: MilestoneId::fromParts('activityMovingTime', $sportKey, (string) $activityId),
+                id: MilestoneId::random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_MOVING_TIME,
                 sportType: $sportType,

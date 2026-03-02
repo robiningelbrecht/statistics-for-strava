@@ -81,7 +81,7 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('cumulativeDistance', (string) $threshold),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::CUMULATIVE_DISTANCE,
                     sportType: SportType::tryFrom($row['sportType']),

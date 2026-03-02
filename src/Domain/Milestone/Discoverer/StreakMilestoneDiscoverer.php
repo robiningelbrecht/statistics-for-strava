@@ -77,7 +77,7 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('streak', (string) $threshold, $achievedOn->format('Y-m-d')),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::STREAK,
                     sportType: null,

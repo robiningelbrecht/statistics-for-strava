@@ -61,7 +61,7 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
                 }
 
                 $milestone = Milestone::create(
-                    id: MilestoneId::fromParts('activityCount', (string) $threshold),
+                    id: MilestoneId::random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::ACTIVITY_COUNT,
                     sportType: SportType::tryFrom($row['sportType']),
