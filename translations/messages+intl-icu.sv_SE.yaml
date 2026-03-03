@@ -53,7 +53,7 @@ Commutes: Pendling
 'Commutes only': 'Endast pendling'
 Compare: Jämför
 'Compare to': 'Jämför med'
-'Completed activity number {threshold}': 'Completed activity number {threshold}'
+'Completed {threshold} activities': 'Completed {threshold} activities'
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -106,8 +106,7 @@ Feb: Feb
 'Filter on country': 'Filtrera på land'
 'Filter on sport type': 'Filtrera på sport'
 'Filter on starred segments': 'Filtrera på favorit segment'
-'First {sportType}': 'First {sportType}'
-'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
+'First-ever activity recorded': 'First-ever activity recorded'
 Firsts: Firsts
 Fitness: Träning
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
@@ -265,13 +264,9 @@ Race: Tävling
 'Racquet & Paddle Sports': 'Rack & Paddel Sporter'
 'Racquet Ball': Racketboll
 Ranking: Rankning
-'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
-'Reached {threshold} total distance on {gearName}': 'Reached {threshold} total distance on {gearName}'
 'Reached {threshold} total elevation': 'Reached {threshold} total elevation'
-'Reached {threshold} total elevation on {gearName}': 'Reached {threshold} total elevation on {gearName}'
-'Reached {threshold} total moving time': 'Reached {threshold} total moving time'
-'Reached {threshold} total moving time on {gearName}': 'Reached {threshold} total moving time on {gearName}'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -529,15 +524,14 @@ never: aldrig
 'on': på
 'per activity': 'per aktivitet'
 'per hour': 'per timma'
+'reached Eddington number {number}': 'reached Eddington number {number}'
 to: till
 total: totalt
 weeks: veckor
 workouts: träningspass
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dagar'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
-'{days} day streak': '{days} day streak'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} timmar'
-'{label} Eddington {number}': '{label} Eddington {number}'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} varje {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} aktiviteter på {year}'
@@ -546,7 +540,5 @@ workouts: träningspass
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
-'{threshold} activities': '{threshold} activities'
-'{threshold} hours': '{threshold} hours'
 '{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
 '{threshold} on {gearName}': '{threshold} on {gearName}'

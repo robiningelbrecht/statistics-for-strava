@@ -60,7 +60,10 @@
                         <h3 class="text-base font-bold text-gray-900">{{ _self.milestoneTitle(milestone) }}</h3>
                     </div>
                     <div class="text-sm text-gray-600">
-                        {{ _self.milestoneDescription(milestone) }}
+                        {% if milestone.getActivityId() %}
+                            {% set activity = enrichedActivities.find(milestone.getActivityId()) %}
+                            {{ activity|activityLink }}
+                        {% endif %}
                     </div>
                     {% if milestone.getFunComparison() %}
                         <div class="mt-1 text-sm italic text-gray-500">
@@ -74,10 +77,6 @@
                             {{ "on"|trans }} {{ milestone.getPrevious().getAchievedOn()|formatDate('normal') }}
                         </div>
                     {% endif %}
-                    {% if milestone.getActivityId() %}
-                        {% set activity = enrichedActivities.find(milestone.getActivityId()) %}
-                        <div class="mt-1 text-sm">{{ activity|activityLink }}</div>
-                    {% endif %}
                 </div>
             </div>
         {% endfor %}
@@ -88,27 +87,27 @@
     {% set category = milestone.getCategory().value %}
 
     {% if category == 'first' %}
-        {{ "First {sportType}"|trans({'{sportType}': context.getSportType()|trans}) }}
+        {{ "First-ever activity recorded"|trans }}
     {% elseif category == 'activityCount' %}
-        {{ "{threshold} activities"|trans({'{threshold}': context.getThreshold()|formatNumber(0)}) }}
+        {{ "Completed {threshold} activities"|trans({'{threshold}': context.getThreshold()|formatNumber(0)}) }}
     {% elseif category == 'cumulativeDistance' %}
-        {{ context.getThreshold()|renderMeasurement(0)|raw }}
+        {{ "Reached {threshold} total distance"|trans({'{threshold}': context.getThreshold()|renderMeasurement(0)})|raw }}
     {% elseif category == 'cumulativeElevation' %}
-        {{ context.getThreshold()|renderMeasurement(0)|raw }}
+        {{ "Reached {threshold} total elevation"|trans({'{threshold}': context.getThreshold()|renderMeasurement(0)})|raw }}
     {% elseif category == 'cumulativeMovingTime' %}
-        {{ "{threshold} hours"|trans({'{threshold}': context.getThreshold().toFloat()|formatNumber(0)}) }}
+        {{ "Reached {threshold} hours total moving time"|trans({'{threshold}': context.getThreshold().toFloat()|formatNumber(0)})|raw }}
     {% elseif category == 'activityDistance' %}
-        {{ "Longest distance"|trans }}
+        {{ "Longest distance"|trans }}: {{ context.getValue()|renderMeasurement(1)|raw }}
     {% elseif category == 'activityElevation' %}
-        {{ "Most elevation"|trans }}
+        {{ "Most elevation"|trans }}: {{ context.getValue()|renderMeasurement(0)|raw }}
     {% elseif category == 'activityMovingTime' %}
-        {{ "Longest activity"|trans }}
+        {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
     {% elseif category == 'personalBest' %}
-        {{ context.getDistance()|renderMeasurement(1)|raw }}
+        {{ "New personal best for"|trans }} {{ context.getDistance()|renderMeasurement(0)|raw }}: {{ context.getTime()|formatSeconds }}
     {% elseif category == 'eddington' %}
-        {{ "{label} Eddington {number}"|trans({'{label}': context.getLabel(), '{number}': context.getNumber()}) }}
+        {{ context.getLabel() }}: {{ "reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif category == 'streak' %}
-        {{ "{days} day streak"|trans({'{days}': context.getDays()}) }}
+        {{ "{days} consecutive days of activity"|trans({'{days}': context.getDays()}) }}
     {% elseif category == 'gearDistance' %}
         {{ "{threshold} on {gearName}"|trans({
             '{threshold}': context.getThreshold()|renderMeasurement(0),
@@ -121,62 +120,8 @@
         })|raw }}
     {% elseif category == 'gearMovingTime' %}
         {{ "{threshold} hours on {gearName}"|trans({
-            '{threshold}':context.getThreshold()|renderMeasurement(0),
+            '{threshold}': context.getThreshold().toFloat()|formatNumber(0),
             '{gearName}': context.getGearName()
         })|raw }}
-    {% endif %}
-{% endmacro %}
-{% macro milestoneDescription(milestone) %}
-    {% set context = milestone.getContext() %}
-    {% set category = milestone.getCategory().value %}
-
-    {% if category == 'first' %}
-        {{ "First {sportType} activity: {activityName}"|trans({
-            '{sportType}': context.getSportType()|trans,
-            '{activityName}': context.getActivityName()
-        }) }}
-    {% elseif category == 'cumulativeDistance' %}
-        {{ "Reached {threshold} total distance"|trans({
-            '{threshold}': context.getThreshold()|renderMeasurement(0)
-        })|raw }}
-    {% elseif category == 'activityDistance' %}
-        {{ "Longest distance"|trans }}: {{ context.getValue()|renderMeasurement(1)|raw }}
-    {% elseif category == 'cumulativeElevation' %}
-        {{ "Reached {threshold} total elevation"|trans({
-            '{threshold}': context.getThreshold()|renderMeasurement(0)
-        })|raw }}
-    {% elseif category == 'activityElevation' %}
-        {{ "Most elevation"|trans }}: {{ context.getValue()|renderMeasurement(0)|raw }}
-    {% elseif category == 'cumulativeMovingTime' %}
-        {{ "Reached {threshold} total moving time"|trans({
-            '{threshold}': context.getThreshold()|renderMeasurement(0)
-        })|raw }}
-    {% elseif category == 'activityMovingTime' %}
-        {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
-    {% elseif category == 'activityCount' %}
-        {{ "Completed activity number {threshold}"|trans({
-            '{threshold}': context.getThreshold()
-        }) }}
-    {% elseif category == 'personalBest' %}
-        {{ "New personal best for"|trans }} {{ context.getDistance()|renderMeasurement(1)|raw }}: {{ context.getTime()|formatSeconds }}
-    {% elseif category == 'eddington' %}
-        {{ "Reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
-    {% elseif category == 'streak' %}
-        {{ "{days} consecutive days of activity"|trans({'{days}': context.getDays()}) }}
-    {% elseif category == 'gearDistance' %}
-        {{ "Reached {threshold} total distance on {gearName}"|trans({
-            '{threshold}': context.getThreshold(),
-            '{gearName}': context.getGearName()
-        }) }}
-    {% elseif category == 'gearElevation' %}
-        {{ "Reached {threshold} total elevation on {gearName}"|trans({
-            '{threshold}': context.getThreshold(),
-            '{gearName}': context.getGearName()
-        }) }}
-    {% elseif category == 'gearMovingTime' %}
-        {{ "Reached {threshold} total moving time on {gearName}"|trans({
-            '{threshold}': context.getThreshold(),
-            '{gearName}': context.getGearName()
-        }) }}
     {% endif %}
 {% endmacro %}
