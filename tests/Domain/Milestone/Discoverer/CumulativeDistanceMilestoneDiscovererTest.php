@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Milestone\Discoverer;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\CumulativeDistanceContext;
 use App\Domain\Milestone\Discoverer\CumulativeDistanceMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCategory;
@@ -26,40 +27,53 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
     public function testDiscoverFirstMetricThreshold(): void
     {
-        // 100 km threshold: insert exactly 100 km
         $this->insertActivity(1, '2024-01-01', 100.0);
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(1, $milestones);
+        $this->assertCount(2, $milestones);
 
-        $milestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::CUMULATIVE_DISTANCE, $milestone->getCategory());
-        $this->assertEquals('100 km', $milestone->getTitle());
-        $this->assertNull($milestone->getPrevious());
-        $this->assertNull($milestone->getActivityId());
+        $globalMilestone = $milestones->toArray()[0];
+        $this->assertEquals(MilestoneCategory::CUMULATIVE_DISTANCE, $globalMilestone->getCategory());
+        $this->assertEquals('100 km', $globalMilestone->getTitle());
+        $this->assertNull($globalMilestone->getSportType());
+        $this->assertNull($globalMilestone->getPrevious());
+        $this->assertNull($globalMilestone->getActivityId());
 
-        $context = $milestone->getContext();
+        $context = $globalMilestone->getContext();
         $this->assertInstanceOf(CumulativeDistanceContext::class, $context);
         $this->assertInstanceOf(Kilometer::class, $context->getThreshold());
         $this->assertEquals(100.0, $context->getThreshold()->toFloat());
+
+        $sportMilestone = $milestones->toArray()[1];
+        $this->assertEquals('100 km', $sportMilestone->getTitle());
+        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
+        $this->assertNull($sportMilestone->getPrevious());
     }
 
     public function testDiscoverMultipleThresholds(): void
     {
-        // First activity: 250 km → hits 100 + 250
         $this->insertActivity(1, '2024-01-01', 250.0);
-        // Second activity: 260 km → total 510 km → hits 500
         $this->insertActivity(2, '2024-01-02', 260.0);
 
         $milestones = $this->discoverer->discover();
 
         $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals(['100 km', '250 km', '500 km'], $titles);
+        $this->assertEquals([
+            '100 km', '250 km',
+            '100 km', '250 km',
+            '500 km', '500 km',
+        ], $titles);
 
-        $thirdMilestone = $milestones->toArray()[2];
-        $this->assertNotNull($thirdMilestone->getPrevious());
-        $this->assertEquals('250 km', $thirdMilestone->getPrevious()->getLabel());
+        $global500 = $milestones->toArray()[4];
+        $this->assertNull($global500->getSportType());
+        $this->assertNotNull($global500->getPrevious());
+        $this->assertEquals('250 km', $global500->getPrevious()->getLabel());
+
+        $sport500 = $milestones->toArray()[5];
+        $this->assertEquals(SportType::RIDE, $sport500->getSportType());
+        $this->assertNotNull($sport500->getPrevious());
+        $this->assertEquals('250 km', $sport500->getPrevious()->getLabel());
     }
 
     public function testDiscoverSkipsZeroDistance(): void
@@ -71,7 +85,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
     public function testDiscoverWithImperialUnits(): void
     {
-        // 161 km ≈ 100 mi, should hit the 100 mi threshold
         $this->insertActivity(1, '2024-01-01', 161.0);
 
         $discoverer = new CumulativeDistanceMilestoneDiscoverer(
@@ -81,8 +94,30 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         );
         $milestones = $discoverer->discover();
 
-        $this->assertGreaterThanOrEqual(1, count($milestones));
+        $this->assertGreaterThanOrEqual(2, count($milestones));
         $this->assertStringContainsString('mi', $milestones->toArray()[0]->getTitle());
+    }
+
+    public function testDiscoverWithMultipleSportTypes(): void
+    {
+        $this->insertActivityWithSportType(1, '2024-01-01', 150.0, SportType::RIDE);
+        $this->insertActivityWithSportType(2, '2024-01-02', 110.0, SportType::RUN);
+
+        $milestones = $this->discoverer->discover();
+
+        $milestonesArray = $milestones->toArray();
+
+        $this->assertNull($milestonesArray[0]->getSportType());
+        $this->assertEquals('100 km', $milestonesArray[0]->getTitle());
+
+        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
+        $this->assertEquals('100 km', $milestonesArray[1]->getTitle());
+
+        $this->assertNull($milestonesArray[2]->getSportType());
+        $this->assertEquals('250 km', $milestonesArray[2]->getTitle());
+
+        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertEquals('100 km', $milestonesArray[3]->getTitle());
     }
 
     public function testFunComparisonIsSet(): void
@@ -107,11 +142,17 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
     private function insertActivity(int $id, string $date, float $distanceKm): void
     {
+        $this->insertActivityWithSportType($id, $date, $distanceKm, SportType::RIDE);
+    }
+
+    private function insertActivityWithSportType(int $id, string $date, float $distanceKm, SportType $sportType): void
+    {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed($id))
                 ->withStartDateTime(SerializableDateTime::fromString($date))
                 ->withDistance(Kilometer::from($distanceKm))
+                ->withSportType($sportType)
                 ->build(), []
         ));
     }

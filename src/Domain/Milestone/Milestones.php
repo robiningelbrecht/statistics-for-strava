@@ -25,11 +25,11 @@ final class Milestones extends Collection
         /** @var Milestone $milestone */
         foreach ($this as $milestone) {
             $group = $milestone->getCategory()->getFilterGroup();
-            $groups[$group->value] = $group;
+            $groups[array_search($group, MilestoneFilterGroup::cases())] = $group;
         }
 
         ksort($groups);
 
-        return array_values($groups);
+        return $groups;
     }
 }

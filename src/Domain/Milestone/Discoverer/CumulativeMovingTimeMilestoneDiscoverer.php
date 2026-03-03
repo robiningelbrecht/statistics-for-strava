@@ -39,10 +39,17 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
         )->fetchAllAssociative();
 
         $milestones = [];
-        $cumulativeSeconds = 0;
-        $thresholdIndex = 0;
-        /** @var ?Milestone $previousMilestone */
-        $previousMilestone = null;
+        $globalSeconds = 0;
+        $globalThresholdIndex = 0;
+        /** @var ?Milestone $globalPreviousMilestone */
+        $globalPreviousMilestone = null;
+
+        /** @var array<string, int> $sportSeconds */
+        $sportSeconds = [];
+        /** @var array<string, int> $sportThresholdIndices */
+        $sportThresholdIndices = [];
+        /** @var array<string, ?Milestone> $sportPreviousMilestones */
+        $sportPreviousMilestones = [];
 
         foreach ($rows as $row) {
             $seconds = (int) $row['movingTimeInSeconds'];
@@ -50,47 +57,80 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
                 continue;
             }
 
-            $cumulativeSeconds += $seconds;
-            $cumulativeHours = $cumulativeSeconds / 3600;
+            $sportType = SportType::from($row['sportType']);
+            $sportTypeValue = $row['sportType'];
+            $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
 
-            while ($thresholdIndex < count(self::THRESHOLDS) && $cumulativeHours >= self::THRESHOLDS[$thresholdIndex]) {
-                $threshold = self::THRESHOLDS[$thresholdIndex];
-                $thresholdHour = Hour::from($threshold);
-                $totalHour = Hour::from(round($cumulativeHours, 1));
-                $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
+            $globalSeconds += $seconds;
+            $globalHours = $globalSeconds / 3600;
 
-                $previous = null;
-                if ($previousMilestone) {
-                    $previousContext = $previousMilestone->getContext();
-                    assert($previousContext instanceof CumulativeMovingTimeContext);
-                    $previous = PreviousMilestone::create(
-                        milestoneId: $previousMilestone->getId(),
-                        label: number_format((int) $previousContext->getThreshold()->toFloat()).' h',
-                        achievedOn: $previousMilestone->getAchievedOn(),
-                    );
-                }
-
-                $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
-                    achievedOn: $achievedOn,
-                    category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
-                    sportType: SportType::tryFrom($row['sportType']),
-                    activityId: null,
-                    title: number_format($threshold).' hours',
-                    context: new CumulativeMovingTimeContext(
-                        threshold: $thresholdHour,
-                        totalMovingTime: $totalHour,
-                    ),
-                    previous: $previous,
-                    funComparison: MovingTimeFunComparison::resolve($thresholdHour),
-                );
-
+            while ($globalThresholdIndex < count(self::THRESHOLDS) && $globalHours >= self::THRESHOLDS[$globalThresholdIndex]) {
+                $threshold = self::THRESHOLDS[$globalThresholdIndex];
+                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalHours, $globalPreviousMilestone);
                 $milestones[] = $milestone;
-                $previousMilestone = $milestone;
-                ++$thresholdIndex;
+                $globalPreviousMilestone = $milestone;
+                ++$globalThresholdIndex;
+            }
+
+            if (!isset($sportSeconds[$sportTypeValue])) {
+                $sportSeconds[$sportTypeValue] = 0;
+                $sportThresholdIndices[$sportTypeValue] = 0;
+                $sportPreviousMilestones[$sportTypeValue] = null;
+            }
+            $sportSeconds[$sportTypeValue] += $seconds;
+            $sportHours = $sportSeconds[$sportTypeValue] / 3600;
+
+            while ($sportThresholdIndices[$sportTypeValue] < count(self::THRESHOLDS) && $sportHours >= self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]]) {
+                $threshold = self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]];
+                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportHours, $sportPreviousMilestones[$sportTypeValue]);
+                $milestones[] = $milestone;
+                $sportPreviousMilestones[$sportTypeValue] = $milestone;
+                ++$sportThresholdIndices[$sportTypeValue];
             }
         }
 
         return Milestones::fromArray($milestones);
+    }
+
+    private function createMilestone(
+        SerializableDateTime $achievedOn,
+        ?SportType $sportType,
+        int $threshold,
+        float $cumulativeHours,
+        ?Milestone $previousMilestone,
+    ): Milestone {
+        $thresholdHour = Hour::from($threshold);
+        $totalHour = Hour::from(round($cumulativeHours, 1));
+
+        return Milestone::create(
+            id: $this->milestoneIdFactory->create(),
+            achievedOn: $achievedOn,
+            category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
+            sportType: $sportType,
+            activityId: null,
+            title: number_format($threshold).' hours',
+            context: new CumulativeMovingTimeContext(
+                threshold: $thresholdHour,
+                totalMovingTime: $totalHour,
+            ),
+            previous: $this->buildPreviousMilestone($previousMilestone),
+            funComparison: MovingTimeFunComparison::resolve($thresholdHour),
+        );
+    }
+
+    private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone
+    {
+        if (!$previousMilestone instanceof Milestone) {
+            return null;
+        }
+
+        $previousContext = $previousMilestone->getContext();
+        assert($previousContext instanceof CumulativeMovingTimeContext);
+
+        return PreviousMilestone::create(
+            milestoneId: $previousMilestone->getId(),
+            label: number_format((int) $previousContext->getThreshold()->toFloat()).' h',
+            achievedOn: $previousMilestone->getAchievedOn(),
+        );
     }
 }
