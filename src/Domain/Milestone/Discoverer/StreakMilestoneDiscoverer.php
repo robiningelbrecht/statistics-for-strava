@@ -83,7 +83,6 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                     category: MilestoneCategory::STREAK,
                     sportType: null,
                     activityId: null,
-                    title: $threshold.' day streak',
                     context: new StreakContext(
                         days: $threshold,
                     ),

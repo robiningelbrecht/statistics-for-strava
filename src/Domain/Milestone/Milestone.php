@@ -18,7 +18,6 @@ final readonly class Milestone
         private MilestoneCategory $category,
         private ?SportType $sportType,
         private ?ActivityId $activityId,
-        private string $title,
         private MilestoneContext $context,
         private ?PreviousMilestone $previous,
         private ?FunComparison $funComparison,
@@ -31,7 +30,6 @@ final readonly class Milestone
         MilestoneCategory $category,
         ?SportType $sportType,
         ?ActivityId $activityId,
-        string $title,
         MilestoneContext $context,
         ?PreviousMilestone $previous = null,
         ?FunComparison $funComparison = null,
@@ -42,7 +40,6 @@ final readonly class Milestone
             category: $category,
             sportType: $sportType,
             activityId: $activityId,
-            title: $title,
             context: $context,
             previous: $previous,
             funComparison: $funComparison,
@@ -72,11 +69,6 @@ final readonly class Milestone
     public function getActivityId(): ?ActivityId
     {
         return $this->activityId;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     public function getContext(): MilestoneContext

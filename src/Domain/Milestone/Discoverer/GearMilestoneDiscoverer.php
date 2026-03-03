@@ -107,7 +107,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         category: MilestoneCategory::GEAR_DISTANCE,
                         sportType: null,
                         activityId: null,
-                        title: number_format($threshold).' '.$distanceSymbol.' on '.$gearName,
                         context: new GearDistanceContext(
                             gearName: $gearName,
                             threshold: $thresholdInUnit,
@@ -135,7 +134,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         category: MilestoneCategory::GEAR_ELEVATION,
                         sportType: null,
                         activityId: null,
-                        title: number_format($threshold).' '.$elevationSymbol.' on '.$gearName,
                         context: new GearElevationContext(
                             gearName: $gearName,
                             threshold: $thresholdInUnit,
@@ -162,7 +160,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         category: MilestoneCategory::GEAR_MOVING_TIME,
                         sportType: null,
                         activityId: null,
-                        title: number_format($threshold).' hours on '.$gearName,
                         context: new GearMovingTimeContext(
                             gearName: $gearName,
                             threshold: Hour::from($threshold),

@@ -74,7 +74,6 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 category: MilestoneCategory::ACTIVITY_ELEVATION,
                 sportType: $sportType,
                 activityId: $activityId,
-                title: 'Most elevation',
                 context: new ActivityRecordContext(
                     value: $elevation,
                 ),

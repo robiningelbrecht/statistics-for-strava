@@ -61,8 +61,8 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     category: MilestoneCategory::EDDINGTON,
                     sportType: null,
                     activityId: null,
-                    title: $eddington->getLabel().' Eddington '.$threshold,
                     context: new EddingtonContext(
+                        label: $eddington->getLabel(),
                         number: $threshold,
                     ),
                     previous: $previous,

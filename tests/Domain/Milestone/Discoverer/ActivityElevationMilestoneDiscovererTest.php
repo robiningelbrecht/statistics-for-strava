@@ -34,7 +34,6 @@ class ActivityElevationMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::ACTIVITY_ELEVATION, $milestone->getCategory());
-        $this->assertEquals('Most elevation', $milestone->getTitle());
         $this->assertEquals(SportType::RIDE, $milestone->getSportType());
         $this->assertNotNull($milestone->getActivityId());
 

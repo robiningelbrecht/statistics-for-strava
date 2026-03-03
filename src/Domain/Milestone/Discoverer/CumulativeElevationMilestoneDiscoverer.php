@@ -130,7 +130,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
             category: MilestoneCategory::CUMULATIVE_ELEVATION,
             sportType: $sportType,
             activityId: null,
-            title: number_format($threshold).' '.$symbol,
             context: new CumulativeElevationContext(
                 threshold: $thresholdInUnit,
             ),

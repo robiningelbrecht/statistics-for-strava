@@ -34,7 +34,6 @@ class ActivityMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::ACTIVITY_MOVING_TIME, $milestone->getCategory());
-        $this->assertEquals('Longest activity', $milestone->getTitle());
         $this->assertEquals(SportType::RIDE, $milestone->getSportType());
         $this->assertNotNull($milestone->getActivityId());
 

@@ -106,6 +106,7 @@ Feb: 二月
 'Filter on country': 按国家筛选
 'Filter on sport type': 按运动类型筛选
 'Filter on starred segments': 筛选星标路段
+'First {sportType}': 'First {sportType}'
 'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Firsts: Firsts
 Fitness: 健身
@@ -534,7 +535,9 @@ weeks: 周
 workouts: 锻炼
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
+'{days} day streak': '{days} day streak'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'
+'{label} Eddington {number}': '{label} Eddington {number}'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel}每{interval}'
 '{numberOfActivities} activities': '{numberOfActivities}活动'
 '{numberOfActivities} activities in {year}': '{year}年内，{numberOfActivities}项活动'
@@ -543,3 +546,7 @@ workouts: 锻炼
 '{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{threshold} activities': '{threshold} activities'
+'{threshold} hours': '{threshold} hours'
+'{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
+'{threshold} on {gearName}': '{threshold} on {gearName}'

@@ -55,7 +55,6 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::GEAR_DISTANCE, $milestone->getCategory());
-        $this->assertEquals('100 km on Canyon Endurace', $milestone->getTitle());
         $this->assertNull($milestone->getSportType());
         $this->assertNull($milestone->getPrevious());
 
@@ -77,7 +76,6 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::GEAR_ELEVATION, $milestone->getCategory());
-        $this->assertEquals('500 m on Canyon Endurace', $milestone->getTitle());
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(GearElevationContext::class, $context);
@@ -97,7 +95,6 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::GEAR_MOVING_TIME, $milestone->getCategory());
-        $this->assertEquals('24 hours on Canyon Endurace', $milestone->getTitle());
 
         $context = $milestone->getContext();
         $this->assertInstanceOf(GearMovingTimeContext::class, $context);
@@ -119,12 +116,7 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
             fn ($m) => MilestoneCategory::GEAR_DISTANCE === $m->getCategory(),
         ));
 
-        $titles = array_map(fn ($m) => $m->getTitle(), $distanceMilestones);
-        $this->assertEquals([
-            '100 km on Canyon Endurace',
-            '250 km on Canyon Endurace',
-            '500 km on Canyon Endurace',
-        ], $titles);
+        $this->assertCount(3, $distanceMilestones);
 
         $this->assertNull($distanceMilestones[0]->getPrevious());
         $this->assertNotNull($distanceMilestones[1]->getPrevious());
@@ -151,8 +143,6 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
         ));
 
         $this->assertCount(2, $distanceMilestones);
-        $this->assertEquals('100 km on Canyon Endurace', $distanceMilestones[0]->getTitle());
-        $this->assertEquals('100 km on Nike Pegasus', $distanceMilestones[1]->getTitle());
     }
 
     public function testDiscoverCombinesDistanceElevationAndTime(): void
@@ -190,7 +180,6 @@ class GearMilestoneDiscovererTest extends ContainerTestCase
         ));
 
         $this->assertGreaterThanOrEqual(1, count($distanceMilestones));
-        $this->assertStringContainsString('mi', $distanceMilestones[0]->getTitle());
     }
 
     public function setUp(): void

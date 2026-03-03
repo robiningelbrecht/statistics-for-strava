@@ -71,7 +71,6 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
                 category: MilestoneCategory::ACTIVITY_DISTANCE,
                 sportType: $sportType,
                 activityId: $activityId,
-                title: 'Longest distance',
                 context: new ActivityRecordContext(
                     value: $distanceInKm,
                 ),
