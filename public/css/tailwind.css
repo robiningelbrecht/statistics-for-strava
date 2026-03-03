@@ -11,6 +11,7 @@
 @import "./components/sidebar.css";
 
 @source "../../templates/**/*.html.twig";
+@source "../../templates/**/*.svg";
 @source "../../public/*.html";
 @source "../../public/js/**/*.js";
 @source "../../src/Infrastructure/Twig/*.php";

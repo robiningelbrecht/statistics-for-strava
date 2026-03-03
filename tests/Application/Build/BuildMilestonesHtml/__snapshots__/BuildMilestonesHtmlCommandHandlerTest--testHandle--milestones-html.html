@@ -75,9 +75,24 @@
                         <span>Eddington</span>
                     </label>
                 </div>
+                            <div>
+                    <input type="radio" id="gear" value="gear" name="filter-group" class="hidden peer" required="">
+                    <label for="gear" class="flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-4 py-1 text-sm font-medium shadow-xs text-gray-700 bg-white border border-gray-200 hover:text-strava-orange peer-checked:text-strava-orange">
+                        <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path></svg>
+                        <span>Gear</span>
+                    </label>
+                </div>
                     </div>
         <div class="relative border-l-2 border-gray-200 ml-6">
-                    <div class="mb-8 ml-10" id="milestone-20" data-milestone-filter-group="eddington">
+                                                                        <div class="relative mb-8 -ml-4" data-milestone-year-separator>
+                    <div class="flex items-center gap-x-3">
+                        <div class="size-8 rounded-full bg-strava-orange flex items-center justify-center ring-8 ring-gray-50">
+                            <svg class="size-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path></svg>
+                        </div>
+                        <span class="text-sm font-bold text-gray-700">2023</span>
+                    </div>
+                </div>
+                        <div class="mb-8 ml-10" id="milestone-20" data-milestone-filter-group="eddington">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -95,7 +110,7 @@
                     </div>
                                                                                                 </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-1" data-milestone-filter-group="activity">
+                                            <div class="mb-8 ml-10" id="milestone-1" data-milestone-filter-group="activity">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -117,7 +132,7 @@
                     </div>
                                                                                                 </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-14" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-14" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -145,7 +160,7 @@
                         </div>
                                                                             </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-19" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-19" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -167,7 +182,32 @@
                                                                                                         <span class="mt-2 inline-block text-xs text-gray-400">Runs</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-5" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-27" data-milestone-filter-group="gear">
+                <div class="absolute -inset-s-10">
+                    <div class="flex flex-col items-center gap-y-1 w-20">
+                        <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
+                            <svg class="size-4 text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path></svg>
+                        </div>
+                        <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">31-08-2023</time>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <h3 class="text-sm font-semibold mb-1">250 km on Retro Race Bike</h3>
+                    <div class="text-sm text-gray-600">
+                                
+            Reached 250 total distance on Retro Race Bike (actual: 275.474)
+    
+                    </div>
+                                                                <div class="mt-1 text-xs text-gray-400">
+                            Previous:
+                            <a href="javascript:void(0)" data-scroll-to="milestone-25" class="underline hover:text-gray-600">
+                                100 km
+                            </a>
+                            on 29-07-2023
+                        </div>
+                                                                            </div>
+            </div>
+                                            <div class="mb-8 ml-10" id="milestone-5" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -187,7 +227,32 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-17" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-26" data-milestone-filter-group="gear">
+                <div class="absolute -inset-s-10">
+                    <div class="flex flex-col items-center gap-y-1 w-20">
+                        <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
+                            <svg class="size-4 text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path></svg>
+                        </div>
+                        <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">31-07-2023</time>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <h3 class="text-sm font-semibold mb-1">1,000 m on Retro Race Bike</h3>
+                    <div class="text-sm text-gray-600">
+                                
+            Reached 1000 total elevation on Retro Race Bike (actual: 1142)
+    
+                    </div>
+                                                                <div class="mt-1 text-xs text-gray-400">
+                            Previous:
+                            <a href="javascript:void(0)" data-scroll-to="milestone-24" class="underline hover:text-gray-600">
+                                500 m
+                            </a>
+                            on 30-07-2022
+                        </div>
+                                                                            </div>
+            </div>
+                                            <div class="mb-8 ml-10" id="milestone-17" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -215,7 +280,7 @@
                         </div>
                                                                             </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-18" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-18" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -244,7 +309,7 @@
                                                                                     <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-4" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-4" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -271,7 +336,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-12" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-12" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -292,7 +357,7 @@
                         </div>
                                                                                                 </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-13" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-13" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -314,7 +379,25 @@
                                                                                                         <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-36" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-25" data-milestone-filter-group="gear">
+                <div class="absolute -inset-s-10">
+                    <div class="flex flex-col items-center gap-y-1 w-20">
+                        <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
+                            <svg class="size-4 text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path></svg>
+                        </div>
+                        <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">29-07-2023</time>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <h3 class="text-sm font-semibold mb-1">100 km on Retro Race Bike</h3>
+                    <div class="text-sm text-gray-600">
+                                
+            Reached 100 total distance on Retro Race Bike (actual: 162.415)
+    
+                    </div>
+                                                                                                </div>
+            </div>
+                                            <div class="mb-8 ml-10" id="milestone-40" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -334,7 +417,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-37" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-41" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -354,7 +437,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-38" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-42" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -374,7 +457,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-39" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-43" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -394,7 +477,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-40" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-44" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -414,7 +497,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-41" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-45" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -434,7 +517,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-42" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-46" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -454,7 +537,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-43" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-47" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -474,7 +557,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-44" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-48" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -494,7 +577,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-45" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-49" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -514,7 +597,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-46" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-50" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -534,7 +617,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-47" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-51" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -554,7 +637,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-3" data-milestone-filter-group="distance">
+                                            <div class="mb-8 ml-10" id="milestone-3" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -574,7 +657,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-8" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-8" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -594,7 +677,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-11" data-milestone-filter-group="movingTime">
+                                            <div class="mb-8 ml-10" id="milestone-11" data-milestone-filter-group="movingTime">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -614,7 +697,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-23" data-milestone-filter-group="first">
+                                            <div class="mb-8 ml-10" id="milestone-23" data-milestone-filter-group="first">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -634,7 +717,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-24" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-28" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -654,7 +737,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-25" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-29" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -674,7 +757,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-26" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-30" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -694,7 +777,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-27" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-31" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -714,7 +797,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-28" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-32" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -734,7 +817,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-29" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-33" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -754,7 +837,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-30" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-34" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -774,7 +857,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-31" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-35" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -794,7 +877,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-32" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-36" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -814,7 +897,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-33" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-37" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -834,7 +917,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-34" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-38" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -854,7 +937,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-35" data-milestone-filter-group="personalBest">
+                                            <div class="mb-8 ml-10" id="milestone-39" data-milestone-filter-group="personalBest">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -874,7 +957,15 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-2" data-milestone-filter-group="distance">
+                                                                <div class="relative mb-8 -ml-4" data-milestone-year-separator>
+                    <div class="flex items-center gap-x-3">
+                        <div class="size-8 rounded-full bg-strava-orange flex items-center justify-center ring-8 ring-gray-50">
+                            <svg class="size-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path></svg>
+                        </div>
+                        <span class="text-sm font-bold text-gray-700">2022</span>
+                    </div>
+                </div>
+                        <div class="mb-8 ml-10" id="milestone-2" data-milestone-filter-group="distance">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -894,7 +985,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Runs</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-7" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-7" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -914,7 +1005,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Runs</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-10" data-milestone-filter-group="movingTime">
+                                            <div class="mb-8 ml-10" id="milestone-10" data-milestone-filter-group="movingTime">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -934,7 +1025,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Runs</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-15" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-15" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -955,7 +1046,7 @@
                         </div>
                                                                                                 </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-16" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-16" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -977,7 +1068,7 @@
                                                                                                         <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-22" data-milestone-filter-group="first">
+                                            <div class="mb-8 ml-10" id="milestone-22" data-milestone-filter-group="first">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -997,7 +1088,33 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Runs</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-6" data-milestone-filter-group="elevation">
+                                            <div class="mb-8 ml-10" id="milestone-24" data-milestone-filter-group="gear">
+                <div class="absolute -inset-s-10">
+                    <div class="flex flex-col items-center gap-y-1 w-20">
+                        <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
+                            <svg class="size-4 text-strava-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10.051 8.102-3.778.322-1.994 1.994a.94.94 0 0 0 .533 1.6l2.698.316m8.39 1.617-.322 3.78-1.994 1.994a.94.94 0 0 1-1.595-.533l-.4-2.652m8.166-11.174a1.366 1.366 0 0 0-1.12-1.12c-1.616-.279-4.906-.623-6.38.853-1.671 1.672-5.211 8.015-6.31 10.023a.932.932 0 0 0 .162 1.111l.828.835.833.832a.932.932 0 0 0 1.111.163c2.008-1.102 8.35-4.642 10.021-6.312 1.475-1.478 1.133-4.77.855-6.385Zm-2.961 3.722a1.88 1.88 0 1 1-3.76 0 1.88 1.88 0 0 1 3.76 0Z"></path></svg>
+                        </div>
+                        <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">30-07-2022</time>
+                    </div>
+                </div>
+                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <h3 class="text-sm font-semibold mb-1">500 m on Retro Race Bike</h3>
+                    <div class="text-sm text-gray-600">
+                                
+            Reached 500 total elevation on Retro Race Bike (actual: 556)
+    
+                    </div>
+                                                                                                </div>
+            </div>
+                                                                <div class="relative mb-8 -ml-4" data-milestone-year-separator>
+                    <div class="flex items-center gap-x-3">
+                        <div class="size-8 rounded-full bg-strava-orange flex items-center justify-center ring-8 ring-gray-50">
+                            <svg class="size-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewbox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"></path></svg>
+                        </div>
+                        <span class="text-sm font-bold text-gray-700">2020</span>
+                    </div>
+                </div>
+                        <div class="mb-8 ml-10" id="milestone-6" data-milestone-filter-group="elevation">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -1017,7 +1134,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-9" data-milestone-filter-group="movingTime">
+                                            <div class="mb-8 ml-10" id="milestone-9" data-milestone-filter-group="movingTime">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">
@@ -1037,7 +1154,7 @@
                                                                 <span class="mt-2 inline-block text-xs text-gray-400">Virtual Rides</span>
                                     </div>
             </div>
-                    <div class="mb-8 ml-10" id="milestone-21" data-milestone-filter-group="first">
+                                            <div class="mb-8 ml-10" id="milestone-21" data-milestone-filter-group="first">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
                         <div class="flex items-center justify-center size-8 bg-white rounded-full ring-8 ring-gray-50 border border-gray-200">

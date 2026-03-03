@@ -27,7 +27,20 @@
         </div>
     {% endif %}
     <div class="relative border-l-2 border-gray-200 ml-6">
+        {% set currentYear = null %}
         {% for milestone in milestones %}
+            {% set milestoneYear = milestone.getAchievedOn().getYear() %}
+            {% if milestoneYear != currentYear %}
+                {% set currentYear = milestoneYear %}
+                <div class="relative mb-8 -ml-4" data-milestone-year-separator>
+                    <div class="flex items-center gap-x-3">
+                        <div class="size-8 rounded-full bg-strava-orange flex items-center justify-center ring-8 ring-gray-50">
+                            {{ svg('calendar', 'size-4', 'text-white') }}
+                        </div>
+                        <span class="text-sm font-bold text-gray-700">{{ currentYear }}</span>
+                    </div>
+                </div>
+            {% endif %}
             <div class="mb-8 ml-10" id="{{ milestone.getId() }}" data-milestone-filter-group="{{ milestone.getCategory().getFilterGroup().value }}">
                 <div class="absolute -inset-s-10">
                     <div class="flex flex-col items-center gap-y-1 w-20">
@@ -109,5 +122,23 @@
         {{ "Reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif category == 'streak' %}
         {{ "{days} consecutive days of activity"|trans({'{days}': context.getDays()}) }}
+    {% elseif category == 'gearDistance' %}
+        {{ "Reached {threshold} total distance on {gearName} (actual: {totalDistance})"|trans({
+            '{threshold}': context.getThreshold(),
+            '{totalDistance}': context.getTotalDistance(),
+            '{gearName}': context.getGearName()
+        }) }}
+    {% elseif category == 'gearElevation' %}
+        {{ "Reached {threshold} total elevation on {gearName} (actual: {totalElevation})"|trans({
+            '{threshold}': context.getThreshold(),
+            '{totalElevation}': context.getTotalElevation(),
+            '{gearName}': context.getGearName()
+        }) }}
+    {% elseif category == 'gearMovingTime' %}
+        {{ "Reached {threshold} total moving time on {gearName} (actual: {totalMovingTime})"|trans({
+            '{threshold}': context.getThreshold(),
+            '{totalMovingTime}': context.getTotalMovingTime(),
+            '{gearName}': context.getGearName()
+        }) }}
     {% endif %}
 {% endmacro %}

@@ -1497,6 +1497,9 @@
       border-bottom-color: var(--color-gray-700) !important;
     }
   }
+  .-ml-4 {
+    margin-left: calc(var(--spacing) * -4);
+  }
   .ml-0\.5 {
     margin-left: calc(var(--spacing) * 0.5);
   }
@@ -2181,6 +2184,9 @@
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
+  .gap-x-3 {
+    column-gap: calc(var(--spacing) * 3);
+  }
   .gap-x-4 {
     column-gap: calc(var(--spacing) * 4);
   }
@@ -2626,9 +2632,6 @@
   }
   .bg-blue-50 {
     background-color: var(--color-blue-50);
-  }
-  .bg-blue-600 {
-    background-color: var(--color-blue-600);
   }
   .bg-blue-600\/10 {
     background-color: color-mix(in srgb, #2563EB 10%, transparent);
