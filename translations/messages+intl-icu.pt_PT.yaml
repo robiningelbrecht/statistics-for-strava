@@ -53,7 +53,7 @@ Commutes: 'Viagens Escritório'
 'Commutes only': 'Apenas viagens Escritório'
 Compare: Comparar
 'Compare to': 'Comparar com'
-'Completed activity number {threshold} (total: {totalCount})': 'Completed activity number {threshold} (total: {totalCount})'
+'Completed activity number {threshold}': 'Completed activity number {threshold}'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -265,12 +265,12 @@ Race: Corrida
 'Racquet Ball': Racquetball
 Ranking: Ranking
 'Reached Eddington number {number}': 'Reached Eddington number {number}'
-'Reached {threshold} total distance (actual: {totalDistance})': 'Reached {threshold} total distance (actual: {totalDistance})'
-'Reached {threshold} total distance on {gearName} (actual: {totalDistance})': 'Reached {threshold} total distance on {gearName} (actual: {totalDistance})'
-'Reached {threshold} total elevation (actual: {totalElevation})': 'Reached {threshold} total elevation (actual: {totalElevation})'
-'Reached {threshold} total elevation on {gearName} (actual: {totalElevation})': 'Reached {threshold} total elevation on {gearName} (actual: {totalElevation})'
-'Reached {threshold} total moving time (actual: {totalMovingTime})': 'Reached {threshold} total moving time (actual: {totalMovingTime})'
-'Reached {threshold} total moving time on {gearName} (actual: {totalMovingTime})': 'Reached {threshold} total moving time on {gearName} (actual: {totalMovingTime})'
+'Reached {threshold} total distance': 'Reached {threshold} total distance'
+'Reached {threshold} total distance on {gearName}': 'Reached {threshold} total distance on {gearName}'
+'Reached {threshold} total elevation on {gearName}': 'Reached {threshold} total elevation on {gearName}'
+'Reached {threshold} total elevation)': 'Reached {threshold} total elevation)'
+'Reached {threshold} total moving time': 'Reached {threshold} total moving time'
+'Reached {threshold} total moving time on {gearName}': 'Reached {threshold} total moving time on {gearName}'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'

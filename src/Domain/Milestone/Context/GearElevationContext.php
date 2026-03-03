@@ -12,7 +12,6 @@ final readonly class GearElevationContext implements MilestoneContext
     public function __construct(
         private string $gearName,
         private Meter|Foot $threshold,
-        private Meter|Foot $totalElevation,
     ) {
     }
 
@@ -24,10 +23,5 @@ final readonly class GearElevationContext implements MilestoneContext
     public function getThreshold(): Meter|Foot
     {
         return $this->threshold;
-    }
-
-    public function getTotalElevation(): Meter|Foot
-    {
-        return $this->totalElevation;
     }
 }

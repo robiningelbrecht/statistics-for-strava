@@ -58,7 +58,12 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
             ++$globalCount;
             while ($globalThresholdIndex < count(self::THRESHOLDS) && $globalCount >= self::THRESHOLDS[$globalThresholdIndex]) {
                 $threshold = self::THRESHOLDS[$globalThresholdIndex];
-                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalCount, $globalPreviousMilestone);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: null,
+                    threshold: $threshold,
+                    previousMilestone: $globalPreviousMilestone
+                );
                 $milestones[] = $milestone;
                 $globalPreviousMilestone = $milestone;
                 ++$globalThresholdIndex;
@@ -73,7 +78,12 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
 
             while ($sportThresholdIndices[$sportTypeValue] < count(self::THRESHOLDS) && $sportCounts[$sportTypeValue] >= self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]]) {
                 $threshold = self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]];
-                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportCounts[$sportTypeValue], $sportPreviousMilestones[$sportTypeValue]);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: $sportType,
+                    threshold: $threshold,
+                    previousMilestone: $sportPreviousMilestones[$sportTypeValue]
+                );
                 $milestones[] = $milestone;
                 $sportPreviousMilestones[$sportTypeValue] = $milestone;
                 ++$sportThresholdIndices[$sportTypeValue];
@@ -87,7 +97,6 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
         SerializableDateTime $achievedOn,
         ?SportType $sportType,
         int $threshold,
-        int $count,
         ?Milestone $previousMilestone,
     ): Milestone {
         return Milestone::create(
@@ -99,7 +108,6 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
             title: number_format($threshold).' activities',
             context: new ActivityCountContext(
                 threshold: $threshold,
-                totalCount: $count,
             ),
             previous: $this->buildPreviousMilestone($previousMilestone),
             funComparison: ActivityCountFunComparison::resolve($threshold),

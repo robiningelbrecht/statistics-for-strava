@@ -66,7 +66,12 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
 
             while ($globalThresholdIndex < count(self::THRESHOLDS) && $globalHours >= self::THRESHOLDS[$globalThresholdIndex]) {
                 $threshold = self::THRESHOLDS[$globalThresholdIndex];
-                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalHours, $globalPreviousMilestone);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: null,
+                    threshold: $threshold,
+                    previousMilestone: $globalPreviousMilestone
+                );
                 $milestones[] = $milestone;
                 $globalPreviousMilestone = $milestone;
                 ++$globalThresholdIndex;
@@ -82,7 +87,12 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
 
             while ($sportThresholdIndices[$sportTypeValue] < count(self::THRESHOLDS) && $sportHours >= self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]]) {
                 $threshold = self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]];
-                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportHours, $sportPreviousMilestones[$sportTypeValue]);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: $sportType,
+                    threshold: $threshold,
+                    previousMilestone: $sportPreviousMilestones[$sportTypeValue]
+                );
                 $milestones[] = $milestone;
                 $sportPreviousMilestones[$sportTypeValue] = $milestone;
                 ++$sportThresholdIndices[$sportTypeValue];
@@ -96,11 +106,9 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
         SerializableDateTime $achievedOn,
         ?SportType $sportType,
         int $threshold,
-        float $cumulativeHours,
         ?Milestone $previousMilestone,
     ): Milestone {
         $thresholdHour = Hour::from($threshold);
-        $totalHour = Hour::from(round($cumulativeHours, 1));
 
         return Milestone::create(
             id: $this->milestoneIdFactory->create(),
@@ -111,7 +119,6 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
             title: number_format($threshold).' hours',
             context: new CumulativeMovingTimeContext(
                 threshold: $thresholdHour,
-                totalMovingTime: $totalHour,
             ),
             previous: $this->buildPreviousMilestone($previousMilestone),
             funComparison: MovingTimeFunComparison::resolve($thresholdHour),

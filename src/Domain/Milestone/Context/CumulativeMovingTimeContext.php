@@ -10,17 +10,11 @@ final readonly class CumulativeMovingTimeContext implements MilestoneContext
 {
     public function __construct(
         private Hour $threshold,
-        private Hour $totalMovingTime,
     ) {
     }
 
     public function getThreshold(): Hour
     {
         return $this->threshold;
-    }
-
-    public function getTotalMovingTime(): Hour
-    {
-        return $this->totalMovingTime;
     }
 }

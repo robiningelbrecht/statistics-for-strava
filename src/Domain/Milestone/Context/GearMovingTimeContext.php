@@ -11,7 +11,6 @@ final readonly class GearMovingTimeContext implements MilestoneContext
     public function __construct(
         private string $gearName,
         private Hour $threshold,
-        private Hour $totalMovingTime,
     ) {
     }
 
@@ -23,10 +22,5 @@ final readonly class GearMovingTimeContext implements MilestoneContext
     public function getThreshold(): Hour
     {
         return $this->threshold;
-    }
-
-    public function getTotalMovingTime(): Hour
-    {
-        return $this->totalMovingTime;
     }
 }

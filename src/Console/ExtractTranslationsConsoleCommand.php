@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Infrastructure\Console\ConsoleApplication;
 use App\Infrastructure\Localisation\Locale;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Translation\Extractor\ExtractorInterface;
 use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Yaml\Yaml;
@@ -34,22 +36,21 @@ class ExtractTranslationsConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach (Locale::cases() as $locale) {
-            $process = new Process(
-                command: [
-                    '/var/www/bin/console',
-                    'translation:extract',
-                    '--force',
-                    '--prefix=',
-                    '--domain=messages',
-                    '--format=yaml',
-                    '--sort=ASC',
-                    '--domain=messages',
-                    $locale->value,
-                ],
-                timeout: null,
+            $arrayInput = new ArrayInput([
+                'command' => 'translation:extract',
+                '--force' => true,
+                '--prefix' => '',
+                '--domain' => 'messages',
+                '--format' => 'yaml',
+                '--sort' => 'ASC',
+                'locale' => $locale->value,
+            ]);
+            $arrayInput->setInteractive(false);
+            ConsoleApplication::get()->doRun(
+                input: $arrayInput,
+                output: new NullOutput(),
             );
 
-            $process->run();
             $output->writeln(sprintf('<info>Extracted translations for "%s"</info>', $locale->value));
         }
 
