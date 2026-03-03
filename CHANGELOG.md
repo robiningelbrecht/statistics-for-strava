@@ -1,3 +1,30 @@
+# [v4.6.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.8) - 2026-03-03
+
+## New features
+* Added [statistics for recording devices](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration), giving you more insight into which devices you use for your activities.
+
+```yaml
+gear:
+  recordingDevices:
+    - gearId: garmin-forerunner-265
+      purchasePrice:
+        amountInCents: 29950
+        currency: EUR
+```
+
+## Improvements
+* Made submenu items consistent across the entire app for a more uniform user experience.
+* Reorganized the src/Infrastructure directory to improve project structure and maintainability.
+
+## Technical details
+* ISSUE #1826: Rearrange src/Infrastructure by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1827
+* ISSUE #1833: Submenu items should be consistent throughout the app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1834
+* ISSUE #1835: Recording devices stats by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1836
+* ISSUE #1841: Move rewind svg icons from twig files to SvgsTwigExtension by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1842
+* ISSUE #1819: Update neuron-core/neuron-ai to v3 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1820
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.7...v4.6.8
+
 # [v4.6.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.7) - 2026-02-26
 
 ## New features
