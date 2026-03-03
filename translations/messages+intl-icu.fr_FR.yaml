@@ -53,7 +53,7 @@ Commutes: 'Trajets domicile-travail'
 'Commutes only': 'Trajets domicile-travail uniquement'
 Compare: Comparer
 'Compare to': 'Comparer à'
-'Completed activity number {threshold}': 'Completed activity number {threshold}'
+'Completed {threshold} activities': 'Completed {threshold} activities'
 'Congrats! You achieved personal bests during this activity.': 'Félicitations ! Vous avez réalisé vos meilleures performances personnelles lors de cette activité.'
 'Consider reducing load': 'Envisagez de réduire la charge'
 Consistency: Uniformité
@@ -106,8 +106,7 @@ Feb: Fév
 'Filter on country': 'Filtrer par pays'
 'Filter on sport type': 'Filtrer par type de sport'
 'Filter on starred segments': 'Filtrer sur les segments favoris'
-'First {sportType}': 'First {sportType}'
-'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
+'First-ever activity recorded': 'First-ever activity recorded'
 Firsts: Firsts
 Fitness: Forme
 'Fitness may be declining due to low recent training load': "La forme physique peut diminuer en raison d'une charge d'entraînement récente basse."
@@ -265,13 +264,9 @@ Race: Course
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
 Ranking: Ranking
-'Reached Eddington number {number}': 'Reached Eddington number {number}'
+'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
-'Reached {threshold} total distance on {gearName}': 'Reached {threshold} total distance on {gearName}'
 'Reached {threshold} total elevation': 'Reached {threshold} total elevation'
-'Reached {threshold} total elevation on {gearName}': 'Reached {threshold} total elevation on {gearName}'
-'Reached {threshold} total moving time': 'Reached {threshold} total moving time'
-'Reached {threshold} total moving time on {gearName}': 'Reached {threshold} total moving time on {gearName}'
 'Recent effort': 'Recent effort'
 'Recording devices': 'Recording devices'
 'Recording devices details': 'Recording devices details'
@@ -529,15 +524,14 @@ never: jamais
 'on': 'on'
 'per activity': 'par activité'
 'per hour': 'par heure'
+'reached Eddington number {number}': 'reached Eddington number {number}'
 to: à
 total: total
 weeks: semaines
 workouts: entraînements
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} jours'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
-'{days} day streak': '{days} day streak'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} heures'
-'{label} Eddington {number}': '{label} Eddington {number}'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} toutes les {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activités'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activités en {year}'
@@ -546,7 +540,5 @@ workouts: entraînements
 '{numberOfResults} results based on your active filters': '{numberOfResults} résultats basés sur vos filtres actifs'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} itinéraires basés sur vos filtres actifs'
 '{numberOfWeeks} weeks': '{numberOfWeeks} semaines'
-'{threshold} activities': '{threshold} activities'
-'{threshold} hours': '{threshold} hours'
 '{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
 '{threshold} on {gearName}': '{threshold} on {gearName}'
