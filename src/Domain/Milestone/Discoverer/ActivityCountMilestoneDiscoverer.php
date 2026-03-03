@@ -38,50 +38,87 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
         )->fetchAllAssociative();
 
         $milestones = [];
-        $count = 0;
-        $thresholdIndex = 0;
-        /** @var ?Milestone $previousMilestone */
-        $previousMilestone = null;
+        $globalCount = 0;
+        $globalThresholdIndex = 0;
+        /** @var ?Milestone $globalPreviousMilestone */
+        $globalPreviousMilestone = null;
+
+        /** @var array<string, int> $sportCounts */
+        $sportCounts = [];
+        /** @var array<string, int> $sportThresholdIndices */
+        $sportThresholdIndices = [];
+        /** @var array<string, ?Milestone> $sportPreviousMilestones */
+        $sportPreviousMilestones = [];
 
         foreach ($rows as $row) {
-            ++$count;
+            $sportType = SportType::from($row['sportType']);
+            $sportTypeValue = $row['sportType'];
+            $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
 
-            while ($thresholdIndex < count(self::THRESHOLDS) && $count >= self::THRESHOLDS[$thresholdIndex]) {
-                $threshold = self::THRESHOLDS[$thresholdIndex];
-                $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
-
-                $previous = null;
-                if ($previousMilestone) {
-                    $previousContext = $previousMilestone->getContext();
-                    assert($previousContext instanceof ActivityCountContext);
-                    $previous = PreviousMilestone::create(
-                        milestoneId: $previousMilestone->getId(),
-                        label: number_format($previousContext->getThreshold()),
-                        achievedOn: $previousMilestone->getAchievedOn(),
-                    );
-                }
-
-                $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
-                    achievedOn: $achievedOn,
-                    category: MilestoneCategory::ACTIVITY_COUNT,
-                    sportType: SportType::tryFrom($row['sportType']),
-                    activityId: null,
-                    title: number_format($threshold).' activities',
-                    context: new ActivityCountContext(
-                        threshold: $threshold,
-                        totalCount: $count,
-                    ),
-                    previous: $previous,
-                    funComparison: ActivityCountFunComparison::resolve($threshold),
-                );
-
+            ++$globalCount;
+            while ($globalThresholdIndex < count(self::THRESHOLDS) && $globalCount >= self::THRESHOLDS[$globalThresholdIndex]) {
+                $threshold = self::THRESHOLDS[$globalThresholdIndex];
+                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalCount, $globalPreviousMilestone);
                 $milestones[] = $milestone;
-                $previousMilestone = $milestone;
-                ++$thresholdIndex;
+                $globalPreviousMilestone = $milestone;
+                ++$globalThresholdIndex;
+            }
+
+            if (!isset($sportCounts[$sportTypeValue])) {
+                $sportCounts[$sportTypeValue] = 0;
+                $sportThresholdIndices[$sportTypeValue] = 0;
+                $sportPreviousMilestones[$sportTypeValue] = null;
+            }
+            ++$sportCounts[$sportTypeValue];
+
+            while ($sportThresholdIndices[$sportTypeValue] < count(self::THRESHOLDS) && $sportCounts[$sportTypeValue] >= self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]]) {
+                $threshold = self::THRESHOLDS[$sportThresholdIndices[$sportTypeValue]];
+                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportCounts[$sportTypeValue], $sportPreviousMilestones[$sportTypeValue]);
+                $milestones[] = $milestone;
+                $sportPreviousMilestones[$sportTypeValue] = $milestone;
+                ++$sportThresholdIndices[$sportTypeValue];
             }
         }
 
         return Milestones::fromArray($milestones);
+    }
+
+    private function createMilestone(
+        SerializableDateTime $achievedOn,
+        ?SportType $sportType,
+        int $threshold,
+        int $count,
+        ?Milestone $previousMilestone,
+    ): Milestone {
+        return Milestone::create(
+            id: $this->milestoneIdFactory->create(),
+            achievedOn: $achievedOn,
+            category: MilestoneCategory::ACTIVITY_COUNT,
+            sportType: $sportType,
+            activityId: null,
+            title: number_format($threshold).' activities',
+            context: new ActivityCountContext(
+                threshold: $threshold,
+                totalCount: $count,
+            ),
+            previous: $this->buildPreviousMilestone($previousMilestone),
+            funComparison: ActivityCountFunComparison::resolve($threshold),
+        );
+    }
+
+    private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone
+    {
+        if (!$previousMilestone instanceof Milestone) {
+            return null;
+        }
+
+        $previousContext = $previousMilestone->getContext();
+        assert($previousContext instanceof ActivityCountContext);
+
+        return PreviousMilestone::create(
+            milestoneId: $previousMilestone->getId(),
+            label: number_format($previousContext->getThreshold()),
+            achievedOn: $previousMilestone->getAchievedOn(),
+        );
     }
 }

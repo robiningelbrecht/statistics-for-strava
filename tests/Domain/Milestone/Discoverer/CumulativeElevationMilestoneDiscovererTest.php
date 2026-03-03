@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Milestone\Discoverer;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\CumulativeElevationContext;
 use App\Domain\Milestone\Discoverer\CumulativeElevationMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCategory;
@@ -30,17 +31,23 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(1, $milestones);
+        $this->assertCount(2, $milestones);
 
-        $milestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::CUMULATIVE_ELEVATION, $milestone->getCategory());
-        $this->assertEquals('500 m', $milestone->getTitle());
-        $this->assertNull($milestone->getPrevious());
+        $globalMilestone = $milestones->toArray()[0];
+        $this->assertEquals(MilestoneCategory::CUMULATIVE_ELEVATION, $globalMilestone->getCategory());
+        $this->assertEquals('500 m', $globalMilestone->getTitle());
+        $this->assertNull($globalMilestone->getSportType());
+        $this->assertNull($globalMilestone->getPrevious());
 
-        $context = $milestone->getContext();
+        $context = $globalMilestone->getContext();
         $this->assertInstanceOf(CumulativeElevationContext::class, $context);
         $this->assertInstanceOf(Meter::class, $context->getThreshold());
         $this->assertEquals(500.0, $context->getThreshold()->toFloat());
+
+        $sportMilestone = $milestones->toArray()[1];
+        $this->assertEquals('500 m', $sportMilestone->getTitle());
+        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
+        $this->assertNull($sportMilestone->getPrevious());
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -51,11 +58,20 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals(['500 m', '1,000 m'], $titles);
+        $this->assertEquals([
+            '500 m', '500 m',
+            '1,000 m', '1,000 m',
+        ], $titles);
 
-        $secondMilestone = $milestones->toArray()[1];
-        $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals('500 m', $secondMilestone->getPrevious()->getLabel());
+        $global1000 = $milestones->toArray()[2];
+        $this->assertNull($global1000->getSportType());
+        $this->assertNotNull($global1000->getPrevious());
+        $this->assertEquals('500 m', $global1000->getPrevious()->getLabel());
+
+        $sport1000 = $milestones->toArray()[3];
+        $this->assertEquals(SportType::RIDE, $sport1000->getSportType());
+        $this->assertNotNull($sport1000->getPrevious());
+        $this->assertEquals('500 m', $sport1000->getPrevious()->getLabel());
     }
 
     public function testDiscoverSkipsZeroElevation(): void
@@ -67,7 +83,6 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
 
     public function testDiscoverWithImperialUnits(): void
     {
-        // 500 m ≈ 1640 ft, which should hit the 1,000 ft threshold
         $this->insertActivity(1, '2024-01-01', 500.0);
 
         $discoverer = new CumulativeElevationMilestoneDiscoverer(
@@ -77,8 +92,30 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
         );
         $milestones = $discoverer->discover();
 
-        $this->assertGreaterThanOrEqual(1, count($milestones));
+        $this->assertGreaterThanOrEqual(2, count($milestones));
         $this->assertStringContainsString('ft', $milestones->toArray()[0]->getTitle());
+    }
+
+    public function testDiscoverWithMultipleSportTypes(): void
+    {
+        $this->insertActivityWithSportType(1, '2024-01-01', 600.0, SportType::RIDE);
+        $this->insertActivityWithSportType(2, '2024-01-02', 500.0, SportType::RUN);
+
+        $milestones = $this->discoverer->discover();
+
+        $milestonesArray = $milestones->toArray();
+
+        $this->assertNull($milestonesArray[0]->getSportType());
+        $this->assertEquals('500 m', $milestonesArray[0]->getTitle());
+
+        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
+        $this->assertEquals('500 m', $milestonesArray[1]->getTitle());
+
+        $this->assertNull($milestonesArray[2]->getSportType());
+        $this->assertEquals('1,000 m', $milestonesArray[2]->getTitle());
+
+        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertEquals('500 m', $milestonesArray[3]->getTitle());
     }
 
     public function testFunComparisonIsSet(): void
@@ -103,11 +140,17 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
 
     private function insertActivity(int $id, string $date, float $elevationM): void
     {
+        $this->insertActivityWithSportType($id, $date, $elevationM, SportType::RIDE);
+    }
+
+    private function insertActivityWithSportType(int $id, string $date, float $elevationM, SportType $sportType): void
+    {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed($id))
                 ->withStartDateTime(SerializableDateTime::fromString($date))
                 ->withElevation(Meter::from($elevationM))
+                ->withSportType($sportType)
                 ->build(), []
         ));
     }

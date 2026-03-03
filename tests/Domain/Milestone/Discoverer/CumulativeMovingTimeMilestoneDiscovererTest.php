@@ -5,6 +5,7 @@ namespace App\Tests\Domain\Milestone\Discoverer;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\CumulativeMovingTimeContext;
 use App\Domain\Milestone\Discoverer\CumulativeMovingTimeMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCategory;
@@ -29,16 +30,22 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(1, $milestones);
+        $this->assertCount(2, $milestones);
 
-        $milestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::CUMULATIVE_MOVING_TIME, $milestone->getCategory());
-        $this->assertEquals('24 hours', $milestone->getTitle());
-        $this->assertNull($milestone->getPrevious());
+        $globalMilestone = $milestones->toArray()[0];
+        $this->assertEquals(MilestoneCategory::CUMULATIVE_MOVING_TIME, $globalMilestone->getCategory());
+        $this->assertEquals('24 hours', $globalMilestone->getTitle());
+        $this->assertNull($globalMilestone->getSportType());
+        $this->assertNull($globalMilestone->getPrevious());
 
-        $context = $milestone->getContext();
+        $context = $globalMilestone->getContext();
         $this->assertInstanceOf(CumulativeMovingTimeContext::class, $context);
         $this->assertEquals(24.0, $context->getThreshold()->toFloat());
+
+        $sportMilestone = $milestones->toArray()[1];
+        $this->assertEquals('24 hours', $sportMilestone->getTitle());
+        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
+        $this->assertNull($sportMilestone->getPrevious());
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -49,14 +56,23 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(2, $milestones);
+        $this->assertCount(4, $milestones);
 
         $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals(['24 hours', '48 hours'], $titles);
+        $this->assertEquals([
+            '24 hours', '24 hours',
+            '48 hours', '48 hours',
+        ], $titles);
 
-        $secondMilestone = $milestones->toArray()[1];
-        $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals('24 h', $secondMilestone->getPrevious()->getLabel());
+        $global48 = $milestones->toArray()[2];
+        $this->assertNull($global48->getSportType());
+        $this->assertNotNull($global48->getPrevious());
+        $this->assertEquals('24 h', $global48->getPrevious()->getLabel());
+
+        $sport48 = $milestones->toArray()[3];
+        $this->assertEquals(SportType::RIDE, $sport48->getSportType());
+        $this->assertNotNull($sport48->getPrevious());
+        $this->assertEquals('24 h', $sport48->getPrevious()->getLabel());
     }
 
     public function testDiscoverSkipsZeroMovingTime(): void
@@ -66,10 +82,33 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
+    public function testDiscoverWithMultipleSportTypes(): void
+    {
+        // 24h each from different sports = 48h global
+        $this->insertActivityWithSportType(1, '2024-01-01', 86400, SportType::RIDE);
+        $this->insertActivityWithSportType(2, '2024-01-02', 86400, SportType::RUN);
+
+        $milestones = $this->discoverer->discover();
+
+        $milestonesArray = $milestones->toArray();
+
+        $this->assertNull($milestonesArray[0]->getSportType());
+        $this->assertEquals('24 hours', $milestonesArray[0]->getTitle());
+
+        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
+        $this->assertEquals('24 hours', $milestonesArray[1]->getTitle());
+
+        $this->assertNull($milestonesArray[2]->getSportType());
+        $this->assertEquals('48 hours', $milestonesArray[2]->getTitle());
+        $this->assertNotNull($milestonesArray[2]->getPrevious());
+        $this->assertEquals('24 h', $milestonesArray[2]->getPrevious()->getLabel());
+
+        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertEquals('24 hours', $milestonesArray[3]->getTitle());
+    }
+
     public function testFunComparisonIsNullForSmallThreshold(): void
     {
-        // 24h doesn't have a fun comparison (min is 8h for FULL_WORK_DAY)
-        // Actually 24h >= 8, so it should have one
         $this->insertActivity(1, '2024-01-01', 86400);
 
         $milestones = $this->discoverer->discover();
@@ -85,11 +124,17 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
     private function insertActivity(int $id, string $date, int $movingTimeInSeconds): void
     {
+        $this->insertActivityWithSportType($id, $date, $movingTimeInSeconds, SportType::RIDE);
+    }
+
+    private function insertActivityWithSportType(int $id, string $date, int $movingTimeInSeconds, SportType $sportType): void
+    {
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed($id))
                 ->withStartDateTime(SerializableDateTime::fromString($date))
                 ->withMovingTimeInSeconds($movingTimeInSeconds)
+                ->withSportType($sportType)
                 ->build(), []
         ));
     }

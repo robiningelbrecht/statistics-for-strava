@@ -12,7 +12,9 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
+use App\Infrastructure\ValueObject\Measurement\Length\Mile;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
@@ -46,15 +48,21 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
              ORDER BY startDateTime ASC'
         )->fetchAllAssociative();
 
-        $isImperial = UnitSystem::IMPERIAL === $this->unitSystem;
-        $thresholds = $isImperial ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
+        $thresholds = UnitSystem::IMPERIAL === $this->unitSystem ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
         $symbol = $this->unitSystem->distanceSymbol();
 
         $milestones = [];
-        $cumulativeDistanceM = 0.0;
-        $thresholdIndex = 0;
-        /** @var ?Milestone $previousMilestone */
-        $previousMilestone = null;
+        $globalDistanceM = 0.0;
+        $globalThresholdIndex = 0;
+        /** @var ?Milestone $globalPreviousMilestone */
+        $globalPreviousMilestone = null;
+
+        /** @var array<string, float> $sportDistancesM */
+        $sportDistancesM = [];
+        /** @var array<string, int> $sportThresholdIndices */
+        $sportThresholdIndices = [];
+        /** @var array<string, ?Milestone> $sportPreviousMilestones */
+        $sportPreviousMilestones = [];
 
         foreach ($rows as $row) {
             $distanceM = (float) $row['distance'];
@@ -62,46 +70,80 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                 continue;
             }
 
-            $cumulativeDistanceM += $distanceM;
-            $cumulativeInUnit = Meter::from($cumulativeDistanceM)->toKilometer()->toUnitSystem($this->unitSystem);
+            $sportType = SportType::from($row['sportType']);
+            $sportTypeValue = $row['sportType'];
+            $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
 
-            while ($thresholdIndex < count($thresholds) && $cumulativeInUnit->toFloat() >= $thresholds[$thresholdIndex]) {
-                $threshold = $thresholds[$thresholdIndex];
-                $thresholdInUnit = $this->unitSystem->distance($threshold);
-                $achievedOn = SerializableDateTime::fromString($row['startDateTime']);
+            $globalDistanceM += $distanceM;
+            $globalCumulativeInUnit = Meter::from($globalDistanceM)->toKilometer()->toUnitSystem($this->unitSystem);
 
-                $previous = null;
-                if ($previousMilestone) {
-                    $previousContext = $previousMilestone->getContext();
-                    assert($previousContext instanceof CumulativeDistanceContext);
-                    $previous = PreviousMilestone::create(
-                        milestoneId: $previousMilestone->getId(),
-                        label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
-                        achievedOn: $previousMilestone->getAchievedOn(),
-                    );
-                }
-
-                $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
-                    achievedOn: $achievedOn,
-                    category: MilestoneCategory::CUMULATIVE_DISTANCE,
-                    sportType: SportType::tryFrom($row['sportType']),
-                    activityId: null,
-                    title: number_format($threshold).' '.$symbol,
-                    context: new CumulativeDistanceContext(
-                        threshold: $thresholdInUnit,
-                        totalDistance: $cumulativeInUnit,
-                    ),
-                    previous: $previous,
-                    funComparison: DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()),
-                );
-
+            while ($globalThresholdIndex < count($thresholds) && $globalCumulativeInUnit->toFloat() >= $thresholds[$globalThresholdIndex]) {
+                $threshold = $thresholds[$globalThresholdIndex];
+                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalCumulativeInUnit, $globalPreviousMilestone, $symbol);
                 $milestones[] = $milestone;
-                $previousMilestone = $milestone;
-                ++$thresholdIndex;
+                $globalPreviousMilestone = $milestone;
+                ++$globalThresholdIndex;
+            }
+
+            if (!isset($sportDistancesM[$sportTypeValue])) {
+                $sportDistancesM[$sportTypeValue] = 0.0;
+                $sportThresholdIndices[$sportTypeValue] = 0;
+                $sportPreviousMilestones[$sportTypeValue] = null;
+            }
+            $sportDistancesM[$sportTypeValue] += $distanceM;
+            $sportCumulativeInUnit = Meter::from($sportDistancesM[$sportTypeValue])->toKilometer()->toUnitSystem($this->unitSystem);
+
+            while ($sportThresholdIndices[$sportTypeValue] < count($thresholds) && $sportCumulativeInUnit->toFloat() >= $thresholds[$sportThresholdIndices[$sportTypeValue]]) {
+                $threshold = $thresholds[$sportThresholdIndices[$sportTypeValue]];
+                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportCumulativeInUnit, $sportPreviousMilestones[$sportTypeValue], $symbol);
+                $milestones[] = $milestone;
+                $sportPreviousMilestones[$sportTypeValue] = $milestone;
+                ++$sportThresholdIndices[$sportTypeValue];
             }
         }
 
         return Milestones::fromArray($milestones);
+    }
+
+    private function createMilestone(
+        SerializableDateTime $achievedOn,
+        ?SportType $sportType,
+        int $threshold,
+        Kilometer|Mile $cumulativeInUnit,
+        ?Milestone $previousMilestone,
+        string $symbol,
+    ): Milestone {
+        $thresholdInUnit = $this->unitSystem->distance($threshold);
+
+        return Milestone::create(
+            id: $this->milestoneIdFactory->create(),
+            achievedOn: $achievedOn,
+            category: MilestoneCategory::CUMULATIVE_DISTANCE,
+            sportType: $sportType,
+            activityId: null,
+            title: number_format($threshold).' '.$symbol,
+            context: new CumulativeDistanceContext(
+                threshold: $thresholdInUnit,
+                totalDistance: $cumulativeInUnit,
+            ),
+            previous: $this->buildPreviousMilestone($previousMilestone, $symbol),
+            funComparison: DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()),
+        );
+    }
+
+    private function buildPreviousMilestone(?Milestone $previousMilestone, string $symbol): ?PreviousMilestone
+    {
+        if (!$previousMilestone instanceof Milestone) {
+            return null;
+        }
+
+        $previousContext = $previousMilestone->getContext();
+        assert($previousContext instanceof CumulativeDistanceContext);
+
+        return PreviousMilestone::create(
+            milestoneId: $previousMilestone->getId(),
+            label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
+            achievedOn: $previousMilestone->getAchievedOn(),
+        );
     }
 }
