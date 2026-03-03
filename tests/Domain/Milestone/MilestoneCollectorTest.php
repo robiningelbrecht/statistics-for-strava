@@ -18,6 +18,7 @@ use App\Domain\Milestone\Discoverer\CumulativeElevationMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\CumulativeMovingTimeMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\EddingtonMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\FirstsMilestoneDiscoverer;
+use App\Domain\Milestone\Discoverer\GearMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\PersonalBestMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\StreakMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCollector;
@@ -214,6 +215,7 @@ class MilestoneCollectorTest extends ContainerTestCase
                 $milestoneIdFactory,
             ),
             new FirstsMilestoneDiscoverer($connection, $milestoneIdFactory),
+            new GearMilestoneDiscoverer($connection, $unitSystem, $milestoneIdFactory),
             new PersonalBestMilestoneDiscoverer($connection, $milestoneIdFactory),
             new StreakMilestoneDiscoverer($connection, $milestoneIdFactory),
         ]);

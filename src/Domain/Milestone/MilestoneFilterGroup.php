@@ -17,6 +17,7 @@ enum MilestoneFilterGroup: string implements TranslatableInterface
     case PERSONAL_BEST = 'personalBest';
     case EDDINGTON = 'eddington';
     case STREAK = 'streak';
+    case GEAR = 'gear';
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
@@ -29,6 +30,7 @@ enum MilestoneFilterGroup: string implements TranslatableInterface
             self::PERSONAL_BEST => $translator->trans('Personal bests', locale: $locale),
             self::EDDINGTON => $translator->trans('Eddington', locale: $locale),
             self::STREAK => $translator->trans('Streaks', locale: $locale),
+            self::GEAR => $translator->trans('Gear', locale: $locale),
         };
     }
 
@@ -43,6 +45,7 @@ enum MilestoneFilterGroup: string implements TranslatableInterface
             self::PERSONAL_BEST => 'trophy',
             self::EDDINGTON => 'eddington',
             self::STREAK => 'fire',
+            self::GEAR => 'rocket',
         };
     }
 }

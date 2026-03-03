@@ -8,15 +8,18 @@ enum MilestoneCategory: string
 {
     case FIRST = 'first';
     case CUMULATIVE_DISTANCE = 'cumulativeDistance';
-    case ACTIVITY_DISTANCE = 'activityDistance';
     case CUMULATIVE_ELEVATION = 'cumulativeElevation';
-    case ACTIVITY_ELEVATION = 'activityElevation';
     case CUMULATIVE_MOVING_TIME = 'cumulativeMovingTime';
+    case ACTIVITY_DISTANCE = 'activityDistance';
+    case ACTIVITY_ELEVATION = 'activityElevation';
     case ACTIVITY_MOVING_TIME = 'activityMovingTime';
     case ACTIVITY_COUNT = 'activityCount';
     case PERSONAL_BEST = 'personalBest';
     case EDDINGTON = 'eddington';
     case STREAK = 'streak';
+    case GEAR_DISTANCE = 'gearDistance';
+    case GEAR_ELEVATION = 'gearElevation';
+    case GEAR_MOVING_TIME = 'gearMovingTime';
 
     public function getFilterGroup(): MilestoneFilterGroup
     {
@@ -29,6 +32,7 @@ enum MilestoneCategory: string
             self::PERSONAL_BEST => MilestoneFilterGroup::PERSONAL_BEST,
             self::EDDINGTON => MilestoneFilterGroup::EDDINGTON,
             self::STREAK => MilestoneFilterGroup::STREAK,
+            self::GEAR_DISTANCE, self::GEAR_ELEVATION, self::GEAR_MOVING_TIME => MilestoneFilterGroup::GEAR,
         };
     }
 }
