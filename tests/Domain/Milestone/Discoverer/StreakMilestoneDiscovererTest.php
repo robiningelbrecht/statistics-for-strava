@@ -34,7 +34,6 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::STREAK, $milestone->getCategory());
-        $this->assertEquals('7 day streak', $milestone->getTitle());
         $this->assertNull($milestone->getSportType());
         $this->assertNull($milestone->getActivityId());
         $this->assertNull($milestone->getPrevious());
@@ -53,9 +52,6 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
-
-        $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals(['7 day streak', '14 day streak'], $titles);
 
         $secondMilestone = $milestones->toArray()[1];
         $this->assertNotNull($secondMilestone->getPrevious());
@@ -85,7 +81,6 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
-        $this->assertEquals('7 day streak', $milestones->toArray()[0]->getTitle());
     }
 
     public function testDiscoverHandlesDuplicateDaysInStreak(): void
@@ -99,7 +94,6 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $this->assertCount(1, $milestones);
-        $this->assertEquals('7 day streak', $milestones->toArray()[0]->getTitle());
     }
 
     public function testFunComparisonIsSet(): void

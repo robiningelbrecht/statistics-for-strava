@@ -34,7 +34,6 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $globalMilestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::CUMULATIVE_MOVING_TIME, $globalMilestone->getCategory());
-        $this->assertEquals('24 hours', $globalMilestone->getTitle());
         $this->assertNull($globalMilestone->getSportType());
         $this->assertNull($globalMilestone->getPrevious());
 
@@ -43,7 +42,6 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->assertEquals(24.0, $context->getThreshold()->toFloat());
 
         $sportMilestone = $milestones->toArray()[1];
-        $this->assertEquals('24 hours', $sportMilestone->getTitle());
         $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
         $this->assertNull($sportMilestone->getPrevious());
     }
@@ -57,12 +55,6 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $this->assertCount(4, $milestones);
-
-        $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals([
-            '24 hours', '24 hours',
-            '48 hours', '48 hours',
-        ], $titles);
 
         $global48 = $milestones->toArray()[2];
         $this->assertNull($global48->getSportType());
@@ -93,18 +85,14 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $milestonesArray = $milestones->toArray();
 
         $this->assertNull($milestonesArray[0]->getSportType());
-        $this->assertEquals('24 hours', $milestonesArray[0]->getTitle());
 
         $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
-        $this->assertEquals('24 hours', $milestonesArray[1]->getTitle());
 
         $this->assertNull($milestonesArray[2]->getSportType());
-        $this->assertEquals('48 hours', $milestonesArray[2]->getTitle());
         $this->assertNotNull($milestonesArray[2]->getPrevious());
         $this->assertEquals('24 h', $milestonesArray[2]->getPrevious()->getLabel());
 
         $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
-        $this->assertEquals('24 hours', $milestonesArray[3]->getTitle());
     }
 
     public function testFunComparisonIsNullForSmallThreshold(): void

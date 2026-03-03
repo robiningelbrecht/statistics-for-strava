@@ -116,7 +116,6 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
             category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
             sportType: $sportType,
             activityId: null,
-            title: number_format($threshold).' hours',
             context: new CumulativeMovingTimeContext(
                 threshold: $thresholdHour,
             ),

@@ -106,6 +106,7 @@ Feb: Feb
 'Filter on country': 'Filtrera på land'
 'Filter on sport type': 'Filtrera på sport'
 'Filter on starred segments': 'Filtrera på favorit segment'
+'First {sportType}': 'First {sportType}'
 'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Firsts: Firsts
 Fitness: Träning
@@ -534,7 +535,9 @@ weeks: veckor
 workouts: träningspass
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dagar'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
+'{days} day streak': '{days} day streak'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} timmar'
+'{label} Eddington {number}': '{label} Eddington {number}'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} varje {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} aktiviteter på {year}'
@@ -543,3 +546,7 @@ workouts: träningspass
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{threshold} activities': '{threshold} activities'
+'{threshold} hours': '{threshold} hours'
+'{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
+'{threshold} on {gearName}': '{threshold} on {gearName}'

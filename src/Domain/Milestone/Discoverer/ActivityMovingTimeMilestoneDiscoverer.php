@@ -72,7 +72,6 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
                 category: MilestoneCategory::ACTIVITY_MOVING_TIME,
                 sportType: $sportType,
                 activityId: $activityId,
-                title: 'Longest activity',
                 context: new ActivityRecordContext(
                     value: Seconds::from($movingTime),
                 ),

@@ -34,7 +34,6 @@ class ActivityDistanceMilestoneDiscovererTest extends ContainerTestCase
 
         $milestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::ACTIVITY_DISTANCE, $milestone->getCategory());
-        $this->assertEquals('Longest distance', $milestone->getTitle());
         $this->assertEquals(SportType::RIDE, $milestone->getSportType());
         $this->assertNotNull($milestone->getActivityId());
 

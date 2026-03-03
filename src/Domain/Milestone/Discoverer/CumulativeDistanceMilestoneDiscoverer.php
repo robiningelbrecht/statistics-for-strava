@@ -130,7 +130,6 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
             category: MilestoneCategory::CUMULATIVE_DISTANCE,
             sportType: $sportType,
             activityId: null,
-            title: number_format($threshold).' '.$symbol,
             context: new CumulativeDistanceContext(
                 threshold: $thresholdInUnit,
             ),

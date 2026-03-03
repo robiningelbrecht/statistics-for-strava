@@ -70,10 +70,6 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
                 continue;
             }
 
-            $distanceLabel = ($distance->isLowerThanOne()
-                ? round($distance->toFloat(), 1)
-                : $distance->toInt()).$distance->getSymbol();
-
             $previous = null;
             if (null !== $previousTime) {
                 $previous = PreviousMilestone::create(
@@ -90,7 +86,6 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
                 category: MilestoneCategory::PERSONAL_BEST,
                 sportType: $sportType,
                 activityId: $activityId,
-                title: $distanceLabel,
                 context: new PersonalBestContext(
                     distance: $distance,
                     time: Seconds::from($timeInSeconds),

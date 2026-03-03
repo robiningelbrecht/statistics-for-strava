@@ -105,7 +105,6 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
             category: MilestoneCategory::ACTIVITY_COUNT,
             sportType: $sportType,
             activityId: null,
-            title: number_format($threshold).' activities',
             context: new ActivityCountContext(
                 threshold: $threshold,
             ),

@@ -53,7 +53,6 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
                 category: MilestoneCategory::FIRST,
                 sportType: $sportType,
                 activityId: ActivityId::fromString($row['activityId']),
-                title: $sportType->value,
                 context: new FirstContext(
                     sportType: $sportType,
                     activityName: $row['name'],

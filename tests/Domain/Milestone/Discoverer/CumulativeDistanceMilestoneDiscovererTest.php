@@ -35,7 +35,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
         $globalMilestone = $milestones->toArray()[0];
         $this->assertEquals(MilestoneCategory::CUMULATIVE_DISTANCE, $globalMilestone->getCategory());
-        $this->assertEquals('100 km', $globalMilestone->getTitle());
         $this->assertNull($globalMilestone->getSportType());
         $this->assertNull($globalMilestone->getPrevious());
         $this->assertNull($globalMilestone->getActivityId());
@@ -46,7 +45,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->assertEquals(100.0, $context->getThreshold()->toFloat());
 
         $sportMilestone = $milestones->toArray()[1];
-        $this->assertEquals('100 km', $sportMilestone->getTitle());
         $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
         $this->assertNull($sportMilestone->getPrevious());
     }
@@ -57,13 +55,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', 260.0);
 
         $milestones = $this->discoverer->discover();
-
-        $titles = array_map(fn ($m) => $m->getTitle(), $milestones->toArray());
-        $this->assertEquals([
-            '100 km', '250 km',
-            '100 km', '250 km',
-            '500 km', '500 km',
-        ], $titles);
 
         $global500 = $milestones->toArray()[4];
         $this->assertNull($global500->getSportType());
@@ -95,7 +86,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $discoverer->discover();
 
         $this->assertGreaterThanOrEqual(2, count($milestones));
-        $this->assertStringContainsString('mi', $milestones->toArray()[0]->getTitle());
     }
 
     public function testDiscoverWithMultipleSportTypes(): void
@@ -108,16 +98,12 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $milestonesArray = $milestones->toArray();
 
         $this->assertNull($milestonesArray[0]->getSportType());
-        $this->assertEquals('100 km', $milestonesArray[0]->getTitle());
 
         $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
-        $this->assertEquals('100 km', $milestonesArray[1]->getTitle());
 
         $this->assertNull($milestonesArray[2]->getSportType());
-        $this->assertEquals('250 km', $milestonesArray[2]->getTitle());
 
         $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
-        $this->assertEquals('100 km', $milestonesArray[3]->getTitle());
     }
 
     public function testFunComparisonIsSet(): void

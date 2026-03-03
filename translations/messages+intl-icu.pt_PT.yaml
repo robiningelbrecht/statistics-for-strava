@@ -106,6 +106,7 @@ Feb: Fev
 'Filter on country': 'Filtrar por país'
 'Filter on sport type': 'Filtrar por tipo de desporto'
 'Filter on starred segments': 'Filtrar por segmentos favoritos'
+'First {sportType}': 'First {sportType}'
 'First {sportType} activity: {activityName}': 'First {sportType} activity: {activityName}'
 Firsts: Firsts
 Fitness: Forma
@@ -534,7 +535,9 @@ weeks: semanas
 workouts: treinos
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dias'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
+'{days} day streak': '{days} day streak'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} horas'
+'{label} Eddington {number}': '{label} Eddington {number}'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} a cada {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} activities'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} actividades em {year}'
@@ -543,3 +546,7 @@ workouts: treinos
 '{numberOfResults} results based on your active filters': '{numberOfResults} resultados com base nos teus filtros ativos'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} percursos com base nos teus filtros ativos'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{threshold} activities': '{threshold} activities'
+'{threshold} hours': '{threshold} hours'
+'{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
+'{threshold} on {gearName}': '{threshold} on {gearName}'
