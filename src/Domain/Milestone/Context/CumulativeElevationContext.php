@@ -11,17 +11,11 @@ final readonly class CumulativeElevationContext implements MilestoneContext
 {
     public function __construct(
         private Meter|Foot $threshold,
-        private Meter|Foot $totalElevation,
     ) {
     }
 
     public function getThreshold(): Meter|Foot
     {
         return $this->threshold;
-    }
-
-    public function getTotalElevation(): Meter|Foot
-    {
-        return $this->totalElevation;
     }
 }

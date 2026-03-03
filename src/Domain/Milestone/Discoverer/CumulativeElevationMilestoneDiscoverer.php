@@ -12,7 +12,6 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
-use App\Infrastructure\ValueObject\Measurement\Length\Foot;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -78,7 +77,13 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
 
             while ($globalThresholdIndex < count($thresholds) && $globalCumulativeInUnit->toFloat() >= $thresholds[$globalThresholdIndex]) {
                 $threshold = $thresholds[$globalThresholdIndex];
-                $milestone = $this->createMilestone($achievedOn, null, $threshold, $globalCumulativeInUnit, $globalPreviousMilestone, $symbol);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: null,
+                    threshold: $threshold,
+                    previousMilestone: $globalPreviousMilestone,
+                    symbol: $symbol
+                );
                 $milestones[] = $milestone;
                 $globalPreviousMilestone = $milestone;
                 ++$globalThresholdIndex;
@@ -94,7 +99,13 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
 
             while ($sportThresholdIndices[$sportTypeValue] < count($thresholds) && $sportCumulativeInUnit->toFloat() >= $thresholds[$sportThresholdIndices[$sportTypeValue]]) {
                 $threshold = $thresholds[$sportThresholdIndices[$sportTypeValue]];
-                $milestone = $this->createMilestone($achievedOn, $sportType, $threshold, $sportCumulativeInUnit, $sportPreviousMilestones[$sportTypeValue], $symbol);
+                $milestone = $this->createMilestone(
+                    achievedOn: $achievedOn,
+                    sportType: $sportType,
+                    threshold: $threshold,
+                    previousMilestone: $sportPreviousMilestones[$sportTypeValue],
+                    symbol: $symbol
+                );
                 $milestones[] = $milestone;
                 $sportPreviousMilestones[$sportTypeValue] = $milestone;
                 ++$sportThresholdIndices[$sportTypeValue];
@@ -108,7 +119,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
         SerializableDateTime $achievedOn,
         ?SportType $sportType,
         int $threshold,
-        Meter|Foot $cumulativeInUnit,
         ?Milestone $previousMilestone,
         string $symbol,
     ): Milestone {
@@ -123,7 +133,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
             title: number_format($threshold).' '.$symbol,
             context: new CumulativeElevationContext(
                 threshold: $thresholdInUnit,
-                totalElevation: $cumulativeInUnit,
             ),
             previous: $this->buildPreviousMilestone($previousMilestone, $symbol),
             funComparison: ElevationFunComparison::resolve($thresholdInUnit->toMeter()),

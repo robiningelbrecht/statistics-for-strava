@@ -43,7 +43,6 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
         $context = $globalMilestone->getContext();
         $this->assertInstanceOf(ActivityCountContext::class, $context);
         $this->assertEquals(10, $context->getThreshold());
-        $this->assertEquals(10, $context->getTotalCount());
 
         $sportMilestone = $milestones->toArray()[1];
         $this->assertEquals(MilestoneCategory::ACTIVITY_COUNT, $sportMilestone->getCategory());

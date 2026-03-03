@@ -111,7 +111,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         context: new GearDistanceContext(
                             gearName: $gearName,
                             threshold: $thresholdInUnit,
-                            totalDistance: $cumulativeInUnit,
                         ),
                         previous: $this->buildDistancePreviousMilestone($state['distPrev'], $distanceSymbol),
                     );
@@ -140,7 +139,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         context: new GearElevationContext(
                             gearName: $gearName,
                             threshold: $thresholdInUnit,
-                            totalElevation: $cumulativeInUnit,
                         ),
                         previous: $this->buildElevationPreviousMilestone($state['elevPrev'], $elevationSymbol),
                     );
@@ -168,7 +166,6 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
                         context: new GearMovingTimeContext(
                             gearName: $gearName,
                             threshold: Hour::from($threshold),
-                            totalMovingTime: Hour::from(round($cumulativeHours, 1)),
                         ),
                         previous: $this->buildMovingTimePreviousMilestone($state['timePrev']),
                     );
@@ -185,7 +182,7 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
 
     private function buildDistancePreviousMilestone(?Milestone $previous, string $symbol): ?PreviousMilestone
     {
-        if (!$previous) {
+        if (!$previous instanceof Milestone) {
             return null;
         }
 
@@ -201,7 +198,7 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
 
     private function buildElevationPreviousMilestone(?Milestone $previous, string $symbol): ?PreviousMilestone
     {
-        if (!$previous) {
+        if (!$previous instanceof Milestone) {
             return null;
         }
 
@@ -217,7 +214,7 @@ final readonly class GearMilestoneDiscoverer implements MilestoneDiscoverer
 
     private function buildMovingTimePreviousMilestone(?Milestone $previous): ?PreviousMilestone
     {
-        if (!$previous) {
+        if (!$previous instanceof Milestone) {
             return null;
         }
 

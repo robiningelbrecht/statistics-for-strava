@@ -8,17 +8,11 @@ final readonly class ActivityCountContext implements MilestoneContext
 {
     public function __construct(
         private int $threshold,
-        private int $totalCount,
     ) {
     }
 
     public function getThreshold(): int
     {
         return $this->threshold;
-    }
-
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
     }
 }

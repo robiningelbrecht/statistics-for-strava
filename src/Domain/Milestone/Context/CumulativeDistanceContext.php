@@ -11,17 +11,11 @@ final readonly class CumulativeDistanceContext implements MilestoneContext
 {
     public function __construct(
         private Kilometer|Mile $threshold,
-        private Kilometer|Mile $totalDistance,
     ) {
     }
 
     public function getThreshold(): Kilometer|Mile
     {
         return $this->threshold;
-    }
-
-    public function getTotalDistance(): Kilometer|Mile
-    {
-        return $this->totalDistance;
     }
 }

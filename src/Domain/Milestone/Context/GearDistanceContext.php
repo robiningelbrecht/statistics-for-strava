@@ -12,7 +12,6 @@ final readonly class GearDistanceContext implements MilestoneContext
     public function __construct(
         private string $gearName,
         private Kilometer|Mile $threshold,
-        private Kilometer|Mile $totalDistance,
     ) {
     }
 
@@ -24,10 +23,5 @@ final readonly class GearDistanceContext implements MilestoneContext
     public function getThreshold(): Kilometer|Mile
     {
         return $this->threshold;
-    }
-
-    public function getTotalDistance(): Kilometer|Mile
-    {
-        return $this->totalDistance;
     }
 }

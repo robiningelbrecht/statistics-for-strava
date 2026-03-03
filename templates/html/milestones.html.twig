@@ -63,9 +63,7 @@
                     {% if milestone.getPrevious() %}
                         <div class="mt-1 text-xs text-gray-400">
                             {{ "Previous"|trans }}:
-                            <a href="javascript:void(0)" data-scroll-to="{{ milestone.getPrevious().getMilestoneId() }}" class="underline hover:text-gray-600">
-                                {{ milestone.getPrevious().getLabel() }}
-                            </a>
+                            <a href="javascript:void(0)" data-scroll-to="{{ milestone.getPrevious().getMilestoneId() }}" class="underline hover:text-gray-600">{{ milestone.getPrevious().getLabel() }}</a>
                             {{ "on"|trans }} {{ milestone.getPrevious().getAchievedOn()|formatDate('normal') }}
                         </div>
                     {% endif %}
@@ -91,30 +89,26 @@
             '{activityName}': context.getActivityName()
         }) }}
     {% elseif category == 'cumulativeDistance' %}
-        {{ "Reached {threshold} total distance (actual: {totalDistance})"|trans({
-            '{threshold}': context.getThreshold(),
-            '{totalDistance}': context.getTotalDistance()
+        {{ "Reached {threshold} total distance"|trans({
+            '{threshold}': context.getThreshold()
         }) }}
     {% elseif category == 'activityDistance' %}
         {{ "Longest distance"|trans }}: {{ context.getValue()|renderMeasurement(1)|raw }}
     {% elseif category == 'cumulativeElevation' %}
-        {{ "Reached {threshold} total elevation (actual: {totalElevation})"|trans({
-            '{threshold}': context.getThreshold(),
-            '{totalElevation}': context.getTotalElevation()
+        {{ "Reached {threshold} total elevation)"|trans({
+            '{threshold}': context.getThreshold()
         }) }}
     {% elseif category == 'activityElevation' %}
         {{ "Most elevation"|trans }}: {{ context.getValue()|renderMeasurement(0)|raw }}
     {% elseif category == 'cumulativeMovingTime' %}
-        {{ "Reached {threshold} total moving time (actual: {totalMovingTime})"|trans({
-            '{threshold}': context.getThreshold(),
-            '{totalMovingTime}': context.getTotalMovingTime()
+        {{ "Reached {threshold} total moving time"|trans({
+            '{threshold}': context.getThreshold()
         }) }}
     {% elseif category == 'activityMovingTime' %}
         {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
     {% elseif category == 'activityCount' %}
-        {{ "Completed activity number {threshold} (total: {totalCount})"|trans({
-            '{threshold}': context.getThreshold(),
-            '{totalCount}': context.getTotalCount()
+        {{ "Completed activity number {threshold}"|trans({
+            '{threshold}': context.getThreshold()
         }) }}
     {% elseif category == 'personalBest' %}
         {{ "New personal best for"|trans }} {{ context.getDistance()|renderMeasurement(1)|raw }}: {{ context.getTime()|formatSeconds }}
@@ -123,21 +117,18 @@
     {% elseif category == 'streak' %}
         {{ "{days} consecutive days of activity"|trans({'{days}': context.getDays()}) }}
     {% elseif category == 'gearDistance' %}
-        {{ "Reached {threshold} total distance on {gearName} (actual: {totalDistance})"|trans({
+        {{ "Reached {threshold} total distance on {gearName}"|trans({
             '{threshold}': context.getThreshold(),
-            '{totalDistance}': context.getTotalDistance(),
             '{gearName}': context.getGearName()
         }) }}
     {% elseif category == 'gearElevation' %}
-        {{ "Reached {threshold} total elevation on {gearName} (actual: {totalElevation})"|trans({
+        {{ "Reached {threshold} total elevation on {gearName}"|trans({
             '{threshold}': context.getThreshold(),
-            '{totalElevation}': context.getTotalElevation(),
             '{gearName}': context.getGearName()
         }) }}
     {% elseif category == 'gearMovingTime' %}
-        {{ "Reached {threshold} total moving time on {gearName} (actual: {totalMovingTime})"|trans({
+        {{ "Reached {threshold} total moving time on {gearName}"|trans({
             '{threshold}': context.getThreshold(),
-            '{totalMovingTime}': context.getTotalMovingTime(),
             '{gearName}': context.getGearName()
         }) }}
     {% endif %}
