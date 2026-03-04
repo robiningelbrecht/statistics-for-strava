@@ -101,8 +101,8 @@ final readonly class GearMovingTimeMilestoneDiscoverer implements MilestoneDisco
         assert($context instanceof GearMovingTimeContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previous->getId(),
-            label: number_format((int) $context->getThreshold()->toFloat()).' h',
+            previousMilestoneId: $previous->getId(),
+            threshold: $context->getThreshold(),
             achievedOn: $previous->getAchievedOn(),
         );
     }

@@ -8,6 +8,7 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Milestone\Context\StreakContext;
 use App\Domain\Milestone\Discoverer\StreakMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\ValueObject\Measurement\SimpleUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
@@ -55,7 +56,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
         $secondMilestone = $milestones->toArray()[1];
         $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals('7 days', $secondMilestone->getPrevious()->getLabel());
+        $this->assertEquals(SimpleUnit::from(7), $secondMilestone->getPrevious()->getThreshold());
     }
 
     public function testDiscoverNoMilestoneForShortStreak(): void
@@ -85,7 +86,6 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
     public function testDiscoverHandlesDuplicateDaysInStreak(): void
     {
-        // Two activities on same day should count as 1 day
         for ($i = 0; $i < 7; ++$i) {
             $this->insertActivity($i + 1, sprintf('2024-01-%02d', $i + 1));
         }

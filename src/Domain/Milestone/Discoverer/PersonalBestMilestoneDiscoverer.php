@@ -66,8 +66,8 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
             $previous = null;
             if (null !== $previousTime) {
                 $previous = PreviousMilestone::create(
-                    milestoneId: $records[$recordKey]->getId(),
-                    label: $this->formatDurationAsHumanString($previousTime),
+                    previousMilestoneId: $records[$recordKey]->getId(),
+                    threshold: Seconds::from($previousTime),
                     achievedOn: $records[$recordKey]->getAchievedOn(),
                 );
             }

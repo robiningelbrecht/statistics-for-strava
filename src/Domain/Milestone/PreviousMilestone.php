@@ -4,37 +4,38 @@ declare(strict_types=1);
 
 namespace App\Domain\Milestone;
 
+use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class PreviousMilestone
 {
     private function __construct(
-        private MilestoneId $milestoneId,
-        private string $label,
+        private MilestoneId $previousMilestoneId,
+        private Unit $threshold,
         private SerializableDateTime $achievedOn,
     ) {
     }
 
     public static function create(
-        MilestoneId $milestoneId,
-        string $label,
+        MilestoneId $previousMilestoneId,
+        Unit $threshold,
         SerializableDateTime $achievedOn,
     ): self {
         return new self(
-            milestoneId: $milestoneId,
-            label: $label,
+            previousMilestoneId: $previousMilestoneId,
+            threshold: $threshold,
             achievedOn: $achievedOn,
         );
     }
 
-    public function getMilestoneId(): MilestoneId
+    public function getPreviousMilestoneId(): MilestoneId
     {
-        return $this->milestoneId;
+        return $this->previousMilestoneId;
     }
 
-    public function getLabel(): string
+    public function getThreshold(): Unit
     {
-        return $this->label;
+        return $this->threshold;
     }
 
     public function getAchievedOn(): SerializableDateTime

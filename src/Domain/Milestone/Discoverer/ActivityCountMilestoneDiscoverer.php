@@ -12,6 +12,7 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\ValueObject\Measurement\SimpleUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -122,8 +123,8 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
         assert($previousContext instanceof ActivityCountContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previousMilestone->getId(),
-            label: number_format($previousContext->getThreshold()),
+            previousMilestoneId: $previousMilestone->getId(),
+            threshold: SimpleUnit::from($previousContext->getThreshold()),
             achievedOn: $previousMilestone->getAchievedOn(),
         );
     }

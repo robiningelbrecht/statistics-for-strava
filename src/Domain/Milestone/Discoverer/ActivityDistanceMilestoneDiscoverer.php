@@ -56,10 +56,10 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
                 $previousMilestone = $records[$sportKey]['milestone'];
                 $previousContext = $previousMilestone->getContext();
                 assert($previousContext instanceof ActivityRecordContext);
-                $previousUnit = $previousContext->getValue();
+
                 $previous = PreviousMilestone::create(
-                    milestoneId: $previousMilestone->getId(),
-                    label: round($previousUnit->toFloat(), 1).$previousUnit->getSymbol(),
+                    previousMilestoneId: $previousMilestone->getId(),
+                    threshold: $previousContext->getValue(),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }

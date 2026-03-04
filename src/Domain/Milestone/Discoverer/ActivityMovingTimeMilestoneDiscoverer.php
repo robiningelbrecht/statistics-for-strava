@@ -56,8 +56,8 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
             if (isset($records[$sportKey])) {
                 $previousMilestone = $records[$sportKey]['milestone'];
                 $previous = PreviousMilestone::create(
-                    milestoneId: $previousMilestone->getId(),
-                    label: $this->formatDurationAsHumanString($records[$sportKey]['raw']),
+                    previousMilestoneId: $previousMilestone->getId(),
+                    threshold: Seconds::from($records[$sportKey]['raw']),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }

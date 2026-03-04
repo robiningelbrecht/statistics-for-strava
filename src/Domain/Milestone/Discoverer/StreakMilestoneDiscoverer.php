@@ -11,6 +11,7 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
+use App\Infrastructure\ValueObject\Measurement\SimpleUnit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
@@ -70,8 +71,8 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof StreakContext);
                     $previous = PreviousMilestone::create(
-                        milestoneId: $previousMilestone->getId(),
-                        label: $previousContext->getDays().' days',
+                        previousMilestoneId: $previousMilestone->getId(),
+                        threshold: SimpleUnit::from($previousContext->getDays()),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }

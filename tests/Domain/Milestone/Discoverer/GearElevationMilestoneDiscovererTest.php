@@ -75,9 +75,9 @@ class GearElevationMilestoneDiscovererTest extends ContainerTestCase
         $milestonesArray = $milestones->toArray();
         $this->assertNull($milestonesArray[0]->getPrevious());
         $this->assertNotNull($milestonesArray[1]->getPrevious());
-        $this->assertEquals('500 m', $milestonesArray[1]->getPrevious()->getLabel());
+        $this->assertEquals(Meter::from(500), $milestonesArray[1]->getPrevious()->getThreshold());
         $this->assertNotNull($milestonesArray[2]->getPrevious());
-        $this->assertEquals('1,000 m', $milestonesArray[2]->getPrevious()->getLabel());
+        $this->assertEquals(Meter::from(1000), $milestonesArray[2]->getPrevious()->getThreshold());
     }
 
     public function testDiscoverTracksGearsSeparately(): void

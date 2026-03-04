@@ -76,7 +76,7 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
         $secondMilestone = $milestones->toArray()[1];
         $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals(1, $secondMilestone->getPrevious()->getLabel());
+        $this->assertEquals(Kilometer::from(1), $secondMilestone->getPrevious()->getThreshold());
     }
 
     public function setUp(): void

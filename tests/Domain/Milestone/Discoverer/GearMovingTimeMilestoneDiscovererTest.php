@@ -10,6 +10,7 @@ use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Domain\Milestone\Context\GearMovingTimeContext;
 use App\Domain\Milestone\Discoverer\GearMovingTimeMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
@@ -63,7 +64,6 @@ class GearMovingTimeMilestoneDiscovererTest extends ContainerTestCase
     {
         $gearId = GearId::fromUnprefixed('bike-1');
         $this->insertGear($gearId, 'Canyon Endurace');
-        // 48h = 172800s, split across two activities
         $this->insertActivity('1', '2024-01-01', $gearId, 100000);
         $this->insertActivity('2', '2024-01-02', $gearId, 80000);
 
@@ -74,7 +74,7 @@ class GearMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $milestonesArray = $milestones->toArray();
         $this->assertNull($milestonesArray[0]->getPrevious());
         $this->assertNotNull($milestonesArray[1]->getPrevious());
-        $this->assertEquals('24 h', $milestonesArray[1]->getPrevious()->getLabel());
+        $this->assertEquals(Hour::from(24), $milestonesArray[1]->getPrevious()->getThreshold());
     }
 
     public function testDiscoverTracksGearsSeparately(): void

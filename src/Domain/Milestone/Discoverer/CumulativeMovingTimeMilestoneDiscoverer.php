@@ -133,8 +133,8 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
         assert($previousContext instanceof CumulativeMovingTimeContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previousMilestone->getId(),
-            label: number_format((int) $previousContext->getThreshold()->toFloat()).' h',
+            previousMilestoneId: $previousMilestone->getId(),
+            threshold: $previousContext->getThreshold(),
             achievedOn: $previousMilestone->getAchievedOn(),
         );
     }

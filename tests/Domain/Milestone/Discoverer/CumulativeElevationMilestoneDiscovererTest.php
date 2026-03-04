@@ -58,12 +58,12 @@ class CumulativeElevationMilestoneDiscovererTest extends ContainerTestCase
         $global1000 = $milestones->toArray()[2];
         $this->assertNull($global1000->getSportType());
         $this->assertNotNull($global1000->getPrevious());
-        $this->assertEquals('500 m', $global1000->getPrevious()->getLabel());
+        $this->assertEquals(Meter::from(500), $global1000->getPrevious()->getThreshold());
 
         $sport1000 = $milestones->toArray()[3];
         $this->assertEquals(SportType::RIDE, $sport1000->getSportType());
         $this->assertNotNull($sport1000->getPrevious());
-        $this->assertEquals('500 m', $sport1000->getPrevious()->getLabel());
+        $this->assertEquals(Meter::from(500), $sport1000->getPrevious()->getThreshold());
     }
 
     public function testDiscoverSkipsZeroElevation(): void

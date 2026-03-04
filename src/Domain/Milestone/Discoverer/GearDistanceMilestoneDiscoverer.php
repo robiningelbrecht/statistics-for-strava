@@ -46,8 +46,6 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
         )->fetchAllAssociative();
 
         $thresholds = UnitSystem::IMPERIAL === $this->unitSystem ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
-        $symbol = $this->unitSystem->distanceSymbol();
-
         $milestones = [];
 
         /** @var array<string, array{distanceM: float, name: string, idx: int, prev: ?Milestone}> $gearState */
@@ -89,7 +87,7 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
                         threshold: $thresholdInUnit,
                     ),
                 )
-                ->withPrevious($this->buildPreviousMilestone($state['prev'], $symbol))
+                ->withPrevious($this->buildPreviousMilestone($state['prev']))
                 ->withFunComparison(DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()));
 
                 $milestones[] = $milestone;
@@ -101,7 +99,7 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
         return Milestones::fromArray($milestones);
     }
 
-    private function buildPreviousMilestone(?Milestone $previous, string $symbol): ?PreviousMilestone
+    private function buildPreviousMilestone(?Milestone $previous): ?PreviousMilestone
     {
         if (!$previous instanceof Milestone) {
             return null;
@@ -111,8 +109,8 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
         assert($context instanceof GearDistanceContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previous->getId(),
-            label: number_format((int) $context->getThreshold()->toFloat()).' '.$symbol,
+            previousMilestoneId: $previous->getId(),
+            threshold: $context->getThreshold(),
             achievedOn: $previous->getAchievedOn(),
         );
     }
