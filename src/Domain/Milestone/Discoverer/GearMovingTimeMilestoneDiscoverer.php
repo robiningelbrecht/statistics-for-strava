@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Milestone\Discoverer;
 
 use App\Domain\Milestone\Context\GearMovingTimeContext;
+use App\Domain\Milestone\FunComparison\MovingTimeFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
@@ -67,6 +68,7 @@ final readonly class GearMovingTimeMilestoneDiscoverer implements MilestoneDisco
 
             while ($state['idx'] < count(self::THRESHOLDS) && $cumulativeHours >= self::THRESHOLDS[$state['idx']]) {
                 $threshold = self::THRESHOLDS[$state['idx']];
+                $thresholdHour = Hour::from($threshold);
 
                 $milestone = Milestone::create(
                     id: $this->milestoneIdFactory->create(),
@@ -76,9 +78,10 @@ final readonly class GearMovingTimeMilestoneDiscoverer implements MilestoneDisco
                     activityId: null,
                     context: new GearMovingTimeContext(
                         gearName: $gearName,
-                        threshold: Hour::from($threshold),
+                        threshold: $thresholdHour,
                     ),
                     previous: $this->buildPreviousMilestone($state['prev']),
+                    funComparison: MovingTimeFunComparison::resolve($thresholdHour),
                 );
 
                 $milestones[] = $milestone;

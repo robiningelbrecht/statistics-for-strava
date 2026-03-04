@@ -28,7 +28,6 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
     public function testDiscoverWithSufficientActivities(): void
     {
-        // To reach E5 we need at least 5 days with 5+ km each
         for ($i = 1; $i <= 5; ++$i) {
             $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
@@ -44,19 +43,22 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
         $this->assertGreaterThanOrEqual(1, count($milestones));
 
-        $first = $milestones->toArray()[0];
+        $first = array_first($milestones->toArray());
         $this->assertEquals(MilestoneCategory::EDDINGTON, $first->getCategory());
         $this->assertNull($first->getSportType());
         $this->assertNull($first->getActivityId());
 
         $context = $first->getContext();
         $this->assertInstanceOf(EddingtonContext::class, $context);
+        $this->assertEquals(1, $context->getNumber());
+
+        $last = array_last($milestones->toArray());
+        $context = $last->getContext();
         $this->assertEquals(5, $context->getNumber());
     }
 
     public function testDiscoverPreviousMilestoneTracking(): void
     {
-        // E5 and E10: need 10 days with 10+ km each
         for ($i = 1; $i <= 10; ++$i) {
             $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
                 ActivityBuilder::fromDefaults()
@@ -74,7 +76,7 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
         $secondMilestone = $milestones->toArray()[1];
         $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertStringContainsString('E', $secondMilestone->getPrevious()->getLabel());
+        $this->assertEquals(1, $secondMilestone->getPrevious()->getLabel());
     }
 
     public function setUp(): void
