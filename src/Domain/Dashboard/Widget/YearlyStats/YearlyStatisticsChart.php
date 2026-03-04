@@ -99,6 +99,11 @@ final readonly class YearlyStatisticsChart
             };
             foreach (array_keys($months) as $month) {
                 for ($dayOfMonth = 1; $dayOfMonth <= 31; ++$dayOfMonth) {
+                    if (!checkdate($month, $dayOfMonth, $year->toInt())) {
+                        $series[(string) $year]['data'][] = round($previousValue->toFloat());
+                        continue;
+                    }
+
                     $date = SerializableDateTime::fromString(sprintf(
                         '%04d-%02d-%02d',
                         $year->toInt(),
