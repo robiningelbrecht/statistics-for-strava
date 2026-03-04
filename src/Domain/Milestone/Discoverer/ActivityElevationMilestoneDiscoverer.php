@@ -42,10 +42,7 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 continue;
             }
 
-            $sportType = SportType::tryFrom($row['sportType']);
-            if (null === $sportType) {
-                continue;
-            }
+            $sportType = SportType::from($row['sportType']);
             $sportKey = $sportType->value;
 
             if (isset($records[$sportKey]) && $elevationRaw <= $records[$sportKey]['raw']) {

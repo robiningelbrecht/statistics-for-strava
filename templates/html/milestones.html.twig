@@ -111,7 +111,8 @@
     {% elseif category == 'activityMovingTime' %}
         {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
     {% elseif category == 'personalBest' %}
-        {{ "New personal best for"|trans }} {{ context.getDistance()|renderMeasurement(0)|raw }}: {{ context.getTime()|formatSeconds }}
+        {% set distance = context.getDistance() %}
+        {{ "New personal best for"|trans }} {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}<span class="text-xs">{{ distance.getSymbol() }}</span>: {{ context.getTime()|formatSeconds }}
     {% elseif category == 'eddington' %}
         {{ context.getLabel() }}: {{ "reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif category == 'streak' %}
