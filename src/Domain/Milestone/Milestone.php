@@ -28,21 +28,17 @@ final readonly class Milestone
         MilestoneId $id,
         SerializableDateTime $achievedOn,
         MilestoneCategory $category,
-        ?SportType $sportType,
-        ?ActivityId $activityId,
         MilestoneContext $context,
-        ?PreviousMilestone $previous = null,
-        ?FunComparison $funComparison = null,
     ): self {
         return new self(
             id: $id,
             achievedOn: $achievedOn,
             category: $category,
-            sportType: $sportType,
-            activityId: $activityId,
+            sportType: null,
+            activityId: null,
             context: $context,
-            previous: $previous,
-            funComparison: $funComparison,
+            previous: null,
+            funComparison: null,
         );
     }
 
@@ -66,9 +62,23 @@ final readonly class Milestone
         return $this->sportType;
     }
 
+    public function withSportType(?SportType $sportType): self
+    {
+        return clone ($this, [
+            'sportType' => $sportType,
+        ]);
+    }
+
     public function getActivityId(): ?ActivityId
     {
         return $this->activityId;
+    }
+
+    public function withActivityId(ActivityId $activityId): self
+    {
+        return clone ($this, [
+            'activityId' => $activityId,
+        ]);
     }
 
     public function getContext(): MilestoneContext
@@ -81,8 +91,22 @@ final readonly class Milestone
         return $this->previous;
     }
 
+    public function withPrevious(?PreviousMilestone $previous): self
+    {
+        return clone ($this, [
+            'previous' => $previous,
+        ]);
+    }
+
     public function getFunComparison(): ?FunComparison
     {
         return $this->funComparison;
+    }
+
+    public function withFunComparison(?FunComparison $funComparison): self
+    {
+        return clone ($this, [
+            'funComparison' => $funComparison,
+        ]);
     }
 }

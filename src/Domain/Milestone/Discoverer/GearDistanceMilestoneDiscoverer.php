@@ -84,15 +84,13 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
                     id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_DISTANCE,
-                    sportType: null,
-                    activityId: null,
                     context: new GearDistanceContext(
                         gearName: $gearName,
                         threshold: $thresholdInUnit,
                     ),
-                    previous: $this->buildPreviousMilestone($state['prev'], $symbol),
-                    funComparison: DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()),
-                );
+                )
+                ->withPrevious($this->buildPreviousMilestone($state['prev'], $symbol))
+                ->withFunComparison(DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()));
 
                 $milestones[] = $milestone;
                 $state['prev'] = $milestone;

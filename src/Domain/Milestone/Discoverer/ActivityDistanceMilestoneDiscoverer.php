@@ -69,13 +69,13 @@ final readonly class ActivityDistanceMilestoneDiscoverer implements MilestoneDis
                 id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_DISTANCE,
-                sportType: $sportType,
-                activityId: $activityId,
                 context: new ActivityRecordContext(
                     value: $distanceInKm,
                 ),
-                previous: $previous,
-            );
+            )
+                ->withSportType($sportType)
+                ->withActivityId($activityId)
+                ->withPrevious($previous);
 
             $milestones[] = $milestone;
             $records[$sportKey] = [

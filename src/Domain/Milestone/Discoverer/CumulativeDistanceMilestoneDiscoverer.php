@@ -128,14 +128,13 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
             id: $this->milestoneIdFactory->create(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_DISTANCE,
-            sportType: $sportType,
-            activityId: null,
             context: new CumulativeDistanceContext(
                 threshold: $thresholdInUnit,
             ),
-            previous: $this->buildPreviousMilestone($previousMilestone, $symbol),
-            funComparison: DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()),
-        );
+        )
+            ->withSportType($sportType)
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone, $symbol))
+            ->withFunComparison(DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()));
     }
 
     private function buildPreviousMilestone(?Milestone $previousMilestone, string $symbol): ?PreviousMilestone

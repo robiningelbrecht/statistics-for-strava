@@ -54,15 +54,12 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::EDDINGTON,
-                    sportType: null,
-                    activityId: null,
                     context: new EddingtonContext(
                         label: $eddington->getLabel(),
                         number: $threshold,
                         distance: $this->unitSystem->distance($threshold),
                     ),
-                    previous: $previous,
-                );
+                )->withPrevious($previous);
 
                 $milestones[] = $milestone;
                 $previousMilestone = $milestone;
