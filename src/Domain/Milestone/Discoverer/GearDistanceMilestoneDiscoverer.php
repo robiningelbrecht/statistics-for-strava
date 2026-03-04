@@ -79,7 +79,7 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
                 $thresholdInUnit = $this->unitSystem->distance($threshold);
 
                 $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
+                    id: $this->milestoneIdFactory->random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_DISTANCE,
                     context: new GearDistanceContext(

@@ -64,7 +64,7 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: $this->milestoneIdFactory->create(),
+                id: $this->milestoneIdFactory->random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_MOVING_TIME,
                 context: new ActivityRecordContext(

@@ -51,7 +51,7 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                 }
 
                 $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
+                    id: $this->milestoneIdFactory->random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::EDDINGTON,
                     context: new EddingtonContext(

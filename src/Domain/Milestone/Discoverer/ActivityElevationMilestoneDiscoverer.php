@@ -66,7 +66,7 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
 
             $activityId = ActivityId::fromString($row['activityId']);
             $milestone = Milestone::create(
-                id: $this->milestoneIdFactory->create(),
+                id: $this->milestoneIdFactory->random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_ELEVATION,
                 context: new ActivityRecordContext(

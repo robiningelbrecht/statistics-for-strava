@@ -8,14 +8,17 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\FirstContext;
 use App\Domain\Milestone\Discoverer\FirstsMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class FirstsMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private FirstsMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -31,22 +34,12 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(2, $milestones);
-
-        $first = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::FIRST, $first->getCategory());
-        $this->assertEquals(SportType::RIDE, $first->getSportType());
-        $this->assertNotNull($first->getActivityId());
-        $this->assertNull($first->getPrevious());
-        $this->assertNull($first->getFunComparison());
-
-        $context = $first->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(FirstContext::class, $context);
         $this->assertEquals(SportType::RIDE, $context->getSportType());
         $this->assertEquals('Morning ride', $context->getActivityName());
 
-        $second = $milestones->toArray()[1];
-        $this->assertEquals(SportType::RUN, $second->getSportType());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverRespectsChronologicalOrder(): void
@@ -55,12 +48,7 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-01', SportType::RIDE, 'First ride');
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(1, $milestones);
-
-        $context = $milestones->toArray()[0]->getContext();
-        $this->assertInstanceOf(FirstContext::class, $context);
-        $this->assertEquals('First ride', $context->getActivityName());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function setUp(): void

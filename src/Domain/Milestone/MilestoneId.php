@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Milestone;
 
-final readonly class MilestoneId implements \Stringable
+final readonly class MilestoneId implements \Stringable, \JsonSerializable
 {
     private function __construct(
         private string $id,
@@ -17,6 +17,11 @@ final readonly class MilestoneId implements \Stringable
     }
 
     public function __toString(): string
+    {
+        return $this->id;
+    }
+
+    public function jsonSerialize(): string
     {
         return $this->id;
     }

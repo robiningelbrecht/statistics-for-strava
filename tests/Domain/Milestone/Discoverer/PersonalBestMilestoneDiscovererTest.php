@@ -10,7 +10,7 @@ use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\PersonalBestContext;
 use App\Domain\Milestone\Discoverer\PersonalBestMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
@@ -18,9 +18,12 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private PersonalBestMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -35,20 +38,14 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(1, $milestones);
-
-        $milestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::PERSONAL_BEST, $milestone->getCategory());
-        $this->assertEquals(SportType::RUN, $milestone->getSportType());
-        $this->assertNotNull($milestone->getActivityId());
-
-        $context = $milestone->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(PersonalBestContext::class, $context);
         $this->assertInstanceOf(Kilometer::class, $context->getDistance());
         $this->assertEquals(5.0, $context->getDistance()->toFloat());
         $this->assertInstanceOf(Seconds::class, $context->getTime());
         $this->assertEquals(1200, $context->getTime()->toInt());
-        $this->assertNull($milestone->getPrevious());
+
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverTracksImprovements(): void
@@ -60,15 +57,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertBestEffort(2, SportType::RUN, 5000, 1100);
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(2, $milestones);
-
-        $second = $milestones->toArray()[1];
-        $context = $second->getContext();
-        $this->assertInstanceOf(PersonalBestContext::class, $context);
-        $this->assertEquals(1100, $context->getTime()->toInt());
-        $this->assertNotNull($second->getPrevious());
-        $this->assertEquals('2024-01-01', $second->getPrevious()->getAchievedOn()->format('Y-m-d'));
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverDoesNotCreateMilestoneForSlowerTime(): void
@@ -80,8 +69,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertBestEffort(2, SportType::RUN, 5000, 1500);
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(1, $milestones);
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverTracksSportTypesSeparately(): void
@@ -93,10 +81,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertBestEffort(2, SportType::RIDE, 10000, 1800);
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(2, $milestones);
-        $this->assertEquals(SportType::RUN, $milestones->toArray()[0]->getSportType());
-        $this->assertEquals(SportType::RIDE, $milestones->toArray()[1]->getSportType());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverTracksDistancesSeparately(): void
@@ -106,9 +91,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $this->insertBestEffort(1, SportType::RUN, 10000, 2700);
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(2, $milestones);
-        $this->assertCount(2, $milestones);
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function setUp(): void

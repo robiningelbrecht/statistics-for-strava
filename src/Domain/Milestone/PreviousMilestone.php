@@ -7,7 +7,7 @@ namespace App\Domain\Milestone;
 use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class PreviousMilestone
+final readonly class PreviousMilestone implements \JsonSerializable
 {
     private function __construct(
         private MilestoneId $previousMilestoneId,
@@ -41,5 +41,17 @@ final readonly class PreviousMilestone
     public function getAchievedOn(): SerializableDateTime
     {
         return $this->achievedOn;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'previousMilestoneId' => $this->previousMilestoneId,
+            'threshold' => $this->threshold,
+            'achievedOn' => $this->achievedOn,
+        ];
     }
 }

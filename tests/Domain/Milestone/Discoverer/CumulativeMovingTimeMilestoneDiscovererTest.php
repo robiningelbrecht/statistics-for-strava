@@ -8,15 +8,17 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\CumulativeMovingTimeContext;
 use App\Domain\Milestone\Discoverer\CumulativeMovingTimeMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
-use App\Infrastructure\ValueObject\Measurement\Time\Hour;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private CumulativeMovingTimeMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -30,20 +32,11 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(2, $milestones);
-
-        $globalMilestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::CUMULATIVE_MOVING_TIME, $globalMilestone->getCategory());
-        $this->assertNull($globalMilestone->getSportType());
-        $this->assertNull($globalMilestone->getPrevious());
-
-        $context = $globalMilestone->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(CumulativeMovingTimeContext::class, $context);
         $this->assertEquals(24.0, $context->getThreshold()->toFloat());
 
-        $sportMilestone = $milestones->toArray()[1];
-        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
-        $this->assertNull($sportMilestone->getPrevious());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -52,24 +45,12 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', 80000);
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(4, $milestones);
-
-        $global48 = $milestones->toArray()[2];
-        $this->assertNull($global48->getSportType());
-        $this->assertNotNull($global48->getPrevious());
-        $this->assertEquals(Hour::from(24), $global48->getPrevious()->getThreshold());
-
-        $sport48 = $milestones->toArray()[3];
-        $this->assertEquals(SportType::RIDE, $sport48->getSportType());
-        $this->assertNotNull($sport48->getPrevious());
-        $this->assertEquals(Hour::from(24), $sport48->getPrevious()->getThreshold());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverSkipsZeroMovingTime(): void
     {
         $this->insertActivity(1, '2024-01-01', 0);
-
         $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
@@ -79,18 +60,7 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivityWithSportType(2, '2024-01-02', 86400, SportType::RUN);
 
         $milestones = $this->discoverer->discover();
-
-        $milestonesArray = $milestones->toArray();
-
-        $this->assertNull($milestonesArray[0]->getSportType());
-
-        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
-
-        $this->assertNull($milestonesArray[2]->getSportType());
-        $this->assertNotNull($milestonesArray[2]->getPrevious());
-        $this->assertEquals(Hour::from(24), $milestonesArray[2]->getPrevious()->getThreshold());
-
-        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testFunComparisonIsNullForSmallThreshold(): void
@@ -98,7 +68,6 @@ class CumulativeMovingTimeMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', 86400);
 
         $milestones = $this->discoverer->discover();
-
         $this->assertNotNull($milestones->toArray()[0]->getFunComparison());
     }
 

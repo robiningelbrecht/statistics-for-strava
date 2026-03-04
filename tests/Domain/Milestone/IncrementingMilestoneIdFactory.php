@@ -11,7 +11,7 @@ final class IncrementingMilestoneIdFactory implements MilestoneIdFactory
 {
     private int $counter = 0;
 
-    public function create(): MilestoneId
+    public function random(): MilestoneId
     {
         return MilestoneId::fromString('milestone-'.++$this->counter);
     }

@@ -111,7 +111,7 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
         $thresholdHour = Hour::from($threshold);
 
         return Milestone::create(
-            id: $this->milestoneIdFactory->create(),
+            id: $this->milestoneIdFactory->random(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
             context: new CumulativeMovingTimeContext(

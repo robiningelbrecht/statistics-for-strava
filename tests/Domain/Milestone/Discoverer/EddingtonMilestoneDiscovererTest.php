@@ -9,16 +9,19 @@ use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\EddingtonContext;
 use App\Domain\Milestone\Discoverer\EddingtonMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private EddingtonMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -41,20 +44,11 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertGreaterThanOrEqual(1, count($milestones));
-
-        $first = array_first($milestones->toArray());
-        $this->assertEquals(MilestoneCategory::EDDINGTON, $first->getCategory());
-        $this->assertNull($first->getSportType());
-        $this->assertNull($first->getActivityId());
-
-        $context = $first->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(EddingtonContext::class, $context);
         $this->assertEquals(1, $context->getNumber());
 
-        $last = array_last($milestones->toArray());
-        $context = $last->getContext();
-        $this->assertEquals(5, $context->getNumber());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverPreviousMilestoneTracking(): void
@@ -71,12 +65,7 @@ class EddingtonMilestoneDiscovererTest extends ContainerTestCase
         }
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertGreaterThanOrEqual(2, count($milestones));
-
-        $secondMilestone = $milestones->toArray()[1];
-        $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals(Kilometer::from(1), $secondMilestone->getPrevious()->getThreshold());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function setUp(): void

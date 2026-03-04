@@ -121,7 +121,7 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
         $thresholdInUnit = $this->unitSystem->elevation($threshold);
 
         return Milestone::create(
-            id: $this->milestoneIdFactory->create(),
+            id: $this->milestoneIdFactory->random(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_ELEVATION,
             context: new CumulativeElevationContext(

@@ -101,7 +101,7 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
         ?Milestone $previousMilestone,
     ): Milestone {
         return Milestone::create(
-            id: $this->milestoneIdFactory->create(),
+            id: $this->milestoneIdFactory->random(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::ACTIVITY_COUNT,
             context: new ActivityCountContext(

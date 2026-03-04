@@ -120,7 +120,7 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
         $thresholdInUnit = $this->unitSystem->distance($threshold);
 
         return Milestone::create(
-            id: $this->milestoneIdFactory->create(),
+            id: $this->milestoneIdFactory->random(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_DISTANCE,
             context: new CumulativeDistanceContext(

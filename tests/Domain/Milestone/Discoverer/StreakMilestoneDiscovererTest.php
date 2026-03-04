@@ -7,15 +7,17 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Milestone\Context\StreakContext;
 use App\Domain\Milestone\Discoverer\StreakMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
-use App\Infrastructure\ValueObject\Measurement\SimpleUnit;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class StreakMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private StreakMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -31,17 +33,11 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(1, $milestones);
-
-        $milestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::STREAK, $milestone->getCategory());
-        $this->assertNull($milestone->getSportType());
-        $this->assertNull($milestone->getActivityId());
-        $this->assertNull($milestone->getPrevious());
-
-        $context = $milestone->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(StreakContext::class, $context);
         $this->assertEquals(7, $context->getDays());
+
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -51,12 +47,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         }
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(2, $milestones);
-
-        $secondMilestone = $milestones->toArray()[1];
-        $this->assertNotNull($secondMilestone->getPrevious());
-        $this->assertEquals(SimpleUnit::from(7), $secondMilestone->getPrevious()->getThreshold());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverNoMilestoneForShortStreak(): void
@@ -80,8 +71,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         }
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(1, $milestones);
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverHandlesDuplicateDaysInStreak(): void
@@ -92,8 +82,7 @@ class StreakMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(100, '2024-01-03');
 
         $milestones = $this->discoverer->discover();
-
-        $this->assertCount(1, $milestones);
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testFunComparisonIsSet(): void

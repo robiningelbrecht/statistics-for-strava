@@ -71,7 +71,7 @@ final readonly class GearMovingTimeMilestoneDiscoverer implements MilestoneDisco
                 $thresholdHour = Hour::from($threshold);
 
                 $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
+                    id: $this->milestoneIdFactory->random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_MOVING_TIME,
                     context: new GearMovingTimeContext(
