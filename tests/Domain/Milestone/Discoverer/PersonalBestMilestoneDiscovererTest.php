@@ -108,18 +108,7 @@ class PersonalBestMilestoneDiscovererTest extends ContainerTestCase
         $milestones = $this->discoverer->discover();
 
         $this->assertCount(2, $milestones);
-
         $this->assertCount(2, $milestones);
-    }
-
-    public function testDiscoverIgnoresUnknownDistances(): void
-    {
-        $this->insertActivity(1, '2024-01-01', SportType::RUN);
-        $this->insertBestEffort(1, SportType::RUN, 7777, 2000);
-
-        $milestones = $this->discoverer->discover();
-
-        $this->assertTrue($milestones->isEmpty());
     }
 
     public function setUp(): void

@@ -45,10 +45,7 @@ final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneD
                 continue;
             }
 
-            $sportType = SportType::tryFrom($row['sportType']);
-            if (null === $sportType) {
-                continue;
-            }
+            $sportType = SportType::from($row['sportType']);
             $sportKey = $sportType->value;
 
             if (isset($records[$sportKey]) && $movingTime <= $records[$sportKey]['raw']) {

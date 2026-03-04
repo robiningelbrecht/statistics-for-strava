@@ -45,18 +45,11 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
         $records = [];
 
         foreach ($rows as $row) {
-            $sportType = SportType::tryFrom($row['sportType']);
-            if (null === $sportType) {
-                continue;
-            }
+            $sportType = SportType::from($row['sportType']);
             $distanceInMeter = (int) $row['distanceInMeter'];
             $timeInSeconds = (int) $row['timeInSeconds'];
 
-            $distance = $distanceMap[$distanceInMeter] ?? null;
-            if (null === $distance) {
-                continue;
-            }
-
+            $distance = $distanceMap[$distanceInMeter];
             $recordKey = $sportType->value.'_'.$distanceInMeter;
 
             $previousTime = null;

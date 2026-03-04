@@ -40,11 +40,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
                 continue;
             }
 
-            $sportType = SportType::tryFrom($sportTypeValue);
-            if (null === $sportType) {
-                continue;
-            }
-
+            $sportType = SportType::from($sportTypeValue);
             $seenSportTypes[$sportTypeValue] = true;
 
             $milestones[] = Milestone::create(
