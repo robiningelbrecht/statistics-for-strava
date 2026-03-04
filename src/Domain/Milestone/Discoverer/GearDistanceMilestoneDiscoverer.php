@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Milestone\Discoverer;
 
 use App\Domain\Milestone\Context\GearDistanceContext;
+use App\Domain\Milestone\FunComparison\DistanceFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
@@ -90,6 +91,7 @@ final readonly class GearDistanceMilestoneDiscoverer implements MilestoneDiscove
                         threshold: $thresholdInUnit,
                     ),
                     previous: $this->buildPreviousMilestone($state['prev'], $symbol),
+                    funComparison: DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()),
                 );
 
                 $milestones[] = $milestone;

@@ -6,7 +6,6 @@ namespace App\Domain\Milestone\Discoverer;
 
 use App\Domain\Activity\Eddington\EddingtonCalculator;
 use App\Domain\Milestone\Context\EddingtonContext;
-use App\Domain\Milestone\FunComparison\EddingtonFunComparison;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
@@ -23,21 +22,17 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
     ) {
     }
 
-    private const array THRESHOLDS = [
-        5, 10, 15, 20, 25, 30, 40, 50,
-        60, 75, 100, 125, 150, 175, 200,
-    ];
-
     public function discover(): Milestones
     {
         $milestones = [];
+        $thresholds = range(1, 250);
 
         foreach ($this->eddingtonCalculator->calculate($this->unitSystem) as $eddington) {
             $history = $eddington->getEddingtonHistory();
             /** @var ?Milestone $previousMilestone */
             $previousMilestone = null;
 
-            foreach (self::THRESHOLDS as $threshold) {
+            foreach ($thresholds as $threshold) {
                 if (!isset($history[$threshold])) {
                     continue;
                 }
@@ -50,7 +45,7 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     assert($previousContext instanceof EddingtonContext);
                     $previous = PreviousMilestone::create(
                         milestoneId: $previousMilestone->getId(),
-                        label: 'E'.$previousContext->getNumber(),
+                        label: (string) $previousContext->getNumber(),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }
@@ -64,9 +59,9 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     context: new EddingtonContext(
                         label: $eddington->getLabel(),
                         number: $threshold,
+                        distance: $this->unitSystem->distance($threshold),
                     ),
                     previous: $previous,
-                    funComparison: EddingtonFunComparison::resolve($threshold),
                 );
 
                 $milestones[] = $milestone;

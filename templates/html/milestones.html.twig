@@ -70,6 +70,14 @@
                             {{ milestone.getFunComparison()|trans }}
                         </div>
                     {% endif %}
+                    {% if milestone.getCategory() == enum('App\\Domain\\Milestone\\MilestoneCategory').EDDINGTON  %}
+                        <div class="mt-1 text-sm italic text-gray-500">
+                            {{ "That's {number} days of at least {distance}"|trans({
+                                '{number}': milestone.getContext().getNumber(),
+                                '{distance}':  milestone.getContext().getDistance()|renderMeasurement(0)})|raw
+                            }}
+                        </div>
+                    {% endif %}
                     {% if milestone.getPrevious() %}
                         <div class="mt-1 text-xs text-gray-400">
                             {{ "Previous"|trans }}:
