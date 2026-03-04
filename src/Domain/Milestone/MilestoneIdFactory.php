@@ -6,5 +6,5 @@ namespace App\Domain\Milestone;
 
 interface MilestoneIdFactory
 {
-    public function create(): MilestoneId;
+    public function random(): MilestoneId;
 }

@@ -78,7 +78,7 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                 }
 
                 $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
+                    id: $this->milestoneIdFactory->random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::STREAK,
                     context: new StreakContext(

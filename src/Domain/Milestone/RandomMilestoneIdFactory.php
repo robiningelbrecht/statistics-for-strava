@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 
 final readonly class RandomMilestoneIdFactory implements MilestoneIdFactory
 {
-    public function create(): MilestoneId
+    public function random(): MilestoneId
     {
         return MilestoneId::fromString('milestone-'.Uuid::uuid4()->toString());
     }

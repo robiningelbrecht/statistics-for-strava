@@ -79,7 +79,7 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
                 $thresholdInUnit = $this->unitSystem->elevation($threshold);
 
                 $milestone = Milestone::create(
-                    id: $this->milestoneIdFactory->create(),
+                    id: $this->milestoneIdFactory->random(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_ELEVATION,
                     context: new GearElevationContext(

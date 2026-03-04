@@ -10,7 +10,7 @@ use App\Domain\Milestone\Context\MilestoneContext;
 use App\Domain\Milestone\FunComparison\FunComparison;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
-final readonly class Milestone
+final readonly class Milestone implements \JsonSerializable
 {
     private function __construct(
         private MilestoneId $id,
@@ -108,5 +108,22 @@ final readonly class Milestone
         return clone ($this, [
             'funComparison' => $funComparison,
         ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'achievedOn' => $this->achievedOn,
+            'category' => $this->category,
+            'sportType' => $this->sportType,
+            'activityId' => $this->activityId,
+            'context' => $this->context,
+            'previous' => $this->previous,
+            'funComparison' => $this->funComparison,
+        ];
     }
 }

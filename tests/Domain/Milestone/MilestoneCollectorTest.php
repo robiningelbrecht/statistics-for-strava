@@ -24,6 +24,7 @@ use App\Domain\Milestone\Discoverer\GearMovingTimeMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\PersonalBestMilestoneDiscoverer;
 use App\Domain\Milestone\Discoverer\StreakMilestoneDiscoverer;
 use App\Domain\Milestone\MilestoneCollector;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -31,13 +32,15 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class MilestoneCollectorTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     public function testDiscoverAllWithNoActivities(): void
     {
         $collector = $this->createCollector();
-
         $this->assertTrue($collector->discoverAll()->isEmpty());
     }
 
@@ -54,17 +57,12 @@ class MilestoneCollectorTest extends ContainerTestCase
 
         $this->assertFalse($milestones->isEmpty());
 
-        $categories = array_unique(array_map(
+        $categories = array_values(array_unique(array_map(
             fn ($m) => $m->getCategory()->value,
             $milestones->toArray()
-        ));
+        )));
 
-        $this->assertContains('first', $categories);
-        $this->assertContains('activityCount', $categories);
-        $this->assertContains('personalBest', $categories);
-        $this->assertContains('activityDistance', $categories);
-        $this->assertContains('activityElevation', $categories);
-        $this->assertContains('activityMovingTime', $categories);
+        $this->assertMatchesJsonSnapshot(Json::encode($categories));
     }
 
     public function testDiscoverAllSortsNewestFirst(): void

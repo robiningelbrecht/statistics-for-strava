@@ -8,16 +8,19 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\CumulativeDistanceContext;
 use App\Domain\Milestone\Discoverer\CumulativeDistanceMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private CumulativeDistanceMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
@@ -31,22 +34,12 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
 
         $milestones = $this->discoverer->discover();
 
-        $this->assertCount(2, $milestones);
-
-        $globalMilestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::CUMULATIVE_DISTANCE, $globalMilestone->getCategory());
-        $this->assertNull($globalMilestone->getSportType());
-        $this->assertNull($globalMilestone->getPrevious());
-        $this->assertNull($globalMilestone->getActivityId());
-
-        $context = $globalMilestone->getContext();
+        $context = $milestones->getFirst()->getContext();
         $this->assertInstanceOf(CumulativeDistanceContext::class, $context);
         $this->assertInstanceOf(Kilometer::class, $context->getThreshold());
         $this->assertEquals(100.0, $context->getThreshold()->toFloat());
 
-        $sportMilestone = $milestones->toArray()[1];
-        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
-        $this->assertNull($sportMilestone->getPrevious());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -55,22 +48,12 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(2, '2024-01-02', 260.0);
 
         $milestones = $this->discoverer->discover();
-
-        $global500 = $milestones->toArray()[4];
-        $this->assertNull($global500->getSportType());
-        $this->assertNotNull($global500->getPrevious());
-        $this->assertEquals(Kilometer::from(250), $global500->getPrevious()->getThreshold());
-
-        $sport500 = $milestones->toArray()[5];
-        $this->assertEquals(SportType::RIDE, $sport500->getSportType());
-        $this->assertNotNull($sport500->getPrevious());
-        $this->assertEquals(Kilometer::from(250), $sport500->getPrevious()->getThreshold());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testDiscoverSkipsZeroDistance(): void
     {
         $this->insertActivity(1, '2024-01-01', 0.0);
-
         $this->assertTrue($this->discoverer->discover()->isEmpty());
     }
 
@@ -84,7 +67,6 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
             new IncrementingMilestoneIdFactory(),
         );
         $milestones = $discoverer->discover();
-
         $this->assertGreaterThanOrEqual(2, count($milestones));
     }
 
@@ -94,16 +76,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivityWithSportType(2, '2024-01-02', 110.0, SportType::RUN);
 
         $milestones = $this->discoverer->discover();
-
-        $milestonesArray = $milestones->toArray();
-
-        $this->assertNull($milestonesArray[0]->getSportType());
-
-        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
-
-        $this->assertNull($milestonesArray[2]->getSportType());
-
-        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function testFunComparisonIsSet(): void
@@ -111,9 +84,7 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $this->insertActivity(1, '2024-01-01', 500.0);
 
         $milestones = $this->discoverer->discover();
-
-        $last = $milestones->toArray()[count($milestones) - 1];
-        $this->assertNotNull($last->getFunComparison());
+        $this->assertMatchesJsonSnapshot(Json::encode($milestones));
     }
 
     public function setUp(): void

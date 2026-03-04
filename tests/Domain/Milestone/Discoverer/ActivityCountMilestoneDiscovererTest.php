@@ -6,23 +6,24 @@ use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\SportType\SportType;
-use App\Domain\Milestone\Context\ActivityCountContext;
 use App\Domain\Milestone\Discoverer\ActivityCountMilestoneDiscoverer;
-use App\Domain\Milestone\MilestoneCategory;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private ActivityCountMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
     {
         $milestones = $this->discoverer->discover();
-
         $this->assertTrue($milestones->isEmpty());
     }
 
@@ -30,23 +31,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
     {
         $this->insertActivities(10);
 
-        $milestones = $this->discoverer->discover();
-
-        $this->assertCount(2, $milestones);
-
-        $globalMilestone = $milestones->toArray()[0];
-        $this->assertEquals(MilestoneCategory::ACTIVITY_COUNT, $globalMilestone->getCategory());
-        $this->assertNull($globalMilestone->getSportType());
-        $this->assertNull($globalMilestone->getPrevious());
-
-        $context = $globalMilestone->getContext();
-        $this->assertInstanceOf(ActivityCountContext::class, $context);
-        $this->assertEquals(10, $context->getThreshold());
-
-        $sportMilestone = $milestones->toArray()[1];
-        $this->assertEquals(MilestoneCategory::ACTIVITY_COUNT, $sportMilestone->getCategory());
-        $this->assertEquals(SportType::RIDE, $sportMilestone->getSportType());
-        $this->assertNull($sportMilestone->getPrevious());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->discoverer->discover()));
     }
 
     public function testDiscoverMultipleThresholds(): void
@@ -91,40 +76,13 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
             ));
         }
 
-        $milestones = $this->discoverer->discover();
-
-        $this->assertCount(4, $milestones);
-
-        $milestonesArray = $milestones->toArray();
-
-        $this->assertNull($milestonesArray[0]->getSportType());
-
-        $this->assertEquals(SportType::RIDE, $milestonesArray[1]->getSportType());
-
-        $this->assertNull($milestonesArray[2]->getSportType());
-        $this->assertNotNull($milestonesArray[2]->getPrevious());
-        $this->assertEquals('10', $milestonesArray[2]->getPrevious()->getThreshold());
-
-        $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->discoverer->discover()));
     }
 
     public function testFunComparisonIsSet(): void
     {
         $this->insertActivities(50);
-
-        $milestones = $this->discoverer->discover();
-
-        $globalMilestone50 = $milestones->toArray()[4];
-        $this->assertNotNull($globalMilestone50->getFunComparison());
-    }
-
-    public function testFunComparisonIsNullForSmallThreshold(): void
-    {
-        $this->insertActivities(10);
-
-        $milestones = $this->discoverer->discover();
-
-        $this->assertNull($milestones->toArray()[0]->getFunComparison());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->discoverer->discover()));
     }
 
     public function setUp(): void
