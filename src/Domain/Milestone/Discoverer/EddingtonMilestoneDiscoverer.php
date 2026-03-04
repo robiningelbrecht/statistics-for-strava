@@ -44,8 +44,8 @@ final readonly class EddingtonMilestoneDiscoverer implements MilestoneDiscoverer
                     $previousContext = $previousMilestone->getContext();
                     assert($previousContext instanceof EddingtonContext);
                     $previous = PreviousMilestone::create(
-                        milestoneId: $previousMilestone->getId(),
-                        label: (string) $previousContext->getNumber(),
+                        previousMilestoneId: $previousMilestone->getId(),
+                        threshold: $previousContext->getDistance(),
                         achievedOn: $previousMilestone->getAchievedOn(),
                     );
                 }

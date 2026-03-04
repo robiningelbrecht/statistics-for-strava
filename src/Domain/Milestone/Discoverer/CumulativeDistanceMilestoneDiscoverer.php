@@ -47,8 +47,6 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
         )->fetchAllAssociative();
 
         $thresholds = UnitSystem::IMPERIAL === $this->unitSystem ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
-        $symbol = $this->unitSystem->distanceSymbol();
-
         $milestones = [];
         $globalDistanceM = 0.0;
         $globalThresholdIndex = 0;
@@ -82,7 +80,6 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                     sportType: null,
                     threshold: $threshold,
                     previousMilestone: $globalPreviousMilestone,
-                    symbol: $symbol
                 );
                 $milestones[] = $milestone;
                 $globalPreviousMilestone = $milestone;
@@ -104,7 +101,6 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
                     sportType: $sportType,
                     threshold: $threshold,
                     previousMilestone: $sportPreviousMilestones[$sportTypeValue],
-                    symbol: $symbol
                 );
                 $milestones[] = $milestone;
                 $sportPreviousMilestones[$sportTypeValue] = $milestone;
@@ -120,7 +116,6 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
         ?SportType $sportType,
         int $threshold,
         ?Milestone $previousMilestone,
-        string $symbol,
     ): Milestone {
         $thresholdInUnit = $this->unitSystem->distance($threshold);
 
@@ -133,11 +128,11 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
             ),
         )
             ->withSportType($sportType)
-            ->withPrevious($this->buildPreviousMilestone($previousMilestone, $symbol))
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone))
             ->withFunComparison(DistanceFunComparison::resolve($thresholdInUnit->toMeter()->toKilometer()));
     }
 
-    private function buildPreviousMilestone(?Milestone $previousMilestone, string $symbol): ?PreviousMilestone
+    private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone
     {
         if (!$previousMilestone instanceof Milestone) {
             return null;
@@ -147,8 +142,8 @@ final readonly class CumulativeDistanceMilestoneDiscoverer implements MilestoneD
         assert($previousContext instanceof CumulativeDistanceContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previousMilestone->getId(),
-            label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
+            previousMilestoneId: $previousMilestone->getId(),
+            threshold: $previousContext->getThreshold(),
             achievedOn: $previousMilestone->getAchievedOn(),
         );
     }

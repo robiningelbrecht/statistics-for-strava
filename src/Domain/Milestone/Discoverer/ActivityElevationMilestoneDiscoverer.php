@@ -56,10 +56,10 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 $previousMilestone = $records[$sportKey]['milestone'];
                 $previousContext = $previousMilestone->getContext();
                 assert($previousContext instanceof ActivityRecordContext);
-                $previousUnit = $previousContext->getValue();
+
                 $previous = PreviousMilestone::create(
-                    milestoneId: $previousMilestone->getId(),
-                    label: $previousUnit->toInt().$previousUnit->getSymbol(),
+                    previousMilestoneId: $previousMilestone->getId(),
+                    threshold: $previousContext->getValue(),
                     achievedOn: $previousMilestone->getAchievedOn(),
                 );
             }

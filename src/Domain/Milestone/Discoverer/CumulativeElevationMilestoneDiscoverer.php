@@ -47,7 +47,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
         )->fetchAllAssociative();
 
         $thresholds = UnitSystem::IMPERIAL === $this->unitSystem ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
-        $symbol = $this->unitSystem->elevationSymbol();
 
         $milestones = [];
         $globalElevationM = 0.0;
@@ -82,7 +81,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
                     sportType: null,
                     threshold: $threshold,
                     previousMilestone: $globalPreviousMilestone,
-                    symbol: $symbol
                 );
                 $milestones[] = $milestone;
                 $globalPreviousMilestone = $milestone;
@@ -104,7 +102,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
                     sportType: $sportType,
                     threshold: $threshold,
                     previousMilestone: $sportPreviousMilestones[$sportTypeValue],
-                    symbol: $symbol
                 );
                 $milestones[] = $milestone;
                 $sportPreviousMilestones[$sportTypeValue] = $milestone;
@@ -120,7 +117,6 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
         ?SportType $sportType,
         int $threshold,
         ?Milestone $previousMilestone,
-        string $symbol,
     ): Milestone {
         $thresholdInUnit = $this->unitSystem->elevation($threshold);
 
@@ -133,11 +129,11 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
             ),
         )
             ->withSportType($sportType)
-            ->withPrevious($this->buildPreviousMilestone($previousMilestone, $symbol))
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone))
             ->withFunComparison(ElevationFunComparison::resolve($thresholdInUnit->toMeter()));
     }
 
-    private function buildPreviousMilestone(?Milestone $previousMilestone, string $symbol): ?PreviousMilestone
+    private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone
     {
         if (!$previousMilestone instanceof Milestone) {
             return null;
@@ -147,8 +143,8 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
         assert($previousContext instanceof CumulativeElevationContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previousMilestone->getId(),
-            label: number_format((int) $previousContext->getThreshold()->toFloat()).' '.$symbol,
+            previousMilestoneId: $previousMilestone->getId(),
+            threshold: $previousContext->getThreshold(),
             achievedOn: $previousMilestone->getAchievedOn(),
         );
     }

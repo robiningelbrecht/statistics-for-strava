@@ -59,12 +59,12 @@ class CumulativeDistanceMilestoneDiscovererTest extends ContainerTestCase
         $global500 = $milestones->toArray()[4];
         $this->assertNull($global500->getSportType());
         $this->assertNotNull($global500->getPrevious());
-        $this->assertEquals('250 km', $global500->getPrevious()->getLabel());
+        $this->assertEquals(Kilometer::from(250), $global500->getPrevious()->getThreshold());
 
         $sport500 = $milestones->toArray()[5];
         $this->assertEquals(SportType::RIDE, $sport500->getSportType());
         $this->assertNotNull($sport500->getPrevious());
-        $this->assertEquals('250 km', $sport500->getPrevious()->getLabel());
+        $this->assertEquals(Kilometer::from(250), $sport500->getPrevious()->getThreshold());
     }
 
     public function testDiscoverSkipsZeroDistance(): void

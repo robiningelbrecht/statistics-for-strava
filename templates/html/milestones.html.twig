@@ -79,10 +79,11 @@
                         </div>
                     {% endif %}
                     {% if milestone.getPrevious() %}
+                        {% set previousMilestone = milestone.getPrevious() %}
                         <div class="mt-1 text-xs text-gray-400">
                             {{ "Previous"|trans }}:
-                            <a href="javascript:void(0)" data-scroll-to="{{ milestone.getPrevious().getMilestoneId() }}" class="underline hover:text-gray-600">{{ milestone.getPrevious().getLabel() }}</a>
-                            {{ "on"|trans }} {{ milestone.getPrevious().getAchievedOn()|formatDate('normal') }}
+                            <a href="javascript:void(0)" data-scroll-to="{{ previousMilestone.getPreviousMilestoneId() }}" class="underline hover:text-gray-600">{{ previousMilestone.getThreshold()|renderMeasurement(0)|raw }}</a>
+                            {{ "on"|trans }} {{ previousMilestone.getAchievedOn()|formatDate('normal') }}
                         </div>
                     {% endif %}
                 </div>

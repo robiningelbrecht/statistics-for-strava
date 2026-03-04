@@ -46,8 +46,6 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
         )->fetchAllAssociative();
 
         $thresholds = UnitSystem::IMPERIAL === $this->unitSystem ? self::IMPERIAL_THRESHOLDS : self::METRIC_THRESHOLDS;
-        $symbol = $this->unitSystem->elevationSymbol();
-
         $milestones = [];
 
         /** @var array<string, array{elevationM: float, name: string, idx: int, prev: ?Milestone}> $gearState */
@@ -89,7 +87,7 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
                         threshold: $thresholdInUnit,
                     )
                 )
-                ->withPrevious($this->buildPreviousMilestone($state['prev'], $symbol))
+                ->withPrevious($this->buildPreviousMilestone($state['prev']))
                 ->withFunComparison(ElevationFunComparison::resolve($thresholdInUnit->toMeter()));
 
                 $milestones[] = $milestone;
@@ -101,7 +99,7 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
         return Milestones::fromArray($milestones);
     }
 
-    private function buildPreviousMilestone(?Milestone $previous, string $symbol): ?PreviousMilestone
+    private function buildPreviousMilestone(?Milestone $previous): ?PreviousMilestone
     {
         if (!$previous instanceof Milestone) {
             return null;
@@ -111,8 +109,8 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
         assert($context instanceof GearElevationContext);
 
         return PreviousMilestone::create(
-            milestoneId: $previous->getId(),
-            label: number_format((int) $context->getThreshold()->toFloat()).' '.$symbol,
+            previousMilestoneId: $previous->getId(),
+            threshold: $context->getThreshold(),
             achievedOn: $previous->getAchievedOn(),
         );
     }

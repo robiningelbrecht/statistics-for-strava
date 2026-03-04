@@ -60,12 +60,12 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
         $global50 = $milestones->toArray()[4];
         $this->assertNull($global50->getSportType());
         $this->assertNotNull($global50->getPrevious());
-        $this->assertEquals('25', $global50->getPrevious()->getLabel());
+        $this->assertEquals('25', $global50->getPrevious()->getThreshold());
 
         $sport50 = $milestones->toArray()[5];
         $this->assertEquals(SportType::RIDE, $sport50->getSportType());
         $this->assertNotNull($sport50->getPrevious());
-        $this->assertEquals('25', $sport50->getPrevious()->getLabel());
+        $this->assertEquals('25', $sport50->getPrevious()->getThreshold());
     }
 
     public function testDiscoverWithMultipleSportTypes(): void
@@ -103,7 +103,7 @@ class ActivityCountMilestoneDiscovererTest extends ContainerTestCase
 
         $this->assertNull($milestonesArray[2]->getSportType());
         $this->assertNotNull($milestonesArray[2]->getPrevious());
-        $this->assertEquals('10', $milestonesArray[2]->getPrevious()->getLabel());
+        $this->assertEquals('10', $milestonesArray[2]->getPrevious()->getThreshold());
 
         $this->assertEquals(SportType::RUN, $milestonesArray[3]->getSportType());
     }

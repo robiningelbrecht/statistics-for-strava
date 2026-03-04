@@ -75,9 +75,9 @@ class GearDistanceMilestoneDiscovererTest extends ContainerTestCase
         $milestonesArray = $milestones->toArray();
         $this->assertNull($milestonesArray[0]->getPrevious());
         $this->assertNotNull($milestonesArray[1]->getPrevious());
-        $this->assertEquals('100 km', $milestonesArray[1]->getPrevious()->getLabel());
+        $this->assertEquals(Kilometer::from(100), $milestonesArray[1]->getPrevious()->getThreshold());
         $this->assertNotNull($milestonesArray[2]->getPrevious());
-        $this->assertEquals('250 km', $milestonesArray[2]->getPrevious()->getLabel());
+        $this->assertEquals(Kilometer::from(250), $milestonesArray[2]->getPrevious()->getThreshold());
     }
 
     public function testDiscoverTracksGearsSeparately(): void
