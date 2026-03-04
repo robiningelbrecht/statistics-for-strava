@@ -74,15 +74,13 @@ final readonly class GearMovingTimeMilestoneDiscoverer implements MilestoneDisco
                     id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_MOVING_TIME,
-                    sportType: null,
-                    activityId: null,
                     context: new GearMovingTimeContext(
                         gearName: $gearName,
                         threshold: $thresholdHour,
                     ),
-                    previous: $this->buildPreviousMilestone($state['prev']),
-                    funComparison: MovingTimeFunComparison::resolve($thresholdHour),
-                );
+                )
+                ->withPrevious($this->buildPreviousMilestone($state['prev']))
+                ->withFunComparison(MovingTimeFunComparison::resolve($thresholdHour));
 
                 $milestones[] = $milestone;
                 $state['prev'] = $milestone;

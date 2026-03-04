@@ -84,15 +84,13 @@ final readonly class GearElevationMilestoneDiscoverer implements MilestoneDiscov
                     id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::GEAR_ELEVATION,
-                    sportType: null,
-                    activityId: null,
                     context: new GearElevationContext(
                         gearName: $gearName,
                         threshold: $thresholdInUnit,
-                    ),
-                    previous: $this->buildPreviousMilestone($state['prev'], $symbol),
-                    funComparison: ElevationFunComparison::resolve($thresholdInUnit->toMeter()),
-                );
+                    )
+                )
+                ->withPrevious($this->buildPreviousMilestone($state['prev'], $symbol))
+                ->withFunComparison(ElevationFunComparison::resolve($thresholdInUnit->toMeter()));
 
                 $milestones[] = $milestone;
                 $state['prev'] = $milestone;

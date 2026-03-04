@@ -69,13 +69,13 @@ final readonly class ActivityElevationMilestoneDiscoverer implements MilestoneDi
                 id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::ACTIVITY_ELEVATION,
-                sportType: $sportType,
-                activityId: $activityId,
                 context: new ActivityRecordContext(
                     value: $elevation,
                 ),
-                previous: $previous,
-            );
+            )
+                ->withSportType($sportType)
+                ->withActivityId($activityId)
+                ->withPrevious($previous);
 
             $milestones[] = $milestone;
             $records[$sportKey] = [

@@ -114,14 +114,13 @@ final readonly class CumulativeMovingTimeMilestoneDiscoverer implements Mileston
             id: $this->milestoneIdFactory->create(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_MOVING_TIME,
-            sportType: $sportType,
-            activityId: null,
             context: new CumulativeMovingTimeContext(
                 threshold: $thresholdHour,
             ),
-            previous: $this->buildPreviousMilestone($previousMilestone),
-            funComparison: MovingTimeFunComparison::resolve($thresholdHour),
-        );
+        )
+            ->withSportType($sportType)
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone))
+            ->withFunComparison(MovingTimeFunComparison::resolve($thresholdHour));
     }
 
     private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone

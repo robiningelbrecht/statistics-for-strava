@@ -103,14 +103,13 @@ final readonly class ActivityCountMilestoneDiscoverer implements MilestoneDiscov
             id: $this->milestoneIdFactory->create(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::ACTIVITY_COUNT,
-            sportType: $sportType,
-            activityId: null,
             context: new ActivityCountContext(
                 threshold: $threshold,
             ),
-            previous: $this->buildPreviousMilestone($previousMilestone),
-            funComparison: ActivityCountFunComparison::resolve($threshold),
-        );
+        )
+            ->withSportType($sportType)
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone))
+            ->withFunComparison(ActivityCountFunComparison::resolve($threshold));
     }
 
     private function buildPreviousMilestone(?Milestone $previousMilestone): ?PreviousMilestone

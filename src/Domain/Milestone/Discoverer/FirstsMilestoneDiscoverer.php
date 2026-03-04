@@ -47,13 +47,13 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
                 id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::FIRST,
-                sportType: $sportType,
-                activityId: ActivityId::fromString($row['activityId']),
                 context: new FirstContext(
                     sportType: $sportType,
                     activityName: $row['name'],
                 ),
-            );
+            )
+            ->withSportType($sportType)
+            ->withActivityId(ActivityId::fromString($row['activityId']));
         }
 
         return Milestones::fromArray($milestones);

@@ -44,9 +44,8 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
         $previousMilestone = null;
 
         foreach ($rows as $row) {
-            $currentDate = new \DateTimeImmutable($row['activityDate']);
-
-            if (!$previousDate instanceof \DateTimeImmutable) {
+            $currentDate = SerializableDateTime::fromString($row['activityDate']);
+            if (!$previousDate instanceof SerializableDateTime) {
                 $streakDays = 1;
             } else {
                 $diff = (int) $previousDate->diff($currentDate)->days;
@@ -81,14 +80,12 @@ final readonly class StreakMilestoneDiscoverer implements MilestoneDiscoverer
                     id: $this->milestoneIdFactory->create(),
                     achievedOn: $achievedOn,
                     category: MilestoneCategory::STREAK,
-                    sportType: null,
-                    activityId: null,
                     context: new StreakContext(
                         days: $threshold,
                     ),
-                    previous: $previous,
-                    funComparison: StreakFunComparison::resolve($threshold),
-                );
+                )
+                    ->withPrevious($previous)
+                    ->withFunComparison(StreakFunComparison::resolve($threshold));
 
                 $milestones[] = $milestone;
                 $previousMilestone = $milestone;

@@ -77,14 +77,14 @@ final readonly class PersonalBestMilestoneDiscoverer implements MilestoneDiscove
                 id: $this->milestoneIdFactory->create(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
                 category: MilestoneCategory::PERSONAL_BEST,
-                sportType: $sportType,
-                activityId: $activityId,
                 context: new PersonalBestContext(
                     distance: $distance,
                     time: Seconds::from($timeInSeconds),
                 ),
-                previous: $previous,
-            );
+            )
+                ->withSportType($sportType)
+                ->withActivityId($activityId)
+                ->withPrevious($previous);
 
             $milestones[] = $milestone;
             $records[$recordKey] = $milestone;

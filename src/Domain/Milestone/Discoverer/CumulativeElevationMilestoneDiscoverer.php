@@ -128,14 +128,13 @@ final readonly class CumulativeElevationMilestoneDiscoverer implements Milestone
             id: $this->milestoneIdFactory->create(),
             achievedOn: $achievedOn,
             category: MilestoneCategory::CUMULATIVE_ELEVATION,
-            sportType: $sportType,
-            activityId: null,
             context: new CumulativeElevationContext(
                 threshold: $thresholdInUnit,
             ),
-            previous: $this->buildPreviousMilestone($previousMilestone, $symbol),
-            funComparison: ElevationFunComparison::resolve($thresholdInUnit->toMeter()),
-        );
+        )
+            ->withSportType($sportType)
+            ->withPrevious($this->buildPreviousMilestone($previousMilestone, $symbol))
+            ->withFunComparison(ElevationFunComparison::resolve($thresholdInUnit->toMeter()));
     }
 
     private function buildPreviousMilestone(?Milestone $previousMilestone, string $symbol): ?PreviousMilestone
