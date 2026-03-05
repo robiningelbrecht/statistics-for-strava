@@ -9,5 +9,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 interface TranslatableWithDescription extends TranslatableInterface
 {
-    public function transDescription(TranslatorInterface $translator, ?string $locale = null): string;
+    /**
+     * @param array<string, string> $parameters
+     */
+    public function transDescription(TranslatorInterface $translator, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 }

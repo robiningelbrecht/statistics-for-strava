@@ -31,7 +31,7 @@ enum AcRatioStatus implements TranslatableWithDescription
         };
     }
 
-    public function transDescription(TranslatorInterface $translator, ?string $locale = null): string
+    public function transDescription(TranslatorInterface $translator, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return match ($this) {
             self::HIGH_RISK => $translator->trans('Consider reducing load', locale: $locale),
