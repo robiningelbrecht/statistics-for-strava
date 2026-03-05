@@ -40,7 +40,7 @@ enum TSBStatus implements TranslatableWithDescription
         };
     }
 
-    public function transDescription(TranslatorInterface $translator, ?string $locale = null): string
+    public function transDescription(TranslatorInterface $translator, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return match ($this) {
             self::POSSIBLE_DETRAINING => $translator->trans('Fitness may be declining due to low recent training load', locale: $locale),

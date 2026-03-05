@@ -16,13 +16,20 @@ final readonly class TranslationTwigExtension
     ) {
     }
 
+    /**
+     * @param array<string, string> $arguments
+     */
     #[AsTwigFilter('transDescription')]
-    public function transDescription(TranslatableWithDescription $message): string
+    public function transDescription(TranslatableWithDescription $message, array $arguments = [], ?string $domain = null): string
     {
         if ($message instanceof TranslatableMessage && '' === $message->getMessage()) {
             return '';
         }
 
-        return $message->transDescription($this->translator);
+        return $message->transDescription(
+            translator: $this->translator,
+            parameters: $arguments,
+            domain: $domain
+        );
     }
 }
