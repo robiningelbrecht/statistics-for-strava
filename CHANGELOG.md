@@ -1,3 +1,17 @@
+# [v4.7.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.0) - 2026-03-05
+
+## New features
+* Added a timeline view of your key achievements and milestones over time.
+
+## Bug fixes
+* Fixed a calculation bug that caused the yearly statistics graph to incorrectly drop downward.
+
+## Technical details
+* ISSUE #1837: Milestones timeline by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1839
+* ISSUE #1848: Yearly Stats graph calculation error - went downward by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1850
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.6.8...v4.7.0
+
 # [v4.6.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.6.8) - 2026-03-03
 
 ## New features
