@@ -22,23 +22,23 @@
     <div class="modal-body space-y-4">
         <div class="flex gap-x-4">
             {% if zwiftLevel or sportTypesThatHaveBestEfforts is not empty %}
-                <div class="shrink-0 border-r border-gray-200">
-                    <ul class="mr-2 flex flex-col gap-y-1 text-sm font-medium" id="badgesTab" data-tabs="#badgesTabContent" role="tablist">
+                <div class="tabs tabs--default tabs--vertical shrink-0 border-r border-gray-200">
+                    <ul id="badgesTab" data-tabs="#badgesTabContent" role="tablist">
                         <li role="presentation">
-                            <a href="#" data-tabs-target="#badgesTabUserBadge" role="tab" aria-controls="badgesTabUserBadge-tab" class="inline-flex items-center justify-center p-2 border-l-2 group">
+                            <a href="#" data-tabs-target="#badgesTabUserBadge" role="tab" aria-controls="badgesTabUserBadge-tab">
                                 {{ "User badge"|trans }}
                             </a>
                         </li>
                         {% if sportTypesThatHaveBestEfforts is not empty %}
                             <li role="presentation">
-                                <a href="#" data-tabs-target="#badgesTabPbBadges" role="tab" aria-controls="badgesTabPbBadges-tab" class="inline-flex items-center justify-center p-2 border-l-2 group">
+                                <a href="#" data-tabs-target="#badgesTabPbBadges" role="tab" aria-controls="badgesTabPbBadges-tab">
                                     {{ "PB badges"|trans }}
                                 </a>
                             </li>
                         {% endif %}
                         {% if zwiftLevel %}
                             <li role="presentation">
-                                <a href="#" data-tabs-target="#badgesTabZwiftBadge" role="tab" aria-controls="badgesTabZwiftBadge-tab" class="inline-flex items-center justify-center p-2 border-l-2 group">
+                                <a href="#" data-tabs-target="#badgesTabZwiftBadge" role="tab" aria-controls="badgesTabZwiftBadge-tab">
                                     {{ "Zwift badge"|trans }}
                                 </a>
                             </li>

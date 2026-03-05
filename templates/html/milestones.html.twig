@@ -119,12 +119,12 @@
     {% elseif category == 'streak' %}
         {{ "{days} consecutive days of activity"|trans({'{days}': context.getDays()}) }}
     {% elseif category == 'gearDistance' %}
-        {{ "{threshold} on {gearName}"|trans({
+        {{ "{threshold} total distance on {gearName}"|trans({
             '{threshold}': context.getThreshold()|renderMeasurement(0),
             '{gearName}': context.getGearName()
         })|raw }}
     {% elseif category == 'gearElevation' %}
-        {{ "{threshold} on {gearName}"|trans({
+        {{ "{threshold} total elevation on {gearName}"|trans({
             '{threshold}': context.getThreshold()|renderMeasurement(0),
             '{gearName}': context.getGearName()
         })|raw }}

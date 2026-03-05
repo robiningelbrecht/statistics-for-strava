@@ -536,4 +536,5 @@ workouts: Trainingseinheiten
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
 '{numberOfWeeks} weeks': '{numberOfWeeks} Wochen'
 '{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
-'{threshold} on {gearName}': '{threshold} on {gearName}'
+'{threshold} total distance on {gearName}': '{threshold} total distance on {gearName}'
+'{threshold} total elevation on {gearName}': '{threshold} total elevation on {gearName}'
