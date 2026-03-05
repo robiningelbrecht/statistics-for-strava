@@ -536,4 +536,5 @@ workouts: treinos
 '{numberOfResults} routes based on your active filters': '{numberOfResults} rotas com base nos teus filtros ativos'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
-'{threshold} on {gearName}': '{threshold} on {gearName}'
+'{threshold} total distance on {gearName}': '{threshold} total distance on {gearName}'
+'{threshold} total elevation on {gearName}': '{threshold} total elevation on {gearName}'

@@ -4774,6 +4774,23 @@
         }
       }
     }
+    &.tabs--vertical {
+      & > ul {
+        margin-right: calc(var(--spacing) * 2);
+        flex-direction: column;
+        column-gap: calc(var(--spacing) * 0);
+        row-gap: calc(var(--spacing) * 1);
+        text-align: left;
+        & > li {
+          & > a {
+            border-bottom-style: var(--tw-border-style);
+            border-bottom-width: 0px;
+            border-left-style: var(--tw-border-style);
+            border-left-width: 2px;
+          }
+        }
+      }
+    }
   }
   ul.tabs.tabs--pills {
     display: inline-flex;

@@ -19,6 +19,19 @@
                 }
             }
         }
+
+        &.tabs--vertical{
+            & > ul {
+                @apply mr-2 flex-col gap-y-1 gap-x-0 text-left;
+
+                & > li {
+
+                    & > a {
+                        @apply border-l-2 border-b-0;
+                    }
+                }
+            }
+        }
     }
 
     ul.tabs.tabs--pills {

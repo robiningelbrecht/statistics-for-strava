@@ -536,4 +536,5 @@ workouts: 锻炼
 '{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{threshold} hours on {gearName}': '{threshold} hours on {gearName}'
-'{threshold} on {gearName}': '{threshold} on {gearName}'
+'{threshold} total distance on {gearName}': '{threshold} total distance on {gearName}'
+'{threshold} total elevation on {gearName}': '{threshold} total elevation on {gearName}'
