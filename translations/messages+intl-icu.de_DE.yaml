@@ -53,11 +53,11 @@ Commutes: Pendeln
 'Commutes only': 'Nur Pendler'
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
-'Completed {threshold} activities': 'Completed {threshold} activities'
+'Completed {threshold} activities': 'Aktivitäten {threshold} abgeschlossen'
 'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
-Country: Country
+Country: Land
 Cricket: Cricket
 Crossfit: Crossfit
 'Current Status': 'Aktueller Status'
@@ -79,7 +79,7 @@ Density: Dichte
 Details: Details
 Device: Gerät
 Distance: Distanz
-'Distance & Elevation': 'Distance & Elevation'
+'Distance & Elevation': 'Distanz & Höhenmeter'
 'Distance breakdown': Distanzaufschlüsselung
 'Distance in {unit}': 'Distanz in {unit}'
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
@@ -90,7 +90,7 @@ Duration: Dauer
 'E-Bike Rides': E-Bike-Radfahrten
 'E-Mountain Bike Rides': E-Mountainbike-Fahrten
 Eddington: Eddington
-'Effort vs heart rate': 'Effort vs heart rate'
+'Effort vs heart rate': 'Anstrengung vs Herzfrequenz'
 Elev: Anstieg
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
@@ -106,8 +106,8 @@ Feb: Feb
 'Filter on country': 'Filter nach Land'
 'Filter on sport type': 'Filter nach Sportart'
 'Filter on starred segments': 'Filter für markierte Segmente'
-'First-ever activity recorded': 'First-ever activity recorded'
-Firsts: Firsts
+'First-ever activity recorded': 'Erste Aktivität aufgezeichnet'
+Firsts: Premieren
 Fitness: Fitness
 'Fitness may be declining due to low recent training load': 'Rückgang der Fitness durch zu niedriges Trainingspensum.'
 'Fitness may decline': 'Fitness lässt nach'
@@ -172,7 +172,7 @@ Laps: Runden
 'Last effort': 'Letzte Anstrengung'
 'Last maintenance': 'Letzte Wartung'
 'Last {numberOfDays} days': 'Letzten {numberOfDays} Tage'
-Lifetime: Lifetime
+Lifetime: Gesamtzeitraum
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Leichte Ermüdung bei guter Bereitschaft. Eine super Balance für Qualitätstraining oder längere Einheiten'
 Load: Belastung
 'Load (CTL/ATL)': 'Lade (CTL/ATL)'
@@ -180,9 +180,9 @@ Load: Belastung
 Loading...: Lädt...
 'Locations over the globe': 'Orte auf der Welt'
 'Long run': 'Langer Lauf'
-'Longest activity': 'Longest activity'
+'Longest activity': 'Längste Aktivität'
 'Longest activity (h)': 'Längste Aktivität (h)'
-'Longest distance': 'Longest distance'
+'Longest distance': 'weiteste Distanz'
 'Longest streaks': 'Längste Serie'
 Low: Niedrig
 'Low risk': 'Geringes Risiko'
@@ -194,9 +194,9 @@ Max: Max
 'Max gradient': 'Max. Steigung'
 May: Mai
 Medium: Mittel
-Metric: Metric
+Metric: Metrisch
 Metrics: Metriken
-Milestones: Milestones
+Milestones: Meilensteine
 'Mind & Body Sports': 'Geist & Körper Sportarten'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate Ermüdung bei stabilem Fitnesslevel. Gut geeignet für regelmäßiges tägliches Training'
 'Moderate monotony': 'Moderate Monotonie'
@@ -206,7 +206,7 @@ Monotony: Monotonie
 Monthly: Monatlich
 'Monthly stats': 'Monatliche Statistiken'
 Morning: Morgen
-'Most elevation': 'Most elevation'
+'Most elevation': 'Meiste Höhenmeter'
 'Most recent activities': 'Neueste Aktivitäten'
 'Most recent challenges': 'Neueste Herausforderungen'
 'Most recent milestones': 'Most recent milestones'
@@ -214,11 +214,11 @@ Morning: Morgen
 'Moving time': Bewegungszeit
 Name: Name
 Neutral: Neutral
-'New personal best for': 'New personal best for'
+'New personal best for': 'Neue persönliche Bestleistung für'
 Night: Nacht
 'No activities': 'Keine Aktivitäten'
 'No data available': 'Keine Daten verfügbar'
-'No milestones achieved yet': 'No milestones achieved yet'
+'No milestones achieved yet': 'Noch keine Meilensteine erreicht'
 'No other options to compare with': 'Keine anderen Optionen zum Vergleich'
 None: Keine
 'Nordic Ski': 'Nordischer Skilanglauf'
@@ -229,7 +229,7 @@ Now: Jetzt
 'Number of activities per month': 'Anzahl an Aktivitäten pro Monat'
 'Number of times completed': 'Anzahl abgeschlossen'
 Oct: Okt
-'Older effort': 'Older effort'
+'Older effort': 'Ältere Leistung'
 'On average, that works out to {dailyAverage} per day, a weekly average of {weeklyAverage} and a monthly average of {monthlyAverage} 🐣.': 'Im Schnitt ergibt das {dailyAverage} täglich, mit einem Wochenmittel von {weeklyAverage} und einem Monatsmittel von {monthlyAverage} 🐣.'
 'One of your gear maintenance tasks is due': 'Eine deiner Ausrüstungswartungsaufgaben steht an'
 'Optimal training range': 'Optimale Trainingszone'
@@ -248,7 +248,7 @@ Padel: Padel
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
 'Personal Records': 'Persönliche Bestzeiten'
-'Personal bests': 'Personal bests'
+'Personal bests': 'Persönliche Bestleistungen'
 Photo: Foto
 Photos: Fotos
 'Pickle Ball': Pickleball
@@ -259,18 +259,18 @@ Power: Leistung
 'Power distribution': Leistungsverteilung
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Dabei wurden geschätzte {caloriesBurned} Kalorien verbraucht, was ungefähr {numberOfPizzaSlices} Pizzastücken entspricht 🍕.'
 'Prev year': Vorjahr
-Previous: Previous
+Previous: Vorherige
 Race: Wettkampf
 'Racing Score': Wettkampfpunktzahl
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
 Ranking: Rangliste
-'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
-'Reached {threshold} total distance': 'Reached {threshold} total distance'
-'Reached {threshold} total elevation': 'Reached {threshold} total elevation'
-'Recent effort': 'Recent effort'
-'Recording devices': 'Recording devices'
-'Recording devices details': 'Recording devices details'
+'Reached {threshold} hours total moving time': '{threshold} Stunden gesamte Bewegungszeit erreicht'
+'Reached {threshold} total distance': '{threshold} Gesamtdistanz erreicht'
+'Reached {threshold} total elevation': '{threshold} Gesamthöhenmeter erreicht'
+'Recent effort': 'Aktuelle Leistung'
+'Recording devices': 'Aufzeichnungsgeräte'
+'Recording devices details': 'Details zu Aufzeichnungsgeräten'
 'Recovery Timeline': Erholungszeitplan
 'Recovery forecast': Erholungsprognose
 'Reduced carbon emission by commuting': 'Reduzierter Kohlendioxidausstoß durch Pendler'
@@ -328,90 +328,90 @@ Sunday: Sonntag
 Surfing: Surfen
 Swim: Schwimmen
 'TSB (Form)': 'TSB (Form)'
-'TSB positive in': 'TSB positive in'
+'TSB positive in': 'TSB positiv in'
 'Table Tennis': Tischtennis
 Tag: Tag
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'Tag "{maintenanceTaskTag}" wurde in "{activityName}" verwendet, aber die Ausrüstung, die in der Aktivität referenziert wird ist nicht der Komponente zugewiesen.'
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
-'Team Sports': 'Team Sports'
+'Team Sports': 'Teamsportarten'
 Tennis: Tennis
-"That's 100 days of commitment, triple digits!": "That's 100 days of commitment, triple digits!"
-"That's 2 activities per week for nearly 5 years": "That's 2 activities per week for nearly 5 years"
-"That's 2 full days of non-stop activity": "That's 2 full days of non-stop activity"
-"That's 2 full weeks of non-stop activity": "That's 2 full weeks of non-stop activity"
-"That's 2 full years of daily activity, incredible!": "That's 2 full years of daily activity, incredible!"
-"That's 2 months without missing a day": "That's 2 months without missing a day"
-"That's 2 months without stopping": "That's 2 months without stopping"
-"That's 250 days, over two thirds of a year": "That's 250 days, over two thirds of a year"
-"That's 3 activities per week for nearly 5 years": "That's 3 activities per week for nearly 5 years"
-"That's 3 full days of non-stop movement": "That's 3 full days of non-stop movement"
-"That's 3 weeks straight, they say it takes 21 days to build a habit": "That's 3 weeks straight, they say it takes 21 days to build a habit"
-"That's 4 months of unbroken daily activity": "That's 4 months of unbroken daily activity"
-"That's 45 days, halfway to a full quarter": "That's 45 days, halfway to a full quarter"
-"That's 5 months, nearly half a year without a rest day": "That's 5 months, nearly half a year without a rest day"
-"That's 500 days, well beyond a year of daily activity": "That's 500 days, well beyond a year of daily activity"
-"That's a century ride": "That's a century ride"
-"That's a full day of non-stop movement": "That's a full day of non-stop movement"
-"That's a full fortnight of daily activity": "That's a full fortnight of daily activity"
-"That's a full month of non-stop activity": "That's a full month of non-stop activity"
-"That's a full month without a rest day": "That's a full month without a rest day"
-"That's a full quarter of daily activity": "That's a full quarter of daily activity"
-"That's a full week of non-stop movement": "That's a full week of non-stop movement"
-"That's a full work day of exercise": "That's a full work day of exercise"
-"That's a full year of daily activity": "That's a full year of daily activity"
-"That's about 3 months of continuous activity": "That's about 3 months of continuous activity"
-"That's about one activity per week for a year": "That's about one activity per week for a year"
-"That's almost 2 activities per week for a year": "That's almost 2 activities per week for a year"
-"That's almost 21 days of continuous movement": "That's almost 21 days of continuous movement"
-"That's almost 3 activities per week for 7 years": "That's almost 3 activities per week for 7 years"
-"That's an activity almost every day for 27 years": "That's an activity almost every day for 27 years"
-"That's an activity every day for almost 7 years": "That's an activity every day for almost 7 years"
-"That's an activity every day for nearly 14 years": "That's an activity every day for nearly 14 years"
-"That's climbing Mount Everest 10 times": "That's climbing Mount Everest 10 times"
-"That's climbing Mount Everest 3 times": "That's climbing Mount Everest 3 times"
-"That's climbing Mount Everest 6 times": "That's climbing Mount Everest 6 times"
-"That's climbing Mount Everest twice": "That's climbing Mount Everest twice"
-"That's climbing to the edge of space and back 5 times": "That's climbing to the edge of space and back 5 times"
-"That's cruising altitude of a commercial airplane": "That's cruising altitude of a commercial airplane"
-"That's half a year without skipping a single day": "That's half a year without skipping a single day"
-"That's higher than Felix Baumgartner's space jump": "That's higher than Felix Baumgartner's space jump"
-"That's higher than the International Space Station's orbit": "That's higher than the International Space Station's orbit"
-"That's like watching all Lord of the Rings extended editions back to back": "That's like watching all Lord of the Rings extended editions back to back"
-"That's more than 2 Eiffel Towers stacked up": "That's more than 2 Eiffel Towers stacked up"
-"That's more than 2.5 times around the Earth": "That's more than 2.5 times around the Earth"
-"That's more than 4 days of continuous activity": "That's more than 4 days of continuous activity"
-"That's more than 41 days of non-stop movement": "That's more than 41 days of non-stop movement"
-"That's more than 5 activities per week for 7 years": "That's more than 5 activities per week for 7 years"
-"That's more than a full year of non-stop movement": "That's more than a full year of non-stop movement"
-"That's more than halfway around the Earth": "That's more than halfway around the Earth"
-"That's more than halfway to the ISS": "That's more than halfway to the ISS"
-"That's more than one activity per day for a year": "That's more than one activity per day for a year"
-"That's nearly 4 activities per week for 7 years": "That's nearly 4 activities per week for 7 years"
-"That's nearly 5 activities per week for a year": "That's nearly 5 activities per week for a year"
-"That's over 6 months of non-stop movement": "That's over 6 months of non-stop movement"
-"That's roughly the length of France": "That's roughly the length of France"
-"That's taller than the Empire State Building": "That's taller than the Empire State Building"
-"That's the altitude of the International Space Station": "That's the altitude of the International Space Station"
-"That's the circumference of the Earth": "That's the circumference of the Earth"
-"That's the diameter of the Earth": "That's the diameter of the Earth"
-"That's the distance from Amsterdam to Berlin and back": "That's the distance from Amsterdam to Berlin and back"
-"That's the distance from Earth to the Moon": "That's the distance from Earth to the Moon"
-"That's the edge of space, the Kármán line": "That's the edge of space, the Kármán line"
-"That's the height of Denali, the tallest peak in North America": "That's the height of Denali, the tallest peak in North America"
-"That's the height of Mont Blanc, the rooftop of the Alps": "That's the height of Mont Blanc, the rooftop of the Alps"
-"That's the height of Mount Everest": "That's the height of Mount Everest"
-"That's the height of Mount Fuji": "That's the height of Mount Fuji"
-"That's the height of the Eiffel Tower": "That's the height of the Eiffel Tower"
-"That's the height of the tallest Alpe d'Huez finish": "That's the height of the tallest Alpe d'Huez finish"
-"That's the length of Great Britain from north to south": "That's the length of Great Britain from north to south"
-"That's the length of the Great Wall of China": "That's the length of the Great Wall of China"
-"That's the length of the Netherlands from north to south": "That's the length of the Netherlands from north to south"
-"That's the length of the Rhine river": "That's the length of the Rhine river"
-"That's the length of the Trans-Siberian Railway": "That's the length of the Trans-Siberian Railway"
-"That's the width of the United States coast to coast": "That's the width of the United States coast to coast"
-"That's twice around the Earth": "That's twice around the Earth"
-"That's wider than Australia": "That's wider than Australia"
-"That's {number} days of at least {distance}": "That's {number} days of at least {distance}"
+"That's 100 days of commitment, triple digits!": "Das sind 100 Tage voller Einsatz - dreistellig!"
+"That's 2 activities per week for nearly 5 years": "Das entspricht zwei Aktivitäten pro Woche für fast 5 Jahre"
+"That's 2 full days of non-stop activity": "Das entspricht zwei Tagen ununterbrochene Aktivität"
+"That's 2 full weeks of non-stop activity": "Das entspricht zwei Wochen ununterbrochene Aktivität"
+"That's 2 full years of daily activity, incredible!": "Das sind zwei Jahre tägliche Aktivität, wahnsinn!"
+"That's 2 months without missing a day": "Das sind zwei Monate ohne einen einzigen Ruhetag"
+"That's 2 months without stopping": "Das sind zwei Monaten ohne Unterbrechung"
+"That's 250 days, over two thirds of a year": "Das sind 250 Tage, 2/3 des Jahres"
+"That's 3 activities per week for nearly 5 years": "Das entspricht drei Aktivitäten pro Woche für fast 5 Jahre"
+"That's 3 full days of non-stop movement": "Das sind 3 volle Tage Bewegung am Stück"
+"That's 3 weeks straight, they say it takes 21 days to build a habit": "3 Wochen am Stück! Man sagt, man braucht 21 Tage, um eine neue Gewohnheit zu festigen"
+"That's 4 months of unbroken daily activity": "Das sind 4 Monate tägliche Aktivität ohne Unterbrechung."
+"That's 45 days, halfway to a full quarter": "Das sind 45 Tage, die Hälfte eines ganzen Quartals."
+"That's 5 months, nearly half a year without a rest day": "Das sind 5 Monate, fast ein halbes Jahr ohne einen einzigen Ruhetag."
+"That's 500 days, well beyond a year of daily activity": "Das sind 500 Tage, deutlich über ein Jahr tägliche Aktivität."
+"That's a century ride": "Das ist ein century ride"
+"That's a full day of non-stop movement": "Das ist ein ganzer Tag Bewegung ohne Pause"
+"That's a full fortnight of daily activity": "Das entspricht zwei Wochen täglicher Aktivität"
+"That's a full month of non-stop activity": "Das entspricht einem Monat Aktivität am Stück"
+"That's a full month without a rest day": "Das ist ein ganzer Monat ohne Ruhetag"
+"That's a full quarter of daily activity": "Das ist ein ganzes Quartal tägliche Aktivität"
+"That's a full week of non-stop movement": "Das ist eine ganze Woche Bewegung am Stück"
+"That's a full work day of exercise": "Das entspricht einem Arbeitstag voller Sport"
+"That's a full year of daily activity": "Das ist ein ganzes Jahr tägliche Aktivität"
+"That's about 3 months of continuous activity": "Das entspricht drei Monaten ununterbrochener Aktivität"
+"That's about one activity per week for a year": "Das entspricht einer Aktivität pro Woche für ein Jahr"
+"That's almost 2 activities per week for a year": "Das entspricht zwei Aktivitäten pro Woche für ein Jahr"
+"That's almost 21 days of continuous movement": "Das sind fast 21 Tage ununterbrochene Bewegung"
+"That's almost 3 activities per week for 7 years": "Das entspricht drei Aktivitäten pro Woche für 7 Jahre"
+"That's an activity almost every day for 27 years": "Das entspricht einer täglichen Aktivität für 27 Jahre"
+"That's an activity every day for almost 7 years": "Das entspricht einer täglichen Aktivität für 7 Jahre"
+"That's an activity every day for nearly 14 years": "Das entspricht einer täglichen Aktivität für 14 Jahre"
+"That's climbing Mount Everest 10 times": "Das entspricht zehn Besteigungen des Mount Everest."
+"That's climbing Mount Everest 3 times": "Das entspricht drei Besteigungen des Mount Everest."
+"That's climbing Mount Everest 6 times": "Das entspricht sechs Besteigungen des Mount Everest."
+"That's climbing Mount Everest twice": "Das entspricht zwei Besteigungen des Mount Everest."
+"That's climbing to the edge of space and back 5 times": "Das entspricht fünf Aufstiegen bis an den Rand des Weltraums und zurück."
+"That's cruising altitude of a commercial airplane": "Das entspricht der Flughöhe eines Linienfluges"
+"That's half a year without skipping a single day": "Das ist ein halbes Jahr ohne einen einzigen Pausentag"
+"That's higher than Felix Baumgartner's space jump": "Das ist höher als Felix Baumgartners Weltraumsprung"
+"That's higher than the International Space Station's orbit": "Das ist höher als die Umlaufbahn der Internationalen Raumstation."
+"That's like watching all Lord of the Rings extended editions back to back": "Das ist, als würde man alle Extended Editions von Herr der Ringe nacheinander anschauen."
+"That's more than 2 Eiffel Towers stacked up": "Das ist mehr als zwei übereinandergestapelte Eiffeltürme"
+"That's more than 2.5 times around the Earth": "Das ist mehr als 2,5 um die ganze Erde"
+"That's more than 4 days of continuous activity": "Das sind mehr als 4 Tage ununterbrochener Aktivität."
+"That's more than 41 days of non-stop movement": "Das sind mehr als 41 Tage ununterbrochener Bewegung"
+"That's more than 5 activities per week for 7 years": "Das sind mehr als fünf Aktivitäten pro Woche über sieben Jahre."
+"That's more than a full year of non-stop movement": "Das ist mehr als ein ganzes Jahr ununterbrochener Bewegung."
+"That's more than halfway around the Earth": "Das ist mehr als die halbe Strecke um die Erde."
+"That's more than halfway to the ISS": "Das ist mehr als der halbe Weg zur ISS"
+"That's more than one activity per day for a year": "Das ist mehr als eine Aktivität über ein ganzes Jahr"
+"That's nearly 4 activities per week for 7 years": "Das sind fast vier Aktivitäten pro Woche für sieben Jahre"
+"That's nearly 5 activities per week for a year": "Das sind fast fünf Aktivitäten pro Woche für ein Jahre"
+"That's over 6 months of non-stop movement": "Das sind mehr als sechs Monate ununterbrochener Bewegung"
+"That's roughly the length of France": "Das entspricht grob der Länge Frankreichs"
+"That's taller than the Empire State Building": "Das ist höher als das Empire State Building"
+"That's the altitude of the International Space Station": "Das ist die Flughöhe der Internationalen Raumstation"
+"That's the circumference of the Earth": "Das entspricht dem Erdumfang"
+"That's the diameter of the Earth": "Das entspricht dem Durchmesser der Erde"
+"That's the distance from Amsterdam to Berlin and back": "Das ist die Entfernung von Amsterdam nach Berlin und zurück"
+"That's the distance from Earth to the Moon": "Das entspricht der Entfernung der Erde zum Mond"
+"That's the edge of space, the Kármán line": "Das ist bis zum Rand des Weltraums, der Kármán-Linie"
+"That's the height of Denali, the tallest peak in North America": "Das ist die Höhe des Denali, der höchsten Erhebung Nordamerikas"
+"That's the height of Mont Blanc, the rooftop of the Alps": "Das ist die Höhe des Mont Blanc, dem Dach der Alpen"
+"That's the height of Mount Everest": "Das ist die Höhe des Mount Everest"
+"That's the height of Mount Fuji": "Das ist die Höhe des Mount Fuji"
+"That's the height of the Eiffel Tower": "Das ist die Höhe des Eiffelturms"
+"That's the height of the tallest Alpe d'Huez finish": "Das entspricht der Höhe der Bergankunft in Alpe d'Huez"
+"That's the length of Great Britain from north to south": "Das entspricht der Länge von Großbritaniens von Nord nach Süd"
+"That's the length of the Great Wall of China": "Das entspricht der Länge der chinesischen Mauer"
+"That's the length of the Netherlands from north to south": "Das entspricht der Länge der Niederlande von Nord nach Süd"
+"That's the length of the Rhine river": "Das entspricht der Länge des Rheins."
+"That's the length of the Trans-Siberian Railway": "Das entspricht der Länge der Trans-Sibirischen Eisenbahn"
+"That's the width of the United States coast to coast": "Das entspricht der Breite der USA von Küste zu Küste"
+"That's twice around the Earth": "Das entspricht zwei Erdumrundungen"
+"That's wider than Australia": "Das ist breiter als Australien"
+"That's {number} days of at least {distance}": "Das sind {number} Tage mit mindestens {distance}"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Die Eddington-Zahl im Kontext des Radfahrens oder Laufens ist definiert als die maximale Zahl E, bei der der Sportler an mindestens E Tagen jeweils mindestens E km zurückgelegt hat.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Diese Abzeichen sind dynamisch erstellt. Du kannst sie in allen &lt;img&gt; Tags verwenden.'
 Thinking...: Denke...
@@ -520,13 +520,13 @@ never: nie
 'on': am
 'per activity': 'pro Aktivität'
 'per hour': 'pro Stunde'
-'reached Eddington number {number}': 'reached Eddington number {number}'
+'reached Eddington number {number}': 'erreichte Eddington Zahl {number}'
 to: mit
 total: gesamt
 weeks: Wochen
 workouts: Trainingseinheiten
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} Tagen'
-'{days} consecutive days of activity': '{days} consecutive days of activity'
+'{days} consecutive days of activity': '{days} aufeinanderfolgende Tage Aktivität'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} Stunden'
 '{maintenanceTaskLabel} every {interval}': '{maintenanceTaskLabel} alle {interval}'
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
@@ -536,6 +536,6 @@ workouts: Trainingseinheiten
 '{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
 '{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
 '{numberOfWeeks} weeks': '{numberOfWeeks} Wochen'
-'{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
-'{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
-'{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'
+'{threshold} hours using {gearName}': '{threshold} Stunden mit {gearName} aufgezeichnet'
+'{threshold} total distance using {gearName}': '{threshold} Gesamtdistianz mit {gearName} aufgezeichnet'
+'{threshold} total elevation using {gearName}': '{threshold} Gesamthöhenmeter mit {gearName} aufgezeichnet'
