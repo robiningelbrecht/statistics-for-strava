@@ -21,7 +21,8 @@ appearance:
       - { 'widget': 'eddington', 'width': 33, 'enabled': true }
       - { 'widget': 'peakPowerOutputs', 'width': 50, 'enabled': true }
       - { 'widget': 'heartRateZones', 'width': 50, 'enabled': true }
-      - { 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
+      - { 'widget': 'monthlyStats', 'width': 66, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
+      - { 'widget': 'mostRecentMilestones', 'width': 33, 'enabled': true, 'config': { 'numberOfMilestonesToDisplay': 5 } }
       - { 'widget': 'trainingLoad', 'width': 100, 'enabled': true }
       - { 'widget': 'weekdayStats', 'width': 50, 'enabled': true }
       - { 'widget': 'dayTimeStats', 'width': 50, 'enabled': true }
@@ -212,10 +213,20 @@ This widget displays your monthly statistics and lets you compare your performan
 * __metricsDisplayOrder__: The order in which the metrics are displayed in the widget. Supported metrics are 'distance', 'movingTime' and 'elevation'. All 3 metrics must be included.
 
 ```yml
-{ 'widget': 'monthlyStats', 'width': 100, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
+{ 'widget': 'monthlyStats', 'width': 66, 'enabled': true, 'config': { 'enableLastXYearsByDefault': 10, 'metricsDisplayOrder': ['distance', 'movingTime', 'elevation'] } }
 ```
 
-![monthlyStats widget](../assets/images/dashboard-widgets/monthly-stats.png)
+## mostRecentMilestones
+
+This widget displays a timeline view of your key achievements and milestones over time.
+
+* __numberOfMilestonesToDisplay__: the number of milestones to display.
+
+```yml
+{ 'widget': 'mostRecentMilestones', 'width': 33, 'enabled': true, 'config': { 'numberOfMilestonesToDisplay': 5 } }
+```
+
+![mostRecentMilestones widget](../assets/images/dashboard-widgets/most-recent-milestones.png)
 
 ## trainingLoad
 

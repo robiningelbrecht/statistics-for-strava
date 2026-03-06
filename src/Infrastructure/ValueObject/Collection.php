@@ -61,6 +61,20 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
     }
 
     /**
+     * @param array<T> $items
+     *
+     * @return Collection<T>
+     */
+    public function addMultiple(array $items): self
+    {
+        foreach ($items as $item) {
+            $this->add($item);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<T>
      */
     public function remove(int|string $index): self

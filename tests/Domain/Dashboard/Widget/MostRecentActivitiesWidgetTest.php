@@ -33,6 +33,7 @@ class MostRecentActivitiesWidgetTest extends ContainerTestCase
     #[\Override]
     protected function setUp(): void
     {
+        parent::setUp();
         $this->widget = $this->getContainer()->get(MostRecentActivitiesWidget::class);
     }
 }

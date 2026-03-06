@@ -43,8 +43,7 @@ final readonly class MostRecentChallengesCompletedWidget implements Widget
             return null;
         }
 
-        /** @var int $numberOfChallengesToDisplay */
-        $numberOfChallengesToDisplay = $configuration->get('numberOfChallengesToDisplay');
+        $numberOfChallengesToDisplay = (int) $configuration->get('numberOfChallengesToDisplay');
 
         return $this->twig->load('html/dashboard/widget/widget--most-recent-challenges.html.twig')->render([
             'challenges' => $challenges->slice(0, $numberOfChallengesToDisplay),
