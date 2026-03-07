@@ -33,8 +33,8 @@ class AutowireWithMutexPass implements CompilerPassInterface
                 [$prefix, $lockName] = explode('.', (string) $mutexDefinitionId);
 
                 foreach ($constructorParams as $param) {
-                    /** @var \ReflectionNamedType $type */
                     $type = $param->getType();
+                    assert($type instanceof \ReflectionNamedType);
                     $definitionArguments[] = match ($param->getName()) {
                         'lockName' => LockName::from($lockName),
                         default => new Reference($type->getName()),

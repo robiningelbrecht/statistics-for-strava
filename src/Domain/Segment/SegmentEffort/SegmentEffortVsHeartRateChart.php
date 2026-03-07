@@ -42,7 +42,6 @@ final readonly class SegmentEffortVsHeartRateChart
      */
     public function build(): array
     {
-        /** @var SegmentEffort[] $effortsWithHeartRate */
         $effortsWithHeartRate = array_values(array_filter(
             $this->segmentEfforts->toArray(),
             fn (SegmentEffort $effort): bool => null !== $effort->getAverageHeartRate(),

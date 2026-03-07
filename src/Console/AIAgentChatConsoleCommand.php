@@ -11,6 +11,7 @@ use NeuronAI\Chat\Messages\Stream\Chunks\TextChunk;
 use NeuronAI\Chat\Messages\UserMessage;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -37,8 +38,8 @@ final class AIAgentChatConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        /** @var \Symfony\Component\Console\Helper\QuestionHelper $helper */
         $helper = $this->getHelper('question');
+        assert($helper instanceof QuestionHelper);
 
         $io->block(
             messages: [

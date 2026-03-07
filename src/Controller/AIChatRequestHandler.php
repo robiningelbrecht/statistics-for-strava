@@ -80,8 +80,8 @@ final readonly class AIChatRequestHandler
     public function chatSse(Request $request): EventStreamResponse
     {
         return new EventStreamResponse(function (EventStreamResponse $response) use ($request): void {
-            /** @var string $message */
             $message = $request->query->get('message');
+            assert(is_string($message));
 
             $response->sendEvent(new ServerSentEvent(
                 data: $this->twig->render('html/chat/message.html.twig', [
