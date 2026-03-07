@@ -17,8 +17,8 @@ final readonly class Month
         private int $month,
     ) {
         $this->firstDay = SerializableDateTime::createFromFormat(
-            format: 'd-n-Y',
-            datetime: '01-'.$this->month.'-'.$this->year,
+            format: 'd-n-Y H:i:s',
+            datetime: '01-'.$this->month.'-'.$this->year.' 00:00:00',
         );
         $this->lastDay = SerializableDateTime::fromString($this->year.'-'.$this->month.'-'.$this->firstDay->format('t'));
     }
