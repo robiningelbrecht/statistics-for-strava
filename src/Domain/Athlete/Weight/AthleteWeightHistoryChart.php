@@ -49,8 +49,8 @@ final readonly class AthleteWeightHistoryChart
             $athleteWeights,
         );
 
-        /** @var AthleteWeight $firstAthleteWeight */
         $firstAthleteWeight = reset($athleteWeights);
+        assert($firstAthleteWeight instanceof AthleteWeight);
 
         $zoomEndValue = $this->now->format('Y-m-d');
         $zoomStartValue = $firstAthleteWeight->getOn()->format('Y-m-d');
