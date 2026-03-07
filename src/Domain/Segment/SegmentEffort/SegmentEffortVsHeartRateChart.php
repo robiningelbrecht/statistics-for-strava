@@ -47,7 +47,7 @@ final readonly class SegmentEffortVsHeartRateChart
             fn (SegmentEffort $effort): bool => null !== $effort->getAverageHeartRate(),
         ));
 
-        if ($effortsWithHeartRate === []) {
+        if ([] === $effortsWithHeartRate) {
             return [];
         }
 
