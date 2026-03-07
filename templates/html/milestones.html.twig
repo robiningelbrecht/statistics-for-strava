@@ -53,11 +53,11 @@
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center gap-x-1 mb-1">
                         {% if milestone.getSportType() %}
-                            <div class="px-2 py-0.5 text-xxs font-medium border border-gray-200 text-strava-orange bg-white rounded-lg">
+                            <div class="shrink-0 px-2 py-0.5 text-xxs font-medium border border-gray-200 text-strava-orange bg-white rounded-lg">
                                 {{ milestone.getSportType()|trans }}
                             </div>
                         {% endif %}
-                        <h3 class="text-base font-bold text-gray-900">{{ _self.milestoneTitle(milestone) }}</h3>
+                        <h3 class="text-sm md:text-base font-bold text-gray-900 truncate">{{ _self.milestoneTitle(milestone) }}</h3>
                     </div>
                     <div class="text-sm text-gray-600">
                         {% if milestone.getActivityId() %}
@@ -66,12 +66,12 @@
                         {% endif %}
                     </div>
                     {% if milestone.getFunComparison() %}
-                        <div class="mt-1 text-sm italic text-gray-500">
+                        <div class="mt-1 text-sm italic text-gray-500 truncate">
                             {{ milestone.getFunComparison()|trans }}
                         </div>
                     {% endif %}
                     {% if milestone.getCategory() == enum('App\\Domain\\Milestone\\MilestoneCategory').EDDINGTON  %}
-                        <div class="mt-1 text-sm italic text-gray-500">
+                        <div class="mt-1 text-sm italic text-gray-500 truncate">
                             {{ "That's {number} days of at least {distance}"|trans({
                                 '{number}': milestone.getContext().getNumber(),
                                 '{distance}':  milestone.getContext().getDistance()|renderMeasurement(0)})|raw
