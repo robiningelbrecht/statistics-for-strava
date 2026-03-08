@@ -8,6 +8,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 enum StreakFunComparison: string implements FunComparison
 {
+    case FULL_WEEK = 'streakFullWeek';
     case FORTNIGHT = 'streakFortnight';
     case TWENTY_ONE_DAYS_HABIT = 'streakTwentyOneDaysHabit';
     case FULL_MONTH = 'streakFullMonth';
@@ -26,6 +27,7 @@ enum StreakFunComparison: string implements FunComparison
     public static function resolve(int $days): ?self
     {
         return match ($days) {
+            7 => self::FULL_WEEK,
             14 => self::FORTNIGHT,
             21 => self::TWENTY_ONE_DAYS_HABIT,
             30 => self::FULL_MONTH,
@@ -47,6 +49,7 @@ enum StreakFunComparison: string implements FunComparison
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {
         return match ($this) {
+            self::FULL_WEEK => $translator->trans("That's a full week of daily activity", locale: $locale),
             self::FORTNIGHT => $translator->trans("That's a full fortnight of daily activity", locale: $locale),
             self::TWENTY_ONE_DAYS_HABIT => $translator->trans("That's 3 weeks straight, they say it takes 21 days to build a habit", locale: $locale),
             self::FULL_MONTH => $translator->trans("That's a full month without a rest day", locale: $locale),
