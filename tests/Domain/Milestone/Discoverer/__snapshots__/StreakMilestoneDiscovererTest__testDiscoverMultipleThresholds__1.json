@@ -7,7 +7,7 @@
         "activityId": null,
         "context": {},
         "previous": null,
-        "funComparison": null
+        "funComparison": "streakFullWeek"
     },
     {
         "id": "milestone-2",

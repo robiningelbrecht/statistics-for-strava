@@ -31,29 +31,26 @@ class ElevationFunComparisonTest extends TestCase
         $this->assertEquals($expected, ElevationFunComparison::resolve(Meter::from($meters)));
     }
 
-    /**
-     * @return \Generator<string, array{float, ElevationFunComparison}>
-     */
     public static function resolveProvider(): \Generator
     {
         yield 'eiffel tower' => [300, ElevationFunComparison::EIFFEL_TOWER];
         yield 'empire state' => [500, ElevationFunComparison::EMPIRE_STATE_BUILDING];
         yield 'two eiffels' => [1_000, ElevationFunComparison::TWO_EIFFEL_TOWERS];
-        yield 'alpe d huez' => [2_469, ElevationFunComparison::ALPE_D_HUEZ];
-        yield 'mount fuji' => [3_776, ElevationFunComparison::MOUNT_FUJI];
-        yield 'mont blanc' => [4_808, ElevationFunComparison::MONT_BLANC];
-        yield 'denali' => [6_190, ElevationFunComparison::DENALI];
+        yield 'deepest cave' => [2_500, ElevationFunComparison::DEEPEST_CAVE];
+        yield 'mont blanc' => [5_000, ElevationFunComparison::HIGHER_THAN_MONT_BLANC];
         yield 'everest' => [8_849, ElevationFunComparison::MOUNT_EVEREST];
-        yield 'cruising altitude' => [12_000, ElevationFunComparison::CRUISING_ALTITUDE];
+        yield 'cruising altitude' => [10_000, ElevationFunComparison::CRUISING_ALTITUDE];
         yield 'everest twice' => [17_772, ElevationFunComparison::EVEREST_TWICE];
-        yield 'everest 3x' => [26_658, ElevationFunComparison::EVEREST_THREE_TIMES];
-        yield 'baumgartner' => [39_000, ElevationFunComparison::BAUMGARTNER_SPACE_JUMP];
-        yield 'everest 6x' => [53_069, ElevationFunComparison::EVEREST_SIX_TIMES];
-        yield 'everest 10x' => [88_448, ElevationFunComparison::EVEREST_TEN_TIMES];
+        yield 'nearly everest 3x' => [25_000, ElevationFunComparison::NEARLY_EVEREST_THREE_TIMES];
+        yield 'baumgartner' => [50_000, ElevationFunComparison::BAUMGARTNER_SPACE_JUMP];
+        yield 'everest 8x' => [75_000, ElevationFunComparison::EVEREST_EIGHT_TIMES];
         yield 'karman line' => [100_000, ElevationFunComparison::KARMAN_LINE];
+        yield 'above karman' => [150_000, ElevationFunComparison::ABOVE_KARMAN_LINE];
         yield 'halfway iss' => [200_000, ElevationFunComparison::HALFWAY_TO_ISS];
-        yield 'iss altitude' => [408_000, ElevationFunComparison::ISS_ALTITUDE];
+        yield 'low earth orbit' => [300_000, ElevationFunComparison::LOW_EARTH_ORBIT];
+        yield 'iss altitude' => [400_000, ElevationFunComparison::ISS_ALTITUDE];
         yield 'higher than iss' => [500_000, ElevationFunComparison::HIGHER_THAN_ISS];
+        yield 'twice iss' => [750_000, ElevationFunComparison::TWICE_ISS_ALTITUDE];
         yield 'edge of space 5x' => [1_000_000, ElevationFunComparison::EDGE_OF_SPACE_FIVE_TIMES];
     }
 }

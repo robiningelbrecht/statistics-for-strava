@@ -10,6 +10,12 @@ use Symfony\Component\Translation\IdentityTranslator;
 
 class MovingTimeFunComparisonTest extends TestCase
 {
+    #[DataProvider(methodName: 'resolveProvider')]
+    public function testResolve(float $hours, MovingTimeFunComparison $expected): void
+    {
+        $this->assertEquals($expected, MovingTimeFunComparison::resolve(Hour::from($hours)));
+    }
+
     public function testTransReturnsNonEmptyStringForAllCases(): void
     {
         $translator = new IdentityTranslator();
@@ -25,31 +31,23 @@ class MovingTimeFunComparisonTest extends TestCase
         $this->assertNull(MovingTimeFunComparison::resolve(Hour::from(7)));
     }
 
-    #[DataProvider(methodName: 'resolveProvider')]
-    public function testResolve(float $hours, MovingTimeFunComparison $expected): void
-    {
-        $this->assertEquals($expected, MovingTimeFunComparison::resolve(Hour::from($hours)));
-    }
-
-    /**
-     * @return \Generator<string, array{float, MovingTimeFunComparison}>
-     */
     public static function resolveProvider(): \Generator
     {
-        yield 'work day' => [8, MovingTimeFunComparison::FULL_WORK_DAY];
-        yield 'lotr' => [12, MovingTimeFunComparison::LOTR_EXTENDED];
         yield 'full day' => [24, MovingTimeFunComparison::FULL_DAY];
         yield 'two days' => [48, MovingTimeFunComparison::TWO_FULL_DAYS];
-        yield 'three days' => [72, MovingTimeFunComparison::THREE_FULL_DAYS];
         yield 'four days' => [100, MovingTimeFunComparison::FOUR_DAYS];
         yield 'full week' => [168, MovingTimeFunComparison::FULL_WEEK];
-        yield 'two weeks' => [336, MovingTimeFunComparison::TWO_WEEKS];
+        yield 'ten days' => [250, MovingTimeFunComparison::TEN_DAYS];
         yield 'three weeks' => [500, MovingTimeFunComparison::THREE_WEEKS];
-        yield 'full month' => [744, MovingTimeFunComparison::FULL_MONTH];
+        yield 'full month' => [750, MovingTimeFunComparison::FULL_MONTH];
         yield '41 days' => [1_000, MovingTimeFunComparison::FORTY_ONE_DAYS];
-        yield 'two months' => [1_440, MovingTimeFunComparison::TWO_MONTHS];
-        yield 'three months' => [2_160, MovingTimeFunComparison::THREE_MONTHS];
-        yield 'six months' => [4_380, MovingTimeFunComparison::SIX_MONTHS];
-        yield 'full year' => [8_760, MovingTimeFunComparison::FULL_YEAR];
+        yield 'two months' => [1_500, MovingTimeFunComparison::TWO_MONTHS];
+        yield 'nearly three months' => [2_000, MovingTimeFunComparison::NEARLY_THREE_MONTHS];
+        yield 'three and a half months' => [2_500, MovingTimeFunComparison::THREE_AND_HALF_MONTHS];
+        yield 'four months' => [3_000, MovingTimeFunComparison::FOUR_MONTHS];
+        yield 'five and a half' => [4_000, MovingTimeFunComparison::FIVE_AND_HALF_MONTHS];
+        yield 'seven months' => [5_000, MovingTimeFunComparison::SEVEN_MONTHS];
+        yield 'ten months' => [7_500, MovingTimeFunComparison::TEN_MONTHS];
+        yield 'full year' => [10_000, MovingTimeFunComparison::FULL_YEAR];
     }
 }

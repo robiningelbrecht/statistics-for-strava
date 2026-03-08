@@ -9,6 +9,12 @@ use Symfony\Component\Translation\IdentityTranslator;
 
 class StreakFunComparisonTest extends TestCase
 {
+    #[DataProvider(methodName: 'resolveProvider')]
+    public function testResolve(int $days, StreakFunComparison $expected): void
+    {
+        $this->assertEquals($expected, StreakFunComparison::resolve($days));
+    }
+
     public function testTransReturnsNonEmptyStringForAllCases(): void
     {
         $translator = new IdentityTranslator();
@@ -22,20 +28,10 @@ class StreakFunComparisonTest extends TestCase
     {
         $this->assertNull(StreakFunComparison::resolve(1));
         $this->assertNull(StreakFunComparison::resolve(6));
-        $this->assertNull(StreakFunComparison::resolve(7));
         $this->assertNull(StreakFunComparison::resolve(15));
         $this->assertNull(StreakFunComparison::resolve(31));
     }
 
-    #[DataProvider(methodName: 'resolveProvider')]
-    public function testResolve(int $days, StreakFunComparison $expected): void
-    {
-        $this->assertEquals($expected, StreakFunComparison::resolve($days));
-    }
-
-    /**
-     * @return \Generator<string, array{int, StreakFunComparison}>
-     */
     public static function resolveProvider(): \Generator
     {
         yield 'fortnight' => [14, StreakFunComparison::FORTNIGHT];
