@@ -23,6 +23,7 @@
             {% if monthlyStatsCharts|length > 1 %}
                 <div class="tabs tabs--default">
                     <ul id="monthlyStatsActivityType{{ context.value }}Tab{{ uniqueId }}" data-tabs="#monthlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}"
+                        data-tabs-sync-group="monthlyStatsActivityType{{ uniqueId }}"
                         role="tablist">
                         {% for activityType,chart in monthlyStatsCharts %}
                             <li role="presentation">
