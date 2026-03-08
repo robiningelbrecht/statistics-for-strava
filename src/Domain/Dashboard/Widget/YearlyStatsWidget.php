@@ -35,7 +35,7 @@ final readonly class YearlyStatsWidget implements Widget
     {
         return WidgetConfiguration::empty()
             ->add('enableLastXYearsByDefault', 10)
-            ->add('metricsDisplayOrder', array_map(fn (StatsContext $context) => $context->value, StatsContext::defaultSortingOrder()));
+            ->add('metricsDisplayOrder', array_map(fn (StatsContext $context) => $context->value, StatsContext::defaultChartSortingOrder()));
     }
 
     public function guardValidConfiguration(WidgetConfiguration $configuration): void
@@ -86,7 +86,7 @@ final readonly class YearlyStatsWidget implements Widget
             }
 
             $activityType = ActivityType::from($activityType);
-            foreach (StatsContext::cases() as $yearlyStatsContext) {
+            foreach (StatsContext::defaultChartSortingOrder() as $yearlyStatsContext) {
                 if (in_array($yearlyStatsContext, [StatsContext::DISTANCE, StatsContext::ELEVATION]) && !$activityType->supportsDistanceAndElevation()) {
                     continue;
                 }

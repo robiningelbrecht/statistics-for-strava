@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Dashboard\Widget\WeeklyStats;
 
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\DailyTrainingLoad;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Calendar\Weeks;
 use App\Domain\Dashboard\InvalidDashboardLayout;
@@ -21,6 +22,7 @@ final readonly class WeeklyStatsWidget implements Widget
 {
     public function __construct(
         private EnrichedActivities $enrichedActivities,
+        private DailyTrainingLoad $dailyTrainingLoad,
         private UnitSystem $unitSystem,
         private Environment $twig,
         private TranslatorInterface $translator,
@@ -41,8 +43,8 @@ final readonly class WeeklyStatsWidget implements Widget
         if (!is_array($configuration->get('metricsDisplayOrder'))) {
             throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must be an array.');
         }
-        if (3 !== count($configuration->get('metricsDisplayOrder'))) {
-            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 3 metrics.');
+        if (4 !== count($configuration->get('metricsDisplayOrder'))) {
+            throw new InvalidDashboardLayout('Configuration item "metricsDisplayOrder" must contain all 4 metrics.');
         }
         foreach ($configuration->get('metricsDisplayOrder') as $metricDisplayOrder) {
             if (!StatsContext::tryFrom($metricDisplayOrder)) {
@@ -79,6 +81,7 @@ final readonly class WeeklyStatsWidget implements Widget
                 activities: $activitiesPerActivityType[$activityType->value],
                 unitSystem: $this->unitSystem,
                 activityType: $activityType,
+                trainingLoad: $this->dailyTrainingLoad,
                 metricsDisplayOrder: array_map(
                     StatsContext::from(...),
                     $metricsDisplayOrder,
