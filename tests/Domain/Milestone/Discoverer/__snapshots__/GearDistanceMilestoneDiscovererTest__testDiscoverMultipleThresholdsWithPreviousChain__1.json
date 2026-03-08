@@ -7,7 +7,7 @@
         "activityId": null,
         "context": {},
         "previous": null,
-        "funComparison": "distanceCenturyRide"
+        "funComparison": "distanceEdgeOfSpace"
     },
     {
         "id": "milestone-2",
@@ -21,7 +21,7 @@
             "threshold": 100,
             "achievedOn": "2024-01-01 00:00:00"
         },
-        "funComparison": "distanceCenturyRide"
+        "funComparison": "distanceLengthOfJamaica"
     },
     {
         "id": "milestone-3",
@@ -35,6 +35,6 @@
             "threshold": 250,
             "achievedOn": "2024-01-01 00:00:00"
         },
-        "funComparison": "distanceNetherlandsLength"
+        "funComparison": "distanceMadridToBarcelona"
     }
 ]

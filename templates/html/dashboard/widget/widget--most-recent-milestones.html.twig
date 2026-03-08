@@ -1,0 +1,53 @@
+{% from 'html/milestones.html.twig' import milestoneTitle as milestoneTitle %}
+{% autoescape false %}
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">
+            {{ "Most recent milestones"|trans }}
+        </h3>
+        <a href="#" data-router-navigate="{{ relativeUrl('milestones') }}"
+           class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+            {{ "View all"|trans }}
+        </a>
+    </div>
+    <div class="flex flex-col grow gap-y-2 max-h-92 overflow-y-auto">
+        {% for milestone in milestones %}
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                    {% if milestone.getSportType() %}
+                        <div class="shrink-0 px-2 py-0.5 text-xxs font-medium border border-gray-200 text-strava-orange bg-white rounded-lg">
+                            {{ milestone.getSportType()|trans }}
+                        </div>
+                    {% endif %}
+                    <h3 class="text-sm font-bold text-gray-900 truncate">{{ milestoneTitle(milestone) }}</h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                    {% if milestone.getActivityId() %}
+                        {% set activity = enrichedActivities.find(milestone.getActivityId()) %}
+                        {{ activity|activityLink }}
+                    {% endif %}
+                </div>
+                {% if milestone.getFunComparison() %}
+                    <div class="mt-1 text-sm italic text-gray-500 truncate">
+                        {{ milestone.getFunComparison()|trans }}
+                    </div>
+                {% endif %}
+                {% if milestone.getCategory() == enum('App\\Domain\\Milestone\\MilestoneCategory').EDDINGTON  %}
+                    <div class="mt-1 text-sm italic text-gray-500">
+                        {{ "That's {number} days of at least {distance}"|trans({
+                            '{number}': milestone.getContext().getNumber(),
+                            '{distance}':  milestone.getContext().getDistance()|renderMeasurement(0)})|raw
+                        }}
+                    </div>
+                {% endif %}
+                {% if milestone.getPrevious() %}
+                    {% set previousMilestone = milestone.getPrevious() %}
+                    <div class="mt-1 text-xs text-gray-400">
+                        {{ "Previous"|trans }}:
+                        {{ previousMilestone.getThreshold()|renderMeasurement(0)|raw }}
+                        {{ "on"|trans }} {{ previousMilestone.getAchievedOn()|formatDate('normal') }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endautoescape %}

@@ -1697,6 +1697,9 @@
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
   }
+  .max-h-92 {
+    max-height: calc(var(--spacing) * 92);
+  }
   .max-h-\[calc\(100vh-114px\)\] {
     max-height: calc(100vh - 114px);
   }
@@ -1717,6 +1720,9 @@
   }
   .min-h-64 {
     min-height: calc(var(--spacing) * 64);
+  }
+  .min-h-80 {
+    min-height: calc(var(--spacing) * 80);
   }
   .min-h-\[350px\] {
     min-height: 350px;
@@ -3963,6 +3969,12 @@
     @media (width >= 48rem) {
       font-size: var(--text-4xl);
       line-height: var(--tw-leading, var(--text-4xl--line-height));
+    }
+  }
+  .md\:text-base {
+    @media (width >= 48rem) {
+      font-size: var(--text-base);
+      line-height: var(--tw-leading, var(--text-base--line-height));
     }
   }
   .md\:text-lg {

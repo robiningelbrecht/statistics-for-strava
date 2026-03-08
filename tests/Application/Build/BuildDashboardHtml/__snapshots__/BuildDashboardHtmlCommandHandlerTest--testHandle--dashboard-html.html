@@ -649,7 +649,7 @@
             </div>
 
             </div>
-                    <div data-fullscreen-content class="xl:col-span-6 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <div data-fullscreen-content class="xl:col-span-4 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                 <div class="flex items-center justify-between mb-4">
     <h3 class="text-lg font-semibold">
         Monthly stats
@@ -675,8 +675,8 @@
             </li>
             </ul>
 </div>
-<div id="monthlyStatsTabContent--1">
-            <div id="monthlyStatsdistance--1" role="tabpanel" aria-labelledby="monthlyStatsdistance--1">
+<div class="flex flex-col grow" id="monthlyStatsTabContent--1">
+            <div class="flex flex-col grow" id="monthlyStatsdistance--1" role="tabpanel" aria-labelledby="monthlyStatsdistance--1">
                                         <div class="tabs tabs--default">
                     <ul id="monthlyStatsActivityTypedistanceTab--1" data-tabs="#monthlyStatsActivityTypedistanceTabContent--1" role="tablist">
                                                     <li role="presentation">
@@ -691,16 +691,16 @@
                             </li>
                                             </ul>
                 </div>
-                        <div id="monthlyStatsActivityTypedistanceTabContent--1">
-                                    <div id="monthlyStatsRidedistance--1" role="tabpanel" aria-labelledby="monthlyStatsRidedistance--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatDistance"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}km"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,170.793,33.548,24.424,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,0,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                        <div class="flex flex-col grow" id="monthlyStatsActivityTypedistanceTabContent--1">
+                                    <div class="flex flex-col grow" id="monthlyStatsRidedistance--1" role="tabpanel" aria-labelledby="monthlyStatsRidedistance--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatDistance"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}km"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,170.793,33.548,24.424,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,0,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
-                                    <div id="monthlyStatsRundistance--1" role="tabpanel" aria-labelledby="monthlyStatsRundistance--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatDistance"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}km"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,33.548,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,50,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                                    <div class="flex flex-col grow" id="monthlyStatsRundistance--1" role="tabpanel" aria-labelledby="monthlyStatsRundistance--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatDistance"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}km"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,33.548,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,50,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
                             </div>
         </div>
-            <div id="monthlyStatsmovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsmovingTime--1">
+            <div class="flex flex-col grow" id="monthlyStatsmovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsmovingTime--1">
                                         <div class="tabs tabs--default">
                     <ul id="monthlyStatsActivityTypemovingTimeTab--1" data-tabs="#monthlyStatsActivityTypemovingTimeTabContent--1" role="tablist">
                                                     <li role="presentation">
@@ -715,16 +715,16 @@
                             </li>
                                             </ul>
                 </div>
-                        <div id="monthlyStatsActivityTypemovingTimeTabContent--1">
-                                    <div id="monthlyStatsRidemovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsRidemovingTime--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatHours"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,4,1,1,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,1,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                        <div class="flex flex-col grow" id="monthlyStatsActivityTypemovingTimeTabContent--1">
+                                    <div class="flex flex-col grow" id="monthlyStatsRidemovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsRidemovingTime--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatHours"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,4,1,1,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,1,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
-                                    <div id="monthlyStatsRunmovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsRunmovingTime--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatHours"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,1,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                                    <div class="flex flex-col grow" id="monthlyStatsRunmovingTime--1" role="tabpanel" aria-labelledby="monthlyStatsRunmovingTime--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatHours"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}h"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,1,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,1,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
                             </div>
         </div>
-            <div id="monthlyStatselevation--1" role="tabpanel" aria-labelledby="monthlyStatselevation--1">
+            <div class="flex flex-col grow" id="monthlyStatselevation--1" role="tabpanel" aria-labelledby="monthlyStatselevation--1">
                                         <div class="tabs tabs--default">
                     <ul id="monthlyStatsActivityTypeelevationTab--1" data-tabs="#monthlyStatsActivityTypeelevationTabContent--1" role="tablist">
                                                     <li role="presentation">
@@ -739,16 +739,107 @@
                             </li>
                                             </ul>
                 </div>
-                        <div id="monthlyStatsActivityTypeelevationTabContent--1">
-                                    <div id="monthlyStatsRideelevation--1" role="tabpanel" aria-labelledby="monthlyStatsRideelevation--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatElevation"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}m"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,879,278,36,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,278,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,278,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                        <div class="flex flex-col grow" id="monthlyStatsActivityTypeelevationTabContent--1">
+                                    <div class="flex flex-col grow" id="monthlyStatsRideelevation--1" role="tabpanel" aria-labelledby="monthlyStatsRideelevation--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatElevation"},"legend":{"selected":{"2023":true,"2022":true,"2021":true,"2020":true},"data":["2023","2022","2021","2020"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}m"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,879,278,36,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[0,0,0,0,0,0,278,0,0,0,0,0]},{"name":"2021","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"2020","type":"line","smooth":true,"data":[null,null,null,null,null,null,278,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
-                                    <div id="monthlyStatsRunelevation--1" role="tabpanel" aria-labelledby="monthlyStatsRunelevation--1-tab">
-                        <div class="h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatElevation"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}m"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,278,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,278,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
+                                    <div class="flex flex-col grow" id="monthlyStatsRunelevation--1" role="tabpanel" aria-labelledby="monthlyStatsRunelevation--1-tab">
+                        <div class="grow min-h-80" data-echarts-options='{"backgroundColor":null,"animation":false,"grid":{"top":"50px","left":"2px","right":"10px","bottom":"2%","containLabel":true},"tooltip":{"trigger":"axis","valueFormatter":"callback:formatElevation"},"legend":{"selected":{"2023":true,"2022":true},"data":["2023","2022"]},"xAxis":{"type":"category","boundaryGap":false,"data":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"axisPointer":{"type":"shadow"}},"yAxis":{"type":"value","axisLabel":{"formatter":"{value}m"}},"series":[{"name":"2023","type":"line","smooth":true,"data":[0,0,0,0,0,0,0,278,null,null,null,null]},{"name":"2022","type":"line","smooth":true,"data":[null,null,null,null,null,null,278,0,0,0,0,0]}]}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
                             </div>
         </div>
     </div>
+            </div>
+                    <div data-fullscreen-content class="xl:col-span-2 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                    <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">
+            Most recent milestones
+        </h3>
+        <a href="#" data-router-navigate="/milestones" class="shrink-0 inline-flex items-center p-2 text-sm font-medium rounded-lg text-blue-600 hover:bg-gray-100">
+            View all
+        </a>
+    </div>
+    <div class="flex flex-col grow gap-y-2 max-h-92 overflow-y-auto">
+                    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                                        <h3 class="text-sm font-bold text-gray-900 truncate">            
+            Ride: reached Eddington number 6
+    </h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                                    </div>
+                                                    <div class="mt-1 text-sm italic text-gray-500">
+                        That's 6 days of at least 6<span class="text-xs">km</span>
+                    </div>
+                                                                        <div class="mt-1 text-xs text-gray-400">
+                        Previous:
+                        5<span class="text-xs">km</span>
+                        on 04-09-2023
+                    </div>
+                            </div>
+                    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                                        <h3 class="text-sm font-bold text-gray-900 truncate">            
+            Ride: reached Eddington number 5
+    </h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                                    </div>
+                                                    <div class="mt-1 text-sm italic text-gray-500">
+                        That's 5 days of at least 5<span class="text-xs">km</span>
+                    </div>
+                                                                        <div class="mt-1 text-xs text-gray-400">
+                        Previous:
+                        4<span class="text-xs">km</span>
+                        on 31-08-2023
+                    </div>
+                            </div>
+                    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                                        <h3 class="text-sm font-bold text-gray-900 truncate">            
+            Completed 10 activities
+    </h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                                    </div>
+                                    <div class="mt-1 text-sm italic text-gray-500 truncate">
+                        That's about one activity per week for two months
+                    </div>
+                                                            </div>
+                    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                                        <h3 class="text-sm font-bold text-gray-900 truncate">            
+            Reached 250<span class="text-xs">km</span> total distance
+    </h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                                    </div>
+                                    <div class="mt-1 text-sm italic text-gray-500 truncate">
+                        That's roughly the length of the island of Jamaica
+                    </div>
+                                                                                        <div class="mt-1 text-xs text-gray-400">
+                        Previous:
+                        100<span class="text-xs">km</span>
+                        on 29-07-2023
+                    </div>
+                            </div>
+                    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div class="flex items-center gap-x-1 mb-1">
+                                            <div class="shrink-0 px-2 py-0.5 text-xxs font-medium border border-gray-200 text-strava-orange bg-white rounded-lg">
+                            Runs
+                        </div>
+                                        <h3 class="text-sm font-bold text-gray-900 truncate">            
+            Reached 500<span class="text-xs">m</span> total elevation
+    </h3>
+                </div>
+                <div class="text-sm text-gray-600">
+                                    </div>
+                                    <div class="mt-1 text-sm italic text-gray-500 truncate">
+                        That's taller than the Empire State Building
+                    </div>
+                                                            </div>
+            </div>
+
             </div>
                     <div data-fullscreen-content class="xl:col-span-6 flex flex-col p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center justify-between mb-4">

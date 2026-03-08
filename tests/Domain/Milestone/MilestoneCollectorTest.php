@@ -53,6 +53,7 @@ class MilestoneCollectorTest extends ContainerTestCase
         $this->insertBestEffort(1, SportType::RIDE, 10000, 1800);
 
         $collector = $this->createCollector();
+        $collector->discoverAll();
         $milestones = $collector->discoverAll();
 
         $this->assertFalse($milestones->isEmpty());

@@ -24,7 +24,6 @@ final class SvgsTwigExtension
         $svg = $this->load('icons', $name);
 
         if ($size) {
-            /** @var non-empty-string $svg */
             $svg = preg_replace_callback('/class="([^"]+)"/', function (array $matches) use ($size): string {
                 $classes = explode(' ', $matches[1]);
                 $classes = array_filter($classes, fn (string $class): bool => !preg_match('/^(w-|h-|size-)/', $class));
@@ -32,10 +31,10 @@ final class SvgsTwigExtension
 
                 return 'class="'.implode(' ', $classes).'"';
             }, $svg);
+            assert(is_string($svg) && '' !== $svg);
         }
 
         if (null !== $iconColor) {
-            /** @var non-empty-string $svg */
             $svg = preg_replace_callback('/class="([^"]+)"/', function (array $matches) use ($iconColor): string {
                 $classes = explode(' ', $matches[1]);
                 $classes = array_filter($classes, fn (string $class): bool => !preg_match('/^(text-|hover:text|fill-|stroke-)/', $class));
@@ -43,6 +42,7 @@ final class SvgsTwigExtension
 
                 return 'class="'.trim(implode(' ', $classes)).'"';
             }, $svg);
+            assert(is_string($svg) && '' !== $svg);
         }
 
         return $svg;

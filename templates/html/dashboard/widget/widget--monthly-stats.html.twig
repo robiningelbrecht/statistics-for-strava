@@ -15,9 +15,9 @@
         {% endfor %}
     </ul>
 </div>
-<div id="monthlyStatsTabContent{{ uniqueId }}">
+<div class="flex flex-col grow" id="monthlyStatsTabContent{{ uniqueId }}">
     {% for context in metricsDisplayOrder %}
-        <div id="monthlyStats{{ context.value }}{{ uniqueId }}" role="tabpanel"
+        <div class="flex flex-col grow" id="monthlyStats{{ context.value }}{{ uniqueId }}" role="tabpanel"
              aria-labelledby="monthlyStats{{ context.value }}{{ uniqueId }}">
             {% set monthlyStatsCharts = monthlyStatsChartsPerContext[context.value] %}
             {% if monthlyStatsCharts|length > 1 %}
@@ -36,11 +36,11 @@
                     </ul>
                 </div>
             {% endif %}
-            <div id="monthlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}">
+            <div class="flex flex-col grow" id="monthlyStatsActivityType{{ context.value }}TabContent{{ uniqueId }}">
                 {% for activityType,chart in monthlyStatsCharts %}
-                    <div id="monthlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tabpanel"
+                    <div class="flex flex-col grow" id="monthlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}" role="tabpanel"
                          aria-labelledby="monthlyStats{{ activityType }}{{ context.value }}{{ uniqueId }}-tab">
-                        <div class="h-80" data-echarts-options='{{ chart }}' data-echarts-click="handleMonthlyStatsClick"></div>
+                        <div class="grow min-h-80" data-echarts-options='{{ chart }}' data-echarts-click="handleMonthlyStatsClick"></div>
                     </div>
                 {% endfor %}
             </div>
