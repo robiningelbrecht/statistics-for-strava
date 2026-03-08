@@ -109,6 +109,12 @@ TZ=Etc/GMT
 # CADDY_LOG_LEVEL=ERROR
 ```
 
+> [!IMPORTANT] Instead of passing secrets directly via the `STRAVA_CLIENT_SECRET` and `STRAVA_REFRESH_TOKEN` environment variables, you can use [Docker Compose secrets](https://docs.docker.com/compose/how-tos/use-secrets/).
+>
+> Define `STRAVA_CLIENT_SECRET_FILE` and `STRAVA_REFRESH_TOKEN_FILE` to point to the secret files (typically located in /run/secrets/). When the standard environment variables are not set, the application will automatically read the values from these files.
+>
+> This approach is recommended when running the application with Docker Compose, as it avoids exposing sensitive values in environment variables.
+
 ## config.yaml
 
 [include](../configuration/config-yaml-example.md ':include')

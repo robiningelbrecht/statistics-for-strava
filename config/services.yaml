@@ -7,6 +7,8 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
+    _strava_refresh_token: '%env(string:STRAVA_REFRESH_TOKEN)%'
+    _strava_client_secret: '%env(string:STRAVA_CLIENT_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -156,11 +158,11 @@ services:
 
     App\Domain\Strava\StravaClientSecret:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:STRAVA_CLIENT_SECRET)%']
+        arguments: ['%env(default:_strava_client_secret:file:STRAVA_CLIENT_SECRET_FILE)%']
 
     App\Domain\Strava\StravaRefreshToken:
         factory: [ null, 'fromString' ]
-        arguments: ['%env(string:STRAVA_REFRESH_TOKEN)%']
+        arguments: ['%env(default:_strava_refresh_token:file:STRAVA_REFRESH_TOKEN_FILE)%']
 
     App\Domain\Athlete\AthleteBirthDate:
         factory: [ null, 'fromString' ]

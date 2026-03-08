@@ -45,8 +45,8 @@ final class DebugEnvironmentConsoleCommand extends Command
             ->setRows([
                 ['APP_VERSION', AppVersion::getSemanticVersion()],
                 ['STRAVA_CLIENT_ID', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_CLIENT_ID')],
-                ['STRAVA_CLIENT_SECRET', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_CLIENT_SECRET')],
-                ['STRAVA_REFRESH_TOKEN', $autoRedactSensitiveInfo ? $redactedString : getenv('STRAVA_REFRESH_TOKEN')],
+                ['STRAVA_CLIENT_SECRET', $autoRedactSensitiveInfo ? $redactedString : $this->getenvOrFile('STRAVA_CLIENT_SECRET')],
+                ['STRAVA_REFRESH_TOKEN', $autoRedactSensitiveInfo ? $redactedString : $this->getenvOrFile('STRAVA_REFRESH_TOKEN')],
                 ['TZ', getenv('TZ')],
             ]);
         $table->render();
@@ -65,5 +65,20 @@ final class DebugEnvironmentConsoleCommand extends Command
         ]);
 
         return Command::SUCCESS;
+    }
+
+    protected function getenvOrFile(string $var): ?string
+    {
+        $value = getenv($var);
+        if (false !== $value && '' !== $value) {
+            return $value;
+        }
+
+        $file = getenv($var.'_FILE');
+        if ($file && is_readable($file)) {
+            return trim((string) file_get_contents($file));
+        }
+
+        return null;
     }
 }
