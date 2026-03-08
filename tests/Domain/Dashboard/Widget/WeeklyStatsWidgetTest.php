@@ -29,11 +29,11 @@ class WeeklyStatsWidgetTest extends ContainerTestCase
         yield 'invalid "metricsDisplayOrder" key' => [$config, 'Configuration item "metricsDisplayOrder" must be an array.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('metricsDisplayOrder', [1, 2, 3, 4]);
-        yield 'invalid number of items in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" must contain all 3 metrics.'];
+            ->add('metricsDisplayOrder', [1, 2, 3, 4, 5]);
+        yield 'invalid number of items in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" must contain all 4 metrics.'];
 
         $config = WidgetConfiguration::empty()
-            ->add('metricsDisplayOrder', ['test', 2, 3]);
+            ->add('metricsDisplayOrder', ['test', 2, 3, 4]);
         yield 'invalid value in "metricsDisplayOrder"' => [$config, 'Configuration item "metricsDisplayOrder" contains invalid value "test".'];
     }
 

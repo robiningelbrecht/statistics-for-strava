@@ -5,6 +5,7 @@ namespace App\Domain\Dashboard\Widget\WeeklyStats;
 use App\Domain\Activity\Activities;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\DailyTrainingLoad;
 use App\Domain\Calendar\Week;
 use App\Domain\Calendar\Weeks;
 use App\Domain\Dashboard\StatsContext;
@@ -18,6 +19,7 @@ final readonly class WeeklyStatsChart
         private Activities $activities,
         private UnitSystem $unitSystem,
         private ActivityType $activityType,
+        private DailyTrainingLoad $trainingLoad,
         /** @var StatsContext[] */
         private array $metricsDisplayOrder,
         private SerializableDateTime $now,
@@ -32,6 +34,7 @@ final readonly class WeeklyStatsChart
         Activities $activities,
         UnitSystem $unitSystem,
         ActivityType $activityType,
+        DailyTrainingLoad $trainingLoad,
         array $metricsDisplayOrder,
         SerializableDateTime $now,
         TranslatorInterface $translator,
@@ -40,6 +43,7 @@ final readonly class WeeklyStatsChart
             activities: $activities,
             unitSystem: $unitSystem,
             activityType: $activityType,
+            trainingLoad: $trainingLoad,
             metricsDisplayOrder: $metricsDisplayOrder,
             now: $now,
             translator: $translator,
@@ -61,7 +65,8 @@ final readonly class WeeklyStatsChart
 
         if ([] === array_filter($data[StatsContext::DISTANCE->value])
             && [] === array_filter($data[StatsContext::MOVING_TIME->value])
-            && [] === array_filter($data[StatsContext::ELEVATION->value])) {
+            && [] === array_filter($data[StatsContext::ELEVATION->value])
+            && [] === array_filter($data[StatsContext::LOAD->value])) {
             return []; // @codeCoverageIgnore
         }
 
@@ -108,6 +113,7 @@ final readonly class WeeklyStatsChart
                 StatsContext::DISTANCE => $this->unitSystem->distanceSymbol(),
                 StatsContext::MOVING_TIME => 'h',
                 StatsContext::ELEVATION => $this->unitSystem->elevationSymbol(),
+                StatsContext::LOAD => '', // No unit symbol needed for Load
             };
 
             $series[] = array_merge_recursive(
@@ -187,19 +193,21 @@ final readonly class WeeklyStatsChart
     }
 
     /**
-     * @return array{distance: float[], movingTime: float[], elevation: int[]}
+     * @return array{distance: float[], movingTime: float[], elevation: int[], load: int[]}
      */
     private function getData(Weeks $weeks): array
     {
         $distancePerWeek = [];
         $timePerWeek = [];
         $elevationPerWeek = [];
+        $loadPerWeek = [];
 
         /** @var Week $week */
         foreach ($weeks as $week) {
             $distancePerWeek[$week->getId()] = 0;
             $timePerWeek[$week->getId()] = 0;
             $elevationPerWeek[$week->getId()] = 0;
+            $loadPerWeek[$week->getId()] = 0;
         }
 
         /** @var Activity $activity */
@@ -216,6 +224,16 @@ final readonly class WeeklyStatsChart
             $timePerWeek[$week] += $activity->getMovingTimeInSeconds();
         }
 
+        /** @var Week $week */
+        foreach ($weeks as $week) {
+            $day = $week->getFrom();
+            $to = $week->getTo();
+            while ($day <= $to) {
+                $loadPerWeek[$week->getId()] += $this->trainingLoad->calculate($day);
+                $day = SerializableDateTime::fromString($day->modify('+1 day')->format('Y-m-d'));
+            }
+        }
+
         $distancePerWeek = array_map(
             fn (float|int $distance): float => round($distance, $distance < 100 ? $this->activityType->getDistancePrecision() : 0),
             $distancePerWeek
@@ -230,6 +248,7 @@ final readonly class WeeklyStatsChart
             StatsContext::DISTANCE->value => array_values($distancePerWeek),
             StatsContext::MOVING_TIME->value => array_values($timePerWeek),
             StatsContext::ELEVATION->value => array_values($elevationPerWeek),
+            StatsContext::LOAD->value => array_values($loadPerWeek),
         ];
     }
 }
