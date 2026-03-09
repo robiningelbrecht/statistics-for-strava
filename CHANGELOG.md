@@ -6,7 +6,7 @@
 ## Improvements
 * Improved the descriptions for gear milestones.
 * Improved the mobile layout for milestones.
-* Improved how milestone comparisons are displayed.
+* Improved milestone comparisons.
 * Updated the German translation file.
 
 ## Technical details
