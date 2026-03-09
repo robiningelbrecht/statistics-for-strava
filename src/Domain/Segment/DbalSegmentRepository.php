@@ -21,10 +21,10 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
     {
         $sql = 'INSERT INTO Segment (segmentId, name, sportType, distance, maxGradient, isFavourite, 
                      deviceName, climbCategory, countryCode, detailsHaveBeenImported, polyline,
-                     startingCoordinateLatitude, startingCoordinateLongitude) 
+                     startingCoordinateLatitude, startingCoordinateLongitude, averageGradient) 
                 VALUES (:segmentId, :name, :sportType, :distance, :maxGradient, :isFavourite, 
                         :deviceName, :climbCategory, :countryCode, :detailsHaveBeenImported, :polyline,
-                        :startingCoordinateLatitude, :startingCoordinateLongitude)';
+                        :startingCoordinateLatitude, :startingCoordinateLongitude, :averageGradient)';
 
         $this->connection->executeStatement($sql, [
             'segmentId' => $segment->getId(),
@@ -40,6 +40,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
             'polyline' => null,
             'startingCoordinateLatitude' => null,
             'startingCoordinateLongitude' => null,
+            'averageGradient' => $segment->getAverageGradient(),
         ]);
     }
 
@@ -134,6 +135,7 @@ final readonly class DbalSegmentRepository extends DbalRepository implements Seg
                 Latitude::fromOptionalString((string) $result['startingCoordinateLatitude']),
                 Longitude::fromOptionalString((string) $result['startingCoordinateLongitude'])
             ),
+            averageGradient: isset($result['averageGradient']) ? (float) $result['averageGradient'] : null,
         );
     }
 
