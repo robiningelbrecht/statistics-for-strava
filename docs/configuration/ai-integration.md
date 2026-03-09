@@ -7,7 +7,7 @@ To start using the AI features in **Statistics for Strava**, you first need to p
 
 > [!IMPORTANT]
 > **Important** Statistics for Strava uses the <a href="https://docs.neuron-ai.dev">Neuron AI</a> library to interface with AI models.
-> Only providers supported by Neuron AI are compatible. See the full list of <a href="https://docs.neuron-ai.dev/components/ai-provider">supported providers</a>
+> Only providers supported by Neuron AI are compatible. See the full list of <a href="https://docs.neuron-ai.dev/providers/ai-provider">supported providers</a>
 
 ## Cloud providers
 
