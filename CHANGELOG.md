@@ -1,3 +1,25 @@
+# [v4.7.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.1) - 2026-03-09
+
+## New features
+* Added a new dashboard widget showing your most recent milestones.
+
+## Improvements
+* Improved the descriptions for gear milestones.
+* Improved the mobile layout for milestones.
+* Improved how milestone comparisons are displayed.
+* Updated the German translation file.
+
+## Technical details
+* ISSUE #1852: Improve gear milestone descriptions by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1853
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1858
+* ISSUE #1854: Dashboard widget for most recent milestones by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1859
+* ISSUE #1861: Improve milestones mobile layout by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1862
+* ISSUE #1863: Switch var annotations in favour of asserts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1864
+* ISSUE #1865: Improve milestone comparisons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1868
+* ISSUE #1865: Supported providers link broken by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1871
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.0...v4.7.1
+
 # [v4.7.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.0) - 2026-03-05
 
 ## New features
