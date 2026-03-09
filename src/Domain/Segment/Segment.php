@@ -51,6 +51,8 @@ final class Segment implements SupportsAITooling
         private readonly ?EncodedPolyline $polyline,
         #[ORM\Embedded(class: Coordinate::class)]
         private readonly ?Coordinate $startingCoordinate,
+        #[ORM\Column(type: 'float', nullable: true)]
+        private readonly ?float $averageGradient,
     ) {
     }
 
@@ -64,6 +66,7 @@ final class Segment implements SupportsAITooling
         ?int $climbCategory,
         ?string $deviceName,
         ?string $countryCode,
+        ?float $averageGradient,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -78,6 +81,7 @@ final class Segment implements SupportsAITooling
             detailsHaveBeenImported: false,
             polyline: null,
             startingCoordinate: null,
+            averageGradient: $averageGradient,
         );
     }
 
@@ -94,6 +98,7 @@ final class Segment implements SupportsAITooling
         bool $detailsHaveBeenImported,
         ?EncodedPolyline $polyline,
         ?Coordinate $startingCoordinate,
+        ?float $averageGradient,
     ): self {
         return new self(
             segmentId: $segmentId,
@@ -108,6 +113,7 @@ final class Segment implements SupportsAITooling
             detailsHaveBeenImported: $detailsHaveBeenImported,
             polyline: $polyline,
             startingCoordinate: $startingCoordinate,
+            averageGradient: $averageGradient,
         );
     }
 
@@ -148,6 +154,11 @@ final class Segment implements SupportsAITooling
     public function getMaxGradient(): float
     {
         return $this->maxGradient;
+    }
+
+    public function getAverageGradient(): ?float
+    {
+        return $this->averageGradient;
     }
 
     public function getSportType(): SportType

@@ -11,6 +11,7 @@
         "countryCode": "BE",
         "detailsHaveBeenImported": 0,
         "polyline": null,
+        "averageGradient": 2.7,
         "startingCoordinateLatitude": null,
         "startingCoordinateLongitude": null
     },
@@ -26,6 +27,7 @@
         "countryCode": null,
         "detailsHaveBeenImported": 0,
         "polyline": null,
+        "averageGradient": null,
         "startingCoordinateLatitude": null,
         "startingCoordinateLongitude": null
     }

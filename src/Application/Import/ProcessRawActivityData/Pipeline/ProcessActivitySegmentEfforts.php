@@ -73,6 +73,7 @@ final readonly class ProcessActivitySegmentEfforts implements ProcessRawDataStep
                             climbCategory: $activitySegment['climb_category'] ?? null,
                             deviceName: $activity->getDeviceName(),
                             countryCode: $countryCode,
+                            averageGradient: $activitySegment['average_grade'] ?? null,
                         );
                         $this->segmentRepository->add($segment);
                         ++$countSegmentsAdded;
