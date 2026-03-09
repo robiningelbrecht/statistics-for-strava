@@ -27,6 +27,7 @@ Apr: Apr
 'Ask Mark something...': 'Fråga Mark någonting...'
 'Athlete profile': 'Athlete profile'
 Aug: Aug
+'Average gradient': 'Average gradient'
 Avg: Med
 'Back Country Ski': Utförsåkning
 Badges: Badges
@@ -191,7 +192,6 @@ Maintenance: Underhåll
 'Maintenance history': Underhållshistorik
 Mar: Mar
 Max: Max
-'Max gradient': 'Max lutning'
 May: May
 Medium: Mellan
 Metric: Metric
@@ -507,6 +507,7 @@ Yoga: Yoga
 'Zwift stats': 'Sammanställning Zwift'
 activities: aktiviteter
 and: och
+'average gradient': 'average gradient'
 avg: snitt
 bpm: bpm
 clear: rensa

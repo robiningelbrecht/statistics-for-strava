@@ -27,6 +27,7 @@ Apr: Avr
 'Ask Mark something...': 'Demandez quelque chose à Mark...'
 'Athlete profile': 'Athlete profile'
 Aug: Aoû
+'Average gradient': 'Average gradient'
 Avg: Moy
 'Back Country Ski': 'Ski de randonnée'
 Badges: Badges
@@ -191,7 +192,6 @@ Maintenance: Maintenance
 'Maintenance history': 'Historique de maintenance'
 Mar: Mar
 Max: Max
-'Max gradient': 'Max gradient'
 May: Mai
 Medium: Moyen
 Metric: Metric
@@ -507,6 +507,7 @@ Yoga: Yoga
 'Zwift stats': 'Stats Zwift'
 activities: activités
 and: et
+'average gradient': 'average gradient'
 avg: moy
 bpm: bpm
 clear: effacer
