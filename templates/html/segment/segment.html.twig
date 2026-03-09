@@ -17,7 +17,12 @@
                     <div class="text-xs text-gray-500">{{ segment.getDistance().getSymbol() }}</div>
                 </li>
                 <li class="flex items-center gap-x-0.5 px-2" title="Max gradient">
-                    {{ svg('max-gradient') }}
+                    {{ svg('percentage') }}
+                    <div>{{ segment.getAverageGradient() }}</div>
+                    <div class="text-xs text-gray-500">{{ "average gradient"|trans }}</div>
+                </li>
+                <li class="flex items-center gap-x-0.5 px-2" title="Max gradient">
+                    {{ svg('percentage') }}
                     <div>{{ segment.getMaxGradient() }}</div>
                     <div class="text-xs text-gray-500">{{ "max gradient"|trans }}</div>
                 </li>
