@@ -26,6 +26,7 @@ final class SegmentBuilder
     private bool $detailsHaveBeenImported = false;
     private ?EncodedPolyline $polyline;
     private readonly ?Coordinate $startingCoordinate;
+    private ?float $averageGradient = 2.7;
 
     private function __construct()
     {
@@ -57,7 +58,8 @@ final class SegmentBuilder
             countryCode: $this->countryCode,
             detailsHaveBeenImported: $this->detailsHaveBeenImported,
             polyline: $this->polyline,
-            startingCoordinate: $this->startingCoordinate
+            startingCoordinate: $this->startingCoordinate,
+            averageGradient: $this->averageGradient,
         );
     }
 
@@ -120,6 +122,13 @@ final class SegmentBuilder
     public function withPolyline(EncodedPolyline $polyline): self
     {
         $this->polyline = $polyline;
+
+        return $this;
+    }
+
+    public function withAverageGradient(?float $averageGradient): self
+    {
+        $this->averageGradient = $averageGradient;
 
         return $this;
     }

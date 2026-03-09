@@ -27,6 +27,7 @@ Apr: 四月
 'Ask Mark something...': 问问Mark...
 'Athlete profile': 'Athlete profile'
 Aug: 八月
+'Average gradient': 'Average gradient'
 Avg: 平均
 'Back Country Ski': 越野滑雪
 Badges: Badges
@@ -191,7 +192,6 @@ Maintenance: 维护
 'Maintenance history': 维护历史
 Mar: 三月
 Max: 最大
-'Max gradient': 最大坡度
 May: 五月
 Medium: 中等
 Metric: Metric
@@ -507,6 +507,7 @@ Yoga: 瑜伽
 'Zwift stats': Zwift统计
 activities: 活动
 and: 和
+'average gradient': 'average gradient'
 avg: 平均
 bpm: 拍子数
 clear: 清除
