@@ -23,7 +23,7 @@
     <link rel="preload" href="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ relativeUrl(asset('libraries/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" data-easter-egg="{{ easterEggPageUrl }}">
 <div class="antialiased">
     <!-- NAVIGATION -->
     {% autoescape false %}
@@ -269,5 +269,6 @@
 <script src="{{ relativeUrl(asset('js/dist/app.min.js')) }}" type="module"></script>
 {% block customScripts %}
 {% endblock customScripts %}
+<!-- {{ easterEggPageUrl }} -->
 </body>
 </html>
