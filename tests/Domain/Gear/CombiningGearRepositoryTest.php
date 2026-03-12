@@ -2,11 +2,15 @@
 
 namespace App\Tests\Domain\Gear;
 
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Gear\CombiningGearRepository;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Gear\CustomGear\CustomGearBuilder;
 use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -14,6 +18,8 @@ use Spatie\Snapshots\MatchesSnapshots;
 class CombiningGearRepositoryTest extends ContainerTestCase
 {
     use MatchesSnapshots;
+
+    private CombiningGearRepository $combiningGearRepository;
 
     public function testFindAll(): void
     {
@@ -42,5 +48,36 @@ class CombiningGearRepositoryTest extends ContainerTestCase
         $this->assertMatchesJsonSnapshot(
             $this->getConnection()->executeQuery('SELECT * FROM Gear')->fetchAllAssociative()
         );
+    }
+
+    public function testHasGear(): void
+    {
+        $this->assertFalse($this->combiningGearRepository->hasGear());
+
+        $this->getContainer()->get(ActivityRepository::class)->add(
+            ActivityWithRawData::fromState(
+                ActivityBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(4))
+                    ->build(),
+                []
+            ),
+        );
+
+        $this->getContainer()->get(CustomGearRepository::class)->save(
+            CustomGearBuilder::fromDefaults()
+            ->withGearId(GearId::fromUnprefixed(4))
+            ->withDistanceInMeter(Meter::from(100230))
+            ->withIsRetired(true)
+            ->build()
+        );
+
+        $this->assertTrue($this->combiningGearRepository->hasGear());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->combiningGearRepository = $this->getContainer()->get(CombiningGearRepository::class);
     }
 }
