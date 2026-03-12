@@ -1,3 +1,2 @@
 Importing challenges...
-Could not import challenges from trophy case page: an error
   => Imported challenge "Challenge 1"

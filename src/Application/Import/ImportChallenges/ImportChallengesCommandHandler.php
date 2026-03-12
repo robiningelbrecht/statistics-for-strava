@@ -2,7 +2,6 @@
 
 namespace App\Application\Import\ImportChallenges;
 
-use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\Challenge;
 use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
@@ -21,7 +20,6 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
     public function __construct(
         private Strava $strava,
         private ChallengeRepository $challengeRepository,
-        private AthleteRepository $athleteRepository,
         private FilesystemOperator $fileStorage,
         private UuidFactory $uuidFactory,
         private Sleep $sleep,
@@ -40,22 +38,17 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
             );
         }
 
-        $athlete = $this->athleteRepository->find();
         $challenges = [];
         $challengesAddedInCurrentRun = [];
+
         try {
-            $challenges = $this->strava->getChallengesOnPublicProfile($athlete->getAthleteId());
-        } catch (\Throwable $e) {
-            $command->getOutput()->writeln('Could not import challenges from public profile: '.$e->getMessage());
-        }
-        try {
-            $challenges = [...$challenges, ...$this->strava->getChallengesOnTrophyCase()];
+            $challenges = $this->strava->getChallengesOnTrophyCase();
         } catch (\Throwable $e) {
             $command->getOutput()->writeln('Could not import challenges from trophy case page: '.$e->getMessage());
         }
 
         if ([] === $challenges) {
-            $command->getOutput()->writeln('No Challenges to import...');
+            $command->getOutput()->writeln('No challenges to import...');
 
             return;
         }

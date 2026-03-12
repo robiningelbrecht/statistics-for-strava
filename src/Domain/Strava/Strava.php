@@ -342,55 +342,6 @@ class Strava
     /**
      * @return array<mixed>
      */
-    public function getChallengesOnPublicProfile(string $athleteId): array
-    {
-        $contents = $this->request('athletes/'.$athleteId);
-        if (!preg_match_all('/<li class="Trophies_listItem[\S]*">(?<matches>[\s\S]*)<\/li>/U', $contents, $matches)) {
-            throw new \RuntimeException('Could not fetch Strava challenges on public profile');
-        }
-
-        $challenges = [];
-        foreach ($matches['matches'] as $match) {
-            if (!preg_match('/<h4[\s\S]*>(?<match>.*?)<\/h4>/U', $match, $challengeName)) {
-                throw new \RuntimeException('Could not fetch Strava challenge name');
-            }
-            if (!preg_match('/<a href="[\S]*" title="(?<match>.*?)" class="[\S]*"[\s\S]*\/>/U', $match, $teaser)) {
-                throw new \RuntimeException('Could not fetch Strava challenge teaser');
-            }
-            if (!preg_match('/<img src="(?<match>.*?)" alt="[\s\S]*"[\s\S]*\/>/U', $match, $logoUrl)) {
-                throw new \RuntimeException('Could not fetch Strava challenge logoUrl');
-            }
-            if (!preg_match('/<a href="\/challenges\/(?<match>.*?)" title="[\s\S]*"[\s\S]*>/U', $match, $url)) {
-                throw new \RuntimeException('Could not fetch Strava challenge url');
-            }
-            if (!preg_match('/<img src="https[\S]+\/challenges\/(?<match>.*?)\/[\S]+.png" alt="[\s\S]*"[\s\S]*\/>/U', $match, $challengeId)) {
-                // Apparently public profiles can contain challenges that we cannot process
-                // because of missing required id. Skip these instead of throwing and aborting possible import.
-                continue;
-            }
-            if (!preg_match('/<time[\s\S]*>(?<match>.*?)<\/time>/', $match, $completedOn)) {
-                throw new \RuntimeException('Could not fetch Strava challenge timestamp');
-            }
-            if (in_array(trim($completedOn['match']), ['', '0'], true)) {
-                throw new \RuntimeException('Could not fetch Strava challenge timestamp');
-            }
-
-            $challenges[] = [
-                'name' => $challengeName['match'],
-                'completedOn' => SerializableDateTime::createFromFormat('d M Y H:i:s', '01 '.trim($completedOn['match'].' 00:00:00')),
-                'teaser' => $teaser['match'],
-                'logo_url' => $logoUrl['match'],
-                'url' => $url['match'],
-                'challenge_id' => $challengeId['match'],
-            ];
-        }
-
-        return $challenges;
-    }
-
-    /**
-     * @return array<mixed>
-     */
     public function getChallengesOnTrophyCase(): array
     {
         if (!$this->filesystemOperator->fileExists('storage/files/strava-challenge-history.html')) {
