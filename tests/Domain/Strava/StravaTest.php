@@ -40,6 +40,29 @@ class StravaTest extends TestCase
     private NullSleep $sleep;
     private MockObject $logger;
 
+    public function testGetAccessToken(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'POST',
+                'oauth/token',
+            )
+        ->willReturn(new Response(200, [], Json::encode(['access_token' => 'theAccessToken'])));
+
+        $this->strava->getAccessToken();
+        $this->strava->getAccessToken();
+    }
+
     public function testVerifyAccessToken(): void
     {
         $this->filesystemOperator
