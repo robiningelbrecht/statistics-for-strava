@@ -280,10 +280,12 @@ class SpyStrava extends Strava
     }
 
     #[\Override]
-    public function getChallengesOnPublicProfile(string $athleteId): array
+    public function getChallengesOnTrophyCase(): array
     {
-        ++$this->numberOfCallsExecuted;
-        $this->throw429IfMaxNumberOfCallsIsExceeded();
+        if ($this->triggerExceptionOnNextCall) {
+            $this->triggerExceptionOnNextCall = false;
+            throw new RequestException(message: 'The error', request: new Request('GET', 'uri'), response: new Response(500, [], Json::encode(['error' => 'The error'])));
+        }
 
         return [
             [
@@ -311,12 +313,6 @@ class SpyStrava extends Strava
                 'completedOn' => SerializableDateTime::fromString('2023-10-01'),
             ],
         ];
-    }
-
-    #[\Override]
-    public function getChallengesOnTrophyCase(): array
-    {
-        throw new \RuntimeException('an error');
     }
 
     #[\Override]
