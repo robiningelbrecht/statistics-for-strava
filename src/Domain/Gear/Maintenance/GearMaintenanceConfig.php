@@ -213,7 +213,6 @@ final readonly class GearMaintenanceConfig implements \Stringable
     public function getEnrichedGearComponents(MaintenanceTaskTags $maintenanceTaskTags): GearComponents
     {
         $enrichedGearComponents = GearComponents::empty();
-        /** @var GearComponent $gearComponent */
         foreach ($this->getGearComponents() as $gearComponent) {
             $enrichedGearComponents->add($gearComponent->withMaintenanceTaskTags($maintenanceTaskTags));
         }
@@ -228,7 +227,6 @@ final readonly class GearMaintenanceConfig implements \Stringable
 
     public function normalizeGearIds(GearIds $gearIds): void
     {
-        /** @var GearComponent $gearComponent */
         foreach ($this->getGearComponents() as $gearComponent) {
             $gearComponent->normalizeGearIds($gearIds);
         }
@@ -245,12 +243,9 @@ final readonly class GearMaintenanceConfig implements \Stringable
 
     public function getAllReferencedGearIds(): GearIds
     {
-        /** @var GearIds $gearIds */
-        $gearIds = $this->getGearComponents()->getAllReferencedGearIds()->mergeWith(
+        return $this->getGearComponents()->getAllReferencedGearIds()->mergeWith(
             $this->getGearOptions()->getAllReferencedGearIds()
         )->unique();
-
-        return $gearIds;
     }
 
     /**

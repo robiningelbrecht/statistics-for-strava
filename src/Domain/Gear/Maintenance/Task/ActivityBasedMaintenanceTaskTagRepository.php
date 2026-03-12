@@ -20,7 +20,6 @@ final readonly class ActivityBasedMaintenanceTaskTagRepository implements Mainte
         $activities = $this->enrichedActivities->findAll();
         $tasks = MaintenanceTaskTags::empty();
 
-        /** @var \App\Domain\Gear\Maintenance\GearComponent $gearComponent */
         foreach ($this->gearMaintenanceConfig->getGearComponents() as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $task) {
                 foreach ($activities as $activity) {

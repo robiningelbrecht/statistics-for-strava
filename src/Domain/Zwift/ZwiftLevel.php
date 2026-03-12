@@ -45,8 +45,8 @@ final readonly class ZwiftLevel extends PositiveInteger
     {
         $xpTable = $this->getXpTable();
 
-        /** @var int $maxXp */
         $maxXp = end($xpTable);
+        assert(is_int($maxXp));
 
         return $maxXp;
     }

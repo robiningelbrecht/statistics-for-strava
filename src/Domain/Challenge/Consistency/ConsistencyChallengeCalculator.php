@@ -26,7 +26,6 @@ final readonly class ConsistencyChallengeCalculator
         $months = $months->reverse();
 
         $consistency = [];
-        /** @var ConsistencyChallenge $challenge */
         foreach ($challenges as $challenge) {
             if (!$challenge->isEnabled()) {
                 continue;

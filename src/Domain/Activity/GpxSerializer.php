@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
+use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Serialization\Escape;
@@ -24,8 +25,8 @@ final readonly class GpxSerializer
         $activity = $this->enrichedActivities->find($activityId);
         $activitySteams = $this->activityStreamRepository->findByActivityId($activity->getId());
 
-        /** @var Stream\ActivityStream $timeStream */
         $timeStream = $activitySteams->filterOnType(StreamType::TIME);
+        assert($timeStream instanceof ActivityStream);
         $latLngStream = $activitySteams->filterOnType(StreamType::LAT_LNG)?->getData() ?? [];
         $altitudeStream = $activitySteams->filterOnType(StreamType::ALTITUDE)?->getData() ?? [];
         $powerStream = $activitySteams->filterOnType(StreamType::WATTS)?->getData() ?? [];
@@ -69,8 +70,8 @@ final readonly class GpxSerializer
                 $trkptNode->addAttribute('lon', (string) $latLngStream[$i][1]);
             }
 
-            /** @var \DateInterval $intervalInSeconds */
             $intervalInSeconds = \DateInterval::createFromDateString($time.' seconds');
+            assert($intervalInSeconds instanceof \DateInterval);
             $trkptNode->addChild(
                 'time',
                 $activity->getStartDate()->add($intervalInSeconds)->format(self::DATE_TIME_FORMAT)

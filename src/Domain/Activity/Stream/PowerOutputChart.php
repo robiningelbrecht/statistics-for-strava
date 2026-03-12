@@ -25,8 +25,8 @@ final readonly class PowerOutputChart
         $series = [];
         $maxPowerOutput = 100;
         foreach ($this->bestPowerOutputs as $bestPowerOutputs) {
-            /** @var PowerOutputs $powerOutputs */
             [$description, $powerOutputs] = $bestPowerOutputs;
+            assert($powerOutputs instanceof PowerOutputs);
             $scalarPowerOutputs = $powerOutputs->map(fn (PowerOutput $powerOutput): int => $powerOutput->getPower());
             $series[] = [
                 'type' => 'line',

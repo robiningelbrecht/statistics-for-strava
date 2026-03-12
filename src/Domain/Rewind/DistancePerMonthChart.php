@@ -48,7 +48,6 @@ final readonly class DistancePerMonthChart
         $monthlyTotals = array_fill(1, 12, 0);
         $sportTypes = [];
 
-        /** @var Kilometer $distance */
         foreach ($this->distancePerMonth as [$monthNumber, $sportType, $distance]) {
             if ($distance->isZeroOrLower()) {
                 continue;

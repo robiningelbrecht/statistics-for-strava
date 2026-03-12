@@ -17,22 +17,16 @@ final readonly class CombiningGearRepository implements GearRepository
 
     public function findAll(): Gears
     {
-        /** @var Gears $gears */
-        $gears = $this->importedGearRepository->findAll()->mergeWith(
+        return $this->importedGearRepository->findAll()->mergeWith(
             $this->customGearRepository->findAll()
         );
-
-        return $gears;
     }
 
     public function findAllUsed(): Gears
     {
-        /** @var Gears $gears */
-        $gears = $this->importedGearRepository->findAllUsed()->mergeWith(
+        return $this->importedGearRepository->findAllUsed()->mergeWith(
             $this->customGearRepository->findAllUsed()
         );
-
-        return $gears;
     }
 
     public function hasGear(): bool

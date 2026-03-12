@@ -44,15 +44,13 @@ final readonly class DistancePerMonthPerGearChart
 
         $xAxisValues = [];
         $distancePerGearAndMonth = [];
-        /** @var Month $month */
         foreach ($this->months as $month) {
             $xAxisValues[] = $month->getLabel();
-            /** @var Gear $gear */
             foreach ($gears as $gear) {
                 $distancePerGearAndMonth[(string) $gear->getId()][$month->getId()] = 0;
             }
         }
-        /** @var \App\Domain\Activity\Activity $activity */
+
         foreach ($this->activities as $activity) {
             if (!$activity->getGearId()) {
                 continue;

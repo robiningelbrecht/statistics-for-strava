@@ -67,8 +67,8 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
     private function enrichGears(Gears $gears): Gears
     {
         $enrichedGears = Gears::empty();
-        /** @var ImportedGear $gear */
         foreach ($gears as $gear) {
+            assert($gear instanceof ImportedGear);
             $enrichedGears->add($this->importedGearConfig->enrichGearWithCustomData($gear));
         }
 

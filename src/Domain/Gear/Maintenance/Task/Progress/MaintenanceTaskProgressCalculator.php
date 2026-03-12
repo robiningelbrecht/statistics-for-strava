@@ -50,10 +50,8 @@ final readonly class MaintenanceTaskProgressCalculator
         $maintenanceTaskTags = $this->maintenanceTaskTagRepository->findAll()->filterOnValid();
         $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($maintenanceTaskTags);
 
-        /** @var \App\Domain\Gear\Maintenance\GearComponent $gearComponent */
         foreach ($allGearComponents as $gearComponent) {
             $gearComponent = $gearComponent->withMaintenanceTaskTags($maintenanceTaskTags);
-            /** @var \App\Domain\Gear\Maintenance\Task\MaintenanceTask $maintenanceTask */
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
                 if (!$mostRecentTag = $maintenanceTask->getMostRecentMaintenanceTaskTag()) {
                     continue;

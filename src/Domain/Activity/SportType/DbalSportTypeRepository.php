@@ -31,7 +31,6 @@ final readonly class DbalSportTypeRepository extends DbalRepository implements S
     public function findForImages(): SportTypes
     {
         $notInSportTypes = ['invalid'];
-        /** @var SportType $sportType */
         foreach ($this->hidePhotosForSportTypes as $sportType) {
             $notInSportTypes[] = $sportType->value;
         }

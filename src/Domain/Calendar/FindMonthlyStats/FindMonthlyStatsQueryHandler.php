@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Calendar\FindMonthlyStats;
 
-use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\ActivityTypes;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Calendar\Month;
@@ -64,7 +63,6 @@ final readonly class FindMonthlyStatsQueryHandler implements QueryHandler
         }
 
         $minMaxDatePerActivityType = [];
-        /** @var ActivityType $activityType */
         foreach ($activityTypes as $activityType) {
             /** @var non-empty-array<string, string> $result */
             $result = $this->connection->executeQuery(

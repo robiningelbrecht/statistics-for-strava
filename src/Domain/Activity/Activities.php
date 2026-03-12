@@ -39,7 +39,6 @@ final class Activities extends Collection
     public function getUniqueYears(): Years
     {
         $years = Years::empty();
-        /** @var Activity $activity */
         foreach ($this as $activity) {
             $activityYear = Year::fromInt($activity->getStartDate()->getYear());
             if ($years->has($activityYear)) {
