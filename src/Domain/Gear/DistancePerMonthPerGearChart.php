@@ -52,7 +52,7 @@ final readonly class DistancePerMonthPerGearChart
         }
 
         foreach ($this->activities as $activity) {
-            if (!$activity->getGearId()) {
+            if (!$activity->getGearId() instanceof GearId) {
                 continue;
             }
             if (!array_key_exists((string) $activity->getGearId(), $distancePerGearAndMonth)) {
