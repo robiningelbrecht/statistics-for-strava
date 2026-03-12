@@ -8,6 +8,9 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Collection;
 
+/**
+ * @extends Collection<ConsistencyChallenge>
+ */
 final class ConsistencyChallenges extends Collection
 {
     public function getItemClassName(): string

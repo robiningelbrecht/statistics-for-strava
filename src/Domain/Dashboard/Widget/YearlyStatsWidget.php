@@ -77,8 +77,8 @@ final readonly class YearlyStatsWidget implements Widget
         $yearlyStats = $this->queryBus->ask(new FindYearlyStats());
         $yearlyStatsPerDay = $this->queryBus->ask(new FindYearlyStatsPerDay());
 
-        /** @var int $enableLastXYearsByDefault */
         $enableLastXYearsByDefault = $configuration->get('enableLastXYearsByDefault');
+        assert(is_int($enableLastXYearsByDefault));
 
         foreach ($activitiesPerActivityType as $activityType => $activities) {
             if ($activities->isEmpty()) {

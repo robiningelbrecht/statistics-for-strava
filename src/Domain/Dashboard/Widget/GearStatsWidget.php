@@ -71,7 +71,6 @@ final readonly class GearStatsWidget implements Widget
 
         $chartsPerActivityType = [];
         if (count($gearsPerActivityType) > 1) {
-            /** @var \App\Domain\Activity\ActivityType $activityType */
             foreach ($importedActivityTypes as $activityType) {
                 if (!isset($gearsPerActivityType[$activityType->value])) {
                     continue;

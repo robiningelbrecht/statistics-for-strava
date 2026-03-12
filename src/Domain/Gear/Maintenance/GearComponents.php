@@ -20,7 +20,6 @@ final class GearComponents extends Collection
     public function getAllMaintenanceTags(): array
     {
         $tags = [];
-        /** @var GearComponent $gearComponent */
         foreach ($this as $gearComponent) {
             foreach ($gearComponent->getMaintenanceTasks() as $maintenanceTask) {
                 $tags[] = (string) $maintenanceTask->getTag();
@@ -33,7 +32,6 @@ final class GearComponents extends Collection
     public function getAllReferencedGearIds(): GearIds
     {
         $gearIds = GearIds::empty();
-        /** @var GearComponent $gearComponent */
         foreach ($this as $gearComponent) {
             foreach ($gearComponent->getAttachedTo() as $gearId) {
                 $gearIds->add($gearId);
@@ -49,7 +47,6 @@ final class GearComponents extends Collection
     public function getAllReferencedImages(): array
     {
         $images = [];
-        /** @var GearComponent $gearComponent */
         foreach ($this as $gearComponent) {
             $images[] = $gearComponent->getImgSrc();
         }

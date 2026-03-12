@@ -22,7 +22,6 @@ final readonly class EddingtonCalculator
     public function calculate(UnitSystem $unitSystem): array
     {
         $eddingtons = [];
-        /** @var Config\EddingtonConfigItem $eddingtonConfigItem */
         foreach ($this->eddingtonConfiguration as $eddingtonConfigItem) {
             $activities = $this->enrichedActivities->findBySportTypes($eddingtonConfigItem->getSportTypesToInclude());
             if ($activities->isEmpty()) {

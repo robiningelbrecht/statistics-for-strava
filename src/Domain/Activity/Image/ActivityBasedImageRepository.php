@@ -23,7 +23,6 @@ final readonly class ActivityBasedImageRepository implements ImageRepository
     {
         $images = Images::empty();
         $activities = $this->enrichedActivities->findAll();
-        /** @var \App\Domain\Activity\Activity $activity */
         foreach ($activities as $activity) {
             if (0 === $activity->getTotalImageCount()) {
                 continue;

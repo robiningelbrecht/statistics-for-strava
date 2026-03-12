@@ -110,7 +110,6 @@ final readonly class GearComponent
 
     public function normalizeGearIds(GearIds $normalizedGearIds): void
     {
-        /** @var GearId $gearId */
         foreach ($this->getAttachedTo() as $gearId) {
             if ($gearId->isPrefixedWithStravaPrefix()) {
                 continue;

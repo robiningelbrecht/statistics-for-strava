@@ -49,10 +49,8 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
 
     /**
      * @param T $item
-     *
-     * @return Collection<T>
      */
-    public function add(mixed $item): self
+    public function add(mixed $item): static
     {
         $this->guardItemIsInstanceOfItemClassName($item);
         $this->items[] = $item;
@@ -62,10 +60,8 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
 
     /**
      * @param array<T> $items
-     *
-     * @return Collection<T>
      */
-    public function addMultiple(array $items): self
+    public function addMultiple(array $items): static
     {
         foreach ($items as $item) {
             $this->add($item);
@@ -74,10 +70,7 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
         return $this;
     }
 
-    /**
-     * @return Collection<T>
-     */
-    public function remove(int|string $index): self
+    public function remove(int|string $index): static
     {
         if (array_key_exists((string) $index, $this->items)) {
             unset($this->items[$index]);
@@ -91,10 +84,8 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
     /**
      * @param T $itemToReplace
      * @param T $itemTobeReplacedWith
-     *
-     * @return Collection<T>
      */
-    public function replace(mixed $itemToReplace, mixed $itemTobeReplacedWith): self
+    public function replace(mixed $itemToReplace, mixed $itemTobeReplacedWith): static
     {
         $this->guardItemIsInstanceOfItemClassName($itemTobeReplacedWith);
 
@@ -110,10 +101,8 @@ abstract class Collection implements \Countable, \IteratorAggregate, \JsonSerial
 
     /**
      * @param Collection<T> $collection
-     *
-     * @return Collection<T>
      */
-    public function mergeWith(Collection $collection): self
+    public function mergeWith(Collection $collection): static
     {
         foreach ($collection as $item) {
             $this->add($item);
