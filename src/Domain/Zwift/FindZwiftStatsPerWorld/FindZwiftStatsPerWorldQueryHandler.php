@@ -43,8 +43,8 @@ final readonly class FindZwiftStatsPerWorldQueryHandler implements QueryHandler
 
         $statsPerWorld = [];
         foreach ($results as $result) {
-            /** @var string $zwiftWorld */
             $zwiftWorld = $result['zwiftWorld'];
+            assert(is_string($zwiftWorld));
             $statsPerWorld[] = [
                 'zwiftWorld' => $zwiftWorld,
                 'numberOfActivities' => (int) $result['numberOfActivities'],

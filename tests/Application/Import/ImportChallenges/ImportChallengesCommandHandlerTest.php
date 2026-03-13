@@ -3,8 +3,6 @@
 namespace App\Tests\Application\Import\ImportChallenges;
 
 use App\Application\Import\ImportChallenges\ImportChallenges;
-use App\Domain\Athlete\Athlete;
-use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeId;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Strava\Strava;
@@ -27,18 +25,13 @@ class ImportChallengesCommandHandlerTest extends ContainerTestCase
     public function testHandle(): void
     {
         $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(3);
+        $this->strava->setMaxNumberOfCallsBeforeTriggering429(1000);
 
         $this->getContainer()->get(ChallengeRepository::class)->add(
             ChallengeBuilder::fromDefaults()
                 ->withChallengeId(ChallengeId::fromUnprefixed('2023-10_challenge_2'))
                 ->build()
         );
-
-        $this->getContainer()->get(AthleteRepository::class)->save(Athlete::create([
-            'id' => 100,
-            'birthDate' => '1989-08-14',
-        ]));
 
         $this->commandBus->dispatch(new ImportChallenges($output));
 
@@ -49,7 +42,6 @@ class ImportChallengesCommandHandlerTest extends ContainerTestCase
     public function testHandleWhenErrorInDownload(): void
     {
         $output = new SpyOutput();
-        $this->strava->setMaxNumberOfCallsBeforeTriggering429(100);
         $this->strava->triggerExceptionOnNextCall();
 
         $this->getContainer()->get(ChallengeRepository::class)->add(
@@ -58,11 +50,6 @@ class ImportChallengesCommandHandlerTest extends ContainerTestCase
                 ->withChallengeId(ChallengeId::fromUnprefixed('2023-10_challenge_2'))
                 ->build()
         );
-
-        $this->getContainer()->get(AthleteRepository::class)->save(Athlete::create([
-            'id' => 100,
-            'birthDate' => '1989-08-14',
-        ]));
 
         $this->commandBus->dispatch(new ImportChallenges($output));
 

@@ -18,9 +18,8 @@ final class SegmentEfforts extends Collection
 
     public function getBestEffort(): SegmentEffort
     {
-        /** @var SegmentEffort $bestEffort */
         $bestEffort = $this->getFirst();
-        /** @var SegmentEffort $segmentEffort */
+        assert($bestEffort instanceof SegmentEffort);
         foreach ($this as $segmentEffort) {
             if ($segmentEffort->getElapsedTimeInSeconds() >= $bestEffort->getElapsedTimeInSeconds()) {
                 continue;

@@ -71,7 +71,7 @@ final readonly class DistanceOverTimePerGearChart
 
         $series = [];
         $selectedSeries = [];
-        /** @var Gear $gear */
+
         foreach ($gears as $gear) {
             $gearName = Escape::forJsonEncode($gear->getName());
             $selectedSeries[$gearName] = !$gear->isRetired();

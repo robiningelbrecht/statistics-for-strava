@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity;
 
-use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypeRepository;
 
 final readonly class SportTypeBasedActivityTypeRepository implements ActivityTypeRepository
@@ -17,7 +16,6 @@ final readonly class SportTypeBasedActivityTypeRepository implements ActivityTyp
     public function findAll(): ActivityTypes
     {
         $activityTypes = [];
-        /** @var SportType $sportType */
         foreach ($this->sportTypeRepository->findAll() as $sportType) {
             $activityTypes[$sportType->getActivityType()->value] = $sportType->getActivityType();
         }

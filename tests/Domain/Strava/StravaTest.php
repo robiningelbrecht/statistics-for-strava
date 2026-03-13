@@ -40,6 +40,29 @@ class StravaTest extends TestCase
     private NullSleep $sleep;
     private MockObject $logger;
 
+    public function testGetAccessToken(): void
+    {
+        $this->filesystemOperator
+            ->expects($this->never())
+            ->method('fileExists');
+
+        $this->logger
+            ->expects($this->never())
+            ->method('log');
+
+        $this->client
+            ->expects($this->once())
+            ->method('request')
+            ->with(
+                'POST',
+                'oauth/token',
+            )
+        ->willReturn(new Response(200, [], Json::encode(['access_token' => 'theAccessToken'])));
+
+        $this->strava->getAccessToken();
+        $this->strava->getAccessToken();
+    }
+
     public function testVerifyAccessToken(): void
     {
         $this->filesystemOperator
@@ -723,228 +746,6 @@ class StravaTest extends TestCase
             ->willReturn(new Response(200, [], Json::encode(['id' => 12345])));
 
         $this->strava->deleteWebhookSubscription('the-id');
-    }
-
-    public function testGetChallengesOnPublicProfile(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $challenges = $this->strava->getChallengesOnPublicProfile('10');
-        $this->assertMatchesJsonSnapshot($challenges);
-    }
-
-    public function testGetChallengesOnPublicProfileWhenInvalidProfile(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], '');
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenges on public profile'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenNameNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-name.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge name'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenTeaserNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-teaser.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge teaser'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenLogoNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-logo.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge logoUrl'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenUrlNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-url.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge url'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenIdNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-id.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenTimeNotFound(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-without-time.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge timestamp'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
-    }
-
-    public function testGetChallengesOnPublicProfileWhenTimeIsEmpty(): void
-    {
-        $this->filesystemOperator
-            ->expects($this->never())
-            ->method('fileExists');
-
-        $this->client
-            ->expects($this->once())
-            ->method('request')
-            ->willReturnCallback(function (string $method, string $path, array $options): Response {
-                $this->assertEquals('GET', $method);
-                $this->assertEquals('athletes/10', $path);
-
-                return new Response(200, [], file_get_contents(__DIR__.'/public-profile-with-empty-time.html'));
-            });
-
-        $this->logger
-            ->expects($this->once())
-            ->method('info');
-
-        $this->expectExceptionObject(new \RuntimeException('Could not fetch Strava challenge timestamp'));
-
-        $this->strava->getChallengesOnPublicProfile('10');
     }
 
     public function testGetChallengesOnTrophyCase(): void
