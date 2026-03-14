@@ -21,12 +21,12 @@
                                     {% for sportType in sportTypes %}
                                         <li>
                                             <div>
-                                                <input type="radio" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType" value="{{ sportType.value }}" class="peer" />
+                                                <input type="checkbox" id="{{ sportType.value }}" data-dataTable-filter="sportType" name="sportType[{{ sportType.value }}]" value="{{ sportType.value }}" class="peer" />
                                                 <label for="{{ sportType.value }}" class="flex gap-x-1 items-center">
                                                     {{ svgSportType(sportType) }}
                                                     <div>{{ sportType|trans }}</div>
                                                 </label>
-                                                <a href="#" data-dataTable-filter-clear="sportType">{{ "clear"|trans }}</a>
+                                                <a href="#" data-datatable-filter-clear="sportType[{{ sportType.value }}]">{{ "clear"|trans }}</a>
                                             </div>
                                         </li>
                                     {% endfor %}
