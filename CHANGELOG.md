@@ -1,3 +1,26 @@
+# [v4.7.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.2) - 2026-03-14
+
+## New features
+* Average gradient on segments page
+
+## Improvements
+* Multi-select filters for heatmaps
+* Updated Shoutrrr to v0.14.0
+* German translation updates
+
+## Bug fixes
+* Fixed pace distribution for imperial units
+
+## Technical details
+* ISSUE #1867: Add average gradient on segments page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1874
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1883
+* ISSUE #1884: Update Shoutrrr to v0.14.0 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1885
+* ISSUE #1887: Sunset challenge import from public profile by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1888
+* ISSUE #1891: Fix pace distribution issue for imerial system by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1894
+* ISSUE #1893: Allow heatmap activities / filters to be multi-select by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1895
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.1...v4.7.2
+
 # [v4.7.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.1) - 2026-03-09
 
 ## New features
