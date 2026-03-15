@@ -92,7 +92,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                         'segment' => $segment,
                     ]),
                     searchables: $segment->getSearchables(),
-                    filterables: $segment->getFilterables(),
+                    filterables: $segment->getFilterables($this->unitSystem),
                     sortValues: $segment->getSortables(),
                     summables: []
                 );
