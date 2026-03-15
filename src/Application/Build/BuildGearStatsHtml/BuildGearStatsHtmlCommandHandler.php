@@ -70,6 +70,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
                 'customGearConfig' => $this->customGearConfig,
                 'activeGear' => $activeGear,
                 'retiredGear' => $allUsedGear->filter(fn (Gear $gear): bool => $gear->isRetired()),
+                'unitSystem' => $this->unitSystem,
                 'distancePerMonthPerGearChart' => Json::encode(
                     DistancePerMonthPerGearChart::create(
                         gearCollection: $allUsedGear,

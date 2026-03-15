@@ -11,6 +11,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -206,6 +207,13 @@ class ImportedGear implements Gear
     public function getRelativeCostPerWorkout(): ?Money
     {
         return $this->getPurchasePrice()?->divide($this->numberOfActivities > 0 ? $this->numberOfActivities : 1);
+    }
+
+    public function getRelativeCostPerDistanceUnit(UnitSystem $unitSystem): ?Money
+    {
+        $distance = $this->getDistance()->toUnitSystem($unitSystem)->toInt();
+
+        return $this->getPurchasePrice()?->divide($distance > 0 ? $distance : 1);
     }
 
     public function isRetired(): bool
