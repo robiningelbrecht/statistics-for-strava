@@ -14,6 +14,7 @@ use App\Domain\Zwift\ZwiftMap;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -300,16 +301,19 @@ final class Segment implements SupportsAITooling
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, int|string>
      */
-    public function getFilterables(): array
+    public function getFilterables(UnitSystem $unitSystem): array
     {
-        return [
+        return array_filter([
             'isKom' => $this->isKOM() ? 'isKom' : '',
             'isFavourite' => $this->isFavourite() ? 'isFavourite' : '',
             'sportType' => $this->getSportType()->value,
             'countryCode' => $this->getCountryCode() ?? '',
-        ];
+            'distance' => (int) round($this->getDistance()->toUnitSystem($unitSystem)->toFloat() * 10), // We don't want to filter on float values, but integers instead.
+            'averageGradient' => $this->getAverageGradient() ? (int) round($this->getAverageGradient() * 10) : null, // We don't want to filter on float values, but integers instead.
+            'maxGradient' => (int) round($this->getMaxGradient() * 10), // We don't want to filter on float values, but integers instead.
+        ]);
     }
 
     /**

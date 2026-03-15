@@ -38,7 +38,7 @@
     <aside class="fixed top-0 left-0 w-64 sidebar-collapsed:w-32 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 z-1001"
            aria-label="Sidenav" id="drawer-navigation">
         {% set isSymfonyRouter = router == enum('App\\Application\\Router').SYMFONY %}
-        <div class="sidebar-collapsed:max-h-full max-h-[calc(100vh-114px)] overflow-y-auto py-5 px-3 h-full bg-white divide-y divide-gray-200">
+        <div class="sidebar-collapsed:max-h-full max-h-[calc(100vh-114px)] overflow-y-auto py-5 px-3 h-full divide-y divide-gray-200">
             <ul class="space-y-1 pb-2">
                 <li>
                     <a href="{{ relativeUrl('dashboard') }}" data-router-navigate="{{ relativeUrl('dashboard') }}" {{ isSymfonyRouter ? 'data-router-disabled' : '' }}

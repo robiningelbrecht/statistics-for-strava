@@ -80,11 +80,16 @@ final readonly class VelocityDistributionChart
 
         $yAxisMax = max($data) * 1.2;
 
+        $target = $this->averageSpeed->toFloat();
+        if ($velocityUnitPreference instanceof SecPerKm) {
+            $secPerKm = $this->averageSpeed->toMetersPerSecond()->toSecPerKm();
+            $target = UnitSystem::METRIC === $this->unitSystem ? $secPerKm->toFloat() : $secPerKm->toSecPerMile()->toFloat();
+        }
         $xAxisValueAverageVelocity = array_search($this->findClosestSteppedValue(
             min: $minVelocity,
             max: $maxVelocity,
             step: $step,
-            target: $velocityUnitPreference instanceof Pace ? $this->averageSpeed->toMetersPerSecond()->toSecPerKm()->toFloat() : $this->averageSpeed->toFloat()
+            target: $target
         ), $xAxisValues);
 
         $convertedAverageVelocity = match (true) {

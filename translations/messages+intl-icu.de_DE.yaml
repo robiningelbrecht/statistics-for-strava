@@ -127,6 +127,7 @@ Goal: Ziel
 Golf: Golf
 'Good training variety': 'Gute Abwechslung im Training'
 'Google searches': 'Google Suchanfragen'
+Gradient: Gradient
 'Gravel Rides': Schotterfahrt
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Die Richtlinien variieren von Person zu Person; weitere Informationen findest du in Joe Friels ‚The Cyclist's Training Bible‘ oder in den Forschungsunterlagen von TrainingPeaks."
 HIIT: HIIT
@@ -192,6 +193,7 @@ Maintenance: Wartung
 'Maintenance history': Wartungsverlauf
 Mar: Mär
 Max: Max
+'Max gradient': 'Max gradient'
 May: Mai
 Medium: Mittel
 Metric: Metrisch
@@ -357,70 +359,70 @@ Tennis: Tennis
 "That's a full week of daily activity": "'Das ist eine ganze Woche tägliche Aktivität"
 "That's a full week of non-stop movement": 'Das ist eine ganze Woche Bewegung am Stück'
 "That's a full year of daily activity": 'Das ist ein ganzes Jahr tägliche Aktivität'
-"That's about 3.5 months of continuous movement": "Das sind fast 3,5 Monate ununterbrochene Bewegung"
+"That's about 3.5 months of continuous movement": 'Das sind fast 3,5 Monate ununterbrochene Bewegung'
 "That's about one activity per week for a year": 'Das entspricht einer Aktivität pro Woche für ein Jahr'
-"That's about one activity per week for half a year": "Das entspricht einer Aktivität pro Woche für ein halbes Jahr"
-"That's about one activity per week for two months": "Das entspricht einer Aktivität pro Woche für zwei Monate"
+"That's about one activity per week for half a year": 'Das entspricht einer Aktivität pro Woche für ein halbes Jahr'
+"That's about one activity per week for two months": 'Das entspricht einer Aktivität pro Woche für zwei Monate'
 "That's almost 2 activities per week for a year": 'Das entspricht zwei Aktivitäten pro Woche für ein Jahr'
 "That's almost 21 days of continuous movement": 'Das sind fast 21 Tage ununterbrochene Bewegung'
 "That's almost 3 activities per week for 7 years": 'Das entspricht drei Aktivitäten pro Woche für 7 Jahre'
 "That's an activity almost every day for 27 years": 'Das entspricht einer täglichen Aktivität für 27 Jahre'
 "That's an activity every day for almost 7 years": 'Das entspricht einer täglichen Aktivität für 7 Jahre'
-"That's an activity every day for nearly 11 years": "Das entspricht einer täglichen Aktivität für fast 11 Jahre"
+"That's an activity every day for nearly 11 years": 'Das entspricht einer täglichen Aktivität für fast 11 Jahre'
 "That's an activity every day for nearly 14 years": 'Das entspricht einer täglichen Aktivität für fast 14 Jahre'
-"That's an activity every day for over 20 years": "Das entspricht einer täglichen Aktivität über 20 Jahre hinweg"
-"That's an activity every day for over 8 years": "Das entspricht einer täglichen Aktivität über 8 Jahre hinweg"
+"That's an activity every day for over 20 years": 'Das entspricht einer täglichen Aktivität über 20 Jahre hinweg'
+"That's an activity every day for over 8 years": 'Das entspricht einer täglichen Aktivität über 8 Jahre hinweg'
 "That's climbing Mount Everest twice": 'Das entspricht zwei Besteigungen des Mount Everest.'
 "That's climbing to the edge of space and back 5 times": 'Das entspricht fünf Aufstiegen bis an den Rand des Weltraums und zurück.'
 "That's cruising altitude of a commercial airplane": 'Das entspricht der Flughöhe eines Linienfluges'
-"That's deeper than the deepest known cave on Earth": "Das ist tiefer als die tiefste bekannte Höhle der Erde"
-"That's five times around the Earth": "Das ist fünf mal um die ganze Erde"
+"That's deeper than the deepest known cave on Earth": 'Das ist tiefer als die tiefste bekannte Höhle der Erde'
+"That's five times around the Earth": 'Das ist fünf mal um die ganze Erde'
 "That's half a year without skipping a single day": 'Das ist ein halbes Jahr ohne einen einzigen Pausentag'
 "That's higher than Felix Baumgartner's space jump": 'Das ist höher als Felix Baumgartners Weltraumsprung'
 "That's higher than the International Space Station's orbit": 'Das ist höher als die Umlaufbahn der Internationalen Raumstation.'
-"That's higher than the summit of Mont Blanc": "Das ist höher als der Gipfel des Mont Blanc"
-"That's more than 10 days of non-stop movement": "Das sind mehr als 4 Tage ununterbrochener Bewegung"
-"That's more than 10 months of continuous movement": "Das sind mehr als 10 Monate fortlaufender Bewegung"
+"That's higher than the summit of Mont Blanc": 'Das ist höher als der Gipfel des Mont Blanc'
+"That's more than 10 days of non-stop movement": 'Das sind mehr als 4 Tage ununterbrochener Bewegung'
+"That's more than 10 months of continuous movement": 'Das sind mehr als 10 Monate fortlaufender Bewegung'
 "That's more than 2 Eiffel Towers stacked up": 'Das ist höher als zwei übereinandergestapelte Eiffeltürme'
 "That's more than 2.5 times around the Earth": 'Das ist mehr als 2,5 um die ganze Erde'
 "That's more than 4 days of continuous activity": 'Das sind mehr als 4 Tage ununterbrochener Aktivität'
-"That's more than 4 months of non-stop activity": "Das sind mehr als 4 Monate ununterbrochener Aktivität"
+"That's more than 4 months of non-stop activity": 'Das sind mehr als 4 Monate ununterbrochener Aktivität'
 "That's more than 41 days of non-stop movement": 'Das sind mehr als 41 Tage ununterbrochener Bewegung'
 "That's more than 5 activities per week for 7 years": 'Das sind mehr als fünf Aktivitäten pro Woche über sieben Jahre.'
-"That's more than 8 times the height of Mount Everest": "Das ist die 8 mal die Höhe des Mount Everest, "
+"That's more than 8 times the height of Mount Everest": 'Das ist die 8 mal die Höhe des Mount Everest, '
 "That's more than a full year of non-stop movement": 'Das ist mehr als ein ganzes Jahr ununterbrochener Bewegung.'
 "That's more than halfway around the Earth": 'Das ist mehr als der halbe Umfang der Erde.'
 "That's more than halfway to the ISS": 'Das ist mehr als der halbe Weg zur ISS'
-"That's more than the circumference of Mars": "Das ist mehr als der Umfang des Planeten Mars"
-"That's more than the distance from Earth to the Moon": "Das ist weiter als von der Erde bis zum Mond"
+"That's more than the circumference of Mars": 'Das ist mehr als der Umfang des Planeten Mars'
+"That's more than the distance from Earth to the Moon": 'Das ist weiter als von der Erde bis zum Mond'
 "That's nearly 3 months of non-stop activity": "That's nearly 3 months of non-stop activity"
 "That's nearly 4 activities per week for 7 years": 'Das sind fast vier Aktivitäten pro Woche für sieben Jahre'
 "That's nearly 5 activities per week for a year": 'Das sind fast fünf Aktivitäten pro Woche für ein Jahre'
 "That's nearly 7 months of non-stop activity": "That's nearly 7 months of non-stop activity"
-"That's nearly climbing Mount Everest 3 times": "Das entspricht fast drei Besteigungen des Mount Everest"
+"That's nearly climbing Mount Everest 3 times": 'Das entspricht fast drei Besteigungen des Mount Everest'
 "That's nearly the altitude of the International Space Station": "That's nearly the altitude of the International Space Station"
 "That's nearly twice around the Earth": "That's nearly twice around the Earth"
 "That's nearly twice the altitude of the International Space Station": "That's nearly twice the altitude of the International Space Station"
-"That's over 5.5 months of continuous movement": "Das sind über 5,5 Monate ununterbrochene Bewegung"
-"That's roughly a quarter of the way around the Earth": "Das ist ein Viertel des Erdumfangs"
-"That's roughly the diameter of Jupiter": "Das ist der Durchmesser des Jupiter"
-"That's roughly the diameter of Neptune": "Das ist der Durchmesser des Neptun"
-"That's roughly the distance from London to Perth": "Das ist die Strecke von London bis Perth"
-"That's roughly the distance from Madrid to Barcelona": "Das ist die Strecke von Madrid bis Barcelona"
-"That's roughly the distance light travels in one second": "Diese Strecke legt Licht in einer Sekunde zurück"
+"That's over 5.5 months of continuous movement": 'Das sind über 5,5 Monate ununterbrochene Bewegung'
+"That's roughly a quarter of the way around the Earth": 'Das ist ein Viertel des Erdumfangs'
+"That's roughly the diameter of Jupiter": 'Das ist der Durchmesser des Jupiter'
+"That's roughly the diameter of Neptune": 'Das ist der Durchmesser des Neptun'
+"That's roughly the distance from London to Perth": 'Das ist die Strecke von London bis Perth'
+"That's roughly the distance from Madrid to Barcelona": 'Das ist die Strecke von Madrid bis Barcelona'
+"That's roughly the distance light travels in one second": 'Diese Strecke legt Licht in einer Sekunde zurück'
 "That's roughly the length of France": 'Das entspricht grob der Länge Frankreichs'
-"That's roughly the length of the Danube river": "Das ist die Länge der Donau von Quelle zur Mündung"
-"That's roughly the length of the island of Jamaica": "Das ist die Ausdehnung von Jamaica"
+"That's roughly the length of the Danube river": 'Das ist die Länge der Donau von Quelle zur Mündung'
+"That's roughly the length of the island of Jamaica": 'Das ist die Ausdehnung von Jamaica'
 "That's taller than the Empire State Building": 'Das ist höher als das Empire State Building'
-"That's the altitude of a satellite in low Earth orbit": "Das ist die Flughöhe eines Satelliten in einer niedrigen Erdumlaufbahn"
+"That's the altitude of a satellite in low Earth orbit": 'Das ist die Flughöhe eines Satelliten in einer niedrigen Erdumlaufbahn'
 "That's the circumference of the Earth": 'Das entspricht dem Erdumfang'
 "That's the distance from Earth to the Moon": 'Das entspricht der Entfernung der Erde zum Mond'
-"That's the distance to the edge of space, straight up": "Das ist bis zum Rand des Weltraums"
+"That's the distance to the edge of space, straight up": 'Das ist bis zum Rand des Weltraums'
 "That's the edge of space, the Kármán line": 'Das ist bis zum Beginn des Weltraums, die Kármán-Linie'
 "That's the height of Mount Everest": 'Das ist die Höhe des Mount Everest'
 "That's the height of the Eiffel Tower": 'Das ist die Höhe des Eiffelturms'
 "That's the length of the Great Wall of China": 'Das entspricht der Länge der chinesischen Mauer'
-"That's three quarters of the way around the Earth": "Das ist dreiviertel des Erdumfanges"
+"That's three quarters of the way around the Earth": 'Das ist dreiviertel des Erdumfanges'
 "That's {number} days of at least {distance}": 'Das sind {number} Tage mit mindestens {distance}'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Die Eddington-Zahl im Kontext des Radfahrens oder Laufens ist definiert als die maximale Zahl E, bei der der Sportler an mindestens E Tagen jeweils mindestens E km zurückgelegt hat.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Diese Abzeichen sind dynamisch erstellt. Du kannst sie in allen &lt;img&gt; Tags verwenden.'

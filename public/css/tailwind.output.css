@@ -1084,6 +1084,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .my-4 {
+    margin-block: calc(var(--spacing) * 4);
+  }
   .ms-3 {
     margin-inline-start: calc(var(--spacing) * 3);
   }
@@ -1119,6 +1122,9 @@
   }
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
+  }
+  .mt-6 {
+    margin-top: calc(var(--spacing) * 6);
   }
   .apexcharts-canvas {
     & .apexcharts-tooltip {
@@ -2064,6 +2070,15 @@
   .animate-\[bounce_1s_infinite_400ms\] {
     animation: bounce 1s infinite 400ms;
   }
+  .animate-\[spin_1\.5s_linear_infinite\] {
+    animation: spin 1.5s linear infinite;
+  }
+  .animate-\[spin_2s_linear_infinite\] {
+    animation: spin 2s linear infinite;
+  }
+  .animate-\[spin_3s_linear_infinite_reverse\] {
+    animation: spin 3s linear infinite reverse;
+  }
   .animate-bounce {
     animation: var(--animate-bounce);
   }
@@ -3001,6 +3016,10 @@
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
   }
+  .text-4xl {
+    font-size: var(--text-4xl);
+    line-height: var(--tw-leading, var(--text-4xl--line-height));
+  }
   .text-7xl {
     font-size: var(--text-7xl);
     line-height: var(--tw-leading, var(--text-7xl--line-height));
@@ -3173,6 +3192,9 @@
     .dark .datatable-wrapper .datatable-table thead th& .datatable-sorter {
       color: white;
     }
+  }
+  .text-\[\#111827\] {
+    color: #111827;
   }
   .text-\[\#faba00\] {
     color: #faba00;
@@ -3352,6 +3374,9 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
+  }
+  .\[animation-direction\:reverse\] {
+    animation-direction: reverse;
   }
   .\[writing-mode\:vertical-lr\] {
     writing-mode: vertical-lr;
@@ -5176,6 +5201,18 @@
       text-align: left;
     }
   }
+  body:has(.rainbow-bg) {
+    animation: rainbow-bg 10s linear infinite;
+    nav {
+      animation: rainbow-bg 10s linear infinite;
+    }
+    aside, #toggle-sidebar-collapsed-state {
+      display: none !important;
+    }
+    main {
+      margin-left: calc(var(--spacing) * 0) !important;
+    }
+  }
 }
 @layer base {
   * {
@@ -5871,6 +5908,29 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+@keyframes rainbow-bg {
+  0% {
+    background-color: #ff6b6b;
+  }
+  16% {
+    background-color: #ffa36c;
+  }
+  33% {
+    background-color: #fff56d;
+  }
+  50% {
+    background-color: #6bff95;
+  }
+  66% {
+    background-color: #6bdfff;
+  }
+  83% {
+    background-color: #8a6bff;
+  }
+  100% {
+    background-color: #ff6b6b;
   }
 }
 @layer properties {
