@@ -127,6 +127,7 @@ Goal: Objectif
 Golf: Golf
 'Good training variety': "Bonne variété d'entraînement"
 'Google searches': 'Recherches Google'
+Gradient: Gradient
 'Gravel Rides': 'Sorties Gravel'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Les directives varient selon l'individu ; pour plus d'informations, voir 'The Cyclist's Training Bible' de Joe Friel ou la documentation de recherche de TrainingPeaks."
 HIIT: HIIT
@@ -192,6 +193,7 @@ Maintenance: Maintenance
 'Maintenance history': 'Historique de maintenance'
 Mar: Mar
 Max: Max
+'Max gradient': 'Max gradient'
 May: Mai
 Medium: Moyen
 Metric: Metric

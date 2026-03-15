@@ -3,10 +3,12 @@
         "active": true,
         "searchables": "⭐️ Segment One",
         "filterables": {
-            "isKom": "",
             "isFavourite": "isFavourite",
             "sportType": "Ride",
-            "countryCode": "BE"
+            "countryCode": "BE",
+            "distance": 1,
+            "averageGradient": 27,
+            "maxGradient": 53
         },
         "summables": [],
         "sort": {
@@ -22,10 +24,11 @@
         "active": true,
         "searchables": "Segment Two",
         "filterables": {
-            "isKom": "",
-            "isFavourite": "",
             "sportType": "Ride",
-            "countryCode": "BE"
+            "countryCode": "BE",
+            "distance": 1,
+            "averageGradient": 27,
+            "maxGradient": 10
         },
         "summables": [],
         "sort": {
@@ -44,7 +47,10 @@
             "isKom": "isKom",
             "isFavourite": "isFavourite",
             "sportType": "Ride",
-            "countryCode": "BE"
+            "countryCode": "BE",
+            "distance": 1,
+            "averageGradient": 27,
+            "maxGradient": 53
         },
         "summables": [],
         "sort": {
@@ -60,10 +66,12 @@
         "active": true,
         "searchables": "⭐️ Segment Ten",
         "filterables": {
-            "isKom": "",
             "isFavourite": "isFavourite",
             "sportType": "VirtualRide",
-            "countryCode": "BE"
+            "countryCode": "BE",
+            "distance": 1,
+            "averageGradient": 27,
+            "maxGradient": 53
         },
         "summables": [],
         "sort": {
