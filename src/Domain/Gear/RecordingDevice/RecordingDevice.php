@@ -8,6 +8,7 @@ use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\String\Name;
 use Money\Money;
 
@@ -99,5 +100,12 @@ final readonly class RecordingDevice
     public function getRelativeCostPerWorkout(): ?Money
     {
         return $this->getPurchasePrice()?->divide($this->getNumberOfWorkouts() > 0 ? $this->getNumberOfWorkouts() : 1);
+    }
+
+    public function getRelativeCostPerDistanceUnit(UnitSystem $unitSystem): ?Money
+    {
+        $distance = $this->getDistanceTracked()->toUnitSystem($unitSystem)->toInt();
+
+        return $this->getPurchasePrice()?->divide($distance > 0 ? $distance : 1);
     }
 }

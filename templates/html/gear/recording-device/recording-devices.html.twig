@@ -54,7 +54,7 @@
                                 {{ svg('wallet') }}
                             </div>
                         </th>
-                        <th colspan="2" scope="col" class="px-2 py-3">
+                        <th colspan="3" scope="col" class="px-2 py-3">
                             {{ "Relative cost"|trans }}
                         </th>
                     </tr>
@@ -64,6 +64,9 @@
                         </th>
                         <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
                             {{ "per activity"|trans }}
+                        </th>
+                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                            {{ "per"|trans }} {{ renderUnitSymbol('distance') }}
                         </th>
                     </tr>
                     </thead>
@@ -107,6 +110,14 @@
                                 {% set relativeCostPerWorkout = recordingDevice.getRelativeCostPerWorkout() %}
                                 {% if relativeCostPerWorkout %}
                                     {{ relativeCostPerWorkout|formatMoney }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-2 truncate">
+                                {% set relativeCostPerDistanceUnit = recordingDevice.getRelativeCostPerDistanceUnit(unitSystem) %}
+                                {% if relativeCostPerDistanceUnit %}
+                                    {{ relativeCostPerDistanceUnit|formatMoney }}
                                 {% else %}
                                     -
                                 {% endif %}
