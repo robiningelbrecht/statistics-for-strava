@@ -8,7 +8,8 @@
             "countryCode": "BE",
             "distance": 1,
             "averageGradient": 27,
-            "maxGradient": 53
+            "maxGradient": 53,
+            "lastEffortDate": 1696896000000
         },
         "summables": [],
         "sort": {
@@ -28,7 +29,8 @@
             "countryCode": "BE",
             "distance": 1,
             "averageGradient": 27,
-            "maxGradient": 10
+            "maxGradient": 10,
+            "lastEffortDate": 1696896000000
         },
         "summables": [],
         "sort": {
@@ -50,7 +52,8 @@
             "countryCode": "BE",
             "distance": 1,
             "averageGradient": 27,
-            "maxGradient": 53
+            "maxGradient": 53,
+            "lastEffortDate": 1696896000000
         },
         "summables": [],
         "sort": {
@@ -71,7 +74,8 @@
             "countryCode": "BE",
             "distance": 1,
             "averageGradient": 27,
-            "maxGradient": 53
+            "maxGradient": 53,
+            "lastEffortDate": 1696896000000
         },
         "summables": [],
         "sort": {
