@@ -171,6 +171,25 @@
                             </div>
                         </div>
                         <div class="filter-dropdown">
+                            <button id="dropdownDateRangeButton"
+                                    data-dropdown-toggle="dropdownDateRange" type="button">
+                                <span>{{ "Last effort date"|trans }}</span>
+                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
+                            <div id="dropdownDateRange" class="divide-y divide-gray-100">
+                                <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
+                                    <div class="flex items-center" data-dataTable-filter="lastEffortDate[]">
+                                        <input name="lastEffortDate[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <span class="mx-2 text-gray-500">{{ "to"|trans }}</span>
+                                        <input name="lastEffortDate[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                    </div>
+                                    <a href="#" class="text-strava-orange text-sm text-right underline" data-datatable-filter-clear="lastEffortDate">{{ "clear"|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-dropdown">
                             <button id="dropdownOtherButton"
                                     data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Other"|trans }}</span>
