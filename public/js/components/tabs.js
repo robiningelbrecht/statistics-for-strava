@@ -1,10 +1,8 @@
 import {eventBus, Events} from "../core/event-bus";
 
-export default class TabsManager {
-    constructor() {
-        this._syncGroups = {};
-    }
+let _isSyncing = false;
 
+export default class TabsManager {
     init(rootNode) {
         rootNode.querySelectorAll('[data-tabs]').forEach(($triggerEl) => {
             const tabItems = [];
@@ -25,40 +23,32 @@ export default class TabsManager {
                 });
 
             const syncGroupId = $triggerEl.getAttribute('data-tabs-sync-group');
-            if (syncGroupId && !this._syncGroups[syncGroupId]) {
-                this._syncGroups[syncGroupId] = {instances: [], activeIndex: 0, syncing: false};
-            }
 
-            const tabsInstance = new Tabs($triggerEl, tabItems, {
+            let tabsInstance;
+            tabsInstance = new Tabs($triggerEl, tabItems, {
                 defaultTabId: defaultTabId,
                 activeClasses: 'active',
                 inactiveClasses: 'inactive',
                 onShow: (tabs, activeTab) => {
-                    if (syncGroupId) {
-                        const group = this._syncGroups[syncGroupId];
-                        if (!group.syncing) {
-                            const newIndex = tabItems.findIndex(item => item.id === activeTab.id);
-                            if (newIndex !== -1 && newIndex !== group.activeIndex) {
-                                group.activeIndex = newIndex;
-                                group.syncing = true;
-                                group.instances.forEach(({instance, items}) => {
-                                    if (instance !== tabsInstance && items[newIndex]) {
-                                        instance.show(items[newIndex].id);
-                                    }
-                                });
-                                group.syncing = false;
-                            }
-                        }
-                    }
-
                     const activeTabId = activeTab.id.replace('#', '');
                     // Trigger a chart resize to make sure charts are rendered and displayed.
                     eventBus.emit(Events.TAB_CHANGED, {activeTabId});
+
+                    if (syncGroupId && !_isSyncing && tabsInstance) {
+                        const activeIndex = tabItems.findIndex(item => item.id === activeTab.id);
+                        eventBus.emit(Events.TAB_SYNCED, {syncGroupId, activeIndex, source: tabsInstance});
+                    }
                 },
             });
 
             if (syncGroupId) {
-                this._syncGroups[syncGroupId].instances.push({instance: tabsInstance, items: tabItems});
+                eventBus.on(Events.TAB_SYNCED, ({syncGroupId: groupId, activeIndex, source}) => {
+                    if (groupId === syncGroupId && source !== tabsInstance && tabItems[activeIndex]) {
+                        _isSyncing = true;
+                        tabsInstance.show(tabItems[activeIndex].id);
+                        _isSyncing = false;
+                    }
+                });
             }
         });
     }

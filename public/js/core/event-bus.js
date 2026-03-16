@@ -4,6 +4,7 @@ export const Events = Object.freeze({
     DARK_MODE_TOGGLED:          'darkMode:toggled',
     FULLSCREEN_ENABLED:         'fullscreen:enabled',
     TAB_CHANGED:                'tab:changed',
+    TAB_SYNCED:                 'tab:synced',
     SIDEBAR_RESIZED:            'sidebar:resized',
     NAVIGATION_CLICKED:         'navigation:clicked',
     DATA_TABLE_CLUSTER_CHANGED: 'dataTable:clusterChanged',
