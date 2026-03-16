@@ -313,6 +313,7 @@ final class Segment implements SupportsAITooling
             'distance' => (int) round($this->getDistance()->toUnitSystem($unitSystem)->toFloat() * 10), // We don't want to filter on float values, but integers instead.
             'averageGradient' => $this->getAverageGradient() ? (int) round($this->getAverageGradient() * 10) : null, // We don't want to filter on float values, but integers instead.
             'maxGradient' => (int) round($this->getMaxGradient() * 10), // We don't want to filter on float values, but integers instead.
+            'lastEffortDate' => $this->getLastEffortDate() instanceof SerializableDateTime ? $this->getLastEffortDate()->getTimestamp() * 1000 : null, // JS timestamp is in milliseconds,
         ]);
     }
 

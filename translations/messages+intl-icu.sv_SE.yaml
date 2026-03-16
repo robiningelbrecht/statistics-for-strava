@@ -172,6 +172,7 @@ Laps: Varv
 'Last 7 days training load': 'Belastning de senaste 7 dagarna'
 'Last activity': 'Last activity'
 'Last effort': 'Senaste prestation'
+'Last effort date': 'Last effort date'
 'Last maintenance': 'Senast underhållet'
 'Last {numberOfDays} days': 'Senaste {numberOfDays} dagarna'
 Lifetime: Lifetime
@@ -531,6 +532,7 @@ more: mera
 n/a: n/a
 never: aldrig
 'on': på
+per: per
 'per activity': 'per aktivitet'
 'per hour': 'per timma'
 'reached Eddington number {number}': 'reached Eddington number {number}'

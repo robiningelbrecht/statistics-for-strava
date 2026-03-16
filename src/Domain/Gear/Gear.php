@@ -10,6 +10,7 @@ use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Time\Hour;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Money\Money;
@@ -65,6 +66,8 @@ interface Gear extends SupportsAITooling
     public function getRelativeCostPerHour(): ?Money;
 
     public function getRelativeCostPerWorkout(): ?Money;
+
+    public function getRelativeCostPerDistanceUnit(UnitSystem $unitSystem): ?Money;
 
     public function getActivityTypes(): ActivityTypes;
 

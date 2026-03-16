@@ -172,6 +172,7 @@ Laps: Laps
 'Last 7 days training load': 'Last 7 days training load'
 'Last activity': 'Last activity'
 'Last effort': 'Last effort'
+'Last effort date': 'Last effort date'
 'Last maintenance': 'Última manutenção'
 'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
 Lifetime: Lifetime
@@ -531,6 +532,7 @@ more: more
 n/a: n/d
 never: nunca
 'on': 'on'
+per: per
 'per activity': 'per activity'
 'per hour': 'per hour'
 'reached Eddington number {number}': 'reached Eddington number {number}'

@@ -172,6 +172,7 @@ Laps: 圈
 'Last 7 days training load': 最近7天训练负荷
 'Last activity': 'Last activity'
 'Last effort': 最后努力
+'Last effort date': 'Last effort date'
 'Last maintenance': 最后维护
 'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
@@ -531,6 +532,7 @@ more: 更多
 n/a: 不适用
 never: 从不
 'on': 在
+per: per
 'per activity': 每项活动
 'per hour': 每小时
 'reached Eddington number {number}': 'reached Eddington number {number}'

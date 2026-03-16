@@ -172,6 +172,7 @@ Laps: Giri
 'Last 7 days training load': 'Carico di allenamento negli ultimi 7 giorni'
 'Last activity': 'Last activity'
 'Last effort': 'Ultimo tentativo'
+'Last effort date': 'Last effort date'
 'Last maintenance': 'Ultima manutenzione'
 'Last {numberOfDays} days': 'Ultimi {numberOfDays} giorni'
 Lifetime: Lifetime
@@ -531,6 +532,7 @@ more: altro
 n/a: n/d
 never: mai
 'on': il
+per: per
 'per activity': 'per activity'
 'per hour': 'per hour'
 'reached Eddington number {number}': 'reached Eddington number {number}'

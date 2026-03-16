@@ -8,6 +8,7 @@ use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Gear\RecordingDevice\RecordingDeviceRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use League\Flysystem\FilesystemOperator;
 use Twig\Environment;
 
@@ -16,6 +17,7 @@ final readonly class BuildRecordingDevicesCommandHandler implements CommandHandl
     public function __construct(
         private RecordingDeviceRepository $recordingDeviceRepository,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
+        private UnitSystem $unitSystem,
         private Environment $twig,
         private FilesystemOperator $buildStorage,
     ) {
@@ -31,6 +33,7 @@ final readonly class BuildRecordingDevicesCommandHandler implements CommandHandl
             $this->twig->load('html/gear/recording-device/recording-devices.html.twig')->render([
                 'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
                 'devices' => $recordingDevices,
+                'unitSystem' => $this->unitSystem,
             ]),
         );
 
