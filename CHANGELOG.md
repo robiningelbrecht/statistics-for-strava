@@ -1,3 +1,20 @@
+# [v4.7.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.3) - 2026-03-17
+
+## Improvements
+* Added extra filters to the segment overview page
+* Introduced relative cost per km for gear and recording devices
+
+## Bug fixes
+* Fixed a division by zero issue in weekday statistics
+
+## Technical details
+* ISSUE #1897: Extra filters on the segment overview page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1898
+* ISSUE #1899: Relative cost per km by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1900
+* ISSUE #1901: Filter segment page for a specific period on last effort… by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1902
+* ISSUE #1904: Division by zero in WeekdayStats.php by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1905
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.2...v4.7.3
+
 # [v4.7.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.2) - 2026-03-14
 
 ## New features
