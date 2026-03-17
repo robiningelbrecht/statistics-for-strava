@@ -59,7 +59,7 @@ final readonly class DaytimeStats
             $statistics[$daytime->value]['averageDistance'] = $statistics[$daytime->value]['totalDistance'] / $statistics[$daytime->value]['numberOfWorkouts'];
             $statistics[$daytime->value]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$daytime->value]['movingTime']);
             $statistics[$daytime->value]['movingTimeInHours'] = Seconds::from($statistics[$daytime->value]['movingTime'])->toHour();
-            $statistics[$daytime->value]['percentage'] = round($statistics[$daytime->value]['movingTime'] / $totalMovingTime * 100, 2);
+            $statistics[$daytime->value]['percentage'] = $totalMovingTime > 0 ? round($statistics[$daytime->value]['movingTime'] / $totalMovingTime * 100, 2) : 0;
         }
 
         foreach ($statistics as $daytime => $statistic) {

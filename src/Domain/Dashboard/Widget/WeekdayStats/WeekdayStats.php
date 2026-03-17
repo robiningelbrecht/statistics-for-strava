@@ -74,7 +74,7 @@ final readonly class WeekdayStats
             $statistics[$weekDay]['averageDistance'] = $statistics[$weekDay]['totalDistance'] / $statistics[$weekDay]['numberOfWorkouts'];
             $statistics[$weekDay]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$weekDay]['movingTime']);
             $statistics[$weekDay]['movingTimeInHours'] = Seconds::from($statistics[$weekDay]['movingTime'])->toHour();
-            $statistics[$weekDay]['percentage'] = round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2);
+            $statistics[$weekDay]['percentage'] = $totalMovingTime > 0 ? round($statistics[$weekDay]['movingTime'] / $totalMovingTime * 100, 2) : 0;
         }
 
         foreach ($statistics as $weekDay => $statistic) {
