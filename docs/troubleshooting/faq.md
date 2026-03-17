@@ -18,3 +18,9 @@ If you hit the daily rate limit, the app will automatically import the remaining
 
 No, the app only supports one Strava account at a time. If you want to use multiple Strava accounts, 
 you will need to run multiple instances of the app, each with its own Strava client ID and secret.
+
+## Can I manage my settings through the UI?
+
+No. All configuration is done through the config `yaml` files. Adding a settings UI would require implementing
+user authentication and account management, which introduces significant complexity. 
+To keep the app simple and lightweight, we intentionally avoid this and rely on file-based configuration instead.
