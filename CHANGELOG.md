@@ -2,7 +2,7 @@
 
 ## Improvements
 * Added extra filters to the segment overview page
-* Introduced relative cost per km for gear and recording devices
+* Introduced relative cost per distance unit for gear and recording devices
 
 ## Bug fixes
 * Fixed a division by zero issue in weekday statistics
