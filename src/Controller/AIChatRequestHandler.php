@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Application\AppUrl;
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatRepository;
@@ -11,6 +12,7 @@ use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Http\ServerSentEvent;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Path;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\Agent\AgentInterface;
@@ -37,6 +39,7 @@ final readonly class AIChatRequestHandler
         private ChatCommands $chatCommands,
         private ChatRepository $chatRepository,
         private CommandBus $commandBus,
+        private AppUrl $appUrl,
         private FormFactoryInterface $formFactory,
         private Environment $twig,
     ) {
@@ -46,14 +49,14 @@ final readonly class AIChatRequestHandler
     public function handle(): Response
     {
         if (!$this->buildStorage->fileExists('index.html')) {
-            return new RedirectResponse('/', Response::HTTP_FOUND);
+            return new RedirectResponse(Path::from('/', $this->appUrl)->toRelativePath(), Response::HTTP_FOUND);
         }
         if (!AppConfig::isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
         $formBuilder = $this->formFactory->createBuilder();
         $form = $formBuilder
-            ->setAction('/ai/chat/user-message')
+            ->setAction(Path::from('/ai/chat/user-message', $this->appUrl)->toRelativePath())
             ->add('message', TextType::class, [
                 'label' => 'Message',
                 'required' => true,

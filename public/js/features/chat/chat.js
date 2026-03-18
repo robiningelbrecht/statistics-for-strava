@@ -15,6 +15,9 @@ export default class Chat {
 
         this.commands = JSON.parse(this.chatWrapper.getAttribute('data-chat-commands') || '{}');
         this.autoCompleteJS = null;
+
+        const raw = window.statisticsForStrava?.appUrl?.basePath || '';
+        this.basePath = raw ? '/' + raw.replace(/^\/+|\/+$/g, '') : '';
     }
 
     toggleElements(disabled) {
@@ -65,7 +68,7 @@ export default class Chat {
     }
 
     handleSSE(message) {
-        const source = new EventSource(`/chat/sse?message=${encodeURIComponent(message)}`);
+        const source = new EventSource(`${this.basePath}/chat/sse?message=${encodeURIComponent(message)}`);
         let renderer = null;
 
         source.addEventListener('fullMessage', event => {
@@ -122,7 +125,7 @@ export default class Chat {
         }
 
         try {
-            await fetch('/chat/clear', { method: 'POST' });
+            await fetch(`${this.basePath}/chat/clear`, { method: 'POST' });
             this.chatWrapper.innerHTML = '';
         } catch (error) {
             console.error('Failed to clear chat:', error);

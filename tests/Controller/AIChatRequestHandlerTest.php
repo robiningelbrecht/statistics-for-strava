@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Application\AppUrl;
 use App\Controller\AIChatRequestHandler;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
@@ -207,6 +208,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             chatCommands: ChatCommands::fromArray([]),
             chatRepository: $this->chatRepository,
             commandBus: $this->getContainer()->get(CommandBus::class),
+            appUrl: AppUrl::fromString('http://localhost'),
             formFactory: $this->getContainer()->get(FormFactoryInterface::class),
             twig: $this->getContainer()->get(Environment::class),
         );
@@ -228,8 +230,9 @@ class AIChatRequestHandlerTest extends ContainerTestCase
             chatCommands: ChatCommands::fromArray([]),
             chatRepository: $chatRepository,
             commandBus: $commandBus,
+            appUrl: AppUrl::fromString('http://localhost'),
             formFactory: $this->getContainer()->get(FormFactoryInterface::class),
-            twig: $this->getContainer()->get(Environment::class),
+            twig: $this->getContainer()->get(Environment::class)
         );
     }
 
