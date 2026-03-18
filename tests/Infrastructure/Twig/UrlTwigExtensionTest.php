@@ -4,14 +4,20 @@ namespace App\Tests\Infrastructure\Twig;
 
 use App\Application\AppUrl;
 use App\Domain\Activity\Image\ImageOrientation;
+use App\Domain\Activity\SportType\SportType;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Twig\StringTwigExtension;
 use App\Infrastructure\Twig\SvgsTwigExtension;
 use App\Infrastructure\Twig\UrlTwigExtension;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Segment\SegmentBuilder;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class UrlTwigExtensionTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private StringTwigExtension $stringTwigExtension;
     private SvgsTwigExtension $svgsTwigExtension;
 
@@ -70,6 +76,26 @@ class UrlTwigExtensionTest extends ContainerTestCase
                 svgsTwigExtension: $this->svgsTwigExtension,
             )->placeholderImage(ImageOrientation::PORTRAIT)
         );
+    }
+
+    public function testSegmentLinkForVirtualSegments(): void
+    {
+        $extension = new UrlTwigExtension(
+            appUrl: AppUrl::fromString('http://localhost:8081'),
+            stringTwigExtension: $this->stringTwigExtension,
+            svgsTwigExtension: $this->svgsTwigExtension,
+        );
+
+        $snapshot = [];
+        foreach (['zwift', 'rouvy', 'mywhoosh', 'random'] as $deviceName) {
+            $segment = SegmentBuilder::fromDefaults()
+                ->withSportType(SportType::VIRTUAL_RIDE)
+                ->withDeviceName($deviceName)
+                ->build();
+            $snapshot[$deviceName] = $extension->renderSegmentTitleLink($segment);
+        }
+
+        $this->assertMatchesJsonSnapshot(Json::encode($snapshot));
     }
 
     #[\Override]
