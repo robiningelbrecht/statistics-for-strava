@@ -114,7 +114,7 @@ This will prompt you with a message like the following:
 
 ### Via the UI
 
-[Virtual AI assistant](https://www.youtube.com/embed/mdidBVigJAo ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
+[Virtual AI assistant](https://www.youtube.com/embed/d1r8ISbRL5o ':include :type=iframe width=100% height=400px title="Statistics for Strava" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen')
 
 ### Pre-defining chat commands
 

@@ -57,6 +57,7 @@ final class DebugEnvironmentConsoleCommand extends Command
             $config['general']['athlete']['birthday'] = $redactedString;
             $config['general']['athlete']['weightHistory'] = [$redactedString];
             $config['import']['webhooks']['verifyToken'] = $redactedString;
+            $config['integrations']['ai']['configuration'] = [$redactedString];
         }
 
         $io->block([
