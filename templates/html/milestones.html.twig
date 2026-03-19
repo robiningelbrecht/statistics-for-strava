@@ -100,7 +100,7 @@
     {% if milestoneCategory == categoryEnum.FIRST_ACTIVITY_IN_COUNTRY %}
         <div class="flex gap-x-1 items-center">
             <span>{{ "First activity in {countryName}"|trans({'{countryName}': context.getCountryName()}) }}</span>
-            <img src="{{ relativeUrl('assets/images/flags/' ~ context.getCountryCode()|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ context.getCountryName() }}" alt="{{ context.getCountryName() }}">
+            <img src="{{ context.getCountryCode()|countryIcon }}" width="15" class="rounded-xs" title="{{ context.getCountryName() }}" alt="{{ context.getCountryName() }}">
         </div>
     {% elseif milestoneCategory == categoryEnum.FIRST_ACTIVITY_OF_SPORT_TYPE %}
         {{ "First-ever activity recorded"|trans }}
@@ -120,7 +120,7 @@
         {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
     {% elseif milestoneCategory == categoryEnum.PERSONAL_BEST %}
         {% set distance = context.getDistance() %}
-        {{ "New personal best for"|trans }} {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}<span class="text-xs">{{ distance.getSymbol() }}</span>: {{ context.getTime()|formatSeconds }}
+        {{ "New personal best for"|trans }} {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}<span class="text-xs">{{ distance.getSymbol() }}</span>: {{ context.getTime()|formatSecondsAsPaddedClock }}
     {% elseif milestoneCategory == categoryEnum.EDDINGTON %}
         {{ context.getLabel() }}: {{ "reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif milestoneCategory == categoryEnum.STREAK %}
@@ -146,7 +146,7 @@
 {% macro previousMilestoneThreshold(milestoneCategory, previousMilestone) %}
     {% set categoryEnum = enum('App\\Domain\\Milestone\\MilestoneCategory') %}
     {% if milestoneCategory == categoryEnum.PERSONAL_BEST %}
-        <span class="underline">{{ previousMilestone.getThreshold()|formatSeconds }}</span>
+        <span class="underline">{{ previousMilestone.getThreshold()|formatSecondsAsPaddedClock }}</span>
     {% else %}
         <span class="underline">{{ previousMilestone.getThreshold()|renderMeasurement(0)|raw }}</span>
     {% endif %}

@@ -37,6 +37,12 @@ final readonly class UrlTwigExtension
         return $this->toRelativeUrl('/assets/placeholder.webp');
     }
 
+    #[AsTwigFilter('countryIcon')]
+    public function countryIcon(string $countryCode): string
+    {
+        return $this->toRelativeUrl('/assets/images/flags/'.strtolower($countryCode).'.svg');
+    }
+
     #[AsTwigFilter('activityLink', isSafe: ['html'])]
     public function renderActivityTitleLink(Activity $activity, ?int $ellipses = null, bool $truncate = false): string
     {

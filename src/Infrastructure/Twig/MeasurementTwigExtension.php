@@ -97,4 +97,10 @@ final readonly class MeasurementTwigExtension
     {
         return $this->formatDurationAsHumanString($seconds->toInt());
     }
+
+    #[AsTwigFilter('formatSecondsAsPaddedClock')]
+    public function formatSecondsAsPaddedClock(Seconds $seconds): string
+    {
+        return $this->formatDurationAsPaddedClock($seconds->toInt());
+    }
 }

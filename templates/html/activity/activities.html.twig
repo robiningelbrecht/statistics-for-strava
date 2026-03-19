@@ -86,7 +86,7 @@
                                                 <div>
                                                     <input type="radio" id="{{ countryCode }}" data-dataTable-filter="countryCode" name="countryCode" value="{{ countryCode }}" class="peer" />
                                                     <label for="{{ countryCode }}" class="flex gap-x-1 items-center">
-                                                        <img src="{{ relativeUrl('assets/images/flags/' ~ countryCode|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
+                                                        <img src="{{ countryCode|countryIcon }}" width="15" class="rounded-xs" title="{{ countryName }}" alt="{{ countryName }}">
                                                         <span>{{ countryName }}</span>
                                                     </label>
                                                     <a href="#" data-datatable-filter-clear="countryCode">{{ "clear"|trans }}</a>
