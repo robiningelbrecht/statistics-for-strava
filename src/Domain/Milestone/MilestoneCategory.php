@@ -7,6 +7,7 @@ namespace App\Domain\Milestone;
 enum MilestoneCategory: string
 {
     case FIRST_ACTIVITY_OF_SPORT_TYPE = 'first';
+    case FIRST_ACTIVITY_IN_COUNTRY = 'firstActivityInCountry';
     case CUMULATIVE_DISTANCE = 'cumulativeDistance';
     case CUMULATIVE_ELEVATION = 'cumulativeElevation';
     case CUMULATIVE_MOVING_TIME = 'cumulativeMovingTime';
@@ -24,7 +25,7 @@ enum MilestoneCategory: string
     public function getFilterGroup(): MilestoneFilterGroup
     {
         return match ($this) {
-            self::FIRST_ACTIVITY_OF_SPORT_TYPE => MilestoneFilterGroup::FIRST,
+            self::FIRST_ACTIVITY_OF_SPORT_TYPE, self::FIRST_ACTIVITY_IN_COUNTRY => MilestoneFilterGroup::FIRST,
             self::CUMULATIVE_DISTANCE, self::ACTIVITY_DISTANCE => MilestoneFilterGroup::DISTANCE,
             self::CUMULATIVE_ELEVATION, self::ACTIVITY_ELEVATION => MilestoneFilterGroup::ELEVATION,
             self::CUMULATIVE_MOVING_TIME, self::ACTIVITY_MOVING_TIME => MilestoneFilterGroup::MOVING_TIME,
