@@ -97,7 +97,12 @@
     {% set context = milestone.getContext() %}
     {% set milestoneCategory = milestone.getCategory() %}
 
-    {% if milestoneCategory == categoryEnum.FIRST_ACTIVITY_OF_SPORT_TYPE %}
+    {% if milestoneCategory == categoryEnum.FIRST_ACTIVITY_IN_COUNTRY %}
+        <div class="flex gap-x-1 items-center">
+            <span>{{ "First activity in {countryName}"|trans({'{countryName}': context.getCountryName()}) }}</span>
+            <img src="{{ relativeUrl('assets/images/flags/' ~ context.getCountryCode()|lower ~ '.svg') }}" width="15" class="rounded-xs" title="{{ context.getCountryName() }}" alt="{{ context.getCountryName() }}">
+        </div>
+    {% elseif milestoneCategory == categoryEnum.FIRST_ACTIVITY_OF_SPORT_TYPE %}
         {{ "First-ever activity recorded"|trans }}
     {% elseif milestoneCategory == categoryEnum.ACTIVITY_COUNT %}
         {{ "Completed {threshold} activities"|trans({'{threshold}': context.getThreshold()|formatNumber(0)}) }}
