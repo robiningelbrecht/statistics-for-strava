@@ -7,7 +7,7 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Milestone\Context\FirstContext;
-use App\Domain\Milestone\Discoverer\FirstsMilestoneDiscoverer;
+use App\Domain\Milestone\Discoverer\FirstActivityOfSportTypeMilestoneDiscoverer;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -15,11 +15,11 @@ use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Milestone\IncrementingMilestoneIdFactory;
 use Spatie\Snapshots\MatchesSnapshots;
 
-class FirstsMilestoneDiscovererTest extends ContainerTestCase
+class FirstActivityOfSportTypeMilestoneDiscovererTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private FirstsMilestoneDiscoverer $discoverer;
+    private FirstActivityOfSportTypeMilestoneDiscoverer $discoverer;
 
     public function testDiscoverWithNoActivities(): void
     {
@@ -54,7 +54,7 @@ class FirstsMilestoneDiscovererTest extends ContainerTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->discoverer = new FirstsMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
+        $this->discoverer = new FirstActivityOfSportTypeMilestoneDiscoverer($this->getConnection(), new IncrementingMilestoneIdFactory());
     }
 
     private function insertActivity(int $id, string $date, SportType $sportType, string $name): void
