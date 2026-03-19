@@ -6,6 +6,7 @@ namespace App\Domain\Milestone\Discoverer;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\WorldType;
 use App\Domain\Milestone\Context\FirstActivityInCountryContext;
 use App\Domain\Milestone\Milestone;
 use App\Domain\Milestone\MilestoneCategory;
@@ -29,7 +30,11 @@ final readonly class FirstActivityInCountryMilestoneDiscoverer implements Milest
                     JSON_EXTRACT(routeGeography, '$.country_code') AS countryCode
              FROM Activity
              WHERE JSON_EXTRACT(routeGeography, '$.country_code') IS NOT NULL
-             ORDER BY startDateTime ASC"
+             AND worldType = :worldType
+             ORDER BY startDateTime ASC",
+            [
+                'worldType' => WorldType::REAL_WORLD->value,
+            ],
         )->fetchAllAssociative();
 
         $milestones = [];
