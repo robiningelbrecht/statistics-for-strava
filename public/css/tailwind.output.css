@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.1 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.2.2 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -2771,8 +2771,11 @@
       background-color: var(--color-gray-700);
     }
   }
-  .bg-gradient-to-t {
-    --tw-gradient-position: to top in oklab;
+  .bg-linear-to-t {
+    --tw-gradient-position: to top;
+    @supports (background-image: linear-gradient(in lab, red, red)) {
+      --tw-gradient-position: to top in oklab;
+    }
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
   .from-black\/60 {
@@ -3443,33 +3446,6 @@
       @media (hover: hover) {
         fill: var(--color-gray-900);
       }
-    }
-  }
-  .group-focus\/image\:translate-y-0 {
-    &:is(:where(.group\/image):focus *) {
-      --tw-translate-y: calc(var(--spacing) * 0);
-      translate: var(--tw-translate-x) var(--tw-translate-y);
-    }
-  }
-  .group-focus\/image\:scale-105 {
-    &:is(:where(.group\/image):focus *) {
-      --tw-scale-x: 105%;
-      --tw-scale-y: 105%;
-      --tw-scale-z: 105%;
-      scale: var(--tw-scale-x) var(--tw-scale-y);
-    }
-  }
-  .group-focus\/image\:bg-black\/20 {
-    &:is(:where(.group\/image):focus *) {
-      background-color: color-mix(in srgb, #000000 20%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-black) 20%, transparent);
-      }
-    }
-  }
-  .group-focus\/image\:opacity-100 {
-    &:is(:where(.group\/image):focus *) {
-      opacity: 100%;
     }
   }
   .group-has-\[input\:not\(\:placeholder-shown\)\]\/range-filter\:visible {
