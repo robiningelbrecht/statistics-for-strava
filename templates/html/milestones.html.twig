@@ -97,7 +97,7 @@
     {% set context = milestone.getContext() %}
     {% set milestoneCategory = milestone.getCategory() %}
 
-    {% if milestoneCategory == categoryEnum.FIRST %}
+    {% if milestoneCategory == categoryEnum.FIRST_ACTIVITY_OF_SPORT_TYPE %}
         {{ "First-ever activity recorded"|trans }}
     {% elseif milestoneCategory == categoryEnum.ACTIVITY_COUNT %}
         {{ "Completed {threshold} activities"|trans({'{threshold}': context.getThreshold()|formatNumber(0)}) }}

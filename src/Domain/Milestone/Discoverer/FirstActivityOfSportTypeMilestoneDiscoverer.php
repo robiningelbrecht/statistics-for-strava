@@ -14,7 +14,7 @@ use App\Domain\Milestone\Milestones;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
-final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
+final readonly class FirstActivityOfSportTypeMilestoneDiscoverer implements MilestoneDiscoverer
 {
     public function __construct(
         private Connection $connection,
@@ -46,7 +46,7 @@ final readonly class FirstsMilestoneDiscoverer implements MilestoneDiscoverer
             $milestones[] = Milestone::create(
                 id: $this->milestoneIdFactory->random(),
                 achievedOn: SerializableDateTime::fromString($row['startDateTime']),
-                category: MilestoneCategory::FIRST,
+                category: MilestoneCategory::FIRST_ACTIVITY_OF_SPORT_TYPE,
                 context: new FirstContext(
                     sportType: $sportType,
                     activityName: $row['name'],
