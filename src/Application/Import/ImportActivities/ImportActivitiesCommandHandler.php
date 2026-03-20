@@ -11,6 +11,8 @@ use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\ImportHash\ActivityImportHash;
+use App\Domain\Activity\ImportHash\ActivityImportHashRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesToImport;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -21,6 +23,7 @@ use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
+use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use GuzzleHttp\Exception\ClientException;
@@ -34,6 +37,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private ActivityRepository $activityRepository,
         private ActivityIdRepository $activityIdRepository,
         private ActivityStreamRepository $activityStreamRepository,
+        private ActivityImportHashRepository $activityImportHashRepository,
         private NumberOfNewActivitiesToProcessPerImport $numberOfNewActivitiesToProcessPerImport,
         private SportTypesToImport $sportTypesToImport,
         private ActivityVisibilitiesToImport $activityVisibilitiesToImport,
@@ -144,6 +148,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             }
 
             $activity = $context->getActivity() ?? throw new \RuntimeException('Activity not set on $context');
+            $activityWasUpdated = false;
             if ($context->isNewActivity()) {
                 // We always expect "segment_efforts" to be set in raw data.
                 // If not, something is really wrong. Abort import.
@@ -157,13 +162,23 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
                 $this->numberOfNewActivitiesToProcessPerImport->increaseNumberOfProcessedActivities();
             } else {
-                $this->activityRepository->update(ActivityWithRawData::fromState(
-                    activity: $activity,
-                    rawData: [
-                        ...$this->activityRepository->findWithRawData($activity->getId())->getRawData(),
-                        ...$rawStravaData,
-                    ]
-                ));
+                $summaryHash = hash('xxh128', Json::encode($rawStravaData));
+                $existingHash = $this->activityImportHashRepository->find($activityId);
+                $activityWasUpdated = !$existingHash?->matches($summaryHash);
+
+                if ($activityWasUpdated) {
+                    $this->activityRepository->update(ActivityWithRawData::fromState(
+                        activity: $activity,
+                        rawData: [
+                            ...$this->activityRepository->findWithRawData($activity->getId())->getRawData(),
+                            ...$rawStravaData,
+                        ]
+                    ));
+
+                    $this->activityImportHashRepository->save(
+                        ActivityImportHash::fromState($activityId, $summaryHash)
+                    );
+                }
             }
 
             foreach ($context->getStreams() as $stream) {
@@ -176,10 +191,14 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
             unset($activityIdsToDelete[(string) $context->getActivity()->getId()]);
 
             $command->getOutput()->writeln(sprintf(
-                '  => [%d/%d] %s activity: "%s - %s"',
+                '  => [%d/%d] %s activity: "%s" - %s',
                 $delta,
                 $countTotalStravaActivitiesToImport,
-                $context->isNewActivity() ? 'Imported' : 'Updated',
+                match (true) {
+                    $context->isNewActivity() => 'Imported',
+                    $activityWasUpdated => 'Updated',
+                    default => 'Skipped',
+                },
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'))
             );

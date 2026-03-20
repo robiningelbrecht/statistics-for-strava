@@ -16,6 +16,8 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityVisibility;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\BestEffort\ActivityBestEffortRepository;
+use App\Domain\Activity\ImportHash\ActivityImportHash;
+use App\Domain\Activity\ImportHash\ActivityImportHashRepository;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportType;
@@ -252,6 +254,20 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 ->build(), []
         ));
 
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed(6))
+                ->build(), []
+        ));
+
+        $activity6Summary = $this->strava->getActivity(ActivityId::fromUnprefixed(6));
+        $this->getContainer()->get(ActivityImportHashRepository::class)->save(
+            ActivityImportHash::fromState(
+                ActivityId::fromUnprefixed(6),
+                hash('xxh128', Json::encode($activity6Summary))
+            )
+        );
+
         $this->importActivitiesCommandHandler->handle(new ImportActivities($output, null));
 
         $this->assertMatchesTextSnapshot($output);
@@ -274,6 +290,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            activityImportHashRepository: $this->getContainer()->get(ActivityImportHashRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: ActivityVisibilitiesToImport::from([ActivityVisibility::EVERYONE->value]),
@@ -312,6 +329,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            activityImportHashRepository: $this->getContainer()->get(ActivityImportHashRepository::class),
             numberOfNewActivitiesToProcessPerImport: NumberOfNewActivitiesToProcessPerImport::fromInt(1),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -355,6 +373,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            activityImportHashRepository: $this->getContainer()->get(ActivityImportHashRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -389,6 +408,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            activityImportHashRepository: $this->getContainer()->get(ActivityImportHashRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: SportTypesToImport::from(['Ride']),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
@@ -484,6 +504,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
             activityRepository: $this->getContainer()->get(ActivityRepository::class),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             activityStreamRepository: $this->getContainer()->get(ActivityStreamRepository::class),
+            activityImportHashRepository: $this->getContainer()->get(ActivityImportHashRepository::class),
             numberOfNewActivitiesToProcessPerImport: $this->getContainer()->get(NumberOfNewActivitiesToProcessPerImport::class),
             sportTypesToImport: $this->getContainer()->get(SportTypesToImport::class),
             activityVisibilitiesToImport: $this->getContainer()->get(ActivityVisibilitiesToImport::class),
