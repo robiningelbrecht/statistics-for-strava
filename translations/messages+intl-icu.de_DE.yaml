@@ -107,7 +107,7 @@ Feb: Feb
 'Filter on country': 'Filter nach Land'
 'Filter on sport type': 'Filter nach Sportart'
 'Filter on starred segments': 'Filter für markierte Segmente'
-'First activity in {countryName}': 'First activity in {countryName}'
+'First activity in {countryName}': 'Erste Aktivität in {countryName}'
 'First-ever activity recorded': 'Erste Aktivität aufgezeichnet'
 Firsts: Premieren
 Fitness: Fitness
@@ -128,7 +128,7 @@ Goal: Ziel
 Golf: Golf
 'Good training variety': 'Gute Abwechslung im Training'
 'Google searches': 'Google Suchanfragen'
-Gradient: Gradient
+Gradient: Steigung
 'Gravel Rides': Schotterfahrt
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Die Richtlinien variieren von Person zu Person; weitere Informationen findest du in Joe Friels ‚The Cyclist's Training Bible‘ oder in den Forschungsunterlagen von TrainingPeaks."
 HIIT: HIIT
@@ -146,7 +146,7 @@ High: Hoch
 'Highly recovered and ready to perform': 'Bestens erholt und bereit für Höchstleistungen'
 Hikes: Wanderungen
 History: Verlauf
-'History (6 weeks)': Verlauf
+'History (6 weeks)': Verlauf (6 Wochen)
 'How diverse is your training': 'Wie abwechslungsreich ist dein Training'
 'How hard is your typical training session': 'Wie anstrengend ist dein typisches Training'
 'How long is your typical training session': 'Wie lange dauert deine typische Trainingseinheit'
@@ -172,8 +172,8 @@ Lap: Runde
 Laps: Runden
 'Last 7 days training load': 'Trainingsbelastung der letzten 7 Tage'
 'Last activity': 'Letzte Aktivität'
-'Last effort': 'Letzte Anstrengung'
-'Last effort date': 'Last effort date'
+'Last effort': 'Letzte Leistung'
+'Last effort date': 'Datum der letzten Leistung'
 'Last maintenance': 'Letzte Wartung'
 'Last {numberOfDays} days': 'Letzten {numberOfDays} Tage'
 Lifetime: Gesamtzeitraum
@@ -195,7 +195,7 @@ Maintenance: Wartung
 'Maintenance history': Wartungsverlauf
 Mar: Mär
 Max: Max
-'Max gradient': 'Max gradient'
+'Max gradient': 'Max Steigung'
 May: Mai
 Medium: Mittel
 Metric: Metrisch
@@ -397,14 +397,14 @@ Tennis: Tennis
 "That's more than halfway to the ISS": 'Das ist mehr als der halbe Weg zur ISS'
 "That's more than the circumference of Mars": 'Das ist mehr als der Umfang des Planeten Mars'
 "That's more than the distance from Earth to the Moon": 'Das ist weiter als von der Erde bis zum Mond'
-"That's nearly 3 months of non-stop activity": "That's nearly 3 months of non-stop activity"
+"That's nearly 3 months of non-stop activity": "Das sind fast 3 Monate Aktivität ohne Pause"
 "That's nearly 4 activities per week for 7 years": 'Das sind fast vier Aktivitäten pro Woche für sieben Jahre'
 "That's nearly 5 activities per week for a year": 'Das sind fast fünf Aktivitäten pro Woche für ein Jahre'
-"That's nearly 7 months of non-stop activity": "That's nearly 7 months of non-stop activity"
+"That's nearly 7 months of non-stop activity": "Das sind fast 7 Monate Aktivität ohne Pause"
 "That's nearly climbing Mount Everest 3 times": 'Das entspricht fast drei Besteigungen des Mount Everest'
-"That's nearly the altitude of the International Space Station": "That's nearly the altitude of the International Space Station"
-"That's nearly twice around the Earth": "That's nearly twice around the Earth"
-"That's nearly twice the altitude of the International Space Station": "That's nearly twice the altitude of the International Space Station"
+"That's nearly the altitude of the International Space Station": "Das ist fast die Flughöhe der Internationalen Raumstation"
+"That's nearly twice around the Earth": "Das ist fast zweimal um die Erde"
+"That's nearly twice the altitude of the International Space Station": "Das ist fast die doppelte Flughöhe der Internationalen Raumstation"
 "That's over 5.5 months of continuous movement": 'Das sind über 5,5 Monate ununterbrochene Bewegung'
 "That's roughly a quarter of the way around the Earth": 'Das ist ein Viertel des Erdumfangs'
 "That's roughly the diameter of Jupiter": 'Das ist der Durchmesser des Jupiter'
@@ -511,7 +511,7 @@ Yoga: Yoga
 'Zwift stats': 'Zwift Statistiken'
 activities: Aktivitäten
 and: und
-'average gradient': 'average gradient'
+'average gradient': 'durchschn. Steigung'
 avg: durchschn.
 bpm: bpm
 clear: löschen
