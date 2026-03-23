@@ -1,3 +1,30 @@
+# [v4.7.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.4) - 2026-03-23
+
+## New features
+* Added a new milestone: your first activity in a new country is now tracked.
+
+## Improvements
+* Redact AI API keys and improve the documentation.
+* Improved how time is displayed for Personal Best milestones.
+* You can now open an activity’s detail page by clicking its image on the Photos page.
+* Updated German translations.
+* Fixed a layout issue so recent milestones now align properly, even when other widgets in the same row are taller.
+
+## Bug fixes
+* Fixed an issue in the Workout Assistant by switching to relative URLs.
+
+## Technical details
+* Docs: FAQ improvement by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1907
+* ISSUE #1909: Use relative URLs while using the workout assistant by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1910
+* ISSUE #1908: Add AI api key to redactions + improve AI docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1911
+* ISSUE #1916: Add first activity in a new country as a new milestone by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1917
+* ISSUE #1915: Milestones - Personal Bests: time notation by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1918
+* ISSUE #1914: Open activity detail when clicking an image on the Photos page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1919
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/1920
+* ISSUE #1923: Make Most recent milestones same height when another widget on same row is taller by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1924
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.3...v4.7.4
+
 # [v4.7.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.3) - 2026-03-17
 
 ## Improvements
