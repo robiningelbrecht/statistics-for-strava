@@ -12,15 +12,12 @@ use App\Domain\Milestone\MilestoneCategory;
 use App\Domain\Milestone\MilestoneIdFactory;
 use App\Domain\Milestone\Milestones;
 use App\Domain\Milestone\PreviousMilestone;
-use App\Infrastructure\Time\Format\ProvideTimeFormats;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\Connection;
 
 final readonly class ActivityMovingTimeMilestoneDiscoverer implements MilestoneDiscoverer
 {
-    use ProvideTimeFormats;
-
     public function __construct(
         private Connection $connection,
         private MilestoneIdFactory $milestoneIdFactory,
