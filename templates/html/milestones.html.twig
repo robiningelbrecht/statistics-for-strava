@@ -147,6 +147,8 @@
     {% set categoryEnum = enum('App\\Domain\\Milestone\\MilestoneCategory') %}
     {% if milestoneCategory == categoryEnum.PERSONAL_BEST %}
         <span class="underline">{{ previousMilestone.getThreshold()|formatSecondsAsPaddedClock }}</span>
+    {% elseif milestoneCategory == categoryEnum.ACTIVITY_MOVING_TIME %}
+        <span class="underline">{{ previousMilestone.getThreshold()|formatSeconds }}</span>
     {% else %}
         <span class="underline">{{ previousMilestone.getThreshold()|renderMeasurement(0)|raw }}</span>
     {% endif %}
