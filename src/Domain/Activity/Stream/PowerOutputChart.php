@@ -33,7 +33,7 @@ final readonly class PowerOutputChart
                 fn (PowerOutput $powerOutput): array => [$powerOutput->getTimeIntervalInSeconds(), $powerOutput->getPower()]
             );
 
-            if (empty($data)) {
+            if ($data === []) {
                 continue;
             }
 
@@ -74,7 +74,7 @@ final readonly class PowerOutputChart
                 'min' => 1,
                 'max' => 3600,
                 'axisLabel' => [
-                    'formatter' => 'callback:formatDurationAxisLabel',
+                    'formatter' => 'callback:formatDuration',
                 ],
                 'splitLine' => [
                     'lineStyle' => ['type' => 'dashed'],

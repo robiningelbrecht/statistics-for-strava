@@ -53,6 +53,7 @@ export const registerEchartsCallbacks = () => {
     window.statisticsForStrava.callbacks = {
         formatSeconds,
         formatPace,
+        formatDuration,
         formatSecondsTrimZero: (secondsToFormat) => {
             const time = formatSeconds(secondsToFormat);
 
@@ -85,14 +86,11 @@ export const registerEchartsCallbacks = () => {
                 + `${velocityIsPace ? 'Pace' : 'Speed'}: <strong>${velocity}</strong> ${velocityUnit}<br/>`
                 + `Time: <strong>${elapsed}</strong>`;
         },
-        formatDurationAxisLabel: (seconds) => {
-            return formatDuration(seconds);
-        },
         formatPowerDurationTooltip: (params) => {
             if (!Array.isArray(params)) params = [params];
             const duration = formatDuration(params[0].value[0]);
             return '<b>' + duration + '</b><br/>' + params.map(
-                p => p.marker + ' ' + p.seriesName + ': <b>' + p.value[1] + ' W</b>'
+                p => p.marker + ' ' + p.seriesName + ': <b>' + p.value[1] + 'w</b>'
             ).join('<br/>');
         },
         symbolSize: (params) => {
