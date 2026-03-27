@@ -86,11 +86,7 @@ export const registerEchartsCallbacks = () => {
                 + `Time: <strong>${elapsed}</strong>`;
         },
         formatDurationAxisLabel: (seconds) => {
-            if (seconds < 60) return seconds + 's';
-            const m = Math.floor(seconds / 60);
-            if (seconds < 3600) return m + 'm';
-            const h = Math.floor(seconds / 3600);
-            return h + 'h';
+            return formatDuration(seconds);
         },
         formatPowerDurationTooltip: (params) => {
             if (!Array.isArray(params)) params = [params];
