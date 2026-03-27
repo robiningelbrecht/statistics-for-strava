@@ -33,7 +33,7 @@ final readonly class PowerOutputChart
                 fn (PowerOutput $powerOutput): array => [$powerOutput->getTimeIntervalInSeconds(), $powerOutput->getPower()]
             );
 
-            if ($data === []) {
+            if ([] === $data) {
                 continue;
             }
 
