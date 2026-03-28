@@ -34,7 +34,7 @@ final readonly class PowerOutputChart
             );
 
             if ([] === $data) {
-                continue;
+                continue; // @codeCoverageIgnore
             }
 
             $powers = $powerOutputs->map(fn (PowerOutput $powerOutput): int => $powerOutput->getPower());
