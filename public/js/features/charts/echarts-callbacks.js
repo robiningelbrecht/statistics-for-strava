@@ -37,10 +37,23 @@ const formatPace = (seconds) => {
     return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
 };
 
+const formatDuration = (seconds) => {
+    if (seconds < 60) return seconds + 's';
+    if (seconds < 3600) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return s > 0 ? m + 'm ' + s + 's' : m + 'm';
+    }
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return m > 0 ? h + 'h ' + m + 'm' : h + 'h';
+};
+
 export const registerEchartsCallbacks = () => {
     window.statisticsForStrava.callbacks = {
         formatSeconds,
         formatPace,
+        formatDuration,
         formatSecondsTrimZero: (secondsToFormat) => {
             const time = formatSeconds(secondsToFormat);
 
@@ -72,6 +85,13 @@ export const registerEchartsCallbacks = () => {
                 + `Heart rate: <strong>${heartRate}</strong> bpm<br/>`
                 + `${velocityIsPace ? 'Pace' : 'Speed'}: <strong>${velocity}</strong> ${velocityUnit}<br/>`
                 + `Time: <strong>${elapsed}</strong>`;
+        },
+        formatPowerDurationTooltip: (params) => {
+            if (!Array.isArray(params)) params = [params];
+            const duration = formatDuration(params[0].value[0]);
+            return '<b>' + duration + '</b><br/>' + params.map(
+                p => p.marker + ' ' + p.seriesName + ': <b>' + p.value[1] + 'w</b>'
+            ).join('<br/>');
         },
         symbolSize: (params) => {
             return (params[2] / 100) * 15 + 5;
