@@ -21,7 +21,12 @@ final readonly class FirstActivityInCountryContext implements MilestoneContext
 
     public function getCountryName(): string
     {
-        return Countries::getName(strtoupper($this->countryCode));
+        $code = strtoupper($this->countryCode);
+        if ('XK' === $code) {
+            return 'Kosovo';
+        }
+
+        return Countries::getName($code);
     }
 
     public function getActivityName(): string
