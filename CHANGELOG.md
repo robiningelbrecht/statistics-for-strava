@@ -1,3 +1,26 @@
+# [v4.7.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.5) - 2026-04-01
+
+## Improvements
+* Updated Italian translations: Improved and corrected several Italian UI translations.
+* Enhanced Power Output chart: The power output chart has been improved for better readability and accuracy.
+
+## Bug fixes
+* Fixed crash related to missing indices: Resolved an issue that caused errors like "Couldn't read the indices [Names][XK]".
+* Fixed milestone duration formatting: Previous milestone durations are now displayed in the correct format.
+* Fixed speed distribution graph for imperial unit system.
+
+## Technical details
+* ISSUE #1931: Fix milestones format previous durations by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1932
+* ISSUE #1930: Speed Distribution is not hitting X-Axis properly by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1933
+* chore(i18n): improve Italian translations by @franzudev in https://github.com/robiningelbrecht/statistics-for-strava/pull/1934
+* ISSUE #1937: Improve power output chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1938
+* ISSUE #1944: Couldn't read the indices [Names][XK] by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1945
+
+## New Contributors
+* @franzudev made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1934
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.4...v4.7.5
+
 # [v4.7.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.4) - 2026-03-23
 
 ## New features
