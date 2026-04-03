@@ -31,6 +31,7 @@
 - Community & Contributions
 
   - [Feature requests](community/feature-requests.md "Statistics for Strava | Feature requests")
+  - [Projects](community/projects.md "Statistics for Strava | Projects")
   - [Sponsors](community/sponsors.md "Statistics for Strava | Sponsors")
   
 - [Changelog](changelog.md "Statistics for Strava | Changelog")
