@@ -22,8 +22,15 @@ jobs:
       - name: Get latest release tag from upstream
         id: upstream
         run: |
-          LATEST=$(curl -s https://api.github.com/repos/nicholas-fedor/shoutrrr/releases/latest | jq -r '.tag_name')
+          LATEST=$(curl -sS -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/nicholas-fedor/shoutrrr/releases/latest | jq -r '.tag_name')
+          if [[ "$LATEST" == "null" || -z "$LATEST" ]]; then
+            echo "::error::Failed to fetch latest Shoutrrr release tag"
+            exit 1
+          fi
           echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create issue
         if: steps.local.outputs.current != steps.upstream.outputs.latest
