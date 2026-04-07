@@ -324,8 +324,8 @@ final class Segment implements SupportsAITooling
     {
         return array_filter([
             'name' => (string) $this->getName(),
-            'distance' => round($this->getDistance()->toFloat(), 2),
-            'average-gradient' => $this->getAverageGradient(),
+            'distance' => (int) ($this->getDistance()->toFloat() * 1000),
+            'average-gradient' => (int) ($this->getAverageGradient() * 100),
             'ride-count' => $this->getNumberOfTimesRidden(),
             'last-effort-date' => $this->getLastEffortDate()?->getTimestamp(),
         ]);
