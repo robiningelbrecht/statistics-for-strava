@@ -725,11 +725,11 @@ final class Activity implements SupportsAITooling
 
         return array_filter(array_merge([
             'start-date' => $this->getStartDate()->getTimestamp(),
-            'distance' => round($this->getDistance()->toFloat(), 2),
-            'elevation' => $this->getElevation()->toFloat(),
+            'distance' => (int) ($this->getDistance()->toFloat() * 1000),
+            'elevation' => (int) ($this->getElevation()->toFloat() * 1000),
             'moving-time' => $this->getMovingTimeInSeconds(),
             'power' => $this->getAveragePower(),
-            'speed' => round($this->getAverageSpeed()->toFloat(), 1),
+            'speed' => (int) ($this->getAverageSpeed()->toFloat() * 1000),
             'heart-rate' => $this->getAverageHeartRate(),
             'calories' => $this->getCalories(),
         ], $bestAveragePowerSortables));
