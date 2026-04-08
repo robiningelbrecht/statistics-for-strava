@@ -40,6 +40,7 @@ Best: Meilleur
 'Build zone (–10)': 'Zone de progression (–10)'
 'CTL (Fitness)': 'CTL (Forme à long terme)'
 Cadence: Cadence
+'Cadence distribution': 'Distribution de la cadence'
 Calories: Calories
 'Calories burned': 'Calories dépensées'
 Canoeing: Canoë
@@ -269,9 +270,9 @@ Race: Course
 'Racquet & Paddle Sports': 'Sports de raquette et paddle'
 'Racquet Ball': Racquetball
 Ranking: Classement
-'Reached {threshold} hours total moving time': "{threshold} heures de temps en mouvement au total"
-'Reached {threshold} total distance': "{threshold} distance au total"
-'Reached {threshold} total elevation': "{threshold} élévation au total"
+'Reached {threshold} hours total moving time': '{threshold} heures de temps en mouvement au total'
+'Reached {threshold} total distance': '{threshold} distance au total'
+'Reached {threshold} total elevation': '{threshold} élévation au total'
 'Recent effort': 'Effort récent'
 'Recording devices': "Appareils d'enregistrement"
 'Recording devices details': "Détails des appareils d'enregistrement"

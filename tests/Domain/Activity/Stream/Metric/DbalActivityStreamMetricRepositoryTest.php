@@ -163,7 +163,7 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         $this->addStream(ActivityId::fromUnprefixed('2'), StreamType::HEART_RATE);
         $this->addStream(ActivityId::fromUnprefixed('3'), StreamType::VELOCITY);
         // Activity 4 has a stream type that doesn't support distribution.
-        $this->addStream(ActivityId::fromUnprefixed('4'), StreamType::CADENCE);
+        $this->addStream(ActivityId::fromUnprefixed('4'), StreamType::ALTITUDE);
 
         $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
             activityId: ActivityId::fromUnprefixed('1'),

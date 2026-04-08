@@ -7,6 +7,7 @@ namespace App\Application\Build\BuildActivitiesHtml;
 use App\Application\Countries;
 use App\Domain\Activity\ActivityTotals;
 use App\Domain\Activity\BestEffort\BestEffortsCalculator;
+use App\Domain\Activity\CadenceDistributionChart;
 use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\HeartRateDistributionChart;
@@ -168,6 +169,21 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                             default => $this->translator->trans('Pace distribution'),
                         },
                         'data' => Json::encode($velocityDistributionChart),
+                    ];
+                }
+            }
+
+            $cadenceDistribution = $valueDistributionMetrics->filterOnStreamType(StreamType::CADENCE)?->getData() ?? [];
+            if ($activity->getAverageCadence() && count($cadenceDistribution) > 1) {
+                $cadenceDistributionChart = CadenceDistributionChart::create(
+                    cadenceData: $cadenceDistribution,
+                    averageCadence: $activity->getAverageCadence(),
+                )->build();
+
+                if (!is_null($cadenceDistributionChart)) {
+                    $distributionCharts[] = [
+                        'title' => $this->translator->trans('Cadence distribution'),
+                        'data' => Json::encode($cadenceDistributionChart),
                     ];
                 }
             }
