@@ -143,6 +143,10 @@ import:
   # Each segment only needs to be imported once, so this will not affect the import time for subsequent imports.
   optInToSegmentDetailImport: false
 metrics:
+  # An array of activity ids to exclude from peak power outputs. 
+  # This allows you to blacklist specific activity IDs from the peak power calculation.
+  # ["123456789", "987654321"]
+  excludeActivitiesFromPeakPowerOutputs: []
   # By default, the app calculates your Eddington score for Rides, Runs, and Walks.
   # Each category includes a list of sport types used in the calculation.
   # This setting lets you customize which sport types are grouped together and how the Eddington score is calculated.
