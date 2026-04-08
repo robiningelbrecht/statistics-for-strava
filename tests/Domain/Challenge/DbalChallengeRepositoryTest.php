@@ -31,6 +31,38 @@ class DbalChallengeRepositoryTest extends ContainerTestCase
         $this->challengeRepository->find(ChallengeId::fromUnprefixed('1'));
     }
 
+    public function testUpdateChallengeId(): void
+    {
+        $oldId = ChallengeId::fromUnprefixed('old-id');
+        $newId = ChallengeId::fromUnprefixed('new-id');
+
+        $challenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId($oldId)
+            ->build();
+        $this->challengeRepository->add($challenge);
+
+        $this->challengeRepository->updateChallengeId($oldId, $newId);
+
+        $this->expectException(EntityNotFound::class);
+        $this->challengeRepository->find($oldId);
+    }
+
+    public function testUpdateChallengeIdFindsNewId(): void
+    {
+        $oldId = ChallengeId::fromUnprefixed('old-id');
+        $newId = ChallengeId::fromUnprefixed('new-id');
+
+        $challenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId($oldId)
+            ->build();
+        $this->challengeRepository->add($challenge);
+
+        $this->challengeRepository->updateChallengeId($oldId, $newId);
+
+        $updated = $this->challengeRepository->find($newId);
+        $this->assertEquals($newId, $updated->getId());
+    }
+
     public function testFindAll(): void
     {
         $challengeOne = ChallengeBuilder::fromDefaults()
