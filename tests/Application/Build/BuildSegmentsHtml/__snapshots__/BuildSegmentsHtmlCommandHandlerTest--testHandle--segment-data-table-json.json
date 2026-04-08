@@ -14,8 +14,8 @@
         "summables": [],
         "sort": {
             "name": "⭐️ Segment One",
-            "distance": 0.1,
-            "average-gradient": 2.7,
+            "distance": 100,
+            "average-gradient": 270,
             "ride-count": 2,
             "last-effort-date": 1696896000
         },
@@ -35,8 +35,8 @@
         "summables": [],
         "sort": {
             "name": "Segment Two",
-            "distance": 0.11,
-            "average-gradient": 2.7,
+            "distance": 110,
+            "average-gradient": 270,
             "ride-count": 1,
             "last-effort-date": 1696896000
         },
@@ -58,8 +58,8 @@
         "summables": [],
         "sort": {
             "name": "⭐️ 🏔️ Alpe du Zwift",
-            "distance": 0.1,
-            "average-gradient": 2.7,
+            "distance": 100,
+            "average-gradient": 270,
             "ride-count": 1,
             "last-effort-date": 1696896000
         },
@@ -80,8 +80,8 @@
         "summables": [],
         "sort": {
             "name": "⭐️ Segment Ten",
-            "distance": 0.1,
-            "average-gradient": 2.7,
+            "distance": 100,
+            "average-gradient": 270,
             "ride-count": 1,
             "last-effort-date": 1696896000
         },
