@@ -27,6 +27,7 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
         private readonly ActivityIdRepository $activityIdRepository,
         private readonly ActivitySummaryRepository $activitySummaryRepository,
         private readonly AthleteWeightHistory $athleteWeightHistory,
+        private readonly ActivitiesExcludedFromPeakPowerOutputs $activitiesExcludedFromPeakPowerOutputs,
     ) {
     }
 
@@ -119,17 +120,23 @@ final class StreamBasedActivityPowerRepository implements ActivityPowerRepositor
                 WHERE m.streamType = :streamType
                 AND m.metricType = :metricType
                 AND a.sportType IN(:sportTypes)
-                AND a.startDateTime >= :dateFrom AND a.startDateTime <= :dateTill';
+                AND a.startDateTime >= :dateFrom AND a.startDateTime <= :dateTill
+                AND m.activityId NOT IN(:excludedActivityIds)';
 
-        $results = $this->connection->executeQuery($sql, [
+        $params = [
             'streamType' => StreamType::WATTS->value,
             'metricType' => ActivityStreamMetricType::BEST_AVERAGES->value,
             'sportTypes' => $sportTypes->map(fn (SportType $sportType) => $sportType->value),
             'dateFrom' => $dateRange->getFrom()->format('Y-m-d 00:00:00'),
             'dateTill' => $dateRange->getTill()->format('Y-m-d 23:59:59'),
-        ], [
+            'excludedActivityIds' => $this->activitiesExcludedFromPeakPowerOutputs->map(fn (ActivityId $activityId): string => (string) $activityId) ?: ['unexisting-id'],
+        ];
+        $types = [
             'sportTypes' => ArrayParameterType::STRING,
-        ])->fetchAllAssociative();
+            'excludedActivityIds' => ArrayParameterType::STRING,
+        ];
+
+        $results = $this->connection->executeQuery($sql, $params, $types)->fetchAllAssociative();
 
         /** @var array<int, array{activityId: string, power: int}> $bestPerInterval */
         $bestPerInterval = [];
