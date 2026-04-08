@@ -101,6 +101,27 @@ class DbalChallengeRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testDeleteWithNonAlphanumericIds(): void
+    {
+        $alphanumericChallenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId(ChallengeId::fromUnprefixed('2022-10_valid_id'))
+            ->build();
+        $this->challengeRepository->add($alphanumericChallenge);
+
+        $nonAlphanumericChallenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId(ChallengeId::fromUnprefixed('2022-10_roc_d&#x27;azur'))
+            ->build();
+        $this->challengeRepository->add($nonAlphanumericChallenge);
+
+        $this->challengeRepository->deleteWithNonAlphanumericIds();
+
+        $this->assertEquals(1, $this->challengeRepository->count());
+        $this->assertEquals(
+            $alphanumericChallenge,
+            $this->challengeRepository->find($alphanumericChallenge->getId())
+        );
+    }
+
     #[\Override]
     protected function setUp(): void
     {

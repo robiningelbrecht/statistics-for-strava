@@ -70,6 +70,24 @@ final readonly class DbalChallengeRepository extends DbalRepository implements C
         ]);
     }
 
+    public function deleteWithNonAlphanumericIds(): void
+    {
+        $challengeIds = $this->connection->createQueryBuilder()
+            ->select('challengeId')
+            ->from('Challenge')
+            ->executeQuery()
+            ->fetchFirstColumn();
+
+        foreach ($challengeIds as $challengeId) {
+            if (preg_match('/[^a-zA-Z0-9_-]/', $challengeId)) {
+                $this->connection->executeStatement(
+                    'DELETE FROM Challenge WHERE challengeId = :challengeId',
+                    ['challengeId' => $challengeId]
+                );
+            }
+        }
+    }
+
     /**
      * @param array<string, mixed> $result
      */

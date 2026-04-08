@@ -103,5 +103,7 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
             $command->getOutput()->writeln(sprintf('  => Imported challenge "%s"', $challenge->getName()));
             $this->sleep->sweetDreams(1); // Make sure timestamp is increased by at least one second.
         }
+
+        $this->challengeRepository->deleteWithNonAlphanumericIds();
     }
 }
