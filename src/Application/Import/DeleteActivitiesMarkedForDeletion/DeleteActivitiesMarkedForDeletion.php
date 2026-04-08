@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Import\DeleteActivitiesMarkedForDeletion;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
