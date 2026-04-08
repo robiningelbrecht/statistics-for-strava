@@ -24,7 +24,7 @@ enum StreamType: string
     public static function thatSupportDistributionValues(): array
     {
         return [
-            self::WATTS, self::HEART_RATE, self::VELOCITY,
+            self::WATTS, self::HEART_RATE, self::VELOCITY, self::CADENCE,
         ];
     }
 }
