@@ -29,6 +29,23 @@ final readonly class FtpHistoryChart
      */
     public function build(): array
     {
+        $zoomEndValue = $this->now->format('Y-m-d');
+        $zoomStartValue = $this->ftps->getFirst()?->getSetOn()->format('Y-m-d');
+
+        if ($this->ftps->count() >= 2) {
+            $zoomStartValue = $this->now->format('Y-01-01');
+
+            $dates = $this->ftps->map(fn (Ftp $ftp): string => $ftp->getSetOn()->format('Y-m-d'));
+            $datesInCurrentYear = array_filter(
+                $dates,
+                fn (string $date): bool => $date >= $zoomStartValue
+            );
+
+            if (count($datesInCurrentYear) < 3) {
+                $zoomStartValue = array_slice($dates, -3, 1)[0];
+            }
+        }
+
         return [
             'animation' => true,
             'backgroundColor' => null,
@@ -39,8 +56,29 @@ final readonly class FtpHistoryChart
                 'top' => '2%',
                 'left' => '3%',
                 'right' => '4%',
-                'bottom' => '3%',
+                'bottom' => '50px',
                 'containLabel' => true,
+            ],
+            'toolbox' => [
+                'show' => true,
+                'feature' => [
+                    'dataZoom' => [
+                        'show' => true,
+                        'yAxisIndex' => 'none',
+                    ],
+                    'restore' => [
+                        'show' => true,
+                    ],
+                ],
+            ],
+            'dataZoom' => [
+                [
+                    'type' => 'slider',
+                    'startValue' => $zoomStartValue,
+                    'endValue' => $zoomEndValue,
+                    'brushSelect' => false,
+                    'zoomLock' => false,
+                ],
             ],
             'xAxis' => [
                 [
