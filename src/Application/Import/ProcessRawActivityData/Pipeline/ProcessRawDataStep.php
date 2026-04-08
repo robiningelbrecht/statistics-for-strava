@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Import\ProcessRawActivityData\Pipeline;
 
 use Symfony\Component\Console\Output\OutputInterface;

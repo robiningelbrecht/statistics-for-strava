@@ -60,6 +60,16 @@ final readonly class DbalChallengeRepository extends DbalRepository implements C
         return $this->hydrate($result);
     }
 
+    public function updateChallengeId(ChallengeId $oldChallengeId, ChallengeId $newChallengeId): void
+    {
+        $sql = 'UPDATE Challenge SET challengeId = :newChallengeId WHERE challengeId = :oldChallengeId';
+
+        $this->connection->executeStatement($sql, [
+            'newChallengeId' => (string) $newChallengeId,
+            'oldChallengeId' => (string) $oldChallengeId,
+        ]);
+    }
+
     /**
      * @param array<string, mixed> $result
      */

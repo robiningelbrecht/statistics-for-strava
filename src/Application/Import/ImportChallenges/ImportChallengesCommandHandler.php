@@ -39,7 +39,6 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
         }
 
         $challenges = [];
-        $challengesAddedInCurrentRun = [];
 
         try {
             $challenges = $this->strava->getChallengesOnTrophyCase();
@@ -56,48 +55,53 @@ final readonly class ImportChallengesCommandHandler implements CommandHandler
         foreach ($challenges as $stravaChallenge) {
             $createdOn = $stravaChallenge['completedOn'];
             $challengeId = ChallengeId::fromDateAndName(
-                $createdOn,
-                $stravaChallenge['name'],
+                createdOn: $createdOn,
+                name: $stravaChallenge['name'],
             );
-
-            // Do not import challenges that have been imported in the current run.
-            if (isset($challengesAddedInCurrentRun[(string) $challengeId])) {
-                continue;
-            }
 
             try {
                 $this->challengeRepository->find($challengeId);
                 continue;
             } catch (EntityNotFound) {
-                $challenge = Challenge::create(
-                    challengeId: $challengeId,
-                    createdOn: $createdOn,
-                    name: $stravaChallenge['name'],
-                    logoUrl: $stravaChallenge['logo_url'] ?? null,
-                    slug: $stravaChallenge['url'],
-                );
-                if ($url = $challenge->getLogoUrl()) {
-                    $fileSystemPath = sprintf('challenges/%s.png', $this->uuidFactory->random());
+                $oldChallengeId = ChallengeId::toOldVersion($createdOn, $stravaChallenge['name']);
+                if ($oldChallengeId->toUnprefixedString() !== $challengeId->toUnprefixedString()) {
                     try {
-                        $this->fileStorage->write(
-                            $fileSystemPath,
-                            $this->strava->downloadImage($url)
-                        );
-                    } catch (\Throwable $e) {
-                        $command->getOutput()->writeln(sprintf(
-                            '  => Could not import "%s", error: %s',
-                            $challenge->getName(),
-                            $e->getMessage()
-                        ));
+                        $this->challengeRepository->find($oldChallengeId);
+                        $this->challengeRepository->updateChallengeId($oldChallengeId, $challengeId);
+                        $command->getOutput()->writeln(sprintf('  => Migrated challenge "%s"', $stravaChallenge['name']));
                         continue;
+                    } catch (EntityNotFound) {
                     }
-                    $challenge = $challenge->withLocalLogo('files/'.$fileSystemPath);
                 }
-                $this->challengeRepository->add($challenge);
-                $challengesAddedInCurrentRun[(string) $challengeId] = $challengeId;
-                $command->getOutput()->writeln(sprintf('  => Imported challenge "%s"', $challenge->getName()));
-                $this->sleep->sweetDreams(1); // Make sure timestamp is increased by at least one second.
             }
+
+            $challenge = Challenge::create(
+                challengeId: $challengeId,
+                createdOn: $createdOn,
+                name: $stravaChallenge['name'],
+                logoUrl: $stravaChallenge['logo_url'] ?? null,
+                slug: $stravaChallenge['url'],
+            );
+            if ($url = $challenge->getLogoUrl()) {
+                $fileSystemPath = sprintf('challenges/%s.png', $this->uuidFactory->random());
+                try {
+                    $this->fileStorage->write(
+                        $fileSystemPath,
+                        $this->strava->downloadImage($url)
+                    );
+                } catch (\Throwable $e) {
+                    $command->getOutput()->writeln(sprintf(
+                        '  => Could not import "%s", error: %s',
+                        $challenge->getName(),
+                        $e->getMessage()
+                    ));
+                    continue;
+                }
+                $challenge = $challenge->withLocalLogo('files/'.$fileSystemPath);
+            }
+            $this->challengeRepository->add($challenge);
+            $command->getOutput()->writeln(sprintf('  => Imported challenge "%s"', $challenge->getName()));
+            $this->sleep->sweetDreams(1); // Make sure timestamp is increased by at least one second.
         }
     }
 }

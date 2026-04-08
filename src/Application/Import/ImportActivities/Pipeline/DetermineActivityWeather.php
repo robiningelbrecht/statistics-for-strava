@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Import\ImportActivities\Pipeline;
 
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;

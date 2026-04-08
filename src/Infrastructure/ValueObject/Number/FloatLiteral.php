@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\ValueObject\Number;
 
 abstract readonly class FloatLiteral implements \JsonSerializable

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Application\Import\ImportActivities;
 
 use App\Domain\Activity\ActivityIds;
