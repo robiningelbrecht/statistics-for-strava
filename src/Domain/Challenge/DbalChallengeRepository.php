@@ -79,7 +79,8 @@ final readonly class DbalChallengeRepository extends DbalRepository implements C
             ->fetchFirstColumn();
 
         foreach ($challengeIds as $challengeId) {
-            if (preg_match('/[^a-zA-Z0-9_-]/', $challengeId)) {
+            $challengeId = ChallengeId::fromString($challengeId);
+            if (preg_match('/[^a-zA-Z0-9_-]/', $challengeId->toUnprefixedString())) {
                 $this->connection->executeStatement(
                     'DELETE FROM Challenge WHERE challengeId = :challengeId',
                     ['challengeId' => $challengeId]
