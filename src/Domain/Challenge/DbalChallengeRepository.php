@@ -60,6 +60,35 @@ final readonly class DbalChallengeRepository extends DbalRepository implements C
         return $this->hydrate($result);
     }
 
+    public function updateChallengeId(ChallengeId $oldChallengeId, ChallengeId $newChallengeId): void
+    {
+        $sql = 'UPDATE Challenge SET challengeId = :newChallengeId WHERE challengeId = :oldChallengeId';
+
+        $this->connection->executeStatement($sql, [
+            'newChallengeId' => (string) $newChallengeId,
+            'oldChallengeId' => (string) $oldChallengeId,
+        ]);
+    }
+
+    public function deleteWithNonAlphanumericIds(): void
+    {
+        $challengeIds = $this->connection->createQueryBuilder()
+            ->select('challengeId')
+            ->from('Challenge')
+            ->executeQuery()
+            ->fetchFirstColumn();
+
+        foreach ($challengeIds as $challengeId) {
+            $challengeId = ChallengeId::fromString($challengeId);
+            if (preg_match('/[^a-zA-Z0-9_-]/', $challengeId->toUnprefixedString())) {
+                $this->connection->executeStatement(
+                    'DELETE FROM Challenge WHERE challengeId = :challengeId',
+                    ['challengeId' => $challengeId]
+                );
+            }
+        }
+    }
+
     /**
      * @param array<string, mixed> $result
      */

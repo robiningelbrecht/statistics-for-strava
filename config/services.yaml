@@ -190,6 +190,10 @@ services:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("import.sportTypesToImport")']
 
+    App\Domain\Activity\Stream\ActivitiesExcludedFromPeakPowerOutputs:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("metrics.excludeActivitiesFromPeakPowerOutputs", [])']
+
     App\Domain\Athlete\Weight\AthleteWeightHistory:
         factory: [ null, 'fromArray' ]
         arguments: [

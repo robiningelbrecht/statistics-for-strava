@@ -40,6 +40,7 @@ Best: Beste
 'Build zone (–10)': 'Aufbauzone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Trittfrequenz
+'Cadence distribution': Kadenzverteilung
 Calories: Kalorien
 'Calories burned': 'Kalorien verbrannt'
 Canoeing: Kanufahren
@@ -146,7 +147,7 @@ High: Hoch
 'Highly recovered and ready to perform': 'Bestens erholt und bereit für Höchstleistungen'
 Hikes: Wanderungen
 History: Verlauf
-'History (6 weeks)': Verlauf (6 Wochen)
+'History (6 weeks)': 'Verlauf (6 Wochen)'
 'How diverse is your training': 'Wie abwechslungsreich ist dein Training'
 'How hard is your typical training session': 'Wie anstrengend ist dein typisches Training'
 'How long is your typical training session': 'Wie lange dauert deine typische Trainingseinheit'
@@ -397,14 +398,14 @@ Tennis: Tennis
 "That's more than halfway to the ISS": 'Das ist mehr als der halbe Weg zur ISS'
 "That's more than the circumference of Mars": 'Das ist mehr als der Umfang des Planeten Mars'
 "That's more than the distance from Earth to the Moon": 'Das ist weiter als von der Erde bis zum Mond'
-"That's nearly 3 months of non-stop activity": "Das sind fast 3 Monate Aktivität ohne Pause"
+"That's nearly 3 months of non-stop activity": 'Das sind fast 3 Monate Aktivität ohne Pause'
 "That's nearly 4 activities per week for 7 years": 'Das sind fast vier Aktivitäten pro Woche für sieben Jahre'
 "That's nearly 5 activities per week for a year": 'Das sind fast fünf Aktivitäten pro Woche für ein Jahre'
-"That's nearly 7 months of non-stop activity": "Das sind fast 7 Monate Aktivität ohne Pause"
+"That's nearly 7 months of non-stop activity": 'Das sind fast 7 Monate Aktivität ohne Pause'
 "That's nearly climbing Mount Everest 3 times": 'Das entspricht fast drei Besteigungen des Mount Everest'
-"That's nearly the altitude of the International Space Station": "Das ist fast die Flughöhe der Internationalen Raumstation"
-"That's nearly twice around the Earth": "Das ist fast zweimal um die Erde"
-"That's nearly twice the altitude of the International Space Station": "Das ist fast die doppelte Flughöhe der Internationalen Raumstation"
+"That's nearly the altitude of the International Space Station": 'Das ist fast die Flughöhe der Internationalen Raumstation'
+"That's nearly twice around the Earth": 'Das ist fast zweimal um die Erde'
+"That's nearly twice the altitude of the International Space Station": 'Das ist fast die doppelte Flughöhe der Internationalen Raumstation'
 "That's over 5.5 months of continuous movement": 'Das sind über 5,5 Monate ununterbrochene Bewegung'
 "That's roughly a quarter of the way around the Earth": 'Das ist ein Viertel des Erdumfangs'
 "That's roughly the diameter of Jupiter": 'Das ist der Durchmesser des Jupiter'

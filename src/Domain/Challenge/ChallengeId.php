@@ -18,6 +18,18 @@ final readonly class ChallengeId extends Identifier
         SerializableDateTime $createdOn,
         string $name,
     ): self {
+        $sanitizedString = preg_replace('/[^a-zA-Z0-9_-]/', '_', html_entity_decode(substr($name, 0, 250)));
+        assert(is_string($sanitizedString));
+
+        return self::fromUnprefixed(
+            $createdOn->format('Y-m_').strtolower($sanitizedString)
+        );
+    }
+
+    public static function toOldVersion(
+        SerializableDateTime $createdOn,
+        string $name,
+    ): self {
         $sanitizedString = preg_replace("/\s+/", '_', substr($name, 0, 250));
         assert(is_string($sanitizedString));
 

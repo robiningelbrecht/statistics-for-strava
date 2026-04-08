@@ -13,4 +13,8 @@ interface ChallengeRepository
     public function count(): int;
 
     public function find(ChallengeId $challengeId): Challenge;
+
+    public function updateChallengeId(ChallengeId $oldChallengeId, ChallengeId $newChallengeId): void;
+
+    public function deleteWithNonAlphanumericIds(): void;
 }

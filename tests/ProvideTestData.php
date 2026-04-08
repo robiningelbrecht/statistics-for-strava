@@ -418,6 +418,12 @@ trait ProvideTestData
         ));
         $activityStreamMetricRepository->add(ActivityStreamMetric::create(
             activityId: ActivityId::fromUnprefixed('9756441741'),
+            streamType: StreamType::CADENCE,
+            metricType: ActivityStreamMetricType::VALUE_DISTRIBUTION,
+            data: [1 => 2, 2 => 5, 6 => 8],
+        ));
+        $activityStreamMetricRepository->add(ActivityStreamMetric::create(
+            activityId: ActivityId::fromUnprefixed('9756441741'),
             streamType: StreamType::HEART_RATE,
             metricType: ActivityStreamMetricType::BEST_AVERAGES,
             data: $bestAveragesHeartRate,

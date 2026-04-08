@@ -31,6 +31,38 @@ class DbalChallengeRepositoryTest extends ContainerTestCase
         $this->challengeRepository->find(ChallengeId::fromUnprefixed('1'));
     }
 
+    public function testUpdateChallengeId(): void
+    {
+        $oldId = ChallengeId::fromUnprefixed('old-id');
+        $newId = ChallengeId::fromUnprefixed('new-id');
+
+        $challenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId($oldId)
+            ->build();
+        $this->challengeRepository->add($challenge);
+
+        $this->challengeRepository->updateChallengeId($oldId, $newId);
+
+        $this->expectException(EntityNotFound::class);
+        $this->challengeRepository->find($oldId);
+    }
+
+    public function testUpdateChallengeIdFindsNewId(): void
+    {
+        $oldId = ChallengeId::fromUnprefixed('old-id');
+        $newId = ChallengeId::fromUnprefixed('new-id');
+
+        $challenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId($oldId)
+            ->build();
+        $this->challengeRepository->add($challenge);
+
+        $this->challengeRepository->updateChallengeId($oldId, $newId);
+
+        $updated = $this->challengeRepository->find($newId);
+        $this->assertEquals($newId, $updated->getId());
+    }
+
     public function testFindAll(): void
     {
         $challengeOne = ChallengeBuilder::fromDefaults()
@@ -66,6 +98,27 @@ class DbalChallengeRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             2,
             $this->challengeRepository->count()
+        );
+    }
+
+    public function testDeleteWithNonAlphanumericIds(): void
+    {
+        $alphanumericChallenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId(ChallengeId::fromUnprefixed('2022-10_valid_id'))
+            ->build();
+        $this->challengeRepository->add($alphanumericChallenge);
+
+        $nonAlphanumericChallenge = ChallengeBuilder::fromDefaults()
+            ->withChallengeId(ChallengeId::fromUnprefixed('2022-10_roc_d&#x27;azur'))
+            ->build();
+        $this->challengeRepository->add($nonAlphanumericChallenge);
+
+        $this->challengeRepository->deleteWithNonAlphanumericIds();
+
+        $this->assertEquals(1, $this->challengeRepository->count());
+        $this->assertEquals(
+            $alphanumericChallenge,
+            $this->challengeRepository->find($alphanumericChallenge->getId())
         );
     }
 
