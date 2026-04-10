@@ -26,8 +26,9 @@ enum SportType: string implements TranslatableInterface
     case RUN = 'Run';
     case TRAIL_RUN = 'TrailRun';
     case VIRTUAL_RUN = 'VirtualRun';
-    // Walk
+    // Walk.
     case WALK = 'Walk';
+    // Hike.
     case HIKE = 'Hike';
     // Water sports.
     case CANOEING = 'Canoeing';
@@ -84,7 +85,7 @@ enum SportType: string implements TranslatableInterface
 
     public function getVelocityDisplayPreference(): Velocity
     {
-        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+        if (in_array(self::getActivityType(), [ActivityType::RUN, ActivityType::WALK, ActivityType::HIKE])) {
             return SecPerKm::zero();
         }
 
@@ -96,7 +97,7 @@ enum SportType: string implements TranslatableInterface
 
     public function getTemplateName(): string
     {
-        if (ActivityType::RUN === self::getActivityType() || ActivityType::WALK === self::getActivityType()) {
+        if (in_array(self::getActivityType(), [ActivityType::RUN, ActivityType::WALK, ActivityType::HIKE])) {
             return 'activity--sport-type--run';
         }
 
@@ -178,7 +179,9 @@ enum SportType: string implements TranslatableInterface
             // RUN.
             SportType::RUN, SportType::TRAIL_RUN, SportType::VIRTUAL_RUN => ActivityType::RUN,
             // WALK.
-            SportType::WALK, SportType::HIKE => ActivityType::WALK,
+            SportType::WALK => ActivityType::WALK,
+            // HIKE.
+            SportType::HIKE => ActivityType::HIKE,
             // WATER.
             SportType::CANOEING, SportType::KAYAKING, SportType::KITE_SURF,
             SportType::ROWING, SportType::STAND_UP_PADDLING,

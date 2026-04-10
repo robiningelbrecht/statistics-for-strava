@@ -35,7 +35,15 @@ class EddingtonConfigurationTest extends TestCase
                 label: 'Walk',
                 showInNavBar: false,
                 sportTypesToInclude: SportTypes::fromArray([
-                    SportType::WALK, SportType::HIKE,
+                    SportType::WALK,
+                ]),
+                showInDashboardWidget: false,
+            ),
+            EddingtonConfigItem::create(
+                label: 'Hike',
+                showInNavBar: false,
+                sportTypesToInclude: SportTypes::fromArray([
+                    SportType::HIKE,
                 ]),
                 showInDashboardWidget: false,
             ),
@@ -131,7 +139,13 @@ class EddingtonConfigurationTest extends TestCase
             [
                 'label' => 'Walk',
                 'showInNavBar' => false,
-                'sportTypesToInclude' => ['Walk', 'Hike'],
+                'sportTypesToInclude' => ['Walk'],
+                'showInDashboardWidget' => false,
+            ],
+            [
+                'label' => 'Hike',
+                'showInNavBar' => false,
+                'sportTypesToInclude' => ['Hike'],
                 'showInDashboardWidget' => false,
             ],
         ];

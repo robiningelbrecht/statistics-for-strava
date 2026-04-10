@@ -40,7 +40,13 @@ final class EddingtonConfiguration extends Collection
             [
                 'label' => 'Walk',
                 'showInNavBar' => false,
-                'sportTypesToInclude' => ['Walk', 'Hike'],
+                'sportTypesToInclude' => ['Walk'],
+                'showInDashboardWidget' => false,
+            ],
+            [
+                'label' => 'Hike',
+                'showInNavBar' => false,
+                'sportTypesToInclude' => ['Hike'],
                 'showInDashboardWidget' => false,
             ],
         ];

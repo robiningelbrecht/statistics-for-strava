@@ -17,6 +17,7 @@ enum ActivityType: string implements TranslatableInterface
     case RIDE = 'Ride';
     case RUN = 'Run';
     case WALK = 'Walk';
+    case HIKE = 'Hike';
     case WATER_SPORTS = 'WaterSports';
     case WINTER_SPORTS = 'WinterSports';
     case SKATING = 'Skating';
@@ -48,6 +49,7 @@ enum ActivityType: string implements TranslatableInterface
             self::RIDE => $translator->trans('Cycling', locale: $locale),
             self::RUN => $translator->trans('Running', locale: $locale),
             self::WALK => $translator->trans('Walking', locale: $locale),
+            self::HIKE => $translator->trans('Hiking', locale: $locale),
             self::WATER_SPORTS => $translator->trans('Water Sports', locale: $locale),
             self::WINTER_SPORTS => $translator->trans('Winter Sports', locale: $locale),
             self::SKATING => $translator->trans('Skating', locale: $locale),
@@ -77,7 +79,7 @@ enum ActivityType: string implements TranslatableInterface
     public function supportsDistanceBreakdownStats(): bool
     {
         return match ($this) {
-            self::RUN, self::RIDE, self::WALK, self::SKATING => true,
+            self::RUN, self::RIDE, self::WALK, self::HIKE, self::SKATING => true,
             default => false,
         };
     }
@@ -85,7 +87,7 @@ enum ActivityType: string implements TranslatableInterface
     public function supportsDistanceAndElevation(): bool
     {
         return match ($this) {
-            self::RUN, self::RIDE, self::WALK, self::WATER_SPORTS, self::SKATING => true,
+            self::RUN, self::RIDE, self::WALK, self::HIKE, self::WATER_SPORTS, self::SKATING => true,
             default => false,
         };
     }
@@ -140,7 +142,7 @@ enum ActivityType: string implements TranslatableInterface
     public function getDistancePrecision(): int
     {
         return match ($this) {
-            self::RIDE, self::RUN, self::WALK, self::WATER_SPORTS => 2,
+            self::RIDE, self::RUN, self::WALK, self::HIKE, self::WATER_SPORTS => 2,
             default => 0,
         };
     }
@@ -151,6 +153,7 @@ enum ActivityType: string implements TranslatableInterface
             ActivityType::RIDE => 'emerald-600',
             ActivityType::RUN => 'orange-500',
             ActivityType::WALK => 'yellow-300',
+            ActivityType::HIKE => 'green-600',
             ActivityType::WATER_SPORTS => 'blue-600',
             ActivityType::WINTER_SPORTS => 'red-600',
             default => 'gray-600',
