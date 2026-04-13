@@ -1,3 +1,40 @@
+# [v4.7.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.6) - 2026-04-13
+
+## New features
+* Added a new Cadence Distribution chart to better visualize cadence data
+* Added configuration support to exclude specific activities from Peak Power Outputs calculations.
+
+```yaml
+metrics:
+  # An array of activity ids to exclude from peak power outputs. 
+  # This allows you to blacklist specific activity IDs from the peak power calculation.
+  # ["123456789", "987654321"]
+  excludeActivitiesFromPeakPowerOutputs: []
+```
+
+## Improvements
+* Added French translations (thanks to @christian-vdz).
+* Added zoom/slider controls to the FTP dashboard widget for easier navigation.
+* Improved Athlete Weight History tooltip formatting for clearer and more consistent display.
+
+## Bug fixes
+* Fixed activity sorting issues where ordering by distance and pace could be slightly incorrect.
+* Fixed challenge imports by removing duplicate imported challenges.
+
+## Technical details
+* feat(translations): new fr by @christian-vdz in https://github.com/robiningelbrecht/statistics-for-strava/pull/1951
+* ISSUE #1960: Sorting Activities by Distance and Pace is slightly off by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1961
+* ISSUE #1963: Remove duplicate imported challenges by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1964
+* ISSUE #1958: Zoom/Slider for FTP dashboard widget by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1965
+* ISSUE #1957: Allow excluding specific activities from Peak Power Outputs via config by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1966
+* ISSUE #1959: Distribution Chart - Cadence by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1967
+* ISSUE #1968: AthleteWeightHistoryChart tooltip formatting by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1970
+
+## New Contributors
+* @christian-vdz made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1951
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.5...v4.7.6
+
 # [v4.7.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.5) - 2026-04-01
 
 ## Improvements
