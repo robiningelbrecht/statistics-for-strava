@@ -51,6 +51,7 @@ final readonly class FtpHistoryChart
             'backgroundColor' => null,
             'tooltip' => [
                 'trigger' => 'axis',
+                'formatter' => 'callback:formatDateOnlyTooltip',
             ],
             'grid' => [
                 'top' => '2%',

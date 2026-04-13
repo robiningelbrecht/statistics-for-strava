@@ -78,6 +78,7 @@ final readonly class AthleteWeightHistoryChart
             'backgroundColor' => null,
             'tooltip' => [
                 'trigger' => 'axis',
+                'formatter' => 'callback:formatDateOnlyTooltip',
             ],
             'grid' => [
                 'top' => '2%',
