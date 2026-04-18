@@ -1,5 +1,5 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
-import {processPolylines} from "fastgeotoolkit";
+import initFastGeoToolkitWasm, {process_polylines as processPolylines} from "fastgeotoolkit/wasm";
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -11,6 +11,7 @@ export default class HeatmapDrawer {
         this.densityFeatureGroup = L.featureGroup();
         this.routePolylines = [];
         this.redrawVersion = 0;
+        this.fastGeoToolkitInitializationPromise = null;
         this.map = L.map(this.wrapper, {
             scrollWheelZoom: true,
             minZoom: 1,
@@ -113,6 +114,13 @@ export default class HeatmapDrawer {
         return `hsl(${hue}, 100%, 50%)`;
     }
 
+    async _ensureFastGeoToolkitInitialized() {
+        if (!this.fastGeoToolkitInitializationPromise) {
+            this.fastGeoToolkitInitializationPromise = initFastGeoToolkitWasm();
+        }
+        await this.fastGeoToolkitInitializationPromise;
+    }
+
     async redraw(routes) {
         const redrawVersion = ++this.redrawVersion;
         routes = routes.filter((route) => route.active);
@@ -178,6 +186,10 @@ export default class HeatmapDrawer {
 
         if (encodedPolylines.length > 0) {
             try {
+                await this._ensureFastGeoToolkitInitialized();
+                if (redrawVersion !== this.redrawVersion) {
+                    return;
+                }
                 const heatmap = await processPolylines(encodedPolylines);
                 if (redrawVersion !== this.redrawVersion) {
                     return;
