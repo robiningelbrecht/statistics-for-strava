@@ -7,5 +7,8 @@
     "tailwindcss": "^4.2.0",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "fastgeotoolkit": "^0.2.3"
   }
 }

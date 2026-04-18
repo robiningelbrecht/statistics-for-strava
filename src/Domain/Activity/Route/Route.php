@@ -144,6 +144,7 @@ final readonly class Route implements \JsonSerializable
             'active' => true,
             'id' => $this->getActivityId(),
             'activityUrl' => $this->relativeActivityUri ?? null,
+            'encodedPolyline' => (string) $this->getEncodedPolyline(),
             'startDate' => $startDate,
             'distance' => $distance,
             'name' => Escape::forJsonEncode($this->getName()),

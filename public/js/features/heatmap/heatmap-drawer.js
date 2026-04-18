@@ -1,4 +1,5 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
+import {processPolylines} from "fastgeotoolkit";
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -7,7 +8,9 @@ export default class HeatmapDrawer {
         this.modalManager = modalManager;
         this.placesControl = null;
         this.mainFeatureGroup = L.featureGroup();
+        this.densityFeatureGroup = L.featureGroup();
         this.routePolylines = [];
+        this.redrawVersion = 0;
         this.map = L.map(this.wrapper, {
             scrollWheelZoom: true,
             minZoom: 1,
@@ -16,18 +19,18 @@ export default class HeatmapDrawer {
         this.config.tileLayerUrls.forEach((tileLayerUrl) => {
             L.tileLayer(tileLayerUrl).addTo(this.map);
         });
-        this.defaultPolylineStyle = {
-            color: this.config.polylineColor,
+        this.hiddenPolylineStyle = {
             weight: 1.5,
-            opacity: 0.5,
+            opacity: 0,
             smoothFactor: 1,
             overrideExisting: true,
             detectColors: true,
         };
-        this.inactivePolylineStyle = {
-            weight: 0,
-            opacity: 0,
-        }
+        this.nearbyPolylineStyle = {
+            color: '#ffffff',
+            weight: 4,
+            opacity: 0.8,
+        };
         this.map.on("click", (e) => this._handleMapClick(e));
         this.map.on("popupclose", () => this._resetRouteStyles());
         this.map.on("popupopen", (e) => this._handlePopupOpen(e));
@@ -35,7 +38,7 @@ export default class HeatmapDrawer {
 
     _resetRouteStyles() {
         this.routePolylines.forEach(entry => {
-            entry.polyline.setStyle(this.defaultPolylineStyle);
+            entry.polyline.setStyle(this.hiddenPolylineStyle);
         });
     }
 
@@ -75,9 +78,8 @@ export default class HeatmapDrawer {
             return;
         }
 
-        notNearby.forEach(entry => {
-            entry.polyline.setStyle(this.inactivePolylineStyle);
-        });
+        notNearby.forEach(entry => entry.polyline.setStyle(this.hiddenPolylineStyle));
+        nearby.forEach(entry => entry.polyline.setStyle(this.nearbyPolylineStyle));
 
         const html = `
             <div class="m-4 text-sm max-h-50 overflow-y-auto no-dark">
@@ -105,9 +107,17 @@ export default class HeatmapDrawer {
             }).openOn(this.map);
     }
 
-    redraw(routes) {
+    _getGradientColor(frequency, maxFrequency) {
+        const intensity = maxFrequency > 0 ? frequency / maxFrequency : 0;
+        const hue = Math.max(0, 240 - (240 * intensity));
+        return `hsl(${hue}, 100%, 50%)`;
+    }
+
+    async redraw(routes) {
+        const redrawVersion = ++this.redrawVersion;
         routes = routes.filter((route) => route.active);
         this.mainFeatureGroup.clearLayers();
+        this.densityFeatureGroup.clearLayers();
         this.routePolylines = [];
         if (this.placesControl) {
             this.map.removeControl(this.placesControl);
@@ -128,6 +138,7 @@ export default class HeatmapDrawer {
         const countryFeatureGroups = new Map();
         const fitMapBoundsFeatureGroup = L.featureGroup();
         const mostActiveState = determineMostActiveState(routes);
+        const encodedPolylines = [];
 
         routes.forEach(route => {
             const {countryCode, state} = route.startLocation;
@@ -138,7 +149,7 @@ export default class HeatmapDrawer {
 
             const polyline = L.polyline(
                 route.coordinates,
-                this.defaultPolylineStyle
+                this.hiddenPolylineStyle
             ).addTo(countryFeatureGroups.get(countryCode));
 
             this.routePolylines.push({
@@ -146,6 +157,9 @@ export default class HeatmapDrawer {
                 polyline: polyline,
                 coordinates: route.coordinates
             });
+            if (route.encodedPolyline) {
+                encodedPolylines.push(route.encodedPolyline);
+            }
 
             if (mostActiveState === state) {
                 L.polyline(route.coordinates).addTo(fitMapBoundsFeatureGroup);
@@ -160,6 +174,31 @@ export default class HeatmapDrawer {
             });
         });
         this.mainFeatureGroup.addTo(this.map);
+        this.densityFeatureGroup.addTo(this.map);
+
+        if (encodedPolylines.length > 0) {
+            try {
+                const heatmap = await processPolylines(encodedPolylines);
+                if (redrawVersion !== this.redrawVersion) {
+                    return;
+                }
+
+                heatmap.tracks.forEach(track => {
+                    const color = this._getGradientColor(track.frequency, heatmap.max_frequency);
+                    const intensity = heatmap.max_frequency > 0 ? track.frequency / heatmap.max_frequency : 0;
+                    L.polyline(track.coordinates, {
+                        color,
+                        weight: 1.5 + (intensity * 4),
+                        opacity: 0.65 + (intensity * 0.35),
+                        smoothFactor: 1,
+                        overrideExisting: true,
+                        detectColors: true,
+                    }).addTo(this.densityFeatureGroup);
+                });
+            } catch (error) {
+                console.error('Unable to process heatmap polylines with fastgeotoolkit', error);
+            }
+        }
 
         this.placesControl = L.control.flyToPlaces({places});
         this.placesControl.addTo(this.map);
