@@ -21,7 +21,20 @@ final readonly class CadenceDistributionChart
     public static function create(
         array $cadenceData,
         int $averageCadence,
+        ActivityType $activityType,
     ): self {
+        if (in_array($activityType, [ActivityType::RUN, ActivityType::WALK])) {
+            $doubledCadenceData = [];
+            foreach ($cadenceData as $cadence => $time) {
+                $doubledCadenceData[$cadence * 2] = $time;
+            }
+
+            return new self(
+                cadenceData: $doubledCadenceData,
+                averageCadence: $averageCadence * 2,
+            );
+        }
+
         return new self(
             cadenceData: $cadenceData,
             averageCadence: $averageCadence,

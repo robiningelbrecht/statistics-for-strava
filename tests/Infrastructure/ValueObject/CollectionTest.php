@@ -35,14 +35,9 @@ class CollectionTest extends TestCase
             ->add(Name::fromString(10))
             ->mergeWith(ATestCollection::fromArray([Name::fromString(20)]));
 
-        $this->assertEqualsCanonicalizing(
-            $collection,
-            ATestCollection::fromArray([Name::fromString(10), Name::fromString(20)])
-        );
-
-        $this->assertEqualsCanonicalizing(
-            $collection,
-            ATestCollection::fromArray([Name::fromString(20), Name::fromString(10)])
+        $this->assertEquals(
+            ATestCollection::fromArray([Name::fromString(10), Name::fromString(20)]),
+            $collection
         );
     }
 

@@ -122,6 +122,15 @@ export const registerEchartsCallbacks = () => {
             const elevationSymbol = window.statisticsForStrava.unitSystem.elevationSymbol;
             return `${value.toFixed(0)}${elevationSymbol}`;
         },
+        formatDateOnlyTooltip: (params) => {
+            if (!Array.isArray(params)) params = [params];
+            const dateFormat = window.statisticsForStrava.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
+            const date = echarts.time.format(params[0].axisValue, dateFormat, false);
+            return date + params
+                .filter(p => p.data && p.data.length > 0)
+                .map(p => '<br/>' + p.marker + ' ' + p.seriesName + ': <b>' + p.data[1] + '</b>')
+                .join('');
+        },
         formatActivityGridTooltip: (value) => {
             if (value === undefined || value === null) {
                 return '-';
