@@ -5,6 +5,7 @@ const BASE_GRADIENT_WEIGHT = 1.5;
 const MAX_GRADIENT_WEIGHT_ADDITION = 4;
 const BASE_GRADIENT_OPACITY = 0.65;
 const MAX_GRADIENT_OPACITY_ADDITION = 0.35;
+const BLUE_HUE = 240;
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -115,7 +116,7 @@ export default class HeatmapDrawer {
 
     _getGradientColor(frequency, maxFrequency) {
         const intensity = this._getIntensity(frequency, maxFrequency);
-        const hue = Math.max(0, 240 - (240 * intensity));
+        const hue = Math.max(0, BLUE_HUE - (BLUE_HUE * intensity));
         return `hsl(${hue}, 100%, 50%)`;
     }
 
