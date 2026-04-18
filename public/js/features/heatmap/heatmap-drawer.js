@@ -109,9 +109,13 @@ export default class HeatmapDrawer {
     }
 
     _getGradientColor(frequency, maxFrequency) {
-        const intensity = maxFrequency > 0 ? frequency / maxFrequency : 0;
+        const intensity = this._getIntensity(frequency, maxFrequency);
         const hue = Math.max(0, 240 - (240 * intensity));
         return `hsl(${hue}, 100%, 50%)`;
+    }
+
+    _getIntensity(frequency, maxFrequency) {
+        return maxFrequency > 0 ? frequency / maxFrequency : 0;
     }
 
     async _ensureFastGeoToolkitInitialized() {
@@ -197,7 +201,7 @@ export default class HeatmapDrawer {
 
                 heatmap.tracks.forEach(track => {
                     const color = this._getGradientColor(track.frequency, heatmap.max_frequency);
-                    const intensity = heatmap.max_frequency > 0 ? track.frequency / heatmap.max_frequency : 0;
+                    const intensity = this._getIntensity(track.frequency, heatmap.max_frequency);
                     L.polyline(track.coordinates, {
                         color,
                         weight: 1.5 + (intensity * 4),

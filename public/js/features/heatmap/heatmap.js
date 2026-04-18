@@ -36,13 +36,14 @@ export default class Heatmap {
         this.filterManager.prefillFromStorage(FilterName.HEATMAP);
         await redraw(false);
 
-        this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', () => void redraw()));
+        const safeRedraw = () => redraw().catch(error => console.error('Unable to redraw heatmap', error));
+        this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', safeRedraw));
 
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', e => {
                 e.preventDefault();
                 this.filterManager.resetAll();
-                void redraw();
+                safeRedraw();
             });
         }
 
@@ -51,7 +52,7 @@ export default class Heatmap {
                 e.preventDefault();
                 const name = btn.getAttribute('data-datatable-filter-clear');
                 this.filterManager.resetOne(name);
-                void redraw();
+                safeRedraw();
             });
         });
     };
