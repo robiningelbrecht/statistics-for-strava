@@ -178,6 +178,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 $cadenceDistributionChart = CadenceDistributionChart::create(
                     cadenceData: $cadenceDistribution,
                     averageCadence: $activity->getAverageCadence(),
+                    activityType: $activityType,
                 )->build();
 
                 if (!is_null($cadenceDistributionChart)) {
