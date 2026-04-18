@@ -6,6 +6,7 @@ const MAX_GRADIENT_WEIGHT_ADDITION = 4;
 const BASE_GRADIENT_OPACITY = 0.65;
 const MAX_GRADIENT_OPACITY_ADDITION = 0.35;
 const BLUE_HUE = 240;
+const NEARBY_ROUTE_HIGHLIGHT_COLOR = '#ffffff';
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -34,7 +35,7 @@ export default class HeatmapDrawer {
             detectColors: true,
         };
         this.nearbyPolylineStyle = {
-            color: '#ffffff',
+            color: NEARBY_ROUTE_HIGHLIGHT_COLOR,
             weight: 4,
             opacity: 0.8,
         };
