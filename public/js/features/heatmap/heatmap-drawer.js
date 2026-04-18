@@ -1,6 +1,11 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
 import initFastGeoToolkitWasm, {process_polylines as processPolylines} from "fastgeotoolkit/wasm";
 
+const BASE_GRADIENT_WEIGHT = 1.5;
+const MAX_GRADIENT_WEIGHT_ADDITION = 4;
+const BASE_GRADIENT_OPACITY = 0.65;
+const MAX_GRADIENT_OPACITY_ADDITION = 0.35;
+
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
         this.wrapper = wrapper;
@@ -118,6 +123,10 @@ export default class HeatmapDrawer {
         return maxFrequency > 0 ? frequency / maxFrequency : 0;
     }
 
+    _isStaleRedraw(redrawVersion) {
+        return redrawVersion !== this.redrawVersion;
+    }
+
     async _ensureFastGeoToolkitInitialized() {
         if (!this.fastGeoToolkitInitializationPromise) {
             this.fastGeoToolkitInitializationPromise = initFastGeoToolkitWasm();
@@ -191,11 +200,11 @@ export default class HeatmapDrawer {
         if (encodedPolylines.length > 0) {
             try {
                 await this._ensureFastGeoToolkitInitialized();
-                if (redrawVersion !== this.redrawVersion) {
+                if (this._isStaleRedraw(redrawVersion)) {
                     return;
                 }
                 const heatmap = await processPolylines(encodedPolylines);
-                if (redrawVersion !== this.redrawVersion) {
+                if (this._isStaleRedraw(redrawVersion)) {
                     return;
                 }
 
@@ -204,8 +213,8 @@ export default class HeatmapDrawer {
                     const intensity = this._getIntensity(track.frequency, heatmap.max_frequency);
                     L.polyline(track.coordinates, {
                         color,
-                        weight: 1.5 + (intensity * 4),
-                        opacity: 0.65 + (intensity * 0.35),
+                        weight: BASE_GRADIENT_WEIGHT + (intensity * MAX_GRADIENT_WEIGHT_ADDITION),
+                        opacity: BASE_GRADIENT_OPACITY + (intensity * MAX_GRADIENT_OPACITY_ADDITION),
                         smoothFactor: 1,
                         overrideExisting: true,
                         detectColors: true,
