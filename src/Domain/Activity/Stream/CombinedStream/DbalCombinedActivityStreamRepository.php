@@ -18,7 +18,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
 {
     public function add(CombinedActivityStream $combinedActivityStream): void
     {
-        $sql = 'INSERT INTO CombinedActivityStream (activityId, unitSystem, streamTypes, data, maxYAxisValue)
+        $sql = 'REPLACE INTO CombinedActivityStream (activityId, unitSystem, streamTypes, data, maxYAxisValue)
         VALUES (:activityId, :unitSystem, :streamTypes, :data, :maxYAxisValue)';
 
         $this->connection->executeStatement($sql, [
@@ -59,9 +59,21 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
     {
         $sql = 'SELECT Activity.activityId FROM Activity 
                   WHERE sportType IN (:sportTypes)
-                  AND NOT EXISTS (
-                    SELECT 1 FROM CombinedActivityStream WHERE CombinedActivityStream.activityId = Activity.activityId 
-                    AND CombinedActivityStream.unitSystem = :unitSystem
+                  AND (
+                    NOT EXISTS (
+                        SELECT 1 FROM CombinedActivityStream WHERE CombinedActivityStream.activityId = Activity.activityId 
+                        AND CombinedActivityStream.unitSystem = :unitSystem
+                    )
+                    OR EXISTS (
+                        SELECT 1 FROM CombinedActivityStream 
+                        WHERE CombinedActivityStream.activityId = Activity.activityId
+                        AND CombinedActivityStream.unitSystem = :unitSystem
+                        AND Activity.sportType IN (:gapSportTypes)
+                        AND CombinedActivityStream.streamTypes NOT LIKE :gapOnly
+                        AND CombinedActivityStream.streamTypes NOT LIKE :gapPrefix
+                        AND CombinedActivityStream.streamTypes NOT LIKE :gapSuffix
+                        AND CombinedActivityStream.streamTypes NOT LIKE :gapMiddle
+                    )
                   )
                   AND EXISTS (
                     SELECT 1 FROM ActivityStream y
@@ -78,6 +90,15 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 [
                     'unitSystem' => $unitSystem->value,
                     'timeStreamType' => CombinedStreamType::TIME->value,
+                    'gapOnly' => CombinedStreamType::GAP->value,
+                    'gapPrefix' => CombinedStreamType::GAP->value.',%',
+                    'gapSuffix' => '%,'.CombinedStreamType::GAP->value,
+                    'gapMiddle' => '%,'.CombinedStreamType::GAP->value.',%',
+                    'gapSportTypes' => [
+                        SportType::RUN->value,
+                        SportType::TRAIL_RUN->value,
+                        SportType::VIRTUAL_RUN->value,
+                    ],
                     'otherStreamTypes' => array_map(
                         fn (CombinedStreamType $streamType) => $streamType->getStreamType()->value,
                         CombinedStreamTypes::othersFor($activityType)->toArray()
@@ -86,6 +107,7 @@ final readonly class DbalCombinedActivityStreamRepository extends DbalRepository
                 ],
                 [
                     'sportTypes' => ArrayParameterType::STRING,
+                    'gapSportTypes' => ArrayParameterType::STRING,
                     'otherStreamTypes' => ArrayParameterType::STRING,
                 ]
             )->fetchFirstColumn());

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildActivitiesHtml;
+namespace App\Domain\Activity\Gap;
 
 use App\Domain\Activity\Activity;
-use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Split\ActivitySplit;
 use App\Domain\Activity\Split\ActivitySplits;
 use App\Domain\Activity\Stream\ActivityStreams;
@@ -15,10 +14,10 @@ use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
 /**
- * @phpstan-type BuildActivityGapTrackPoint array{lat: float, lon: float, ele: float, timestamp: int}
- * @phpstan-type BuildActivityGapSegment array{
- *     from: BuildActivityGapTrackPoint,
- *     to: BuildActivityGapTrackPoint,
+ * @phpstan-type ActivityGapTrackPoint array{lat: float, lon: float, ele: float, timestamp: int}
+ * @phpstan-type ActivityGapSegment array{
+ *     from: ActivityGapTrackPoint,
+ *     to: ActivityGapTrackPoint,
  *     distance_m: float,
  *     duration_s: int,
  *     grade: float,
@@ -27,20 +26,17 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
  *     gap_pace_sec_per_km: float
  * }
  */
-final readonly class BuildActivityGapAssembler
+final readonly class ActivityGapAssembler
 {
-    public function __construct(
-        private GapCalculator $gapCalculator = new GapCalculator(),
-    ) {
-    }
-
     public function for(
         Activity $activity,
         ActivityStreams $streams,
         ActivitySplits $metricSplits,
         ActivitySplits $imperialSplits,
-    ): ?BuildActivityGapData {
-        if (!$this->gapCalculator->supports($activity->getSportType())) {
+    ): ?ActivityGap {
+        $gapCalculator = GapCalculator::create();
+
+        if (!$gapCalculator->supports($activity->getSportType())) {
             return null;
         }
 
@@ -49,27 +45,26 @@ final readonly class BuildActivityGapAssembler
             return null;
         }
 
-        $summary = $this->gapCalculator->calculate($trackPoints, $activity->getSportType());
+        $summary = $gapCalculator->calculate($trackPoints, $activity->getSportType());
         if (null === $summary['gap_pace_sec_per_km']) {
             return null;
         }
 
-        /** @var list<BuildActivityGapSegment> $segments */
-        $segments = iterator_to_array($this->gapCalculator->calculateSegments($trackPoints, $activity->getSportType()), false);
+        /** @var list<ActivityGapSegment> $segments */
+        $segments = iterator_to_array($gapCalculator->calculateSegments($trackPoints, $activity->getSportType()), false);
         if ([] === $segments) {
             return null;
         }
 
-        return new BuildActivityGapData(
+        return new ActivityGap(
             overallGapPaceInSecondsPerKm: SecPerKm::from($summary['gap_pace_sec_per_km']),
             metricSplits: $this->mapSegmentsToSplits($segments, $metricSplits, UnitSystem::METRIC),
             imperialSplits: $this->mapSegmentsToSplits($segments, $imperialSplits, UnitSystem::IMPERIAL),
-            profileChartData: $this->buildProfileChartData($segments),
         );
     }
 
     /**
-     * @return list<BuildActivityGapTrackPoint>
+     * @return list<ActivityGapTrackPoint>
      */
     private function buildTrackPoints(ActivityStreams $streams): array
     {
@@ -107,9 +102,9 @@ final readonly class BuildActivityGapAssembler
     }
 
     /**
-     * @param list<BuildActivityGapSegment> $segments
+     * @param list<ActivityGapSegment> $segments
      *
-     * @return array<int, BuildActivityGapSplitData>
+     * @return array<int, ActivityGapSplit>
      */
     private function mapSegmentsToSplits(array $segments, ActivitySplits $splits, UnitSystem $unitSystem): array
     {
@@ -174,7 +169,7 @@ final readonly class BuildActivityGapAssembler
     }
 
     /**
-     * @param array<int, BuildActivityGapSplitData> $mappedSplits
+     * @param array<int, ActivityGapSplit> $mappedSplits
      */
     private function finalizeSplit(
         array &$mappedSplits,
@@ -190,27 +185,8 @@ final readonly class BuildActivityGapAssembler
         }
 
         $paceMultiplier = UnitSystem::METRIC === $unitSystem ? 1000.0 : Mile::from(1)->toMeter()->toFloat();
-        $mappedSplits[$split->getSplitNumber()] = new BuildActivityGapSplitData(
+        $mappedSplits[$split->getSplitNumber()] = new ActivityGapSplit(
             gapPaceInSeconds: SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * $paceMultiplier),
         );
-    }
-
-    /**
-     * @param list<BuildActivityGapSegment> $segments
-     *
-     * @return list<int>
-     */
-    private function buildProfileChartData(array $segments): array
-    {
-        if ([] === $segments) {
-            return [];
-        }
-
-        $profileChartData = [(int) round($segments[0]['gap_pace_sec_per_km'])];
-        foreach ($segments as $segment) {
-            $profileChartData[] = (int) round($segment['gap_pace_sec_per_km']);
-        }
-
-        return $profileChartData;
     }
 }

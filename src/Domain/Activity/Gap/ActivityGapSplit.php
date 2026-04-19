@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildActivitiesHtml;
+namespace App\Domain\Activity\Gap;
 
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
-final readonly class BuildActivityGapSplitData
+final readonly class ActivityGapSplit
 {
     public function __construct(
         private SecPerKm $gapPaceInSeconds,

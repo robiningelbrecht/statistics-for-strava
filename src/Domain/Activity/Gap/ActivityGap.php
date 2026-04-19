@@ -2,22 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildActivitiesHtml;
+namespace App\Domain\Activity\Gap;
 
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
-final readonly class BuildActivityGapData
+final readonly class ActivityGap
 {
     /**
-     * @param array<int, BuildActivityGapSplitData> $metricSplits
-     * @param array<int, BuildActivityGapSplitData> $imperialSplits
+     * @param array<int, ActivityGapSplit> $metricSplits
+     * @param array<int, ActivityGapSplit> $imperialSplits
      */
     public function __construct(
         private SecPerKm $overallGapPaceInSecondsPerKm,
         private array $metricSplits,
         private array $imperialSplits,
-        private array $profileChartData,
     ) {
     }
 
@@ -26,7 +25,7 @@ final readonly class BuildActivityGapData
         return $this->overallGapPaceInSecondsPerKm;
     }
 
-    public function getSplit(UnitSystem $unitSystem, int $splitNumber): ?BuildActivityGapSplitData
+    public function getSplit(UnitSystem $unitSystem, int $splitNumber): ?ActivityGapSplit
     {
         return match ($unitSystem) {
             UnitSystem::METRIC => $this->metricSplits[$splitNumber] ?? null,
@@ -34,11 +33,4 @@ final readonly class BuildActivityGapData
         };
     }
 
-    /**
-     * @return list<int>
-     */
-    public function getProfileChartData(): array
-    {
-        return $this->profileChartData;
-    }
 }

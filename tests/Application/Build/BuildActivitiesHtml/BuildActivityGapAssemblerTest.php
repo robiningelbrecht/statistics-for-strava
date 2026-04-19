@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Application\Build\BuildActivitiesHtml;
 
-use App\Application\Build\BuildActivitiesHtml\BuildActivityGapAssembler;
-use App\Domain\Activity\Gap\GapCalculator;
+use App\Domain\Activity\Gap\ActivityGapAssembler;
 use App\Domain\Activity\Split\ActivitySplits;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreams;
@@ -20,7 +19,7 @@ final class BuildActivityGapAssemblerTest extends TestCase
 {
     public function testItReturnsNullForNonRunningActivities(): void
     {
-        $assembler = new BuildActivityGapAssembler(new GapCalculator());
+        $assembler = new ActivityGapAssembler();
 
         self::assertNull($assembler->for(
             activity: ActivityBuilder::fromDefaults()->withSportType(SportType::RIDE)->build(),
@@ -32,7 +31,7 @@ final class BuildActivityGapAssemblerTest extends TestCase
 
     public function testItReturnsNullWhenRequiredStreamsAreMissing(): void
     {
-        $assembler = new BuildActivityGapAssembler(new GapCalculator());
+        $assembler = new ActivityGapAssembler();
 
         self::assertNull($assembler->for(
             activity: ActivityBuilder::fromDefaults()->withSportType(SportType::RUN)->build(),
@@ -49,7 +48,7 @@ final class BuildActivityGapAssemblerTest extends TestCase
 
     public function testItMapsGapOntoImportedSplitRowsAndFiltersPausedSamples(): void
     {
-        $assembler = new BuildActivityGapAssembler(new GapCalculator(smoothingWindowSize: 1));
+        $assembler = new ActivityGapAssembler();
 
         $gap = $assembler->for(
             activity: ActivityBuilder::fromDefaults()->withSportType(SportType::RUN)->build(),
@@ -100,8 +99,6 @@ final class BuildActivityGapAssemblerTest extends TestCase
 
         self::assertNotNull($gap);
         self::assertGreaterThan(0.0, $gap->getOverallGapPaceInSecondsPerKm()->toFloat());
-        self::assertCount(5, $gap->getProfileChartData());
-        self::assertGreaterThan(0.0, $gap->getProfileChartData()[0]);
         self::assertNotNull($gap->getSplit(UnitSystem::METRIC, 1));
         self::assertNotNull($gap->getSplit(UnitSystem::METRIC, 2));
         self::assertNull($gap->getSplit(UnitSystem::METRIC, 3));
@@ -111,7 +108,7 @@ final class BuildActivityGapAssemblerTest extends TestCase
 
     public function testItDoesNotCreateSyntheticSplitDataWhenImportedSplitsRunOut(): void
     {
-        $assembler = new BuildActivityGapAssembler(new GapCalculator(smoothingWindowSize: 1));
+        $assembler = new ActivityGapAssembler();
 
         $gap = $assembler->for(
             activity: ActivityBuilder::fromDefaults()->withSportType(SportType::RUN)->build(),

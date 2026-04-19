@@ -10,6 +10,7 @@ use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\CadenceDistributionChart;
 use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
+use App\Domain\Activity\Gap\ActivityGapAssembler;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\LeafletMap;
@@ -57,7 +58,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
         private BestEffortsCalculator $bestEffortsCalculator,
-        private BuildActivityGapAssembler $buildActivityGapAssembler,
+        private ActivityGapAssembler $buildActivityGapAssembler,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -238,13 +239,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 $streamTypesForCharts = $combinedActivityStream->getStreamTypesForCharts();
                 $items = [];
                 foreach ($streamTypesForCharts as $combinedStreamType) {
-                    if (CombinedStreamType::PACE === $combinedStreamType && null !== $gap && [] !== $gap->getProfileChartData()) {
-                        $items[] = [
-                            'yAxisData' => $gap->getProfileChartData(),
-                            'yAxisStreamType' => CombinedStreamType::GAP,
-                        ];
-                    }
-
                     $items[] = [
                         'yAxisData' => $combinedActivityStream->getChartStreamData($combinedStreamType),
                         'yAxisStreamType' => $combinedStreamType,

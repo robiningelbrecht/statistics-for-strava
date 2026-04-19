@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
+use App\Domain\Activity\Math;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStream;
@@ -28,12 +30,17 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
 {
     use ProvideTimeFormats;
 
+    private const GAP_CHART_ELEVATION_SMOOTHING_WINDOW_SIZE = 25;
+    private const GAP_CHART_GRADE_DISTANCE_WINDOW_IN_METERS = 100.0;
+    private const GAP_CHART_SMOOTHING_WINDOW_SIZE = 15;
+
     public function __construct(
         private ActivityRepository $activityRepository,
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private UnitSystem $unitSystem,
         private Mutex $mutex,
+        private ?GapCalculator $gapCalculator = null,
     ) {
     }
 
@@ -45,6 +52,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
         $activityIdsThatNeedCombining = $this->combinedActivityStreamRepository->findActivityIdsThatNeedStreamCombining(
             $this->unitSystem
         );
+        $gapCalculator = $this->gapCalculator ?? GapCalculator::create();
         $activityWithCombinedStreamCalculatedCount = 0;
         foreach ($activityIdsThatNeedCombining as $activityId) {
             $activity = $this->activityRepository->find($activityId);
@@ -54,6 +62,9 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             if (!($timeStream = $streams->filterOnType(StreamType::TIME)) instanceof ActivityStream) {
                 continue; // @codeCoverageIgnore
             }
+            $timeData = $timeStream->getData();
+            $movingData = $streams->filterOnType(StreamType::MOVING)?->getData();
+
             $combinedStreamTypes = CombinedStreamTypes::fromArray([
                 CombinedStreamType::TIME,
             ]);
@@ -80,6 +91,20 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             /** @var array<int, array{0: CombinedStreamType, 1: ActivityStream}> $otherStreams */
             $otherStreams = [];
             foreach (CombinedStreamTypes::othersFor($activity->getSportType()->getActivityType()) as $combinedStreamType) {
+                if (CombinedStreamType::PACE === $combinedStreamType && $gapCalculator->supports($activity->getSportType())) {
+                    $gapChartData = $this->buildGapChartData(
+                        gapCalculator: $gapCalculator,
+                        timeData: $timeData,
+                        movingData: $movingData,
+                        altitudeData: $streams->filterOnType(StreamType::ALTITUDE)?->getData() ?? [],
+                        latLngData: $latLngData,
+                    );
+                    if ([] !== $gapChartData) {
+                        $combinedStreamTypes->add(CombinedStreamType::GAP);
+                        $otherStreams[] = [CombinedStreamType::GAP, $gapChartData];
+                    }
+                }
+
                 if (!($stream = $streams->filterOnType($combinedStreamType->getStreamType())) instanceof ActivityStream) {
                     continue;
                 }
@@ -106,9 +131,6 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             }
 
             $combinedData = [];
-            $timeData = $timeStream->getData();
-            $movingData = $streams->filterOnType(StreamType::MOVING)?->getData();
-
             $cumulativeMovingTime = 0;
             $hasMovingData = null !== $movingData && [] !== $movingData;
             $hasDistanceData = $combinedStreamTypes->has(CombinedStreamType::DISTANCE);
@@ -196,5 +218,101 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
             '=> Calculated combined activity streams for %d activities',
             $activityWithCombinedStreamCalculatedCount
         ));
+    }
+
+    /**
+     * @param list<int> $timeData
+     * @param list<bool>|null $movingData
+     * @param list<float|int> $altitudeData
+     * @param list<array{0: float, 1: float}|null> $latLngData
+     *
+     * @return list<int>
+     */
+    private function buildGapChartData(
+        GapCalculator $gapCalculator,
+        array $timeData,
+        ?array $movingData,
+        array $altitudeData,
+        array $latLngData,
+    ): array {
+        if ([] === $timeData || [] === $altitudeData || [] === $latLngData) {
+            return [];
+        }
+
+        $maxIndex = min(\count($timeData), \count($altitudeData), \count($latLngData));
+        $trackPoints = [];
+        $rawIndexByTrackPointIndex = [];
+
+        for ($i = 0; $i < $maxIndex; ++$i) {
+            if (null !== $movingData && [] !== $movingData && false === ($movingData[$i] ?? false)) {
+                continue;
+            }
+
+            $coordinate = $latLngData[$i] ?? null;
+            if (!is_array($coordinate) || 2 !== \count($coordinate)) {
+                continue;
+            }
+
+            $trackPoints[] = [
+                'lat' => (float) $coordinate[0],
+                'lon' => (float) $coordinate[1],
+                'ele' => (float) $altitudeData[$i],
+                'timestamp' => (int) $timeData[$i],
+            ];
+            $rawIndexByTrackPointIndex[] = $i;
+        }
+
+        if (\count($trackPoints) < 2) {
+            return [];
+        }
+
+        $chartGapCalculator = GapCalculator::create(
+            smoothingWindowSize: self::GAP_CHART_ELEVATION_SMOOTHING_WINDOW_SIZE,
+            gradeDistanceWindowInMeters: self::GAP_CHART_GRADE_DISTANCE_WINDOW_IN_METERS,
+        );
+
+        $pointGapPaces = $chartGapCalculator->calculatePointGapPaces($trackPoints);
+        if ([] === $pointGapPaces) {
+            return [];
+        }
+
+        $gapByRawIndex = [];
+        foreach ($rawIndexByTrackPointIndex as $trackPointIndex => $rawIndex) {
+            $gapPace = $pointGapPaces[$trackPointIndex] ?? null;
+            if (null === $gapPace) {
+                continue;
+            }
+
+            $gapByRawIndex[$rawIndex] = (int) round($gapPace);
+        }
+
+        $chartData = [];
+        $currentGapValue = null;
+        foreach ($timeData as $i => $_time) {
+            if (null !== $movingData && [] !== $movingData && false === ($movingData[$i] ?? false)) {
+                continue;
+            }
+
+            if (array_key_exists($i, $gapByRawIndex)) {
+                $currentGapValue = $gapByRawIndex[$i];
+            }
+
+            if (null === $currentGapValue) {
+                continue;
+            }
+
+            $chartData[$i] = $currentGapValue;
+        }
+
+        if ([] === $chartData) {
+            return [];
+        }
+
+        $smoothedChartData = Math::movingAverage(array_values($chartData), self::GAP_CHART_SMOOTHING_WINDOW_SIZE);
+
+        return array_combine(array_keys($chartData), array_map(
+            static fn (int|float $value): int => (int) round($value),
+            $smoothedChartData,
+        )) ?: [];
     }
 }
