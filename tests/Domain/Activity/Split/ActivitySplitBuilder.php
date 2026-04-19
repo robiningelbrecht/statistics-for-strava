@@ -15,7 +15,7 @@ final class ActivitySplitBuilder
     private ActivityId $activityId;
     private UnitSystem $unitSystem = UnitSystem::METRIC;
     private int $splitNumber = 1;
-    private readonly Meter $distance;
+    private Meter $distance;
     private readonly int $elapsedTimeInSeconds;
     private readonly int $movingTimeInSeconds;
     private readonly Meter $elevationDifference;
@@ -76,6 +76,13 @@ final class ActivitySplitBuilder
     public function withSplitNumber(int $splitNumber): self
     {
         $this->splitNumber = $splitNumber;
+
+        return $this;
+    }
+
+    public function withDistanceInMeter(float|int $distance): self
+    {
+        $this->distance = Meter::from($distance);
 
         return $this;
     }

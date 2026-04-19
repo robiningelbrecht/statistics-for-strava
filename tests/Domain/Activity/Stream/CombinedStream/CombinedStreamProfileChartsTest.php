@@ -11,6 +11,28 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CombinedStreamProfileChartsTest extends ContainerTestCase
 {
+    public function testItUsesPaceFormattingForGapSeries(): void
+    {
+        $chart = CombinedStreamProfileCharts::create(
+            items: [
+                ['yAxisData' => [301.2, 299.8, 298.9], 'yAxisStreamType' => CombinedStreamType::GAP],
+                ['yAxisData' => [300.4, 301.1, 302.0], 'yAxisStreamType' => CombinedStreamType::PACE],
+            ],
+            topXAxisData: [1, 2, 3],
+            bottomXAxisData: [0.5, 1.0, 1.5],
+            bottomXAxisSuffix: 'km',
+            grades: [],
+            maximumNumberOfDigitsOnYAxis: 3,
+            unitSystem: UnitSystem::METRIC,
+            translator: $this->getContainer()->get(TranslatorInterface::class)
+        )->build();
+
+        $this->assertSame('callback:formatSecondsTrimZero', $chart['yAxis'][0]['axisLabel']['formatter']);
+        $this->assertSame('callback:formatSecondsTrimZero', $chart['yAxis'][1]['axisLabel']['formatter']);
+        $this->assertSame('__gap', $chart['series'][0]['name']);
+        $this->assertSame('__pace', $chart['series'][1]['name']);
+    }
+
     #[TestWith(data: [1, '65px'])]
     #[TestWith(data: [4, '75px'])]
     #[TestWith(data: [5, '85px'])]

@@ -172,7 +172,7 @@ final readonly class CombinedStreamProfileCharts
                 'axisLabel' => [
                     'show' => true,
                     'customValues' => [$minYAxis, $maxYAxis],
-                    'formatter' => CombinedStreamType::PACE === $yAxisStreamType ? 'callback:formatSecondsTrimZero' : null,
+                    'formatter' => $yAxisStreamType->usesPaceFormatting() ? 'callback:formatSecondsTrimZero' : null,
                     'color' => '#aaa',
                     'verticalAlignMaxLabel' => 'top',
                     'verticalAlignMinLabel' => 'bottom',
@@ -189,7 +189,11 @@ final readonly class CombinedStreamProfileCharts
             }
 
             $series[] = [
-                'name' => CombinedStreamType::PACE === $yAxisStreamType ? '__pace' : $yAxisSuffix,
+                'name' => match ($yAxisStreamType) {
+                    CombinedStreamType::PACE => '__pace',
+                    CombinedStreamType::GAP => '__gap',
+                    default => $yAxisSuffix,
+                },
                 'xAxisIndex' => $index,
                 'yAxisIndex' => $index,
                 'markArea' => [

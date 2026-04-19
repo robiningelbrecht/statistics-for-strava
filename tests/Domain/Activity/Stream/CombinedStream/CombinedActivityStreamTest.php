@@ -50,4 +50,24 @@ class CombinedActivityStreamTest extends TestCase
             $stream->getCoordinates()
         );
     }
+
+    public function testGapStreamMetadata(): void
+    {
+        $translator = new class implements \Symfony\Contracts\Translation\TranslatorInterface {
+            public function trans(?string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
+            {
+                return (string) $id;
+            }
+
+            public function getLocale(): string
+            {
+                return 'en';
+            }
+        };
+
+        $this->assertSame('GAP', CombinedStreamType::GAP->trans($translator));
+        $this->assertSame('/km', CombinedStreamType::GAP->getSuffix(UnitSystem::METRIC));
+        $this->assertTrue(CombinedStreamType::GAP->isChartable());
+        $this->assertTrue(CombinedStreamType::GAP->usesPaceFormatting());
+    }
 }

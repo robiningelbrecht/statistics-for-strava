@@ -21,6 +21,14 @@
                 <dt class="font-extrabold">{{ activity.getPaceInSecPerKm()|formatPace }}</dt>
             </div>
         </div>
+        {% if gap %}
+            <div class="w-1/7 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
+                <div class="text-center">
+                    <dd class="text-xs text-gray-500">{{ "GAP"|trans }}</dd>
+                    <dt class="font-extrabold">{{ gap.getOverallGapPaceInSecondsPerKm()|formatPace }}</dt>
+                </div>
+            </div>
+        {% endif %}
         <div class="w-1/7 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
             <div class="text-center">
                 <dd class="text-xs text-gray-500">{{ "Elevation"|trans }}</dd>
@@ -84,11 +92,15 @@
                             <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
                                 <div class="w-8 px-2 py-2">{{ renderUnitSymbol('distance') }}</div>
                                 <div class="w-20 px-2 py-2">{{ "Pace"|trans }}</div>
+                                {% if gap %}
+                                    <div class="w-20 px-2 py-2">{{ "GAP"|trans }}</div>
+                                {% endif %}
                                 <div class="grow min-w-40 px-2 py-2"></div>
                                 <div class="w-20 px-2 py-2">{{ "Elev"|trans }}</div>
                                 <div class="w-20 px-2 py-2">{{ "HR"|trans }}</div>
                             </div>
                             {% for split in splits %}
+                                {% set gapSplit = gap ? gap.getSplit(split.getUnitSystem(), split.getSplitNumber()) : null %}
                                 <div class="flex items-center border-b last:border-b-0">
                                     <div class="w-8 px-2 py-2 font-bold">
                                         {{ split.getSplitNumber() }}
@@ -96,6 +108,11 @@
                                     <div class="w-20 px-2 py-2">
                                         {{ split.getPaceInSecPerKm()|formatPace }}
                                     </div>
+                                    {% if gap %}
+                                        <div class="w-20 px-2 py-2">
+                                            {{ gapSplit ? gapSplit.getGapPaceInSeconds()|formatPace : '' }}
+                                        </div>
+                                    {% endif %}
                                     <div class="grow min-w-40 px-2 py-2">
                                         <div class=" bg-gray-200 rounded-full h-2.5">
                                             <div class="bg-strava-orange h-2.5 rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>

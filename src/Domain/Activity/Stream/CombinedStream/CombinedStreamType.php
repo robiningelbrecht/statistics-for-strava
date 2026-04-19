@@ -18,6 +18,7 @@ enum CombinedStreamType: string implements TranslatableInterface
     case HEART_RATE = 'heartrate';
     case VELOCITY = 'velocity';
     case PACE = 'pace';
+    case GAP = 'gap';
     case DISTANCE = 'distance';
     case LAT_LNG = 'latlng';
     case TIME = 'time';
@@ -43,6 +44,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::STEPS_PER_MINUTE => $translator->trans('Cadence'),
             CombinedStreamType::WATTS => $translator->trans('Power'),
             CombinedStreamType::PACE => $translator->trans('Pace'),
+            CombinedStreamType::GAP => $translator->trans('GAP'),
             CombinedStreamType::VELOCITY => $translator->trans('Speed'),
             default => throw new \RuntimeException(sprintf('Cannot translate CombinedStreamType "%s"', $this->value)),
         };
@@ -56,6 +58,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::STEPS_PER_MINUTE => 'spm',
             CombinedStreamType::WATTS => 'watt',
             CombinedStreamType::PACE => $unitSystem->paceSymbol(),
+            CombinedStreamType::GAP => $unitSystem->paceSymbol(),
             CombinedStreamType::ALTITUDE => $unitSystem->elevationSymbol(),
             CombinedStreamType::VELOCITY => $unitSystem->speedSymbol(),
             default => throw new \RuntimeException('Suffix not supported for '.$this->value),
@@ -71,6 +74,7 @@ enum CombinedStreamType: string implements TranslatableInterface
             CombinedStreamType::STEPS_PER_MINUTE => '#91cc75',
             CombinedStreamType::WATTS => '#73c0de',
             CombinedStreamType::PACE,
+            CombinedStreamType::GAP,
             CombinedStreamType::VELOCITY => '#fac858',
             default => '#cccccc',
         };
@@ -81,6 +85,14 @@ enum CombinedStreamType: string implements TranslatableInterface
         return match ($this) {
             self::DISTANCE, self::LAT_LNG, self::TIME, self::GRADE => false,
             default => true,
+        };
+    }
+
+    public function usesPaceFormatting(): bool
+    {
+        return match ($this) {
+            self::PACE, self::GAP => true,
+            default => false,
         };
     }
 }

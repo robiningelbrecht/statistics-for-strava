@@ -37,6 +37,10 @@ const formatPace = (seconds) => {
     return `<strong>${minutes}:${secs.toString().padStart(2, '0')}</strong>${paceSymbol}`;
 };
 
+const formatPaceCompact = (seconds) => {
+    return `${window.statisticsForStrava.callbacks.formatSecondsTrimZero(seconds)}${window.statisticsForStrava.unitSystem.paceSymbol}`;
+};
+
 const formatDuration = (seconds) => {
     if (seconds < 60) return seconds + 's';
     if (seconds < 3600) {
@@ -64,7 +68,10 @@ export const registerEchartsCallbacks = () => {
             if (!Array.isArray(params)) params = [params];
             return [...params].sort((a, b) => a.seriesIndex - b.seriesIndex).map(p => {
                 if (p.seriesName === '__pace') {
-                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace(p.value)}`;
+                    return `${p.marker} Pace: <strong>${formatPaceCompact(p.value)}</strong>`;
+                }
+                if (p.seriesName === '__gap') {
+                    return `${p.marker} GAP: <strong>${formatPaceCompact(p.value)}</strong>`;
                 }
 
                 const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';
