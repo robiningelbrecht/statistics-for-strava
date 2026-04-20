@@ -10,6 +10,7 @@ use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\CadenceDistributionChart;
 use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
+use App\Domain\Activity\Gap\ActivityGapAssembler;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\LeafletMap;
@@ -56,6 +57,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
         private BestEffortsCalculator $bestEffortsCalculator,
+        private ActivityGapAssembler $buildActivityGapAssembler,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -96,12 +98,9 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $dataDatableRows = [];
         foreach ($activities as $activity) {
             $activityType = $activity->getSportType()->getActivityType();
+            $activityStreams = $this->activityStreamRepository->findByActivityId($activity->getId());
 
-            $heartRateStream = null;
-            try {
-                $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
-            } catch (EntityNotFound) {
-            }
+            $heartRateStream = $activityStreams->filterOnType(StreamType::HEART_RATE);
 
             $valueDistributionMetrics = $this->activityStreamMetricRepository->findByActivityIdAndMetricType(
                 $activity->getId(),
@@ -192,6 +191,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $activitySplits = $this->activitySplitRepository->findBy(
                 activityId: $activity->getId(),
                 unitSystem: $this->unitSystem
+            );
+            $gap = $this->buildActivityGapAssembler->for(
+                activity: $activity,
+                streams: $activityStreams,
+                metricSplits: $this->activitySplitRepository->findBy($activity->getId(), UnitSystem::METRIC),
+                imperialSplits: $this->activitySplitRepository->findBy($activity->getId(), UnitSystem::IMPERIAL),
             );
 
             if (!$activitySplits->isEmpty() && $heartRateStream) {
@@ -294,6 +299,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'profileChartHeight' => $profileChartHeight,
                     'hasProfileChart' => null !== $profileChart,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
+                    'gap' => $gap,
                 ]),
             );
 
