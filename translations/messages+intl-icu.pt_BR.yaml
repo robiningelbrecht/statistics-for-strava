@@ -118,6 +118,7 @@ Fitness: Fitness
 'Form (TSB)': 'Form (TSB)'
 Fri: Sex
 Friday: Sexta-feira
+GAP: GAP
 Gear: Equipamento
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'O equipamento "{gearId}" está referenciado no seu arquivo de configuração de manutenção, mas não foi importado do Strava. Por favor, verifique se o equipamento existe e está corretamente sincronizado.'
 'Gear details': 'Gear details'

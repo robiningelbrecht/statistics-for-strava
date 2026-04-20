@@ -118,6 +118,7 @@ Fitness: Träning
 'Form (TSB)': 'Träningsform (TSB)'
 Fri: Fre
 Friday: Fredag
+GAP: GAP
 Gear: Utrustning
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Utrusning "{gearId}" refereras i din underhållskonfigurationsfil, men importerades inte från Strava. Kontrollera att utrustningen finns och är korrekt synkroniserad..'
 'Gear details': 'Utrustning detaljer'
