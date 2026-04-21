@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Activity\Gap;
 
 use App\Domain\Activity\Gap\Gap;
 use App\Domain\Activity\Gap\GapCalculator;
+use App\Domain\Activity\Gap\GapSegment;
 use App\Domain\Activity\SportType\SportType;
 use PHPUnit\Framework\TestCase;
 
@@ -36,9 +37,10 @@ final class GapCalculatorTest extends TestCase
         $segments = iterator_to_array($calculator->calculateSegments($this->downhillTrackPoints()), false);
 
         self::assertCount(2, $segments);
-        self::assertLessThan(1.0, $segments[0]['gap_multiplier']);
-        self::assertGreaterThan(1.0, $segments[1]['gap_multiplier']);
-        self::assertGreaterThan($segments[1]['gap_pace_sec_per_km'], $segments[0]['gap_pace_sec_per_km']);
+        self::assertContainsOnlyInstancesOf(GapSegment::class, $segments);
+        self::assertLessThan(1.0, $segments[0]->getGapMultiplier());
+        self::assertGreaterThan(1.0, $segments[1]->getGapMultiplier());
+        self::assertGreaterThan($segments[1]->getGapPaceInSecondsPerKm(), $segments[0]->getGapPaceInSecondsPerKm());
     }
 
     public function testItSkipsZeroDistanceAndNonIncreasingTimestamps(): void
@@ -73,7 +75,7 @@ final class GapCalculatorTest extends TestCase
         ]), false);
 
         self::assertCount(1, $segments);
-        self::assertSame(30, $segments[0]['duration_s']);
+        self::assertSame(30, $segments[0]->getDurationInSeconds());
     }
 
     public function testItSmoothsElevationSpikesBeforeCalculatingGrade(): void
@@ -86,8 +88,8 @@ final class GapCalculatorTest extends TestCase
 
         self::assertCount(\count($unsmoothedSegments), $smoothedSegments);
         self::assertGreaterThan(
-            max(array_map(static fn (array $segment): float => abs($segment['grade']), $smoothedSegments)),
-            max(array_map(static fn (array $segment): float => abs($segment['grade']), $unsmoothedSegments)),
+            max(array_map(static fn (GapSegment $segment): float => abs($segment->getGrade()), $smoothedSegments)),
+            max(array_map(static fn (GapSegment $segment): float => abs($segment->getGrade()), $unsmoothedSegments)),
         );
     }
 
@@ -119,8 +121,8 @@ final class GapCalculatorTest extends TestCase
         $segments = iterator_to_array($calculator->calculateSegments($this->shortTrackPoints()), false);
 
         self::assertCount(2, $segments);
-        self::assertGreaterThan(0.0, $segments[0]['grade']);
-        self::assertGreaterThan(0.0, $segments[1]['grade']);
+        self::assertGreaterThan(0.0, $segments[0]->getGrade());
+        self::assertGreaterThan(0.0, $segments[1]->getGrade());
     }
 
     public function testItOnlyAppliesToRunningSportTypes(): void
@@ -192,11 +194,11 @@ final class GapCalculatorTest extends TestCase
 
         self::assertCount(2, $segments);
         foreach ($segments as $segment) {
-            self::assertSame(0.0, $segment['grade']);
-            self::assertEqualsWithDelta(1.0, $segment['gap_multiplier'], 0.01);
+            self::assertSame(0.0, $segment->getGrade());
+            self::assertEqualsWithDelta(1.0, $segment->getGapMultiplier(), 0.01);
             self::assertEqualsWithDelta(
-                $segment['actual_pace_sec_per_km'],
-                $segment['gap_pace_sec_per_km'],
+                $segment->getActualPaceInSecondsPerKm(),
+                $segment->getGapPaceInSecondsPerKm(),
                 0.01,
             );
         }
