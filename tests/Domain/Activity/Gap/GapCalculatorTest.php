@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Activity\Gap;
 
+use App\Domain\Activity\Gap\Gap;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\SportType\SportType;
 use PHPUnit\Framework\TestCase;
@@ -14,17 +15,18 @@ final class GapCalculatorTest extends TestCase
     {
         $calculator = GapCalculator::create(smoothingWindowSize: 3);
 
-        $summary = $calculator->calculate($this->trackPointsWithModerateClimb());
+        $gap = $calculator->calculate($this->trackPointsWithModerateClimb());
 
-        self::assertSame(3, $summary['segments']);
-        self::assertGreaterThan(330.0, $summary['distance_m']);
-        self::assertLessThan(336.0, $summary['distance_m']);
-        self::assertSame(120, $summary['duration_s']);
-        self::assertGreaterThan(350.0, $summary['actual_pace_sec_per_km']);
-        self::assertLessThan(370.0, $summary['actual_pace_sec_per_km']);
-        self::assertTrue($summary['gap_pace_sec_per_km'] <= $summary['actual_pace_sec_per_km']);
-        self::assertGreaterThan(0.0, $summary['average_grade']);
-        self::assertGreaterThan($summary['distance_m'], $summary['total_adjusted_distance_m']);
+        self::assertInstanceOf(Gap::class, $gap);
+        self::assertSame(3, $gap->getSegmentCount());
+        self::assertGreaterThan(330.0, $gap->getDistanceInMeters());
+        self::assertLessThan(336.0, $gap->getDistanceInMeters());
+        self::assertSame(120, $gap->getDurationInSeconds());
+        self::assertGreaterThan(350.0, $gap->getActualPaceInSecondsPerKm());
+        self::assertLessThan(370.0, $gap->getActualPaceInSecondsPerKm());
+        self::assertTrue($gap->getGapPaceInSecondsPerKm() <= $gap->getActualPaceInSecondsPerKm());
+        self::assertGreaterThan(0.0, $gap->getAverageGrade());
+        self::assertGreaterThan($gap->getDistanceInMeters(), $gap->getTotalAdjustedDistanceInMeters());
     }
 
     public function testItRewardsSlightDownhillButPenalizesSteepDownhill(): void
@@ -96,16 +98,16 @@ final class GapCalculatorTest extends TestCase
         $sparseSummary = $calculator->calculate($this->trackPointsWithModerateClimb());
         $denseSummary = $calculator->calculate($this->densifyTrack($this->trackPointsWithModerateClimbList(), 4));
 
-        self::assertNotNull($sparseSummary['gap_pace_sec_per_km']);
-        self::assertNotNull($denseSummary['gap_pace_sec_per_km']);
+        self::assertNotNull($sparseSummary->getGapPaceInSecondsPerKm());
+        self::assertNotNull($denseSummary->getGapPaceInSecondsPerKm());
         self::assertEqualsWithDelta(
-            $sparseSummary['gap_pace_sec_per_km'],
-            $denseSummary['gap_pace_sec_per_km'],
+            $sparseSummary->getGapPaceInSecondsPerKm(),
+            $denseSummary->getGapPaceInSecondsPerKm(),
             40.0,
         );
         self::assertEqualsWithDelta(
-            $sparseSummary['average_grade'],
-            $denseSummary['average_grade'],
+            $sparseSummary->getAverageGrade(),
+            $denseSummary->getAverageGrade(),
             0.01,
         );
     }
@@ -130,22 +132,112 @@ final class GapCalculatorTest extends TestCase
         self::assertTrue($calculator->supports(SportType::VIRTUAL_RUN));
         self::assertFalse($calculator->supports(SportType::RIDE));
 
-        self::assertSame(
-            [
-                'segments' => 0,
-                'distance_m' => 0.0,
-                'duration_s' => 0,
-                'actual_pace_sec_per_km' => null,
-                'gap_pace_sec_per_km' => null,
-                'average_grade' => 0.0,
-                'total_adjusted_distance_m' => 0.0,
-            ],
-            $calculator->calculate($this->trackPointsWithModerateClimb(), SportType::RIDE)
-        );
+        $rideSummary = $calculator->calculate($this->trackPointsWithModerateClimb(), SportType::RIDE);
+        self::assertInstanceOf(Gap::class, $rideSummary);
+        self::assertSame(0, $rideSummary->getSegmentCount());
+        self::assertSame(0.0, $rideSummary->getDistanceInMeters());
+        self::assertSame(0, $rideSummary->getDurationInSeconds());
+        self::assertNull($rideSummary->getActualPaceInSecondsPerKm());
+        self::assertNull($rideSummary->getGapPaceInSecondsPerKm());
+        self::assertSame(0.0, $rideSummary->getAverageGrade());
+        self::assertSame(0.0, $rideSummary->getTotalAdjustedDistanceInMeters());
         self::assertSame(
             [],
             iterator_to_array($calculator->calculateSegments($this->trackPointsWithModerateClimb(), SportType::RIDE), false)
         );
+    }
+
+    public function testItCalculatesPerPointGapPaces(): void
+    {
+        $calculator = GapCalculator::create(smoothingWindowSize: 3);
+
+        $paces = $calculator->calculatePointGapPaces($this->trackPointsWithModerateClimbList());
+
+        self::assertCount(4, $paces);
+        foreach ($paces as $pace) {
+            self::assertNotNull($pace);
+            self::assertGreaterThan(0.0, $pace);
+        }
+
+        self::assertSame([], $calculator->calculatePointGapPaces($this->trackPointsWithModerateClimbList(), SportType::RIDE));
+    }
+
+    public function testItReturnsEmptyResultForFewerThanTwoPoints(): void
+    {
+        $calculator = GapCalculator::create();
+
+        $emptyGap = $calculator->calculate([]);
+        self::assertSame(0, $emptyGap->getSegmentCount());
+        self::assertNull($emptyGap->getGapPaceInSecondsPerKm());
+
+        $singlePointGap = $calculator->calculate([
+            ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0, 'timestamp' => 1700000000],
+        ]);
+        self::assertSame(0, $singlePointGap->getSegmentCount());
+        self::assertNull($singlePointGap->getGapPaceInSecondsPerKm());
+
+        self::assertSame([], iterator_to_array($calculator->calculateSegments([]), false));
+        self::assertSame([], $calculator->calculatePointGapPaces([]));
+    }
+
+    public function testItTreatsFlatTerrainAsNeutral(): void
+    {
+        $calculator = GapCalculator::create(smoothingWindowSize: 1);
+
+        $segments = iterator_to_array($calculator->calculateSegments([
+            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 1700000000],
+            ['lat' => 51.0009, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 1700000030],
+            ['lat' => 51.0018, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 1700000060],
+        ]), false);
+
+        self::assertCount(2, $segments);
+        foreach ($segments as $segment) {
+            self::assertSame(0.0, $segment['grade']);
+            self::assertEqualsWithDelta(1.0, $segment['gap_multiplier'], 0.01);
+            self::assertEqualsWithDelta(
+                $segment['actual_pace_sec_per_km'],
+                $segment['gap_pace_sec_per_km'],
+                0.01,
+            );
+        }
+    }
+
+    public function testItRejectsInvalidConfiguration(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Smoothing window size must be at least 1.'));
+        GapCalculator::create(smoothingWindowSize: 0);
+    }
+
+    public function testItRejectsInvalidGradeDistanceWindow(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Grade distance window must be greater than 0.'));
+        GapCalculator::create(gradeDistanceWindowInMeters: 0.0);
+    }
+
+    public function testItRejectsInvalidGradeRange(): void
+    {
+        $this->expectExceptionObject(new \InvalidArgumentException('Minimum grade must be lower than maximum grade.'));
+        GapCalculator::create(minGrade: 0.5, maxGrade: 0.5);
+    }
+
+    public function testItRejectsMissingTimestamp(): void
+    {
+        $calculator = GapCalculator::create();
+
+        $this->expectExceptionObject(new \InvalidArgumentException('Track point is missing required field "timestamp".'));
+        $calculator->calculate([
+            ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0],
+        ]);
+    }
+
+    public function testItRejectsUnsupportedTimestampType(): void
+    {
+        $calculator = GapCalculator::create();
+
+        $this->expectExceptionObject(new \InvalidArgumentException('Unsupported timestamp value provided.'));
+        $calculator->calculate([
+            ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0, 'timestamp' => 3.14],
+        ]);
     }
 
     /**
@@ -282,7 +374,7 @@ final class GapCalculatorTest extends TestCase
         }
 
         if (is_string($timestamp) && !is_numeric($timestamp)) {
-            return (new \DateTimeImmutable($timestamp))->getTimestamp();
+            return new \DateTimeImmutable($timestamp)->getTimestamp();
         }
 
         return (int) $timestamp;
