@@ -16,16 +16,6 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
  *     ele: float,
  *     timestamp: int
  * }
- * @phpstan-type GapSegment array{
- *     from: NormalizedTrackPoint,
- *     to: NormalizedTrackPoint,
- *     distance_m: float,
- *     duration_s: int,
- *     grade: float,
- *     actual_pace_sec_per_km: float,
- *     gap_multiplier: float,
- *     gap_pace_sec_per_km: float
- * }
  */
 final readonly class GapCalculator
 {
@@ -83,10 +73,10 @@ final readonly class GapCalculator
 
         foreach ($this->calculateSegments($trackPoints, $sportType) as $segment) {
             ++$segments;
-            $distance += $segment['distance_m'];
-            $duration += $segment['duration_s'];
-            $weightedGrade += $segment['grade'] * $segment['distance_m'];
-            $adjustedDistance += $segment['distance_m'] * $segment['gap_multiplier'];
+            $distance += $segment->getDistanceInMeters();
+            $duration += $segment->getDurationInSeconds();
+            $weightedGrade += $segment->getGrade() * $segment->getDistanceInMeters();
+            $adjustedDistance += $segment->getDistanceInMeters() * $segment->getGapMultiplier();
         }
 
         return Gap::create(
@@ -146,16 +136,14 @@ final readonly class GapCalculator
 
             $gapMultiplier = $this->gapMultiplier($window['grade']);
 
-            yield [
-                'from' => $from,
-                'to' => $to,
-                'distance_m' => $distance,
-                'duration_s' => $duration,
-                'grade' => $window['grade'],
-                'actual_pace_sec_per_km' => $window['actual_pace_sec_per_km'],
-                'gap_multiplier' => $gapMultiplier,
-                'gap_pace_sec_per_km' => $window['actual_pace_sec_per_km'] / $gapMultiplier,
-            ];
+            yield GapSegment::create(
+                distanceInMeters: $distance,
+                durationInSeconds: $duration,
+                grade: $window['grade'],
+                actualPaceInSecondsPerKm: $window['actual_pace_sec_per_km'],
+                gapMultiplier: $gapMultiplier,
+                gapPaceInSecondsPerKm: $window['actual_pace_sec_per_km'] / $gapMultiplier,
+            );
         }
     }
 
