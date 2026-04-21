@@ -5,16 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Activity\Gap;
 
 use App\Domain\Activity\ActivityType;
+use App\Domain\Activity\Math;
 use App\Domain\Activity\SportType\SportType;
-use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 /**
- * @phpstan-type RawTrackPoint array{
- *     lat: float|int|string,
- *     lon: float|int|string,
- *     ele: float|int|string,
- *     timestamp: \DateTimeInterface|int|string
- * }
  * @phpstan-type NormalizedTrackPoint array{
  *     lat: float,
  *     lon: float,
@@ -31,24 +26,14 @@ use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
  *     gap_multiplier: float,
  *     gap_pace_sec_per_km: float
  * }
- * @phpstan-type GapSummary array{
- *     segments: int,
- *     distance_m: float,
- *     duration_s: int,
- *     actual_pace_sec_per_km: ?float,
- *     gap_pace_sec_per_km: ?float,
- *     average_grade: float,
- *     total_adjusted_distance_m: float
- * }
  */
-#[Autoconfigure(constructor: 'create')]
 final readonly class GapCalculator
 {
-    private const EARTH_RADIUS_M = 6371000.0;
-    private const FLAT_METABOLIC_COST = 3.6;
-    private const DEFAULT_GRADE_DISTANCE_WINDOW_M = 50.0;
-    private const MIN_ELEVATION_CHANGE_THRESHOLD_M = 0.1;
-    private const GRADE_DEAD_ZONE = 0.005;
+    private const float EARTH_RADIUS_M = 6371000.0;
+    private const float FLAT_METABOLIC_COST = 3.6;
+    private const float DEFAULT_GRADE_DISTANCE_WINDOW_M = 50.0;
+    private const float MIN_ELEVATION_CHANGE_THRESHOLD_M = 0.1;
+    private const float GRADE_DEAD_ZONE = 0.005;
 
     private function __construct(
         private int $smoothingWindowSize = 31,
@@ -82,14 +67,12 @@ final readonly class GapCalculator
     }
 
     /**
-     * @param iterable<array<string, mixed>|object> $trackPoints
-     *
-     * @return GapSummary
+     * @param iterable<array<string, mixed>> $trackPoints
      */
-    public function calculate(iterable $trackPoints, ?SportType $sportType = null): array
+    public function calculate(iterable $trackPoints, ?SportType $sportType = null): Gap
     {
-        if (null !== $sportType && !$this->supports($sportType)) {
-            return $this->emptySummary();
+        if ($sportType instanceof SportType && !$this->supports($sportType)) {
+            return Gap::empty();
         }
 
         $segments = 0;
@@ -106,45 +89,47 @@ final readonly class GapCalculator
             $adjustedDistance += $segment['distance_m'] * $segment['gap_multiplier'];
         }
 
-        $actualPace = $distance > 0.0 ? ($duration / $distance) * 1000.0 : null;
-        $gapPace = $adjustedDistance > 0.0 ? ($duration / $adjustedDistance) * 1000.0 : null;
-
-        return [
-            'segments' => $segments,
-            'distance_m' => $distance,
-            'duration_s' => $duration,
-            'actual_pace_sec_per_km' => $actualPace,
-            'gap_pace_sec_per_km' => $gapPace,
-            'average_grade' => $distance > 0.0 ? $weightedGrade / $distance : 0.0,
-            'total_adjusted_distance_m' => $adjustedDistance,
-        ];
+        return Gap::create(
+            segmentCount: $segments,
+            distanceInMeters: $distance,
+            durationInSeconds: $duration,
+            actualPaceInSecondsPerKm: $distance > 0.0 ? ($duration / $distance) * 1000.0 : null,
+            gapPaceInSecondsPerKm: $adjustedDistance > 0.0 ? ($duration / $adjustedDistance) * 1000.0 : null,
+            averageGrade: $distance > 0.0 ? $weightedGrade / $distance : 0.0,
+            totalAdjustedDistanceInMeters: $adjustedDistance,
+        );
     }
 
     /**
-     * @param iterable<array<string, mixed>|object> $trackPoints
+     * @param iterable<array<string, mixed>> $trackPoints
      *
      * @return \Generator<int, GapSegment>
      */
     public function calculateSegments(iterable $trackPoints, ?SportType $sportType = null): \Generator
     {
-        if (null !== $sportType && !$this->supports($sportType)) {
+        if ($sportType instanceof SportType && !$this->supports($sportType)) {
             return;
         }
 
         $points = $this->smoothPoints($trackPoints);
-        if (\count($points) < 2) {
+        $pointCount = \count($points);
+        if ($pointCount < 2) {
             return;
         }
 
         $cumulativeDistances = $this->buildCumulativeDistances($points);
+        $lastIndex = $pointCount - 1;
+        $trackLength = $cumulativeDistances[$lastIndex];
 
-        for ($i = 1; $i < \count($points); ++$i) {
+        for ($i = 1; $i < $pointCount; ++$i) {
             $from = $points[$i - 1];
             $to = $points[$i];
             $distance = $cumulativeDistances[$i] - $cumulativeDistances[$i - 1];
             $duration = $to['timestamp'] - $from['timestamp'];
-
-            if ($distance <= 0.0 || $duration <= 0) {
+            if ($distance <= 0.0) {
+                continue;
+            }
+            if ($duration <= 0) {
                 continue;
             }
 
@@ -152,6 +137,8 @@ final readonly class GapCalculator
                 points: $points,
                 cumulativeDistances: $cumulativeDistances,
                 centerDistance: ($cumulativeDistances[$i - 1] + $cumulativeDistances[$i]) / 2.0,
+                trackLength: $trackLength,
+                lastIndex: $lastIndex,
             );
             if (null === $window) {
                 continue;
@@ -178,29 +165,34 @@ final readonly class GapCalculator
     }
 
     /**
-     * @param iterable<array<string, mixed>|object> $trackPoints
+     * @param iterable<array<string, mixed>> $trackPoints
      *
      * @return list<?float>
      */
     public function calculatePointGapPaces(iterable $trackPoints, ?SportType $sportType = null): array
     {
-        if (null !== $sportType && !$this->supports($sportType)) {
+        if ($sportType instanceof SportType && !$this->supports($sportType)) {
             return [];
         }
 
         $points = $this->smoothPoints($trackPoints);
-        if (\count($points) < 2) {
+        $pointCount = \count($points);
+        if ($pointCount < 2) {
             return [];
         }
 
         $cumulativeDistances = $this->buildCumulativeDistances($points);
+        $lastIndex = $pointCount - 1;
+        $trackLength = $cumulativeDistances[$lastIndex];
         $gapPaces = [];
 
-        foreach ($points as $index => $_point) {
+        foreach (array_keys($points) as $index) {
             $window = $this->calculateWindowMetrics(
                 points: $points,
                 cumulativeDistances: $cumulativeDistances,
                 centerDistance: $cumulativeDistances[$index],
+                trackLength: $trackLength,
+                lastIndex: $lastIndex,
             );
 
             $gapPaces[] = null === $window
@@ -212,7 +204,7 @@ final readonly class GapCalculator
     }
 
     /**
-     * @param iterable<array<string, mixed>|object> $trackPoints
+     * @param iterable<array<string, mixed>> $trackPoints
      *
      * @return list<NormalizedTrackPoint>
      */
@@ -229,23 +221,32 @@ final readonly class GapCalculator
         }
 
         $radius = intdiv($this->smoothingWindowSize, 2);
+        $sigma = max(1.0, $this->smoothingWindowSize / 6.0);
+        $twoSigmaSquared = 2.0 * $sigma * $sigma;
+        $weights = [];
+        for ($d = 0; $d <= $radius; ++$d) {
+            $weights[$d] = exp(-($d * $d) / $twoSigmaSquared);
+        }
+
+        $pointCount = \count($points);
         $smoothedPoints = $points;
 
-        foreach ($points as $index => $point) {
+        foreach (array_keys($points) as $index) {
             $weightedElevation = 0.0;
             $totalWeight = 0.0;
             $start = max(0, $index - $radius);
-            $end = min(\count($points) - 1, $index + $radius);
+            $end = min($pointCount - 1, $index + $radius);
 
             for ($neighborIndex = $start; $neighborIndex <= $end; ++$neighborIndex) {
-                $distanceFromCenter = abs($neighborIndex - $index);
-                $sigma = max(1.0, $this->smoothingWindowSize / 6.0);
-                $weight = exp(-(($distanceFromCenter * $distanceFromCenter) / (2.0 * $sigma * $sigma)));
+                $weight = $weights[abs($neighborIndex - $index)];
                 $weightedElevation += $points[$neighborIndex]['ele'] * $weight;
                 $totalWeight += $weight;
             }
 
-            $smoothedPoints[$index]['ele'] = $weightedElevation / $totalWeight;
+            $smoothedPoints[$index] = [
+                ...$smoothedPoints[$index],
+                'ele' => $weightedElevation / $totalWeight,
+            ];
         }
 
         return $smoothedPoints;
@@ -259,9 +260,10 @@ final readonly class GapCalculator
     private function buildCumulativeDistances(array $points): array
     {
         $cumulativeDistances = [0.0];
+        $pointCount = \count($points);
 
-        for ($i = 1; $i < \count($points); ++$i) {
-            $cumulativeDistances[$i] = $cumulativeDistances[$i - 1] + $this->haversineDistance(
+        for ($i = 1; $i < $pointCount; ++$i) {
+            $cumulativeDistances[] = $cumulativeDistances[$i - 1] + $this->haversineDistance(
                 $points[$i - 1]['lat'],
                 $points[$i - 1]['lon'],
                 $points[$i]['lat'],
@@ -274,14 +276,13 @@ final readonly class GapCalculator
 
     /**
      * @param list<NormalizedTrackPoint> $points
-     * @param list<float> $cumulativeDistances
+     * @param list<float>                $cumulativeDistances
      *
      * @return array{grade: float, actual_pace_sec_per_km: float}|null
      */
-    private function calculateWindowMetrics(array $points, array $cumulativeDistances, float $centerDistance): ?array
+    private function calculateWindowMetrics(array $points, array $cumulativeDistances, float $centerDistance, float $trackLength, int $lastIndex): ?array
     {
         $halfWindow = $this->gradeDistanceWindowInMeters / 2.0;
-        $trackLength = $cumulativeDistances[\count($cumulativeDistances) - 1];
         $startDistance = max(0.0, $centerDistance - $halfWindow);
         $endDistance = min($trackLength, $centerDistance + $halfWindow);
         $run = $endDistance - $startDistance;
@@ -289,16 +290,15 @@ final readonly class GapCalculator
             return null;
         }
 
-        $startElevation = $this->interpolateElevationAtDistance($points, $cumulativeDistances, $startDistance);
-        $endElevation = $this->interpolateElevationAtDistance($points, $cumulativeDistances, $endDistance);
+        [$startElevation, $startTimestamp] = $this->interpolateAtDistance($points, $cumulativeDistances, $startDistance, $lastIndex);
+        [$endElevation, $endTimestamp] = $this->interpolateAtDistance($points, $cumulativeDistances, $endDistance, $lastIndex);
+
         $rise = $endElevation - $startElevation;
         $rawGrade = $rise / $run;
         $grade = abs($rise) < self::MIN_ELEVATION_CHANGE_THRESHOLD_M || abs($rawGrade) < self::GRADE_DEAD_ZONE
             ? 0.0
-            : $this->clamp($rawGrade, $this->minGrade, $this->maxGrade);
+            : Math::clamp($rawGrade, $this->minGrade, $this->maxGrade);
 
-        $startTimestamp = $this->interpolateTimestampAtDistance($points, $cumulativeDistances, $startDistance);
-        $endTimestamp = $this->interpolateTimestampAtDistance($points, $cumulativeDistances, $endDistance);
         $duration = $endTimestamp - $startTimestamp;
         if ($duration <= 0.0) {
             return null;
@@ -312,74 +312,53 @@ final readonly class GapCalculator
 
     /**
      * @param list<NormalizedTrackPoint> $points
-     * @param list<float> $cumulativeDistances
+     * @param list<float>                $cumulativeDistances
+     *
+     * @return array{float, float} [elevation, timestamp]
      */
-    private function interpolateElevationAtDistance(array $points, array $cumulativeDistances, float $targetDistance): float
+    private function interpolateAtDistance(array $points, array $cumulativeDistances, float $targetDistance, int $lastIndex): array
     {
-        $lastIndex = \count($cumulativeDistances) - 1;
-
         if ($targetDistance <= 0.0) {
-            return $points[0]['ele'];
+            return [$points[0]['ele'], (float) $points[0]['timestamp']];
         }
 
         if ($targetDistance >= $cumulativeDistances[$lastIndex]) {
-            return $points[$lastIndex]['ele'];
+            return [$points[$lastIndex]['ele'], (float) $points[$lastIndex]['timestamp']];
         }
 
-        for ($i = 1; $i <= $lastIndex; ++$i) {
-            if ($targetDistance > $cumulativeDistances[$i]) {
-                continue;
-            }
+        $i = $this->findSegmentIndex($cumulativeDistances, $targetDistance, $lastIndex);
+        $segmentLength = $cumulativeDistances[$i] - $cumulativeDistances[$i - 1];
 
-            $segmentStartDistance = $cumulativeDistances[$i - 1];
-            $segmentEndDistance = $cumulativeDistances[$i];
-            $segmentLength = $segmentEndDistance - $segmentStartDistance;
-            if ($segmentLength <= 0.0) {
-                return $points[$i]['ele'];
-            }
-
-            $ratio = ($targetDistance - $segmentStartDistance) / $segmentLength;
-
-            return $points[$i - 1]['ele'] + (($points[$i]['ele'] - $points[$i - 1]['ele']) * $ratio);
+        if ($segmentLength <= 0.0) {
+            return [$points[$i]['ele'], (float) $points[$i]['timestamp']];
         }
 
-        return $points[$lastIndex]['ele'];
+        $ratio = ($targetDistance - $cumulativeDistances[$i - 1]) / $segmentLength;
+
+        return [
+            $points[$i - 1]['ele'] + (($points[$i]['ele'] - $points[$i - 1]['ele']) * $ratio),
+            $points[$i - 1]['timestamp'] + (($points[$i]['timestamp'] - $points[$i - 1]['timestamp']) * $ratio),
+        ];
     }
 
     /**
-     * @param list<NormalizedTrackPoint> $points
      * @param list<float> $cumulativeDistances
      */
-    private function interpolateTimestampAtDistance(array $points, array $cumulativeDistances, float $targetDistance): float
+    private function findSegmentIndex(array $cumulativeDistances, float $targetDistance, int $lastIndex): int
     {
-        $lastIndex = \count($cumulativeDistances) - 1;
+        $low = 1;
+        $high = $lastIndex;
 
-        if ($targetDistance <= 0.0) {
-            return (float) $points[0]['timestamp'];
-        }
-
-        if ($targetDistance >= $cumulativeDistances[$lastIndex]) {
-            return (float) $points[$lastIndex]['timestamp'];
-        }
-
-        for ($i = 1; $i <= $lastIndex; ++$i) {
-            if ($targetDistance > $cumulativeDistances[$i]) {
-                continue;
+        while ($low < $high) {
+            $mid = $low + intdiv($high - $low, 2);
+            if ($cumulativeDistances[$mid] < $targetDistance) {
+                $low = $mid + 1;
+            } else {
+                $high = $mid;
             }
-
-            $segmentStartDistance = $cumulativeDistances[$i - 1];
-            $segmentEndDistance = $cumulativeDistances[$i];
-            $segmentLength = $segmentEndDistance - $segmentStartDistance;
-            if ($segmentLength <= 0.0) {
-                return (float) $points[$i]['timestamp'];
-            }
-
-            $ratio = ($targetDistance - $segmentStartDistance) / $segmentLength;
-
-            return $points[$i - 1]['timestamp'] + (($points[$i]['timestamp'] - $points[$i - 1]['timestamp']) * $ratio);
         }
 
-        return (float) $points[$lastIndex]['timestamp'];
+        return $low;
     }
 
     private function gapMultiplier(float $grade): float
@@ -412,74 +391,28 @@ final readonly class GapCalculator
         $a = $sinDeltaLat * $sinDeltaLat
             + cos($lat1Rad) * cos($lat2Rad) * $sinDeltaLon * $sinDeltaLon;
 
-        return self::EARTH_RADIUS_M * 2.0 * atan2(sqrt($a), sqrt(1.0 - $this->clamp($a, 0.0, 1.0)));
+        return self::EARTH_RADIUS_M * 2.0 * atan2(sqrt($a), sqrt(1.0 - Math::clamp($a, 0.0, 1.0)));
     }
 
     /**
-     * @param array<string, mixed>|object $trackPoint
+     * @param array<string, mixed> $trackPoint
      *
      * @return NormalizedTrackPoint
      */
-    private function normalizePoint(array|object $trackPoint): array
-    {
-        $lat = $this->readField($trackPoint, 'lat');
-        $lon = $this->readField($trackPoint, 'lon');
-        $ele = $this->readField($trackPoint, 'ele');
-        $timestamp = $this->readField($trackPoint, 'timestamp');
-
-        return [
-            'lat' => (float) $lat,
-            'lon' => (float) $lon,
-            'ele' => (float) $ele,
-            'timestamp' => $this->normalizeTimestamp($timestamp),
-        ];
-    }
-
-    private function normalizeTimestamp(mixed $timestamp): int
-    {
-        return match (true) {
-            $timestamp instanceof \DateTimeInterface => $timestamp->getTimestamp(),
-            is_int($timestamp) => $timestamp,
-            is_string($timestamp) && is_numeric($timestamp) => (int) $timestamp,
-            is_string($timestamp) => (new \DateTimeImmutable($timestamp))->getTimestamp(),
-            default => throw new \InvalidArgumentException('Unsupported timestamp value provided.'),
-        };
-    }
-
-    /**
-     * @param array<string, mixed>|object $trackPoint
-     */
-    private function readField(array|object $trackPoint, string $field): mixed
-    {
-        if (is_array($trackPoint) && array_key_exists($field, $trackPoint)) {
-            return $trackPoint[$field];
-        }
-
-        if (is_object($trackPoint) && isset($trackPoint->{$field})) {
-            return $trackPoint->{$field};
-        }
-
-        throw new \InvalidArgumentException(sprintf('Track point is missing required field "%s".', $field));
-    }
-
-    private function clamp(float $value, float $min, float $max): float
-    {
-        return max($min, min($max, $value));
-    }
-
-    /**
-     * @return GapSummary
-     */
-    private function emptySummary(): array
+    private function normalizePoint(array $trackPoint): array
     {
         return [
-            'segments' => 0,
-            'distance_m' => 0.0,
-            'duration_s' => 0,
-            'actual_pace_sec_per_km' => null,
-            'gap_pace_sec_per_km' => null,
-            'average_grade' => 0.0,
-            'total_adjusted_distance_m' => 0.0,
+            'lat' => (float) ($trackPoint['lat'] ?? throw new \InvalidArgumentException('Track point is missing required field "lat".')),
+            'lon' => (float) ($trackPoint['lon'] ?? throw new \InvalidArgumentException('Track point is missing required field "lon".')),
+            'ele' => (float) ($trackPoint['ele'] ?? throw new \InvalidArgumentException('Track point is missing required field "ele".')),
+            'timestamp' => match (true) {
+                ($ts = $trackPoint['timestamp'] ?? null) instanceof SerializableDateTime => $ts->getTimestamp(),
+                is_int($ts) => $ts,
+                is_string($ts) && is_numeric($ts) => (int) $ts,
+                is_string($ts) => SerializableDateTime::fromString($ts)->getTimestamp(),
+                null === $ts => throw new \InvalidArgumentException('Track point is missing required field "timestamp".'),
+                default => throw new \InvalidArgumentException('Unsupported timestamp value provided.'),
+            },
         ];
     }
 }
