@@ -308,6 +308,26 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertNull($splits->toArray()[1]->getGapPaceInSecondsPerKm());
     }
 
+    public function testProcessFinalizesPartiallyFilledLastSplit(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-partial-last');
+        $this->addActivity($activityId, SportType::RUN);
+        $this->addStreams($activityId, $this->buildHillyTrackPoints());
+
+        // Track points produce ~2370m of GPS segments.
+        // Three 1000m splits = 3000m total, so the last split won't be
+        // fully filled by segments but should still receive a GAP value.
+        $this->addMetricSplits($activityId, [1000.0, 1000.0, 1000.0]);
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $splits = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC);
+        $this->assertNotNull($splits->toArray()[0]->getGapPaceInSecondsPerKm());
+        $this->assertNotNull($splits->toArray()[1]->getGapPaceInSecondsPerKm());
+        $this->assertNotNull($splits->toArray()[2]->getGapPaceInSecondsPerKm());
+    }
+
     public function testProcessOutputsProgress(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-progress');
