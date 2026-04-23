@@ -97,9 +97,11 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $dataDatableRows = [];
         foreach ($activities as $activity) {
             $activityType = $activity->getSportType()->getActivityType();
-            $activityStreams = $this->activityStreamRepository->findByActivityId($activity->getId());
-
-            $heartRateStream = $activityStreams->filterOnType(StreamType::HEART_RATE);
+            $heartRateStream = null;
+            try {
+                $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
+            } catch (EntityNotFound) {
+            }
 
             $valueDistributionMetrics = $this->activityStreamMetricRepository->findByActivityIdAndMetricType(
                 $activity->getId(),
