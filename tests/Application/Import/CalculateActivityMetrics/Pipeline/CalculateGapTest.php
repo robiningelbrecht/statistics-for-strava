@@ -288,6 +288,26 @@ class CalculateGapTest extends ContainerTestCase
         );
     }
 
+    public function testProcessHandlesNearZeroDistanceSplit(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-tiny-split');
+        $this->addActivity($activityId, SportType::RUN);
+        $this->addStreams($activityId, $this->buildHillyTrackPoints());
+
+        // A normal split followed by a near-zero distance split.
+        // After segments fill the first split, the while loop advances to the
+        // second split where $remainingInSplit = 0.000001 <= 0.00001,
+        // triggering the early-finalize guard.
+        $this->addMetricSplits($activityId, [1000.0, 0.000001]);
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $splits = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC);
+        $this->assertNotNull($splits->toArray()[0]->getGapPaceInSecondsPerKm());
+        $this->assertNull($splits->toArray()[1]->getGapPaceInSecondsPerKm());
+    }
+
     public function testProcessOutputsProgress(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-progress');
