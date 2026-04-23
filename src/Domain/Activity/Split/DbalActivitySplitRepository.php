@@ -7,6 +7,7 @@ namespace App\Domain\Activity\Split;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
@@ -46,10 +47,10 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
     {
         $sql = 'INSERT INTO ActivitySplit (
             activityId, unitSystem, splitNumber, distance, elapsedTimeInSeconds, movingTimeInSeconds,
-            elevationDifference, averageSpeed, minAverageSpeed, maxAverageSpeed, paceZone, gapPaceInSecondsPerKm
+            elevationDifference, averageSpeed, minAverageSpeed, maxAverageSpeed, paceZone, gapPaceInSecondsPerKm, averageHeartRate
         ) VALUES(
             :activityId, :unitSystem, :splitNumber, :distance, :elapsedTimeInSeconds, :movingTimeInSeconds,
-            :elevationDifference, :averageSpeed, :minAverageSpeed, :maxAverageSpeed, :paceZone, :gapPaceInSecondsPerKm
+            :elevationDifference, :averageSpeed, :minAverageSpeed, :maxAverageSpeed, :paceZone, :gapPaceInSecondsPerKm, :averageHeartRate
         )';
 
         $this->connection->executeStatement($sql, [
@@ -65,12 +66,13 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
             'maxAverageSpeed' => $activitySplit->getMaxAverageSpeed()->toFloat(),
             'paceZone' => $activitySplit->getPaceZone(),
             'gapPaceInSecondsPerKm' => $activitySplit->getGapPaceInSecondsPerKm()?->toFloat(),
+            'averageHeartRate' => $activitySplit->getAverageHeartRate(),
         ]);
     }
 
     public function update(ActivitySplit $activitySplit): void
     {
-        $sql = 'UPDATE ActivitySplit SET gapPaceInSecondsPerKm = :gapPaceInSecondsPerKm
+        $sql = 'UPDATE ActivitySplit SET gapPaceInSecondsPerKm = :gapPaceInSecondsPerKm, averageHeartRate = :averageHeartRate
             WHERE activityId = :activityId AND unitSystem = :unitSystem AND splitNumber = :splitNumber';
 
         $this->connection->executeStatement($sql, [
@@ -78,6 +80,7 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
             'unitSystem' => $activitySplit->getUnitSystem()->value,
             'splitNumber' => $activitySplit->getSplitNumber(),
             'gapPaceInSecondsPerKm' => $activitySplit->getGapPaceInSecondsPerKm()?->toFloat(),
+            'averageHeartRate' => $activitySplit->getAverageHeartRate(),
         ]);
     }
 
@@ -104,6 +107,22 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
                 'sportTypes' => $supportedSportTypes,
             ], [
                 'sportTypes' => ArrayParameterType::STRING,
+            ])->fetchFirstColumn()
+        ));
+    }
+
+    public function findActivityIdsWithoutAverageHeartRate(): ActivityIds
+    {
+        $sql = 'SELECT s.activityId FROM ActivitySplit s
+                INNER JOIN ActivityStream ast ON ast.activityId = s.activityId AND ast.streamType = :streamType
+                GROUP BY s.activityId
+                HAVING MAX(s.averageHeartRate) IS NULL
+                ORDER BY s.activityId';
+
+        return ActivityIds::fromArray(array_map(
+            ActivityId::fromString(...),
+            $this->connection->executeQuery($sql, [
+                'streamType' => StreamType::HEART_RATE->value,
             ])->fetchFirstColumn()
         ));
     }
@@ -135,6 +154,7 @@ final readonly class DbalActivitySplitRepository extends DbalRepository implemen
             maxAverageSpeed: MetersPerSecond::from($result['maxAverageSpeed']),
             paceZone: $result['paceZone'],
             gapPaceInSecondsPerKm: isset($result['gapPaceInSecondsPerKm']) ? SecPerKm::from((float) $result['gapPaceInSecondsPerKm']) : null,
+            averageHeartRate: $result['averageHeartRate'] ?? null,
         );
     }
 }

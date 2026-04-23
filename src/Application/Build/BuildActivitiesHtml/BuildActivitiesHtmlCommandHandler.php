@@ -15,7 +15,6 @@ use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\LeafletMap;
 use App\Domain\Activity\PowerDistributionChart;
 use App\Domain\Activity\Split\ActivitySplitRepository;
-use App\Domain\Activity\Split\ActivitySplits;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -97,11 +96,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         $dataDatableRows = [];
         foreach ($activities as $activity) {
             $activityType = $activity->getSportType()->getActivityType();
-            $heartRateStream = null;
-            try {
-                $heartRateStream = $this->activityStreamRepository->findOneByActivityAndStreamType($activity->getId(), StreamType::HEART_RATE);
-            } catch (EntityNotFound) {
-            }
 
             $valueDistributionMetrics = $this->activityStreamMetricRepository->findByActivityIdAndMetricType(
                 $activity->getId(),
@@ -193,27 +187,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 activityId: $activity->getId(),
                 unitSystem: $this->unitSystem
             );
-
-            if (!$activitySplits->isEmpty() && $heartRateStream) {
-                $enrichedSplits = [];
-                $sumSplitMovingTimeInSeconds = 0;
-                foreach ($activitySplits as $activitySplit) {
-                    $movingTimeInSeconds = $activitySplit->getMovingTimeInSeconds();
-                    $heartRatesForCurrentSplit = array_slice(
-                        array: $heartRateStream->getData(),
-                        offset: $sumSplitMovingTimeInSeconds,
-                        length: $movingTimeInSeconds
-                    );
-                    if (0 === count($heartRatesForCurrentSplit)) {
-                        $enrichedSplits[] = $activitySplit; // @codeCoverageIgnore
-                        continue; // @codeCoverageIgnore
-                    }
-                    $averageHeartRate = (int) round(array_sum($heartRatesForCurrentSplit) / count($heartRatesForCurrentSplit));
-                    $enrichedSplits[] = $activitySplit->withAverageHeartRate($averageHeartRate);
-                    $sumSplitMovingTimeInSeconds += $movingTimeInSeconds;
-                }
-                $activitySplits = ActivitySplits::fromArray($enrichedSplits);
-            }
 
             $profileChart = null;
             $profileChartHeight = 0;
