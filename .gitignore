@@ -27,6 +27,8 @@ phpstan.neon
 
 ###> app-build ###
 /config/app/*.yaml
+!/config/app/config.yaml
+/config/reference.php
 /build
 /storage
 /cron
