@@ -118,6 +118,7 @@ Fitness: 健身
 'Form (TSB)': '状态 (TSB)'
 Fri: 周五
 Friday: 星期五
+GAP: GAP
 Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
 'Gear details': 装备详情
