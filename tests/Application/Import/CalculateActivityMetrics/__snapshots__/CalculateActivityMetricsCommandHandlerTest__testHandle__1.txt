@@ -14,5 +14,8 @@ Calculating activity metrics. Please be patient, this can take a while...
   => Calculated normalized power for 0 streams (3 s)
   => Calculated normalized power for 0 streams (3 s)
 
+  => Calculated split avg heart rate for 0 activities (3 s)
+  => Calculated split avg heart rate for 0 activities (3 s)
+
   => Calculated value distribution for 0 streams (3 s)
   => Calculated value distribution for 0 streams (3 s)

@@ -16,37 +16,37 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(name: 'ActivitySplit_activityIdUnitSystemIndex', columns: ['activityId', 'unitSystem'])]
-final class ActivitySplit implements SupportsAITooling
+final readonly class ActivitySplit implements SupportsAITooling
 {
     use ProvideTimeFormats;
 
-    private ?int $averageHeartRate = null;
-
     private function __construct(
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly ActivityId $activityId,
+        private ActivityId $activityId,
         #[ORM\Id, ORM\Column(type: 'string')]
-        private readonly UnitSystem $unitSystem,
+        private UnitSystem $unitSystem,
         #[ORM\Id, ORM\Column(type: 'integer')]
-        private readonly int $splitNumber,
+        private int $splitNumber,
         #[ORM\Column(type: 'integer')]
-        private readonly Meter $distance,
+        private Meter $distance,
         #[ORM\Column(type: 'integer')]
-        private readonly int $elapsedTimeInSeconds,
+        private int $elapsedTimeInSeconds,
         #[ORM\Column(type: 'integer')]
-        private readonly int $movingTimeInSeconds,
+        private int $movingTimeInSeconds,
         #[ORM\Column(type: 'integer')]
-        private readonly Meter $elevationDifference,
+        private Meter $elevationDifference,
         #[ORM\Column(type: 'float')]
-        private readonly MetersPerSecond $averageSpeed,
+        private MetersPerSecond $averageSpeed,
         #[ORM\Column(type: 'float')]
-        private readonly MetersPerSecond $minAverageSpeed,
+        private MetersPerSecond $minAverageSpeed,
         #[ORM\Column(type: 'integer')]
-        private readonly MetersPerSecond $maxAverageSpeed,
+        private MetersPerSecond $maxAverageSpeed,
         #[ORM\Column(type: 'integer')]
-        private readonly int $paceZone,
+        private int $paceZone,
         #[ORM\Column(type: 'float', nullable: true)]
-        private readonly ?SecPerKm $gapPaceInSecondsPerKm,
+        private ?SecPerKm $gapPaceInSecondsPerKm,
+        #[ORM\Column(type: 'integer', nullable: true)]
+        private ?int $averageHeartRate,
     ) {
     }
 
@@ -76,6 +76,7 @@ final class ActivitySplit implements SupportsAITooling
             maxAverageSpeed: $maxAverageSpeed,
             paceZone: $paceZone,
             gapPaceInSecondsPerKm: null,
+            averageHeartRate: null,
         );
     }
 
@@ -92,6 +93,7 @@ final class ActivitySplit implements SupportsAITooling
         MetersPerSecond $maxAverageSpeed,
         int $paceZone,
         ?SecPerKm $gapPaceInSecondsPerKm = null,
+        ?int $averageHeartRate = null,
     ): self {
         return new self(
             activityId: $activityId,
@@ -106,6 +108,7 @@ final class ActivitySplit implements SupportsAITooling
             maxAverageSpeed: $maxAverageSpeed,
             paceZone: $paceZone,
             gapPaceInSecondsPerKm: $gapPaceInSecondsPerKm,
+            averageHeartRate: $averageHeartRate,
         );
     }
 
