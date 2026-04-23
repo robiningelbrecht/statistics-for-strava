@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Activity\Gap;
 
+use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Gap\Gap;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
-use App\Domain\Activity\SportType\SportType;
 use PHPUnit\Framework\TestCase;
 
 final class GapCalculatorTest extends TestCase
@@ -125,28 +125,13 @@ final class GapCalculatorTest extends TestCase
         self::assertGreaterThan(0.0, $segments[1]->getGrade());
     }
 
-    public function testItOnlyAppliesToRunningSportTypes(): void
+    public function testSupportsGapStatsOnActivityType(): void
     {
-        $calculator = GapCalculator::create();
-
-        self::assertTrue($calculator->supports(SportType::RUN));
-        self::assertTrue($calculator->supports(SportType::TRAIL_RUN));
-        self::assertTrue($calculator->supports(SportType::VIRTUAL_RUN));
-        self::assertFalse($calculator->supports(SportType::RIDE));
-
-        $rideSummary = $calculator->calculate($this->trackPointsWithModerateClimb(), SportType::RIDE);
-        self::assertInstanceOf(Gap::class, $rideSummary);
-        self::assertSame(0, $rideSummary->getSegmentCount());
-        self::assertSame(0.0, $rideSummary->getDistanceInMeters());
-        self::assertSame(0, $rideSummary->getDurationInSeconds());
-        self::assertNull($rideSummary->getActualPaceInSecondsPerKm());
-        self::assertNull($rideSummary->getGapPaceInSecondsPerKm());
-        self::assertSame(0.0, $rideSummary->getAverageGrade());
-        self::assertSame(0.0, $rideSummary->getTotalAdjustedDistanceInMeters());
-        self::assertSame(
-            [],
-            iterator_to_array($calculator->calculateSegments($this->trackPointsWithModerateClimb(), SportType::RIDE), false)
-        );
+        self::assertTrue(ActivityType::RUN->supportsGapStats());
+        self::assertFalse(ActivityType::RIDE->supportsGapStats());
+        self::assertFalse(ActivityType::WALK->supportsGapStats());
+        self::assertFalse(ActivityType::WATER_SPORTS->supportsGapStats());
+        self::assertFalse(ActivityType::FITNESS->supportsGapStats());
     }
 
     public function testItCalculatesPerPointGapPaces(): void
@@ -161,7 +146,7 @@ final class GapCalculatorTest extends TestCase
             self::assertGreaterThan(0.0, $pace);
         }
 
-        self::assertSame([], $calculator->calculatePointGapPaces($this->trackPointsWithModerateClimbList(), SportType::RIDE));
+        self::assertSame([], $calculator->calculatePointGapPaces([]));
     }
 
     public function testItReturnsEmptyResultForFewerThanTwoPoints(): void

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Gap;
 
-use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Math;
-use App\Domain\Activity\SportType\SportType;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 /**
@@ -59,19 +57,15 @@ final readonly class GapCalculator
     /**
      * @param iterable<array<string, mixed>> $trackPoints
      */
-    public function calculate(iterable $trackPoints, ?SportType $sportType = null): Gap
+    public function calculate(iterable $trackPoints): Gap
     {
-        if ($sportType instanceof SportType && !$this->supports($sportType)) {
-            return Gap::empty();
-        }
-
         $segments = 0;
         $distance = 0.0;
         $duration = 0;
         $weightedGrade = 0.0;
         $adjustedDistance = 0.0;
 
-        foreach ($this->calculateSegments($trackPoints, $sportType) as $segment) {
+        foreach ($this->calculateSegments($trackPoints) as $segment) {
             ++$segments;
             $distance += $segment->getDistanceInMeters();
             $duration += $segment->getDurationInSeconds();
@@ -95,12 +89,8 @@ final readonly class GapCalculator
      *
      * @return \Generator<int, GapSegment>
      */
-    public function calculateSegments(iterable $trackPoints, ?SportType $sportType = null): \Generator
+    public function calculateSegments(iterable $trackPoints): \Generator
     {
-        if ($sportType instanceof SportType && !$this->supports($sportType)) {
-            return;
-        }
-
         $points = $this->smoothPoints($trackPoints);
         $pointCount = \count($points);
         if ($pointCount < 2) {
@@ -147,22 +137,13 @@ final readonly class GapCalculator
         }
     }
 
-    public function supports(SportType $sportType): bool
-    {
-        return ActivityType::RUN->getSportTypes()->has($sportType);
-    }
-
     /**
      * @param iterable<array<string, mixed>> $trackPoints
      *
      * @return list<?float>
      */
-    public function calculatePointGapPaces(iterable $trackPoints, ?SportType $sportType = null): array
+    public function calculatePointGapPaces(iterable $trackPoints): array
     {
-        if ($sportType instanceof SportType && !$this->supports($sportType)) {
-            return [];
-        }
-
         $points = $this->smoothPoints($trackPoints);
         $pointCount = \count($points);
         if ($pointCount < 2) {

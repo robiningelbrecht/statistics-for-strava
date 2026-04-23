@@ -9,6 +9,7 @@ use App\Domain\Activity\Split\ActivitySplit;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 
 final class ActivitySplitBuilder
 {
@@ -23,6 +24,7 @@ final class ActivitySplitBuilder
     private MetersPerSecond $minAverageSpeed;
     private MetersPerSecond $maxAverageSpeed;
     private readonly int $paceZone;
+    private ?SecPerKm $gapPaceInSecondsPerKm = null;
 
     private function __construct()
     {
@@ -55,7 +57,8 @@ final class ActivitySplitBuilder
             averageSpeed: $this->averageSpeed,
             minAverageSpeed: $this->minAverageSpeed,
             maxAverageSpeed: $this->maxAverageSpeed,
-            paceZone: $this->paceZone
+            paceZone: $this->paceZone,
+            gapPaceInSecondsPerKm: $this->gapPaceInSecondsPerKm,
         );
     }
 
@@ -104,6 +107,13 @@ final class ActivitySplitBuilder
     public function withMaxAverageSpeed(MetersPerSecond $maxAverageSpeed): self
     {
         $this->maxAverageSpeed = $maxAverageSpeed;
+
+        return $this;
+    }
+
+    public function withGapPace(SecPerKm $gapPace): self
+    {
+        $this->gapPaceInSecondsPerKm = $gapPace;
 
         return $this;
     }

@@ -2,62 +2,73 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Activity\Gap;
+namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
-use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\Gap\GapCalculator;
+use App\Domain\Activity\Gap\GapSegment;
 use App\Domain\Activity\Split\ActivitySplit;
+use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\Split\ActivitySplits;
-use App\Domain\Activity\Stream\ActivityStreams;
+use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Infrastructure\ValueObject\Measurement\Length\Mile;
+use App\Infrastructure\Console\ProgressIndicator;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @phpstan-type ActivityGapTrackPoint array{lat: float, lon: float, ele: float, timestamp: int}
- */
-final readonly class ActivityGapAssembler
+final readonly class CalculateGap implements CalculateActivityMetricsStep
 {
-    public function for(
-        Activity $activity,
-        ActivityStreams $streams,
-        ActivitySplits $metricSplits,
-        ActivitySplits $imperialSplits,
-    ): ?ActivityGap {
-        $gapCalculator = GapCalculator::create();
+    public function __construct(
+        private ActivitySplitRepository $activitySplitRepository,
+        private ActivityStreamRepository $activityStreamRepository,
+    ) {
+    }
 
-        if (!$gapCalculator->supports($activity->getSportType())) {
-            return null;
+    public function process(OutputInterface $output): void
+    {
+        $progressIndicator = new ProgressIndicator($output);
+        $progressIndicator->start('=> Calculated GAP for 0 activities');
+
+        $countActivitiesProcessed = 0;
+        $activityIdsToProcess = $this->activitySplitRepository->findActivityIdsWithoutGap();
+
+        foreach ($activityIdsToProcess as $activityId) {
+            $trackPoints = $this->buildTrackPoints($activityId);
+            if ([] === $trackPoints) {
+                continue;
+            }
+
+            $gapCalculator = GapCalculator::create();
+
+            /** @var list<GapSegment> $segments */
+            $segments = iterator_to_array($gapCalculator->calculateSegments($trackPoints), false);
+            if ([] === $segments) {
+                continue;
+            }
+
+            $gapEnrichedSplits = ActivitySplits::empty()
+                ->addMultiple($this->mapSegmentsToSplits($segments, $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)))
+                ->addMultiple($this->mapSegmentsToSplits($segments, $this->activitySplitRepository->findBy($activityId, UnitSystem::IMPERIAL)));
+
+            foreach ($gapEnrichedSplits as $split) {
+                $this->activitySplitRepository->update($split);
+            }
+
+            ++$countActivitiesProcessed;
+            $progressIndicator->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
         }
 
-        $trackPoints = $this->buildTrackPoints($streams);
-        if ([] === $trackPoints) {
-            return null;
-        }
-
-        $summary = $gapCalculator->calculate($trackPoints, $activity->getSportType());
-        if (null === $summary->getGapPaceInSecondsPerKm()) {
-            return null;
-        }
-
-        /** @var list<GapSegment> $segments */
-        $segments = iterator_to_array($gapCalculator->calculateSegments($trackPoints, $activity->getSportType()), false);
-        if ([] === $segments) {
-            return null;
-        }
-
-        return new ActivityGap(
-            overallGapPaceInSecondsPerKm: SecPerKm::from($summary->getGapPaceInSecondsPerKm()),
-            metricSplits: $this->mapSegmentsToSplits($segments, $metricSplits, UnitSystem::METRIC),
-            imperialSplits: $this->mapSegmentsToSplits($segments, $imperialSplits, UnitSystem::IMPERIAL),
-        );
+        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
     }
 
     /**
-     * @return list<ActivityGapTrackPoint>
+     * @return list<array{lat: float, lon: float, ele: float, timestamp: int}>
      */
-    private function buildTrackPoints(ActivityStreams $streams): array
+    private function buildTrackPoints(ActivityId $activityId): array
     {
+        $streams = $this->activityStreamRepository->findByActivityId($activityId);
+
         $latLng = $streams->filterOnType(StreamType::LAT_LNG)?->getData() ?? [];
         $altitude = $streams->filterOnType(StreamType::ALTITUDE)?->getData() ?? [];
         $time = $streams->filterOnType(StreamType::TIME)?->getData() ?? [];
@@ -95,35 +106,34 @@ final readonly class ActivityGapAssembler
     }
 
     /**
-     * @param list<GapSegment> $segments
+     * @param list<GapSegment> $gapSegments
      *
-     * @return array<int, ActivityGapSplit>
+     * @return ActivitySplit[]
      */
-    private function mapSegmentsToSplits(array $segments, ActivitySplits $splits, UnitSystem $unitSystem): array
+    private function mapSegmentsToSplits(array $gapSegments, ActivitySplits $splits): array
     {
-        $splitItems = $splits->toArray();
-        if ([] === $splitItems) {
+        if ($splits->isEmpty()) {
             return [];
         }
 
+        $splitItems = array_values($splits->toArray());
         $currentSplitIndex = 0;
         $distanceInCurrentSplit = 0.0;
         $durationInCurrentSplit = 0.0;
         $adjustedDistanceInCurrentSplit = 0.0;
-        $mappedSplits = [];
 
-        foreach ($segments as $segment) {
+        foreach ($gapSegments as $segment) {
             $remainingDistance = $segment->getDistanceInMeters();
             $remainingDuration = (float) $segment->getDurationInSeconds();
             $remainingAdjustedDistance = $segment->getDistanceInMeters() * $segment->getGapMultiplier();
 
             while ($remainingDistance > 0.0 && isset($splitItems[$currentSplitIndex])) {
-                /** @var ActivitySplit $split */
                 $split = $splitItems[$currentSplitIndex];
-                $targetDistance = $split->getDistance()->toMeter()->toFloat();
+                $targetDistance = $split->getDistance()->toFloat();
                 $remainingInSplit = $targetDistance - $distanceInCurrentSplit;
+
                 if ($remainingInSplit <= 0.00001) {
-                    $this->finalizeSplit($mappedSplits, $split, $unitSystem, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
@@ -145,7 +155,7 @@ final readonly class ActivityGapAssembler
                 $remainingAdjustedDistance -= $adjustedDistancePortion;
 
                 if ($distanceInCurrentSplit >= $targetDistance - 0.00001) {
-                    $this->finalizeSplit($mappedSplits, $split, $unitSystem, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
@@ -158,28 +168,20 @@ final readonly class ActivityGapAssembler
             }
         }
 
-        return $mappedSplits;
+        return $splitItems;
     }
 
-    /**
-     * @param array<int, ActivityGapSplit> $mappedSplits
-     */
-    private function finalizeSplit(
-        array &$mappedSplits,
+    private function finalizeSplitGap(
         ActivitySplit $split,
-        UnitSystem $unitSystem,
         float $targetDistanceInMeters,
         float $distanceInCurrentSplit,
         float $durationInCurrentSplit,
         float $adjustedDistanceInCurrentSplit,
-    ): void {
+    ): ActivitySplit {
         if ($distanceInCurrentSplit < $targetDistanceInMeters - 0.00001 || $adjustedDistanceInCurrentSplit <= 0.0) {
-            return;
+            return $split;
         }
 
-        $paceMultiplier = UnitSystem::METRIC === $unitSystem ? 1000.0 : Mile::from(1)->toMeter()->toFloat();
-        $mappedSplits[$split->getSplitNumber()] = new ActivityGapSplit(
-            gapPaceInSeconds: SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * $paceMultiplier),
-        );
+        return $split->withGapPace(SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0));
     }
 }

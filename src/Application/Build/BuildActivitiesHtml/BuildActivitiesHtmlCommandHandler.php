@@ -10,12 +10,12 @@ use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\CadenceDistributionChart;
 use App\Domain\Activity\Device\DeviceRepository;
 use App\Domain\Activity\EnrichedActivities;
-use App\Domain\Activity\Gap\ActivityGapAssembler;
 use App\Domain\Activity\HeartRateDistributionChart;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\LeafletMap;
 use App\Domain\Activity\PowerDistributionChart;
 use App\Domain\Activity\Split\ActivitySplitRepository;
+use App\Domain\Activity\Split\ActivitySplits;
 use App\Domain\Activity\SportType\SportTypeRepository;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
@@ -57,7 +57,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
         private BestEffortsCalculator $bestEffortsCalculator,
-        private ActivityGapAssembler $buildActivityGapAssembler,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -192,32 +191,26 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 activityId: $activity->getId(),
                 unitSystem: $this->unitSystem
             );
-            $gap = $this->buildActivityGapAssembler->for(
-                activity: $activity,
-                streams: $activityStreams,
-                metricSplits: $this->activitySplitRepository->findBy($activity->getId(), UnitSystem::METRIC),
-                imperialSplits: $this->activitySplitRepository->findBy($activity->getId(), UnitSystem::IMPERIAL),
-            );
 
             if (!$activitySplits->isEmpty() && $heartRateStream) {
-                /** @var \App\Domain\Activity\Split\ActivitySplit $activitySplit */
+                $enrichedSplits = [];
                 $sumSplitMovingTimeInSeconds = 0;
                 foreach ($activitySplits as $activitySplit) {
                     $movingTimeInSeconds = $activitySplit->getMovingTimeInSeconds();
-                    // Enrich ActivitySplit with average heart rate.
                     $heartRatesForCurrentSplit = array_slice(
                         array: $heartRateStream->getData(),
                         offset: $sumSplitMovingTimeInSeconds,
                         length: $movingTimeInSeconds
                     );
                     if (0 === count($heartRatesForCurrentSplit)) {
+                        $enrichedSplits[] = $activitySplit;
                         continue; // @codeCoverageIgnore
                     }
                     $averageHeartRate = (int) round(array_sum($heartRatesForCurrentSplit) / count($heartRatesForCurrentSplit));
-
-                    $activitySplit->enrichWithAverageHeartRate($averageHeartRate);
+                    $enrichedSplits[] = $activitySplit->withAverageHeartRate($averageHeartRate);
                     $sumSplitMovingTimeInSeconds += $movingTimeInSeconds;
                 }
+                $activitySplits = ActivitySplits::fromArray($enrichedSplits);
             }
 
             $profileChart = null;
@@ -299,7 +292,6 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'profileChartHeight' => $profileChartHeight,
                     'hasProfileChart' => null !== $profileChart,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
-                    'gap' => $gap,
                 ]),
             );
 
