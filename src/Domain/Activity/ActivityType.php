@@ -90,6 +90,11 @@ enum ActivityType: string implements TranslatableInterface
         };
     }
 
+    public function supportsGapStats(): bool
+    {
+        return self::RUN === $this;
+    }
+
     public function supportsBestEffortsStats(): bool
     {
         return [] !== $this->getDistancesForBestEffortCalculation();

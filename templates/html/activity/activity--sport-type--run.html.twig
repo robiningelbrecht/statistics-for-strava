@@ -21,11 +21,12 @@
                 <dt class="font-extrabold">{{ activity.getPaceInSecPerKm()|formatPace }}</dt>
             </div>
         </div>
-        {%- if gap %}
+        {% set overallGap = splits.getOverallGapPaceInSecondsPerKm() %}
+        {%- if overallGap %}
         <div class="w-1/7 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
             <div class="text-center">
                 <dd class="text-xs text-gray-500">{{ "GAP"|trans }}</dd>
-                <dt class="font-extrabold">{{ gap.getOverallGapPaceInSecondsPerKm()|formatPace }}</dt>
+                <dt class="font-extrabold">{{ overallGap|formatPace }}</dt>
             </div>
         </div>
         {% endif %}

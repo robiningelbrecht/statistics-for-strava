@@ -45,6 +45,8 @@ final class ActivitySplit implements SupportsAITooling
         private readonly MetersPerSecond $maxAverageSpeed,
         #[ORM\Column(type: 'integer')]
         private readonly int $paceZone,
+        #[ORM\Column(type: 'float', nullable: true)]
+        private readonly ?SecPerKm $gapPaceInSecondsPerKm,
     ) {
     }
 
@@ -73,6 +75,7 @@ final class ActivitySplit implements SupportsAITooling
             minAverageSpeed: $minAverageSpeed,
             maxAverageSpeed: $maxAverageSpeed,
             paceZone: $paceZone,
+            gapPaceInSecondsPerKm: null,
         );
     }
 
@@ -88,6 +91,7 @@ final class ActivitySplit implements SupportsAITooling
         MetersPerSecond $minAverageSpeed,
         MetersPerSecond $maxAverageSpeed,
         int $paceZone,
+        ?SecPerKm $gapPaceInSecondsPerKm = null,
     ): self {
         return new self(
             activityId: $activityId,
@@ -101,6 +105,7 @@ final class ActivitySplit implements SupportsAITooling
             minAverageSpeed: $minAverageSpeed,
             maxAverageSpeed: $maxAverageSpeed,
             paceZone: $paceZone,
+            gapPaceInSecondsPerKm: $gapPaceInSecondsPerKm,
         );
     }
 
@@ -192,14 +197,28 @@ final class ActivitySplit implements SupportsAITooling
         return $this->paceZone;
     }
 
-    public function enrichWithAverageHeartRate(int $averageHeartRate): void
+    public function withAverageHeartRate(int $averageHeartRate): self
     {
-        $this->averageHeartRate = $averageHeartRate;
+        return clone ($this, [
+            'averageHeartRate' => $averageHeartRate,
+        ]);
     }
 
     public function getAverageHeartRate(): ?int
     {
         return $this->averageHeartRate;
+    }
+
+    public function withGapPace(SecPerKm $gapPace): self
+    {
+        return clone ($this, [
+            'gapPaceInSecondsPerKm' => $gapPace,
+        ]);
+    }
+
+    public function getGapPaceInSecondsPerKm(): ?SecPerKm
+    {
+        return $this->gapPaceInSecondsPerKm;
     }
 
     public function exportForAITooling(): array
