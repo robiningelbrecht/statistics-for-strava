@@ -228,34 +228,14 @@ final class GapCalculatorTest extends TestCase
     }
 
     /**
-     * @return \Generator<int, array<string, float|int|string>>
+     * @return \Generator<int, array<string, float|int>>
      */
     private function trackPointsWithModerateClimb(): \Generator
     {
-        yield [
-            'lat' => 51.0000,
-            'lon' => 4.0000,
-            'ele' => 12.0,
-            'timestamp' => '2026-04-18T08:00:00+00:00',
-        ];
-        yield [
-            'lat' => 51.0010,
-            'lon' => 4.0000,
-            'ele' => 16.0,
-            'timestamp' => '2026-04-18T08:00:40+00:00',
-        ];
-        yield [
-            'lat' => 51.0020,
-            'lon' => 4.0000,
-            'ele' => 18.0,
-            'timestamp' => '2026-04-18T08:01:20+00:00',
-        ];
-        yield [
-            'lat' => 51.0030,
-            'lon' => 4.0000,
-            'ele' => 23.0,
-            'timestamp' => '2026-04-18T08:02:00+00:00',
-        ];
+        yield ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 12.0, 'timestamp' => 0];
+        yield ['lat' => 51.0010, 'lon' => 4.0000, 'ele' => 16.0, 'timestamp' => 40];
+        yield ['lat' => 51.0020, 'lon' => 4.0000, 'ele' => 18.0, 'timestamp' => 80];
+        yield ['lat' => 51.0030, 'lon' => 4.0000, 'ele' => 23.0, 'timestamp' => 120];
     }
 
     /**
@@ -300,7 +280,7 @@ final class GapCalculatorTest extends TestCase
     }
 
     /**
-     * @return list<array<string, float|int|string>>
+     * @return list<array<string, float|int>>
      */
     private function trackPointsWithModerateClimbList(): array
     {
@@ -308,7 +288,7 @@ final class GapCalculatorTest extends TestCase
     }
 
     /**
-     * @param list<array<string, float|int|string>> $trackPoints
+     * @param list<array<string, float|int>> $trackPoints
      *
      * @return list<array<string, float|int>>
      */
@@ -326,7 +306,7 @@ final class GapCalculatorTest extends TestCase
                     'lat' => (float) $from['lat'] + (((float) $to['lat'] - (float) $from['lat']) * $ratio),
                     'lon' => (float) $from['lon'] + (((float) $to['lon'] - (float) $from['lon']) * $ratio),
                     'ele' => (float) $from['ele'] + (((float) $to['ele'] - (float) $from['ele']) * $ratio),
-                    'timestamp' => (int) round($this->normalizeTestTimestamp($from['timestamp']) + (($this->normalizeTestTimestamp($to['timestamp']) - $this->normalizeTestTimestamp($from['timestamp'])) * $ratio)),
+                    'timestamp' => (int) round((int) $from['timestamp'] + (((int) $to['timestamp'] - (int) $from['timestamp']) * $ratio)),
                 ];
             }
         }
@@ -336,7 +316,7 @@ final class GapCalculatorTest extends TestCase
             'lat' => (float) $lastPoint['lat'],
             'lon' => (float) $lastPoint['lon'],
             'ele' => (float) $lastPoint['ele'],
-            'timestamp' => $this->normalizeTestTimestamp($lastPoint['timestamp']),
+            'timestamp' => (int) $lastPoint['timestamp'],
         ];
 
         return $denseTrack;
@@ -352,18 +332,5 @@ final class GapCalculatorTest extends TestCase
             ['lat' => 51.0001, 'lon' => 4.0000, 'ele' => 11.0, 'timestamp' => 6],
             ['lat' => 51.0002, 'lon' => 4.0000, 'ele' => 12.0, 'timestamp' => 12],
         ];
-    }
-
-    private function normalizeTestTimestamp(float|int|string $timestamp): int
-    {
-        if (is_int($timestamp)) {
-            return $timestamp;
-        }
-
-        if (is_string($timestamp) && !is_numeric($timestamp)) {
-            return new \DateTimeImmutable($timestamp)->getTimestamp();
-        }
-
-        return (int) $timestamp;
     }
 }

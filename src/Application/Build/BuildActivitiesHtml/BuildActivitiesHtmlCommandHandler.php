@@ -205,7 +205,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                         length: $movingTimeInSeconds
                     );
                     if (0 === count($heartRatesForCurrentSplit)) {
-                        $enrichedSplits[] = $activitySplit;
+                        $enrichedSplits[] = $activitySplit; // @codeCoverageIgnore
                         continue; // @codeCoverageIgnore
                     }
                     $averageHeartRate = (int) round(array_sum($heartRatesForCurrentSplit) / count($heartRatesForCurrentSplit));

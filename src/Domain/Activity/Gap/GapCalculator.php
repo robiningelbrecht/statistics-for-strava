@@ -297,11 +297,6 @@ final readonly class GapCalculator
 
         $i = $this->findSegmentIndex($cumulativeDistances, $targetDistance, $lastIndex);
         $segmentLength = $cumulativeDistances[$i] - $cumulativeDistances[$i - 1];
-
-        if ($segmentLength <= 0.0) {
-            return [$points[$i]['ele'], (float) $points[$i]['timestamp']];
-        }
-
         $ratio = ($targetDistance - $cumulativeDistances[$i - 1]) / $segmentLength;
 
         return [

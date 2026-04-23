@@ -17,19 +17,6 @@ final readonly class Gap
     ) {
     }
 
-    public static function empty(): self
-    {
-        return new self(
-            segmentCount: 0,
-            distanceInMeters: 0.0,
-            durationInSeconds: 0,
-            actualPaceInSecondsPerKm: null,
-            gapPaceInSecondsPerKm: null,
-            averageGrade: 0.0,
-            totalAdjustedDistanceInMeters: 0.0,
-        );
-    }
-
     public static function create(
         int $segmentCount,
         float $distanceInMeters,
