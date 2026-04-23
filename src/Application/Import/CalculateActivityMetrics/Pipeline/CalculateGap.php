@@ -168,6 +168,12 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             }
         }
 
+        if (isset($splitItems[$currentSplitIndex]) && $adjustedDistanceInCurrentSplit > 0.0) {
+            $splitItems[$currentSplitIndex] = $splitItems[$currentSplitIndex]->withGapPace(
+                SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0)
+            );
+        }
+
         return $splitItems;
     }
 
