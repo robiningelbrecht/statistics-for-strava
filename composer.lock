@@ -2588,16 +2588,16 @@
         },
         {
             "name": "neuron-core/neuron-ai",
-            "version": "3.3.8",
+            "version": "3.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/neuron-core/neuron-ai.git",
-                "reference": "1d4f433f055deb3c89f4378a33ec1b04180f4e7d"
+                "reference": "789f5d0380ae384902bd0cca2012e31d4cf08382"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/1d4f433f055deb3c89f4378a33ec1b04180f4e7d",
-                "reference": "1d4f433f055deb3c89f4378a33ec1b04180f4e7d",
+                "url": "https://api.github.com/repos/neuron-core/neuron-ai/zipball/789f5d0380ae384902bd0cca2012e31d4cf08382",
+                "reference": "789f5d0380ae384902bd0cca2012e31d4cf08382",
                 "shasum": ""
             },
             "require": {
@@ -2648,7 +2648,7 @@
             "description": "The PHP Agentic Framework.",
             "support": {
                 "issues": "https://github.com/neuron-core/neuron-ai/issues",
-                "source": "https://github.com/neuron-core/neuron-ai/tree/3.3.8"
+                "source": "https://github.com/neuron-core/neuron-ai/tree/3.3.10"
             },
             "funding": [
                 {
@@ -2656,7 +2656,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-14T16:24:52+00:00"
+            "time": "2026-04-20T17:12:27+00:00"
         },
         {
             "name": "psr/cache",
@@ -9319,11 +9319,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.50",
+            "version": "2.1.51",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
-                "reference": "d452086fb4cf648c6b2d8cf3b639351f79e4f3e2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dc3b523c45e714c70de2ac5113b958223b55dc59",
+                "reference": "dc3b523c45e714c70de2ac5113b958223b55dc59",
                 "shasum": ""
             },
             "require": {
@@ -9368,7 +9368,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-17T13:10:32+00:00"
+            "time": "2026-04-21T18:22:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
