@@ -17,6 +17,17 @@ final class ActivitySplits extends Collection
         return ActivitySplit::class;
     }
 
+    public function hasGapPace(): bool
+    {
+        foreach ($this as $split) {
+            if ($split->getGapPaceInSecondsPerKm() instanceof SecPerKm) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getOverallGapPaceInSecondsPerKm(): ?SecPerKm
     {
         $totalWeightedGap = 0.0;
