@@ -1,5 +1,5 @@
 general:
-  app_url: 'http://192.168.8.134:8081/'
+  app_url: 'http://strava.home/'
   profile_picture_url: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/43397685/12321199/5/large.jpg'
   appSubTitle: 'Hybrid Athlete'
 appearance:
