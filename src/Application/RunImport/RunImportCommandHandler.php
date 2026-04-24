@@ -6,6 +6,13 @@ namespace App\Application\RunImport;
 
 use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
 use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
+use App\Application\Import\ImportActivities\ImportActivities;
+use App\Application\Import\ImportAthlete\ImportAthlete;
+use App\Application\Import\ImportChallenges\ImportChallenges;
+use App\Application\Import\ImportGear\ImportGear;
+use App\Application\Import\ImportSegments\ImportSegments;
+use App\Application\Import\LinkCustomGearToActivities\LinkCustomGearToActivities;
+use App\Application\Import\ProcessRawActivityData\ProcessRawActivityData;
 use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -39,6 +46,19 @@ final readonly class RunImportCommandHandler implements CommandHandler
             return;
         }
 
+        $this->commandBus->dispatch(new ImportAthlete($output));
+        $this->commandBus->dispatch(new ImportActivities(
+            output: $output,
+            restrictToActivityIds: $command->getRestrictToActivityIds()
+        ));
+        $this->commandBus->dispatch(new ImportGear(
+            output: $output,
+            restrictToActivityIds: $command->getRestrictToActivityIds())
+        );
+        $this->commandBus->dispatch(new ProcessRawActivityData($output));
+        $this->commandBus->dispatch(new LinkCustomGearToActivities($output));
+        $this->commandBus->dispatch(new ImportSegments($output));
+        $this->commandBus->dispatch(new ImportChallenges($output));
         $this->commandBus->dispatch(new CalculateActivityMetrics($output));
         $this->commandBus->dispatch(new DeleteActivitiesMarkedForDeletion($output));
 
