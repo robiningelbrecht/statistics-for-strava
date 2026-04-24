@@ -117,7 +117,33 @@ export default class HeatmapDrawer {
 
     _getGradientColor(frequency, maxFrequency) {
         const intensity = this._getIntensity(frequency, maxFrequency);
-        const hue = Math.max(0, BLUE_HUE - (BLUE_HUE * intensity));
+        // Map intensity 1.0 to blue -> purple -> red -> orange -> yellow
+        // Using HSL hues: 
+        // 0.0: Blue
+        // 0.25: Purple
+        // 0.5: Red 
+        // 0.75: Orange
+        // 1.0: Yellow
+        
+        let hue;
+        if (intensity <= 0.25) {
+            // Blue (240) to Purple (280)
+            const t = intensity / 0.25;
+            hue = 240 + t * (280 - 240);
+        } else if (intensity <= 0.5) {
+            // Purple (280) to Red (360)
+            const t = (intensity - 0.25) / 0.25;
+            hue = 280 + t * (360 - 280);
+        } else if (intensity <= 0.75) {
+            // Red (0) to Orange (30)
+            const t = (intensity - 0.5) / 0.25;
+            hue = 0 + t * (30 - 0);
+        } else {
+            // Orange (30) to Yellow (60)
+            const t = (intensity - 0.75) / 0.25;
+            hue = 30 + t * (60 - 30);
+        }
+        
         return `hsl(${hue}, 100%, 50%)`;
     }
 
@@ -210,13 +236,16 @@ export default class HeatmapDrawer {
                     return;
                 }
 
-                heatmap.tracks.forEach(track => {
-                    const color = this._getGradientColor(track.frequency, heatmap.max_frequency);
-                    const intensity = this._getIntensity(track.frequency, heatmap.max_frequency);
+                // Sort tracks by frequency so that higher frequency tracks are drawn last (on top)     
+                const sortedTracks = heatmap.tracks.sort((a, b) => a.frequency - b.frequency);
+
+                sortedTracks.forEach(track => {
+                    const color = this._getGradientColor(track.frequency, heatmap.max_frequency);       
+                    const intensity = this._getIntensity(track.frequency, heatmap.max_frequency);       
                     L.polyline(track.coordinates, {
                         color,
-                        weight: BASE_GRADIENT_WEIGHT + (intensity * MAX_GRADIENT_WEIGHT_ADDITION),
-                        opacity: BASE_GRADIENT_OPACITY + (intensity * MAX_GRADIENT_OPACITY_ADDITION),
+                        weight: BASE_GRADIENT_WEIGHT + (intensity * MAX_GRADIENT_WEIGHT_ADDITION),      
+                        opacity: BASE_GRADIENT_OPACITY + (intensity * MAX_GRADIENT_OPACITY_ADDITION),   
                         smoothFactor: 1,
                         overrideExisting: true,
                         detectColors: true,
