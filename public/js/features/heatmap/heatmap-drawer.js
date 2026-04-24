@@ -1,4 +1,12 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
+import initFastGeoToolkitWasm, {process_polylines as processPolylines} from "fastgeotoolkit/wasm";
+
+const BASE_GRADIENT_WEIGHT = 1.5;
+const MAX_GRADIENT_WEIGHT_ADDITION = 4;
+const BASE_GRADIENT_OPACITY = 0.65;
+const MAX_GRADIENT_OPACITY_ADDITION = 0.35;
+const BLUE_HUE = 240;
+const NEARBY_ROUTE_HIGHLIGHT_COLOR = '#ffffff';
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -7,7 +15,10 @@ export default class HeatmapDrawer {
         this.modalManager = modalManager;
         this.placesControl = null;
         this.mainFeatureGroup = L.featureGroup();
+        this.densityFeatureGroup = L.featureGroup();
         this.routePolylines = [];
+        this.redrawVersion = 0;
+        this.fastGeoToolkitInitializationPromise = null;
         this.map = L.map(this.wrapper, {
             scrollWheelZoom: true,
             minZoom: 1,
@@ -16,18 +27,18 @@ export default class HeatmapDrawer {
         this.config.tileLayerUrls.forEach((tileLayerUrl) => {
             L.tileLayer(tileLayerUrl).addTo(this.map);
         });
-        this.defaultPolylineStyle = {
-            color: this.config.polylineColor,
+        this.hiddenPolylineStyle = {
             weight: 1.5,
-            opacity: 0.5,
+            opacity: 0,
             smoothFactor: 1,
             overrideExisting: true,
             detectColors: true,
         };
-        this.inactivePolylineStyle = {
-            weight: 0,
-            opacity: 0,
-        }
+        this.nearbyPolylineStyle = {
+            color: NEARBY_ROUTE_HIGHLIGHT_COLOR,
+            weight: 4,
+            opacity: 0.8,
+        };
         this.map.on("click", (e) => this._handleMapClick(e));
         this.map.on("popupclose", () => this._resetRouteStyles());
         this.map.on("popupopen", (e) => this._handlePopupOpen(e));
@@ -35,7 +46,7 @@ export default class HeatmapDrawer {
 
     _resetRouteStyles() {
         this.routePolylines.forEach(entry => {
-            entry.polyline.setStyle(this.defaultPolylineStyle);
+            entry.polyline.setStyle(this.hiddenPolylineStyle);
         });
     }
 
@@ -75,9 +86,8 @@ export default class HeatmapDrawer {
             return;
         }
 
-        notNearby.forEach(entry => {
-            entry.polyline.setStyle(this.inactivePolylineStyle);
-        });
+        notNearby.forEach(entry => entry.polyline.setStyle(this.hiddenPolylineStyle));
+        nearby.forEach(entry => entry.polyline.setStyle(this.nearbyPolylineStyle));
 
         const html = `
             <div class="m-4 text-sm max-h-50 overflow-y-auto no-dark">
@@ -105,9 +115,32 @@ export default class HeatmapDrawer {
             }).openOn(this.map);
     }
 
-    redraw(routes) {
+    _getGradientColor(frequency, maxFrequency) {
+        const intensity = this._getIntensity(frequency, maxFrequency);
+        const hue = Math.max(0, BLUE_HUE - (BLUE_HUE * intensity));
+        return `hsl(${hue}, 100%, 50%)`;
+    }
+
+    _getIntensity(frequency, maxFrequency) {
+        return maxFrequency > 0 ? frequency / maxFrequency : 0;
+    }
+
+    _isStaleRedraw(redrawVersion) {
+        return redrawVersion !== this.redrawVersion;
+    }
+
+    async _ensureFastGeoToolkitInitialized() {
+        if (!this.fastGeoToolkitInitializationPromise) {
+            this.fastGeoToolkitInitializationPromise = initFastGeoToolkitWasm();
+        }
+        await this.fastGeoToolkitInitializationPromise;
+    }
+
+    async redraw(routes) {
+        const redrawVersion = ++this.redrawVersion;
         routes = routes.filter((route) => route.active);
         this.mainFeatureGroup.clearLayers();
+        this.densityFeatureGroup.clearLayers();
         this.routePolylines = [];
         if (this.placesControl) {
             this.map.removeControl(this.placesControl);
@@ -128,6 +161,7 @@ export default class HeatmapDrawer {
         const countryFeatureGroups = new Map();
         const fitMapBoundsFeatureGroup = L.featureGroup();
         const mostActiveState = determineMostActiveState(routes);
+        const encodedPolylines = [];
 
         routes.forEach(route => {
             const {countryCode, state} = route.startLocation;
@@ -138,7 +172,7 @@ export default class HeatmapDrawer {
 
             const polyline = L.polyline(
                 route.coordinates,
-                this.defaultPolylineStyle
+                this.hiddenPolylineStyle
             ).addTo(countryFeatureGroups.get(countryCode));
 
             this.routePolylines.push({
@@ -146,6 +180,9 @@ export default class HeatmapDrawer {
                 polyline: polyline,
                 coordinates: route.coordinates
             });
+            if (route.encodedPolyline) {
+                encodedPolylines.push(route.encodedPolyline);
+            }
 
             if (mostActiveState === state) {
                 L.polyline(route.coordinates).addTo(fitMapBoundsFeatureGroup);
@@ -160,6 +197,35 @@ export default class HeatmapDrawer {
             });
         });
         this.mainFeatureGroup.addTo(this.map);
+        this.densityFeatureGroup.addTo(this.map);
+
+        if (encodedPolylines.length > 0) {
+            try {
+                await this._ensureFastGeoToolkitInitialized();
+                if (this._isStaleRedraw(redrawVersion)) {
+                    return;
+                }
+                const heatmap = await processPolylines(encodedPolylines);
+                if (this._isStaleRedraw(redrawVersion)) {
+                    return;
+                }
+
+                heatmap.tracks.forEach(track => {
+                    const color = this._getGradientColor(track.frequency, heatmap.max_frequency);
+                    const intensity = this._getIntensity(track.frequency, heatmap.max_frequency);
+                    L.polyline(track.coordinates, {
+                        color,
+                        weight: BASE_GRADIENT_WEIGHT + (intensity * MAX_GRADIENT_WEIGHT_ADDITION),
+                        opacity: BASE_GRADIENT_OPACITY + (intensity * MAX_GRADIENT_OPACITY_ADDITION),
+                        smoothFactor: 1,
+                        overrideExisting: true,
+                        detectColors: true,
+                    }).addTo(this.densityFeatureGroup);
+                });
+            } catch (error) {
+                console.error('Unable to process heatmap polylines with fastgeotoolkit', error);
+            }
+        }
 
         this.placesControl = L.control.flyToPlaces({places});
         this.placesControl.addTo(this.map);

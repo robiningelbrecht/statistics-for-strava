@@ -18,7 +18,7 @@ export default class Heatmap {
         const apiUrl = this.heatmap.getAttribute('data-leaflet-routes');
         const allRoutes = await fetchJson(apiUrl);
 
-        const redraw = (updateStorage = true) => {
+        const redraw = async (updateStorage = true) => {
             const activeFilters = this.filterManager.getActiveFilters();
             this.filterManager.updateDropdownState(activeFilters);
             if(updateStorage){
@@ -26,7 +26,7 @@ export default class Heatmap {
             }
 
             const routes = this.filterManager.applyFiltersToRows(allRoutes);
-            this.drawer.redraw(routes);
+            await this.drawer.redraw(routes);
 
             this.resetBtn.classList.toggle('hidden', !(Object.keys(activeFilters).length > 0));
             const resultCount = this.wrapper.querySelector('[data-dataTable-result-count]');
@@ -34,15 +34,16 @@ export default class Heatmap {
         };
 
         this.filterManager.prefillFromStorage(FilterName.HEATMAP);
-        redraw(false);
+        await redraw(false);
 
-        this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
+        const safeRedraw = () => redraw().catch(error => console.error('Unable to redraw heatmap', error));
+        this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', safeRedraw));
 
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', e => {
                 e.preventDefault();
                 this.filterManager.resetAll();
-                redraw();
+                safeRedraw();
             });
         }
 
@@ -51,7 +52,7 @@ export default class Heatmap {
                 e.preventDefault();
                 const name = btn.getAttribute('data-datatable-filter-clear');
                 this.filterManager.resetOne(name);
-                redraw();
+                safeRedraw();
             });
         });
     };
