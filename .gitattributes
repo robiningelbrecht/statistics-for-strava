@@ -1,3 +1,7 @@
 docs/** linguist-documentation
 tests/** linguist-vendored
 public/libraries/** linguist-vendored
+
+# Enforce Unix line endings (LF) on files executed inside Docker containers
+*.sh text eol=lf
+bin/console text eol=lf
