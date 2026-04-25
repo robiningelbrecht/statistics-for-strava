@@ -129,7 +129,10 @@ restrictToDateRange: {from: '2026-01-01', to: '2026-03-31'}
 
 ### Periodized goals
 
-You can use `restrictToDateRange` to vary your goals over time, matching your training plan:
+You can use `restrictToDateRange` to vary your goals over time, matching your training plan.
+All goals whose date range includes the current date will be shown. There is no precedence between goals.
+If you want a date-ranged goal to replace a default one during a specific period, make sure to assign
+date ranges to **all** goals so they don't overlap.
 
 ```yaml
 'weekly': [

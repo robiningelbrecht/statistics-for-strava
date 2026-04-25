@@ -111,7 +111,7 @@ final readonly class TrainingGoalsWidget implements Widget
             }
         }
 
-        if ($calculatedGoalsPerPeriod === []) {
+        if ([] === $calculatedGoalsPerPeriod) {
             return null;
         }
 
