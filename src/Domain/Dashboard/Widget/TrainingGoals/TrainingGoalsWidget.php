@@ -85,7 +85,9 @@ final readonly class TrainingGoalsWidget implements Widget
                 if (!$trainingGoal->isEnabled()) {
                     continue;
                 }
-
+                if (!$trainingGoal->isActiveOn($now)) {
+                    continue;
+                }
                 $response = $this->queryBus->ask(new FindTrainingGoalMetrics(
                     sportTypes: $trainingGoal->getSportTypesToInclude(),
                     from: $from,
@@ -107,6 +109,10 @@ final readonly class TrainingGoalsWidget implements Widget
                     'progressLeftToDo' => $trainingGoal->getGoal()->subtract($convertedProgress),
                 ];
             }
+        }
+
+        if ($calculatedGoalsPerPeriod === []) {
+            return null;
         }
 
         return $this->twig->load('html/dashboard/widget/widget--training-goals.html.twig')->render([

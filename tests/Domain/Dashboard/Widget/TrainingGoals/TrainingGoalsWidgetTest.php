@@ -79,6 +79,42 @@ class TrainingGoalsWidgetTest extends ContainerTestCase
         $this->assertNull($render);
     }
 
+    public function testRenderWithRestrictToDateRange(): void
+    {
+        $this->provideFullTestSet();
+
+        $config = WidgetConfiguration::empty()
+            ->add('goals', [
+                'weekly' => [
+                    ['label' => 'Running (base)',  'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 25,  'sportTypesToInclude' => ['Run'], 'restrictToDateRange' => ['from' => '2025-01-01', 'to' => '2025-03-31']],
+                    ['label' => 'Running (build)', 'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 40,  'sportTypesToInclude' => ['Run'], 'restrictToDateRange' => ['from' => '2025-10-01', 'to' => '2025-12-31']],
+                    ['label' => 'Cycling',         'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 200, 'sportTypesToInclude' => ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']],
+                ],
+            ]);
+
+        $render = $this->widget->render(
+            now: SerializableDateTime::fromString('2025-10-16'),
+            configuration: $config
+        );
+        $this->assertMatchesHtmlSnapshot($render);
+    }
+
+    public function testRenderReturnsNullWhenAllGoalsFilteredByDateRange(): void
+    {
+        $config = WidgetConfiguration::empty()
+            ->add('goals', [
+                'weekly' => [
+                    ['label' => 'Running', 'enabled' => true, 'type' => 'distance', 'unit' => 'km', 'goal' => 25, 'sportTypesToInclude' => ['Run'], 'restrictToDateRange' => ['from' => '2025-01-01', 'to' => '2025-03-31']],
+                ],
+            ]);
+
+        $render = $this->widget->render(
+            now: SerializableDateTime::fromString('2025-10-16'),
+            configuration: $config
+        );
+        $this->assertNull($render);
+    }
+
     public function testRenderWhenNoGoalsUseCaseTwo(): void
     {
         $render = $this->widget->render(
