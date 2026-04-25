@@ -83,7 +83,7 @@ final readonly class TrainingGoal
 
     public function isActiveOn(SerializableDateTime $date): bool
     {
-        if (!$this->restrictToDateRange instanceof \App\Infrastructure\ValueObject\Time\DateRange) {
+        if (!$this->restrictToDateRange instanceof DateRange) {
             return true;
         }
 
