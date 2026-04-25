@@ -62,16 +62,17 @@ class TrainingGoalsTest extends TestCase
         $yml['weekly'][0]['restrictToDateRange'] = ['from' => '2026-01-01', 'to' => '2026-03-31'];
 
         $goals = TrainingGoals::fromConfig($yml);
-        $goalsArray = $goals->toArray();
+        $goal = $goals->getFirst();
 
-        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
-        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-02-15')));
-        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-03-31')));
-        $this->assertFalse($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2025-12-31')));
-        $this->assertFalse($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-04-01')));
+        $this->assertTrue($goal->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
+        $this->assertTrue($goal->isActiveOn(SerializableDateTime::fromString('2026-02-15')));
+        $this->assertTrue($goal->isActiveOn(SerializableDateTime::fromString('2026-03-31')));
+        $this->assertFalse($goal->isActiveOn(SerializableDateTime::fromString('2025-12-31')));
+        $this->assertFalse($goal->isActiveOn(SerializableDateTime::fromString('2026-04-01')));
 
-        $this->assertTrue($goalsArray[1]->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
-        $this->assertTrue($goalsArray[1]->isActiveOn(SerializableDateTime::fromString('2099-12-31')));
+        $goal = $goals->toArray()[1];
+        $this->assertTrue($goal->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
+        $this->assertTrue($goal->isActiveOn(SerializableDateTime::fromString('2099-12-31')));
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
