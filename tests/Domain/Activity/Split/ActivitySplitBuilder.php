@@ -17,7 +17,7 @@ final class ActivitySplitBuilder
     private UnitSystem $unitSystem = UnitSystem::METRIC;
     private int $splitNumber = 1;
     private Meter $distance;
-    private int $elapsedTimeInSeconds;
+    private readonly int $elapsedTimeInSeconds;
     private int $movingTimeInSeconds;
     private readonly Meter $elevationDifference;
     private MetersPerSecond $averageSpeed;

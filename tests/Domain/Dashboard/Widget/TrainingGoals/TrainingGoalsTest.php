@@ -9,6 +9,7 @@ use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoal;
 use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoalPeriod;
 use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoals;
 use App\Domain\Dashboard\Widget\TrainingGoals\TrainingGoalType;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -53,6 +54,24 @@ class TrainingGoalsTest extends TestCase
             ]),
             TrainingGoals::fromConfig(self::getValidYml())
         );
+    }
+
+    public function testFromConfigWithRestrictToDateRange(): void
+    {
+        $yml = self::getValidYml();
+        $yml['weekly'][0]['restrictToDateRange'] = ['from' => '2026-01-01', 'to' => '2026-03-31'];
+
+        $goals = TrainingGoals::fromConfig($yml);
+        $goalsArray = $goals->toArray();
+
+        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
+        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-02-15')));
+        $this->assertTrue($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-03-31')));
+        $this->assertFalse($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2025-12-31')));
+        $this->assertFalse($goalsArray[0]->isActiveOn(SerializableDateTime::fromString('2026-04-01')));
+
+        $this->assertTrue($goalsArray[1]->isActiveOn(SerializableDateTime::fromString('2026-01-01')));
+        $this->assertTrue($goalsArray[1]->isActiveOn(SerializableDateTime::fromString('2099-12-31')));
     }
 
     #[DataProvider(methodName: 'provideInvalidConfig')]
@@ -133,6 +152,22 @@ class TrainingGoalsTest extends TestCase
         $yml['weekly'][0]['type'] = 'movingTime';
         $yml['weekly'][0]['unit'] = 'km';
         yield 'invalid "type and unit" combo 2' => [$yml, 'The unit "km" is not valid for goal type "movingTime"'];
+
+        $yml = self::getValidYml();
+        $yml['weekly'][0]['restrictToDateRange'] = 'LOL';
+        yield 'invalid "restrictToDateRange" type' => [$yml, '"restrictToDateRange" property must be an object with "from" and "to" keys'];
+
+        $yml = self::getValidYml();
+        $yml['weekly'][0]['restrictToDateRange'] = ['from' => '2026-01-01'];
+        yield 'missing "to" in "restrictToDateRange"' => [$yml, '"restrictToDateRange" requires both "from" and "to" keys'];
+
+        $yml = self::getValidYml();
+        $yml['weekly'][0]['restrictToDateRange'] = ['from' => 'not-a-date', 'to' => '2026-03-31'];
+        yield 'invalid date in "restrictToDateRange"' => [$yml, '"restrictToDateRange" contains invalid date values, expected format "YYYY-MM-DD"'];
+
+        $yml = self::getValidYml();
+        $yml['weekly'][0]['restrictToDateRange'] = ['from' => '2026-06-01', 'to' => '2026-03-31'];
+        yield '"from" after "to" in "restrictToDateRange"' => [$yml, '"restrictToDateRange.from" must be before or equal to "restrictToDateRange.to"'];
     }
 
     private static function getValidYml(): array

@@ -8,6 +8,8 @@ use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Challenge\Consistency\ProvideGoalConverters;
 use App\Infrastructure\ValueObject\Measurement\ProvideUnitFromScalar;
 use App\Infrastructure\ValueObject\Measurement\Unit;
+use App\Infrastructure\ValueObject\Time\DateRange;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class TrainingGoal
 {
@@ -21,6 +23,7 @@ final readonly class TrainingGoal
         private TrainingGoalPeriod $period,
         private Unit $goal,
         private SportTypes $sportTypesToInclude,
+        private ?DateRange $restrictToDateRange = null,
     ) {
     }
 
@@ -32,6 +35,7 @@ final readonly class TrainingGoal
         float $goal,
         string $unit,
         SportTypes $sportTypesToInclude,
+        ?DateRange $restrictToDateRange = null,
     ): self {
         return new self(
             label: $label,
@@ -43,6 +47,7 @@ final readonly class TrainingGoal
                 unit: $unit,
             ),
             sportTypesToInclude: $sportTypesToInclude,
+            restrictToDateRange: $restrictToDateRange,
         );
     }
 
@@ -74,5 +79,15 @@ final readonly class TrainingGoal
     public function getSportTypesToInclude(): SportTypes
     {
         return $this->sportTypesToInclude;
+    }
+
+    public function isActiveOn(SerializableDateTime $date): bool
+    {
+        if (!$this->restrictToDateRange instanceof \App\Infrastructure\ValueObject\Time\DateRange) {
+            return true;
+        }
+
+        return $date->isAfterOrOn($this->restrictToDateRange->getFrom())
+            && $date->isBeforeOrOn($this->restrictToDateRange->getTill());
     }
 }
