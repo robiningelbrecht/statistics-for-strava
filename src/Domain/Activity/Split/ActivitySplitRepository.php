@@ -18,6 +18,8 @@ interface ActivitySplitRepository
 
     public function findActivityIdsWithoutGap(): ActivityIds;
 
+    public function findActivityIdsWithoutAverageHeartRate(): ActivityIds;
+
     public function isImportedForActivity(ActivityId $activityId): bool;
 
     public function deleteForActivity(ActivityId $activityId): void;

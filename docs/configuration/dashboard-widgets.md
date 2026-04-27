@@ -94,6 +94,9 @@ goal: 200
 # The sport types to include in this goal.
 # For a complete list of supported sport types, visit: https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration?id=supported-sport-types
 sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
+# Optional: restrict this goal to a specific date range. When omitted, the goal is always active.
+# This allows you to adjust goals according to your training plan.
+restrictToDateRange: {from: '2026-01-01', to: '2026-03-31'}
 ```
 
 ### Example
@@ -122,6 +125,24 @@ sportTypesToInclude: ['Ride', 'MountainBikeRide', 'GravelRide', 'VirtualRide']
     'lifetime': [],
   },
 }
+```
+
+### Periodized goals
+
+You can use `restrictToDateRange` to vary your goals over time, matching your training plan.
+All goals whose date range includes the current date will be shown. There is no precedence between goals.
+If you want a date-ranged goal to replace a default one during a specific period, make sure to assign
+date ranges to **all** goals so they don't overlap.
+
+```yaml
+'weekly': [
+  # Base phase: Jan-Mar 2026
+  { label: 'Running (base)',  enabled: true, type: 'distance', unit: 'km', goal: 25,  sportTypesToInclude: ['Run'], restrictToDateRange: {from: '2026-01-01', to: '2026-03-31'} },
+  # Build phase: Apr 2026
+  { label: 'Running (build)', enabled: true, type: 'distance', unit: 'km', goal: 30,  sportTypesToInclude: ['Run'], restrictToDateRange: {from: '2026-04-01', to: '2026-04-30'} },
+  # Peak phase: May 2026
+  { label: 'Running (peak)',  enabled: true, type: 'distance', unit: 'km', goal: 40,  sportTypesToInclude: ['Run'], restrictToDateRange: {from: '2026-05-01', to: '2026-05-31'} },
+]
 ```
 
 ![trainingGoals widget](../assets/images/dashboard-widgets/training-goals.png)

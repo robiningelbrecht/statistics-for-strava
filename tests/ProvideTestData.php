@@ -686,6 +686,7 @@ trait ProvideTestData
         $activitySplitRepository->add(
             ActivitySplitBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed('45326441741'))
+                ->withAverageHeartRate(130)
                 ->build()
         );
 

@@ -7,6 +7,8 @@ namespace App\Domain\Dashboard\Widget\TrainingGoals;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Infrastructure\ValueObject\Collection;
+use App\Infrastructure\ValueObject\Time\DateRange;
+use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 /**
  * @extends Collection<TrainingGoal>
@@ -104,6 +106,27 @@ final class TrainingGoals extends Collection
                     $goalConfig['unit'] = TrainingGoal::SIMPLE;
                 }
 
+                $restrictToDateRange = null;
+                if (array_key_exists('restrictToDateRange', $goalConfig)) {
+                    $dateRangeConfig = $goalConfig['restrictToDateRange'];
+                    if (!is_array($dateRangeConfig)) {
+                        throw new InvalidTrainingGoalsConfiguration('"restrictToDateRange" property must be an object with "from" and "to" keys');
+                    }
+                    if (!array_key_exists('from', $dateRangeConfig) || !array_key_exists('to', $dateRangeConfig)) {
+                        throw new InvalidTrainingGoalsConfiguration('"restrictToDateRange" requires both "from" and "to" keys');
+                    }
+                    try {
+                        $restrictToDateRange = DateRange::fromDates(
+                            from: SerializableDateTime::fromString($dateRangeConfig['from']),
+                            till: SerializableDateTime::fromString($dateRangeConfig['to'].' 23:59:59'),
+                        );
+                    } catch (\DateMalformedStringException) {
+                        throw new InvalidTrainingGoalsConfiguration('"restrictToDateRange" contains invalid date values, expected format "YYYY-MM-DD"');
+                    } catch (\InvalidArgumentException) {
+                        throw new InvalidTrainingGoalsConfiguration('"restrictToDateRange.from" must be before or equal to "restrictToDateRange.to"');
+                    }
+                }
+
                 $trainingGoals[] = TrainingGoal::create(
                     label: $goalConfig['label'],
                     isEnabled: $goalConfig['enabled'],
@@ -111,7 +134,8 @@ final class TrainingGoals extends Collection
                     period: $trainingGoalPeriod,
                     goal: (float) $goalConfig['goal'],
                     unit: $goalConfig['unit'],
-                    sportTypesToInclude: $sportTypesToInclude
+                    sportTypesToInclude: $sportTypesToInclude,
+                    restrictToDateRange: $restrictToDateRange,
                 );
             }
         }
