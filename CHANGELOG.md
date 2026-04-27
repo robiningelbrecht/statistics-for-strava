@@ -1,3 +1,37 @@
+# [v4.7.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.7) - 2026-04-27
+
+## New features
+* Introduced Grade Adjusted Pace (GAP) for running activities
+* Training goal widget allows goals to be configured based on a specific date range
+
+```yaml
+'config': {
+  'goals': {
+    'weekly': [
+      { label: 'Cycling', enabled: true, type: 'distance', unit: 'km', goal: 200,  restrictToDateRange: {from: '2026-01-01', to: '2026-03-31'} }
+    ],
+  },
+}
+```
+
+https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/dashboard-widgets?id=traininggoals
+
+## Bug fixes
+* Fixed cadence accuracy for running and walking activities by correctly doubling the cadence value where needed.
+
+## Technical details
+* ISSUE #1974: Cadence needs to be doubled for runs and walks by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1978
+* feat(translations): more fr by @christian-vdz in https://github.com/robiningelbrecht/statistics-for-strava/pull/1972
+* ISSUE #1976: Provide GitHub Container Packages as alternative to dock… by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1977
+* ISSUE #1979: Calculate and display Grade Adjusted Pace (GAP) for running activities by @cgtobi https://github.com/robiningelbrecht/statistics-for-strava/pull/1981
+* ISSUE #1984: Move activity split average heart rate calculation to CalculateActivityMetrics pipeline by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1989
+* ISSUE #1988: Training goal based on date range by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1991
+
+## New Contributors
+* @cgtobi made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/1981
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.6...v4.7.7
+
 # [v4.7.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.6) - 2026-04-13
 
 ## New features
