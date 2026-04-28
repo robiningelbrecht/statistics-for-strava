@@ -150,7 +150,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
                 $remainingInSplit = $targetDistance - $distanceInCurrentSplit;
 
                 if ($remainingInSplit <= 0.00001) {
-                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit, $weightedObservedGradeInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
@@ -176,7 +176,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
                 $remainingWeightedObservedGrade -= $weightedObservedGradePortion;
 
                 if ($distanceInCurrentSplit >= $targetDistance - 0.00001) {
-                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit, $weightedObservedGradeInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
@@ -194,9 +194,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             $splitItems[$currentSplitIndex] = $splitItems[$currentSplitIndex]->withGapPace(
                 $this->resolveGapPace(
                     $splitItems[$currentSplitIndex],
-                    ($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0,
                     $distanceInCurrentSplit,
-                    $weightedObservedGradeInCurrentSplit,
                 )
             );
         }
@@ -208,9 +206,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         ActivitySplit $split,
         float $targetDistanceInMeters,
         float $distanceInCurrentSplit,
-        float $durationInCurrentSplit,
         float $adjustedDistanceInCurrentSplit,
-        float $weightedObservedGradeInCurrentSplit,
     ): ActivitySplit {
         if ($distanceInCurrentSplit < $targetDistanceInMeters - 0.00001 || $adjustedDistanceInCurrentSplit <= 0.0) {
             return $split;
@@ -218,90 +214,32 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
 
         return $split->withGapPace($this->resolveGapPace(
             $split,
-            ($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0,
             $distanceInCurrentSplit,
-            $weightedObservedGradeInCurrentSplit,
         ));
     }
 
     private function resolveGapPace(
         ActivitySplit $split,
-        float $calculatedGapPaceInSecondsPerKm,
         float $distanceInCurrentSplit,
-        float $weightedObservedGradeInCurrentSplit,
     ): SecPerKm {
         $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
         $distanceInMeters = max(1.0, $distanceInCurrentSplit);
         $signedNetElevationDifferenceInMeters = $split->getElevationDifference()->toFloat();
-        $netElevationDifferenceInMeters = abs($signedNetElevationDifferenceInMeters);
-        $netGrade = $netElevationDifferenceInMeters / $distanceInMeters;
-        $observedGrade = $weightedObservedGradeInCurrentSplit / $distanceInMeters;
+        $signedNetGrade = $signedNetElevationDifferenceInMeters / $distanceInMeters;
+        $absoluteNetGrade = abs($signedNetGrade);
 
-        // Flat or near-flat splits should not drift far from the actual pace,
-        // even if point-level grade data or grade_smooth is noisy.
-        if ($signedNetElevationDifferenceInMeters < 0.0 && ($netElevationDifferenceInMeters <= 2.0 || $netGrade < 0.002)) {
-            return SecPerKm::from(min(
-                $actualPaceInSecondsPerKm * 1.01,
-                max($actualPaceInSecondsPerKm, $calculatedGapPaceInSecondsPerKm),
-            ));
+        if ($absoluteNetGrade < 0.0005) {
+            return SecPerKm::from($actualPaceInSecondsPerKm);
         }
 
-        if ($signedNetElevationDifferenceInMeters < 0.0 && ($netElevationDifferenceInMeters <= 5.0 || $netGrade < 0.005)) {
-            return SecPerKm::from(min(
-                $actualPaceInSecondsPerKm * 1.01,
-                max($actualPaceInSecondsPerKm * 0.99, $calculatedGapPaceInSecondsPerKm),
-            ));
+        if ($signedNetGrade > 0.0) {
+            $uphillBenefitRatio = min(0.16, $absoluteNetGrade * 3.0);
+
+            return SecPerKm::from($actualPaceInSecondsPerKm * (1.0 - $uphillBenefitRatio));
         }
 
-        if ($signedNetElevationDifferenceInMeters > 0.0) {
-            $uphillBenefitRatio = match (true) {
-                $netGrade < 0.01 => 0.02,
-                $netGrade < 0.02 => 0.04,
-                $netGrade < 0.03 => 0.06,
-                default => 0.10,
-            };
+        $downhillPenaltyRatio = min(0.12, $absoluteNetGrade * 1.9);
 
-            return SecPerKm::from(min(
-                $actualPaceInSecondsPerKm,
-                max($actualPaceInSecondsPerKm * (1.0 - $uphillBenefitRatio), $calculatedGapPaceInSecondsPerKm),
-            ));
-        }
-
-        // Beyond tiny descents, downhill should stop looking like "free speed"
-        // in the split table. Use a mild penalty for moderate downhill and a
-        // stronger one for steep downhill.
-        if ($signedNetElevationDifferenceInMeters < 0.0 && $netGrade >= 0.005) {
-            $downhillPenaltyRatio = $netGrade >= 0.03
-                ? min(0.10, 0.035 + (($netGrade - 0.03) * 2.0))
-                : min(0.05, 0.008 + (($netGrade - 0.005) * 1.6));
-
-            return SecPerKm::from($actualPaceInSecondsPerKm * (1.0 + $downhillPenaltyRatio));
-        }
-
-        if ($netElevationDifferenceInMeters <= 5.0 || $netGrade < 0.005) {
-            $allowedDeviationRatio = 0.02;
-        } elseif ($netGrade < 0.01 || $netElevationDifferenceInMeters <= 10.0) {
-            $allowedDeviationRatio = 0.03;
-        } else {
-            $allowedDeviationRatio = null;
-        }
-
-        if (null !== $allowedDeviationRatio) {
-            return SecPerKm::from(min(
-                $actualPaceInSecondsPerKm * (1.0 + $allowedDeviationRatio),
-                max($actualPaceInSecondsPerKm * (1.0 - $allowedDeviationRatio), $calculatedGapPaceInSecondsPerKm),
-            ));
-        }
-
-        // GPS altitude noise can create unrealistic short-window grades. Keep
-        // the split GAP within a plausible band around the actual split pace.
-        $allowedDeviationRatio = min(0.35, 0.08 + max($netGrade, $observedGrade) * 4.0);
-        $minimumGapPace = $actualPaceInSecondsPerKm * (1.0 - $allowedDeviationRatio);
-        $maximumGapPace = $actualPaceInSecondsPerKm * (1.0 + $allowedDeviationRatio);
-
-        return SecPerKm::from(min(
-            $maximumGapPace,
-            max($minimumGapPace, $calculatedGapPaceInSecondsPerKm),
-        ));
+        return SecPerKm::from($actualPaceInSecondsPerKm * (1.0 + $downhillPenaltyRatio));
     }
 }
