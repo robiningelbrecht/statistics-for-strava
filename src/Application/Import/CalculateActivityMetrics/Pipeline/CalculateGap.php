@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
 use App\Domain\Activity\Split\ActivitySplit;
@@ -30,9 +31,21 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $progressIndicator = new ProgressIndicator($output);
         $progressIndicator->start('=> Calculated GAP for 0 activities');
 
-        $countActivitiesProcessed = 0;
-        $activityIdsToProcess = $this->activitySplitRepository->findActivityIdsWithoutGap();
+        $countActivitiesProcessed = $this->recalculateForActivityIds(
+            output: $output,
+            activityIdsToProcess: $this->activitySplitRepository->findActivityIdsWithoutGap(),
+            progressIndicator: $progressIndicator,
+        );
 
+        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+    }
+
+    public function recalculateForActivityIds(
+        OutputInterface $output,
+        ActivityIds $activityIdsToProcess,
+        ?ProgressIndicator $progressIndicator = null,
+    ): int {
+        $countActivitiesProcessed = 0;
         foreach ($activityIdsToProcess as $activityId) {
             $trackPoints = $this->buildTrackPoints($activityId);
             if ([] === $trackPoints) {
@@ -56,10 +69,10 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             }
 
             ++$countActivitiesProcessed;
-            $progressIndicator->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+            $progressIndicator?->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
         }
 
-        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+        return $countActivitiesProcessed;
     }
 
     /**
@@ -170,7 +183,11 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
 
         if (isset($splitItems[$currentSplitIndex]) && $adjustedDistanceInCurrentSplit > 0.0) {
             $splitItems[$currentSplitIndex] = $splitItems[$currentSplitIndex]->withGapPace(
-                SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0)
+                $this->resolveGapPace(
+                    $splitItems[$currentSplitIndex],
+                    ($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0,
+                    $distanceInCurrentSplit,
+                )
             );
         }
 
@@ -188,6 +205,31 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             return $split;
         }
 
-        return $split->withGapPace(SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0));
+        return $split->withGapPace($this->resolveGapPace(
+            $split,
+            ($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0,
+            $distanceInCurrentSplit,
+        ));
+    }
+
+    private function resolveGapPace(
+        ActivitySplit $split,
+        float $calculatedGapPaceInSecondsPerKm,
+        float $distanceInCurrentSplit,
+    ): SecPerKm {
+        $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
+        $distanceInMeters = max(1.0, $distanceInCurrentSplit);
+        $netGrade = abs($split->getElevationDifference()->toFloat()) / $distanceInMeters;
+
+        // GPS altitude noise can create unrealistic short-window grades. Keep
+        // the split GAP within a plausible band around the actual split pace.
+        $allowedDeviationRatio = min(0.35, 0.08 + $netGrade * 4.0);
+        $minimumGapPace = $actualPaceInSecondsPerKm * (1.0 - $allowedDeviationRatio);
+        $maximumGapPace = $actualPaceInSecondsPerKm * (1.0 + $allowedDeviationRatio);
+
+        return SecPerKm::from(min(
+            $maximumGapPace,
+            max($minimumGapPace, $calculatedGapPaceInSecondsPerKm),
+        ));
     }
 }

@@ -328,6 +328,29 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertNotNull($splits->toArray()[2]->getGapPaceInSecondsPerKm());
     }
 
+    public function testProcessKeepsGapCloseToActualPaceOnGentleRollingTerrain(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-gentle-rolling');
+        $this->addActivity($activityId, SportType::RUN);
+        $this->addStreams($activityId, $this->buildGentleRollingTrackPoints());
+        $this->addMetricSplits($activityId, [1000.0, 1000.0]);
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $splits = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray();
+
+        foreach ($splits as $split) {
+            $gapPace = $split->getGapPaceInSecondsPerKm();
+            $this->assertNotNull($gapPace);
+            $this->assertLessThan(
+                60.0,
+                abs($gapPace->toFloat() - $split->getPaceInSecPerKm()->toFloat()),
+                'GAP should stay reasonably close to actual pace on gentle terrain.',
+            );
+        }
+    }
+
     public function testProcessOutputsProgress(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-progress');
@@ -465,6 +488,24 @@ class CalculateGapTest extends ContainerTestCase
             $latLng[] = [50.0 + $i * 0.00009, 4.0];
             $altitude[] = 100.0 + $i * 1.5;
             $time[] = $i * 5;
+        }
+
+        return ['latLng' => $latLng, 'altitude' => $altitude, 'time' => $time];
+    }
+
+    /**
+     * @return array{latLng: list<array{float, float}>, altitude: list<float>, time: list<int>}
+     */
+    private function buildGentleRollingTrackPoints(): array
+    {
+        $latLng = [];
+        $altitude = [];
+        $time = [];
+
+        for ($i = 0; $i < 220; ++$i) {
+            $latLng[] = [50.0 + $i * 0.00009, 4.0];
+            $altitude[] = 100.0 + 2.5 * sin($i * 0.08);
+            $time[] = $i * 6;
         }
 
         return ['latLng' => $latLng, 'altitude' => $altitude, 'time' => $time];
