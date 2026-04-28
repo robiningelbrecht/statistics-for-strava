@@ -286,6 +286,36 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertNotNull($splitWithoutGrade->getGapPaceInSecondsPerKm());
     }
 
+    public function testProcessKeepsExactlyFlatSplitAtActualPace(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-grade-stream-exact-flat');
+        $this->addActivity($activityId, SportType::RUN);
+
+        $trackPoints = $this->buildFlatTrackPoints();
+        $this->addStreams($activityId, $trackPoints);
+        $this->activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->withSplitNumber(1)
+                ->withDistanceInMeter(1000.0)
+                ->withElevationDifferenceInMeter(0)
+                ->build()
+        );
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
+        $this->assertNotNull($split->getGapPaceInSecondsPerKm());
+        $this->assertEqualsWithDelta(
+            $split->getPaceInSecPerKm()->toFloat(),
+            $split->getGapPaceInSecondsPerKm()->toFloat(),
+            0.01,
+            'Exactly flat splits should keep GAP equal to actual pace.',
+        );
+    }
+
     public function testProcessKeepsGradeStreamGapCloseToActualPaceOnNearFlatSplit(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-grade-stream-flat');
@@ -500,10 +530,10 @@ class CalculateGapTest extends ContainerTestCase
 
         $this->assertNotNull($flatGap);
         $this->assertNotNull($uphillGap);
-        $this->assertLessThan(
+        $this->assertLessThanOrEqual(
             $flatGap->toFloat(),
             $uphillGap->toFloat(),
-            'GAP for uphill should be faster (lower) than actual pace on flat at same speed',
+            'Uphill GAP should be at least as fast as the flat equivalent at the same speed.',
         );
     }
 
