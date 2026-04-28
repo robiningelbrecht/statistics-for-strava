@@ -12,7 +12,8 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
  *     lat: float,
  *     lon: float,
  *     ele: float,
- *     timestamp: int
+ *     timestamp: int,
+ *     grade: ?float
  * }
  */
 final readonly class GapCalculator
@@ -113,26 +114,25 @@ final readonly class GapCalculator
                 continue;
             }
 
-            $window = $this->calculateWindowMetrics(
+            $actualPaceInSecondsPerKm = ($duration / $distance) * 1000.0;
+            $grade = $this->resolveSegmentGrade(
+                from: $from,
+                to: $to,
                 points: $points,
                 cumulativeDistances: $cumulativeDistances,
                 centerDistance: ($cumulativeDistances[$i - 1] + $cumulativeDistances[$i]) / 2.0,
                 trackLength: $trackLength,
                 lastIndex: $lastIndex,
             );
-            if (null === $window) {
-                continue;
-            }
-
-            $gapMultiplier = $this->gapMultiplier($window['grade']);
+            $gapMultiplier = $this->gapMultiplier($grade);
 
             yield GapSegment::create(
                 distanceInMeters: $distance,
                 durationInSeconds: $duration,
-                grade: $window['grade'],
-                actualPaceInSecondsPerKm: $window['actual_pace_sec_per_km'],
+                grade: $grade,
+                actualPaceInSecondsPerKm: $actualPaceInSecondsPerKm,
                 gapMultiplier: $gapMultiplier,
-                gapPaceInSecondsPerKm: $window['actual_pace_sec_per_km'] / $gapMultiplier,
+                gapPaceInSecondsPerKm: $actualPaceInSecondsPerKm / $gapMultiplier,
             );
         }
     }
@@ -325,6 +325,36 @@ final readonly class GapCalculator
         return $low;
     }
 
+    /**
+     * @param NormalizedTrackPoint       $from
+     * @param NormalizedTrackPoint       $to
+     * @param list<NormalizedTrackPoint> $points
+     * @param list<float>                $cumulativeDistances
+     */
+    private function resolveSegmentGrade(
+        array $from,
+        array $to,
+        array $points,
+        array $cumulativeDistances,
+        float $centerDistance,
+        float $trackLength,
+        int $lastIndex,
+    ): float {
+        if (null !== $from['grade'] || null !== $to['grade']) {
+            $gradeValues = array_filter([$from['grade'], $to['grade']], static fn (?float $grade): bool => null !== $grade);
+
+            return array_sum($gradeValues) / count($gradeValues);
+        }
+
+        return $this->calculateWindowMetrics(
+            points: $points,
+            cumulativeDistances: $cumulativeDistances,
+            centerDistance: $centerDistance,
+            trackLength: $trackLength,
+            lastIndex: $lastIndex,
+        )['grade'] ?? 0.0;
+    }
+
     private function gapMultiplier(float $grade): float
     {
         $grade2 = $grade * $grade;
@@ -369,6 +399,9 @@ final readonly class GapCalculator
             'lat' => (float) ($trackPoint['lat'] ?? throw new \InvalidArgumentException('Track point is missing required field "lat".')),
             'lon' => (float) ($trackPoint['lon'] ?? throw new \InvalidArgumentException('Track point is missing required field "lon".')),
             'ele' => (float) ($trackPoint['ele'] ?? throw new \InvalidArgumentException('Track point is missing required field "ele".')),
+            'grade' => isset($trackPoint['grade']) && is_numeric($trackPoint['grade'])
+                ? Math::clamp(-((float) $trackPoint['grade']) / 100.0, $this->minGrade, $this->maxGrade)
+                : null,
             'timestamp' => match (true) {
                 ($ts = $trackPoint['timestamp'] ?? null) instanceof SerializableDateTime => $ts->getTimestamp(),
                 is_int($ts) => $ts,
