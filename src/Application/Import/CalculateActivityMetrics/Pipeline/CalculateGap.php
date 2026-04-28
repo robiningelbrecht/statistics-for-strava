@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
 use App\Domain\Activity\Split\ActivitySplit;
@@ -30,9 +31,21 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $progressIndicator = new ProgressIndicator($output);
         $progressIndicator->start('=> Calculated GAP for 0 activities');
 
-        $countActivitiesProcessed = 0;
-        $activityIdsToProcess = $this->activitySplitRepository->findActivityIdsWithoutGap();
+        $countActivitiesProcessed = $this->recalculateForActivityIds(
+            output: $output,
+            activityIdsToProcess: $this->activitySplitRepository->findActivityIdsWithoutGap(),
+            progressIndicator: $progressIndicator,
+        );
 
+        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+    }
+
+    public function recalculateForActivityIds(
+        OutputInterface $output,
+        ActivityIds $activityIdsToProcess,
+        ?ProgressIndicator $progressIndicator = null,
+    ): int {
+        $countActivitiesProcessed = 0;
         foreach ($activityIdsToProcess as $activityId) {
             $trackPoints = $this->buildTrackPoints($activityId);
             if ([] === $trackPoints) {
@@ -56,14 +69,14 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             }
 
             ++$countActivitiesProcessed;
-            $progressIndicator->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+            $progressIndicator?->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
         }
 
-        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+        return $countActivitiesProcessed;
     }
 
     /**
-     * @return list<array{lat: float, lon: float, ele: float, timestamp: int}>
+     * @return list<array{lat: float, lon: float, ele: float, timestamp: int, grade?: float|null}>
      */
     private function buildTrackPoints(ActivityId $activityId): array
     {
@@ -72,6 +85,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $latLng = $streams->filterOnType(StreamType::LAT_LNG)?->getData() ?? [];
         $altitude = $streams->filterOnType(StreamType::ALTITUDE)?->getData() ?? [];
         $time = $streams->filterOnType(StreamType::TIME)?->getData() ?? [];
+        $grade = $streams->filterOnType(StreamType::GRADE)?->getData() ?? [];
         if (in_array([], [$latLng, $altitude, $time], true)) {
             return [];
         }
@@ -99,6 +113,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
                 'lon' => (float) $coordinate[1],
                 'ele' => (float) $altitude[$i],
                 'timestamp' => (int) $time[$i],
+                'grade' => isset($grade[$i]) && is_numeric($grade[$i]) ? (float) $grade[$i] : null,
             ];
         }
 
@@ -121,11 +136,13 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $distanceInCurrentSplit = 0.0;
         $durationInCurrentSplit = 0.0;
         $adjustedDistanceInCurrentSplit = 0.0;
+        $weightedObservedGradeInCurrentSplit = 0.0;
 
         foreach ($gapSegments as $segment) {
             $remainingDistance = $segment->getDistanceInMeters();
             $remainingDuration = (float) $segment->getDurationInSeconds();
             $remainingAdjustedDistance = $segment->getDistanceInMeters() * $segment->getGapMultiplier();
+            $remainingWeightedObservedGrade = abs($segment->getGrade()) * $segment->getDistanceInMeters();
 
             while ($remainingDistance > 0.0 && isset($splitItems[$currentSplitIndex])) {
                 $split = $splitItems[$currentSplitIndex];
@@ -133,11 +150,12 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
                 $remainingInSplit = $targetDistance - $distanceInCurrentSplit;
 
                 if ($remainingInSplit <= 0.00001) {
-                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
                     $adjustedDistanceInCurrentSplit = 0.0;
+                    $weightedObservedGradeInCurrentSplit = 0.0;
                     continue;
                 }
 
@@ -145,21 +163,25 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
                 $ratio = $distancePortion / $remainingDistance;
                 $durationPortion = $remainingDuration * $ratio;
                 $adjustedDistancePortion = $remainingAdjustedDistance * $ratio;
+                $weightedObservedGradePortion = $remainingWeightedObservedGrade * $ratio;
 
                 $distanceInCurrentSplit += $distancePortion;
                 $durationInCurrentSplit += $durationPortion;
                 $adjustedDistanceInCurrentSplit += $adjustedDistancePortion;
+                $weightedObservedGradeInCurrentSplit += $weightedObservedGradePortion;
 
                 $remainingDistance -= $distancePortion;
                 $remainingDuration -= $durationPortion;
                 $remainingAdjustedDistance -= $adjustedDistancePortion;
+                $remainingWeightedObservedGrade -= $weightedObservedGradePortion;
 
                 if ($distanceInCurrentSplit >= $targetDistance - 0.00001) {
-                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $durationInCurrentSplit, $adjustedDistanceInCurrentSplit);
+                    $splitItems[$currentSplitIndex] = $this->finalizeSplitGap($split, $targetDistance, $distanceInCurrentSplit, $adjustedDistanceInCurrentSplit);
                     ++$currentSplitIndex;
                     $distanceInCurrentSplit = 0.0;
                     $durationInCurrentSplit = 0.0;
                     $adjustedDistanceInCurrentSplit = 0.0;
+                    $weightedObservedGradeInCurrentSplit = 0.0;
                 }
             }
 
@@ -170,7 +192,10 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
 
         if (isset($splitItems[$currentSplitIndex]) && $adjustedDistanceInCurrentSplit > 0.0) {
             $splitItems[$currentSplitIndex] = $splitItems[$currentSplitIndex]->withGapPace(
-                SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0)
+                $this->resolveGapPace(
+                    $splitItems[$currentSplitIndex],
+                    $distanceInCurrentSplit,
+                )
             );
         }
 
@@ -181,13 +206,40 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         ActivitySplit $split,
         float $targetDistanceInMeters,
         float $distanceInCurrentSplit,
-        float $durationInCurrentSplit,
         float $adjustedDistanceInCurrentSplit,
     ): ActivitySplit {
         if ($distanceInCurrentSplit < $targetDistanceInMeters - 0.00001 || $adjustedDistanceInCurrentSplit <= 0.0) {
             return $split;
         }
 
-        return $split->withGapPace(SecPerKm::from(($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0));
+        return $split->withGapPace($this->resolveGapPace(
+            $split,
+            $distanceInCurrentSplit,
+        ));
+    }
+
+    private function resolveGapPace(
+        ActivitySplit $split,
+        float $distanceInCurrentSplit,
+    ): SecPerKm {
+        $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
+        $distanceInMeters = max(1.0, $distanceInCurrentSplit);
+        $signedNetElevationDifferenceInMeters = $split->getElevationDifference()->toFloat();
+        $signedNetGrade = $signedNetElevationDifferenceInMeters / $distanceInMeters;
+        $absoluteNetGrade = abs($signedNetGrade);
+
+        if ($absoluteNetGrade < 0.0005) {
+            return SecPerKm::from($actualPaceInSecondsPerKm);
+        }
+
+        if ($signedNetGrade > 0.0) {
+            $uphillBenefitRatio = min(0.16, $absoluteNetGrade * 3.0);
+
+            return SecPerKm::from($actualPaceInSecondsPerKm * (1.0 - $uphillBenefitRatio));
+        }
+
+        $downhillPenaltyRatio = min(0.12, $absoluteNetGrade * 1.9);
+
+        return SecPerKm::from($actualPaceInSecondsPerKm * (1.0 + $downhillPenaltyRatio));
     }
 }
