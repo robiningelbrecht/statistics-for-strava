@@ -1,3 +1,10 @@
+# [v4.7.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.8) - 2026-04-28
+
+## Bug fixes
+* ISSUE #1993: An exception has been thrown during the rendering of a template by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1994
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.7...v4.7.8
+
 # [v4.7.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.7) - 2026-04-27
 
 ## New features
