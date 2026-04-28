@@ -19,7 +19,7 @@ final readonly class GapCalculator
 {
     private const float EARTH_RADIUS_M = 6371000.0;
     private const float FLAT_METABOLIC_COST = 3.6;
-    private const float DEFAULT_GRADE_DISTANCE_WINDOW_M = 50.0;
+    private const float DEFAULT_GRADE_DISTANCE_WINDOW_M = 200.0;
     private const float MIN_ELEVATION_CHANGE_THRESHOLD_M = 0.1;
     private const float GRADE_DEAD_ZONE = 0.005;
 

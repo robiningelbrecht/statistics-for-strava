@@ -110,10 +110,9 @@
                                     <div class="w-20 px-2 py-2">
                                         {{ split.getPaceInSecPerKm()|formatPace }}
                                     </div>
-                                    {% set gapPaceInSecondsPerKm = split.getGapPaceInSecondsPerKm() %}
-                                    {% if gapPaceInSecondsPerKm %}
+                                    {% if splits.hasGapPace() %}
                                         <div class="w-20 px-2 py-2">
-                                            {{ gapPaceInSecondsPerKm|formatPace }}
+                                            {{ (split.getGapPaceInSecondsPerKm() ?: split.getPaceInSecPerKm())|formatPace }}
                                         </div>
                                     {% endif %}
                                     <div class="grow min-w-40 px-2 py-2">
