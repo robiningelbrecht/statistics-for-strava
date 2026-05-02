@@ -15,4 +15,5 @@ enum Locale: string
     case pt_PT = 'pt_PT';
     case sv_SV = 'sv_SE';
     case zh_CN = 'zh_CN';
+    case hu_HU = 'hu_HU';
 }
