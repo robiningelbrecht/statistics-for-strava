@@ -69,7 +69,7 @@ final readonly class SegmentEffortVsHeartRateChart
         foreach ($effortsWithHeartRate as $index => $effort) {
             $velocity = match (true) {
                 $preference instanceof SecPer100Meter => round($effort->getPaceInSecPer100Meter()->toFloat(), 1),
-                $preference instanceof SecPerKm => $effort->getPaceInSecPerKm()->toFloat(),
+                $preference instanceof SecPerKm => round($effort->getPaceInSecPerKm()->toFloat()),
                 default => round($effort->getAverageSpeed()->toUnitSystem($this->unitSystem)->toFloat(), 1),
             };
             $heartRate = $effort->getAverageHeartRate();
