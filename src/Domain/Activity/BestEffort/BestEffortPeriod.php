@@ -23,7 +23,7 @@ enum BestEffortPeriod: string implements TranslatableInterface
             self::FOUR_WEEKS => $translator->trans('{numberOfWeeks} weeks', ['{numberOfWeeks}' => 4], locale: $locale),
             self::TWELVE_WEEKS => $translator->trans('{numberOfWeeks} weeks', ['{numberOfWeeks}' => 12], locale: $locale),
             self::SIX_MONTHS => $translator->trans('{numberOfMonths} months', ['{numberOfMonths}' => 6], locale: $locale),
-            self::YEAR => $translator->trans('YTD', locale: $locale),
+            self::YEAR => $translator->trans('Year', locale: $locale),
             self::ALL_TIME => $translator->trans('All time', locale: $locale),
         };
     }

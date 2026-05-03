@@ -21,7 +21,7 @@ Activity: Tevékenység
 'Adaptive & Inclusive Sports': 'Adaptív és inkluzív sportok'
 Afternoon: Délután
 All: Mind
-'All time': 'Összesített'
+'All time': Összesített
 'Alpine Ski': 'Alpesi sí'
 Apr: Ápr
 'Ask Mark something...': 'Kérdezz Marktól...'
@@ -29,7 +29,7 @@ Apr: Ápr
 Aug: Aug
 'Average gradient': 'Átlagos lejtés'
 Avg: Átl
-'Back Country Ski': 'Túrasí'
+'Back Country Ski': Túrasí
 Badges: Kitűzők
 Badminton: Tollaslabda
 Basketball: Kosárlabda
@@ -49,7 +49,7 @@ Canoeing: Kenuzás
 Challenges: Kihívások
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Krónikus edzésterhelés (Fitnesz) – a napi edzésterhelés 42 napos exponenciálisan súlyozott átlaga. A hosszú távú edzésadaptációt mutatja.'
 'Clear chat': 'Chat törlése'
-'Close modal': 'Bezárás'
+'Close modal': Bezárás
 'Collapse sidebar': 'Oldalsáv összecsukása'
 Commutes: Ingázások
 'Commutes only': 'Csak ingázások'
@@ -135,11 +135,11 @@ Gradient: Lejtés
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Az irányelvek egyénenként változnak; további információkért lásd Joe Friel 'The Cyclist's Training Bible' c. könyvét vagy a TrainingPeaks kutatási dokumentációját."
 HIIT: HIIT
 HR: Pulzus
-'Hand Cycle': 'Kézikerékpár'
-'Heart rate': 'Pulzus'
+'Hand Cycle': Kézikerékpár
+'Heart rate': Pulzus
 'Heart rate distribution': 'Pulzus eloszlás'
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Az elmúlt havi pulzuszóna eloszlás. A hatékony polarizált edzéshez az edzéseidnek elsősorban a következő zónákba kell esniük'
-'Heart rate zones': 'Pulzuszónák'
+'Heart rate zones': Pulzuszónák
 Heatmap: Hőtérkép
 High: Magas
 'High fatigue levels may increase injury or burnout risk. Consider reducing load and prioritizing recovery': 'A magas fáradtsági szint növelheti a sérülés vagy kiégés kockázatát. Fontold meg a terhelés csökkentését és a regeneráció előtérbe helyezését'
@@ -155,13 +155,13 @@ History: Előzmények
 'How much do you train on average per week': 'Átlagosan mennyit edzel hetente'
 'How much training you do in total on days you train.': 'Mennyi összes edzést végzel az edzésnapjaidon.'
 'How often do you train': 'Milyen gyakran edzel'
-'Ice Skate': 'Jégkorcsolya'
+'Ice Skate': Jégkorcsolya
 Id: Azonosító
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A(z) „{imgSrc}" kép szerepel a karbantartási konfigurációs fájlban, de nem található a „storage/gear-maintenance" mappában'
 Imperial: Angolszász
-"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "Ez idő alatt {totalDistance}-t tettem meg, ami {numberOfTripsAroundTheWorld} körülutazás a Föld körül, vagy {numberOfTripsToTheMoonPercent}% az úton a Hold felé, és {totalElevation} szintemelkedést győztem le, ami {timesMountEverest}-szer a Mount Everest magassága. Összesen {totalTimeRecorded} mozgásban töltött idő."
+"In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": 'Ez idő alatt {totalDistance}-t tettem meg, ami {numberOfTripsAroundTheWorld} körülutazás a Föld körül, vagy {numberOfTripsToTheMoonPercent}% az úton a Hold felé, és {totalElevation} szintemelkedést győztem le, ami {timesMountEverest}-szer a Mount Everest magassága. Összesen {totalTimeRecorded} mozgásban töltött idő.'
 'Individual thresholds vary based on fitness level.': 'Az egyéni küszöbértékek a fitnesz szinttől függően változnak.'
-'Inline Skate': 'Görkorcsolya'
+'Inline Skate': Görkorcsolya
 Intensity: Intenzitás
 'It looks like no valid gear is attached to any of the components. Please check your config file.': 'Úgy tűnik, hogy egyetlen komponenshez sem tartozik érvényes felszerelés. Kérjük, ellenőrizd a konfigurációs fájlt.'
 Jan: Jan
@@ -183,7 +183,7 @@ Lifetime: 'Teljes időszak'
 Load: Terhelés
 'Load (CTL/ATL)': 'Terhelés (CTL/ATL)'
 'Loading data...': 'Adatok betöltése...'
-Loading...: 'Betöltés...'
+Loading...: Betöltés...
 'Locations over the globe': 'Helyszínek a Földön'
 'Long run': 'Hosszú futás'
 'Longest activity': 'Leghosszabb tevékenység'
@@ -227,7 +227,7 @@ Night: Éjjel
 'No milestones achieved yet': 'Még nincsenek elért mérföldkövek'
 'No other options to compare with': 'Nincs más összehasonlítási lehetőség'
 None: 'Egyik sem'
-'Nordic Ski': 'Sífutás'
+'Nordic Ski': Sífutás
 Normalized: Normalizált
 'Not supported': 'Nem támogatott'
 Nov: Nov
@@ -241,7 +241,7 @@ Oct: Okt
 'Optimal training range': 'Optimális edzéstartomány'
 Other: Egyéb
 'Outdoor Sports': 'Szabadtéri sportok'
-Over-fatigued: 'Túlterhelve'
+Over-fatigued: Túlterhelve
 'Over-fatigued (–30)': 'Túlterhelve (–30)'
 'Overall weekly training stress': 'Heti összes edzésstressz'
 'PB badges': 'Személyes rekord kitűzők'
@@ -251,13 +251,13 @@ PRs: 'Személyes rekordok'
 Pace: Tempó
 'Pace distribution': 'Tempó eloszlás'
 Padel: Padel
-'Peak fresh': 'Csúcsfriss'
+'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
 'Personal Records': 'Személyes rekordok'
 'Personal bests': 'Személyes csúcsok'
 Photo: Fotó
 Photos: Fotók
-'Pickle Ball': 'Pickleball'
+'Pickle Ball': Pickleball
 Pilates: Pilates
 'Please address these issues': 'Kérjük, foglalkozz ezekkel a problémákkal'
 'Polarised training (last 30 days)': 'Polarizált edzés (utolsó 30 nap)'
@@ -267,7 +267,7 @@ Power: Teljesítmény
 'Prev year': 'Előző év'
 Previous: Előző
 Race: Verseny
-'Racing Score': 'Versenypontszám'
+'Racing Score': Versenypontszám
 'Racquet & Paddle Sports': 'Ütős sportok'
 'Racquet Ball': 'Squash labda'
 Ranking: Ranglista
@@ -281,8 +281,8 @@ Ranking: Ranglista
 'Recovery forecast': 'Regenerációs előrejelzés'
 'Reduced carbon emission by commuting': 'Csökkentett szén-dioxid kibocsátás ingázással'
 'Relative cost': 'Relatív költség'
-'Rest Days': 'Pihenőnapok'
-'Rest days': 'Pihenőnapok'
+'Rest Days': Pihenőnapok
+'Rest days': Pihenőnapok
 'Rest days in last 7 days': 'Pihenőnapok az utolsó 7 napban'
 'Rest days vs. active days': 'Pihenőnapok vs. aktív napok'
 'Retired gear': 'Visszavont felszerelés'
@@ -290,7 +290,7 @@ Rewind: Visszatekintő
 'Rewind comparisons are only available on larger screens.': 'A visszatekintő összehasonlítások csak nagyobb képernyőkön érhetők el.'
 Rides: 'Kerékpáros túrák'
 'Risk of detraining': 'Edzettség elvesztésének kockázata'
-'Rock Climbing': 'Sziklamászás'
+'Rock Climbing': Sziklamászás
 'Roller Ski': 'Görkorcsolyás sí'
 Rowing: Evezés
 Running: Futás
@@ -317,10 +317,10 @@ Socials: Közösségi
 Speed: Sebesség
 'Speed distribution': 'Sebesség eloszlás'
 Splits: Részidők
-'Sport variety': 'Sporttípus-változatosság'
+'Sport variety': Sporttípus-változatosság
 Squash: Squash
 'Stair Stepper': 'Lépcső szimulátor'
-'Stand Up Paddling': 'SUP'
+'Stand Up Paddling': SUP
 'Start slideshow': 'Diavetítés indítása'
 'Start times': 'Kezdési idők'
 'Statistics for Strava': 'Strava statisztikák'
@@ -335,11 +335,11 @@ Surfing: Szörfözés
 Swim: Úszás
 'TSB (Form)': 'TSB (Forma)'
 'TSB positive in': 'TSB pozitív ezután:'
-'Table Tennis': 'Asztalitenisz'
+'Table Tennis': Asztalitenisz
 Tag: Cimke
 'Tag "{maintenanceTaskTag}" was used on "{activityName}", but the gear referenced on that activity is not attached to this component.': 'A(z) „{maintenanceTaskTag}" cimke a(z) „{activityName}" tevékenységben lett használva, de az ahhoz a tevékenységhez kapcsolódó felszerelés nincs csatolva ehhez a komponenshez.'
 'Taper sweet-spot (+15)': 'Taper édes pont (+15)'
-'Team Sports': 'Csapatsportok'
+'Team Sports': Csapatsportok
 Tennis: Tenisz
 "That's 1.5 times the distance to the edge of space": 'Ez 1,5-szere az űr határáig terjedő távolságnak'
 "That's 100 days of commitment, triple digits!": 'Ez 100 nap elkötelezettség, háromjegyű!'
@@ -430,7 +430,7 @@ Tennis: Tenisz
 "That's {number} days of at least {distance}": 'Ez {number} nap legalább {distance}-vel'
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Az Eddington-szám kerékpározás vagy futás kontextusában a maximális E szám, amelyre az atléta legalább E napot teljesített legalább E km-rel.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ezek a kitűzők dinamikusan jönnek létre. Bármely &lt;img&gt; tagben használhatod őket'
-Thinking...: 'Gondolkodás...'
+Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'
 'This feature is currently disabled': 'Ez a funkció jelenleg le van tiltva'
 Thu: Cs
@@ -446,7 +446,7 @@ Time: Idő
 'Total hours spent per gear': 'Összes óra felszerelésenkén'
 'Total hours spent per sport type': 'Összes óra sporttípusonként'
 'Total kudos and comments received': 'Összes kapott kudos és hozzászólás'
-'Trail Runs': 'Terepfutások'
+'Trail Runs': Terepfutások
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'A heti 4–5 napos edzés magasabb pontszámot ér el, mint ha mindent egy-két napra zsúfolnak.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Edzési impulzus – az intenzitást és az időtartamot figyelembe vevő edzésterhelési mutató.'
 'Training Load Analysis': 'Edzésterhelés elemzés'
@@ -459,7 +459,7 @@ Tuesday: Kedd
 Unspecified: Meghatározatlan
 'Updated on': 'Frissítve:'
 'User badge': 'Felhasználói kitűző'
-'Velo Mobiles': 'Velomobil'
+'Velo Mobiles': Velomobil
 'Very high': 'Nagyon magas'
 'View all': 'Összes megtekintése'
 'View details': 'Részletek megtekintése'
@@ -484,22 +484,21 @@ Weight: Súly
 'Weight Training': 'Súlyzós edzés'
 'Weight history': 'Súly előzmények'
 Wheelchair: Kerekesszék
-'Wind Surf': 'Windsurfing'
+'Wind Surf': Windsurfing
 'Winter Sports': 'Téli sportok'
 Workout: Edzés
 'Workout assistant': 'Edzési asszisztens'
 'Workout type': 'Edzés típusa'
-YTD: ÉTD
 Year: Év
 Yearly: Éves
 'Yearly stats': 'Éves statisztikák'
 Yoga: Jóga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": "{numberOfCountriesWithWorkouts} különböző országban rögzítettél edzéseket, ez az összes ország {percentage}-a 🌍"
+"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '{numberOfCountriesWithWorkouts} különböző országban rögzítettél edzéseket, ez az összes ország {percentage}-a 🌍'
 'Your PB badge': 'Személyes rekord kitűződ'
 'Your Strava badge': 'Strava kitűződ'
 'Your Strava {year} rewind will be available on the 24th of December.': 'A(z) {year}-es Strava visszatekintőd december 24-én lesz elérhető.'
 'Your Zwift badge': 'Zwift kitűződ'
-'Your badge(s)': 'Kitűződ(ök)'
+'Your badge(s)': Kitűződ(ök)
 'Z1-2 (Low)': 'Z1-2 (Alacsony)'
 'Z3 (Mod)': 'Z3 (Közepes)'
 'Z4-5 (High)': 'Z4-5 (Magas)'
@@ -519,7 +518,7 @@ bpm: bpm
 clear: törlés
 comments: hozzászólások
 compare: összehasonlítás
-'day(s)': 'nap(ok)'
+day(s): nap(ok)
 days: napok
 'days needed for next Eddington': 'napok a következő Eddington-számhoz'
 history: előzmények
@@ -535,9 +534,9 @@ more: több
 n/a: n/a
 never: soha
 'on': 'ekkor:'
-per: '/'
-'per activity': 'tevékenységenkén'
-'per hour': 'óránként'
+per: /
+'per activity': tevékenységenkén
+'per hour': óránként
 'reached Eddington number {number}': '{number}-es Eddington-szám elérve'
 to: '-ig'
 total: összesen
