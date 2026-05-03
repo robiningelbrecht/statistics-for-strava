@@ -143,7 +143,7 @@ final readonly class WeeklyStatsChart
             ],
             'grid' => [
                 'left' => '10px',
-                'right' => '10px',
+                'right' => '20px',
                 'bottom' => '50px',
                 'containLabel' => true,
             ],
