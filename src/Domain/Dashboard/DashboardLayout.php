@@ -23,14 +23,14 @@ final readonly class DashboardLayout implements \IteratorAggregate
     public static function default(): array
     {
         return [
-            ['widget' => 'mostRecentActivities', 'width' => 66, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
+            ['widget' => 'mostRecentActivities', 'width' => 100, 'enabled' => true, 'config' => ['numberOfActivitiesToDisplay' => 5]],
             ['widget' => 'introText', 'width' => 33, 'enabled' => false],
             ['widget' => 'trainingGoals', 'width' => 33, 'enabled' => false, 'config' => ['goals' => []]],
             ['widget' => 'weeklyStats', 'width' => 100, 'enabled' => true, 'config' => ['metricsDisplayOrder' => ['distance', 'movingTime', 'elevation']]],
-            ['widget' => 'activityGrid', 'width' => 100, 'enabled' => true],
-            ['widget' => 'streaks', 'width' => 33, 'enabled' => true, 'config' => ['subtitle' => null, 'sportTypesToInclude' => []]],
+            ['widget' => 'activityGrid', 'width' => 66, 'enabled' => true],
+            ['widget' => 'streaks', 'width' => 33, 'enabled' => false, 'config' => ['subtitle' => null, 'sportTypesToInclude' => []]],
             ['widget' => 'athleteProfile', 'width' => 33, 'enabled' => true],
-            ['widget' => 'eddington', 'width' => 33, 'enabled' => true],
+            ['widget' => 'eddington', 'width' => 33, 'enabled' => false],
             ['widget' => 'peakPowerOutputs', 'width' => 50, 'enabled' => true],
             ['widget' => 'heartRateZones', 'width' => 50, 'enabled' => true],
             ['widget' => 'monthlyStats', 'width' => 66, 'enabled' => true, 'config' => [
