@@ -98,6 +98,15 @@ appearance:
     #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}.png'
     # Enables or disables grayscale styling on the heatmap.
     enableGreyScale: true
+    # Optional, sets the initial center point of the heatmap as [latitude, longitude].
+    # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
+    # Leave empty to auto-fit.
+    initialCenter: null
+    # initialCenter: [51.05, 3.72]
+    # Optional, sets the initial zoom level of the heatmap (1-18, where 1 is fully zoomed out and 18 is street-level).
+    # Must be used together with initialCenter.
+    initialZoom: null
+    # initialZoom: 12
   photos:
     # Optional, an array of sport types for which photos should be hidden on the photos page. 
     # They will not be rendered, and they won't show up in the filters. 
