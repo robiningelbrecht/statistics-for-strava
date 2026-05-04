@@ -100,6 +100,7 @@ appearance:
     enableGreyScale: true
     # Optional, sets the initial center point of the heatmap as [latitude, longitude].
     # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
+    # 🔥 PRO tip: You can easily get the latitude and longitude by navigating to a location in Google Maps. The coordinates are shown in the URL.
     # Leave empty to auto-fit.
     initialCenter: null
     # initialCenter: [51.05, 3.72]
