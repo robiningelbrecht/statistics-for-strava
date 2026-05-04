@@ -172,11 +172,14 @@ Kayaking: Kajak
 'Kite Surf': 'Sárkányos szörfözés'
 Lap: Kör
 Laps: Körök
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Utolsó 7 nap edzésterhelése'
 'Last activity': 'Utolsó tevékenység'
 'Last effort': 'Utolsó teljesítmény'
 'Last effort date': 'Utolsó teljesítmény dátuma'
 'Last maintenance': 'Utolsó karbantartás'
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': 'Utolsó {numberOfDays} nap'
 Lifetime: 'Teljes időszak'
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Enyhe fáradtság jó készenléti állapottal. Kiváló egyensúly a minőségi edzéshez vagy hosszabb erőfeszítésekhez'
@@ -433,6 +436,8 @@ Tennis: Tenisz
 Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'
 'This feature is currently disabled': 'Ez a funkció jelenleg le van tiltva'
+'This month': 'This month'
+'This week': 'This week'
 Thu: Cs
 Thursday: Csütörtök
 Time: Idő

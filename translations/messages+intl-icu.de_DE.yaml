@@ -172,11 +172,14 @@ Kayaking: Kajakfahren
 'Kite Surf': Kitesurfen
 Lap: Runde
 Laps: Runden
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Trainingsbelastung der letzten 7 Tage'
 'Last activity': 'Letzte Aktivität'
 'Last effort': 'Letzte Leistung'
 'Last effort date': 'Datum der letzten Leistung'
 'Last maintenance': 'Letzte Wartung'
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': 'Letzten {numberOfDays} Tage'
 Lifetime: Gesamtzeitraum
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Leichte Ermüdung bei guter Bereitschaft. Eine super Balance für Qualitätstraining oder längere Einheiten'
@@ -433,6 +436,8 @@ Tennis: Tennis
 Thinking...: Denke...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Diese Grafik zeigt deinen Trainingsstil. Die Achsen stehen für verschiedene normalisierte Gewohnheiten. Höhere Werte bedeuten dabei eine stärkere Gewichtung.'
 'This feature is currently disabled': 'Dieses Feature ist momentan deaktiviert'
+'This month': 'This month'
+'This week': 'This week'
 Thu: Do
 Thursday: Donnerstag
 Time: Zeit

@@ -54,6 +54,15 @@ export default class Heatmap {
                 redraw();
             });
         });
+
+        this.wrapper.addEventListener('click', (e) => {
+            const preset = e.target.closest('[data-date-preset]');
+            if (!preset) return;
+            e.preventDefault();
+            const filterName = preset.closest('[data-date-preset-filter]').getAttribute('data-date-preset-filter');
+            this.filterManager.applyDatePreset(preset.getAttribute('data-date-preset'), filterName);
+            redraw();
+        });
     };
 
 }

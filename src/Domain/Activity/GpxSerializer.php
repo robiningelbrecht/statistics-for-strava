@@ -71,7 +71,6 @@ final readonly class GpxSerializer
             }
 
             $intervalInSeconds = \DateInterval::createFromDateString($time.' seconds');
-            assert($intervalInSeconds instanceof \DateInterval);
             $trkptNode->addChild(
                 'time',
                 $activity->getStartDate()->add($intervalInSeconds)->format(self::DATE_TIME_FORMAT)
