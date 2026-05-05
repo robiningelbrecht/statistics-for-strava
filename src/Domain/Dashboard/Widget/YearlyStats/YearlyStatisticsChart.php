@@ -84,14 +84,7 @@ final readonly class YearlyStatisticsChart
             $selectedSeries[$year->toInt()] = $delta <= $this->enableLastXYearsByDefault;
             ++$delta;
 
-            $series[(string) $year] = [
-                'name' => (string) $year,
-                'type' => 'line',
-                'smooth' => true,
-                'showSymbol' => false,
-                'data' => [],
-            ];
-
+            $data = [];
             $previousValue = match ($this->context) {
                 StatsContext::MOVING_TIME => Hour::zero(),
                 StatsContext::DISTANCE => Kilometer::zero()->toUnitSystem($this->unitSystem),
@@ -100,7 +93,7 @@ final readonly class YearlyStatisticsChart
             foreach (array_keys($months) as $month) {
                 for ($dayOfMonth = 1; $dayOfMonth <= 31; ++$dayOfMonth) {
                     if (!checkdate($month, $dayOfMonth, $year->toInt())) {
-                        $series[(string) $year]['data'][] = round($previousValue->toFloat());
+                        $data[] = round($previousValue->toFloat());
                         continue;
                     }
 
@@ -125,9 +118,17 @@ final readonly class YearlyStatisticsChart
                         $value = $previousValue;
                     }
                     $previousValue = $value;
-                    $series[(string) $year]['data'][] = round($value->toFloat());
+                    $data[] = round($value->toFloat());
                 }
             }
+
+            $series[(string) $year] = [
+                'name' => (string) $year,
+                'type' => 'line',
+                'smooth' => true,
+                'showSymbol' => false,
+                'data' => $data,
+            ];
         }
 
         return [

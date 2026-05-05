@@ -51,6 +51,13 @@
                                 </div>
                                 <a href="#" class="text-strava-orange text-sm text-right underline" data-dataTable-filter-clear="start-date">{{ "clear"|trans }}</a>
                             </div>
+                            <div class="hidden lg:flex flex-wrap gap-1.5 p-3" data-date-preset-filter="start-date">
+                                <a href="#" data-date-preset="this-week" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1 transition-colors">{{ "This week"|trans }}</a>
+                                <a href="#" data-date-preset="last-week" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1 transition-colors">{{ "Last week"|trans }}</a>
+                                <a href="#" data-date-preset="this-month" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1 transition-colors">{{ "This month"|trans }}</a>
+                                <a href="#" data-date-preset="last-month" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1 transition-colors">{{ "Last month"|trans }}</a>
+                                <a href="#" data-date-preset="last-30-days" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1 transition-colors">{{ "Last 30 days"|trans }}</a>
+                            </div>
                         </div>
                     </div>
                     <div class="filter-dropdown">

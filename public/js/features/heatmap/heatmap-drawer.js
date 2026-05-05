@@ -164,7 +164,9 @@ export default class HeatmapDrawer {
         this.placesControl = L.control.flyToPlaces({places});
         this.placesControl.addTo(this.map);
 
-        if (fitMapBoundsFeatureGroup.getBounds().isValid()) {
+        if (this.config.initialCenter && this.config.initialZoom) {
+            this.map.setView(this.config.initialCenter, this.config.initialZoom);
+        } else if (fitMapBoundsFeatureGroup.getBounds().isValid()) {
             this.map.fitBounds(fitMapBoundsFeatureGroup.getBounds());
         }
     }

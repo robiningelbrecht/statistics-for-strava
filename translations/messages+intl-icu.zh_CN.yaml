@@ -172,11 +172,14 @@ Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
 Lap: 圈
 Laps: 圈
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 最近7天训练负荷
 'Last activity': 'Last activity'
 'Last effort': 最后努力
 'Last effort date': 'Last effort date'
 'Last maintenance': 最后维护
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
@@ -433,6 +436,8 @@ Tennis: 网球
 Thinking...: 思考中...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 功能当前被禁用
+'This month': 'This month'
+'This week': 'This week'
 Thu: 周四
 Thursday: 星期四
 Time: 时间

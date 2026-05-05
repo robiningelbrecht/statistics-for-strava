@@ -90,7 +90,9 @@ services:
         arguments: [
             '@=app_config("appearance.heatmap.polylineColor", "#fc6719")',
             '@=app_config("appearance.heatmap.tileLayerUrl", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")',
-            '@=app_config("appearance.heatmap.enableGreyScale", true)'
+            '@=app_config("appearance.heatmap.enableGreyScale", true)',
+            '@=app_config("appearance.heatmap.initialCenter", [])',
+            '@=app_config("appearance.heatmap.initialZoom", 12)'
         ]
 
     App\Application\Build\BuildPhotosHtml\DefaultEnabledPhotoFilters:
