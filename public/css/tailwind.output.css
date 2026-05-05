@@ -1686,8 +1686,8 @@
   .h-\[calc\(100vh-15\.4rem\)\] {
     height: calc(100vh - 15.4rem);
   }
-  .h-\[calc\(100vh-245px\)\] {
-    height: calc(100vh - 245px);
+  .h-\[calc\(100vh-235px\)\] {
+    height: calc(100vh - 235px);
   }
   .h-auto {
     height: auto;
@@ -1710,8 +1710,8 @@
   .max-h-\[calc\(100vh-114px\)\] {
     max-height: calc(100vh - 114px);
   }
-  .max-h-\[calc\(100vh-200px\)\] {
-    max-height: calc(100vh - 200px);
+  .max-h-\[calc\(100vh-165px\)\] {
+    max-height: calc(100vh - 165px);
   }
   .max-h-\[calc\(100vh-285px\)\] {
     max-height: calc(100vh - 285px);

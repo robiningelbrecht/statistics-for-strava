@@ -210,7 +210,7 @@ gear:
           amountInCents: 29950
           currency: EUR
 zwift:
-  # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
+  # Optional, your Zwift level. Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
   # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if zwift.level is filled out.
   racingScore: null
