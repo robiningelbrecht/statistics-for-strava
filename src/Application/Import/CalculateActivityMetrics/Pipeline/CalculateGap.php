@@ -140,6 +140,9 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $distanceScaleFactor = $totalGapSegmentDistance > 0.0 && $totalSplitDistance > 0.0
             ? $totalSplitDistance / $totalGapSegmentDistance
             : 1.0;
+        if ($totalGapSegmentDistance <= 0.0 || $totalSplitDistance <= 0.0) {
+            return $splits->toArray();
+        }
 
         $splitItems = array_values($splits->toArray());
         $currentSplitIndex = 0;
@@ -230,33 +233,13 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         float $distanceInCurrentSplit,
     ): SecPerKm {
         $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
-        $distanceInMeters = max(1.0, $distanceInCurrentSplit);
-        $signedNetElevationDifferenceInMeters = $split->getElevationDifference()->toFloat();
-        $signedNetGrade = $signedNetElevationDifferenceInMeters / $distanceInMeters;
-        $absoluteNetGrade = abs($signedNetGrade);
-
-        if ($absoluteNetGrade < 0.0005) {
+        if ($distanceInCurrentSplit <= 0.0 || !is_finite($calculatedGapPaceInSecondsPerKm) || $calculatedGapPaceInSecondsPerKm <= 0.0) {
             return SecPerKm::from($actualPaceInSecondsPerKm);
         }
 
-        if ($signedNetGrade > 0.0 && $calculatedGapPaceInSecondsPerKm > $actualPaceInSecondsPerKm) {
-            $calculatedGapPaceInSecondsPerKm = $actualPaceInSecondsPerKm * (1.0 - min(0.16, $absoluteNetGrade * 3.0));
-        }
-        if ($signedNetGrade < 0.0 && $calculatedGapPaceInSecondsPerKm < $actualPaceInSecondsPerKm) {
-            $calculatedGapPaceInSecondsPerKm = $actualPaceInSecondsPerKm * (1.0 + min(0.12, $absoluteNetGrade * 1.9));
-        }
-
-        [$minimumFactor, $maximumFactor] = match (true) {
-            $absoluteNetGrade < 0.005 => [0.99, 1.01],
-            $absoluteNetGrade < 0.02 && $signedNetGrade > 0.0 => [0.88, 1.0],
-            $absoluteNetGrade < 0.02 && $signedNetGrade < 0.0 => [1.0, 1.05],
-            $signedNetGrade > 0.0 => [0.8, 1.0],
-            default => [1.0, 1.25],
-        };
-
         return SecPerKm::from(min(
-            $actualPaceInSecondsPerKm * $maximumFactor,
-            max($actualPaceInSecondsPerKm * $minimumFactor, $calculatedGapPaceInSecondsPerKm),
+            $actualPaceInSecondsPerKm * 1.6,
+            max($actualPaceInSecondsPerKm * 0.5, $calculatedGapPaceInSecondsPerKm),
         ));
     }
 }

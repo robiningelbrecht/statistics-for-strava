@@ -257,7 +257,7 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertNotNull($splits->toArray()[0]->getGapPaceInSecondsPerKm());
     }
 
-    public function testProcessAcceptsGradeStreamWhenAvailable(): void
+    public function testProcessIgnoresGradeStreamWhenAvailable(): void
     {
         $withGradeActivityId = ActivityId::fromUnprefixed('run-grade-stream');
         $withoutGradeActivityId = ActivityId::fromUnprefixed('run-no-grade-stream');
@@ -271,7 +271,7 @@ class CalculateGapTest extends ContainerTestCase
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId($withGradeActivityId)
                 ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), 5.0))
+                ->withData(array_fill(0, count($trackPoints['time']), 50.0))
                 ->build()
         );
         $this->addMetricSplits($withGradeActivityId, [1000.0]);
@@ -284,6 +284,12 @@ class CalculateGapTest extends ContainerTestCase
         $splitWithoutGrade = $this->activitySplitRepository->findBy($withoutGradeActivityId, UnitSystem::METRIC)->toArray()[0];
         $this->assertNotNull($splitWithGrade->getGapPaceInSecondsPerKm());
         $this->assertNotNull($splitWithoutGrade->getGapPaceInSecondsPerKm());
+        $this->assertEqualsWithDelta(
+            $splitWithoutGrade->getGapPaceInSecondsPerKm()->toFloat(),
+            $splitWithGrade->getGapPaceInSecondsPerKm()->toFloat(),
+            0.01,
+            'The Strava grade stream is intentionally ignored for split GAP.',
+        );
     }
 
     public function testProcessKeepsExactlyFlatSplitAtActualPace(): void
@@ -299,6 +305,7 @@ class CalculateGapTest extends ContainerTestCase
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->withSplitNumber(1)
                 ->withDistanceInMeter(1000.0)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 995.0))
                 ->withElevationDifferenceInMeter(0)
                 ->build()
         );
@@ -316,21 +323,22 @@ class CalculateGapTest extends ContainerTestCase
         );
     }
 
-    public function testProcessKeepsGradeStreamGapCloseToActualPaceOnNearFlatSplit(): void
+    public function testProcessKeepsAltitudeDerivedFlatGapCloseToActualPace(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-grade-stream-flat');
         $this->addActivity($activityId, SportType::RUN);
 
         $trackPoints = $this->buildFlatTrackPoints();
         $this->addStreams($activityId, $trackPoints);
-        $this->activityStreamRepository->add(
-            ActivityStreamBuilder::fromDefaults()
+        $this->activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
                 ->withActivityId($activityId)
-                ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), 5.0))
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->withSplitNumber(1)
+                ->withDistanceInMeter(1000.0)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 995.0))
                 ->build()
         );
-        $this->addMetricSplits($activityId, [1000.0]);
 
         $output = new SpyOutput();
         $this->calculateGap->process($output);
@@ -340,31 +348,24 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertLessThan(
             8.0,
             abs($split->getGapPaceInSecondsPerKm()->toFloat() - $split->getPaceInSecPerKm()->toFloat()),
-            'Splits with up to 5m net elevation change should keep GAP nearly identical to pace.',
+            'Flat altitude-derived GAP should stay close to actual pace when split pace matches stream timing.',
         );
     }
 
-    public function testProcessKeepsTinyDownhillGapNearlyIdenticalToPace(): void
+    public function testProcessUsesSegmentGapForRollingTerrainWithFlatNetElevation(): void
     {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-tiny-downhill');
+        $activityId = ActivityId::fromUnprefixed('run-rolling-net-flat');
         $this->addActivity($activityId, SportType::RUN);
 
-        $trackPoints = $this->buildFlatTrackPoints();
-        $this->addStreams($activityId, $trackPoints);
-        $this->activityStreamRepository->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activityId)
-                ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), 5.0))
-                ->build()
-        );
+        $this->addStreams($activityId, $this->buildRollingNetFlatTrackPoints());
         $this->activitySplitRepository->add(
             ActivitySplitBuilder::fromDefaults()
                 ->withActivityId($activityId)
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->withSplitNumber(1)
                 ->withDistanceInMeter(1000.0)
-                ->withElevationDifferenceInMeter(-1)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 995.0))
+                ->withElevationDifferenceInMeter(0)
                 ->build()
         );
 
@@ -373,35 +374,26 @@ class CalculateGapTest extends ContainerTestCase
 
         $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
         $this->assertNotNull($split->getGapPaceInSecondsPerKm());
-        $this->assertLessThan(
-            4.0,
+        $this->assertGreaterThan(
+            10.0,
             abs($split->getGapPaceInSecondsPerKm()->toFloat() - $split->getPaceInSecPerKm()->toFloat()),
-            'Tiny downhill splits should keep GAP essentially identical to pace.',
+            'Rolling terrain should keep segment-derived GAP even when split net elevation is flat.',
         );
     }
 
-    public function testProcessPenalizesSteepDownhillSplit(): void
+    public function testProcessPenalizesAltitudeDerivedSteepDownhillSplit(): void
     {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-steep-downhill');
+        $activityId = ActivityId::fromUnprefixed('run-steep-downhill');
         $this->addActivity($activityId, SportType::RUN);
 
-        $trackPoints = $this->buildFlatTrackPoints();
-        $this->addStreams($activityId, $trackPoints);
-        $this->activityStreamRepository->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activityId)
-                ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), 5.0))
-                ->build()
-        );
+        $this->addStreams($activityId, $this->buildLinearGradeTrackPoints(-0.30));
         $this->activitySplitRepository->add(
             ActivitySplitBuilder::fromDefaults()
                 ->withActivityId($activityId)
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->withSplitNumber(1)
                 ->withDistanceInMeter(1000.0)
-                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(3.533))
-                ->withElevationDifferenceInMeter(-42)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 995.0))
                 ->build()
         );
 
@@ -415,77 +407,21 @@ class CalculateGapTest extends ContainerTestCase
             $split->getGapPaceInSecondsPerKm()->toFloat(),
             'Steep downhill splits should yield a slower GAP than actual pace.',
         );
-        $this->assertGreaterThan(
-            295.0,
-            $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Steep downhill GAP should stay in a realistic slower-than-pace range.',
-        );
     }
 
-    public function testProcessPenalizesModerateDownhillPartialLikeSplit(): void
+    public function testProcessClampsAbsurdlyFastCalculatedGap(): void
     {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-moderate-downhill');
+        $activityId = ActivityId::fromUnprefixed('run-gap-clamp-fast');
         $this->addActivity($activityId, SportType::RUN);
 
-        $trackPoints = $this->buildFlatTrackPoints();
-        $this->addStreams($activityId, $trackPoints);
-        $this->activityStreamRepository->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activityId)
-                ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), 5.0))
-                ->build()
-        );
-        $this->activitySplitRepository->add(
-            ActivitySplitBuilder::fromDefaults()
-                ->withActivityId($activityId)
-                ->withUnitSystem(UnitSystem::METRIC)
-                ->withSplitNumber(1)
-                ->withDistanceInMeter(702.4)
-                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(3.247))
-                ->withElevationDifferenceInMeter(-11)
-                ->build()
-        );
-
-        $output = new SpyOutput();
-        $this->calculateGap->process($output);
-
-        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
-        $this->assertNotNull($split->getGapPaceInSecondsPerKm());
-        $this->assertGreaterThan(
-            $split->getPaceInSecPerKm()->toFloat(),
-            $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Moderate downhill partial splits should yield a slightly slower GAP than actual pace.',
-        );
-        $this->assertLessThan(
-            325.0,
-            $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Moderate downhill partial splits should stay close to the expected slower-than-pace range.',
-        );
-    }
-
-    public function testProcessCapsModerateUphillBenefit(): void
-    {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-moderate-uphill');
-        $this->addActivity($activityId, SportType::RUN);
-
-        $trackPoints = $this->buildFlatTrackPoints();
-        $this->addStreams($activityId, $trackPoints);
-        $this->activityStreamRepository->add(
-            ActivityStreamBuilder::fromDefaults()
-                ->withActivityId($activityId)
-                ->withStreamType(StreamType::GRADE)
-                ->withData(array_fill(0, count($trackPoints['time']), -5.0))
-                ->build()
-        );
+        $this->addStreams($activityId, $this->buildLinearGradeTrackPoints(0.45, 1));
         $this->activitySplitRepository->add(
             ActivitySplitBuilder::fromDefaults()
                 ->withActivityId($activityId)
                 ->withUnitSystem(UnitSystem::METRIC)
                 ->withSplitNumber(1)
                 ->withDistanceInMeter(1000.0)
-                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(2.89))
-                ->withElevationDifferenceInMeter(15)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(3.0))
                 ->build()
         );
 
@@ -494,15 +430,39 @@ class CalculateGapTest extends ContainerTestCase
 
         $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
         $this->assertNotNull($split->getGapPaceInSecondsPerKm());
-        $this->assertLessThanOrEqual(
-            $split->getPaceInSecPerKm()->toFloat(),
+        $this->assertEqualsWithDelta(
+            $split->getPaceInSecPerKm()->toFloat() * 0.5,
             $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Moderate uphill splits should not become slower than actual pace.',
+            0.01,
+            'Absurdly fast calculated GAP should be clamped to 50% of actual pace.',
         );
-        $this->assertGreaterThan(
-            328.0,
+    }
+
+    public function testProcessDoesNotCapSteepUphillToOldLinearBenefit(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-steep-uphill');
+        $this->addActivity($activityId, SportType::RUN);
+
+        $this->addStreams($activityId, $this->buildLinearGradeTrackPoints(0.10));
+        $this->activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->withSplitNumber(1)
+                ->withDistanceInMeter(1000.0)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 995.0))
+                ->build()
+        );
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
+        $this->assertNotNull($split->getGapPaceInSecondsPerKm());
+        $this->assertLessThan(
+            $split->getPaceInSecPerKm()->toFloat() * 0.84,
             $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Moderate uphill benefit should be capped to a realistic range.',
+            'Steep uphill GAP should use the segment metabolic multiplier instead of the old 16% linear cap.',
         );
     }
 
@@ -582,7 +542,17 @@ class CalculateGapTest extends ContainerTestCase
         $activityId = ActivityId::fromUnprefixed('run-gentle-rolling');
         $this->addActivity($activityId, SportType::RUN);
         $this->addStreams($activityId, $this->buildGentleRollingTrackPoints());
-        $this->addMetricSplits($activityId, [1000.0, 1000.0]);
+        foreach ([1, 2] as $splitNumber) {
+            $this->activitySplitRepository->add(
+                ActivitySplitBuilder::fromDefaults()
+                    ->withActivityId($activityId)
+                    ->withUnitSystem(UnitSystem::METRIC)
+                    ->withSplitNumber($splitNumber)
+                    ->withDistanceInMeter(1000.0)
+                    ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(1000.0 / 657.0))
+                    ->build()
+            );
+        }
 
         $output = new SpyOutput();
         $this->calculateGap->process($output);
@@ -745,6 +715,42 @@ class CalculateGapTest extends ContainerTestCase
     /**
      * @return array{latLng: list<array{float, float}>, altitude: list<float>, time: list<int>}
      */
+    private function buildLinearGradeTrackPoints(float $grade, int $timeStepInSeconds = 5): array
+    {
+        $latLng = [];
+        $altitude = [];
+        $time = [];
+
+        for ($i = 0; $i < 200; ++$i) {
+            $latLng[] = [50.0 + $i * 0.00009, 4.0];
+            $altitude[] = 100.0 + ($i * 10.0 * $grade);
+            $time[] = $i * $timeStepInSeconds;
+        }
+
+        return ['latLng' => $latLng, 'altitude' => $altitude, 'time' => $time];
+    }
+
+    /**
+     * @return array{latLng: list<array{float, float}>, altitude: list<float>, time: list<int>}
+     */
+    private function buildRollingNetFlatTrackPoints(): array
+    {
+        $latLng = [];
+        $altitude = [];
+        $time = [];
+
+        for ($i = 0; $i < 200; ++$i) {
+            $latLng[] = [50.0 + $i * 0.00009, 4.0];
+            $altitude[] = 100.0 + 25.0 * sin((2.0 * M_PI * $i) / 199.0);
+            $time[] = $i * 5;
+        }
+
+        return ['latLng' => $latLng, 'altitude' => $altitude, 'time' => $time];
+    }
+
+    /**
+     * @return array{latLng: list<array{float, float}>, altitude: list<float>, time: list<int>}
+     */
     private function buildGentleRollingTrackPoints(): array
     {
         $latLng = [];
@@ -753,7 +759,7 @@ class CalculateGapTest extends ContainerTestCase
 
         for ($i = 0; $i < 220; ++$i) {
             $latLng[] = [50.0 + $i * 0.00009, 4.0];
-            $altitude[] = 100.0 + 2.5 * sin($i * 0.08);
+            $altitude[] = 100.0 + 0.5 * sin($i * 0.08);
             $time[] = $i * 6;
         }
 
