@@ -5,49 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Activity\Gap;
 
 use App\Domain\Activity\ActivityType;
-use App\Domain\Activity\Gap\Gap;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
-use App\Domain\Activity\Gap\MinettiGapAdjustmentModel;
 use App\Domain\Activity\Gap\StravaLikeGapAdjustmentModel;
 use PHPUnit\Framework\TestCase;
 
 final class GapCalculatorTest extends TestCase
 {
-    public function testItCalculatesGapSummaryFromGeneratorInput(): void
-    {
-        $calculator = GapCalculator::create(smoothingWindowSize: 3);
-
-        $gap = $calculator->calculate($this->trackPointsWithModerateClimb());
-
-        self::assertInstanceOf(Gap::class, $gap);
-        self::assertSame(3, $gap->getSegmentCount());
-        self::assertGreaterThan(330.0, $gap->getDistanceInMeters());
-        self::assertLessThan(336.0, $gap->getDistanceInMeters());
-        self::assertSame(120, $gap->getDurationInSeconds());
-        self::assertGreaterThan(350.0, $gap->getActualPaceInSecondsPerKm());
-        self::assertLessThan(370.0, $gap->getActualPaceInSecondsPerKm());
-        self::assertTrue($gap->getGapPaceInSecondsPerKm() <= $gap->getActualPaceInSecondsPerKm());
-        self::assertGreaterThan(0.0, $gap->getAverageGrade());
-        self::assertGreaterThan($gap->getDistanceInMeters(), $gap->getTotalAdjustedDistanceInMeters());
-    }
-
-    public function testMinettiModelRewardsSlightDownhillButPenalizesSteepDownhill(): void
-    {
-        $calculator = GapCalculator::create(
-            smoothingWindowSize: 1,
-            adjustmentModel: new MinettiGapAdjustmentModel(),
-        );
-
-        $segments = iterator_to_array($calculator->calculateSegments($this->downhillTrackPoints()), false);
-
-        self::assertCount(2, $segments);
-        self::assertContainsOnlyInstancesOf(GapSegment::class, $segments);
-        self::assertLessThan(1.0, $segments[0]->getGapMultiplier());
-        self::assertGreaterThan(1.0, $segments[1]->getGapMultiplier());
-        self::assertGreaterThan($segments[1]->getGapPaceInSecondsPerKm(), $segments[0]->getGapPaceInSecondsPerKm());
-    }
-
     public function testItSkipsZeroDistanceAndNonIncreasingTimestamps(): void
     {
         $calculator = GapCalculator::create(smoothingWindowSize: 1);
@@ -98,27 +62,6 @@ final class GapCalculatorTest extends TestCase
         );
     }
 
-    public function testItUsesDistanceWindowSoDenseTimestampSamplingStaysStable(): void
-    {
-        $calculator = GapCalculator::create(smoothingWindowSize: 3);
-
-        $sparseSummary = $calculator->calculate($this->trackPointsWithModerateClimb());
-        $denseSummary = $calculator->calculate($this->densifyTrack($this->trackPointsWithModerateClimbList(), 4));
-
-        self::assertNotNull($sparseSummary->getGapPaceInSecondsPerKm());
-        self::assertNotNull($denseSummary->getGapPaceInSecondsPerKm());
-        self::assertEqualsWithDelta(
-            $sparseSummary->getGapPaceInSecondsPerKm(),
-            $denseSummary->getGapPaceInSecondsPerKm(),
-            40.0,
-        );
-        self::assertEqualsWithDelta(
-            $sparseSummary->getAverageGrade(),
-            $denseSummary->getAverageGrade(),
-            0.01,
-        );
-    }
-
     public function testItKeepsEdgeSegmentsWhenDistanceWindowOverlapsTrackBoundaries(): void
     {
         $calculator = GapCalculator::create(smoothingWindowSize: 3);
@@ -139,30 +82,14 @@ final class GapCalculatorTest extends TestCase
         self::assertFalse(ActivityType::FITNESS->supportsGapStats());
     }
 
-    public function testDefaultAdjustmentModelIsStravaLike(): void
-    {
-        $defaultCalculator = GapCalculator::create(smoothingWindowSize: 1);
-        $minettiCalculator = GapCalculator::create(
-            smoothingWindowSize: 1,
-            adjustmentModel: new MinettiGapAdjustmentModel(),
-        );
-
-        $defaultSegments = iterator_to_array($defaultCalculator->calculateSegments($this->trackPointsWithTenPercentClimb()), false);
-        $minettiSegments = iterator_to_array($minettiCalculator->calculateSegments($this->trackPointsWithTenPercentClimb()), false);
-
-        self::assertNotEmpty($defaultSegments);
-        self::assertNotEmpty($minettiSegments);
-        self::assertLessThan($minettiSegments[0]->getGapMultiplier(), $defaultSegments[0]->getGapMultiplier());
-    }
-
     public function testStravaLikeAdjustmentModelMatchesDocumentedShape(): void
     {
         $stravaLike = new StravaLikeGapAdjustmentModel();
-        $minetti = new MinettiGapAdjustmentModel();
 
         self::assertEqualsWithDelta(1.0, $stravaLike->adjustmentFactor(0.0), 0.0001);
-        self::assertLessThan($minetti->adjustmentFactor(0.10), $stravaLike->adjustmentFactor(0.10));
-        self::assertGreaterThan($minetti->adjustmentFactor(-0.10), $stravaLike->adjustmentFactor(-0.10));
+        self::assertEqualsWithDelta(1.42, $stravaLike->adjustmentFactor(0.10), 0.0001);
+        self::assertEqualsWithDelta(0.88, $stravaLike->adjustmentFactor(-0.10), 0.0001);
+        self::assertGreaterThan($stravaLike->adjustmentFactor(0.05), $stravaLike->adjustmentFactor(0.10));
         self::assertGreaterThan($stravaLike->adjustmentFactor(-0.10), $stravaLike->adjustmentFactor(-0.18));
         self::assertEqualsWithDelta(
             $stravaLike->adjustmentFactor(0.50),
@@ -176,53 +103,14 @@ final class GapCalculatorTest extends TestCase
         );
     }
 
-    public function testInjectedAdjustmentModelChangesCalculatedGap(): void
-    {
-        $stravaLikeGap = GapCalculator::create(
-            smoothingWindowSize: 1,
-            adjustmentModel: new StravaLikeGapAdjustmentModel(),
-        )->calculate($this->trackPointsWithTenPercentClimb());
-        $minettiGap = GapCalculator::create(
-            smoothingWindowSize: 1,
-            adjustmentModel: new MinettiGapAdjustmentModel(),
-        )->calculate($this->trackPointsWithTenPercentClimb());
-
-        self::assertNotNull($stravaLikeGap->getGapPaceInSecondsPerKm());
-        self::assertNotNull($minettiGap->getGapPaceInSecondsPerKm());
-        self::assertGreaterThan($minettiGap->getGapPaceInSecondsPerKm(), $stravaLikeGap->getGapPaceInSecondsPerKm());
-    }
-
-    public function testItCalculatesPerPointGapPaces(): void
-    {
-        $calculator = GapCalculator::create(smoothingWindowSize: 3);
-
-        $paces = $calculator->calculatePointGapPaces($this->trackPointsWithModerateClimbList());
-
-        self::assertCount(4, $paces);
-        foreach ($paces as $pace) {
-            self::assertNotNull($pace);
-            self::assertGreaterThan(0.0, $pace);
-        }
-
-        self::assertSame([], $calculator->calculatePointGapPaces([]));
-    }
-
     public function testItReturnsEmptyResultForFewerThanTwoPoints(): void
     {
         $calculator = GapCalculator::create();
 
-        $emptyGap = $calculator->calculate([]);
-        self::assertSame(0, $emptyGap->getSegmentCount());
-        self::assertNull($emptyGap->getGapPaceInSecondsPerKm());
-
-        $singlePointGap = $calculator->calculate([
-            ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0, 'timestamp' => 1700000000],
-        ]);
-        self::assertSame(0, $singlePointGap->getSegmentCount());
-        self::assertNull($singlePointGap->getGapPaceInSecondsPerKm());
-
         self::assertSame([], iterator_to_array($calculator->calculateSegments([]), false));
-        self::assertSame([], $calculator->calculatePointGapPaces([]));
+        self::assertSame([], iterator_to_array($calculator->calculateSegments([
+            ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0, 'timestamp' => 1700000000],
+        ]), false));
     }
 
     public function testItTreatsFlatTerrainAsNeutral(): void
@@ -239,11 +127,6 @@ final class GapCalculatorTest extends TestCase
         foreach ($segments as $segment) {
             self::assertSame(0.0, $segment->getGrade());
             self::assertEqualsWithDelta(1.0, $segment->getGapMultiplier(), 0.01);
-            self::assertEqualsWithDelta(
-                $segment->getActualPaceInSecondsPerKm(),
-                $segment->getGapPaceInSecondsPerKm(),
-                0.01,
-            );
         }
     }
 
@@ -270,9 +153,9 @@ final class GapCalculatorTest extends TestCase
         $calculator = GapCalculator::create();
 
         $this->expectExceptionObject(new \InvalidArgumentException('Track point is missing required field "timestamp".'));
-        $calculator->calculate([
+        iterator_to_array($calculator->calculateSegments([
             ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0],
-        ]);
+        ]), false);
     }
 
     public function testItRejectsUnsupportedTimestampType(): void
@@ -280,59 +163,9 @@ final class GapCalculatorTest extends TestCase
         $calculator = GapCalculator::create();
 
         $this->expectExceptionObject(new \InvalidArgumentException('Unsupported timestamp value provided.'));
-        $calculator->calculate([
+        iterator_to_array($calculator->calculateSegments([
             ['lat' => 51.0, 'lon' => 4.0, 'ele' => 10.0, 'timestamp' => 3.14],
-        ]);
-    }
-
-    /**
-     * @return \Generator<int, array<string, float|int>>
-     */
-    private function trackPointsWithModerateClimb(): \Generator
-    {
-        yield ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 12.0, 'timestamp' => 0];
-        yield ['lat' => 51.0010, 'lon' => 4.0000, 'ele' => 16.0, 'timestamp' => 40];
-        yield ['lat' => 51.0020, 'lon' => 4.0000, 'ele' => 18.0, 'timestamp' => 80];
-        yield ['lat' => 51.0030, 'lon' => 4.0000, 'ele' => 23.0, 'timestamp' => 120];
-    }
-
-    /**
-     * @return list<array<string, float|int>>
-     */
-    private function downhillTrackPoints(): array
-    {
-        return [
-            [
-                'lat' => 51.0000,
-                'lon' => 4.0000,
-                'ele' => 30.0,
-                'timestamp' => 1700000000,
-            ],
-            [
-                'lat' => 51.0010,
-                'lon' => 4.0000,
-                'ele' => 19.0,
-                'timestamp' => 1700000040,
-            ],
-            [
-                'lat' => 51.0020,
-                'lon' => 4.0000,
-                'ele' => -41.0,
-                'timestamp' => 1700000080,
-            ],
-        ];
-    }
-
-    /**
-     * @return list<array<string, float|int>>
-     */
-    private function trackPointsWithTenPercentClimb(): array
-    {
-        return [
-            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 0],
-            ['lat' => 51.0009, 'lon' => 4.0000, 'ele' => 20.0, 'timestamp' => 30],
-            ['lat' => 51.0018, 'lon' => 4.0000, 'ele' => 30.0, 'timestamp' => 60],
-        ];
+        ]), false);
     }
 
     /**
@@ -347,49 +180,6 @@ final class GapCalculatorTest extends TestCase
             ['lat' => 51.0006, 'lon' => 4.0000, 'ele' => 11.0, 'timestamp' => 24],
             ['lat' => 51.0008, 'lon' => 4.0000, 'ele' => 11.5, 'timestamp' => 32],
         ];
-    }
-
-    /**
-     * @return list<array<string, float|int>>
-     */
-    private function trackPointsWithModerateClimbList(): array
-    {
-        return iterator_to_array($this->trackPointsWithModerateClimb(), false);
-    }
-
-    /**
-     * @param list<array<string, float|int>> $trackPoints
-     *
-     * @return list<array<string, float|int>>
-     */
-    private function densifyTrack(array $trackPoints, int $subdivisionsPerSegment): array
-    {
-        $denseTrack = [];
-
-        for ($i = 0; $i < \count($trackPoints) - 1; ++$i) {
-            $from = $trackPoints[$i];
-            $to = $trackPoints[$i + 1];
-
-            for ($step = 0; $step < $subdivisionsPerSegment; ++$step) {
-                $ratio = $step / $subdivisionsPerSegment;
-                $denseTrack[] = [
-                    'lat' => (float) $from['lat'] + (((float) $to['lat'] - (float) $from['lat']) * $ratio),
-                    'lon' => (float) $from['lon'] + (((float) $to['lon'] - (float) $from['lon']) * $ratio),
-                    'ele' => (float) $from['ele'] + (((float) $to['ele'] - (float) $from['ele']) * $ratio),
-                    'timestamp' => (int) round((int) $from['timestamp'] + (((int) $to['timestamp'] - (int) $from['timestamp']) * $ratio)),
-                ];
-            }
-        }
-
-        $lastPoint = $trackPoints[\count($trackPoints) - 1];
-        $denseTrack[] = [
-            'lat' => (float) $lastPoint['lat'],
-            'lon' => (float) $lastPoint['lon'],
-            'ele' => (float) $lastPoint['ele'],
-            'timestamp' => (int) $lastPoint['timestamp'],
-        ];
-
-        return $denseTrack;
     }
 
     /**

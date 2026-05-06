@@ -827,9 +827,7 @@ class CalculateGapTest extends ContainerTestCase
             distanceInMeters: 0.0,
             durationInSeconds: 250,
             grade: 0.0,
-            actualPaceInSecondsPerKm: 250.0,
             gapMultiplier: 1.0,
-            gapPaceInSecondsPerKm: 250.0,
         );
 
         $method = new \ReflectionMethod($this->calculateGap, 'mapSegmentsToSplits');
@@ -899,9 +897,7 @@ class CalculateGapTest extends ContainerTestCase
             distanceInMeters: 1000.0,
             durationInSeconds: 0,
             grade: 0.0,
-            actualPaceInSecondsPerKm: 0.0,
             gapMultiplier: 1.0,
-            gapPaceInSecondsPerKm: 0.0,
         );
 
         $method = new \ReflectionMethod($this->calculateGap, 'mapSegmentsToSplits');
@@ -921,9 +917,7 @@ class CalculateGapTest extends ContainerTestCase
             distanceInMeters: 1000.0,
             durationInSeconds: 250,
             grade: 0.0,
-            actualPaceInSecondsPerKm: 250.0,
             gapMultiplier: 0.0,
-            gapPaceInSecondsPerKm: 250.0,
         );
 
         $method = new \ReflectionMethod($this->calculateGap, 'mapSegmentsToSplits');
@@ -1370,8 +1364,8 @@ class CalculateGapTest extends ContainerTestCase
             ->withAverageSpeed(MetersPerSecond::from(2.0))
             ->build();
         $segments = [
-            GapSegment::create(1000.0, 250, 0.0, 250.0, 1.0, 250.0),
-            GapSegment::create(1000.0, 250, 0.0, 250.0, 1.0, 250.0),
+            GapSegment::create(1000.0, 250, 0.0, 1.0),
+            GapSegment::create(1000.0, 250, 0.0, 1.0),
         ];
 
         $method = new \ReflectionMethod($this->calculateGap, 'mapSegmentsToSplits');
@@ -1532,15 +1526,11 @@ class CalculateGapTest extends ContainerTestCase
 
     private function flatGapSegment(float $distanceInMeters, int $durationInSeconds, float $multiplier = 1.0): GapSegment
     {
-        $actualPaceInSecondsPerKm = ($durationInSeconds / $distanceInMeters) * 1000.0;
-
         return GapSegment::create(
             distanceInMeters: $distanceInMeters,
             durationInSeconds: $durationInSeconds,
             grade: 0.0,
-            actualPaceInSecondsPerKm: $actualPaceInSecondsPerKm,
             gapMultiplier: $multiplier,
-            gapPaceInSecondsPerKm: $actualPaceInSecondsPerKm / $multiplier,
         );
     }
 

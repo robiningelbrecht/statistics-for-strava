@@ -6,7 +6,7 @@ namespace App\Domain\Activity\Gap;
 
 use App\Domain\Activity\Math;
 
-final readonly class StravaLikeGapAdjustmentModel implements GapAdjustmentModel
+final readonly class StravaLikeGapAdjustmentModel
 {
     /**
      * Empirical GAP distance factors shaped from Schroeder's reverse engineering

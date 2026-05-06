@@ -27,7 +27,7 @@ final readonly class GapCalculator
         private float $gradeDistanceWindowInMeters = self::DEFAULT_GRADE_DISTANCE_WINDOW_M,
         private float $minGrade = -0.45,
         private float $maxGrade = 0.45,
-        private GapAdjustmentModel $adjustmentModel = new StravaLikeGapAdjustmentModel(),
+        private StravaLikeGapAdjustmentModel $adjustmentModel = new StravaLikeGapAdjustmentModel(),
     ) {
         if ($this->smoothingWindowSize < 1) {
             throw new \InvalidArgumentException('Smoothing window size must be at least 1.');
@@ -45,44 +45,12 @@ final readonly class GapCalculator
         float $gradeDistanceWindowInMeters = self::DEFAULT_GRADE_DISTANCE_WINDOW_M,
         float $minGrade = -0.45,
         float $maxGrade = 0.45,
-        ?GapAdjustmentModel $adjustmentModel = null,
     ): self {
         return new self(
             smoothingWindowSize: $smoothingWindowSize,
             gradeDistanceWindowInMeters: $gradeDistanceWindowInMeters,
             minGrade: $minGrade,
             maxGrade: $maxGrade,
-            adjustmentModel: $adjustmentModel ?? new StravaLikeGapAdjustmentModel(),
-        );
-    }
-
-    /**
-     * @param iterable<array<string, mixed>> $trackPoints
-     */
-    public function calculate(iterable $trackPoints): Gap
-    {
-        $segments = 0;
-        $distance = 0.0;
-        $duration = 0;
-        $weightedGrade = 0.0;
-        $adjustedDistance = 0.0;
-
-        foreach ($this->calculateSegments($trackPoints) as $segment) {
-            ++$segments;
-            $distance += $segment->getDistanceInMeters();
-            $duration += $segment->getDurationInSeconds();
-            $weightedGrade += $segment->getGrade() * $segment->getDistanceInMeters();
-            $adjustedDistance += $segment->getDistanceInMeters() * $segment->getGapMultiplier();
-        }
-
-        return Gap::create(
-            segmentCount: $segments,
-            distanceInMeters: $distance,
-            durationInSeconds: $duration,
-            actualPaceInSecondsPerKm: $distance > 0.0 ? ($duration / $distance) * 1000.0 : null,
-            gapPaceInSecondsPerKm: $adjustedDistance > 0.0 ? ($duration / $adjustedDistance) * 1000.0 : null,
-            averageGrade: $distance > 0.0 ? $weightedGrade / $distance : 0.0,
-            totalAdjustedDistanceInMeters: $adjustedDistance,
         );
     }
 
@@ -115,7 +83,6 @@ final readonly class GapCalculator
                 continue;
             }
 
-            $actualPaceInSecondsPerKm = ($duration / $distance) * 1000.0;
             $grade = $this->resolveSegmentGrade(
                 points: $points,
                 cumulativeDistances: $cumulativeDistances,
@@ -129,46 +96,9 @@ final readonly class GapCalculator
                 distanceInMeters: $distance,
                 durationInSeconds: $duration,
                 grade: $grade,
-                actualPaceInSecondsPerKm: $actualPaceInSecondsPerKm,
                 gapMultiplier: $gapMultiplier,
-                gapPaceInSecondsPerKm: $actualPaceInSecondsPerKm / $gapMultiplier,
             );
         }
-    }
-
-    /**
-     * @param iterable<array<string, mixed>> $trackPoints
-     *
-     * @return list<?float>
-     */
-    public function calculatePointGapPaces(iterable $trackPoints): array
-    {
-        $points = $this->smoothPoints($trackPoints);
-        $pointCount = \count($points);
-        if ($pointCount < 2) {
-            return [];
-        }
-
-        $cumulativeDistances = $this->buildCumulativeDistances($points);
-        $lastIndex = $pointCount - 1;
-        $trackLength = $cumulativeDistances[$lastIndex];
-        $gapPaces = [];
-
-        foreach (array_keys($points) as $index) {
-            $window = $this->calculateWindowMetrics(
-                points: $points,
-                cumulativeDistances: $cumulativeDistances,
-                centerDistance: $cumulativeDistances[$index],
-                trackLength: $trackLength,
-                lastIndex: $lastIndex,
-            );
-
-            $gapPaces[] = null === $window
-                ? null
-                : $window['actual_pace_sec_per_km'] / $this->adjustmentModel->adjustmentFactor($window['grade']);
-        }
-
-        return $gapPaces;
     }
 
     /**
