@@ -20,6 +20,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class CalculateGap implements CalculateActivityMetricsStep
 {
+    private const float MINIMUM_GAP_PACE_FACTOR = 0.5;
+    private const float MAXIMUM_GAP_PACE_FACTOR = 1.6;
+
     public function __construct(
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityStreamRepository $activityStreamRepository,
@@ -191,16 +194,6 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             }
         }
 
-        if (isset($splitItems[$currentSplitIndex]) && $adjustedDistanceInCurrentSplit > 0.0) {
-            $splitItems[$currentSplitIndex] = $splitItems[$currentSplitIndex]->withGapPace(
-                $this->resolveGapPace(
-                    $splitItems[$currentSplitIndex],
-                    ($durationInCurrentSplit / $adjustedDistanceInCurrentSplit) * 1000.0,
-                    $distanceInCurrentSplit,
-                )
-            );
-        }
-
         return $splitItems;
     }
 
@@ -228,13 +221,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         float $distanceInCurrentSplit,
     ): SecPerKm {
         $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
-        $resolvedGapPaceInSecondsPerKm = $distanceInCurrentSplit > 0.0 && is_finite($calculatedGapPaceInSecondsPerKm) && $calculatedGapPaceInSecondsPerKm > 0.0
-            ? $calculatedGapPaceInSecondsPerKm
-            : $actualPaceInSecondsPerKm;
 
-        return SecPerKm::from(min(
-            $actualPaceInSecondsPerKm * 1.6,
-            max($actualPaceInSecondsPerKm * 0.5, $resolvedGapPaceInSecondsPerKm),
-        ));
+        return SecPerKm::from(min($actualPaceInSecondsPerKm * self::MAXIMUM_GAP_PACE_FACTOR, max($actualPaceInSecondsPerKm * self::MINIMUM_GAP_PACE_FACTOR, $distanceInCurrentSplit > 0.0 && is_finite($calculatedGapPaceInSecondsPerKm) && $calculatedGapPaceInSecondsPerKm > 0.0 ? $calculatedGapPaceInSecondsPerKm : $actualPaceInSecondsPerKm)));
     }
 }
