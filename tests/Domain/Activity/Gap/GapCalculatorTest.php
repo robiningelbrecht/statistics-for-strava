@@ -8,6 +8,8 @@ use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Gap\Gap;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
+use App\Domain\Activity\Gap\MinettiGapAdjustmentModel;
+use App\Domain\Activity\Gap\StravaLikeGapAdjustmentModel;
 use PHPUnit\Framework\TestCase;
 
 final class GapCalculatorTest extends TestCase
@@ -30,9 +32,12 @@ final class GapCalculatorTest extends TestCase
         self::assertGreaterThan($gap->getDistanceInMeters(), $gap->getTotalAdjustedDistanceInMeters());
     }
 
-    public function testItRewardsSlightDownhillButPenalizesSteepDownhill(): void
+    public function testMinettiModelRewardsSlightDownhillButPenalizesSteepDownhill(): void
     {
-        $calculator = GapCalculator::create(smoothingWindowSize: 1);
+        $calculator = GapCalculator::create(
+            smoothingWindowSize: 1,
+            adjustmentModel: new MinettiGapAdjustmentModel(),
+        );
 
         $segments = iterator_to_array($calculator->calculateSegments($this->downhillTrackPoints()), false);
 
@@ -132,6 +137,59 @@ final class GapCalculatorTest extends TestCase
         self::assertFalse(ActivityType::WALK->supportsGapStats());
         self::assertFalse(ActivityType::WATER_SPORTS->supportsGapStats());
         self::assertFalse(ActivityType::FITNESS->supportsGapStats());
+    }
+
+    public function testDefaultAdjustmentModelIsStravaLike(): void
+    {
+        $defaultCalculator = GapCalculator::create(smoothingWindowSize: 1);
+        $minettiCalculator = GapCalculator::create(
+            smoothingWindowSize: 1,
+            adjustmentModel: new MinettiGapAdjustmentModel(),
+        );
+
+        $defaultSegments = iterator_to_array($defaultCalculator->calculateSegments($this->trackPointsWithTenPercentClimb()), false);
+        $minettiSegments = iterator_to_array($minettiCalculator->calculateSegments($this->trackPointsWithTenPercentClimb()), false);
+
+        self::assertNotEmpty($defaultSegments);
+        self::assertNotEmpty($minettiSegments);
+        self::assertLessThan($minettiSegments[0]->getGapMultiplier(), $defaultSegments[0]->getGapMultiplier());
+    }
+
+    public function testStravaLikeAdjustmentModelMatchesDocumentedShape(): void
+    {
+        $stravaLike = new StravaLikeGapAdjustmentModel();
+        $minetti = new MinettiGapAdjustmentModel();
+
+        self::assertEqualsWithDelta(1.0, $stravaLike->adjustmentFactor(0.0), 0.0001);
+        self::assertLessThan($minetti->adjustmentFactor(0.10), $stravaLike->adjustmentFactor(0.10));
+        self::assertGreaterThan($minetti->adjustmentFactor(-0.10), $stravaLike->adjustmentFactor(-0.10));
+        self::assertGreaterThan($stravaLike->adjustmentFactor(-0.10), $stravaLike->adjustmentFactor(-0.18));
+        self::assertEqualsWithDelta(
+            $stravaLike->adjustmentFactor(0.50),
+            $stravaLike->adjustmentFactor(2.0),
+            0.0001,
+        );
+        self::assertEqualsWithDelta(
+            $stravaLike->adjustmentFactor(-0.50),
+            $stravaLike->adjustmentFactor(-2.0),
+            0.0001,
+        );
+    }
+
+    public function testInjectedAdjustmentModelChangesCalculatedGap(): void
+    {
+        $stravaLikeGap = GapCalculator::create(
+            smoothingWindowSize: 1,
+            adjustmentModel: new StravaLikeGapAdjustmentModel(),
+        )->calculate($this->trackPointsWithTenPercentClimb());
+        $minettiGap = GapCalculator::create(
+            smoothingWindowSize: 1,
+            adjustmentModel: new MinettiGapAdjustmentModel(),
+        )->calculate($this->trackPointsWithTenPercentClimb());
+
+        self::assertNotNull($stravaLikeGap->getGapPaceInSecondsPerKm());
+        self::assertNotNull($minettiGap->getGapPaceInSecondsPerKm());
+        self::assertGreaterThan($minettiGap->getGapPaceInSecondsPerKm(), $stravaLikeGap->getGapPaceInSecondsPerKm());
     }
 
     public function testItCalculatesPerPointGapPaces(): void
@@ -262,6 +320,18 @@ final class GapCalculatorTest extends TestCase
                 'ele' => -41.0,
                 'timestamp' => 1700000080,
             ],
+        ];
+    }
+
+    /**
+     * @return list<array<string, float|int>>
+     */
+    private function trackPointsWithTenPercentClimb(): array
+    {
+        return [
+            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 0],
+            ['lat' => 51.0009, 'lon' => 4.0000, 'ele' => 20.0, 'timestamp' => 30],
+            ['lat' => 51.0018, 'lon' => 4.0000, 'ele' => 30.0, 'timestamp' => 60],
         ];
     }
 

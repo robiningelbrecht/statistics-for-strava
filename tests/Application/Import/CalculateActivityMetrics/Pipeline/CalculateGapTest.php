@@ -381,7 +381,7 @@ class CalculateGapTest extends ContainerTestCase
         );
     }
 
-    public function testProcessPenalizesAltitudeDerivedSteepDownhillSplit(): void
+    public function testProcessAppliesSteepDownhillRebound(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-steep-downhill');
         $this->addActivity($activityId, SportType::RUN);
@@ -402,10 +402,10 @@ class CalculateGapTest extends ContainerTestCase
 
         $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
         $this->assertNotNull($split->getGapPaceInSecondsPerKm());
-        $this->assertGreaterThan(
+        $this->assertLessThan(
             $split->getPaceInSecPerKm()->toFloat(),
             $split->getGapPaceInSecondsPerKm()->toFloat(),
-            'Steep downhill splits should yield a slower GAP than actual pace.',
+            'The Strava-like model should rebound on very steep downhill grades.',
         );
     }
 

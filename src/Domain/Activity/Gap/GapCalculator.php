@@ -18,7 +18,6 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final readonly class GapCalculator
 {
     private const float EARTH_RADIUS_M = 6371000.0;
-    private const float FLAT_METABOLIC_COST = 3.6;
     private const float DEFAULT_GRADE_DISTANCE_WINDOW_M = 200.0;
     private const float MIN_ELEVATION_CHANGE_THRESHOLD_M = 0.1;
     private const float GRADE_DEAD_ZONE = 0.005;
@@ -28,6 +27,7 @@ final readonly class GapCalculator
         private float $gradeDistanceWindowInMeters = self::DEFAULT_GRADE_DISTANCE_WINDOW_M,
         private float $minGrade = -0.45,
         private float $maxGrade = 0.45,
+        private GapAdjustmentModel $adjustmentModel = new StravaLikeGapAdjustmentModel(),
     ) {
         if ($this->smoothingWindowSize < 1) {
             throw new \InvalidArgumentException('Smoothing window size must be at least 1.');
@@ -45,12 +45,14 @@ final readonly class GapCalculator
         float $gradeDistanceWindowInMeters = self::DEFAULT_GRADE_DISTANCE_WINDOW_M,
         float $minGrade = -0.45,
         float $maxGrade = 0.45,
+        ?GapAdjustmentModel $adjustmentModel = null,
     ): self {
         return new self(
             smoothingWindowSize: $smoothingWindowSize,
             gradeDistanceWindowInMeters: $gradeDistanceWindowInMeters,
             minGrade: $minGrade,
             maxGrade: $maxGrade,
+            adjustmentModel: $adjustmentModel ?? new StravaLikeGapAdjustmentModel(),
         );
     }
 
@@ -123,7 +125,7 @@ final readonly class GapCalculator
                 trackLength: $trackLength,
                 lastIndex: $lastIndex,
             );
-            $gapMultiplier = $this->gapMultiplier($grade);
+            $gapMultiplier = $this->adjustmentModel->adjustmentFactor($grade);
 
             yield GapSegment::create(
                 distanceInMeters: $distance,
@@ -165,7 +167,7 @@ final readonly class GapCalculator
 
             $gapPaces[] = null === $window
                 ? null
-                : $window['actual_pace_sec_per_km'] / $this->gapMultiplier($window['grade']);
+                : $window['actual_pace_sec_per_km'] / $this->adjustmentModel->adjustmentFactor($window['grade']);
         }
 
         return $gapPaces;
@@ -346,23 +348,6 @@ final readonly class GapCalculator
             trackLength: $trackLength,
             lastIndex: $lastIndex,
         )['grade'] ?? 0.0;
-    }
-
-    private function gapMultiplier(float $grade): float
-    {
-        $grade2 = $grade * $grade;
-        $grade3 = $grade2 * $grade;
-        $grade4 = $grade3 * $grade;
-        $grade5 = $grade4 * $grade;
-
-        $metabolicCost = 155.4 * $grade5
-            - 30.4 * $grade4
-            - 43.3 * $grade3
-            + 46.3 * $grade2
-            + 19.5 * $grade
-            + self::FLAT_METABOLIC_COST;
-
-        return max(0.1, $metabolicCost / self::FLAT_METABOLIC_COST);
     }
 
     private function haversineDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
