@@ -70,7 +70,7 @@ services:
     healthcheck:
       test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/strava.db && echo 'ok' || exit 1" ]
       start_period: 5s
-    entrypoint: ['bin/console', 'app:daemon:run']
+    command: ['bin/console', 'app:daemon:run']
     networks:
       - statistics-for-strava-network
 
