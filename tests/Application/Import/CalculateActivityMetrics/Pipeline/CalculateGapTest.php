@@ -294,7 +294,7 @@ class CalculateGapTest extends ContainerTestCase
 
     public function testProcessKeepsExactlyFlatSplitAtActualPace(): void
     {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-exact-flat');
+        $activityId = ActivityId::fromUnprefixed('run-exact-flat');
         $this->addActivity($activityId, SportType::RUN);
 
         $trackPoints = $this->buildFlatTrackPoints();
@@ -325,7 +325,7 @@ class CalculateGapTest extends ContainerTestCase
 
     public function testProcessKeepsAltitudeDerivedFlatGapCloseToActualPace(): void
     {
-        $activityId = ActivityId::fromUnprefixed('run-grade-stream-flat');
+        $activityId = ActivityId::fromUnprefixed('run-altitude-flat');
         $this->addActivity($activityId, SportType::RUN);
 
         $trackPoints = $this->buildFlatTrackPoints();
@@ -436,6 +436,99 @@ class CalculateGapTest extends ContainerTestCase
             0.01,
             'Absurdly fast calculated GAP should be clamped to 50% of actual pace.',
         );
+    }
+
+    public function testProcessClampsAbsurdlySlowCalculatedGap(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-gap-clamp-slow');
+        $this->addActivity($activityId, SportType::RUN);
+
+        $this->addStreams($activityId, $this->buildLinearGradeTrackPoints(-0.50, 1));
+        $this->activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withUnitSystem(UnitSystem::METRIC)
+                ->withSplitNumber(1)
+                ->withDistanceInMeter(1000.0)
+                ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(20.0))
+                ->build()
+        );
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
+        $this->assertNotNull($split->getGapPaceInSecondsPerKm());
+        $this->assertEqualsWithDelta(
+            $split->getPaceInSecPerKm()->toFloat() * 1.6,
+            $split->getGapPaceInSecondsPerKm()->toFloat(),
+            0.01,
+            'Absurdly slow calculated GAP should be clamped to 160% of actual pace.',
+        );
+    }
+
+    public function testProcessSkipsZeroDistanceSplitCollection(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-zero-distance-split');
+        $this->addActivity($activityId, SportType::RUN);
+        $this->addStreams($activityId, $this->buildFlatTrackPoints());
+        $this->addMetricSplits($activityId, [0.0]);
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
+        $this->assertNull($split->getGapPaceInSecondsPerKm());
+    }
+
+    public function testResolveGapPaceFallsBackToActualPaceForInvalidCalculatedGap(): void
+    {
+        $split = ActivitySplitBuilder::fromDefaults()
+            ->withDistanceInMeter(1000.0)
+            ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(4.0))
+            ->build();
+
+        $method = new \ReflectionMethod($this->calculateGap, 'resolveGapPace');
+        $gapPace = $method->invoke($this->calculateGap, $split, INF, 1000.0);
+
+        $this->assertInstanceOf(SecPerKm::class, $gapPace);
+        $this->assertEqualsWithDelta(
+            $split->getPaceInSecPerKm()->toFloat(),
+            $gapPace->toFloat(),
+            0.01,
+        );
+    }
+
+    public function testResolveGapPaceFallsBackToActualPaceForZeroMappedDistance(): void
+    {
+        $split = ActivitySplitBuilder::fromDefaults()
+            ->withDistanceInMeter(1000.0)
+            ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(4.0))
+            ->build();
+
+        $method = new \ReflectionMethod($this->calculateGap, 'resolveGapPace');
+        $gapPace = $method->invoke($this->calculateGap, $split, 200.0, 0.0);
+
+        $this->assertInstanceOf(SecPerKm::class, $gapPace);
+        $this->assertEqualsWithDelta(
+            $split->getPaceInSecPerKm()->toFloat(),
+            $gapPace->toFloat(),
+            0.01,
+        );
+    }
+
+    public function testFinalizeSplitGapLeavesIncompleteSplitUnchanged(): void
+    {
+        $split = ActivitySplitBuilder::fromDefaults()
+            ->withDistanceInMeter(1000.0)
+            ->withAverageSpeed(\App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond::from(4.0))
+            ->build();
+
+        $method = new \ReflectionMethod($this->calculateGap, 'finalizeSplitGap');
+        $finalizedSplit = $method->invoke($this->calculateGap, $split, 1000.0, 999.0, 250.0, 1000.0);
+
+        $this->assertSame($split, $finalizedSplit);
+        $this->assertNull($finalizedSplit->getGapPaceInSecondsPerKm());
     }
 
     public function testProcessDoesNotCapSteepUphillToOldLinearBenefit(): void

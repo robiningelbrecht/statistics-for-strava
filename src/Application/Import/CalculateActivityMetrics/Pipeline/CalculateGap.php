@@ -137,12 +137,7 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             static fn (ActivitySplit $split): float => $split->getDistance()->toFloat(),
             $splits->toArray(),
         ));
-        $distanceScaleFactor = $totalGapSegmentDistance > 0.0 && $totalSplitDistance > 0.0
-            ? $totalSplitDistance / $totalGapSegmentDistance
-            : 1.0;
-        if ($totalGapSegmentDistance <= 0.0 || $totalSplitDistance <= 0.0) {
-            return $splits->toArray();
-        }
+        $distanceScaleFactor = $totalGapSegmentDistance > 0.0 && $totalSplitDistance > 0.0 ? $totalSplitDistance / $totalGapSegmentDistance : 1.0;
 
         $splitItems = array_values($splits->toArray());
         $currentSplitIndex = 0;
@@ -233,13 +228,13 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         float $distanceInCurrentSplit,
     ): SecPerKm {
         $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
-        if ($distanceInCurrentSplit <= 0.0 || !is_finite($calculatedGapPaceInSecondsPerKm) || $calculatedGapPaceInSecondsPerKm <= 0.0) {
-            return SecPerKm::from($actualPaceInSecondsPerKm);
-        }
+        $resolvedGapPaceInSecondsPerKm = $distanceInCurrentSplit > 0.0 && is_finite($calculatedGapPaceInSecondsPerKm) && $calculatedGapPaceInSecondsPerKm > 0.0
+            ? $calculatedGapPaceInSecondsPerKm
+            : $actualPaceInSecondsPerKm;
 
         return SecPerKm::from(min(
             $actualPaceInSecondsPerKm * 1.6,
-            max($actualPaceInSecondsPerKm * 0.5, $calculatedGapPaceInSecondsPerKm),
+            max($actualPaceInSecondsPerKm * 0.5, $resolvedGapPaceInSecondsPerKm),
         ));
     }
 }

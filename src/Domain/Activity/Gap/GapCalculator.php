@@ -117,8 +117,6 @@ final readonly class GapCalculator
 
             $actualPaceInSecondsPerKm = ($duration / $distance) * 1000.0;
             $grade = $this->resolveSegmentGrade(
-                from: $from,
-                to: $to,
                 points: $points,
                 cumulativeDistances: $cumulativeDistances,
                 centerDistance: ($cumulativeDistances[$i - 1] + $cumulativeDistances[$i]) / 2.0,
@@ -327,14 +325,10 @@ final readonly class GapCalculator
     }
 
     /**
-     * @param NormalizedTrackPoint       $from
-     * @param NormalizedTrackPoint       $to
      * @param list<NormalizedTrackPoint> $points
      * @param list<float>                $cumulativeDistances
      */
     private function resolveSegmentGrade(
-        array $from,
-        array $to,
         array $points,
         array $cumulativeDistances,
         float $centerDistance,
