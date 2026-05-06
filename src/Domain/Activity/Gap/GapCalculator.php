@@ -12,8 +12,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
  *     lat: float,
  *     lon: float,
  *     ele: float,
- *     timestamp: int,
- *     grade: ?float
+ *     timestamp: int
  * }
  */
 final readonly class GapCalculator
@@ -340,12 +339,6 @@ final readonly class GapCalculator
         float $trackLength,
         int $lastIndex,
     ): float {
-        if (null !== $from['grade'] || null !== $to['grade']) {
-            $gradeValues = array_filter([$from['grade'], $to['grade']], static fn (?float $grade): bool => null !== $grade);
-
-            return array_sum($gradeValues) / count($gradeValues);
-        }
-
         return $this->calculateWindowMetrics(
             points: $points,
             cumulativeDistances: $cumulativeDistances,
@@ -399,9 +392,6 @@ final readonly class GapCalculator
             'lat' => (float) ($trackPoint['lat'] ?? throw new \InvalidArgumentException('Track point is missing required field "lat".')),
             'lon' => (float) ($trackPoint['lon'] ?? throw new \InvalidArgumentException('Track point is missing required field "lon".')),
             'ele' => (float) ($trackPoint['ele'] ?? throw new \InvalidArgumentException('Track point is missing required field "ele".')),
-            'grade' => isset($trackPoint['grade']) && is_numeric($trackPoint['grade'])
-                ? Math::clamp(-((float) $trackPoint['grade']) / 100.0, $this->minGrade, $this->maxGrade)
-                : null,
             'timestamp' => match (true) {
                 ($ts = $trackPoint['timestamp'] ?? null) instanceof SerializableDateTime => $ts->getTimestamp(),
                 is_int($ts) => $ts,
