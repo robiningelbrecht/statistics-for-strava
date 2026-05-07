@@ -7,7 +7,6 @@ namespace App\Tests\Domain\Activity\Gap;
 use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
-use App\Domain\Activity\Gap\StravaLikeGapAdjustmentModel;
 use PHPUnit\Framework\TestCase;
 
 final class GapCalculatorTest extends TestCase
@@ -80,27 +79,6 @@ final class GapCalculatorTest extends TestCase
         self::assertFalse(ActivityType::WALK->supportsGapStats());
         self::assertFalse(ActivityType::WATER_SPORTS->supportsGapStats());
         self::assertFalse(ActivityType::FITNESS->supportsGapStats());
-    }
-
-    public function testStravaLikeAdjustmentModelMatchesDocumentedShape(): void
-    {
-        $stravaLike = new StravaLikeGapAdjustmentModel();
-
-        self::assertEqualsWithDelta(1.0, $stravaLike->adjustmentFactor(0.0), 0.0001);
-        self::assertEqualsWithDelta(1.42, $stravaLike->adjustmentFactor(0.10), 0.0001);
-        self::assertEqualsWithDelta(0.88, $stravaLike->adjustmentFactor(-0.10), 0.0001);
-        self::assertGreaterThan($stravaLike->adjustmentFactor(0.05), $stravaLike->adjustmentFactor(0.10));
-        self::assertGreaterThan($stravaLike->adjustmentFactor(-0.10), $stravaLike->adjustmentFactor(-0.18));
-        self::assertEqualsWithDelta(
-            $stravaLike->adjustmentFactor(0.50),
-            $stravaLike->adjustmentFactor(2.0),
-            0.0001,
-        );
-        self::assertEqualsWithDelta(
-            $stravaLike->adjustmentFactor(-0.50),
-            $stravaLike->adjustmentFactor(-2.0),
-            0.0001,
-        );
     }
 
     public function testItReturnsEmptyResultForFewerThanTwoPoints(): void

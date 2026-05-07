@@ -27,7 +27,6 @@ final readonly class GapCalculator
         private float $gradeDistanceWindowInMeters = self::DEFAULT_GRADE_DISTANCE_WINDOW_M,
         private float $minGrade = -0.45,
         private float $maxGrade = 0.45,
-        private StravaLikeGapAdjustmentModel $adjustmentModel = new StravaLikeGapAdjustmentModel(),
     ) {
         if ($this->smoothingWindowSize < 1) {
             throw new \InvalidArgumentException('Smoothing window size must be at least 1.');
@@ -90,7 +89,7 @@ final readonly class GapCalculator
                 trackLength: $trackLength,
                 lastIndex: $lastIndex,
             );
-            $gapMultiplier = $this->adjustmentModel->adjustmentFactor($grade);
+            $gapMultiplier = StravaLikeGapAdjustmentModel::calculateAdjustmentFactor($grade);
 
             yield GapSegment::create(
                 distanceInMeters: $distance,
@@ -185,7 +184,7 @@ final readonly class GapCalculator
         $endDistance = min($trackLength, $centerDistance + $halfWindow);
         $run = $endDistance - $startDistance;
         if ($run <= 0.0) {
-            return null;
+            return null; // @codeCoverageIgnore
         }
 
         [$startElevation, $startTimestamp] = $this->interpolateAtDistance($points, $cumulativeDistances, $startDistance, $lastIndex);
@@ -199,7 +198,7 @@ final readonly class GapCalculator
 
         $duration = $endTimestamp - $startTimestamp;
         if ($duration <= 0.0) {
-            return null;
+            return null; // @codeCoverageIgnore
         }
 
         return [

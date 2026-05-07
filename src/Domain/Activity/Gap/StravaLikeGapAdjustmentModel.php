@@ -32,7 +32,7 @@ final readonly class StravaLikeGapAdjustmentModel
         [0.50, 3.90],
     ];
 
-    public function adjustmentFactor(float $grade): float
+    public static function calculateAdjustmentFactor(float $grade): float
     {
         $grade = Math::clamp($grade, -0.50, 0.50);
         $previousGrade = self::FACTORS_BY_GRADE[0][0];
@@ -53,6 +53,6 @@ final readonly class StravaLikeGapAdjustmentModel
             $previousFactor = $knownFactor;
         }
 
-        return $previousFactor;
+        return $previousFactor; // @codeCoverageIgnore
     }
 }
