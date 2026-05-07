@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\Gap\GapCalculator;
 use App\Domain\Activity\Gap\GapSegment;
 use App\Domain\Activity\Split\ActivitySplit;
@@ -34,22 +33,8 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
         $progressIndicator = new ProgressIndicator($output);
         $progressIndicator->start('=> Calculated GAP for 0 activities');
 
-        $countActivitiesProcessed = $this->recalculateForActivityIds(
-            output: $output,
-            activityIdsToProcess: $this->activitySplitRepository->findActivityIdsWithoutGap(),
-            progressIndicator: $progressIndicator,
-        );
-
-        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
-    }
-
-    public function recalculateForActivityIds(
-        OutputInterface $output,
-        ActivityIds $activityIdsToProcess,
-        ?ProgressIndicator $progressIndicator = null,
-    ): int {
         $countActivitiesProcessed = 0;
-        foreach ($activityIdsToProcess as $activityId) {
+        foreach ($this->activitySplitRepository->findActivityIdsWithoutGap() as $activityId) {
             $trackPoints = $this->buildTrackPoints($activityId);
             if ([] === $trackPoints) {
                 continue;
@@ -72,10 +57,10 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
             }
 
             ++$countActivitiesProcessed;
-            $progressIndicator?->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
+            $progressIndicator->updateMessage(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
         }
 
-        return $countActivitiesProcessed;
+        $progressIndicator->finish(sprintf('=> Calculated GAP for %d activities', $countActivitiesProcessed));
     }
 
     /**
@@ -222,6 +207,14 @@ final readonly class CalculateGap implements CalculateActivityMetricsStep
     ): SecPerKm {
         $actualPaceInSecondsPerKm = $split->getPaceInSecPerKm()->toFloat();
 
-        return SecPerKm::from(min($actualPaceInSecondsPerKm * self::MAXIMUM_GAP_PACE_FACTOR, max($actualPaceInSecondsPerKm * self::MINIMUM_GAP_PACE_FACTOR, $distanceInCurrentSplit > 0.0 && is_finite($calculatedGapPaceInSecondsPerKm) && $calculatedGapPaceInSecondsPerKm > 0.0 ? $calculatedGapPaceInSecondsPerKm : $actualPaceInSecondsPerKm)));
+        $isValidGapPace = $distanceInCurrentSplit > 0.0
+            && is_finite($calculatedGapPaceInSecondsPerKm)
+            && $calculatedGapPaceInSecondsPerKm > 0.0;
+
+        $gapPace = $isValidGapPace ? $calculatedGapPaceInSecondsPerKm : $actualPaceInSecondsPerKm;
+        $minPace = $actualPaceInSecondsPerKm * self::MINIMUM_GAP_PACE_FACTOR;
+        $maxPace = $actualPaceInSecondsPerKm * self::MAXIMUM_GAP_PACE_FACTOR;
+
+        return SecPerKm::from(min($maxPace, max($minPace, $gapPace)));
     }
 }

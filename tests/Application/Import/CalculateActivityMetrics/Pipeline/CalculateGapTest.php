@@ -4,7 +4,6 @@ namespace App\Tests\Application\Import\CalculateActivityMetrics\Pipeline;
 
 use App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateGap;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityIds;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\Gap\GapSegment;
@@ -338,81 +337,6 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertStringContainsString('Calculated GAP for 0 activities', (string) $output);
     }
 
-    public function testRecalculateForActivityIdsReturnsZeroWhenNoSegmentsAreGenerated(): void
-    {
-        $activityId = ActivityId::fromUnprefixed('run-explicit-no-gap-segments');
-        $this->addActivity($activityId, SportType::RUN);
-        $this->addRawStreams(
-            activityId: $activityId,
-            latLng: [[50.0, 4.0], [50.0, 4.0], [50.009, 4.0]],
-            altitude: [100.0, 100.0, 100.0],
-            time: [0, 10, 10],
-        );
-        $this->addMetricSplits($activityId, [1000.0]);
-
-        $countProcessed = $this->calculateGap->recalculateForActivityIds(
-            output: new SpyOutput(),
-            activityIdsToProcess: ActivityIds::fromArray([$activityId]),
-        );
-
-        $this->assertSame(0, $countProcessed);
-    }
-
-    public function testRecalculateForActivityIdsReturnsProcessedCountWithoutProgressIndicator(): void
-    {
-        $activityId = ActivityId::fromUnprefixed('run-explicit-recalculate');
-        $this->addActivity($activityId, SportType::RUN);
-        $this->addStreams($activityId, $this->buildFlatTrackPoints());
-        $this->addMetricSplits($activityId, [1000.0]);
-
-        $countProcessed = $this->calculateGap->recalculateForActivityIds(
-            output: new SpyOutput(),
-            activityIdsToProcess: ActivityIds::fromArray([$activityId]),
-        );
-
-        $this->assertSame(1, $countProcessed);
-        $split = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray()[0];
-        $this->assertNotNull($split->getGapPaceInSecondsPerKm());
-    }
-
-    public function testRecalculateForActivityIdsReturnsZeroForEmptyActivityIds(): void
-    {
-        $countProcessed = $this->calculateGap->recalculateForActivityIds(
-            output: new SpyOutput(),
-            activityIdsToProcess: ActivityIds::empty(),
-        );
-
-        $this->assertSame(0, $countProcessed);
-    }
-
-    public function testRecalculateForActivityIdsCountsOnlyProcessedActivitiesFromMixedExplicitIds(): void
-    {
-        $processedActivityId = ActivityId::fromUnprefixed('run-explicit-mixed-processed');
-        $skippedActivityId = ActivityId::fromUnprefixed('run-explicit-mixed-skipped');
-        $this->addActivity($processedActivityId, SportType::RUN);
-        $this->addActivity($skippedActivityId, SportType::RUN);
-        $this->addStreams($processedActivityId, $this->buildFlatTrackPoints());
-        $this->addRawStreams(
-            activityId: $skippedActivityId,
-            latLng: [[50.0, 4.0], [50.0, 4.0]],
-            altitude: [100.0, 100.0],
-            time: [0, 10],
-        );
-        $this->addMetricSplits($processedActivityId, [1000.0]);
-        $this->addMetricSplits($skippedActivityId, [1000.0]);
-
-        $countProcessed = $this->calculateGap->recalculateForActivityIds(
-            output: new SpyOutput(),
-            activityIdsToProcess: ActivityIds::fromArray([$processedActivityId, $skippedActivityId]),
-        );
-
-        $processedSplit = $this->activitySplitRepository->findBy($processedActivityId, UnitSystem::METRIC)->toArray()[0];
-        $skippedSplit = $this->activitySplitRepository->findBy($skippedActivityId, UnitSystem::METRIC)->toArray()[0];
-        $this->assertSame(1, $countProcessed);
-        $this->assertNotNull($processedSplit->getGapPaceInSecondsPerKm());
-        $this->assertNull($skippedSplit->getGapPaceInSecondsPerKm());
-    }
-
     public function testProcessUpdatesImperialSplitsWhenMetricSplitsAreMissing(): void
     {
         $activityId = ActivityId::fromUnprefixed('run-imperial-only');
@@ -433,20 +357,6 @@ class CalculateGapTest extends ContainerTestCase
         $imperialSplit = $this->activitySplitRepository->findBy($activityId, UnitSystem::IMPERIAL)->toArray()[0];
         $this->assertNotNull($imperialSplit->getGapPaceInSecondsPerKm());
         $this->assertSame([], $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)->toArray());
-    }
-
-    public function testRecalculateForActivityIdsCountsActivitiesWithSegmentsAndNoSplits(): void
-    {
-        $activityId = ActivityId::fromUnprefixed('run-no-splits');
-        $this->addActivity($activityId, SportType::RUN);
-        $this->addStreams($activityId, $this->buildFlatTrackPoints());
-
-        $countProcessed = $this->calculateGap->recalculateForActivityIds(
-            output: new SpyOutput(),
-            activityIdsToProcess: ActivityIds::fromArray([$activityId]),
-        );
-
-        $this->assertSame(1, $countProcessed);
     }
 
     public function testProcessUpdatesMetricAndImperialSplits(): void
