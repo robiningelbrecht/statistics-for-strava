@@ -1,3 +1,21 @@
+# [v4.7.10](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.10) - 2026-05-07
+
+## Improvements
+* Use non-breaking space as thousands separator to prevent line wrapping
+* Allow to set Zwift level over 100
+* Improve split GAP calcultion and values
+
+## Technical details
+* fix: use non-breaking space as thousands separator to prevent line wrapping by @vrkrebs in https://github.com/robiningelbrecht/statistics-for-strava/pull/2015
+* ISSUE #2016: Allow to set Zwift level over 100 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2017
+* ISSUE #2018: Use docker compose CMD instead of ENTRYPOINT by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2019
+* fix: stabilize split GAP values and add GAP recalculation command by @cgtobi in https://github.com/robiningelbrecht/statistics-for-strava/pull/1997
+
+## New Contributors
+* @vrkrebs made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2015
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.9...v4.7.10
+
 # [v4.7.9](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.9) - 2026-05-04
 
 ## New features
