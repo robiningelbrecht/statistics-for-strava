@@ -1,4 +1,5 @@
 {% set allTimeLabel = "All time"|trans %}
+{% set ytdLabel = "YTD"|trans %}
 {% set breadcrumbs = [{
     'url': 'rewind',
     'label': 'Rewind'|trans
@@ -21,6 +22,8 @@
                             type="button">
                         {% if isAllTimeRewind %}
                             {{ allTimeLabel }}
+                        {% elseif isYtdRewind %}
+                            {{ ytdLabel }}
                         {% else %}
                             {{ "Rewind"|trans }} {{ activeRewindOption }}
                         {% endif %}
@@ -35,8 +38,10 @@
                             {% for rewindOption in availableRewindOptions|filter(rewindOption => rewindOption != activeRewindOption) %}
                                 <li>
                                     <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ rewindOption) }}" class="block px-4 py-2 hover:bg-gray-100 ">
-                                        {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
+                                        {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME') %}
                                             {{ allTimeLabel }}
+                                        {% elseif rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::YTD') %}
+                                            {{ ytdLabel }}
                                         {% else %}
                                             {{ "Rewind"|trans }} {{ rewindOption }}
                                         {% endif %}
@@ -62,8 +67,10 @@
                             {% for rewindOption in availableRewindOptions|filter(rewindOption => rewindOption != activeRewindOption) %}
                                 <li>
                                     <a href="#" data-router-navigate="{{ relativeUrl('rewind/' ~ activeRewindOption ~ '/compare/' ~ rewindOption) }}" class="block px-4 py-2 hover:bg-gray-100 ">
-                                        {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
+                                        {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME') %}
                                             {{ allTimeLabel }}
+                                        {% elseif rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::YTD') %}
+                                            {{ ytdLabel }}
                                         {% else %}
                                             {{ "Rewind"|trans }} {{ rewindOption }}
                                         {% endif %}

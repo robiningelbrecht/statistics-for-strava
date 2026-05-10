@@ -33,9 +33,14 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
             Year::fromInt(...),
             $years
         ));
+        $currentYear = (int) $now->format('Y');
         $options = [
             FindAvailableRewindOptions::ALL_TIME => $allYears,
         ];
+
+        if (in_array((string) $currentYear, $years)) {
+            $options[FindAvailableRewindOptions::YTD] = Years::fromArray([Year::fromInt($currentYear)]);
+        }
 
         foreach ($years as $year) {
             $cutOffDate = SerializableDateTime::fromString(sprintf('%s-12-24 00:00:00', $year));

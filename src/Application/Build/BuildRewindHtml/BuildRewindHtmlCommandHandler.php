@@ -100,17 +100,24 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $rewindItems = RewindItems::empty();
 
             if (FindAvailableRewindOptions::ALL_TIME !== $availableRewindOption) {
+                $isYtd = FindAvailableRewindOptions::YTD === $availableRewindOption;
+                $yearInt = $isYtd ? (int) $now->format('Y') : (int) $availableRewindOption;
+                $subTitle = $isYtd
+                    ? $this->translator->trans('{numberOfActivities} activities (YTD)', [
+                        '{numberOfActivities}' => $totalActivityCountResponse->getTotalActivityCount(),
+                    ])
+                    : $this->translator->trans('{numberOfActivities} activities in {year}', [
+                        '{numberOfActivities}' => $totalActivityCountResponse->getTotalActivityCount(),
+                        '{year}' => $availableRewindOption,
+                    ]);
                 $rewindItems->add(RewindItem::from(
                     icon: 'calendar',
                     title: $this->translator->trans('Daily activities'),
-                    subTitle: $this->translator->trans('{numberOfActivities} activities in {year}', [
-                        '{numberOfActivities}' => $totalActivityCountResponse->getTotalActivityCount(),
-                        '{year}' => $availableRewindOption,
-                    ]),
+                    subTitle: $subTitle,
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(DailyActivitiesChart::create(
                             movingTimePerDay: $findMovingTimePerDayResponse->getMovingTimePerDay(),
-                            year: Year::fromInt((int) $availableRewindOption),
+                            year: Year::fromInt($yearInt),
                             translator: $this->translator,
                         )->build()),
                     ]),
@@ -324,6 +331,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 'activeRewindOption' => $availableRewindOption,
                 'rewindItems' => $rewindItems,
                 'isAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOption,
+                'isYtdRewind' => FindAvailableRewindOptions::YTD === $availableRewindOption,
             ];
 
             $this->buildStorage->write(
@@ -363,6 +371,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     'rewindItemsRight' => $rewindItemsPerYear->getForGroup($availableRewindOptionRight),
                     'rewindItemsLeftIsAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOptionLeft,
                     'rewindItemsRightIsAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOptionRight,
+                    'rewindItemsLeftIsYtdRewind' => FindAvailableRewindOptions::YTD === $availableRewindOptionLeft,
+                    'rewindItemsRightIsYtdRewind' => FindAvailableRewindOptions::YTD === $availableRewindOptionRight,
                 ]);
 
                 if ($availableRewindOptionRight == $defaultRewindYearToCompareWith) {

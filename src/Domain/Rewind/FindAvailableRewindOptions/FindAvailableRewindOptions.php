@@ -13,6 +13,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final readonly class FindAvailableRewindOptions implements Query
 {
     public const string ALL_TIME = 'all-time';
+    public const string YTD = 'ytd';
 
     public function __construct(
         private SerializableDateTime $now,
