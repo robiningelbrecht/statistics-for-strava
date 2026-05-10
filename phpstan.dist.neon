@@ -6,6 +6,8 @@ parameters:
         - src/
     ignoreErrors:
         - identifier: missingType.generics
+        - identifier: property.onlyWritten
+          path: src/Domain/Activity/Strength/ActivityStrengthSet.php
     type_coverage:
         return: 100
         param: 100

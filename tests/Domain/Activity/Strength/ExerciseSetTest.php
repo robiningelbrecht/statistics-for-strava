@@ -6,7 +6,7 @@ namespace App\Tests\Domain\Activity\Strength;
 
 use App\Domain\Activity\Strength\ExerciseName;
 use App\Domain\Activity\Strength\ExerciseSet;
-use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
+use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 use PHPUnit\Framework\TestCase;
 
 class ExerciseSetTest extends TestCase
@@ -17,13 +17,13 @@ class ExerciseSetTest extends TestCase
             exerciseName: ExerciseName::fromString('Squat'),
             numberOfSets: 3,
             numberOfReps: 5,
-            weightInKg: Kilogram::from(100.0),
+            weightLbs: Pound::from(100.0),
         );
 
         $this->assertEquals('Squat', (string) $set->getExerciseName());
         $this->assertEquals(3, $set->getNumberOfSets());
         $this->assertEquals(5, $set->getNumberOfReps());
-        $this->assertEquals(100.0, $set->getWeightInKg()->toFloat());
+        $this->assertEquals(100.0, $set->getWeightLbs()->toFloat());
         $this->assertFalse($set->isBodyweight());
     }
 
@@ -35,7 +35,7 @@ class ExerciseSetTest extends TestCase
             numberOfReps: 10,
         );
 
-        $this->assertNull($set->getWeightInKg());
+        $this->assertNull($set->getWeightLbs());
         $this->assertTrue($set->isBodyweight());
     }
 
@@ -45,7 +45,7 @@ class ExerciseSetTest extends TestCase
             exerciseName: ExerciseName::fromString('Bench Press'),
             numberOfSets: 4,
             numberOfReps: 8,
-            weightInKg: Kilogram::from(80.0),
+            weightLbs: Pound::from(80.0),
         );
 
         $data = $set->jsonSerialize();
@@ -53,7 +53,7 @@ class ExerciseSetTest extends TestCase
         $this->assertSame('Bench Press', (string) $data['exerciseName']);
         $this->assertSame(4, $data['numberOfSets']);
         $this->assertSame(8, $data['numberOfReps']);
-        $this->assertSame(80.0, $data['weightInKg']->toFloat());
+        $this->assertSame(80.0, $data['weightLbs']->toFloat());
     }
 
     public function testJsonSerializeBodyweight(): void
@@ -66,7 +66,7 @@ class ExerciseSetTest extends TestCase
 
         $data = $set->jsonSerialize();
 
-        $this->assertNull($data['weightInKg']);
+        $this->assertNull($data['weightLbs']);
     }
 
     public function testItShouldThrowOnZeroSets(): void

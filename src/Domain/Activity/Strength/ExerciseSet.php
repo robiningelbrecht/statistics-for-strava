@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Activity\Strength;
 
-use App\Infrastructure\ValueObject\Measurement\Mass\Kilogram;
+use App\Infrastructure\ValueObject\Measurement\Mass\Pound;
 
 final readonly class ExerciseSet implements \JsonSerializable
 {
@@ -12,17 +12,13 @@ final readonly class ExerciseSet implements \JsonSerializable
         private ExerciseName $exerciseName,
         private int $numberOfSets,
         private int $numberOfReps,
-        private ?Kilogram $weightInKg,
+        private ?Pound $weightLbs,
     ) {
         if ($this->numberOfSets <= 0) {
-            throw new \InvalidArgumentException(
-                sprintf('Number of sets must be a positive integer, got: %d', $this->numberOfSets)
-            );
+            throw new \InvalidArgumentException(sprintf('Number of sets must be a positive integer, got: %d', $this->numberOfSets));
         }
         if ($this->numberOfReps <= 0) {
-            throw new \InvalidArgumentException(
-                sprintf('Number of reps must be a positive integer, got: %d', $this->numberOfReps)
-            );
+            throw new \InvalidArgumentException(sprintf('Number of reps must be a positive integer, got: %d', $this->numberOfReps));
         }
     }
 
@@ -30,13 +26,13 @@ final readonly class ExerciseSet implements \JsonSerializable
         ExerciseName $exerciseName,
         int $numberOfSets,
         int $numberOfReps,
-        ?Kilogram $weightInKg = null,
+        ?Pound $weightLbs = null,
     ): self {
         return new self(
             exerciseName: $exerciseName,
             numberOfSets: $numberOfSets,
             numberOfReps: $numberOfReps,
-            weightInKg: $weightInKg,
+            weightLbs: $weightLbs,
         );
     }
 
@@ -55,23 +51,24 @@ final readonly class ExerciseSet implements \JsonSerializable
         return $this->numberOfReps;
     }
 
-    public function getWeightInKg(): ?Kilogram
+    public function getWeightLbs(): ?Pound
     {
-        return $this->weightInKg;
+        return $this->weightLbs;
     }
 
     public function isBodyweight(): bool
     {
-        return null === $this->weightInKg;
+        return !$this->weightLbs instanceof \App\Infrastructure\ValueObject\Measurement\Mass\Pound;
     }
 
+    /** @return array<string, mixed> */
     public function jsonSerialize(): array
     {
         return [
             'exerciseName' => $this->exerciseName,
             'numberOfSets' => $this->numberOfSets,
             'numberOfReps' => $this->numberOfReps,
-            'weightInKg' => $this->weightInKg,
+            'weightLbs' => $this->weightLbs,
         ];
     }
 }

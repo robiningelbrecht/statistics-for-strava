@@ -23,7 +23,7 @@ class StrengthWorkoutDescriptionParserTest extends TestCase
         string $expectedName,
         int $expectedSets,
         int $expectedReps,
-        ?float $expectedWeightKg,
+        ?float $expectedWeightLbs,
     ): void {
         $exercises = $this->parser->parse($description);
 
@@ -32,10 +32,10 @@ class StrengthWorkoutDescriptionParserTest extends TestCase
         $this->assertEquals($expectedName, (string) $first->getExerciseName());
         $this->assertEquals($expectedSets, $first->getNumberOfSets());
         $this->assertEquals($expectedReps, $first->getNumberOfReps());
-        if (null === $expectedWeightKg) {
-            $this->assertNull($first->getWeightInKg());
+        if (null === $expectedWeightLbs) {
+            $this->assertNull($first->getWeightLbs());
         } else {
-            $this->assertEquals($expectedWeightKg, $first->getWeightInKg()->toFloat());
+            $this->assertEquals($expectedWeightLbs, $first->getWeightLbs()->toFloat());
         }
     }
 
@@ -87,17 +87,17 @@ class StrengthWorkoutDescriptionParserTest extends TestCase
         $this->assertEquals('Squat', (string) $items[0]->getExerciseName());
         $this->assertEquals(3, $items[0]->getNumberOfSets());
         $this->assertEquals(5, $items[0]->getNumberOfReps());
-        $this->assertEquals(100.0, $items[0]->getWeightInKg()->toFloat());
+        $this->assertEquals(100.0, $items[0]->getWeightLbs()->toFloat());
 
         $this->assertEquals('Bench Press', (string) $items[1]->getExerciseName());
         $this->assertEquals(4, $items[1]->getNumberOfSets());
         $this->assertEquals(8, $items[1]->getNumberOfReps());
-        $this->assertEquals(80.0, $items[1]->getWeightInKg()->toFloat());
+        $this->assertEquals(80.0, $items[1]->getWeightLbs()->toFloat());
 
         $this->assertEquals('Deadlift', (string) $items[2]->getExerciseName());
         $this->assertEquals(1, $items[2]->getNumberOfSets());
         $this->assertEquals(3, $items[2]->getNumberOfReps());
-        $this->assertEquals(140.0, $items[2]->getWeightInKg()->toFloat());
+        $this->assertEquals(140.0, $items[2]->getWeightLbs()->toFloat());
 
         $this->assertEquals('Pull Up', (string) $items[3]->getExerciseName());
         $this->assertTrue($items[3]->isBodyweight());
