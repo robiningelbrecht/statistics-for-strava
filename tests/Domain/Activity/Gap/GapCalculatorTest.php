@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 final class GapCalculatorTest extends TestCase
 {
-    public function testItSkipsZeroDistanceAndNonIncreasingTimestamps(): void
+    public function testItPreservesZeroDistanceDurationAndSkipsNonIncreasingTimestamps(): void
     {
         $calculator = GapCalculator::create(smoothingWindowSize: 1);
 
@@ -40,6 +40,21 @@ final class GapCalculatorTest extends TestCase
                 'ele' => 30.0,
                 'timestamp' => 1700000060,
             ],
+        ]), false);
+
+        self::assertCount(1, $segments);
+        self::assertSame(60, $segments[0]->getDurationInSeconds());
+    }
+
+    public function testItPreservesRepeatedCoordinateDuration(): void
+    {
+        $calculator = GapCalculator::create(smoothingWindowSize: 1);
+
+        $segments = iterator_to_array($calculator->calculateSegments([
+            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 0],
+            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 10],
+            ['lat' => 51.0000, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 20],
+            ['lat' => 51.0009, 'lon' => 4.0000, 'ele' => 10.0, 'timestamp' => 30],
         ]), false);
 
         self::assertCount(1, $segments);

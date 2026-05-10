@@ -481,6 +481,64 @@ class CalculateGapTest extends ContainerTestCase
         $this->assertNotNull($splits->toArray()[0]->getGapPaceInSecondsPerKm());
     }
 
+    public function testProcessPreservesMovingDurationForRepeatedCoordinates(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('run-repeated-coordinates');
+        $this->addActivity($activityId, SportType::RUN);
+
+        $this->activityStreamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::LAT_LNG)
+                ->withData([
+                    [51.0000, 4.0000],
+                    [51.0000, 4.0000],
+                    [51.0000, 4.0000],
+                    [51.0009, 4.0000],
+                ])
+                ->build()
+        );
+        $this->activityStreamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::ALTITUDE)
+                ->withData([10.0, 10.0, 10.0, 10.0])
+                ->build()
+        );
+        $this->activityStreamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::TIME)
+                ->withData([0, 10, 20, 30])
+                ->build()
+        );
+        $this->activityStreamRepository->add(
+            ActivityStreamBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withStreamType(StreamType::MOVING)
+                ->withData([true, true, true, true])
+                ->build()
+        );
+
+        $this->activitySplitRepository->add(
+            ActivitySplitBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withDistanceInMeter(100.0)
+                ->withAverageSpeed(MetersPerSecond::from(3.333))
+                ->build()
+        );
+
+        $output = new SpyOutput();
+        $this->calculateGap->process($output);
+
+        $gapPace = $this->activitySplitRepository->findBy($activityId, UnitSystem::METRIC)
+            ->toArray()[0]->getGapPaceInSecondsPerKm();
+
+        $this->assertNotNull($gapPace);
+        $this->assertGreaterThan(250.0, $gapPace->toFloat());
+        $this->assertLessThan(350.0, $gapPace->toFloat());
+    }
+
     public function testProcessIgnoresGradeStreamWhenAvailable(): void
     {
         $withGradeActivityId = ActivityId::fromUnprefixed('run-grade-stream');

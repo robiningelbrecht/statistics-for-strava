@@ -69,18 +69,23 @@ final readonly class GapCalculator
         $cumulativeDistances = $this->buildCumulativeDistances($points);
         $lastIndex = $pointCount - 1;
         $trackLength = $cumulativeDistances[$lastIndex];
+        $pendingZeroDistanceDuration = 0;
 
         for ($i = 1; $i < $pointCount; ++$i) {
             $from = $points[$i - 1];
             $to = $points[$i];
             $distance = $cumulativeDistances[$i] - $cumulativeDistances[$i - 1];
             $duration = $to['timestamp'] - $from['timestamp'];
-            if ($distance <= 0.0) {
-                continue;
-            }
             if ($duration <= 0) {
                 continue;
             }
+            if ($distance <= 0.0) {
+                $pendingZeroDistanceDuration += $duration;
+                continue;
+            }
+
+            $duration += $pendingZeroDistanceDuration;
+            $pendingZeroDistanceDuration = 0;
 
             $grade = $this->resolveSegmentGrade(
                 points: $points,
