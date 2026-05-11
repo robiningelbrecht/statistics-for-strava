@@ -1,5 +1,4 @@
 {% set allTimeLabel = "All time"|trans %}
-{% set ytdLabel = "YTD"|trans %}
 {% set breadcrumbs = [
     {
         'url': 'rewind',
@@ -7,7 +6,7 @@
     },
     {
         'url': 'rewind/' ~ activeRewindOptionLeft,
-        'label': (rewindItemsLeftIsAllTimeRewind ? allTimeLabel : (rewindItemsLeftIsYtdRewind ? ytdLabel : activeRewindOptionLeft)),
+        'label': (rewindItemsLeftIsAllTimeRewind ? allTimeLabel : activeRewindOptionLeft),
     },
     {
         'url': 'rewind/' ~ activeRewindOptionLeft ~ '/compare',
@@ -15,7 +14,7 @@
     },
     {
         'url': 'rewind/' ~ activeRewindOptionLeft ~ '/compare/' ~ activeRewindOptionRight,
-        'label': (rewindItemsRightIsAllTimeRewind ? allTimeLabel : (rewindItemsRightIsYtdRewind ? ytdLabel : activeRewindOptionRight)),
+        'label':  (rewindItemsRightIsAllTimeRewind ? allTimeLabel : activeRewindOptionRight),
     }
 ] %}
 {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': breadcrumbs} %}
@@ -42,8 +41,6 @@
                         type="button">
                     {% if rewindItemsLeftIsAllTimeRewind %}
                         {{ allTimeLabel }}
-                    {% elseif rewindItemsLeftIsYtdRewind %}
-                        {{ ytdLabel }}
                     {% else %}
                         {{ "Rewind"|trans }} {{ activeRewindOptionLeft }}
                     {% endif %}
@@ -62,10 +59,8 @@
                                     {% set url = relativeUrl('rewind/' ~ rewindOption ~ '/compare/' ~ activeRewindOptionRight) %}
                                 {% endif %}
                                 <a href="#" data-router-navigate="{{ url }}" class="block px-4 py-2 hover:bg-gray-100 ">
-                                    {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME') %}
+                                    {% if rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::ALL_TIME')  %}
                                         {{ allTimeLabel }}
-                                    {% elseif rewindOption == constant('App\\Domain\\Rewind\\FindAvailableRewindOptions\\FindAvailableRewindOptions::YTD') %}
-                                        {{ ytdLabel }}
                                     {% else %}
                                         {{ "Rewind"|trans }} {{ rewindOption }}
                                     {% endif %}
@@ -84,8 +79,6 @@
                         type="button">
                     {% if rewindItemsRightIsAllTimeRewind %}
                         {{ allTimeLabel }}
-                    {% elseif rewindItemsRightIsYtdRewind %}
-                        {{ ytdLabel }}
                     {% else %}
                         {{ "Rewind"|trans }} {{ activeRewindOptionRight }}
                     {% endif %}

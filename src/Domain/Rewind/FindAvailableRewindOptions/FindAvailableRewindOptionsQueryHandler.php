@@ -7,7 +7,6 @@ namespace App\Domain\Rewind\FindAvailableRewindOptions;
 use App\Infrastructure\CQRS\Query\Query;
 use App\Infrastructure\CQRS\Query\QueryHandler;
 use App\Infrastructure\CQRS\Query\Response;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\Year;
 use App\Infrastructure\ValueObject\Time\Years;
 use Doctrine\DBAL\Connection;
@@ -23,7 +22,6 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
     {
         assert($query instanceof FindAvailableRewindOptions);
 
-        $now = $query->getNow();
         $years = $this->connection->executeQuery(
             'SELECT DISTINCT strftime("%Y",startDateTime) AS year FROM Activity
              ORDER BY year DESC',
@@ -33,20 +31,11 @@ final readonly class FindAvailableRewindOptionsQueryHandler implements QueryHand
             Year::fromInt(...),
             $years
         ));
-        $currentYear = (int) $now->format('Y');
         $options = [
             FindAvailableRewindOptions::ALL_TIME => $allYears,
         ];
 
-        if (in_array((string) $currentYear, $years)) {
-            $options[FindAvailableRewindOptions::YTD] = Years::fromArray([Year::fromInt($currentYear)]);
-        }
-
         foreach ($years as $year) {
-            $cutOffDate = SerializableDateTime::fromString(sprintf('%s-12-24 00:00:00', $year));
-            if ($now->isBefore($cutOffDate)) {
-                continue;
-            }
             $options[$year] = Years::fromArray([Year::fromInt((int) $year)]);
         }
 
