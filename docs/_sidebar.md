@@ -1,11 +1,11 @@
 - Getting Started
   - [Prerequisites](getting-started/prerequisites.md "Statistics for Strava | Prerequisites")
   - [Installation](getting-started/installation.md "Statistics for Strava | Installation")
-  - [Kubernetes with HelmForge](getting-started/kubernetes-helmforge.md "Statistics for Strava | Kubernetes with HelmForge")
   - [Scheduling](getting-started/scheduling.md "Statistics for Strava | Scheduling")
   - [Challenges and trophies](getting-started/challenges-and-trophies.md "Statistics for Strava | Challenges and trophies")
   - [Updates](getting-started/updates.md "Statistics for Strava | Updates")
   - [Proxmox setup](getting-started/proxmox.md "Statistics for Strava | Proxmox setup")
+  - [Kubernetes with HelmForge](getting-started/kubernetes-helmforge.md "Statistics for Strava | Kubernetes with HelmForge")
 
 - Configuration
 
