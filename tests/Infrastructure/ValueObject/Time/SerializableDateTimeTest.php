@@ -40,4 +40,44 @@ class SerializableDateTimeTest extends TestCase
             SerializableDateTime::fromString('2023-10-05 10:22:22')->toUtc(),
         );
     }
+
+    public function testIsBefore(): void
+    {
+        $earlier = SerializableDateTime::fromString('2023-10-05 10:00:00');
+        $later = SerializableDateTime::fromString('2023-10-05 11:00:00');
+
+        $this->assertTrue($earlier->isBefore($later));
+        $this->assertFalse($later->isBefore($earlier));
+        $this->assertFalse($earlier->isBefore($earlier));
+    }
+
+    public function testIsAfter(): void
+    {
+        $earlier = SerializableDateTime::fromString('2023-10-05 10:00:00');
+        $later = SerializableDateTime::fromString('2023-10-05 11:00:00');
+
+        $this->assertTrue($later->isAfter($earlier));
+        $this->assertFalse($earlier->isAfter($later));
+        $this->assertFalse($earlier->isAfter($earlier));
+    }
+
+    public function testIsBeforeOrOn(): void
+    {
+        $earlier = SerializableDateTime::fromString('2023-10-05 10:00:00');
+        $later = SerializableDateTime::fromString('2023-10-05 11:00:00');
+
+        $this->assertTrue($earlier->isBeforeOrOn($later));
+        $this->assertTrue($earlier->isBeforeOrOn($earlier));
+        $this->assertFalse($later->isBeforeOrOn($earlier));
+    }
+
+    public function testIsAfterOrOn(): void
+    {
+        $earlier = SerializableDateTime::fromString('2023-10-05 10:00:00');
+        $later = SerializableDateTime::fromString('2023-10-05 11:00:00');
+
+        $this->assertTrue($later->isAfterOrOn($earlier));
+        $this->assertTrue($later->isAfterOrOn($later));
+        $this->assertFalse($earlier->isAfterOrOn($later));
+    }
 }
