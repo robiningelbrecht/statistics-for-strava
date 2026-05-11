@@ -12,8 +12,4 @@ use App\Infrastructure\CQRS\Query\Query;
 final readonly class FindAvailableRewindOptions implements Query
 {
     public const string ALL_TIME = 'all-time';
-
-    public function __construct(
-    ) {
-    }
 }
