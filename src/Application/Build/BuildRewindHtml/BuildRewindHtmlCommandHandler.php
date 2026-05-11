@@ -69,7 +69,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         assert($command instanceof BuildRewindHtml);
 
         $now = $command->getCurrentDateTime();
-        $availableRewindOptionsResponse = $this->queryBus->ask(new FindAvailableRewindOptions($now));
+        $availableRewindOptionsResponse = $this->queryBus->ask(new FindAvailableRewindOptions());
         $availableRewindOptions = $availableRewindOptionsResponse->getAvailableOptions();
         $usedGears = $this->gearRepository->findAllUsed();
 
@@ -338,8 +338,8 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 );
             }
         }
-        if (1 === count($availableRewindOptions)) {
-            // "All time" option is the only one. No need to compare rewinds.
+        if (2 === count($availableRewindOptions)) {
+            // "All time" and one other year are the only options. No need to compare rewinds.
             return;
         }
 

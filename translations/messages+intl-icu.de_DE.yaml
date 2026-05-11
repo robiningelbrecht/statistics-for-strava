@@ -344,7 +344,7 @@ Tag: Tag
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 'Team Sports': Teamsportarten
 Tennis: Tennis
-"That's 1.5 times the distance to the edge of space": "Das ist das 1,5-fache der Entfernung bis zum Rand des Weltraums"
+"That's 1.5 times the distance to the edge of space": 'Das ist das 1,5-fache der Entfernung bis zum Rand des Weltraums'
 "That's 100 days of commitment, triple digits!": 'Das sind 100 Tage voller Einsatz - dreistellig!'
 "That's 2 activities per week for nearly 5 years": 'Das entspricht zwei Aktivitäten pro Woche für fast 5 Jahre'
 "That's 2 full days of non-stop activity": 'Das entspricht zwei Tagen ununterbrochene Aktivität'
@@ -501,7 +501,6 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Ländern aufgezeichnet, das sind {percentage} aller Länder 🌍'
 'Your PB badge': 'Dein PB Abzeichen'
 'Your Strava badge': 'Dein Strava-Abzeichen'
-'Your Strava {year} rewind will be available on the 24th of December.': 'Dein Strava {year} Rückblick wird am 24. Dezember zur Verfügung stehen.'
 'Your Zwift badge': 'Dein Zwift-Abzeichen'
 'Your badge(s)': 'Dein(e) Abzeichen'
 'Z1-2 (Low)': 'Z1-2 (Niedrig)'

@@ -54,45 +54,7 @@ class FindAvailableRewindOptionsQueryHandlerTest extends ContainerTestCase
         $this->assertEquals(
             [
                 'all-time',
-                2024,
-                2023,
-            ],
-            $response->getAvailableOptions(),
-        );
-    }
-
-    public function testHandleWhenAfterCutOffDate(): void
-    {
-        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('2'))
-                ->withStartDateTime(SerializableDateTime::fromString('2023-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('3'))
-                ->withStartDateTime(SerializableDateTime::fromString('2024-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()
-                ->withActivityId(ActivityId::fromUnprefixed('4'))
-                ->withStartDateTime(SerializableDateTime::fromString('2024-01-01 00:00:00'))
-                ->build(),
-            []
-        ));
-
-        /** @var \App\Domain\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptionsResponse $response */
-        $response = $this->queryHandler->handle(
-            new FindAvailableRewindOptions(SerializableDateTime::fromString('2024-12-2500:00:00'))
-        );
-
-        $this->assertEquals(
-            [
-                'all-time',
+                2025,
                 2024,
                 2023,
             ],
