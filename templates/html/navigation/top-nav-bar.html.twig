@@ -75,7 +75,7 @@
                 </a>
             </div>
             {% if inAppContext %}
-                <button id="profileDropdownMenuButton" data-dropdown-toggle="profileDropdownMenu" class="cursor-pointer flex rounded-full border" type="button">
+                <button id="profileDropdownMenuButton" data-dropdown="profileDropdownMenu" class="cursor-pointer flex rounded-full border" type="button">
                     <span class="sr-only">Open user menu</span>
                     {% if profilePictureUrl %}
                         <img class="size-8 rounded-full bg-white" src="{{ profilePictureUrl }}" alt="Profile Picture">
@@ -103,7 +103,7 @@
                     <ul class="px-2 pb-2 text-sm text-body font-medium" aria-labelledby="profileDropdownMenuButton">
                         {% if appConfig.isAIIntegrationWithUIEnabled() %}
                             <li>
-                                <a href="#" data-modal-custom-ai="{{ relativeUrl('/ai/chat') }}"
+                                <a href="#" data-modal-custom-ai="{{ relativeUrl('/ai/chat') }}" data-close-dropdown
                                    class="inline-flex items-center w-full p-2 hover:bg-gray-50 rounded">
                                     <svg class="size-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6l3 3v-3h2V9h-2M4 4h11v8H9l-3 3v-3H4V4Z"/>
@@ -113,7 +113,7 @@
                             </li>
                         {% endif %}
                         <li>
-                            <a href="#" data-model-content-url="{{ relativeUrl('badge.html') }}"
+                            <a href="#" data-model-content-url="{{ relativeUrl('badge.html') }}" data-close-dropdown
                                class="inline-flex items-center w-full p-2 hover:bg-gray-50 rounded">
                                 <svg class="size-4 me-1.5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 507.9 507.9" xml:space="preserve">

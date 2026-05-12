@@ -4626,7 +4626,7 @@
 }
 @layer components {
   div.filter-dropdown {
-    & > button[data-dropdown-toggle] {
+    & > button[data-dropdown] {
       display: inline-flex;
       width: fit-content;
       cursor: pointer;

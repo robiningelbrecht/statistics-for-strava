@@ -27,7 +27,7 @@
                         {% if sportTypes|length > 0 %}
                             <div class="filter-dropdown">
                                 <button id="dropdownSportTypesButton"
-                                        data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                        data-dropdown="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Filter on sport type"|trans }}</span>
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -53,7 +53,7 @@
                         {% endif %}
                         <div class="filter-dropdown">
                             <button id="dropdownDateRangeButton"
-                                    data-dropdown-toggle="dropdownDateRange" type="button">
+                                    data-dropdown="dropdownDateRange" type="button">
                                 <span>{{ "Date"|trans }}</span>
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -80,7 +80,7 @@
                         {% if countries|length > 0 %}
                             <div class="filter-dropdown">
                                 <button id="dropdownCountriesButton"
-                                        data-dropdown-toggle="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                        data-dropdown="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Country"|trans }}</span>
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -107,7 +107,7 @@
                         {% if gears|length > 0 %}
                             <div class="filter-dropdown">
                                 <button id="dropdownGearsButton"
-                                        data-dropdown-toggle="dropdownGears" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                        data-dropdown="dropdownGears" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Gear"|trans }}</span>
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -142,7 +142,7 @@
                         {% if devices|length > 0 %}
                             <div class="filter-dropdown">
                                 <button id="dropdownDevicesButton"
-                                        data-dropdown-toggle="dropdownDevices" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                        data-dropdown="dropdownDevices" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Device"|trans }}</span>
                                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -175,7 +175,7 @@
                             </div>
                         {% endif %}
                         <div class="filter-dropdown">
-                            <button id="distanceElevationButton" data-dropdown-toggle="dropdownDistanceElevation" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                            <button id="distanceElevationButton" data-dropdown="dropdownDistanceElevation" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Distance & Elevation"|trans }}</span>
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -235,7 +235,7 @@
                             </div>
                         </div>
                         <div class="filter-dropdown">
-                            <button id="otherButton" data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                            <button id="otherButton" data-dropdown="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Other"|trans }}</span>
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>

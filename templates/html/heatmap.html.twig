@@ -10,7 +10,7 @@
                     {% if sportTypes|length > 0 %}
                         <div class="filter-dropdown">
                             <button id="dropdownSportTypesButton"
-                                    data-dropdown-toggle="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                                    data-dropdown="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Filter on sport type"|trans }}</span>
                                 <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -36,7 +36,7 @@
                     {% endif %}
                     <div class="filter-dropdown">
                         <button id="dropdownDateRangeButton"
-                                data-dropdown-toggle="dropdownDateRange" type="button">
+                                data-dropdown="dropdownDateRange" type="button">
                             <span>{{ "Date"|trans }}</span>
                             <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="filter-dropdown">
-                        <button id="otherButton" data-dropdown-toggle="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
+                        <button id="otherButton" data-dropdown="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                             <span>{{ "Other"|trans }}</span>
                             <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
