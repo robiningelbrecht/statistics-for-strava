@@ -14,6 +14,7 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
+use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 use App\Domain\Athlete\KeyValueBasedAthleteRepository;
 use App\Domain\Athlete\MaxHeartRate\MaxHeartRateFormula;
 use App\Domain\Athlete\RestingHeartRate\RestingHeartRateFormula;
@@ -75,7 +76,8 @@ class DailyTrainingLoadTest extends ContainerTestCase
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
-            )
+            ),
+            HeartRateZoneConfiguration::fromArray([]),
         );
 
         $this->athleteRepository->save(Athlete::create([
@@ -101,7 +103,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            277,
+            105,
             $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
@@ -124,7 +126,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         ]));
 
         $this->assertEquals(
-            277,
+            105,
             $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
@@ -165,7 +167,8 @@ class DailyTrainingLoadTest extends ContainerTestCase
                 $this->getContainer()->get(KeyValueStore::class),
                 $this->getContainer()->get(MaxHeartRateFormula::class),
                 $this->getContainer()->get(RestingHeartRateFormula::class),
-            )
+            ),
+            HeartRateZoneConfiguration::fromArray([]),
         );
     }
 }
