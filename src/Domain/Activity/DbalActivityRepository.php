@@ -74,13 +74,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
     {
         $sql = 'INSERT INTO Activity (
             activityId, startDateTime, sportType, activityType, worldType, name, description, distance,
-            elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories,
+            elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories, kilojoules,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
             polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
-            :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories,
+            :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories, :kilojoules,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
             :polyline, :routeGeography, :weather, :gearId, :data, :isCommute, :streamsAreImported, :workoutType
@@ -100,6 +100,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'startingCoordinateLatitude' => $activity->getStartingCoordinate()?->getLatitude()->toFloat(),
             'startingCoordinateLongitude' => $activity->getStartingCoordinate()?->getLongitude()->toFloat(),
             'calories' => $activity->getCalories(),
+            'kilojoules' => $activity->getKilojoules(),
             'averagePower' => $activity->getAveragePower(),
             'maxPower' => $activity->getMaxPower(),
             'averageSpeed' => $activity->getAverageSpeed()->toFloat(),
@@ -233,6 +234,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
                 Longitude::fromOptionalString((string) $result['startingCoordinateLongitude'])
             ),
             calories: (int) ($result['calories'] ?? 0),
+            kilojoules: ((int) $result['kilojoules']) ?: null,
             averagePower: ((int) $result['averagePower']) ?: null,
             maxPower: ((int) $result['maxPower']) ?: null,
             averageSpeed: KmPerHour::from($result['averageSpeed']),
