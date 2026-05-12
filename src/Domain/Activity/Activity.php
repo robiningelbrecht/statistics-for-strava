@@ -90,6 +90,8 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $calories,
         #[ORM\Column(type: 'integer', nullable: true)]
+        private readonly ?int $kilojoules,
+        #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $averagePower,
         #[ORM\Column(type: 'integer', nullable: true)]
         private readonly ?int $maxPower,
@@ -162,6 +164,7 @@ final class Activity implements SupportsAITooling
                 Longitude::fromOptionalString($rawData['start_latlng'][1] ?? null),
             ),
             calories: (int) ($rawData['calories'] ?? 0),
+            kilojoules: isset($rawData['kilojoules']) ? (int) $rawData['kilojoules'] : null,
             averagePower: isset($rawData['average_watts']) ? (int) $rawData['average_watts'] : null,
             maxPower: isset($rawData['max_watts']) ? (int) $rawData['max_watts'] : null,
             averageSpeed: MetersPerSecond::from($rawData['average_speed'])->toKmPerHour(),
@@ -197,6 +200,7 @@ final class Activity implements SupportsAITooling
         Meter $elevation,
         ?Coordinate $startingCoordinate,
         ?int $calories,
+        ?int $kilojoules,
         ?int $averagePower,
         ?int $maxPower,
         KmPerHour $averageSpeed,
@@ -227,6 +231,7 @@ final class Activity implements SupportsAITooling
             elevation: $elevation,
             startingCoordinate: $startingCoordinate,
             calories: $calories,
+            kilojoules: $kilojoules,
             averagePower: $averagePower,
             maxPower: $maxPower,
             averageSpeed: $averageSpeed,
@@ -467,6 +472,11 @@ final class Activity implements SupportsAITooling
     public function getCalories(): ?int
     {
         return $this->calories;
+    }
+
+    public function getKilojoules(): ?int
+    {
+        return $this->kilojoules;
     }
 
     public function getAveragePower(): ?int
