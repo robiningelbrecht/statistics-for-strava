@@ -1,4 +1,4 @@
-/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
@@ -988,14 +988,8 @@
   .-inset-s-10 {
     inset-inline-start: calc(var(--spacing) * -10);
   }
-  .start {
-    inset-inline-start: var(--spacing);
-  }
   .start-0 {
     inset-inline-start: calc(var(--spacing) * 0);
-  }
-  .end {
-    inset-inline-end: var(--spacing);
   }
   .top-0 {
     top: calc(var(--spacing) * 0);
@@ -1840,6 +1834,9 @@
   }
   .w-1\/7 {
     width: calc(1 / 7 * 100%);
+  }
+  .w-1\/8 {
+    width: calc(1 / 8 * 100%);
   }
   .w-2 {
     width: calc(var(--spacing) * 2);
@@ -4927,7 +4924,6 @@
       background-color: var(--scrollbar-corner);
       border-radius: var(--scrollbar-corner-radius);
     }
-    scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
     &::-webkit-scrollbar {
       display: block;
@@ -4936,6 +4932,7 @@
     }
     display: inline-flex;
     max-width: 100%;
+    scrollbar-width: thin;
     flex-wrap: nowrap;
     column-gap: 1px;
     overflow-x: auto;
@@ -5198,13 +5195,13 @@
       background-color: var(--scrollbar-corner);
       border-radius: var(--scrollbar-corner-radius);
     }
-    scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
     &::-webkit-scrollbar {
       display: block;
       width: 8px;
       height: 8px;
     }
+    scrollbar-width: thin;
   }
 }
 @layer components {
