@@ -1,5 +1,5 @@
 
-StatisticsforStravav4.7.10|DAEMON
+StatisticsforStravav4.7.11|DAEMON
 
 Startedon0811202514:47:03
 

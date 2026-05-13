@@ -1,9 +1,39 @@
+# [v4.7.11](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.11) - 2026-05-13
+
+## New Features
+* Added kilojoules (kJ) to the activity detail page
+
+## Improvements
+* Updated the German (de_DE) ICU translation file
+* Added documentation for installing via HelmForge on Kubernetes
+* Added a new "Current year" rewind option
+* Normalized daily TSS and TRIMP calculations
+
+## Bug fixes
+* Fixed the dropdown menu not closing when clicking a link
+* Fixed GAP calculation issues caused by repeated identical GPS coordinates
+
+## Technical details
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/2026
+* docs: add HelmForge Kubernetes install guide by @mberlofa in https://github.com/robiningelbrecht/statistics-for-strava/pull/2024
+* feat: Add YTD rewind option by @paquiro in https://github.com/robiningelbrecht/statistics-for-strava/pull/2029
+* ISSUE #2033: Normalize daily TSS and daily TRIMP by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2034
+* ISSUE #2027: Show kilojoules on activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2036
+* ISSUE #2035: We need to close the dropdown menu when clicking a link by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2037
+* fix GAP for repeated moving coordinates by @cgtobi in https://github.com/robiningelbrecht/statistics-for-strava/pull/2031
+
+## New Contributors
+* @mberlofa made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2024
+* @paquiro made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2029
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.10...v4.7.11
+
 # [v4.7.10](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.10) - 2026-05-07
 
 ## Improvements
 * Use non-breaking space as thousands separator to prevent line wrapping
 * Allow to set Zwift level over 100
-* Improve split GAP calcultion and values
+* Improve split GAP calculation and values
 
 ## Technical details
 * fix: use non-breaking space as thousands separator to prevent line wrapping by @vrkrebs in https://github.com/robiningelbrecht/statistics-for-strava/pull/2015
