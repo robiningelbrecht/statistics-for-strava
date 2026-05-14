@@ -3,7 +3,6 @@
 namespace App\Domain\Activity;
 
 use App\Domain\Athlete\AthleteRepository;
-use App\Domain\Athlete\HeartRateZone\HeartRateZoneConfiguration;
 use App\Domain\Ftp\FtpHistory;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\Measurement\Time\Seconds;
@@ -19,7 +18,6 @@ final class DailyTrainingLoad
         private readonly ActivityIntensity $activityIntensity,
         private readonly FtpHistory $ftpHistory,
         private readonly AthleteRepository $athleteRepository,
-        private readonly HeartRateZoneConfiguration $heartRateZoneConfiguration,
     ) {
     }
 
