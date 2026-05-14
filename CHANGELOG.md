@@ -1,3 +1,11 @@
+# [v4.7.12](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.12) - 2026-05-14
+
+## What's Changed
+* Fix date column wrapping with non-default date formats by @czdanika in https://github.com/robiningelbrecht/statistics-for-strava/pull/2039
+* Reverted ISSUE #2033: Normalize daily TSS and daily TRIMP by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2034
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.11...v4.7.12
+
 # [v4.7.11](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.11) - 2026-05-13
 
 ## New Features
