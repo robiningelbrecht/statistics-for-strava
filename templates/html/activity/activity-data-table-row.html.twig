@@ -1,7 +1,7 @@
 {% autoescape false %}
 {% set activityType =  activity.getSportType().getActivityType() %}
 <tr class="group odd:bg-white border-b even:border-b even:bg-gray-50">
-    <td class="px-2 py-2">
+    <td class="px-2 py-2 whitespace-nowrap">
         {{ activity.getStartDate()|formatDate() }}
     </td>
     <td class="px-2 py-2 truncate lg:sticky lg:left-0 group-odd:bg-white group-even:bg-gray-50">
