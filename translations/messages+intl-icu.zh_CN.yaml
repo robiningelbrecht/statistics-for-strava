@@ -97,6 +97,7 @@ Elev: 海拔
 Elevation: 海拔高度
 'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
+Energy: Energy
 'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: 晚上
 'Excludes commutes': 筛除通勤
@@ -172,11 +173,14 @@ Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
 Lap: 圈
 Laps: 圈
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 最近7天训练负荷
 'Last activity': 'Last activity'
 'Last effort': 最后努力
 'Last effort date': 'Last effort date'
 'Last maintenance': 最后维护
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': '最近{numberOfDays}天'
 Lifetime: Lifetime
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
@@ -433,6 +437,8 @@ Tennis: 网球
 Thinking...: 思考中...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 功能当前被禁用
+'This month': 'This month'
+'This week': 'This week'
 Thu: 周四
 Thursday: 星期四
 Time: 时间
@@ -489,7 +495,6 @@ Wheelchair: 轮椅
 Workout: 锻炼
 'Workout assistant': 'Workout assistant'
 'Workout type': 锻炼类型
-YTD: YTD
 Year: 年
 Yearly: Yearly
 'Yearly stats': 年度统计
@@ -497,7 +502,6 @@ Yoga: 瑜伽
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '您记录了{numberOfCountriesWithWorkouts}个不同国家/地区的锻炼情况，占所有国家/地区的百分之 {percentage} 🌍'
 'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
-'Your Strava {year} rewind will be available on the 24th of December.': '您的Strava {year}年回顾将于12月24日上线。'
 'Your Zwift badge': Zwift徽章
 'Your badge(s)': 徽章
 'Z1-2 (Low)': Z1-2（低）

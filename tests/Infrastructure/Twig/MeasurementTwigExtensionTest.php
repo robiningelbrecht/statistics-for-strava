@@ -57,7 +57,7 @@ class MeasurementTwigExtensionTest extends TestCase
         $extension = new MeasurementTwigExtension(UnitSystem::METRIC);
 
         $this->assertEquals(
-            '1 000.33',
+            "1\u{00A0}000.33",
             $extension->formatNumber(1000.334, 2)
         );
 

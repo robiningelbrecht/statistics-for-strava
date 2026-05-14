@@ -134,7 +134,7 @@ final readonly class Route implements \JsonSerializable
         }
         $distanceInScalar = $distance->toFloat();
         $precision = $distanceInScalar < 100 ? 1 : 0;
-        $distance = number_format(round($distanceInScalar, $precision), $precision, '.', ' ').$distance->getSymbol();
+        $distance = number_format(round($distanceInScalar, $precision), $precision, '.', "\u{00A0}").$distance->getSymbol();
 
         $startDate = is_null($this->dateAndTimeFormat) ?
             $this->getOn()->format('d-m-Y') :

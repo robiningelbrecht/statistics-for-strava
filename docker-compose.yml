@@ -55,7 +55,7 @@ services:
         start_period: 5s
       environment:
         - TZ=Europe/Brussels
-      entrypoint: ['bin/console', 'app:daemon:run']
+      command: ['bin/console', 'app:daemon:run']
       networks:
         - statistics-for-strava-network
 

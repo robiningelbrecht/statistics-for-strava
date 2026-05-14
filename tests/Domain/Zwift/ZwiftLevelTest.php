@@ -3,47 +3,57 @@
 namespace App\Tests\Domain\Zwift;
 
 use App\Domain\Zwift\ZwiftLevel;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ZwiftLevelTest extends TestCase
 {
-    public function testLevel(): void
+    #[DataProvider('provideValidLevels')]
+    public function testLevel(int $level): void
     {
-        $this->assertEquals(1, ZwiftLevel::fromInt(1)->getValue());
-        $this->assertEquals(100, ZwiftLevel::fromInt(100)->getValue());
+        $this->assertEquals($level, ZwiftLevel::fromInt($level)->getValue());
     }
 
-    public function testGetProgress(): void
+    /**
+     * @return array<string, array{int}>
+     */
+    public static function provideValidLevels(): array
+    {
+        return [
+            'min' => [1],
+            'max progress' => [100],
+            'above max progress' => [150],
+        ];
+    }
+
+    #[DataProvider('provideProgressPercentages')]
+    public function testGetProgress(int $level, float $expectedPercentage): void
     {
         $this->assertEquals(
-            1.0,
-            ZwiftLevel::fromInt(1)->getProgressPercentage()
+            $expectedPercentage,
+            ZwiftLevel::fromInt($level)->getProgressPercentage()
         );
-        $this->assertEquals(
-            100,
-            ZwiftLevel::fromInt(100)->getProgressPercentage()
-        );
-        $this->assertEquals(
-            96,
-            ZwiftLevel::fromInt(99)->getProgressPercentage()
-        );
-        $this->assertEquals(
-            66.17,
-            ZwiftLevel::fromInt(80)->getProgressPercentage()
-        );
+    }
+
+    /**
+     * @return array<string, array{int, float}>
+     */
+    public static function provideProgressPercentages(): array
+    {
+        return [
+            'level 1' => [1, 1.0],
+            'level 80' => [80, 66.17],
+            'level 99 rounds down to 96' => [99, 96],
+            'level 100' => [100, 100],
+            'level 101 caps at 100' => [101, 100],
+            'level 150 caps at 100' => [150, 100],
+        ];
     }
 
     public function testItShouldThrowWhenLevelTooLow(): void
     {
-        $this->expectExceptionObject(new \InvalidArgumentException('ZwiftLevel must be a number between 1 and 100'));
+        $this->expectExceptionObject(new \InvalidArgumentException('ZwiftLevel must be at least 1'));
 
         ZwiftLevel::fromInt(0);
-    }
-
-    public function testItShouldThrowWhenLevelTooHigh(): void
-    {
-        $this->expectExceptionObject(new \InvalidArgumentException('ZwiftLevel must be a number between 1 and 100'));
-
-        ZwiftLevel::fromInt(101);
     }
 }

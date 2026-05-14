@@ -6,6 +6,7 @@ Currently, the app is translated to:
 * 🇫🇷 French (thanks to [@llaumgui](https://github.com/llaumgui), [@Ahmosys](https://github.com/llaumgui) and [@Snoopfr](https://github.com/Snoopfr))
 * 🇩🇪 German (thanks to [@daydreamer77](https://github.com/daydreamer77))
 * 🇧🇪 Dutch
+* 🇭🇺 Hungarian (thanks to [@czdanika](https://github.com/czdanika))
 * 🇮🇹 Italian (thanks to Highlander)
 * 🇵🇹 Portuguese (thanks to [@jcnmsg](https://github.com/jcnmsg), [@davisenra](https://github.com/davisenra) & Batista)
 * 🇸🇪 Swedish  (thanks to [@strobit](https://github.com/strobit))

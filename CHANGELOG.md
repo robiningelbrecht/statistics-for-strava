@@ -1,3 +1,97 @@
+# [v4.7.11](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.11) - 2026-05-13
+
+## New Features
+* Added kilojoules (kJ) to the activity detail page
+
+## Improvements
+* Updated the German (de_DE) ICU translation file
+* Added documentation for installing via HelmForge on Kubernetes
+* Added a new "Current year" rewind option
+* Normalized daily TSS and TRIMP calculations
+
+## Bug fixes
+* Fixed the dropdown menu not closing when clicking a link
+* Fixed GAP calculation issues caused by repeated identical GPS coordinates
+
+## Technical details
+* Update messages+intl-icu.de_DE.yaml by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/2026
+* docs: add HelmForge Kubernetes install guide by @mberlofa in https://github.com/robiningelbrecht/statistics-for-strava/pull/2024
+* feat: Add YTD rewind option by @paquiro in https://github.com/robiningelbrecht/statistics-for-strava/pull/2029
+* ISSUE #2033: Normalize daily TSS and daily TRIMP by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2034
+* ISSUE #2027: Show kilojoules on activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2036
+* ISSUE #2035: We need to close the dropdown menu when clicking a link by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2037
+* fix GAP for repeated moving coordinates by @cgtobi in https://github.com/robiningelbrecht/statistics-for-strava/pull/2031
+
+## New Contributors
+* @mberlofa made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2024
+* @paquiro made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2029
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.10...v4.7.11
+
+# [v4.7.10](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.10) - 2026-05-07
+
+## Improvements
+* Use non-breaking space as thousands separator to prevent line wrapping
+* Allow to set Zwift level over 100
+* Improve split GAP calculation and values
+
+## Technical details
+* fix: use non-breaking space as thousands separator to prevent line wrapping by @vrkrebs in https://github.com/robiningelbrecht/statistics-for-strava/pull/2015
+* ISSUE #2016: Allow to set Zwift level over 100 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2017
+* ISSUE #2018: Use docker compose CMD instead of ENTRYPOINT by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2019
+* fix: stabilize split GAP values and add GAP recalculation command by @cgtobi in https://github.com/robiningelbrecht/statistics-for-strava/pull/1997
+
+## New Contributors
+* @vrkrebs made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2015
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.9...v4.7.10
+
+# [v4.7.9](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.9) - 2026-05-04
+
+## New features
+* SFS Docker image is now also published on the GitHub Container Registry.
+* Added a Hungarian (hu_HU) translation.
+* Added an option to configure the heatmap to load with a fixed viewport.
+
+```yaml
+appearance:
+  heatmap:
+    # Optional, sets the initial center point of the heatmap as [latitude, longitude].
+    # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
+    # 🔥 PRO tip: You can easily get the latitude and longitude by navigating to a location in Google Maps. The coordinates are shown in the URL.
+    # Leave empty to auto-fit.
+    initialCenter: null
+    # initialCenter: [51.05, 3.72]
+    # Optional, sets the initial zoom level of the heatmap (1-18, where 1 is fully zoomed out and 18 is street-level).
+    # Must be used together with initialCenter.
+    initialZoom: null
+    # initialZoom: 12
+```
+
+## Improvements
+* Added winter sports to the Yearly stats chart.
+* Added pre-configured quick links to the date filter options.
+
+## Bug fixes
+* Fixed the incorrect “Best Efforts YTD” label.
+* Fixed an issue where the label of the rightmost data point in weekly stats was partially cut off.
+* Fixed pace rounding in the Segments charts.
+
+## Technical details
+* ISSUE #1996: Update docs with Github container registry reference by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/1998
+* Add Hungarian (hu_HU) translation by @czdanika in https://github.com/robiningelbrecht/statistics-for-strava/pull/2002
+* ISSUE #2001: Fixed best efforts YTD label by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2003
+* ISSUE #1999: Weekly stats, data label of rightmost data point is partially cutoff by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2004
+* ISSUE #2000: Pace rounding in Segments charts by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2005
+* ISSUE #2006: Add winter sports to Yearly stats chart by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2007
+* ISSUE #2008: Add pre-configured links to the date filters by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2010
+* ISSUE #2009: Allow to configure heatmap to load on fixed view port by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2011
+
+## New Contributors
+* @czdanika made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2002
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.8...v4.7.9
+
 # [v4.7.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.8) - 2026-04-28
 
 ## Bug fixes

@@ -48,7 +48,7 @@ class AthleteTest extends TestCase
                 'birthDate' => '2024-01-01',
             ],
         );
-        $athlete->getRestingHeartRateFormula(SerializableDateTime::fromString('2024-01-01'));
+        $athlete->getRestingHeartRate(SerializableDateTime::fromString('2024-01-01'));
     }
 
     public static function provideDataAthleteAgeData(): array

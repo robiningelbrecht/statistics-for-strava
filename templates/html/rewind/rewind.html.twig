@@ -12,11 +12,11 @@
 {% endif %}
 {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': breadcrumbs} %}
 {% autoescape false %}
-    {% if availableRewindOptions|length > 1 %}
+    {% if availableRewindOptions|length > 2 %}
         <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <div class="flex gap-x-2">
                 <div>
-                    <button id="dropdownRewindOptionButton" data-dropdown-toggle="dropdownRewindOption"
+                    <button id="dropdownRewindOptionButton" data-dropdown="dropdownRewindOption"
                             class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between"
                             type="button">
                         {% if isAllTimeRewind %}
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="hidden lg:block">
-                    <button id="dropdownRewindOptionCompareToButton" data-dropdown-toggle="dropdownRewindOptionCompareTo"
+                    <button id="dropdownRewindOptionCompareToButton" data-dropdown="dropdownRewindOptionCompareTo"
                             class="cursor-pointer w-fit text-white bg-strava-orange hover:bg-orange-600 focus:ring-4 focus:outline-hidden focus:ring-orange-300 font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between"
                             type="button">
                         {{ "Compare to"|trans }}
@@ -88,16 +88,5 @@
             These charts are based on <a href="https://github.com/atefkbenothman" class="underline" target="_blank">Kai's</a> work,
             go <a href="https://github.com/atefkbenothman/strava-recap" class="underline" target="_blank">check it out</a>
         </p>
-        <div class="mt-4 flex items-center p-2 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50"
-             role="alert">
-            <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                 fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="text-xs">
-                {{ "Your Strava {year} rewind will be available on the 24th of December."|trans({'{year}': now.format('Y')}) }}
-            </div>
-        </div>
     </div>
 {% endautoescape %}

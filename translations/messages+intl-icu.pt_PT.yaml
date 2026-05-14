@@ -97,6 +97,7 @@ Elev: Desnível
 Elevation: Elevação
 'Elevation in {unit}': 'Elevação em {unit}'
 Elliptical: Elíptica
+Energy: Energy
 'Enter fullscreen mode': 'Enter fullscreen mode'
 Evening: 'Fim da tarde'
 'Excludes commutes': 'Exclui viagens escritório'
@@ -172,11 +173,14 @@ Kayaking: Caiaque
 'Kite Surf': Kitesurf
 Lap: Volta
 Laps: Voltas
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Carga de treino dos últimos 7 dias'
 'Last activity': 'Last activity'
 'Last effort': 'Last effort'
 'Last effort date': 'Last effort date'
 'Last maintenance': 'Última manutenção'
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': 'Últimos {numberOfDays} dias'
 Lifetime: Lifetime
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Light fatigue with good readiness. A great balance for quality training or longer efforts'
@@ -433,6 +437,8 @@ Tennis: Ténis
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
 'This feature is currently disabled': 'Esta funcionalidade está desabilitada'
+'This month': 'This month'
+'This week': 'This week'
 Thu: Qui
 Thursday: Quinta-feira
 Time: Hora
@@ -489,7 +495,6 @@ Wheelchair: 'Cadeira de Rodas'
 Workout: Treino
 'Workout assistant': 'Workout assistant'
 'Workout type': 'Tipo de exercício'
-YTD: YTD
 Year: Ano
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
@@ -497,7 +502,6 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Registou actividades em {numberOfCountriesWithWorkouts} países diferentes, o que dá {percentage} de todos os países🌍'
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
-'Your Strava {year} rewind will be available on the 24th of December.': 'O seu Rewind Strava de {year} estará disponível no dia 24 de Dezembro.'
 'Your Zwift badge': 'O teu emblema do Zwift'
 'Your badge(s)': 'O(s) teu(s) emblema(s)'
 'Z1-2 (Low)': 'Z1-2 (Low)'

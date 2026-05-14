@@ -53,9 +53,9 @@ final readonly class DaytimeStats
             $daytime = Daytime::fromSerializableDateTime($activity->getStartDate());
 
             ++$statistics[$daytime->value]['numberOfWorkouts'];
-            $statistics[$daytime->value]['totalDistance'] = ($statistics[$daytime->value]['totalDistance'] ?? 0) + $activity->getDistance()->toFloat();
-            $statistics[$daytime->value]['totalElevation'] = ($statistics[$daytime->value]['totalElevation'] ?? 0) + $activity->getElevation()->toFloat();
-            $statistics[$daytime->value]['movingTime'] = ($statistics[$daytime->value]['movingTime'] ?? 0) + $activity->getMovingTimeInSeconds();
+            $statistics[$daytime->value]['totalDistance'] += $activity->getDistance()->toFloat();
+            $statistics[$daytime->value]['totalElevation'] += $activity->getElevation()->toFloat();
+            $statistics[$daytime->value]['movingTime'] += $activity->getMovingTimeInSeconds();
             $statistics[$daytime->value]['averageDistance'] = $statistics[$daytime->value]['totalDistance'] / $statistics[$daytime->value]['numberOfWorkouts'];
             $statistics[$daytime->value]['movingTimeForHumans'] = $this->formatDurationAsHumanString($statistics[$daytime->value]['movingTime']);
             $statistics[$daytime->value]['movingTimeInHours'] = Seconds::from($statistics[$daytime->value]['movingTime'])->toHour();

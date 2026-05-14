@@ -8,19 +8,21 @@ use App\Infrastructure\ValueObject\Number\PositiveInteger;
 
 final readonly class ZwiftLevel extends PositiveInteger
 {
-    private const int MAX_LEVEL = 100;
+    private const int MAX_LEVEL_FOR_PROGRESS = 100;
 
     protected function validate(int $value): void
     {
-        if ($value >= 1 && $value <= self::MAX_LEVEL) {
-            return;
+        if ($value < 1) {
+            throw new \InvalidArgumentException('ZwiftLevel must be at least 1');
         }
-
-        throw new \InvalidArgumentException('ZwiftLevel must be a number between 1 and 100');
     }
 
     public function getProgressPercentage(): float
     {
+        if ($this->getValue() >= self::MAX_LEVEL_FOR_PROGRESS) {
+            return 100;
+        }
+
         $xpNeeded = $this->getXpNeededToReachLevel();
         if (0 === $xpNeeded) {
             return 1;
@@ -38,7 +40,10 @@ final readonly class ZwiftLevel extends PositiveInteger
 
     public function getXpNeededToReachLevel(): int
     {
-        return $this->getXpTable()[$this->getValue() - 1];
+        $xpTable = $this->getXpTable();
+        $level = min($this->getValue(), self::MAX_LEVEL_FOR_PROGRESS);
+
+        return $xpTable[$level - 1];
     }
 
     public function getXpNeededToReachMaxLevel(): int

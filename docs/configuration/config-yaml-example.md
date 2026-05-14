@@ -67,7 +67,7 @@ general:
       cycling: []
       running: []
 appearance:
-  # Allowed options: en_US, fr_FR, it_IT, nl_BE, de_DE, pt_BR, pt_PT sv_SE or zh_CN
+  # Allowed options: en_US, fr_FR, hu_HU, it_IT, nl_BE, de_DE, pt_BR, pt_PT sv_SE or zh_CN
   locale: 'en_US'
   # Allowed options: metric or imperial
   unitSystem: 'metric'
@@ -98,6 +98,16 @@ appearance:
     #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}.png'
     # Enables or disables grayscale styling on the heatmap.
     enableGreyScale: true
+    # Optional, sets the initial center point of the heatmap as [latitude, longitude].
+    # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
+    # 🔥 PRO tip: You can easily get the latitude and longitude by navigating to a location in Google Maps. The coordinates are shown in the URL.
+    # Leave empty to auto-fit.
+    initialCenter: null
+    # initialCenter: [51.05, 3.72]
+    # Optional, sets the initial zoom level of the heatmap (1-18, where 1 is fully zoomed out and 18 is street-level).
+    # Must be used together with initialCenter.
+    initialZoom: null
+    # initialZoom: 12
   photos:
     # Optional, an array of sport types for which photos should be hidden on the photos page. 
     # They will not be rendered, and they won't show up in the filters. 
@@ -200,7 +210,7 @@ gear:
           amountInCents: 29950
           currency: EUR
 zwift:
-  # Optional, your Zwift level (1 - 100). Will be used to render your Zwift badge. Leave empty to disable this feature
+  # Optional, your Zwift level. Will be used to render your Zwift badge. Leave empty to disable this feature
   level: null
   # Optional, your Zwift racing score (0 - 1000). Will be used to add to your Zwift badge if zwift.level is filled out.
   racingScore: null

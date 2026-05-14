@@ -1,4 +1,5 @@
 import {FilterStorage} from "./storage";
+import {DatePreset} from "./date-preset";
 
 export class FilterManager {
     constructor(wrapper) {
@@ -174,6 +175,17 @@ export class FilterManager {
             }
         });
         FilterStorage.clearAll(tableName);
+    }
+
+    applyDatePreset(presetName, filterName) {
+        const range = DatePreset.resolve(presetName);
+        if (!range) return;
+
+        const fromInput = this.wrapper.querySelector(`input[name="${filterName}[from]"]`);
+        const toInput = this.wrapper.querySelector(`input[name="${filterName}[to]"]`);
+
+        if (fromInput) fromInput.valueAsDate = range.from;
+        if (toInput) toInput.valueAsDate = range.to;
     }
 
     resetOne(name) {

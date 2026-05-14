@@ -97,6 +97,7 @@ Elev: Disl.
 Elevation: Dislivello
 'Elevation in {unit}': 'Dislivello in {unit}'
 Elliptical: Ellittica
+Energy: Energy
 'Enter fullscreen mode': 'Entra in modalità schermo intero'
 Evening: Sera
 'Excludes commutes': 'Esclude gli spostamenti casa-lavoro'
@@ -172,11 +173,14 @@ Kayaking: Kayak
 'Kite Surf': Kitesurf
 Lap: Giro
 Laps: Giri
+'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Carico di allenamento negli ultimi 7 giorni'
 'Last activity': 'Ultima attività'
 'Last effort': 'Ultimo tentativo'
 'Last effort date': 'Data dell’ultimo sforzo'
 'Last maintenance': 'Ultima manutenzione'
+'Last month': 'Last month'
+'Last week': 'Last week'
 'Last {numberOfDays} days': 'Ultimi {numberOfDays} giorni'
 Lifetime: Lifetime
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Fatica leggera con buona prontezza. Un ottimo equilibrio per allenamenti di qualità o sforzi più lunghi'
@@ -433,6 +437,8 @@ Tennis: Tennis
 Thinking...: Elaborazione...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Questo grafico riassume come ti alleni. Ogni asse riflette una diversa abitudine di allenamento normalizzata, quindi valori più alti indicano un’enfasi maggiore.'
 'This feature is currently disabled': 'Questa funzionalità è attualmente disattivata'
+'This month': 'This month'
+'This week': 'This week'
 Thu: Gio
 Thursday: Giovedì
 Time: Tempo
@@ -489,7 +495,6 @@ Wheelchair: 'Sedia a rotelle'
 Workout: Allenamento
 'Workout assistant': 'Assistente allenamento'
 'Workout type': 'Tipo di allenamento'
-YTD: YTD
 Year: Anno
 Yearly: Yearly
 'Yearly stats': 'Statistiche annuali'
@@ -497,7 +502,6 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Hai registrato allenamenti in {numberOfCountriesWithWorkouts} paesi diversi, pari al {percentage} di tutti i paesi 🌍'
 'Your PB badge': 'Il tuo badge record personale'
 'Your Strava badge': 'Il tuo badge Strava'
-'Your Strava {year} rewind will be available on the 24th of December.': 'Il tuo Rewind Strava {year} sarà disponibile il 24 dicembre.'
 'Your Zwift badge': 'Il tuo badge Zwift'
 'Your badge(s)': 'I tuoi badge'
 'Z1-2 (Low)': 'Z1-2 (Basso)'

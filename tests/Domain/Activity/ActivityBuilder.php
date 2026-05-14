@@ -86,6 +86,7 @@ final class ActivityBuilder
             elevation: $this->elevation,
             startingCoordinate: $this->startingCoordinate,
             calories: $this->calories,
+            kilojoules: null,
             averagePower: $this->averagePower,
             maxPower: $this->maxPower,
             averageSpeed: $this->averageSpeed,

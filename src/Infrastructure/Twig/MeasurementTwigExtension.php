@@ -89,7 +89,7 @@ final readonly class MeasurementTwigExtension
             return '0';
         }
 
-        return number_format(round($number, $precision), $precision, '.', ' ');
+        return number_format(round($number, $precision), $precision, '.', "\u{00A0}");
     }
 
     #[AsTwigFilter('formatSeconds')]

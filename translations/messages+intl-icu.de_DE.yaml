@@ -97,6 +97,7 @@ Elev: Anstieg
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
+Energy: Energy
 'Enter fullscreen mode': 'Vollbildmodus aktivieren'
 Evening: Abend
 'Excludes commutes': 'Pendler ausschließen'
@@ -172,11 +173,14 @@ Kayaking: Kajakfahren
 'Kite Surf': Kitesurfen
 Lap: Runde
 Laps: Runden
+'Last 30 days': 'Letzte 30 Tage'
 'Last 7 days training load': 'Trainingsbelastung der letzten 7 Tage'
 'Last activity': 'Letzte Aktivität'
 'Last effort': 'Letzte Leistung'
 'Last effort date': 'Datum der letzten Leistung'
 'Last maintenance': 'Letzte Wartung'
+'Last month': 'Letzter Monat'
+'Last week': 'Letzte Woche'
 'Last {numberOfDays} days': 'Letzten {numberOfDays} Tage'
 Lifetime: Gesamtzeitraum
 'Light fatigue with good readiness. A great balance for quality training or longer efforts': 'Leichte Ermüdung bei guter Bereitschaft. Eine super Balance für Qualitätstraining oder längere Einheiten'
@@ -341,7 +345,7 @@ Tag: Tag
 'Taper sweet-spot (+15)': 'Taper sweet-spot (+15)'
 'Team Sports': Teamsportarten
 Tennis: Tennis
-"That's 1.5 times the distance to the edge of space": "That's 1.5 times the distance to the edge of space"
+"That's 1.5 times the distance to the edge of space": 'Das ist das 1,5-fache der Entfernung bis zum Rand des Weltraums'
 "That's 100 days of commitment, triple digits!": 'Das sind 100 Tage voller Einsatz - dreistellig!'
 "That's 2 activities per week for nearly 5 years": 'Das entspricht zwei Aktivitäten pro Woche für fast 5 Jahre'
 "That's 2 full days of non-stop activity": 'Das entspricht zwei Tagen ununterbrochene Aktivität'
@@ -433,6 +437,8 @@ Tennis: Tennis
 Thinking...: Denke...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Diese Grafik zeigt deinen Trainingsstil. Die Achsen stehen für verschiedene normalisierte Gewohnheiten. Höhere Werte bedeuten dabei eine stärkere Gewichtung.'
 'This feature is currently disabled': 'Dieses Feature ist momentan deaktiviert'
+'This month': 'Dieser Monat'
+'This week': 'Diese Woche'
 Thu: Do
 Thursday: Donnerstag
 Time: Zeit
@@ -489,7 +495,6 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout assistant': Trainingsassistent
 'Workout type': Trainingseinheitstyp
-YTD: YTD
 Year: Jahr
 Yearly: Jährlich
 'Yearly stats': 'Jährliche Statistiken'
@@ -497,7 +502,6 @@ Yoga: Yoga
 "You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Du hast Aktivitäten in {numberOfCountriesWithWorkouts} unterschiedlichen Ländern aufgezeichnet, das sind {percentage} aller Länder 🌍'
 'Your PB badge': 'Dein PB Abzeichen'
 'Your Strava badge': 'Dein Strava-Abzeichen'
-'Your Strava {year} rewind will be available on the 24th of December.': 'Dein Strava {year} Rückblick wird am 24. Dezember zur Verfügung stehen.'
 'Your Zwift badge': 'Dein Zwift-Abzeichen'
 'Your badge(s)': 'Dein(e) Abzeichen'
 'Z1-2 (Low)': 'Z1-2 (Niedrig)'

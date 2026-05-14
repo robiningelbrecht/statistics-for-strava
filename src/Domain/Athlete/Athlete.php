@@ -61,7 +61,7 @@ final class Athlete implements \JsonSerializable, SupportsAITooling
         return $this->getBirthDate()->diff($on)->y;
     }
 
-    public function getRestingHeartRateFormula(SerializableDateTime $on): int
+    public function getRestingHeartRate(SerializableDateTime $on): int
     {
         if (is_null($this->restingHeartRateFormula)) {
             throw new \RuntimeException('Resting heart rate formula not set');
