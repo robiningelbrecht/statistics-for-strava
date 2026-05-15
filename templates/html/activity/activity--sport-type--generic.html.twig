@@ -104,13 +104,16 @@
                     </div>
                 {% endif %}
                 {% if activity.getLocalImagePaths() %}
-                    <div class="flex gap-2 relative overflow-x-auto">
+                    <div class="flex gap-2 relative overflow-x-auto activity-photo-gallery">
                         {% for imagePath in activity.getLocalImagePaths() %}
-                            <div class="h-32 shrink-0">
+                            <a class="h-32 shrink-0 cursor-pointer block relative group/photo"
+                               data-activity-photo="{{ relativeUrl(imagePath) }}"
+                               href="#">
                                 <img class="h-full object-cover object-top rounded-lg lazy"
                                      src="{{ placeholderImage() }}" data-src="{{ relativeUrl(imagePath) }}"
                                      alt="Activity image"/>
-                            </div>
+                                <div class="absolute inset-0 bg-black/0 group-hover/photo:bg-black/20 transition-colors duration-300 rounded-lg"></div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
