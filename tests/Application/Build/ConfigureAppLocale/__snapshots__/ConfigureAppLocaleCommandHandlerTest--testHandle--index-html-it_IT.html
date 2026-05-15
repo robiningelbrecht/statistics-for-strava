@@ -350,6 +350,70 @@
 <script src="/libraries/leaflet/leaflet.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
 <script src="/js/dist/leaflet.controls.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
 <script src="/js/dist/app.min.js?0025176c-5652-11ee-923d-02424dd627d5" type="module"></script>
+<script src="/libraries/lightgallery/lightgallery.umd.min.js?0025176c-5652-11ee-923d-02424dd627d5"></script>
+<script>
+(function () {
+    function initActivityPhotoGallery(container) {
+        if (typeof lightGallery === 'undefined') return;
+        var galleries = container.querySelectorAll ? container.querySelectorAll('.activity-photo-gallery') : [];
+        galleries.forEach(function (gallery) {
+            if (gallery.dataset.lgInit) return;
+            gallery.dataset.lgInit = '1';
+            var links = Array.from(gallery.querySelectorAll('[data-activity-photo]'));
+            if (!links.length) return;
+            var items = links.map(function (el) {
+                return { src: el.getAttribute('data-activity-photo'), alt: 'Activity image' };
+            });
+            var trigger = document.createElement('span');
+            trigger.style.display = 'none';
+            document.body.appendChild(trigger);
+            var lg = lightGallery(trigger, {
+                dynamic: true,
+                plugins: [],
+                download: false,
+                closeOnTap: true,
+                enableDrag: false,
+                enableSwipe: false,
+                backdropDuration: 200,
+                dynamicEl: items,
+            });
+            trigger.addEventListener('lgAfterOpen', function () {
+                document.querySelectorAll('.lg-img-wrap').forEach(function (el) {
+                    el.style.cursor = 'pointer';
+                    el.addEventListener('click', function () { lg.closeGallery(); });
+                });
+            });
+            links.forEach(function (link, idx) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    lg.refresh(items);
+                    lg.openGallery(idx);
+                }, true);
+            });
+        });
+    }
+
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            m.addedNodes.forEach(function (node) {
+                if (node.nodeType === 1) { initActivityPhotoGallery(node); }
+            });
+        });
+    });
+
+    function startObserver() {
+        var target = document.getElementById('modal-content') || document.body;
+        observer.observe(target, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startObserver);
+    } else {
+        startObserver();
+    }
+})();
+</script>
 <!-- 3c64bce0-4f00-54bc-a9fb-a2402a364b87 -->
 </body>
 </html>
