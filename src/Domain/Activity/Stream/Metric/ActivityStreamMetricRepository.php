@@ -21,5 +21,7 @@ interface ActivityStreamMetricRepository
 
     public function findActivityIdsWithoutEncodedPolyline(): ActivityIds;
 
+    public function findActivityIdsWithoutAerobicDecoupling(int $minimumMovingTimeInSeconds): ActivityIds;
+
     public function findByActivityIdAndMetricType(ActivityId $activityId, ActivityStreamMetricType $metricType): ActivityStreamMetrics;
 }

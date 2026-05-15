@@ -10,4 +10,5 @@ enum ActivityStreamMetricType: string
     case VALUE_DISTRIBUTION = 'valueDistribution';
     case NORMALIZED_POWER = 'normalizedPower';
     case ENCODED_POLYLINE = 'encodedPolyline';
+    case AEROBIC_DECOUPLING = 'aerobicDecoupling';
 }

@@ -6,6 +6,7 @@ namespace App\Application\Build\BuildActivitiesHtml;
 
 use App\Application\Countries;
 use App\Domain\Activity\ActivityTotals;
+use App\Domain\Activity\AerobicDecoupling;
 use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\CadenceDistributionChart;
 use App\Domain\Activity\Device\DeviceRepository;
@@ -58,6 +59,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private DeviceRepository $deviceRepository,
         private FtpHistory $ftpHistory,
         private BestEffortsCalculator $bestEffortsCalculator,
+        private AerobicDecoupling $aerobicDecoupling,
         private HeartRateZoneConfiguration $heartRateZoneConfiguration,
         private Countries $countries,
         private UnitSystem $unitSystem,
@@ -103,6 +105,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 $activity->getId(),
                 ActivityStreamMetricType::VALUE_DISTRIBUTION
             );
+            $aerobicDecoupling = $this->aerobicDecoupling->calculateFor($activity->getId());
 
             $distributionCharts = [];
             $heartRateDistribution = $valueDistributionMetrics->filterOnStreamType(StreamType::HEART_RATE)?->getData() ?? [];
@@ -276,6 +279,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'hasProfileChart' => null !== $profileChart,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
                     'heartRateZones' => $timeInHeartRateZones,
+                    'aerobicDecoupling' => $aerobicDecoupling,
+                    'aerobicDecouplingSeverity' => $this->aerobicDecoupling->determineSeverity($aerobicDecoupling),
                 ]),
             );
 

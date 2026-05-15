@@ -153,6 +153,10 @@ import:
   # Each segment only needs to be imported once, so this will not affect the import time for subsequent imports.
   optInToSegmentDetailImport: false
 metrics:
+  aerobicDecoupling:
+    # Minimum moving time in minutes before aerobic decoupling is calculated for runs.
+    # Set to 0 to calculate it for every run with heart rate, velocity, time, and moving streams.
+    minimumMovingTimeInMinutes: 30
   # An array of activity ids to exclude from peak power outputs. 
   # This allows you to blacklist specific activity IDs from the peak power calculation.
   # ["123456789", "987654321"]

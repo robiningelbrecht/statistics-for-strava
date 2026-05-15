@@ -184,6 +184,10 @@ services:
         factory: [ null, 'fromScalarArray' ]
         arguments: ['@=app_config("metrics.eddington", [])']
 
+    App\Application\Import\CalculateActivityMetrics\Pipeline\CalculateAerobicDecoupling:
+        arguments:
+            $minimumMovingTimeInMinutes: '@=app_config("metrics.aerobicDecoupling.minimumMovingTimeInMinutes", 30)'
+
     App\Domain\Activity\SportType\SportTypesSortingOrder:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.sportTypesSortingOrder", [])']

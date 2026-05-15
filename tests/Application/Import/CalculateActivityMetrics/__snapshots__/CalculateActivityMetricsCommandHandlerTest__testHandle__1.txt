@@ -1,4 +1,7 @@
 Calculating activity metrics. Please be patient, this can take a while...
+  => Calculated aerobic decoupling for 0 activities (3 s)
+  => Calculated aerobic decoupling for 0 activities (3 s)
+
   => Calculated best efforts for 0 activities (3 s)
   => Calculated best efforts for 0 activities (3 s)
 

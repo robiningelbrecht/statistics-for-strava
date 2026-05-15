@@ -6,6 +6,7 @@ namespace App\Domain\Activity\Stream\Metric;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
@@ -122,6 +123,57 @@ final readonly class DbalActivityStreamMetricRepository extends DbalRepository i
             $this->connection->executeQuery($sql, [
                 'metricType' => ActivityStreamMetricType::ENCODED_POLYLINE->value,
                 'streamType' => StreamType::LAT_LNG->value,
+            ])->fetchFirstColumn()
+        ));
+    }
+
+    public function findActivityIdsWithoutAerobicDecoupling(int $minimumMovingTimeInSeconds): ActivityIds
+    {
+        $sql = 'SELECT Activity.activityId FROM Activity
+                WHERE Activity.activityType = :activityType
+                AND Activity.movingTimeInSeconds >= :minimumMovingTimeInSeconds
+                AND NOT EXISTS (
+                    SELECT 1 FROM ActivityStreamMetric m
+                    WHERE m.activityId = Activity.activityId
+                    AND m.streamType = :velocityStreamType
+                    AND m.metricType = :metricType
+                )
+                AND EXISTS (
+                    SELECT 1 FROM ActivityStream s
+                    WHERE s.activityId = Activity.activityId
+                    AND s.streamType = :timeStreamType
+                    AND s.dataSize > 0
+                )
+                AND EXISTS (
+                    SELECT 1 FROM ActivityStream s
+                    WHERE s.activityId = Activity.activityId
+                    AND s.streamType = :movingStreamType
+                    AND s.dataSize > 0
+                )
+                AND EXISTS (
+                    SELECT 1 FROM ActivityStream s
+                    WHERE s.activityId = Activity.activityId
+                    AND s.streamType = :heartRateStreamType
+                    AND s.dataSize > 0
+                )
+                AND EXISTS (
+                    SELECT 1 FROM ActivityStream s
+                    WHERE s.activityId = Activity.activityId
+                    AND s.streamType = :velocityStreamType
+                    AND s.dataSize > 0
+                )
+                ORDER BY Activity.activityId';
+
+        return ActivityIds::fromArray(array_map(
+            ActivityId::fromString(...),
+            $this->connection->executeQuery($sql, [
+                'activityType' => ActivityType::RUN->value,
+                'minimumMovingTimeInSeconds' => $minimumMovingTimeInSeconds,
+                'metricType' => ActivityStreamMetricType::AEROBIC_DECOUPLING->value,
+                'timeStreamType' => StreamType::TIME->value,
+                'movingStreamType' => StreamType::MOVING->value,
+                'heartRateStreamType' => StreamType::HEART_RATE->value,
+                'velocityStreamType' => StreamType::VELOCITY->value,
             ])->fetchFirstColumn()
         ));
     }

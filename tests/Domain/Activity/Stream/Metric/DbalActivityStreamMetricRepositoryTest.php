@@ -4,6 +4,9 @@ namespace App\Tests\Domain\Activity\Stream\Metric;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\DbalActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
@@ -12,6 +15,7 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\Metric\DbalActivityStreamMetricRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 
 class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
@@ -238,6 +242,50 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindActivityIdsWithoutAerobicDecoupling(): void
+    {
+        $eligibleActivityId = ActivityId::fromUnprefixed('1');
+        $tooShortActivityId = ActivityId::fromUnprefixed('2');
+        $rideActivityId = ActivityId::fromUnprefixed('3');
+        $missingStreamActivityId = ActivityId::fromUnprefixed('4');
+        $alreadyCalculatedActivityId = ActivityId::fromUnprefixed('5');
+
+        $this->addActivity($eligibleActivityId, SportType::RUN, 1800);
+        $this->addRequiredAerobicDecouplingStreams($eligibleActivityId);
+        $this->addActivity($tooShortActivityId, SportType::RUN, 1799);
+        $this->addRequiredAerobicDecouplingStreams($tooShortActivityId);
+        $this->addActivity($rideActivityId, SportType::RIDE, 1800);
+        $this->addRequiredAerobicDecouplingStreams($rideActivityId);
+        $this->addActivity($missingStreamActivityId, SportType::TRAIL_RUN, 1800);
+        $this->addStream($missingStreamActivityId, StreamType::TIME);
+        $this->addActivity($alreadyCalculatedActivityId, SportType::VIRTUAL_RUN, 1800);
+        $this->addRequiredAerobicDecouplingStreams($alreadyCalculatedActivityId);
+
+        $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
+            activityId: $alreadyCalculatedActivityId,
+            streamType: StreamType::VELOCITY,
+            metricType: ActivityStreamMetricType::AEROBIC_DECOUPLING,
+            data: [4.2],
+        ));
+
+        $this->assertEquals(
+            ActivityIds::fromArray([$eligibleActivityId]),
+            $this->activityStreamMetricRepository->findActivityIdsWithoutAerobicDecoupling(1800),
+        );
+    }
+
+    public function testFindActivityIdsWithoutAerobicDecouplingAllowsZeroMinimumMovingTime(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('1');
+        $this->addActivity($activityId, SportType::RUN, 1);
+        $this->addRequiredAerobicDecouplingStreams($activityId);
+
+        $this->assertEquals(
+            ActivityIds::fromArray([$activityId]),
+            $this->activityStreamMetricRepository->findActivityIdsWithoutAerobicDecoupling(0),
+        );
+    }
+
     public function testFindByActivityIdAndMetricType(): void
     {
         $activityId = ActivityId::fromUnprefixed('1');
@@ -301,8 +349,29 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
             ActivityStreamBuilder::fromDefaults()
                 ->withActivityId($activityId)
                 ->withStreamType($streamType)
+                ->withData([1])
                 ->build()
         );
+    }
+
+    private function addRequiredAerobicDecouplingStreams(ActivityId $activityId): void
+    {
+        $this->addStream($activityId, StreamType::TIME);
+        $this->addStream($activityId, StreamType::MOVING);
+        $this->addStream($activityId, StreamType::HEART_RATE);
+        $this->addStream($activityId, StreamType::VELOCITY);
+    }
+
+    private function addActivity(ActivityId $activityId, SportType $sportType, int $movingTimeInSeconds): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId($activityId)
+                ->withSportType($sportType)
+                ->withMovingTimeInSeconds($movingTimeInSeconds)
+                ->build(),
+            []
+        ));
     }
 
     #[\Override]
