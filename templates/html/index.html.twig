@@ -22,6 +22,15 @@
     <link rel="preload" href="{{ relativeUrl(asset('libraries/leaflet/leaflet.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ relativeUrl(asset('libraries/clusterize/clusterize.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="{{ relativeUrl(asset('libraries/lightgallery/lightgallery-bundle.min.css')) }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <style>
+        /* LightGallery: only lg.ttf is bundled; declare it explicitly so browsers don't 404 on woff2/woff */
+        @font-face { font-family: 'lg'; src: url('{{ relativeUrl(asset('libraries/lightgallery/lg.ttf')) }}') format('truetype'); font-display: block; }
+        /* Toolbar: hide download, render nav/close icons without icon font */
+        .lg-toolbar .lg-download { display: none !important; }
+        .lg-close:after  { content: '✕' !important; font-family: system-ui, sans-serif !important; font-size: 1.5rem !important; }
+        .lg-prev:after   { content: '‹' !important; font-family: system-ui, sans-serif !important; font-size: 3rem !important; line-height: 1 !important; }
+        .lg-next:before  { content: '›' !important; font-family: system-ui, sans-serif !important; font-size: 3rem !important; line-height: 1 !important; }
+    </style>
 </head>
 <body class="bg-gray-50" data-easter-egg="{{ easterEggPageUrl }}">
 <div class="antialiased">
@@ -267,6 +276,70 @@
 <script src="{{ relativeUrl(asset('libraries/leaflet/leaflet.js')) }}"></script>
 <script src="{{ relativeUrl(asset('js/dist/leaflet.controls.min.js')) }}"></script>
 <script src="{{ relativeUrl(asset('js/dist/app.min.js')) }}" type="module"></script>
+<script src="{{ relativeUrl(asset('libraries/lightgallery/lightgallery.umd.min.js')) }}"></script>
+<script>
+(function () {
+    function initActivityPhotoGallery(container) {
+        if (typeof lightGallery === 'undefined') return;
+        var galleries = container.querySelectorAll ? container.querySelectorAll('.activity-photo-gallery') : [];
+        galleries.forEach(function (gallery) {
+            if (gallery.dataset.lgInit) return;
+            gallery.dataset.lgInit = '1';
+            var links = Array.from(gallery.querySelectorAll('[data-activity-photo]'));
+            if (!links.length) return;
+            var items = links.map(function (el) {
+                return { src: el.getAttribute('data-activity-photo'), alt: 'Activity image' };
+            });
+            var trigger = document.createElement('span');
+            trigger.style.display = 'none';
+            document.body.appendChild(trigger);
+            var lg = lightGallery(trigger, {
+                dynamic: true,
+                plugins: [],
+                download: false,
+                closeOnTap: true,
+                enableDrag: false,
+                enableSwipe: false,
+                backdropDuration: 200,
+                dynamicEl: items,
+            });
+            trigger.addEventListener('lgAfterOpen', function () {
+                document.querySelectorAll('.lg-img-wrap').forEach(function (el) {
+                    el.style.cursor = 'pointer';
+                    el.addEventListener('click', function () { lg.closeGallery(); });
+                });
+            });
+            links.forEach(function (link, idx) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    lg.refresh(items);
+                    lg.openGallery(idx);
+                }, true);
+            });
+        });
+    }
+
+    var observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (m) {
+            m.addedNodes.forEach(function (node) {
+                if (node.nodeType === 1) { initActivityPhotoGallery(node); }
+            });
+        });
+    });
+
+    function startObserver() {
+        var target = document.getElementById('modal-content') || document.body;
+        observer.observe(target, { childList: true, subtree: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startObserver);
+    } else {
+        startObserver();
+    }
+})();
+</script>
 {% block customScripts %}
 {% endblock customScripts %}
 <!-- {{ easterEggPageUrl }} -->
