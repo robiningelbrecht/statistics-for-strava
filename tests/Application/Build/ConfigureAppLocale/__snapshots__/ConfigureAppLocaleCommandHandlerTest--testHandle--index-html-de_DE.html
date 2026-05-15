@@ -22,6 +22,15 @@
     <link rel="preload" href="/libraries/leaflet/leaflet.css?0025176c-5652-11ee-923d-02424dd627d5" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="/libraries/clusterize/clusterize.min.css?0025176c-5652-11ee-923d-02424dd627d5" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="/libraries/lightgallery/lightgallery-bundle.min.css?0025176c-5652-11ee-923d-02424dd627d5" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <style>
+        /* LightGallery: only lg.ttf is bundled; declare it explicitly so browsers don't 404 on woff2/woff */
+        @font-face { font-family: 'lg'; src: url('/libraries/lightgallery/lg.ttf?0025176c-5652-11ee-923d-02424dd627d5') format('truetype'); font-display: block; }
+        /* Toolbar: hide download, render nav/close icons without icon font */
+        .lg-toolbar .lg-download { display: none !important; }
+        .lg-close:after  { content: '&acirc;&#156;&#149;' !important; font-family: system-ui, sans-serif !important; font-size: 1.5rem !important; }
+        .lg-prev:after   { content: '&acirc;&#128;&sup1;' !important; font-family: system-ui, sans-serif !important; font-size: 3rem !important; line-height: 1 !important; }
+        .lg-next:before  { content: '&acirc;&#128;&ordm;' !important; font-family: system-ui, sans-serif !important; font-size: 3rem !important; line-height: 1 !important; }
+    </style>
 </head>
 <body class="bg-gray-50" data-easter-egg="3c64bce0-4f00-54bc-a9fb-a2402a364b87">
 <div class="antialiased">
