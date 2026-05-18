@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities Overview – Redesign POC</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+    <style type="text/tailwindcss">
+        @theme {
+            --color-strava-orange: #F26722;
+            --color-strava-orange-soft: #FFF1E9;
+            --font-sans: Inter, ui-sans-serif, system-ui;
+            --text-xxs: 0.625rem;
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #f3f4f6;
+        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Sticky first columns on horizontal scroll */
+        .col-sticky-1 { position: sticky; left: 0; z-index: 2; }
+        .col-sticky-2 { position: sticky; left: 88px; z-index: 2; }
+        thead .col-sticky-1, thead .col-sticky-2 { z-index: 4; }
+
+        /* Right shadow on the last sticky column to hint at scrollable content */
+        .col-sticky-edge::after {
+            content: '';
+            position: absolute;
+            top: 0; right: -8px; bottom: 0;
+            width: 8px;
+            background: linear-gradient(to right, rgba(0,0,0,0.06), transparent);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-start justify-center py-6 px-3">
+
+<div class="w-full max-w-7xl bg-white rounded-lg shadow-2xl ring-1 ring-black/5 overflow-hidden">
+
+    <!-- Breadcrumb -->
+    <nav class="px-6 md:px-8 pt-4 pb-2 text-xs text-gray-500">
+        <a href="#" class="hover:text-strava-orange transition">Home</a>
+        <span class="mx-1.5 text-gray-300">/</span>
+        <span class="text-gray-700 font-medium">Activities</span>
+    </nav>
+
+    <!-- HEADER: title, summary, search, filter chips, sort -->
+    <header class="bg-white px-6 md:px-8 pt-3 pb-4 sticky top-0 z-30 border-b border-gray-200">
+        <div class="flex items-end justify-between gap-4 flex-wrap mb-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Activities</h1>
+                <p class="text-xs text-gray-500 mt-1 flex flex-wrap items-center gap-x-1 gap-y-0.5">
+                    <span><span class="font-bold text-gray-800">247</span> results</span>
+                    <span class="text-gray-300">·</span>
+                    <span><span class="font-bold text-gray-800">4,521 km</span> distance</span>
+                    <span class="text-gray-300">·</span>
+                    <span><span class="font-bold text-gray-800">92 h</span> moving</span>
+                    <span class="text-gray-300">·</span>
+                    <span><span class="font-bold text-gray-800">28,450 m</span> elevation</span>
+                    <span class="text-gray-300">·</span>
+                    <span><span class="font-bold text-gray-800">142,200 kcal</span></span>
+                </p>
+            </div>
+
+            <button class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+                Sort: Date <span class="text-gray-400">(newest first)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-400" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+        </div>
+
+        <!-- Search -->
+        <div class="relative mb-2.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/></svg>
+            <input type="search" placeholder="Search activities by name, location, gear..."
+                   class="w-full bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 focus:border-strava-orange focus:ring-2 focus:ring-strava-orange/20 text-sm text-gray-900 placeholder:text-gray-400 rounded-lg pl-10 pr-3 py-2.5 transition outline-none" />
+        </div>
+
+        <!-- Filter dropdown buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-strava-orange bg-strava-orange/10 border border-strava-orange/20 hover:bg-strava-orange/15 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Filter on sport type</span>
+                <span class="inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-strava-orange text-white text-xxs font-bold tabular-nums">1</span>
+                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-strava-orange bg-strava-orange/10 border border-strava-orange/20 hover:bg-strava-orange/15 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Date</span>
+                <span class="text-xxs font-semibold text-strava-orange/80">This year</span>
+                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Country</span>
+                <svg class="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Gear</span>
+                <svg class="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Device</span>
+                <svg class="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-strava-orange bg-strava-orange/10 border border-strava-orange/20 hover:bg-strava-orange/15 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Distance &amp; Elevation</span>
+                <span class="inline-flex items-center justify-center min-w-4 h-4 px-1 rounded-full bg-strava-orange text-white text-xxs font-bold tabular-nums">1</span>
+                <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <button class="inline-flex items-center gap-2 text-xs font-medium text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 rounded-lg px-3 py-1.5 shadow-xs transition">
+                <span>Other</span>
+                <svg class="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m1 1 4 4 4-4"/></svg>
+            </button>
+
+            <a href="#" class="ml-auto text-xs text-strava-orange hover:underline font-medium">Clear all filters</a>
+        </div>
+    </header>
+
+    <!-- TABLE -->
+    <div class="p-4 md:p-6">
+        <div class="border border-gray-200 rounded-lg overflow-hidden shadow-xs">
+            <div class="overflow-auto max-h-[calc(100vh-260px)]">
+                <table class="w-full text-sm text-gray-700 border-separate border-spacing-0">
+
+                    <!-- Sticky header -->
+                    <thead class="sticky top-0 z-10 bg-gray-50 text-xxs font-semibold uppercase tracking-wider text-gray-500">
+                        <tr>
+                            <th scope="col" class="col-sticky-1 bg-gray-50 px-3 py-2.5 text-left border-b border-gray-200 w-22">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                    Date
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-2.5 h-2.5 text-strava-orange" viewBox="0 0 10 6" fill="currentColor"><path d="m1 1 4 4 4-4z"/></svg>
+                                </button>
+                            </th>
+                            <th scope="col" class="col-sticky-2 col-sticky-edge bg-gray-50 px-3 py-2.5 text-left border-b border-gray-200 min-w-[260px]">Activity</th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M9 21C7.9 21 6.95 20.6 6.17 19.82C5.39 19.04 5 18.1 5 17V8.82C4.41 8.6 3.93 8.24 3.56 7.73C3.18 7.22 3 6.65 3 6C3 5.16 3.29 4.45 3.87 3.87C4.45 3.29 5.16 3 6 3C6.83 3 7.54 3.29 8.12 3.87C8.70 4.45 9 5.16 9 6C9 6.65 8.81 7.22 8.43 7.73C8.06 8.24 7.58 8.6 7 8.82V17C7 17.55 7.19 18.02 7.58 18.41C7.97 18.80 8.45 19 9 19C9.55 19 10.02 18.80 10.41 18.41C10.80 18.02 11 17.55 11 17V7C11 5.9 11.39 4.95 12.17 4.17C12.95 3.39 13.9 3 15 3C16.1 3 17.04 3.39 17.82 4.17C18.60 4.95 19 5.9 19 7V15.17C19.58 15.39 20.06 15.75 20.43 16.26C20.81 16.77 21 17.35 21 18C21 18.83 20.70 19.54 20.12 20.12C19.54 20.70 18.83 21 18 21C17.16 21 16.45 20.70 15.87 20.12C15.29 19.54 15 18.83 15 18C15 17.35 15.18 16.76 15.56 16.25C15.93 15.73 16.41 15.37 17 15.17V7C17 6.45 16.80 5.97 16.41 5.58C16.02 5.19 15.55 5 15 5C14.45 5 13.97 5.19 13.58 5.58C13.19 5.97 13 6.45 13 7V17C13 18.1 12.60 19.04 11.82 19.82C11.04 20.60 10.1 21 9 21Z" fill="currentColor"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">4,521 km</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M21.85,17.47l-5-8a1,1,0,0,0-1.7,0l-1,1.63L10.86,5.5a1,1,0,0,0-1.72,0l-7,12A1,1,0,0,0,3,19H21A1,1,0,0,0,21.85,17.47ZM10.45,17H4.74L10,8l2.93,5Zm2.35,0L15,13.57L16,11.89,19.2,17Z"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">28,450 m</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">92 h</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5a10 10 0 0 0-8.66 15 1 1 0 0 0 1.74-1A7.92 7.92 0 0 1 4 15a8 8 0 1 1 14.93 4 1 1 0 0 0 .37 1.37 1 1 0 0 0 1.36-.37A10 10 0 0 0 12 5Zm2.84 5.76-1.55 1.54A2.91 2.91 0 0 0 12 12a3 3 0 1 0 3 3 2.9 2.9 0 0 0-.3-1.28l1.55-1.54a1 1 0 0 0 0-1.42 1 1 0 0 0-1.41 0ZM12 16a1 1 0 0 1 0-2 1 1 0 0 1 .7.28 1 1 0 0 1 .3.72 1 1 0 0 1-1 1Z"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">km/h</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-rose-500" viewBox="0 0 24 24" fill="none"><path d="M19.24 6.24a4.5 4.5 0 0 1 .13 6.36L12 20l-7.37-7.4a4.5 4.5 0 0 1 6.36-6.36L12 7.25l1-1.01a4.5 4.5 0 0 1 6.24 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">bpm</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-orange-500" viewBox="0 0 24 24" fill="none"><path d="M12 2c1.5 4 4 5 4 9a4 4 0 0 1-8 0c0-2 1-3 1-4 2 1 2-3 3-5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">kcal</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-violet-500" viewBox="0 0 24 24"><path fill="currentColor" d="M19.87,8.6A1,1,0,0,0,19,8H14.42l1.27-4.74a1,1,0,0,0-.17-.87A1,1,0,0,0,14.73,2h-7a1,1,0,0,0-1,.74l-2.68,10a1,1,0,0,0,.17.87,1,1,0,0,0,.8.39H8.89L7.08,20.74a1,1,0,0,0,1.71.93l10.9-12A1,1,0,0,0,19.87,8.6Z"/></svg>
+                                </button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">avg w</div>
+                            </th>
+
+                            <!-- Best power efforts (stacked watts/wkg cells) -->
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-l border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 5s</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 10s</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 30s</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 1m</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 5m</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 8m</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 20m</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                            <th scope="col" class="bg-gray-50 px-3 py-2.5 text-right border-b border-gray-200 whitespace-nowrap">
+                                <button class="inline-flex items-center gap-1 hover:text-strava-orange transition">Best 1h</button>
+                                <div class="font-normal normal-case text-gray-400 mt-0.5">w · w/kg</div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- Row: Coastal loop -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Mon May 18</div>
+                                <div class="text-xxs text-gray-400">7:42 AM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Ride"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h3l3 9-2 2M10 17l1.5-9 3.5-2-2-3h5"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Morning coastal loop – chasing the sunrise</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">45.2<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">624<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1:32:18</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">29.4</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">142</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,245</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">218</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">845</div><div class="text-xxs text-gray-400">11.3</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">782</div><div class="text-xxs text-gray-400">10.4</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">645</div><div class="text-xxs text-gray-400">8.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">520</div><div class="text-xxs text-gray-400">6.9</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">380</div><div class="text-xxs text-gray-400">5.1</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">335</div><div class="text-xxs text-gray-400">4.5</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">290</div><div class="text-xxs text-gray-400">3.9</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">245</div><div class="text-xxs text-gray-400">3.3</div></td>
+                        </tr>
+
+                        <!-- Row: Gravel adventure -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Sat May 16</div>
+                                <div class="text-xxs text-gray-400">10:15 AM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h3l3 9-2 2M10 17l1.5-9 3.5-2-2-3h5"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Saturday gravel adventure through the redwoods</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">78.6<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,240<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">3:18:42</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">23.8</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">148</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">2,180</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">195</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">712</div><div class="text-xxs text-gray-400">9.5</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">658</div><div class="text-xxs text-gray-400">8.8</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">542</div><div class="text-xxs text-gray-400">7.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">458</div><div class="text-xxs text-gray-400">6.1</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">342</div><div class="text-xxs text-gray-400">4.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">312</div><div class="text-xxs text-gray-400">4.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">268</div><div class="text-xxs text-gray-400">3.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">218</div><div class="text-xxs text-gray-400">2.9</div></td>
+                        </tr>
+
+                        <!-- Row: Recovery run (no power data) -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Thu May 14</div>
+                                <div class="text-xxs text-gray-400">6:30 AM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4a2 2 0 1 1 0-.001M7 22l3-5 2-3 2 2 4 6M5 13l3-3 2 2-3 3-2-2zm2-7 4 1 2-1 2 4-2 1-3-2"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Easy recovery jog around the park</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">8.2<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">35<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">48:12</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">5:53<span class="text-xxs text-gray-400 ml-0.5">/km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">142</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">512</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+
+                        <!-- Row: Zwift (no GPS) with PR -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Tue May 12</div>
+                                <div class="text-xxs text-gray-400">8:00 PM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-violet-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M5 17h6l3-8 3 8M9 5l3-1 3 4M9 5l-2 4"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Alpe du Zwift – pacing breakthrough</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">12.1<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,063<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1:02:30</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">11.6</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">168</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">920</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">285</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">912</div><div class="text-xxs text-gray-400">12.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">820</div><div class="text-xxs text-gray-400">10.9</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">695</div><div class="text-xxs text-gray-400">9.3</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">555</div><div class="text-xxs text-gray-400">7.4</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">412</div><div class="text-xxs text-gray-400">5.5</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">368</div><div class="text-xxs text-gray-400">4.9</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">325</div><div class="text-xxs text-gray-400">4.3</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+
+                        <!-- Row: Commute -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Mon May 10</div>
+                                <div class="text-xxs text-gray-400">5:42 PM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h3l3 9-2 2M10 17l1.5-9 3.5-2-2-3h5"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Commute home via the river path</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">14.5<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">85<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">38:12</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">22.8</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">132</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">420</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">165</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">685</div><div class="text-xxs text-gray-400">9.1</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">612</div><div class="text-xxs text-gray-400">8.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">485</div><div class="text-xxs text-gray-400">6.5</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">385</div><div class="text-xxs text-gray-400">5.1</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">275</div><div class="text-xxs text-gray-400">3.7</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">242</div><div class="text-xxs text-gray-400">3.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+
+                        <!-- Row: Track workout -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Fri May 8</div>
+                                <div class="text-xxs text-gray-400">5:45 PM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4a2 2 0 1 1 0-.001M7 22l3-5 2-3 2 2 4 6M5 13l3-3 2 2-3 3-2-2zm2-7 4 1 2-1 2 4-2 1-3-2"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Track workout – 8 × 400 m @ 5k pace</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">10.4<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">18<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">52:18</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">5:02<span class="text-xxs text-gray-400 ml-0.5">/km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">165</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">685</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+
+                        <!-- Row: Century race PR -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Sun May 3</div>
+                                <div class="text-xxs text-gray-400">8:30 AM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6h3l3 9-2 2M10 17l1.5-9 3.5-2-2-3h5"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Century: Hill Country epic — first sub-7</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">162.4<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">2,840<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">6:42:18</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">24.2</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">145</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">4,250</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">205</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">752</div><div class="text-xxs text-gray-400">10.0</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">692</div><div class="text-xxs text-gray-400">9.2</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">580</div><div class="text-xxs text-gray-400">7.7</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">478</div><div class="text-xxs text-gray-400">6.4</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">358</div><div class="text-xxs text-gray-400">4.8</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">328</div><div class="text-xxs text-gray-400">4.4</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">285</div><div class="text-xxs text-gray-400">3.8</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">232</div><div class="text-xxs text-gray-400">3.1</div></td>
+                        </tr>
+
+                        <!-- Row: Half marathon PR -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Sun Apr 28</div>
+                                <div class="text-xxs text-gray-400">9:00 AM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4a2 2 0 1 1 0-.001M7 22l3-5 2-3 2 2 4 6M5 13l3-3 2 2-3 3-2-2zm2-7 4 1 2-1 2 4-2 1-3-2"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Bay Bridge Half Marathon — new PB!</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">21.1<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">112<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1:38:42</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">4:41<span class="text-xxs text-gray-400 ml-0.5">/km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">172</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,485</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+
+                        <!-- Row: Rouvy virtual climb -->
+                        <tr class="group hover:bg-strava-orange/[0.03] transition">
+                            <td class="col-sticky-1 bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100 whitespace-nowrap text-xs">
+                                <div class="font-medium text-gray-900">Wed Apr 23</div>
+                                <div class="text-xxs text-gray-400">7:15 PM</div>
+                            </td>
+                            <td class="col-sticky-2 col-sticky-edge bg-white group-hover:bg-strava-orange/[0.03] px-3 py-2.5 border-b border-gray-100">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="shrink-0 w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="M5 17h6l3-8 3 8M9 5l3-1 3 4M9 5l-2 4"/></svg>
+                                    <a href="#" class="font-medium text-gray-900 group-hover:text-strava-orange truncate transition">Stelvio Pass – north side simulation</a>
+                                </div>
+                            </td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">24.3<span class="text-xxs text-gray-400 ml-0.5">km</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,820<span class="text-xxs text-gray-400 ml-0.5">m</span></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1:42:08</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">14.3</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">156</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap">1,420</td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap font-semibold text-gray-900">248</td>
+                            <td class="px-3 py-2.5 border-b border-l border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">798</div><div class="text-xxs text-gray-400">10.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">720</div><div class="text-xxs text-gray-400">9.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">605</div><div class="text-xxs text-gray-400">8.1</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">495</div><div class="text-xxs text-gray-400">6.6</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">372</div><div class="text-xxs text-gray-400">5.0</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">338</div><div class="text-xxs text-gray-400">4.5</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right tabular-nums whitespace-nowrap"><div class="font-semibold text-gray-900">295</div><div class="text-xxs text-gray-400">3.9</div></td>
+                            <td class="px-3 py-2.5 border-b border-gray-100 text-right text-gray-300">—</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
