@@ -4731,6 +4731,7 @@
       }
     }
     & li label {
+      flex-grow: 1;
       cursor: pointer;
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
