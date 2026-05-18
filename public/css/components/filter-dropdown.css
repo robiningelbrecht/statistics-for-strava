@@ -33,7 +33,7 @@
         }
 
         & li label {
-            @apply text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:bg-gray-100;
+            @apply grow text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:bg-gray-100;
         }
 
         & li a[data-datatable-filter-clear] {
