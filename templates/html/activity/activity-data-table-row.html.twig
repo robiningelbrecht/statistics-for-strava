@@ -4,7 +4,7 @@
     <td class="px-2 py-2 whitespace-nowrap">
         {{ activity.getStartDate()|formatDate() }}
     </td>
-    <td class="px-2 py-2 truncate lg:sticky lg:left-0 group-odd:bg-white group-even:bg-gray-50">
+    <td class="px-2 py-2 whitespace-nowrap lg:sticky lg:left-0 group-odd:bg-white group-even:bg-gray-50">
         {{ activity|activityLink(ellipses: 50) }}
     </td>
     <td class="px-6 py-2">
