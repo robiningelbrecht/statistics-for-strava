@@ -2,8 +2,8 @@
     div.filter-dropdown {
         & > button[data-dropdown]{
             @apply cursor-pointer w-fit text-strava-orange border border-strava-orange font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between;
-            @apply [&.active]:text-white [&.active]:bg-strava-orange [&.active]:hover:bg-orange-600 [&.active]:hover:border-orange-600;
-            @apply hover:ring-3 hover:outline-hidden hover:ring-orange-300;
+            @apply [&.active]:text-strava-orange [&.active]:bg-strava-orange/15;
+            @apply hover:bg-strava-orange/15 [&.active]:hover:bg-strava-orange/20;
 
             & svg {
                 @apply transition-transform duration-200;
@@ -11,8 +11,6 @@
         }
 
         & > button:has(+ div.block) {
-            @apply ring-3 outline-hidden ring-orange-300;
-
             & svg {
                 @apply rotate-180;
             }
@@ -35,7 +33,7 @@
         }
 
         & li label {
-            @apply text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:text-gray-600 hover:bg-gray-100;
+            @apply text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:bg-gray-100;
         }
 
         & li a[data-datatable-filter-clear] {
