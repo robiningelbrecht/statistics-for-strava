@@ -59,8 +59,8 @@
             {% for activity in mostRecentActivities %}
                 {% set activityType =  activity.getSportType().getActivityType() %}
                 <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                    <td class="px-2 py-2">
-                        <div class="w-18">{{ activity.getStartDate()|formatDate() }}</div>
+                    <td class="px-2 py-2 whitespace-nowrap">
+                        {{ activity.getStartDate()|formatDate() }}
                     </td>
                     <td class="px-2 py-2 truncate sticky left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
                         {{ activity|activityLink(ellipses: 30) }}
