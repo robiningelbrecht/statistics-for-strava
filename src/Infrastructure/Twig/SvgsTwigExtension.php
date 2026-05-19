@@ -23,7 +23,7 @@ final class SvgsTwigExtension
     {
         $svg = $this->load('icons', $name);
 
-        if ($size) {
+        if (null !== $size) {
             $svg = preg_replace_callback('/class="([^"]+)"/', function (array $matches) use ($size): string {
                 $classes = explode(' ', $matches[1]);
                 $classes = array_filter($classes, fn (string $class): bool => !preg_match('/^(w-|h-|size-)/', $class));

@@ -7,7 +7,6 @@ export default class LeafletMapManager {
             const leafletMap = new LeafletMap(mapNode, data);
 
             await leafletMap.addRoutes();
-            leafletMap.addGpxControl();
             leafletMap.connectToEChart();
         });
     }

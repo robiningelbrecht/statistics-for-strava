@@ -41,7 +41,7 @@ final readonly class MeasurementTwigExtension
     {
         $convertedMeasurement = $this->convertMeasurement($measurement);
         $measurementInScalar = $convertedMeasurement->toFloat();
-        $formattedNumber = self::formatNumber($measurementInScalar, $measurementInScalar < 100 ? $precision : 0);
+        $formattedNumber = self::formatNumber($measurementInScalar, $precision);
 
         if (!$symbolSuffix) {
             if ('' === $convertedMeasurement->getSymbol()) {
@@ -78,6 +78,7 @@ final readonly class MeasurementTwigExtension
             'distance' => $this->unitSystem->distanceSymbol(),
             'elevation' => $this->unitSystem->elevationSymbol(),
             'pace' => $this->unitSystem->paceSymbol(),
+            'speed' => $this->unitSystem->speedSymbol(),
             default => throw new \RuntimeException(sprintf('Invalid unitName "%s"', $unitName)),
         };
     }
@@ -88,6 +89,8 @@ final readonly class MeasurementTwigExtension
         if (is_null($number)) {
             return '0';
         }
+
+        $precision = $number < 100 ? $precision : 0;
 
         return number_format(round($number, $precision), $precision, '.', "\u{00A0}");
     }
