@@ -21,12 +21,12 @@
                 {% if calculatedConsistencyChallenges[consistencyChallenge.getId()] is defined %}
                     <tr class="bg-white border-b">
                         <th scope="row"
-                            class="px-2 py-2 sticky left-0 text-left bg-white border font-medium text-gray-900 whitespace-nowrap">
+                            class="px-2 py-2 sticky left-0 text-left bg-white border border-gray-100 font-medium text-gray-900 whitespace-nowrap">
                             {{ consistencyChallenge.getLabel() }}
                         </th>
                         {% set calculatedAchievements = calculatedConsistencyChallenges[consistencyChallenge.getId()] %}
                         {% for calculatedAchievement in calculatedAchievements %}
-                            <td class="px-3 py-2 border">
+                            <td class="px-3 py-2 border border-gray-100">
                                 {% set actualValue = calculatedAchievement.actualValue %}
                                 {% if calculatedAchievement.actualValue is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Unit') %}
                                     {% set actualValue = calculatedAchievement.actualValue.toFloat()|formatNumber(0) ~ calculatedAchievement.actualValue.getSymbol() %}

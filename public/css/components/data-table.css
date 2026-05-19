@@ -19,9 +19,9 @@ table.data-table {
 
     tbody {
         tr {
-            @apply border-b border-gray-100 hover:bg-gray-50;
+            @apply border-b hover:bg-gray-50;
 
-            td,th {
+            td, th {
                 @apply px-6 py-2.5 group-hover/row:bg-gray-50;
 
                 &.narrow {
