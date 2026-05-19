@@ -45,6 +45,7 @@
     "Dance": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
     "Pilates": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
     "Yoga": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
+    "PhysicalTherapy": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
     "Golf": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
     "RockClimbing": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
     "Sail": "App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\KmPerHour",
