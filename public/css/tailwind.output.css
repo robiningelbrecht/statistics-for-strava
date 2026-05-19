@@ -3315,6 +3315,9 @@
   .text-gray-200 {
     color: var(--color-gray-200);
   }
+  .text-gray-300 {
+    color: var(--color-gray-300);
+  }
   .text-gray-400 {
     color: var(--color-gray-400);
   }
@@ -3610,9 +3613,19 @@
       visibility: visible;
     }
   }
+  .group-aria-asc\:text-gray-200 {
+    &:is(:where(.group)[aria-sort="ascending"] *) {
+      color: var(--color-gray-200);
+    }
+  }
   .group-aria-asc\:text-strava-orange {
     &:is(:where(.group)[aria-sort="ascending"] *) {
       color: var(--color-strava-orange);
+    }
+  }
+  .group-aria-desc\:text-gray-200 {
+    &:is(:where(.group)[aria-sort="descending"] *) {
+      color: var(--color-gray-200);
     }
   }
   .group-aria-desc\:text-strava-orange {
@@ -4830,6 +4843,14 @@ table.data-table {
       }
       &[data-dataTable-sort] {
         cursor: pointer;
+        transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+        transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+        transition-duration: var(--tw-duration, var(--default-transition-duration));
+        &:hover {
+          @media (hover: hover) {
+            background-color: var(--color-gray-100);
+          }
+        }
       }
     }
   }
