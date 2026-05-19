@@ -23,7 +23,7 @@
                     <div class="flex items-center">
                         <label for="search" class="sr-only">Search</label>
                         <div class="relative w-full">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <div class="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
                                 </svg>
@@ -113,14 +113,14 @@
                                         <div class="group/range-filter flex items-center justify-between gap-x-2">
                                             <div class="flex items-center justify-between w-full" data-datatable-filter="distance[]">
                                                 <div class="flex items-center">
-                                                    <input name="distance[from]" type="number" min="0" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="distance[from]" type="number" min="0" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       km
                                                     </span>
                                                 </div>
                                                 <span class="mx-2 text-gray-500">to</span>
                                                 <div class="flex items-center">
-                                                    <input name="distance[to]" type="number" min="0" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="distance[to]" type="number" min="0" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       km
                                                     </span>
@@ -149,14 +149,14 @@
                                         <div class="group/range-filter flex items-center justify-between gap-x-2">
                                             <div class="flex items-center justify-between w-full" data-datatable-filter="averageGradient[]">
                                                 <div class="flex items-center">
-                                                    <input name="averageGradient[from]" type="number" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="averageGradient[from]" type="number" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       %
                                                     </span>
                                                 </div>
                                                 <span class="mx-2 text-gray-500">to</span>
                                                 <div class="flex items-center">
-                                                    <input name="averageGradient[to]" type="number" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="averageGradient[to]" type="number" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       %
                                                     </span>
@@ -173,14 +173,14 @@
                                         <div class="group/range-filter flex items-center justify-between gap-x-2">
                                             <div class="flex items-center justify-between w-full" data-datatable-filter="maxGradient[]">
                                                 <div class="flex items-center">
-                                                    <input name="maxGradient[from]" type="number" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="maxGradient[from]" type="number" step="0.1" placeholder="min" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       %
                                                     </span>
                                                 </div>
                                                 <span class="mx-2 text-gray-500">to</span>
                                                 <div class="flex items-center">
-                                                    <input name="maxGradient[to]" type="number" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                                                    <input name="maxGradient[to]" type="number" step="0.1" placeholder="max" class="z-20 w-23 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-s-lg block p-2.5">
                                                     <span class="flex items-center py-3 px-3 bg-gray-100 text-gray-500 border border-l-0 border-gray-300 text-xs rounded-e-lg">
                                                       %
                                                     </span>
@@ -202,9 +202,9 @@
                             <div id="dropdownDateRange" class="divide-y divide-gray-100">
                                 <div class="flex items-center gap-x-2 p-3" aria-labelledby="dropdownDateRangeButton">
                                     <div class="flex items-center" data-datatable-filter="lastEffortDate[]">
-                                        <input name="lastEffortDate[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <input name="lastEffortDate[from]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                                         <span class="mx-2 text-gray-500">to</span>
-                                        <input name="lastEffortDate[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <input name="lastEffortDate[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                                     </div>
                                     <a href="#" class="text-strava-orange text-sm text-right underline" data-datatable-filter-clear="lastEffortDate">clear</a>
                                 </div>
