@@ -6,6 +6,8 @@ namespace App\Domain\Athlete\HeartRateZone;
 
 final readonly class TimeInHeartRateZones
 {
+    private int $totalTimeInSeconds;
+
     private function __construct(
         private int $timeInZoneOne,
         private int $timeInZoneTwo,
@@ -13,6 +15,8 @@ final readonly class TimeInHeartRateZones
         private int $timeInZoneFour,
         private int $timeInZoneFive,
     ) {
+        $this->totalTimeInSeconds = $this->getTimeInZoneOne() + $this->getTimeInZoneTwo()
+            + $this->getTimeInZoneThree() + $this->getTimeInZoneFour() + $this->getTimeInZoneFive();
     }
 
     public static function create(
@@ -36,9 +40,19 @@ final readonly class TimeInHeartRateZones
         return $this->timeInZoneOne;
     }
 
+    public function getPercentageInZoneOne(): float
+    {
+        return round($this->calculatePercentage($this->getTimeInZoneOne()), 1);
+    }
+
     public function getTimeInZoneTwo(): int
     {
         return $this->timeInZoneTwo;
+    }
+
+    public function getPercentageInZoneTwo(): float
+    {
+        return round($this->calculatePercentage($this->getTimeInZoneTwo()), 1);
     }
 
     public function getTimeInZoneThree(): int
@@ -46,9 +60,19 @@ final readonly class TimeInHeartRateZones
         return $this->timeInZoneThree;
     }
 
+    public function getPercentageInZoneThree(): float
+    {
+        return round($this->calculatePercentage($this->getTimeInZoneThree()), 1);
+    }
+
     public function getTimeInZoneFour(): int
     {
         return $this->timeInZoneFour;
+    }
+
+    public function getPercentageInZoneFour(): float
+    {
+        return round($this->calculatePercentage($this->getTimeInZoneFour()), 1);
     }
 
     public function getTimeInZoneFive(): int
@@ -56,36 +80,37 @@ final readonly class TimeInHeartRateZones
         return $this->timeInZoneFive;
     }
 
+    public function getPercentageInZoneFive(): float
+    {
+        return round($this->calculatePercentage($this->getTimeInZoneFive()), 1);
+    }
+
     private function getTotalTime(): int
     {
-        return $this->getTimeInZoneOne() + $this->getTimeInZoneTwo()
-            + $this->getTimeInZoneThree() + $this->getTimeInZoneFour() + $this->getTimeInZoneFive();
+        return $this->totalTimeInSeconds;
     }
 
     public function getPercentageInLowZones(): float
     {
-        if (0 === $this->getTotalTime()) {
-            return 0;
-        }
-
-        return ($this->getTimeInZoneOne() + $this->getTimeInZoneTwo()) / $this->getTotalTime() * 100;
+        return $this->calculatePercentage($this->getTimeInZoneOne() + $this->getTimeInZoneTwo());
     }
 
     public function getPercentageInMediumZone(): float
     {
-        if (0 === $this->getTotalTime()) {
-            return 0;
-        }
-
-        return $this->getTimeInZoneThree() / $this->getTotalTime() * 100;
+        return $this->calculatePercentage($this->getTimeInZoneThree());
     }
 
     public function getPercentageInHighZones(): float
+    {
+        return $this->calculatePercentage($this->getTimeInZoneFour() + $this->getTimeInZoneFive());
+    }
+
+    private function calculatePercentage(int $number): float
     {
         if (0 === $this->getTotalTime()) {
             return 0;
         }
 
-        return ($this->getTimeInZoneFour() + $this->getTimeInZoneFive()) / $this->getTotalTime() * 100;
+        return $number / $this->getTotalTime() * 100;
     }
 }
