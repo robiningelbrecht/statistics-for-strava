@@ -16,7 +16,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
                             </div>
-                            <input id="search" type="search" placeholder="{{ "Search segment..."|trans }}" class="table-search bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5">
+                            <input id="search" type="search" placeholder="{{ "Search segment..."|trans }}" class="table-search bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-strava-orange/30 focus:border-strava-orange/50 transition block w-full ps-10 p-2.5">
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2">
@@ -234,36 +234,36 @@
                     </div>
                 </form>
                 <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
-                    <table class="w-full text-sm text-center text-gray-500">
-                        <thead class="z-10 sticky top-0 text-xs text-gray-700 uppercase bg-gray-50">
+                    <table class="data-table">
+                        <thead class="z-10 sticky top-0">
                         <tr>
-                            <th scope="col" data-dataTable-sort="name" class="px-2 py-3 cursor-pointer">
+                            <th scope="col" data-dataTable-sort="name" class="narrow">
                                 <div class="w-92">{{ svg('sorting-icon') }}</div>
                             </th>
-                            <th scope="col" data-dataTable-sort="last-effort-date" class="px-2 py-3 cursor-pointer">
+                            <th scope="col" data-dataTable-sort="last-effort-date" class="narrow">
                                 <div class="flex items-center justify-center" title="{{ "Last effort"|trans }}">
                                     {{ svg('calendar') }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col">
                                 <div class="flex items-center justify-center" title="{{ "Best effort"|trans }}">
                                     {{ svg('trophy') }}
                                 </div>
                             </th>
-                            <th scope="col" data-dataTable-sort="distance" class="px-2 py-3 cursor-pointer" title="{{ "Distance"|trans }}">
+                            <th scope="col" data-dataTable-sort="distance" title="{{ "Distance"|trans }}">
                                 <div class="flex items-center justify-center">
                                     {{ svg('distance') }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
-                            <th scope="col" data-dataTable-sort="average-gradient" class="px-2 py-3 cursor-pointer" title="{{ "Average gradient"|trans }}">
+                            <th scope="col" data-dataTable-sort="average-gradient" title="{{ "Average gradient"|trans }}">
                                 <div class="flex items-center justify-center">
                                     {{ svg('percentage') }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
-                            <th scope="col" data-dataTable-sort="ride-count" class="px-2 py-3 cursor-pointer" title="{{ "Number of times completed"|trans }}">
+                            <th scope="col" data-dataTable-sort="ride-count" title="{{ "Number of times completed"|trans }}">
                                 <div class="flex items-center justify-center">
                                     {{ svg('hashtag') }}
                                     {{ svg('sorting-icon') }}

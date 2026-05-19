@@ -1,0 +1,33 @@
+table.data-table {
+    @apply w-full text-sm text-center text-gray-500;
+
+    thead {
+        @apply text-xs text-gray-700 uppercase bg-gray-50;
+
+        th {
+            @apply px-6 py-3;
+
+            &.narrow {
+                @apply px-2;
+            }
+
+            &[data-dataTable-sort] {
+                @apply cursor-pointer;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            @apply border-b border-gray-100 hover:bg-gray-50;
+
+            td,th {
+                @apply px-6 py-2.5 group-hover/row:bg-gray-50;
+
+                &.narrow {
+                    @apply px-2;
+                }
+            }
+        }
+    }
+}

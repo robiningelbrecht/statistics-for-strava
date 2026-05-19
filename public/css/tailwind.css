@@ -2,6 +2,7 @@
 @import "../../node_modules/flowbite/src/themes/default.css";
 @import "./components/chat.css";
 @import "./components/dark-mode.css";
+@import "./components/data-table.css";
 @import "./components/filter-dropdown.css";
 @import "./components/tabs.css";
 @import "./components/popover.css";
@@ -57,7 +58,6 @@
     .overflow-auto, .overflow-x-auto {
         @apply scrollbar-thin;
     }
-
 }
 
 @theme{

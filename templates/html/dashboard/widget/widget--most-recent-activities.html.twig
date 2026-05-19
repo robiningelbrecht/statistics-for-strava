@@ -9,46 +9,46 @@
         </a>
     </div>
     <div class="relative h-0 min-h-70 grow overflow-x-auto overflow-y-auto">
-        <table class="w-full text-sm text-center text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <table class="data-table">
+            <thead>
             <tr>
-                <th scope="col" class="px-2 py-3">
+                <th scope="col" class="narrow">
 
                 </th>
-                <th scope="col" class="px-2 py-3 bg-gray-50 sticky left-0">
+                <th scope="col" class="narrow bg-gray-50 sticky left-0">
 
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
                         {{ svg('distance') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Elevation"|trans }}">
                         {{ svg('elevation') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
                         {{ svg('time') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
                         {{ svg('speed') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Heart rate"|trans }}">
                         {{ svg('heart-rate') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Calories burned"|trans }}">
                         {{ svg('calories') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
                         {{ svg('power') }}
                     </div>
@@ -58,23 +58,23 @@
             <tbody>
             {% for activity in mostRecentActivities %}
                 {% set activityType =  activity.getSportType().getActivityType() %}
-                <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                    <td class="px-2 py-2 whitespace-nowrap">
+                <tr class="group/row">
+                    <td class="narrow whitespace-nowrap">
                         {{ activity.getStartDate()|formatDate() }}
                     </td>
-                    <td class="px-2 py-2 truncate sticky left-0 {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                    <td class="narrow truncate sticky left-0 bg-white">
                         {{ activity|activityLink(ellipses: 30) }}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getElevation()|renderMeasurement(0) }}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getMovingTimeFormatted() }}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
                         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
                             {{ activity.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
@@ -84,13 +84,13 @@
                             {{ activity.getAverageSpeed()|renderMeasurement(1) }}
                         {% endif %}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getAverageHeartRate() ?? 'n/a' }}
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getCalories() }}<span class="text-xs">kcal</span>
                     </td>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ activity.getAveragePower() ? activity.getAveragePower() ~ '<span class="text-xs">w</span>': 'n/a' }}
                     </td>
                 </tr>
