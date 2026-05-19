@@ -22,6 +22,7 @@
 @source "../../node_modules/flowbite";
 
 @theme {
+    --font-sans: Inter, ui-sans-serif, system-ui;
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
     --color-grey-yo: #cccccc;

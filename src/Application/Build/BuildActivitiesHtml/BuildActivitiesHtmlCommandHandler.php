@@ -258,8 +258,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'leaflet' => $leafletMap instanceof LeafletMap ? [
                         'polylineUrl' => $polylinesFileLocation,
                         'map' => $leafletMap,
-                        'gpxLink' => $activityHasTimeStream ? $gpxFileLocation : null,
                     ] : null,
+                    'gpxLink' => $activityHasTimeStream ? $gpxFileLocation : null,
                     'distributionCharts' => $distributionCharts,
                     'segmentEfforts' => $this->segmentEffortRepository->findByActivityId($activity->getId()),
                     'splits' => $activitySplits,

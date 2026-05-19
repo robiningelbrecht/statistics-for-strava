@@ -16,6 +16,7 @@ export default class LeafletMap {
         if (data.tileLayer) {
             L.tileLayer(data.tileLayer).addTo(this.map);
         }
+
     }
 
     async addRoutes() {
@@ -47,14 +48,7 @@ export default class LeafletMap {
 
         featureGroup.addTo(this.map);
         this.map.fitBounds(featureGroup.getBounds(), {maxZoom: this.data.maxZoom});
-    }
-
-    addGpxControl() {
-        if (!this.data.gpxLink) {
-            return;
-        }
-
-        L.control.downloadGpx({gpxLink: this.data.gpxLink}).addTo(this.map);
+        L.control.mapTools({bounds: featureGroup.getBounds()}).addTo(this.map);
     }
 
     async connectToEChart() {
