@@ -85,6 +85,7 @@ Device: Dispositivo
 Distance: Distância
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Divisão da distância'
+'Distance distribution': 'Distance distribution'
 'Distance in {unit}': 'Distância em {unit}'
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
@@ -93,6 +94,8 @@ Duration: Duration
 'E-Bike Rides': 'Pedais de E-Bike'
 'E-Mountain Bike Rides': 'Pedais de E-MTB'
 Eddington: Eddington
+'Eddington number': 'Eddington number'
+'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Desnível
 Elevation: Elevação
@@ -116,7 +119,7 @@ Firsts: Firsts
 Fitness: Fitness
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
-'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Por exemplo, um número de Eddington de 70 significa que um ciclista pedalou pelo menos 70 km em um único dia, em pelo menos 70 ocasiões. Alcançar um número de Eddington alto é difícil, porque aumentar de 70 para 75, por exemplo, provavelmente exigirá mais do que apenas cinco treinos longos adicionais – já que qualquer treino com menos de 75 km não será mais contabilizado.'
+'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Form (TSB)'
 Fri: Sex
 Friday: Sexta-feira
@@ -192,6 +195,7 @@ Loading...: Carregando...
 'Long run': 'Corridas longas'
 'Longest activity': 'Longest activity'
 'Longest activity (h)': 'Longest activity (h)'
+'Longest day': 'Longest day'
 'Longest distance': 'Longest distance'
 'Longest streaks': 'Longest streaks'
 Low: Baixa
@@ -224,6 +228,7 @@ Morning: Manhã
 Name: Name
 Neutral: Neutral
 'New personal best for': 'New personal best for'
+'Next milestone': 'Next milestone'
 Night: Noite
 'No activities': 'Sem atividades'
 'No data available': 'No data available'
@@ -429,7 +434,7 @@ Tennis: Ténis
 "That's the length of the Great Wall of China": "That's the length of the Great Wall of China"
 "That's three quarters of the way around the Earth": "That's three quarters of the way around the Earth"
 "That's {number} days of at least {distance}": "That's {number} days of at least {distance}"
-'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'O número de Eddington no contexto de ciclismo ou corrida é definido como o número máximo X, tal que o atleta percorreu pelo menos X km em pelo menos X dias.'
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'These badges are dynamically created. You can use them in any &lt;img&gt; tag'
 Thinking...: Thinking...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
@@ -529,6 +534,7 @@ compare: compare
 day(s): day(s)
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
+'days to reach {n}': 'days to reach {n}'
 history: history
 hours: hours
 hrs: hrs

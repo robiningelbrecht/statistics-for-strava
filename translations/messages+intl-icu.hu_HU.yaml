@@ -85,6 +85,7 @@ Device: Eszköz
 Distance: Távolság
 'Distance & Elevation': 'Távolság & szintemelkedés'
 'Distance breakdown': 'Távolság részletezés'
+'Distance distribution': 'Distance distribution'
 'Distance in {unit}': 'Távolság ({unit})'
 'Distance over time per gear': 'Távolság időben felszerelésenkén'
 'Distance per month per gear': 'Havi távolság felszerelésenkén'
@@ -93,6 +94,8 @@ Duration: Időtartam
 'E-Bike Rides': 'E-Bike túrák'
 'E-Mountain Bike Rides': 'E-MTB túrák'
 Eddington: Eddington
+'Eddington number': 'Eddington number'
+'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 Elev: Szintek
 Elevation: Szintemelkedés
@@ -116,7 +119,7 @@ Firsts: Elsők
 Fitness: Fitnesz
 'Fitness may be declining due to low recent training load': 'A fitnesz csökkenhet az alacsony közelmúltbeli edzésterhelés miatt'
 'Fitness may decline': 'A fitnesz csökkenhet'
-'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Például egy 70-es Eddington-szám azt jelenti, hogy a kerékpáros legalább 70 alkalommal tekert legalább 70 km-t egy nap. Egy magas Eddington-szám elérése nehéz, hiszen pl. a 70-ről 75-re való lépéshez valószínűleg több mint öt új hosszú edzés szükséges, mivel a 75 km-nél rövidebb edzések már nem számítanak bele.'
+'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Forma (TSB)'
 Fri: P
 Friday: Péntek
@@ -192,6 +195,7 @@ Loading...: Betöltés...
 'Long run': 'Hosszú futás'
 'Longest activity': 'Leghosszabb tevékenység'
 'Longest activity (h)': 'Leghosszabb tevékenység (h)'
+'Longest day': 'Longest day'
 'Longest distance': 'Leghosszabb távolság'
 'Longest streaks': 'Leghosszabb sorozatok'
 Low: Alacsony
@@ -224,6 +228,7 @@ Morning: Reggel
 Name: Név
 Neutral: Semleges
 'New personal best for': 'Új személyes rekord:'
+'Next milestone': 'Next milestone'
 Night: Éjjel
 'No activities': 'Nincsenek tevékenységek'
 'No data available': 'Nincs elérhető adat'
@@ -429,7 +434,7 @@ Tennis: Tenisz
 "That's the length of the Great Wall of China": 'Ez a Kínai Nagy Fal hossza'
 "That's three quarters of the way around the Earth": 'Ez a Föld kerületének háromnegyede'
 "That's {number} days of at least {distance}": 'Ez {number} nap legalább {distance}-vel'
-'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Az Eddington-szám kerékpározás vagy futás kontextusában a maximális E szám, amelyre az atléta legalább E napot teljesített legalább E km-rel.'
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ezek a kitűzők dinamikusan jönnek létre. Bármely &lt;img&gt; tagben használhatod őket'
 Thinking...: Gondolkodás...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'Ez a diagram összefoglalja, hogyan edzel. Minden tengely különböző normalizált edzési szokást tükröz, így a magasabb értékek erősebb hangsúlyt jelentenek.'
@@ -529,6 +534,7 @@ compare: összehasonlítás
 day(s): nap(ok)
 days: napok
 'days needed for next Eddington': 'napok a következő Eddington-számhoz'
+'days to reach {n}': 'days to reach {n}'
 history: előzmények
 hours: órák
 hrs: h

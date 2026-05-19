@@ -1,4 +1,4 @@
-<div class="flex items-center justify-between mb-5">
+<div class="flex items-center justify-between mb-1">
     <div class="flex items-center gap-x-1">
         {% include 'html/navigation/breadcrumbs.html.twig' with {'breadcrumbs': [{
             'url': 'eddington',
@@ -44,14 +44,43 @@
                      <div id="eddington{{ unitSystem.value }}TabContent">
                          {% for eddington in eddingtonsForUnitSystem %}
                              <div class="grid grid-cols-1 gap-4" id="{{ eddington.getId() }}" role="tabpanel" aria-labelledby="{{ eddington.getId() }}-tab">
-                                 <!-- EDDINGTON CHART -->
-                                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                                     <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddington.getId()] }}'></div>
+                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-y-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs divide-y divide-gray-100 sm:divide-y-0 sm:divide-x">
+                                     <div class="flex flex-col items-center justify-center text-center px-4 pt-4 sm:pt-0">
+                                         <div class="text-xxs uppercase tracking-wider text-gray-500">{{ "Eddington number"|trans }}</div>
+                                         <div class="text-5xl font-extrabold text-strava-orange leading-tight">
+                                             {{ eddington.getNumber() }}
+                                         </div>
+                                         <div class="text-xs text-gray-500">
+                                             {{ eddington.getLabel() }} · {{ eddington.getUnitSystem().distanceSymbol() }}
+                                         </div>
+                                     </div>
+                                     {% set nextNumber = eddington.getNumber() + 1 %}
+                                     {% set daysToNext = eddington.getDaysToCompleteForFutureNumbers()[nextNumber] ?? null %}
+                                     <div class="flex flex-col items-center justify-center text-center px-4 pt-4 sm:pt-0">
+                                         <div class="text-xxs uppercase tracking-wider text-gray-500">{{ "Next milestone"|trans }}</div>
+                                         {% if daysToNext is not null %}
+                                             <div class="text-5xl font-extrabold leading-tight">{{ daysToNext }}</div>
+                                             <div class="text-xs text-gray-500">
+                                                 {{ "days to reach {n}"|trans({'{n}': nextNumber}) }}
+                                             </div>
+                                         {% endif %}
+                                     </div>
+                                     <div class="flex flex-col items-center justify-center text-center px-4 pt-4 sm:pt-0">
+                                         <div class="text-xxs uppercase tracking-wider text-gray-500">{{ "Longest day"|trans }}</div>
+                                         <div class="text-5xl font-extrabold leading-tight">{{ eddington.getLongestDistanceInADay() }}</div>
+                                         <div class="text-xs text-gray-500">{{ eddington.getUnitSystem().distanceSymbol() }}</div>
+                                     </div>
                                  </div>
-                                 <!-- HISTORY -->
-                                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-                                     <h3 class="font-bold mb-4">{{ "History"|trans }}</h3>
-                                     <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddington.getId()] }}'></div>
+                                 <!-- CHARTS -->
+                                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                         <h3 class="font-bold mb-4">{{ "Distance distribution"|trans }}</h3>
+                                         <div class="h-64" data-echarts-options='{{ eddingtonCharts[eddington.getId()] }}'></div>
+                                     </div>
+                                     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                                         <h3 class="font-bold mb-4">{{ "Eddington over time"|trans }}</h3>
+                                         <div class="h-64" data-echarts-options='{{ eddingtonHistoryCharts[eddington.getId()] }}'></div>
+                                     </div>
                                  </div>
                              </div>
                          {% endfor %}

@@ -85,6 +85,7 @@ Device: Enhet
 Distance: Distans
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Sammanställning av sträckor'
+'Distance distribution': 'Distance distribution'
 'Distance in {unit}': 'Distans i {unit}'
 'Distance over time per gear': 'Distans över tid per utrustning'
 'Distance per month per gear': 'Distans per månad per utrustning'
@@ -93,6 +94,8 @@ Duration: Duration
 'E-Bike Rides': 'E-Cykel Turer'
 'E-Mountain Bike Rides': 'E-Mountain Bike Turer'
 Eddington: Eddington
+'Eddington number': 'Eddington number'
+'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Höjd
 Elevation: Höjdmeter
@@ -116,7 +119,7 @@ Firsts: Firsts
 Fitness: Träning
 'Fitness may be declining due to low recent training load': 'Fitness may be declining due to low recent training load'
 'Fitness may decline': 'Fitness may decline'
-'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'Som ett exempel skulle ett Eddingtontal på 70 innebära att en cyklist har cyklat minst 70 km eller miles under loppet av en dag vid minst 70 tillfällen. Att uppnå ett högt Eddingtontal är svårt, eftersom en övergång från, säg, 70 till 75 (förmodligen) kommer att kräva mer än fem nya långdistanspass, eftersom inga pass som är kortare än 75 km eller miles kommer att inkluderas i beräkningen.'
+'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Träningsform (TSB)'
 Fri: Fre
 Friday: Fredag
@@ -192,6 +195,7 @@ Loading...: Laddar...
 'Long run': Långdistanslöpning
 'Longest activity': 'Longest activity'
 'Longest activity (h)': 'Längsta aktiviteten (h)'
+'Longest day': 'Longest day'
 'Longest distance': 'Longest distance'
 'Longest streaks': 'Längsta obrutna serie'
 Low: Låg
@@ -224,6 +228,7 @@ Morning: Morgon
 Name: Namn
 Neutral: Neutral
 'New personal best for': 'New personal best for'
+'Next milestone': 'Next milestone'
 Night: Natt
 'No activities': 'Inga aktivieter'
 'No data available': 'Ingen data tillgänglig'
@@ -429,7 +434,7 @@ Tennis: Tennis
 "That's the length of the Great Wall of China": "That's the length of the Great Wall of China"
 "That's three quarters of the way around the Earth": "That's three quarters of the way around the Earth"
 "That's {number} days of at least {distance}": "That's {number} days of at least {distance}"
-'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'Eddingtontalet i samband med cykling eller löpning definieras som det maximala antalet E så att idrottaren har tillryggalagt minst E km under minst E dagar.'
+'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Dessa märken skapas dynamiskt. Du kan använda dem i vilken &lt;img&gt; tagg som helst'
 Thinking...: Tänker...
 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.': 'This chart summarizes how you train. Each axis reflects a different normalized training habit, so higher values mean stronger emphasis.'
@@ -529,6 +534,7 @@ compare: jämför
 day(s): day(s)
 days: dagar
 'days needed for next Eddington': 'dagar till nästa Eddington nivå'
+'days to reach {n}': 'days to reach {n}'
 history: historik
 hours: timmar
 hrs: tim
