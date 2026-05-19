@@ -48,6 +48,7 @@ Canoeing: Canoë
 'Challenge consistency': 'Défi de régularité'
 Challenges: Défis
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': "Charge d'Entraînement Chronique (Forme) - Moyenne pondérée exponentiellement sur 42 jours de votre charge d'entraînement quotidienne. Représente l'adaptation d'entraînement à long terme."
+'Clear all filters': 'Clear all filters'
 'Clear chat': 'Effacer le chat'
 'Close modal': 'Fermer la fenêtre modale'
 'Collapse sidebar': 'Réduire la barre latérale'
@@ -557,9 +558,9 @@ workouts: entraînements
 '{numberOfActivities} activities': '{numberOfActivities} activités'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} activités en {year}'
 '{numberOfMonths} months': '{numberOfMonths} mois'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} photos based on your active filters'
-'{numberOfResults} results based on your active filters': '{numberOfResults} résultats basés sur vos filtres actifs'
-'{numberOfResults} routes based on your active filters': '{numberOfResults} itinéraires basés sur vos filtres actifs'
+'{numberOfResults} photos': '{numberOfResults} photos'
+'{numberOfResults} results': '{numberOfResults} results'
+'{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} semaines'
 '{threshold} hours using {gearName}': '{threshold} heures en utilisant {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} distance totale en utilisant {gearName}'

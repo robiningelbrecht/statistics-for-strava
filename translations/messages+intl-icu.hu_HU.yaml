@@ -48,6 +48,7 @@ Canoeing: Kenuzás
 'Challenge consistency': 'Kihívás következetesség'
 Challenges: Kihívások
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Krónikus edzésterhelés (Fitnesz) – a napi edzésterhelés 42 napos exponenciálisan súlyozott átlaga. A hosszú távú edzésadaptációt mutatja.'
+'Clear all filters': 'Clear all filters'
 'Clear chat': 'Chat törlése'
 'Close modal': Bezárás
 'Collapse sidebar': 'Oldalsáv összecsukása'
@@ -557,9 +558,9 @@ workouts: edzések
 '{numberOfActivities} activities': '{numberOfActivities} tevékenység'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} tevékenység {year}-ben'
 '{numberOfMonths} months': '{numberOfMonths} hónap'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} fotó az aktív szűrők alapján'
-'{numberOfResults} results based on your active filters': '{numberOfResults} eredmény az aktív szűrők alapján'
-'{numberOfResults} routes based on your active filters': '{numberOfResults} útvonal az aktív szűrők alapján'
+'{numberOfResults} photos': '{numberOfResults} photos'
+'{numberOfResults} results': '{numberOfResults} results'
+'{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} hét'
 '{threshold} hours using {gearName}': '{threshold} óra {gearName} felhasználásával'
 '{threshold} total distance using {gearName}': '{threshold} össztávolság {gearName} felhasználásával'
