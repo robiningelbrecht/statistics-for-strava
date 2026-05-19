@@ -1,22 +1,22 @@
 {% autoescape false %}
 {% set activityType =  activity.getSportType().getActivityType() %}
-<tr class="group odd:bg-white border-b even:border-b even:bg-gray-50">
-    <td class="px-2 py-2 whitespace-nowrap">
+<tr class="group/row">
+    <td class="narrow whitespace-nowrap">
         {{ activity.getStartDate()|formatDate() }}
     </td>
-    <td class="px-2 py-2 whitespace-nowrap lg:sticky lg:left-0 group-odd:bg-white group-even:bg-gray-50">
+    <td class="whitespace-nowrap narrow lg:sticky lg:left-0 bg-white">
         {{ activity|activityLink(ellipses: 50) }}
     </td>
-    <td class="px-6 py-2">
+    <td>
         {{ activity.getDistance()|renderMeasurement(activityType.getDistancePrecision()) }}
     </td>
-    <td class="px-6 py-2">
+    <td>
         {{ activity.getElevation()|renderMeasurement(0) }}
     </td>
-    <td class="px-6 py-2">
+    <td>
         {{ activity.getMovingTimeFormatted() }}
     </td>
-    <td class="px-6 py-2">
+    <td>
         {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
             {{ activity.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
@@ -26,27 +26,27 @@
             {{ activity.getAverageSpeed()|renderMeasurement(1) }}
         {% endif %}
     </td>
-    <td class="px-6 py-2">
-        {{ activity.getAverageHeartRate() ?? 'n/a' }}
+    <td>
+        {{ activity.getAverageHeartRate() ?? '-' }}
     </td>
-    <td class="px-6 py-2">
+    <td>
         {{ activity.getCalories() }}<span class="text-xs">kcal</span>
     </td>
-    <td class="px-6 py-2">
-        {{ activity.getAveragePower() ? activity.getAveragePower() ~ '<span class="text-xs">w</span>': 'n/a' }}
+    <td>
+        {{ activity.getAveragePower() ? activity.getAveragePower() ~ '<span class="text-xs">w</span>': '-' }}
     </td>
     {% for timeInterval in timeIntervals %}
         {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
         {% if powerOutput %}
-            <td class="px-2 py-2 border-l-2">
+            <td class="border-l-2">
                 {{ powerOutput.getPower() }}<span class="text-xs">w</span>
             </td>
-            <td class="px-2 py-2 border-r-2">
+            <td class="border-r-2">
                 {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
             </td>
         {% else %}
-            <td class="px-2 py-2"></td>
-            <td class="px-2 py-2"></td>
+            <td class="border-l-2">-</td>
+            <td class="border-r-2">-</td>
         {% endif %}
     {% endfor %}
 </tr>

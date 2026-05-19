@@ -8,15 +8,15 @@
     <div class="grid grid-cols-1 mb-4">
         <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <div class="overflow-auto max-h-[calc(100vh-165px)] relative">
-                <table class="w-full text-sm text-center text-gray-500" data-accordion="table-months"
+                <table class="data-table" data-accordion="table-months"
                        data-active-classes="text-gray-500" data-inactive-classes="text-gray-500">
-                    <thead class="z-10 text-gray-700 sticky top-0 text-xs uppercase bg-gray-50">
-                    <tr>
-                        <th class="px-2"></th>
-                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                    <thead class="z-10 sticky top-0">
+                    <tr class="group/row">
+                        <th class="narrow"></th>
+                        <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                         </th>
-                        <th scope="col" class="px-2 py-3">
+                        <th scope="col" class="narrow">
                             <div class="leading-7">
                                 # {{ "workouts"|trans }}
                             </div>
@@ -24,7 +24,7 @@
                                 {{ totals.numberOfActivities }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('distance') }}
                             </div>
@@ -33,7 +33,7 @@
                                 {{ convertedTotalDistance.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('distance') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('elevation') }}
                             </div>
@@ -42,7 +42,7 @@
                                 {{ convertedTotalElevation.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('elevation') }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
@@ -50,7 +50,7 @@
                                 {{ totals.movingTime|formatSeconds }}
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('calories') }}
                             </div>
@@ -58,7 +58,7 @@
                                 {{ totals.calories|formatNumber(0) }}kcal
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('challenge') }}
                             </div>
@@ -70,14 +70,13 @@
                     </thead>
                     {% for month in months %}
                         {% set statsForCurrentMonth = monthlyStatistics.getForMonth(month) %}
-                        {% set zebraClasses = cycle(['bg-white', 'bg-gray-50'], loop.index0) %}
                         {% if statsForCurrentMonth|length > 0 %}
                             <tbody>
-                            <tr class="{{ zebraClasses }} border-b cursor-pointer"
+                            <tr class="cursor-pointer"
                                 id="table-months-header-{{ loop.index0 }}"
                                 data-accordion-target="#table-months-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-months-content-{{ loop.index0 }}">
-                                <td class="w-4 p-2 text-gray-700">
+                                <td class="w-4 text-gray-700">
                                     <svg data-accordion-icon class="size-2 rotate-180 shrink-0" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -86,7 +85,7 @@
                                     </svg>
                                 </td>
                                 <th scope="row"
-                                    class="sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap {{ zebraClasses }}">
+                                    class="sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
                                     <a href="#"
                                        data-model-content-url="{{ relativeUrl('month/month-' ~ month.getId() ~ '.html') }}"
                                        class="text-blue-600 hover:underline">
@@ -113,7 +112,7 @@
                                 </td>
                             </tr>
                             </tbody>
-                            <tbody class="hidden border-b {{ zebraClasses }}"
+                            <tbody class="hidden border-b"
                                    id="table-months-content-{{ loop.index0 }}"
                                    aria-labelledby="table-months-header-{{ loop.index0 }}">
                             {% for sportType in sportTypes %}
@@ -123,7 +122,7 @@
                                         <td class="w-4 p-2 text-gray-700">
 
                                         </td>
-                                        <td class="{{ zebraClasses }} text-gray-700 sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
+                                        <td class="text-gray-700 sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
                                             {{ sportType|trans }}
                                         </td>
                                         <td class="px-2 py-2 truncate">

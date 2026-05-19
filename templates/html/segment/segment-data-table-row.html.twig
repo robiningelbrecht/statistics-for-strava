@@ -1,16 +1,16 @@
 {% autoescape false %}
-<tr class="odd:bg-white border-b even:border-b even:bg-gray-50">
-    <td class="px-2 py-2 text-left">
+<tr class="group/row">
+    <td class="narrow">
         <div class="flex items-center gap-x-1">
             {{ segment|segmentLink() }}
         </div>
     </td>
-    <td class="px-2 py-2">
+    <td class="narrow">
         {% if segment.getLastEffortDate() %}
             {{ segment.getLastEffortDate()|formatDate() }}
         {% endif %}
     </td>
-    <td class="px-2 py-2">
+    <td>
         <div class="flex justify-center">
             {% set bestEffort = segment.getBestEffort() %}
             <div class="w-52">
@@ -23,13 +23,13 @@
             </div>
         </div>
     </td>
-    <td class="px-2 py-2">
+    <td>
         {{ segment.getDistance()|renderMeasurement(2) }}
     </td>
-    <td class="px-2 py-2">
+    <td>
         {{ segment.getAverageGradient() }}<span class="text-xs">%</span>
     </td>
-    <td class="px-2 py-2">
+    <td>
         {{ segment.getNumberOfTimesRidden() }}
     </td>
 </tr>

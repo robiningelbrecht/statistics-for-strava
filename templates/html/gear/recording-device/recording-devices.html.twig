@@ -25,72 +25,72 @@
                 </h3>
             </div>
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-center text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <table class="data-table">
+                    <thead>
                     <tr>
-                        <th rowspan="2" scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                        <th rowspan="2" scope="col" class="sticky left-0 bg-gray-50">
 
                         </th>
-                        <th rowspan="2" scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col">
                             # {{ "workouts"|trans }}
                         </th>
-                        <th rowspan="2" scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('distance') }}
                             </div>
                         </th>
-                        <th rowspan="2" scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('elevation') }}
                             </div>
                         </th>
-                        <th rowspan="2" scope="col" class="px-6 py-3">
+                        <th rowspan="2" scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('time') }}
                             </div>
                         </th>
-                        <th rowspan="2" scope="col" class="px-2 py-3">
+                        <th rowspan="2" scope="col">
                             <div class="flex items-center justify-center">
                                 {{ svg('wallet') }}
                             </div>
                         </th>
-                        <th colspan="3" scope="col" class="px-2 py-3">
+                        <th colspan="3" scope="col">
                             {{ "Relative cost"|trans }}
                         </th>
                     </tr>
                     <tr>
-                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                        <th scope="col" class="truncate">
                             {{ "per hour"|trans }}
                         </th>
-                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                        <th scope="col" class="truncate">
                             {{ "per activity"|trans }}
                         </th>
-                        <th scope="col" class="px-2 pb-3 truncate font-normal normal-case">
+                        <th scope="col" class="truncate">
                             {{ "per"|trans }} {{ renderUnitSymbol('distance') }}
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for recordingDevice in devices %}
-                        <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                            <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                        <tr class="group/row">
+                            <th scope="row" class="bg-white sticky left-0 font-medium whitespace-nowrap">
                                 <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-filters='{{ dataFilters('activities', {device: recordingDevice.getId()}) }}' class="font-medium text-blue-600 hover:underline">
                                     {{ recordingDevice.getName() }}
                                 </a>
                             </th>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {{ recordingDevice.getNumberOfWorkouts() }}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {{ recordingDevice.getDistanceTracked()|renderMeasurement(0) }}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {{ recordingDevice.getElevationTracked()|renderMeasurement(0) }}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {{ recordingDevice.getTimeTrackedFormatted() }}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {% set purchasePrice = recordingDevice.getPurchasePrice() %}
                                 {% if purchasePrice %}
                                     {{ purchasePrice|formatMoney }}
@@ -98,7 +98,7 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {% set relativeCostPerHour = recordingDevice.getRelativeCostPerHour() %}
                                 {% if relativeCostPerHour %}
                                     {{ relativeCostPerHour|formatMoney }}
@@ -106,7 +106,7 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {% set relativeCostPerWorkout = recordingDevice.getRelativeCostPerWorkout() %}
                                 {% if relativeCostPerWorkout %}
                                     {{ relativeCostPerWorkout|formatMoney }}
@@ -114,7 +114,7 @@
                                     -
                                 {% endif %}
                             </td>
-                            <td class="px-6 py-2 truncate">
+                            <td class="truncate">
                                 {% set relativeCostPerDistanceUnit = recordingDevice.getRelativeCostPerDistanceUnit(unitSystem) %}
                                 {% if relativeCostPerDistanceUnit %}
                                     {{ relativeCostPerDistanceUnit|formatMoney }}
