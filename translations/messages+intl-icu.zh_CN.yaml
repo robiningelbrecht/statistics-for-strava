@@ -27,8 +27,9 @@ Apr: 四月
 'Ask Mark something...': 问问Mark...
 'Athlete profile': 'Athlete profile'
 Aug: 八月
+Average: Average
 'Average gradient': 'Average gradient'
-Avg: 平均
+'Avg speed': 'Avg speed'
 'Back Country Ski': 越野滑雪
 Badges: Badges
 Badminton: 羽毛球
@@ -40,7 +41,6 @@ Best: 最佳
 'Build zone (–10)': '构建区 (–10)'
 'CTL (Fitness)': 'CTL (体能)'
 Cadence: 踏频
-'Cadence distribution': 踏频分布
 Calories: 卡路里
 'Calories burned': 燃烧的卡路里
 Canoeing: 划独木舟
@@ -57,6 +57,7 @@ Compare: 对比
 'Compare to': 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
 'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
@@ -86,7 +87,6 @@ Distance: 距离
 'Distance in {unit}': '以{unit}为单位的距离'
 'Distance over time per gear': 每个装备随时间变化的距离
 'Distance per month per gear': 每个装备每月的距离
-Distribution: 分布
 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 电动自行车骑行
@@ -138,7 +138,6 @@ HIIT: 高强度间歇训练
 HR: 心率
 'Hand Cycle': 手动自行车
 'Heart rate': 心率
-'Heart rate distribution': 心率分布
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 过去一个月的心率区间分布。为了进行有效的极化训练，您的训练应主要在以下区间内进行。
 'Heart rate zones': 心率区间
 Heatmap: 热图
@@ -205,7 +204,6 @@ Max: 最大
 May: 五月
 Medium: 中等
 Metric: Metric
-Metrics: Metrics
 Milestones: Milestones
 'Mind & Body Sports': 心灵与身体运动
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
@@ -232,7 +230,7 @@ Night: 夜晚
 'No other options to compare with': 无可供比较的其他选项
 None: 无
 'Nordic Ski': 北欧滑雪
-Normalized: 归一化
+'Normalized power': 'Normalized power'
 'Not supported': 不支持
 Nov: 十一月
 Now: Now
@@ -253,7 +251,6 @@ Over-fatigued: Over-fatigued
 PRs: PRs
 'PRs achieved per month': 每月PRs
 Pace: 步速
-'Pace distribution': 步速分布
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
@@ -267,7 +264,6 @@ Pilates: 普拉提
 'Please address these issues': 请解决这些问题
 'Polarised training (last 30 days)': 极化训练（过去30天）
 Power: 功率
-'Power distribution': 功率分布
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
 'Prev year': 去年
 Previous: Previous
@@ -320,7 +316,6 @@ Soccer: 足球
 Socials: 社交
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: 速度
-'Speed distribution': 速度分布
 Splits: 分段
 'Sport variety': 'Sport variety'
 Squash: 壁球
@@ -443,6 +438,7 @@ Thinking...: 思考中...
 Thu: 周四
 Thursday: 星期四
 Time: 时间
+'Time in zone': 'Time in zone'
 'Times completed': 完成次数
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
 'Toggle sidebar': 切换侧边栏
@@ -546,6 +542,7 @@ per: per
 'reached Eddington number {number}': 'reached Eddington number {number}'
 to: 至
 total: 总计
+watts: watts
 weeks: 周
 workouts: 锻炼
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'

@@ -1,33 +1,37 @@
 <!-- Modal header --><html><body>
 <div class="modal-header z-10000 sticky top-0 bg-white">
-        <div class="flex items-center justify-between">
-            <h3 class="max-w-[30%] sm:max-w-[50%] md:max-w-full truncate">
-                <a class="flex items-center gap-x-1 hover:underline" href="https://www.strava.com/activities/9756441741123" target="_blank" rel="nofollow">
-                    Watopia Flat Forward in London
-                    <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 18">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"></path>
+        <div class="flex items-start justify-between gap-4">
+            <div class="min-w-0">
+                <h3 class="text-lg md:text-xl font-extrabold flex items-center gap-2">
+                    <span class="line-clamp-1">Watopia Flat Forward in London</span>
+                    <a href="https://www.strava.com/activities/9756441741123" class="text-gray-500 hover:text-strava-orange transition" title="Open on Strava">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewbox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"></path>
+                        </svg>
+                    </a>
+                </h3>
+                            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                                <button type="button" class="close inline-flex items-center justify-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
                     </svg>
-                </a>
-            </h3>
-            <span class="mx-1 text-xs font-normal text-gray-500">-</span>
-            <span class="text-xs font-normal text-gray-500">
-                16:35 on Thursday,
-                <a href="#" data-model-content-url="/month/month-2023-08.html" class="hover:underline">August</a>
-                 31, 2023
-            </span>
-            <button type="button" class="close">
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"></path>
-                </svg>
-                <span class="sr-only">Close modal</span>
-            </button>
-        </div>
+                    <span class="sr-only">Close modal</span>
+                </button>
             </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-gray-600">
+             <span class="inline-flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-3.5 text-gray-400" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+                <a href="#" class="hover:underline hover:text-strava-orange transition" title="View this month" data-model-content-url="/month/month-2023-08.html">
+                    August 31, 2023
+                </a> &Acirc;&middot; 16:35
+             </span>
+                                </div>
+    </div>
     <!-- Modal body -->
-    <div class="modal-body">
-        <div class="grid grid-cols-1 gap-4">
-            <div class="grid grid-cols-1 gap-4">
-                        <div class="flex gap-x-2 overflow-x-auto">
+    <div class="modal-body space-y-6">
+                <div class="flex gap-x-2 overflow-x-auto">
         <div class="w-1/8 min-w-25 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
             <div class="text-center">
                 <dd class="text-xs text-gray-500">Distance</dd>
@@ -87,76 +91,100 @@
             </div>
         </div>
     </div>
-                                                                </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <div>
-                        <div id="splitsLapsTabContent">
-                                    <div id="splitsLapsTabSplits" role="tabpanel" aria-labelledby="splitsLapsTabSplits-tab">
-                        <div class="text-center text-gray-500 text-sm h-[350px] relative overflow-x-auto px-2 pb-2 border border-gray-200 rounded-lg shadow-sm">
-                            <div class="bg-white sticky top-0 pt-2 flex items-center text-xs text-gray-700 uppercase font-bold">
-                                <div class="w-8 px-2 py-2">km</div>
-                                <div class="w-20 px-2 py-2">Pace</div>
-                                                                    <div class="w-20 px-2 py-2">
-                                       GAP
-                                    </div>
-                                                                <div class="grow min-w-40 px-2 py-2"></div>
-                                <div class="w-20 px-2 py-2">Elev</div>
-                                <div class="w-20 px-2 py-2">HR</div>
+                                    <section class="rounded-lg overflow-hidden border border-gray-200 shadow-xs bg-white">
+            <div class="relative">
+                                <div class="h-80 md:h-96 w-full z-0" data-leaflet='{"polylineUrl":"\/api\/","tileLayer":null,"minZoom":null,"maxZoom":null,"imageOverlay":null,"bounds":null,"scrollWheelZoom":true}' data-leaflet-echart-connect>
+                </div>
+            </div>
+                    </section>
+                
+                    <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                    <div class="rounded-lg bg-white border border-gray-200 shadow-xs p-5 ">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="size-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+                                    <svg class="text-strava-orange size-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none"><g><path d="M19.2373 6.23731C20.7839 7.78395 20.8432 10.2727 19.3718 11.8911L11.9995 20.0001L4.62812 11.8911C3.15679 10.2727 3.21605 7.7839 4.76269 6.23726C6.48961 4.51034 9.33372 4.66814 10.8594 6.5752L12 8.00045L13.1396 6.57504C14.6653 4.66798 17.5104 4.51039 19.2373 6.23731Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></svg>
+                                </div>
+                                <h3 class="font-bold text-gray-900">Heart rate</h3>
                             </div>
-                                                            <div class="flex items-center border-b last:border-b-0">
-                                    <div class="w-8 px-2 py-2 font-bold">
-                                        1
-                                    </div>
-                                    <div class="w-20 px-2 py-2">
-                                        5:33
-                                    </div>
-                                                                            <div class="w-20 px-2 py-2">
-                                                                                                                                        5:00
-                                                                                    </div>
-                                                                        <div class="grow min-w-40 px-2 py-2">
-                                        <div class=" bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: 28.48%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="w-20 px-2 py-2">
-                                        2<span class="text-xs">m</span>
-                                    </div>
-                                                                            <div class="w-20 px-2 py-2">
-                                            n/a
-                                        </div>
-                                                                    </div>
-                                                            <div class="flex items-center border-b last:border-b-0">
-                                    <div class="w-8 px-2 py-2 font-bold">
-                                        2
-                                    </div>
-                                    <div class="w-20 px-2 py-2">
-                                        5:33
-                                    </div>
-                                                                            <div class="w-20 px-2 py-2">
-                                                                                                                                        5:10
-                                                                                    </div>
-                                                                        <div class="grow min-w-40 px-2 py-2">
-                                        <div class=" bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-strava-orange h-2.5 rounded-full" style="width: 28.48%"></div>
-                                        </div>
-                                    </div>
-                                    <div class="w-20 px-2 py-2">
-                                        2<span class="text-xs">m</span>
-                                    </div>
-                                                                            <div class="w-20 px-2 py-2">
-                                            n/a
-                                        </div>
-                                                                    </div>
-                                                    </div>
-                    </div>
-                                            </div>
-        </div>
-                                            <div class="flex flex-col justify-center rounded-lg bg-[#89D7D2]">
-                        <img class="h-auto max-w-full rounded-lg lazy" src="/assets/placeholder.webp" data-src="/assets/images/maps/not-found.webp" alt="No map">
-                    </div>
+                            <span class="text-xxs text-gray-400 uppercase tracking-wider">bpm</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div class="rounded-lg bg-gray-50 p-3">
+                                <div class="text-xxs uppercase text-gray-500 tracking-wider">Average</div>
+                                <div class="text-3xl font-black text-gray-900 mt-0.5">154</div>
                             </div>
-                                                            <div id="chartsTabContent">
-                                        </div>
-    </div>
+                            <div class="rounded-lg bg-gray-50 p-3">
+                                <div class="text-xxs uppercase text-gray-500 tracking-wider">Max</div>
+                                <div class="text-3xl font-black text-gray-900 mt-0.5">
+                                    174
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xxs uppercase text-gray-500 font-semibold tracking-wider mb-1.5">Time in zone</div>
+                        <div class="space-y-1.5">
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="w-6 text-gray-500 font-medium">Z1</span>
+                                <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#DF584A]" style="width: 12%"></div>
+                                </div>
+                                <span class="w-10 text-right text-gray-700 font-medium tabular-nums">12%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="w-6 text-gray-500 font-medium">Z2</span>
+                                <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#D63522]" style="width: 38%"></div>
+                                </div>
+                                <span class="w-10 text-right text-gray-700 font-medium tabular-nums">38%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="w-6 text-gray-500 font-medium">Z3</span>
+                                <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#BD2D22]" style="width: 31%"></div>
+                                </div>
+                                <span class="w-10 text-right text-gray-700 font-medium tabular-nums">31%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="w-6 text-gray-500 font-medium">Z4</span>
+                                <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#942319]" style="width: 15%"></div>
+                                </div>
+                                <span class="w-10 text-right text-gray-700 font-medium tabular-nums">15%</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="w-6 text-gray-500 font-medium">Z5</span>
+                                <div class="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-[#6A1009]" style="width: 4%"></div>
+                                </div>
+                                <span class="w-10 text-right text-gray-700 font-medium tabular-nums">4%</span>
+                            </div>
+                        </div>
+                    </div>
+                                                    <div class="rounded-lg bg-white border border-gray-200 shadow-xs p-5 ">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="size-8 rounded-lg bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                                    <svg class="text-strava-orange size-5" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path fill="currentColor" d="M19.87,8.6A1,1,0,0,0,19,8H14.42l1.27-4.74a1,1,0,0,0-.17-.87A1,1,0,0,0,14.73,2h-7a1,1,0,0,0-1,.74l-2.68,10a1,1,0,0,0,.17.87,1,1,0,0,0,.8.39H8.89L7.08,20.74a1,1,0,0,0,1.71.93l10.9-12A1,1,0,0,0,19.87,8.6Zm-9.79,8.68,1.07-4a1,1,0,0,0-.17-.87,1,1,0,0,0-.79-.39H6.35L8.49,4h4.93L12.15,8.74a1,1,0,0,0,1,1.26h3.57Z"></path></svg>
+                                </div>
+                                <h3 class="font-bold text-gray-900">Power</h3>
+                            </div>
+                            <span class="text-xxs text-gray-400 uppercase tracking-wider">watts</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div class="rounded-lg bg-gray-50 p-3">
+                                <div class="text-xxs uppercase text-gray-500 tracking-wider">Average</div>
+                                <div class="text-3xl font-black text-gray-900 mt-0.5">192<span class="text-sm font-medium text-gray-400 ml-1">w</span>
 </div>
+                            </div>
+                                                        <div class="rounded-lg bg-gray-50 p-3">
+                                <div class="text-xxs uppercase text-gray-500 tracking-wider">Max</div>
+                                <div class="text-3xl font-black text-gray-900 mt-0.5">
+                                    479
+                                                                            <span class="text-sm font-medium text-gray-400 ml-1">w</span>
+                                                                    </div>
+                            </div>
+                        </div>
+                                                                                            </div>
+                            </section>
+                                    </div>
 </body></html>

@@ -27,8 +27,9 @@ Apr: Apr
 'Ask Mark something...': 'Fråga Mark någonting...'
 'Athlete profile': 'Athlete profile'
 Aug: Aug
+Average: Average
 'Average gradient': 'Average gradient'
-Avg: Med
+'Avg speed': 'Avg speed'
 'Back Country Ski': Utförsåkning
 Badges: Badges
 Badminton: Badminton
@@ -40,7 +41,6 @@ Best: Bästa
 'Build zone (–10)': 'Utvecklingsfas (–10)'
 'CTL (Fitness)': 'CTL (Träningsform)'
 Cadence: Kadens
-'Cadence distribution': Kadensfördelning
 Calories: Kalorier
 'Calories burned': 'Brända kalorier'
 Canoeing: Kanot
@@ -57,6 +57,7 @@ Compare: Jämför
 'Compare to': 'Jämför med'
 'Completed {threshold} activities': 'Completed {threshold} activities'
 'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
@@ -86,7 +87,6 @@ Distance: Distans
 'Distance in {unit}': 'Distans i {unit}'
 'Distance over time per gear': 'Distans över tid per utrustning'
 'Distance per month per gear': 'Distans per månad per utrustning'
-Distribution: Fördelning
 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 'E-Cykel Turer'
@@ -138,7 +138,6 @@ HIIT: HIIT
 HR: Puls
 'Hand Cycle': Handcykel
 'Heart rate': Puls
-'Heart rate distribution': Pulsfördelning
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Pulszonfördelning under den senaste månaden. För effektiv polariserad träning bör dina träningspass huvudsakligen falla inom följande zoner'
 'Heart rate zones': Pulszoner
 Heatmap: Färgkarta
@@ -205,7 +204,6 @@ Max: Max
 May: May
 Medium: Mellan
 Metric: Metric
-Metrics: Mätvärden
 Milestones: Milestones
 'Mind & Body Sports': 'Sinne- och kroppssporter'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
@@ -232,7 +230,7 @@ Night: Natt
 'No other options to compare with': 'Inga andra alternativ att jämföra med'
 None: Inga
 'Nordic Ski': 'Telemark skidåkning'
-Normalized: Normaliserad
+'Normalized power': 'Normalized power'
 'Not supported': 'Inget stöd tillgängligt'
 Nov: Nov
 Now: Now
@@ -253,7 +251,6 @@ Over-fatigued: Over-fatigued
 PRs: Rekord
 'PRs achieved per month': 'Rekord nådda per månad'
 Pace: Tempo
-'Pace distribution': 'Pace distribution'
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
@@ -267,7 +264,6 @@ Pilates: Pilates
 'Please address these issues': 'Vänligen ta itu med dessa problem'
 'Polarised training (last 30 days)': 'Polariserad träning (senaste 30 dagarna)'
 Power: Effekt
-'Power distribution': Effektfördelning
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Tidigare år'
 Previous: Previous
@@ -320,7 +316,6 @@ Soccer: Fotboll
 Socials: 'Sociala medier'
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Fart
-'Speed distribution': 'Speed distribution'
 Splits: Delar
 'Sport variety': 'Sport variety'
 Squash: Squash
@@ -443,6 +438,7 @@ Thinking...: Tänker...
 Thu: Tor
 Thursday: Torsdag
 Time: Tid
+'Time in zone': 'Time in zone'
 'Times completed': 'Antal gånger avklarade'
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'För att aktivera, konfigurera {configFile} och bygg om filerna så att ändringarna träder i kraft'
 'Toggle sidebar': 'Visa/Dölj sidofält'
@@ -546,6 +542,7 @@ per: per
 'reached Eddington number {number}': 'reached Eddington number {number}'
 to: till
 total: totalt
+watts: watts
 weeks: veckor
 workouts: träningspass
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dagar'

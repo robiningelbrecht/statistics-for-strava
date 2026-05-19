@@ -27,8 +27,9 @@ Apr: Abr
 'Ask Mark something...': 'Ask Mark something...'
 'Athlete profile': 'Athlete profile'
 Aug: Ago
+Average: Average
 'Average gradient': 'Average gradient'
-Avg: Média
+'Avg speed': 'Avg speed'
 'Back Country Ski': 'Esqui Fora de Pista'
 Badges: Badges
 Badminton: Badmínton
@@ -40,7 +41,6 @@ Best: Melhor
 'Build zone (–10)': 'Zona de carga (–10)'
 'CTL (Fitness)': 'CTL (Forma)'
 Cadence: Cadência
-'Cadence distribution': 'Distribuição de cadência'
 Calories: Calorias
 'Calories burned': 'Calories burned'
 Canoeing: Canoagem
@@ -57,6 +57,7 @@ Compare: Comparar
 'Compare to': 'Comparar com'
 'Completed {threshold} activities': 'Completed {threshold} activities'
 'Congrats! You achieved personal bests during this activity.': 'Congrats! You achieved personal bests during this activity.'
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
 Country: Country
@@ -86,7 +87,6 @@ Distance: Distância
 'Distance in {unit}': 'Distância em {unit}'
 'Distance over time per gear': 'Distância ao longo do tempo por equipamento'
 'Distance per month per gear': 'Distância por mês por equipamento'
-Distribution: Distribution
 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.'
 Duration: Duration
 'E-Bike Rides': 'Passeios de E-Bike'
@@ -138,7 +138,6 @@ HIIT: HIIT
 HR: FC
 'Hand Cycle': 'Ciclismo Manual'
 'Heart rate': 'Frequência cardíaca'
-'Heart rate distribution': 'Distribuição da frequência cardíaca'
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones'
 'Heart rate zones': 'Zonas de frequência cardíaca'
 Heatmap: 'Mapa de calor'
@@ -205,7 +204,6 @@ Max: Máx
 May: Mai
 Medium: Médio
 Metric: Metric
-Metrics: Métricas
 Milestones: Milestones
 'Mind & Body Sports': 'Desportos para Corpo e Mente'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
@@ -232,7 +230,7 @@ Night: Noite
 'No other options to compare with': 'No other options to compare with'
 None: None
 'Nordic Ski': 'Esqui Nórdico'
-Normalized: Normalized
+'Normalized power': 'Normalized power'
 'Not supported': 'Not supported'
 Nov: Nov
 Now: Now
@@ -253,7 +251,6 @@ Over-fatigued: Over-fatigued
 PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
-'Pace distribution': 'Pace distribution'
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
@@ -267,7 +264,6 @@ Pilates: Pilates
 'Please address these issues': 'Por favor resolva estas situaçãoes'
 'Polarised training (last 30 days)': 'Polarised training (last 30 days)'
 Power: Potência
-'Power distribution': 'Distribuição da potência'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Ano anterior'
 Previous: Previous
@@ -320,7 +316,6 @@ Soccer: Futebol
 Socials: Socials
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Velocidade
-'Speed distribution': 'Speed distribution'
 Splits: Intervalos
 'Sport variety': 'Sport variety'
 Squash: Squash
@@ -443,6 +438,7 @@ Thinking...: Thinking...
 Thu: Qui
 Thursday: Quinta-feira
 Time: Hora
+'Time in zone': 'Time in zone'
 'Times completed': 'Vezes concluído'
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Para activar, configurar {configFile} e recriar os ficheiros para que as mudanças sejam efectivas'
 'Toggle sidebar': 'Ativar/desativar barra lateral'
@@ -546,6 +542,7 @@ per: per
 'reached Eddington number {number}': 'reached Eddington number {number}'
 to: to
 total: total
+watts: watts
 weeks: semanas
 workouts: treinos
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dias'
