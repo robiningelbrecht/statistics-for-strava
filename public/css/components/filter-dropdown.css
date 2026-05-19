@@ -1,9 +1,9 @@
 @layer components {
     div.filter-dropdown {
         & > button[data-dropdown]{
-            @apply cursor-pointer w-fit text-strava-orange border border-strava-orange font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between;
-            @apply [&.active]:text-strava-orange [&.active]:bg-strava-orange/15;
-            @apply hover:bg-strava-orange/15 [&.active]:hover:bg-strava-orange/20;
+            @apply cursor-pointer w-fit font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between;
+            @apply text-gray-600 bg-white hover:text-gray-900 hover:bg-gray-50 border border-gray-200;
+            @apply [&.active]:text-strava-orange [&.active]:border-strava-orange [&.active]:bg-strava-orange/15 [&.active]:hover:bg-strava-orange/20;
 
             & svg {
                 @apply w-2.5 h-2.5 ms-3 transition-transform duration-200;
@@ -29,7 +29,11 @@
         }
 
         & input:where([type="radio"], [type="checkbox"]) {
-            @apply w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-orange-500 focus:ring-2;
+            @apply w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-strava-orange/30 focus:ring-2;
+        }
+
+        & input:where([type="text"], [type="date"], [type="number"]) {
+            @apply focus:outline-none focus:ring-2 focus:ring-strava-orange/30 focus:border-strava-orange/50 transition;
         }
 
         & li label {
