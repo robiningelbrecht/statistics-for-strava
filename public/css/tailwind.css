@@ -43,6 +43,10 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+
+    table tr {
+        border-color: var(--color-gray-100, currentColor);
+    }
 }
 
 @layer utilities {

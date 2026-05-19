@@ -4858,13 +4858,12 @@ table.data-table {
     tr {
       border-bottom-style: var(--tw-border-style);
       border-bottom-width: 1px;
-      border-color: var(--color-gray-100);
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-gray-50);
         }
       }
-      td,th {
+      td, th {
         padding-inline: calc(var(--spacing) * 6);
         padding-block: calc(var(--spacing) * 2.5);
         &:is(:where(.group\/row):hover *) {
@@ -5405,6 +5404,9 @@ table.data-table {
 @layer base {
   *, ::after, ::before, ::backdrop, ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
+  }
+  table tr {
+    border-color: var(--color-gray-100, currentColor);
   }
 }
 @layer utilities {
