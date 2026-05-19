@@ -69,6 +69,7 @@ enum SportType: string implements TranslatableInterface
     // Mind & Body Sports.
     case PILATES = 'Pilates';
     case YOGA = 'Yoga';
+    case PHYSICAL_THERAPY = 'PhysicalTherapy';
     // Outdoor Sports.
     case GOLF = 'Golf';
     case ROCK_CLIMBING = 'RockClimbing';
@@ -148,6 +149,7 @@ enum SportType: string implements TranslatableInterface
             self::PILATES => $translator->trans('Pilates', locale: $locale),
             self::RACQUET_BALL => $translator->trans('Racquet Ball', locale: $locale),
             self::PADEL => $translator->trans('Padel', locale: $locale),
+            self::PHYSICAL_THERAPY => $translator->trans('Physical Therapy', locale: $locale),
             self::ROCK_CLIMBING => $translator->trans('Rock Climbing', locale: $locale),
             self::VIRTUAL_ROW => $translator->trans('Virtual Row', locale: $locale),
             self::SAIL => $translator->trans('Sail', locale: $locale),
@@ -195,7 +197,7 @@ enum SportType: string implements TranslatableInterface
             SportType::CROSSFIT, SportType::WEIGHT_TRAINING, SportType::WORKOUT, SportType::STAIR_STEPPER,
             SportType::VIRTUAL_ROW, SportType::HIIT, SportType::ELLIPTICAL, SportType::DANCE => ActivityType::FITNESS,
             // MIND_BODY_SPORTS.
-            SportType::PILATES, SportType::YOGA => ActivityType::MIND_BODY_SPORTS,
+            SportType::PILATES, SportType::YOGA, SportType::PHYSICAL_THERAPY => ActivityType::MIND_BODY_SPORTS,
             // OUTDOOR_SPORTS.
             SportType::GOLF, SportType::ROCK_CLIMBING, SportType::SAIL => ActivityType::OUTDOOR_SPORTS,
             // TEAM SPORTS.
@@ -244,6 +246,7 @@ enum SportType: string implements TranslatableInterface
             self::VOLLEYBALL,
             self::DANCE,
             self::PADEL,
+            self::PHYSICAL_THERAPY,
         ]);
     }
 
@@ -271,6 +274,7 @@ enum SportType: string implements TranslatableInterface
             self::VOLLEYBALL,
             self::DANCE,
             self::PADEL,
+            self::PHYSICAL_THERAPY,
         ]);
     }
 
