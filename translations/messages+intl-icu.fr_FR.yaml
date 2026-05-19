@@ -27,8 +27,9 @@ Apr: Avr
 'Ask Mark something...': 'Demandez quelque chose à Mark...'
 'Athlete profile': "Profil de l'athlète"
 Aug: Aoû
+Average: Average
 'Average gradient': 'Average gradient'
-Avg: Moy
+'Avg speed': 'Avg speed'
 'Back Country Ski': 'Ski de randonnée'
 Badges: Badges
 Badminton: Badminton
@@ -40,7 +41,6 @@ Best: Meilleur
 'Build zone (–10)': 'Zone de progression (–10)'
 'CTL (Fitness)': 'CTL (Forme à long terme)'
 Cadence: Cadence
-'Cadence distribution': 'Distribution de la cadence'
 Calories: Calories
 'Calories burned': 'Calories dépensées'
 Canoeing: Canoë
@@ -57,6 +57,7 @@ Compare: Comparer
 'Compare to': 'Comparer à'
 'Completed {threshold} activities': '{threshold} activités réalisées'
 'Congrats! You achieved personal bests during this activity.': 'Félicitations ! Vous avez réalisé vos meilleures performances personnelles lors de cette activité.'
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Envisagez de réduire la charge'
 Consistency: Uniformité
 Country: Pays
@@ -86,7 +87,6 @@ Distance: Distance
 'Distance in {unit}': 'Distance en {unit}'
 'Distance over time per gear': 'Distance dans le temps par matériel'
 'Distance per month per gear': 'Distance par mois par matériel'
-Distribution: Distribution
 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'Un mélange de vélo, de course, de natation et de renforcement musculaire augmente votre score de variété.'
 Duration: Durée
 'E-Bike Rides': 'Sorties en vélo électrique'
@@ -138,7 +138,6 @@ HIIT: HIIT
 HR: FC
 'Hand Cycle': Handbike
 'Heart rate': 'Fréquence cardiaque'
-'Heart rate distribution': 'Répartition de la fréquence cardiaque'
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': "Répartition des zones de fréquence cardiaque au cours du mois dernier. Pour un entraînement polarisé efficace, vos séances devraient se situer principalement dans les zones suivantes\_:"
 'Heart rate zones': 'Zones de fréquence cardiaque'
 Heatmap: 'Carte thermique'
@@ -205,7 +204,6 @@ Max: Max
 May: Mai
 Medium: Moyen
 Metric: Métrique
-Metrics: Métriques
 Milestones: Milestones
 'Mind & Body Sports': "Sports du corps et de l'esprit"
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
@@ -232,7 +230,7 @@ Night: Nuit
 'No other options to compare with': 'Aucune autre option à comparer'
 None: Aucun
 'Nordic Ski': 'Ski nordique'
-Normalized: Normalisé
+'Normalized power': 'Normalized power'
 'Not supported': 'Non pris en charge'
 Nov: Nov
 Now: Now
@@ -253,7 +251,6 @@ Over-fatigued: Surentraîné
 PRs: Records
 'PRs achieved per month': 'Records personnels atteints par mois'
 Pace: Allure
-'Pace distribution': 'Distribution du rythme'
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Puissances maximales'
@@ -267,7 +264,6 @@ Pilates: Pilates
 'Please address these issues': 'Veuillez résoudre ces problèmes'
 'Polarised training (last 30 days)': 'Entraînement polarisé (30 derniers jours)'
 Power: Puissance
-'Power distribution': 'Répartition de la puissance'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Alimenté par une estimation de {caloriesBurned} calories, soit environ {numberOfPizzaSlices} parts de pizza 🍕.'
 'Prev year': 'Année précédente'
 Previous: Précédent
@@ -320,7 +316,6 @@ Soccer: Football
 Socials: 'Réseaux sociaux'
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Vitesse
-'Speed distribution': 'Répartition de la vitesse'
 Splits: Splits
 'Sport variety': 'Sport variety'
 Squash: Squash
@@ -443,6 +438,7 @@ Thinking...: Réfléchit...
 Thu: Jeu
 Thursday: Jeudi
 Time: Temps
+'Time in zone': 'Time in zone'
 'Times completed': 'Fois accompli'
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': "Pour l'activer, configurez {configFile} et reconstruisez les fichiers pour que les modifications prennent effet"
 'Toggle sidebar': 'Basculer la barre latérale'
@@ -546,6 +542,7 @@ per: par
 'reached Eddington number {number}': 'reached Eddington number {number}'
 to: à
 total: total
+watts: watts
 weeks: semaines
 workouts: entraînements
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} jours'

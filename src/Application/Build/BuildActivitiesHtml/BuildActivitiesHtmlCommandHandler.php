@@ -106,7 +106,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $heartRateDistribution = $valueDistributionMetrics->filterOnStreamType(StreamType::HEART_RATE)?->getData() ?? [];
             if ($activity->getAverageHeartRate() && [] !== $heartRateDistribution) {
                 $distributionCharts[] = [
-                    'title' => $this->translator->trans('Heart rate distribution'),
+                    'title' => $this->translator->trans('Heart rate'),
                     'data' => Json::encode(HeartRateDistributionChart::create(
                         heartRateData: $heartRateDistribution,
                         averageHeartRate: $activity->getAverageHeartRate(),
@@ -139,7 +139,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
                 if (!is_null($powerDistributionChart)) {
                     $distributionCharts[] = [
-                        'title' => $this->translator->trans('Power distribution'),
+                        'title' => $this->translator->trans('Power'),
                         'data' => Json::encode($powerDistributionChart),
                     ];
                 }
@@ -159,8 +159,8 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 if (!is_null($velocityDistributionChart)) {
                     $distributionCharts[] = [
                         'title' => match (true) {
-                            $velocityUnitPreference instanceof KmPerHour => $this->translator->trans('Speed distribution'),
-                            default => $this->translator->trans('Pace distribution'),
+                            $velocityUnitPreference instanceof KmPerHour => $this->translator->trans('Speed'),
+                            default => $this->translator->trans('Pace'),
                         },
                         'data' => Json::encode($velocityDistributionChart),
                     ];
@@ -177,7 +177,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
 
                 if (!is_null($cadenceDistributionChart)) {
                     $distributionCharts[] = [
-                        'title' => $this->translator->trans('Cadence distribution'),
+                        'title' => $this->translator->trans('Cadence'),
                         'data' => Json::encode($cadenceDistributionChart),
                     ];
                 }

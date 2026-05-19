@@ -110,7 +110,7 @@
                         </div>
                         <div class="flex items-baseline gap-1">
                             <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getElevation().toFloat()|formatNumber(0) }}</span>
-                            <span class="text-xs font-medium text-gray-500">{{ renderUnitSymbol('elevation') }}</span>
+                            <span class="text-xs font-medium text-gray-500">{{ activity.getElevation().getSymbol() }}</span>
                         </div>
                     </div>
                 </div>
@@ -309,153 +309,92 @@
                 {% endif %}
             </section>
         {% endif %}
-        <div class="grid grid-cols-1 gap-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {% block statsInleftColumn %}
-                    <div class="space-y-4">
-                        {% if bestEfforts|length > 0 %}
-                            <div class="relative overflow-x-auto px-2 py-2 border border-gray-200 rounded-lg shadow-sm">
-                                <table class="w-full text-sm text-center text-gray-500">
-                                    <caption class="caption-top text-xs">
-                                        {{ "Congrats! You achieved personal bests during this activity."|trans }}
-                                    </caption>
-                                    <thead class="text-xs text-gray-700 uppercase">
-                                    <tr>
-                                        <th scope="col" class="px-2 py-2">
-                                            {{ "Distance"|trans }}
-                                        </th>
-                                        <th scope="col" class="px-2 py-2">
-                                            {{ "Time"|trans }}
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for bestEffort in bestEfforts %}
-                                        {% set distance = bestEffort.getBestEffortDistance() %}
-                                        <tr class="border-b last:border-b-0">
-                                            <th class="px-2 py-2">
-                                                {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }} {{ distance.getSymbol() }}
-                                            </th>
-                                            <td class="px-2 py-2">
-                                                {{ bestEffort.getFormattedTime() }}
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+        {% if bestEfforts|length > 0 %}
+            <section class="rounded-lg bg-amber-50 border border-amber-100 dark:bg-[#202830] dark:border-[#3e444d] shadow-xs p-5">
+                <div class="flex items-center gap-2 mb-3">
+                   {{ svg('star', 'size-5', 'text-amber-500') }}
+                    <h3 class="font-bold text-gray-900">{{ "Personal bests"|trans }}</h3>
+                    <span class="text-xs text-gray-500">{{ "Congrats! You achieved {numberOfPRs} PRs in this activity."|trans({'{numberOfPRs}': bestEfforts|length}) }}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    {% for bestEffort in bestEfforts %}
+                        {% set distance = bestEffort.getBestEffortDistance() %}
+                        <div class="bg-white rounded-xl px-4 py-2.5 border border-gray-200">
+                            <div class="text-xxs uppercase font-semibold text-gray-500">
+                                {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}{{ distance.getSymbol() }}
                             </div>
-                        {% endif %}
-                    </div>
-                {% endblock statsInleftColumn %}
-            </div>
-            {% block extraStatsUnderColumns %}
-            {% endblock extraStatsUnderColumns %}
-            {% if segmentEfforts|length > 0 %}
-                <div class="grid grid-cols-1 gap-4">
-                    <div id="accordion-segments" data-accordion="collapse"
-                         data-active-classes="text-gray-900"
-                         data-inactive-classes="text-gray-900">
-                        <a id="accordion-segments-heading" data-accordion-target="#accordion-segments-body" aria-expanded="false"
-                           aria-controls="accordion-segments-body"
-                           class="hover:underline cursor-pointer flex items-center gap-3 justify-between w-full py-3 font-medium rtl:text-right text-gray-900">
-                            <span>{{ "Segments"|trans }} ({{ segmentEfforts|length }})</span>
-                            <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
-                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 5 5 1 1 5"/>
-                            </svg>
-                        </a>
-                        <div id="accordion-segments-body" class="hidden relative overflow-x-auto"
-                             aria-labelledby="accordion-segments-heading">
-                            <table class="w-full text-sm text-center text-gray-500">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-2 py-3">
-                                        <div class="flex items-center justify-center" title="{{ "Number of times completed"|trans }}">
-                                            {{ svg('hashtag') }}
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-2 py-3 text-left">
-
-                                    </th>
-                                    <th scope="col" class="px-2 py-3">
-                                        <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
-                                            {{ svg('time') }}
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-2 py-3">
-                                        <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                            {{ svg('speed') }}
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-2 py-3">
-                                        <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
-                                            {{ svg('distance') }}
-                                        </div>
-                                    </th>
-                                    <th scope="col" class="px-2 py-3">
-                                        <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
-                                            {{ svg('power') }}
-                                        </div>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for segmentEffort in segmentEfforts %}
-                                    <tr class="{{ cycle(['bg-white border-b', 'border-b bg-gray-50'], loop.index0) }}">
-                                        <td class="px-2 py-2">
-                                            {{ segmentEffort.getRank() }}
-                                        </td>
-                                        <td class="px-2 py-2 text-left">
-                                            <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}"
-                                               class="font-medium text-blue-600 hover:underline" rel="nofollow">
-                                                <span class="truncate">{{ segmentEffort.getName()|ellipses(50) }}</span>
-                                            </a>
-                                        </td>
-                                        <td class="px-2 py-2">
-                                            {{ segmentEffort.getElapsedTimeFormatted() }}
-                                        </td>
-                                        <td class="px-2 py-2">
-                                            {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
-                                            {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
-                                                {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
-                                            {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
-                                                {{ segmentEffort.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
-                                            {% else %}
-                                                {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
-                                            {% endif %}
-                                        </td>
-                                        <td class="px-2 py-2">
-                                            {{ segmentEffort.getDistance()|renderMeasurement(2) }}
-                                        </td>
-                                        <td class="px-2 py-2">
-                                            {% if segmentEffort.getAverageWatts() %}
-                                                {{ segmentEffort.getAverageWatts()|formatNumber(0) }}<span class="text-xs">w</span>
-                                            {% else %}
-                                                n/a
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                            <div class="text-lg font-black text-gray-900">
+                                {{ bestEffort.getFormattedTime() }}
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endif %}
-
-            {% if distributionCharts is not empty %}
-                <div id="chartsTabDistribution" role="tabpanel" aria-labelledby="chartsTabDistribution-tab">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        {% for distributionChart in distributionCharts %}
-                            <div>
-                                <h3 class="font-bold mb-1 text-center">{{ distributionChart.title }}</h3>
-                                <div class="h-87.5" data-echarts-options='{{ distributionChart.data }}'></div>
+            </section>
+        {% endif %}
+        {% if segmentEfforts|length > 0 %}
+            <details class="group/section">
+                <summary class="list-none cursor-pointer flex items-center justify-between py-2 hover:text-strava-orange transition select-none">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-bold text-gray-900 group-hover/section:text-strava-orange transition">{{ "Segments"|trans }}</h3>
+                        <span class="text-xs font-medium text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">{{ segmentEfforts|length }}</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-3 text-gray-400 transition-transform group-open/section:rotate-180" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m1 1 4 4 4-4"/>
+                    </svg>
+                </summary>
+                <div class="mt-3 space-y-2 max-h-125 overflow-y-auto p-1">
+                    {% for segmentEffort in segmentEfforts %}
+                        <a href="#" data-model-content-url="{{ relativeUrl('segment/' ~ segmentEffort.getSegmentId() ~ '.html') }}" rel="nofollow"
+                           class="group/segment flex items-center gap-3 bg-white hover:bg-gray-50 border border-gray-200 shadow-xs hover:ring-strava-orange/30 rounded-xl p-3 transition">
+                            <div title="Rank" class="shrink-0 w-12 h-10 rounded-lg bg-gray-100 text-gray-700 flex items-center justify-center font-bold text-sm gap-0.5">
+                                {{ segmentEffort.getRank() }}
                             </div>
-                        {% endfor %}
-                    </div>
+                            <div class="flex-1 min-w-0">
+                                <span class="font-semibold text-gray-900 truncate group-hover/segment:text-strava-orange transition">{{ segmentEffort.getName() }}</span>
+                                <div class="text-xs text-gray-500 mt-0.5">{{ segmentEffort.getDistance()|renderMeasurement(2) }}</div>
+                            </div>
+                            <div class="hidden sm:flex gap-4 text-right">
+                                <div>
+                                    <div class="text-xxs uppercase text-gray-400 tracking-wider">{{ "Time"|trans }}</div>
+                                    <div class="text-sm font-bold text-gray-900">{{ segmentEffort.getElapsedTimeFormatted() }}</div>
+                                </div>
+                                <div>
+                                    <div class="text-xxs uppercase text-gray-400 tracking-wider">{{ "Speed"|trans }}</div>
+                                    <div class="text-sm font-bold text-gray-900">
+                                        {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
+                                        {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
+                                            {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}/100m
+                                        {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
+                                            {{ segmentEffort.getPaceInSecPerKm()|formatPace }}{{ renderUnitSymbol('pace') }}
+                                        {% else %}
+                                            {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if segmentEffort.getAverageWatts() %}
+                                    <div>
+                                        <div class="text-xxs uppercase text-gray-400 tracking-wider">{{ "Power"|trans }}</div>
+                                        <div class="text-sm font-bold text-gray-900">{{ segmentEffort.getAverageWatts()|formatNumber(0) }}w</div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endfor %}
                 </div>
-            {% endif %}
-    </div>
+            </details>
+        {% endif %}
+        {% if distributionCharts is not empty %}
+            <section>
+                <h3 class="font-bold text-gray-900 mb-3">Distribution</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {% for distributionChart in distributionCharts %}
+                        <div class="bg-white border border-gray-200 shadow-xs rounded-lg p-4">
+                            <div class="text-sm font-semibold mb-2 text-center">{{ distributionChart.title }}</div>
+                            <div class="h-87.5" data-echarts-options='{{ distributionChart.data }}'></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
     </div>
 {% endautoescape %}

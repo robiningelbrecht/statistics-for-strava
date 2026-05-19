@@ -27,8 +27,9 @@ Apr: Ápr
 'Ask Mark something...': 'Kérdezz Marktól...'
 'Athlete profile': 'Sportoló profil'
 Aug: Aug
+Average: Average
 'Average gradient': 'Átlagos lejtés'
-Avg: Átl
+'Avg speed': 'Avg speed'
 'Back Country Ski': Túrasí
 Badges: Kitűzők
 Badminton: Tollaslabda
@@ -40,7 +41,6 @@ Best: Legjobb
 'Build zone (–10)': 'Építési zóna (–10)'
 'CTL (Fitness)': 'CTL (Fitnesz)'
 Cadence: Kadencia
-'Cadence distribution': 'Kadencia eloszlás'
 Calories: Kalória
 'Calories burned': 'Elégetett kalória'
 Canoeing: Kenuzás
@@ -57,6 +57,7 @@ Compare: Összehasonlítás
 'Compare to': 'Összehasonlítás:'
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
 'Congrats! You achieved personal bests during this activity.': 'Gratulálok! Személyes rekordot értél el ennél a tevékenységnél.'
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
 Country: Ország
@@ -86,7 +87,6 @@ Distance: Távolság
 'Distance in {unit}': 'Távolság ({unit})'
 'Distance over time per gear': 'Távolság időben felszerelésenkén'
 'Distance per month per gear': 'Havi távolság felszerelésenkén'
-Distribution: Eloszlás
 'Doing a mix of cycling, running, swimming, and strength work increases your variety score.': 'A kerékpározás, futás, úszás és erőedzés vegyítése növeli a változatossági pontszámodat.'
 Duration: Időtartam
 'E-Bike Rides': 'E-Bike túrák'
@@ -138,7 +138,6 @@ HIIT: HIIT
 HR: Pulzus
 'Hand Cycle': Kézikerékpár
 'Heart rate': Pulzus
-'Heart rate distribution': 'Pulzus eloszlás'
 'Heart rate zone distribution over the past month. For effective polarized training, your workouts should primarily fall within the following zones': 'Az elmúlt havi pulzuszóna eloszlás. A hatékony polarizált edzéshez az edzéseidnek elsősorban a következő zónákba kell esniük'
 'Heart rate zones': Pulzuszónák
 Heatmap: Hőtérkép
@@ -205,7 +204,6 @@ Max: Max
 May: Máj
 Medium: Közepes
 Metric: Metrikus
-Metrics: Mutatók
 Milestones: Mérföldkövek
 'Mind & Body Sports': 'Test-lélek sportok'
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Mérsékelt fáradtság stabil fittséggel. Kiváló a következetes napi edzéshez'
@@ -232,7 +230,7 @@ Night: Éjjel
 'No other options to compare with': 'Nincs más összehasonlítási lehetőség'
 None: 'Egyik sem'
 'Nordic Ski': Sífutás
-Normalized: Normalizált
+'Normalized power': 'Normalized power'
 'Not supported': 'Nem támogatott'
 Nov: Nov
 Now: Most
@@ -253,7 +251,6 @@ Over-fatigued: Túlterhelve
 PRs: 'Személyes rekordok'
 'PRs achieved per month': 'Havi személyes rekordok'
 Pace: Tempó
-'Pace distribution': 'Tempó eloszlás'
 Padel: Padel
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
@@ -267,7 +264,6 @@ Pilates: Pilates
 'Please address these issues': 'Kérjük, foglalkozz ezekkel a problémákkal'
 'Polarised training (last 30 days)': 'Polarizált edzés (utolsó 30 nap)'
 Power: Teljesítmény
-'Power distribution': 'Teljesítmény eloszlás'
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Ezt becsült {caloriesBurned} kalória hajtotta, ami nagyjából {numberOfPizzaSlices} szelet pizza.'
 'Prev year': 'Előző év'
 Previous: Előző
@@ -320,7 +316,6 @@ Soccer: Labdarúgás
 Socials: Közösségi
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Aki rendszeresen 90 percet edz, magasabb pontszámot ér el, mint aki főleg rövid edzéseket végez.'
 Speed: Sebesség
-'Speed distribution': 'Sebesség eloszlás'
 Splits: Részidők
 'Sport variety': Sporttípus-változatosság
 Squash: Squash
@@ -443,6 +438,7 @@ Thinking...: Gondolkodás...
 Thu: Cs
 Thursday: Csütörtök
 Time: Idő
+'Time in zone': 'Time in zone'
 'Times completed': 'Teljesítések száma'
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Az engedélyezéséhez konfiguráld a(z) {configFile} fájlt, és építsd újra a fájlokat a változtatások életbe lépéséhez'
 'Toggle sidebar': 'Oldalsáv ki/be'
@@ -546,6 +542,7 @@ per: /
 'reached Eddington number {number}': '{number}-es Eddington-szám elérve'
 to: '-ig'
 total: összesen
+watts: watts
 weeks: hetek
 workouts: edzések
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} nap'
