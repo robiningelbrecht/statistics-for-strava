@@ -12,7 +12,7 @@ table.data-table {
             }
 
             &[data-dataTable-sort] {
-                @apply cursor-pointer;
+                @apply cursor-pointer transition-colors hover:bg-gray-100;
             }
         }
     }
