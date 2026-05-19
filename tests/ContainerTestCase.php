@@ -43,6 +43,7 @@ abstract class ContainerTestCase extends KernelTestCase
         StreamBasedActivityPowerRepository::$cachedPowerOutputs = [];
         StreamBasedActivityHeartRateRepository::$cachedHeartRateZones = [];
         StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesPerActivityType = [];
+        StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesPerActivity = [];
         StreamBasedActivityHeartRateRepository::$cachedHeartRateZonesInLastXDays = [];
         Eddington::$instances = [];
         ActivityTotals::$instance = null;

@@ -16,6 +16,7 @@ use App\Domain\Activity\LeafletMap;
 use App\Domain\Activity\PowerDistributionChart;
 use App\Domain\Activity\Split\ActivitySplitRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
+use App\Domain\Activity\Stream\ActivityHeartRateRepository;
 use App\Domain\Activity\Stream\ActivityPowerRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\CombinedStream\CombinedActivityStreamRepository;
@@ -47,6 +48,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private EnrichedActivities $enrichedActivities,
         private ActivityStreamRepository $activityStreamRepository,
         private ActivityStreamMetricRepository $activityStreamMetricRepository,
+        private ActivityHeartRateRepository $activityHeartRateRepository,
         private CombinedActivityStreamRepository $combinedActivityStreamRepository,
         private ActivitySplitRepository $activitySplitRepository,
         private ActivityLapRepository $activityLapRepository,
@@ -251,6 +253,12 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             $gpxFileLocation = sprintf('api/activity/%s/route.gpx', $unprefixedActivityId);
             $activityHasTimeStream = $this->activityStreamRepository->hasOneForActivityAndStreamType($activity->getId(), StreamType::TIME);
 
+            $timeInHeartRateZones = null;
+            try {
+                $timeInHeartRateZones = $this->activityHeartRateRepository->findTotalTimeInSecondsInHeartRateZonesForActivity($activity->getId());
+            } catch (EntityNotFound) {
+            }
+
             $this->buildStorage->write(
                 'activity/'.$activity->getId().'.html',
                 $this->twig->load($templateName)->render([
@@ -267,6 +275,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                     'profileChartHeight' => $profileChartHeight,
                     'hasProfileChart' => null !== $profileChart,
                     'bestEfforts' => $this->bestEffortsCalculator->forActivity($activity->getId()),
+                    'heartRateZones' => $timeInHeartRateZones,
                 ]),
             );
 
