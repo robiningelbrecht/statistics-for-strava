@@ -85,6 +85,7 @@ Device: Device
 Distance: Distance
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Distance breakdown'
+'Distance distribution': 'Distance distribution'
 'Distance in {unit}': 'Distance in {unit}'
 'Distance over time per gear': 'Distance over time per gear'
 'Distance per month per gear': 'Distance per month per gear'
@@ -93,6 +94,8 @@ Duration: Duration
 'E-Bike Rides': 'E-Bike Rides'
 'E-Mountain Bike Rides': 'E-Mountain Bike Rides'
 Eddington: Eddington
+'Eddington number': 'Eddington number'
+'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Elev
 Elevation: Elevation
@@ -192,6 +195,7 @@ Loading...: Loading...
 'Long run': 'Long run'
 'Longest activity': 'Longest activity'
 'Longest activity (h)': 'Longest activity (h)'
+'Longest day': 'Longest day'
 'Longest distance': 'Longest distance'
 'Longest streaks': 'Longest streaks'
 Low: Low
@@ -224,6 +228,7 @@ Morning: Morning
 Name: Name
 Neutral: Neutral
 'New personal best for': 'New personal best for'
+'Next milestone': 'Next milestone'
 Night: Night
 'No activities': 'No activities'
 'No data available': 'No data available'
@@ -529,6 +534,7 @@ compare: compare
 day(s): day(s)
 days: days
 'days needed for next Eddington': 'days needed for next Eddington'
+'days to reach {n}': 'days to reach {n}'
 history: history
 hours: hours
 hrs: hrs
