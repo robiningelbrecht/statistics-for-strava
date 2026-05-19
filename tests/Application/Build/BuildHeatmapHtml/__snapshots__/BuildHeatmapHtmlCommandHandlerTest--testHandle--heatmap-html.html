@@ -22,7 +22,7 @@
                                             <div class="filter-dropdown">
                             <button id="dropdownSportTypesButton" data-dropdown="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>Filter on sport type</span>
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
                                 </svg>
                             </button>
@@ -54,7 +54,7 @@
                                         <div class="filter-dropdown">
                         <button id="dropdownDateRangeButton" data-dropdown="dropdownDateRange" type="button">
                             <span>Date</span>
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
                             </svg>
                         </button>
@@ -79,7 +79,7 @@
                     <div class="filter-dropdown">
                         <button id="otherButton" data-dropdown="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                             <span>Other</span>
-                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
                             </svg>
                         </button>
@@ -144,9 +144,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-xs text-gray-700">
-                                        <span class="font-bold" data-datatable-result-count>1</span> routes based on your active filters
-                    <a href="#" class="hidden text-strava-orange underline" data-datatable-reset>clear</a>
+                <div class="flex items-center justify-between gap-x-2 text-xs text-gray-700">
+                    <div>
+                                                <span class="font-bold" data-datatable-result-count>1</span> routes
+                    </div>
+                    <a href="#" class="hidden font-medium text-strava-orange hover:underline" data-datatable-reset>Clear all filters</a>
                 </div>
             </form>
             <div class="mt-2 lg:mt-0 text-gray-700 text-xs">

@@ -48,6 +48,7 @@ Canoeing: 划独木舟
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': '长期训练负荷（体能）— 42天训练的负荷指数加权平均值。代表长期训练适应情况。'
+'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
 'Close modal': 关闭模态框
 'Collapse sidebar': 折叠侧边栏
@@ -557,9 +558,9 @@ workouts: 锻炼
 '{numberOfActivities} activities': '{numberOfActivities}活动'
 '{numberOfActivities} activities in {year}': '{year}年内，{numberOfActivities}项活动'
 '{numberOfMonths} months': '{numberOfMonths} months'
-'{numberOfResults} photos based on your active filters': '{numberOfResults}张照片符合筛选条件'
-'{numberOfResults} results based on your active filters': '{numberOfResults}个结果符合筛选条件'
-'{numberOfResults} routes based on your active filters': '{numberOfResults}条路线符合筛选条件'
+'{numberOfResults} photos': '{numberOfResults} photos'
+'{numberOfResults} results': '{numberOfResults} results'
+'{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'

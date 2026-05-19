@@ -4925,6 +4925,9 @@ table.data-table {
         }
       }
       & svg {
+        margin-inline-start: calc(var(--spacing) * 3);
+        height: calc(var(--spacing) * 2.5);
+        width: calc(var(--spacing) * 2.5);
         transition-property: transform, translate, scale, rotate;
         transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
         transition-duration: var(--tw-duration, var(--default-transition-duration));

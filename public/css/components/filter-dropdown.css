@@ -6,7 +6,7 @@
             @apply hover:bg-strava-orange/15 [&.active]:hover:bg-strava-orange/20;
 
             & svg {
-                @apply transition-transform duration-200;
+                @apply w-2.5 h-2.5 ms-3 transition-transform duration-200;
             }
         }
 

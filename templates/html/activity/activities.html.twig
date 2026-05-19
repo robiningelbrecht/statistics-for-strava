@@ -29,7 +29,7 @@
                                 <button id="dropdownSportTypesButton"
                                         data-dropdown="dropdownSportTypes" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Filter on sport type"|trans }}</span>
-                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -55,7 +55,7 @@
                             <button id="dropdownDateRangeButton"
                                     data-dropdown="dropdownDateRange" type="button">
                                 <span>{{ "Date"|trans }}</span>
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
@@ -82,7 +82,7 @@
                                 <button id="dropdownCountriesButton"
                                         data-dropdown="dropdownCountries" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Country"|trans }}</span>
-                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -109,7 +109,7 @@
                                 <button id="dropdownGearsButton"
                                         data-dropdown="dropdownGears" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Gear"|trans }}</span>
-                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -144,7 +144,7 @@
                                 <button id="dropdownDevicesButton"
                                         data-dropdown="dropdownDevices" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                     <span>{{ "Device"|trans }}</span>
-                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                     </svg>
                                 </button>
@@ -177,7 +177,7 @@
                         <div class="filter-dropdown">
                             <button id="distanceElevationButton" data-dropdown="dropdownDistanceElevation" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Distance & Elevation"|trans }}</span>
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
@@ -237,7 +237,7 @@
                         <div class="filter-dropdown">
                             <button id="otherButton" data-dropdown="dropdownOther" data-dropdown-offset-distance="10" data-dropdown-offset-skidding="0" type="button">
                                 <span>{{ "Other"|trans }}</span>
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
@@ -286,10 +286,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-xs text-gray-700">
-                        {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ activityTotals.getTotalActivities() ~ '</span>' %}
-                        {{ "{numberOfResults} results based on your active filters"|trans({'{numberOfResults}': numberOfResults}) }}
-                        <a href="#" class="hidden text-strava-orange underline" data-dataTable-reset>{{ "clear"|trans }}</a>
+                    <div class="flex items-center justify-between gap-x-2 text-xs text-gray-700">
+                        <div>
+                            {% set numberOfResults = '<span class="font-bold" data-dataTable-result-count>' ~ activityTotals.getTotalActivities() ~ '</span>' %}
+                            {{ "{numberOfResults} results"|trans({'{numberOfResults}': numberOfResults}) }}
+                        </div>
+                        <a href="#" class="hidden font-medium text-strava-orange hover:underline" data-dataTable-reset>{{ "Clear all filters"|trans }}</a>
                     </div>
                 </form>
                 <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">

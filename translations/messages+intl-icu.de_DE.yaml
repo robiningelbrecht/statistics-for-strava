@@ -48,6 +48,7 @@ Canoeing: Kanufahren
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
+'Clear all filters': 'Clear all filters'
 'Clear chat': 'Chat löschen'
 'Close modal': 'Modalen Dialog schließen'
 'Collapse sidebar': 'Seitenleiste einklappen'
@@ -557,9 +558,9 @@ workouts: Trainingseinheiten
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} Aktivitäten im {year}'
 '{numberOfMonths} months': '{numberOfMonths} Monate'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} Fotos basierend auf deinen aktiven Filtern'
-'{numberOfResults} results based on your active filters': '{numberOfResults} Ergebnisse basierend auf deinen aktiven Filtern'
-'{numberOfResults} routes based on your active filters': '{numberOfResults} Routen basierend auf deinen aktiven Filtern'
+'{numberOfResults} photos': '{numberOfResults} photos'
+'{numberOfResults} results': '{numberOfResults} results'
+'{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} Wochen'
 '{threshold} hours using {gearName}': '{threshold} Stunden mit {gearName} aufgezeichnet'
 '{threshold} total distance using {gearName}': '{threshold} Gesamtdistianz mit {gearName} aufgezeichnet'

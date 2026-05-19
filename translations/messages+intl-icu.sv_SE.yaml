@@ -48,6 +48,7 @@ Canoeing: Kanot
 'Challenge consistency': Utmaningsihållighet
 Challenges: Utmaningar
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Kronisk träningsbelastning (Träningsform) - 42 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar långsiktig träningsanpassning.'
+'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
 'Close modal': 'Close modal'
 'Collapse sidebar': Minimera
@@ -557,9 +558,9 @@ workouts: träningspass
 '{numberOfActivities} activities': '{numberOfActivities} aktiviteter'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} aktiviteter på {year}'
 '{numberOfMonths} months': '{numberOfMonths} months'
-'{numberOfResults} photos based on your active filters': '{numberOfResults} bilder utifrån dina aktiva filter'
-'{numberOfResults} results based on your active filters': '{numberOfResults} resultat utifrån dina aktiva filter'
-'{numberOfResults} routes based on your active filters': '{numberOfResults} turer utifrån dina aktiva filter'
+'{numberOfResults} photos': '{numberOfResults} photos'
+'{numberOfResults} results': '{numberOfResults} results'
+'{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
