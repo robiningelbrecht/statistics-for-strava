@@ -10,6 +10,7 @@
 @import "./components/badge.css";
 @import "./components/leaflet.css";
 @import "./components/sidebar.css";
+@import "./components/scroll-to.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../templates/**/*.svg";

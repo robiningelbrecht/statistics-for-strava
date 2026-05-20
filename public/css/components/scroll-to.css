@@ -1,0 +1,13 @@
+@theme {
+    @keyframes scroll-to-highlight {
+        0%   { box-shadow: 0 0 0 0 rgba(242, 103, 34, 0.45); }
+        60%  { box-shadow: 0 0 0 6px rgba(242, 103, 34, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(242, 103, 34, 0); }
+    }
+}
+
+@layer components {
+    .scroll-to-highlighted {
+        animation: scroll-to-highlight 1.5s ease-out;
+    }
+}
