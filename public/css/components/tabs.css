@@ -43,7 +43,7 @@
             @apply hover:bg-gray-50;
 
             & > a {
-                @apply inline-flex gap-x-1 items-center px-4 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors;
+                @apply inline-flex gap-x-1 items-center px-4 py-1 rounded-md text-sm font-medium text-gray-900 transition-colors;
                 @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strava-orange/50;
 
                 &.active {
