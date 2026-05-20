@@ -29,6 +29,7 @@ Apr: Abr
 Aug: Ago
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 'Esqui Fora de Pista'
 Badges: Badges
@@ -260,6 +261,7 @@ Pace: Ritmo
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
+'Per {unit}': 'Per {unit}'
 'Personal Records': Recordes
 'Personal bests': 'Personal bests'
 Photo: Foto
