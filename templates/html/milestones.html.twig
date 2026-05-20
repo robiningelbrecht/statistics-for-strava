@@ -11,14 +11,14 @@
         <div class="flex gap-2 mb-6 overflow-x-auto" data-milestone-filters>
             <div class="shrink-0">
                 <input type="radio" id="all" value="all" name="filter-group" class="hidden peer" required="" checked>
-                <label for="all" class="inline-flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-3 py-2 text-sm font-medium shadow-xs bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 peer-checked:text-strava-orange peer-checked:border-strava-orange peer-checked:bg-strava-orange/15 peer-checked:hover:text-strava-orange peer-checked:hover:bg-strava-orange/20">
+                <label for="all" class="inline-flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-3 py-2 text-sm font-medium shadow-xs bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 peer-checked:text-strava-orange peer-checked:border-strava-orange peer-checked:bg-strava-orange/15 peer-checked:hover:text-strava-orange peer-checked:hover:bg-strava-orange/20 transition-colors">
                     {{ "All"|trans }}
                 </label>
             </div>
             {% for group in milestones.getUniqueFilterGroups() %}
                 <div class="shrink-0">
                     <input type="radio" id="{{ group.value }}" value="{{ group.value }}" name="filter-group" class="hidden peer" required="">
-                    <label for="{{ group.value }}" class="inline-flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-3 py-2 text-sm font-medium shadow-xs bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 peer-checked:text-strava-orange peer-checked:border-strava-orange peer-checked:bg-strava-orange/15 peer-checked:hover:text-strava-orange peer-checked:hover:bg-strava-orange/20">
+                    <label for="{{ group.value }}" class="inline-flex items-center justify-between gap-x-1 rounded-lg cursor-pointer px-3 py-2 text-sm font-medium shadow-xs bg-white border border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 peer-checked:text-strava-orange peer-checked:border-strava-orange peer-checked:bg-strava-orange/15 peer-checked:hover:text-strava-orange peer-checked:hover:bg-strava-orange/20 transition-colors">
                         {{ svg(group.getSvgIcon(), 'size-4', '') }}
                         <span>{{ group|trans }}</span>
                     </label>
@@ -34,8 +34,8 @@
                 {% set currentYear = milestoneYear %}
                 <div class="relative mb-8 -ml-4" data-milestone-year-separator>
                     <div class="flex items-center gap-x-3">
-                        <div class="size-8 rounded-full bg-strava-orange flex items-center justify-center ring-8 ring-gray-50">
-                            {{ svg('calendar', 'size-4', 'text-white') }}
+                        <div class="size-8 rounded-full bg-[#F8E4DA] dark:bg-[#202830] flex items-center justify-center ring-8 ring-gray-50">
+                            {{ svg('calendar', 'size-4', 'text-strava-orange') }}
                         </div>
                         <span class="text-sm font-bold text-gray-700">{{ currentYear }}</span>
                     </div>
@@ -50,7 +50,7 @@
                         <time class="text-xs text-gray-500 bg-gray-50 pb-1.25">{{ milestone.getAchievedOn()|formatDate('normal') }}</time>
                     </div>
                 </div>
-                <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+                <div data-scroll-to-highlight class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
                     <div class="flex items-center gap-x-1 mb-1">
                         {% if milestone.getSportType() %}
                             <div class="shrink-0 px-2 py-0.5 text-xxs font-medium border border-gray-200 text-strava-orange bg-white rounded-lg">
@@ -82,7 +82,7 @@
                         {% set previousMilestone = milestone.getPrevious() %}
                         <div class="mt-1 text-xs text-gray-400">
                             {{ "Previous"|trans }}:
-                            <a href="javascript:void(0)" data-scroll-to="{{ previousMilestone.getPreviousMilestoneId() }}" class="hover:text-gray-600">
+                            <a href="javascript:void(0)" data-scroll-to="{{ previousMilestone.getPreviousMilestoneId() }}" class="text-gray-500 hover:text-gray-600">
                                 {{ _self.previousMilestoneThreshold(milestone.getCategory(), previousMilestone) }}</a>
                             {{ "on"|trans }} {{ previousMilestone.getAchievedOn()|formatDate('normal') }}
                         </div>

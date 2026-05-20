@@ -2724,6 +2724,9 @@
   .bg-\[\#DF584A\] {
     background-color: #DF584A;
   }
+  .bg-\[\#F8E4DA\] {
+    background-color: #F8E4DA;
+  }
   .bg-amber-50 {
     background-color: var(--color-amber-50);
   }
@@ -3031,9 +3034,6 @@
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
-  }
-  .pt-4 {
-    padding-top: calc(var(--spacing) * 4);
   }
   .pt-14 {
     padding-top: calc(var(--spacing) * 14);
@@ -4166,9 +4166,9 @@
       }
     }
   }
-  .sm\:pt-0 {
+  .sm\:pb-0 {
     @media (width >= 40rem) {
-      padding-top: calc(var(--spacing) * 0);
+      padding-bottom: calc(var(--spacing) * 0);
     }
   }
   .sm\:text-lg {
@@ -4964,6 +4964,9 @@ table.data-table {
       line-height: var(--tw-leading, var(--text-sm--line-height));
       --tw-font-weight: var(--font-weight-medium);
       font-weight: var(--font-weight-medium);
+      transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
       border-style: var(--tw-border-style);
       border-width: 1px;
       border-color: var(--color-gray-200);
@@ -5146,7 +5149,11 @@ table.data-table {
           justify-content: center;
           border-bottom-style: var(--tw-border-style);
           border-bottom-width: 2px;
-          padding: calc(var(--spacing) * 2);
+          padding-inline: calc(var(--spacing) * 3);
+          padding-block: calc(var(--spacing) * 2.5);
+          transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+          transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+          transition-duration: var(--tw-duration, var(--default-transition-duration));
           border-color: var(--color-gray-100);
           color: var(--color-gray-500);
           &:hover {
@@ -5156,7 +5163,20 @@ table.data-table {
           }
           &:hover {
             @media (hover: hover) {
-              color: var(--color-gray-600);
+              color: var(--color-gray-700);
+            }
+          }
+          &:focus-visible {
+            outline-style: var(--tw-outline-style);
+            outline-width: 2px;
+          }
+          &:focus-visible {
+            outline-offset: 2px;
+          }
+          &:focus-visible {
+            outline-color: color-mix(in srgb, #F26722 50%, transparent);
+            @supports (color: color-mix(in lab, red, red)) {
+              outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
             }
           }
           &.active {
@@ -5209,6 +5229,9 @@ table.data-table {
       border-bottom-width: 1px;
       border-color: var(--color-gray-200);
       background-color: var(--color-white);
+      transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
       &:first-child {
         border-start-start-radius: var(--radius-lg);
         border-end-start-radius: var(--radius-lg);
@@ -5225,23 +5248,51 @@ table.data-table {
         border-right-style: var(--tw-border-style);
         border-right-width: 1px;
       }
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-gray-50);
+        }
+      }
       & > a {
         display: inline-flex;
         align-items: center;
         column-gap: calc(var(--spacing) * 1);
+        border-radius: var(--radius-md);
         padding-inline: calc(var(--spacing) * 4);
         padding-block: calc(var(--spacing) * 1);
         font-size: var(--text-sm);
         line-height: var(--tw-leading, var(--text-sm--line-height));
         --tw-font-weight: var(--font-weight-medium);
         font-weight: var(--font-weight-medium);
+        color: var(--color-gray-600);
+        transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+        transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+        transition-duration: var(--tw-duration, var(--default-transition-duration));
         &:hover {
           @media (hover: hover) {
-            color: var(--color-strava-orange);
+            color: var(--color-gray-900);
+          }
+        }
+        &:focus-visible {
+          outline-style: var(--tw-outline-style);
+          outline-width: 2px;
+        }
+        &:focus-visible {
+          outline-offset: 2px;
+        }
+        &:focus-visible {
+          outline-color: color-mix(in srgb, #F26722 50%, transparent);
+          @supports (color: color-mix(in lab, red, red)) {
+            outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
           }
         }
         &.active {
           color: var(--color-strava-orange);
+          &:hover {
+            @media (hover: hover) {
+              color: var(--color-strava-orange);
+            }
+          }
         }
       }
     }
@@ -5269,7 +5320,7 @@ table.data-table {
     max-width: 100%;
     scrollbar-width: thin;
     flex-wrap: nowrap;
-    column-gap: 1px;
+    column-gap: calc(var(--spacing) * 0.5);
     overflow-x: auto;
     text-align: center;
     font-size: var(--text-sm);
@@ -5291,9 +5342,33 @@ table.data-table {
         border-radius: var(--radius-lg);
         padding-inline: calc(var(--spacing) * 4);
         padding-block: calc(var(--spacing) * 2);
+        transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+        transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+        transition-duration: var(--tw-duration, var(--default-transition-duration));
         &:hover {
           @media (hover: hover) {
-            color: var(--color-gray-900);
+            background-color: color-mix(in srgb, #ffffff 50%, transparent);
+            @supports (color: color-mix(in lab, red, red)) {
+              background-color: color-mix(in oklab, var(--color-white) 50%, transparent);
+            }
+          }
+        }
+        &:hover {
+          @media (hover: hover) {
+            color: var(--color-gray-700);
+          }
+        }
+        &:focus-visible {
+          outline-style: var(--tw-outline-style);
+          outline-width: 2px;
+        }
+        &:focus-visible {
+          outline-offset: 2px;
+        }
+        &:focus-visible {
+          outline-color: color-mix(in srgb, #F26722 50%, transparent);
+          @supports (color: color-mix(in lab, red, red)) {
+            outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
           }
         }
         &.active {
@@ -5301,6 +5376,16 @@ table.data-table {
           color: var(--color-gray-900);
           --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
           box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+          &:hover {
+            @media (hover: hover) {
+              background-color: var(--color-white);
+            }
+          }
+          &:hover {
+            @media (hover: hover) {
+              color: var(--color-gray-900);
+            }
+          }
           &:where([data-theme=dark], [data-theme=dark] *) {
             background-color: #151b23;
           }
@@ -5507,6 +5592,11 @@ table.data-table {
     transition-duration: var(--tw-duration, var(--default-transition-duration));
     --tw-duration: 75ms;
     transition-duration: 75ms;
+  }
+}
+@layer components {
+  .scroll-to-highlighted {
+    animation: scroll-to-highlight 1.5s ease-out;
   }
 }
 @layer base {
@@ -6281,6 +6371,17 @@ table.data-table {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+@keyframes scroll-to-highlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 103, 34, 0.45);
+  }
+  60% {
+    box-shadow: 0 0 0 6px rgba(242, 103, 34, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(242, 103, 34, 0);
   }
 }
 @keyframes rainbow-bg {

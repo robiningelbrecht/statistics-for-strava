@@ -1,7 +1,7 @@
 @layer components {
     div.filter-dropdown {
         & > button[data-dropdown]{
-            @apply cursor-pointer w-fit font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between;
+            @apply cursor-pointer w-fit font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between transition-colors;
             @apply text-gray-600 bg-white hover:text-gray-900 hover:bg-gray-50 border border-gray-200;
             @apply [&.active]:text-strava-orange [&.active]:border-strava-orange [&.active]:bg-strava-orange/15 [&.active]:hover:bg-strava-orange/20;
 
