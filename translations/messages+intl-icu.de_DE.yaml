@@ -58,7 +58,6 @@ Commutes: Pendeln
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Completed {threshold} activities': '{threshold} Aktivitäten abgeschlossen'
-'Congrats! You achieved personal bests during this activity.': 'Herzlichen Glückwunsch! Du hast persönliche Bestleistungen während dieser Aktivität erreicht.'
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
@@ -107,7 +106,6 @@ Energy: Energy
 Evening: Abend
 'Excludes commutes': 'Pendler ausschließen'
 'FTP history': FTP-Verlauf
-'Fastest times': 'Schnellste Zeiten'
 Favourite: Favorit
 Feb: Feb
 'Filter on KOM segments': 'Filter für KOM-Segmente'
@@ -176,7 +174,6 @@ KOM: KOM
 Kayaking: Kajakfahren
 'Kite Surf': Kitesurfen
 Lap: Runde
-Laps: Runden
 'Last 30 days': 'Letzte 30 Tage'
 'Last 7 days training load': 'Trainingsbelastung der letzten 7 Tage'
 'Last activity': 'Letzte Aktivität'

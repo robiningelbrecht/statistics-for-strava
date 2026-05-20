@@ -58,7 +58,6 @@ Commutes: Pendling
 Compare: Jämför
 'Compare to': 'Jämför med'
 'Completed {threshold} activities': 'Completed {threshold} activities'
-'Congrats! You achieved personal bests during this activity.': 'Grattis! Du slog ditt tidigare rekord i den här aktiviteten.'
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -107,7 +106,6 @@ Energy: Energy
 Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
-'Fastest times': 'Snabbaste tiderna'
 Favourite: Favoriter
 Feb: Feb
 'Filter on KOM segments': 'Filtrera på KOM segment'
@@ -176,7 +174,6 @@ KOM: KOM
 Kayaking: Kayak
 'Kite Surf': Draksurfning
 Lap: Varv
-Laps: Varv
 'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Belastning de senaste 7 dagarna'
 'Last activity': 'Last activity'

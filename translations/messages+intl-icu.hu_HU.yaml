@@ -58,7 +58,6 @@ Commutes: Ingázások
 Compare: Összehasonlítás
 'Compare to': 'Összehasonlítás:'
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
-'Congrats! You achieved personal bests during this activity.': 'Gratulálok! Személyes rekordot értél el ennél a tevékenységnél.'
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -107,7 +106,6 @@ Energy: Energy
 Evening: Este
 'Excludes commutes': 'Ingázások nélkül'
 'FTP history': 'FTP előzmények'
-'Fastest times': 'Leggyorsabb idők'
 Favourite: Kedvenc
 Feb: Feb
 'Filter on KOM segments': 'Szűrés KOM szegmensekre'
@@ -176,7 +174,6 @@ KOM: KOM
 Kayaking: Kajak
 'Kite Surf': 'Sárkányos szörfözés'
 Lap: Kör
-Laps: Körök
 'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 'Utolsó 7 nap edzésterhelése'
 'Last activity': 'Utolsó tevékenység'

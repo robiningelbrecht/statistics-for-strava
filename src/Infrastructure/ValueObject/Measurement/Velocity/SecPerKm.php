@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Infrastructure\ValueObject\Measurement\Velocity;
 
 use App\Infrastructure\ValueObject\Measurement\Length\Mile;
+use App\Infrastructure\ValueObject\Measurement\Metric;
 use App\Infrastructure\ValueObject\Measurement\ProvideMeasurementUnit;
+use App\Infrastructure\ValueObject\Measurement\Unit;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 
-final readonly class SecPerKm implements Pace
+final readonly class SecPerKm implements Pace, Metric
 {
     use ProvideMeasurementUnit;
 
@@ -42,6 +44,11 @@ final readonly class SecPerKm implements Pace
             return $this;
         }
 
+        return $this->toSecPerMile();
+    }
+
+    public function toImperial(): Unit
+    {
         return $this->toSecPerMile();
     }
 }
