@@ -29,6 +29,7 @@ Apr: Ápr
 Aug: Aug
 Average: Average
 'Average gradient': 'Átlagos lejtés'
+'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Túrasí
 Badges: Kitűzők
@@ -260,6 +261,7 @@ Pace: Tempó
 Padel: Padel
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
+'Per {unit}': 'Per {unit}'
 'Personal Records': 'Személyes rekordok'
 'Personal bests': 'Személyes csúcsok'
 Photo: Fotó

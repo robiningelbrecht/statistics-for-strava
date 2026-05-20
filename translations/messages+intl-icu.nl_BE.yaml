@@ -29,6 +29,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 'Back Country Ski'
 Badges: Badges
@@ -260,6 +261,7 @@ Pace: Pace
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Peak power outputs'
+'Per {unit}': 'Per {unit}'
 'Personal Records': 'Personal Records'
 'Personal bests': 'Personal bests'
 Photo: Photo

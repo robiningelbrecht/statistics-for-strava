@@ -29,6 +29,7 @@ Apr: 四月
 Aug: 八月
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 越野滑雪
 Badges: Badges
@@ -260,6 +261,7 @@ Pace: 步速
 Padel: Padel
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
+'Per {unit}': 'Per {unit}'
 'Personal Records': 个人记录
 'Personal bests': 'Personal bests'
 Photo: 照片

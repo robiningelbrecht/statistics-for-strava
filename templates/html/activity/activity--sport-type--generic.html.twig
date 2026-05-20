@@ -160,24 +160,24 @@
                 </div>
             </section>
         {% endif %}
-        {% if leaflet %}
-        {% endif %}
         <section class="rounded-lg overflow-hidden border border-gray-200 shadow-xs bg-white">
-            <div class="relative">
-                {% set leafletOptions = {
-                    'polylineUrl': relativeUrl('api/' ~ leaflet.polylineUrl),
-                    'tileLayer': leaflet.map.getTileLayer(),
-                    'minZoom': leaflet.map.getMinZoom(),
-                    'maxZoom': leaflet.map.getMaxZoom(),
-                    'imageOverlay': leaflet.map.getOverlayImageUrl(),
-                    'bounds': leaflet.map.getBounds(),
-                    'scrollWheelZoom': true
-                } %}
-                <div class="h-80 md:h-96 w-full z-0" data-leaflet='{{ leafletOptions|json_encode }}' data-leaflet-echart-connect>
+            {% if leaflet %}
+                <div class="relative border-b border-gray-200">
+                    {% set leafletOptions = {
+                        'polylineUrl': relativeUrl('api/' ~ leaflet.polylineUrl),
+                        'tileLayer': leaflet.map.getTileLayer(),
+                        'minZoom': leaflet.map.getMinZoom(),
+                        'maxZoom': leaflet.map.getMaxZoom(),
+                        'imageOverlay': leaflet.map.getOverlayImageUrl(),
+                        'bounds': leaflet.map.getBounds(),
+                        'scrollWheelZoom': true
+                    } %}
+                    <div class="h-80 md:h-96 w-full z-0" data-leaflet='{{ leafletOptions|json_encode }}' data-leaflet-echart-connect>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             {% if hasProfileChart is not empty %}
-                <div class="border-t border-gray-200">
+                <div>
                     {% set unprefixedActivityId = activity.getId().toUnprefixedString() %}
                     <div style="height: {{ profileChartHeight }}px"
                          data-echarts-options='{{ relativeUrl('api/activity/' ~ unprefixedActivityId ~ '/metrics.json') }}'
@@ -297,7 +297,7 @@
                                     {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
                                     {% if powerOutput %}
                                         <div class="text-center bg-gray-50 rounded-md py-1.5">
-                                            <div class="text-xxs text-gray-500 uppercase">{{ timeIntervalLabels[loop.index0] }}</div>
+                                            <div class="text-xxs text-gray-500">{{ timeIntervalLabels[loop.index0] }}</div>
                                             <div class="text-sm font-bold text-gray-900">{{ powerOutput.getPower() }}<span class="text-xxs font-medium text-gray-400">w</span></div>
                                             <div class="text-xxs text-gray-400 tabular-nums">{{ powerOutput.getRelativePower() }} w/kg</div>
                                         </div>
@@ -331,6 +331,8 @@
                 </div>
             </section>
         {% endif %}
+        {% block splitsAndLaps %}
+        {% endblock splitsAndLaps %}
         {% if segmentEfforts|length > 0 %}
             <details class="group/section">
                 <summary class="list-none cursor-pointer flex items-center justify-between py-2 hover:text-strava-orange transition select-none">

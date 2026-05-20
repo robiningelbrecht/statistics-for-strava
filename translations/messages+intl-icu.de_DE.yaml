@@ -29,6 +29,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Durchschnittliche Steigung'
+'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Skitouren
 Badges: Badges
@@ -260,6 +261,7 @@ Pace: Pace
 Padel: Padel
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
+'Per {unit}': 'Per {unit}'
 'Personal Records': 'Persönliche Bestzeiten'
 'Personal bests': 'Persönliche Bestleistungen'
 Photo: Foto

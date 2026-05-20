@@ -14,14 +14,14 @@
                     @apply hover:text-gray-700 hover:border-gray-300;
                     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strava-orange/50;
 
-                    &.active{
+                    &.active {
                         @apply text-strava-orange border-strava-orange;
                     }
                 }
             }
         }
 
-        &.tabs--vertical{
+        &.tabs--vertical {
             & > ul {
                 @apply mr-2 flex-col gap-y-1 gap-x-0 text-left;
 
@@ -68,6 +68,20 @@
 
                 &.active {
                     @apply shadow-xs bg-white text-gray-900 hover:bg-white hover:text-gray-900 dark:bg-[#151b23];
+                }
+            }
+        }
+
+        &.tabs--menu-item--compact {
+            @apply text-xs;
+
+            & > li {
+                & > a {
+                    @apply px-3 py-1 rounded-md;
+
+                    &.active {
+                        @apply shadow-sm;
+                    }
                 }
             }
         }
