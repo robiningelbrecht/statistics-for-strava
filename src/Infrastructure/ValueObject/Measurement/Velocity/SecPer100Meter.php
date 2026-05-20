@@ -13,7 +13,7 @@ final readonly class SecPer100Meter implements Pace
 
     public function getSymbol(): string
     {
-        return '100m';
+        return 'sec/100m';
     }
 
     public function toUnitSystem(UnitSystem $unitSystem): self

@@ -34,9 +34,10 @@
                             {{ svg('speed', 'size-3.5') }}
                         </div>
                     </div>
+                    {% set convertedPace = activity.getPaceInSecPerKm()|convertMeasurement %}
                     <div class="flex items-baseline gap-1">
-                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getPaceInSecPerKm().toFloat()|formatNumber(0) }}</span>
-                        <span class="text-xs font-medium text-gray-500">{{ activity.getPaceInSecPerKm().getSymbol() }}</span>
+                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ convertedPace|formatPace() }}</span>
+                        <span class="text-xs font-medium text-gray-500">{{ convertedPace.getSymbol() }}</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">

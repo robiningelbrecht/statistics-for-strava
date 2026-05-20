@@ -58,7 +58,6 @@ Commutes: 通勤
 Compare: 对比
 'Compare to': 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
-'Congrats! You achieved personal bests during this activity.': 恭喜！您在此活动中取得了个人最佳成绩。
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -107,7 +106,6 @@ Energy: Energy
 Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
-'Fastest times': 最快时间
 Favourite: 收藏夹
 Feb: 二月
 'Filter on KOM segments': 筛选KOM路段
@@ -176,7 +174,6 @@ KOM: 赛段王
 Kayaking: 皮划艇
 'Kite Surf': 风筝冲浪
 Lap: 圈
-Laps: 圈
 'Last 30 days': 'Last 30 days'
 'Last 7 days training load': 最近7天训练负荷
 'Last activity': 'Last activity'
