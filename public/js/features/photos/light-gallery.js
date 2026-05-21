@@ -1,6 +1,6 @@
-import lightGallery from "../../../libraries/lightgallery/lightgallery.umd.min.js";
-import lgZoom from "../../../libraries/lightgallery/lightgallery.lg-zoom.min.js";
-import lgFullscreen from "../../../libraries/lightgallery/lightgallery.lg-fullscreen.min";
+import lightGallery from 'lightgallery';
+import lgFullscreen from 'lightgallery/plugins/fullscreen'
+import lgZoom from 'lightgallery/plugins/zoom'
 
 export default class LightGallery {
     constructor(wrapper) {
