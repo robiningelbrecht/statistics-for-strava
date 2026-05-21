@@ -8,7 +8,6 @@
         "distanceInMeter": 100,
         "averageSpeedInMetersPerSecond": 3,
         "elevationDifferenceInMeter": 2,
-        "averageHeartRate": null,
         "paceZone": 0
     }
 ]

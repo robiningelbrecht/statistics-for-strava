@@ -60,7 +60,6 @@ final class ActivitySplitBuilder
             maxAverageSpeed: $this->maxAverageSpeed,
             paceZone: $this->paceZone,
             gapPaceInSecondsPerKm: $this->gapPaceInSecondsPerKm,
-            averageHeartRate: $this->averageHeartRate,
         );
     }
 

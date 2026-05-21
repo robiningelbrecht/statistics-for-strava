@@ -121,7 +121,6 @@
                                         <th class="border-b border-gray-100 w-15 md:w-20 px-2 py-2 text-left font-semibold">{{ "GAP"|trans }}</th>
                                     {% endif %}
                                     <th class="border-b border-gray-100 px-2 py-2 text-left font-semibold"></th>
-                                    <th class="border-b border-gray-100 w-17.5 px-2 py-2 text-right font-semibold">{{ "HR"|trans }}</th>
                                     <th class="border-b border-gray-100 w-15 md:w-17.5 px-4 py-2 text-right font-semibold">{{ "Elev"|trans }}</th>
                                 </tr>
                                 </thead>
@@ -146,9 +145,6 @@
                                                     <div class="h-full bg-strava-orange rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
                                                 </div>
                                             </div>
-                                        </td>
-                                        <td class="px-2 py-2.5 text-right text-gray-500">
-                                            {{ split.getAverageHeartRate() ?: "n/a"|trans }}
                                         </td>
                                         <td class="px-4 py-2.5 text-right text-gray-500">{{ split.getElevationDifference()|renderMeasurement(0) }}</td>
                                     </tr>
