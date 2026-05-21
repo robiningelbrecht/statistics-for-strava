@@ -83,19 +83,8 @@
                             {{ activity.getDeviceName() ?: 'None'|trans }}
                     </span>
                 </a>
+                {% include "html/activity/aerobic-decoupling-kpi.html.twig" %}
             </div>
-        </section>
-            {% if aerobicDecoupling is not null %}
-                {% set aerobicDecouplingClass = {
-                    stable: 'border-green-200 bg-green-50 text-green-700',
-                    moderate: 'border-yellow-200 bg-yellow-50 text-yellow-700',
-                    significant: 'border-red-200 bg-red-50 text-red-700'
-                }[aerobicDecouplingSeverity] %}
-                <div class="rounded-lg p-3 flex gap-x-2 items-center justify-between border {{ aerobicDecouplingClass }}">
-                    <span class="text-xs">{{ "Aerobic Decoupling"|trans }}</span>
-                    <span class="text-sm font-bold">{{ aerobicDecoupling|formatNumber(1) }}<span class="text-xxs font-medium">%</span></span>
-                </div>
-            {% endif %}
         </section>
     {% endautoescape %}
 {% endblock mainStatsOnTop %}

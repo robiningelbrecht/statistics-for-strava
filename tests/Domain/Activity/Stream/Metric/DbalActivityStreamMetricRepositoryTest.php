@@ -255,7 +255,7 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         $this->addActivity($tooShortActivityId, SportType::RUN, 1799);
         $this->addRequiredAerobicDecouplingStreams($tooShortActivityId);
         $this->addActivity($rideActivityId, SportType::RIDE, 1800);
-        $this->addRequiredAerobicDecouplingStreams($rideActivityId);
+        $this->addRequiredAerobicDecouplingStreams($rideActivityId, StreamType::WATTS);
         $this->addActivity($missingStreamActivityId, SportType::TRAIL_RUN, 1800);
         $this->addStream($missingStreamActivityId, StreamType::TIME);
         $this->addActivity($alreadyCalculatedActivityId, SportType::VIRTUAL_RUN, 1800);
@@ -269,7 +269,19 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            ActivityIds::fromArray([$eligibleActivityId]),
+            ActivityIds::fromArray([$eligibleActivityId, $rideActivityId]),
+            $this->activityStreamMetricRepository->findActivityIdsWithoutAerobicDecoupling(1800),
+        );
+    }
+
+    public function testFindActivityIdsWithoutAerobicDecouplingRequiresRidePowerStream(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('1');
+        $this->addActivity($activityId, SportType::RIDE, 1800);
+        $this->addRequiredAerobicDecouplingStreams($activityId);
+
+        $this->assertEquals(
+            ActivityIds::fromArray([]),
             $this->activityStreamMetricRepository->findActivityIdsWithoutAerobicDecoupling(1800),
         );
     }
@@ -354,12 +366,12 @@ class DbalActivityStreamMetricRepositoryTest extends ContainerTestCase
         );
     }
 
-    private function addRequiredAerobicDecouplingStreams(ActivityId $activityId): void
+    private function addRequiredAerobicDecouplingStreams(ActivityId $activityId, StreamType $efficiencyStreamType = StreamType::VELOCITY): void
     {
         $this->addStream($activityId, StreamType::TIME);
         $this->addStream($activityId, StreamType::MOVING);
         $this->addStream($activityId, StreamType::HEART_RATE);
-        $this->addStream($activityId, StreamType::VELOCITY);
+        $this->addStream($activityId, $efficiencyStreamType);
     }
 
     private function addActivity(ActivityId $activityId, SportType $sportType, int $movingTimeInSeconds): void

@@ -1,0 +1,13 @@
+{% if aerobicDecoupling is not null %}
+            {% set aerobicDecouplingClass = {
+                stable: 'border-green-200 bg-green-50 text-green-600',
+                moderate: 'border-yellow-200 bg-yellow-50 text-yellow-600',
+                significant: 'border-red-200 bg-red-50 text-red-600'
+            }[aerobicDecouplingSeverity] %}
+            <div class="w-1/8 min-w-32 flex flex-col items-center justify-center overflow-hidden px-2 py-2 border rounded-lg shadow-sm {{ aerobicDecouplingClass }}">
+                <div class="text-center">
+                    <dd class="text-xs">{{ "Aerobic Decoupling"|trans }}</dd>
+                    <dt class="font-extrabold">{{ aerobicDecoupling|formatNumber(1) }}%</dt>
+                </div>
+            </div>
+{% endif %}

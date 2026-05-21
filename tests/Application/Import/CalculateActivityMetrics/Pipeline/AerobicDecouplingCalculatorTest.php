@@ -13,7 +13,7 @@ final class AerobicDecouplingCalculatorTest extends TestCase
 
     public function testCalculateReturnsZeroForStableRun(): void
     {
-        $this->assertSame(0.0, round($this->calculator->calculate(
+        $this->assertSame(0.0, round($this->calculator->calculateForRun(
             timeData: range(0, 10),
             movingData: array_fill(0, 11, true),
             heartRateData: array_fill(0, 11, 100),
@@ -23,7 +23,7 @@ final class AerobicDecouplingCalculatorTest extends TestCase
 
     public function testCalculateReturnsPositivePercentageForHeartRateDrift(): void
     {
-        $this->assertSame(9.1, round($this->calculator->calculate(
+        $this->assertSame(9.1, round($this->calculator->calculateForRun(
             timeData: range(0, 10),
             movingData: array_fill(0, 11, true),
             heartRateData: [100, 100, 100, 100, 100, 100, 110, 110, 110, 110, 110],
@@ -33,7 +33,7 @@ final class AerobicDecouplingCalculatorTest extends TestCase
 
     public function testCalculateExcludesZeroHeartRateSamples(): void
     {
-        $this->assertSame(0.0, round($this->calculator->calculate(
+        $this->assertSame(0.0, round($this->calculator->calculateForRun(
             timeData: range(0, 10),
             movingData: array_fill(0, 11, true),
             heartRateData: [100, 100, 100, 0, 100, 100, 100, 100, 100, 100, 100],
@@ -43,7 +43,7 @@ final class AerobicDecouplingCalculatorTest extends TestCase
 
     public function testCalculateIgnoresPausedTimeWhenSplittingHalves(): void
     {
-        $this->assertSame(9.1, round($this->calculator->calculate(
+        $this->assertSame(9.1, round($this->calculator->calculateForRun(
             timeData: range(0, 20),
             movingData: [
                 true, true, true, true, true, true,
@@ -65,11 +65,51 @@ final class AerobicDecouplingCalculatorTest extends TestCase
 
     public function testCalculateReturnsNullWhenUsableDataIsInsufficient(): void
     {
-        $this->assertNull($this->calculator->calculate(
+        $this->assertNull($this->calculator->calculateForRun(
             timeData: range(0, 10),
             movingData: array_fill(0, 11, false),
             heartRateData: array_fill(0, 11, 100),
             velocityData: array_fill(0, 11, 3),
+        ));
+    }
+
+    public function testCalculateForRideReturnsZeroForStableNormalizedPowerAndHeartRate(): void
+    {
+        $this->assertSame(0.0, round($this->calculator->calculateForRide(
+            timeData: range(0, 60),
+            movingData: array_fill(0, 61, true),
+            heartRateData: array_fill(0, 61, 100),
+            powerData: array_fill(0, 61, 200),
+        ), 1));
+    }
+
+    public function testCalculateForRideReturnsPositivePercentageForHeartRateDrift(): void
+    {
+        $this->assertSame(9.1, round($this->calculator->calculateForRide(
+            timeData: range(0, 60),
+            movingData: array_fill(0, 61, true),
+            heartRateData: array_merge(array_fill(0, 31, 100), array_fill(0, 30, 110)),
+            powerData: array_fill(0, 61, 200),
+        ), 1));
+    }
+
+    public function testCalculateForRideExcludesInvalidSamplesAndPausedTime(): void
+    {
+        $this->assertSame(0.0, round($this->calculator->calculateForRide(
+            timeData: range(0, 61),
+            movingData: array_fill(0, 62, true),
+            heartRateData: array_fill(0, 62, 100),
+            powerData: array_merge(array_fill(0, 15, 200), [0], array_fill(0, 46, 200)),
+        ), 1));
+    }
+
+    public function testCalculateForRideReturnsNullWhenHalfHasInsufficientPowerSamples(): void
+    {
+        $this->assertNull($this->calculator->calculateForRide(
+            timeData: range(0, 58),
+            movingData: array_fill(0, 59, true),
+            heartRateData: array_fill(0, 59, 100),
+            powerData: array_fill(0, 59, 200),
         ));
     }
 

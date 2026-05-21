@@ -44,6 +44,7 @@ final class CalculateAerobicDecouplingTest extends ContainerTestCase
         new CalculateAerobicDecoupling(
             activityStreamRepository: $this->activityStreamRepository,
             activityStreamMetricRepository: $this->activityStreamMetricRepository,
+            activityRepository: $this->activityRepository,
             aerobicDecouplingCalculator: new AerobicDecouplingCalculator(),
             minimumMovingTimeInMinutes: 0,
         )->process(new SpyOutput());
@@ -68,18 +69,43 @@ final class CalculateAerobicDecouplingTest extends ContainerTestCase
         new CalculateAerobicDecoupling(
             activityStreamRepository: $this->activityStreamRepository,
             activityStreamMetricRepository: $this->activityStreamMetricRepository,
+            activityRepository: $this->activityRepository,
             aerobicDecouplingCalculator: new AerobicDecouplingCalculator(),
             minimumMovingTimeInMinutes: -1,
         );
     }
 
-    private function addActivity(ActivityId $activityId): void
+    public function testProcessCalculatesRideAerobicDecouplingFromPower(): void
+    {
+        $activityId = ActivityId::fromUnprefixed('1');
+        $this->addActivity($activityId, SportType::RIDE, 60);
+        $this->addStream($activityId, StreamType::TIME, range(0, 60));
+        $this->addStream($activityId, StreamType::MOVING, array_fill(0, 61, true));
+        $this->addStream($activityId, StreamType::HEART_RATE, array_merge(array_fill(0, 31, 100), array_fill(0, 30, 110)));
+        $this->addStream($activityId, StreamType::WATTS, array_fill(0, 61, 200));
+
+        new CalculateAerobicDecoupling(
+            activityStreamRepository: $this->activityStreamRepository,
+            activityStreamMetricRepository: $this->activityStreamMetricRepository,
+            activityRepository: $this->activityRepository,
+            aerobicDecouplingCalculator: new AerobicDecouplingCalculator(),
+            minimumMovingTimeInMinutes: 0,
+        )->process(new SpyOutput());
+
+        $metric = $this->activityStreamMetricRepository
+            ->findByActivityIdAndMetricType($activityId, ActivityStreamMetricType::AEROBIC_DECOUPLING)
+            ->filterOnStreamType(StreamType::WATTS);
+
+        $this->assertSame(9.0909, $metric->getData()[0]);
+    }
+
+    private function addActivity(ActivityId $activityId, SportType $sportType = SportType::RUN, int $movingTimeInSeconds = 10): void
     {
         $this->activityRepository->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId($activityId)
-                ->withSportType(SportType::RUN)
-                ->withMovingTimeInSeconds(10)
+                ->withSportType($sportType)
+                ->withMovingTimeInSeconds($movingTimeInSeconds)
                 ->build(),
             []
         ));

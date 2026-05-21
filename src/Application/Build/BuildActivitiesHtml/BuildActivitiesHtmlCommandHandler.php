@@ -105,7 +105,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
                 $activity->getId(),
                 ActivityStreamMetricType::VALUE_DISTRIBUTION
             );
-            $aerobicDecoupling = $this->aerobicDecoupling->calculateFor($activity->getId());
+            $aerobicDecoupling = $this->aerobicDecoupling->calculateFor($activity);
 
             $distributionCharts = [];
             $heartRateDistribution = $valueDistributionMetrics->filterOnStreamType(StreamType::HEART_RATE)?->getData() ?? [];

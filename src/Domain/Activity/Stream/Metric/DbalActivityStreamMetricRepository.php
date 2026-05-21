@@ -130,12 +130,15 @@ final readonly class DbalActivityStreamMetricRepository extends DbalRepository i
     public function findActivityIdsWithoutAerobicDecoupling(int $minimumMovingTimeInSeconds): ActivityIds
     {
         $sql = 'SELECT Activity.activityId FROM Activity
-                WHERE Activity.activityType = :activityType
+                WHERE Activity.activityType IN (:activityTypes)
                 AND Activity.movingTimeInSeconds >= :minimumMovingTimeInSeconds
                 AND NOT EXISTS (
                     SELECT 1 FROM ActivityStreamMetric m
                     WHERE m.activityId = Activity.activityId
-                    AND m.streamType = :velocityStreamType
+                    AND m.streamType = CASE
+                        WHEN Activity.activityType = :rideActivityType THEN :wattsStreamType
+                        ELSE :velocityStreamType
+                    END
                     AND m.metricType = :metricType
                 )
                 AND EXISTS (
@@ -156,24 +159,43 @@ final readonly class DbalActivityStreamMetricRepository extends DbalRepository i
                     AND s.streamType = :heartRateStreamType
                     AND s.dataSize > 0
                 )
-                AND EXISTS (
-                    SELECT 1 FROM ActivityStream s
-                    WHERE s.activityId = Activity.activityId
-                    AND s.streamType = :velocityStreamType
-                    AND s.dataSize > 0
+                AND (
+                    (
+                        Activity.activityType = :runActivityType
+                        AND EXISTS (
+                            SELECT 1 FROM ActivityStream s
+                            WHERE s.activityId = Activity.activityId
+                            AND s.streamType = :velocityStreamType
+                            AND s.dataSize > 0
+                        )
+                    )
+                    OR (
+                        Activity.activityType = :rideActivityType
+                        AND EXISTS (
+                            SELECT 1 FROM ActivityStream s
+                            WHERE s.activityId = Activity.activityId
+                            AND s.streamType = :wattsStreamType
+                            AND s.dataSize > 0
+                        )
+                    )
                 )
                 ORDER BY Activity.activityId';
 
         return ActivityIds::fromArray(array_map(
             ActivityId::fromString(...),
             $this->connection->executeQuery($sql, [
-                'activityType' => ActivityType::RUN->value,
+                'activityTypes' => [ActivityType::RUN->value, ActivityType::RIDE->value],
+                'runActivityType' => ActivityType::RUN->value,
+                'rideActivityType' => ActivityType::RIDE->value,
                 'minimumMovingTimeInSeconds' => $minimumMovingTimeInSeconds,
                 'metricType' => ActivityStreamMetricType::AEROBIC_DECOUPLING->value,
                 'timeStreamType' => StreamType::TIME->value,
                 'movingStreamType' => StreamType::MOVING->value,
                 'heartRateStreamType' => StreamType::HEART_RATE->value,
                 'velocityStreamType' => StreamType::VELOCITY->value,
+                'wattsStreamType' => StreamType::WATTS->value,
+            ], [
+                'activityTypes' => ArrayParameterType::STRING,
             ])->fetchFirstColumn()
         ));
     }

@@ -15,11 +15,17 @@ final readonly class AerobicDecoupling
     ) {
     }
 
-    public function calculateFor(ActivityId $activityId): ?float
+    public function calculateFor(Activity $activity): ?float
     {
-        $aerobicDecouplingMetric = $this->activityStreamMetricRepository
-            ->findByActivityIdAndMetricType($activityId, ActivityStreamMetricType::AEROBIC_DECOUPLING)
-            ->filterOnStreamType(StreamType::VELOCITY);
+        $streamType = match ($activity->getSportType()->getActivityType()) {
+            ActivityType::RIDE => StreamType::WATTS,
+            default => StreamType::VELOCITY,
+        };
+        $aerobicDecouplingMetrics = $this->activityStreamMetricRepository
+            ->findByActivityIdAndMetricType($activity->getId(), ActivityStreamMetricType::AEROBIC_DECOUPLING);
+        $aerobicDecouplingMetric = $aerobicDecouplingMetrics->filterOnStreamType($streamType)
+            ?? $aerobicDecouplingMetrics->filterOnStreamType(StreamType::VELOCITY)
+            ?? $aerobicDecouplingMetrics->filterOnStreamType(StreamType::WATTS);
 
         if (!$aerobicDecouplingMetric instanceof Stream\Metric\ActivityStreamMetric) {
             return null;

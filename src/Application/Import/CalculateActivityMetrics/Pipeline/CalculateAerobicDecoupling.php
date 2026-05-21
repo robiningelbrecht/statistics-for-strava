@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Import\CalculateActivityMetrics\Pipeline;
 
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetric;
 use App\Domain\Activity\Stream\Metric\ActivityStreamMetricRepository;
@@ -17,6 +19,7 @@ final readonly class CalculateAerobicDecoupling implements CalculateActivityMetr
     private int $minimumMovingTimeInSeconds;
 
     public function __construct(
+        private ActivityRepository $activityRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private ActivityStreamMetricRepository $activityStreamMetricRepository,
         private AerobicDecouplingCalculator $aerobicDecouplingCalculator,
@@ -40,16 +43,30 @@ final readonly class CalculateAerobicDecoupling implements CalculateActivityMetr
         );
 
         foreach ($activityIdsToProcess as $activityId) {
-            $decoupling = $this->aerobicDecouplingCalculator->calculate(
-                timeData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::TIME)->getData(),
-                movingData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::MOVING)->getData(),
-                heartRateData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::HEART_RATE)->getData(),
-                velocityData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::VELOCITY)->getData(),
-            );
+            $activityType = $this->activityRepository->find($activityId)->getSportType()->getActivityType();
+            $decoupling = match ($activityType) {
+                ActivityType::RUN => $this->aerobicDecouplingCalculator->calculateForRun(
+                    timeData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::TIME)->getData(),
+                    movingData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::MOVING)->getData(),
+                    heartRateData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::HEART_RATE)->getData(),
+                    velocityData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::VELOCITY)->getData(),
+                ),
+                ActivityType::RIDE => $this->aerobicDecouplingCalculator->calculateForRide(
+                    timeData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::TIME)->getData(),
+                    movingData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::MOVING)->getData(),
+                    heartRateData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::HEART_RATE)->getData(),
+                    powerData: $this->activityStreamRepository->findOneByActivityAndStreamType($activityId, StreamType::WATTS)->getData(),
+                ),
+                default => null,
+            };
+            $streamType = match ($activityType) {
+                ActivityType::RIDE => StreamType::WATTS,
+                default => StreamType::VELOCITY,
+            };
 
             $this->activityStreamMetricRepository->add(ActivityStreamMetric::create(
                 activityId: $activityId,
-                streamType: StreamType::VELOCITY,
+                streamType: $streamType,
                 metricType: ActivityStreamMetricType::AEROBIC_DECOUPLING,
                 data: [null === $decoupling ? null : round($decoupling, 4)],
             ));
