@@ -1737,9 +1737,6 @@
   .max-h-\[calc\(100vh-285px\)\] {
     max-height: calc(100vh - 285px);
   }
-  .max-h-\[calc\(100vh-585px\)\] {
-    max-height: calc(100vh - 585px);
-  }
   .max-h-full {
     max-height: 100%;
   }
@@ -3454,6 +3451,10 @@
   }
   .shadow-xs {
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.05));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .ring {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .ring-1 {
