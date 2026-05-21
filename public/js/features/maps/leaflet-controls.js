@@ -1,4 +1,4 @@
-L.Control.FlyToPlaces = L.Control.extend({
+const FlyToPlacesControl = L.Control.extend({
     options: {
         position: 'topright',
         places: {}
@@ -32,11 +32,11 @@ L.Control.FlyToPlaces = L.Control.extend({
     }
 });
 
-L.control.flyToPlaces = function (opts) {
-    return new L.Control.FlyToPlaces(opts);
+export function createFlyToPlacesControl(options = {}) {
+    return new FlyToPlacesControl(options);
 }
 
-L.Control.MapTools = L.Control.extend({
+const MapToolsControl = L.Control.extend({
     options: {
         position: 'topleft',
         bounds: null,
@@ -99,6 +99,6 @@ L.Control.MapTools = L.Control.extend({
     }
 });
 
-L.control.mapTools = function (opts) {
-    return new L.Control.MapTools(opts);
+export function createMapToolsControl(options = {}) {
+    return new MapToolsControl(options);
 }

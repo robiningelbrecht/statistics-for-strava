@@ -1,4 +1,6 @@
 import {fetchJson} from "../../utils";
+import L from 'leaflet';
+import {createMapToolsControl} from "./leaflet-controls";
 
 export default class LeafletMap {
     constructor(mapNode, data) {
@@ -48,7 +50,7 @@ export default class LeafletMap {
 
         featureGroup.addTo(this.map);
         this.map.fitBounds(featureGroup.getBounds(), {maxZoom: this.data.maxZoom});
-        L.control.mapTools({bounds: featureGroup.getBounds()}).addTo(this.map);
+        this.map.addControl(createMapToolsControl({bounds: featureGroup.getBounds()}));
     }
 
     async connectToEChart() {
