@@ -11,12 +11,10 @@ use App\Domain\Activity\Split\ActivitySplits;
 use App\Domain\Activity\Split\DbalActivitySplitRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
-use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Activity\Stream\ActivityStreamBuilder;
 
 class DbalActivitySplitRepositoryTest extends ContainerTestCase
 {
@@ -187,58 +185,13 @@ class DbalActivitySplitRepositoryTest extends ContainerTestCase
 
         $splits = $this->activitySplitRepository->findBy(ActivityId::fromUnprefixed('test'), UnitSystem::METRIC);
         $this->assertNull($splits->toArray()[0]->getGapPaceInSecondsPerKm());
-        $this->assertNull($splits->toArray()[0]->getAverageHeartRate());
 
         $split = $splits->toArray()[0]
-            ->withGapPace(SecPerKm::from(350.5))
-            ->withAverageHeartRate(145);
+            ->withGapPace(SecPerKm::from(350.5));
         $this->activitySplitRepository->update($split);
 
         $updatedSplits = $this->activitySplitRepository->findBy(ActivityId::fromUnprefixed('test'), UnitSystem::METRIC);
         $this->assertEqualsWithDelta(350.5, $updatedSplits->toArray()[0]->getGapPaceInSecondsPerKm()->toFloat(), 0.01);
-        $this->assertSame(145, $updatedSplits->toArray()[0]->getAverageHeartRate());
-    }
-
-    public function testFindActivityIdsWithoutAverageHeartRate(): void
-    {
-        $this->addActivity('with-hr-stream-no-avg', SportType::RUN);
-        $this->addActivity('with-hr-stream-has-avg', SportType::RUN);
-        $this->addActivity('without-hr-stream', SportType::RUN);
-
-        $this->activityStreamRepository->add(ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('with-hr-stream-no-avg'))
-            ->withStreamType(StreamType::HEART_RATE)
-            ->withData([140, 150, 160])
-            ->build());
-
-        $this->activityStreamRepository->add(ActivityStreamBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('with-hr-stream-has-avg'))
-            ->withStreamType(StreamType::HEART_RATE)
-            ->withData([140, 150, 160])
-            ->build());
-
-        $this->activitySplitRepository->add(ActivitySplitBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('with-hr-stream-no-avg'))
-            ->withSplitNumber(1)
-            ->build());
-
-        $this->activitySplitRepository->add(ActivitySplitBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('with-hr-stream-has-avg'))
-            ->withSplitNumber(1)
-            ->withAverageHeartRate(150)
-            ->build());
-
-        $this->activitySplitRepository->add(ActivitySplitBuilder::fromDefaults()
-            ->withActivityId(ActivityId::fromUnprefixed('without-hr-stream'))
-            ->withSplitNumber(1)
-            ->build());
-
-        $this->assertEquals(
-            ActivityIds::fromArray([
-                ActivityId::fromUnprefixed('with-hr-stream-no-avg'),
-            ]),
-            $this->activitySplitRepository->findActivityIdsWithoutAverageHeartRate(),
-        );
     }
 
     private function addActivity(string $id, SportType $sportType): void
