@@ -1,4 +1,6 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
+import L from 'leaflet';
+import {createFlyToPlacesControl} from "../maps/leaflet-controls";
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -161,8 +163,7 @@ export default class HeatmapDrawer {
         });
         this.mainFeatureGroup.addTo(this.map);
 
-        this.placesControl = L.control.flyToPlaces({places});
-        this.placesControl.addTo(this.map);
+        this.map.addControl(createFlyToPlacesControl({places}));
 
         if (this.config.initialCenter && this.config.initialZoom) {
             this.map.setView(this.config.initialCenter, this.config.initialZoom);
