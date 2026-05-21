@@ -551,6 +551,7 @@ per: /
 'per activity': tevékenységenkén
 'per hour': óránként
 'reached Eddington number {number}': '{number}-es Eddington-szám elérve'
+rpm: rpm
 to: '-ig'
 total: összesen
 watts: watts

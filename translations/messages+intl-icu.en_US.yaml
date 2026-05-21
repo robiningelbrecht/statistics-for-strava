@@ -551,6 +551,7 @@ per: per
 'per activity': 'per activity'
 'per hour': 'per hour'
 'reached Eddington number {number}': 'reached Eddington number {number}'
+rpm: rpm
 to: to
 total: total
 watts: watts
