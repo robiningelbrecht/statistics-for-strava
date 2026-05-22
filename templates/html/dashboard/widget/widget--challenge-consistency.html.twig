@@ -21,7 +21,7 @@
                 {% if calculatedConsistencyChallenges[consistencyChallenge.getId()] is defined %}
                     <tr class="bg-white border-b">
                         <th scope="row"
-                            class="px-2 py-2 sticky left-0 text-left bg-white border border-gray-100 font-medium text-gray-900 whitespace-nowrap">
+                            class="px-2 py-2.5 sticky left-0 text-left bg-white border border-gray-100 font-medium text-gray-900 whitespace-nowrap">
                             {{ consistencyChallenge.getLabel() }}
                         </th>
                         {% set calculatedAchievements = calculatedConsistencyChallenges[consistencyChallenge.getId()] %}
