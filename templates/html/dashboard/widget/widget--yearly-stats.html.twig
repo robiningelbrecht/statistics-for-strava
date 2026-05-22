@@ -128,7 +128,9 @@
                                             {{ statistic.totalElevation|renderMeasurement(0) }}
                                         </td>
                                         <td>
-                                            <div class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium {{ statistic.differenceInElevationYearBefore.toFloat() >= 0 ? 'bg-green-100 text-green-800': 'bg-red-100 text-red-800' }}">
+                                            {% set diffPreviousYear = statistic.differenceInElevationYearBefore.toFloat() %}
+                                            {% set diffColors = diffPreviousYear > 0 ? 'bg-green-100 text-green-800': (diffPreviousYear < 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500') %}
+                                            <div class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium {{ diffColors }}">
                                                 {% if statistic.differenceInElevationYearBefore is not null %}
                                                     {% if statistic.differenceInElevationYearBefore.toFloat() >= 0 %}
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -146,6 +148,8 @@
                                                     <div>
                                                         {{ statistic.differenceInElevationYearBefore|renderMeasurement(0) }}
                                                     </div>
+                                                {% else %}
+                                                    -
                                                 {% endif %}
                                             </div>
                                         </td>
@@ -153,7 +157,9 @@
                                             {{ statistic.movingTime }}
                                         </td>
                                         <td class="px-2 py-2">
-                                            <div class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium {{ statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 ? 'bg-green-100 text-green-800': 'bg-red-100 text-red-800' }}">
+                                            {% set diffPreviousYear = statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() %}
+                                            {% set diffColors = diffPreviousYear > 0 ? 'bg-green-100 text-green-800': (diffPreviousYear < 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500') %}
+                                            <div class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium {{ diffColors }}">
                                                 {% if statistic.differenceInMovingTimeYearBefore is not null %}
                                                     {% if statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() >= 0 %}
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
@@ -171,6 +177,8 @@
                                                     <div>
                                                         {{ statistic.differenceInMovingTimeYearBefore }}
                                                     </div>
+                                                {% else %}
+                                                    -
                                                 {% endif %}
                                             </div>
                                         </td>
