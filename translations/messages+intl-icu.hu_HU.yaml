@@ -433,6 +433,7 @@ Tennis: Tenisz
 "That's the length of the Great Wall of China": 'Ez a Kínai Nagy Fal hossza'
 "That's three quarters of the way around the Earth": 'Ez a Föld kerületének háromnegyede'
 "That's {number} days of at least {distance}": 'Ez {number} nap legalább {distance}-vel'
+"That's {percentage}% of all countries 🌍": "That's {percentage}% of all countries 🌍"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Ezek a kitűzők dinamikusan jönnek létre. Bármely &lt;img&gt; tagben használhatod őket'
 Thinking...: Gondolkodás...
@@ -501,7 +502,6 @@ Year: Év
 Yearly: Éves
 'Yearly stats': 'Éves statisztikák'
 Yoga: Jóga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": '{numberOfCountriesWithWorkouts} különböző országban rögzítettél edzéseket, ez az összes ország {percentage}-a 🌍'
 'Your PB badge': 'Személyes rekord kitűződ'
 'Your Strava badge': 'Strava kitűződ'
 'Your Zwift badge': 'Zwift kitűződ'
@@ -530,6 +530,7 @@ bpm: bpm
 clear: törlés
 comments: hozzászólások
 compare: összehasonlítás
+countries: countries
 day(s): nap(ok)
 days: napok
 'days needed for next Eddington': 'napok a következő Eddington-számhoz'
