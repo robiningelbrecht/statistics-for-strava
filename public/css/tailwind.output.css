@@ -4834,6 +4834,14 @@
     @supports (color: color-mix(in lab, red, red)) {
       --color-strava-orange-soft: color-mix(in oklch, var(--color-strava-orange) 10%, transparent);
     }
+    --color-green-100: var(--color-green-900);
+    --color-green-800: var(--color-green-200);
+    --color-red-100: var(--color-red-900);
+    --color-red-800: var(--color-red-200);
+    --color-orange-100: var(--color-orange-900);
+    --color-orange-800: var(--color-orange-200);
+    --color-yellow-100: var(--color-yellow-900);
+    --color-yellow-800: var(--color-yellow-200);
   }
   .no-dark {
     --color-gray-50: #F9FAFB;
