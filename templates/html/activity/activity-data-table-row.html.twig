@@ -19,9 +19,9 @@
     <td>
         {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
-            {{ activity.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
+            {{ activity.getPaceInSecPer100Meter()|formatPace }}<span class="text-xxs ml-px">/100m</span>
         {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
-            {{ activity.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
+            {{ activity.getPaceInSecPerKm()|formatPace }}<span class="text-xxs ml-px">{{ renderUnitSymbol('pace') }}</span>
         {% else %}
             {{ activity.getAverageSpeed()|renderMeasurement(1) }}
         {% endif %}
@@ -30,19 +30,19 @@
         {{ activity.getAverageHeartRate() ?? '-' }}
     </td>
     <td>
-        {{ activity.getCalories() }}<span class="text-xs">kcal</span>
+        {{ activity.getCalories() }}<span class="text-xxs ml-px">kcal</span>
     </td>
     <td>
-        {{ activity.getAveragePower() ? activity.getAveragePower() ~ '<span class="text-xs">w</span>': '-' }}
+        {{ activity.getAveragePower() ? activity.getAveragePower() ~ '<span class="text-xxs ml-px">w</span>': '-' }}
     </td>
     {% for timeInterval in timeIntervals %}
         {% set powerOutput = activity.getBestAveragePowerForTimeInterval(timeInterval) %}
         {% if powerOutput %}
             <td class="border-l-2">
-                {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                {{ powerOutput.getPower() }}<span class="text-xxs ml-px">w</span>
             </td>
             <td class="border-r-2">
-                {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                {{ powerOutput.getRelativePower() }}<span class="text-xxs ml-px">w/kg</span>
             </td>
         {% else %}
             <td class="border-l-2">-</td>

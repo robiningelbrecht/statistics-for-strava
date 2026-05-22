@@ -105,7 +105,7 @@
                                     {{ statsForCurrentMonth.movingTime|formatSeconds }}
                                 </td>
                                 <td class="px-2 py-2 truncate">
-                                    {{ statsForCurrentMonth.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
+                                    {{ statsForCurrentMonth.calories|formatNumber(0) }}<span class="text-xxs ml-px">kcal</span>
                                 </td>
                                 <td class="px-2 py-2 truncate">
                                     {{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == month.getId())|length }}

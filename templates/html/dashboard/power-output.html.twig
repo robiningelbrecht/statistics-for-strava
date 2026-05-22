@@ -72,10 +72,10 @@
                                 {% for powerOutput in powerOutputs %}
                                     {% if powerOutput.getTimeIntervalInSeconds() in timeIntervalsToDisplay %}
                                         <td class="px-2 py-2">
-                                            {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                            {{ powerOutput.getPower() }}<span class="text-xxs ml-px">w</span>
                                         </td>
                                         <td class="px-2 py-2 border-r">
-                                            {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                            {{ powerOutput.getRelativePower() }}<span class="text-xxs ml-px">w/kg</span>
                                         </td>
                                     {% endif %}
                                 {% endfor %}

@@ -1535,6 +1535,9 @@
   .ml-auto {
     margin-left: auto;
   }
+  .ml-px {
+    margin-left: 1px;
+  }
   .scrollbar {
     &::-webkit-scrollbar-track {
       background-color: var(--scrollbar-track);

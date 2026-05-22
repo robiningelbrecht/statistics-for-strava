@@ -175,7 +175,7 @@
                     {{ gear.getAverageDistance()|renderMeasurement(0, 'avg'|trans) }} /
                     {{ gear.getDistance()|renderMeasurement(0, 'total'|trans) }}
                 {% else %}
-                    0<span class="text-xs">{{ gear.getDistance().getSymbol() }}</span>
+                    0<span class="text-xxs ml-px">{{ gear.getDistance().getSymbol() }}</span>
                 {% endif %}
             </td>
             <td class="truncate">
@@ -188,7 +188,7 @@
                 {{ gear.getAverageSpeed()|renderMeasurement(1) }}
             </td>
             <td class="truncate">
-                {{ gear.getTotalCalories()|formatNumber(0) }}<span class="text-xs">kcal</span>
+                {{ gear.getTotalCalories()|formatNumber(0) }}<span class="text-xxs ml-px">kcal</span>
             </td>
             <td class="truncate">
                 {% set purchasePrice = gear.getPurchasePrice() %}

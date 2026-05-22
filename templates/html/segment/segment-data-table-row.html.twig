@@ -18,7 +18,7 @@
                 <span class="font-medium">-</span>
                 {{ segment.getBestEffort().getAverageSpeed()|renderMeasurement(1) }}
                 {% if segment.getBestEffort().getAverageWatts() %}
-                    <span class="font-medium">-</span> {{ segment.getBestEffort().getAverageWatts()|formatNumber(0) }}<span class="text-xs">w</span>
+                    <span class="font-medium">-</span> {{ segment.getBestEffort().getAverageWatts()|formatNumber(0) }}<span class="text-xxs ml-px">w</span>
                 {% endif %}
             </div>
         </div>
@@ -27,7 +27,7 @@
         {{ segment.getDistance()|renderMeasurement(2) }}
     </td>
     <td>
-        {{ segment.getAverageGradient() }}<span class="text-xs">%</span>
+        {{ segment.getAverageGradient() }}<span class="text-xxs ml-px">%</span>
     </td>
     <td>
         {{ segment.getNumberOfTimesRidden() }}
