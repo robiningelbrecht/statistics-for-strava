@@ -3,31 +3,31 @@
         {{ "Zwift stats"|trans }}
     </h3>
     <div class="relative overflow-x-auto">
-        <table class="w-full text-sm text-center text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <table class="data-table">
+            <thead>
             <tr>
-                <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                <th scope="col" class="sticky left-0 bg-gray-50">
 
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     # {{ "workouts"|trans }}
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center">
                         {{ svg('distance') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center">
                         {{ svg('elevation') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center">
                         {{ svg('time') }}
                     </div>
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col">
                     <div class="flex items-center justify-center">
                         {{ svg('calories') }}
                     </div>
@@ -36,24 +36,24 @@
             </thead>
             <tbody>
             {% for statistic in statsPerWorld %}
-                <tr class="bg-white border-b">
+                <tr class="group/row">
                     <th scope="row"
-                        class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                        class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                         <div>{{ statistic.zwiftWorld }}</div>
                     </th>
-                    <td class="px-6 py-2">
+                    <td>
                         {{ statistic.numberOfActivities }}
                     </td>
-                    <td class="px-6 py-2 truncate">
+                    <td class="truncate">
                         {{ statistic.distance|renderMeasurement(0) }}
                     </td>
-                    <td class="px-6 py-2 truncate">
+                    <td class="truncate">
                         {{ statistic.elevation|renderMeasurement(0) }}
                     </td>
-                    <td class="px-6 py-2 truncate" title="{{ statistic.movingTime.toHour().toFloat()|formatNumber(1) }}h">
+                    <td class="truncate" title="{{ statistic.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                         {{ statistic.movingTime|formatSeconds }}
                     </td>
-                    <td class="px-6 py-2 truncate">
+                    <td class="truncate">
                         {{ statistic.calories|formatNumber(0) }}<span class="text-xxs ml-px">kcal</span>
                     </td>
                 </tr>
