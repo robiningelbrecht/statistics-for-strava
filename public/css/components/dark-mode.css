@@ -15,6 +15,7 @@
         --color-white: #202830;
 
         --color-blue-600: #478be6;
+        --color-strava-orange-soft: color-mix(in oklch, var(--color-strava-orange) 10%, transparent);
     }
 
     .no-dark {
@@ -33,6 +34,7 @@
         --color-white: #ffffff;
 
         --color-blue-600: #2563EB;
+        --color-strava-orange-soft: #FFF1E9;
     }
 }
 

@@ -112,7 +112,7 @@
     --color-pink-700: #BE185D;
     --color-pink-800: #9D174D;
     --color-pink-900: #831843;
-    --color-rose-50: oklch(96.9% 0.015 12.422);
+    --color-rose-500: oklch(64.5% 0.246 16.439);
     --color-rose-600: oklch(58.6% 0.253 17.585);
     --color-gray-50: #F9FAFB;
     --color-gray-100: #F3F4F6;
@@ -204,6 +204,7 @@
     --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
+    --color-strava-orange-soft: #FFF1E9;
     --color-grey-yo: #cccccc;
   }
 }
@@ -1731,9 +1732,6 @@
   .max-h-125 {
     max-height: calc(var(--spacing) * 125);
   }
-  .max-h-\[calc\(100vh-114px\)\] {
-    max-height: calc(100vh - 114px);
-  }
   .max-h-\[calc\(100vh-165px\)\] {
     max-height: calc(100vh - 165px);
   }
@@ -2729,9 +2727,6 @@
   .bg-\[\#DF584A\] {
     background-color: #DF584A;
   }
-  .bg-\[\#F8E4DA\] {
-    background-color: #F8E4DA;
-  }
   .bg-amber-50 {
     background-color: var(--color-amber-50);
   }
@@ -2816,22 +2811,22 @@
       background-color: color-mix(in oklab, var(--color-red-600) 10%, transparent);
     }
   }
-  .bg-rose-50 {
-    background-color: var(--color-rose-50);
+  .bg-rose-500\/10 {
+    background-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-rose-500) 10%, transparent);
+    }
   }
   .bg-strava-orange {
     background-color: var(--color-strava-orange);
+  }
+  .bg-strava-orange-soft {
+    background-color: var(--color-strava-orange-soft);
   }
   .bg-strava-orange\/5 {
     background-color: color-mix(in srgb, #F26722 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-strava-orange) 5%, transparent);
-    }
-  }
-  .bg-strava-orange\/10 {
-    background-color: color-mix(in srgb, #F26722 10%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-strava-orange) 10%, transparent);
     }
   }
   .bg-transparent {
@@ -3036,9 +3031,6 @@
   }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
-  }
-  .pt-14 {
-    padding-top: calc(var(--spacing) * 14);
   }
   .pt-20 {
     padding-top: calc(var(--spacing) * 20);
@@ -3540,16 +3532,6 @@
       padding-inline: calc(var(--spacing) * 4);
     }
   }
-  .group-odd\:bg-white {
-    &:is(:where(.group):nth-child(odd) *) {
-      background-color: var(--color-white);
-    }
-  }
-  .group-even\:bg-gray-50 {
-    &:is(:where(.group):nth-child(even) *) {
-      background-color: var(--color-gray-50);
-    }
-  }
   .group-open\/section\:rotate-180 {
     &:is(:where(.group\/section):is([open], :popover-open, :open) *) {
       rotate: 180deg;
@@ -3665,12 +3647,9 @@
       background-color: var(--color-gray-100);
     }
   }
-  .peer-checked\:bg-strava-orange\/15 {
+  .peer-checked\:bg-strava-orange-soft {
     &:is(:where(.peer):checked ~ *) {
-      background-color: color-mix(in srgb, #F26722 15%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
-      }
+      background-color: var(--color-strava-orange-soft);
     }
   }
   .peer-checked\:text-strava-orange {
@@ -3814,22 +3793,6 @@
     &:last-child {
       border-bottom-style: var(--tw-border-style);
       border-bottom-width: 0px;
-    }
-  }
-  .odd\:bg-white {
-    &:nth-child(odd) {
-      background-color: var(--color-white);
-    }
-  }
-  .even\:border-b {
-    &:nth-child(even) {
-      border-bottom-style: var(--tw-border-style);
-      border-bottom-width: 1px;
-    }
-  }
-  .even\:bg-gray-50 {
-    &:nth-child(even) {
-      background-color: var(--color-gray-50);
     }
   }
   .hover\:border-gray-300 {
@@ -4612,20 +4575,10 @@
       display: none;
     }
   }
-  .sidebar-collapsed\:max-h-full {
-    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
-      max-height: 100%;
-    }
-  }
-  .sidebar-collapsed\:w-32 {
-    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
-      width: calc(var(--spacing) * 32);
-    }
-  }
-  .sidebar-collapsed\:md\:ml-32 {
+  .sidebar-collapsed\:md\:ml-16 {
     &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
       @media (width >= 48rem) {
-        margin-left: calc(var(--spacing) * 32);
+        margin-left: calc(var(--spacing) * 16);
       }
     }
   }
@@ -4876,6 +4829,10 @@
     --color-black: #F0F6FC;
     --color-white: #202830;
     --color-blue-600: #478be6;
+    --color-strava-orange-soft: color-mix(in srgb, #F26722 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --color-strava-orange-soft: color-mix(in oklch, var(--color-strava-orange) 10%, transparent);
+    }
   }
   .no-dark {
     --color-gray-50: #F9FAFB;
@@ -4891,6 +4848,7 @@
     --color-black: #000000;
     --color-white: #ffffff;
     --color-blue-600: #2563EB;
+    --color-strava-orange-soft: #FFF1E9;
   }
 }
 @layer utilities {
@@ -5002,10 +4960,7 @@ table.data-table {
         border-color: var(--color-strava-orange);
       }
       &.active {
-        background-color: color-mix(in srgb, #F26722 15%, transparent);
-        @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
-        }
+        background-color: var(--color-strava-orange-soft);
       }
       &.active {
         color: var(--color-strava-orange);
@@ -5492,31 +5447,6 @@ table.data-table {
     }
   }
 }
-@layer components {
-  .badge-pill {
-    border-radius: calc(infinity * 1px);
-    background-color: color-mix(in srgb, #ED8936 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-orange-400) 40%, transparent);
-    }
-    padding-inline: calc(var(--spacing) * 2.5);
-    padding-block: calc(var(--spacing) * 0.5);
-    font-size: var(--text-xs);
-    line-height: var(--tw-leading, var(--text-xs--line-height));
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-orange-800);
-    &:where([data-theme=dark], [data-theme=dark] *) {
-      background-color: color-mix(in srgb, #F26722 60%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-strava-orange) 60%, transparent);
-      }
-    }
-    &:where([data-theme=dark], [data-theme=dark] *) {
-      color: #f0f6fc;
-    }
-  }
-}
 @layer utilities {
   .leaflet-tile-pane {
     --tw-grayscale: grayscale(100%);
@@ -5575,49 +5505,126 @@ table.data-table {
   }
 }
 @layer components {
-  .sidebar-menu-link {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--spacing) * 3);
-    border-radius: var(--radius-lg);
-    padding: calc(var(--spacing) * 2);
-    font-size: var(--text-base);
-    line-height: var(--tw-leading, var(--text-base--line-height));
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-gray-900);
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-gray-100);
+  aside#drawer-navigation {
+    position: fixed;
+    top: calc(var(--spacing) * 0);
+    left: calc(var(--spacing) * 0);
+    z-index: 1001;
+    height: 100vh;
+    width: calc(var(--spacing) * 64);
+    border-right-style: var(--tw-border-style);
+    border-right-width: 1px;
+    border-color: var(--color-gray-200);
+    background-color: var(--color-white);
+    padding-top: calc(var(--spacing) * 14);
+    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      width: calc(var(--spacing) * 16);
+    }
+    > div:nth-child(1) {
+      height: 100%;
+      max-height: calc(100vh - 114px);
+      :where(& > :not(:last-child)) {
+        --tw-divide-y-reverse: 0;
+        border-bottom-style: var(--tw-border-style);
+        border-top-style: var(--tw-border-style);
+        border-top-width: calc(1px * var(--tw-divide-y-reverse));
+        border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+      }
+      :where(& > :not(:last-child)) {
+        border-color: var(--color-gray-200);
+      }
+      overflow-y: auto;
+      padding-inline: calc(var(--spacing) * 3);
+      padding-block: calc(var(--spacing) * 5);
+      &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+        max-height: 100%;
+      }
+      > ul {
+        > li a {
+          display: flex;
+          align-items: center;
+          column-gap: calc(var(--spacing) * 3);
+          border-radius: var(--radius-lg);
+          padding: calc(var(--spacing) * 2);
+          font-size: var(--text-sm);
+          line-height: var(--tw-leading, var(--text-sm--line-height));
+          --tw-font-weight: var(--font-weight-medium);
+          font-weight: var(--font-weight-medium);
+          color: var(--color-gray-900);
+          &:hover {
+            @media (hover: hover) {
+              background-color: var(--color-strava-orange-soft);
+            }
+          }
+          &:hover {
+            @media (hover: hover) {
+              color: var(--color-strava-orange);
+            }
+          }
+          &[aria-selected="true"] {
+            background-color: var(--color-strava-orange-soft);
+          }
+          &[aria-selected="true"] {
+            color: var(--color-strava-orange);
+          }
+          &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+            justify-content: center;
+          }
+          svg {
+            width: calc(var(--spacing) * 5);
+            height: calc(var(--spacing) * 5);
+            flex-shrink: 0;
+            color: var(--color-gray-500);
+          }
+          &:hover svg, &[aria-selected="true"] svg {
+            color: var(--color-strava-orange);
+          }
+          span:nth-of-type(1) {
+            flex: 1;
+            white-space: nowrap;
+            &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+              display: none;
+            }
+          }
+          span.badge {
+            border-radius: calc(infinity * 1px);
+            background-color: color-mix(in srgb, #F26722 15%, transparent);
+            @supports (color: color-mix(in lab, red, red)) {
+              background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
+            }
+            padding-inline: calc(var(--spacing) * 2.5);
+            padding-block: calc(var(--spacing) * 0.5);
+            font-size: var(--text-xs);
+            line-height: var(--tw-leading, var(--text-xs--line-height));
+            --tw-font-weight: var(--font-weight-medium);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-strava-orange);
+            &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+              display: none;
+            }
+          }
+        }
       }
     }
-    &[aria-selected="true"] {
-      background-color: var(--color-gray-100);
-    }
-    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+    > div:nth-child(2) {
+      position: absolute;
+      bottom: calc(var(--spacing) * 0);
+      left: calc(var(--spacing) * 0);
+      z-index: 20;
+      display: flex;
+      width: 100%;
       flex-direction: column;
-    }
-    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
-      row-gap: calc(var(--spacing) * 0.5);
-    }
-    &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
+      justify-content: center;
+      row-gap: calc(var(--spacing) * 1);
+      border-top-style: var(--tw-border-style);
+      border-top-width: 1px;
+      background-color: var(--color-white);
+      padding: calc(var(--spacing) * 2);
+      text-align: center;
       font-size: var(--text-xs);
       line-height: var(--tw-leading, var(--text-xs--line-height));
+      color: var(--color-gray-500);
     }
-    &:hover .sidebar-menu-link-icon {
-      color: var(--color-gray-900);
-    }
-  }
-  .sidebar-menu-link-icon {
-    height: calc(var(--spacing) * 6);
-    width: calc(var(--spacing) * 6);
-    flex-shrink: 0;
-    color: var(--color-gray-500);
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, content-visibility, overlay, pointer-events;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    --tw-duration: 75ms;
-    transition-duration: 75ms;
   }
 }
 @layer components {

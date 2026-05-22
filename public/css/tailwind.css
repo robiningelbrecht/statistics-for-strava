@@ -7,7 +7,6 @@
 @import "./components/tabs.css";
 @import "./components/popover.css";
 @import "./components/modal.css";
-@import "./components/badge.css";
 @import "./components/leaflet.css";
 @import "./components/sidebar.css";
 @import "./components/scroll-to.css";
@@ -27,6 +26,7 @@
     --font-sans: Inter, ui-sans-serif, system-ui;
     --text-xxs: 0.625rem;
     --color-strava-orange: #F26722;
+    --color-strava-orange-soft: #FFF1E9;
     --color-grey-yo: #cccccc;
 }
 
