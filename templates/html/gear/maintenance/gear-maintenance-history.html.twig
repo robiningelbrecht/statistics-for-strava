@@ -16,40 +16,40 @@
     <!-- Modal body -->
     <div class="modal-body space-y-4">
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <table class="data-table">
+                <thead>
                 <tr>
-                    <th scope="col" class="px-2 py-3">
+                    <th scope="col">
                         <div class="w-18 flex items-center justify-center" title="{{ "Date"|trans }}">
                             {{ svg('calendar') }}
                         </div>
                     </th>
-                    <th scope="col" class="px-2 py-3 bg-gray-50 sticky left-0">
+                    <th scope="col" class="bg-gray-50 sticky left-0">
                         <div class="flex items-center justify-center">
                             {{ svg('components') }}
                         </div>
                     </th>
-                    <th scope="col" class="px-2 py-3">
+                    <th scope="col">
                         {{ "Activity"|trans }}
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col">
                         {{ "Tag"|trans }}
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for maintenanceTaskTag in maintenanceTaskTags %}
-                    <tr class="border-b {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
-                        <td class="px-2 py-2 text-center">
-                            <div class="w-18">{{ maintenanceTaskTag.getTaggedOn()|formatDate() }}</div>
+                    <tr class="group/row">
+                        <td class="text-center">
+                            {{ maintenanceTaskTag.getTaggedOn()|formatDate() }}
                         </td>
-                        <th scope="row" class="px-2 py-2 sticky left-0 font-medium text-gray-900 whitespace-nowrap {{ cycle(['bg-white', 'bg-gray-50'], loop.index0) }}">
+                        <th scope="row" class="text-left bg-white sticky left-0 font-medium text-gray-900 whitespace-nowrap">
                             {{ maintenanceTaskTag.getTaggedForGearComponentName() }}
                         </th>
-                        <td class="px-2 py-2 truncate">
+                        <td class="text-left truncate">
                             {{ maintenanceTaskTag.getActivityName() }}
                         </td>
-                        <td class="px-2 py-2 truncate">
+                        <td class="truncate">
                             {{ maintenanceTaskTag.getTag() }}
                         </td>
                     </tr>

@@ -19,7 +19,9 @@
         --color-green-100: var(--color-green-900);
         --color-green-600: var(--color-green-400);
         --color-green-800: var(--color-green-200);
+        --color-red-50: var(--color-red-950);
         --color-red-100: var(--color-red-900);
+        --color-red-300: var(--color-red-700);
         --color-red-600: var(--color-red-400);
         --color-red-800: var(--color-red-200);
         --color-orange-100: var(--color-orange-900);

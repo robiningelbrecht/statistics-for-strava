@@ -16,6 +16,7 @@
     --color-red-700: #B91C1C;
     --color-red-800: #991B1B;
     --color-red-900: #7F1D1D;
+    --color-red-950: oklch(25.8% 0.092 26.042);
     --color-orange-50: #FFFAF0;
     --color-orange-100: #FEEBC8;
     --color-orange-200: #FBD38D;
@@ -4837,7 +4838,9 @@
     --color-green-100: var(--color-green-900);
     --color-green-600: var(--color-green-400);
     --color-green-800: var(--color-green-200);
+    --color-red-50: var(--color-red-950);
     --color-red-100: var(--color-red-900);
+    --color-red-300: var(--color-red-700);
     --color-red-600: var(--color-red-400);
     --color-red-800: var(--color-red-200);
     --color-orange-100: var(--color-orange-900);
