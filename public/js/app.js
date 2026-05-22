@@ -13,7 +13,6 @@ import LazyLoad from "../libraries/lazyload.min";
 import DataTableManager from "./features/data-table/data-table-manager";
 import FullscreenManager from "./components/fullscreen";
 import ScrollTo from "./components/scroll-to";
-import Heatmap from "./features/heatmap/heatmap";
 import MilestoneFilter from "./features/milestones/milestone-filter";
 import DarkModeManager from "./components/dark-mode";
 import DropdownManager from "./components/dropdown";
@@ -82,6 +81,9 @@ eventBus.on(Events.PAGE_LOADED, async ({page, modalId}) => {
     }
     if (page === 'heatmap') {
         const $heatmapWrapper = document.querySelector('.heatmap-wrapper');
+        const {default: Heatmap} = await import(
+            /* webpackChunkName: "leaflet" */ './features/heatmap/heatmap'
+        );
         await new Heatmap($heatmapWrapper, modalManager).render();
     }
     if (page === 'photos') {
