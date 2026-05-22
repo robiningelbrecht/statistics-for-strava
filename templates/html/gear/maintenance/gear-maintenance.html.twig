@@ -167,7 +167,7 @@
                                                                             {{ maintenanceTask.getTag() }}
                                                                         </span>
                                                                 </div>
-                                                                <span class="text-xs">
+                                                                <span class="text-xs grow">
                                                                         {{ "Last maintenance"|trans }}:
                                                                         {% if mostRecentTaskTag is not null %}
                                                                             {{ mostRecentTaskTag.getTaggedOn()|formatDate('normal') }}
@@ -185,11 +185,11 @@
                                                                 {% if progress.isZero() %}
                                                                     {% set colors = {'bg':'bg-gray-200','text':'text-gray-700'} %}
                                                                 {% elseif progress.isLow() %}
-                                                                    {% set colors = {'bg':'bg-green-600','text':'text-green-700'} %}
+                                                                    {% set colors = {'bg':'bg-green-600','text':'text-green-600'} %}
                                                                 {% elseif progress.isMedium() %}
-                                                                    {% set colors = { 'bg':'bg-yellow-400','text':'text-yellow-700'} %}
+                                                                    {% set colors = { 'bg':'bg-yellow-400','text':'text-yellow-600'} %}
                                                                 {% elseif progress.isHigh() %}
-                                                                    {% set colors = {'bg':'bg-red-600', 'text':'text-red-700'} %}
+                                                                    {% set colors = {'bg':'bg-red-600', 'text':'text-red-600'} %}
                                                                 {% endif %}
                                                                 <div class="mt-2">
                                                                     <div class="mb-1">
