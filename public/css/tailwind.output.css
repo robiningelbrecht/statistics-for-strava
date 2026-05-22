@@ -16,7 +16,6 @@
     --color-red-700: #B91C1C;
     --color-red-800: #991B1B;
     --color-red-900: #7F1D1D;
-    --color-red-950: oklch(25.8% 0.092 26.042);
     --color-orange-50: #FFFAF0;
     --color-orange-100: #FEEBC8;
     --color-orange-200: #FBD38D;
@@ -4835,20 +4834,23 @@
     @supports (color: color-mix(in lab, red, red)) {
       --color-strava-orange-soft: color-mix(in oklch, var(--color-strava-orange) 10%, transparent);
     }
-    --color-green-100: var(--color-green-900);
-    --color-green-600: var(--color-green-400);
-    --color-green-800: var(--color-green-200);
-    --color-red-50: var(--color-red-950);
-    --color-red-100: var(--color-red-900);
-    --color-red-300: var(--color-red-700);
-    --color-red-600: var(--color-red-400);
-    --color-red-800: var(--color-red-200);
-    --color-orange-100: var(--color-orange-900);
-    --color-orange-500: var(--color-orange-400);
-    --color-orange-800: var(--color-orange-200);
-    --color-yellow-100: var(--color-yellow-900);
-    --color-yellow-600: var(--color-yellow-400);
-    --color-yellow-800: var(--color-yellow-200);
+    --color-green-100: #064E3B;
+    --color-green-600: #34D399;
+    --color-green-700: #6EE7B7;
+    --color-green-800: #A7F3D0;
+    --color-red-50: #450a0a;
+    --color-red-100: #7F1D1D;
+    --color-red-300: #B91C1C;
+    --color-red-600: #F87171;
+    --color-red-700: #FCA5A5;
+    --color-red-800: #FECACA;
+    --color-orange-100: #652B19;
+    --color-orange-500: #ED8936;
+    --color-orange-800: #FBD38D;
+    --color-yellow-100: #78350F;
+    --color-yellow-600: #FBBF24;
+    --color-yellow-700: #FCD34D;
+    --color-yellow-800: #FDE68A;
   }
   .no-dark {
     --color-gray-50: #F9FAFB;
