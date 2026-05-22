@@ -146,9 +146,9 @@
                                     <td>
                                         {% set velocityPreference = activity.getSportType().getVelocityDisplayPreference() %}
                                         {% if velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPer100Meter') %}
-                                            {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span>
+                                            {{ segmentEffort.getPaceInSecPer100Meter()|formatPace }}<span class="text-xxs ml-px">/100m</span>
                                         {% elseif velocityPreference is instanceof('App\\Infrastructure\\ValueObject\\Measurement\\Velocity\\SecPerKm') %}
-                                            {{ segmentEffort.getPaceInSecPerKm()|formatPace }}<span class="text-xs">{{ renderUnitSymbol('pace') }}</span>
+                                            {{ segmentEffort.getPaceInSecPerKm()|formatPace }}<span class="text-xxs ml-px">{{ renderUnitSymbol('pace') }}</span>
                                         {% else %}
                                             {{ segmentEffort.getAverageSpeed()|renderMeasurement(1) }}
                                         {% endif %}
@@ -158,7 +158,7 @@
                                     </td>
                                     <td>
                                         {% if segmentEffort.getAverageWatts() %}
-                                            {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xs">w</span>
+                                            {{ segmentEffort.getAverageWatts()|formatNumber(1) }}<span class="text-xxs ml-px">w</span>
                                         {% else %}
                                             {{ "n/a"|trans }}
                                         {% endif %}

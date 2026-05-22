@@ -49,14 +49,14 @@ final readonly class MeasurementTwigExtension
             }
 
             return sprintf(
-                '%s<span class="text-xs">%s</span>',
+                '%s<span class="text-xxs ml-px">%s</span>',
                 $formattedNumber,
                 $convertedMeasurement->getSymbol()
             );
         }
 
         return sprintf(
-            '%s<span class="text-xs">%s %s</span>',
+            '%s<span class="text-xxs ml-px">%s %s</span>',
             $formattedNumber,
             $convertedMeasurement->getSymbol(),
             $symbolSuffix

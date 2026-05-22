@@ -51,10 +51,10 @@
                                         {{ powerOutput.getFormattedTimeInterval() }}
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ powerOutput.getPower() }}<span class="text-xs">w</span>
+                                        {{ powerOutput.getPower() }}<span class="text-xxs ml-px">w</span>
                                     </td>
                                     <td class="px-2 py-2">
-                                        {{ powerOutput.getRelativePower() }}<span class="text-xs">w/kg</span>
+                                        {{ powerOutput.getRelativePower() }}<span class="text-xxs ml-px">w/kg</span>
                                     </td>
                                     <td class="px-6 py-2 text-left truncate">
                                         {{ enrichedActivities.find(powerOutput.getActivityId())|activityLink() }}

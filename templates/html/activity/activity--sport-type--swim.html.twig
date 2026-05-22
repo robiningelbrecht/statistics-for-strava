@@ -106,7 +106,7 @@
                                 {% for split in splits %}
                                     <tr class="hover:bg-gray-50">
                                         <td class="px-4 py-2.5 font-bold text-gray-900">{{ split.getSplitNumber() }}</td>
-                                        <td class="px-2 py-2.5 text-gray-500">{{ split.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span></td>
+                                        <td class="px-2 py-2.5 text-gray-500">{{ split.getPaceInSecPer100Meter()|formatPace }}<span class="text-xxs ml-px">/100m</span></td>
                                         <td class="px-2 py-2.5">
                                             <div class="flex items-center gap-2">
                                                 <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
@@ -141,7 +141,7 @@
                                         <td class="px-4 py-2.5 font-bold text-gray-900">{{ lap.getLapNumber() }}</td>
                                         <td class="px-2 py-2.5 text-gray-500">{{ lap.getDistanceInKilometer()|renderMeasurement(1) }}</td>
                                         <td class="px-2 py-2.5 text-gray-500">{{ lap.getMovingTimeFormatted() }}</td>
-                                        <td class="px-2 py-2.5 text-gray-500">{{ lap.getPaceInSecPer100Meter()|formatPace }}<span class="text-xs">/100m</span></td>
+                                        <td class="px-2 py-2.5 text-gray-500">{{ lap.getPaceInSecPer100Meter()|formatPace }}<span class="text-xxs ml-px">/100m</span></td>
                                         <td class="px-2 py-2.5">
                                             <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                                                 <div class="h-full bg-strava-orange rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%"></div>

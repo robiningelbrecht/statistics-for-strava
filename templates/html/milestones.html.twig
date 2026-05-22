@@ -120,7 +120,7 @@
         {{ "Longest activity"|trans }}: {{ context.getValue()|formatSeconds }}
     {% elseif milestoneCategory == categoryEnum.PERSONAL_BEST %}
         {% set distance = context.getDistance() %}
-        {{ "New personal best for"|trans }} {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}<span class="text-xs">{{ distance.getSymbol() }}</span>: {{ context.getTime()|formatSecondsAsPaddedClock }}
+        {{ "New personal best for"|trans }} {{ distance.isLowerThanOne() ? distance.toFloat()|round(1) : distance.toInt() }}<span class="text-xxs ml-px">{{ distance.getSymbol() }}</span>: {{ context.getTime()|formatSecondsAsPaddedClock }}
     {% elseif milestoneCategory == categoryEnum.EDDINGTON %}
         {{ context.getLabel() }}: {{ "reached Eddington number {number}"|trans({'{number}': context.getNumber()}) }}
     {% elseif milestoneCategory == categoryEnum.STREAK %}
