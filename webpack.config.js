@@ -7,7 +7,8 @@ module.exports = {
         'app.min': './public/js/app.js'
     },
     optimization: {
-        minimize: true
+        minimize: true,
+        splitChunks: false,
     },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),

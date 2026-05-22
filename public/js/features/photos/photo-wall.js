@@ -1,6 +1,5 @@
 import {FilterStorage, FilterName} from "../data-table/storage";
 import {FilterManager} from "../data-table/filter-manager";
-import LightGallery from "./light-gallery";
 
 export default class PhotoWall {
     constructor(wrapper) {
@@ -12,10 +11,13 @@ export default class PhotoWall {
             filterables: JSON.parse(el.getAttribute('data-filterables')),
             active: true
         }));
-        this.lightGallery = new LightGallery(this.wrapper);
     }
 
     async render() {
+        const {default: LightGallery} = await import(
+            /* webpackChunkName: "lightgallery" */ './light-gallery'
+        );
+        this.lightGallery = new LightGallery(this.wrapper);
         const redraw = () => {
             const activeFilters = this.filterManager.getActiveFilters();
             this.filterManager.updateDropdownState(activeFilters);
