@@ -433,6 +433,7 @@ Tennis: Ténis
 "That's the length of the Great Wall of China": "That's the length of the Great Wall of China"
 "That's three quarters of the way around the Earth": "That's three quarters of the way around the Earth"
 "That's {number} days of at least {distance}": "That's {number} days of at least {distance}"
+"That's {percentage}% of all countries 🌍": "That's {percentage}% of all countries 🌍"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Estas medalhas são criadas dinamicamente. Pode usá-las em qualquer tag de &lt;img&gt;'
 Thinking...: Thinking...
@@ -501,7 +502,6 @@ Year: Ano
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
 Yoga: Yoga
-"You recorded workouts in {numberOfCountriesWithWorkouts} different countries, that's {percentage} of all countries 🌍": 'Registou actividades em {numberOfCountriesWithWorkouts} países diferentes, o que dá {percentage} de todos os países🌍'
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
 'Your Zwift badge': 'O teu emblema do Zwift'
@@ -530,6 +530,7 @@ bpm: bpm
 clear: limpar
 comments: comentários
 compare: comparar
+countries: countries
 day(s): day(s)
 days: dias
 'days needed for next Eddington': 'days needed for next Eddington'
