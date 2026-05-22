@@ -64,7 +64,7 @@
                     <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                         <div class="flex items-center justify-between mb-1">
                             <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Distance"|trans }}</span>
-                            <div class="size-6 rounded-md bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                            <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
                                 {{ svg('distance', 'size-3.5') }}
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                         <div class="flex items-center justify-between mb-1">
                             <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Moving time"|trans }}</span>
-                            <div class="size-6 rounded-md bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                            <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
                                 {{ svg('time', 'size-3.5') }}
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                     <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                         <div class="flex items-center justify-between mb-1">
                             <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Avg speed"|trans }}</span>
-                            <div class="size-6 rounded-md bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                            <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
                                 {{ svg('speed', 'size-3.5') }}
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                         <div class="flex items-center justify-between mb-1">
                             <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Elevation"|trans }}</span>
-                            <div class="size-6 rounded-md bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                            <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
                                 {{ svg('elevation', 'size-3.5') }}
                             </div>
                         </div>
@@ -203,8 +203,8 @@
                     <div class="rounded-lg bg-white border border-gray-200 shadow-xs p-5 {{ not averagePower ? 'lg:col-span-2' }}">
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center gap-2">
-                                <div class="size-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                                    {{ svg('heart-rate', 'size-5') }}
+                                <div class="size-8 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center">
+                                    {{ svg('heart-rate', 'size-5', 'text-rose-600') }}
                                 </div>
                                 <h3 class="font-bold text-gray-900">{{ "Heart rate"|trans }}</h3>
                             </div>
@@ -266,7 +266,7 @@
                     <div class="rounded-lg bg-white border border-gray-200 shadow-xs p-5 {{ not averageHearRate ? 'lg:col-span-2' }}">
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center gap-2">
-                                <div class="size-8 rounded-lg bg-strava-orange/10 text-strava-orange flex items-center justify-center">
+                                <div class="size-8 rounded-lg bg-strava-orange-soft text-strava-orange flex items-center justify-center">
                                     {{ svg('power', 'size-5') }}
                                 </div>
                                 <h3 class="font-bold text-gray-900">{{ "Power"|trans }}</h3>

@@ -10,7 +10,7 @@ node_modules
 /src/Repository
 .idea
 config/reference.php
-*-poc.html
+poc/
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
