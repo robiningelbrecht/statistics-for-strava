@@ -40,7 +40,9 @@ const MapToolsControl = L.Control.extend({
     options: {
         position: 'topleft',
         bounds: null,
-        padding: [24, 24]
+        padding: [24, 24],
+        showFullscreen: true,
+        showReset: true,
     },
     onAdd: function (map) {
         const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control--custom no-dark');
@@ -61,31 +63,33 @@ const MapToolsControl = L.Control.extend({
             return button;
         };
 
-        // Fullscreen toggle.
-        const fsButton = makeButton(enterIcon, 'Toggle fullscreen');
-        L.DomEvent.on(fsButton, 'click', function (e) {
-            L.DomEvent.preventDefault(e);
-            if (!document.fullscreenElement) {
-                mapEl.requestFullscreen().catch(function () {});
-            } else {
-                document.exitFullscreen();
-            }
-        });
+        if (options.showFullscreen) {
+            const fsButton = makeButton(enterIcon, 'Toggle fullscreen');
+            L.DomEvent.on(fsButton, 'click', function (e) {
+                L.DomEvent.preventDefault(e);
+                if (!document.fullscreenElement) {
+                    mapEl.requestFullscreen().catch(function () {});
+                } else {
+                    document.exitFullscreen();
+                }
+            });
 
-        this._onFullscreenChange = function () {
-            fsButton.innerHTML = document.fullscreenElement === mapEl ? exitIcon : enterIcon;
-            setTimeout(function () { map.invalidateSize(); }, 100);
-        };
-        document.addEventListener('fullscreenchange', this._onFullscreenChange);
+            this._onFullscreenChange = function () {
+                fsButton.innerHTML = document.fullscreenElement === mapEl ? exitIcon : enterIcon;
+                setTimeout(function () { map.invalidateSize(); }, 100);
+            };
+            document.addEventListener('fullscreenchange', this._onFullscreenChange);
+        }
 
-        // Reset view.
-        const resetButton = makeButton(resetIcon, 'Reset view');
-        L.DomEvent.on(resetButton, 'click', function (e) {
-            L.DomEvent.preventDefault(e);
-            if (options.bounds) {
-                map.fitBounds(options.bounds, { padding: options.padding });
-            }
-        });
+        if (options.showReset) {
+            const resetButton = makeButton(resetIcon, 'Reset view');
+            L.DomEvent.on(resetButton, 'click', function (e) {
+                L.DomEvent.preventDefault(e);
+                if (options.bounds) {
+                    map.fitBounds(options.bounds, { padding: options.padding });
+                }
+            });
+        }
 
         L.DomEvent.disableClickPropagation(container);
 
