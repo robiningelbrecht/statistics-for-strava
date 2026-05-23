@@ -1,3 +1,12 @@
+# [v4.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.1) - 2026-05-23
+
+## Bug fixes
+
+* Fixed ChunkLoadError: Loading chunk failed on instances served behind Cloudflare, where dynamically loaded JS chunks were being requested from the wrong
+  URL due to interference from the Cloudflare Insights beacon.
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.0...v4.8.1
+
 # [v4.8.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.0) - 2026-05-23
 
 ## Improvements
@@ -18,7 +27,6 @@
 * ISSUE #2050: Followup fixes for activity redesign by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2056
 * ISSUE #2057: Small UX improvements throughout the app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2058
 * ISSUE #2057: Fix gear maintenance dark mode UI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2059
-
 
 **Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.12...v4.8.0
 
