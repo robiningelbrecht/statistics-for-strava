@@ -153,10 +153,10 @@
                                                 {% endif %}
                                             </div>
                                         </td>
-                                        <td class="px-2 py-2" title="{{ statistic.movingTimeInHours.toFloat()|formatNumber(1) }}h">
+                                        <td class="px-2 py-2 whitespace-nowrap" title="{{ statistic.movingTimeInHours.toFloat()|formatNumber(1) }}h">
                                             {{ statistic.movingTime }}
                                         </td>
-                                        <td class="px-2 py-2">
+                                        <td class="px-2 py-2 whitespace-nowrap">
                                             {% set diffPreviousYear = statistic.differenceInMovingTimeInSecondsYearBefore.toFloat() %}
                                             {% set diffColors = diffPreviousYear > 0 ? 'bg-green-100 text-green-800': (diffPreviousYear < 0 ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-500') %}
                                             <div class="inline-flex items-center justify-center px-2 py-0.5 rounded text-xs font-medium {{ diffColors }}">
