@@ -1,3 +1,27 @@
+# [v4.8.0](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.0) - 2026-05-23
+
+## Improvements
+* Added support for the PhysicalTherapy sport type
+* Redesigned the activity detail page
+* Redesigned the sidebar navigation
+* Fixed dark mode styling issues throughout the app
+
+## Bug fixes
+* Fixed an issue where the dropdown active state was not updating correctly when filtering.
+
+## Technical details
+* ISSUE #2047: Fix dropdown active state when filtering by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2049
+* ISSUE #2050: Add support for sport type PhysicalTherapy by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2052
+* ISSUE #2048: Redesign of the activity detail page by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2051
+* ISSUE #2050: Follow up fixes for activity redesign by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2054
+* ISSUE #2053: Remove average heart rate from splits by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2055
+* ISSUE #2050: Followup fixes for activity redesign by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2056
+* ISSUE #2057: Small UX improvements throughout the app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2058
+* ISSUE #2057: Fix gear maintenance dark mode UI by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2059
+
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.7.12...v4.8.0
+
 # [v4.7.12](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.7.12) - 2026-05-14
 
 ## What's Changed
