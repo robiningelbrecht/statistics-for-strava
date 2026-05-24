@@ -14,7 +14,7 @@ export class SummableCalculator {
         const sums = this.calculate(rows);
         wrapper.querySelectorAll('[data-dataTable-summable]').forEach(node => {
             const key = node.getAttribute('data-dataTable-summable');
-            node.innerHTML = sums[key] !== undefined ? numberFormat(sums[key], 0, ',', ' ') : 0;
+            node.innerHTML = sums[key] !== undefined ? numberFormat(sums[key], 0, ',', "\u{00A0}") : 0;
         });
     }
 }

@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42 napos fitnesz trend'
 '7-day fatigue level': '7 napos fáradtsági szint'
 '< 1.5: Good variety in training': '< 1,5: Jó változatosság az edzésben'
@@ -42,6 +43,7 @@ Best: Legjobb
 'Build zone (–10)': 'Építési zóna (–10)'
 'CTL (Fitness)': 'CTL (Fitnesz)'
 Cadence: Kadencia
+Cal.: Cal.
 Calories: Kalória
 'Calories burned': 'Elégetett kalória'
 Canoeing: Kenuzás
@@ -82,6 +84,7 @@ Density: Sűrűség
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
 Details: Részletek
 Device: Eszköz
+Dist.: Dist.
 Distance: Távolság
 'Distance & Elevation': 'Távolság & szintemelkedés'
 'Distance breakdown': 'Távolság részletezés'
@@ -98,6 +101,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 Elev: Szintek
+Elev.: Elev.
 Elevation: Szintemelkedés
 'Elevation in {unit}': 'Szintemelkedés ({unit})'
 Elliptical: 'Elliptikus gép'
@@ -256,6 +260,7 @@ PRs: 'Személyes rekordok'
 'PRs achieved per month': 'Havi személyes rekordok'
 Pace: Tempó
 Padel: Padel
+Pct.: Pct.
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
 'Per {unit}': 'Per {unit}'

@@ -1,11 +1,11 @@
 table.data-table {
     @apply w-full text-sm text-center text-gray-500;
 
-    thead {
-        @apply text-xs text-gray-700 uppercase bg-gray-50;
+    thead, tfoot {
+        @apply z-10 sticky top-0 text-gray-500 text-xxs uppercase font-semibold bg-gray-50;
 
         th {
-            @apply px-6 py-3;
+            @apply px-6 py-4 whitespace-nowrap;
 
             &.narrow {
                 @apply px-2;
@@ -13,6 +13,18 @@ table.data-table {
 
             &[data-dataTable-sort] {
                 @apply cursor-pointer transition-colors hover:bg-gray-100;
+            }
+        }
+    }
+
+    tfoot {
+        @apply bottom-0;
+
+        tr {
+            @apply normal-case;
+
+            th {
+                @apply py-3;
             }
         }
     }

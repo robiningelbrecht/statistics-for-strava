@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42-dagars träningstendens'
 '7-day fatigue level': '7-dagars utmattningsnivå'
 '< 1.5: Good variety in training': '< 1.5: Bra variation av träningsformer'
@@ -42,6 +43,7 @@ Best: Bästa
 'Build zone (–10)': 'Utvecklingsfas (–10)'
 'CTL (Fitness)': 'CTL (Träningsform)'
 Cadence: Kadens
+Cal.: Cal.
 Calories: Kalorier
 'Calories burned': 'Brända kalorier'
 Canoeing: Kanot
@@ -82,6 +84,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
 Device: Enhet
+Dist.: Dist.
 Distance: Distans
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Sammanställning av sträckor'
@@ -98,6 +101,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Höjd
+Elev.: Elev.
 Elevation: Höjdmeter
 'Elevation in {unit}': 'Höjdmeter i {unit}'
 Elliptical: Elliptisk
@@ -256,6 +260,7 @@ PRs: Rekord
 'PRs achieved per month': 'Rekord nådda per månad'
 Pace: Tempo
 Padel: Padel
+Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
 'Per {unit}': 'Per {unit}'

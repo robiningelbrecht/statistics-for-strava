@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': 42天健身趋势
 '7-day fatigue level': 7天疲劳水平
 '< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
@@ -42,6 +43,7 @@ Best: 最佳
 'Build zone (–10)': '构建区 (–10)'
 'CTL (Fitness)': 'CTL (体能)'
 Cadence: 踏频
+Cal.: Cal.
 Calories: 卡路里
 'Calories burned': 燃烧的卡路里
 Canoeing: 划独木舟
@@ -82,6 +84,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 Details: 详情
 Device: 设备
+Dist.: Dist.
 Distance: 距离
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 距离分解
@@ -98,6 +101,7 @@ Eddington: 愛丁頓數
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: 海拔
+Elev.: Elev.
 Elevation: 海拔高度
 'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
@@ -256,6 +260,7 @@ PRs: PRs
 'PRs achieved per month': 每月PRs
 Pace: 步速
 Padel: Padel
+Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
 'Per {unit}': 'Per {unit}'
