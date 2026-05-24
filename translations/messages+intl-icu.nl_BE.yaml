@@ -60,6 +60,7 @@ Commutes: Commutes
 Compare: Compare
 'Compare to': 'Compare to'
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -277,6 +278,7 @@ Power: Kracht
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Vorig jaar'
 Previous: Previous
+'Purchase price': 'Purchase price'
 Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'

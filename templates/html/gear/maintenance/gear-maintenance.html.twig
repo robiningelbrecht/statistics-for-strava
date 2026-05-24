@@ -60,38 +60,32 @@
                 {% endif %}
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-center text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <thead class="text-gray-500 text-xxs uppercase font-semibold bg-gray-50">
                         <tr>
                             <th class="px-2"></th>
                             <th scope="col" class="px-2 py-3">
                                 {{ "Gear"|trans }}
                             </th>
                             <th scope="col" class="text-left px-2 py-3">
-
+                                {{ "Name"|trans }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <div class="flex items-center justify-center">
-                                    {{ svg('distance') }}
-                                </div>
+                                {{ "Dist."|trans }}
                             </th>
                             <th scope="col" class="px-6 py-3 max-w-120">
-                                <div class="flex items-center justify-center">
-                                    {{ svg('components') }}
-                                </div>
+                                {{ "Components"|trans }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <div class="flex items-center justify-center">
-                                    {{ svg('history') }}
-                                </div>
+
                             </th>
                         </tr>
                         </thead>
                         <tbody data-accordion="table-gears"
-                               data-active-classes="text-gray-700"
-                               data-inactive-classes="text-gray-700">
+                               data-active-classes="text-gray-500"
+                               data-inactive-classes="text-gray-500">
                         {% for gear in gearsAttachedToComponents %}
                             {% set componentsAttachedToGear = gearComponents|filter(component => component.isAttachedTo(gear.getId())) %}
-                            <tr class="border-b aria-expanded:bg-gray-100 hover:aria-expanded:bg-gray-200 hover:bg-gray-200 cursor-pointer"
+                            <tr class="border-b aria-expanded:bg-gray-50 hover:aria-expanded:bg-gray-100 hover:bg-gray-50 cursor-pointer"
                                 id="table-gears-header-{{ loop.index0 }}"
                                 data-accordion-target="#table-gears-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-gears-content-{{ loop.index0 }}">

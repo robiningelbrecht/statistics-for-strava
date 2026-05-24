@@ -4080,16 +4080,16 @@
       }
     }
   }
-  .aria-expanded\:bg-gray-100 {
+  .aria-expanded\:bg-gray-50 {
     &[aria-expanded="true"] {
-      background-color: var(--color-gray-100);
+      background-color: var(--color-gray-50);
     }
   }
-  .hover\:aria-expanded\:bg-gray-200 {
+  .hover\:aria-expanded\:bg-gray-100 {
     &:hover {
       @media (hover: hover) {
         &[aria-expanded="true"] {
-          background-color: var(--color-gray-200);
+          background-color: var(--color-gray-100);
         }
       }
     }

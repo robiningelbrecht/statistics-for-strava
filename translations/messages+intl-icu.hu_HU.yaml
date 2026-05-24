@@ -60,6 +60,7 @@ Commutes: Ingázások
 Compare: Összehasonlítás
 'Compare to': 'Összehasonlítás:'
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -277,6 +278,7 @@ Power: Teljesítmény
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Ezt becsült {caloriesBurned} kalória hajtotta, ami nagyjából {numberOfPizzaSlices} szelet pizza.'
 'Prev year': 'Előző év'
 Previous: Előző
+'Purchase price': 'Purchase price'
 Race: Verseny
 'Racing Score': Versenypontszám
 'Racquet & Paddle Sports': 'Ütős sportok'

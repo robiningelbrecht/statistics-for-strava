@@ -60,6 +60,7 @@ Commutes: Pendling
 Compare: Jämför
 'Compare to': 'Jämför med'
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -277,6 +278,7 @@ Power: Effekt
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Tidigare år'
 Previous: Previous
+'Purchase price': 'Purchase price'
 Race: Tävling
 'Racing Score': Tävlingspoäng
 'Racquet & Paddle Sports': 'Rack & Paddel Sporter'
