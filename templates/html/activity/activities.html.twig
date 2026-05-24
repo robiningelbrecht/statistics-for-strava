@@ -296,11 +296,11 @@
                 </form>
                 <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
                     <table class="data-table">
-                        <thead class="z-10 sticky top-0">
+                        <thead>
                         <tr>
                             <th class="narrow" scope="col" data-dataTable-sort="start-date">
                                 <div class="flex items-center justify-center" title="{{ "Date"|trans }}">
-                                    {{ svg('calendar') }}
+                                    {{ "Date"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
@@ -308,63 +308,46 @@
                                 <div class="w-92">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="distance">
-                                <div class="w-20 flex items-center justify-center" title="{{ "Distance"|trans }}">
-                                    {{ svg('distance') }}
+                                <div class="flex items-center justify-center" title="{{ "Distance"|trans }}">
+                                    {{ "Dist."|trans }}
                                     {{ svg('sorting-icon') }}
-                                </div>
-                                <div class="pt-0.5 normal-case text-xxs">
-                                    {% set convertedTotalDistance = activityTotals.getDistance()|convertMeasurement %}
-                                    <span data-dataTable-summable="distance">{{ convertedTotalDistance.toFloat()|formatNumber(0) }}</span>{{ renderUnitSymbol('distance') }}
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="elevation">
-                                <div class="w-20 flex items-center justify-center" title="{{ "Elevation"|trans }}">
-                                    {{ svg('elevation') }}
+                                <div class="flex items-center justify-center" title="{{ "Elevation"|trans }}">
+                                    {{ "Elev."|trans }}
                                     {{ svg('sorting-icon') }}
-                                </div>
-                                <div class="pt-0.5 normal-case text-xxs">
-                                    {% set convertedTotalElevation = activityTotals.getElevation()|convertMeasurement %}
-                                    <span data-dataTable-summable="elevation">{{ convertedTotalElevation.toFloat()|formatNumber(0) }}</span>{{ renderUnitSymbol('elevation') }}
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="moving-time">
-                                <div class="w-16 flex items-center justify-center" title="{{ "Time"|trans }}">
-                                    {{ svg('time') }}
+                                <div class="flex items-center justify-center" title="{{ "Time"|trans }}">
+                                    {{ "Moving time"|trans }}
                                     {{ svg('sorting-icon') }}
-                                </div>
-                                <div class="pt-0.5 normal-case text-xxs">
-                                    <span data-dataTable-summable="moving-time">{{ activityTotals.getMovingTimeInHours()|formatNumber(0) }}</span>h
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="speed">
-                                <div class="w-16 flex items-center justify-center" title="{{ "Speed"|trans }}">
-                                    {{ svg('speed') }}
+                                <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
+                                    {{ "Speed"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
-                                <div class="pt-0.5">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="heart-rate">
-                                <div class="w-16 flex items-center justify-center" title="{{ "Heart rate"|trans }}">
-                                    {{ svg('heart-rate') }}
+                                <div class="flex items-center justify-center" title="{{ "Heart rate"|trans }}">
+                                    {{ "HR"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
-                                <div class="pt-0.5">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="calories">
-                                <div class="w-24 flex items-center justify-center" title="{{ "Calories burned"|trans }}">
-                                    {{ svg('calories') }}
+                                <div class="flex items-center justify-center" title="{{ "Calories burned"|trans }}">
+                                    {{ "Cal."|trans }}
                                     {{ svg('sorting-icon') }}
-                                </div>
-                                <div class="pt-0.5 normal-case text-xxs">
-                                    <span data-dataTable-summable="calories">{{ activityTotals.getCalories()|formatNumber(0) }}</span>kcal
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="power">
                                 <div class="flex items-center justify-center" title="{{ "Power"|trans }}">
-                                    {{ svg('power') }}
+                                    {{ "Power"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
-                                <div class="pt-0.5">&nbsp;</div>
                             </th>
                             <th scope="col" data-dataTable-sort="power-5s" colspan="2">
                                 <div class="flex items-center justify-center" title="{{ "Speed"|trans }}">
@@ -421,6 +404,59 @@
                             <td class="px-6 py-2.5 truncate">{{ "Loading data..."|trans }}</td>
                         </tr>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th class="narrow" scope="col">
+
+                            </th>
+                            <th scope="col" class="narrow bg-gray-50 lg:sticky lg:left-0">
+
+                            </th>
+                            <th scope="col">
+                                {% set convertedTotalDistance = activityTotals.getDistance()|convertMeasurement %}
+                                <span data-dataTable-summable="distance">{{ convertedTotalDistance.toFloat()|formatNumber(0) }}</span> {{ renderUnitSymbol('distance') }}
+                            </th>
+                            <th scope="col">
+                                {% set convertedTotalElevation = activityTotals.getElevation()|convertMeasurement %}
+                                <span data-dataTable-summable="elevation">{{ convertedTotalElevation.toFloat()|formatNumber(0) }}</span> {{ renderUnitSymbol('elevation') }}
+                            </th>
+                            <th scope="col">
+                                <span data-dataTable-summable="moving-time">{{ activityTotals.getMovingTimeInHours()|formatNumber(0) }}</span> h
+                            </th>
+                            <th scope="col">
+                            </th>
+                            <th scope="col">
+                            </th>
+                            <th scope="col">
+                                <span data-dataTable-summable="calories">{{ activityTotals.getCalories()|formatNumber(0) }}</span> kcal
+                            </th>
+                            <th scope="col">
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                            <th scope="col" colspan="2">
+
+                            </th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

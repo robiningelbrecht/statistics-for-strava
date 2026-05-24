@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': 'tendência de fitness 42-dias'
 '7-day fatigue level': 'Nível de fadiga 7-dias'
 '< 1.5: Good variety in training': '< 1.5: Boa variedade de treino'
@@ -42,6 +43,7 @@ Best: Melhor
 'Build zone (–10)': 'Zona de carga (–10)'
 'CTL (Fitness)': 'CTL (Forma)'
 Cadence: Cadência
+Cal.: Cal.
 Calories: Calorias
 'Calories burned': 'Calories burned'
 Canoeing: Canoagem
@@ -82,6 +84,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 'Instruções detalhadas disponíveis na documentação em'
 Details: Details
 Device: Dispositivo
+Dist.: Dist.
 Distance: Distância
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Divisão da distância'
@@ -98,6 +101,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Desnível
+Elev.: Elev.
 Elevation: Elevação
 'Elevation in {unit}': 'Elevação em {unit}'
 Elliptical: Elíptica
@@ -256,6 +260,7 @@ PRs: 'Recordes Pessoais'
 'PRs achieved per month': 'Recordes alcançados por mês'
 Pace: Ritmo
 Padel: Padel
+Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Picos de potência'
 'Per {unit}': 'Per {unit}'

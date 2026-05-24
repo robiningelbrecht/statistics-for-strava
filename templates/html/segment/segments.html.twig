@@ -237,37 +237,37 @@
                 </form>
                 <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
                     <table class="data-table">
-                        <thead class="z-10 sticky top-0">
+                        <thead>
                         <tr>
                             <th scope="col" data-dataTable-sort="name" class="narrow">
                                 <div class="w-92">{{ svg('sorting-icon') }}</div>
                             </th>
                             <th scope="col" data-dataTable-sort="last-effort-date" class="narrow">
                                 <div class="flex items-center justify-center" title="{{ "Last effort"|trans }}">
-                                    {{ svg('calendar') }}
+                                    {{ "Last effort"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="flex items-center justify-center" title="{{ "Best effort"|trans }}">
-                                    {{ svg('trophy') }}
+                                    {{ "Best effort"|trans }}
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="distance" title="{{ "Distance"|trans }}">
                                 <div class="flex items-center justify-center">
-                                    {{ svg('distance') }}
+                                    {{ "Dist."|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="average-gradient" title="{{ "Average gradient"|trans }}">
                                 <div class="flex items-center justify-center">
-                                    {{ svg('percentage') }}
+                                    {{ "Pct."|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
                             <th scope="col" data-dataTable-sort="ride-count" title="{{ "Number of times completed"|trans }}">
                                 <div class="flex items-center justify-center">
-                                    {{ svg('hashtag') }}
+                                    {{ "# completed"|trans }}
                                     {{ svg('sorting-icon') }}
                                 </div>
                             </th>
