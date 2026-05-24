@@ -58,7 +58,7 @@
                 {% if overallGap %}
                     <div class="bg-gray-50 rounded-lg p-3 flex gap-x-2 items-center justify-between">
                         <span class="text-xs text-gray-500">{{ "GAP"|trans }}</span>
-                        <span class="text-sm font-bold text-gray-900">{{ overallGap.toFloat()|formatNumber(0) }} <span class="text-xxs font-medium text-gray-400">{{ overallGap.getSymbol() }}</span></span>
+                        <span class="text-sm font-bold text-gray-900">{{ overallGap|formatPace }} <span class="text-xxs font-medium text-gray-400">{{ renderUnitSymbol('pace') }}</span></span>
                     </div>
                 {% endif %}
                 <div class="bg-gray-50 rounded-lg p-3 flex gap-x-2 items-center justify-between">
