@@ -138,6 +138,7 @@ Goal: Cél
 Golf: Golf
 'Good training variety': 'Jó edzésváltozatosság'
 'Google searches': 'Google keresések'
+Grad.: Grad.
 Gradient: Lejtés
 'Gravel Rides': 'Gravel túrák'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Az irányelvek egyénenként változnak; további információkért lásd Joe Friel 'The Cyclist's Training Bible' c. könyvét vagy a TrainingPeaks kutatási dokumentációját."
@@ -260,7 +261,6 @@ PRs: 'Személyes rekordok'
 'PRs achieved per month': 'Havi személyes rekordok'
 Pace: Tempó
 Padel: Padel
-Pct.: Pct.
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
 'Per {unit}': 'Per {unit}'
@@ -532,6 +532,7 @@ and: és
 'average gradient': 'átlagos lejtés'
 avg: átl
 bpm: bpm
+challenges: challenges
 clear: törlés
 comments: hozzászólások
 compare: összehasonlítás
