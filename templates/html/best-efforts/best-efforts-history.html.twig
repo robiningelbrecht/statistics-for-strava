@@ -18,16 +18,16 @@
     <div class="modal-body space-y-4">
         <div class="grid grid-cols-1 gap-4">
             <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-center text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <table class="data-table">
+                    <thead>
                     <tr>
-                        <th scope="col" class="px-2 py-3 sticky left-0 bg-gray-50">
+                        <th scope="col" class="sticky left-0 bg-gray-50">
                             <div class="flex items-center justify-center" title="{{ "Ranking"|trans }}">
-                                {{ svg('hashtag') }}
+                               {{ "Rank"|trans }}
                             </div>
                         </th>
                         {% for sportType in sportTypes %}
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col">
                                 {{ sportType|trans }}
                             </th>
                         {% endfor %}
@@ -35,22 +35,22 @@
                     </thead>
                     <tbody>
                     {% for i in 0..9 %}
-                        <tr class="bg-white border-b">
+                        <tr class="group/row">
                             <th scope="row"
-                                class="px-2 py-2 sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 {{ loop.index }}
                             </th>
                             {% for sportType in sportTypes %}
                                 {% set bestEffort = bestEffortsCalculator.historyFor(sportType, distance, i) %}
                                 {% if bestEffort %}
                                     {% set activity = enrichedActivities.find(bestEffort.getActivityId()) %}
-                                    <td class="px-2 py-2 truncate">
+                                    <td class="truncate">
                                         <div class="font-semibold text-gray-700">{{ bestEffort.getFormattedTime() }}</div>
                                         <div class="text-xs">{{ activity.getStartDate()|formatDate() }}</div>
                                         <div class="text-xs inline-flex">{{ activity|activityLink(ellipses: 50) }}</div>
                                     </td>
                                 {% else %}
-                                    <td class="px-2 py-2 truncate"> - </td>
+                                    <td class="truncate"> - </td>
                                 {% endif %}
                             {% endfor %}
                         </tr>
