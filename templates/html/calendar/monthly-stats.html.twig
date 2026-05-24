@@ -72,7 +72,7 @@
                         {% set statsForCurrentMonth = monthlyStatistics.getForMonth(month) %}
                         {% if statsForCurrentMonth|length > 0 %}
                             <tbody>
-                            <tr class="cursor-pointer"
+                            <tr class="group/row cursor-pointer"
                                 id="table-months-header-{{ loop.index0 }}"
                                 data-accordion-target="#table-months-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-months-content-{{ loop.index0 }}">
@@ -85,29 +85,29 @@
                                     </svg>
                                 </td>
                                 <th scope="row"
-                                    class="sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
+                                    class="bg-white sticky left-0 w-36 text-right font-medium whitespace-nowrap">
                                     <a href="#"
                                        data-model-content-url="{{ relativeUrl('month/month-' ~ month.getId() ~ '.html') }}"
                                        class="text-blue-600 hover:underline">
                                         {{ month.getLabel() }}
                                     </a>
                                 </th>
-                                <td class="px-2 py-2 truncate">
+                                <td class="truncate">
                                     {{ statsForCurrentMonth.numberOfActivities }}
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="ptruncate">
                                     {{ statsForCurrentMonth.distance|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="truncate">
                                     {{ statsForCurrentMonth.elevation|renderMeasurement(0) }}
                                 </td>
-                                <td class="px-2 py-2 truncate" title="{{ statsForCurrentMonth.movingTime.toHour().toFloat()|formatNumber(1) }}h">
+                                <td class="truncate" title="{{ statsForCurrentMonth.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                     {{ statsForCurrentMonth.movingTime|formatSeconds }}
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="truncate">
                                     {{ statsForCurrentMonth.calories|formatNumber(0) }}<span class="text-xxs ml-px">kcal</span>
                                 </td>
-                                <td class="px-2 py-2 truncate">
+                                <td class="truncate">
                                     {{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == month.getId())|length }}
                                 </td>
                             </tr>
@@ -122,26 +122,25 @@
                                         <td class="w-4 p-2 text-gray-700">
 
                                         </td>
-                                        <td class="text-gray-700 sticky left-0 w-36 px-2 py-2 text-right font-medium whitespace-nowrap">
+                                        <td class="text-gray-700 sticky left-0 w-36 text-right font-medium whitespace-nowrap">
                                             {{ sportType|trans }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="truncate">
                                             {{ totalsForSportType.numberOfActivities }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="truncate">
                                             {{ totalsForSportType.distance|renderMeasurement(0) }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="truncate">
                                             {{ totalsForSportType.elevation|renderMeasurement(0) }}
                                         </td>
-                                        <td class="px-2 py-2 truncate" title="{{ totalsForSportType.movingTime.toHour().toFloat()|formatNumber(1) }}h">
+                                        <td class="truncate" title="{{ totalsForSportType.movingTime.toHour().toFloat()|formatNumber(1) }}h">
                                             {{ totalsForSportType.movingTime|formatSeconds }}
                                         </td>
-                                        <td class="px-2 py-2 truncate">
-                                            {{ totalsForSportType.calories|formatNumber(0) }}<span
-                                                    class="text-xs">kcal</span>
+                                        <td class="truncate">
+                                            {{ totalsForSportType.calories|formatNumber(0) }}<span class="text-xs">kcal</span>
                                         </td>
-                                        <td class="px-2 py-2 truncate">
+                                        <td class="truncate">
 
                                         </td>
                                     </tr>

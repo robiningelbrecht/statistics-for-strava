@@ -5,7 +5,7 @@
             {{ segment|segmentLink() }}
         </div>
     </td>
-    <td class="narrow">
+    <td class="narrow whitespace-nowrap">
         {% if segment.getLastEffortDate() %}
             {{ segment.getLastEffortDate()|formatDate() }}
         {% endif %}
