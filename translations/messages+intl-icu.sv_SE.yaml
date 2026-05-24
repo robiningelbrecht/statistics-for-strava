@@ -138,6 +138,7 @@ Goal: Goal
 Golf: Golf
 'Good training variety': 'Bra variation av träningsformer'
 'Google searches': 'Google sökningar'
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': Grusvägscykling
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Riktlinjerna varierar från individ till individ; för mer information se Joe Friel's 'The Cyclist's Training Bible' eller 'TrainingPeaks' forskningsdokumentation."
@@ -260,7 +261,6 @@ PRs: Rekord
 'PRs achieved per month': 'Rekord nådda per månad'
 Pace: Tempo
 Padel: Padel
-Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
 'Per {unit}': 'Per {unit}'
@@ -532,6 +532,7 @@ and: och
 'average gradient': 'average gradient'
 avg: snitt
 bpm: bpm
+challenges: challenges
 clear: rensa
 comments: kommentarer
 compare: jämför

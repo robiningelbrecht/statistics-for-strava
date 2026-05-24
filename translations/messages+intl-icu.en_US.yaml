@@ -138,6 +138,7 @@ Goal: Goal
 Golf: Golf
 'Good training variety': 'Good training variety'
 'Google searches': 'Google searches'
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': 'Gravel Rides'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."
@@ -260,7 +261,6 @@ PRs: PRs
 'PRs achieved per month': 'PRs achieved per month'
 Pace: Pace
 Padel: Padel
-Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Peak power outputs'
 'Per {unit}': 'Per {unit}'
@@ -532,6 +532,7 @@ and: and
 'average gradient': 'average gradient'
 avg: avg
 bpm: bpm
+challenges: challenges
 clear: clear
 comments: comments
 compare: compare

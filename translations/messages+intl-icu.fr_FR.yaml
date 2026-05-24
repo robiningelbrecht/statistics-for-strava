@@ -138,6 +138,7 @@ Goal: Objectif
 Golf: Golf
 'Good training variety': "Bonne variété d'entraînement"
 'Google searches': 'Recherches Google'
+Grad.: Grad.
 Gradient: Pente
 'Gravel Rides': 'Sorties Gravel'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Les directives varient selon l'individu ; pour plus d'informations, voir 'The Cyclist's Training Bible' de Joe Friel ou la documentation de recherche de TrainingPeaks."
@@ -260,7 +261,6 @@ PRs: Records
 'PRs achieved per month': 'Records personnels atteints par mois'
 Pace: Allure
 Padel: Padel
-Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Puissances maximales'
 'Per {unit}': 'Per {unit}'
@@ -532,6 +532,7 @@ and: et
 'average gradient': 'pente moyenne'
 avg: moy
 bpm: bpm
+challenges: challenges
 clear: effacer
 comments: commentaires
 compare: comparer

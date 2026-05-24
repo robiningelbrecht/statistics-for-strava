@@ -138,6 +138,7 @@ Goal: Goal
 Golf: 高尔夫
 'Good training variety': 良好的训练多样性
 'Google searches': Google搜索
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': 砾石骑行
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": '指导原则因人而异；欲了解更多信息，请参阅乔·弗里尔的《自行车训练圣经》或 TrainingPeaks 的研究文档。'
@@ -260,7 +261,6 @@ PRs: PRs
 'PRs achieved per month': 每月PRs
 Pace: 步速
 Padel: Padel
-Pct.: Pct.
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
 'Per {unit}': 'Per {unit}'
@@ -532,6 +532,7 @@ and: 和
 'average gradient': 'average gradient'
 avg: 平均
 bpm: 拍子数
+challenges: challenges
 clear: 清除
 comments: 留言
 compare: 对比
