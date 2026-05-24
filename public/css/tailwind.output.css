@@ -1611,6 +1611,10 @@
     width: calc(var(--spacing) * 2);
     height: calc(var(--spacing) * 2);
   }
+  .size-2\.5 {
+    width: calc(var(--spacing) * 2.5);
+    height: calc(var(--spacing) * 2.5);
+  }
   .size-3 {
     width: calc(var(--spacing) * 3);
     height: calc(var(--spacing) * 3);
@@ -2661,6 +2665,9 @@
   .border-red-500 {
     border-color: var(--color-red-500);
   }
+  .border-strava-orange {
+    border-color: var(--color-strava-orange);
+  }
   .border-yellow-300 {
     border-color: var(--color-yellow-300);
   }
@@ -3353,9 +3360,6 @@
   .text-green-600 {
     color: var(--color-green-600);
   }
-  .text-green-700 {
-    color: var(--color-green-700);
-  }
   .text-green-800 {
     color: var(--color-green-800);
   }
@@ -3370,9 +3374,6 @@
   }
   .text-red-600 {
     color: var(--color-red-600);
-  }
-  .text-red-700 {
-    color: var(--color-red-700);
   }
   .text-red-800 {
     color: var(--color-red-800);
@@ -3397,9 +3398,6 @@
   }
   .text-yellow-600 {
     color: var(--color-yellow-600);
-  }
-  .text-yellow-700 {
-    color: var(--color-yellow-700);
   }
   .text-yellow-800 {
     color: var(--color-yellow-800);
@@ -3850,6 +3848,16 @@
       }
     }
   }
+  .hover\:bg-strava-orange\/20 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, #F26722 20%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-strava-orange) 20%, transparent);
+        }
+      }
+    }
+  }
   .hover\:bg-strava-orange\/30 {
     &:hover {
       @media (hover: hover) {
@@ -4027,11 +4035,6 @@
       --tw-ring-color: var(--color-gray-200);
     }
   }
-  .focus\:ring-orange-300 {
-    &:focus {
-      --tw-ring-color: var(--color-orange-300);
-    }
-  }
   .focus\:ring-red-500 {
     &:focus {
       --tw-ring-color: var(--color-red-500);
@@ -4045,16 +4048,6 @@
       }
     }
   }
-  .focus\:outline-hidden {
-    &:focus {
-      --tw-outline-style: none;
-      outline-style: none;
-      @media (forced-colors: active) {
-        outline: 2px solid transparent;
-        outline-offset: 2px;
-      }
-    }
-  }
   .focus\:outline-none {
     &:focus {
       --tw-outline-style: none;
@@ -4065,6 +4058,11 @@
     &:focus-visible {
       outline-style: var(--tw-outline-style);
       outline-width: 0px;
+    }
+  }
+  .active\:scale-\[0\.97\] {
+    &:active {
+      scale: 0.97;
     }
   }
   .disabled\:cursor-not-allowed {
