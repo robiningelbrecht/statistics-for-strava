@@ -451,6 +451,7 @@ Thursday: Torsdag
 Time: Tid
 'Time in zone': 'Time in zone'
 'Times completed': 'Antal gånger avklarade'
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'För att aktivera, konfigurera {configFile} och bygg om filerna så att ändringarna träder i kraft'
 'Toggle sidebar': 'Visa/Dölj sidofält'
 'Top 10': '10 bästa'

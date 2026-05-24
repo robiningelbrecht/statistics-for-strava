@@ -451,6 +451,7 @@ Thursday: 星期四
 Time: 时间
 'Time in zone': 'Time in zone'
 'Times completed': 完成次数
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
