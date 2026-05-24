@@ -240,7 +240,10 @@
                         <thead>
                         <tr>
                             <th scope="col" data-dataTable-sort="name" class="narrow">
-                                <div class="w-92">{{ svg('sorting-icon') }}</div>
+                                <div class="w-92 flex items-center">
+                                    {{ "Title"|trans }}
+                                    {{ svg('sorting-icon') }}
+                                </div>
                             </th>
                             <th scope="col" data-dataTable-sort="last-effort-date" class="narrow">
                                 <div class="flex items-center justify-center" title="{{ "Last effort"|trans }}">
