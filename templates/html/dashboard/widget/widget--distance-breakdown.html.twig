@@ -21,7 +21,7 @@
     <div id="distanceBreakdownActivityTypeTabContent{{ uniqueId }}">
         {% for activityType,distanceBreakdown in distanceBreakdowns %}
             {% set sportTypes = enum('App\\Domain\\Activity\\ActivityType').from(activityType).getSportTypes() %}
-            <div class="relative overflow-x-auto" id="distanceBreakdown{{ activityType }}{{ uniqueId }}" role="tabpanel"
+            <div class="relative overflow-auto max-h-79" id="distanceBreakdown{{ activityType }}{{ uniqueId }}" role="tabpanel"
                  aria-labelledby="distanceBreakdown{{ activityType }}{{ uniqueId }}-tab">
                 <table class="data-table">
                     <thead>

@@ -32,7 +32,7 @@
                     <th scope="row"
                         class="narrow sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                         <div class="flex items-center gap-x-2">
-                            <img class="shrink-0 size-10 object-cover lazy rounded-sm" src="{{ placeholderImage() }}" data-src="{{ relativeUrl('') }}" alt="{{ statistic.zwiftWorld }}">
+                            <img class="shrink-0 size-10 object-cover lazy rounded-sm" src="{{ placeholderImage() }}" data-src="{{ relativeUrl('assets/images/maps/thumbs/zwift-' ~ statistic.zwiftWorld|lower|replace({' ': '-'}) ~ '.webp') }}" alt="{{ statistic.zwiftWorld }}">
                             <div>{{ statistic.zwiftWorld }}</div>
                         </div>
                     </th>
