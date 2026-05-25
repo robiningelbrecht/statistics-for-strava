@@ -34,10 +34,9 @@
                             {{ svg('speed', 'size-3.5') }}
                         </div>
                     </div>
-                    {% set convertedPace = activity.getPaceInSecPerKm()|convertMeasurement %}
                     <div class="flex items-baseline gap-1">
-                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ convertedPace|formatPace() }}</span>
-                        <span class="text-xs font-medium text-gray-500">{{ convertedPace.getSymbol() }}</span>
+                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getPaceInSecPerKm()|convertMeasurement|formatPace }}</span>
+                        <span class="text-xs font-medium text-gray-500">{{ renderUnitSymbol('pace') }}</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
@@ -58,7 +57,9 @@
                 {% if overallGap %}
                     <div class="bg-gray-50 rounded-lg p-3 flex gap-x-2 items-center justify-between">
                         <span class="text-xs text-gray-500">{{ "GAP"|trans }}</span>
-                        <span class="text-sm font-bold text-gray-900">{{ overallGap|formatPace }} <span class="text-xxs font-medium text-gray-400">{{ renderUnitSymbol('pace') }}</span></span>
+                        <span class="text-sm font-bold text-gray-900">{{ overallGap|convertMeasurement|formatPace }}
+                            <span class="text-xxs font-medium text-gray-400">{{ renderUnitSymbol('pace') }}</span>
+                        </span>
                     </div>
                 {% endif %}
                 <div class="bg-gray-50 rounded-lg p-3 flex gap-x-2 items-center justify-between">
