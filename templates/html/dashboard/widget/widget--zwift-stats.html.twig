@@ -2,14 +2,14 @@
     <h3 class="mb-4 text-lg font-semibold">
         {{ "Zwift stats"|trans }}
     </h3>
-    <div class="relative overflow-x-auto">
+    <div class="relative overflow-auto max-h-65">
         <table class="data-table">
             <thead>
             <tr>
-                <th scope="col" class="sticky left-0 bg-gray-50">
-
+                <th scope="col" class="narrow sticky left-0 bg-gray-50">
+                    {{ "World"|trans }}
                 </th>
-                <th scope="col">
+                <th scope="col" class="narrow">
                     # {{ "workouts"|trans }}
                 </th>
                 <th scope="col">
@@ -30,10 +30,13 @@
             {% for statistic in statsPerWorld %}
                 <tr class="group/row">
                     <th scope="row"
-                        class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                        <div>{{ statistic.zwiftWorld }}</div>
+                        class="narrow sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                        <div class="flex items-center gap-x-2">
+                            <img class="shrink-0 size-10 object-cover lazy rounded-sm" src="{{ placeholderImage() }}" data-src="{{ relativeUrl('') }}" alt="{{ statistic.zwiftWorld }}">
+                            <div>{{ statistic.zwiftWorld }}</div>
+                        </div>
                     </th>
-                    <td>
+                    <td class="narrow">
                         {{ statistic.numberOfActivities }}
                     </td>
                     <td class="truncate">
