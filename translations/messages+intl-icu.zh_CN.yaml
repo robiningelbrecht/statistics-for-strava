@@ -30,6 +30,7 @@ Apr: 四月
 Aug: 八月
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 越野滑雪
@@ -533,7 +534,6 @@ Z5: Z5
 'Zwift stats': Zwift统计
 activities: 活动
 and: 和
-'average gradient': 'average gradient'
 avg: 平均
 bpm: 拍子数
 challenges: challenges
@@ -551,7 +551,6 @@ hrs: hrs
 kudos: 赞
 'last {numberOfDays} days': '最近{numberOfDays}天'
 max: max
-'max gradient': 最大坡度
 min: min
 months: 月
 more: 更多

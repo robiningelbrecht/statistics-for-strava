@@ -30,6 +30,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Durchschnittliche Steigung'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Skitouren
@@ -533,7 +534,6 @@ Z5: Z5
 'Zwift stats': 'Zwift Statistiken'
 activities: Aktivitäten
 and: und
-'average gradient': 'durchschn. Steigung'
 avg: durchschn.
 bpm: bpm
 challenges: challenges
@@ -551,7 +551,6 @@ hrs: h
 kudos: Kudos
 'last {numberOfDays} days': 'letzten {numberOfDays} Tage'
 max: max
-'max gradient': 'max. Steigung'
 min: min
 months: Monate
 more: mehr
