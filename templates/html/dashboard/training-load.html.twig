@@ -88,35 +88,35 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border border-gray-200 rounded-lg shadow-xs relative overflow-x-auto">
-                        <table class="w-full text-sm text-left text-gray-500">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <div class="relative overflow-x-auto">
+                        <table class="data-table">
+                            <thead>
                                 <tr>
-                                    <th scope="col" class="px-4 py-3">{{ "Day"|trans }}</th>
-                                    <th scope="col" class="px-4 py-3">{{ "TSB (Form)"|trans }}</th>
-                                    <th scope="col" class="px-4 py-3">{{ "Status"|trans }}</th>
-                                    <th scope="col" class="px-4 py-3">{{ "A:C Ratio"|trans }}</th>
-                                    <th scope="col" class="px-4 py-3">{{ "Status"|trans }}</th>
+                                    <th scope="col">{{ "Day"|trans }}</th>
+                                    <th scope="col">{{ "TSB (Form)"|trans }}</th>
+                                    <th scope="col">{{ "Status"|trans }}</th>
+                                    <th scope="col">{{ "A:C Ratio"|trans }}</th>
+                                    <th scope="col">{{ "Status"|trans }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {% for item in trainingLoadForecast.getProjection() %}
-                                <tr class="bg-white border-b last:border-b-0">
+                                <tr>
                                     {% set tsbStatus = item.tsb.getStatus() %}
                                     {% set acRatioStatus = item.acRatio.getStatus() %}
-                                    <td class="px-4 py-3 font-medium text-gray-900">{{ item.day|date("M j") }}</td>
-                                    <td class="px-4 py-3">
+                                    <td class="font-medium text-gray-900">{{ item.day|date("M j") }}</td>
+                                    <td>
                                         <span class="font-semibold {{ tsbStatus.getTextColor() }}">{{ item.tsb.getValue() }}</span>
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td>
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ tsbStatus.getPillColors() }}">
                                             {{ tsbStatus|trans }}
                                         </span>
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td>
                                         <span class="font-semibold {{ acRatioStatus.getTextColor() }}">{{ item.acRatio.getValue() }}</span>
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td>
                                         <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium {{ acRatioStatus.getPillColors() }}">
                                             {{ acRatioStatus|trans }}
                                         </span>

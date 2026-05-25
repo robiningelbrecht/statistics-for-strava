@@ -35,38 +35,24 @@
                             # {{ "workouts"|trans }}
                         </th>
                         <th rowspan="2" scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('distance') }}
-                            </div>
+                            {{ "Dist."|trans }}
                         </th>
                         <th rowspan="2" scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('elevation') }}
-                            </div>
+                            {{ "Elev."|trans }}
                         </th>
                         <th rowspan="2" scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('time') }}
-                            </div>
+                            {{ "Moving time"|trans }}
                         </th>
                         <th rowspan="2" scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('wallet') }}
-                            </div>
+                            {{ "Purchase price"|trans }}
                         </th>
                         <th colspan="3" scope="col">
                             {{ "Relative cost"|trans }}
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="col" class="truncate">
-                            {{ "per hour"|trans }}
-                        </th>
-                        <th scope="col" class="truncate">
-                            {{ "per activity"|trans }}
-                        </th>
-                        <th scope="col" class="truncate">
-                            {{ "per"|trans }} {{ renderUnitSymbol('distance') }}
+                            <div class="font-normal normal-case">
+                                {{ "per hour"|trans }} /
+                                {{ "per activity"|trans }} /
+                                {{ "per"|trans }} {{ renderUnitSymbol('distance') }}
+                            </div>
                         </th>
                     </tr>
                     </thead>

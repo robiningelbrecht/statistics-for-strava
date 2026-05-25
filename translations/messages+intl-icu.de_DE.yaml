@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42-tägiger Fitness-Trend'
 '7-day fatigue level': '7-tägiges Ermüdungsniveau'
 '< 1.5: Good variety in training': '< 1.5: Gute Abwechslung im Training'
@@ -29,6 +30,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Durchschnittliche Steigung'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Skitouren
@@ -42,6 +44,7 @@ Best: Beste
 'Build zone (–10)': 'Aufbauzone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Trittfrequenz
+Cal.: Cal.
 Calories: Kalorien
 'Calories burned': 'Kalorien verbrannt'
 Canoeing: Kanufahren
@@ -58,6 +61,7 @@ Commutes: Pendeln
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Completed {threshold} activities': '{threshold} Aktivitäten abgeschlossen'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
@@ -82,6 +86,7 @@ Density: Dichte
 'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
 Details: Details
 Device: Gerät
+Dist.: Dist.
 Distance: Distanz
 'Distance & Elevation': 'Distanz & Höhenmeter'
 'Distance breakdown': Distanzaufschlüsselung
@@ -98,6 +103,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Anstrengung vs Herzfrequenz'
 Elev: Anstieg
+Elev.: Elev.
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
@@ -134,6 +140,7 @@ Goal: Ziel
 Golf: Golf
 'Good training variety': 'Gute Abwechslung im Training'
 'Google searches': 'Google Suchanfragen'
+Grad.: Grad.
 Gradient: Steigung
 'Gravel Rides': Schotterfahrt
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Die Richtlinien variieren von Person zu Person; weitere Informationen findest du in Joe Friels ‚The Cyclist's Training Bible‘ oder in den Forschungsunterlagen von TrainingPeaks."
@@ -272,10 +279,12 @@ Power: Leistung
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Dabei wurden geschätzte {caloriesBurned} Kalorien verbraucht, was ungefähr {numberOfPizzaSlices} Pizzastücken entspricht 🍕.'
 'Prev year': Vorjahr
 Previous: Vorherige
+'Purchase price': 'Purchase price'
 Race: Wettkampf
 'Racing Score': Wettkampfpunktzahl
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
 'Racquet Ball': Racquetball
+Rank: Rank
 Ranking: Rangliste
 'Reached {threshold} hours total moving time': '{threshold} Stunden gesamte Bewegungszeit erreicht'
 'Reached {threshold} total distance': '{threshold} Gesamtdistanz erreicht'
@@ -446,6 +455,7 @@ Thursday: Donnerstag
 Time: Zeit
 'Time in zone': 'Time in zone'
 'Times completed': 'Male abgeschlossen'
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
 'Toggle sidebar': 'Seitenleiste umschalten'
 'Top 10': 'Top 10'
@@ -524,9 +534,9 @@ Z5: Z5
 'Zwift stats': 'Zwift Statistiken'
 activities: Aktivitäten
 and: und
-'average gradient': 'durchschn. Steigung'
 avg: durchschn.
 bpm: bpm
+challenges: challenges
 clear: löschen
 comments: Kommentare
 compare: vergleiche
@@ -541,7 +551,6 @@ hrs: h
 kudos: Kudos
 'last {numberOfDays} days': 'letzten {numberOfDays} Tage'
 max: max
-'max gradient': 'max. Steigung'
 min: min
 months: Monate
 more: mehr

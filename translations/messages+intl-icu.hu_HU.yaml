@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42 napos fitnesz trend'
 '7-day fatigue level': '7 napos fáradtsági szint'
 '< 1.5: Good variety in training': '< 1,5: Jó változatosság az edzésben'
@@ -29,6 +30,7 @@ Apr: Ápr
 Aug: Aug
 Average: Average
 'Average gradient': 'Átlagos lejtés'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Túrasí
@@ -42,6 +44,7 @@ Best: Legjobb
 'Build zone (–10)': 'Építési zóna (–10)'
 'CTL (Fitness)': 'CTL (Fitnesz)'
 Cadence: Kadencia
+Cal.: Cal.
 Calories: Kalória
 'Calories burned': 'Elégetett kalória'
 Canoeing: Kenuzás
@@ -58,6 +61,7 @@ Commutes: Ingázások
 Compare: Összehasonlítás
 'Compare to': 'Összehasonlítás:'
 'Completed {threshold} activities': '{threshold} tevékenység teljesítve'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Fontold meg a terhelés csökkentését'
 Consistency: Következetesség
@@ -82,6 +86,7 @@ Density: Sűrűség
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
 Details: Részletek
 Device: Eszköz
+Dist.: Dist.
 Distance: Távolság
 'Distance & Elevation': 'Távolság & szintemelkedés'
 'Distance breakdown': 'Távolság részletezés'
@@ -98,6 +103,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Erőfeszítés vs pulzus'
 Elev: Szintek
+Elev.: Elev.
 Elevation: Szintemelkedés
 'Elevation in {unit}': 'Szintemelkedés ({unit})'
 Elliptical: 'Elliptikus gép'
@@ -134,6 +140,7 @@ Goal: Cél
 Golf: Golf
 'Good training variety': 'Jó edzésváltozatosság'
 'Google searches': 'Google keresések'
+Grad.: Grad.
 Gradient: Lejtés
 'Gravel Rides': 'Gravel túrák'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Az irányelvek egyénenként változnak; további információkért lásd Joe Friel 'The Cyclist's Training Bible' c. könyvét vagy a TrainingPeaks kutatási dokumentációját."
@@ -272,10 +279,12 @@ Power: Teljesítmény
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Ezt becsült {caloriesBurned} kalória hajtotta, ami nagyjából {numberOfPizzaSlices} szelet pizza.'
 'Prev year': 'Előző év'
 Previous: Előző
+'Purchase price': 'Purchase price'
 Race: Verseny
 'Racing Score': Versenypontszám
 'Racquet & Paddle Sports': 'Ütős sportok'
 'Racquet Ball': 'Squash labda'
+Rank: Rank
 Ranking: Ranglista
 'Reached {threshold} hours total moving time': '{threshold} óra összes mozgásidő elérve'
 'Reached {threshold} total distance': '{threshold} összes távolság elérve'
@@ -446,6 +455,7 @@ Thursday: Csütörtök
 Time: Idő
 'Time in zone': 'Time in zone'
 'Times completed': 'Teljesítések száma'
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Az engedélyezéséhez konfiguráld a(z) {configFile} fájlt, és építsd újra a fájlokat a változtatások életbe lépéséhez'
 'Toggle sidebar': 'Oldalsáv ki/be'
 'Top 10': 'Top 10'
@@ -524,9 +534,9 @@ Z5: Z5
 'Zwift stats': 'Zwift statisztikák'
 activities: tevékenységek
 and: és
-'average gradient': 'átlagos lejtés'
 avg: átl
 bpm: bpm
+challenges: challenges
 clear: törlés
 comments: hozzászólások
 compare: összehasonlítás
@@ -541,7 +551,6 @@ hrs: h
 kudos: kudos
 'last {numberOfDays} days': 'utolsó {numberOfDays} nap'
 max: max
-'max gradient': 'max. lejtés'
 min: min
 months: hónapok
 more: több

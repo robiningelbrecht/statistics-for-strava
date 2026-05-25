@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': 42天健身趋势
 '7-day fatigue level': 7天疲劳水平
 '< 1.5: Good variety in training': '< 1.5: 训练多样性良好'
@@ -29,6 +30,7 @@ Apr: 四月
 Aug: 八月
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 越野滑雪
@@ -42,6 +44,7 @@ Best: 最佳
 'Build zone (–10)': '构建区 (–10)'
 'CTL (Fitness)': 'CTL (体能)'
 Cadence: 踏频
+Cal.: Cal.
 Calories: 卡路里
 'Calories burned': 燃烧的卡路里
 Canoeing: 划独木舟
@@ -58,6 +61,7 @@ Commutes: 通勤
 Compare: 对比
 'Compare to': 对比
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -82,6 +86,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
 Details: 详情
 Device: 设备
+Dist.: Dist.
 Distance: 距离
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 距离分解
@@ -98,6 +103,7 @@ Eddington: 愛丁頓數
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: 海拔
+Elev.: Elev.
 Elevation: 海拔高度
 'Elevation in {unit}': '海拔高度（单位：{unit})'
 Elliptical: 椭圆机
@@ -134,6 +140,7 @@ Goal: Goal
 Golf: 高尔夫
 'Good training variety': 良好的训练多样性
 'Google searches': Google搜索
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': 砾石骑行
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": '指导原则因人而异；欲了解更多信息，请参阅乔·弗里尔的《自行车训练圣经》或 TrainingPeaks 的研究文档。'
@@ -272,10 +279,12 @@ Power: 功率
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': '消耗了约{caloriesBurned}卡路里，或大约{numberOfPizzaSlices}片披萨🍕。'
 'Prev year': 去年
 Previous: Previous
+'Purchase price': 'Purchase price'
 Race: 比赛
 'Racing Score': 赛车成绩
 'Racquet & Paddle Sports': 球拍和桨类运动
 'Racquet Ball': 壁球
+Rank: Rank
 Ranking: Ranking
 'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
@@ -446,6 +455,7 @@ Thursday: 星期四
 Time: 时间
 'Time in zone': 'Time in zone'
 'Times completed': 完成次数
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': '请配置{configFile}并重新构建文件以开启此功能'
 'Toggle sidebar': 切换侧边栏
 'Top 10': 前10名
@@ -524,9 +534,9 @@ Z5: Z5
 'Zwift stats': Zwift统计
 activities: 活动
 and: 和
-'average gradient': 'average gradient'
 avg: 平均
 bpm: 拍子数
+challenges: challenges
 clear: 清除
 comments: 留言
 compare: 对比
@@ -541,7 +551,6 @@ hrs: hrs
 kudos: 赞
 'last {numberOfDays} days': '最近{numberOfDays}天'
 max: max
-'max gradient': 最大坡度
 min: min
 months: 月
 more: 更多

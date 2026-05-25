@@ -23,8 +23,7 @@
         </h3>
         <div class="flex items-center">
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
-                <li class="flex items-center gap-x-0.5 pr-2">
-                    {{ svg('distance', 'size-5') }}
+                <li class="flex flex-col pr-2 text-sm">
                     {% if statistics.distance %}
                         <div>{{ statistics.distance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.distance|convertMeasurement.getSymbol() }}</div>
@@ -32,31 +31,27 @@
                         0
                     {% endif %}
                 </li>
-                <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('elevation', 'size-5') }}
+                <li class="flex flex-col px-2 text-sm">
                     {% if statistics.elevation %}
                         <div>{{ statistics.elevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
-                        <div class="text-xs text-gray-500">{{ statistics.elevation|convertMeasurement.getSymbol() }}</div>
+                        <div class="text-xs text-gray-500">{{ statistics.elevation|convertMeasurement.getSymbol() }} {{ "Elev."|trans|lower }}</div>
                     {% else %}
                         0
                     {% endif %}
                 </li>
-                <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('time', 'size-5') }}
+                <li class="flex flex-col px-2 text-sm">
                     <div>{{ (statistics.movingTime.toHour().toFloat())|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">{{ "hours"|trans }}</div>
                 </li>
-                <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('challenge', 'size-5') }}
+                <li class="flex flex-col px-2 text-sm">
                     <div>{{ challenges|filter(challenge => challenge.getCreatedOn().format('Y-m') == calendar.getMonth().getId())|length }}</div>
+                    <div class="text-xs text-gray-500">{{ "challenges"|trans }}</div>
                 </li>
-                <li class="flex items-center gap-x-0.5 px-2">
-                    {{ svg('calories', 'size-5') }}
+                <li class="flex flex-col px-2 text-sm">
                     <div>{{ statistics.calories|formatNumber(0) }}</div>
                     <div class="text-xs text-gray-500">kcal</div>
                 </li>
-                <li class="flex items-center gap-x-0.5 pl-2">
-                    {{ svg('hashtag') }}
+                <li class="flex flex-col pl-2 text-sm">
                     <div>{{ statistics.numberOfActivities }}</div>
                     <div class="text-xs text-gray-500">{{ "workouts"|trans }}</div>
                 </li>

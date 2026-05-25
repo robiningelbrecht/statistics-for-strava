@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42-dagars träningstendens'
 '7-day fatigue level': '7-dagars utmattningsnivå'
 '< 1.5: Good variety in training': '< 1.5: Bra variation av träningsformer'
@@ -29,6 +30,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Utförsåkning
@@ -42,6 +44,7 @@ Best: Bästa
 'Build zone (–10)': 'Utvecklingsfas (–10)'
 'CTL (Fitness)': 'CTL (Träningsform)'
 Cadence: Kadens
+Cal.: Cal.
 Calories: Kalorier
 'Calories burned': 'Brända kalorier'
 Canoeing: Kanot
@@ -58,6 +61,7 @@ Commutes: Pendling
 Compare: Jämför
 'Compare to': 'Jämför med'
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -82,6 +86,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 'Detaljerade instruktioner finns i dokumentationen på'
 Details: Detaljer
 Device: Enhet
+Dist.: Dist.
 Distance: Distans
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Sammanställning av sträckor'
@@ -98,6 +103,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Höjd
+Elev.: Elev.
 Elevation: Höjdmeter
 'Elevation in {unit}': 'Höjdmeter i {unit}'
 Elliptical: Elliptisk
@@ -134,6 +140,7 @@ Goal: Goal
 Golf: Golf
 'Good training variety': 'Bra variation av träningsformer'
 'Google searches': 'Google sökningar'
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': Grusvägscykling
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Riktlinjerna varierar från individ till individ; för mer information se Joe Friel's 'The Cyclist's Training Bible' eller 'TrainingPeaks' forskningsdokumentation."
@@ -272,10 +279,12 @@ Power: Effekt
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Tidigare år'
 Previous: Previous
+'Purchase price': 'Purchase price'
 Race: Tävling
 'Racing Score': Tävlingspoäng
 'Racquet & Paddle Sports': 'Rack & Paddel Sporter'
 'Racquet Ball': Racketboll
+Rank: Rank
 Ranking: Rankning
 'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
@@ -446,6 +455,7 @@ Thursday: Torsdag
 Time: Tid
 'Time in zone': 'Time in zone'
 'Times completed': 'Antal gånger avklarade'
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'För att aktivera, konfigurera {configFile} och bygg om filerna så att ändringarna träder i kraft'
 'Toggle sidebar': 'Visa/Dölj sidofält'
 'Top 10': '10 bästa'
@@ -524,9 +534,9 @@ Z5: Z5
 'Zwift stats': 'Sammanställning Zwift'
 activities: aktiviteter
 and: och
-'average gradient': 'average gradient'
 avg: snitt
 bpm: bpm
+challenges: challenges
 clear: rensa
 comments: kommentarer
 compare: jämför
@@ -541,7 +551,6 @@ hrs: tim
 kudos: kudos
 'last {numberOfDays} days': 'senaste {numberOfDays} dagarna'
 max: max
-'max gradient': 'maximal lutning'
 min: min
 months: månader
 more: mera

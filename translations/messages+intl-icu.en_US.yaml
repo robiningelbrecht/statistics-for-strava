@@ -1,3 +1,4 @@
+'# completed': '# completed'
 '42-day fitness trend': '42-day fitness trend'
 '7-day fatigue level': '7-day fatigue level'
 '< 1.5: Good variety in training': '< 1.5: Good variety in training'
@@ -29,6 +30,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 'Back Country Ski'
@@ -42,6 +44,7 @@ Best: Best
 'Build zone (–10)': 'Build zone (–10)'
 'CTL (Fitness)': 'CTL (Fitness)'
 Cadence: Cadence
+Cal.: Cal.
 Calories: Calories
 'Calories burned': 'Calories burned'
 Canoeing: Canoeing
@@ -58,6 +61,7 @@ Commutes: Commutes
 Compare: Compare
 'Compare to': 'Compare to'
 'Completed {threshold} activities': 'Completed {threshold} activities'
+Components: Components
 'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
 'Consider reducing load': 'Consider reducing load'
 Consistency: Consistency
@@ -82,6 +86,7 @@ Density: Density
 'Detailed instructions are available in the documentation on': 'Detailed instructions are available in the documentation on'
 Details: Details
 Device: Device
+Dist.: Dist.
 Distance: Distance
 'Distance & Elevation': 'Distance & Elevation'
 'Distance breakdown': 'Distance breakdown'
@@ -98,6 +103,7 @@ Eddington: Eddington
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Effort vs heart rate'
 Elev: Elev
+Elev.: Elev.
 Elevation: Elevation
 'Elevation in {unit}': 'Elevation in {unit}'
 Elliptical: Elliptical
@@ -134,6 +140,7 @@ Goal: Goal
 Golf: Golf
 'Good training variety': 'Good training variety'
 'Google searches': 'Google searches'
+Grad.: Grad.
 Gradient: Gradient
 'Gravel Rides': 'Gravel Rides'
 "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation.": "Guidelines vary by individual; for more information see Joe Friel's 'The Cyclist's Training Bible' or TrainingPeaks' research documentation."
@@ -272,10 +279,12 @@ Power: Power
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.'
 'Prev year': 'Prev year'
 Previous: Previous
+'Purchase price': 'Purchase price'
 Race: Race
 'Racing Score': 'Racing Score'
 'Racquet & Paddle Sports': 'Racquet & Paddle Sports'
 'Racquet Ball': 'Racquet Ball'
+Rank: Rank
 Ranking: Ranking
 'Reached {threshold} hours total moving time': 'Reached {threshold} hours total moving time'
 'Reached {threshold} total distance': 'Reached {threshold} total distance'
@@ -446,6 +455,7 @@ Thursday: Thursday
 Time: Time
 'Time in zone': 'Time in zone'
 'Times completed': 'Times completed'
+Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'To enable it, configure {configFile} and rebuild the files for the changes to take effect'
 'Toggle sidebar': 'Toggle sidebar'
 'Top 10': 'Top 10'
@@ -524,9 +534,9 @@ Z5: Z5
 'Zwift stats': 'Zwift stats'
 activities: activities
 and: and
-'average gradient': 'average gradient'
 avg: avg
 bpm: bpm
+challenges: challenges
 clear: clear
 comments: comments
 compare: compare
@@ -541,7 +551,6 @@ hrs: hrs
 kudos: kudos
 'last {numberOfDays} days': 'last {numberOfDays} days'
 max: max
-'max gradient': 'max gradient'
 min: min
 months: months
 more: more

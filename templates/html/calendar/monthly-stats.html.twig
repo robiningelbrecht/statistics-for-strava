@@ -10,61 +10,29 @@
             <div class="overflow-auto max-h-[calc(100vh-165px)] relative">
                 <table class="data-table" data-accordion="table-months"
                        data-active-classes="text-gray-500" data-inactive-classes="text-gray-500">
-                    <thead class="z-10 sticky top-0">
+                    <thead>
                     <tr class="group/row">
                         <th class="narrow"></th>
                         <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                         </th>
                         <th scope="col" class="narrow">
-                            <div class="leading-7">
-                                # {{ "workouts"|trans }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs">
-                                {{ totals.numberOfActivities }}
-                            </div>
+                            # {{ "workouts"|trans }}
                         </th>
                         <th scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('distance') }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs">
-                                {% set convertedTotalDistance = totals.distance|convertMeasurement %}
-                                {{ convertedTotalDistance.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('distance') }}
-                            </div>
+                            {{ "Dist."|trans }}
                         </th>
                         <th scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('elevation') }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs">
-                                {% set convertedTotalElevation = totals.elevation|convertMeasurement %}
-                                {{ convertedTotalElevation.toFloat()|formatNumber(0) }}{{ renderUnitSymbol('elevation') }}
-                            </div>
+                            {{ "Elev."|trans }}
                         </th>
                         <th scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('time') }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs" title="{{ totals.movingTime.toHour().toFloat()|formatNumber(1) }}h">
-                                {{ totals.movingTime|formatSeconds }}
-                            </div>
+                            {{ "Moving time"|trans }}
                         </th>
                         <th scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('calories') }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs">
-                                {{ totals.calories|formatNumber(0) }}kcal
-                            </div>
+                            {{ "Cal."|trans }}
                         </th>
                         <th scope="col">
-                            <div class="flex items-center justify-center">
-                                {{ svg('challenge') }}
-                            </div>
-                            <div class="pt-0.5 normal-case text-xxs">
-                                {{ challenges|length }}
-                            </div>
+                            # {{ "challenges"|trans }}
                         </th>
                     </tr>
                     </thead>
@@ -85,7 +53,7 @@
                                     </svg>
                                 </td>
                                 <th scope="row"
-                                    class="bg-white sticky left-0 w-36 text-right font-medium whitespace-nowrap">
+                                    class="bg-white sticky left-0 text-right font-medium whitespace-nowrap">
                                     <a href="#"
                                        data-model-content-url="{{ relativeUrl('month/month-' ~ month.getId() ~ '.html') }}"
                                        class="text-blue-600 hover:underline">
@@ -119,10 +87,10 @@
                                 {% set totalsForSportType = monthlyStatistics.getForMonthAndSportType(month, sportType) %}
                                 {% if totalsForSportType.numberOfActivities > 0 %}
                                     <tr>
-                                        <td class="w-4 p-2 text-gray-700">
+                                        <td class="w-4 p-2">
 
                                         </td>
-                                        <td class="text-gray-700 sticky left-0 w-36 text-right font-medium whitespace-nowrap">
+                                        <td class="text-gray-700 bg-white sticky left-0 text-right font-medium whitespace-nowrap">
                                             {{ sportType|trans }}
                                         </td>
                                         <td class="truncate">
