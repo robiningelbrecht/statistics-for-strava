@@ -195,6 +195,6 @@ final class EnrichedActivities
      */
     private function resolveIds(array $ids): array
     {
-        return array_map(fn (string $id) => self::$cachedActivities[$id], $ids);
+        return array_map(fn (string $id): Activity => self::$cachedActivities[$id], $ids);
     }
 }

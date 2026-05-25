@@ -1647,6 +1647,10 @@
     width: calc(var(--spacing) * 8);
     height: calc(var(--spacing) * 8);
   }
+  .size-10 {
+    width: calc(var(--spacing) * 10);
+    height: calc(var(--spacing) * 10);
+  }
   .h-0 {
     height: calc(var(--spacing) * 0);
   }
@@ -1739,6 +1743,9 @@
   }
   .max-h-50 {
     max-height: calc(var(--spacing) * 50);
+  }
+  .max-h-65 {
+    max-height: calc(var(--spacing) * 65);
   }
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
@@ -3782,12 +3789,6 @@
   .last\:animate-fade-in-chat-message {
     &:last-child {
       animation: var(--animate-fade-in-chat-message);
-    }
-  }
-  .last\:border-b-0 {
-    &:last-child {
-      border-bottom-style: var(--tw-border-style);
-      border-bottom-width: 0px;
     }
   }
   .hover\:border-gray-300 {

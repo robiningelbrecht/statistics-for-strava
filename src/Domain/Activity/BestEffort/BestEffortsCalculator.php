@@ -167,7 +167,7 @@ final class BestEffortsCalculator
 
         $ids = $this->cachedPerActivity[(string) $activityId] ?? [];
 
-        return ActivityBestEfforts::fromArray(array_map(fn (string $id) => $this->cachedBestEfforts[$id], $ids));
+        return ActivityBestEfforts::fromArray(array_map(fn (string $id): ActivityBestEffort => $this->cachedBestEfforts[$id], $ids));
     }
 
     public function historyFor(SportType $sportType, ConvertableToMeter $distance, int $position): ?ActivityBestEffort
