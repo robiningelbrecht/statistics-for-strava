@@ -1747,6 +1747,9 @@
   .max-h-65 {
     max-height: calc(var(--spacing) * 65);
   }
+  .max-h-79 {
+    max-height: calc(var(--spacing) * 79);
+  }
   .max-h-80 {
     max-height: calc(var(--spacing) * 80);
   }
