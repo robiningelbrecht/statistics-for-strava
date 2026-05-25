@@ -30,6 +30,7 @@ Apr: Apr
 Aug: Aug
 Average: Average
 'Average gradient': 'Average gradient'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Utförsåkning
@@ -533,7 +534,6 @@ Z5: Z5
 'Zwift stats': 'Sammanställning Zwift'
 activities: aktiviteter
 and: och
-'average gradient': 'average gradient'
 avg: snitt
 bpm: bpm
 challenges: challenges
@@ -551,7 +551,6 @@ hrs: tim
 kudos: kudos
 'last {numberOfDays} days': 'senaste {numberOfDays} dagarna'
 max: max
-'max gradient': 'maximal lutning'
 min: min
 months: månader
 more: mera

@@ -30,6 +30,7 @@ Apr: Ápr
 Aug: Aug
 Average: Average
 'Average gradient': 'Átlagos lejtés'
+'Avg gradient': 'Avg gradient'
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Túrasí
@@ -533,7 +534,6 @@ Z5: Z5
 'Zwift stats': 'Zwift statisztikák'
 activities: tevékenységek
 and: és
-'average gradient': 'átlagos lejtés'
 avg: átl
 bpm: bpm
 challenges: challenges
@@ -551,7 +551,6 @@ hrs: h
 kudos: kudos
 'last {numberOfDays} days': 'utolsó {numberOfDays} nap'
 max: max
-'max gradient': 'max. lejtés'
 min: min
 months: hónapok
 more: több
