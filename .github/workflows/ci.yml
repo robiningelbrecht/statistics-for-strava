@@ -63,7 +63,7 @@ jobs:
         run: vendor/bin/paratest --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml
 
       - name: Generate coverage report
-        uses: clearlyip/code-coverage-report-action@v6
+        uses: clearlyip/code-coverage-report-action@v7
         id: code_coverage_report_action
         with:
           filename: 'clover.xml'
