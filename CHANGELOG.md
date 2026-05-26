@@ -1,3 +1,20 @@
+# [v4.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.2) - 2026-05-26 
+
+## Improvements
+* A lot of small UX improvements throughout the app
+* Use table header labels instead of icons
+
+## Bug fixes
+* Properly format GAP pace for running activities
+
+## Technical details
+* ISSUE #2062: Daytime dashboard widget disable text wrap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2063
+* ISSUE #2064: Yearly stats dashboard widget disable text wrap by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2065
+* ISSUE #2068: Use table header labels instead of icons by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2069
+* fix: format GAP like pace by @cgtobi in https://github.com/robiningelbrecht/statistics-for-strava/pull/2071
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.1...v4.8.2
+
 # [v4.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.1) - 2026-05-23
 
 ## Bug fixes
