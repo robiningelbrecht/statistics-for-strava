@@ -25,7 +25,7 @@
                 {% if errors is not empty %}
                     <div class="flex mb-4 p-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50"
                          role="alert">
-                        <svg class="shrink-0 inline w-4 h-4 me-3 mt-0.5" aria-hidden="true"
+                        <svg class="shrink-0 inline size-4 me-3 mt-0.5" aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
@@ -43,7 +43,7 @@
                 {% if warnings is not empty %}
                     <div class="flex mb-4 p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50"
                          role="alert">
-                        <svg class="shrink-0 inline w-4 h-4 me-3 mt-0.5" aria-hidden="true"
+                        <svg class="shrink-0 inline size-4 me-3 mt-0.5" aria-hidden="true"
                              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                         </svg>
@@ -90,7 +90,7 @@
                                 data-accordion-target="#table-gears-content-{{ loop.index0 }}"
                                 aria-expanded="false" aria-controls="table-gears-content-{{ loop.index0 }}">
                                 <td class="w-4 p-2 text-gray-900">
-                                    <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                                    <svg data-accordion-icon class="size-3 rotate-180 shrink-0" aria-hidden="true"
                                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                               stroke-width="2"
@@ -131,7 +131,7 @@
                                         {% for gearComponent in componentsAttachedToGear %}
                                             <div class="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm">
                                                 <div class="relative w-48 h-full">
-                                                    <img class="absolute inset-0 lazy object-cover w-full h-full rounded-t-lg md:rounded-none md:rounded-s-lg"
+                                                    <img class="absolute inset-0 lazy object-cover size-full rounded-t-lg md:rounded-none md:rounded-s-lg"
                                                          src="{{ placeholderImage() }}"
                                                          data-src="{{ relativeUrl('/gear-maintenance/' ~ gearComponent.getImgSrc()) }}"
                                                          alt="{{ gearComponent.getLabel() }}">
