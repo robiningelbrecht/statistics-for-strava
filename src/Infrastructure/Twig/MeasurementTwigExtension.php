@@ -36,6 +36,14 @@ final readonly class MeasurementTwigExtension
         return $measurement;
     }
 
+    #[AsTwigFilter('formatMeasurement')]
+    public function formatMeasurement(Unit $measurement, int $precision): string
+    {
+        $convertedMeasurement = $this->convertMeasurement($measurement);
+        $measurementInScalar = $convertedMeasurement->toFloat();
+        return self::formatNumber($measurementInScalar, $precision);
+    }
+
     #[AsTwigFilter('renderMeasurement')]
     public function renderMeasurement(Unit $measurement, int $precision, ?string $symbolSuffix = null): string
     {
