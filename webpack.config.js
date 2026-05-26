@@ -12,7 +12,6 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, 'public/js/dist'),
-        publicPath: '/js/dist/',
         filename: '[name].js',
         chunkFilename: '[name].min.js',
         clean: true,
