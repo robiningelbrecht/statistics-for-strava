@@ -41,6 +41,7 @@ final readonly class MeasurementTwigExtension
     {
         $convertedMeasurement = $this->convertMeasurement($measurement);
         $measurementInScalar = $convertedMeasurement->toFloat();
+
         return self::formatNumber($measurementInScalar, $precision);
     }
 
