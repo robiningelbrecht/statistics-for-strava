@@ -17,6 +17,7 @@ export default class HeatmapDrawer {
             scrollWheelZoom: true,
             minZoom: 1,
             maxZoom: 21,
+            preferCanvas: true,
         });
         this.config.tileLayerUrls.forEach((tileLayerUrl) => {
             L.tileLayer(tileLayerUrl).addTo(this.map);
@@ -143,7 +144,7 @@ export default class HeatmapDrawer {
 
             const polyline = L.polyline(
                 route.coordinates,
-                this.defaultPolylineStyle
+                {...this.defaultPolylineStyle, smoothFactor: 2.0}
             ).addTo(countryFeatureGroups.get(countryCode));
 
             this.routePolylines.push({
