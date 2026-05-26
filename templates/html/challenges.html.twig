@@ -8,7 +8,7 @@
         <div class="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
             <h3 class="flex items-center gap-x-1 text-lg font-semibold mb-4">
                 <span>{{ month }}</span>
-                <span class="badge-pill">{{ challenges|length }}</span>
+                <span class="bg-strava-orange/15 text-strava-orange text-xs font-medium px-2.5 py-0.5 rounded-full">{{ challenges|length }}</span>
             </h3>
             <div class="grid gap-4 grid-cols-8 xl:grid-cols-12">
                 {% for challenge in challenges %}
