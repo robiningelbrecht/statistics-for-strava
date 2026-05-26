@@ -114,6 +114,7 @@
     --color-pink-900: #831843;
     --color-rose-500: oklch(64.5% 0.246 16.439);
     --color-rose-600: oklch(58.6% 0.253 17.585);
+    --color-slate-500: oklch(55.4% 0.046 257.417);
     --color-gray-50: #F9FAFB;
     --color-gray-100: #F3F4F6;
     --color-gray-200: #E5E7EB;
@@ -3382,11 +3383,17 @@
   .text-red-900 {
     color: var(--color-red-900);
   }
+  .text-rose-500 {
+    color: var(--color-rose-500);
+  }
   .text-rose-600 {
     color: var(--color-rose-600);
   }
   .text-sky-500 {
     color: var(--color-sky-500);
+  }
+  .text-slate-500 {
+    color: var(--color-slate-500);
   }
   .text-strava-orange {
     color: var(--color-strava-orange);

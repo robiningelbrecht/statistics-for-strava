@@ -127,7 +127,7 @@ Fitness: 'Forma fisica'
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Forma (TSB)'
 Fri: Ven
-Friday: Venerdì
+Fri.: Fri.
 GAP: GAP
 Gear: Attrezzatura
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'L''attrezzatura "{gearId}" è presente nel tuo file di configurazione della manutenzione, ma non è stata importata da Strava. Verifica che esista e sia sincronizzata correttamente.'
@@ -219,7 +219,7 @@ Milestones: Milestones
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Fatica moderata con forma stabile. Ben adatto a un allenamento costante giorno dopo giorno'
 'Moderate monotony': 'Monotonia moderata'
 Mon: Lun
-Monday: Lunedì
+Mon.: Mon.
 Monotony: Monotonia
 Monthly: Monthly
 'Monthly stats': 'Statistiche mensili'
@@ -312,7 +312,7 @@ Running: Running
 Runs: Corse
 Sail: Vela
 Sat: Sab
-Saturday: Sabato
+Sat.: Sat.
 Search: Cerca
 'Search activity...': 'Cerca attività...'
 'Search segment...': 'Cerca segmento...'
@@ -344,7 +344,7 @@ Status: Status
 'Streak started on {date}': 'Serie iniziata il {date}'
 Streaks: Serie
 Sun: Dom
-Sunday: Domenica
+Sun.: Sun.
 Surfing: Surf
 Swim: Nuoto
 'TSB (Form)': 'TSB (Forma)'
@@ -451,7 +451,7 @@ Thinking...: Elaborazione...
 'This month': 'This month'
 'This week': 'This week'
 Thu: Gio
-Thursday: Giovedì
+Thu.: Thu.
 Time: Tempo
 'Time in zone': 'Time in zone'
 'Times completed': 'Volte completate'
@@ -474,7 +474,7 @@ Title: Title
 'Training goals': 'Obiettivi di allenamento'
 'Training load is accumulating, recovery days are important': 'Il carico di allenamento si sta accumulando, i giorni di recupero sono importanti'
 Tue: Mar
-Tuesday: Martedì
+Tue.: Tue.
 Unspecified: 'Non specificato'
 'Updated on': 'Aggiornato il'
 'User badge': 'Badge utente'
@@ -493,7 +493,7 @@ Walks: Passeggiate
 'Water Sports': 'Sport acquatici'
 'We detected following issues': 'Abbiamo rilevato i seguenti problemi'
 Wed: Mer
-Wednesday: Mercoledì
+Wed.: Wed.
 Weekly: Weekly
 'Weekly Strain': 'Sforzo settimanale'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Sforzo settimanale - prodotto tra il carico settimanale e la monotonia. Indica lo stress complessivo.'

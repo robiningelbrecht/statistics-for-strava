@@ -39,13 +39,13 @@ enum Daytime: string implements TranslatableInterface
         };
     }
 
-    public function getEmoji(): string
+    public function getSvgIcon(): string
     {
         return match ($this) {
-            self::MORNING => '🌞',
-            self::AFTERNOON => '🌆',
-            self::EVENING => '🌃',
-            self::NIGHT => '🌙',
+            self::MORNING => 'sunrise',
+            self::AFTERNOON => 'sun',
+            self::EVENING => 'sunset',
+            self::NIGHT => 'moon',
         };
     }
 

@@ -19,7 +19,5 @@ interface ActivityStreamMetricRepository
 
     public function findActivityIdsWithoutDistributionValues(): ActivityIds;
 
-    public function findActivityIdsWithoutEncodedPolyline(): ActivityIds;
-
     public function findByActivityIdAndMetricType(ActivityId $activityId, ActivityStreamMetricType $metricType): ActivityStreamMetrics;
 }

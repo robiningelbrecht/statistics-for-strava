@@ -127,7 +127,7 @@ Fitness: Forma
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Forma (TSB)'
 Fri: Sex
-Friday: Sexta-feira
+Fri.: Fri.
 GAP: GAP
 Gear: Equipamento
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Equipamento "{gearId}" está referenciado no ficheiro de configuração, mas não foi importado do Strava. Por favor verifique se o equipamento existe e foi corretamente sincronizado.'
@@ -219,7 +219,7 @@ Milestones: Milestones
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Monotonia moderada'
 Mon: Seg
-Monday: Segunda-feira
+Mon.: Mon.
 Monotony: Monotonia
 Monthly: Monthly
 'Monthly stats': 'Estatísticas mensais'
@@ -312,7 +312,7 @@ Running: Running
 Runs: Corridas
 Sail: Vela
 Sat: Sáb
-Saturday: Sábado
+Sat.: Sat.
 Search: Pesquisar
 'Search activity...': 'Pesquisar atividade...'
 'Search segment...': 'Pesquisar segmento...'
@@ -344,7 +344,7 @@ Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Sequências
 Sun: Dom
-Sunday: Domingo
+Sun.: Sun.
 Surfing: Surf
 Swim: Natação
 'TSB (Form)': 'TSB (Forma)'
@@ -451,7 +451,7 @@ Thinking...: Thinking...
 'This month': 'This month'
 'This week': 'This week'
 Thu: Qui
-Thursday: Quinta-feira
+Thu.: Thu.
 Time: Hora
 'Time in zone': 'Time in zone'
 'Times completed': 'Vezes concluído'
@@ -474,7 +474,7 @@ Title: Title
 'Training goals': 'Training goals'
 'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: Ter
-Tuesday: Terça-feira
+Tue.: Tue.
 Unspecified: 'Não especificado'
 'Updated on': 'Atualizado em'
 'User badge': 'User badge'
@@ -493,7 +493,7 @@ Walks: Passeios
 'Water Sports': 'Desportos Aquáticos'
 'We detected following issues': 'Foram detectadas as seguintes situações'
 Wed: Qua
-Wednesday: Quarta-feira
+Wed.: Wed.
 Weekly: Weekly
 'Weekly Strain': 'Pressão Semanal'
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'PressãoSemanal - Resultado da carga semanal e monotonia de treino. Stress geral de treino.'

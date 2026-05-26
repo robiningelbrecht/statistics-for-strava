@@ -36,7 +36,7 @@
                 <table class="data-table">
                     <thead>
                     <tr>
-                        <th scope="col" class="sticky left-0 bg-gray-50">
+                        <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                         </th>
                         <th scope="col" class="narrow">
@@ -57,7 +57,7 @@
                     {% for weekday, statistic in allActivities.weekDayStats.getData() %}
                         <tr class="group/row">
                             <th scope="row"
-                                class="sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
+                                class="narrow sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
                                 {{ weekday }}
                             </th>
                             <td class="narrow">
@@ -90,7 +90,7 @@
                     <table class="data-table">
                         <thead>
                         <tr>
-                            <th scope="col" class="sticky left-0 bg-gray-50">
+                            <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                             </th>
                             <th scope="col" class="narrow">
@@ -111,7 +111,7 @@
                         {% for weekday, statistic in stats.weekDayStats.getData() %}
                             <tr class="group/row">
                                 <th scope="row"
-                                    class="sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
+                                    class="narrow sticky bg-white left-0 font-medium text-gray-900 whitespace-nowrap">
                                     {{ weekday }}
                                 </th>
                                 <td class="narrow">
