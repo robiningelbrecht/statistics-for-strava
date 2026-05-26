@@ -36,7 +36,7 @@
                 <table class="data-table">
                     <thead>
                     <tr>
-                        <th scope="col" class="sticky left-0 bg-gray-50">
+                        <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                         </th>
                         <th scope="col" class="narrow">
@@ -57,10 +57,15 @@
                     {% for statistic in allActivities.dayTimeStats.getData() %}
                         <tr class="group/row">
                             <th scope="row"
-                                class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                <div>{{ statistic.daytime|trans }}</div>
-                                <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
-                                    - {{ statistic.daytime.getHours()[1] }}h
+                                class="narrow sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                <div class="flex gap-x-2 items-center">
+                                    {{ svg(statistic.daytime.getSvgIcon()) }}
+                                    <div>
+                                        <div>{{ statistic.daytime|trans }}</div>
+                                        <div class="font-normal text-xs text-gray-500">{{ statistic.daytime.getHours()[0] }}h
+                                            - {{ statistic.daytime.getHours()[1] }}h
+                                        </div>
+                                    </div>
                                 </div>
                             </th>
                             <td class="narrow">
@@ -93,7 +98,7 @@
                     <table class="data-table">
                         <thead>
                         <tr>
-                            <th scope="col" class="sticky left-0 bg-gray-50">
+                            <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                             </th>
                             <th scope="col" class="narrow">
@@ -114,10 +119,15 @@
                         {% for statistic in stats.dayTimeStats.getData() %}
                             <tr class="group/row">
                                 <th scope="row"
-                                    class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
-                                    <div>{{ statistic.daytime|trans }}</div>
-                                    <div class="font-normal text-xs">{{ statistic.daytime.getHours()[0] }}h
-                                        - {{ statistic.daytime.getHours()[1] }}h
+                                    class="narrow sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex gap-x-2 items-center">
+                                        {{ svg(statistic.daytime.getSvgIcon()) }}
+                                        <div>
+                                            <div>{{ statistic.daytime|trans }}</div>
+                                            <div class="font-normal text-xs text-gray-500">{{ statistic.daytime.getHours()[0] }}h
+                                                - {{ statistic.daytime.getHours()[1] }}h
+                                            </div>
+                                        </div>
                                     </div>
                                 </th>
                                 <td class="narrow">

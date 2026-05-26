@@ -127,7 +127,7 @@ Fitness: 健身
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': '状态 (TSB)'
 Fri: 周五
-Friday: 星期五
+Fri.: Fri.
 GAP: GAP
 Gear: 装备
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': '您的维护配置文件中引用了装备"{gearId}"，但该装备尚未从 Strava 导入。请检查该装备是否存在并已正确同步。'
@@ -219,7 +219,7 @@ Milestones: Milestones
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 适度单调性
 Mon: 周一
-Monday: 星期一
+Mon.: Mon.
 Monotony: 单调性
 Monthly: Monthly
 'Monthly stats': 每月统计
@@ -312,7 +312,7 @@ Running: 跑步
 Runs: 跑步
 Sail: 帆船
 Sat: 周六
-Saturday: 星期六
+Sat.: Sat.
 Search: 搜索
 'Search activity...': 搜索活动...
 'Search segment...': 搜索路段...
@@ -344,7 +344,7 @@ Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: 连续记录
 Sun: 周日
-Sunday: 星期日
+Sun.: Sun.
 Surfing: 冲浪
 Swim: 游泳
 'TSB (Form)': 'TSB (状态)'
@@ -451,7 +451,7 @@ Thinking...: 思考中...
 'This month': 'This month'
 'This week': 'This week'
 Thu: 周四
-Thursday: 星期四
+Thu.: Thu.
 Time: 时间
 'Time in zone': 'Time in zone'
 'Times completed': 完成次数
@@ -474,7 +474,7 @@ Title: Title
 'Training goals': 'Training goals'
 'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: 周二
-Tuesday: 星期二
+Tue.: Tue.
 Unspecified: 未指定
 'Updated on': 更新于
 'User badge': 用户徽章
@@ -493,7 +493,7 @@ Walks: 散步
 'Water Sports': 水上运动
 'We detected following issues': 检测到以下问题
 Wed: 周三
-Wednesday: 星期三
+Wed.: Wed.
 Weekly: Weekly
 'Weekly Strain': 每周训练负荷
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': '每周训练负荷 - 每周训练量与单调性的乘积。整体训练压力。'

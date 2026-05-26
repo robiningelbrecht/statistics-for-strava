@@ -127,7 +127,7 @@ Fitness: Träning
 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.': 'For example, an Eddington number of 70 would imply that a cyclist has cycled at least 70 km or miles in a day on at least 70 occasions. Achieving a high Eddington number is difficult, since moving from, say, 70 to 75 will (probably) require more than five new long-distance workouts, since any workout shorter than 75 km or miles will no longer be included in the reckoning.'
 'Form (TSB)': 'Träningsform (TSB)'
 Fri: Fre
-Friday: Fredag
+Fri.: Fri.
 GAP: GAP
 Gear: Utrustning
 'Gear "{gearId}" is referenced in your maintenance config file, but was not imported from Strava. Please check that the gear exists and is correctly synced.': 'Utrusning "{gearId}" refereras i din underhållskonfigurationsfil, men importerades inte från Strava. Kontrollera att utrustningen finns och är korrekt synkroniserad..'
@@ -219,7 +219,7 @@ Milestones: Milestones
 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training': 'Moderate fatigue with stable fitness. Well suited for consistent day-to-day training'
 'Moderate monotony': 'Måttlig monotoni'
 Mon: Må
-Monday: Måndag
+Mon.: Mon.
 Monotony: Monotoni
 Monthly: Monthly
 'Monthly stats': Sammanställning
@@ -312,7 +312,7 @@ Running: Löpning
 Runs: Löpturer
 Sail: Segling
 Sat: Lör
-Saturday: Lördag
+Sat.: Sat.
 Search: Sök
 'Search activity...': 'Sök aktivitet...'
 'Search segment...': 'Sök segment...'
@@ -344,7 +344,7 @@ Status: Status
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: Serie
 Sun: Sön
-Sunday: Söndag
+Sun.: Sun.
 Surfing: Surfning
 Swim: Simmning
 'TSB (Form)': 'TSB (Form)'
@@ -451,7 +451,7 @@ Thinking...: Tänker...
 'This month': 'This month'
 'This week': 'This week'
 Thu: Tor
-Thursday: Torsdag
+Thu.: Thu.
 Time: Tid
 'Time in zone': 'Time in zone'
 'Times completed': 'Antal gånger avklarade'
@@ -474,7 +474,7 @@ Title: Title
 'Training goals': 'Training goals'
 'Training load is accumulating, recovery days are important': 'Training load is accumulating, recovery days are important'
 Tue: Tis
-Tuesday: Tisdag
+Tue.: Tue.
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
 'User badge': Användarmärke
@@ -493,7 +493,7 @@ Walks: Promenader
 'Water Sports': Vattensport
 'We detected following issues': 'Vi har upptäckt följande problem'
 Wed: Ons
-Wednesday: Onsdag
+Wed.: Wed.
 Weekly: Weekly
 'Weekly Strain': Veckobelastning
 'Weekly Strain - Product of weekly training load and monotony. Overall training stress.': 'Veckobelastning - Produkten av veckovis träningsbelastning och monotoni. Övergripande träningsstress.'

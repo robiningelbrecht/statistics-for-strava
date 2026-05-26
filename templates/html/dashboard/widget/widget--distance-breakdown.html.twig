@@ -26,7 +26,7 @@
                 <table class="data-table">
                     <thead>
                     <tr>
-                        <th scope="col" class="sticky left-0 bg-gray-50">
+                        <th scope="col" class="narrow sticky left-0 bg-gray-50">
 
                         </th>
                         <th scope="col" class="narrow">
@@ -50,7 +50,7 @@
                     {% for statistic in distanceBreakdown %}
                         <tr class="group/row">
                             <th scope="row"
-                                class="sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
+                                class="narrow sticky left-0 bg-white font-medium text-gray-900 whitespace-nowrap">
                                 <div>
                                     <a href="#" data-router-navigate="{{ relativeUrl('activities') }}" data-filters='{{ dataFilters('activities', {sportType: sportTypes, distance: {from: statistic.min, to: statistic.max, multiplier: 10}}) }}' class="text-blue-600 hover:underline">
                                         {{ statistic.label }}

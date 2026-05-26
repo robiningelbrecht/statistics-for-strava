@@ -77,7 +77,7 @@ final readonly class DaytimeStatsChart
         foreach ($this->daytimeStats->getData() as $statistic) {
             $data[] = [
                 'value' => $statistic['percentage'],
-                'name' => $statistic['daytime']->getEmoji().' '.$statistic['daytime']->trans($this->translator),
+                'name' => $statistic['daytime']->trans($this->translator),
             ];
         }
 
