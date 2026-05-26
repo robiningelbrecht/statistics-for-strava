@@ -12,7 +12,7 @@
                         </div>
                     </div>
                     <div class="flex items-baseline gap-1">
-                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getDistance().toFloat()|formatNumber(activity.getSportType().getActivityType().getDistancePrecision()) }}</span>
+                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getDistance()|convertMeasurement.toFloat()|formatNumber(activity.getSportType().getActivityType().getDistancePrecision()) }}</span>
                         <span class="text-xs font-medium text-gray-500">{{ renderUnitSymbol('distance') }}</span>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getPaceInSecPer100Meter()|formatPace() }}</span>
+                        <span class="text-2xl font-black tracking-tight text-gray-900">{{ activity.getPaceInSecPer100Meter()|convertMeasurement|formatPace() }}</span>
                         <span class="text-xs font-medium text-gray-500">{{ activity.getPaceInSecPer100Meter().getSymbol() }}</span>
                     </div>
                 </div>

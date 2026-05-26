@@ -17,6 +17,10 @@ import MilestoneFilter from "./features/milestones/milestone-filter";
 import DarkModeManager from "./components/dark-mode";
 import DropdownManager from "./components/dropdown";
 
+// Override webpack's compile-time publicPath so dynamic imports resolve under subpath deployments.
+const sfsBasePath = window.statisticsForStrava?.appUrl?.basePath?.replace(/^\/+|\/+$/g, '');
+__webpack_public_path__ = '/' + (sfsBasePath ? sfsBasePath + '/' : '') + 'js/dist/';
+
 const $main = document.querySelector("main");
 
 // Boot router.
