@@ -26,4 +26,16 @@
             @apply flex! items-center justify-center;
         }
     }
+
+    @keyframes leaflet-ctrl-scroll-zoom-fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    .leaflet-ctrl-scroll-zoom-warning::after {
+        content: attr(data-ctrl-scroll-zoom-message);
+        animation: leaflet-ctrl-scroll-zoom-fadein .8s forwards;
+        @apply absolute inset-0 flex justify-center items-center p-4 text-white text-center text-xl;
+        @apply pointer-events-none bg-black/50 z-[461];
+    }
 }
