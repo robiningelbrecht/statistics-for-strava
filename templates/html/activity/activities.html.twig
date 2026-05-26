@@ -413,12 +413,10 @@
 
                             </th>
                             <th scope="col">
-                                {% set convertedTotalDistance = activityTotals.getDistance()|convertMeasurement %}
-                                <span data-dataTable-summable="distance">{{ convertedTotalDistance.toFloat()|formatNumber(0) }}</span> {{ renderUnitSymbol('distance') }}
+                                <span data-dataTable-summable="distance">{{ activityTotals.getDistance()|formatMeasurement(0) }}</span> {{ renderUnitSymbol('distance') }}
                             </th>
                             <th scope="col">
-                                {% set convertedTotalElevation = activityTotals.getElevation()|convertMeasurement %}
-                                <span data-dataTable-summable="elevation">{{ convertedTotalElevation.toFloat()|formatNumber(0) }}</span> {{ renderUnitSymbol('elevation') }}
+                                <span data-dataTable-summable="elevation">{{ activityTotals.getElevation()|formatMeasurement(0) }}</span> {{ renderUnitSymbol('elevation') }}
                             </th>
                             <th scope="col">
                                 <span data-dataTable-summable="moving-time">{{ activityTotals.getMovingTimeInHours()|formatNumber(0) }}</span> h

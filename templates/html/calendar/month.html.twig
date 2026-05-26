@@ -25,7 +25,7 @@
             <ul class="hidden md:flex text-center mr-2 divide-x divide-gray-200">
                 <li class="flex flex-col pr-2 text-sm">
                     {% if statistics.distance %}
-                        <div>{{ statistics.distance|convertMeasurement.toFloat()|formatNumber(0) }}</div>
+                        <div>{{ statistics.distance|formatMeasurement(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.distance|convertMeasurement.getSymbol() }}</div>
                     {% else %}
                         0
@@ -33,7 +33,7 @@
                 </li>
                 <li class="flex flex-col px-2 text-sm">
                     {% if statistics.elevation %}
-                        <div>{{ statistics.elevation|convertMeasurement.toFloat()|formatNumber(0) }}</div>
+                        <div>{{ statistics.elevation|formatMeasurement(0) }}</div>
                         <div class="text-xs text-gray-500">{{ statistics.elevation|convertMeasurement.getSymbol() }} {{ "Elev."|trans|lower }}</div>
                     {% else %}
                         0
