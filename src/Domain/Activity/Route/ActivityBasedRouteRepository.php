@@ -10,6 +10,7 @@ use App\Domain\Activity\WorkoutType;
 use App\Domain\Activity\WorldType;
 use App\Infrastructure\Repository\DbalRepository;
 use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
@@ -49,7 +50,7 @@ final readonly class ActivityBasedRouteRepository extends DbalRepository impleme
                 activityId: ActivityId::fromString($result['activityId']),
                 name: $result['name'],
                 distance: Meter::from($result['distance'])->toKilometer(),
-                encodedPolyline: $result['polyline'],
+                coordinates: EncodedPolyline::fromString($result['polyline'])->decodeAndPairLatLng(),
                 routeGeography: RouteGeography::create(Json::decode($result['routeGeography'])),
                 sportType: SportType::from($result['sportType']),
                 isCommute: (bool) $result['isCommute'],

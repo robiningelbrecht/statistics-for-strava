@@ -9,18 +9,20 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
 use App\Infrastructure\Serialization\Escape;
 use App\Infrastructure\Time\Format\DateAndTimeFormat;
-use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 
 final readonly class Route implements \JsonSerializable
 {
+    /**
+     * @param array<int, array<float, float>> $coordinates
+     */
     private function __construct(
         private ActivityId $activityId,
         private string $name,
         private Kilometer $distance,
-        private string $encodedPolyline,
+        private array $coordinates,
         private RouteGeography $routeGeography,
         private SportType $sportType,
         private bool $isCommute,
@@ -32,11 +34,14 @@ final readonly class Route implements \JsonSerializable
     ) {
     }
 
+    /**
+     * @param array<int, array<float, float>> $coordinates
+     */
     public static function create(
         ActivityId $activityId,
         string $name,
         Kilometer $distance,
-        string $encodedPolyline,
+        array $coordinates,
         RouteGeography $routeGeography,
         SportType $sportType,
         bool $isCommute,
@@ -47,7 +52,7 @@ final readonly class Route implements \JsonSerializable
             activityId: $activityId,
             name: $name,
             distance: $distance,
-            encodedPolyline: $encodedPolyline,
+            coordinates: $coordinates,
             routeGeography: $routeGeography,
             sportType: $sportType,
             isCommute: $isCommute,
@@ -74,9 +79,12 @@ final readonly class Route implements \JsonSerializable
         return $this->distance;
     }
 
-    public function getEncodedPolyline(): EncodedPolyline
+    /**
+     * @return array<int, array<float, float>>
+     */
+    public function getCoordinates(): array
     {
-        return EncodedPolyline::fromString($this->encodedPolyline);
+        return $this->coordinates;
     }
 
     public function getRouteGeography(): RouteGeography
@@ -157,7 +165,7 @@ final readonly class Route implements \JsonSerializable
                 'isCommute' => $this->isCommute() ? 'true' : 'false',
                 'workoutType' => $this->getWorkoutType()?->value,
             ],
-            'coordinates' => $this->getEncodedPolyline()->decodeAndPairLatLng(),
+            'coordinates' => $this->getCoordinates(),
         ];
     }
 }

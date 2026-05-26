@@ -1,6 +1,7 @@
 import {pointToLineDistance, point, lineString} from "../../../libraries/turf";
 import L from 'leaflet';
 import {createFlyToPlacesControl, createMapToolsControl} from "../maps/leaflet-controls";
+import 'leaflet-gesture-handling';
 
 export default class HeatmapDrawer {
     constructor(wrapper, config, modalManager) {
@@ -12,6 +13,7 @@ export default class HeatmapDrawer {
         this.mainFeatureGroup = L.featureGroup();
         this.routePolylines = [];
         this.map = L.map(this.wrapper, {
+            gestureHandling: true,
             scrollWheelZoom: true,
             minZoom: 1,
             maxZoom: 21,
