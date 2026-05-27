@@ -1,4 +1,4 @@
-{% from 'html/milestones.html.twig' import milestoneTitle as milestoneTitle %}
+{% from 'html/milestones.html.twig' import milestoneTitle, previousMilestoneThreshold %}
 {% autoescape false %}
     <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold">
@@ -43,7 +43,7 @@
                     {% set previousMilestone = milestone.getPrevious() %}
                     <div class="mt-1 text-xs text-gray-400">
                         {{ "Previous"|trans }}:
-                        {{ previousMilestone.getThreshold()|renderMeasurement(0)|raw }}
+                        {{ previousMilestoneThreshold(milestone.getCategory(), previousMilestone) }}
                         {{ "on"|trans }} {{ previousMilestone.getAchievedOn()|formatDate('normal') }}
                     </div>
                 {% endif %}
