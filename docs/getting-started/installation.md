@@ -54,7 +54,7 @@ services:
   #   - Sending notifications when a new app version becomes available
   #
   # These tasks can be configured in the main configuration file under the `daemon` section:
-  #   https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/main-configuration
+  #   https://docs.getsfs.app/#/configuration/main-configuration
   #
   # If you prefer to trigger these tasks manually, you can omit this container entirely.
   daemon:

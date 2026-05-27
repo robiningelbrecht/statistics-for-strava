@@ -41,8 +41,8 @@ https://github.com/user-attachments/assets/81554f32-31be-4899-afd6-681ce3e7bcb6
 * **Activities** -  Browse a detailed list of everything you've done
 * **Monthly View** - Monthly stats with an interactive calendar
 * **Gear stats** - Track how much you've used each bike, shoe, etc.
-* **Custom gear** - Add custom gear setups  ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/custom-gear))
-* **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://statistics-for-strava-docs.robiningelbrecht.be/#/configuration/gear-maintenance))
+* **Custom gear** - Add custom gear setups  ([instructions](https://docs.getsfs.app/#/configuration/custom-gear))
+* **Maintenance Tracking** - Keep tabs on gear wear and tear ([instructions](https://docs.getsfs.app/#/configuration/gear-maintenance))
 * **Eddington** - For your distance milestones
 * **Segments & Efforts** - Dive into your segment history and times
 * **Heatmap** - Visualize where you’ve been active the most
@@ -57,7 +57,7 @@ https://github.com/user-attachments/assets/81554f32-31be-4899-afd6-681ce3e7bcb6
 ## 📖 Documentation
 
 Start off by showing some ❤️ and give this repo a star. 
-When you are done, head over to the [documentation](https://statistics-for-strava-docs.robiningelbrecht.be) to get started with the installation and configuration of Statistics for Strava.
+When you are done, head over to the [documentation](https://docs.getsfs.app) to get started with the installation and configuration of Statistics for Strava.
 
 ## 🫶 Sponsors
 
