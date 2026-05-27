@@ -1,3 +1,5 @@
+import { Dropdown } from 'flowbite';
+
 export default class DropdownManager {
     init(rootNode) {
         rootNode.querySelectorAll('[data-dropdown]').forEach(($triggerEl) => {

@@ -1,4 +1,5 @@
 import {eventBus, Events} from "../core/event-bus";
+import { Tabs } from 'flowbite';
 
 export default class TabsManager {
     init(rootNode) {
