@@ -1,2 +1,2 @@
-* [:fire: Live demo](https://statistics-for-strava.robiningelbrecht.be/dashboard)
+* [:fire: Live demo](https://demo.getsfs.app/)
 * [Discord](https://discord.gg/p4zpZyCHNc)

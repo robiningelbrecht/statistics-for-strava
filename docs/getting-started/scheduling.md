@@ -1,7 +1,7 @@
 # Scheduling
 
 Your data only updates when the import and build commands are run.
-If you have configured the [daemon](https://statistics-for-strava-docs.robiningelbrecht.be/#/getting-started/installation?id=docker-composeyml) container, these commands will run automatically.
+If you have configured the [daemon](https://docs.getsfs.app/#/getting-started/installation?id=docker-composeyml) container, these commands will run automatically.
 Alternatively, you can implement your own mechanism to perform these updates without relying on the built-in daemon container.
 
 ## Using the built-in crontab on your host system

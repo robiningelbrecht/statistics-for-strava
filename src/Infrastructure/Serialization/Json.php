@@ -24,7 +24,7 @@ final readonly class Json
             return json_decode($json ?: '', $assoc, max(1, $depth), JSON_THROW_ON_ERROR);
         } catch (\JsonException) {
             throw new \JsonException('Invalid JSON detected. This is usually caused by corrupted activity data.
-Please see the troubleshooting guide for steps to resolve the issue: https://statistics-for-strava-docs.robiningelbrecht.be/#/troubleshooting/import-build-fails for more information.');
+Please see the troubleshooting guide for steps to resolve the issue: https://docs.getsfs.app/#/troubleshooting/import-build-fails for more information.');
         }
     }
 
