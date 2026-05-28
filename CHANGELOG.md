@@ -1,3 +1,19 @@
+# [v4.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.3) - 2026-05-28
+
+## Bug fixes
+
+* Fixed rendering of previous milestones in the milestone dashboard widget
+* Convert all measurements to proper unit system
+
+## Technical details
+* ISSUE #2082: Convert all measurements to proper unit system by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2083
+* ISSUE #2085: Milestone dashboard widget does not render previous milestones correctly by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2086
+* ISSUE #2087: Bundle flowbite in app.min.js by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2088
+* ISSUE #2089: New Shoutrrr release - v0.15.1 by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2090
+* ISSUE #2094: Reference to new domain getsfs.app by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2095
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.2...v4.8.3
+
 # [v4.8.2](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.2) - 2026-05-26 
 
 ## Improvements
