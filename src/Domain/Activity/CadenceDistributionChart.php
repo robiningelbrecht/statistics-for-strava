@@ -12,6 +12,7 @@ final readonly class CadenceDistributionChart
         /** @var array<int, int> */
         private array $cadenceData,
         private int $averageCadence,
+        private int $labelMultiplier,
     ) {
     }
 
@@ -23,21 +24,10 @@ final readonly class CadenceDistributionChart
         int $averageCadence,
         ActivityType $activityType,
     ): self {
-        if (in_array($activityType, [ActivityType::RUN, ActivityType::WALK])) {
-            $doubledCadenceData = [];
-            foreach ($cadenceData as $cadence => $time) {
-                $doubledCadenceData[$cadence * 2] = $time;
-            }
-
-            return new self(
-                cadenceData: $doubledCadenceData,
-                averageCadence: $averageCadence * 2,
-            );
-        }
-
         return new self(
             cadenceData: $cadenceData,
             averageCadence: $averageCadence,
+            labelMultiplier: in_array($activityType, [ActivityType::RUN, ActivityType::WALK]) ? 2 : 1,
         );
     }
 
@@ -92,7 +82,7 @@ final readonly class CadenceDistributionChart
             ],
             'xAxis' => [
                 'type' => 'category',
-                'data' => $xAxisValues,
+                'data' => array_map(fn (int $value): int => $value * $this->labelMultiplier, $xAxisValues),
                 'axisTick' => [
                     'show' => false,
                 ],
@@ -141,7 +131,7 @@ final readonly class CadenceDistributionChart
                         ],
                         'data' => [
                             [
-                                'value' => $this->averageCadence,
+                                'value' => $this->averageCadence * $this->labelMultiplier,
                                 'coord' => [$xAxisValueAverageCadence, $yAxisMax * 0.9],
                             ],
                         ],
