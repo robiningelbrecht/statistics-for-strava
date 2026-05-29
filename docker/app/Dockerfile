@@ -2,7 +2,7 @@ FROM dunglas/frankenphp:1-php8.5-alpine
 
 WORKDIR /var/www
 
-# Run in production by default for all self-hosted instances. Real environment
+# Run in production by default for all self-hosted instances.
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
 
