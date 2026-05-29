@@ -108,6 +108,19 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
     }
 
+    public function testClearChatAINotEnabled(): void
+    {
+        $this->chatRepository
+            ->expects($this->never())
+            ->method('clear');
+
+        $requestHandler = $this->buildRequestHandler(
+            $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
+        );
+
+        $this->assertMatchesHtmlSnapshot($requestHandler->clearChat()->getContent());
+    }
+
     #[AllowMockObjectsWithoutExpectations]
     public function testChatSse(): void
     {
@@ -193,6 +206,17 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         $dispatchedCommands = $spyCommandBus->getDispatchedCommands();
         $this->assertCount(1, $dispatchedCommands);
         $this->assertInstanceOf(AddChatMessage::class, $dispatchedCommands[0]);
+    }
+
+    #[AllowMockObjectsWithoutExpectations]
+    public function testChatSseAINotEnabled(): void
+    {
+        $requestHandler = $this->buildRequestHandler(
+            $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-disabled')
+        );
+
+        $request = new Request(query: ['message' => 'What is my FTP?']);
+        $this->assertMatchesHtmlSnapshot($requestHandler->chatSse($request)->getContent());
     }
 
     private function buildRequestHandler(KernelProjectDir $kernelProjectDir): AIChatRequestHandler

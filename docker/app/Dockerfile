@@ -2,6 +2,10 @@ FROM dunglas/frankenphp:1-php8.5-alpine
 
 WORKDIR /var/www
 
+# Run in production by default for all self-hosted instances. Real environment
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
   bash \
