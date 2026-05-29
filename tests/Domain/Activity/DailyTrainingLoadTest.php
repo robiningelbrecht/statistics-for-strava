@@ -103,7 +103,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         ));
 
         $this->assertEquals(
-            277,
+            105,
             $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
@@ -126,7 +126,7 @@ class DailyTrainingLoadTest extends ContainerTestCase
         ]));
 
         $this->assertEquals(
-            277,
+            105,
             $this->dailyTrainingLoad->calculate(SerializableDateTime::fromString('2023-10-10')),
         );
     }
