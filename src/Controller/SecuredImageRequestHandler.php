@@ -1,0 +1,52 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Infrastructure\ValueObject\String\AllowedIpAddresses;
+use League\Flysystem\FilesystemOperator;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
+
+#[AsController]
+final readonly class SecuredImageRequestHandler
+{
+    public function __construct(
+        private FilesystemOperator $fileStorage,
+        private AllowedIpAddresses $allowedIps,
+    ) {
+    }
+
+    #[Route(path: '/secured-image/{path}', requirements: ['path' => '.+'], methods: ['GET'])]
+    public function handle(string $path, Request $request): Response
+    {
+        if (!$this->fileStorage->fileExists($path)) {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+
+        $isTrusted = $this->allowedIps->isEmpty() || $this->allowedIps->contains($request->headers->get('CF-Connecting-IP'));
+
+        if (!$isTrusted) {
+            // Not a trusted visitor: serve an anonymized, stable random photo instead of the real one.
+            $seed = pathinfo($path, PATHINFO_FILENAME);
+            [$width, $height] = 0 === crc32($seed) % 2 ? [800, 1200] : [1200, 800];
+
+            return new RedirectResponse(sprintf('https://picsum.photos/seed/%s/%d/%d', urlencode($seed), $width, $height));
+        }
+
+        $stream = $this->fileStorage->readStream($path);
+
+        return new StreamedResponse(
+            function () use ($stream): void {
+                fpassthru($stream);
+            },
+            Response::HTTP_OK,
+            ['Content-Type' => $this->fileStorage->mimeType($path)]
+        );
+    }
+}
