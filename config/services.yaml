@@ -7,6 +7,7 @@ parameters:
     env(APP_DEBUG): 0
     env(LOCK_DSN): 'flock'
     env(TZ): ''
+    env(SECURED_IMAGE_ALLOWED_IPS): ''
 
 services:
     # default configuration for services in *this* file
@@ -62,6 +63,10 @@ services:
     App\Infrastructure\ValueObject\Time\SerializableTimezone:
         factory: [ null, 'fromOptionalString' ]
         arguments: ['%env(string:TZ)%']
+
+    App\Infrastructure\ValueObject\String\AllowedIpAddresses:
+        factory: [ null, 'fromString' ]
+        arguments: ['%env(string:SECURED_IMAGE_ALLOWED_IPS)%']
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
         autoconfigure: false

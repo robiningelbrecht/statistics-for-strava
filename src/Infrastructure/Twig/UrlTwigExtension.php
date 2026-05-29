@@ -27,6 +27,14 @@ final readonly class UrlTwigExtension
         return Path::from($path, $this->appUrl)->toRelativePath();
     }
 
+    #[AsTwigFunction('securedImageUrl')]
+    public function securedImageUrl(string $imageUrl): string
+    {
+        $pathRelativeToFiles = ltrim((string) preg_replace('#^/?files/#', '', $imageUrl), '/');
+
+        return $this->toRelativeUrl('secured-image/'.$pathRelativeToFiles);
+    }
+
     #[AsTwigFunction('placeholderImage')]
     public function placeholderImage(?ImageOrientation $imageOrientation = null): string
     {

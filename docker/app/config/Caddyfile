@@ -53,6 +53,13 @@
 		file_server
 	}
 
+	# Block direct access to activity photos. The real files are only reachable
+	# through the IP-gated /secured-image/* route (handled by PHP/Symfony).
+	@activityPhotos path /files/activities/*
+	handle @activityPhotos {
+		respond 404
+	}
+
 	# Serve other /files/* from storage
 	handle /files/* {
 		header {
