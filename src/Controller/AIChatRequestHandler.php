@@ -74,14 +74,22 @@ final readonly class AIChatRequestHandler
     #[Route(path: '/chat/clear', methods: ['POST'], priority: 2)]
     public function clearChat(): Response
     {
+        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
+            return new Response('UI for AI not enabled', Response::HTTP_OK);
+        }
+
         $this->chatRepository->clear();
 
         return new Response(status: Response::HTTP_NO_CONTENT);
     }
 
     #[Route('/chat/sse', methods: ['GET'], priority: 2)]
-    public function chatSse(Request $request): EventStreamResponse
+    public function chatSse(Request $request): Response
     {
+        if (!AppConfig::isAIIntegrationWithUIEnabled()) {
+            return new Response('UI for AI not enabled', Response::HTTP_OK);
+        }
+
         return new EventStreamResponse(function (EventStreamResponse $response) use ($request): void {
             $message = $request->query->get('message');
             assert(is_string($message));
