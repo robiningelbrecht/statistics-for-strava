@@ -1,3 +1,22 @@
+# [v4.8.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.4) - 2026-05-29
+
+> [!WARNING]  
+> This release fixes an issue where log files stored under `storage/files/logs` could be accessed through the web server on publicly exposed SfS instances.
+> While the logs did not contain sensitive user data, they were never intended to be publicly accessible. Access to these files is now properly blocked.
+> Security and privacy are taken very seriously, and we apologize for not catching this earlier.
+
+> [!NOTE]  
+> We revisited the way training load is calculated and discovered that the current implementation was incorrect in certain cases.
+> As a result, users with many heart rate-based activities may notice significant changes in their training load numbers after updating.
+
+## Technical details
+* ISSUE #2093: Cadence distribution chart bars do not connect by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2097
+* Added anonymous analytics for docs by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2098
+* ISSUE #2033: Normalize daily TSS and daily TRIMP by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2100
+* ISSUE #2101: Allow demo to serve anonymized image by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2102
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.3...v4.8.4
+
 # [v4.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.3) - 2026-05-28
 
 ## Bug fixes
