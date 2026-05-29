@@ -17,7 +17,7 @@ final readonly class AllowedIpAddresses
     public static function fromString(string $string): self
     {
         $ipAddresses = array_values(array_filter(array_map(
-            'trim',
+            trim(...),
             explode(',', $string)
         )));
 
