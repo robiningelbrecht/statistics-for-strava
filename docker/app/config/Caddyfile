@@ -53,21 +53,24 @@
 		file_server
 	}
 
-	# Block direct access to activity photos. The real files are only reachable
-	# through the IP-gated /secured-image/* route (handled by PHP/Symfony).
-	@activityPhotos path /files/activities/*
-	handle @activityPhotos {
-		respond 404
+	# Only serve image and SVG files from storage, except the activity photos:
+	# those are only reachable through the IP-gated /secured-image/* route.
+	# Everything else is blocked.
+	@allowedFiles {
+		path /files/*.jpg /files/*.jpeg /files/*.png /files/*.gif /files/*.webp /files/*.avif /files/*.svg
+		not path /files/activities/*
 	}
-
-	# Serve other /files/* from storage
-	handle /files/* {
+	handle @allowedFiles {
 		header {
 			Cache-Control "public, max-age=31536000, immutable"
 		}
 
 		root * /var/www/storage
 		file_server
+	}
+
+	handle /files/* {
+		respond 404
 	}
 
 	# Serve /gear-maintenance/* from storage.

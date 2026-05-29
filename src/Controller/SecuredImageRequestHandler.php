@@ -22,7 +22,7 @@ final readonly class SecuredImageRequestHandler
     ) {
     }
 
-    #[Route(path: '/secured-image/{path}', requirements: ['path' => '.+'], methods: ['GET'])]
+    #[Route(path: '/secured-image/{path}', requirements: ['path' => '.+'], methods: ['GET'], priority: 2)]
     public function handle(string $path, Request $request): Response
     {
         if (!$this->fileStorage->fileExists($path)) {
