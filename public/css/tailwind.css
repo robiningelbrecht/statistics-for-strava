@@ -35,6 +35,7 @@
 @custom-variant aria-desc (&[aria-sort="descending"]);
 @custom-variant sidebar-collapsed (&:where([data-sidebar-collapsed], [data-sidebar-collapsed] *));
 @custom-variant fullscreen-enabled (&:where([data-fullscreen-enabled], [data-fullscreen-enabled] *));
+@custom-variant drawer-open (&:where(body:has(#drawer-navigation[aria-modal="true"]) *));
 
 @layer base {
     *,
