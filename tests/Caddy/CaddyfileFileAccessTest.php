@@ -5,6 +5,7 @@ namespace App\Tests\Caddy;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 
 class CaddyfileFileAccessTest extends TestCase
@@ -84,7 +85,7 @@ class CaddyfileFileAccessTest extends TestCase
     public static function tearDownAfterClass(): void
     {
         self::$caddy?->stop();
-        self::removeDirectory(self::$workDir);
+        new Filesystem()->remove(self::$workDir);
     }
 
     private static function writeTestSnippet(string $fixtures): string
@@ -113,21 +114,5 @@ class CaddyfileFileAccessTest extends TestCase
         }
 
         throw new \RuntimeException(sprintf('Caddy did not start listening on port %d. Output: %s', $port, self::$caddy?->getErrorOutput() ?? ''));
-    }
-
-    private static function removeDirectory(string $directory): void
-    {
-        if (!is_dir($directory)) {
-            return;
-        }
-
-        $items = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
-        foreach ($items as $item) {
-            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
-        }
-        rmdir($directory);
     }
 }
