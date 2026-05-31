@@ -17,7 +17,6 @@
 	}
 }
 
-# Path-routing rules, shared with the integration test (see the file for details).
 import /etc/frankenphp/snippets/paths.caddyfile
 
 :8080 {
@@ -31,7 +30,6 @@ import /etc/frankenphp/snippets/paths.caddyfile
 	}
 
 	# Path-routing rules (static html, /files/*, /gear-maintenance/*, /assets/*).
-	# Defined in docker/app/config/snippets/paths.caddyfile and guarded by an integration test.
 	import paths
 
 	# Serve everything else trough Symfony.
