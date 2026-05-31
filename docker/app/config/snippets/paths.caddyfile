@@ -1,0 +1,67 @@
+# Path-routing rules shared between the production Caddyfile and the integration test
+# (tests/Infrastructure/Caddy/CaddyfileFileAccessTest.php), so the test exercises the
+# live rules instead of a copy. The test reuses this file but rewrites the /var/www base
+# to a fixtures directory.
+#
+# This covers every path directive EXCEPT the PHP front-controller handle, which needs
+# the running app and therefore stays in the main Caddyfile.
+(paths) {
+	# Serve static .html from build/html
+	@staticBuildFiles {
+		path *.html
+	}
+	handle @staticBuildFiles {
+		handle /manifest.json {
+			root /var/www/public
+		}
+
+		handle {
+			root * /var/www/build/html
+			file_server
+		}
+	}
+
+	handle /files/* {
+		# Serve badge SVGs — no cache
+		@badges path /files/*-badge.svg
+		handle @badges {
+			header {
+				Cache-Control "no-cache, no-store, must-revalidate"
+			}
+
+			root * /var/www/storage
+			file_server
+		}
+
+		# Only serve image and SVG files from storage, except the activity photos:
+		# those are only reachable through the IP-gated /secured-image/* route.
+		# Everything else is blocked.
+		@allowedFiles {
+			path_regexp (?i)\.(jpe?g|png|gif|webp|avif|svg)$
+			path /files/*
+			not path /files/activities/*
+		}
+		handle @allowedFiles {
+			header {
+				Cache-Control "public, max-age=31536000, immutable"
+			}
+
+			root * /var/www/storage
+			file_server
+		}
+		respond 404
+	}
+
+	# Serve /gear-maintenance/* from storage.
+	handle /gear-maintenance/* {
+		root * /var/www/storage
+		file_server
+	}
+
+	# Cache static assets.
+	handle /assets/* {
+		header {
+			Cache-Control "public, max-age=86400"
+		}
+	}
+}

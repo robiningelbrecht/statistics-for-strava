@@ -62,6 +62,17 @@ jobs:
       - name: Run test suite
         run: vendor/bin/paratest --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml
 
+      - name: Setup Caddy
+        run: |
+          curl -fsSL -o caddy.tar.gz https://github.com/caddyserver/caddy/releases/download/v2.10.2/caddy_2.10.2_linux_amd64.tar.gz
+          tar -xzf caddy.tar.gz caddy
+          sudo install -m 0755 caddy /usr/bin/caddy
+          rm caddy.tar.gz
+          caddy version
+
+      - name: Run Caddy test suite
+        run: vendor/bin/paratest --testsuite caddy
+
       - name: Generate coverage report
         uses: clearlyip/code-coverage-report-action@v7
         id: code_coverage_report_action

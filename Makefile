@@ -35,6 +35,9 @@ composer:
 download-database:
 	scp $(user)@$(server):/home/docker/stacks/strava-statistics/storage/database/strava.db ./storage/database/strava.db
 
+download-assets:
+	scp -r $(user)@$(server):/home/docker/stacks/strava-statistics/storage/files ./storage/
+
 # Database migration helpers.
 migrate-diff:
 	@make console arg="doctrine:migrations:diff"
@@ -87,12 +90,6 @@ app-build-assets:
 	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/dist/tailwind.min.css --minify"
 	@make dcr cmd="npx @tailwindcss/cli -i public/css/tailwind.css -o public/css/tailwind.output.css"
 	@make dcr cmd="node_modules/.bin/webpack --config webpack.config.js"
-
-app-build-all:
-	@make build-containers
-	@make app-build-files
-	@make app-build-assets
-	@make build-containers
 
 app-run-docs:
 	docsify serve docs
