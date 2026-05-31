@@ -1,10 +1,4 @@
-# Path-routing rules shared between the production Caddyfile and the integration test
-# (tests/Infrastructure/Caddy/CaddyfileFileAccessTest.php), so the test exercises the
-# live rules instead of a copy. The test reuses this file but rewrites the /var/www base
-# to a fixtures directory.
-#
-# This covers every path directive EXCEPT the PHP front-controller handle, which needs
-# the running app and therefore stays in the main Caddyfile.
+# Path-routing rules cover every path directive EXCEPT the PHP front-controller handle.
 (paths) {
 	# Serve static .html from build/html
 	@staticBuildFiles {
