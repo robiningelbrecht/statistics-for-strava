@@ -39,6 +39,7 @@ RUN set -eux; \
 
 COPY docker/app/config/php.ini ${PHP_INI_DIR}/php.ini
 COPY docker/app/config/Caddyfile /etc/frankenphp/Caddyfile
+COPY docker/app/config/snippets/ /etc/frankenphp/snippets/
 COPY docker/app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 

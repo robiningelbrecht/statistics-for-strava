@@ -11,6 +11,7 @@
          failOnNotice="true"
          failOnSkipped="true"
          cacheDirectory=".phpunit.cache"
+         defaultTestSuite="default"
 >
     <php>
         <ini name="display_errors" value="1" />
@@ -24,8 +25,12 @@
         <bootstrap class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
     </extensions>
     <testsuites>
-        <testsuite name="Test Suite">
+        <testsuite name="default">
             <directory>tests</directory>
+            <exclude>tests/Caddy</exclude>
+        </testsuite>
+        <testsuite name="caddy">
+            <directory>tests/Caddy</directory>
         </testsuite>
     </testsuites>
     <source>

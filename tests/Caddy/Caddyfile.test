@@ -1,0 +1,16 @@
+# Test-only Caddy config for CaddyfileFileAccessTest.
+{
+	admin off
+	auto_https off
+	http_port {$SFS_TEST_PORT}
+}
+
+import {$SFS_TEST_SNIPPET}
+
+:{$SFS_TEST_PORT} {
+	root {$SFS_TEST_FIXTURES}/public
+	import paths
+	file_server {
+		hide *.php *.yaml *.yml */log
+	}
+}
