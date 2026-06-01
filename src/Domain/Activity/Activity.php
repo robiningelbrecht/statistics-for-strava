@@ -582,6 +582,11 @@ final class Activity implements SupportsAITooling
         return $this->elapsedTimeInSeconds;
     }
 
+    public function getElapsedTimeFormatted(): string
+    {
+        return $this->formatDurationAsClock($this->getElapsedTimeInSeconds());
+    }
+
     public function getUrl(): string
     {
         return 'https://www.strava.com/activities/'.$this->getId()->toUnprefixedString();
