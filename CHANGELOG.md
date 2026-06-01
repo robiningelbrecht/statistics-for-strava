@@ -1,3 +1,23 @@
+# [v4.8.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.5) - 2026-06-01
+
+## New features
+* Added activity elapsed time to the activity detail page
+
+## Improvements
+* Improved application security by tightening file access rules
+* Improved accessibility of the mobile navigation menu
+
+## Bug fixes
+* Fixed and refined Caddy server directives, with additional test coverage to prevent future regressions
+
+## Technical details
+* ISSUE #2104: Harden security by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2105
+* ISSUE #2106: Add button state to the mobile menu trigger by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2108
+* ISSUE #2107: Fix Caddy directives and add proper tests by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2109
+* ISSUE #2110: Activity elapsed time by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2111
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.4...v4.8.5
+
 # [v4.8.4](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.4) - 2026-05-29
 
 > [!WARNING]  
@@ -20,7 +40,6 @@
 # [v4.8.3](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.3) - 2026-05-28
 
 ## Bug fixes
-
 * Fixed rendering of previous milestones in the milestone dashboard widget
 * Convert all measurements to proper unit system
 
@@ -53,7 +72,6 @@
 # [v4.8.1](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.1) - 2026-05-23
 
 ## Bug fixes
-
 * Fixed ChunkLoadError: Loading chunk failed on instances served behind Cloudflare, where dynamically loaded JS chunks were being requested from the wrong
   URL due to interference from the Cloudflare Insights beacon.
 
