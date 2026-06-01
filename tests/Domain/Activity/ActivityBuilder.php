@@ -37,6 +37,7 @@ final class ActivityBuilder
     private readonly ?int $maxHeartRate;
     private readonly ?int $averageCadence;
     private int $movingTimeInSeconds = 10;
+    private int $elapsedTimeInSeconds = 10;
     private int $kudoCount = 1;
     private int $totalImageCount = 0;
     private ?string $deviceName = null;
@@ -95,6 +96,7 @@ final class ActivityBuilder
             maxHeartRate: $this->maxHeartRate,
             averageCadence: $this->averageCadence,
             movingTimeInSeconds: $this->movingTimeInSeconds,
+            elapsedTimeInSeconds: $this->elapsedTimeInSeconds,
             kudoCount: $this->kudoCount,
             deviceName: $this->deviceName,
             totalImageCount: $this->totalImageCount,
@@ -146,6 +148,13 @@ final class ActivityBuilder
     public function withMovingTimeInSeconds(int $movingTimeInSeconds): self
     {
         $this->movingTimeInSeconds = $movingTimeInSeconds;
+
+        return $this;
+    }
+
+    public function withElapsedTimeInSeconds(int $elapsedTimeInSeconds): self
+    {
+        $this->elapsedTimeInSeconds = $elapsedTimeInSeconds;
 
         return $this;
     }

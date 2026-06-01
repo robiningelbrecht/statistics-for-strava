@@ -108,6 +108,8 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'integer')]
         private readonly int $movingTimeInSeconds,
         #[ORM\Column(type: 'integer')]
+        private readonly int $elapsedTimeInSeconds,
+        #[ORM\Column(type: 'integer')]
         private readonly int $kudoCount,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
@@ -173,6 +175,7 @@ final class Activity implements SupportsAITooling
             maxHeartRate: isset($rawData['max_heartrate']) ? (int) round($rawData['max_heartrate']) : null,
             averageCadence: isset($rawData['average_cadence']) ? (int) round($rawData['average_cadence']) : null,
             movingTimeInSeconds: $rawData['moving_time'] ?? 0,
+            elapsedTimeInSeconds: $rawData['elapsed_time'] ?? 0,
             kudoCount: $rawData['kudos_count'] ?? 0,
             deviceName: $deviceName,
             totalImageCount: $rawData['total_photo_count'] ?? 0,
@@ -209,6 +212,7 @@ final class Activity implements SupportsAITooling
         ?int $maxHeartRate,
         ?int $averageCadence,
         int $movingTimeInSeconds,
+        int $elapsedTimeInSeconds,
         int $kudoCount,
         ?string $deviceName,
         int $totalImageCount,
@@ -240,6 +244,7 @@ final class Activity implements SupportsAITooling
             maxHeartRate: $maxHeartRate,
             averageCadence: $averageCadence,
             movingTimeInSeconds: $movingTimeInSeconds,
+            elapsedTimeInSeconds: $elapsedTimeInSeconds,
             kudoCount: $kudoCount,
             deviceName: $deviceName,
             totalImageCount: $totalImageCount,
@@ -570,6 +575,11 @@ final class Activity implements SupportsAITooling
     public function getMovingTimeFormatted(): string
     {
         return $this->formatDurationAsClock($this->getMovingTimeInSeconds());
+    }
+
+    public function getElapsedTimeInSeconds(): int
+    {
+        return $this->elapsedTimeInSeconds;
     }
 
     public function getUrl(): string

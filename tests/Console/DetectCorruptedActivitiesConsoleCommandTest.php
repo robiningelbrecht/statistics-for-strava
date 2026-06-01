@@ -38,11 +38,11 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
     public function testExecuteWithoutDataButNegativeConfirmation(): void
     {
         $this->getConnection()->executeStatement(
-            'INSERT INTO Activity (activityId, data, startDateTime, sportType, name, distance, 
-                                    elevation, averageSpeed, maxSpeed, movingTimeInSeconds, kudoCount,
-                                    totalImageCount, worldType) 
-                VALUES (:activityId, :data, :startDateTime, :sportType, :name, :distance, 
-                        :elevation, :averageSpeed, :maxSpeed, :movingTimeInSeconds, :kudoCount,
+            'INSERT INTO Activity (activityId, data, startDateTime, sportType, name, distance,
+                                    elevation, averageSpeed, maxSpeed, movingTimeInSeconds, elapsedTimeInSeconds, kudoCount,
+                                    totalImageCount, worldType)
+                VALUES (:activityId, :data, :startDateTime, :sportType, :name, :distance,
+                        :elevation, :averageSpeed, :maxSpeed, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount,
                         :totalImageCount, :worldType)',
             [
                 'activityId' => 'activity-test',
@@ -55,6 +55,7 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
                 'averageSpeed' => 4200,
                 'maxSpeed' => 4200,
                 'movingTimeInSeconds' => 4200,
+                'elapsedTimeInSeconds' => 4200,
                 'kudoCount' => 4200,
                 'totalImageCount' => 1,
                 'worldType' => WorldType::REAL_WORLD->value,
@@ -74,11 +75,11 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
     public function testExecuteWithoutDataButPositiveConfirmation(): void
     {
         $this->getConnection()->executeStatement(
-            'INSERT INTO Activity (activityId, data, startDateTime, sportType, name, distance, 
-                                    elevation, averageSpeed, maxSpeed, movingTimeInSeconds, kudoCount,
-                                    totalImageCount, worldType) 
-                VALUES (:activityId, :data, :startDateTime, :sportType, :name, :distance, 
-                        :elevation, :averageSpeed, :maxSpeed, :movingTimeInSeconds, :kudoCount,
+            'INSERT INTO Activity (activityId, data, startDateTime, sportType, name, distance,
+                                    elevation, averageSpeed, maxSpeed, movingTimeInSeconds, elapsedTimeInSeconds, kudoCount,
+                                    totalImageCount, worldType)
+                VALUES (:activityId, :data, :startDateTime, :sportType, :name, :distance,
+                        :elevation, :averageSpeed, :maxSpeed, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount,
                         :totalImageCount, :worldType)',
             [
                 'activityId' => 'activity-test',
@@ -91,6 +92,7 @@ class DetectCorruptedActivitiesConsoleCommandTest extends ConsoleCommandTestCase
                 'averageSpeed' => 4200,
                 'maxSpeed' => 4200,
                 'movingTimeInSeconds' => 4200,
+                'elapsedTimeInSeconds' => 4200,
                 'kudoCount' => 4200,
                 'totalImageCount' => 1,
                 'worldType' => WorldType::REAL_WORLD->value,

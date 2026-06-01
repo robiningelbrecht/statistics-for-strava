@@ -76,13 +76,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             activityId, startDateTime, sportType, activityType, worldType, name, description, distance,
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories, kilojoules,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
-            averageCadence,movingTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
+            averageCadence,movingTimeInSeconds, elapsedTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
             polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories, :kilojoules,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
-            :averageCadence, :movingTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
+            :averageCadence, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
             :polyline, :routeGeography, :weather, :gearId, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
@@ -109,6 +109,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'maxHeartRate' => $activity->getMaxHeartRate(),
             'averageCadence' => $activity->getAverageCadence(),
             'movingTimeInSeconds' => $activity->getMovingTimeInSeconds(),
+            'elapsedTimeInSeconds' => $activity->getElapsedTimeInSeconds(),
             'kudoCount' => $activity->getKudoCount(),
             'deviceName' => $activity->getDeviceName(),
             'totalImageCount' => $activity->getTotalImageCount(),
@@ -243,6 +244,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             maxHeartRate: isset($result['maxHeartRate']) ? (int) round($result['maxHeartRate']) : null,
             averageCadence: isset($result['averageCadence']) ? (int) round($result['averageCadence']) : null,
             movingTimeInSeconds: $result['movingTimeInSeconds'] ?: 0,
+            elapsedTimeInSeconds: $result['elapsedTimeInSeconds'] ?: 0,
             kudoCount: $result['kudoCount'] ?: 0,
             deviceName: $result['deviceName'],
             totalImageCount: $result['totalImageCount'] ?: 0,
