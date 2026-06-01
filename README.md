@@ -21,7 +21,6 @@
   <a href="#-showcase">Showcase</a> •
   <a href="#-documentation">Docs</a> •
   <a href="https://discord.gg/p4zpZyCHNc">Discord</a> •
-  <a href="#-sponsors">Sponsors</a>
 </p>
 
 <p align="center">
@@ -58,10 +57,4 @@ https://github.com/user-attachments/assets/81554f32-31be-4899-afd6-681ce3e7bcb6
 
 Start off by showing some ❤️ and give this repo a star. 
 When you are done, head over to the [documentation](https://docs.getsfs.app) to get started with the installation and configuration of Statistics for Strava.
-
-## 🫶 Sponsors
-
-This project is sponsored by [Blackfire.io](https://www.blackfire.io).
-
-![Blackfire logo](docs/assets/images/blackfire-logo.png)
 
