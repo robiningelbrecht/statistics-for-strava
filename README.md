@@ -27,6 +27,17 @@
   <a href="https://www.buymeacoffee.com/ingelbrecht" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 40px !important;" ></a>
 </p>
 
+> [!NOTE]
+> On June 1, 2026, Strava announced significant changes to its Developer Program, including a requirement for developers to have an active Strava subscription in order to access the API.
+>
+> Statistics for Strava has always depended heavily on the Strava API. As a result, these changes may have a significant impact on the future of the project.
+>
+> At this moment, I have not yet decided what the long-term future of Statistics for Strava will look like. I am currently evaluating the implications of the new Developer Program, possible alternatives, and what this means for both existing and future users.
+>
+> For now, the project remains available and existing installations will continue to work as long as Strava access remains available. However, I want to be transparent that future development, new installations, and long-term support are currently under review.
+>
+> Thank you to everyone who has supported the project, contributed code, reported issues, translated the application, or simply used Statistics for Strava over the years. I'll share more information once I have a clearer picture of the available options.
+
 ## 📸 Showcase
 
 > [!NOTE]
