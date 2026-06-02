@@ -8,18 +8,16 @@ export default class ModalManager {
         this.modalContent = this.modalSkeletonNode.querySelector('#modal-content');
         this.modalSpinner = this.modalSkeletonNode.querySelector('.spinner');
         this.modal = null;
-        this.clickHandlerRegistered = false;
     }
 
+    // Must be called exactly once at boot. The handler relies on closest(), so
+    // a single delegated listener on document covers page content, (re)loaded
+    // modal content and dynamically added rows alike. Registering it per
+    // rootNode used to leak listeners onto the reused #modal-skeleton node (one
+    // per opened modal); since the handler only calls stopPropagation() — not
+    // stopImmediatePropagation() — every one of them fired on a single click,
+    // pushing a duplicate history entry each time and breaking the back button.
     init() {
-        // Register the click delegation only once. The handler relies on
-        // closest(), so a single listener on document covers page content,
-        // (re)loaded modal content and dynamically added rows alike.
-        if (this.clickHandlerRegistered) {
-            return;
-        }
-        this.clickHandlerRegistered = true;
-
         document.addEventListener('click', (e) => {
             const node = e.target.closest('a[data-model-content-url]');
             if (!node) return;
