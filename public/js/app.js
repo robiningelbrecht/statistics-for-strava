@@ -56,7 +56,6 @@ const initElements = (rootNode) => {
     initPopovers();
     initAccordions();
 
-    modalManager.init(rootNode);
     dataTableManager.init(rootNode);
     chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
     leafletMapManager.init(rootNode);
@@ -65,6 +64,7 @@ const initElements = (rootNode) => {
 }
 
 sidebar.init();
+modalManager.init();
 darkModeManager.attachEventListeners();
 
 eventBus.on(Events.DARK_MODE_TOGGLED, ({darkModeEnabled}) => {
@@ -121,10 +121,6 @@ eventBus.on(Events.MODAL_LOADED, async ({node, modalName}) => {
         new Chat(node).render();
     }
 });
-eventBus.on(Events.DATA_TABLE_CLUSTER_CHANGED, ({node}) => {
-    modalManager.init(node);
-});
-
 const $modalAIChat = document.querySelector('a[data-modal-custom-ai]');
 if ($modalAIChat) {
     $modalAIChat.addEventListener('click', (e) => {
