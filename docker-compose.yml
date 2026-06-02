@@ -1,6 +1,8 @@
 services:
     php-cli:
-        build: docker/php-cli
+        build:
+            context: ./
+            dockerfile: docker/php-cli/Dockerfile
         container_name: 'statistics-for-strava-php-cli'
         volumes:
             - './:/var/www/'

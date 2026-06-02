@@ -96,6 +96,12 @@ eventBus.on(Events.PAGE_LOADED, async ({page, modalId}) => {
         await new PhotoWall($photoWallWrapper).render();
     }
 });
+eventBus.on(Events.MODAL_HISTORY_CHANGED, ({modalId}) => {
+    modalManager.close();
+    if (modalId) {
+        modalManager.open(modalId);
+    }
+});
 eventBus.on(Events.NAVIGATION_CLICKED, ({link}) => {
     if (!link || !link.hasAttribute('data-filters')) {
         return;

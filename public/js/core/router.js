@@ -99,6 +99,13 @@ export default class Router {
     registerBrowserBackAndForth() {
         window.onpopstate = e => {
             if (!e.state) return;
+
+            if (e.state.route === this.app.getAttribute('data-router-current')) {
+                this.app.setAttribute('data-modal-current', e.state.modal);
+                eventBus.emit(Events.MODAL_HISTORY_CHANGED, {modalId: e.state.modal});
+                return;
+            }
+
             this.renderContent(e.state.route, e.state.modal);
         };
     }

@@ -8,10 +8,19 @@ export default class ModalManager {
         this.modalContent = this.modalSkeletonNode.querySelector('#modal-content');
         this.modalSpinner = this.modalSkeletonNode.querySelector('.spinner');
         this.modal = null;
+        this.clickHandlerRegistered = false;
     }
 
-    init(rootNode) {
-        rootNode.addEventListener('click', (e) => {
+    init() {
+        // Register the click delegation only once. The handler relies on
+        // closest(), so a single listener on document covers page content,
+        // (re)loaded modal content and dynamically added rows alike.
+        if (this.clickHandlerRegistered) {
+            return;
+        }
+        this.clickHandlerRegistered = true;
+
+        document.addEventListener('click', (e) => {
             const node = e.target.closest('a[data-model-content-url]');
             if (!node) return;
 
