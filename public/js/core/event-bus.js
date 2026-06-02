@@ -1,6 +1,7 @@
 export const Events = Object.freeze({
     PAGE_LOADED:                'page:loaded',
     MODAL_LOADED:               'modal:loaded',
+    MODAL_HISTORY_CHANGED:      'modal:historyChanged',
     DARK_MODE_TOGGLED:          'darkMode:toggled',
     FULLSCREEN_ENABLED:         'fullscreen:enabled',
     TAB_CHANGED:                'tab:changed',
