@@ -15,7 +15,7 @@ use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
 use App\Domain\Gear\GearRepository;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
-use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\Config\Leaflet\LeafletConfig;use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Symfony\Component\Intl\Countries;
@@ -32,6 +32,7 @@ final readonly class IndexHtml
         private ImageRepository $imageRepository,
         private EddingtonCalculator $eddingtonCalculator,
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
+        private LeafletConfig $leafletConfig,
         private ?ProfilePictureUrl $profilePictureUrl,
         private ?AppSubTitle $appSubTitle,
         private AppUrl $appUrl,
@@ -78,6 +79,7 @@ final readonly class IndexHtml
                     'distanceSymbol' => $this->unitSystem->distanceSymbol(),
                     'elevationSymbol' => $this->unitSystem->elevationSymbol(),
                 ],
+                'leafletConfig' => $this->leafletConfig,
             ]),
         ];
     }

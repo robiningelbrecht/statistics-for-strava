@@ -4027,11 +4027,6 @@
       }
     }
   }
-  .focus\:bg-gray-100 {
-    &:focus {
-      background-color: var(--color-gray-100);
-    }
-  }
   .focus\:ring-0 {
     &:focus {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -4058,11 +4053,6 @@
   .focus\:ring-blue-500 {
     &:focus {
       --tw-ring-color: var(--color-blue-500);
-    }
-  }
-  .focus\:ring-gray-100 {
-    &:focus {
-      --tw-ring-color: var(--color-gray-100);
     }
   }
   .focus\:ring-gray-200 {
@@ -5546,17 +5536,12 @@ table.data-table {
   }
 }
 @layer utilities {
-  .leaflet-tile-pane {
+  .enable-grey-scale .leaflet-tile-pane {
     --tw-grayscale: grayscale(100%);
-    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  #heatmap .leaflet-tile-pane {
-    --tw-grayscale: grayscale(0%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   #heatmap.enable-grey-scale .leaflet-tile-pane {
     --tw-brightness: brightness(75%);
-    --tw-grayscale: grayscale(100%);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .leaflet-popup-content-wrapper .leaflet-popup-content {

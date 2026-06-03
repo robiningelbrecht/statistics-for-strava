@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Build\BuildPhotosHtml;
+namespace App\Infrastructure\Config\Photos;
 
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;

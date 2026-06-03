@@ -2,7 +2,6 @@
 
 namespace App\Tests\Domain\Activity\Image;
 
-use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -11,6 +10,7 @@ use App\Domain\Activity\Image\ActivityBasedImageRepository;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;

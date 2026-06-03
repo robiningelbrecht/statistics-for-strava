@@ -1,14 +1,10 @@
 @layer utilities {
-    .leaflet-tile-pane {
+    .enable-grey-scale .leaflet-tile-pane {
         @apply grayscale;
     }
 
-    #heatmap .leaflet-tile-pane {
-        @apply grayscale-0;
-    }
-
     #heatmap.enable-grey-scale .leaflet-tile-pane {
-        @apply grayscale brightness-75
+        @apply brightness-75
     }
 
     .leaflet-popup-content-wrapper .leaflet-popup-content {

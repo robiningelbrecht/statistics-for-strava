@@ -2,9 +2,9 @@
 
 namespace App\Domain\Activity\Image;
 
-use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Activity\SportType\SportTypes;
+use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\Time\Year;

@@ -85,8 +85,8 @@ appearance:
     # Leave this setting unchanged to use the default dashboard.
     # For a detailed guide on how to override these defaults, visit: https://docs.getsfs.app/#/configuration/dashboard-widgets
     layout: null
-  heatmap:
-    # Specifies the color of polylines drawn on the heatmap. Accepts any valid CSS color.
+  maps:
+    # Specifies the color of polylines drawn on the maps. Accepts any valid CSS color.
     # (e.g. "red", "#FF0000", "rgb(255,0,0)")
     polylineColor: '#fc6719'
     # Specifies the type of map to use. Must be a valid tile layer URL.
@@ -96,18 +96,19 @@ appearance:
     # tileLayerUrl:
     #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png'
     #  - 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}.png'
-    # Enables or disables grayscale styling on the heatmap.
+    # Enables or disables grayscale styling on the maps.
     enableGreyScale: true
-    # Optional, sets the initial center point of the heatmap as [latitude, longitude].
-    # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
-    # 🔥 PRO tip: You can easily get the latitude and longitude by navigating to a location in Google Maps. The coordinates are shown in the URL.
-    # Leave empty to auto-fit.
-    initialCenter: null
-    # initialCenter: [51.05, 3.72]
-    # Optional, sets the initial zoom level of the heatmap (1-18, where 1 is fully zoomed out and 18 is street-level).
-    # Must be used together with initialCenter.
-    initialZoom: null
-    # initialZoom: 12
+    heatmap:
+        # Optional, sets the initial center point of the heatmap as [latitude, longitude].
+        # When set together with initialZoom, the map will use this fixed viewport instead of auto-fitting to your most active area.
+        # 🔥 PRO tip: You can easily get the latitude and longitude by navigating to a location in Google Maps. The coordinates are shown in the URL.
+        # Leave empty to auto-fit.
+        initialCenter: null
+        # initialCenter: [51.05, 3.72]
+        # Optional, sets the initial zoom level of the heatmap (1-18, where 1 is fully zoomed out and 18 is street-level).
+        # Must be used together with initialCenter.
+        initialZoom: null
+        # initialZoom: 12
   photos:
     # Optional, an array of sport types for which photos should be hidden on the photos page. 
     # They will not be rendered, and they won't show up in the filters. 
