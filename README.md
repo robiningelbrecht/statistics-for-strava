@@ -20,7 +20,7 @@
 <p align="center">
   <a href="#-showcase">Showcase</a> •
   <a href="#-documentation">Docs</a> •
-  <a href="https://discord.gg/p4zpZyCHNc">Discord</a> •
+  <a href="https://discord.gg/p4zpZyCHNc">Discord</a>
 </p>
 
 <p align="center">

@@ -51,7 +51,7 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
 
         $this->strava->setConsoleOutput($command->getOutput());
 
-        $allActivityIds = $this->activityIdRepository->findAll();
+        $allActivityIds = $this->activityIdRepository->findAllImportedFromStravaApi();
         $activityIdsToDelete = array_combine(
             $allActivityIds->map(fn (ActivityId $activityId): string => (string) $activityId),
             $allActivityIds->toArray(),

@@ -73,13 +73,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
     public function add(ActivityWithRawData $activityWithRawData): void
     {
         $sql = 'INSERT INTO Activity (
-            activityId, startDateTime, sportType, activityType, worldType, name, description, distance,
+            activityId, startDateTime, sportType, activityType, worldType, importSource, name, description, distance,
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories, kilojoules,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, elapsedTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
             polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
-            :activityId, :startDateTime, :sportType, :activityType, :worldType, :name, :description, :distance,
+            :activityId, :startDateTime, :sportType, :activityType, :worldType, :importSource, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories, :kilojoules,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
@@ -92,6 +92,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'startDateTime' => $activity->getStartDate(),
             'sportType' => $activity->getSportType()->value,
             'worldType' => $activity->getWorldType()->value,
+            'importSource' => $activity->getImportSource()->value,
             'activityType' => $activity->getSportType()->getActivityType()->value,
             'name' => $activity->getOriginalName(),
             'description' => $activity->getDescription(),
@@ -226,6 +227,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             startDateTime: SerializableDateTime::fromString($result['startDateTime']),
             sportType: SportType::from($result['sportType']),
             worldType: WorldType::from($result['worldType']),
+            importSource: ImportSource::from($result['importSource']),
             name: $result['name'],
             description: $result['description'] ?: '',
             distance: Meter::from($result['distance'])->toKilometer(),
