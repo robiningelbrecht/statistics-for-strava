@@ -16,6 +16,7 @@ use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
+use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\DBAL\ArrayParameterType;
 
@@ -73,13 +74,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
     public function add(ActivityWithRawData $activityWithRawData): void
     {
         $sql = 'INSERT INTO Activity (
-            activityId, startDateTime, sportType, activityType, worldType, importSource, name, description, distance,
+            activityId, startDateTime, sportType, activityType, worldType, importSource, externalReferenceId, name, description, distance,
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories, kilojoules,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
             averageCadence,movingTimeInSeconds, elapsedTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
             polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
-            :activityId, :startDateTime, :sportType, :activityType, :worldType, :importSource, :name, :description, :distance,
+            :activityId, :startDateTime, :sportType, :activityType, :worldType, :importSource, :externalReferenceId, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories, :kilojoules,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
             :averageCadence, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
@@ -93,6 +94,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'sportType' => $activity->getSportType()->value,
             'worldType' => $activity->getWorldType()->value,
             'importSource' => $activity->getImportSource()->value,
+            'externalReferenceId' => $activity->getExternalReferenceId(),
             'activityType' => $activity->getSportType()->getActivityType()->value,
             'name' => $activity->getOriginalName(),
             'description' => $activity->getDescription(),
@@ -228,6 +230,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             sportType: SportType::from($result['sportType']),
             worldType: WorldType::from($result['worldType']),
             importSource: ImportSource::from($result['importSource']),
+            externalReferenceId: ExternalReferenceId::fromOptionalString($result['externalReferenceId'] ?? null),
             name: $result['name'],
             description: $result['description'] ?: '',
             distance: Meter::from($result['distance'])->toKilometer(),
