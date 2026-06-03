@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
@@ -23,6 +24,7 @@ final class ActivityBuilder
     private SerializableDateTime $startDateTime;
     private SportType $sportType = SportType::RIDE;
     private WorldType $worldType = WorldType::REAL_WORLD;
+    private ImportSource $importSource = ImportSource::STRAVA_API;
     private string $name = 'Test activity';
     private readonly string $description;
     private Kilometer $distance;
@@ -81,6 +83,7 @@ final class ActivityBuilder
             startDateTime: $this->startDateTime,
             sportType: $this->sportType,
             worldType: $this->worldType,
+            importSource: $this->importSource,
             name: $this->name,
             description: $this->description,
             distance: $this->distance,
@@ -260,6 +263,13 @@ final class ActivityBuilder
     public function withWorldType(WorldType $worldType): self
     {
         $this->worldType = $worldType;
+
+        return $this;
+    }
+
+    public function withImportSource(ImportSource $importSource): self
+    {
+        $this->importSource = $importSource;
 
         return $this;
     }

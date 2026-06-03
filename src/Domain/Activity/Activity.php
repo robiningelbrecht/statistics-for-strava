@@ -78,6 +78,8 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly WorldType $worldType,
         #[ORM\Column(type: 'string')]
+        private readonly ImportSource $importSource,
+        #[ORM\Column(type: 'string')]
         private readonly string $name,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $description,
@@ -157,6 +159,7 @@ final class Activity implements SupportsAITooling
             startDateTime: $startDate,
             sportType: SportType::from($rawData['sport_type']),
             worldType: $worldType,
+            importSource: ImportSource::STRAVA_API,
             name: $rawData['name'],
             description: $rawData['description'],
             distance: Kilometer::from(round($rawData['distance'] / 1000, 3)),
@@ -197,6 +200,7 @@ final class Activity implements SupportsAITooling
         SerializableDateTime $startDateTime,
         SportType $sportType,
         WorldType $worldType,
+        ImportSource $importSource,
         string $name,
         ?string $description,
         Kilometer $distance,
@@ -229,6 +233,7 @@ final class Activity implements SupportsAITooling
             startDateTime: $startDateTime,
             sportType: $sportType,
             worldType: $worldType,
+            importSource: $importSource,
             name: $name,
             description: $description,
             distance: $distance,
@@ -276,6 +281,11 @@ final class Activity implements SupportsAITooling
     public function getWorldType(): WorldType
     {
         return $this->worldType;
+    }
+
+    public function getImportSource(): ImportSource
+    {
+        return $this->importSource;
     }
 
     public function withSportType(SportType $sportType): self

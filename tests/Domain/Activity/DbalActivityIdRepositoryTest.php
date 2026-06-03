@@ -9,6 +9,7 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\DbalActivityIdRepository;
 use App\Domain\Activity\DbalActivityRepository;
+use App\Domain\Activity\ImportSource;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\GearRepository;
@@ -57,6 +58,42 @@ class DbalActivityIdRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             ActivityIds::fromArray([$activityOne->getId(), $activityTwo->getId(), $activityThree->getId()]),
             $this->activityIdRepository->findAll()
+        );
+    }
+
+    public function testFindAllImportedFromStravaApi(): void
+    {
+        $activityOne = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
+            ->withImportSource(ImportSource::STRAVA_API)
+            ->build();
+        $this->activityRepository->add(ActivityWithRawData::fromState(
+            $activityOne,
+            ['raw' => 'data']
+        ));
+        $activityTwo = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(2))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 13:00:34'))
+            ->withImportSource(ImportSource::FIT_FILE)
+            ->build();
+        $this->activityRepository->add(ActivityWithRawData::fromState(
+            $activityTwo,
+            ['raw' => 'data']
+        ));
+        $activityThree = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(3))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-09 14:00:34'))
+            ->withImportSource(ImportSource::STRAVA_API)
+            ->build();
+        $this->activityRepository->add(ActivityWithRawData::fromState(
+            $activityThree,
+            ['raw' => 'data']
+        ));
+
+        $this->assertEquals(
+            ActivityIds::fromArray([$activityOne->getId(), $activityThree->getId()]),
+            $this->activityIdRepository->findAllImportedFromStravaApi()
         );
     }
 
