@@ -15,7 +15,7 @@ class BuildActivitiesHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildActivitiesHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
         $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
         $this->assertFileSystemWrites(
-            fileSystem: $this->getContainer()->get('api.storage'),
+            fileSystem: $this->getContainer()->get('build_api.storage'),
             contentIsCompressed: true
         );
     }

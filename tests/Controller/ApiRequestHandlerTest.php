@@ -19,7 +19,7 @@ class ApiRequestHandlerTest extends ContainerTestCase
     public function testHandle(): void
     {
         /** @var \League\Flysystem\InMemory\InMemoryFilesystemAdapter $buildStorage */
-        $buildStorage = $this->getContainer()->get('api.storage');
+        $buildStorage = $this->getContainer()->get('build_api.storage');
         $buildStorage->write('el-file.json', Json::encodeAndCompress(['lol']), []);
 
         $response = $this->apiRequestHandler->handle('el-file.json');
@@ -36,7 +36,7 @@ class ApiRequestHandlerTest extends ContainerTestCase
     public function testHandleForGpxFile(): void
     {
         /** @var \League\Flysystem\InMemory\InMemoryFilesystemAdapter $buildStorage */
-        $buildStorage = $this->getContainer()->get('api.storage');
+        $buildStorage = $this->getContainer()->get('build_api.storage');
         $buildStorage->write('el-file.gpx', CompressedString::fromUncompressed('<xml>'), []);
 
         $response = $this->apiRequestHandler->handle('el-file.gpx');
@@ -84,7 +84,7 @@ class ApiRequestHandlerTest extends ContainerTestCase
     protected function setUp(): void
     {
         $this->apiRequestHandler = new ApiRequestHandler(
-            $this->getContainer()->get('api.storage'),
+            $this->getContainer()->get('build_api.storage'),
         );
     }
 }

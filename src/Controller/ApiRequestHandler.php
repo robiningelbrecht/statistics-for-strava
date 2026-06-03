@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final readonly class ApiRequestHandler
 {
     public function __construct(
-        private FilesystemOperator $apiStorage,
+        private FilesystemOperator $buildApiStorage,
     ) {
     }
 
@@ -25,11 +25,11 @@ final readonly class ApiRequestHandler
     public function handle(string $path): Response
     {
         try {
-            if (!$this->apiStorage->fileExists($path)) {
+            if (!$this->buildApiStorage->fileExists($path)) {
                 return new Response('', Response::HTTP_NOT_FOUND);
             }
 
-            $fileContents = $this->apiStorage->read($path);
+            $fileContents = $this->buildApiStorage->read($path);
 
             if (str_ends_with($path, '.gpx')) {
                 $response = new Response(CompressedString::fromCompressed($fileContents)->uncompress());

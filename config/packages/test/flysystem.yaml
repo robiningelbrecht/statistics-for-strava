@@ -15,5 +15,5 @@ flysystem:
         build_html.storage:
             adapter: 'memory'
 
-        api.storage:
+        build_api.storage:
             adapter: 'memory'
