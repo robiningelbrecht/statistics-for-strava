@@ -24,7 +24,7 @@ final readonly class TrainingLoadWidget implements Widget
         private ActivityHeartRateRepository $activityHeartRateRepository,
         private DailyTrainingLoad $dailyTrainingLoad,
         private QueryBus $queryBus,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private Environment $twig,
         private TranslatorInterface $translator,
         private Clock $clock,
@@ -57,7 +57,7 @@ final readonly class TrainingLoadWidget implements Widget
             till: $now,
         )))->getNumberOfRestDays();
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'training-load.html',
             $this->twig->render('html/dashboard/training-load.html.twig', [
                 'trainingLoadChart' => Json::encode(

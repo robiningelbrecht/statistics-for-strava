@@ -34,7 +34,7 @@ use Twig\Environment;
 final readonly class AIChatRequestHandler
 {
     public function __construct(
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private AgentInterface $neuronAIAgent,
         private ChatCommands $chatCommands,
         private ChatRepository $chatRepository,
@@ -48,7 +48,7 @@ final readonly class AIChatRequestHandler
     #[Route(path: '/ai/chat', methods: ['GET'], priority: 2)]
     public function handle(): Response
     {
-        if (!$this->buildStorage->fileExists('index.html')) {
+        if (!$this->buildHtmlStorage->fileExists('index.html')) {
             return new RedirectResponse(Path::from('/', $this->appUrl)->toRelativePath(), Response::HTTP_FOUND);
         }
         if (!AppConfig::isAIIntegrationWithUIEnabled()) {

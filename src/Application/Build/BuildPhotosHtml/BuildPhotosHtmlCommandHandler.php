@@ -22,7 +22,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
         private Countries $countries,
         private DefaultEnabledPhotoFilters $defaultEnabledPhotoFilters,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -32,7 +32,7 @@ final readonly class BuildPhotosHtmlCommandHandler implements CommandHandler
 
         $images = $this->imageRepository->findAll();
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'photos.html',
             $this->twig->load('html/photos.html.twig')->render([
                 'images' => $images,

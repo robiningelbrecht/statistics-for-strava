@@ -1,8 +1,8 @@
 {
     "id": "http://localhost:8080/",
     "name": "Statistics for Strava | Robin Ingelbrecht",
-    "short_name": "Strava Statistics",
-    "description": "Strava Statistics is a self-hosted web app designed to provide you with better stats.",
+    "short_name": "Statistics for Strava",
+    "description": "Statistics for Strava is a self-hosted web app designed to provide you with better stats.",
     "categories": [
         "strava",
         "statistics",

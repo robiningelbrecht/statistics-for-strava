@@ -31,7 +31,7 @@ class BuildManifestCommandHandlerTest extends ContainerTestCase
         ]));
 
         /** @var FilesystemOperator $publicStorage */
-        $publicStorage = $this->getContainer()->get('public.storage');
+        $publicStorage = $this->getContainer()->get('build_html.storage');
         $publicStorage->write('manifest.json', '{"id":"[APP_HOST]","name":"[APP_NAME]","short_name":"Strava Statistics","description":"Strava Statistics is a self-hosted web app designed to provide you with better stats.","categories":["strava","statistics","utilities"],"start_url":"/","scope":"[APP_HOST]","display":"standalone","display_override":["fullscreen","minimal-ui"],"orientation":"portrait","theme_color":"#F26822","background_color":"#f9fafb","icons":[{"src":"[APP_BASE_PATH]/assets/images/manifest/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"/assets/images/manifest/icon-192.maskable.png","sizes":"192x192","type":"image/png","purpose":"maskable"},{"src":"/assets/images/manifest/icon-512.png","sizes":"512x512","type":"image/png"},{"src":"/assets/images/manifest/icon-512.maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"},{"src":"/assets/images/manifest/icon-512.png","sizes":"any","type":"image/png"},{"src":"/assets/images/manifest/icon-512.maskable.png","sizes":"any","type":"image/png","purpose":"maskable"}],"screenshots":[{"src":"/assets/images/manifest/screenshots/dashboard.jpeg","sizes":"750x1600","type":"image/jpeg","form_factor":"narrow","label":"Dashboard"},{"src":"/assets/images/manifest/screenshots/heatmap.jpeg","sizes":"750x1600","type":"image/jpeg","form_factor":"narrow","label":"Heatmap"}]}');
 
         $this->commandBus->dispatch(new BuildManifest());
@@ -40,17 +40,17 @@ class BuildManifestCommandHandlerTest extends ContainerTestCase
 
     public function testThatManifestContainsPlaceholders(): void
     {
-        $manifestContents = file_get_contents($this->getContainer()->get(KernelProjectDir::class).'/public/manifest.json');
+        $manifestContents = file_get_contents($this->getContainer()->get(KernelProjectDir::class).'/templates/manifest.json');
 
         $this->assertStringContainsString(
             '[APP_HOST]',
             $manifestContents,
-            'The manifest.json file should contain the [APP_HOST] placeholder. You probably need to run "git checkout origin/master -- public/manifest.json"'
+            'The manifest.json file should contain the [APP_HOST] placeholder.'
         );
         $this->assertStringContainsString(
             '[APP_NAME]',
             $manifestContents,
-            'The manifest.json file should contain the [APP_NAME] placeholder. You probably need to run "git checkout origin/master -- public/manifest.json"'
+            'The manifest.json file should contain the [APP_NAME] placeholder.'
         );
     }
 

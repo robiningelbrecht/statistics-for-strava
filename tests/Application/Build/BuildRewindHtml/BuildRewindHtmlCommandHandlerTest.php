@@ -35,7 +35,7 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
         ));
 
         $this->commandBus->dispatch(new BuildRewindHtml(SerializableDateTime::fromString('2025-10-01T00:00:00+00:00')));
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 
     public function testHandleWhenNoRewindsToCompare(): void
@@ -57,6 +57,6 @@ class BuildRewindHtmlCommandHandlerTest extends BuildAppFilesTestCase
         ));
 
         $this->commandBus->dispatch(new BuildRewindHtml(SerializableDateTime::fromString('2023-10-01T00:00:00+00:00')));
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 }

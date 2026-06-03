@@ -26,7 +26,7 @@ class BuildGearStatsHtmlCommandHandlerTest extends BuildAppFilesTestCase
         ));
 
         $this->commandBus->dispatch(new BuildGearStatsHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 
     public function testHandleWithoutUnspecifiedGear(): void
@@ -51,6 +51,6 @@ class BuildGearStatsHtmlCommandHandlerTest extends BuildAppFilesTestCase
         ));
 
         $this->commandBus->dispatch(new BuildGearStatsHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 }

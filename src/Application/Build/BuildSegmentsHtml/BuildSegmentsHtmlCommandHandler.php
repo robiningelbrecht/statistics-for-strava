@@ -29,7 +29,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
         private SportTypeRepository $sportTypeRepository,
         private Countries $countries,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private FilesystemOperator $apiStorage,
         private UnitSystem $unitSystem,
         private TranslatorInterface $translator,
@@ -64,7 +64,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
                     );
                 }
 
-                $this->buildStorage->write(
+                $this->buildHtmlStorage->write(
                     'segment/'.$segment->getId().'.html',
                     $this->twig->load('html/segment/segment.html.twig')->render([
                         'segment' => $segment,
@@ -106,7 +106,7 @@ final readonly class BuildSegmentsHtmlCommandHandler implements CommandHandler
             (string) Json::encodeAndCompress($dataDatableRows),
         );
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'segments.html',
             $this->twig->load('html/segment/segments.html.twig')->render([
                 'sportTypes' => $importedSportTypes,

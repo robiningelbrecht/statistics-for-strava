@@ -227,7 +227,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
 
         return new AIChatRequestHandler(
-            buildStorage: $this->buildStorage,
+            buildHtmlStorage: $this->buildStorage,
             neuronAIAgent: $this->neuronAIAgent,
             chatCommands: ChatCommands::fromArray([]),
             chatRepository: $this->chatRepository,
@@ -249,7 +249,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
         );
 
         return new AIChatRequestHandler(
-            buildStorage: $this->buildStorage,
+            buildHtmlStorage: $this->buildStorage,
             neuronAIAgent: $agent,
             chatCommands: ChatCommands::fromArray([]),
             chatRepository: $chatRepository,
@@ -265,7 +265,7 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->buildStorage = $this->getContainer()->get('build.storage');
+        $this->buildStorage = $this->getContainer()->get('build_html.storage');
         $this->neuronAIAgent = $this->createStub(AgentInterface::class);
         $this->chatRepository = $this->createMock(ChatRepository::class);
     }

@@ -20,7 +20,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
         private BestEffortsCalculator $bestEffortsCalculator,
         private TranslatorInterface $translator,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -43,7 +43,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
             }
 
             foreach ($activityType->getDistancesForBestEffortCalculation() as $distance) {
-                $this->buildStorage->write(
+                $this->buildHtmlStorage->write(
                     strtolower(sprintf(
                         'best-efforts/%s/%s-%s.html',
                         $activityType->value,
@@ -63,7 +63,7 @@ final readonly class BuildBestEffortsHtmlCommandHandler implements CommandHandle
             return;
         }
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'best-efforts.html',
             $this->twig->load('html/best-efforts/best-efforts.html.twig')->render([
                 'bestEffortsCharts' => $bestEffortsCharts,

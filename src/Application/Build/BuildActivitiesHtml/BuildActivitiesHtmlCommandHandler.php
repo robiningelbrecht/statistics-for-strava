@@ -62,7 +62,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
         private Countries $countries,
         private UnitSystem $unitSystem,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private FilesystemOperator $apiStorage,
         private TranslatorInterface $translator,
     ) {
@@ -84,7 +84,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             translator: $this->translator,
         );
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'activities.html',
             $this->twig->load('html/activity/activities.html.twig')->render([
                 'sportTypes' => $importedSportTypes,
@@ -259,7 +259,7 @@ final readonly class BuildActivitiesHtmlCommandHandler implements CommandHandler
             } catch (EntityNotFound) {
             }
 
-            $this->buildStorage->write(
+            $this->buildHtmlStorage->write(
                 'activity/'.$activity->getId().'.html',
                 $this->twig->load($templateName)->render([
                     'activity' => $activity,

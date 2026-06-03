@@ -47,7 +47,7 @@ class ConfigureAppLocaleCommandHandlerTest extends ContainerTestCase
         $this->provideFullTestSet();
         $this->commandBus->dispatch(new BuildIndexHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
 
-        $fileSystem = $this->getContainer()->get('build.storage');
+        $fileSystem = $this->getContainer()->get('build_html.storage');
         foreach ($fileSystem->listContents('/', true) as $item) {
             $path = $item->path();
 

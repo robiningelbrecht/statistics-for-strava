@@ -22,7 +22,7 @@ class AppRequestHandlerTest extends ContainerTestCase
     public function testHandle(): void
     {
         /** @var \League\Flysystem\InMemory\InMemoryFilesystemAdapter $buildStorage */
-        $buildStorage = $this->getContainer()->get('build.storage');
+        $buildStorage = $this->getContainer()->get('build_html.storage');
         $buildStorage->write('index.html', 'I am the index', []);
 
         $this->strava
@@ -60,7 +60,7 @@ class AppRequestHandlerTest extends ContainerTestCase
     protected function setUp(): void
     {
         $this->appRequestHandler = new AppRequestHandler(
-            $this->getContainer()->get('build.storage'),
+            $this->getContainer()->get('build_html.storage'),
             $this->strava = $this->createMock(Strava::class),
             $this->getContainer()->get(Environment::class),
         );
