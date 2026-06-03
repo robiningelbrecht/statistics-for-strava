@@ -22,6 +22,7 @@ jobs:
           php-version: '8.5'
           coverage: xdebug
           extensions: zstd
+          ini-values: zend.assertions=1
 
       # https://github.com/marketplace/actions/checkout
       - name: Checkout
