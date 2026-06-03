@@ -3304,6 +3304,9 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
+  .whitespace-pre-line {
+    white-space: pre-line;
+  }
   .datatable-sorter {
     .datatable-wrapper .datatable-table thead th & {
       text-transform: uppercase;
@@ -3575,6 +3578,14 @@
   .\*\:px-4 {
     :is(& > *) {
       padding-inline: calc(var(--spacing) * 4);
+    }
+  }
+  .group-open\/desc\:line-clamp-none {
+    &:is(:where(.group\/desc):is([open], :popover-open, :open) *) {
+      overflow: visible;
+      display: block;
+      -webkit-box-orient: horizontal;
+      -webkit-line-clamp: unset;
     }
   }
   .group-open\/section\:rotate-180 {
