@@ -19,7 +19,7 @@ final readonly class BuildRecordingDevicesCommandHandler implements CommandHandl
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private UnitSystem $unitSystem,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -28,7 +28,7 @@ final readonly class BuildRecordingDevicesCommandHandler implements CommandHandl
         assert($command instanceof BuildRecordingDevices);
 
         $recordingDevices = $this->recordingDeviceRepository->findAll();
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'gear/recording-devices.html',
             $this->twig->load('html/gear/recording-device/recording-devices.html.twig')->render([
                 'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),
@@ -37,7 +37,7 @@ final readonly class BuildRecordingDevicesCommandHandler implements CommandHandl
             ]),
         );
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'gear/recording-devices/info.html',
             $this->twig->load('html/gear/recording-device/recording-device-info.html.twig')->render([
                 'devices' => $recordingDevices,

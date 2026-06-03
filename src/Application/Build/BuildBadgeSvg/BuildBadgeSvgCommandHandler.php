@@ -36,7 +36,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private Environment $twig,
         private QueryBus $queryBus,
         private FilesystemOperator $fileStorage,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -97,7 +97,7 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
             }
         }
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'badge.html',
             $this->twig->load('html/badges.html.twig')->render([
                 'zwiftLevel' => $this->zwiftLevel,

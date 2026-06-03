@@ -21,7 +21,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
         private EddingtonCalculator $eddingtonCalculator,
         private UnitSystem $unitSystem,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -54,7 +54,7 @@ final readonly class BuildEddingtonHtmlCommandHandler implements CommandHandler
             );
         }
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'eddington.html',
             $this->twig->load('html/eddington.html.twig')->render([
                 'activeUnitSystem' => $this->unitSystem,

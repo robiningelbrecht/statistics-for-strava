@@ -59,7 +59,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
         private QueryBus $queryBus,
         private UnitSystem $unitSystem,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -326,13 +326,13 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 'isAllTimeRewind' => FindAvailableRewindOptions::ALL_TIME === $availableRewindOption,
             ];
 
-            $this->buildStorage->write(
+            $this->buildHtmlStorage->write(
                 sprintf('rewind/%s.html', $availableRewindOption),
                 $this->twig->load('html/rewind/rewind.html.twig')->render($render),
             );
 
             if ($availableRewindOptions[0] == $availableRewindOption) {
-                $this->buildStorage->write(
+                $this->buildHtmlStorage->write(
                     'rewind.html',
                     $this->twig->load('html/rewind/rewind.html.twig')->render($render),
                 );
@@ -366,13 +366,13 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                 ]);
 
                 if ($availableRewindOptionRight == $defaultRewindYearToCompareWith) {
-                    $this->buildStorage->write(
+                    $this->buildHtmlStorage->write(
                         sprintf('rewind/%s/compare.html', $availableRewindOptionLeft),
                         $render
                     );
                 }
 
-                $this->buildStorage->write(
+                $this->buildHtmlStorage->write(
                     sprintf('rewind/%s/compare/%s.html', $availableRewindOptionLeft, $availableRewindOptionRight),
                     $render
                 );

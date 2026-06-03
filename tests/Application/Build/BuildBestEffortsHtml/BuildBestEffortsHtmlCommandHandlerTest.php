@@ -12,6 +12,6 @@ class BuildBestEffortsHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->provideFullTestSet();
 
         $this->commandBus->dispatch(new BuildBestEffortsHtml());
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 }

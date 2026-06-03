@@ -88,12 +88,12 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
         ));
 
         $this->commandBus->dispatch(new BuildGearMaintenanceHtml());
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 
     public function testHandleWhenDisabled(): void
     {
-        $fileStorage = $this->getContainer()->get('build.storage');
+        $fileStorage = $this->getContainer()->get('build_html.storage');
 
         new BuildGearMaintenanceHtmlCommandHandler(
             gearMaintenanceConfig: GearMaintenanceConfig::fromArray([]),
@@ -102,7 +102,7 @@ class BuildGearMaintenanceHtmlCommandHandlerTest extends BuildAppFilesTestCase
             maintenanceTaskProgressCalculator: $this->getContainer()->get(MaintenanceTaskProgressCalculator::class),
             gearMaintenanceStorage: $fileStorage,
             twig: $this->getContainer()->get(Environment::class),
-            buildStorage: $fileStorage,
+            buildHtmlStorage: $fileStorage,
             translator: $this->getContainer()->get(TranslatorInterface::class),
         )->handle(
             new BuildGearMaintenanceHtml()

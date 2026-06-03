@@ -15,7 +15,7 @@ final readonly class BuildMilestonesHtmlCommandHandler implements CommandHandler
     public function __construct(
         private MilestoneCollector $milestoneCollector,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -25,7 +25,7 @@ final readonly class BuildMilestonesHtmlCommandHandler implements CommandHandler
 
         $milestones = $this->milestoneCollector->discoverAll();
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'milestones.html',
             $this->twig->load('html/milestones.html.twig')->render([
                 'milestones' => $milestones,

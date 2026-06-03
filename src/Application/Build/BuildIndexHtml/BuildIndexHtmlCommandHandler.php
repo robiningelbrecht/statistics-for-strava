@@ -17,7 +17,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
     public function __construct(
         private IndexHtml $indexHtml,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -30,7 +30,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
         assert($athlete instanceof Athlete);
 
         $easterEggPageUrl = Uuid::uuid5(Uuid::NAMESPACE_DNS, $athlete->getAthleteId());
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'index.html',
             $this->twig->load('html/index.html.twig')->render([
                 'router' => Router::SINGLE_PAGE,
@@ -39,7 +39,7 @@ final readonly class BuildIndexHtmlCommandHandler implements CommandHandler
             ]),
         );
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             sprintf('%s.html', $easterEggPageUrl),
             $this->twig->load('html/easter-egg.html.twig')->render(),
         );

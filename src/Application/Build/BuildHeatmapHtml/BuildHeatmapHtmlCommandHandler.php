@@ -28,7 +28,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
         private UrlTwigExtension $urlTwigExtension,
         private UnitSystem $unitSystem,
         private DateAndTimeFormat $dateAndTimeFormat,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private FilesystemOperator $apiStorage,
     ) {
     }
@@ -55,7 +55,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
             (string) Json::encodeAndCompress($enrichedRoutes),
         );
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'heatmap.html',
             $this->twig->load('html/heatmap.html.twig')->render([
                 'numberOfRoutes' => count($enrichedRoutes),

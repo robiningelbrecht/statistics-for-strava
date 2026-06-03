@@ -15,7 +15,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
     public function __construct(
         private Widgets $widgets,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -23,7 +23,7 @@ final readonly class BuildDashboardHtmlCommandHandler implements CommandHandler
     {
         assert($command instanceof BuildDashboardHtml);
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'dashboard.html',
             $this->twig->load('html/dashboard/dashboard.html.twig')->render([
                 'widgets' => $this->widgets,

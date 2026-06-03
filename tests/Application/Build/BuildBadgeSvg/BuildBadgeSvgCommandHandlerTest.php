@@ -29,7 +29,7 @@ class BuildBadgeSvgCommandHandlerTest extends BuildAppFilesTestCase
         $this->commandBus->dispatch(new BuildBadgeSvg(SerializableDateTime::fromString('2023-10-17 16:15:04')));
 
         $fileSystems = [
-            $this->getContainer()->get('build.storage'),
+            $this->getContainer()->get('build_html.storage'),
             $this->getContainer()->get('file.storage'),
         ];
 

@@ -12,6 +12,6 @@ class BuildMilestonesHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->provideFullTestSet();
 
         $this->commandBus->dispatch(new BuildMilestonesHtml());
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 }

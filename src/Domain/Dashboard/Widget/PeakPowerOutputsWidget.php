@@ -27,7 +27,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
         private ActivityPowerRepository $activityPowerRepository,
         private ActivityTypeRepository $activityTypeRepository,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -101,7 +101,7 @@ final readonly class PeakPowerOutputsWidget implements Widget
             );
         }
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'power-output.html',
             $this->twig->load('html/dashboard/power-output.html.twig')->render([
                 'powerOutputChart' => Json::encode(

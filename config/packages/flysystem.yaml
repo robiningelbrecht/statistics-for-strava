@@ -6,11 +6,6 @@ flysystem:
             options:
                 directory: '%kernel.project_dir%'
                 lock: 0
-        public.storage:
-            adapter: 'local'
-            options:
-                directory: '%kernel.project_dir%/public'
-                lock: 0
         file.storage:
             adapter: 'local'
             options:
@@ -26,7 +21,7 @@ flysystem:
             options:
                 directory: '%kernel.project_dir%/storage/gear-maintenance'
                 lock: 0
-        build.storage:
+        build-html.storage:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%/build/html'

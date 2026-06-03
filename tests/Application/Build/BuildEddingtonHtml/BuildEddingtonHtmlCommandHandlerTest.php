@@ -13,6 +13,6 @@ class BuildEddingtonHtmlCommandHandlerTest extends BuildAppFilesTestCase
         $this->provideFullTestSet();
 
         $this->commandBus->dispatch(new BuildEddingtonHtml(SerializableDateTime::fromString('2023-10-17 16:15:04')));
-        $this->assertFileSystemWrites($this->getContainer()->get('build.storage'));
+        $this->assertFileSystemWrites($this->getContainer()->get('build_html.storage'));
     }
 }

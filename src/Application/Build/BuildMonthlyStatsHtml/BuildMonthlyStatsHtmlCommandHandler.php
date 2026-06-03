@@ -25,7 +25,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
         private EnrichedActivities $enrichedActivities,
         private QueryBus $queryBus,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
     ) {
     }
 
@@ -44,7 +44,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
 
         $monthlyStats = $this->queryBus->ask(new FindMonthlyStats());
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'monthly-stats.html',
             $this->twig->load('html/calendar/monthly-stats.html.twig')->render([
                 'monthlyStatistics' => $monthlyStats,
@@ -56,7 +56,7 @@ final readonly class BuildMonthlyStatsHtmlCommandHandler implements CommandHandl
 
         /** @var Month $month */
         foreach ($allMonths as $month) {
-            $this->buildStorage->write(
+            $this->buildHtmlStorage->write(
                 'month/month-'.$month->getId().'.html',
                 $this->twig->load('html/calendar/month.html.twig')->render([
                     'hasPreviousMonth' => $month->getId() != $allActivities->getFirstActivityStartDate()->format(Month::MONTH_ID_FORMAT),

@@ -39,7 +39,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         private UnitSystem $unitSystem,
         private QueryBus $queryBus,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -63,7 +63,7 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
             $activeGear->add($unspecifiedGear);
         }
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'gear.html',
             $this->twig->load('html/gear/gear.html.twig')->render([
                 'maintenanceTaskIsDue' => !$this->maintenanceTaskProgressCalculator->getGearIdsThatHaveDueTasks()->isEmpty(),

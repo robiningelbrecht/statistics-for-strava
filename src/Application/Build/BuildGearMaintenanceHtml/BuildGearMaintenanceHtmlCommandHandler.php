@@ -28,7 +28,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         private MaintenanceTaskProgressCalculator $maintenanceTaskProgressCalculator,
         private FilesystemOperator $gearMaintenanceStorage,
         private Environment $twig,
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
     ) {
     }
@@ -38,7 +38,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         assert($command instanceof BuildGearMaintenanceHtml);
 
         $gears = $this->gearRepository->findAll();
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'gear/info.html',
             $this->twig->load('html/gear/gear-info.html.twig')->render([
                 'gears' => $gears,
@@ -46,7 +46,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         );
 
         if (!$this->gearMaintenanceConfig->isFeatureEnabled()) {
-            $this->buildStorage->write(
+            $this->buildHtmlStorage->write(
                 'gear/maintenance.html',
                 $this->twig->load('html/gear/maintenance/gear-maintenance-disabled.html.twig')->render()
             );
@@ -132,7 +132,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         $validMaintenanceTaskTags = $maintenanceTaskTags->filterOnValid();
         $allGearComponents = $this->gearMaintenanceConfig->getEnrichedGearComponents($validMaintenanceTaskTags);
 
-        $this->buildStorage->write(
+        $this->buildHtmlStorage->write(
             'gear/maintenance.html',
             $this->twig->load('html/gear/maintenance/gear-maintenance.html.twig')->render([
                 'errors' => $errors,
@@ -144,7 +144,7 @@ final readonly class BuildGearMaintenanceHtmlCommandHandler implements CommandHa
         );
 
         foreach ($gearsThatAreAttachedToComponents as $gear) {
-            $this->buildStorage->write(
+            $this->buildHtmlStorage->write(
                 sprintf('gear/maintenance/history/%s.html', $gear->getId()),
                 $this->twig->load('html/gear/maintenance/gear-maintenance-history.html.twig')->render([
                     'gear' => $gear,

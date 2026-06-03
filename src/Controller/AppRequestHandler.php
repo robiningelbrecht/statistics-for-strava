@@ -18,7 +18,7 @@ use Twig\Environment;
 final readonly class AppRequestHandler
 {
     public function __construct(
-        private FilesystemOperator $buildStorage,
+        private FilesystemOperator $buildHtmlStorage,
         private Strava $strava,
         private Environment $twig,
     ) {
@@ -27,8 +27,8 @@ final readonly class AppRequestHandler
     #[Route(path: '/{wildcard?}', requirements: ['wildcard' => '.*'], methods: ['GET'], priority: -10)]
     public function handle(): Response
     {
-        if ($this->buildStorage->fileExists('index.html')) {
-            return new Response($this->buildStorage->read('index.html'), Response::HTTP_OK);
+        if ($this->buildHtmlStorage->fileExists('index.html')) {
+            return new Response($this->buildHtmlStorage->read('index.html'), Response::HTTP_OK);
         }
         try {
             $this->strava->verifyAccessToken();
