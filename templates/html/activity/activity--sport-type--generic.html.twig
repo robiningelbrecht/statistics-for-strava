@@ -12,7 +12,9 @@
                     </a>
                 </h3>
                 {% if activity.getDescription() %}
-                    <div class="mb-3 text-xs text-gray-500 mt-1 line-clamp-1">{{ activity.getDescription() }}</div>
+                    <details class="group/desc mb-3 mt-1">
+                        <summary class="list-none cursor-pointer text-xs text-gray-500 line-clamp-1 group-open/desc:line-clamp-none whitespace-pre-line">{{ activity.getDescription() }}</summary>
+                    </details>
                 {% endif %}
             </div>
             <div class="flex items-center gap-2 shrink-0">
