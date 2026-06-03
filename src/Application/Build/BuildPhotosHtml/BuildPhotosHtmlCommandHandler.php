@@ -7,6 +7,7 @@ namespace App\Application\Build\BuildPhotosHtml;
 use App\Application\Countries;
 use App\Domain\Activity\Image\ImageRepository;
 use App\Domain\Activity\SportType\SportTypeRepository;
+use App\Infrastructure\Config\Photos\DefaultEnabledPhotoFilters;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;

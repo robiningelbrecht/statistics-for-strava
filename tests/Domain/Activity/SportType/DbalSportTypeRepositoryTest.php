@@ -2,7 +2,6 @@
 
 namespace App\Tests\Domain\Activity\SportType;
 
-use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -10,6 +9,7 @@ use App\Domain\Activity\SportType\DbalSportTypeRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypes;
 use App\Domain\Activity\SportType\SportTypesSortingOrder;
+use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use App\Tests\ContainerTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Build\BuildPhotosHtml;
+namespace App\Tests\Infrastructure\Config\Photos;
 
-use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\SportType\SportType;
+use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use PHPUnit\Framework\TestCase;
 
 class HidePhotosForSportTypesTest extends TestCase

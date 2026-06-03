@@ -4,9 +4,10 @@ import {createMapToolsControl} from "./leaflet-controls";
 import './ctrl-scroll-zoom';
 
 export default class LeafletMap {
-    constructor(mapNode, data) {
+    constructor(mapNode, data, config) {
         this.mapNode = mapNode;
         this.data = data;
+        this.config = config;
 
         this.map = L.map(mapNode, {
             ctrlScrollZoom: true,
@@ -18,9 +19,10 @@ export default class LeafletMap {
         });
 
         if (data.tileLayer) {
-            L.tileLayer(data.tileLayer).addTo(this.map);
+            this.config.tileLayerUrls.forEach((tileLayerUrl) => {
+                L.tileLayer(tileLayerUrl).addTo(this.map);
+            });
         }
-
     }
 
     async addRoutes() {
@@ -29,7 +31,7 @@ export default class LeafletMap {
 
         for (const coordinates of polylines) {
             L.polyline(coordinates, {
-                color: '#fc6719',
+                color: this.config.polylineColor,
                 weight: 2,
                 opacity: 0.9,
                 lineJoin: 'round',

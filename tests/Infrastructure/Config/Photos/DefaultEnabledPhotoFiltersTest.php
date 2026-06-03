@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Build\BuildPhotosHtml;
+namespace App\Tests\Infrastructure\Config\Photos;
 
-use App\Application\Build\BuildPhotosHtml\DefaultEnabledPhotoFilters;
 use App\Domain\Activity\SportType\SportType;
+use App\Infrastructure\Config\Photos\DefaultEnabledPhotoFilters;
 use App\Infrastructure\Serialization\Json;
 use PHPUnit\Framework\TestCase;
 

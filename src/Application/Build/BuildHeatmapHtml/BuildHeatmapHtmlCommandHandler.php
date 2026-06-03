@@ -8,6 +8,7 @@ use App\Domain\Activity\Route\Route;
 use App\Domain\Activity\Route\RouteRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypeRepository;
+use App\Infrastructure\Config\Leaflet\HeatmapConfig;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Serialization\Json;

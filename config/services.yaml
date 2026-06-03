@@ -29,6 +29,30 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\Infrastructure\Config\Leaflet\LeafletConfig:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@=app_config("appearance.maps.polylineColor", "#fc6719")',
+            '@=app_config("appearance.maps.tileLayerUrl", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")',
+            '@=app_config("appearance.maps.enableGreyScale", true)',
+        ]
+
+    App\Infrastructure\Config\Leaflet\HeatmapConfig:
+        factory: [ null, 'create' ]
+        arguments: [
+            '@App\Infrastructure\Config\Leaflet\LeafletConfig',
+            '@=app_config("appearance.maps.heatmap.initialCenter", [])',
+            '@=app_config("appearance.maps.heatmap.initialZoom", 12)'
+        ]
+
+    App\Infrastructure\Config\Photos\DefaultEnabledPhotoFilters:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
+
+    App\Infrastructure\Config\Photos\HidePhotosForSportTypes:
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
+
     App\Infrastructure\Http\ErrorResponseExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
@@ -89,24 +113,6 @@ services:
     App\Application\ProfilePictureUrl:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("general.profilePictureUrl")']
-
-    App\Application\Build\BuildHeatmapHtml\HeatmapConfig:
-        factory: [ null, 'create' ]
-        arguments: [
-            '@=app_config("appearance.heatmap.polylineColor", "#fc6719")',
-            '@=app_config("appearance.heatmap.tileLayerUrl", "https://tile.openstreetmap.org/{z}/{x}/{y}.png")',
-            '@=app_config("appearance.heatmap.enableGreyScale", true)',
-            '@=app_config("appearance.heatmap.initialCenter", [])',
-            '@=app_config("appearance.heatmap.initialZoom", 12)'
-        ]
-
-    App\Application\Build\BuildPhotosHtml\DefaultEnabledPhotoFilters:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
-
-    App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes:
-      factory: [ null, 'from' ]
-      arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
 
     App\Application\Import\ImportActivities\ActivityVisibilitiesToImport:
       factory: [ null, 'from' ]

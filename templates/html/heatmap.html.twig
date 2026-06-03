@@ -123,7 +123,7 @@
         </div>
         <!-- HEATMAP -->
         <div id="heatmap" data-heatmap-config='{{ heatmapConfig|json_encode}}' data-leaflet-routes='{{ relativeUrl('api/heatmap/routes.json') }}'
-             class="grid grid-cols-1 h-[calc(100vh-235px)] rounded-lg {{ heatmapConfig.enableGreyScale() ? 'enable-grey-scale' : '' }}">
+             class="grid grid-cols-1 h-[calc(100vh-235px)] rounded-lg {{ heatmapConfig.getLeafletConfig().enableGreyScale() ? 'enable-grey-scale' : '' }}">
         </div>
         <div class="hidden lg:block z-10000 absolute bottom-3 left-3 py-2 px-4 bg-white border border-gray-200 rounded-lg shadow-xs text-xs">
             {% set percentage = (numberOfCountriesWithWorkouts / 195 * 100)|formatNumber(0) %}

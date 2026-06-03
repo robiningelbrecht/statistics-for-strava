@@ -2,7 +2,6 @@
 
 namespace App\Tests\Domain\Activity;
 
-use App\Application\Build\BuildPhotosHtml\HidePhotosForSportTypes;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityType;
@@ -12,6 +11,7 @@ use App\Domain\Activity\SportType\DbalSportTypeRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\SportType\SportTypesSortingOrder;
 use App\Domain\Activity\SportTypeBasedActivityTypeRepository;
+use App\Infrastructure\Config\Photos\HidePhotosForSportTypes;
 use App\Tests\ContainerTestCase;
 
 class SportTypeBasedActivityTypeRepositoryTest extends ContainerTestCase
