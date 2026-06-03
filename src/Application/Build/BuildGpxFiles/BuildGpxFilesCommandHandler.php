@@ -17,7 +17,7 @@ final readonly class BuildGpxFilesCommandHandler implements CommandHandler
     public function __construct(
         private GpxSerializer $serializer,
         private ActivityStreamRepository $activityStreamRepository,
-        private FilesystemOperator $apiStorage,
+        private FilesystemOperator $buildApiStorage,
         private FilesystemOperator $fileStorage,
     ) {
     }
@@ -33,13 +33,13 @@ final readonly class BuildGpxFilesCommandHandler implements CommandHandler
         $activityIds = $this->activityStreamRepository->findActivityIdsByStreamType(StreamType::TIME);
         foreach ($activityIds as $activityId) {
             $gpxFileLocation = sprintf('activity/%s/route.gpx', $activityId->toUnprefixedString());
-            if ($this->apiStorage->fileExists($gpxFileLocation)) {
+            if ($this->buildApiStorage->fileExists($gpxFileLocation)) {
                 continue;
             }
             if (!$serializedGpx = $this->serializer->serialize($activityId)) {
                 continue;
             }
-            $this->apiStorage->write(
+            $this->buildApiStorage->write(
                 location: $gpxFileLocation,
                 contents: (string) CompressedString::fromUncompressed($serializedGpx),
             );

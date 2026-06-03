@@ -29,7 +29,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
         private UnitSystem $unitSystem,
         private DateAndTimeFormat $dateAndTimeFormat,
         private FilesystemOperator $buildHtmlStorage,
-        private FilesystemOperator $apiStorage,
+        private FilesystemOperator $buildApiStorage,
     ) {
     }
 
@@ -50,7 +50,7 @@ final readonly class BuildHeatmapHtmlCommandHandler implements CommandHandler
                 ->withRelativeActivityUri($this->urlTwigExtension->toRelativeUrl('activity/'.$route->getActivityId().'.html'));
         }
 
-        $this->apiStorage->write(
+        $this->buildApiStorage->write(
             'heatmap/routes.json',
             (string) Json::encodeAndCompress($enrichedRoutes),
         );
