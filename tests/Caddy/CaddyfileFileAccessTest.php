@@ -41,6 +41,7 @@ class CaddyfileFileAccessTest extends TestCase
     public static function provideAccessRules(): iterable
     {
         yield 'static html is served' => ['/page.html', 200, null];
+        yield 'manifest.json is served' => ['/manifest.json', 200, null];
         yield 'asset is served and cached' => ['/assets/app.css', 200, 'max-age=86400'];
         yield 'gear-maintenance file is served' => ['/gear-maintenance/manual.pdf', 200, null];
         yield 'top-level image is served, cached immutably' => ['/files/sample.png', 200, 'immutable'];
