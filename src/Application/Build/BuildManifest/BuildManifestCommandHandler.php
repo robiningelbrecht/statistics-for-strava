@@ -17,7 +17,7 @@ final readonly class BuildManifestCommandHandler implements CommandHandler
         private AthleteRepository $athleteRepository,
         private AppUrl $appUrl,
         private KernelProjectDir $kernelProjectDir,
-        private FilesystemOperator $buildHtmlStorage,
+        private FilesystemOperator $buildStorage,
     ) {
     }
 
@@ -32,6 +32,6 @@ final readonly class BuildManifestCommandHandler implements CommandHandler
         $manifest = str_replace('[APP_HOST]', (string) $this->appUrl, $manifest);
         $manifest = str_replace('[APP_BASE_PATH]', $this->appUrl->getBasePath() ?? '', $manifest);
 
-        $this->buildHtmlStorage->write('manifest.json', $manifest);
+        $this->buildStorage->write('manifest.json', $manifest);
     }
 }
