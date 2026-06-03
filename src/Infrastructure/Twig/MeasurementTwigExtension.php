@@ -58,7 +58,7 @@ final readonly class MeasurementTwigExtension
             }
 
             return sprintf(
-                '%s<span class="text-xxs ml-px">%s</span>',
+                '%s<span class="text-xxs ml-px whitespace-nowrap">%s</span>',
                 $formattedNumber,
                 $convertedMeasurement->getSymbol()
             );
