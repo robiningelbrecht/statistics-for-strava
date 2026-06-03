@@ -27,6 +27,7 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPer100Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
+use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\String\Name;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
@@ -79,6 +80,8 @@ final class Activity implements SupportsAITooling
         private readonly WorldType $worldType,
         #[ORM\Column(type: 'string')]
         private readonly ImportSource $importSource,
+        #[ORM\Column(type: 'string', nullable: true)]
+        private readonly ?ExternalReferenceId $externalReferenceId,
         #[ORM\Column(type: 'string')]
         private readonly string $name,
         #[ORM\Column(type: 'string', nullable: true)]
@@ -160,6 +163,7 @@ final class Activity implements SupportsAITooling
             sportType: SportType::from($rawData['sport_type']),
             worldType: $worldType,
             importSource: ImportSource::STRAVA_API,
+            externalReferenceId: ExternalReferenceId::fromString($rawData['external_id']),
             name: $rawData['name'],
             description: $rawData['description'],
             distance: Kilometer::from(round($rawData['distance'] / 1000, 3)),
@@ -201,6 +205,7 @@ final class Activity implements SupportsAITooling
         SportType $sportType,
         WorldType $worldType,
         ImportSource $importSource,
+        ?ExternalReferenceId $externalReferenceId,
         string $name,
         ?string $description,
         Kilometer $distance,
@@ -234,6 +239,7 @@ final class Activity implements SupportsAITooling
             sportType: $sportType,
             worldType: $worldType,
             importSource: $importSource,
+            externalReferenceId: $externalReferenceId,
             name: $name,
             description: $description,
             distance: $distance,
@@ -286,6 +292,11 @@ final class Activity implements SupportsAITooling
     public function getImportSource(): ImportSource
     {
         return $this->importSource;
+    }
+
+    public function getExternalReferenceId(): ?ExternalReferenceId
+    {
+        return $this->externalReferenceId;
     }
 
     public function withSportType(SportType $sportType): self
