@@ -15,6 +15,13 @@
 
 ---
 
+> [!NOTE]
+> On June 1, 2026, Strava announced significant changes to its Developer Program,
+> including a requirement for developers to have an active Strava subscription in order to access the API.
+>
+> We are exploring possibilities to serve people with an active Strava subscription as well as people that want to move away from Strava.
+> Keep an eye out on future release notes or join our Discord server to stay up to date.
+
 # :camera_flash: Showcase
 
 > [!NOTE]
