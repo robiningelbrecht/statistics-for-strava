@@ -1,0 +1,9 @@
+[
+    {
+        "commandName": "App\\Application\\RunStravaImport\\RunStravaImport",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    }
+]

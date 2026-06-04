@@ -1,0 +1,58 @@
+[
+    {
+        "commandName": "App\\Application\\StravaImport\\ImportAthlete\\ImportAthlete",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\ImportActivities\\ImportActivities",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\ImportGear\\ImportGear",
+        "payload": {
+            "output": {},
+            "restrictToActivityIds": null
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\ProcessRawActivityData\\ProcessRawActivityData",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\ImportSegments\\ImportSegments",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\ImportChallenges\\ImportChallenges",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\CalculateActivityMetrics\\CalculateActivityMetrics",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\StravaImport\\DeleteActivitiesMarkedForDeletion\\DeleteActivitiesMarkedForDeletion",
+        "payload": {
+            "output": {}
+        }
+    }
+]

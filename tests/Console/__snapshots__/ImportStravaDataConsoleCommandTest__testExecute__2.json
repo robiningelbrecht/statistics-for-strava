@@ -1,9 +1,0 @@
-[
-    {
-        "commandName": "App\\Application\\RunImport\\RunImport",
-        "payload": {
-            "output": {},
-            "restrictToActivityIds": null
-        }
-    }
-]
