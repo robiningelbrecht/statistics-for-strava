@@ -61,6 +61,27 @@ class SystemCronTest extends ContainerTestCase
         );
     }
 
+    public function testItSkipsActionsThatDoNotSupportTheConfiguredImportMode(): void
+    {
+        $configuredCronActions = ConfiguredCronActions::fromConfig([
+            [
+                'action' => 'fake',
+                'expression' => '* * * * *',
+                'enabled' => true,
+            ],
+        ]);
+        $runnableCronActions = [
+            new FakeRunnableCronAction(supportsConfiguredImportMode: false),
+        ];
+
+        $cron = new SystemCron(
+            runnableCronActions: $runnableCronActions,
+            configuredCronActions: $configuredCronActions,
+        );
+
+        $this->assertEquals([], iterator_to_array($cron));
+    }
+
     public function testItShouldThrowOnInvalidAction(): void
     {
         $configuredCronActions = ConfiguredCronActions::fromConfig([

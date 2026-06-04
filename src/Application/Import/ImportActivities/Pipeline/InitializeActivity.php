@@ -58,7 +58,7 @@ final readonly class InitializeActivity implements ActivityImportStep
         } catch (EntityNotFound) {
         }
 
-        $activity = Activity::createFromRawData($rawStravaData);
+        $activity = Activity::createFromRawStravaData($rawStravaData);
 
         return $context->withActivity($activity);
     }

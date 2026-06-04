@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application;
 
 use App\Application\RunBuild\RunBuild;
+use App\Application\RunImport\ImportMode;
 use App\Application\RunImport\RunImport;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
@@ -33,12 +34,18 @@ final readonly class importDataAndBuildAppCronAction implements RunnableCronActi
         private AppUrl $appUrl,
         private Mutex $mutex,
         private MigrationRunner $migrationRunner,
+        private ImportMode $importMode,
     ) {
     }
 
     public function getId(): string
     {
         return 'importDataAndBuildApp';
+    }
+
+    public function supportsConfiguredImportMode(): bool
+    {
+        return $this->importMode->isStravaApi();
     }
 
     public function requiresDatabaseSchemaToBeUpdated(): bool

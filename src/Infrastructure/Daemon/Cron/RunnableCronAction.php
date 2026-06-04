@@ -12,6 +12,12 @@ interface RunnableCronAction
 {
     public function getId(): string;
 
+    /**
+     * Whether this action is active for the configured import mode. Unsupported actions are never
+     * registered or scheduled by the daemon, regardless of the daemon config `enabled` flag.
+     */
+    public function supportsConfiguredImportMode(): bool;
+
     public function requiresDatabaseSchemaToBeUpdated(): bool;
 
     /**

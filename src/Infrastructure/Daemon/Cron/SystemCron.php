@@ -30,11 +30,16 @@ final class SystemCron implements Cron
                 continue;
             }
             $id = $configuredCronAction['action'];
+            $runnable = $runnableCronActionsKeyedById[$id] ?? throw new \InvalidArgumentException(sprintf('Cron action "%s" does not exists.', $id));
+
+            if (!$runnable->supportsConfiguredImportMode()) {
+                continue;
+            }
 
             $this->enabledCronActions[$id] = CronAction::create(
                 id: $id,
                 expression: new CronExpression($configuredCronAction['expression']),
-                runnable: $runnableCronActionsKeyedById[$id] ?? throw new \InvalidArgumentException(sprintf('Cron action "%s" does not exists.', $id)),
+                runnable: $runnable,
             );
         }
     }

@@ -9,9 +9,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class FakeRunnableCronAction implements RunnableCronAction
 {
+    public function __construct(
+        private readonly bool $supportsConfiguredImportMode = true,
+    ) {
+    }
+
     public function getId(): string
     {
         return 'fake';
+    }
+
+    public function supportsConfiguredImportMode(): bool
+    {
+        return $this->supportsConfiguredImportMode;
     }
 
     public function getMutexTtl(): int
