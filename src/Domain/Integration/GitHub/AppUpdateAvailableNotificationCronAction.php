@@ -24,6 +24,11 @@ final readonly class AppUpdateAvailableNotificationCronAction implements Runnabl
         return 'appUpdateAvailableNotification';
     }
 
+    public function supportsConfiguredImportMode(): bool
+    {
+        return true;
+    }
+
     public function requiresDatabaseSchemaToBeUpdated(): bool
     {
         return true;

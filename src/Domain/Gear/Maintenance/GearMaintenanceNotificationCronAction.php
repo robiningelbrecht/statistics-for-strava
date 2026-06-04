@@ -25,6 +25,11 @@ final readonly class GearMaintenanceNotificationCronAction implements RunnableCr
         return 'gearMaintenanceNotification';
     }
 
+    public function supportsConfiguredImportMode(): bool
+    {
+        return true;
+    }
+
     public function requiresDatabaseSchemaToBeUpdated(): bool
     {
         return true;

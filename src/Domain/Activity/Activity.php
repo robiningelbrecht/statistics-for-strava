@@ -140,7 +140,7 @@ final class Activity implements SupportsAITooling
     /**
      * @param array<mixed> $rawData
      */
-    public static function createFromRawData(array $rawData): self
+    public static function createFromRawStravaData(array $rawData): self
     {
         $startDate = SerializableDateTime::createFromFormat(
             format: Activity::DATE_TIME_FORMAT,

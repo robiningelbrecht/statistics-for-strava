@@ -122,6 +122,11 @@ services:
       factory: [ null, 'fromInt' ]
       arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
 
+    App\Application\RunImport\ImportMode:
+      autoconfigure: false
+      factory: [ null, 'from' ]
+      arguments: ['@=app_config("import.mode", "stravaApi")']
+
     App\Application\Import\ImportActivities\ActivitiesToSkipDuringImport:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
