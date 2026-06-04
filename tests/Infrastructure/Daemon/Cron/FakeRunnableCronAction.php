@@ -7,10 +7,10 @@ namespace App\Tests\Infrastructure\Daemon\Cron;
 use App\Infrastructure\Daemon\Cron\RunnableCronAction;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class FakeRunnableCronAction implements RunnableCronAction
+final readonly class FakeRunnableCronAction implements RunnableCronAction
 {
     public function __construct(
-        private readonly bool $supportsConfiguredImportMode = true,
+        private bool $supportsConfiguredImportMode = true,
     ) {
     }
 
