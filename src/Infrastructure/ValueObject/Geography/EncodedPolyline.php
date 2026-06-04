@@ -41,9 +41,8 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
             $chunk .= chr((0x20 | ($value & 0x1F)) + 63);
             $value >>= 5;
         }
-        $chunk .= chr(($value & 0x1F) + 63);
 
-        return $chunk;
+        return $chunk . chr(($value & 0x1F) + 63);
     }
 
     public function getStartingCoordinate(): Coordinate
