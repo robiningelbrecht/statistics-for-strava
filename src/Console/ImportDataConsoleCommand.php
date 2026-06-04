@@ -1,15 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Console;
 
-use App\Application\AppUrl;
-use App\Application\RunBuild\RunBuild;
-use App\Domain\Integration\Notification\SendNotification\SendNotification;
+use App\Application\RunStravaImport\RunStravaImport;
+use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIds;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
@@ -18,25 +17,31 @@ use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
-#[AsCommand(name: 'app:data:build|app:strava:build-files', description: 'Build Strava files')]
-final class BuildAppConsoleCommand extends Command
+#[AsCommand(name: 'app:data:import|app:strava:import-data', description: 'Import Strava data')]
+final class ImportDataConsoleCommand extends Command
 {
     use ProvideConsoleIntro;
 
     public function __construct(
         private readonly CommandBus $commandBus,
         private readonly ResourceUsage $resourceUsage,
-        private readonly AppUrl $appUrl,
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
+        private readonly MigrationRunner $migrationRunner,
     ) {
         parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->addArgument('restrictToActivityId', InputArgument::OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -45,11 +50,18 @@ final class BuildAppConsoleCommand extends Command
         $this->resourceUsage->startTimer();
         $this->outputConsoleIntro($output);
 
-        try {
-            $this->mutex->acquireLock('BuildAppConsoleCommand');
+        $restrictToActivityIds = null;
+        if ($restrictToActivityId = $input->getArgument('restrictToActivityId')) {
+            $restrictToActivityIds = ActivityIds::fromArray([ActivityId::fromUnprefixed($restrictToActivityId)]);
+        }
 
-            $this->commandBus->dispatch(new RunBuild(
+        try {
+            $this->migrationRunner->run($output);
+            $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
+
+            $this->commandBus->dispatch(new RunStravaImport(
                 output: $output,
+                restrictToActivityIds: $restrictToActivityIds,
             ));
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
@@ -57,13 +69,6 @@ final class BuildAppConsoleCommand extends Command
         }
 
         $this->resourceUsage->stopTimer();
-        $this->commandBus->dispatch(new SendNotification(
-            title: 'Build successful',
-            message: sprintf('New build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
-            tags: ['+1'],
-            actionUrl: $this->appUrl
-        ));
-
         $output->writeln(sprintf(
             '<info>%s</info>',
             $this->resourceUsage->format(),

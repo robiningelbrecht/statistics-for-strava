@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Application\Import\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
+use App\Application\StravaImport\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityIds;

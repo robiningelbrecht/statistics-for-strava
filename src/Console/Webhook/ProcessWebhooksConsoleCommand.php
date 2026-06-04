@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Webhook;
 
-use App\Application\importDataAndBuildAppCronAction;
+use App\Application\importStravaDataAndBuildAppCronAction;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class ProcessWebhooksConsoleCommand extends Command
 {
     public function __construct(
-        private readonly importDataAndBuildAppCronAction $importDataAndBuildAppCronAction,
+        private readonly importStravaDataAndBuildAppCronAction $importDataAndBuildAppCronAction,
     ) {
         parent::__construct();
     }

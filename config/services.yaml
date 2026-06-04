@@ -114,28 +114,23 @@ services:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("general.profilePictureUrl")']
 
-    App\Application\Import\ImportActivities\ActivityVisibilitiesToImport:
+    App\Application\StravaImport\ImportActivities\ActivityVisibilitiesToImport:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("import.activityVisibilitiesToImport")']
 
-    App\Application\Import\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
+    App\Application\StravaImport\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
       factory: [ null, 'fromInt' ]
       arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
 
-    App\Application\RunImport\ImportMode:
-      autoconfigure: false
-      factory: [ null, 'from' ]
-      arguments: ['@=app_config("import.mode", "stravaApi")']
-
-    App\Application\Import\ImportActivities\ActivitiesToSkipDuringImport:
+    App\Application\StravaImport\ImportActivities\ActivitiesToSkipDuringImport:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
 
-    App\Application\Import\ImportActivities\SkipActivitiesRecordedBefore:
+    App\Application\StravaImport\ImportActivities\SkipActivitiesRecordedBefore:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
-    App\Application\Import\ImportSegments\OptInToSegmentDetailsImport:
+    App\Application\StravaImport\ImportSegments\OptInToSegmentDetailsImport:
       factory: [ null, 'fromBool' ]
       arguments: [ '@=app_config("import.optInToSegmentDetailImport", false)' ]
 
@@ -179,6 +174,10 @@ services:
     App\Domain\Strava\StravaRefreshToken:
         factory: [ null, 'fromString' ]
         arguments: ['%env(string:STRAVA_REFRESH_TOKEN)%']
+
+    App\Domain\Strava\Webhook\WebhookConfig:
+        factory: [ null, 'fromArray' ]
+        arguments: ['@=app_config("import.webhooks", [])']
 
     App\Domain\Athlete\AthleteBirthDate:
         factory: [ null, 'fromString' ]
@@ -239,9 +238,10 @@ services:
         factory: [ null, 'fromArray' ]
         arguments: ['@=app_config("gear.recordingDevices", [])']
 
-    App\Domain\Strava\Webhook\WebhookConfig:
-      factory: [ null, 'fromArray' ]
-      arguments: ['@=app_config("import.webhooks", [])']
+    App\Domain\Import\ImportMode:
+        autoconfigure: false
+        factory: [ null, 'from' ]
+        arguments: ['@=app_config("import.mode", "stravaApi")']
 
     App\Domain\Zwift\ZwiftLevel:
         factory: [ null, 'fromOptionalString' ]
