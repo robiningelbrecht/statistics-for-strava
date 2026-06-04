@@ -1,3 +1,52 @@
+# [v4.8.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.6) - 2026-06-04
+
+## New features
+* Allow to configure all maps instead of the heatmap only
+
+> [!WARNING]  
+> We slightly altered the configuration of the heatmap to take all maps into account.
+> 
+> Configuration before:
+> ```yaml
+>appearance:
+>  heatmap:
+>    polylineColor: '#fc6719'
+>    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+>    enableGreyScale: true
+>    initialCenter: null
+>    initialZoom: null
+> ```
+> 
+> Configuration now:
+> ```yaml
+>appearance:
+>  maps:
+>    polylineColor: '#fc6719'
+>    tileLayerUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+>    enableGreyScale: true
+>    heatmap:
+>      initialCenter: null
+>      initialZoom: null
+> ```
+
+These changes are reflected in the documentation: https://docs.getsfs.app/#/configuration/main-configuration
+
+## Improvements
+* Allow for activity descriptions to be expanded when clicking them
+
+## Bug fixes
+* Fix buggy behaviour when using the browser's back button
+
+## Technical details
+* ISSUE #2113: Fix buggy behaviour when using the browser's back button by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2118
+* Added note to the docs informing users about Strava API policy by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2120
+* ISSUE #2114: Leaflet map settings by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2119
+* ISSUE #2114: Allow for descriptions to be expanded by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2122
+* ISSUE #2123: Move manifest.json to build folder by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2124
+* ISSUE #2125: Add ImportSource and ExternalReferenceId on Activity entity in preparation of multi-source imports by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2126
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.5...v4.8.6
+
 # [v4.8.5](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.5) - 2026-06-01
 
 ## New features
