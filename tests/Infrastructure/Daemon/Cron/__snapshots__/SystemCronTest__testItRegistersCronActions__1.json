@@ -1,13 +1,16 @@
 {
     "importDataAndBuildApp": {
+        "supportsConfiguredImportMode": true,
         "requiresDatabaseSchemaToBeUpdated": false,
         "mutexTtl": 1800
     },
     "gearMaintenanceNotification": {
+        "supportsConfiguredImportMode": true,
         "requiresDatabaseSchemaToBeUpdated": true,
         "mutexTtl": 60
     },
     "appUpdateAvailableNotification": {
+        "supportsConfiguredImportMode": true,
         "requiresDatabaseSchemaToBeUpdated": true,
         "mutexTtl": 60
     }

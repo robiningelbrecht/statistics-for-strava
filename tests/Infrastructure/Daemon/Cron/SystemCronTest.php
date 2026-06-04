@@ -23,6 +23,7 @@ class SystemCronTest extends ContainerTestCase
         /** @var \App\Infrastructure\Daemon\Cron\RunnableCronAction $action */
         foreach ($cron->getAllRunnableCronActions() as $action) {
             $snapshot[$action->getId()] = [
+                'supportsConfiguredImportMode' => $action->supportsConfiguredImportMode(),
                 'requiresDatabaseSchemaToBeUpdated' => $action->requiresDatabaseSchemaToBeUpdated(),
                 'mutexTtl' => $action->getMutexTtl(),
             ];
