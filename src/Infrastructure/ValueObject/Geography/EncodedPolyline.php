@@ -42,7 +42,7 @@ final readonly class EncodedPolyline extends NonEmptyStringLiteral
             $value >>= 5;
         }
 
-        return $chunk . chr(($value & 0x1F) + 63);
+        return $chunk.chr(($value & 0x1F) + 63);
     }
 
     public function getStartingCoordinate(): Coordinate
