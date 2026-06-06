@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Application\RunStravaImport;
 
-use App\Application\StravaImport\CalculateActivityMetrics\CalculateActivityMetrics;
-use App\Application\StravaImport\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
-use App\Application\StravaImport\ImportActivities\ImportActivities;
-use App\Application\StravaImport\ImportAthlete\ImportAthlete;
-use App\Application\StravaImport\ImportChallenges\ImportChallenges;
-use App\Application\StravaImport\ImportGear\ImportGear;
-use App\Application\StravaImport\ImportSegments\ImportSegments;
-use App\Application\StravaImport\LinkCustomGearToActivities\LinkCustomGearToActivities;
-use App\Application\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
+use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
+use App\Application\Import\StravaImport\DeleteActivitiesMarkedForDeletion\DeleteActivitiesMarkedForDeletion;
+use App\Application\Import\StravaImport\ImportActivities\ImportActivities;
+use App\Application\Import\StravaImport\ImportAthlete\ImportAthlete;
+use App\Application\Import\StravaImport\ImportChallenges\ImportChallenges;
+use App\Application\Import\StravaImport\ImportGear\ImportGear;
+use App\Application\Import\StravaImport\ImportSegments\ImportSegments;
+use App\Application\Import\StravaImport\LinkCustomGearToActivities\LinkCustomGearToActivities;
+use App\Application\Import\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
 use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;

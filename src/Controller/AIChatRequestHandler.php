@@ -12,7 +12,7 @@ use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Http\ServerSentEvent;
 use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\String\Path;
+use App\Infrastructure\ValueObject\String\RelativeUrl;
 use GuzzleHttp\Exception\ClientException;
 use League\Flysystem\FilesystemOperator;
 use NeuronAI\Agent\AgentInterface;
@@ -49,14 +49,14 @@ final readonly class AIChatRequestHandler
     public function handle(): Response
     {
         if (!$this->buildHtmlStorage->fileExists('index.html')) {
-            return new RedirectResponse(Path::from('/', $this->appUrl)->toRelativePath(), Response::HTTP_FOUND);
+            return new RedirectResponse(RelativeUrl::from('/', $this->appUrl)->toRelativeUrl(), Response::HTTP_FOUND);
         }
         if (!AppConfig::isAIIntegrationWithUIEnabled()) {
             return new Response('UI for AI not enabled', Response::HTTP_OK);
         }
         $formBuilder = $this->formFactory->createBuilder();
         $form = $formBuilder
-            ->setAction(Path::from('/ai/chat/user-message', $this->appUrl)->toRelativePath())
+            ->setAction(RelativeUrl::from('/ai/chat/user-message', $this->appUrl)->toRelativeUrl())
             ->add('message', TextType::class, [
                 'label' => 'Message',
                 'required' => true,

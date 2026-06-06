@@ -4,31 +4,17 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\ValueObject\String;
 
-use App\Application\AppUrl;
-
-final readonly class Path
+final readonly class Path extends NonEmptyStringLiteral
 {
-    private function __construct(
-        private string $path,
-        private AppUrl $appUrl,
-    ) {
+    public function getExtension(): string
+    {
+        $extension = pathinfo((string) $this, PATHINFO_EXTENSION);
+        return strtolower($extension);
     }
 
-    public static function from(string $path, AppUrl $appUrl): self
+    public function getFilename(): string
     {
-        return new self(
-            path: $path,
-            appUrl: $appUrl
-        );
-    }
-
-    public function toRelativePath(): string
-    {
-        $path = '/'.ltrim($this->path, '/');
-        if (null === $this->appUrl->getBasePath()) {
-            return $path;
-        }
-
-        return '/'.trim($this->appUrl->getBasePath(), '/').$path;
+        $filename = pathinfo((string) $this, PATHINFO_FILENAME);
+        return sprintf('%s.%s', $filename, $this->getExtension());
     }
 }

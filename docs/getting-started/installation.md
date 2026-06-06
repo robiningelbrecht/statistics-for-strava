@@ -144,8 +144,8 @@ Once you have successfully authenticated with Strava, you can import your data a
 after which you can view your statistics.
 
 ```bash
-> docker compose exec app bin/console app:strava:import-data
-> docker compose exec app bin/console app:strava:build-files
+> docker compose exec app bin/console app:data:import
+> docker compose exec app bin/console app:data:build
 ```
 
 > [!IMPORTANT]

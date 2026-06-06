@@ -149,19 +149,12 @@ final class Activity implements SupportsAITooling
         );
 
         $deviceName = $rawData['device_name'] ?? null;
-        $worldType = match (true) {
-            'zwift' === strtolower($deviceName ?? '') => WorldType::ZWIFT,
-            'rouvy' === strtolower($deviceName ?? '') => WorldType::ROUVY,
-            'mywhoosh' === strtolower($deviceName ?? '') => WorldType::MY_WHOOSH,
-            str_contains(strtolower($rawData['name'] ?? ''), 'mywhoosh') => WorldType::MY_WHOOSH,
-            default => WorldType::REAL_WORLD,
-        };
 
         return self::fromState(
             activityId: ActivityId::fromUnprefixed((string) $rawData['id']),
             startDateTime: $startDate,
             sportType: SportType::from($rawData['sport_type']),
-            worldType: $worldType,
+            worldType: WorldType::fromDeviceAndActivityName($deviceName, $rawData['name'] ?? ''),
             importSource: ImportSource::STRAVA_API,
             externalReferenceId: ExternalReferenceId::fromString($rawData['external_id']),
             name: $rawData['name'],

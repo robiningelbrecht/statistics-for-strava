@@ -16,7 +16,7 @@ To do this, you need to add a new cron job to your crontab:
 ### Example
 
 ```bash
-> 0 19 * * * cd /path/to/compose.yaml && docker compose exec app bin/console app:strava:import-data && docker compose exec app bin/console app:strava:build-files
+> 0 19 * * * cd /path/to/compose.yaml && docker compose exec app bin/console app:data:import && docker compose exec app bin/console app:data:build
 ```
 
 ```bash
@@ -44,8 +44,8 @@ Create a file called `refresh.sh` (or a name of your choosing) with the contents
 
 ```bash
 #!/bin/sh
-bin/console app:strava:import-data
-bin/console app:strava:build-files
+bin/console app:data:import
+bin/console app:data:build
 ```
 
 Edit `docker-compose.yml` to include the shell script as well as the Ofelia image.
@@ -97,7 +97,7 @@ you can use the Task Scheduler to run the import and build commands at regular i
 5. In the Task Settings, in the Run command textbox, enter:
 
 ```bash
-docker exec statistics-for-strava bin/console app:strava:import-data && docker exec statistics-for-strava bin/console app:strava:build-files
+docker exec statistics-for-strava bin/console app:data:import && docker exec statistics-for-strava bin/console app:data:build
 ```
 
 > [!IMPORTANT]

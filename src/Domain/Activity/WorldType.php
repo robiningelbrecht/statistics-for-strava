@@ -10,4 +10,15 @@ enum WorldType: string
     case ZWIFT = 'zwift';
     case ROUVY = 'rouvy';
     case MY_WHOOSH = 'myWhoosh';
+
+    public static function fromDeviceAndActivityName(?string $deviceName, string $activityName): self
+    {
+        return match (true) {
+            'zwift' === strtolower($deviceName ?? '') => self::ZWIFT,
+            'rouvy' === strtolower($deviceName ?? '') => self::ROUVY,
+            'mywhoosh' === strtolower($deviceName ?? '') => self::MY_WHOOSH,
+            str_contains(strtolower($activityName), 'mywhoosh') => self::MY_WHOOSH,
+            default => self::REAL_WORLD,
+        };
+    }
 }

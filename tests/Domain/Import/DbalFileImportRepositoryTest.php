@@ -24,6 +24,8 @@ class DbalFileImportRepositoryTest extends ContainerTestCase
         $success = FileImportBuilder::fromDefaults()
             ->withFileImportId(FileImportId::fromUnprefixed('1'))
             ->withFileHash('hash-one')
+            // Binary payload with null bytes proves the zstd round-trip is binary-safe.
+            ->withFileContents("\x00\x01binary\xfffit-bytes\x00")
             ->withSource(ImportSource::FIT_FILE)
             ->withStatus(FileImportStatus::SUCCESS)
             ->withActivityId(ActivityId::fromUnprefixed('123'))

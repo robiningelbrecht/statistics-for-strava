@@ -99,12 +99,12 @@ After the application is authorized with Strava, you can run the same console co
 kubectl exec \
   --namespace statistics-for-strava \
   deploy/statistics-for-strava \
-  -- bin/console app:strava:import-data
+  -- bin/console app:data:import
 
 kubectl exec \
   --namespace statistics-for-strava \
   deploy/statistics-for-strava \
-  -- bin/console app:strava:build-files
+  -- bin/console app:data:build
 ```
 
 ## More information

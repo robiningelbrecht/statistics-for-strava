@@ -2,7 +2,9 @@
 
 namespace App\Tests\Console;
 
+use App\Application\RunFileImport\RunFileImport;
 use App\Console\ImportDataConsoleCommand;
+use App\Domain\Import\ImportMode;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
@@ -15,6 +17,7 @@ use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -112,6 +115,41 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertEmpty($dispatchedCommands);
     }
 
+    public function testExecuteInFileMode(): void
+    {
+        $dispatchedCommands = [];
+        $this->commandBus
+            ->expects($this->atLeastOnce())
+            ->method('dispatch')
+            ->willReturnCallback(function (DomainCommand $command) use (&$dispatchedCommands): void {
+                $dispatchedCommands[] = $command;
+            });
+
+        $this->logger->expects($this->atLeastOnce())->method('info');
+        $this->migrationRunner->expects($this->once())->method('run');
+
+        $command = new ImportDataConsoleCommand(
+            $this->commandBus,
+            new FixedResourceUsage(),
+            $this->logger,
+            new Mutex(
+                connection: $this->getConnection(),
+                clock: PausedClock::fromString('2025-12-04'),
+                lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
+            ),
+            $this->migrationRunner,
+            ImportMode::FILE,
+        );
+
+        $application = new Application();
+        $application->addCommand($command);
+        $commandTester = new CommandTester($application->find('app:data:import'));
+        $commandTester->execute(['command' => 'app:data:import']);
+
+        $this->assertCount(1, $dispatchedCommands);
+        $this->assertInstanceOf(RunFileImport::class, $dispatchedCommands[0]);
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -127,6 +165,7 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             $this->migrationRunner = $this->createMock(MigrationRunner::class),
+            ImportMode::STRAVA_API,
         );
     }
 

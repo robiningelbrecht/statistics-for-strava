@@ -2,7 +2,7 @@
 
 namespace App\Tests\Domain\Strava;
 
-use App\Application\StravaImport\ImportChallenges\ImportChallengesCommandHandler;
+use App\Application\Import\StravaImport\ImportChallenges\ImportChallengesCommandHandler;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Gear\GearId;
 use App\Domain\Segment\SegmentId;

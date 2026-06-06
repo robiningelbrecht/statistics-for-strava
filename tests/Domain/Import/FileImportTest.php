@@ -22,6 +22,7 @@ class FileImportTest extends TestCase
             fileImportId: $fileImportId,
             originalFilename: 'ride.fit',
             fileHash: 'hash',
+            fileContents: 'raw-fit-bytes',
             source: ImportSource::FIT_FILE,
             status: FileImportStatus::SUCCESS,
             errorMessage: null,
@@ -42,6 +43,7 @@ class FileImportTest extends TestCase
             fileImportId: $fileImportId,
             originalFilename: 'ride.tcx',
             fileHash: 'the-hash',
+            fileContents: 'raw-tcx-bytes',
             source: ImportSource::TCX_FILE,
             status: FileImportStatus::FAILED,
             errorMessage: 'Could not parse file',
@@ -52,6 +54,7 @@ class FileImportTest extends TestCase
         $this->assertEquals($fileImportId, $fileImport->getId());
         $this->assertEquals('ride.tcx', $fileImport->getOriginalFilename());
         $this->assertEquals('the-hash', $fileImport->getFileHash());
+        $this->assertEquals('raw-tcx-bytes', $fileImport->getFileContents());
         $this->assertEquals(ImportSource::TCX_FILE, $fileImport->getSource());
         $this->assertEquals(FileImportStatus::FAILED, $fileImport->getStatus());
         $this->assertEquals('Could not parse file', $fileImport->getErrorMessage());

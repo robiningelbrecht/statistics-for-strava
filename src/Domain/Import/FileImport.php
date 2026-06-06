@@ -6,6 +6,7 @@ namespace App\Domain\Import;
 
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ImportSource;
+use App\Domain\Import\FileParser\RawActivityFile;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,6 +21,8 @@ final readonly class FileImport
         private string $originalFilename,
         #[ORM\Column(type: 'string')]
         private string $fileHash,
+        #[ORM\Column(type: 'blob', nullable: true)]
+        private ?string $fileContents,
         #[ORM\Column(type: 'string')]
         private ImportSource $source,
         #[ORM\Column(type: 'string')]
@@ -35,8 +38,7 @@ final readonly class FileImport
 
     public static function create(
         FileImportId $fileImportId,
-        string $originalFilename,
-        string $fileHash,
+        RawActivityFile $file,
         ImportSource $source,
         FileImportStatus $status,
         ?string $errorMessage,
@@ -45,8 +47,9 @@ final readonly class FileImport
     ): self {
         return new self(
             fileImportId: $fileImportId,
-            originalFilename: $originalFilename,
-            fileHash: $fileHash,
+            originalFilename: $file->getPath()->getFilename(),
+            fileHash: $file->getHash(),
+            fileContents: $file->getContents(),
             source: $source,
             status: $status,
             errorMessage: $errorMessage,
@@ -59,6 +62,7 @@ final readonly class FileImport
         FileImportId $fileImportId,
         string $originalFilename,
         string $fileHash,
+        ?string $fileContents,
         ImportSource $source,
         FileImportStatus $status,
         ?string $errorMessage,
@@ -69,6 +73,7 @@ final readonly class FileImport
             fileImportId: $fileImportId,
             originalFilename: $originalFilename,
             fileHash: $fileHash,
+            fileContents: $fileContents,
             source: $source,
             status: $status,
             errorMessage: $errorMessage,
@@ -90,6 +95,11 @@ final readonly class FileImport
     public function getFileHash(): string
     {
         return $this->fileHash;
+    }
+
+    public function getFileContents(): ?string
+    {
+        return $this->fileContents;
     }
 
     public function getSource(): ImportSource

@@ -5,7 +5,7 @@ The main configuration yaml file contains all the settings for you to customize 
 [include](config-yaml-example.md ':include')
 
 > [!IMPORTANT]
-> **Important** After each change to these values, you need to run the _app:strava:build-files_ command again for the changes to take effect
+> **Important** After each change to these values, you need to run the _app:data:build_ command again for the changes to take effect
 
 ## Splitting your configuration into multiple files
 
