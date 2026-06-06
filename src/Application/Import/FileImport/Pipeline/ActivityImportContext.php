@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\Pipeline;
 
-use App\Domain\Activity\Activity;use App\Domain\Activity\ImportSource;use App\Domain\Activity\Lap\ActivityLaps;use App\Domain\Activity\Stream\ActivityStreams;use App\Domain\Import\FileParser\RawActivityFile;use App\Infrastructure\ValueObject\String\Path;
+use App\Domain\Activity\Activity;
+use App\Domain\Activity\ImportSource;
+use App\Domain\Activity\Lap\ActivityLaps;
+use App\Domain\Activity\Stream\ActivityStreams;
+use App\Domain\Import\FileParser\RawActivityFile;
+use App\Infrastructure\ValueObject\String\Path;
 
 final readonly class ActivityImportContext
 {

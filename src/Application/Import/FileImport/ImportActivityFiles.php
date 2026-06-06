@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport;
 
-use App\Infrastructure\CQRS\Command\DomainCommand;use Symfony\Component\Console\Output\OutputInterface;
+use App\Infrastructure\CQRS\Command\DomainCommand;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final readonly class ImportActivityFiles extends DomainCommand
 {

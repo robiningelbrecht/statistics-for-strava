@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\Pipeline;
 
-use App\Domain\Activity\Route\RouteGeography;use App\Domain\Activity\Route\RouteGeographyAnalyzer;use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
+use App\Domain\Activity\Route\RouteGeography;
+use App\Domain\Activity\Route\RouteGeographyAnalyzer;
+use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
+use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
 
 final readonly class AnalyzeRouteGeography implements ImportActivityFileStep
 {

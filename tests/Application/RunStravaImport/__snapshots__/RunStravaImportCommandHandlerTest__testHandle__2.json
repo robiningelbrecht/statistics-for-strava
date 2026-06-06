@@ -1,44 +1,44 @@
 [
     {
-        "commandName": "App\\Application\\StravaImport\\ImportAthlete\\ImportAthlete",
+        "commandName": "App\\Application\\Import\\StravaImport\\ImportAthlete\\ImportAthlete",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\ImportActivities\\ImportActivities",
+        "commandName": "App\\Application\\Import\\StravaImport\\ImportActivities\\ImportActivities",
         "payload": {
             "output": {},
             "restrictToActivityIds": null
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\ImportGear\\ImportGear",
+        "commandName": "App\\Application\\Import\\StravaImport\\ImportGear\\ImportGear",
         "payload": {
             "output": {},
             "restrictToActivityIds": null
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\ProcessRawActivityData\\ProcessRawActivityData",
+        "commandName": "App\\Application\\Import\\StravaImport\\ProcessRawActivityData\\ProcessRawActivityData",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
+        "commandName": "App\\Application\\Import\\StravaImport\\LinkCustomGearToActivities\\LinkCustomGearToActivities",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\ImportSegments\\ImportSegments",
+        "commandName": "App\\Application\\Import\\StravaImport\\ImportSegments\\ImportSegments",
         "payload": {
             "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\ImportChallenges\\ImportChallenges",
+        "commandName": "App\\Application\\Import\\StravaImport\\ImportChallenges\\ImportChallenges",
         "payload": {
             "output": {}
         }
@@ -50,7 +50,7 @@
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\DeleteActivitiesMarkedForDeletion\\DeleteActivitiesMarkedForDeletion",
+        "commandName": "App\\Application\\Import\\StravaImport\\DeleteActivitiesMarkedForDeletion\\DeleteActivitiesMarkedForDeletion",
         "payload": {
             "output": {}
         }

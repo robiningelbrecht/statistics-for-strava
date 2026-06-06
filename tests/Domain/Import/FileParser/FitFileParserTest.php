@@ -4,7 +4,22 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Import\FileParser;
 
-use App\Application\Import\FileImport\Pipeline\ActivityImportContext;use App\Domain\Activity\ImportSource;use App\Domain\Activity\Lap\ActivityLap;use App\Domain\Activity\SportType\SportType;use App\Domain\Activity\Stream\StreamType;use App\Domain\Import\FileParser\CouldNotParseActivityFile;use App\Domain\Import\FileParser\FitFileParser;use App\Infrastructure\Process\ProcessFactory;use App\Infrastructure\Process\SymfonyProcessFactory;use App\Infrastructure\Serialization\Json;use App\Tests\Infrastructure\Time\Clock\PausedClock;use PHPUnit\Framework\MockObject\Stub;use PHPUnit\Framework\TestCase;use Symfony\Component\Process\Process;
+use App\Domain\Activity\ImportSource;
+use App\Domain\Activity\Lap\ActivityLap;
+use App\Domain\Activity\SportType\SportType;
+use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Import\FileParser\CouldNotParseActivityFile;
+use App\Domain\Import\FileParser\FitFileParser;
+use App\Domain\Import\FileParser\ParsedActivityFile;
+use App\Domain\Import\FileParser\RawActivityFile;
+use App\Infrastructure\Process\ProcessFactory;
+use App\Infrastructure\Process\SymfonyProcessFactory;
+use App\Infrastructure\Serialization\Json;
+use App\Infrastructure\ValueObject\String\Path;
+use App\Tests\Infrastructure\Time\Clock\PausedClock;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Process\Process;
 
 class FitFileParserTest extends TestCase
 {
@@ -23,7 +38,7 @@ class FitFileParserTest extends TestCase
     {
         $this->givenFitToolReturns(Json::encode($this->fitDocument()));
 
-        $parsed = $this->parser->parse('/tmp/activity.fit', 'activity.fit');
+        $parsed = $this->parser->parse($this->rawFile('/tmp/activity.fit'));
 
         $this->assertSame('Edge 530', $parsed->getActivity()->getDeviceName());
         $this->assertSame(self::FIT_EPOCH_OFFSET + self::START_FIT_SECONDS, $parsed->getActivity()->getStartDate()->getTimestamp());
@@ -34,14 +49,14 @@ class FitFileParserTest extends TestCase
     {
         $parser = new FitFileParser(new SymfonyProcessFactory(), PausedClock::fromString('2023-10-17 16:15:04'));
 
-        $parsed = $parser->parse(__DIR__.'/fixtures/activity.fit', 'activity.fit');
+        $parsed = $parser->parse($this->rawFileFromFixture('activity.fit'));
 
         $this->assertNull($parsed->getActivity()->getDeviceName());
         $this->assertSame('2021-09-08T00:00:00+00:00', $parsed->getActivity()->getStartDate()->format(\DateTimeInterface::ATOM));
         $this->assertParsedActivity($parsed);
     }
 
-    private function assertParsedActivity(ActivityImportContext $parsed): void
+    private function assertParsedActivity(ParsedActivityFile $parsed): void
     {
         $activity = $parsed->getActivity();
 
@@ -103,7 +118,7 @@ class FitFileParserTest extends TestCase
         unset($message);
         $this->givenFitToolReturns(Json::encode($document));
 
-        $this->assertSame(SportType::TRAIL_RUN, $this->parser->parse('/tmp/activity.fit', 'activity.fit')->getActivity()->getSportType());
+        $this->assertSame(SportType::TRAIL_RUN, $this->parser->parse($this->rawFile('/tmp/activity.fit'))->getActivity()->getSportType());
     }
 
     public function testParseUnsuccessfulProcessThrows(): void
@@ -114,7 +129,7 @@ class FitFileParserTest extends TestCase
         $this->processFactory->method('create')->willReturn($process);
 
         $this->expectException(CouldNotParseActivityFile::class);
-        $this->parser->parse('/tmp/activity.fit', 'activity.fit');
+        $this->parser->parse($this->rawFile('/tmp/activity.fit'));
     }
 
     public function testParseUnsupportedSportThrows(): void
@@ -132,7 +147,23 @@ class FitFileParserTest extends TestCase
         $this->givenFitToolReturns(Json::encode($document));
 
         $this->expectException(CouldNotParseActivityFile::class);
-        $this->parser->parse('/tmp/activity.fit', 'activity.fit');
+        $this->parser->parse($this->rawFile('/tmp/activity.fit'));
+    }
+
+    private function rawFile(string $path): RawActivityFile
+    {
+        return RawActivityFile::from(Path::fromString($path), '');
+    }
+
+    private function rawFileFromFixture(string $name): RawActivityFile
+    {
+        $path = __DIR__.'/fixtures/'.$name;
+        $contents = file_get_contents($path);
+        if (false === $contents) {
+            self::fail(sprintf('Could not read fixture "%s"', $name));
+        }
+
+        return RawActivityFile::from(Path::fromString($path), $contents);
     }
 
     private function givenFitToolReturns(string $output): void
