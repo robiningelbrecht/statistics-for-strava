@@ -11,5 +11,5 @@ Run the following commands to setup the project on your local machine
 Everytime you make changes to the app, you need to build the html files again
 
 ```bash
-> make console arg="app:strava:build-files"
+> make console arg="app:data:build"
 ```

@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Application\Import\StravaImport\ImportActivities\Pipeline;
+
+use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+#[AutoconfigureTag('app.activity_import.pipeline_step')]
+interface ActivityImportStep
+{
+    public function process(ActivityImportContext $context): ActivityImportContext;
+}

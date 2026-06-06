@@ -60,8 +60,8 @@ gear:
 ```
 
 > [!IMPORTANT]
-> **Important** After each change to these values, you need to run the both _app:strava:import-data_
-and _app:strava:build-files_ commands again for the changes to take effect
+> **Important** After each change to these values, you need to run the both _app:data:import_
+and _app:data:build_ commands again for the changes to take effect
 
 > [!WARNING]
 > **Warning** Each activity can be linked to only one gear, either a Strava gear or a custom gear. 

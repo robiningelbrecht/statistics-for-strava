@@ -11,7 +11,7 @@ After that, run the import and build commands again to apply the changes:
 
 
 ```bash
-> docker compose exec app bin/console app:strava:import-data
-> docker compose exec app bin/console app:strava:build-files
+> docker compose exec app bin/console app:data:import
+> docker compose exec app bin/console app:data:build
 ```
 

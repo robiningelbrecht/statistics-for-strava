@@ -44,7 +44,7 @@
         }
     },
     {
-        "commandName": "App\\Application\\StravaImport\\CalculateActivityMetrics\\CalculateActivityMetrics",
+        "commandName": "App\\Application\\Import\\CalculateActivityMetrics\\CalculateActivityMetrics",
         "payload": {
             "output": {}
         }

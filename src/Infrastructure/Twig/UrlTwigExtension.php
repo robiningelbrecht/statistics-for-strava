@@ -8,7 +8,7 @@ use App\Application\AppUrl;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\Image\ImageOrientation;
 use App\Domain\Segment\Segment;
-use App\Infrastructure\ValueObject\String\Path;
+use App\Infrastructure\ValueObject\String\RelativeUrl;
 use Twig\Attribute\AsTwigFilter;
 use Twig\Attribute\AsTwigFunction;
 
@@ -24,7 +24,7 @@ final readonly class UrlTwigExtension
     #[AsTwigFunction('relativeUrl')]
     public function toRelativeUrl(string $path): string
     {
-        return Path::from($path, $this->appUrl)->toRelativePath();
+        return RelativeUrl::from($path, $this->appUrl)->toRelativeUrl();
     }
 
     #[AsTwigFunction('securedImageUrl')]

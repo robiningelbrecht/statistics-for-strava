@@ -24,7 +24,7 @@ use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
 use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
-use App\Application\StravaImport\ImportGear\GearImportStatus;
+use App\Application\Import\StravaImport\ImportGear\GearImportStatus;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;

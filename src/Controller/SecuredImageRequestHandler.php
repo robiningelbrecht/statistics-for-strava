@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Infrastructure\ValueObject\String\AllowedIpAddresses;
+use App\Infrastructure\ValueObject\String\Path;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ final readonly class SecuredImageRequestHandler
 
         if (!$isTrusted) {
             // Not a trusted visitor: serve an anonymized, stable random photo instead of the real one.
-            $seed = pathinfo($path, PATHINFO_FILENAME);
+            $seed = Path::fromString($path)->getFilename();
             [$width, $height] = 0 === crc32($seed) % 2 ? [800, 1200] : [1200, 800];
 
             return new RedirectResponse(sprintf('https://picsum.photos/seed/%s/%d/%d', urlencode($seed), $width, $height));

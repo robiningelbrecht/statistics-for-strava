@@ -2,9 +2,11 @@
 
 namespace App\Console;
 
+use App\Application\RunFileImport\RunFileImport;
 use App\Application\RunStravaImport\RunStravaImport;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Import\ImportMode;
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
@@ -24,7 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
-#[AsCommand(name: 'app:data:import|app:strava:import-data', description: 'Import Strava data')]
+#[AsCommand(name: 'app:data:import|app:strava:import-data', description: 'Import activity data')]
 final class ImportDataConsoleCommand extends Command
 {
     use ProvideConsoleIntro;
@@ -35,6 +37,7 @@ final class ImportDataConsoleCommand extends Command
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
         private readonly MigrationRunner $migrationRunner,
+        private readonly ImportMode $importMode,
     ) {
         parent::__construct();
     }
@@ -57,12 +60,18 @@ final class ImportDataConsoleCommand extends Command
 
         try {
             $this->migrationRunner->run($output);
-            $this->mutex->acquireLock('ImportStravaDataConsoleCommand');
+            $this->mutex->acquireLock('ImportDataConsoleCommand');
 
-            $this->commandBus->dispatch(new RunStravaImport(
-                output: $output,
-                restrictToActivityIds: $restrictToActivityIds,
-            ));
+            if ($this->importMode->isFile()) {
+                $this->commandBus->dispatch(new RunFileImport(
+                    output: $output,
+                ));
+            } else {
+                $this->commandBus->dispatch(new RunStravaImport(
+                    output: $output,
+                    restrictToActivityIds: $restrictToActivityIds,
+                ));
+            }
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
             throw $e;

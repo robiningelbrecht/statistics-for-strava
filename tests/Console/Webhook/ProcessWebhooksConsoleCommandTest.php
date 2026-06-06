@@ -2,7 +2,7 @@
 
 namespace App\Tests\Console\Webhook;
 
-use App\Application\importStravaDataAndBuildAppCronAction;
+use App\Application\Import\importStravaDataAndBuildAppCronAction;
 use App\Console\Webhook\ProcessWebhooksConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\Console\ConsoleCommandTestCase;

@@ -16,6 +16,7 @@ final class FileImportBuilder
     private FileImportId $fileImportId;
     private string $originalFilename = 'activity.fit';
     private string $fileHash = 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3';
+    private ?string $fileContents = null;
     private ImportSource $source = ImportSource::FIT_FILE;
     private FileImportStatus $status = FileImportStatus::SUCCESS;
     private ?string $errorMessage = null;
@@ -39,6 +40,7 @@ final class FileImportBuilder
             fileImportId: $this->fileImportId,
             originalFilename: $this->originalFilename,
             fileHash: $this->fileHash,
+            fileContents: $this->fileContents,
             source: $this->source,
             status: $this->status,
             errorMessage: $this->errorMessage,
@@ -64,6 +66,13 @@ final class FileImportBuilder
     public function withFileHash(string $fileHash): self
     {
         $this->fileHash = $fileHash;
+
+        return $this;
+    }
+
+    public function withFileContents(?string $fileContents): self
+    {
+        $this->fileContents = $fileContents;
 
         return $this;
     }
