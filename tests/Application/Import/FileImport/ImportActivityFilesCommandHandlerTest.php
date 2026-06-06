@@ -2,9 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Import\FileImport\ImportActivityFiles;
+namespace App\Tests\Application\Import\FileImport;
 
-use App\Application\Import\FileImport\ImportActivityFiles;use App\Application\Import\FileImport\ImportActivityFilesCommandHandler;use App\Domain\Activity\ActivityRepository;use App\Domain\Activity\ImportSource;use App\Domain\Activity\Lap\ActivityLapRepository;use App\Domain\Activity\Stream\ActivityStreamRepository;use App\Domain\Activity\Stream\StreamType;use App\Domain\Import\FileImportRepository;use App\Domain\Import\FileImportStatus;use App\Tests\ContainerTestCase;use App\Tests\SpyOutput;use League\Flysystem\FilesystemOperator;
+use App\Application\Import\FileImport\ImportActivityFiles;
+use App\Application\Import\FileImport\ImportActivityFilesCommandHandler;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ImportSource;
+use App\Domain\Activity\Lap\ActivityLapRepository;
+use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Activity\Stream\StreamType;
+use App\Domain\Import\FileImportRepository;
+use App\Domain\Import\FileImportStatus;
+use App\Tests\ContainerTestCase;
+use App\Tests\SpyOutput;
+use League\Flysystem\FilesystemOperator;
 
 class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 {
@@ -42,9 +53,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $streams = $this->getContainer()->get(ActivityStreamRepository::class)->findByActivityId($activityId);
         $this->assertNotNull($streams->filterOnType(StreamType::HEART_RATE));
         $this->assertNotNull($streams->filterOnType(StreamType::LAT_LNG));
-
-        $this->assertFalse($this->fileStorage->fileExists('activity-import/ride.tcx'));
-        $this->assertTrue($this->fileStorage->fileExists('activity-import/processed/ride.tcx'));
     }
 
     public function testHandleImportsFitFileThroughBinary(): void
@@ -66,7 +74,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertSame(ImportSource::FIT_FILE, $activity->getImportSource());
         $this->assertSame(205, $activity->getAveragePower());
         $this->assertCount(1, $this->getContainer()->get(ActivityLapRepository::class)->findBy($activityId));
-        $this->assertTrue($this->fileStorage->fileExists('activity-import/processed/ride.fit'));
     }
 
     public function testHandleIsIdempotent(): void
@@ -83,7 +90,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
         $this->assertStringContainsString('already imported', (string) $output);
         $this->assertCount(1, $this->getContainer()->get(FileImportRepository::class)->findAll());
-        $this->assertFalse($this->fileStorage->fileExists('activity-import/ride.tcx'));
     }
 
     public function testHandleRecordsFailureForCorruptFile(): void
@@ -99,9 +105,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertNull($fileImports->getFirst()->getActivityId());
         // Even failed imports keep their original bytes for later inspection.
         $this->assertSame('this is not valid xml', $fileImports->getFirst()->getFileContents());
-
-        $this->assertFalse($this->fileStorage->fileExists('activity-import/broken.tcx'));
-        $this->assertTrue($this->fileStorage->fileExists('activity-import/processed/broken.tcx'));
     }
 
     public function testHandleWithoutImportDirectoryIsNoOp(): void

@@ -34,7 +34,7 @@ final readonly class SecuredImageRequestHandler
 
         if (!$isTrusted) {
             // Not a trusted visitor: serve an anonymized, stable random photo instead of the real one.
-            $seed = Path::fromString($path)->getFilename();
+            $seed = Path::fromString($path)->getFilenameWithoutExtension();
             [$width, $height] = 0 === crc32($seed) % 2 ? [800, 1200] : [1200, 800];
 
             return new RedirectResponse(sprintf('https://picsum.photos/seed/%s/%d/%d', urlencode($seed), $width, $height));

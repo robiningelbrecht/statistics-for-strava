@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\Pipeline;
 
-use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;use App\Domain\Integration\Weather\OpenMeteo\Weather;use App\Infrastructure\ValueObject\Geography\Coordinate;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteo;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;
+use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;
+use App\Domain\Integration\Weather\OpenMeteo\Weather;
+use App\Infrastructure\ValueObject\Geography\Coordinate;
 
 final readonly class DetermineActivityWeather implements ImportActivityFileStep
 {

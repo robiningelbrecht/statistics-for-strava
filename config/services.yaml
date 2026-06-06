@@ -115,23 +115,23 @@ services:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("general.profilePictureUrl")']
 
-    App\Application\StravaImport\ImportActivities\ActivityVisibilitiesToImport:
+    App\Application\Import\StravaImport\ImportActivities\ActivityVisibilitiesToImport:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("import.activityVisibilitiesToImport")']
 
-    App\Application\StravaImport\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
+    App\Application\Import\StravaImport\ImportActivities\NumberOfNewActivitiesToProcessPerImport:
       factory: [ null, 'fromInt' ]
       arguments: ['@=app_config("import.numberOfNewActivitiesToProcessPerImport")']
 
-    App\Application\StravaImport\ImportActivities\ActivitiesToSkipDuringImport:
+    App\Application\Import\StravaImport\ImportActivities\ActivitiesToSkipDuringImport:
       factory: [ null, 'from' ]
       arguments: ['@=app_config("import.activitiesToSkipDuringImport")']
 
-    App\Application\StravaImport\ImportActivities\SkipActivitiesRecordedBefore:
+    App\Application\Import\StravaImport\ImportActivities\SkipActivitiesRecordedBefore:
       factory: [ null, 'fromOptionalString' ]
       arguments: ['@=app_config("import.skipActivitiesRecordedBefore")']
 
-    App\Application\StravaImport\ImportSegments\OptInToSegmentDetailsImport:
+    App\Application\Import\StravaImport\ImportSegments\OptInToSegmentDetailsImport:
       factory: [ null, 'fromBool' ]
       arguments: [ '@=app_config("import.optInToSegmentDetailImport", false)' ]
 

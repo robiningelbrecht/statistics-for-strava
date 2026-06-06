@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\Pipeline;
 
-use App\Domain\Import\FileImportRepository;use App\Domain\Import\FileParser\ActivityFileParsers;use App\Domain\Import\FileParser\RawActivityFile;use League\Flysystem\FilesystemOperator;
+use App\Domain\Import\FileImportRepository;
+use App\Domain\Import\FileParser\ActivityFileParsers;
+use App\Domain\Import\FileParser\RawActivityFile;
+use App\Infrastructure\ValueObject\String\Path;
+use League\Flysystem\FilesystemOperator;
 
 final readonly class ParseActivityFile implements ImportActivityFileStep
 {
@@ -17,9 +21,12 @@ final readonly class ParseActivityFile implements ImportActivityFileStep
 
     public function process(ActivityImportContext $context): ActivityImportContext
     {
+        $relativePath = (string) $context->getFilePath();
+
+        // The parsers need a real, readable path on the local filesystem.
         $file = RawActivityFile::from(
-            filePath: $context->getFilePath(),
-            fileContents: $this->fileStorage->read((string) $context->getFilePath())
+            filePath: Path::fromString(sprintf('%s/%s', rtrim($this->activityFileStorageDirectory, '/'), $relativePath)),
+            fileContents: $this->fileStorage->read($relativePath)
         );
 
         $context = $context->withFile($file);

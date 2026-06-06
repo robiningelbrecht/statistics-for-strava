@@ -65,7 +65,7 @@ final readonly class TcxFileParser implements ActivityFileParser
             throw new CouldNotParseActivityFile(message: sprintf('No <Activity> found in "%s"', $file->getPath()->getFilename()), activityFile: $file);
         }
 
-        $sportType = $this->mapSportType((string) $activityXml['Sport']);
+        $sportType = $this->mapSportType((string) $activityXml['Sport'], $file);
         $deviceName = isset($activityXml->Creator->Name) ? (string) $activityXml->Creator->Name : null;
 
         $startTimestamp = null;
@@ -123,7 +123,7 @@ final readonly class TcxFileParser implements ActivityFileParser
             ),
             importSource: ImportSource::TCX_FILE,
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
-            name: $file->getPath()->getFilename(),
+            name: $file->getPath()->getFilenameWithoutExtension(),
             description: null,
             distance: Kilometer::from(round($this->sumLapValues($laps, 'distance') / 1000, 3)),
             elevation: Meter::from(round($this->sumLapValues($laps, 'total_elevation_gain'))),
@@ -351,7 +351,7 @@ final readonly class TcxFileParser implements ActivityFileParser
         return MetersPerSecond::from($meterPerSecond)->toKmPerHour();
     }
 
-    private function mapSportType(string $sport): SportType
+    private function mapSportType(string $sport, RawActivityFile $file): SportType
     {
         return match (strtolower($sport)) {
             'running' => SportType::RUN,
@@ -359,7 +359,7 @@ final readonly class TcxFileParser implements ActivityFileParser
             'walking' => SportType::WALK,
             'hiking' => SportType::HIKE,
             'swimming' => SportType::SWIM,
-            default => throw new CouldNotParseActivityFile(sprintf('Unsupported TCX sport "%s"', $sport)),
+            default => throw new CouldNotParseActivityFile(message: sprintf('Unsupported TCX sport "%s"', $sport), activityFile: $file),
         };
     }
 }

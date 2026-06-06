@@ -4,7 +4,25 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport;
 
-use App\Application\Import\FileImport\Pipeline\ActivityFileImportPipeline;use App\Application\Import\FileImport\Pipeline\ActivityImportContext;use App\Application\Import\FileImport\Pipeline\SkipActivityFileImport;use App\Domain\Activity\ActivityRepository;use App\Domain\Activity\ActivityWithRawData;use App\Domain\Activity\Lap\ActivityLapRepository;use App\Domain\Activity\Stream\ActivityStreamRepository;use App\Domain\Import\FileImport;use App\Domain\Import\FileImportId;use App\Domain\Import\FileImportRepository;use App\Domain\Import\FileImportStatus;use App\Domain\Import\FileParser\CouldNotParseActivityFile;use App\Domain\Import\FileParser\RawActivityFile;use App\Domain\Import\FileParser\UnsupportedFileType;use App\Infrastructure\CQRS\Command\Command;use App\Infrastructure\CQRS\Command\CommandHandler;use App\Infrastructure\Time\Clock\Clock;use App\Infrastructure\ValueObject\String\Path;use League\Flysystem\FilesystemOperator;
+use App\Application\Import\FileImport\Pipeline\ActivityFileImportPipeline;
+use App\Application\Import\FileImport\Pipeline\ActivityImportContext;
+use App\Application\Import\FileImport\Pipeline\SkipActivityFileImport;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\Lap\ActivityLapRepository;
+use App\Domain\Activity\Stream\ActivityStreamRepository;
+use App\Domain\Import\FileImport;
+use App\Domain\Import\FileImportId;
+use App\Domain\Import\FileImportRepository;
+use App\Domain\Import\FileImportStatus;
+use App\Domain\Import\FileParser\CouldNotParseActivityFile;
+use App\Domain\Import\FileParser\RawActivityFile;
+use App\Domain\Import\FileParser\UnsupportedFileType;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Time\Clock\Clock;
+use App\Infrastructure\ValueObject\String\Path;
+use League\Flysystem\FilesystemOperator;
 
 final readonly class ImportActivityFilesCommandHandler implements CommandHandler
 {
@@ -42,6 +60,8 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 continue;
             }
 
+            // @TODO: The parsers need a real, readable path on the local filesystem.
+            // @TODO: Check ParseActivityFile.
             $filePath = Path::fromString($item->path());
             $context = ActivityImportContext::create($filePath);
 

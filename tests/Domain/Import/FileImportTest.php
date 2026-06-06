@@ -9,6 +9,8 @@ use App\Domain\Activity\ImportSource;
 use App\Domain\Import\FileImport;
 use App\Domain\Import\FileImportId;
 use App\Domain\Import\FileImportStatus;
+use App\Domain\Import\FileParser\RawActivityFile;
+use App\Infrastructure\ValueObject\String\Path;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -17,12 +19,11 @@ class FileImportTest extends TestCase
     public function testCreate(): void
     {
         $fileImportId = FileImportId::fromUnprefixed('abc');
+        $file = RawActivityFile::from(Path::fromString('ride.fit'), 'raw-fit-bytes');
 
         $fileImport = FileImport::create(
             fileImportId: $fileImportId,
-            originalFilename: 'ride.fit',
-            fileHash: 'hash',
-            fileContents: 'raw-fit-bytes',
+            file: $file,
             source: ImportSource::FIT_FILE,
             status: FileImportStatus::SUCCESS,
             errorMessage: null,
@@ -31,6 +32,9 @@ class FileImportTest extends TestCase
         );
 
         $this->assertEquals($fileImportId, $fileImport->getId());
+        $this->assertSame('ride.fit', $fileImport->getOriginalFilename());
+        $this->assertSame($file->getHash(), $fileImport->getFileHash());
+        $this->assertSame('raw-fit-bytes', $fileImport->getFileContents());
     }
 
     public function testFromStateRoundTrips(): void

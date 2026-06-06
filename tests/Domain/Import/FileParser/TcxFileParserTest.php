@@ -9,7 +9,9 @@ use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Import\FileParser\CouldNotParseActivityFile;
+use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\FileParser\TcxFileParser;
+use App\Infrastructure\ValueObject\String\Path;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use PHPUnit\Framework\TestCase;
 
@@ -19,12 +21,12 @@ class TcxFileParserTest extends TestCase
 
     public function testSupportedExtensions(): void
     {
-        $this->assertSame(['tcx'], $this->parser->supportedExtension());
+        $this->assertSame('tcx', $this->parser->supportedExtension());
     }
 
     public function testParse(): void
     {
-        $parsed = $this->parser->parse(__DIR__.'/fixtures/activity.tcx', 'activity.tcx');
+        $parsed = $this->parser->parse($this->rawFileFromFixture('activity.tcx'));
 
         $activity = $parsed->getActivity();
         $this->assertSame(ImportSource::TCX_FILE, $activity->getImportSource());
@@ -71,16 +73,15 @@ class TcxFileParserTest extends TestCase
         $this->assertSame($activity->getId(), $lap->getActivityId());
     }
 
-    public function testParseUnreadableFileThrows(): void
+    public function testParseEmptyContentsThrows(): void
     {
         $this->expectException(CouldNotParseActivityFile::class);
-        $this->parser->parse(__DIR__.'/fixtures/does-not-exist.tcx', 'does-not-exist.tcx');
+        $this->parser->parse(RawActivityFile::from(Path::fromString('does-not-exist.tcx'), ''));
     }
 
     public function testParseUnsupportedSportThrows(): void
     {
-        $path = sys_get_temp_dir().'/unsupported-sport-'.uniqid().'.tcx';
-        file_put_contents($path, <<<'XML'
+        $xml = <<<'XML'
             <?xml version="1.0" encoding="UTF-8"?>
             <TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2">
               <Activities>
@@ -90,14 +91,21 @@ class TcxFileParserTest extends TestCase
                 </Activity>
               </Activities>
             </TrainingCenterDatabase>
-            XML);
+            XML;
 
-        try {
-            $this->expectException(CouldNotParseActivityFile::class);
-            $this->parser->parse($path, 'unsupported-sport.tcx');
-        } finally {
-            @unlink($path);
+        $this->expectException(CouldNotParseActivityFile::class);
+        $this->parser->parse(RawActivityFile::from(Path::fromString('unsupported-sport.tcx'), $xml));
+    }
+
+    private function rawFileFromFixture(string $name): RawActivityFile
+    {
+        $path = __DIR__.'/fixtures/'.$name;
+        $contents = file_get_contents($path);
+        if (false === $contents) {
+            self::fail(sprintf('Could not read fixture "%s"', $name));
         }
+
+        return RawActivityFile::from(Path::fromString($path), $contents);
     }
 
     protected function setUp(): void

@@ -133,6 +133,7 @@ final readonly class FitFileParser implements ActivityFileParser
         $sportType = $this->mapSportType(
             $this->intOrNull($session['sport'] ?? null),
             $this->intOrNull($session['sub_sport'] ?? null),
+            $file,
         );
 
         $streamMap = $this->buildStreams($records, $startTimestamp);
@@ -149,7 +150,7 @@ final readonly class FitFileParser implements ActivityFileParser
             ),
             importSource: ImportSource::FIT_FILE,
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
-            name: $file->getPath()->getFilename(),
+            name: $file->getPath()->getFilenameWithoutExtension(),
             description: null,
             distance: Kilometer::from(round(($this->floatOrNull($session['total_distance'] ?? null) ?? 0.0) / 1000, 3)),
             elevation: Meter::from(round($this->floatOrNull($session['total_ascent'] ?? null) ?? 0.0)),
@@ -337,7 +338,7 @@ final readonly class FitFileParser implements ActivityFileParser
         return null;
     }
 
-    private function mapSportType(?int $sport, ?int $subSport): SportType
+    private function mapSportType(?int $sport, ?int $subSport, RawActivityFile $file): SportType
     {
         $sportType = match (true) {
             self::SPORT_RUNNING === $sport && self::SUB_SPORT_TRAIL === $subSport => SportType::TRAIL_RUN,
@@ -357,7 +358,7 @@ final readonly class FitFileParser implements ActivityFileParser
         };
 
         if (!$sportType instanceof SportType) {
-            throw new CouldNotParseActivityFile(sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'));
+            throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'), activityFile: $file);
         }
 
         return $sportType;
