@@ -20,11 +20,12 @@ use League\Flysystem\FilesystemOperator;
 class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 {
     private ImportActivityFilesCommandHandler $handler;
-    private FilesystemOperator $fileStorage;
+    private FilesystemOperator $watchStorage;
+    private string $watchDirOnDisk;
 
     public function testHandleImportsTcxFile(): void
     {
-        $this->fileStorage->write('activity-import/ride.tcx', $this->fixture('activity.tcx'));
+        $this->dropInWatchFolder('ride.tcx', $this->fixture('activity.tcx'));
 
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
@@ -55,7 +56,7 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
     public function testHandleImportsFitFileThroughBinary(): void
     {
-        $this->fileStorage->write('activity-import/ride.fit', $this->fixture('activity.fit'));
+        $this->dropInWatchFolder('ride.fit', $this->fixture('activity.fit'));
 
         $this->handler->handle(new ImportActivityFiles(new SpyOutput()));
 
@@ -77,10 +78,10 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
     {
         $bytes = $this->fixture('activity.tcx');
 
-        $this->fileStorage->write('activity-import/ride.tcx', $bytes);
+        $this->dropInWatchFolder('ride.tcx', $bytes);
         $this->handler->handle(new ImportActivityFiles(new SpyOutput()));
 
-        $this->fileStorage->write('activity-import/ride.tcx', $bytes);
+        $this->dropInWatchFolder('ride.tcx', $bytes);
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
@@ -90,7 +91,7 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
     public function testHandleRecordsFailureForCorruptFile(): void
     {
-        $this->fileStorage->write('activity-import/broken.tcx', 'this is not valid xml');
+        $this->dropInWatchFolder('broken.tcx', 'this is not valid xml');
 
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
@@ -111,6 +112,16 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertCount(0, $this->getContainer()->get(FileImportRepository::class)->findAll());
     }
 
+    private function dropInWatchFolder(string $filename, string $contents): void
+    {
+        $this->watchStorage->write('watch/'.$filename, $contents);
+
+        if (!is_dir($this->watchDirOnDisk)) {
+            mkdir($this->watchDirOnDisk, 0775, true);
+        }
+        file_put_contents($this->watchDirOnDisk.'/'.$filename, $contents);
+    }
+
     private function fixture(string $name): string
     {
         $contents = file_get_contents(dirname(__DIR__, 3).'/Domain/Import/FileParser/fixtures/'.$name);
@@ -126,6 +137,20 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         parent::setUp();
 
         $this->handler = $this->getContainer()->get(ImportActivityFilesCommandHandler::class);
-        $this->fileStorage = $this->getContainer()->get('file.storage');
+        $this->watchStorage = $this->getContainer()->get('default.storage');
+        $this->watchDirOnDisk = $this->getContainer()->getParameter('kernel.project_dir').'/watch';
+    }
+
+    protected function tearDown(): void
+    {
+        $this->watchStorage->deleteDirectory('watch');
+
+        if (is_dir($this->watchDirOnDisk)) {
+            foreach (glob($this->watchDirOnDisk.'/*') ?: [] as $file) {
+                unlink($file);
+            }
+        }
+
+        parent::tearDown();
     }
 }
