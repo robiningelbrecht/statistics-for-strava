@@ -27,6 +27,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      # https://github.com/marketplace/actions/setup-go-environment
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+          cache-dependency-path: docker/fit-tool/go.sum
+
+      - name: Build fit-tool
+        run: |
+          CGO_ENABLED=0 go build -ldflags="-s -w" -o fit-tool .
+          sudo install -m 0755 fit-tool /usr/bin/fit-tool
+        working-directory: docker/fit-tool
+
       - name: Copy .env file
         run: cp .env.test .env
 
