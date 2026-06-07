@@ -29,7 +29,7 @@ final readonly class WatchDirectory
     public function listFiles(): DirectoryListing
     {
         return $this->defaultStorage->listContents(self::FOLDER_NAME, false)
-            ->filter(fn (StorageAttributes $attributes) => $attributes->isFile());
+            ->filter(fn (StorageAttributes $attributes): bool => $attributes->isFile());
     }
 
     public function readFile(Path $filePath): string

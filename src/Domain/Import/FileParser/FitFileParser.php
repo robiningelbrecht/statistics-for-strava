@@ -390,7 +390,7 @@ final readonly class FitFileParser implements ActivityFileParser
         /** @var array<int, array{float, float}> $coordinates */
         $coordinates = array_values(array_filter(
             $streamMap[StreamType::LAT_LNG->value] ?? [],
-            static fn (mixed $point): bool => is_array($point),
+            is_array(...),
         ));
 
         if ([] === $coordinates) {

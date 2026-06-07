@@ -66,7 +66,7 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         $sportType = $this->mapSportType((string) $activityXml['Sport'], $file);
-        $deviceName = isset($activityXml->Creator->Name) ? (string) $activityXml->Creator->Name : null;
+        $deviceName = property_exists($activityXml->Creator, 'Name') && null !== $activityXml->Creator->Name ? (string) $activityXml->Creator->Name : null;
 
         $startTimestamp = null;
         $streams = [
@@ -85,19 +85,19 @@ final readonly class TcxFileParser implements ActivityFileParser
             $lapStart = isset($lap['StartTime']) ? SerializableDateTime::fromString((string) $lap['StartTime'])->getTimestamp() : null;
 
             foreach ($lap->Track->Trackpoint ?? [] as $trackpoint) {
-                $time = isset($trackpoint->Time) ? SerializableDateTime::fromString((string) $trackpoint->Time)->getTimestamp() : null;
+                $time = property_exists($trackpoint, 'Time') && null !== $trackpoint->Time ? SerializableDateTime::fromString((string) $trackpoint->Time)->getTimestamp() : null;
                 $startTimestamp ??= $time;
 
                 $streams[StreamType::TIME->value][] = (null !== $time && null !== $startTimestamp) ? $time - $startTimestamp : null;
-                $streams[StreamType::DISTANCE->value][] = isset($trackpoint->DistanceMeters) ? (float) $trackpoint->DistanceMeters : null;
-                $streams[StreamType::ALTITUDE->value][] = isset($trackpoint->AltitudeMeters) ? (float) $trackpoint->AltitudeMeters : null;
+                $streams[StreamType::DISTANCE->value][] = property_exists($trackpoint, 'DistanceMeters') && null !== $trackpoint->DistanceMeters ? (float) $trackpoint->DistanceMeters : null;
+                $streams[StreamType::ALTITUDE->value][] = property_exists($trackpoint, 'AltitudeMeters') && null !== $trackpoint->AltitudeMeters ? (float) $trackpoint->AltitudeMeters : null;
 
-                $latitude = isset($trackpoint->Position->LatitudeDegrees) ? (float) $trackpoint->Position->LatitudeDegrees : null;
-                $longitude = isset($trackpoint->Position->LongitudeDegrees) ? (float) $trackpoint->Position->LongitudeDegrees : null;
+                $latitude = property_exists($trackpoint->Position, 'LatitudeDegrees') && null !== $trackpoint->Position->LatitudeDegrees ? (float) $trackpoint->Position->LatitudeDegrees : null;
+                $longitude = property_exists($trackpoint->Position, 'LongitudeDegrees') && null !== $trackpoint->Position->LongitudeDegrees ? (float) $trackpoint->Position->LongitudeDegrees : null;
                 $streams[StreamType::LAT_LNG->value][] = (null !== $latitude && null !== $longitude) ? [$latitude, $longitude] : null;
 
-                $streams[StreamType::HEART_RATE->value][] = isset($trackpoint->HeartRateBpm->Value) ? (int) $trackpoint->HeartRateBpm->Value : null;
-                $streams[StreamType::CADENCE->value][] = isset($trackpoint->Cadence) ? (int) $trackpoint->Cadence : null;
+                $streams[StreamType::HEART_RATE->value][] = property_exists($trackpoint->HeartRateBpm, 'Value') && null !== $trackpoint->HeartRateBpm->Value ? (int) $trackpoint->HeartRateBpm->Value : null;
+                $streams[StreamType::CADENCE->value][] = property_exists($trackpoint, 'Cadence') && null !== $trackpoint->Cadence ? (int) $trackpoint->Cadence : null;
 
                 $tpx = $this->extensionValues($trackpoint);
                 $streams[StreamType::VELOCITY->value][] = isset($tpx['Speed']) ? (float) $tpx['Speed'] : null;
@@ -133,7 +133,7 @@ final readonly class TcxFileParser implements ActivityFileParser
             averagePower: $this->averageStream($streams[StreamType::WATTS->value]),
             maxPower: $this->maxStream($streams[StreamType::WATTS->value]),
             averageSpeed: $this->toKmPerHour([] !== $velocities ? array_sum($velocities) / count($velocities) : null),
-            maxSpeed: $this->toKmPerHour([] !== $velocities ? (float) max($velocities) : null),
+            maxSpeed: $this->toKmPerHour([] !== $velocities ? max($velocities) : null),
             averageHeartRate: $this->averageStream($streams[StreamType::HEART_RATE->value]),
             maxHeartRate: $this->maxStream($streams[StreamType::HEART_RATE->value]),
             averageCadence: $this->averageStream($streams[StreamType::CADENCE->value]),
@@ -224,15 +224,15 @@ final readonly class TcxFileParser implements ActivityFileParser
             'id' => $index + 1,
             'lap_index' => $index + 1,
             'name' => sprintf('Lap %d', $index + 1),
-            'elapsed_time' => isset($lap->TotalTimeSeconds) ? (int) round((float) $lap->TotalTimeSeconds) : 0,
-            'moving_time' => isset($lap->TotalTimeSeconds) ? (int) round((float) $lap->TotalTimeSeconds) : 0,
-            'distance' => isset($lap->DistanceMeters) ? (float) $lap->DistanceMeters : 0.0,
-            'average_speed' => isset($lap->TotalTimeSeconds, $lap->DistanceMeters) && (float) $lap->TotalTimeSeconds > 0
+            'elapsed_time' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds ? (int) round((float) $lap->TotalTimeSeconds) : 0,
+            'moving_time' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds ? (int) round((float) $lap->TotalTimeSeconds) : 0,
+            'distance' => property_exists($lap, 'DistanceMeters') && null !== $lap->DistanceMeters ? (float) $lap->DistanceMeters : 0.0,
+            'average_speed' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds && (property_exists($lap, 'DistanceMeters') && null !== $lap->DistanceMeters) && (float) $lap->TotalTimeSeconds > 0
                 ? (float) $lap->DistanceMeters / (float) $lap->TotalTimeSeconds
                 : 0.0,
-            'max_speed' => isset($lap->MaximumSpeed) ? (float) $lap->MaximumSpeed : 0.0,
+            'max_speed' => property_exists($lap, 'MaximumSpeed') && null !== $lap->MaximumSpeed ? (float) $lap->MaximumSpeed : 0.0,
             'total_elevation_gain' => 0.0,
-            'average_heartrate' => isset($lap->AverageHeartRateBpm->Value) ? (int) $lap->AverageHeartRateBpm->Value : null,
+            'average_heartrate' => property_exists($lap->AverageHeartRateBpm, 'Value') && null !== $lap->AverageHeartRateBpm->Value ? (int) $lap->AverageHeartRateBpm->Value : null,
             'start_date' => null !== $lapStart ? SerializableDateTime::fromTimestamp($lapStart)->format(\DateTimeInterface::ATOM) : null,
         ];
     }
@@ -260,7 +260,7 @@ final readonly class TcxFileParser implements ActivityFileParser
     private function extensionValues(\SimpleXMLElement $trackpoint): array
     {
         $values = [];
-        if (!isset($trackpoint->Extensions->TPX)) {
+        if (!property_exists($trackpoint->Extensions, 'TPX') || null === $trackpoint->Extensions->TPX) {
             return $values;
         }
 
@@ -276,7 +276,7 @@ final readonly class TcxFileParser implements ActivityFileParser
         $calories = 0;
         $found = false;
         foreach ($activity->Lap as $lap) {
-            if (isset($lap->Calories)) {
+            if (property_exists($lap, 'Calories') && null !== $lap->Calories) {
                 $calories += (int) $lap->Calories;
                 $found = true;
             }
@@ -332,7 +332,7 @@ final readonly class TcxFileParser implements ActivityFileParser
         /** @var array<int, array{float, float}> $coordinates */
         $coordinates = array_values(array_filter(
             $streamMap[StreamType::LAT_LNG->value] ?? [],
-            static fn (mixed $point): bool => is_array($point),
+            is_array(...),
         ));
 
         if ([] === $coordinates) {

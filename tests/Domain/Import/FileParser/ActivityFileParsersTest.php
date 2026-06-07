@@ -62,8 +62,8 @@ class ActivityFileParsersTest extends TestCase
 
     private function createParser(string $extension): ActivityFileParser
     {
-        return new class($extension) implements ActivityFileParser {
-            public function __construct(private readonly string $extension)
+        return new readonly class($extension) implements ActivityFileParser {
+            public function __construct(private string $extension)
             {
             }
 
