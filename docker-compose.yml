@@ -29,6 +29,7 @@ services:
             - ./storage/database:/var/www/storage/database
             - ./storage/files:/var/www/storage/files
             - ./storage/gear-maintenance:/var/www/storage/gear-maintenance
+            - ./watch:/var/www/watch
         env_file: '.env.local'
         healthcheck:
           test: ["CMD", "curl", "-f", "http://localhost:2019/metrics"]

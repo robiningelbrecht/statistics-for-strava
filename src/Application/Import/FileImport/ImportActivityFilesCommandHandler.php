@@ -18,18 +18,15 @@ use App\Domain\Import\FileImportStatus;
 use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\FileParser\UnsupportedFileType;
+use App\Domain\Import\WatchDirectory;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Time\Clock\Clock;
-use App\Infrastructure\ValueObject\String\Path;
-use League\Flysystem\FilesystemOperator;
 
 final readonly class ImportActivityFilesCommandHandler implements CommandHandler
 {
-    private const string SOURCE_DIRECTORY = 'activity-import';
-
     public function __construct(
-        private FilesystemOperator $fileStorage,
+        private WatchDirectory $watchDirectory,
         private ActivityFileImportPipeline $pipeline,
         private ActivityRepository $activityRepository,
         private ActivityStreamRepository $activityStreamRepository,
@@ -45,8 +42,8 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
         $output = $command->getOutput();
         $output->writeln('Importing activity files...');
 
-        if (!$this->fileStorage->directoryExists(self::SOURCE_DIRECTORY)) {
-            $output->writeln(sprintf('  => No "%s" directory found, nothing to import', self::SOURCE_DIRECTORY));
+        if (!$this->watchDirectory->exists()) {
+            $output->writeln('  => No "watch" directory found, nothing to import');
 
             return;
         }
@@ -55,14 +52,8 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
         $countSkipped = 0;
         $countFailed = 0;
 
-        foreach ($this->fileStorage->listContents(self::SOURCE_DIRECTORY, false) as $item) {
-            if (!$item->isFile()) {
-                continue;
-            }
-
-            // @TODO: The parsers need a real, readable path on the local filesystem.
-            // @TODO: Check ParseActivityFile.
-            $filePath = Path::fromString($item->path());
+        foreach ($this->watchDirectory->listFiles() as $item) {
+            $filePath = $this->watchDirectory->getAbsolutePathFor($item);
             $context = ActivityImportContext::create($filePath);
 
             try {
@@ -119,6 +110,8 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 activityId: $activityId,
                 importedOn: $this->clock->getCurrentDateTimeImmutable(),
             ));
+
+            $this->watchDirectory->deleteFile($file);
 
             $output->writeln(sprintf(
                 '  => Imported "%s" as activity "%s - %s"',

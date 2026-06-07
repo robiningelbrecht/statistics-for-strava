@@ -34,7 +34,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $fileImport = $fileImports->getFirst();
         $this->assertSame(FileImportStatus::SUCCESS, $fileImport->getStatus());
         $this->assertSame('ride.tcx', $fileImport->getOriginalFilename());
-        // The original bytes are stored compressed and must round-trip losslessly.
         $this->assertSame($this->fixture('activity.tcx'), $fileImport->getFileContents());
 
         $activityId = $fileImport->getActivityId();
@@ -47,7 +46,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertNotNull($activity->getStartingCoordinate());
         $this->assertNotNull($activity->getEncodedPolyline());
 
-        // Laps are persisted directly as entities (not via raw data).
         $this->assertCount(1, $this->getContainer()->get(ActivityLapRepository::class)->findBy($activityId));
 
         $streams = $this->getContainer()->get(ActivityStreamRepository::class)->findByActivityId($activityId);
@@ -64,7 +62,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $fileImport = $this->getContainer()->get(FileImportRepository::class)->findAll()->getFirst();
         $this->assertNotNull($fileImport);
         $this->assertSame(FileImportStatus::SUCCESS, $fileImport->getStatus());
-        // Binary FIT bytes survive the zstd compress/decompress round-trip.
         $this->assertSame($this->fixture('activity.fit'), $fileImport->getFileContents());
 
         $activityId = $fileImport->getActivityId();
@@ -83,7 +80,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->fileStorage->write('activity-import/ride.tcx', $bytes);
         $this->handler->handle(new ImportActivityFiles(new SpyOutput()));
 
-        // Drop the exact same file again: it must be recognised as already imported.
         $this->fileStorage->write('activity-import/ride.tcx', $bytes);
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
@@ -103,7 +99,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertCount(1, $fileImports);
         $this->assertSame(FileImportStatus::FAILED, $fileImports->getFirst()->getStatus());
         $this->assertNull($fileImports->getFirst()->getActivityId());
-        // Even failed imports keep their original bytes for later inspection.
         $this->assertSame('this is not valid xml', $fileImports->getFirst()->getFileContents());
     }
 
