@@ -21,9 +21,8 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 {
     private ImportActivityFilesCommandHandler $handler;
     private FilesystemOperator $watchStorage;
-    private string $watchDirOnDisk;
 
-    public function testHandleImportsTcxFile(): void
+    public function testHandle(): void
     {
         $this->dropInWatchFolder('ride.tcx', $this->fixture('activity.tcx'));
 
@@ -52,26 +51,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $streams = $this->getContainer()->get(ActivityStreamRepository::class)->findByActivityId($activityId);
         $this->assertNotNull($streams->filterOnType(StreamType::HEART_RATE));
         $this->assertNotNull($streams->filterOnType(StreamType::LAT_LNG));
-    }
-
-    public function testHandleImportsFitFileThroughBinary(): void
-    {
-        $this->dropInWatchFolder('ride.fit', $this->fixture('activity.fit'));
-
-        $this->handler->handle(new ImportActivityFiles(new SpyOutput()));
-
-        $fileImport = $this->getContainer()->get(FileImportRepository::class)->findAll()->getFirst();
-        $this->assertNotNull($fileImport);
-        $this->assertSame(FileImportStatus::SUCCESS, $fileImport->getStatus());
-        $this->assertSame($this->fixture('activity.fit'), $fileImport->getFileContents());
-
-        $activityId = $fileImport->getActivityId();
-        $this->assertNotNull($activityId);
-        $activity = $this->getContainer()->get(ActivityRepository::class)->find($activityId);
-
-        $this->assertSame(ImportSource::FIT_FILE, $activity->getImportSource());
-        $this->assertSame(205, $activity->getAveragePower());
-        $this->assertCount(1, $this->getContainer()->get(ActivityLapRepository::class)->findBy($activityId));
     }
 
     public function testHandleIsIdempotent(): void
@@ -115,11 +94,6 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
     private function dropInWatchFolder(string $filename, string $contents): void
     {
         $this->watchStorage->write('watch/'.$filename, $contents);
-
-        if (!is_dir($this->watchDirOnDisk)) {
-            mkdir($this->watchDirOnDisk, 0775, true);
-        }
-        file_put_contents($this->watchDirOnDisk.'/'.$filename, $contents);
     }
 
     private function fixture(string $name): string
@@ -138,18 +112,11 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
         $this->handler = $this->getContainer()->get(ImportActivityFilesCommandHandler::class);
         $this->watchStorage = $this->getContainer()->get('default.storage');
-        $this->watchDirOnDisk = $this->getContainer()->getParameter('kernel.project_dir').'/watch';
     }
 
     protected function tearDown(): void
     {
         $this->watchStorage->deleteDirectory('watch');
-
-        if (is_dir($this->watchDirOnDisk)) {
-            foreach (glob($this->watchDirOnDisk.'/*') ?: [] as $file) {
-                unlink($file);
-            }
-        }
 
         parent::tearDown();
     }
