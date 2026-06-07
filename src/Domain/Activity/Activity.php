@@ -156,7 +156,7 @@ final class Activity implements SupportsAITooling
             sportType: SportType::from($rawData['sport_type']),
             worldType: WorldType::fromDeviceAndActivityName($deviceName, $rawData['name'] ?? ''),
             importSource: ImportSource::STRAVA_API,
-            externalReferenceId: ExternalReferenceId::fromString($rawData['external_id']),
+            externalReferenceId: ExternalReferenceId::fromOptionalString($rawData['external_id'] ?? ''),
             name: $rawData['name'],
             description: $rawData['description'],
             distance: Kilometer::from(round($rawData['distance'] / 1000, 3)),
