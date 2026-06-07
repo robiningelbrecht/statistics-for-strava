@@ -13,14 +13,6 @@ final class CouldNotParseActivityFile extends \RuntimeException
         parent::__construct($message);
     }
 
-    public static function forFile(string $message, RawActivityFile $file): self
-    {
-        return new self(
-            message: $message,
-            activityFile: $file
-        );
-    }
-
     public function getActivityFile(): RawActivityFile
     {
         return $this->activityFile;

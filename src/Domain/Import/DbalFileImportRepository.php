@@ -21,9 +21,7 @@ final readonly class DbalFileImportRepository extends DbalRepository implements 
             'fileImportId' => (string) $fileImport->getId(),
             'originalFilename' => $fileImport->getOriginalFilename(),
             'fileHash' => $fileImport->getFileHash(),
-            'fileContents' => null !== $fileImport->getFileContents()
-                ? (string) CompressedString::fromUncompressed($fileImport->getFileContents())
-                : null,
+            'fileContents' => null !== $fileImport->getFileContents() ? (string) CompressedString::fromUncompressed($fileImport->getFileContents()) : null,
             'source' => $fileImport->getSource()->value,
             'status' => $fileImport->getStatus()->value,
             'errorMessage' => $fileImport->getErrorMessage(),
