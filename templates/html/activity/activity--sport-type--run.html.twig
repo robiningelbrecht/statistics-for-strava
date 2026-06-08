@@ -7,7 +7,7 @@
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                     <div class="flex items-center justify-between mb-1">
                         <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Distance"|trans }}</span>
-                        <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
+                        <div class="size-6 rounded-md bg-primary-soft text-primary flex items-center justify-center">
                             {{ svg('distance', 'size-3.5') }}
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                     <div class="flex items-center justify-between mb-1">
                         <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Moving time"|trans }}</span>
-                        <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
+                        <div class="size-6 rounded-md bg-primary-soft text-primary flex items-center justify-center">
                             {{ svg('time', 'size-3.5') }}
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                     <div class="flex items-center justify-between mb-1">
                         <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Avg pace"|trans }}</span>
-                        <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
+                        <div class="size-6 rounded-md bg-primary-soft text-primary flex items-center justify-center">
                             {{ svg('speed', 'size-3.5') }}
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                 <div class="bg-white rounded-lg p-3 border border-gray-200 shadow-xs">
                     <div class="flex items-center justify-between mb-1">
                         <span class="text-xxs uppercase tracking-wider font-semibold text-gray-500">{{ "Elevation"|trans }}</span>
-                        <div class="size-6 rounded-md bg-strava-orange-soft text-strava-orange flex items-center justify-center">
+                        <div class="size-6 rounded-md bg-primary-soft text-primary flex items-center justify-center">
                             {{ svg('elevation', 'size-3.5') }}
                         </div>
                     </div>
@@ -78,13 +78,13 @@
                 {% endif %}
                 <a href="#" class="bg-gray-50 rounded-lg p-3 gap-x-2 flex items-center justify-between group" data-router-force-reload data-router-navigate="{{ relativeUrl('activities') }}" data-filters='{{ dataFilters('activities', {gear: activity.getGearIdIncludingNone()}) }}'>
                     <span class="text-xs text-gray-500 shrink-0">{{ "Gear"|trans }}</span>
-                    <span class="text-xs font-bold text-gray-900 group-hover:text-strava-orange truncate" title="{{ activity.getGearName() }}">
+                    <span class="text-xs font-bold text-gray-900 group-hover:text-primary truncate" title="{{ activity.getGearName() }}">
                             {{ activity.getGearName() ?: 'Unspecified'|trans }}
                     </span>
                 </a>
                 <a href="#" class="bg-gray-50 rounded-lg p-3 gap-x-2 flex items-center justify-between group" data-router-force-reload data-router-navigate="{{ relativeUrl('activities') }}" data-filters='{{ dataFilters('activities', {device: activity.getDeviceId()}) }}'>
                     <span class="text-xs text-gray-500 shrink-0">{{ "Device"|trans }}</span>
-                    <span class="text-xs font-bold text-gray-900 group-hover:text-strava-orange truncate" title="{{ activity.getDeviceName() }}">
+                    <span class="text-xs font-bold text-gray-900 group-hover:text-primary truncate" title="{{ activity.getDeviceName() }}">
                             {{ activity.getDeviceName() ?: 'None'|trans }}
                     </span>
                 </a>
@@ -147,7 +147,7 @@
                                         <td class="px-2 py-2.5">
                                             <div class="flex items-center gap-2">
                                                 <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                                    <div class="h-full bg-strava-orange rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
+                                                    <div class="h-full bg-primary rounded-full" style="width: {{ split.getRelativePacePercentage() }}%"></div>
                                                 </div>
                                             </div>
                                         </td>
@@ -183,7 +183,7 @@
                                         <td class="px-2 py-2.5 text-gray-500">{{ lap.getPaceInSecPerKm()|formatPace }}</td>
                                         <td class="px-2 py-2.5">
                                             <div class="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                                <div class="h-full bg-strava-orange rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%"></div>
+                                                <div class="h-full bg-primary rounded-full" style="width: {{ lap.getRelativePacePercentage() }}%"></div>
                                             </div>
                                         </td>
                                         <td class="px-4 py-2.5 text-right text-gray-500">

@@ -204,8 +204,8 @@
     --default-mono-font-family: var(--font-mono);
     --animate-fade-in-chat-message: chat-message 0.15s ease-out 0s forwards;
     --text-xxs: 0.625rem;
-    --color-strava-orange: #F26722;
-    --color-strava-orange-soft: #FFF1E9;
+    --color-primary: #F26722;
+    --color-primary-soft: #FFF1E9;
     --color-grey-yo: #cccccc;
   }
 }
@@ -2685,20 +2685,20 @@
   .border-gray-300 {
     border-color: var(--color-gray-300);
   }
+  .border-primary {
+    border-color: var(--color-primary);
+  }
   .border-red-300 {
     border-color: var(--color-red-300);
   }
   .border-red-500 {
     border-color: var(--color-red-500);
   }
-  .border-strava-orange {
-    border-color: var(--color-strava-orange);
-  }
   .border-yellow-300 {
     border-color: var(--color-yellow-300);
   }
-  .border-t-strava-orange {
-    border-top-color: var(--color-strava-orange);
+  .border-t-primary {
+    border-top-color: var(--color-primary);
   }
   .border-l-blue-600 {
     border-left-color: var(--color-blue-600);
@@ -2835,6 +2835,24 @@
       background-color: color-mix(in oklab, var(--color-orange-500) 10%, transparent);
     }
   }
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .bg-primary-soft {
+    background-color: var(--color-primary-soft);
+  }
+  .bg-primary\/5 {
+    background-color: color-mix(in srgb, #F26722 5%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-primary) 5%, transparent);
+    }
+  }
+  .bg-primary\/15 {
+    background-color: color-mix(in srgb, #F26722 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-primary) 15%, transparent);
+    }
+  }
   .bg-red-50 {
     background-color: var(--color-red-50);
   }
@@ -2857,24 +2875,6 @@
     background-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-rose-500) 10%, transparent);
-    }
-  }
-  .bg-strava-orange {
-    background-color: var(--color-strava-orange);
-  }
-  .bg-strava-orange-soft {
-    background-color: var(--color-strava-orange-soft);
-  }
-  .bg-strava-orange\/5 {
-    background-color: color-mix(in srgb, #F26722 5%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-strava-orange) 5%, transparent);
-    }
-  }
-  .bg-strava-orange\/15 {
-    background-color: color-mix(in srgb, #F26722 15%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
     }
   }
   .bg-transparent {
@@ -3400,6 +3400,9 @@
   .text-orange-800 {
     color: var(--color-orange-800);
   }
+  .text-primary {
+    color: var(--color-primary);
+  }
   .text-red-500 {
     color: var(--color-red-500);
   }
@@ -3423,9 +3426,6 @@
   }
   .text-slate-500 {
     color: var(--color-slate-500);
-  }
-  .text-strava-orange {
-    color: var(--color-strava-orange);
   }
   .text-white {
     color: var(--color-white);
@@ -3504,10 +3504,10 @@
   .ring-gray-50 {
     --tw-ring-color: var(--color-gray-50);
   }
-  .ring-strava-orange\/20 {
+  .ring-primary\/20 {
     --tw-ring-color: color-mix(in srgb, #F26722 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      --tw-ring-color: color-mix(in oklab, var(--color-strava-orange) 20%, transparent);
+      --tw-ring-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
     }
   }
   .outline {
@@ -3593,10 +3593,10 @@
       rotate: 180deg;
     }
   }
-  .group-hover\:text-strava-orange {
+  .group-hover\:text-primary {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
     }
   }
@@ -3649,17 +3649,17 @@
       }
     }
   }
-  .group-hover\/section\:text-strava-orange {
+  .group-hover\/section\:text-primary {
     &:is(:where(.group\/section):hover *) {
       @media (hover: hover) {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
     }
   }
-  .group-hover\/segment\:text-strava-orange {
+  .group-hover\/segment\:text-primary {
     &:is(:where(.group\/segment):hover *) {
       @media (hover: hover) {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
     }
   }
@@ -3673,9 +3673,9 @@
       color: var(--color-gray-200);
     }
   }
-  .group-aria-asc\:text-strava-orange {
+  .group-aria-asc\:text-primary {
     &:is(:where(.group)[aria-sort="ascending"] *) {
-      color: var(--color-strava-orange);
+      color: var(--color-primary);
     }
   }
   .group-aria-desc\:text-gray-200 {
@@ -3683,14 +3683,14 @@
       color: var(--color-gray-200);
     }
   }
-  .group-aria-desc\:text-strava-orange {
+  .group-aria-desc\:text-primary {
     &:is(:where(.group)[aria-sort="descending"] *) {
-      color: var(--color-strava-orange);
+      color: var(--color-primary);
     }
   }
-  .peer-checked\:border-strava-orange {
+  .peer-checked\:border-primary {
     &:is(:where(.peer):checked ~ *) {
-      border-color: var(--color-strava-orange);
+      border-color: var(--color-primary);
     }
   }
   .peer-checked\:bg-blue-600 {
@@ -3703,14 +3703,14 @@
       background-color: var(--color-gray-100);
     }
   }
-  .peer-checked\:bg-strava-orange-soft {
+  .peer-checked\:bg-primary-soft {
     &:is(:where(.peer):checked ~ *) {
-      background-color: var(--color-strava-orange-soft);
+      background-color: var(--color-primary-soft);
     }
   }
-  .peer-checked\:text-strava-orange {
+  .peer-checked\:text-primary {
     &:is(:where(.peer):checked ~ *) {
-      color: var(--color-strava-orange);
+      color: var(--color-primary);
     }
   }
   .peer-focus\:ring-2 {
@@ -3852,10 +3852,10 @@
       }
     }
   }
-  .hover\:border-strava-orange {
+  .hover\:border-primary {
     &:hover {
       @media (hover: hover) {
-        border-color: var(--color-strava-orange);
+        border-color: var(--color-primary);
       }
     }
   }
@@ -3894,22 +3894,22 @@
       }
     }
   }
-  .hover\:bg-strava-orange\/20 {
+  .hover\:bg-primary\/20 {
     &:hover {
       @media (hover: hover) {
         background-color: color-mix(in srgb, #F26722 20%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-strava-orange) 20%, transparent);
+          background-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
         }
       }
     }
   }
-  .hover\:bg-strava-orange\/30 {
+  .hover\:bg-primary\/30 {
     &:hover {
       @media (hover: hover) {
         background-color: color-mix(in srgb, #F26722 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          background-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          background-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
       }
     }
@@ -3963,10 +3963,10 @@
       }
     }
   }
-  .hover\:text-strava-orange {
+  .hover\:text-primary {
     &:hover {
       @media (hover: hover) {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
     }
   }
@@ -3984,33 +3984,33 @@
       }
     }
   }
-  .hover\:ring-strava-orange\/30 {
+  .hover\:ring-primary\/30 {
     &:hover {
       @media (hover: hover) {
         --tw-ring-color: color-mix(in srgb, #F26722 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          --tw-ring-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
       }
     }
   }
-  .peer-checked\:hover\:bg-strava-orange\/20 {
+  .peer-checked\:hover\:bg-primary\/20 {
     &:is(:where(.peer):checked ~ *) {
       &:hover {
         @media (hover: hover) {
           background-color: color-mix(in srgb, #F26722 20%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-strava-orange) 20%, transparent);
+            background-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
           }
         }
       }
     }
   }
-  .peer-checked\:hover\:text-strava-orange {
+  .peer-checked\:hover\:text-primary {
     &:is(:where(.peer):checked ~ *) {
       &:hover {
         @media (hover: hover) {
-          color: var(--color-strava-orange);
+          color: var(--color-primary);
         }
       }
     }
@@ -4025,17 +4025,17 @@
       border-color: var(--color-blue-500);
     }
   }
-  .focus\:border-red-500 {
-    &:focus {
-      border-color: var(--color-red-500);
-    }
-  }
-  .focus\:border-strava-orange\/50 {
+  .focus\:border-primary\/50 {
     &:focus {
       border-color: color-mix(in srgb, #F26722 50%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
-        border-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
+        border-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
       }
+    }
+  }
+  .focus\:border-red-500 {
+    &:focus {
+      border-color: var(--color-red-500);
     }
   }
   .focus\:ring-0 {
@@ -4071,17 +4071,17 @@
       --tw-ring-color: var(--color-gray-200);
     }
   }
-  .focus\:ring-red-500 {
-    &:focus {
-      --tw-ring-color: var(--color-red-500);
-    }
-  }
-  .focus\:ring-strava-orange\/30 {
+  .focus\:ring-primary\/30 {
     &:focus {
       --tw-ring-color: color-mix(in srgb, #F26722 30%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
-        --tw-ring-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+        --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
       }
+    }
+  }
+  .focus\:ring-red-500 {
+    &:focus {
+      --tw-ring-color: var(--color-red-500);
     }
   }
   .focus\:outline-none {
@@ -4754,7 +4754,7 @@
         }
       }
       & a {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
         &:hover {
           @media (hover: hover) {
             text-decoration-line: underline;
@@ -4867,13 +4867,13 @@
           background-color: transparent;
           --tw-font-weight: var(--font-weight-bold);
           font-weight: var(--font-weight-bold);
-          color: var(--color-strava-orange);
+          color: var(--color-primary);
         }
         &:hover, &[aria-selected="true"] {
           cursor: pointer;
           background-color: color-mix(in srgb, #F26722 15%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
+            background-color: color-mix(in oklab, var(--color-primary) 15%, transparent);
           }
         }
       }
@@ -4895,9 +4895,9 @@
     --color-black: #F0F6FC;
     --color-white: #202830;
     --color-blue-600: #478be6;
-    --color-strava-orange-soft: color-mix(in srgb, #F26722 10%, transparent);
+    --color-primary-soft: color-mix(in srgb, #F26722 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      --color-strava-orange-soft: color-mix(in oklch, var(--color-strava-orange) 10%, transparent);
+      --color-primary-soft: color-mix(in oklch, var(--color-primary) 10%, transparent);
     }
     --color-green-100: #064E3B;
     --color-green-600: #34D399;
@@ -4931,7 +4931,7 @@
     --color-black: #000000;
     --color-white: #ffffff;
     --color-blue-600: #2563EB;
-    --color-strava-orange-soft: #FFF1E9;
+    --color-primary-soft: #FFF1E9;
   }
 }
 @layer utilities {
@@ -5054,20 +5054,20 @@ table.data-table {
         }
       }
       &.active {
-        border-color: var(--color-strava-orange);
+        border-color: var(--color-primary);
       }
       &.active {
-        background-color: var(--color-strava-orange-soft);
+        background-color: var(--color-primary-soft);
       }
       &.active {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
       &.active {
         &:hover {
           @media (hover: hover) {
             background-color: color-mix(in srgb, #F26722 20%, transparent);
             @supports (color: color-mix(in lab, red, red)) {
-              background-color: color-mix(in oklab, var(--color-strava-orange) 20%, transparent);
+              background-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
             }
           }
         }
@@ -5126,7 +5126,7 @@ table.data-table {
       width: calc(var(--spacing) * 4);
       border-color: var(--color-gray-300);
       background-color: var(--color-gray-100);
-      color: var(--color-strava-orange);
+      color: var(--color-primary);
       &:focus {
         --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
         box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -5134,7 +5134,7 @@ table.data-table {
       &:focus {
         --tw-ring-color: color-mix(in srgb, #F26722 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          --tw-ring-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
       }
     }
@@ -5145,7 +5145,7 @@ table.data-table {
       &:focus {
         border-color: color-mix(in srgb, #F26722 50%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          border-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
+          border-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
         }
       }
       &:focus {
@@ -5155,7 +5155,7 @@ table.data-table {
       &:focus {
         --tw-ring-color: color-mix(in srgb, #F26722 30%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
-          --tw-ring-color: color-mix(in oklab, var(--color-strava-orange) 30%, transparent);
+          --tw-ring-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
         }
       }
       &:focus {
@@ -5172,7 +5172,7 @@ table.data-table {
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-500);
       &:is(:where(.peer):checked ~ *) {
-        color: var(--color-strava-orange);
+        color: var(--color-primary);
       }
       &:hover {
         @media (hover: hover) {
@@ -5185,7 +5185,7 @@ table.data-table {
       margin-left: auto;
       font-size: var(--text-sm);
       line-height: var(--tw-leading, var(--text-sm--line-height));
-      color: var(--color-strava-orange);
+      color: var(--color-primary);
       text-decoration-line: underline;
       &:is(:where(.peer):checked ~ *) {
         visibility: visible;
@@ -5244,12 +5244,12 @@ table.data-table {
           &:focus-visible {
             outline-color: color-mix(in srgb, #F26722 50%, transparent);
             @supports (color: color-mix(in lab, red, red)) {
-              outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
+              outline-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
             }
           }
           &.active {
-            border-color: var(--color-strava-orange);
-            color: var(--color-strava-orange);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
           }
         }
       }
@@ -5346,14 +5346,14 @@ table.data-table {
         &:focus-visible {
           outline-color: color-mix(in srgb, #F26722 50%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
-            outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
+            outline-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
           }
         }
         &.active {
-          color: var(--color-strava-orange);
+          color: var(--color-primary);
           &:hover {
             @media (hover: hover) {
-              color: var(--color-strava-orange);
+              color: var(--color-primary);
             }
           }
         }
@@ -5433,7 +5433,7 @@ table.data-table {
         &:focus-visible {
           outline-color: color-mix(in srgb, #F26722 50%, transparent);
           @supports (color: color-mix(in lab, red, red)) {
-            outline-color: color-mix(in oklab, var(--color-strava-orange) 50%, transparent);
+            outline-color: color-mix(in oklab, var(--color-primary) 50%, transparent);
           }
         }
         &.active {
@@ -5675,19 +5675,19 @@ table.data-table {
           color: var(--color-gray-900);
           &:hover {
             @media (hover: hover) {
-              background-color: var(--color-strava-orange-soft);
+              background-color: var(--color-primary-soft);
             }
           }
           &:hover {
             @media (hover: hover) {
-              color: var(--color-strava-orange);
+              color: var(--color-primary);
             }
           }
           &[aria-selected="true"] {
-            background-color: var(--color-strava-orange-soft);
+            background-color: var(--color-primary-soft);
           }
           &[aria-selected="true"] {
-            color: var(--color-strava-orange);
+            color: var(--color-primary);
           }
           &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
             justify-content: center;
@@ -5699,7 +5699,7 @@ table.data-table {
             color: var(--color-gray-500);
           }
           &:hover svg, &[aria-selected="true"] svg {
-            color: var(--color-strava-orange);
+            color: var(--color-primary);
           }
           span:nth-of-type(1) {
             flex: 1;
@@ -5712,7 +5712,7 @@ table.data-table {
             border-radius: calc(infinity * 1px);
             background-color: color-mix(in srgb, #F26722 15%, transparent);
             @supports (color: color-mix(in lab, red, red)) {
-              background-color: color-mix(in oklab, var(--color-strava-orange) 15%, transparent);
+              background-color: color-mix(in oklab, var(--color-primary) 15%, transparent);
             }
             padding-inline: calc(var(--spacing) * 2.5);
             padding-block: calc(var(--spacing) * 0.5);
@@ -5720,7 +5720,7 @@ table.data-table {
             line-height: var(--tw-leading, var(--text-xs--line-height));
             --tw-font-weight: var(--font-weight-medium);
             font-weight: var(--font-weight-medium);
-            color: var(--color-strava-orange);
+            color: var(--color-primary);
             &:where([data-sidebar-collapsed], [data-sidebar-collapsed] *) {
               display: none;
             }

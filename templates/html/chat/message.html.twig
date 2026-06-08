@@ -3,7 +3,7 @@
         {% if chatMessage.getUserProfilePictureUrl() %}
             <img class="size-6 rounded-full border" src="{{ chatMessage.getUserProfilePictureUrl() }}"  alt="Profile Picture"/>
         {% else %}
-            <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">
+            <div class="size-6 shrink-0 rounded-full border flex items-center justify-center bg-primary text-white text-xs p-1">
                 {{ chatMessage.getFirstLetterOfFirstName()|upper }}
             </div>
         {% endif %}

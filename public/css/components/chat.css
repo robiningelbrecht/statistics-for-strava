@@ -72,7 +72,7 @@
             }
 
             & a {
-                @apply text-strava-orange hover:underline;
+                @apply text-primary hover:underline;
             }
 
             & strong {
@@ -124,12 +124,12 @@
                 @apply m-1 p-2 text-left text-gray-900 rounded-lg bg-white whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-200 ease-in-out;
 
                 & mark {
-                    @apply bg-transparent text-strava-orange font-bold;
+                    @apply bg-transparent text-primary font-bold;
                 }
 
                 &:hover,
                 &[aria-selected="true"] {
-                    @apply cursor-pointer bg-strava-orange/15;
+                    @apply cursor-pointer bg-primary/15;
                 }
             }
         }

@@ -3,7 +3,7 @@
         & > button[data-dropdown]{
             @apply cursor-pointer w-fit font-medium rounded-lg text-sm px-3 py-2 inline-flex items-center justify-between transition-colors;
             @apply text-gray-600 bg-white hover:text-gray-900 hover:bg-gray-50 border border-gray-200;
-            @apply [&.active]:text-strava-orange [&.active]:border-strava-orange [&.active]:bg-strava-orange-soft [&.active]:hover:bg-strava-orange/20;
+            @apply [&.active]:text-primary [&.active]:border-primary [&.active]:bg-primary-soft [&.active]:hover:bg-primary/20;
 
             & svg {
                 @apply w-2.5 h-2.5 ms-3 transition-transform duration-200;
@@ -29,19 +29,19 @@
         }
 
         & input:where([type="radio"], [type="checkbox"]) {
-            @apply w-4 h-4 text-strava-orange bg-gray-100 border-gray-300 focus:ring-strava-orange/30 focus:ring-2;
+            @apply w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary/30 focus:ring-2;
         }
 
         & input:where([type="text"], [type="date"], [type="number"]) {
-            @apply focus:outline-none focus:ring-2 focus:ring-strava-orange/30 focus:border-strava-orange/50 transition;
+            @apply focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition;
         }
 
         & li label {
-            @apply grow text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-strava-orange hover:bg-gray-100;
+            @apply grow text-sm font-medium text-gray-500 cursor-pointer peer-checked:text-primary hover:bg-gray-100;
         }
 
         & li a[data-datatable-filter-clear] {
-            @apply text-strava-orange text-sm underline invisible peer-checked:visible ml-auto;
+            @apply text-primary text-sm underline invisible peer-checked:visible ml-auto;
         }
     }
 }

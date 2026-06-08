@@ -12,10 +12,10 @@
                     @apply inline-flex items-center justify-center px-3 py-2.5 border-b-2 transition-colors;
                     @apply text-gray-500 border-gray-100;
                     @apply hover:text-gray-700 hover:border-gray-300;
-                    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strava-orange/50;
+                    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/50;
 
                     &.active {
-                        @apply text-strava-orange border-strava-orange;
+                        @apply text-primary border-primary;
                     }
                 }
             }
@@ -44,10 +44,10 @@
 
             & > a {
                 @apply inline-flex gap-x-1 items-center px-4 py-1 rounded-md text-xs font-medium text-gray-900 transition-colors;
-                @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strava-orange/50;
+                @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/50;
 
                 &.active {
-                    @apply text-strava-orange hover:text-strava-orange;
+                    @apply text-primary hover:text-primary;
                 }
             }
         }
@@ -64,7 +64,7 @@
             & > a {
                 @apply text-xs inline-block px-4 py-2 rounded-lg transition-colors;
                 @apply hover:bg-white/50 hover:text-gray-700;
-                @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-strava-orange/50;
+                @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary/50;
 
                 &.active {
                     @apply shadow-xs bg-white text-gray-900 hover:bg-white hover:text-gray-900 dark:bg-[#151b23];
