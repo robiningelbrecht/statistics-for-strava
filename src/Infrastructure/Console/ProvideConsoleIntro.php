@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Console;
 
+use App\Application\AppName;
 use App\Application\AppVersion;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Time\Clock\Clock;
@@ -17,7 +18,7 @@ trait ProvideConsoleIntro
     {
         $output->block(
             messages: [
-                sprintf('Statistics for Strava %s', AppVersion::getSemanticVersion()),
+                sprintf('%s %s', AppName::LABEL, AppVersion::getSemanticVersion()),
             ],
             style: 'fg=black;bg=green',
             padding: true
@@ -29,7 +30,7 @@ trait ProvideConsoleIntro
     {
         $output->block(
             messages: [
-                sprintf('Statistics for Strava %s | DAEMON', AppVersion::getSemanticVersion()),
+                sprintf('%s %s | DAEMON', AppName::LABEL, AppVersion::getSemanticVersion()),
                 sprintf('Started on %s', $clock->getCurrentDateTimeImmutable()->format('d-m-Y H:i:s')),
             ],
             style: 'fg=black;bg=green',

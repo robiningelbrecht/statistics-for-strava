@@ -11,40 +11,8 @@ jobs:
     name: Generate coverage artifact
     runs-on: ubuntu-latest
     steps:
-      - name: Install geos
-        run: sudo apt install -y geos-bin
-
-      # https://github.com/marketplace/actions/setup-php-action
-      - name: Setup PHP 8.5
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.5'
-          coverage: xdebug
-          extensions: zstd
-          ini-values: zend.assertions=1
-
-      # https://github.com/marketplace/actions/checkout
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      # https://github.com/marketplace/actions/setup-go-environment
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.25'
-          cache-dependency-path: docker/fit-tool/go.sum
-
-      - name: Build fit-tool
-        run: |
-          CGO_ENABLED=0 go build -ldflags="-s -w" -o fit-tool .
-          sudo install -m 0755 fit-tool /usr/bin/fit-tool
-        working-directory: docker/fit-tool
-
-      - name: Copy .env file
-        run: cp .env.test .env
-
-      - name: Install dependencies
-        run: composer install --prefer-dist
+      - name: Setup CI environment
+        uses: ./.github/actions/setup-env
 
       - name: Run test suite
         run: vendor/bin/phpunit --order-by=random --fail-on-incomplete --log-junit junit.xml --coverage-clover=clover.xml
