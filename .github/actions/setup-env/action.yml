@@ -1,13 +1,9 @@
 name: Setup CI environment
-description: Checkout, install geos, PHP 8.5 + xdebug, Go, build fit-tool, install Composer dependencies
+description: Install geos, PHP 8.5 + xdebug, Go, build fit-tool, install Composer dependencies
 
 runs:
   using: composite
   steps:
-    # https://github.com/marketplace/actions/checkout
-    - name: Checkout
-      uses: actions/checkout@v6
-
     - name: Install geos
       run: sudo apt install -y geos-bin
       shell: bash
