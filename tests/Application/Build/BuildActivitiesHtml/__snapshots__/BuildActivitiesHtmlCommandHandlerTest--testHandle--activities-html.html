@@ -29,7 +29,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
                                 </svg>
                             </div>
-                            <input id="search" type="search" placeholder="Search activity..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-strava-orange/30 focus:border-strava-orange/50 transition block w-full ps-10 p-2.5">
+                            <input id="search" type="search" placeholder="Search activity..." class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition block w-full ps-10 p-2.5">
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-2">
@@ -89,14 +89,14 @@
                                         <span class="mx-2 text-gray-500">to</span>
                                         <input name="start-date[to]" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                                     </div>
-                                    <a href="#" class="text-strava-orange text-sm text-right underline" data-datatable-filter-clear="start-date">clear</a>
+                                    <a href="#" class="text-primary text-sm text-right underline" data-datatable-filter-clear="start-date">clear</a>
                                 </div>
                                 <div class="hidden lg:flex flex-wrap gap-1.5 p-3" data-date-preset-filter="start-date">
-                                    <a href="#" data-date-preset="this-week" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1">This week</a>
-                                    <a href="#" data-date-preset="last-week" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1">Last week</a>
-                                    <a href="#" data-date-preset="this-month" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1">This month</a>
-                                    <a href="#" data-date-preset="last-month" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1">Last month</a>
-                                    <a href="#" data-date-preset="last-30-days" class="text-xs text-gray-500 hover:text-strava-orange border border-gray-200 hover:border-strava-orange rounded-full px-2.5 py-1">Last 30 days</a>
+                                    <a href="#" data-date-preset="this-week" class="text-xs text-gray-500 hover:text-primary border border-gray-200 hover:border-primary rounded-full px-2.5 py-1">This week</a>
+                                    <a href="#" data-date-preset="last-week" class="text-xs text-gray-500 hover:text-primary border border-gray-200 hover:border-primary rounded-full px-2.5 py-1">Last week</a>
+                                    <a href="#" data-date-preset="this-month" class="text-xs text-gray-500 hover:text-primary border border-gray-200 hover:border-primary rounded-full px-2.5 py-1">This month</a>
+                                    <a href="#" data-date-preset="last-month" class="text-xs text-gray-500 hover:text-primary border border-gray-200 hover:border-primary rounded-full px-2.5 py-1">Last month</a>
+                                    <a href="#" data-date-preset="last-30-days" class="text-xs text-gray-500 hover:text-primary border border-gray-200 hover:border-primary rounded-full px-2.5 py-1">Last 30 days</a>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <a href="#" class="invisible group-has-[input:not(:placeholder-shown)]/range-filter:visible text-strava-orange text-sm text-right underline" data-datatable-filter-clear="distance">clear</a>
+                                            <a href="#" class="invisible group-has-[input:not(:placeholder-shown)]/range-filter:visible text-primary text-sm text-right underline" data-datatable-filter-clear="distance">clear</a>
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-y-2">
@@ -272,7 +272,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <a href="#" class="invisible group-has-[input:not(:placeholder-shown)]/range-filter:visible text-strava-orange text-sm text-right underline" data-datatable-filter-clear="elevation">clear</a>
+                                            <a href="#" class="invisible group-has-[input:not(:placeholder-shown)]/range-filter:visible text-primary text-sm text-right underline" data-datatable-filter-clear="elevation">clear</a>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +350,7 @@
                         <div>
                                                         <span class="font-bold" data-datatable-result-count>15</span> results
                         </div>
-                        <a href="#" class="hidden font-medium text-strava-orange hover:underline" data-datatable-reset>Clear all filters</a>
+                        <a href="#" class="hidden font-medium text-primary hover:underline" data-datatable-reset>Clear all filters</a>
                     </div>
                 </form>
                 <div class="scroll-area overflow-auto max-h-[calc(100vh-285px)]">
@@ -361,7 +361,7 @@
                                 <div class="flex items-center justify-center" title="Date">
                                     Date
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -372,7 +372,7 @@
                                 <div class="flex items-center justify-center" title="Distance">
                                     Dist.
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -380,7 +380,7 @@
                                 <div class="flex items-center justify-center" title="Elevation">
                                     Elev.
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -388,7 +388,7 @@
                                 <div class="flex items-center justify-center" title="Time">
                                     Moving time
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -396,7 +396,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Speed
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -404,7 +404,7 @@
                                 <div class="flex items-center justify-center" title="Heart rate">
                                     HR
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -412,7 +412,7 @@
                                 <div class="flex items-center justify-center" title="Calories burned">
                                     Cal.
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -420,7 +420,7 @@
                                 <div class="flex items-center justify-center" title="Power">
                                     Power
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -428,7 +428,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 5s
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -436,7 +436,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 10s
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -444,7 +444,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 30s
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -452,7 +452,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 1m
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -460,7 +460,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 5m
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -468,7 +468,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 8m
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -476,7 +476,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 20m
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
@@ -484,7 +484,7 @@
                                 <div class="flex items-center justify-center" title="Speed">
                                     Best 1h
                                     <div class="ml-1.5 group sorting-icon" aria-sort="none">
-<svg class="size-2 text-gray-300 group-aria-desc:text-strava-orange group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-strava-orange group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
+<svg class="size-2 text-gray-300 group-aria-desc:text-primary group-aria-asc:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7"></path></svg><svg class="size-2 text-gray-300 group-aria-asc:text-primary group-aria-desc:text-gray-200 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 8"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"></path></svg>
 </div>
                                 </div>
                             </th>
