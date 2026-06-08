@@ -8,7 +8,7 @@
             > ul {
                 > li a {
                     @apply flex items-center gap-x-3 p-2 rounded-lg text-sm font-medium text-gray-900;
-                    @apply hover:bg-strava-orange-soft hover:text-strava-orange aria-selected:bg-strava-orange-soft aria-selected:text-strava-orange;
+                    @apply hover:bg-primary-soft hover:text-primary aria-selected:bg-primary-soft aria-selected:text-primary;
                     @apply sidebar-collapsed:justify-center;
 
                     svg {
@@ -16,7 +16,7 @@
                     }
 
                     &:hover svg, &[aria-selected="true"] svg {
-                        @apply text-strava-orange;
+                        @apply text-primary;
                     }
 
                     span:nth-of-type(1) {
@@ -24,7 +24,7 @@
                     }
 
                     span.badge {
-                        @apply sidebar-collapsed:hidden bg-strava-orange/15 text-strava-orange text-xs font-medium px-2.5 py-0.5 rounded-full;
+                        @apply sidebar-collapsed:hidden bg-primary/15 text-primary text-xs font-medium px-2.5 py-0.5 rounded-full;
                     }
                 }
             }

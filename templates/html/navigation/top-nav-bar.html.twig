@@ -61,7 +61,7 @@
                     </svg>
                 </a>
                 <a target="_blank" title="WindAhead - Wind analyzer for cycling and running routes" href="https://windahead.app/"
-                   class="p-1 rounded-sm hover:bg-gray-100 hover:text-strava-orange">
+                   class="p-1 rounded-sm hover:bg-gray-100 hover:text-primary">
                     <svg class="size-7 rounded-full" viewBox="-2.4 -2.4 28.8 28.8" xmlns="http://www.w3.org/2000/svg">
                         <rect x="-2.4" y="-2.4" width="28.8" height="28.8" fill="currentColor"/>
                         <g stroke="#fff" stroke-width="1.5" stroke-linecap="round" fill="none">
@@ -78,7 +78,7 @@
                     {% if profilePictureUrl %}
                         <img class="size-8 rounded-full bg-white" src="{{ profilePictureUrl }}" alt="Profile Picture">
                     {% else %}
-                        <div class="size-8 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">
+                        <div class="size-8 shrink-0 rounded-full border flex items-center justify-center bg-primary text-white text-xs p-1">
                             {{ athlete.getFirstLetterOfFirstName()|upper }}
                         </div>
                     {% endif %}
@@ -89,7 +89,7 @@
                             {% if profilePictureUrl %}
                                 <img class="size-8 rounded-full bg-white" src="{{ profilePictureUrl }}" alt="Profile Picture">
                             {% else %}
-                                <div class="size-8 shrink-0 rounded-full border flex items-center justify-center bg-strava-orange text-white text-xs p-1">
+                                <div class="size-8 shrink-0 rounded-full border flex items-center justify-center bg-primary text-white text-xs p-1">
                                     {{ athlete.getFirstLetterOfFirstName()|upper }}
                                 </div>
                             {% endif %}

@@ -9,21 +9,21 @@
     </div>
     <div class="grow w-full flex justify-center items-center gap-x-2 text-center">
         {% set dayStreakTitleAttribute = dayStreakStartDate ? "Streak started on {date}"|trans({'{date}': dayStreakStartDate|formatDate('normal')})  %}
-        <div title="{{ dayStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-strava-orange rounded-sm">
+        <div title="{{ dayStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-primary rounded-sm">
             <div class="text-3xl font-extrabold">
                 {{ dayStreak }}
             </div>
             <div class="text-sm">{{ "days"|trans }}</div>
         </div>
         {% set weekStreakTitleAttribute = weekStreakStartDate ? "Streak started on {date}"|trans({'{date}': weekStreakStartDate|formatDate('normal')})  %}
-        <div title="{{ weekStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-strava-orange rounded-sm">
+        <div title="{{ weekStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-primary rounded-sm">
             <div class="text-3xl font-extrabold">
                 {{ weekStreak }}
             </div>
             <div class="text-sm">{{ "weeks"|trans }}</div>
         </div>
         {% set monthStreakTitleAttribute = monthStreakStartDate ? "Streak started on {date}"|trans({'{date}': monthStreakStartDate|formatDate('normal')})  %}
-        <div title="{{ monthStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-strava-orange rounded-sm">
+        <div title="{{ monthStreakTitleAttribute }}" class="grow py-5 border border-gray-200 border-t-4 border-t-primary rounded-sm">
             <div class="text-3xl font-extrabold">
                 {{ monthStreak }}
             </div>

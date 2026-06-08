@@ -25,8 +25,8 @@
 @theme {
     --font-sans: Inter, ui-sans-serif, system-ui;
     --text-xxs: 0.625rem;
-    --color-strava-orange: #F26722;
-    --color-strava-orange-soft: #FFF1E9;
+    --color-primary: #F26722;
+    --color-primary-soft: #FFF1E9;
     --color-grey-yo: #cccccc;
 }
 
