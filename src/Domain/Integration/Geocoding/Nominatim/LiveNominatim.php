@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Integration\Geocoding\Nominatim;
 
+use App\Application\AppName;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Sleep;
@@ -29,7 +30,7 @@ final readonly class LiveNominatim implements Nominatim
                 'https://nominatim.openstreetmap.org/reverse',
                 [
                     RequestOptions::HEADERS => [
-                        'User-Agent' => 'Statistics for Strava App',
+                        'User-Agent' => AppName::LABEL.' App',
                     ],
                     RequestOptions::QUERY => [
                         'lat' => $coordinate->getLatitude()->toFloat(),

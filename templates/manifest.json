@@ -1,7 +1,7 @@
 {
   "id": "[APP_HOST]",
   "name": "[APP_NAME]",
-  "short_name": "Statistics for Strava",
+  "short_name": "[APP_NAME]",
   "description": "Statistics for Strava is a self-hosted web app designed to provide you with better stats.",
   "categories": [
     "strava",
