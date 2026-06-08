@@ -11,6 +11,9 @@ jobs:
     name: Generate coverage artifact
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
       - name: Setup CI environment
         uses: ./.github/actions/setup-env
 
