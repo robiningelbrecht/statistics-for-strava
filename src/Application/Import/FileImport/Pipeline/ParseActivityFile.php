@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\Pipeline;
 
-use App\Domain\Import\FileImportRepository;
+use App\Domain\Import\DuplicateActivityScanner;
 use App\Domain\Import\FileParser\ActivityFileParsers;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\WatchDirectory;
@@ -14,7 +14,7 @@ final readonly class ParseActivityFile implements ImportActivityFileStep
     public function __construct(
         private WatchDirectory $watchDirectory,
         private ActivityFileParsers $activityFileParsers,
-        private FileImportRepository $fileImportRepository,
+        private DuplicateActivityScanner $duplicateActivityScanner,
     ) {
     }
 
@@ -27,7 +27,7 @@ final readonly class ParseActivityFile implements ImportActivityFileStep
 
         $context = $context->withFile($file);
 
-        if ($this->fileImportRepository->existsForFileHash($file->getHash())) {
+        if ($this->duplicateActivityScanner->isDuplicate($file)) {
             throw new SkipActivityFileImport();
         }
 
