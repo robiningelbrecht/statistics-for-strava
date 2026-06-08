@@ -113,7 +113,7 @@ final readonly class GearMaintenanceConfig implements \Stringable
             $purchasePrice = null;
             if (!empty($component['purchasePrice']['amountInCents'])) {
                 $purchasePrice = new Money(
-                    amount: $component['purchasePrice']['amountInCents'],
+                    amount: (int) $component['purchasePrice']['amountInCents'],
                     currency: new Currency($component['purchasePrice']['currency'])
                 );
             }
