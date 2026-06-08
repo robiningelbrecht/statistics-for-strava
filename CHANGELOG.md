@@ -1,3 +1,17 @@
+# [v4.8.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.7) - 2026-06-08
+
+## Bug fixes
+* Fixed an issue where the import crashes for manually added activities
+
+## Technical details
+* ISSUE #2128: Add config option 'import mode' in preparation of multi-source imports by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2130
+* ISSUE #2129: Add new 'FileImport' entity to keep track of all file imports by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2131
+* ISSUE #2133: Add new Activity file import pipeline by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2134
+* ISSUE #2132: Import crashes on activities with null external_id by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2137
+* Fix CI/CD by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2138
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.6...v4.8.7
+
 # [v4.8.6](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.6) - 2026-06-04
 
 ## New features
