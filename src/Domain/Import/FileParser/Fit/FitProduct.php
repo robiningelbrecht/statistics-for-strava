@@ -495,14 +495,21 @@ final class FitProduct
         12 => 'Assioma Duo',
     ];
 
+    public static function supports(int $manufacturerId): bool
+    {
+        // Garmin & favero_electronics.
+        return in_array($manufacturerId, [1, 13, 15, 89, 263], true);
+    }
+
     public static function name(int $manufacturerId, int $productId): ?string
     {
+        if (!self::supports($manufacturerId)) {
+            return null;
+        }
+
         $product = match ($manufacturerId) {
-            // garmin, dynastream, dynastream_oem, tacx
-            1, 15, 13, 89 => self::GARMIN[$productId] ?? null,
-            // favero_electronics
             263 => self::FAVERO[$productId] ?? null,
-            default => null,
+            default => self::GARMIN[$productId] ?? null,
         };
 
         return null === $product ? null : sprintf('%s %s', FitManufacturer::name($manufacturerId), $product);

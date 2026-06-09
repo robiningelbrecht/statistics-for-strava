@@ -46,6 +46,29 @@ class FitFileParserTest extends TestCase
         $this->assertParsedActivity($parsed);
     }
 
+    public function testParsePrefersProductNameWhenManufacturerHasNoProductEnum(): void
+    {
+        $document = $this->withFileId([
+            ['name' => 'manufacturer', 'value' => 23],
+            ['name' => 'product', 'value' => 999],
+            ['name' => 'product_name', 'value' => 'Suunto Vertical'],
+        ]);
+        $this->givenFitToolReturns(Json::encode($document));
+
+        $this->assertSame('Suunto Vertical', $this->parser->parse($this->rawFile('/tmp/activity.fit'))->getActivity()->getDeviceName());
+    }
+
+    public function testParseFallsBackToManufacturerWhenProductNameMissing(): void
+    {
+        $document = $this->withFileId([
+            ['name' => 'manufacturer', 'value' => 123],
+            ['name' => 'product', 'value' => 99],
+        ]);
+        $this->givenFitToolReturns(Json::encode($document));
+
+        $this->assertSame('Polar Electro', $this->parser->parse($this->rawFile('/tmp/activity.fit'))->getActivity()->getDeviceName());
+    }
+
     public function testParseRealFitFileThroughBinary(): void
     {
         $parser = new FitFileParser(new SymfonyProcessFactory(), PausedClock::fromString('2023-10-17 16:15:04'), SerializableTimezone::UTC());
@@ -149,6 +172,24 @@ class FitFileParserTest extends TestCase
 
         $this->expectException(CouldNotParseActivityFile::class);
         $this->parser->parse($this->rawFile('/tmp/activity.fit'));
+    }
+
+    /**
+     * @param list<array{name: string, value: mixed}> $fields
+     *
+     * @return array<string, mixed>
+     */
+    private function withFileId(array $fields): array
+    {
+        $document = $this->fitDocument();
+        foreach ($document['files'][0]['messages'] as &$message) {
+            if ('file_id' === $message['name']) {
+                $message['fields'] = $fields;
+            }
+        }
+        unset($message);
+
+        return $document;
     }
 
     private function rawFile(string $path): RawActivityFile
