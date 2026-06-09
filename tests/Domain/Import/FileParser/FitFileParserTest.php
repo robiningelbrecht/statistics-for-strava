@@ -85,7 +85,7 @@ class FitFileParserTest extends TestCase
         $activity = $parsed->getActivity();
 
         $this->assertSame(ImportSource::FIT_FILE, $activity->getImportSource());
-        $this->assertSame('activity', $activity->getName());
+        $this->assertSame('Night Ride', $activity->getName());
         $this->assertSame(SportType::RIDE, $activity->getSportType());
         $this->assertSame(0.05, $activity->getDistance()->toFloat());
         $this->assertSame(10.0, $activity->getElevation()->toFloat());

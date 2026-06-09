@@ -12,6 +12,7 @@ use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\FileParser\TcxFileParser;
 use App\Infrastructure\ValueObject\String\Path;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +31,7 @@ class TcxFileParserTest extends TestCase
 
         $activity = $parsed->getActivity();
         $this->assertSame(ImportSource::TCX_FILE, $activity->getImportSource());
-        $this->assertSame('activity', $activity->getName());
+        $this->assertSame('Night Ride', $activity->getName());
         $this->assertSame(SportType::RIDE, $activity->getSportType());
         $this->assertSame('Garmin Edge 530', $activity->getDeviceName());
         $this->assertSame('2021-09-08T00:00:00+00:00', $activity->getStartDate()->format(\DateTimeInterface::ATOM));
@@ -121,6 +122,6 @@ class TcxFileParserTest extends TestCase
     {
         parent::setUp();
 
-        $this->parser = new TcxFileParser(PausedClock::fromString('2023-10-17 16:15:04'));
+        $this->parser = new TcxFileParser(PausedClock::fromString('2023-10-17 16:15:04'), SerializableTimezone::UTC());
     }
 }

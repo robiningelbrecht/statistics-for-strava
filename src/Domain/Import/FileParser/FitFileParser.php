@@ -6,6 +6,7 @@ namespace App\Domain\Import\FileParser;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\Lap\ActivityLapId;
@@ -133,13 +134,17 @@ final readonly class FitFileParser implements ActivityFileParser
             throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $session['sport'] ?? 'null', $session['sub_sport'] ?? 'null'), activityFile: $file);
         }
 
-        $streamMap = $this->buildStreams($records, $startTimestamp);
+        $streamMap = $this->buildStreams(
+            records: $records,
+            startTimestamp: $startTimestamp
+        );
         $activityId = ActivityId::random();
         $work = is_numeric($session['total_work'] ?? null) ? (float) $session['total_work'] : null;
+        $startDateTime = SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
 
         $activity = Activity::fromState(
             activityId: $activityId,
-            startDateTime: SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC()),
+            startDateTime: $startDateTime,
             sportType: $sportType,
             worldType: WorldType::fromDeviceAndActivityName(
                 deviceName: $deviceName,
@@ -147,7 +152,7 @@ final readonly class FitFileParser implements ActivityFileParser
             ),
             importSource: ImportSource::FIT_FILE,
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
-            name: $file->getPath()->getFilenameWithoutExtension(),
+            name: ActivityName::from($startDateTime, $sportType),
             description: null,
             distance: Kilometer::from(round((is_numeric($session['total_distance'] ?? null) ? (float) $session['total_distance'] : 0.0) / 1000, 3)),
             elevation: Meter::from(round(is_numeric($session['total_ascent'] ?? null) ? (float) $session['total_ascent'] : 0.0)),
@@ -297,16 +302,16 @@ final readonly class FitFileParser implements ActivityFileParser
         // at 0/0 ("null island"); fall through to the first GPS record instead.
         if (null !== $latitude && null !== $longitude && (0.0 !== $latitude || 0.0 !== $longitude)) {
             return Coordinate::createFromLatAndLng(
-                Latitude::fromString((string) Math::semicirclesToDegrees($latitude)),
-                Longitude::fromString((string) Math::semicirclesToDegrees($longitude)),
+                latitude: Latitude::fromString((string) Math::semicirclesToDegrees($latitude)),
+                longitude: Longitude::fromString((string) Math::semicirclesToDegrees($longitude)),
             );
         }
 
         foreach ($streams[StreamType::LAT_LNG->value] ?? [] as $point) {
             if (is_array($point)) {
                 return Coordinate::createFromLatAndLng(
-                    Latitude::fromString((string) $point[0]),
-                    Longitude::fromString((string) $point[1]),
+                    latitude: Latitude::fromString((string) $point[0]),
+                    longitude: Longitude::fromString((string) $point[1]),
                 );
             }
         }

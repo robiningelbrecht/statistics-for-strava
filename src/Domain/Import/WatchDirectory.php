@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Import;
 
-use App\Domain\Import\FileParser\RawActivityFile;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Infrastructure\ValueObject\String\Path;
 use League\Flysystem\DirectoryListing;
@@ -26,6 +25,18 @@ final readonly class WatchDirectory
         return $this->defaultStorage->directoryExists(self::FOLDER_NAME);
     }
 
+    public function countSupportedFiles(): int
+    {
+        return count(
+            $this->listFiles()
+                ->filter(fn (StorageAttributes $file): bool => in_array(
+                    Path::fromString($file->path())->getExtension(),
+                    ['fit', 'tcx', 'gpx'],
+                ))
+                ->toArray(),
+        );
+    }
+
     public function listFiles(): DirectoryListing
     {
         return $this->defaultStorage->listContents(self::FOLDER_NAME, false)
@@ -37,9 +48,9 @@ final readonly class WatchDirectory
         return $this->defaultStorage->read(self::FOLDER_NAME.'/'.$filePath->getFilename());
     }
 
-    public function deleteFile(RawActivityFile $file): void
+    public function deleteFile(Path $filePath): void
     {
-        $this->defaultStorage->delete(self::FOLDER_NAME.'/'.$file->getPath()->getFilename());
+        $this->defaultStorage->delete(self::FOLDER_NAME.'/'.$filePath->getFilename());
     }
 
     public function getAbsolutePathFor(StorageAttributes $file): Path

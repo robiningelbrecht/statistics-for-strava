@@ -6,6 +6,7 @@ namespace App\Domain\Import\FileParser;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\Lap\ActivityLapId;
@@ -27,18 +28,16 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 
 final readonly class GpxFileParser implements ActivityFileParser
 {
-    /**
-     * Inclusive plausible elevation range in meters. Values outside this range
-     * (or non-finite) are dropped to guard against sentinel/garbage readings.
-     */
     private const float ELEVATION_MIN = -9999.99;
     private const float ELEVATION_MAX = 9999.99;
 
     public function __construct(
         private Clock $clock,
+        private ?SerializableTimezone $timezone,
     ) {
     }
 
@@ -86,17 +85,12 @@ final readonly class GpxFileParser implements ActivityFileParser
         ];
         $laps = [];
 
-        $activityName = null;
         $sportType = SportType::WORKOUT;
         $deviceName = $this->resolveDeviceName($xml);
         $calories = null;
 
         $lapIndex = 0;
         foreach ($xml->trk as $track) {
-            $activityName ??= $this->firstNonEmptyString([
-                property_exists($track, 'name') ? (string) $track->name : null,
-                property_exists($xml, 'metadata') && property_exists($xml->metadata, 'name') ? (string) $xml->metadata->name : null,
-            ]);
             if (property_exists($track, 'type') && null !== $track->type && '' !== (string) $track->type) {
                 $sportType = $this->mapSportType((string) $track->type);
             }
@@ -136,14 +130,24 @@ final readonly class GpxFileParser implements ActivityFileParser
                     $altitude = $this->sanitizeElevation(property_exists($trackpoint, 'ele') && null !== $trackpoint->ele ? (float) $trackpoint->ele : null);
 
                     if (!in_array(null, [$previousLatitude, $previousLongitude, $latitude, $longitude], true)) {
-                        $delta = Math::haversineDistance($previousLatitude, $previousLongitude, $latitude, $longitude);
+                        $delta = Math::haversineDistance(
+                            lat1: $previousLatitude,
+                            lon1: $previousLongitude,
+                            lat2: $latitude,
+                            lon2: $longitude
+                        );
                         $cumulativeDistance += $delta;
                         $segmentDistance += $delta;
                     }
 
                     $instantSpeed = null;
                     if (null !== $previousTime && $time > $previousTime && null !== $latitude && null !== $longitude && null !== $previousLatitude && null !== $previousLongitude) {
-                        $instantSpeed = Math::haversineDistance($previousLatitude, $previousLongitude, $latitude, $longitude) / ($time - $previousTime);
+                        $instantSpeed = Math::haversineDistance(
+                            lat1: $previousLatitude,
+                            lon1: $previousLongitude,
+                            lat2: $latitude,
+                            lon2: $longitude
+                        ) / ($time - $previousTime);
                     }
 
                     $extensions = $this->extractExtensionValues($trackpoint);
@@ -192,10 +196,11 @@ final readonly class GpxFileParser implements ActivityFileParser
 
         $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
         $activityId = ActivityId::random();
+        $startDateTime = SerializableDateTime::fromTimestamp($startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
         $activityLaps = $this->buildActivityLaps($laps, $activityId);
         $activity = Activity::fromState(
             activityId: $activityId,
-            startDateTime: SerializableDateTime::fromTimestamp($startTimestamp),
+            startDateTime: $startDateTime,
             sportType: $sportType,
             worldType: WorldType::fromDeviceAndActivityName(
                 deviceName: $deviceName,
@@ -203,7 +208,7 @@ final readonly class GpxFileParser implements ActivityFileParser
             ),
             importSource: ImportSource::GPX_FILE,
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
-            name: $this->firstNonEmptyString([$activityName, $file->getPath()->getFilenameWithoutExtension()]) ?? $file->getPath()->getFilenameWithoutExtension(),
+            name: ActivityName::from($startDateTime, $sportType),
             description: null,
             distance: Kilometer::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getDistance()->toFloat()) / 1000, 3)),
             elevation: Meter::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getElevationDifference()->toFloat()))),
@@ -328,8 +333,8 @@ final readonly class GpxFileParser implements ActivityFileParser
         foreach ($streams[StreamType::LAT_LNG->value] ?? [] as $point) {
             if (is_array($point)) {
                 return Coordinate::createFromLatAndLng(
-                    Latitude::fromString((string) $point[0]),
-                    Longitude::fromString((string) $point[1]),
+                    latitude: Latitude::fromString((string) $point[0]),
+                    longitude: Longitude::fromString((string) $point[1]),
                 );
             }
         }
@@ -347,7 +352,10 @@ final readonly class GpxFileParser implements ActivityFileParser
             return $values;
         }
 
-        $this->collectExtensionValues($trackpoint->extensions, $values);
+        $this->collectExtensionValues(
+            element: $trackpoint->extensions,
+            values: $values
+        );
 
         return $values;
     }
@@ -358,7 +366,7 @@ final readonly class GpxFileParser implements ActivityFileParser
     private function collectExtensionValues(\SimpleXMLElement $element, array &$values): void
     {
         foreach ($element->children() as $name => $child) {
-            $tag = strtolower((string) $name);
+            $tag = strtolower($name);
             $text = trim((string) $child);
 
             if ('' !== $text && is_numeric($text)) {
@@ -373,7 +381,10 @@ final readonly class GpxFileParser implements ActivityFileParser
             }
 
             if (0 < $child->count()) {
-                $this->collectExtensionValues($child, $values);
+                $this->collectExtensionValues(
+                    element: $child,
+                    values: $values
+                );
             }
         }
     }
@@ -455,20 +466,6 @@ final readonly class GpxFileParser implements ActivityFileParser
             'swimming', 'swim' => SportType::SWIM,
             default => SportType::tryFrom($type) ?? SportType::WORKOUT,
         };
-    }
-
-    /**
-     * @param list<?string> $candidates
-     */
-    private function firstNonEmptyString(array $candidates): ?string
-    {
-        foreach ($candidates as $candidate) {
-            if (null !== $candidate && '' !== trim($candidate)) {
-                return trim($candidate);
-            }
-        }
-
-        return null;
     }
 
     /**

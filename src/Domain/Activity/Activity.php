@@ -83,7 +83,7 @@ final class Activity implements SupportsAITooling
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?ExternalReferenceId $externalReferenceId,
         #[ORM\Column(type: 'string')]
-        private readonly string $name,
+        private readonly ActivityName $name,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $description,
         #[ORM\Column(type: 'integer')]
@@ -157,7 +157,7 @@ final class Activity implements SupportsAITooling
             worldType: WorldType::fromDeviceAndActivityName($deviceName, $rawData['name'] ?? ''),
             importSource: ImportSource::STRAVA_API,
             externalReferenceId: ExternalReferenceId::fromOptionalString($rawData['external_id'] ?? ''),
-            name: $rawData['name'],
+            name: ActivityName::fromString($rawData['name']),
             description: $rawData['description'],
             distance: Kilometer::from(round($rawData['distance'] / 1000, 3)),
             elevation: Meter::from(round($rawData['total_elevation_gain'])),
@@ -199,7 +199,7 @@ final class Activity implements SupportsAITooling
         WorldType $worldType,
         ImportSource $importSource,
         ?ExternalReferenceId $externalReferenceId,
-        string $name,
+        ActivityName $name,
         ?string $description,
         Kilometer $distance,
         Meter $elevation,
@@ -435,7 +435,7 @@ final class Activity implements SupportsAITooling
 
     public function getOriginalName(): string
     {
-        return trim(str_replace('Zwift - ', '', $this->name));
+        return trim(str_replace('Zwift - ', '', (string) $this->name));
     }
 
     public function getName(): string
@@ -452,7 +452,7 @@ final class Activity implements SupportsAITooling
         return Escape::forJsonEncode($this->getName());
     }
 
-    public function withName(string $name): self
+    public function withName(ActivityName $name): self
     {
         return clone ($this, [
             'name' => $name,

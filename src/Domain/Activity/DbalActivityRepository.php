@@ -231,7 +231,7 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             worldType: WorldType::from($result['worldType']),
             importSource: ImportSource::from($result['importSource']),
             externalReferenceId: ExternalReferenceId::fromOptionalString($result['externalReferenceId'] ?? null),
-            name: $result['name'],
+            name: ActivityName::fromString($result['name']),
             description: $result['description'] ?: '',
             distance: Meter::from($result['distance'])->toKilometer(),
             elevation: Meter::from($result['elevation'] ?: 0),
