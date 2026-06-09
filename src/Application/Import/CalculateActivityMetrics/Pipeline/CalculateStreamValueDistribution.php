@@ -70,7 +70,7 @@ final readonly class CalculateStreamValueDistribution implements CalculateActivi
                     ksort($valueDistribution);
                 } elseif (StreamType::CADENCE === $streamType) {
                     /** @var array<int, int<1, max>> $valueDistribution */
-                    $valueDistribution = array_count_values($stream->getData());
+                    $valueDistribution = array_count_values(array_filter($stream->getData(), fn (mixed $item): bool => !is_null($item)));
                     ksort($valueDistribution);
                 } elseif (StreamType::VELOCITY === $streamType) {
                     $velocityUnitPreference = $sportType->getVelocityDisplayPreference();

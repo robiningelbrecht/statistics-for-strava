@@ -71,4 +71,9 @@ final readonly class Math
     {
         return max($min, min($max, $value));
     }
+
+    public static function semicirclesToDegrees(float $semicircles): float
+    {
+        return $semicircles * 180 / 2 ** 31;
+    }
 }
