@@ -17,7 +17,6 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
  */
 final readonly class GapCalculator
 {
-    private const float EARTH_RADIUS_M = 6371000.0;
     private const float DEFAULT_GRADE_DISTANCE_WINDOW_M = 200.0;
     private const float MIN_ELEVATION_CHANGE_THRESHOLD_M = 0.1;
     private const float GRADE_DEAD_ZONE = 0.005;
@@ -165,7 +164,7 @@ final readonly class GapCalculator
         $pointCount = \count($points);
 
         for ($i = 1; $i < $pointCount; ++$i) {
-            $cumulativeDistances[] = $cumulativeDistances[$i - 1] + $this->haversineDistance(
+            $cumulativeDistances[] = $cumulativeDistances[$i - 1] + Math::haversineDistance(
                 $points[$i - 1]['lat'],
                 $points[$i - 1]['lon'],
                 $points[$i]['lat'],
@@ -276,22 +275,6 @@ final readonly class GapCalculator
             trackLength: $trackLength,
             lastIndex: $lastIndex,
         )['grade'] ?? 0.0;
-    }
-
-    private function haversineDistance(float $lat1, float $lon1, float $lat2, float $lon2): float
-    {
-        $lat1Rad = deg2rad($lat1);
-        $lat2Rad = deg2rad($lat2);
-        $deltaLat = deg2rad($lat2 - $lat1);
-        $deltaLon = deg2rad($lon2 - $lon1);
-
-        $sinDeltaLat = sin($deltaLat / 2.0);
-        $sinDeltaLon = sin($deltaLon / 2.0);
-
-        $a = $sinDeltaLat * $sinDeltaLat
-            + cos($lat1Rad) * cos($lat2Rad) * $sinDeltaLon * $sinDeltaLon;
-
-        return self::EARTH_RADIUS_M * 2.0 * atan2(sqrt($a), sqrt(1.0 - Math::clamp($a, 0.0, 1.0)));
     }
 
     /**

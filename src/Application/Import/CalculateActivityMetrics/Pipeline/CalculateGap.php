@@ -16,7 +16,9 @@ use App\Infrastructure\Console\ProgressIndicator;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\SecPerKm;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 30)]
 final readonly class CalculateGap implements CalculateActivityMetricsStep
 {
     private const float MINIMUM_GAP_PACE_FACTOR = 0.5;
