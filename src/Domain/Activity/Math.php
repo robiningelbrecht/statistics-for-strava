@@ -76,4 +76,30 @@ final readonly class Math
     {
         return $semicircles * 180 / 2 ** 31;
     }
+
+    /**
+     * @param array<int|float|null> $values
+     */
+    public static function average(array $values): ?int
+    {
+        $numbers = array_filter($values, static fn (mixed $v): bool => null !== $v);
+        if ([] === $numbers) {
+            return null;
+        }
+
+        return (int) round(array_sum($numbers) / count($numbers));
+    }
+
+    /**
+     * @param array<int|float|null> $values
+     */
+    public static function max(array $values): ?int
+    {
+        $numbers = array_filter($values, static fn (mixed $v): bool => null !== $v);
+        if ([] === $numbers) {
+            return null;
+        }
+
+        return (int) max($numbers);
+    }
 }

@@ -10,6 +10,7 @@ use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\Lap\ActivityLapId;
 use App\Domain\Activity\Lap\ActivityLaps;
+use App\Domain\Activity\Math;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStream;
@@ -23,7 +24,6 @@ use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -125,6 +125,7 @@ final readonly class TcxFileParser implements ActivityFileParser
 
         $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
         $activityId = ActivityId::random();
+        $activityLaps = $this->buildActivityLaps($laps, $activityId);
         $activity = Activity::fromState(
             activityId: $activityId,
             startDateTime: SerializableDateTime::fromTimestamp($startTimestamp),
@@ -137,20 +138,20 @@ final readonly class TcxFileParser implements ActivityFileParser
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
             name: $file->getPath()->getFilenameWithoutExtension(),
             description: null,
-            distance: Kilometer::from(round($this->sumLapValues($laps, 'distance') / 1000, 3)),
-            elevation: Meter::from(round($this->sumLapValues($laps, 'total_elevation_gain'))),
+            distance: Kilometer::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getDistance()->toFloat()) / 1000, 3)),
+            elevation: Meter::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getElevationDifference()->toFloat()))),
             startingCoordinate: $this->resolveStartingCoordinate($streams),
             calories: $this->sumCalories($activityXml),
             kilojoules: null,
-            averagePower: $this->averageStream($streams[StreamType::WATTS->value]),
-            maxPower: $this->maxStream($streams[StreamType::WATTS->value]),
-            averageSpeed: $this->toKmPerHour([] !== $velocities ? array_sum($velocities) / count($velocities) : null),
-            maxSpeed: $this->toKmPerHour([] !== $velocities ? max($velocities) : null),
-            averageHeartRate: $this->averageStream($streams[StreamType::HEART_RATE->value]),
-            maxHeartRate: $this->maxStream($streams[StreamType::HEART_RATE->value]),
-            averageCadence: $this->averageStream($streams[StreamType::CADENCE->value]),
-            movingTimeInSeconds: (int) round($this->sumLapValues($laps, 'moving_time')),
-            elapsedTimeInSeconds: (int) round($this->sumLapValues($laps, 'elapsed_time')),
+            averagePower: Math::average($streams[StreamType::WATTS->value]),
+            maxPower: Math::max($streams[StreamType::WATTS->value]),
+            averageSpeed: MetersPerSecond::fromOptional([] !== $velocities ? array_sum($velocities) / count($velocities) : null)->toKmPerHour(),
+            maxSpeed: MetersPerSecond::fromOptional([] !== $velocities ? max($velocities) : null)->toKmPerHour(),
+            averageHeartRate: Math::average($streams[StreamType::HEART_RATE->value]),
+            maxHeartRate: Math::max($streams[StreamType::HEART_RATE->value]),
+            averageCadence: Math::average($streams[StreamType::CADENCE->value]),
+            movingTimeInSeconds: (int) $activityLaps->sum(static fn (ActivityLap $lap): int => $lap->getMovingTimeInSeconds()),
+            elapsedTimeInSeconds: (int) $activityLaps->sum(static fn (ActivityLap $lap): int => $lap->getElapsedTimeInSeconds()),
             kudoCount: 0,
             deviceName: $deviceName,
             totalImageCount: 0,
@@ -166,7 +167,7 @@ final readonly class TcxFileParser implements ActivityFileParser
         return ParsedActivityFile::create(
             activity: $activity,
             streams: $this->buildActivityStreams($streams, $activityId),
-            laps: $this->buildActivityLaps($laps, $activityId),
+            laps: $activityLaps,
         );
     }
 
@@ -318,45 +319,6 @@ final readonly class TcxFileParser implements ActivityFileParser
     }
 
     /**
-     * @param list<array<string, mixed>> $laps
-     */
-    private function sumLapValues(array $laps, string $key): float
-    {
-        $sum = 0.0;
-        foreach ($laps as $lap) {
-            $sum += (float) ($lap[$key] ?? 0);
-        }
-
-        return $sum;
-    }
-
-    /**
-     * @param list<mixed> $values
-     */
-    private function averageStream(array $values): ?int
-    {
-        $numbers = array_filter($values, static fn (mixed $v): bool => null !== $v);
-        if ([] === $numbers) {
-            return null;
-        }
-
-        return (int) round(array_sum($numbers) / count($numbers));
-    }
-
-    /**
-     * @param list<mixed> $values
-     */
-    private function maxStream(array $values): ?int
-    {
-        $numbers = array_filter($values, static fn (mixed $v): bool => null !== $v);
-        if ([] === $numbers) {
-            return null;
-        }
-
-        return (int) max($numbers);
-    }
-
-    /**
      * @param array<string, list<mixed>> $streamMap
      */
     private function encodePolyline(array $streamMap): ?string
@@ -372,14 +334,5 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         return (string) EncodedPolyline::encode($coordinates);
-    }
-
-    private function toKmPerHour(?float $meterPerSecond): KmPerHour
-    {
-        if (null === $meterPerSecond) {
-            return KmPerHour::zero();
-        }
-
-        return MetersPerSecond::from($meterPerSecond)->toKmPerHour();
     }
 }
