@@ -65,7 +65,15 @@ final readonly class TcxFileParser implements ActivityFileParser
             throw new CouldNotParseActivityFile(message: sprintf('No <Activity> found in "%s"', $file->getPath()->getFilename()), activityFile: $file);
         }
 
-        $sportType = $this->mapSportType((string) $activityXml['Sport'], $file);
+        $tcxSport = (string) $activityXml['Sport'];
+        $sportType = match (strtolower($tcxSport)) {
+            'running' => SportType::RUN,
+            'biking', 'cycling' => SportType::RIDE,
+            'walking' => SportType::WALK,
+            'hiking' => SportType::HIKE,
+            'swimming' => SportType::SWIM,
+            default => SportType::tryFrom($tcxSport) ?? SportType::WORKOUT,
+        };
         $deviceName = property_exists($activityXml->Creator, 'Name') && null !== $activityXml->Creator->Name ? (string) $activityXml->Creator->Name : null;
 
         $startTimestamp = null;
@@ -83,14 +91,18 @@ final readonly class TcxFileParser implements ActivityFileParser
 
         foreach ($activityXml->Lap as $lapIndex => $lap) {
             $lapStart = isset($lap['StartTime']) ? SerializableDateTime::fromString((string) $lap['StartTime'])->getTimestamp() : null;
+            $lapAltitudes = [];
 
             foreach ($lap->Track->Trackpoint ?? [] as $trackpoint) {
                 $time = property_exists($trackpoint, 'Time') && null !== $trackpoint->Time ? SerializableDateTime::fromString((string) $trackpoint->Time)->getTimestamp() : null;
                 $startTimestamp ??= $time;
 
+                $altitude = property_exists($trackpoint, 'AltitudeMeters') && null !== $trackpoint->AltitudeMeters ? (float) $trackpoint->AltitudeMeters : null;
+                $lapAltitudes[] = $altitude;
+
                 $streams[StreamType::TIME->value][] = (null !== $time && null !== $startTimestamp) ? $time - $startTimestamp : null;
                 $streams[StreamType::DISTANCE->value][] = property_exists($trackpoint, 'DistanceMeters') && null !== $trackpoint->DistanceMeters ? (float) $trackpoint->DistanceMeters : null;
-                $streams[StreamType::ALTITUDE->value][] = property_exists($trackpoint, 'AltitudeMeters') && null !== $trackpoint->AltitudeMeters ? (float) $trackpoint->AltitudeMeters : null;
+                $streams[StreamType::ALTITUDE->value][] = $altitude;
 
                 $latitude = property_exists($trackpoint->Position, 'LatitudeDegrees') && null !== $trackpoint->Position->LatitudeDegrees ? (float) $trackpoint->Position->LatitudeDegrees : null;
                 $longitude = property_exists($trackpoint->Position, 'LongitudeDegrees') && null !== $trackpoint->Position->LongitudeDegrees ? (float) $trackpoint->Position->LongitudeDegrees : null;
@@ -104,7 +116,7 @@ final readonly class TcxFileParser implements ActivityFileParser
                 $streams[StreamType::WATTS->value][] = isset($tpx['Watts']) ? (int) $tpx['Watts'] : null;
             }
 
-            $laps[] = $this->buildLap((int) $lapIndex, $lap, $lapStart);
+            $laps[] = $this->buildLap((int) $lapIndex, $lap, $lapStart, $this->elevationGain($lapAltitudes));
         }
 
         if (null === $startTimestamp) {
@@ -167,7 +179,7 @@ final readonly class TcxFileParser implements ActivityFileParser
 
         $streams = ActivityStreams::empty();
         foreach ($streamMap as $type => $values) {
-            if (!$streamType = StreamType::tryFrom((string) $type)) {
+            if (!$streamType = StreamType::tryFrom($type)) {
                 continue;
             }
             if ([] === array_filter($values, static fn (mixed $value): bool => null !== $value)) {
@@ -218,7 +230,7 @@ final readonly class TcxFileParser implements ActivityFileParser
     /**
      * @return array<string, mixed>
      */
-    private function buildLap(int $index, \SimpleXMLElement $lap, ?int $lapStart): array
+    private function buildLap(int $index, \SimpleXMLElement $lap, ?int $lapStart, float $elevationGain): array
     {
         return [
             'id' => $index + 1,
@@ -231,7 +243,7 @@ final readonly class TcxFileParser implements ActivityFileParser
                 ? (float) $lap->DistanceMeters / (float) $lap->TotalTimeSeconds
                 : 0.0,
             'max_speed' => property_exists($lap, 'MaximumSpeed') && null !== $lap->MaximumSpeed ? (float) $lap->MaximumSpeed : 0.0,
-            'total_elevation_gain' => 0.0,
+            'total_elevation_gain' => $elevationGain,
             'average_heartrate' => property_exists($lap->AverageHeartRateBpm, 'Value') && null !== $lap->AverageHeartRateBpm->Value ? (int) $lap->AverageHeartRateBpm->Value : null,
             'start_date' => null !== $lapStart ? SerializableDateTime::fromTimestamp($lapStart)->format(\DateTimeInterface::ATOM) : null,
         ];
@@ -283,6 +295,26 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         return $found ? $calories : null;
+    }
+
+    /**
+     * @param list<?float> $altitudes
+     */
+    private function elevationGain(array $altitudes): float
+    {
+        $gain = 0.0;
+        $previous = null;
+        foreach ($altitudes as $altitude) {
+            if (null === $altitude) {
+                continue;
+            }
+            if (null !== $previous && $altitude > $previous) {
+                $gain += $altitude - $previous;
+            }
+            $previous = $altitude;
+        }
+
+        return $gain;
     }
 
     /**
@@ -349,17 +381,5 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         return MetersPerSecond::from($meterPerSecond)->toKmPerHour();
-    }
-
-    private function mapSportType(string $sport, RawActivityFile $file): SportType
-    {
-        return match (strtolower($sport)) {
-            'running' => SportType::RUN,
-            'biking' => SportType::RIDE,
-            'walking' => SportType::WALK,
-            'hiking' => SportType::HIKE,
-            'swimming' => SportType::SWIM,
-            default => throw new CouldNotParseActivityFile(message: sprintf('Unsupported TCX sport "%s"', $sport), activityFile: $file),
-        };
     }
 }

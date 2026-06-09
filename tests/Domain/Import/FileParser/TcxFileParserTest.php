@@ -36,6 +36,7 @@ class TcxFileParserTest extends TestCase
         $this->assertSame('2021-09-08T00:00:00+00:00', $activity->getStartDate()->format(\DateTimeInterface::ATOM));
 
         $this->assertSame(0.05, $activity->getDistance()->toFloat());
+        $this->assertSame(10.0, $activity->getElevation()->toFloat());
         $this->assertSame(10, $activity->getElapsedTimeInSeconds());
         $this->assertSame(10, $activity->getMovingTimeInSeconds());
         $this->assertSame(42, $activity->getCalories());
@@ -79,22 +80,32 @@ class TcxFileParserTest extends TestCase
         $this->parser->parse(RawActivityFile::from(Path::fromString('does-not-exist.tcx'), ''));
     }
 
-    public function testParseUnsupportedSportThrows(): void
+    public function testParseUnknownSportDefaultsToWorkout(): void
     {
+        // TCX only allows "Running", "Biking" and "Other"; anything else (here a
+        // non-standard value) should fall back to a generic Workout, not fail.
         $xml = <<<'XML'
             <?xml version="1.0" encoding="UTF-8"?>
             <TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2">
               <Activities>
-                <Activity Sport="Skiing">
+                <Activity Sport="Other">
                   <Id>2021-09-08T00:00:00Z</Id>
-                  <Lap StartTime="2021-09-08T00:00:00Z"><Track></Track></Lap>
+                  <Lap StartTime="2021-09-08T00:00:00Z">
+                    <Track>
+                      <Trackpoint>
+                        <Time>2021-09-08T00:00:00Z</Time>
+                        <Position><LatitudeDegrees>45.0</LatitudeDegrees><LongitudeDegrees>22.5</LongitudeDegrees></Position>
+                      </Trackpoint>
+                    </Track>
+                  </Lap>
                 </Activity>
               </Activities>
             </TrainingCenterDatabase>
             XML;
 
-        $this->expectException(CouldNotParseActivityFile::class);
-        $this->parser->parse(RawActivityFile::from(Path::fromString('unsupported-sport.tcx'), $xml));
+        $parsed = $this->parser->parse(RawActivityFile::from(Path::fromString('other-sport.tcx'), $xml));
+
+        $this->assertSame(SportType::WORKOUT, $parsed->getActivity()->getSportType());
     }
 
     private function rawFileFromFixture(string $name): RawActivityFile

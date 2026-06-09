@@ -34,6 +34,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math"
 	"os"
@@ -73,20 +74,42 @@ func main() {
 }
 
 func run(path string) error {
+	files, err := decode(path)
+	// A bad CRC almost always means a quirky-but-readable file rather than
+	// corrupt data, so retry while ignoring the checksum instead of failing.
+	if errors.Is(err, decoder.ErrCRCChecksumMismatch) {
+		fmt.Fprintf(os.Stderr, "fit-tool: warning: %v; retrying without checksum validation\n", err)
+		files, err = decode(path, decoder.WithIgnoreChecksum())
+	}
+	if err != nil {
+		return err
+	}
+
+	enc := json.NewEncoder(os.Stdout)
+	if err := enc.Encode(map[string]any{"files": files}); err != nil {
+		return fmt.Errorf("encode json: %w", err)
+	}
+
+	return nil
+}
+
+// decode reads every chained FIT file at path into the output shape. The opts
+// are forwarded to the decoder so callers can, e.g., relax CRC validation.
+func decode(path string, opts ...decoder.Option) ([]outFile, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return fmt.Errorf("open file: %w", err)
+		return nil, fmt.Errorf("open file: %w", err)
 	}
 	defer f.Close()
 
-	dec := decoder.New(bufio.NewReader(f))
+	dec := decoder.New(bufio.NewReader(f), opts...)
 
 	files := make([]outFile, 0, 1)
 	// A .FIT file may contain multiple chained FIT files; decode them all.
 	for dec.Next() {
 		fit, err := dec.Decode()
 		if err != nil {
-			return fmt.Errorf("decode: %w", err)
+			return nil, fmt.Errorf("decode: %w", err)
 		}
 
 		file := outFile{
@@ -126,12 +149,7 @@ func run(path string) error {
 		files = append(files, file)
 	}
 
-	enc := json.NewEncoder(os.Stdout)
-	if err := enc.Encode(map[string]any{"files": files}); err != nil {
-		return fmt.Errorf("encode json: %w", err)
-	}
-
-	return nil
+	return files, nil
 }
 
 // sanitize replaces non-finite floats (the FIT "invalid" sentinel) with nil so

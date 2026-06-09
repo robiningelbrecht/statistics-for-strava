@@ -16,6 +16,7 @@ use App\Infrastructure\Process\ProcessFactory;
 use App\Infrastructure\Process\SymfonyProcessFactory;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\String\Path;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +48,7 @@ class FitFileParserTest extends TestCase
 
     public function testParseRealFitFileThroughBinary(): void
     {
-        $parser = new FitFileParser(new SymfonyProcessFactory(), PausedClock::fromString('2023-10-17 16:15:04'));
+        $parser = new FitFileParser(new SymfonyProcessFactory(), PausedClock::fromString('2023-10-17 16:15:04'), SerializableTimezone::UTC());
 
         $parsed = $parser->parse($this->rawFileFromFixture('activity.fit'));
 
@@ -255,6 +256,7 @@ class FitFileParserTest extends TestCase
         $this->parser = new FitFileParser(
             $this->processFactory = $this->createStub(ProcessFactory::class),
             PausedClock::fromString('2023-10-17 16:15:04'),
+            SerializableTimezone::UTC(),
         );
     }
 }

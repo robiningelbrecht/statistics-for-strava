@@ -16,6 +16,9 @@ use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreams;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\WorldType;
+use App\Domain\Import\FileParser\Fit\FitManufacturer;
+use App\Domain\Import\FileParser\Fit\FitProduct;
+use App\Domain\Import\FileParser\Fit\FitSportType;
 use App\Infrastructure\Process\ProcessFactory;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
@@ -29,6 +32,7 @@ use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 
 final readonly class FitFileParser implements ActivityFileParser
 {
@@ -36,32 +40,10 @@ final readonly class FitFileParser implements ActivityFileParser
     // FIT timestamps are stored as seconds since the FIT epoch.
     private const int FIT_EPOCH_OFFSET = 631065600;
 
-    // FIT profile Sport enum values.
-    private const int SPORT_RUNNING = 1;
-    private const int SPORT_CYCLING = 2;
-    private const int SPORT_SWIMMING = 5;
-    private const int SPORT_WALKING = 11;
-    private const int SPORT_ROWING = 15;
-    private const int SPORT_HIKING = 17;
-    private const int SPORT_E_BIKING = 21;
-
-    // FIT profile SubSport enum values.
-    private const int SUB_SPORT_TREADMILL = 1;
-    private const int SUB_SPORT_TRAIL = 3;
-    private const int SUB_SPORT_SPIN = 5;
-    private const int SUB_SPORT_INDOOR_CYCLING = 6;
-    private const int SUB_SPORT_MOUNTAIN = 8;
-    private const int SUB_SPORT_DOWNHILL = 9;
-    private const int SUB_SPORT_CYCLOCROSS = 11;
-    private const int SUB_SPORT_E_BIKE_FITNESS = 28;
-    private const int SUB_SPORT_INDOOR_RUNNING = 45;
-    private const int SUB_SPORT_GRAVEL_CYCLING = 46;
-    private const int SUB_SPORT_E_BIKE_MOUNTAIN = 47;
-    private const int SUB_SPORT_VIRTUAL_ACTIVITY = 58;
-
     public function __construct(
         private ProcessFactory $processFactory,
         private Clock $clock,
+        private ?SerializableTimezone $timezone,
     ) {
     }
 
@@ -99,6 +81,8 @@ final readonly class FitFileParser implements ActivityFileParser
         /** @var array<string, mixed>|null $session */
         $session = null;
         $deviceName = null;
+        $manufacturerId = null;
+        $productId = null;
 
         foreach ($messages as $message) {
             $fields = $this->fieldMap($message['fields'] ?? []);
@@ -112,11 +96,17 @@ final readonly class FitFileParser implements ActivityFileParser
                 case 'session':
                     $session ??= $fields;
                     break;
+                case 'file_id':
+                    $manufacturerId ??= $this->intOrNull($fields['manufacturer'] ?? null);
+                    $productId ??= $this->intOrNull($fields['product'] ?? null);
+                    break;
             }
             if (null === $deviceName && is_string($fields['product_name'] ?? null) && '' !== $fields['product_name']) {
                 $deviceName = $fields['product_name'];
             }
         }
+
+        $deviceName ??= $this->resolveDeviceName($manufacturerId, $productId);
 
         if ([] === $records) {
             throw new CouldNotParseActivityFile(message: sprintf('No FIT "record" messages found in "%s"', $file->getPath()->getFilename()), activityFile: $file);
@@ -142,7 +132,7 @@ final readonly class FitFileParser implements ActivityFileParser
 
         $activity = Activity::fromState(
             activityId: $activityId,
-            startDateTime: SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTimestamp),
+            startDateTime: SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC()),
             sportType: $sportType,
             worldType: WorldType::fromDeviceAndActivityName(
                 deviceName: $deviceName,
@@ -181,7 +171,7 @@ final readonly class FitFileParser implements ActivityFileParser
         return ParsedActivityFile::create(
             activity: $activity,
             streams: $this->buildActivityStreams($streamMap, $activityId),
-            laps: $this->buildActivityLaps($this->buildLaps($lapMessages, $startTimestamp), $activityId),
+            laps: $this->buildActivityLaps($this->buildLaps($lapMessages), $activityId),
         );
     }
 
@@ -288,11 +278,10 @@ final readonly class FitFileParser implements ActivityFileParser
      *
      * @return list<array<string, mixed>>
      */
-    private function buildLaps(array $lapMessages, int $startTimestamp): array
+    private function buildLaps(array $lapMessages): array
     {
         $laps = [];
         foreach ($lapMessages as $index => $lap) {
-            $startTime = $this->intOrNull($lap['start_time'] ?? null) ?? $startTimestamp;
             $laps[] = [
                 'id' => $index + 1,
                 'lap_index' => $index + 1,
@@ -304,7 +293,6 @@ final readonly class FitFileParser implements ActivityFileParser
                 'max_speed' => $this->floatOrNull($lap['enhanced_max_speed'] ?? $lap['max_speed'] ?? null) ?? 0.0,
                 'total_elevation_gain' => $this->floatOrNull($lap['total_ascent'] ?? null) ?? 0.0,
                 'average_heartrate' => $this->intOrNull($lap['avg_heart_rate'] ?? null),
-                'start_date' => SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTime)->format(\DateTimeInterface::ATOM),
             ];
         }
 
@@ -319,7 +307,9 @@ final readonly class FitFileParser implements ActivityFileParser
     {
         $latitude = $this->floatOrNull($session['start_position_lat'] ?? null);
         $longitude = $this->floatOrNull($session['start_position_long'] ?? null);
-        if (null !== $latitude && null !== $longitude) {
+        // Indoor/virtual activities (e.g. Zwift) leave the session start position
+        // at 0/0 ("null island"); fall through to the first GPS record instead.
+        if (null !== $latitude && null !== $longitude && (0.0 !== $latitude || 0.0 !== $longitude)) {
             return Coordinate::createFromLatAndLng(
                 Latitude::fromString((string) $this->semicirclesToDegrees($latitude)),
                 Longitude::fromString((string) $this->semicirclesToDegrees($longitude)),
@@ -340,22 +330,7 @@ final readonly class FitFileParser implements ActivityFileParser
 
     private function mapSportType(?int $sport, ?int $subSport, RawActivityFile $file): SportType
     {
-        $sportType = match (true) {
-            self::SPORT_RUNNING === $sport && self::SUB_SPORT_TRAIL === $subSport => SportType::TRAIL_RUN,
-            self::SPORT_RUNNING === $sport && in_array($subSport, [self::SUB_SPORT_TREADMILL, self::SUB_SPORT_INDOOR_RUNNING, self::SUB_SPORT_VIRTUAL_ACTIVITY], true) => SportType::VIRTUAL_RUN,
-            self::SPORT_RUNNING === $sport => SportType::RUN,
-            self::SPORT_CYCLING === $sport && in_array($subSport, [self::SUB_SPORT_MOUNTAIN, self::SUB_SPORT_DOWNHILL, self::SUB_SPORT_CYCLOCROSS], true) => SportType::MOUNTAIN_BIKE_RIDE,
-            self::SPORT_CYCLING === $sport && self::SUB_SPORT_GRAVEL_CYCLING === $subSport => SportType::GRAVEL_RIDE,
-            self::SPORT_CYCLING === $sport && in_array($subSport, [self::SUB_SPORT_INDOOR_CYCLING, self::SUB_SPORT_SPIN, self::SUB_SPORT_VIRTUAL_ACTIVITY], true) => SportType::VIRTUAL_RIDE,
-            self::SPORT_CYCLING === $sport && in_array($subSport, [self::SUB_SPORT_E_BIKE_FITNESS, self::SUB_SPORT_E_BIKE_MOUNTAIN], true) => SportType::E_BIKE_RIDE,
-            self::SPORT_E_BIKING === $sport => SportType::E_BIKE_RIDE,
-            self::SPORT_CYCLING === $sport => SportType::RIDE,
-            self::SPORT_WALKING === $sport => SportType::WALK,
-            self::SPORT_HIKING === $sport => SportType::HIKE,
-            self::SPORT_SWIMMING === $sport => SportType::SWIM,
-            self::SPORT_ROWING === $sport => SportType::ROWING,
-            default => null,
-        };
+        $sportType = FitSportType::resolve($sport, $subSport);
 
         if (!$sportType instanceof SportType) {
             throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'), activityFile: $file);
@@ -422,5 +397,16 @@ final readonly class FitFileParser implements ActivityFileParser
     private function intOrNull(mixed $value): ?int
     {
         return is_numeric($value) ? (int) round((float) $value) : null;
+    }
+
+    private function resolveDeviceName(?int $manufacturerId, ?int $productId): ?string
+    {
+        if (null === $manufacturerId) {
+            return null;
+        }
+
+        $product = null !== $productId ? FitProduct::name($manufacturerId, $productId) : null;
+
+        return $product ?? FitManufacturer::name($manufacturerId);
     }
 }

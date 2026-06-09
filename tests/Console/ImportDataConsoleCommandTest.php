@@ -138,7 +138,7 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
             $this->migrationRunner,
-            ImportMode::FILE,
+            ImportMode::FILES,
         );
 
         $application = new Application();
