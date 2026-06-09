@@ -6,6 +6,7 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
@@ -27,7 +28,7 @@ final class ActivityBuilder
     private WorldType $worldType = WorldType::REAL_WORLD;
     private ImportSource $importSource = ImportSource::STRAVA_API;
     private ExternalReferenceId $externalReferenceId;
-    private string $name = 'Test activity';
+    private ActivityName $name;
     private readonly string $description;
     private Kilometer $distance;
     private Meter $elevation;
@@ -58,6 +59,7 @@ final class ActivityBuilder
     {
         $this->activityId = ActivityId::fromUnprefixed('903645');
         $this->startDateTime = SerializableDateTime::fromString('2023-10-10');
+        $this->name = ActivityName::fromString('Test activity');
         $this->description = '';
         $this->distance = Kilometer::from(10);
         $this->elevation = Meter::from(0);
@@ -126,7 +128,7 @@ final class ActivityBuilder
 
     public function withName(string $name): self
     {
-        $this->name = $name;
+        $this->name = ActivityName::fromString($name);
 
         return $this;
     }

@@ -13,6 +13,7 @@ use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\GpxFileParser;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Infrastructure\ValueObject\String\Path;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +34,7 @@ class GpxFileParserTest extends TestCase
 
         $activity = $parsed->getActivity();
         $this->assertSame(ImportSource::GPX_FILE, $activity->getImportSource());
-        $this->assertSame('Morning Ride', $activity->getName());
+        $this->assertSame('Night Ride', $activity->getName());
         $this->assertSame(SportType::RIDE, $activity->getSportType());
         $this->assertSame('Garmin Edge 530', $activity->getDeviceName());
         $this->assertSame('2021-09-08T00:00:00+00:00', $activity->getStartDate()->format(\DateTimeInterface::ATOM));
@@ -134,6 +135,6 @@ class GpxFileParserTest extends TestCase
     {
         parent::setUp();
 
-        $this->parser = new GpxFileParser(PausedClock::fromString('2023-10-17 16:15:04'));
+        $this->parser = new GpxFileParser(PausedClock::fromString('2023-10-17 16:15:04'), SerializableTimezone::UTC());
     }
 }

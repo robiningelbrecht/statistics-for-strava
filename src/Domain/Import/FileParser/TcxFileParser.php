@@ -6,6 +6,7 @@ namespace App\Domain\Import\FileParser;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\Lap\ActivityLapId;
@@ -27,11 +28,13 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
+use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 
 final readonly class TcxFileParser implements ActivityFileParser
 {
     public function __construct(
         private Clock $clock,
+        private ?SerializableTimezone $timezone,
     ) {
     }
 
@@ -125,10 +128,11 @@ final readonly class TcxFileParser implements ActivityFileParser
 
         $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
         $activityId = ActivityId::random();
+        $startDateTime = SerializableDateTime::fromTimestamp($startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
         $activityLaps = $this->buildActivityLaps($laps, $activityId);
         $activity = Activity::fromState(
             activityId: $activityId,
-            startDateTime: SerializableDateTime::fromTimestamp($startTimestamp),
+            startDateTime: $startDateTime,
             sportType: $sportType,
             worldType: WorldType::fromDeviceAndActivityName(
                 deviceName: $deviceName,
@@ -136,7 +140,7 @@ final readonly class TcxFileParser implements ActivityFileParser
             ),
             importSource: ImportSource::TCX_FILE,
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
-            name: $file->getPath()->getFilenameWithoutExtension(),
+            name: ActivityName::from($startDateTime, $sportType),
             description: null,
             distance: Kilometer::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getDistance()->toFloat()) / 1000, 3)),
             elevation: Meter::from(round($activityLaps->sum(static fn (ActivityLap $lap): float => $lap->getElevationDifference()->toFloat()))),

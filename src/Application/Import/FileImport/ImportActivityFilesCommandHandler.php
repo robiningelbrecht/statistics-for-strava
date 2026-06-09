@@ -66,6 +66,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                     $context = $step->process($context);
                 }
             } catch (SkipActivityFileImport) {
+                $this->watchDirectory->deleteFile($filePath);
                 $output->writeln(sprintf('  => Skipping "%s", file was already imported', $filePath->getFilename()));
                 ++$countSkipped;
                 continue;
@@ -83,6 +84,8 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                     activityId: null,
                     importedOn: $this->clock->getCurrentDateTimeImmutable(),
                 ));
+                $this->watchDirectory->deleteFile($filePath);
+
                 $output->writeln(sprintf('  => <error>Could not import "%s": %s</error>', $filePath->getFilename(), $e->getMessage()));
                 ++$countFailed;
                 continue;
@@ -118,7 +121,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 importedOn: $this->clock->getCurrentDateTimeImmutable(),
             ));
 
-            $this->watchDirectory->deleteFile($file);
+            $this->watchDirectory->deleteFile($filePath);
 
             $output->writeln(sprintf(
                 '  => Imported "%s" as activity "%s - %s"',

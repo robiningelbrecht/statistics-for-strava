@@ -4,6 +4,7 @@ namespace App\Tests\Domain\Activity;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\DbalActivityRepository;
@@ -114,7 +115,7 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->activityRepository->add($activityWithRawData);
 
         $activity = $activity
-            ->withName('Updated name')
+            ->withName(ActivityName::fromString('Updated name'))
             ->withSportType(SportType::BADMINTON)
             ->withDistance(Kilometer::from(9.99))
             ->withAverageSpeed(MetersPerSecond::from(19.99)->toKmPerHour())

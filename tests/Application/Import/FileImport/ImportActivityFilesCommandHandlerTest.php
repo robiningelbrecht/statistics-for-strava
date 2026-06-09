@@ -41,7 +41,7 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $activity = $this->getContainer()->get(ActivityRepository::class)->find($activityId);
 
         $this->assertSame(ImportSource::TCX_FILE, $activity->getImportSource());
-        $this->assertSame('ride', $activity->getName());
+        $this->assertSame('Night Ride', $activity->getName());
         $this->assertSame('Garmin Edge 530', $activity->getDeviceName());
         $this->assertNotNull($activity->getStartingCoordinate());
         $this->assertNotNull($activity->getEncodedPolyline());

@@ -3,6 +3,7 @@
 namespace App\Application\Import\StravaImport\ImportActivities\Pipeline;
 
 use App\Domain\Activity\Activity;
+use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\WorkoutType;
@@ -36,7 +37,7 @@ final readonly class InitializeActivity implements ActivityImportStep
             $gearId = GearId::fromOptionalUnprefixed($rawStravaData['gear_id'] ?? null);
 
             $activity = $activity
-                ->withName($rawStravaData['name'])
+                ->withName(ActivityName::fromString($rawStravaData['name']))
                 ->withSportType($sportType)
                 ->withDistance(Kilometer::from(round($rawStravaData['distance'] / 1000, 3)))
                 ->withAverageSpeed(MetersPerSecond::from($rawStravaData['average_speed'])->toKmPerHour())

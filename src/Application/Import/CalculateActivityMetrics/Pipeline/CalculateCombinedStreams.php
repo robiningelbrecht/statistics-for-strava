@@ -138,7 +138,7 @@ final readonly class CalculateCombinedStreams implements CalculateActivityMetric
                 ];
 
                 if ($hasDistanceData) {
-                    $distance = Meter::from($distanceData[$i])->toKilometer()->toUnitSystem($this->unitSystem)->toFloat();
+                    $distance = Meter::from($distanceData[$i] ?? 0)->toKilometer()->toUnitSystem($this->unitSystem)->toFloat();
                     $combinedPoint[] = match ($activityType) {
                         ActivityType::RIDE => $distance < 1 ? round($distance, 1) : round($distance),
                         default => round($distance, 1),

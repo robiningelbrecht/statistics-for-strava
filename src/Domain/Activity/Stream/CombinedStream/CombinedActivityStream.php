@@ -136,7 +136,7 @@ final class CombinedActivityStream
             return [];
         }
 
-        return array_column($this->data, $coordinateIndex);
+        return array_values(array_filter(array_column($this->data, $coordinateIndex)));
     }
 
     public function getStreamTypesForCharts(): CombinedStreamTypes
