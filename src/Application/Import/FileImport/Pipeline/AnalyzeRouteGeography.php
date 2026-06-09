@@ -25,17 +25,22 @@ final readonly class AnalyzeRouteGeography implements ImportActivityFileStep
         $sportType = $activity->getSportType();
 
         $routeGeography = $activity->getRouteGeography();
-
-        if (!$routeGeography->isReversedGeocoded() && $activity->getStartingCoordinate() && $sportType->supportsReverseGeocoding()) {
-            try {
-                $routeGeography = $routeGeography->updateWith(
-                    $this->nominatim->reverseGeocode($activity->getStartingCoordinate())
-                );
-            } catch (CouldNotReverseGeocodeAddress) {
+        if (!$routeGeography->isReversedGeocoded() && $activity->getStartingCoordinate()) {
+            if ($sportType->supportsReverseGeocoding()) {
+                try {
+                    $routeGeography = $routeGeography->updateWith(
+                        $this->nominatim->reverseGeocode($activity->getStartingCoordinate())
+                    );
+                } catch (CouldNotReverseGeocodeAddress) {
+                }
+            } elseif ($activity->isZwiftRide() && ($zwiftMap = $activity->getLeafletMap())) {
+                $routeGeography = $routeGeography->updateWith([
+                    'state' => $zwiftMap->getLabel(),
+                ]);
             }
         }
 
-        if (!$routeGeography->hasBeenAnalyzedForRouteGeography()
+        if (!$activity->getRouteGeography()->hasBeenAnalyzedForRouteGeography()
             && $sportType->supportsReverseGeocoding() && $activity->getEncodedPolyline()) {
             $routeGeography = $routeGeography->updateWith([
                 RouteGeography::PASSED_TROUGH_COUNTRIES => $this->routeGeographyAnalyzer->analyzeForPolyline(

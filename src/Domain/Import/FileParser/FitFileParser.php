@@ -107,8 +107,8 @@ final readonly class FitFileParser implements ActivityFileParser
         }
 
         $deviceName = match (true) {
-            null !== $manufacturerId && null !== $productId => FitProduct::name($manufacturerId, $productId),
-            null !== $manufacturerId => FitManufacturer::name($manufacturerId),
+            null !== $manufacturerId && null !== $productId => FitProduct::name($manufacturerId, $productId) ?? FitManufacturer::name($manufacturerId),
+            null !== $manufacturerId => FitManufacturer::name($manufacturerId) ?? $productName,
             default => $productName,
         };
 
