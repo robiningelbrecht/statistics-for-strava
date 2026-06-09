@@ -10,6 +10,7 @@ use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
 use App\Domain\Activity\Lap\ActivityLapId;
 use App\Domain\Activity\Lap\ActivityLaps;
+use App\Domain\Activity\Math;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\SportType\SportType;
 use App\Domain\Activity\Stream\ActivityStream;
@@ -28,7 +29,6 @@ use App\Infrastructure\ValueObject\Geography\Latitude;
 use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
-use App\Infrastructure\ValueObject\Measurement\Velocity\KmPerHour;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use App\Infrastructure\ValueObject\String\ExternalReferenceId;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
@@ -80,7 +80,7 @@ final readonly class FitFileParser implements ActivityFileParser
         $lapMessages = [];
         /** @var array<string, mixed>|null $session */
         $session = null;
-        $deviceName = null;
+        $productName = null;
         $manufacturerId = null;
         $productId = null;
 
@@ -97,16 +97,20 @@ final readonly class FitFileParser implements ActivityFileParser
                     $session ??= $fields;
                     break;
                 case 'file_id':
-                    $manufacturerId ??= $this->intOrNull($fields['manufacturer'] ?? null);
-                    $productId ??= $this->intOrNull($fields['product'] ?? null);
+                    $manufacturerId ??= is_numeric($fields['manufacturer'] ?? null) ? (int) round((float) $fields['manufacturer']) : null;
+                    $productId ??= is_numeric($fields['product'] ?? null) ? (int) round((float) $fields['product']) : null;
                     break;
             }
-            if (null === $deviceName && is_string($fields['product_name'] ?? null) && '' !== $fields['product_name']) {
-                $deviceName = $fields['product_name'];
+            if (null === $productName && is_string($fields['product_name'] ?? null) && '' !== $fields['product_name']) {
+                $productName = $fields['product_name'];
             }
         }
 
-        $deviceName ??= $this->resolveDeviceName($manufacturerId, $productId);
+        $deviceName = match (true) {
+            null !== $manufacturerId && null !== $productId => FitProduct::name($manufacturerId, $productId),
+            null !== $manufacturerId => FitManufacturer::name($manufacturerId),
+            default => $productName,
+        };
 
         if ([] === $records) {
             throw new CouldNotParseActivityFile(message: sprintf('No FIT "record" messages found in "%s"', $file->getPath()->getFilename()), activityFile: $file);
@@ -114,21 +118,24 @@ final readonly class FitFileParser implements ActivityFileParser
 
         $session ??= [];
 
-        $startTimestamp = $this->intOrNull($session['start_time'] ?? null)
-            ?? $this->intOrNull($records[0]['timestamp'] ?? null);
+        $startTimestamp = (is_numeric($session['start_time'] ?? null) ? (int) round((float) $session['start_time']) : null)
+            ?? (is_numeric($records[0]['timestamp'] ?? null) ? (int) round((float) $records[0]['timestamp']) : null);
         if (null === $startTimestamp) {
             throw new CouldNotParseActivityFile(message: sprintf('Could not determine start time in "%s"', $file->getPath()->getFilename()), activityFile: $file);
         }
 
-        $sportType = $this->mapSportType(
-            $this->intOrNull($session['sport'] ?? null),
-            $this->intOrNull($session['sub_sport'] ?? null),
-            $file,
+        $sportType = FitSportType::resolve(
+            sport: $session['sport'] ?? null,
+            subSport: $session['sub_sport'] ?? null
         );
+
+        if (!$sportType instanceof SportType) {
+            throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'), activityFile: $file);
+        }
 
         $streamMap = $this->buildStreams($records, $startTimestamp);
         $activityId = ActivityId::random();
-        $work = $this->floatOrNull($session['total_work'] ?? null);
+        $work = is_numeric($session['total_work'] ?? null) ? (float) $session['total_work'] : null;
 
         $activity = Activity::fromState(
             activityId: $activityId,
@@ -142,20 +149,20 @@ final readonly class FitFileParser implements ActivityFileParser
             externalReferenceId: ExternalReferenceId::fromString($file->getPath()->getFilename()),
             name: $file->getPath()->getFilenameWithoutExtension(),
             description: null,
-            distance: Kilometer::from(round(($this->floatOrNull($session['total_distance'] ?? null) ?? 0.0) / 1000, 3)),
-            elevation: Meter::from(round($this->floatOrNull($session['total_ascent'] ?? null) ?? 0.0)),
+            distance: Kilometer::from(round((is_numeric($session['total_distance'] ?? null) ? (float) $session['total_distance'] : 0.0) / 1000, 3)),
+            elevation: Meter::from(round(is_numeric($session['total_ascent'] ?? null) ? (float) $session['total_ascent'] : 0.0)),
             startingCoordinate: $this->resolveStartingCoordinate($session, $streamMap),
-            calories: $this->intOrNull($session['total_calories'] ?? null),
+            calories: is_numeric($session['total_calories'] ?? null) ? (int) round((float) $session['total_calories']) : null,
             kilojoules: null !== $work ? (int) round($work / 1000) : null,
-            averagePower: $this->intOrNull($session['avg_power'] ?? null),
-            maxPower: $this->intOrNull($session['max_power'] ?? null),
-            averageSpeed: $this->toKmPerHour($this->floatOrNull($session['enhanced_avg_speed'] ?? $session['avg_speed'] ?? null)),
-            maxSpeed: $this->toKmPerHour($this->floatOrNull($session['enhanced_max_speed'] ?? $session['max_speed'] ?? null)),
-            averageHeartRate: $this->intOrNull($session['avg_heart_rate'] ?? null),
-            maxHeartRate: $this->intOrNull($session['max_heart_rate'] ?? null),
-            averageCadence: $this->intOrNull($session['avg_cadence'] ?? null),
-            movingTimeInSeconds: $this->intOrNull($session['total_timer_time'] ?? null) ?? 0,
-            elapsedTimeInSeconds: $this->intOrNull($session['total_elapsed_time'] ?? null) ?? 0,
+            averagePower: is_numeric($session['avg_power'] ?? null) ? (int) round((float) $session['avg_power']) : null,
+            maxPower: is_numeric($session['max_power'] ?? null) ? (int) round((float) $session['max_power']) : null,
+            averageSpeed: MetersPerSecond::fromOptional(is_numeric($session['enhanced_avg_speed'] ?? $session['avg_speed'] ?? null) ? (float) ($session['enhanced_avg_speed'] ?? $session['avg_speed'] ?? null) : null)->toKmPerHour(),
+            maxSpeed: MetersPerSecond::fromOptional(is_numeric($session['enhanced_max_speed'] ?? $session['max_speed'] ?? null) ? (float) ($session['enhanced_max_speed'] ?? $session['max_speed'] ?? null) : null)->toKmPerHour(),
+            averageHeartRate: is_numeric($session['avg_heart_rate'] ?? null) ? (int) round((float) $session['avg_heart_rate']) : null,
+            maxHeartRate: is_numeric($session['max_heart_rate'] ?? null) ? (int) round((float) $session['max_heart_rate']) : null,
+            averageCadence: is_numeric($session['avg_cadence'] ?? null) ? (int) round((float) $session['avg_cadence']) : null,
+            movingTimeInSeconds: is_numeric($session['total_timer_time'] ?? null) ? (int) round((float) $session['total_timer_time']) : 0,
+            elapsedTimeInSeconds: is_numeric($session['total_elapsed_time'] ?? null) ? (int) round((float) $session['total_elapsed_time']) : 0,
             kudoCount: 0,
             deviceName: $deviceName,
             totalImageCount: 0,
@@ -171,7 +178,7 @@ final readonly class FitFileParser implements ActivityFileParser
         return ParsedActivityFile::create(
             activity: $activity,
             streams: $this->buildActivityStreams($streamMap, $activityId),
-            laps: $this->buildActivityLaps($this->buildLaps($lapMessages), $activityId),
+            laps: $this->buildActivityLaps($lapMessages, $activityId),
         );
     }
 
@@ -202,30 +209,35 @@ final readonly class FitFileParser implements ActivityFileParser
     }
 
     /**
-     * @param list<array<string, mixed>> $rawLaps
+     * @param list<array<string, mixed>> $lapMessages
      */
-    private function buildActivityLaps(array $rawLaps, ActivityId $activityId): ActivityLaps
+    private function buildActivityLaps(array $lapMessages, ActivityId $activityId): ActivityLaps
     {
-        $averageSpeeds = array_map(static fn (array $lap): float => (float) ($lap['average_speed'] ?? 0.0), $rawLaps);
+        $averageSpeeds = array_map(
+            static fn (array $lap): float => is_numeric($lap['enhanced_avg_speed'] ?? $lap['avg_speed'] ?? null)
+                ? (float) ($lap['enhanced_avg_speed'] ?? $lap['avg_speed'] ?? null)
+                : 0.0,
+            $lapMessages
+        );
         $minAverageSpeed = MetersPerSecond::from([] !== $averageSpeeds ? min($averageSpeeds) : 0.0);
         $maxAverageSpeed = MetersPerSecond::from([] !== $averageSpeeds ? max($averageSpeeds) : 0.0);
 
         $laps = ActivityLaps::empty();
-        foreach ($rawLaps as $lap) {
+        foreach ($lapMessages as $index => $lap) {
             $laps->add(ActivityLap::create(
                 lapId: ActivityLapId::random(),
                 activityId: $activityId,
-                lapNumber: (int) $lap['lap_index'],
-                name: (string) $lap['name'],
-                elapsedTimeInSeconds: (int) $lap['elapsed_time'],
-                movingTimeInSeconds: (int) $lap['moving_time'],
-                distance: Meter::from((float) $lap['distance']),
-                averageSpeed: MetersPerSecond::from((float) $lap['average_speed']),
+                lapNumber: $index + 1,
+                name: sprintf('Lap %d', $index + 1),
+                elapsedTimeInSeconds: is_numeric($lap['total_elapsed_time'] ?? null) ? (int) round((float) $lap['total_elapsed_time']) : 0,
+                movingTimeInSeconds: is_numeric($lap['total_timer_time'] ?? null) ? (int) round((float) $lap['total_timer_time']) : 0,
+                distance: Meter::from(is_numeric($lap['total_distance'] ?? null) ? (float) $lap['total_distance'] : 0.0),
+                averageSpeed: MetersPerSecond::from($averageSpeeds[$index]),
                 minAverageSpeed: $minAverageSpeed,
                 maxAverageSpeed: $maxAverageSpeed,
-                maxSpeed: MetersPerSecond::from((float) $lap['max_speed']),
-                elevationDifference: Meter::from((float) ($lap['total_elevation_gain'] ?? 0)),
-                averageHeartRate: empty($lap['average_heartrate']) ? null : (int) round((float) $lap['average_heartrate']),
+                maxSpeed: MetersPerSecond::from(is_numeric($lap['enhanced_max_speed'] ?? $lap['max_speed'] ?? null) ? (float) ($lap['enhanced_max_speed'] ?? $lap['max_speed'] ?? null) : 0.0),
+                elevationDifference: Meter::from(is_numeric($lap['total_ascent'] ?? null) ? (float) $lap['total_ascent'] : 0.0),
+                averageHeartRate: empty($lap['avg_heart_rate']) ? null : (int) round((float) $lap['avg_heart_rate']),
             ));
         }
 
@@ -252,51 +264,25 @@ final readonly class FitFileParser implements ActivityFileParser
         ];
 
         foreach ($records as $record) {
-            $timestamp = $this->intOrNull($record['timestamp'] ?? null);
+            $timestamp = is_numeric($record['timestamp'] ?? null) ? (int) round((float) $record['timestamp']) : null;
             $streams[StreamType::TIME->value][] = null !== $timestamp ? $timestamp - $startTimestamp : null;
-            $streams[StreamType::DISTANCE->value][] = $this->floatOrNull($record['distance'] ?? null);
+            $streams[StreamType::DISTANCE->value][] = is_numeric($record['distance'] ?? null) ? (float) $record['distance'] : null;
 
-            $latitude = $this->floatOrNull($record['position_lat'] ?? null);
-            $longitude = $this->floatOrNull($record['position_long'] ?? null);
+            $latitude = is_numeric($record['position_lat'] ?? null) ? (float) $record['position_lat'] : null;
+            $longitude = is_numeric($record['position_long'] ?? null) ? (float) $record['position_long'] : null;
             $streams[StreamType::LAT_LNG->value][] = (null !== $latitude && null !== $longitude)
-                ? [$this->semicirclesToDegrees($latitude), $this->semicirclesToDegrees($longitude)]
+                ? [Math::semicirclesToDegrees($latitude), Math::semicirclesToDegrees($longitude)]
                 : null;
 
-            $streams[StreamType::ALTITUDE->value][] = $this->floatOrNull($record['enhanced_altitude'] ?? $record['altitude'] ?? null);
-            $streams[StreamType::VELOCITY->value][] = $this->floatOrNull($record['enhanced_speed'] ?? $record['speed'] ?? null);
-            $streams[StreamType::HEART_RATE->value][] = $this->intOrNull($record['heart_rate'] ?? null);
-            $streams[StreamType::CADENCE->value][] = $this->intOrNull($record['cadence'] ?? null);
-            $streams[StreamType::WATTS->value][] = $this->intOrNull($record['power'] ?? null);
-            $streams[StreamType::TEMP->value][] = $this->intOrNull($record['temperature'] ?? null);
+            $streams[StreamType::ALTITUDE->value][] = is_numeric($record['enhanced_altitude'] ?? $record['altitude'] ?? null) ? (float) ($record['enhanced_altitude'] ?? $record['altitude'] ?? null) : null;
+            $streams[StreamType::VELOCITY->value][] = is_numeric($record['enhanced_speed'] ?? $record['speed'] ?? null) ? (float) ($record['enhanced_speed'] ?? $record['speed'] ?? null) : null;
+            $streams[StreamType::HEART_RATE->value][] = is_numeric($record['heart_rate'] ?? null) ? (int) round((float) $record['heart_rate']) : null;
+            $streams[StreamType::CADENCE->value][] = is_numeric($record['cadence'] ?? null) ? (int) round((float) $record['cadence']) : null;
+            $streams[StreamType::WATTS->value][] = is_numeric($record['power'] ?? null) ? (int) round((float) $record['power']) : null;
+            $streams[StreamType::TEMP->value][] = is_numeric($record['temperature'] ?? null) ? (int) round((float) $record['temperature']) : null;
         }
 
         return $streams;
-    }
-
-    /**
-     * @param list<array<string, mixed>> $lapMessages
-     *
-     * @return list<array<string, mixed>>
-     */
-    private function buildLaps(array $lapMessages): array
-    {
-        $laps = [];
-        foreach ($lapMessages as $index => $lap) {
-            $laps[] = [
-                'id' => $index + 1,
-                'lap_index' => $index + 1,
-                'name' => sprintf('Lap %d', $index + 1),
-                'elapsed_time' => $this->intOrNull($lap['total_elapsed_time'] ?? null) ?? 0,
-                'moving_time' => $this->intOrNull($lap['total_timer_time'] ?? null) ?? 0,
-                'distance' => $this->floatOrNull($lap['total_distance'] ?? null) ?? 0.0,
-                'average_speed' => $this->floatOrNull($lap['enhanced_avg_speed'] ?? $lap['avg_speed'] ?? null) ?? 0.0,
-                'max_speed' => $this->floatOrNull($lap['enhanced_max_speed'] ?? $lap['max_speed'] ?? null) ?? 0.0,
-                'total_elevation_gain' => $this->floatOrNull($lap['total_ascent'] ?? null) ?? 0.0,
-                'average_heartrate' => $this->intOrNull($lap['avg_heart_rate'] ?? null),
-            ];
-        }
-
-        return $laps;
     }
 
     /**
@@ -305,14 +291,14 @@ final readonly class FitFileParser implements ActivityFileParser
      */
     private function resolveStartingCoordinate(array $session, array $streams): ?Coordinate
     {
-        $latitude = $this->floatOrNull($session['start_position_lat'] ?? null);
-        $longitude = $this->floatOrNull($session['start_position_long'] ?? null);
+        $latitude = is_numeric($session['start_position_lat'] ?? null) ? (float) $session['start_position_lat'] : null;
+        $longitude = is_numeric($session['start_position_long'] ?? null) ? (float) $session['start_position_long'] : null;
         // Indoor/virtual activities (e.g. Zwift) leave the session start position
         // at 0/0 ("null island"); fall through to the first GPS record instead.
         if (null !== $latitude && null !== $longitude && (0.0 !== $latitude || 0.0 !== $longitude)) {
             return Coordinate::createFromLatAndLng(
-                Latitude::fromString((string) $this->semicirclesToDegrees($latitude)),
-                Longitude::fromString((string) $this->semicirclesToDegrees($longitude)),
+                Latitude::fromString((string) Math::semicirclesToDegrees($latitude)),
+                Longitude::fromString((string) Math::semicirclesToDegrees($longitude)),
             );
         }
 
@@ -326,17 +312,6 @@ final readonly class FitFileParser implements ActivityFileParser
         }
 
         return null;
-    }
-
-    private function mapSportType(?int $sport, ?int $subSport, RawActivityFile $file): SportType
-    {
-        $sportType = FitSportType::resolve($sport, $subSport);
-
-        if (!$sportType instanceof SportType) {
-            throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'), activityFile: $file);
-        }
-
-        return $sportType;
     }
 
     /**
@@ -373,40 +348,5 @@ final readonly class FitFileParser implements ActivityFileParser
         }
 
         return (string) EncodedPolyline::encode($coordinates);
-    }
-
-    private function toKmPerHour(?float $meterPerSecond): KmPerHour
-    {
-        if (null === $meterPerSecond) {
-            return KmPerHour::zero();
-        }
-
-        return MetersPerSecond::from($meterPerSecond)->toKmPerHour();
-    }
-
-    private function semicirclesToDegrees(float $semicircles): float
-    {
-        return $semicircles * 180 / 2 ** 31;
-    }
-
-    private function floatOrNull(mixed $value): ?float
-    {
-        return is_numeric($value) ? (float) $value : null;
-    }
-
-    private function intOrNull(mixed $value): ?int
-    {
-        return is_numeric($value) ? (int) round((float) $value) : null;
-    }
-
-    private function resolveDeviceName(?int $manufacturerId, ?int $productId): ?string
-    {
-        if (null === $manufacturerId) {
-            return null;
-        }
-
-        $product = null !== $productId ? FitProduct::name($manufacturerId, $productId) : null;
-
-        return $product ?? FitManufacturer::name($manufacturerId);
     }
 }

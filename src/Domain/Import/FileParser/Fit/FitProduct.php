@@ -505,6 +505,6 @@ final class FitProduct
             default => null,
         };
 
-        return null === $raw ? null : ucwords(str_replace('_', ' ', $raw));
+        return null === $raw ? null : sprintf('%s %s', FitManufacturer::name($manufacturerId), ucwords(str_replace('_', ' ', $raw)));
     }
 }

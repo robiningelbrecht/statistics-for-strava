@@ -16,6 +16,15 @@ trait ProvideMeasurementUnit
         return new self($value);
     }
 
+    public static function fromOptional(?float $value): self
+    {
+        if (null === $value) {
+            return static::zero();
+        }
+
+        return new self($value);
+    }
+
     public function isZeroOrLower(): bool
     {
         return $this->value <= 0;
