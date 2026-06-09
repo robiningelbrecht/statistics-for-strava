@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Domain\Import\ImportMode;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\DependencyInjection\AppExpressionLanguageProvider;
@@ -46,9 +47,12 @@ class Kernel extends BaseKernel
         assert($kernelProjectDir instanceof KernelProjectDir);
         $platformEnvironment = $this->getContainer()->get(PlatformEnvironment::class);
         assert($platformEnvironment instanceof PlatformEnvironment);
+        $importMode = $this->getContainer()->get(ImportMode::class);
+        assert($importMode instanceof ImportMode);
         AppConfig::init(
             kernelProjectDir: $kernelProjectDir,
-            platformEnvironment: $platformEnvironment
+            platformEnvironment: $platformEnvironment,
+            importMode: $importMode,
         );
     }
 }

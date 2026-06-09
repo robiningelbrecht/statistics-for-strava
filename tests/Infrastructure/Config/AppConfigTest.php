@@ -2,6 +2,7 @@
 
 namespace App\Tests\Infrastructure\Config;
 
+use App\Domain\Import\ImportMode;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\CouldNotParseYamlConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
@@ -22,7 +23,8 @@ class AppConfigTest extends TestCase
     {
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString($dir),
-            platformEnvironment: $platformEnvironment
+            platformEnvironment: $platformEnvironment,
+            importMode: ImportMode::STRAVA_API
         );
         $this->assertEquals(
             $expectedValue,
@@ -34,7 +36,8 @@ class AppConfigTest extends TestCase
     {
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
-            platformEnvironment: PlatformEnvironment::DEV
+            platformEnvironment: PlatformEnvironment::DEV,
+            importMode: ImportMode::STRAVA_API
         );
         $default = [];
         $this->assertEquals(
@@ -47,7 +50,8 @@ class AppConfigTest extends TestCase
     {
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/valid-config'),
-            platformEnvironment: PlatformEnvironment::DEV
+            platformEnvironment: PlatformEnvironment::DEV,
+            importMode: ImportMode::STRAVA_API
         );
 
         $this->expectExceptionObject(new \RuntimeException('Unknown configuration key "non.existent.key"'));
@@ -60,7 +64,8 @@ class AppConfigTest extends TestCase
 
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config'),
-            platformEnvironment: PlatformEnvironment::DEV
+            platformEnvironment: PlatformEnvironment::DEV,
+            importMode: ImportMode::STRAVA_API
         );
     }
 
@@ -70,7 +75,8 @@ class AppConfigTest extends TestCase
 
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString(__DIR__.'/invalid-config-sub'),
-            platformEnvironment: PlatformEnvironment::DEV
+            platformEnvironment: PlatformEnvironment::DEV,
+            importMode: ImportMode::STRAVA_API
         );
     }
 
@@ -80,7 +86,8 @@ class AppConfigTest extends TestCase
 
         AppConfig::init(
             kernelProjectDir: KernelProjectDir::fromString('lol'),
-            platformEnvironment: PlatformEnvironment::DEV
+            platformEnvironment: PlatformEnvironment::DEV,
+            importMode: ImportMode::STRAVA_API
         );
     }
 
