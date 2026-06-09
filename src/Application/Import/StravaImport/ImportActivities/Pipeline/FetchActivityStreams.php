@@ -11,7 +11,9 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\Time\Clock\Clock;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 90)]
 final readonly class FetchActivityStreams implements ActivityImportStep
 {
     public function __construct(

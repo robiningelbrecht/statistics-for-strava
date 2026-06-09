@@ -3,7 +3,7 @@
 namespace App\Application\Import\StravaImport\ImportActivities;
 
 use App\Application\Import\StravaImport\ImportActivities\Pipeline\ActivityImportContext;
-use App\Application\Import\StravaImport\ImportActivities\Pipeline\ActivityImportPipeline;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\ActivityImportStep;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
@@ -25,10 +25,14 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class ImportActivitiesCommandHandler implements CommandHandler
 {
+    /**
+     * @param iterable<ActivityImportStep> $steps
+     */
     public function __construct(
         private Strava $strava,
         private ActivityRepository $activityRepository,
@@ -40,7 +44,8 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
         private ActivitiesToSkipDuringImport $activitiesToSkipDuringImport,
         private ?SkipActivitiesRecordedBefore $skipActivitiesRecordedBefore,
         private Mutex $mutex,
-        private ActivityImportPipeline $activityImportPipeline,
+        #[AutowireIterator('app.activity_import.pipeline_step')]
+        private iterable $steps,
     ) {
     }
 
@@ -132,7 +137,9 @@ final readonly class ImportActivitiesCommandHandler implements CommandHandler
                     isNewActivity: $isNewActivity,
                 );
 
-                $context = $this->activityImportPipeline->process($context);
+                foreach ($this->steps as $step) {
+                    $context = $step->process($context);
+                }
             } catch (StravaRateLimitHasBeenReached $exception) {
                 $command->getOutput()->writeln(sprintf('<error>%s</error>', $exception->getMessage()));
 

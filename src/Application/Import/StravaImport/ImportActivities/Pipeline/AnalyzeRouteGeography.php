@@ -8,7 +8,9 @@ use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Integration\Geocoding\Nominatim\CouldNotReverseGeocodeAddress;
 use App\Domain\Integration\Geocoding\Nominatim\Nominatim;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 80)]
 final readonly class AnalyzeRouteGeography implements ActivityImportStep
 {
     public function __construct(

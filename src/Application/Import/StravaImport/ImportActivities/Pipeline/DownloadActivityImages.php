@@ -9,7 +9,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use League\Flysystem\FilesystemOperator;
 use Uri\Rfc3986\Uri;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 10)]
 final readonly class DownloadActivityImages implements ActivityImportStep
 {
     public function __construct(

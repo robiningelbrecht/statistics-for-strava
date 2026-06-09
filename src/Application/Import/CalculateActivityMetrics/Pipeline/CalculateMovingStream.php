@@ -160,6 +160,6 @@ final readonly class CalculateMovingStream implements CalculateActivityMetricsSt
      */
     private function hasNumericValue(array $values): bool
     {
-        return array_any($values, fn($value): bool => is_numeric($value));
+        return array_any($values, fn (mixed $value): bool => is_numeric($value));
     }
 }

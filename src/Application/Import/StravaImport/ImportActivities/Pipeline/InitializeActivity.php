@@ -14,7 +14,9 @@ use App\Infrastructure\ValueObject\Geography\Longitude;
 use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
 use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 100)]
 final readonly class InitializeActivity implements ActivityImportStep
 {
     public function __construct(

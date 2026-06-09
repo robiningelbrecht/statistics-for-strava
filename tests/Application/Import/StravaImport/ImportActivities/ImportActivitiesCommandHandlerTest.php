@@ -7,7 +7,12 @@ use App\Application\Import\StravaImport\ImportActivities\ActivityVisibilitiesToI
 use App\Application\Import\StravaImport\ImportActivities\ImportActivities;
 use App\Application\Import\StravaImport\ImportActivities\ImportActivitiesCommandHandler;
 use App\Application\Import\StravaImport\ImportActivities\NumberOfNewActivitiesToProcessPerImport;
-use App\Application\Import\StravaImport\ImportActivities\Pipeline\ActivityImportPipeline;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\ActivityImportStep;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\AnalyzeRouteGeography;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\DetermineActivityWeather;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\DownloadActivityImages;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\FetchActivityStreams;
+use App\Application\Import\StravaImport\ImportActivities\Pipeline\InitializeActivity;
 use App\Application\Import\StravaImport\ImportActivities\SkipActivitiesRecordedBefore;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIdRepository;
@@ -284,7 +289,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            steps: $this->getPipelineSteps(),
         );
 
         $output = new SpyOutput();
@@ -322,7 +327,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            steps: $this->getPipelineSteps(),
         );
 
         $output = new SpyOutput();
@@ -365,7 +370,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            steps: $this->getPipelineSteps(),
         );
 
         $output = new SpyOutput();
@@ -399,7 +404,7 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            steps: $this->getPipelineSteps(),
         );
 
         $output = new SpyOutput();
@@ -494,7 +499,21 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                 clock: PausedClock::fromString('2025-12-04'),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            activityImportPipeline: $this->getContainer()->get(ActivityImportPipeline::class),
+            steps: $this->getPipelineSteps(),
         );
+    }
+
+    /**
+     * @return ActivityImportStep[]
+     */
+    private function getPipelineSteps(): array
+    {
+        return [
+            $this->getContainer()->get(InitializeActivity::class),
+            $this->getContainer()->get(FetchActivityStreams::class),
+            $this->getContainer()->get(AnalyzeRouteGeography::class),
+            $this->getContainer()->get(DetermineActivityWeather::class),
+            $this->getContainer()->get(DownloadActivityImages::class),
+        ];
     }
 }
