@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Config;
 
+use App\Domain\Import\ImportMode;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
@@ -14,6 +15,7 @@ final class AppConfig
 {
     private static ?KernelProjectDir $kernelProjectDir = null;
     private static ?PlatformEnvironment $platformEnvironment = null;
+    private static ?ImportMode $importMode = null;
     /** @var non-empty-array<string> */
     private static array $ymlConfigFiles;
 
@@ -23,9 +25,11 @@ final class AppConfig
     public static function init(
         KernelProjectDir $kernelProjectDir,
         PlatformEnvironment $platformEnvironment,
+        ImportMode $importMode,
     ): void {
         self::$kernelProjectDir = $kernelProjectDir;
         self::$platformEnvironment = $platformEnvironment;
+        self::$importMode = $importMode;
         self::buildConfig();
     }
 
@@ -132,6 +136,11 @@ final class AppConfig
         }
 
         return self::$config[$key];
+    }
+
+    public static function getImportMode(): ?ImportMode
+    {
+        return self::$importMode;
     }
 
     public static function isAIIntegrationEnabled(): bool

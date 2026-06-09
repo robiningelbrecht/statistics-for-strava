@@ -240,6 +240,7 @@ services:
         arguments: ['@=app_config("gear.recordingDevices", [])']
 
     App\Domain\Import\ImportMode:
+        public: true
         autoconfigure: false
         factory: [ null, 'from' ]
         arguments: ['%env(string:IMPORT_MODE)%']

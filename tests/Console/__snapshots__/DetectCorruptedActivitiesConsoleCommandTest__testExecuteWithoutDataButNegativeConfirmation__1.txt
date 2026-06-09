@@ -5,6 +5,8 @@ StatisticsforStravav4.8.7
 
 Runtime:PHP8.5.x(cli)Symfony8.1.0Linux
 
+Configuredimportmode:STRAVA_API
+
 Configurationfiles:
 config.yaml
 configathlete.yaml

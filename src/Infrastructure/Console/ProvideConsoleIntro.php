@@ -52,6 +52,8 @@ trait ProvideConsoleIntro
         $output->newLine();
         $output->text(sprintf('Runtime: PHP %s (%s) - Symfony %s - %s', PHP_VERSION, PHP_SAPI, Kernel::VERSION, PHP_OS));
         $output->newLine();
+        $output->text(sprintf('Configured import mode: %s', AppConfig::getImportMode()->name));
+        $output->newLine();
         $output->text('Configuration files:');
         $output->writeln($configFilesToProcess);
         $output->newLine();

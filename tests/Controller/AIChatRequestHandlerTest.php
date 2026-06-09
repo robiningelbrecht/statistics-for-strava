@@ -6,6 +6,7 @@ use App\Application\AppUrl;
 use App\Controller\AIChatRequestHandler;
 use App\Domain\Athlete\Athlete;
 use App\Domain\Athlete\AthleteRepository;
+use App\Domain\Import\ImportMode;
 use App\Domain\Integration\AI\Chat\AddChatMessage\AddChatMessage;
 use App\Domain\Integration\AI\Chat\ChatCommands;
 use App\Domain\Integration\AI\Chat\ChatMessage;
@@ -223,7 +224,8 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     {
         AppConfig::init(
             kernelProjectDir: $kernelProjectDir,
-            platformEnvironment: PlatformEnvironment::PROD
+            platformEnvironment: PlatformEnvironment::PROD,
+            importMode: ImportMode::STRAVA_API
         );
 
         return new AIChatRequestHandler(
@@ -245,7 +247,8 @@ class AIChatRequestHandlerTest extends ContainerTestCase
     ): AIChatRequestHandler {
         AppConfig::init(
             kernelProjectDir: $this->getContainer()->get(KernelProjectDir::class)->getForTestSuite('app-configs/config-ai-enabled'),
-            platformEnvironment: PlatformEnvironment::PROD
+            platformEnvironment: PlatformEnvironment::PROD,
+            importMode: ImportMode::STRAVA_API
         );
 
         return new AIChatRequestHandler(

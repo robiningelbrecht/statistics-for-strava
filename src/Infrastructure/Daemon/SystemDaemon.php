@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Daemon;
 
+use App\Domain\Import\ImportMode;
 use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Console\ConsoleOutputAware;
 use App\Infrastructure\Daemon\Cron\Cron;
@@ -27,6 +28,7 @@ final class SystemDaemon implements Daemon
         private readonly Clock $clock,
         private readonly Cron $cron,
         private readonly WebhookConfig $webhookConfig,
+        private readonly ImportMode $importMode,
     ) {
     }
 
@@ -63,7 +65,7 @@ final class SystemDaemon implements Daemon
         }
 
         $extraConfiguredCronActionsOutput = [];
-        if ($this->webhookConfig->isEnabled()) {
+        if ($this->importMode->isStravaApi() && $this->webhookConfig->isEnabled()) {
             $extraConfiguredCronActionsOutput[] = sprintf('<info> - processStravaWebhooks: %s</info>', $this->webhookConfig->getCronExpression());
             $actions[] = new Action(
                 key: 'processStravaWebhooks',
