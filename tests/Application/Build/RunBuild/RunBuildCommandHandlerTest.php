@@ -1,30 +1,8 @@
 <?php
 
-namespace App\Tests\Application\RunBuild;
+namespace App\Tests\Application\Build\RunBuild;
 
-use App\Application\Import\StravaImport\ImportGear\GearImportStatus;
-use App\Application\RunBuild\RunBuild;
-use App\Application\RunBuild\RunBuildCommandHandler;
-use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityIdRepository;
-use App\Domain\Activity\ActivityRepository;
-use App\Domain\Activity\ActivityWithRawData;
-use App\Domain\Gear\GearId;
-use App\Domain\Gear\ImportedGear\ImportedGearRepository;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\ValueObject\Time\SerializableDateTime;
-use App\Tests\ContainerTestCase;
-use App\Tests\Domain\Activity\ActivityBuilder;
-use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;
-use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
-use App\Tests\SpyOutput;
-use PHPUnit\Framework\MockObject\MockObject;
-use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\Console\Input\StringInput;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use App\Application\Build\RunBuild\RunBuild;use App\Application\Build\RunBuild\RunBuildCommandHandler;use App\Application\Import\StravaImport\ImportGear\GearImportStatus;use App\Domain\Activity\ActivityId;use App\Domain\Activity\ActivityIdRepository;use App\Domain\Activity\ActivityRepository;use App\Domain\Activity\ActivityWithRawData;use App\Domain\Gear\GearId;use App\Domain\Gear\ImportedGear\ImportedGearRepository;use App\Infrastructure\CQRS\Command\Bus\CommandBus;use App\Infrastructure\Doctrine\Migrations\MigrationRunner;use App\Infrastructure\Serialization\Json;use App\Infrastructure\ValueObject\Time\SerializableDateTime;use App\Tests\ContainerTestCase;use App\Tests\Domain\Activity\ActivityBuilder;use App\Tests\Domain\Gear\ImportedGear\ImportedGearBuilder;use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;use App\Tests\Infrastructure\Time\Clock\PausedClock;use App\Tests\SpyOutput;use PHPUnit\Framework\MockObject\MockObject;use Spatie\Snapshots\MatchesSnapshots;use Symfony\Component\Console\Input\StringInput;use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RunBuildCommandHandlerTest extends ContainerTestCase
 {
