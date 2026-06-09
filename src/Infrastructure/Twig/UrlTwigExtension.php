@@ -7,6 +7,7 @@ namespace App\Infrastructure\Twig;
 use App\Application\AppUrl;
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\Image\ImageOrientation;
+use App\Domain\Activity\SportType\SportType;
 use App\Domain\Segment\Segment;
 use App\Infrastructure\ValueObject\String\RelativeUrl;
 use Twig\Attribute\AsTwigFilter;
@@ -59,7 +60,7 @@ final readonly class UrlTwigExtension
             $activity->isZwiftRide() => $this->svgsTwigExtension->svg('zwift-logo'),
             $activity->isRouvyRide() => $this->svgsTwigExtension->svg('rouvy-logo'),
             $activity->isMyWhooshRide() => $this->svgsTwigExtension->svg('my-whoosh-logo'),
-            default => $this->svgsTwigExtension->svg('indoor-bike'),
+            default => $this->svgsTwigExtension->svgSportType(SportType::RIDE),
         };
 
         $activityTitle = $activity->getName();
@@ -81,7 +82,7 @@ final readonly class UrlTwigExtension
             $segment->isZwiftSegment() => $this->svgsTwigExtension->svg('zwift-logo'),
             $segment->isRouvySegment() => $this->svgsTwigExtension->svg('rouvy-logo'),
             $segment->isMyWhooshSegment() => $this->svgsTwigExtension->svg('my-whoosh-logo'),
-            default => $this->svgsTwigExtension->svg('indoor-bike'),
+            default => $this->svgsTwigExtension->svgSportType(SportType::RIDE),
         };
 
         $segmentTitle = $segment->getName();
