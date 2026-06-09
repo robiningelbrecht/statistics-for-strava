@@ -7,15 +7,15 @@ namespace App\Domain\Import;
 enum ImportMode: string
 {
     case STRAVA_API = 'stravaApi';
-    case FILE = 'file';
+    case FILES = 'files';
 
     public function isStravaApi(): bool
     {
         return self::STRAVA_API === $this;
     }
 
-    public function isFile(): bool
+    public function isFiles(): bool
     {
-        return self::FILE === $this;
+        return self::FILES === $this;
     }
 }

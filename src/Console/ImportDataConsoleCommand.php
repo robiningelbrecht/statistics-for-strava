@@ -62,7 +62,7 @@ final class ImportDataConsoleCommand extends Command
             $this->migrationRunner->run($output);
             $this->mutex->acquireLock('ImportDataConsoleCommand');
 
-            if ($this->importMode->isFile()) {
+            if ($this->importMode->isFiles()) {
                 $this->commandBus->dispatch(new RunFileImport(
                     output: $output,
                 ));

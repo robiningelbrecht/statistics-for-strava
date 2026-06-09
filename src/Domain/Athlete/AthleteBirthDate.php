@@ -9,7 +9,7 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final class AthleteBirthDate extends SerializableDateTime
 {
     #[\Override]
-    public static function fromString(string $string): self
+    public static function fromString(string $string, ?\DateTimeZone $timezone = null): self
     {
         try {
             $birthDate = new self($string);

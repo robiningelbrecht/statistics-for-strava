@@ -16,14 +16,14 @@ class SerializableDateTime extends \DateTimeImmutable implements \JsonSerializab
     /**
      * @throws \DateMalformedStringException
      */
-    public static function fromString(string $string): self
+    public static function fromString(string $string, ?\DateTimeZone $timezone = null): self
     {
-        return new self($string);
+        return new self($string, $timezone);
     }
 
-    public static function fromTimestamp(int $unixTimestamp): self
+    public static function fromTimestamp(int $unixTimestamp, ?\DateTimeZone $timezone = null): self
     {
-        return self::fromString('now')->setTimestamp($unixTimestamp);
+        return self::fromString('now', $timezone)->setTimestamp($unixTimestamp);
     }
 
     public static function createFromFormat(string $format, string $datetime, ?\DateTimeZone $timezone = null): self
