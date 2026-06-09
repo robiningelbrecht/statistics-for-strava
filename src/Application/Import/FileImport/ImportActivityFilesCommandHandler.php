@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport;
 
-use App\Application\Import\FileImport\Pipeline\ActivityFileImportPipeline;
 use App\Application\Import\FileImport\Pipeline\ActivityImportContext;
+use App\Application\Import\FileImport\Pipeline\ImportActivityFileStep;
 use App\Application\Import\FileImport\Pipeline\SkipActivityFileImport;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
@@ -22,12 +22,17 @@ use App\Domain\Import\WatchDirectory;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Time\Clock\Clock;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class ImportActivityFilesCommandHandler implements CommandHandler
 {
+    /**
+     * @param iterable<ImportActivityFileStep> $steps
+     */
     public function __construct(
         private WatchDirectory $watchDirectory,
-        private ActivityFileImportPipeline $pipeline,
+        #[AutowireIterator('app.activity_import_file.pipeline_step')]
+        private iterable $steps,
         private ActivityRepository $activityRepository,
         private ActivityStreamRepository $activityStreamRepository,
         private ActivityLapRepository $activityLapRepository,
@@ -57,7 +62,9 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
             $context = ActivityImportContext::create($filePath);
 
             try {
-                $context = $this->pipeline->process($context);
+                foreach ($this->steps as $step) {
+                    $context = $step->process($context);
+                }
             } catch (SkipActivityFileImport) {
                 $output->writeln(sprintf('  => Skipping "%s", file was already imported', $filePath->getFilename()));
                 ++$countSkipped;

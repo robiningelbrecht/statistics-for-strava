@@ -8,7 +8,9 @@ use App\Domain\Import\DuplicateActivityScanner;
 use App\Domain\Import\FileParser\ActivityFileParsers;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\WatchDirectory;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 100)]
 final readonly class ParseActivityFile implements ImportActivityFileStep
 {
     public function __construct(

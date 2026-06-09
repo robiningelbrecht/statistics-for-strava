@@ -9,7 +9,9 @@ use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoArchiveApiCallHasFailed;
 use App\Domain\Integration\Weather\OpenMeteo\OpenMeteoForecastApiCallHasFailed;
 use App\Domain\Integration\Weather\OpenMeteo\Weather;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 70)]
 final readonly class DetermineActivityWeather implements ActivityImportStep
 {
     public function __construct(
