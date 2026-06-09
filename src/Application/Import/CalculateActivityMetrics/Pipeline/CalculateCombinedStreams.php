@@ -22,7 +22,9 @@ use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use App\Infrastructure\ValueObject\Measurement\UnitSystem;
 use App\Infrastructure\ValueObject\Measurement\Velocity\MetersPerSecond;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 40)]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class CalculateCombinedStreams implements CalculateActivityMetricsStep
 {

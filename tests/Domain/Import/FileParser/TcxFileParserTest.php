@@ -82,8 +82,6 @@ class TcxFileParserTest extends TestCase
 
     public function testParseUnknownSportDefaultsToWorkout(): void
     {
-        // TCX only allows "Running", "Biking" and "Other"; anything else (here a
-        // non-standard value) should fall back to a generic Workout, not fail.
         $xml = <<<'XML'
             <?xml version="1.0" encoding="UTF-8"?>
             <TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2">

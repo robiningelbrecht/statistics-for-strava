@@ -12,7 +12,9 @@ use App\Domain\Activity\Stream\Metric\ActivityStreamMetricType;
 use App\Domain\Activity\Stream\StreamType;
 use App\Infrastructure\Console\ProgressIndicator;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
 
+#[AsTaggedItem(priority: 50)]
 final readonly class CalculateBestStreamAverages implements CalculateActivityMetricsStep
 {
     public function __construct(
