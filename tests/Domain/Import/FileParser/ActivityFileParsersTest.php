@@ -33,6 +33,14 @@ class ActivityFileParsersTest extends TestCase
         $this->registry->parse($this->rawFile('/import/sub/dir/ride.tcx'));
     }
 
+    public function testParseRoutesToGpxParser(): void
+    {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('parsed-by-gpx');
+
+        $this->registry->parse($this->rawFile('/import/sub/dir/ride.gpx'));
+    }
+
     public function testParseWithoutExtensionThrows(): void
     {
         $this->expectException(CouldNotParseActivityFile::class);
@@ -42,7 +50,7 @@ class ActivityFileParsersTest extends TestCase
     public function testParseWithUnsupportedExtensionThrows(): void
     {
         $this->expectException(UnsupportedFileType::class);
-        $this->registry->parse($this->rawFile('/import/activity.gpx'));
+        $this->registry->parse($this->rawFile('/import/activity.lol'));
     }
 
     protected function setUp(): void
@@ -52,6 +60,7 @@ class ActivityFileParsersTest extends TestCase
         $this->registry = new ActivityFileParsers([
             $this->createParser('fit'),
             $this->createParser('tcx'),
+            $this->createParser('gpx'),
         ]);
     }
 

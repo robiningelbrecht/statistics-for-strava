@@ -130,7 +130,7 @@ final readonly class FitFileParser implements ActivityFileParser
         );
 
         if (!$sportType instanceof SportType) {
-            throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $sport ?? 'null', $subSport ?? 'null'), activityFile: $file);
+            throw new CouldNotParseActivityFile(message: sprintf('Unsupported FIT sport %s (sub sport %s)', $session['sport'] ?? 'null', $session['sub_sport'] ?? 'null'), activityFile: $file);
         }
 
         $streamMap = $this->buildStreams($records, $startTimestamp);

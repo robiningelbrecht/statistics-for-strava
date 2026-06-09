@@ -4,7 +4,34 @@ declare(strict_types=1);
 
 namespace App\Application\Build\RunBuild;
 
-use App\Application\Build\BuildActivitiesHtml\BuildActivitiesHtml;use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;use App\Application\Build\BuildBestEffortsHtml\BuildBestEffortsHtml;use App\Application\Build\BuildChallengesHtml\BuildChallengesHtml;use App\Application\Build\BuildDashboardHtml\BuildDashboardHtml;use App\Application\Build\BuildEddingtonHtml\BuildEddingtonHtml;use App\Application\Build\BuildGearMaintenanceHtml\BuildGearMaintenanceHtml;use App\Application\Build\BuildGearStatsHtml\BuildGearStatsHtml;use App\Application\Build\BuildGpxFiles\BuildGpxFiles;use App\Application\Build\BuildHeatmapHtml\BuildHeatmapHtml;use App\Application\Build\BuildIndexHtml\BuildIndexHtml;use App\Application\Build\BuildManifest\BuildManifest;use App\Application\Build\BuildMilestonesHtml\BuildMilestonesHtml;use App\Application\Build\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;use App\Application\Build\BuildPhotosHtml\BuildPhotosHtml;use App\Application\Build\BuildRecordingDevices\BuildRecordingDevices;use App\Application\Build\BuildRewindHtml\BuildRewindHtml;use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;use App\Application\Build\ConfigureAppColors\ConfigureAppColors;use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;use App\Application\Import\StravaImport\ImportGear\GearImportStatus;use App\Domain\Activity\ActivityIdRepository;use App\Infrastructure\Console\ProgressBar;use App\Infrastructure\CQRS\Command\Bus\CommandBus;use App\Infrastructure\CQRS\Command\Command;use App\Infrastructure\CQRS\Command\CommandHandler;use App\Infrastructure\Doctrine\Migrations\MigrationRunner;use App\Infrastructure\Time\Clock\Clock;
+use App\Application\Build\BuildActivitiesHtml\BuildActivitiesHtml;
+use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;
+use App\Application\Build\BuildBestEffortsHtml\BuildBestEffortsHtml;
+use App\Application\Build\BuildChallengesHtml\BuildChallengesHtml;
+use App\Application\Build\BuildDashboardHtml\BuildDashboardHtml;
+use App\Application\Build\BuildEddingtonHtml\BuildEddingtonHtml;
+use App\Application\Build\BuildGearMaintenanceHtml\BuildGearMaintenanceHtml;
+use App\Application\Build\BuildGearStatsHtml\BuildGearStatsHtml;
+use App\Application\Build\BuildGpxFiles\BuildGpxFiles;
+use App\Application\Build\BuildHeatmapHtml\BuildHeatmapHtml;
+use App\Application\Build\BuildIndexHtml\BuildIndexHtml;
+use App\Application\Build\BuildManifest\BuildManifest;
+use App\Application\Build\BuildMilestonesHtml\BuildMilestonesHtml;
+use App\Application\Build\BuildMonthlyStatsHtml\BuildMonthlyStatsHtml;
+use App\Application\Build\BuildPhotosHtml\BuildPhotosHtml;
+use App\Application\Build\BuildRecordingDevices\BuildRecordingDevices;
+use App\Application\Build\BuildRewindHtml\BuildRewindHtml;
+use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
+use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
+use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
+use App\Application\Import\StravaImport\ImportGear\GearImportStatus;
+use App\Domain\Activity\ActivityIdRepository;
+use App\Infrastructure\Console\ProgressBar;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\CQRS\Command\Command;
+use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
+use App\Infrastructure\Time\Clock\Clock;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
 {

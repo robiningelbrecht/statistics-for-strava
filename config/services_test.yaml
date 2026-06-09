@@ -10,6 +10,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    App\Domain\Import\ImportMode:
+        autoconfigure: false
+        factory: [ null, 'from' ]
+        arguments: ['stravaApi']
+
     App\Domain\Strava\Strava:
         class: App\Tests\Domain\Strava\SpyStrava
 

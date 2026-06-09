@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Build\RunBuild;
 
-use App\Infrastructure\CQRS\Command\DomainCommand;use Symfony\Component\Console\Style\SymfonyStyle;
+use App\Infrastructure\CQRS\Command\DomainCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final readonly class RunBuild extends DomainCommand
 {

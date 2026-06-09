@@ -36,10 +36,10 @@ final class AppConfig
     private static function buildConfig(): void
     {
         if (!self::$kernelProjectDir instanceof KernelProjectDir) {
-            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
+            throw new \RuntimeException('$kernelProjectDir not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
         }
         if (!self::$platformEnvironment instanceof PlatformEnvironment) {
-            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::setServices() before using this method.'); // @codeCoverageIgnore
+            throw new \RuntimeException('$platformEnvironment not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
         }
         self::$config = [];
         $isTest = self::$platformEnvironment->isTest();
@@ -138,8 +138,12 @@ final class AppConfig
         return self::$config[$key];
     }
 
-    public static function getImportMode(): ?ImportMode
+    public static function getImportMode(): ImportMode
     {
+        if (!self::$importMode instanceof ImportMode) {
+            throw new \RuntimeException('$importMode not set. Please call AppConfig::init() before using this method.'); // @codeCoverageIgnore
+        }
+
         return self::$importMode;
     }
 
