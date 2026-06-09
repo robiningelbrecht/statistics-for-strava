@@ -2,24 +2,7 @@
 
 namespace App\Tests\Console;
 
-use App\Application\RunFileImport\RunFileImport;
-use App\Console\ImportDataConsoleCommand;
-use App\Domain\Import\ImportMode;
-use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\CQRS\Command\DomainCommand;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
-use App\Infrastructure\Mutex\LockName;
-use App\Infrastructure\Mutex\Mutex;
-use App\Infrastructure\Serialization\Json;
-use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
-use App\Tests\Infrastructure\Time\Clock\PausedClock;
-use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
-use PHPUnit\Framework\MockObject\MockObject;
-use Psr\Log\LoggerInterface;
-use Spatie\Snapshots\MatchesSnapshots;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Tester\CommandTester;
+use App\Application\Import\RunFileImport\RunFileImport;use App\Console\ImportDataConsoleCommand;use App\Domain\Import\ImportMode;use App\Infrastructure\CQRS\Command\Bus\CommandBus;use App\Infrastructure\CQRS\Command\DomainCommand;use App\Infrastructure\Doctrine\Migrations\MigrationRunner;use App\Infrastructure\Mutex\LockName;use App\Infrastructure\Mutex\Mutex;use App\Infrastructure\Serialization\Json;use App\Infrastructure\Time\ResourceUsage\ResourceUsage;use App\Tests\Infrastructure\Time\Clock\PausedClock;use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;use PHPUnit\Framework\MockObject\MockObject;use Psr\Log\LoggerInterface;use Spatie\Snapshots\MatchesSnapshots;use Symfony\Component\Console\Application;use Symfony\Component\Console\Command\Command;use Symfony\Component\Console\Tester\CommandTester;
 
 class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
 {
