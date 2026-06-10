@@ -41,6 +41,8 @@ import (
 
 	"github.com/muktihari/fit/decoder"
 	"github.com/muktihari/fit/kit/scaleoffset"
+	"github.com/muktihari/fit/profile/basetype"
+	"github.com/muktihari/fit/proto"
 )
 
 type outFile struct {
@@ -124,19 +126,7 @@ func decode(path string, opts ...decoder.Option) ([]outFile, error) {
 					continue
 				}
 
-				scale := field.Scale
-				if scale == 0 {
-					scale = 1
-				}
-
-				value := scaleoffset.ApplyAny(field.Value.Any(), scale, field.Offset)
-
-				fields = append(fields, outField{
-					Name:  field.Name,
-					Num:   field.Num,
-					Units: field.Units,
-					Value: sanitize(value),
-				})
+				fields = append(fields, convertField(field))
 			}
 
 			file.Messages = append(file.Messages, outMessage{
@@ -150,6 +140,47 @@ func decode(path string, opts ...decoder.Option) ([]outFile, error) {
 	}
 
 	return files, nil
+}
+
+// convertField turns a decoded FIT field into its JSON output form. Fields
+// holding the FIT "no value" sentinel are emitted as null; otherwise the
+// raw value has its scale/offset applied and is sanitized.
+func convertField(field proto.Field) outField {
+	out := outField{
+		Name:  field.Name,
+		Num:   field.Num,
+		Units: field.Units,
+	}
+
+	raw := field.Value.Any()
+	if isInvalid(raw, field.BaseType) {
+		out.Value = nil
+		return out
+	}
+
+	scale := field.Scale
+	if scale == 0 {
+		scale = 1
+	}
+
+	out.Value = sanitize(scaleoffset.ApplyAny(raw, scale, field.Offset))
+
+	return out
+}
+
+// isInvalid reports whether raw is the FIT "no value" sentinel for its base
+// type. Integer and byte fields encode "unset" as a max-value sentinel (e.g.
+// uint16 -> 0xFFFF = 65535) which must be nulled out before scale/offset turns
+// it into a plausible-looking number. Float sentinels decode to NaN and are
+// handled by sanitize instead, so they are treated as valid here.
+func isInvalid(raw any, bt basetype.BaseType) bool {
+	invalid := bt.Invalid()
+	switch invalid.(type) {
+	case float32, float64:
+		return false
+	}
+
+	return raw == invalid
 }
 
 // sanitize replaces non-finite floats (the FIT "invalid" sentinel) with nil so
