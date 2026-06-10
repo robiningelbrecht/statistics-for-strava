@@ -129,7 +129,7 @@ final readonly class RunStravaImportAndBuildAppCronAction implements RunnableCro
         $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(
             title: 'Build successful',
-            message: sprintf('New import and build of your Strava stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
+            message: sprintf('New import and build of your stats was successful in %ss', $this->resourceUsage->getRunTimeInSeconds()),
             tags: ['+1'],
             actionUrl: $this->appUrl
         ));

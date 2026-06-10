@@ -57,7 +57,11 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
         $countSkipped = 0;
         $countFailed = 0;
 
-        foreach ($this->watchDirectory->listFiles() as $item) {
+        $files = $this->watchDirectory->listFiles()->toArray();
+        $countTotalFilesInWatchDirectory = count($files);
+        $delta = 0;
+        foreach ($files as $item) {
+            ++$delta;
             $filePath = $this->watchDirectory->getAbsolutePathFor($item);
             $context = ActivityImportContext::create($filePath);
 
@@ -67,11 +71,11 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 }
             } catch (SkipActivityFileImport) {
                 $this->watchDirectory->deleteFile($filePath);
-                $output->writeln(sprintf('  => Skipping "%s", file was already imported', $filePath->getFilename()));
+                $output->writeln(sprintf('  => [%d/%d] Skipping "%s", file was already imported', $delta, $countTotalFilesInWatchDirectory, $filePath->getFilename()));
                 ++$countSkipped;
                 continue;
             } catch (UnsupportedFileType) {
-                $output->writeln(sprintf('  => Skipping "%s", unsupported file type', $filePath->getFilename()));
+                $output->writeln(sprintf('  => [%d/%d] Skipping "%s", unsupported file type', $delta, $countTotalFilesInWatchDirectory, $filePath->getFilename()));
                 ++$countSkipped;
                 continue;
             } catch (CouldNotParseActivityFile $e) {
@@ -86,7 +90,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 ));
                 $this->watchDirectory->deleteFile($filePath);
 
-                $output->writeln(sprintf('  => <error>Could not import "%s": %s</error>', $filePath->getFilename(), $e->getMessage()));
+                $output->writeln(sprintf('  => <error>[%d/%d] Could not import "%s": %s</error>', $delta, $countTotalFilesInWatchDirectory, $filePath->getFilename(), $e->getMessage()));
                 ++$countFailed;
                 continue;
             }
@@ -124,7 +128,9 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
             $this->watchDirectory->deleteFile($filePath);
 
             $output->writeln(sprintf(
-                '  => Imported "%s" as activity "%s - %s"',
+                '  => [%d/%d] Imported "%s" as activity "%s - %s"',
+                $delta,
+                $countTotalFilesInWatchDirectory,
                 $filePath->getFilename(),
                 $activity->getName(),
                 $activity->getStartDate()->format('d-m-Y'),

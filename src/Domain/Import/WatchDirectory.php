@@ -25,16 +25,14 @@ final readonly class WatchDirectory
         return $this->defaultStorage->directoryExists(self::FOLDER_NAME);
     }
 
-    public function countSupportedFiles(): int
+    public function hasFilesThatCanBeProcessed(): bool
     {
-        return count(
-            $this->listFiles()
-                ->filter(fn (StorageAttributes $file): bool => in_array(
-                    Path::fromString($file->path())->getExtension(),
-                    ['fit', 'tcx', 'gpx'],
-                ))
-                ->toArray(),
-        );
+        return [] !== $this->listFiles()
+            ->filter(fn (StorageAttributes $file): bool => in_array(
+                Path::fromString($file->path())->getExtension(),
+                ['fit', 'tcx', 'gpx'],
+            ))
+            ->toArray();
     }
 
     public function listFiles(): DirectoryListing

@@ -13,16 +13,20 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Import\FileImportRepository;
 use App\Domain\Import\FileImportStatus;
+use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\ContainerTestCase;
 use App\Tests\SpyOutput;
 use League\Flysystem\FilesystemOperator;
+use Spatie\Snapshots\MatchesSnapshots;
 
 class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 {
+    use MatchesSnapshots;
+
     private ImportActivityFilesCommandHandler $handler;
     private FilesystemOperator $watchStorage;
 
-    public function testHandle(): void
+    public function testHandleImportsActivityFile(): void
     {
         $this->dropInWatchFolder('ride.tcx', $this->fixture('activity.tcx'));
 
@@ -51,9 +55,11 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $streams = $this->getContainer()->get(ActivityStreamRepository::class)->findByActivityId($activityId);
         $this->assertNotNull($streams->filterOnType(StreamType::HEART_RATE));
         $this->assertNotNull($streams->filterOnType(StreamType::LAT_LNG));
+
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
-    public function testHandleIsIdempotent(): void
+    public function testHandleSkipsAlreadyImportedFile(): void
     {
         $bytes = $this->fixture('activity.tcx');
 
@@ -64,8 +70,19 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $this->assertStringContainsString('already imported', (string) $output);
         $this->assertCount(1, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
+    }
+
+    public function testHandleSkipsUnsupportedFileType(): void
+    {
+        $this->dropInWatchFolder('notes.txt', 'just some text');
+
+        $output = new SpyOutput();
+        $this->handler->handle(new ImportActivityFiles($output));
+
+        $this->assertCount(0, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
     public function testHandleRecordsFailureForCorruptFile(): void
@@ -80,6 +97,8 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $this->assertSame(FileImportStatus::FAILED, $fileImports->getFirst()->getStatus());
         $this->assertNull($fileImports->getFirst()->getActivityId());
         $this->assertSame('this is not valid xml', $fileImports->getFirst()->getFileContents());
+
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
     public function testHandleWithoutImportDirectoryIsNoOp(): void
@@ -87,8 +106,8 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $this->assertStringContainsString('nothing to import', (string) $output);
         $this->assertCount(0, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
     private function dropInWatchFolder(string $filename, string $contents): void
