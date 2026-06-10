@@ -33,7 +33,7 @@ composer:
 	@make dcr cmd="composer $(arg)"
 
 download-database:
-	scp $(user)@$(server):/home/docker/stacks/strava-statistics/storage/database/strava.db ./storage/database/strava.db
+	scp $(user)@$(server):/home/docker/stacks/strava-statistics/storage/database/strava.db ./storage/database/dreeve.db
 
 download-assets:
 	scp -r $(user)@$(server):/home/docker/stacks/strava-statistics/storage/files ./storage/

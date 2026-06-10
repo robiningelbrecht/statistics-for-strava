@@ -5,11 +5,13 @@
             <div class="min-w-0">
                 <h3 class="text-lg md:text-xl font-extrabold flex items-center gap-2">
                     <span class="line-clamp-1">{{ activity.getName() }}</span>
-                    <a href="{{ activity.getUrl() }}" class="text-gray-500 hover:text-primary transition" title="Open on Strava">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-                        </svg>
-                    </a>
+                    {% if activity.getImportSource() == enum('App\\Domain\\Activity\\ImportSource').STRAVA_API %}
+                        <a href="{{ activity.getUrl() }}" class="text-gray-500 hover:text-primary transition" title="Open on Strava">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+                            </svg>
+                        </a>
+                    {% endif %}
                 </h3>
                 {% if activity.getDescription() %}
                     <details class="group/desc mb-3 mt-1">
