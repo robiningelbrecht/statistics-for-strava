@@ -9,22 +9,6 @@ class SqliteDatabaseUrlEnvVarProcessorTest extends TestCase
 {
     private string $directory;
 
-    protected function setUp(): void
-    {
-        $this->directory = sys_get_temp_dir().'/'.uniqid('sqlite-db-url-', true);
-        mkdir($this->directory);
-    }
-
-    protected function tearDown(): void
-    {
-        foreach (['dreeve.db', 'strava.db'] as $file) {
-            if (file_exists($this->directory.'/'.$file)) {
-                unlink($this->directory.'/'.$file);
-            }
-        }
-        rmdir($this->directory);
-    }
-
     public function testGetEnvUsesNewDatabaseWhenNoneExists(): void
     {
         $processor = new SqliteDatabaseUrlEnvVarProcessor();
@@ -78,5 +62,21 @@ class SqliteDatabaseUrlEnvVarProcessorTest extends TestCase
             ],
             SqliteDatabaseUrlEnvVarProcessor::getProvidedTypes(),
         );
+    }
+
+    protected function setUp(): void
+    {
+        $this->directory = sys_get_temp_dir().'/'.uniqid('sqlite-db-url-', true);
+        mkdir($this->directory);
+    }
+
+    protected function tearDown(): void
+    {
+        foreach (['dreeve.db', 'strava.db'] as $file) {
+            if (file_exists($this->directory.'/'.$file)) {
+                unlink($this->directory.'/'.$file);
+            }
+        }
+        rmdir($this->directory);
     }
 }
