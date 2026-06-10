@@ -127,6 +127,16 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
+        if ([] === $velocities) {
+            // Files without per-trackpoint TPX/Speed (e.g. Polar exports) still carry
+            // cumulative distance + time per trackpoint; derive velocity from those.
+            $streams[StreamType::VELOCITY->value] = $this->deriveVelocityStream(
+                $streams[StreamType::DISTANCE->value],
+                $streams[StreamType::TIME->value],
+            );
+            $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
+        }
+
         $activityId = ActivityId::random();
         $startDateTime = SerializableDateTime::fromTimestamp($startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
         $activityLaps = $this->buildActivityLaps($laps, $activityId);
@@ -300,6 +310,38 @@ final readonly class TcxFileParser implements ActivityFileParser
         }
 
         return $found ? $calories : null;
+    }
+
+    /**
+     * @param list<?float> $distances
+     * @param list<?int>   $times
+     *
+     * @return list<?float>
+     */
+    private function deriveVelocityStream(array $distances, array $times): array
+    {
+        $velocities = [];
+        $previousDistance = null;
+        $previousTime = null;
+
+        foreach ($distances as $index => $distance) {
+            $time = $times[$index] ?? null;
+            if (null === $distance || null === $time) {
+                $velocities[] = null;
+                continue;
+            }
+
+            if (null !== $previousDistance && null !== $previousTime && $time > $previousTime) {
+                $velocities[] = ($distance - $previousDistance) / ($time - $previousTime);
+            } else {
+                $velocities[] = null;
+            }
+
+            $previousDistance = $distance;
+            $previousTime = $time;
+        }
+
+        return $velocities;
     }
 
     /**

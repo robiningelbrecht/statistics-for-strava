@@ -75,6 +75,20 @@ class TcxFileParserTest extends TestCase
         $this->assertSame($activity->getId(), $lap->getActivityId());
     }
 
+    public function testParsePolarExportDerivesSpeedFromDistanceAndTime(): void
+    {
+        $parsed = $this->parser->parse($this->rawFileFromFixture('activity-polar.tcx'));
+
+        $activity = $parsed->getActivity();
+        $this->assertSame(SportType::RUN, $activity->getSportType());
+        $this->assertSame('Polar M400', $activity->getDeviceName());
+
+        $this->assertSame(18.0, $activity->getAverageSpeed()->toFloat());
+        $this->assertSame(18.0, $activity->getMaxSpeed()->toFloat());
+
+        $this->assertSame([null, 5.0, 5.0], $parsed->getStreams()->filterOnType(StreamType::VELOCITY)?->getData());
+    }
+
     public function testParseEmptyContentsThrows(): void
     {
         $this->expectException(CouldNotParseActivityFile::class);

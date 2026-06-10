@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Activities>
+    <Activity Sport="Running">
+      <Id>2026-06-07T13:21:02.000Z</Id>
+      <Lap StartTime="2026-06-07T13:21:03.000Z">
+        <TotalTimeSeconds>10.0</TotalTimeSeconds>
+        <DistanceMeters>50.0</DistanceMeters>
+        <MaximumSpeed>6.0</MaximumSpeed>
+        <Calories>42</Calories>
+        <AverageHeartRateBpm><Value>125</Value></AverageHeartRateBpm>
+        <MaximumHeartRateBpm><Value>130</Value></MaximumHeartRateBpm>
+        <Intensity>Active</Intensity>
+        <Cadence>80</Cadence>
+        <TriggerMethod>Distance</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2026-06-07T13:21:03.000Z</Time>
+            <Position>
+              <LatitudeDegrees>45.0</LatitudeDegrees>
+              <LongitudeDegrees>22.5</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>100</AltitudeMeters>
+            <DistanceMeters>0.0</DistanceMeters>
+            <HeartRateBpm><Value>120</Value></HeartRateBpm>
+            <Cadence>80</Cadence>
+            <SensorState>Present</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2026-06-07T13:21:08.000Z</Time>
+            <Position>
+              <LatitudeDegrees>45.05</LatitudeDegrees>
+              <LongitudeDegrees>22.55</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>105</AltitudeMeters>
+            <DistanceMeters>25.0</DistanceMeters>
+            <HeartRateBpm><Value>125</Value></HeartRateBpm>
+            <Cadence>81</Cadence>
+            <SensorState>Present</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2026-06-07T13:21:13.000Z</Time>
+            <Position>
+              <LatitudeDegrees>45.1</LatitudeDegrees>
+              <LongitudeDegrees>22.6</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>110</AltitudeMeters>
+            <DistanceMeters>50.0</DistanceMeters>
+            <HeartRateBpm><Value>130</Value></HeartRateBpm>
+            <Cadence>82</Cadence>
+            <SensorState>Present</SensorState>
+          </Trackpoint>
+        </Track>
+        <Extensions>
+          <LX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
+            <AvgSpeed>5.0</AvgSpeed>
+          </LX>
+        </Extensions>
+      </Lap>
+      <Creator xsi:type="Device_t">
+        <Name>Polar M400</Name>
+        <UnitId>0</UnitId>
+        <ProductID>22</ProductID>
+      </Creator>
+      <Author xsi:type="Application_t">
+        <Name>Polar Flow Mobile Viewer</Name>
+      </Author>
+    </Activity>
+  </Activities>
+</TrainingCenterDatabase>
