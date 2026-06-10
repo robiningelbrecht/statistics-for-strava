@@ -32,6 +32,9 @@ use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 
 final readonly class TcxFileParser implements ActivityFileParser
 {
+    // Interval longer than this is treated as a recording gap rather than active time.
+    private const int MAX_RECORDING_GAP_IN_SECONDS = 60;
+
     public function __construct(
         private Clock $clock,
         private ?SerializableTimezone $timezone,
@@ -95,16 +98,22 @@ final readonly class TcxFileParser implements ActivityFileParser
         foreach ($activityXml->Lap as $lapIndex => $lap) {
             $lapStart = isset($lap['StartTime']) ? SerializableDateTime::fromString((string) $lap['StartTime'])->getTimestamp() : null;
             $lapAltitudes = [];
+            $lapTimes = [];
+            $lapDistances = [];
 
             foreach ($lap->Track->Trackpoint ?? [] as $trackpoint) {
                 $time = property_exists($trackpoint, 'Time') && null !== $trackpoint->Time ? SerializableDateTime::fromString((string) $trackpoint->Time)->getTimestamp() : null;
                 $startTimestamp ??= $time;
+                $lapTimes[] = $time;
 
                 $altitude = property_exists($trackpoint, 'AltitudeMeters') && null !== $trackpoint->AltitudeMeters ? (float) $trackpoint->AltitudeMeters : null;
                 $lapAltitudes[] = $altitude;
 
+                $distance = property_exists($trackpoint, 'DistanceMeters') && null !== $trackpoint->DistanceMeters ? (float) $trackpoint->DistanceMeters : null;
+                $lapDistances[] = $distance;
+
                 $streams[StreamType::TIME->value][] = (null !== $time && null !== $startTimestamp) ? $time - $startTimestamp : null;
-                $streams[StreamType::DISTANCE->value][] = property_exists($trackpoint, 'DistanceMeters') && null !== $trackpoint->DistanceMeters ? (float) $trackpoint->DistanceMeters : null;
+                $streams[StreamType::DISTANCE->value][] = $distance;
                 $streams[StreamType::ALTITUDE->value][] = $altitude;
 
                 $latitude = property_exists($trackpoint->Position, 'LatitudeDegrees') && null !== $trackpoint->Position->LatitudeDegrees ? (float) $trackpoint->Position->LatitudeDegrees : null;
@@ -119,7 +128,14 @@ final readonly class TcxFileParser implements ActivityFileParser
                 $streams[StreamType::WATTS->value][] = isset($tpx['Watts']) ? (int) $tpx['Watts'] : null;
             }
 
-            $laps[] = $this->buildLap((int) $lapIndex, $lap, $lapStart, $this->elevationGain($lapAltitudes));
+            $laps[] = $this->buildLap(
+                (int) $lapIndex,
+                $lap,
+                $lapStart,
+                $this->elevationGain($lapAltitudes),
+                $this->activeSeconds($lapTimes),
+                $this->trackpointDistance($lapDistances),
+            );
         }
 
         if (null === $startTimestamp) {
@@ -245,23 +261,68 @@ final readonly class TcxFileParser implements ActivityFileParser
     /**
      * @return array<string, mixed>
      */
-    private function buildLap(int $index, \SimpleXMLElement $lap, ?int $lapStart, float $elevationGain): array
+    private function buildLap(int $index, \SimpleXMLElement $lap, ?int $lapStart, float $elevationGain, int $activeSeconds, ?float $trackpointDistance): array
     {
+        $hasTotalTime = property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds;
+        $totalTimeSeconds = $hasTotalTime ? (int) round((float) $lap->TotalTimeSeconds) : 0;
+
+        // Elapsed time keeps the file's reported total (including pauses/gaps). Moving time is
+        // capped at the active time so a recording gap (e.g. two merged rides) can never inflate it.
+        $movingTime = $hasTotalTime ? min($totalTimeSeconds, $activeSeconds) : 0;
+
+        // Prefer the recorded cumulative-distance stream; the lap summary field can be wrong in
+        // merged files. Fall back to the summary when trackpoints carry no distance.
+        $distance = $trackpointDistance ?? (property_exists($lap, 'DistanceMeters') && null !== $lap->DistanceMeters ? (float) $lap->DistanceMeters : 0.0);
+
         return [
             'id' => $index + 1,
             'lap_index' => $index + 1,
             'name' => sprintf('Lap %d', $index + 1),
-            'elapsed_time' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds ? (int) round((float) $lap->TotalTimeSeconds) : 0,
-            'moving_time' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds ? (int) round((float) $lap->TotalTimeSeconds) : 0,
-            'distance' => property_exists($lap, 'DistanceMeters') && null !== $lap->DistanceMeters ? (float) $lap->DistanceMeters : 0.0,
-            'average_speed' => property_exists($lap, 'TotalTimeSeconds') && null !== $lap->TotalTimeSeconds && (property_exists($lap, 'DistanceMeters') && null !== $lap->DistanceMeters) && (float) $lap->TotalTimeSeconds > 0
-                ? (float) $lap->DistanceMeters / (float) $lap->TotalTimeSeconds
-                : 0.0,
+            'elapsed_time' => $totalTimeSeconds,
+            'moving_time' => $movingTime,
+            'distance' => $distance,
+            'average_speed' => $movingTime > 0 ? $distance / $movingTime : 0.0,
             'max_speed' => property_exists($lap, 'MaximumSpeed') && null !== $lap->MaximumSpeed ? (float) $lap->MaximumSpeed : 0.0,
             'total_elevation_gain' => $elevationGain,
             'average_heartrate' => property_exists($lap->AverageHeartRateBpm, 'Value') && null !== $lap->AverageHeartRateBpm->Value ? (int) $lap->AverageHeartRateBpm->Value : null,
             'start_date' => null !== $lapStart ? SerializableDateTime::fromTimestamp($lapStart)->format(\DateTimeInterface::ATOM) : null,
         ];
+    }
+
+    /**
+     * @param list<?int> $timestamps
+     */
+    private function activeSeconds(array $timestamps): int
+    {
+        $active = 0;
+        $previous = null;
+        foreach ($timestamps as $time) {
+            if (null === $time) {
+                continue;
+            }
+            if (null !== $previous) {
+                $delta = $time - $previous;
+                if ($delta > 0 && $delta <= self::MAX_RECORDING_GAP_IN_SECONDS) {
+                    $active += $delta;
+                }
+            }
+            $previous = $time;
+        }
+
+        return $active;
+    }
+
+    /**
+     * @param list<?float>$distances
+     */
+    private function trackpointDistance(array $distances): ?float
+    {
+        $values = array_values(array_filter($distances, static fn (?float $distance): bool => null !== $distance));
+        if ([] === $values) {
+            return null;
+        }
+
+        return $values[count($values) - 1] - $values[0];
     }
 
     /**

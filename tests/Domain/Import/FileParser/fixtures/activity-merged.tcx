@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
+  <Activities>
+    <Activity Sport="Biking">
+      <Id>2021-09-08T00:00:00Z</Id>
+      <Lap StartTime="2021-09-08T00:00:00Z">
+        <TotalTimeSeconds>7210</TotalTimeSeconds>
+        <DistanceMeters>50</DistanceMeters>
+        <Track>
+          <Trackpoint>
+            <Time>2021-09-08T00:00:00Z</Time>
+            <Position>
+              <LatitudeDegrees>45.0</LatitudeDegrees>
+              <LongitudeDegrees>22.5</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>0</DistanceMeters>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2021-09-08T00:00:10Z</Time>
+            <Position>
+              <LatitudeDegrees>45.01</LatitudeDegrees>
+              <LongitudeDegrees>22.51</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>50</DistanceMeters>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2021-09-08T02:00:00Z</Time>
+            <Position>
+              <LatitudeDegrees>45.02</LatitudeDegrees>
+              <LongitudeDegrees>22.52</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>50</DistanceMeters>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2021-09-08T02:00:10Z</Time>
+            <Position>
+              <LatitudeDegrees>45.03</LatitudeDegrees>
+              <LongitudeDegrees>22.53</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>100</DistanceMeters>
+          </Trackpoint>
+        </Track>
+      </Lap>
+      <Creator>
+        <Name>Garmin Edge 530</Name>
+      </Creator>
+    </Activity>
+  </Activities>
+</TrainingCenterDatabase>
