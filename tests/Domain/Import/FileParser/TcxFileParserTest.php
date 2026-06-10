@@ -75,6 +75,25 @@ class TcxFileParserTest extends TestCase
         $this->assertSame($activity->getId(), $lap->getActivityId());
     }
 
+    public function testParseMergedFileCorrectsMovingTimeAndDistance(): void
+    {
+        $parsed = $this->parser->parse($this->rawFileFromFixture('activity-merged.tcx'));
+
+        $activity = $parsed->getActivity();
+        // Elapsed time keeps the full wall-clock span reported by TotalTimeSeconds.
+        $this->assertSame(7210, $activity->getElapsedTimeInSeconds());
+        // Moving time is capped at the active time: the 7190s recording gap is excluded.
+        $this->assertSame(20, $activity->getMovingTimeInSeconds());
+        // Distance comes from the recorded trackpoint stream (0 -> 100), not the bogus lap summary (50).
+        $this->assertSame(0.1, $activity->getDistance()->toFloat());
+
+        $lap = $parsed->getLaps()->getFirst();
+        $this->assertInstanceOf(ActivityLap::class, $lap);
+        $this->assertSame(7210, $lap->getElapsedTimeInSeconds());
+        $this->assertSame(20, $lap->getMovingTimeInSeconds());
+        $this->assertSame(100.0, $lap->getDistance()->toFloat());
+    }
+
     public function testParsePolarExportDerivesSpeedFromDistanceAndTime(): void
     {
         $parsed = $this->parser->parse($this->rawFileFromFixture('activity-polar.tcx'));
