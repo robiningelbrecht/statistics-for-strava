@@ -1,0 +1,3 @@
+Importingactivityfiles...
+=>[1/1]Skipping"ride.tcx",filewasalreadyimported
+=>Imported0,skipped1,failed0activityfile(s)
