@@ -2,7 +2,7 @@
 
 namespace App\Tests\Console\Webhook;
 
-use App\Application\Import\importStravaDataAndBuildAppCronAction;
+use App\Application\Import\RunStravaImportAndBuildAppCronAction;
 use App\Console\Webhook\ProcessWebhooksConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\Console\ConsoleCommandTestCase;
@@ -34,7 +34,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
         parent::setUp();
 
         $this->processWebhooksConsoleCommand = new ProcessWebhooksConsoleCommand(
-            $this->getContainer()->get(importStravaDataAndBuildAppCronAction::class)
+            $this->getContainer()->get(RunStravaImportAndBuildAppCronAction::class)
         );
     }
 

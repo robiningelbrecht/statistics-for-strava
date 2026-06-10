@@ -25,7 +25,7 @@ use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
-final readonly class importStravaDataAndBuildAppCronAction implements RunnableCronAction
+final readonly class RunStravaImportAndBuildAppCronAction implements RunnableCronAction
 {
     public function __construct(
         private CommandBus $commandBus,
