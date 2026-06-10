@@ -1,6 +1,6 @@
 doctrine:
   dbal:
-    url: 'sqlite:///%kernel.project_dir%/storage/database/strava.db?charset=utf8mb4'
+    url: '%env(sqlite_db_url:DATABASE_DIRECTORY)%'
     profiling_collect_backtrace: false
   orm:
     enable_native_lazy_objects: true
@@ -23,4 +23,4 @@ when@test:
   doctrine:
     dbal:
       # "TEST_TOKEN" is typically set by ParaTest for parallel test isolation
-      url: 'sqlite:///%kernel.project_dir%/tests/strava%env(default::TEST_TOKEN)%.db'
+      url: 'sqlite:///%kernel.project_dir%/tests/dreeve%env(default::TEST_TOKEN)%.db'
