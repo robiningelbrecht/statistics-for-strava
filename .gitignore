@@ -36,4 +36,5 @@ phpstan.neon
 /mercure
 /watch
 /tests/dreeve*.db
+/tests/strava*.db
 ###> app-build ###
