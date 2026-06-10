@@ -124,6 +124,24 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->keyValueStore->find(Key::APP_LAST_BUILT_ON);
     }
 
+    public function testPostponesWhenLockIsAlreadyAcquired(): void
+    {
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test", "heartbeat": 1764806400}']
+        );
+
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertEmpty($this->commandBus->getDispatchedCommands());
+        $this->assertStringContainsString(
+            'Postponing file import, another process is importing data.',
+            $commandTester->getDisplay(),
+        );
+    }
+
     #[\Override]
     protected function setUp(): void
     {
