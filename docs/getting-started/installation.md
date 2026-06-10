@@ -68,7 +68,7 @@ services:
       - ./storage/files:/var/www/storage/files
     env_file: ./.env
     healthcheck:
-      test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/strava.db && echo 'ok' || exit 1" ]
+      test: [ "CMD", "sh", "-c", "test -f /var/www/storage/database/dreeve.db && echo 'ok' || exit 1" ]
       start_period: 5s
     command: ['bin/console', 'app:daemon:run']
     networks:
