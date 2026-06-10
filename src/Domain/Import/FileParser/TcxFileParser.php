@@ -313,7 +313,7 @@ final readonly class TcxFileParser implements ActivityFileParser
     }
 
     /**
-     * @param list<?float>$distances
+     * @param list<?float> $distances
      */
     private function trackpointDistance(array $distances): ?float
     {

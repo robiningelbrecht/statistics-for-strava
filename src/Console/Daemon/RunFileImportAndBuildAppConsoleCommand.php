@@ -7,10 +7,12 @@ namespace App\Console\Daemon;
 use App\Application\AppUrl;
 use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Import\RunFileImport\RunFileImport;
+use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
@@ -33,8 +35,10 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
 {
     public function __construct(
         private readonly CommandBus $commandBus,
+        private readonly ActivityIdRepository $activityIdRepository,
         private readonly WatchDirectory $watchDirectory,
         private readonly ResourceUsage $resourceUsage,
+        private readonly MigrationRunner $migrationRunner,
         private readonly Mutex $mutex,
         private readonly AppUrl $appUrl,
         private readonly Clock $clock,
@@ -46,6 +50,8 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, $output);
+        $this->migrationRunner->run($output);
+
         $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
         $watchDirectoryHasFiles = $this->watchDirectory->hasFilesThatCanBeProcessed();
 
@@ -76,6 +82,13 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             $this->commandBus->dispatch(new RunFileImport(
                 output: $output,
             ));
+        }
+
+        if ($this->activityIdRepository->count() <= 0) {
+            $this->mutex->releaseLock();
+            $output->writeln('<error>Wait until at least one activity has been imported before building the app</error>');
+
+            return Command::SUCCESS;
         }
 
         $this->commandBus->dispatch(new RunBuild(

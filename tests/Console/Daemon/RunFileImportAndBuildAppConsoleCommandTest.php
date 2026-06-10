@@ -4,7 +4,11 @@ namespace App\Tests\Console\Daemon;
 
 use App\Application\AppUrl;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
+use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Import\WatchDirectory;
+use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -13,7 +17,9 @@ use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Console\ConsoleCommandTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
+use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use League\Flysystem\FilesystemOperator;
@@ -34,6 +40,11 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     public function testRunsAndRecordsDateWhenNotYetBuiltToday(): void
     {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
         $command = $this->getCommandInApplication('app:cron:run-file-import');
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);
@@ -44,6 +55,11 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     public function testRunsWhenLastBuiltOnAPreviousDay(): void
     {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
         $this->keyValueStore->save(KeyValue::fromState(
             key: Key::APP_LAST_BUILT_ON,
             value: Value::fromString('2025-12-03'),
@@ -74,6 +90,11 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     public function testRunsWhenFilesArePresentEvenIfAlreadyBuiltToday(): void
     {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
         $this->keyValueStore->save(KeyValue::fromState(
             key: Key::APP_LAST_BUILT_ON,
             value: Value::fromString(self::TODAY),
@@ -87,6 +108,22 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
     }
 
+    public function testDoesNotBuildWhenNoActivitiesHaveBeenImported(): void
+    {
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertEmpty($this->commandBus->getDispatchedCommands());
+        $this->assertStringContainsString(
+            'Wait until at least one activity has been imported before building the app',
+            $commandTester->getDisplay(),
+        );
+
+        $this->expectException(EntityNotFound::class);
+        $this->keyValueStore->find(Key::APP_LAST_BUILT_ON);
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -97,17 +134,19 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->keyValueStore = $this->getContainer()->get(KeyValueStore::class);
 
         $this->command = new RunFileImportAndBuildAppConsoleCommand(
-            $this->commandBus = new SpyCommandBus(),
-            $this->getContainer()->get(WatchDirectory::class),
-            new FixedResourceUsage(),
-            new Mutex(
+            commandBus: $this->commandBus = new SpyCommandBus(),
+            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
+            watchDirectory: $this->getContainer()->get(WatchDirectory::class),
+            resourceUsage: new FixedResourceUsage(),
+            migrationRunner: new VoidMigrationRunner(),
+            mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString(self::TODAY),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            AppUrl::fromString('http://localhost'),
-            PausedClock::fromString(self::TODAY),
-            $this->keyValueStore,
+            appUrl: AppUrl::fromString('http://localhost'),
+            clock: PausedClock::fromString(self::TODAY),
+            keyValueStore: $this->keyValueStore,
         );
     }
 
