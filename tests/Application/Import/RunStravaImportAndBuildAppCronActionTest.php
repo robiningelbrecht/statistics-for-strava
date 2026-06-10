@@ -3,7 +3,7 @@
 namespace App\Tests\Application\Import;
 
 use App\Application\AppUrl;
-use App\Application\Import\importStravaDataAndBuildAppCronAction;
+use App\Application\Import\RunStravaImportAndBuildAppCronAction;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Import\ImportMode;
 use App\Domain\Strava\Webhook\WebhookAspectType;
@@ -25,11 +25,11 @@ use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class importStravaDataAndBuildAppCronActionTest extends ContainerTestCase
+class RunStravaImportAndBuildAppCronActionTest extends ContainerTestCase
 {
     use MatchesSnapshots;
 
-    private importStravaDataAndBuildAppCronAction $importAndBuildAppCronAction;
+    private RunStravaImportAndBuildAppCronAction $importAndBuildAppCronAction;
     private CommandBus $commandBus;
     private MockObject $migrationRunner;
 
@@ -113,7 +113,7 @@ class importStravaDataAndBuildAppCronActionTest extends ContainerTestCase
     {
         parent::setUp();
 
-        $this->importAndBuildAppCronAction = new importStravaDataAndBuildAppCronAction(
+        $this->importAndBuildAppCronAction = new RunStravaImportAndBuildAppCronAction(
             $this->commandBus = new SpyCommandBus(),
             $this->getContainer()->get(WebhookEventRepository::class),
             $this->getContainer()->get(ActivityRepository::class),
