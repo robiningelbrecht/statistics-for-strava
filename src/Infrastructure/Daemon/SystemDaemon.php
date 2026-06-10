@@ -65,6 +65,27 @@ final class SystemDaemon implements Daemon
         }
 
         $extraConfiguredCronActionsOutput = [];
+
+        if ($this->importMode->isFiles()) {
+            $cronExpression = '*/5 * * * *';
+            $extraConfiguredCronActionsOutput[] = sprintf('<info> - runFileImport: %s</info>', $cronExpression);
+            $actions[] = new Action(
+                key: 'runFileImport',
+                mutexTtl: 300,
+                expression: $cronExpression,
+                performer: function (): PromiseInterface {
+                    $process = new CronProcess(
+                        cronActionId: 'runFileImport',
+                        clock: $this->clock,
+                        output: $this->getConsoleOutput(),
+                    )->withCommand('bin/console app:cron:run-file-import');
+                    $process->start();
+
+                    return resolve(true);
+                }
+            );
+        }
+
         if ($this->importMode->isStravaApi() && $this->webhookConfig->isEnabled()) {
             $extraConfiguredCronActionsOutput[] = sprintf('<info> - processStravaWebhooks: %s</info>', $this->webhookConfig->getCronExpression());
             $actions[] = new Action(
