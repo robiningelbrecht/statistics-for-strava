@@ -33,7 +33,7 @@ final class ActivityBuilder
     private Kilometer $distance;
     private Meter $elevation;
     private ?Coordinate $startingCoordinate = null;
-    private readonly int $calories;
+    private int $calories;
     private ?int $averagePower = null;
     private readonly ?int $maxPower;
     private KmPerHour $averageSpeed;
@@ -148,6 +148,13 @@ final class ActivityBuilder
     public function withMovingTimeInSeconds(int $movingTimeInSeconds): self
     {
         $this->movingTimeInSeconds = $movingTimeInSeconds;
+
+        return $this;
+    }
+
+    public function withCalories(int $calories): self
+    {
+        $this->calories = $calories;
 
         return $this;
     }
