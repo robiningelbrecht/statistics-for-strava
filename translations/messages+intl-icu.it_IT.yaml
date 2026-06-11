@@ -230,6 +230,8 @@ Morning: Mattina
 'Most recent milestones': 'Traguardi più recenti'
 'Mountain Bike Rides': 'Uscite in mountain bike'
 'Moving time': 'Tempo in movimento'
+'Moving time by sport': 'Moving time by sport'
+'Moving time in hours': 'Moving time in hours'
 Name: Nome
 Neutral: Neutral
 'New personal best for': 'Nuovo record personale per'
@@ -457,9 +459,9 @@ Title: Title
 'Top 10': 'Primi 10'
 'Total distance per month': 'Distanza totale per mese'
 'Total elevation per month': 'Dislivello totale per mese'
-'Total hours': 'Ore totali'
 'Total hours spent per gear': 'Ore totali per attrezzatura'
 'Total hours spent per sport type': 'Ore totali per tipo di sport'
+'Total moving time per month': 'Total moving time per month'
 'Trail Runs': 'Corse trail'
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Allenarsi 4–5 giorni ogni settimana ottiene un punteggio più alto rispetto a concentrare tutto in uno o due giorni.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - metrica del carico di allenamento che tiene conto di intensità e durata.'

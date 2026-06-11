@@ -230,6 +230,8 @@ Morning: Morgen
 'Most recent milestones': 'Neueste Meilensteine'
 'Mountain Bike Rides': Mountainbike-Fahrten
 'Moving time': Bewegungszeit
+'Moving time by sport': 'Moving time by sport'
+'Moving time in hours': 'Moving time in hours'
 Name: Name
 Neutral: Neutral
 'New personal best for': 'Neue persönliche Bestleistung für'
@@ -457,9 +459,9 @@ Title: Title
 'Top 10': 'Top 10'
 'Total distance per month': 'Gesamtdistanz pro Monat'
 'Total elevation per month': 'Gesamthöhenmeter pro Monat'
-'Total hours': Gesamtstunden
 'Total hours spent per gear': 'Gesamtstunden pro Ausrüstung'
 'Total hours spent per sport type': 'Gesamtstunden pro Sportart'
+'Total moving time per month': 'Total moving time per month'
 'Trail Runs': Trail-Läufe
 'Training 4–5 days every week scores higher than doing everything in one or two days.': '4-5 Tage Training pro Woche erzielen einen höheren Wert als alles an einem oder zwei Tagen zu erledigen.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'

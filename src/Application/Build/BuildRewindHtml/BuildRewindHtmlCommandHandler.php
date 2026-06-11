@@ -27,9 +27,11 @@ use App\Domain\Rewind\FindDistancePerMonth\FindDistancePerMonth;
 use App\Domain\Rewind\FindElevationPerMonth\FindElevationPerMonth;
 use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
+use App\Domain\Rewind\FindMovingTimePerMonth\FindMovingTimePerMonth;
 use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
 use App\Domain\Rewind\FindTotalActivityCount\FindTotalActivityCount;
+use App\Domain\Rewind\MovingTimePerMonthChart;
 use App\Domain\Rewind\MovingTimePerSportTypeChart;
 use App\Domain\Rewind\RestDaysVsActiveDaysChart;
 use App\Domain\Rewind\RewindItem;
@@ -89,6 +91,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
             $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($yearsToQuery));
             $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery, null));
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
+            $movingTimePerMonthResponse = $this->queryBus->ask(new FindMovingTimePerMonth($yearsToQuery));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
             $activeAndRestDaysResponse = $this->queryBus->ask(new FindActiveAndRestDays($yearsToQuery));
             $totalActivityCountResponse = $this->queryBus->ask(new FindTotalActivityCount($yearsToQuery));
@@ -164,6 +167,19 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     totalMetricLabel: $this->unitSystem->distanceSymbol(),
                 ))
                 ->add(RewindItem::from(
+                    icon: 'time',
+                    title: $this->translator->trans('Moving time'),
+                    subTitle: $this->translator->trans('Total moving time per month'),
+                    content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
+                        'chart' => Json::encode(MovingTimePerMonthChart::create(
+                            movingTimePerMonth: $movingTimePerMonthResponse->getMovingTimePerMonth(),
+                            translator: $this->translator,
+                        )->build()),
+                    ]),
+                    totalMetric: (int) round($movingTimePerMonthResponse->getTotalMovingTime() / 3600),
+                    totalMetricLabel: $this->translator->trans('hours'),
+                ))
+                ->add(RewindItem::from(
                     icon: 'elevation',
                     title: $this->translator->trans('Elevation'),
                     subTitle: $this->translator->trans('Total elevation per month'),
@@ -178,7 +194,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     totalMetricLabel: $this->unitSystem->elevationSymbol(),
                 ))->add(RewindItem::from(
                     icon: 'time',
-                    title: $this->translator->trans('Total hours'),
+                    title: $this->translator->trans('Moving time by sport'),
                     subTitle: $this->translator->trans('Total hours spent per sport type'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
                         'chart' => Json::encode(MovingTimePerSportTypeChart::create(

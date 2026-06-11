@@ -230,6 +230,8 @@ Morning: Reggel
 'Most recent milestones': 'Legutóbbi mérföldkövek'
 'Mountain Bike Rides': 'MTB túrák'
 'Moving time': 'Mozgásban töltött idő'
+'Moving time by sport': 'Moving time by sport'
+'Moving time in hours': 'Moving time in hours'
 Name: Név
 Neutral: Semleges
 'New personal best for': 'Új személyes rekord:'
@@ -457,9 +459,9 @@ Title: Title
 'Top 10': 'Top 10'
 'Total distance per month': 'Havi össztávolság'
 'Total elevation per month': 'Havi össz szintemelkedés'
-'Total hours': 'Összes óra'
 'Total hours spent per gear': 'Összes óra felszerelésenkén'
 'Total hours spent per sport type': 'Összes óra sporttípusonként'
+'Total moving time per month': 'Total moving time per month'
 'Trail Runs': Terepfutások
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'A heti 4–5 napos edzés magasabb pontszámot ér el, mint ha mindent egy-két napra zsúfolnak.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Edzési impulzus – az intenzitást és az időtartamot figyelembe vevő edzésterhelési mutató.'

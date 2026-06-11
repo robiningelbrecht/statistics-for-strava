@@ -230,6 +230,8 @@ Morning: Morning
 'Most recent milestones': 'Most recent milestones'
 'Mountain Bike Rides': 'Mountain Bike Rides'
 'Moving time': 'Moving time'
+'Moving time by sport': 'Moving time by sport'
+'Moving time in hours': 'Moving time in hours'
 Name: Name
 Neutral: Neutral
 'New personal best for': 'New personal best for'
@@ -457,9 +459,9 @@ Title: Title
 'Top 10': 'Top 10'
 'Total distance per month': 'Total distance per month'
 'Total elevation per month': 'Total elevation per month'
-'Total hours': 'Total hours'
 'Total hours spent per gear': 'Total hours spent per gear'
 'Total hours spent per sport type': 'Total hours spent per sport type'
+'Total moving time per month': 'Total moving time per month'
 'Trail Runs': 'Trail Runs'
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'

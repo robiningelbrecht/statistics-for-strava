@@ -230,6 +230,8 @@ Morning: 早晨
 'Most recent milestones': 'Most recent milestones'
 'Mountain Bike Rides': 山地车骑行
 'Moving time': 移动时间
+'Moving time by sport': 'Moving time by sport'
+'Moving time in hours': 'Moving time in hours'
 Name: 名称
 Neutral: Neutral
 'New personal best for': 'New personal best for'
@@ -457,9 +459,9 @@ Title: Title
 'Top 10': 前10名
 'Total distance per month': 每月总距离
 'Total elevation per month': 每月总海拔
-'Total hours': 总时长
 'Total hours spent per gear': 每种装备总时长
 'Total hours spent per sport type': 每种运动的总时长
+'Total moving time per month': 'Total moving time per month'
 'Trail Runs': 越野跑
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
