@@ -1,0 +1,25 @@
+{% autoescape false %}
+    <div class="w-full flex flex-col justify-center items-center gap-y-6 text-center">
+        <div>
+            <div class="text-3xl font-extrabold">
+                {{ calories|formatNumber(0) }}
+            </div>
+            <div class="text-sm">kcal</div>
+        </div>
+        <hr class="w-50" />
+        <div class="flex gap-x-4">
+            <div>
+                <div class="text-xl font-extrabold">
+                    {{ (calories / 270)|round|formatNumber(0)}}
+                </div>
+                <div class="text-xs">{{ "Pizza slices"|trans }}</div>
+            </div>
+            <div>
+                <div class="text-xl font-extrabold">
+                    {{ (calories / 105)|round|formatNumber(0)}}
+                </div>
+                <div class="text-xs">{{ "Bananas"|trans }}</div>
+            </div>
+        </div>
+    </div>
+{% endautoescape %}

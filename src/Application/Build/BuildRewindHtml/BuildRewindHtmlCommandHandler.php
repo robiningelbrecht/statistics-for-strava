@@ -22,6 +22,7 @@ use App\Domain\Rewind\FindActivityCountPerMonth\FindActivityCountPerMonth;
 use App\Domain\Rewind\FindActivityLocations\FindActivityLocations;
 use App\Domain\Rewind\FindActivityStartTimesPerHour\FindActivityStartTimesPerHour;
 use App\Domain\Rewind\FindAvailableRewindOptions\FindAvailableRewindOptions;
+use App\Domain\Rewind\FindCaloriesBurnt\FindCaloriesBurnt;
 use App\Domain\Rewind\FindCarbonSaved\FindCarbonSaved;
 use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
@@ -257,6 +258,16 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     ]),
                     totalMetric: (int) round($this->queryBus->ask(new FindCarbonSaved(Years::all($now)))->getKgCoCarbonSaved()->toFloat()),
                     totalMetricLabel: 'kg CO₂',
+                ))
+                ->add(RewindItem::from(
+                    icon: 'calories',
+                    title: $this->translator->trans('Calories burnt'),
+                    subTitle: $this->translator->trans('Energy burned across your activities'),
+                    content: $this->twig->render('html/rewind/rewind-calories-burnt.html.twig', [
+                        'calories' => $this->queryBus->ask(new FindCaloriesBurnt($yearsToQuery))->getCalories(),
+                    ]),
+                    totalMetric: $this->queryBus->ask(new FindCaloriesBurnt(Years::all($now)))->getCalories(),
+                    totalMetricLabel: 'kcal',
                 ));
 
             if ($activityLocations = $this->queryBus->ask(new FindActivityLocations($yearsToQuery))->getActivityLocations()) {
