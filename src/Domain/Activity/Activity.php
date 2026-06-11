@@ -78,7 +78,7 @@ final class Activity implements SupportsAITooling
         private readonly SportType $sportType,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly WorldType $worldType,
-        #[ORM\Column(type: 'string')]
+        #[ORM\Column(type: 'string', options: ['default' => ImportSource::STRAVA_API->value])]
         private readonly ImportSource $importSource,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?ExternalReferenceId $externalReferenceId,
@@ -112,7 +112,7 @@ final class Activity implements SupportsAITooling
         private readonly ?int $averageCadence,
         #[ORM\Column(type: 'integer')]
         private readonly int $movingTimeInSeconds,
-        #[ORM\Column(type: 'integer')]
+        #[ORM\Column(type: 'integer', nullable: true)]
         private readonly int $elapsedTimeInSeconds,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
