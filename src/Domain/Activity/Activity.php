@@ -114,8 +114,6 @@ final class Activity implements SupportsAITooling
         private readonly int $movingTimeInSeconds,
         #[ORM\Column(type: 'integer')]
         private readonly int $elapsedTimeInSeconds,
-        #[ORM\Column(type: 'integer')]
-        private readonly int $kudoCount,
         #[ORM\Column(type: 'string', nullable: true)]
         private readonly ?string $deviceName,
         #[ORM\Column(type: 'integer')]
@@ -176,7 +174,6 @@ final class Activity implements SupportsAITooling
             averageCadence: isset($rawData['average_cadence']) ? (int) round($rawData['average_cadence']) : null,
             movingTimeInSeconds: $rawData['moving_time'] ?? 0,
             elapsedTimeInSeconds: $rawData['elapsed_time'] ?? 0,
-            kudoCount: $rawData['kudos_count'] ?? 0,
             deviceName: $deviceName,
             totalImageCount: $rawData['total_photo_count'] ?? 0,
             localImagePaths: [],
@@ -215,7 +212,6 @@ final class Activity implements SupportsAITooling
         ?int $averageCadence,
         int $movingTimeInSeconds,
         int $elapsedTimeInSeconds,
-        int $kudoCount,
         ?string $deviceName,
         int $totalImageCount,
         array $localImagePaths,
@@ -249,7 +245,6 @@ final class Activity implements SupportsAITooling
             averageCadence: $averageCadence,
             movingTimeInSeconds: $movingTimeInSeconds,
             elapsedTimeInSeconds: $elapsedTimeInSeconds,
-            kudoCount: $kudoCount,
             deviceName: $deviceName,
             totalImageCount: $totalImageCount,
             localImagePaths: $localImagePaths,
@@ -308,18 +303,6 @@ final class Activity implements SupportsAITooling
     {
         return clone ($this, [
             'startingCoordinate' => $coordinate,
-        ]);
-    }
-
-    public function getKudoCount(): int
-    {
-        return $this->kudoCount;
-    }
-
-    public function withKudoCount(int $count): self
-    {
-        return clone ($this, [
-            'kudoCount' => $count,
         ]);
     }
 
@@ -810,7 +793,6 @@ final class Activity implements SupportsAITooling
             'maxHeartRate' => $this->getMaxHeartRate(),
             'averageCadence' => $this->getAverageCadence(),
             'movingTimeInSeconds' => $this->getMovingTimeInSeconds(),
-            'kudoCount' => $this->getKudoCount(),
             'recordedOnDevice' => $this->getDeviceName(),
             'totalImageCount' => $this->getTotalImageCount(),
             'routeGeography' => $this->getRouteGeography()->jsonSerialize(),

@@ -29,7 +29,6 @@ use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
 use App\Domain\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonth;
-use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
 use App\Domain\Rewind\FindTotalActivityCount\FindTotalActivityCount;
 use App\Domain\Rewind\MovingTimePerSportTypeChart;
@@ -90,7 +89,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 
             $findMovingTimePerDayResponse = $this->queryBus->ask(new FindMovingTimePerDay($yearsToQuery));
             $findMovingTimePerSportTypeResponse = $this->queryBus->ask(new FindMovingTimePerSportType($yearsToQuery));
-            $socialsMetricsResponse = $this->queryBus->ask(new FindSocialsMetrics($yearsToQuery));
             $streaksResponse = $this->queryBus->ask(new FindStreaks($yearsToQuery, null));
             $distancePerMonthResponse = $this->queryBus->ask(new FindDistancePerMonth($yearsToQuery));
             $elevationPerMonthResponse = $this->queryBus->ask(new FindElevationPerMonth($yearsToQuery));
@@ -131,7 +129,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
 
             $rewindItems
                 ->add(RewindItem::from(
-                    icon: 'tools',
+                    icon: 'rocket',
                     title: $this->translator->trans('Gear'),
                     subTitle: $this->translator->trans('Total hours spent per gear'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
@@ -165,16 +163,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     ]),
                 ))
                 ->add(RewindItem::from(
-                    icon: 'thumbs-up',
-                    title: $this->translator->trans('Socials'),
-                    subTitle: $this->translator->trans('Total kudos and comments received'),
-                    content: $this->twig->render('html/rewind/rewind-socials.html.twig', [
-                        'kudoCount' => $socialsMetricsResponse->getKudoCount(),
-                        'commentCount' => $socialsMetricsResponse->getCommentCount(),
-                    ])
-                ))
-                ->add(RewindItem::from(
-                    icon: 'rocket',
+                    icon: 'distance',
                     title: $this->translator->trans('Distance'),
                     subTitle: $this->translator->trans('Total distance per month'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
@@ -188,7 +177,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     totalMetricLabel: $this->unitSystem->distanceSymbol(),
                 ))
                 ->add(RewindItem::from(
-                    icon: 'mountain',
+                    icon: 'elevation',
                     title: $this->translator->trans('Elevation'),
                     subTitle: $this->translator->trans('Total elevation per month'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
@@ -201,7 +190,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     totalMetric: $elevationPerMonthResponse->getTotalElevation()->toUnitSystem($this->unitSystem)->toInt(),
                     totalMetricLabel: $this->unitSystem->elevationSymbol(),
                 ))->add(RewindItem::from(
-                    icon: 'watch',
+                    icon: 'time',
                     title: $this->translator->trans('Total hours'),
                     subTitle: $this->translator->trans('Total hours spent per sport type'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
@@ -248,7 +237,7 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                     ]),
                 ))
                 ->add(RewindItem::from(
-                    icon: 'muscle',
+                    icon: 'hashtag',
                     title: $this->translator->trans('Activity count'),
                     subTitle: $this->translator->trans('Number of activities per month'),
                     content: $this->twig->render('html/rewind/rewind-chart.html.twig', [

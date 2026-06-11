@@ -327,7 +327,6 @@ Skating: Korcsolyázás
 Snowboard: Snowboard
 Snowshoe: Hótalp
 Soccer: Labdarúgás
-Socials: Közösségi
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Aki rendszeresen 90 percet edz, magasabb pontszámot ér el, mint aki főleg rövid edzéseket végez.'
 Speed: Sebesség
 Splits: Részidők
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 'Összes óra'
 'Total hours spent per gear': 'Összes óra felszerelésenkén'
 'Total hours spent per sport type': 'Összes óra sporttípusonként'
-'Total kudos and comments received': 'Összes kapott kudos és hozzászólás'
 'Trail Runs': Terepfutások
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'A heti 4–5 napos edzés magasabb pontszámot ér el, mint ha mindent egy-két napra zsúfolnak.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Edzési impulzus – az intenzitást és az időtartamot figyelembe vevő edzésterhelési mutató.'
@@ -539,7 +537,6 @@ avg: átl
 bpm: bpm
 challenges: challenges
 clear: törlés
-comments: hozzászólások
 compare: összehasonlítás
 countries: countries
 day(s): nap(ok)
@@ -549,7 +546,6 @@ days: napok
 history: előzmények
 hours: órák
 hrs: h
-kudos: kudos
 'last {numberOfDays} days': 'utolsó {numberOfDays} nap'
 max: max
 min: min

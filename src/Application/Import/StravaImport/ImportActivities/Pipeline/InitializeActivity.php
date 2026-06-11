@@ -44,7 +44,6 @@ final readonly class InitializeActivity implements ActivityImportStep
                 ->withMaxSpeed(MetersPerSecond::from($rawStravaData['max_speed'])->toKmPerHour())
                 ->withMovingTimeInSeconds($rawStravaData['moving_time'] ?? 0)
                 ->withElevation(Meter::from($rawStravaData['total_elevation_gain']))
-                ->withKudoCount($rawStravaData['kudos_count'] ?? 0)
                 ->withStartingCoordinate(Coordinate::createFromOptionalLatAndLng(
                     Latitude::fromOptionalString($rawStravaData['start_latlng'][0] ?? null),
                     Longitude::fromOptionalString($rawStravaData['start_latlng'][1] ?? null),

@@ -182,7 +182,6 @@ final readonly class TcxFileParser implements ActivityFileParser
             averageCadence: Math::average($streams[StreamType::CADENCE->value]),
             movingTimeInSeconds: (int) $activityLaps->sum(static fn (ActivityLap $lap): int => $lap->getMovingTimeInSeconds()),
             elapsedTimeInSeconds: (int) $activityLaps->sum(static fn (ActivityLap $lap): int => $lap->getElapsedTimeInSeconds()),
-            kudoCount: 0,
             deviceName: $deviceName,
             totalImageCount: 0,
             localImagePaths: [],

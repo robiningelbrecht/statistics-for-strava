@@ -156,7 +156,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                     Latitude::fromString('51.2'),
                     Longitude::fromString('3.18')
                 ))
-                ->withKudoCount(1)
                 ->withName('Delete this one')
                 ->build(),
             [
@@ -177,7 +176,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
-                ->withKudoCount(1)
                 ->withName('Delete this one as well')
                 ->withActivityId(ActivityId::fromUnprefixed(1001))
                 ->build(),
@@ -441,7 +439,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
                     Latitude::fromString('51.2'),
                     Longitude::fromString('3.18')
                 ))
-                ->withKudoCount(1)
                 ->withName('Delete this one')
                 ->build(),
             [
@@ -462,7 +459,6 @@ class ImportActivitiesCommandHandlerTest extends ContainerTestCase
 
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
-                ->withKudoCount(1)
                 ->withName('Delete this one as well')
                 ->withActivityId(ActivityId::fromUnprefixed(1001))
                 ->build(),

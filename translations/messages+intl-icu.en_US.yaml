@@ -327,7 +327,6 @@ Skating: Skating
 Snowboard: Snowboard
 Snowshoe: Snowshoe
 Soccer: Soccer
-Socials: Socials
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Speed
 Splits: Splits
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 'Total hours'
 'Total hours spent per gear': 'Total hours spent per gear'
 'Total hours spent per sport type': 'Total hours spent per sport type'
-'Total kudos and comments received': 'Total kudos and comments received'
 'Trail Runs': 'Trail Runs'
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - Training load metric that accounts for intensity and duration.'
@@ -539,7 +537,6 @@ avg: avg
 bpm: bpm
 challenges: challenges
 clear: clear
-comments: comments
 compare: compare
 countries: countries
 day(s): day(s)
@@ -549,7 +546,6 @@ days: days
 history: history
 hours: hours
 hrs: hrs
-kudos: kudos
 'last {numberOfDays} days': 'last {numberOfDays} days'
 max: max
 min: min

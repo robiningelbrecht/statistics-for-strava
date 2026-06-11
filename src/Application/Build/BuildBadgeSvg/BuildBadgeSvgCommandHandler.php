@@ -12,13 +12,10 @@ use App\Domain\Activity\BestEffort\BestEffortsCalculator;
 use App\Domain\Activity\EnrichedActivities;
 use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Challenge\ChallengeRepository;
-use App\Domain\Rewind\FindSocialsMetrics\FindSocialsMetrics;
 use App\Domain\Zwift\ZwiftLevel;
 use App\Domain\Zwift\ZwiftRacingScore;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\CQRS\Query\Bus\QueryBus;
-use App\Infrastructure\ValueObject\Time\Years;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
@@ -34,7 +31,6 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
         private ?ZwiftLevel $zwiftLevel,
         private ?ZwiftRacingScore $zwiftRacingScore,
         private Environment $twig,
-        private QueryBus $queryBus,
         private FilesystemOperator $fileStorage,
         private FilesystemOperator $buildHtmlStorage,
         private TranslatorInterface $translator,
@@ -61,7 +57,6 @@ final readonly class BuildBadgeSvgCommandHandler implements CommandHandler
                 'athlete' => $athlete,
                 'activities' => $activities->slice(0, 5),
                 'activityTotals' => $activityTotals,
-                'totalKudosReceived' => $this->queryBus->ask(new FindSocialsMetrics(Years::all($now)))->getKudoCount(),
                 'challengesCompleted' => $this->challengeRepository->count(),
             ])
         );

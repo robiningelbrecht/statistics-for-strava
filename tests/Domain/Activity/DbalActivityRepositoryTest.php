@@ -122,7 +122,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
             ->withMaxSpeed(MetersPerSecond::from(99.99)->toKmPerHour())
             ->withMovingTimeInSeconds(999)
             ->withElevation(Meter::from(9999))
-            ->withKudoCount(111)
             ->withPolyline('updated polyline')
             ->withStartingCoordinate(Coordinate::createFromLatAndLng(
                 latitude: Latitude::fromString('20'),
@@ -166,10 +165,6 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             Meter::from(9999),
             $persistedActivity->getElevation()
-        );
-        $this->assertEquals(
-            111,
-            $persistedActivity->getKudoCount()
         );
         $this->assertEquals(
             'updated polyline',

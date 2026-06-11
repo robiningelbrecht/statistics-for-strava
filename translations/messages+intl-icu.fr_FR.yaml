@@ -327,7 +327,6 @@ Skating: Patinage
 Snowboard: Snowboard
 Snowshoe: 'Raquettes à neige'
 Soccer: Football
-Socials: 'Réseaux sociaux'
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Vitesse
 Splits: Splits
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 'Heures totales'
 'Total hours spent per gear': 'Heures totales passées par matériel'
 'Total hours spent per sport type': 'Heures totales passées par type de sport'
-'Total kudos and comments received': 'Total des kudos et commentaires reçus'
 'Trail Runs': Trail
 'Training 4–5 days every week scores higher than doing everything in one or two days.': "S'entraîner 4 à 5 jours par semaine obtient un meilleur score que de faire tout en un ou deux jours."
 'Training Impulse - Training load metric that accounts for intensity and duration.': "Impulsion d'Entraînement - Métrique de charge d'entraînement qui tient compte de l'intensité et de la durée."
@@ -539,7 +537,6 @@ avg: moy
 bpm: bpm
 challenges: challenges
 clear: effacer
-comments: commentaires
 compare: comparer
 countries: countries
 day(s): jour(s)
@@ -549,7 +546,6 @@ days: jours
 history: historique
 hours: heures
 hrs: h
-kudos: kudos
 'last {numberOfDays} days': 'derniers {numberOfDays} jours'
 max: max
 min: min
