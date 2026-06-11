@@ -106,7 +106,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         }
 
         // @TODO: Verify we can load athlete. Move this functionality to separate service "AppStatusChecker".
-        // @TODO: add heartbeat
         if (!$skipImport && $watchDirectoryHasFiles) {
             try {
                 $this->fileSystemPermissionChecker->ensureWriteAccess();
