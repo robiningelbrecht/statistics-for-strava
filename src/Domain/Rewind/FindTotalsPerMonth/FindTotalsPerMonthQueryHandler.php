@@ -35,7 +35,7 @@ final readonly class FindTotalsPerMonthQueryHandler implements QueryHandler
             [
                 'years' => ArrayParameterType::STRING,
             ]
-        )->fetchAssociative();
+        )->fetchAssociative() ?: [];
 
         $results = $this->connection->executeQuery(
             <<<SQL
@@ -69,9 +69,9 @@ final readonly class FindTotalsPerMonthQueryHandler implements QueryHandler
             distancePerMonth: $distancePerMonth,
             elevationPerMonth: $elevationPerMonth,
             movingTimePerMonth: $movingTimePerMonth,
-            totalDistance: Meter::from((int) $totals['distance'])->toKilometer(),
-            totalElevation: Meter::from((int) $totals['elevation']),
-            totalMovingTime: (int) $totals['movingTimeInSeconds'],
+            totalDistance: Meter::from((int) ($totals['distance'] ?? 0))->toKilometer(),
+            totalElevation: Meter::from((int) ($totals['elevation'] ?? 0)),
+            totalMovingTime: (int) ($totals['movingTimeInSeconds'] ?? 0),
         );
     }
 }
