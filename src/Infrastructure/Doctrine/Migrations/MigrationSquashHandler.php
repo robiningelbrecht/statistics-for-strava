@@ -59,11 +59,13 @@ final readonly class MigrationSquashHandler
 
     private function markMigrationAsExecuted(): void
     {
-        $this->connection->executeStatement('DELETE FROM migration_versions');
-        $this->connection->insert('migration_versions', [
-            'version' => self::SQUASHED_MIGRATION,
-            'executed_at' => SerializableDateTime::fromString('now')->format('Y-m-d H:i:s'),
-            'execution_time' => 0,
-        ]);
+        $this->connection->transactional(function (Connection $connection): void {
+            $connection->executeStatement('DELETE FROM migration_versions');
+            $connection->insert('migration_versions', [
+                'version' => self::SQUASHED_MIGRATION,
+                'executed_at' => SerializableDateTime::fromString('now')->format('Y-m-d H:i:s'),
+                'execution_time' => 0,
+            ]);
+        });
     }
 }

@@ -14,7 +14,6 @@ use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\KeyValue\Key;
@@ -51,7 +50,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         private readonly ActivityIdRepository $activityIdRepository,
         private readonly WatchDirectory $watchDirectory,
         private readonly ResourceUsage $resourceUsage,
-        private readonly MigrationRunner $migrationRunner,
         private readonly Mutex $mutex,
         private readonly AppUrl $appUrl,
         private readonly Clock $clock,
@@ -81,10 +79,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         }
 
         $skipImport = $input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION);
-        if (!$skipImport) {
-            $this->migrationRunner->run($output);
-        }
-
         $today = $this->clock->getCurrentDateTimeImmutable()->format('Y-m-d');
         $watchDirectoryHasFiles = $this->watchDirectory->hasFilesThatCanBeProcessed();
 
@@ -111,6 +105,8 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
+        // @TODO: Verify we can load athlete. Move this functionality to separate service "AppStatusChecker".
+        // @TODO: add heartbeat
         if (!$skipImport && $watchDirectoryHasFiles) {
             try {
                 $this->fileSystemPermissionChecker->ensureWriteAccess();

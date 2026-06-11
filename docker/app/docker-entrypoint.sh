@@ -8,6 +8,12 @@ if [ -z "$APP_SECRET" ]; then
     export APP_SECRET="$(php -r 'echo bin2hex(random_bytes(16));')"
 fi
 
+# Run database migrations once at startup. The app and daemon containers share
+# the same image and the same SQLite database volume, so flock serializes the
+# two startups: the winner migrates.
+flock /var/www/storage/database/migrate.lock \
+    php /var/www/bin/console app:db:migrate --no-interaction
+
 if [ -n "$PUID" ] && [ -n "$PGID" ] && [ "$(id -u)" = "0" ]; then
     echo "Setting permissions for PUID=$PUID PGID=$PGID..."
 

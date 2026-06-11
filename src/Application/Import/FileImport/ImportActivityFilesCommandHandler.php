@@ -21,9 +21,13 @@ use App\Domain\Import\FileParser\UnsupportedFileType;
 use App\Domain\Import\WatchDirectory;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Mutex\LockName;
+use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Time\Clock\Clock;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 final readonly class ImportActivityFilesCommandHandler implements CommandHandler
 {
     /**
@@ -37,6 +41,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
         private ActivityStreamRepository $activityStreamRepository,
         private ActivityLapRepository $activityLapRepository,
         private FileImportRepository $fileImportRepository,
+        private Mutex $mutex,
         private Clock $clock,
     ) {
     }
@@ -61,6 +66,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
         $countTotalFilesInWatchDirectory = count($files);
         $delta = 0;
         foreach ($files as $item) {
+            $this->mutex->heartbeat();
             ++$delta;
             $filePath = $this->watchDirectory->getAbsolutePathFor($item);
             $context = ActivityImportContext::create($filePath);

@@ -293,7 +293,6 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             watchDirectory: $this->getContainer()->get(WatchDirectory::class),
             resourceUsage: new FixedResourceUsage(),
-            migrationRunner: new VoidMigrationRunner(),
             mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString(self::TODAY),

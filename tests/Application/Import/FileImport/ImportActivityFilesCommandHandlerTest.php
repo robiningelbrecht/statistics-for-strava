@@ -131,6 +131,10 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
         $this->handler = $this->getContainer()->get(ImportActivityFilesCommandHandler::class);
         $this->watchStorage = $this->getContainer()->get('default.storage');
+        $this->getConnection()->executeStatement(
+            'INSERT INTO KeyValue (`key`, `value`) VALUES (:key, :value)',
+            ['key' => 'lock.importDataOrBuildApp', 'value' => '{"lockAcquiredBy": "test"}']
+        );
     }
 
     protected function tearDown(): void
