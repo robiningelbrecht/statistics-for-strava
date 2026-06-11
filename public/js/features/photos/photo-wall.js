@@ -18,9 +18,12 @@ export default class PhotoWall {
             /* webpackChunkName: "lightgallery" */ './light-gallery'
         );
         this.lightGallery = new LightGallery(this.wrapper);
-        const redraw = () => {
+        const redraw = (updateStorage = true) => {
             const activeFilters = this.filterManager.getActiveFilters();
             this.filterManager.updateDropdownState(activeFilters);
+            if (updateStorage) {
+                this.filterManager.updateStorage(FilterName.PHOTO_WALL, activeFilters);
+            }
 
             const images = this.filterManager.applyFiltersToRows(this.allImages);
             for (const {element, active} of images) {
@@ -36,9 +39,8 @@ export default class PhotoWall {
             this.lightGallery.refresh(activeImages);
         };
 
-        FilterStorage.set(FilterName.PHOTO_WALL, JSON.parse(this.wrapper.getAttribute('data-default-filters')));
         this.filterManager.prefillFromStorage(FilterName.PHOTO_WALL);
-        redraw();
+        redraw(false);
 
         this.wrapper.querySelectorAll('[data-dataTable-filter]').forEach(el => el.addEventListener('input', redraw));
         this.lightGallery.bindEvents();
@@ -46,7 +48,7 @@ export default class PhotoWall {
         if (this.resetBtn) {
             this.resetBtn.addEventListener('click', e => {
                 e.preventDefault();
-                this.filterManager.resetAll();
+                this.filterManager.resetAll(FilterName.PHOTO_WALL);
                 redraw();
             });
         }
