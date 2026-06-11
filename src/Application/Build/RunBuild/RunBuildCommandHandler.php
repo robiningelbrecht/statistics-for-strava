@@ -30,7 +30,6 @@ use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Time\Clock\Clock;
 
 final readonly class RunBuildCommandHandler implements CommandHandler
@@ -39,7 +38,6 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         private CommandBus $commandBus,
         private ActivityIdRepository $activityIdRepository,
         private GearImportStatus $gearImportStatus,
-        private MigrationRunner $migrationRunner,
         private Clock $clock,
     ) {
     }
@@ -49,11 +47,6 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         assert($command instanceof RunBuild);
 
         $output = $command->getOutput();
-        if (!$this->migrationRunner->isAtLatestVersion()) {
-            $output->writeln('<error>Your database is not up to date with the migration schema. Run the import command before building the HTML files</error>');
-
-            return;
-        }
         if ($this->activityIdRepository->count() <= 0) {
             $output->writeln('<error>Wait until at least one activity has been imported before building the app</error>');
 

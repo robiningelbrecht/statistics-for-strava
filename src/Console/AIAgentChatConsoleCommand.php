@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console;
 
 use App\Infrastructure\Config\AppConfig;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use GuzzleHttp\Exception\ClientException;
 use NeuronAI\Agent\AgentInterface;
 use NeuronAI\Chat\Messages\Stream\Chunks\TextChunk;
@@ -20,6 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * @codeCoverageIgnore
  */
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: 'app:ai:agent-chat', description: 'Start a new AI agent chat')]
 final class AIAgentChatConsoleCommand extends Command
 {

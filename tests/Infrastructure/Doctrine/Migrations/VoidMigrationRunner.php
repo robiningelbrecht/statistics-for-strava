@@ -12,10 +12,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 final class VoidMigrationRunner implements MigrationRunner
 {
     private bool $throwOnNextRun = false;
+    private bool $atLatestVersion = true;
 
     public function throwOnNextRun(): void
     {
         $this->throwOnNextRun = true;
+    }
+
+    public function markAsNotAtLatestVersion(): void
+    {
+        $this->atLatestVersion = false;
     }
 
     public function run(OutputInterface $output): void
@@ -33,6 +39,6 @@ final class VoidMigrationRunner implements MigrationRunner
         }
         $this->throwOnNextRun = false;
 
-        return true;
+        return $this->atLatestVersion;
     }
 }

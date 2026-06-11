@@ -12,7 +12,6 @@ use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
@@ -32,7 +31,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
     private RunBuildCommandHandler $buildAppCommandHandler;
     private CommandBus $commandBus;
-    private MockObject $migrationRunner;
     private MockObject $logger;
 
     public function testHandle(): void
@@ -48,11 +46,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
                 ->withGearId(GearId::fromUnprefixed(4))
                 ->build()
         );
-
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('isAtLatestVersion')
-            ->willReturn(true);
 
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new RunBuild(
@@ -74,11 +67,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             ]
         ));
 
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('isAtLatestVersion')
-            ->willReturn(true);
-
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
@@ -88,26 +76,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
 
     public function testHandleWhenStravaImportIsNotCompleted(): void
     {
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('isAtLatestVersion')
-            ->willReturn(true);
-
-        $output = new SpyOutput();
-        $this->buildAppCommandHandler->handle(new RunBuild(
-            output: new SymfonyStyle(new StringInput('input'), $output),
-        ));
-
-        $this->assertMatchesTextSnapshot($output);
-    }
-
-    public function testHandleWhenMigrationSchemaNotUpToDate(): void
-    {
-        $this->migrationRunner
-            ->expects($this->once())
-            ->method('isAtLatestVersion')
-            ->willReturn(false);
-
         $output = new SpyOutput();
         $this->buildAppCommandHandler->handle(new RunBuild(
             output: new SymfonyStyle(new StringInput('input'), $output),
@@ -125,7 +93,6 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
             commandBus: $this->commandBus = new SpyCommandBus(),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
-            migrationRunner: $this->migrationRunner = $this->createMock(MigrationRunner::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
         );
     }
