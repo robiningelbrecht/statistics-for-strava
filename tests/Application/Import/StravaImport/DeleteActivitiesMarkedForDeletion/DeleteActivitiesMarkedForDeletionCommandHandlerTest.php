@@ -50,7 +50,6 @@ class DeleteActivitiesMarkedForDeletionCommandHandlerTest extends ContainerTestC
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
                 ->withActivityId(ActivityId::fromUnprefixed(1000))
-                ->withKudoCount(1)
                 ->withName('Delete this one')
                 ->build(),
             []
@@ -68,7 +67,6 @@ class DeleteActivitiesMarkedForDeletionCommandHandlerTest extends ContainerTestC
 
         $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
             ActivityBuilder::fromDefaults()
-                ->withKudoCount(1)
                 ->withName('Delete this one as well')
                 ->withActivityId(ActivityId::fromUnprefixed(1001))
                 ->build(),

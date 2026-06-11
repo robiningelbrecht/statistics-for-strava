@@ -77,13 +77,13 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             activityId, startDateTime, sportType, activityType, worldType, importSource, externalReferenceId, name, description, distance,
             elevation, startingCoordinateLatitude, startingCoordinateLongitude, calories, kilojoules,
             averagePower, maxPower, averageSpeed, maxSpeed, averageHeartRate, maxHeartRate,
-            averageCadence,movingTimeInSeconds, elapsedTimeInSeconds, kudoCount, deviceName, totalImageCount, localImagePaths,
+            averageCadence,movingTimeInSeconds, elapsedTimeInSeconds, deviceName, totalImageCount, localImagePaths,
             polyline, routeGeography, weather, gearId, data, isCommute, streamsAreImported, workoutType
         ) VALUES(
             :activityId, :startDateTime, :sportType, :activityType, :worldType, :importSource, :externalReferenceId, :name, :description, :distance,
             :elevation, :startingCoordinateLatitude, :startingCoordinateLongitude, :calories, :kilojoules,
             :averagePower, :maxPower, :averageSpeed, :maxSpeed, :averageHeartRate, :maxHeartRate,
-            :averageCadence, :movingTimeInSeconds, :elapsedTimeInSeconds, :kudoCount, :deviceName, :totalImageCount, :localImagePaths,
+            :averageCadence, :movingTimeInSeconds, :elapsedTimeInSeconds, :deviceName, :totalImageCount, :localImagePaths,
             :polyline, :routeGeography, :weather, :gearId, :data, :isCommute, :streamsAreImported, :workoutType
         )';
 
@@ -113,7 +113,6 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'averageCadence' => $activity->getAverageCadence(),
             'movingTimeInSeconds' => $activity->getMovingTimeInSeconds(),
             'elapsedTimeInSeconds' => $activity->getElapsedTimeInSeconds(),
-            'kudoCount' => $activity->getKudoCount(),
             'deviceName' => $activity->getDeviceName(),
             'totalImageCount' => $activity->getTotalImageCount(),
             'localImagePaths' => implode(',', $activity->getLocalImagePaths()),
@@ -139,7 +138,6 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
                     maxSpeed = :maxSpeed,
                     movingTimeInSeconds = :movingTimeInSeconds,
                     elevation = :elevation,
-                    kudoCount = :kudoCount,
                     polyline = :polyline,
                     startingCoordinateLatitude = :startingCoordinateLatitude,
                     startingCoordinateLongitude = :startingCoordinateLongitude,
@@ -163,7 +161,6 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             'averageSpeed' => $activity->getAverageSpeed()->toFloat(),
             'maxSpeed' => $activity->getMaxSpeed()->toFloat(),
             'movingTimeInSeconds' => $activity->getMovingTimeInSeconds(),
-            'kudoCount' => $activity->getKudoCount(),
             'polyline' => $activity->getEncodedPolyline(),
             'startingCoordinateLatitude' => $activity->getStartingCoordinate()?->getLatitude()->toFloat(),
             'startingCoordinateLongitude' => $activity->getStartingCoordinate()?->getLongitude()->toFloat(),
@@ -250,7 +247,6 @@ final readonly class DbalActivityRepository extends DbalRepository implements Ac
             averageCadence: isset($result['averageCadence']) ? (int) round($result['averageCadence']) : null,
             movingTimeInSeconds: $result['movingTimeInSeconds'] ?: 0,
             elapsedTimeInSeconds: $result['elapsedTimeInSeconds'] ?: 0,
-            kudoCount: $result['kudoCount'] ?: 0,
             deviceName: $result['deviceName'],
             totalImageCount: $result['totalImageCount'] ?: 0,
             localImagePaths: $result['localImagePaths'] ? explode(',', (string) $result['localImagePaths']) : [],

@@ -168,7 +168,6 @@ final readonly class FitFileParser implements ActivityFileParser
             averageCadence: is_numeric($session['avg_cadence'] ?? null) ? (int) round((float) $session['avg_cadence']) : null,
             movingTimeInSeconds: is_numeric($session['total_timer_time'] ?? null) ? (int) round((float) $session['total_timer_time']) : 0,
             elapsedTimeInSeconds: is_numeric($session['total_elapsed_time'] ?? null) ? (int) round((float) $session['total_elapsed_time']) : 0,
-            kudoCount: 0,
             deviceName: $deviceName,
             totalImageCount: 0,
             localImagePaths: [],

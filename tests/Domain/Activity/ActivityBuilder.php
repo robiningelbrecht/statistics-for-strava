@@ -43,7 +43,6 @@ final class ActivityBuilder
     private readonly ?int $averageCadence;
     private int $movingTimeInSeconds = 10;
     private int $elapsedTimeInSeconds = 10;
-    private int $kudoCount = 1;
     private int $totalImageCount = 0;
     private ?string $deviceName = null;
     /** @var array<string> */
@@ -106,7 +105,6 @@ final class ActivityBuilder
             averageCadence: $this->averageCadence,
             movingTimeInSeconds: $this->movingTimeInSeconds,
             elapsedTimeInSeconds: $this->elapsedTimeInSeconds,
-            kudoCount: $this->kudoCount,
             deviceName: $this->deviceName,
             totalImageCount: $this->totalImageCount,
             localImagePaths: $this->localImagePaths,
@@ -129,13 +127,6 @@ final class ActivityBuilder
     public function withName(string $name): self
     {
         $this->name = ActivityName::fromString($name);
-
-        return $this;
-    }
-
-    public function withKudoCount(int $kudoCount): self
-    {
-        $this->kudoCount = $kudoCount;
 
         return $this;
     }

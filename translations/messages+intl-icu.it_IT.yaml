@@ -327,7 +327,6 @@ Skating: Pattinaggio
 Snowboard: Snowboard
 Snowshoe: Ciaspolate
 Soccer: Calcio
-Socials: Social
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Chi si allena regolarmente per 90 minuti otterrà un punteggio più alto rispetto a chi fa soprattutto sessioni brevi.'
 Speed: Velocità
 Splits: Intertempi
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 'Ore totali'
 'Total hours spent per gear': 'Ore totali per attrezzatura'
 'Total hours spent per sport type': 'Ore totali per tipo di sport'
-'Total kudos and comments received': 'Totale di kudos e commenti ricevuti'
 'Trail Runs': 'Corse trail'
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Allenarsi 4–5 giorni ogni settimana ottiene un punteggio più alto rispetto a concentrare tutto in uno o due giorni.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Training Impulse - metrica del carico di allenamento che tiene conto di intensità e durata.'
@@ -539,7 +537,6 @@ avg: media
 bpm: bpm
 challenges: challenges
 clear: pulisci
-comments: commenti
 compare: confronta
 countries: countries
 day(s): day(s)
@@ -549,7 +546,6 @@ days: giorni
 history: cronologia
 hours: ore
 hrs: ore
-kudos: kudos
 'last {numberOfDays} days': 'ultimi {numberOfDays} giorni'
 max: max
 min: min

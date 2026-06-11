@@ -327,7 +327,6 @@ Skating: Skridskoåkning
 Snowboard: Snowboard
 Snowshoe: Snöskor
 Soccer: Fotboll
-Socials: 'Sociala medier'
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: Fart
 Splits: Delar
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 'Totala antalet timmar'
 'Total hours spent per gear': 'Totala antalet timmar spenderat per utrustning'
 'Total hours spent per sport type': 'Totala antalet timmar per sport'
-'Total kudos and comments received': 'Totala antalet mottagna kudos och kommentarer'
 'Trail Runs': Stiglöpning
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Träningsimpuls - Träningsbelastningsmått som tar hänsyn till intensitet och varaktighet.'
@@ -539,7 +537,6 @@ avg: snitt
 bpm: bpm
 challenges: challenges
 clear: rensa
-comments: kommentarer
 compare: jämför
 countries: countries
 day(s): day(s)
@@ -549,7 +546,6 @@ days: dagar
 history: historik
 hours: timmar
 hrs: tim
-kudos: kudos
 'last {numberOfDays} days': 'senaste {numberOfDays} dagarna'
 max: max
 min: min

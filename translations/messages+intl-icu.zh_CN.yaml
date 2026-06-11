@@ -327,7 +327,6 @@ Skating: 滑冰
 Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
-Socials: 社交
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
 Speed: 速度
 Splits: 分段
@@ -464,7 +463,6 @@ Title: Title
 'Total hours': 总时长
 'Total hours spent per gear': 每种装备总时长
 'Total hours spent per sport type': 每种运动的总时长
-'Total kudos and comments received': 收到的总赞和留言
 'Trail Runs': 越野跑
 'Training 4–5 days every week scores higher than doing everything in one or two days.': 'Training 4–5 days every week scores higher than doing everything in one or two days.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': '训练脉冲 - 训练负荷指标，综合考虑强度和持续时间。'
@@ -539,7 +537,6 @@ avg: 平均
 bpm: 拍子数
 challenges: challenges
 clear: 清除
-comments: 留言
 compare: 对比
 countries: countries
 day(s): day(s)
@@ -549,7 +546,6 @@ days: 天
 history: 历史
 hours: 小时
 hrs: hrs
-kudos: 赞
 'last {numberOfDays} days': '最近{numberOfDays}天'
 max: max
 min: min
