@@ -20,6 +20,7 @@ RUN apk add --no-cache \
   bash \
   curl \
   file \
+  flock \
   tzdata \
   geos
 
