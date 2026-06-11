@@ -28,11 +28,9 @@ use App\Domain\Rewind\FindElevationPerMonth\FindElevationPerMonth;
 use App\Domain\Rewind\FindLongestActivity\FindLongestActivity;
 use App\Domain\Rewind\FindMovingTimePerDay\FindMovingTimePerDay;
 use App\Domain\Rewind\FindMovingTimePerSportType\FindMovingTimePerSportType;
-use App\Domain\Rewind\FindPersonalRecordsPerMonth\FindPersonalRecordsPerMonth;
 use App\Domain\Rewind\FindStreaks\FindStreaks;
 use App\Domain\Rewind\FindTotalActivityCount\FindTotalActivityCount;
 use App\Domain\Rewind\MovingTimePerSportTypeChart;
-use App\Domain\Rewind\PersonalRecordsPerMonthChart;
 use App\Domain\Rewind\RestDaysVsActiveDaysChart;
 use App\Domain\Rewind\RewindItem;
 use App\Domain\Rewind\RewindItems;
@@ -150,17 +148,6 @@ final readonly class BuildRewindHtmlCommandHandler implements CommandHandler
                             'map' => $leafletMap,
                         ] : null,
                     ])
-                ))
-                ->add(RewindItem::from(
-                    icon: 'medal',
-                    title: $this->translator->trans('PRs'),
-                    subTitle: $this->translator->trans('PRs achieved per month'),
-                    content: $this->twig->render('html/rewind/rewind-chart.html.twig', [
-                        'chart' => Json::encode(PersonalRecordsPerMonthChart::create(
-                            personalRecordsPerMonth: $this->queryBus->ask(new FindPersonalRecordsPerMonth($yearsToQuery))->getPersonalRecordsPerMonth(),
-                            translator: $this->translator,
-                        )->build()),
-                    ]),
                 ))
                 ->add(RewindItem::from(
                     icon: 'distance',
