@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Webhook;
 
 use App\Domain\Strava\Strava;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
@@ -16,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: 'app:strava:webhooks-unsubscribe', description: 'Delete a Strava webhook subscription')]
 final class StravaDeleteWebhookSubscriptionConsoleCommand extends Command
 {

@@ -14,6 +14,7 @@ use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\KeyValue\Key;
@@ -40,6 +41,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('daemon')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: RunFileImportAndBuildAppConsoleCommand::NAME, description: 'Run file import')]
 final class RunFileImportAndBuildAppConsoleCommand extends Command
 {

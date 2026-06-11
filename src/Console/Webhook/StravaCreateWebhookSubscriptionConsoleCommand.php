@@ -8,6 +8,7 @@ use App\Application\AppUrl;
 use App\Controller\StravaWebhookRequestHandler;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\Webhook\WebhookConfig;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\ValueObject\String\Url;
 use Monolog\Attribute\WithMonologChannel;
@@ -19,6 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('console-output')]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: 'app:strava:webhooks-create', description: 'Create a Strava webhook subscription')]
 final class StravaCreateWebhookSubscriptionConsoleCommand extends Command
 {

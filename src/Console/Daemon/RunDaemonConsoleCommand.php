@@ -6,6 +6,7 @@ namespace App\Console\Daemon;
 
 use App\Infrastructure\Console\ProvideConsoleIntro;
 use App\Infrastructure\Daemon\Daemon;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Time\Clock\Clock;
 use Monolog\Attribute\WithMonologChannel;
@@ -17,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('daemon')]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: 'app:daemon:run', description: 'Start SFS daemon')]
 final class RunDaemonConsoleCommand extends Command
 {
