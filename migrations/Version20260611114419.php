@@ -19,11 +19,7 @@ final class Version20260611114419 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $table = $schema->getTable('Activity');
-
-        if ($table->hasColumn('kudoCount')) {
-            $this->addSql('ALTER TABLE Activity DROP COLUMN kudoCount');
-        }
+        $this->addSql('ALTER TABLE Activity DROP COLUMN kudoCount');
     }
 
     public function down(Schema $schema): void
