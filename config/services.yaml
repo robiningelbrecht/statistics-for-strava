@@ -47,10 +47,6 @@ services:
             '@=app_config("appearance.maps.heatmap.initialZoom", 12)'
         ]
 
-    App\Infrastructure\Config\Photos\DefaultEnabledPhotoFilters:
-        factory: [ null, 'from' ]
-        arguments: ['@=app_config("appearance.photos.defaultEnabledFilters", [])']
-
     App\Infrastructure\Config\Photos\HidePhotosForSportTypes:
         factory: [ null, 'from' ]
         arguments: ['@=app_config("appearance.photos.hidePhotosForSportTypes", [])']
