@@ -41,7 +41,7 @@ final class DatabaseSchemaCheckConsoleSubscriber implements EventSubscriberInter
             return;
         }
 
-        $event->getOutput()->writeln('<error>Your database is not up to date with the migration schema. Restart your docker containers by running docker compose stop & docker compose up -d</error>');
+        $event->getOutput()->writeln('<error>Your database is not up to date with the migration schema. Restart your docker containers by running docker compose stop && docker compose up -d</error>');
         $event->disableCommand();
         $this->blocked = true;
     }
