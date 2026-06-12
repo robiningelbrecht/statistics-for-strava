@@ -1,0 +1,30 @@
+[
+    {
+        "dataSize": 4,
+        "activityId": "activity-1",
+        "streamType": "distance",
+        "createdOn": "2023-10-17 16:15:04",
+        "data": "[0,50,50,100]"
+    },
+    {
+        "dataSize": 4,
+        "activityId": "activity-1",
+        "streamType": "latlng",
+        "createdOn": "2023-10-17 16:15:04",
+        "data": "[[45,22.5],[45.01,22.51],[45.02,22.52],[45.03,22.53]]"
+    },
+    {
+        "dataSize": 4,
+        "activityId": "activity-1",
+        "streamType": "time",
+        "createdOn": "2023-10-17 16:15:04",
+        "data": "[0,10,7200,7210]"
+    },
+    {
+        "dataSize": 4,
+        "activityId": "activity-1",
+        "streamType": "velocity_smooth",
+        "createdOn": "2023-10-17 16:15:04",
+        "data": "[null,5,0,5]"
+    }
+]

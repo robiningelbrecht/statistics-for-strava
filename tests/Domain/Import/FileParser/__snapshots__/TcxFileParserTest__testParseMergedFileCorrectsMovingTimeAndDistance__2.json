@@ -1,0 +1,17 @@
+[
+    {
+        "lapId": "activityLap-1",
+        "activityId": "activity-1",
+        "lapNumber": 1,
+        "name": "Lap 1",
+        "elapsedTimeInSeconds": 7210,
+        "movingTimeInSeconds": 20,
+        "distance": 100,
+        "averageSpeed": 5,
+        "minAverageSpeed": 5,
+        "maxAverageSpeed": 5,
+        "maxSpeed": 0,
+        "elevationDifference": 0,
+        "averageHeartRate": null
+    }
+]
