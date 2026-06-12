@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
+use App\Application\AppIsNotReady;
+use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
 use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
 use App\Application\Import\FileImport\ImportActivityFiles;
-use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
@@ -16,7 +17,6 @@ use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Exception\EntityNotFound;
-use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -28,8 +28,6 @@ use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Doctrine\DBAL\Connection;
-use League\Flysystem\UnableToCreateDirectory;
-use League\Flysystem\UnableToWriteFile;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -49,14 +47,13 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
 
     public function __construct(
         private readonly CommandBus $commandBus,
-        private readonly ActivityIdRepository $activityIdRepository,
+        private readonly AppStatusChecker $appStatusChecker,
         private readonly WatchDirectory $watchDirectory,
         private readonly ResourceUsage $resourceUsage,
         private readonly Mutex $mutex,
         private readonly AppUrl $appUrl,
         private readonly Clock $clock,
         private readonly KeyValueStore $keyValueStore,
-        private readonly PermissionChecker $fileSystemPermissionChecker,
         private readonly Connection $connection,
         private readonly LoggerInterface $logger,
         private readonly ImportMode $importMode,
@@ -107,46 +104,38 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             return Command::SUCCESS;
         }
 
-        // @TODO: Verify we can load athlete. Move this functionality to separate service "AppStatusChecker".
-        if (!$skipImport && $watchDirectoryHasFiles) {
-            try {
-                $this->fileSystemPermissionChecker->ensureWriteAccess();
-            } catch (UnableToWriteFile|UnableToCreateDirectory) {
-                $this->mutex->releaseLock();
-                $output->writeln('<error>Make sure the container has write permissions to "storage/database" and "storage/files" on the host system</error>');
+        try {
+            if (!$skipImport && $watchDirectoryHasFiles) {
+                $this->appStatusChecker->ensureIsReadyForFileImport();
 
-                return Command::SUCCESS;
+                $this->commandBus->dispatch(new ImportActivityFiles($output));
+                $this->commandBus->dispatch(new CalculateActivityMetrics($output));
+
+                $this->connection->executeStatement('VACUUM');
+                $output->writeln('Database got vacuumed 🧹');
             }
 
-            $this->commandBus->dispatch(new ImportActivityFiles($output));
-            $this->commandBus->dispatch(new CalculateActivityMetrics($output));
+            if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {
+                $this->appStatusChecker->ensureIsReadyForBuild();
 
-            $this->connection->executeStatement('VACUUM');
-            $output->writeln('Database got vacuumed 🧹');
-        }
-
-        if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {
-            if ($this->activityIdRepository->count() <= 0) {
-                $this->mutex->releaseLock();
-                $output->writeln('<error>Wait until at least one activity has been imported before building the app</error>');
-
-                return Command::SUCCESS;
-            }
-
-            try {
                 $this->commandBus->dispatch(new RunBuild(
                     output: $output,
                 ));
-            } catch (\Throwable $e) {
-                $this->logger->error($e->getMessage());
-                $this->mutex->releaseLock();
-                throw $e;
-            }
 
-            $this->keyValueStore->save(KeyValue::fromState(
-                key: Key::APP_LAST_BUILT_ON,
-                value: Value::fromString($today),
-            ));
+                $this->keyValueStore->save(KeyValue::fromState(
+                    key: Key::APP_LAST_BUILT_ON,
+                    value: Value::fromString($today),
+                ));
+            }
+        } catch (AppIsNotReady $e) {
+            $this->mutex->releaseLock();
+            $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
+
+            return Command::SUCCESS;
+        } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage());
+            $this->mutex->releaseLock();
+            throw $e;
         }
 
         $this->mutex->releaseLock();

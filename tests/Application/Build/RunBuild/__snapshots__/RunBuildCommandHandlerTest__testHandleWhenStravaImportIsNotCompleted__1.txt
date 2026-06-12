@@ -1,1 +1,0 @@
-<error>Wait until at least one activity has been imported before building the app</error>
