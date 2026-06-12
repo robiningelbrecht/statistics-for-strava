@@ -115,6 +115,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             try {
                 $this->fileSystemPermissionChecker->ensureWriteAccess();
             } catch (UnableToWriteFile|UnableToCreateDirectory) {
+                $this->mutex->releaseLock();
                 $output->writeln('<error>Make sure the container has write permissions to "storage/database" and "storage/files" on the host system</error>');
 
                 return Command::SUCCESS;
