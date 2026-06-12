@@ -19,24 +19,21 @@ class ActivityFileParsersTest extends TestCase
 
     public function testParseRoutesToFitParserCaseInsensitive(): void
     {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('parsed-by-fit');
+        $this->expectExceptionObject(new \LogicException('parsed-by-fit'));
 
         $this->registry->parse($this->rawFile('/import/activity.FIT'));
     }
 
     public function testParseRoutesToTcxParser(): void
     {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('parsed-by-tcx');
+        $this->expectExceptionObject(new \LogicException('parsed-by-tcx'));
 
         $this->registry->parse($this->rawFile('/import/sub/dir/ride.tcx'));
     }
 
     public function testParseRoutesToGpxParser(): void
     {
-        $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('parsed-by-gpx');
+        $this->expectExceptionObject(new \LogicException('parsed-by-gpx'));
 
         $this->registry->parse($this->rawFile('/import/sub/dir/ride.gpx'));
     }

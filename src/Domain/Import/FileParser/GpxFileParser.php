@@ -6,10 +6,11 @@ namespace App\Domain\Import\FileParser;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdFactory;
 use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
-use App\Domain\Activity\Lap\ActivityLapId;
+use App\Domain\Activity\Lap\ActivityLapIdFactory;
 use App\Domain\Activity\Lap\ActivityLaps;
 use App\Domain\Activity\Math;
 use App\Domain\Activity\Route\RouteGeography;
@@ -36,6 +37,8 @@ final readonly class GpxFileParser implements ActivityFileParser
     private const float ELEVATION_MAX = 9999.99;
 
     public function __construct(
+        private ActivityIdFactory $activityIdFactory,
+        private ActivityLapIdFactory $activityLapIdFactory,
         private Clock $clock,
         private ?SerializableTimezone $timezone,
     ) {
@@ -195,7 +198,7 @@ final readonly class GpxFileParser implements ActivityFileParser
         }
 
         $velocities = array_filter($streams[StreamType::VELOCITY->value], static fn (mixed $v): bool => null !== $v);
-        $activityId = ActivityId::random();
+        $activityId = $this->activityIdFactory->random();
         $startDateTime = SerializableDateTime::fromTimestamp($startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
         $activityLaps = $this->buildActivityLaps($laps, $activityId);
         $activity = Activity::fromState(
@@ -280,7 +283,7 @@ final readonly class GpxFileParser implements ActivityFileParser
         $laps = ActivityLaps::empty();
         foreach ($rawLaps as $lap) {
             $laps->add(ActivityLap::create(
-                lapId: ActivityLapId::random(),
+                lapId: $this->activityLapIdFactory->random(),
                 activityId: $activityId,
                 lapNumber: (int) $lap['lap_index'],
                 name: (string) $lap['name'],

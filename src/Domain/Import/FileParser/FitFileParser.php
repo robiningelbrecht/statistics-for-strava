@@ -6,10 +6,11 @@ namespace App\Domain\Import\FileParser;
 
 use App\Domain\Activity\Activity;
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityIdFactory;
 use App\Domain\Activity\ActivityName;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLap;
-use App\Domain\Activity\Lap\ActivityLapId;
+use App\Domain\Activity\Lap\ActivityLapIdFactory;
 use App\Domain\Activity\Lap\ActivityLaps;
 use App\Domain\Activity\Math;
 use App\Domain\Activity\Route\RouteGeography;
@@ -42,6 +43,8 @@ final readonly class FitFileParser implements ActivityFileParser
     private const int FIT_EPOCH_OFFSET = 631065600;
 
     public function __construct(
+        private ActivityIdFactory $activityIdFactory,
+        private ActivityLapIdFactory $activityLapIdFactory,
         private ProcessFactory $processFactory,
         private Clock $clock,
         private ?SerializableTimezone $timezone,
@@ -138,7 +141,7 @@ final readonly class FitFileParser implements ActivityFileParser
             records: $records,
             startTimestamp: $startTimestamp
         );
-        $activityId = ActivityId::random();
+        $activityId = $this->activityIdFactory->random();
         $work = is_numeric($session['total_work'] ?? null) ? (float) $session['total_work'] : null;
         $startDateTime = SerializableDateTime::fromTimestamp(self::FIT_EPOCH_OFFSET + $startTimestamp)->toTimezone($this->timezone ?? SerializableTimezone::UTC());
 
@@ -229,7 +232,7 @@ final readonly class FitFileParser implements ActivityFileParser
         $laps = ActivityLaps::empty();
         foreach ($lapMessages as $index => $lap) {
             $laps->add(ActivityLap::create(
-                lapId: ActivityLapId::random(),
+                lapId: $this->activityLapIdFactory->random(),
                 activityId: $activityId,
                 lapNumber: $index + 1,
                 name: sprintf('Lap %d', $index + 1),
