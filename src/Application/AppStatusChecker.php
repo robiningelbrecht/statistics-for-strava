@@ -22,15 +22,12 @@ final readonly class AppStatusChecker
 
     public function ensureIsReadyForStravaImport(): void
     {
-        // The athlete is imported as part of the Strava import itself,
-        // so it can not be a precondition here.
         $this->ensureFileSystemIsWritable();
     }
 
     public function ensureIsReadyForFileImport(): void
     {
         $this->ensureFileSystemIsWritable();
-        $this->ensureAthleteCanBeLoaded();
     }
 
     public function ensureIsReadyForBuild(): void

@@ -60,13 +60,6 @@ class AppStatusCheckerTest extends ContainerTestCase
         $this->buildChecker(new UnwritablePermissionChecker())->ensureIsReadyForFileImport();
     }
 
-    public function testEnsureIsReadyForFileImportThrowsWhenAthleteHasNotBeenImported(): void
-    {
-        $this->expectExceptionObject(AppIsNotReady::becauseAthleteHasNotBeenImportedYet());
-
-        $this->buildChecker(new SuccessfulPermissionChecker())->ensureIsReadyForFileImport();
-    }
-
     public function testEnsureIsReadyForBuildPasses(): void
     {
         $this->expectNotToPerformAssertions();
