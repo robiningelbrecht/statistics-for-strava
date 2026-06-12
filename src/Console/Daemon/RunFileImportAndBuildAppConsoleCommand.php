@@ -39,7 +39,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[WithMonologChannel('console-output')]
+#[WithMonologChannel('daemon')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[AsCommand(name: RunFileImportAndBuildAppConsoleCommand::NAME, description: 'Run file import')]
 final class RunFileImportAndBuildAppConsoleCommand extends Command

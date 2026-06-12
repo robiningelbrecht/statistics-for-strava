@@ -16,7 +16,6 @@ use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
@@ -27,7 +26,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
     use MatchesSnapshots;
 
     private const string TODAY = '2025-12-04';
-
 
     private ImportDataAndBuildAppConsoleCommand $command;
     private SpyCommandBus $delegateCommandBus;
