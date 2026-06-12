@@ -2,6 +2,7 @@
 
 namespace App\Tests\Console;
 
+use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
 use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
@@ -9,6 +10,8 @@ use App\Console\ImportDataAndBuildAppConsoleCommand;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Athlete\Athlete;
+use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
 use App\Domain\Strava\Strava;
@@ -18,7 +21,6 @@ use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Serialization\Json;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
-use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
 use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
@@ -84,11 +86,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     public function testDelegatesBuildToFileImportInFileMode(): void
     {
-        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
-            ActivityBuilder::fromDefaults()->build(),
-            [],
-        ));
-
         $command = new ImportDataAndBuildAppConsoleCommand(
             new NullLogger(),
             ImportMode::FILES,
@@ -107,6 +104,17 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->getContainer()->get(AthleteRepository::class)->save(Athlete::create([
+            'id' => 100,
+            'birthDate' => '1989-08-14',
+            'firstname' => 'Robin',
+            'lastname' => 'Ingelbrecht',
+        ]));
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
 
         $this->command = new ImportDataAndBuildAppConsoleCommand(
             new NullLogger(),
@@ -129,8 +137,11 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
                 clock: PausedClock::fromString(self::TODAY),
                 lockName: LockName::IMPORT_DATA_OR_BUILD_APP,
             ),
-            migrationRunner: new VoidMigrationRunner(),
-            fileSystemPermissionChecker: new SuccessfulPermissionChecker(),
+            appStatusChecker: new AppStatusChecker(
+                $this->getContainer()->get(AthleteRepository::class),
+                $this->getContainer()->get(ActivityIdRepository::class),
+                new SuccessfulPermissionChecker(),
+            ),
             connection: $connection,
             appUrl: AppUrl::fromString('http://localhost'),
             importMode: ImportMode::STRAVA_API,
@@ -144,10 +155,13 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
         return new RunFileImportAndBuildAppConsoleCommand(
             commandBus: $this->spyCommandBus = new SpyCommandBus(),
-            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
+            appStatusChecker: new AppStatusChecker(
+                $this->getContainer()->get(AthleteRepository::class),
+                $this->getContainer()->get(ActivityIdRepository::class),
+                new SuccessfulPermissionChecker(),
+            ),
             watchDirectory: $this->getContainer()->get(WatchDirectory::class),
             resourceUsage: new FixedResourceUsage(),
-            migrationRunner: new VoidMigrationRunner(),
             mutex: new Mutex(
                 connection: $this->getConnection(),
                 clock: PausedClock::fromString(self::TODAY),
@@ -156,7 +170,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             clock: PausedClock::fromString(self::TODAY),
             keyValueStore: $this->getContainer()->get(KeyValueStore::class),
-            fileSystemPermissionChecker: new SuccessfulPermissionChecker(),
             connection: $connection,
             logger: new NullLogger(),
             importMode: ImportMode::FILES,
