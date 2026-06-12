@@ -4,9 +4,11 @@ namespace App\Tests\Console\Daemon;
 
 use App\Application\AppUrl;
 use App\Console\Daemon\RunFileImportAndBuildAppConsoleCommand;
+use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\KeyValue\Key;
@@ -20,13 +22,18 @@ use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
+use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
+use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemOperator;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
+#[AllowMockObjectsWithoutExpectations]
 class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
@@ -142,6 +149,45 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         );
     }
 
+    public function testImportsButDoesNotBuildWhenSkipBuildOptionIsSet(): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+        $this->watchStorage->write('watch/ride.fit', 'raw-fit-bytes');
+
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION => true,
+        ]);
+
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+
+        $this->expectException(EntityNotFound::class);
+        $this->keyValueStore->find(Key::APP_LAST_BUILT_ON);
+    }
+
+    public function testBuildsButDoesNotImportWhenSkipImportOptionIsSet(): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
+        $command = $this->getCommandInApplication('app:cron:run-file-import');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'command' => $command->getName(),
+            '--'.RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION => true,
+        ]);
+
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
+        $this->assertSame(self::TODAY, (string) $this->keyValueStore->find(Key::APP_LAST_BUILT_ON));
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -165,7 +211,21 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             clock: PausedClock::fromString(self::TODAY),
             keyValueStore: $this->keyValueStore,
+            fileSystemPermissionChecker: new SuccessfulPermissionChecker(),
+            connection: $this->mockConnection(),
+            logger: new NullLogger(),
+            importMode: ImportMode::FILES,
         );
+    }
+
+    private function mockConnection(): Connection
+    {
+        // The command only uses the connection to run "VACUUM", which cannot run inside the
+        // transaction the test suite wraps each test in, so we stub it out.
+        $connection = $this->createMock(Connection::class);
+        $connection->method('executeStatement')->willReturn(0);
+
+        return $connection;
     }
 
     protected function getConsoleCommand(): Command

@@ -3,7 +3,9 @@
 namespace App\Tests\Infrastructure\Daemon\Cron;
 
 use App\Infrastructure\Daemon\Cron\ConfiguredCronActions;
+use App\Infrastructure\Daemon\Cron\CronAction;
 use App\Infrastructure\Daemon\Cron\InvalidCronConfig;
+use Cron\CronExpression;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -15,20 +17,14 @@ class ConfiguredCronActionsTest extends TestCase
         $_ENV['DAEMON_DEBUG'] = 1;
     }
 
-    public function testFromConfig(): void
+    public function testItYieldsEnabledActionsAsCronActions(): void
     {
         $this->assertEquals(
             [
-                [
-                    'action' => 'sendNotification',
-                    'expression' => '* * * * *',
-                    'enabled' => true,
-                ],
-                [
-                    'action' => 'importData',
-                    'expression' => '* * * * *',
-                    'enabled' => false,
-                ],
+                CronAction::create(
+                    id: 'sendNotification',
+                    expression: new CronExpression('* * * * *'),
+                ),
             ],
             iterator_to_array(ConfiguredCronActions::fromConfig([
                 [
