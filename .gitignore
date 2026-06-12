@@ -35,6 +35,6 @@ phpstan.neon
 /ollama
 /mercure
 /watch
-/tests/dreeve*.db
-/tests/strava*.db
+/tests/dreeve*.db*
+/tests/strava*.db*
 ###> app-build ###
