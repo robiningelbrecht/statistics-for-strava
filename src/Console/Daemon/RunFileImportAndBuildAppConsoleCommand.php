@@ -141,6 +141,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
                 ));
             } catch (\Throwable $e) {
                 $this->logger->error($e->getMessage());
+                $this->mutex->releaseLock();
                 throw $e;
             }
 

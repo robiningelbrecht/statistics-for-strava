@@ -112,6 +112,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                     $this->fileSystemPermissionChecker->ensureWriteAccess();
                 } catch (UnableToWriteFile|UnableToCreateDirectory) {
                     $output->writeln('<error>Make sure the container has write permissions to "storage/database" and "storage/files" on the host system</error>');
+                    $this->mutex->releaseLock();
 
                     return Command::SUCCESS;
                 }
@@ -152,8 +153,11 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
             }
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
+            $this->mutex->releaseLock();
             throw $e;
         }
+
+        $this->mutex->releaseLock();
 
         $this->resourceUsage->stopTimer();
         $this->commandBus->dispatch(new SendNotification(

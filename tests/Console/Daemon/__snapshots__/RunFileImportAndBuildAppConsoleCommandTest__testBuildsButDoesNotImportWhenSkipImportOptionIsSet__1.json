@@ -1,13 +1,6 @@
 [
     {
-        "commandName": "App\\Application\\RunStravaImport\\RunStravaImport",
-        "payload": {
-            "output": {},
-            "restrictToActivityIds": null
-        }
-    },
-    {
-        "commandName": "App\\Application\\RunBuild\\RunBuild",
+        "commandName": "App\\Application\\Build\\RunBuild\\RunBuild",
         "payload": {
             "output": {}
         }
@@ -16,7 +9,7 @@
         "commandName": "App\\Domain\\Integration\\Notification\\SendNotification\\SendNotification",
         "payload": {
             "title": "Build successful",
-            "message": "New import and build of your Strava stats was successful in 10s",
+            "message": "New import and build of your stats was successful in 10s",
             "tags": [
                 "+1"
             ],

@@ -1,15 +1,5 @@
 [
     {
-        "commandName": "App\\Application\\Import\\RunStravaImport\\RunStravaImport",
-        "payload": {
-            "output": {},
-            "restrictToActivityIds": [
-                "activity-1",
-                "activity-2"
-            ]
-        }
-    },
-    {
         "commandName": "App\\Application\\Build\\RunBuild\\RunBuild",
         "payload": {
             "output": {}

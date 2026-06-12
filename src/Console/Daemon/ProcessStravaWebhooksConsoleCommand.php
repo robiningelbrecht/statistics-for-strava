@@ -10,7 +10,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Import\ImportMode;
 use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
+use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
+use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -19,6 +21,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
 #[AsCommand(name: ProcessStravaWebhooksConsoleCommand::NAME, description: 'Process webhooks')]
 final class ProcessStravaWebhooksConsoleCommand extends Command
 {

@@ -1,13 +1,12 @@
 [
     {
-        "commandName": "App\\Application\\Import\\RunStravaImport\\RunStravaImport",
+        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles",
         "payload": {
-            "output": {},
-            "restrictToActivityIds": null
+            "output": {}
         }
     },
     {
-        "commandName": "App\\Application\\Build\\RunBuild\\RunBuild",
+        "commandName": "App\\Application\\Import\\CalculateActivityMetrics\\CalculateActivityMetrics",
         "payload": {
             "output": {}
         }
