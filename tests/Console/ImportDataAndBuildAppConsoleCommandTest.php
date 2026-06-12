@@ -37,7 +37,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
     private const string TODAY = '2025-12-04';
 
     private ImportDataAndBuildAppConsoleCommand $command;
-    private SpyCommandBus $delegateCommandBus;
+    private SpyCommandBus $spyCommandBus;
 
     public function testDelegatesImportToStravaImport(): void
     {
@@ -47,7 +47,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => 'app:strava:import-data']);
 
-        $this->assertMatchesJsonSnapshot(Json::encode($this->delegateCommandBus->getDispatchedCommands()));
+        $this->assertMatchesJsonSnapshot(Json::encode($this->spyCommandBus->getDispatchedCommands()));
     }
 
     public function testDelegatesBuildToStravaImport(): void
@@ -58,7 +58,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => 'app:strava:build-files']);
 
-        $this->assertMatchesJsonSnapshot(Json::encode($this->delegateCommandBus->getDispatchedCommands()));
+        $this->assertMatchesJsonSnapshot(Json::encode($this->spyCommandBus->getDispatchedCommands()));
     }
 
     public function testDelegatesImportToFileImportInFileMode(): void
@@ -79,7 +79,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($application->find('app:data:import'));
         $commandTester->execute(['command' => 'app:data:import']);
 
-        $this->assertMatchesJsonSnapshot(Json::encode($this->delegateCommandBus->getDispatchedCommands()));
+        $this->assertMatchesJsonSnapshot(Json::encode($this->spyCommandBus->getDispatchedCommands()));
     }
 
     public function testDelegatesBuildToFileImportInFileMode(): void
@@ -100,7 +100,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($application->find('app:data:build'));
         $commandTester->execute(['command' => 'app:data:build']);
 
-        $this->assertMatchesJsonSnapshot(Json::encode($this->delegateCommandBus->getDispatchedCommands()));
+        $this->assertMatchesJsonSnapshot(Json::encode($this->spyCommandBus->getDispatchedCommands()));
     }
 
     #[\Override]
@@ -120,7 +120,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $connection->method('executeStatement')->willReturn(0);
 
         return new RunStravaImportAndBuildAppConsoleCommand(
-            commandBus: $this->delegateCommandBus = new SpyCommandBus(),
+            commandBus: $this->spyCommandBus = new SpyCommandBus(),
             resourceUsage: new FixedResourceUsage(),
             strava: $this->getContainer()->get(Strava::class),
             logger: new NullLogger(),
@@ -143,7 +143,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $connection->method('executeStatement')->willReturn(0);
 
         return new RunFileImportAndBuildAppConsoleCommand(
-            commandBus: $this->delegateCommandBus = new SpyCommandBus(),
+            commandBus: $this->spyCommandBus = new SpyCommandBus(),
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             watchDirectory: $this->getContainer()->get(WatchDirectory::class),
             resourceUsage: new FixedResourceUsage(),

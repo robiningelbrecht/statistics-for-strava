@@ -10,7 +10,9 @@ use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
+use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Exception\EntityNotFound;
+use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\KeyValue\Key;
 use App\Infrastructure\KeyValue\KeyValue;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -23,17 +25,18 @@ use App\Tests\Domain\Activity\ActivityBuilder;
 use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\Doctrine\Migrations\VoidMigrationRunner;
 use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
+use App\Tests\Infrastructure\FileSystem\UnwritablePermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemOperator;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-#[AllowMockObjectsWithoutExpectations]
 class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
@@ -188,6 +191,82 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->assertSame(self::TODAY, (string) $this->keyValueStore->find(Key::APP_LAST_BUILT_ON));
     }
 
+    public function testReturnsEarlyWhenImportModeIsStrava(): void
+    {
+        $command = $this->buildCommand(new SpyCommandBus(), importMode: ImportMode::STRAVA_API);
+
+        $application = new Application();
+        $application->addCommand($command);
+
+        $commandTester = new CommandTester($application->find('app:cron:run-file-import'));
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertStringContainsString('Cannot import files. IMPORT_MODE=stravaApi', $commandTester->getDisplay());
+    }
+
+    public function testShowsErrorAndReleasesLockWhenWriteAccessFails(): void
+    {
+        $this->watchStorage->write('watch/ride.fit', 'raw-fit-bytes');
+
+        $command = $this->buildCommand(
+            $commandBus = new SpyCommandBus(),
+            permissionChecker: new UnwritablePermissionChecker(),
+        );
+
+        $application = new Application();
+        $application->addCommand($command);
+
+        $commandTester = new CommandTester($application->find('app:cron:run-file-import'));
+        $commandTester->execute(['command' => $command->getName()]);
+
+        $this->assertStringContainsString(
+            'Make sure the container has write permissions to "storage/database" and "storage/files" on the host system',
+            $commandTester->getDisplay(),
+        );
+        $this->assertEmpty($commandBus->getDispatchedCommands());
+
+        $row = $this->getConnection()->fetchOne(
+            'SELECT `value` FROM KeyValue WHERE `key` = :key',
+            ['key' => 'lock.importDataOrBuildApp']
+        );
+        $this->assertFalse($row, 'Expected the mutex lock to be released');
+    }
+
+    public function testLogsReleasesLockAndRethrowsWhenBuildFails(): void
+    {
+        $this->getContainer()->get(ActivityRepository::class)->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()->build(),
+            [],
+        ));
+
+        $commandBus = $this->createMock(CommandBus::class);
+        $commandBus->expects($this->once())->method('dispatch')->willThrowException(new \RuntimeException('OH NO ERROR'));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())->method('error')->with('OH NO ERROR');
+
+        $command = $this->buildCommand($commandBus, logger: $logger);
+
+        $application = new Application();
+        $application->addCommand($command);
+
+        $commandTester = new CommandTester($application->find('app:cron:run-file-import'));
+
+        $thrown = null;
+        try {
+            $commandTester->execute(['command' => $command->getName()]);
+        } catch (\RuntimeException $e) {
+            $thrown = $e;
+        }
+
+        $this->assertSame('OH NO ERROR', $thrown?->getMessage());
+        $row = $this->getConnection()->fetchOne(
+            'SELECT `value` FROM KeyValue WHERE `key` = :key',
+            ['key' => 'lock.importDataOrBuildApp']
+        );
+        $this->assertFalse($row, 'Expected the mutex lock to be released');
+    }
+
     #[\Override]
     protected function setUp(): void
     {
@@ -197,8 +276,20 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $this->watchStorage->deleteDirectory('watch');
         $this->keyValueStore = $this->getContainer()->get(KeyValueStore::class);
 
-        $this->command = new RunFileImportAndBuildAppConsoleCommand(
-            commandBus: $this->commandBus = new SpyCommandBus(),
+        $this->command = $this->buildCommand($this->commandBus = new SpyCommandBus());
+    }
+
+    private function buildCommand(
+        CommandBus $commandBus,
+        PermissionChecker $permissionChecker = new SuccessfulPermissionChecker(),
+        ImportMode $importMode = ImportMode::FILES,
+        LoggerInterface $logger = new NullLogger(),
+    ): RunFileImportAndBuildAppConsoleCommand {
+        $connection = $this->createStub(Connection::class);
+        $connection->method('executeStatement')->willReturn(0);
+
+        return new RunFileImportAndBuildAppConsoleCommand(
+            commandBus: $commandBus,
             activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
             watchDirectory: $this->getContainer()->get(WatchDirectory::class),
             resourceUsage: new FixedResourceUsage(),
@@ -211,21 +302,11 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             clock: PausedClock::fromString(self::TODAY),
             keyValueStore: $this->keyValueStore,
-            fileSystemPermissionChecker: new SuccessfulPermissionChecker(),
-            connection: $this->mockConnection(),
-            logger: new NullLogger(),
-            importMode: ImportMode::FILES,
+            fileSystemPermissionChecker: $permissionChecker,
+            connection: $connection,
+            logger: $logger,
+            importMode: $importMode,
         );
-    }
-
-    private function mockConnection(): Connection
-    {
-        // The command only uses the connection to run "VACUUM", which cannot run inside the
-        // transaction the test suite wraps each test in, so we stub it out.
-        $connection = $this->createMock(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
-        return $connection;
     }
 
     protected function getConsoleCommand(): Command
