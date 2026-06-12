@@ -108,7 +108,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             if (!$skipImport && $watchDirectoryHasFiles) {
                 $this->appStatusChecker->ensureIsReadyForFileImport();
 
-
                 $this->commandBus->dispatch(new ImportActivityFiles($output));
                 $this->commandBus->dispatch(new CalculateActivityMetrics($output));
 
