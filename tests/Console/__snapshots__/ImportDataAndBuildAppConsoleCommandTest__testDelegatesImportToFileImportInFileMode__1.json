@@ -1,0 +1,25 @@
+[
+    {
+        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\CalculateActivityMetrics\\CalculateActivityMetrics",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Domain\\Integration\\Notification\\SendNotification\\SendNotification",
+        "payload": {
+            "title": "Build successful",
+            "message": "New import and build of your stats was successful in 10s",
+            "tags": [
+                "+1"
+            ],
+            "actionUrl": "http://localhost"
+        }
+    }
+]
