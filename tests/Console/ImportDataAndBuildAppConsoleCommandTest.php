@@ -28,6 +28,7 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     private const string TODAY = '2025-12-04';
 
+
     private ImportDataAndBuildAppConsoleCommand $command;
     private SpyCommandBus $delegateCommandBus;
 
