@@ -88,7 +88,7 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
         $application = new Application();
         $application->addCommand($command);
 
-        $commandTester = new CommandTester($application->find($command->getName()));
+        $commandTester = new CommandTester($application->find('app:cron:run-strava-import'));
         $commandTester->execute(['command' => $command->getName()]);
 
         $this->assertEmpty($this->commandBus->getDispatchedCommands());
@@ -134,7 +134,7 @@ class RunStravaImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCas
         $application = new Application();
         $application->addCommand($command);
 
-        $commandTester = new CommandTester($application->find($command->getName()));
+        $commandTester = new CommandTester($application->find('app:cron:run-strava-import'));
         $commandTester->execute(['command' => $command->getName()]);
     }
 

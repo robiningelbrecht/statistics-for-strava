@@ -21,14 +21,12 @@ use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
 use Doctrine\DBAL\Connection;
-use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-#[AllowMockObjectsWithoutExpectations]
 class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
@@ -58,7 +56,6 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);
 
-        // The CREATE/UPDATE activity ids should be forwarded to the strava import, the DELETE id should not.
         $this->assertMatchesJsonSnapshot(Json::encode($spyCommandBus->getDispatchedCommands()));
     }
 
@@ -72,7 +69,11 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
         ));
 
         $command = $this->buildWebhooksCommand(ImportMode::FILES);
-        $commandTester = new CommandTester($this->addToApplication($command));
+
+        $application = new Application();
+        $application->addCommand($command);
+
+        $commandTester = new CommandTester($application->find('app:cron:process-webhooks'));
         $statusCode = $commandTester->execute(['command' => $command->getName()]);
 
         $this->assertSame(Command::SUCCESS, $statusCode);
@@ -135,6 +136,9 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
 
     private function buildStravaImportCommand(SpyCommandBus $commandBus): RunStravaImportAndBuildAppConsoleCommand
     {
+        $connection = $this->createStub(Connection::class);
+        $connection->method('executeStatement')->willReturn(0);
+
         return new RunStravaImportAndBuildAppConsoleCommand(
             commandBus: $commandBus,
             resourceUsage: new FixedResourceUsage(),
@@ -147,28 +151,10 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
             ),
             migrationRunner: new VoidMigrationRunner(),
             fileSystemPermissionChecker: new SuccessfulPermissionChecker(),
-            connection: $this->mockConnection(),
+            connection: $connection,
             appUrl: AppUrl::fromString('http://localhost'),
             importMode: ImportMode::STRAVA_API,
         );
-    }
-
-    private function mockConnection(): Connection
-    {
-        // The strava import only uses the connection to run "VACUUM", which cannot run inside the
-        // transaction the test suite wraps each test in, so we stub it out.
-        $connection = $this->createMock(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
-        return $connection;
-    }
-
-    private function addToApplication(Command $command): Command
-    {
-        $application = new Application();
-        $application->addCommand($command);
-
-        return $application->find($command->getName());
     }
 
     protected function getConsoleCommand(): Command
