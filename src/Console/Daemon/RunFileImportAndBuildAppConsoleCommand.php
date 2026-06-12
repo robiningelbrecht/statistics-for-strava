@@ -117,7 +117,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             }
 
             if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {
-                $this->commandBus->dispatch(new ImportAthlete($output));
+                $this->commandBus->dispatch(new ImportAthlete());
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(
