@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Daemon;
 
+use App\Application\AppIsNotReady;
+use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
 use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
@@ -23,17 +25,13 @@ use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
-use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
 use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
-use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
 use Doctrine\DBAL\Connection;
-use League\Flysystem\UnableToCreateDirectory;
-use League\Flysystem\UnableToWriteFile;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -61,8 +59,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         private readonly Strava $strava,
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
-        private readonly MigrationRunner $migrationRunner,
-        private readonly PermissionChecker $fileSystemPermissionChecker,
+        private readonly AppStatusChecker $appStatusChecker,
         private readonly Connection $connection,
         private readonly AppUrl $appUrl,
         private readonly ImportMode $importMode,
@@ -97,8 +94,6 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
             ));
         }
 
-        $this->migrationRunner->run($output);
-
         try {
             $this->mutex->acquireLock('runStravaImportAndBuildApp');
         } catch (LockIsAlreadyAcquired) {
@@ -110,14 +105,7 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
 
         try {
             if (!$input->getOption(self::SKIP_IMPORT_OPTION)) {
-                try {
-                    $this->fileSystemPermissionChecker->ensureWriteAccess();
-                } catch (UnableToWriteFile|UnableToCreateDirectory) {
-                    $output->writeln('<error>Make sure the container has write permissions to "storage/database" and "storage/files" on the host system</error>');
-                    $this->mutex->releaseLock();
-
-                    return Command::SUCCESS;
-                }
+                $this->appStatusChecker->ensureIsReadyForStravaImport();
 
                 $this->commandBus->dispatch(new ImportAthlete($output));
                 $this->commandBus->dispatch(new ImportActivities(
@@ -149,10 +137,17 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                 $output->writeln('Database got vacuumed 🧹');
             }
             if (!$input->getOption(self::SKIP_BUILD_OPTION)) {
+                $this->appStatusChecker->ensureIsReadyForBuild();
+
                 $this->commandBus->dispatch(new RunBuild(
                     output: $output,
                 ));
             }
+        } catch (AppIsNotReady $e) {
+            $this->mutex->releaseLock();
+            $output->writeln(sprintf('<error>%s</error>', $e->getMessage()));
+
+            return Command::SUCCESS;
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
             $this->mutex->releaseLock();
