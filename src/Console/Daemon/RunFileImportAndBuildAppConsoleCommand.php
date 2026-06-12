@@ -9,7 +9,8 @@ use App\Application\AppStatusChecker;
 use App\Application\AppUrl;
 use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
-use App\Application\Import\FileImport\ImportActivityFiles;
+use App\Application\Import\FileImport\ImportActivityFiles\ImportActivityFiles;
+use App\Application\Import\FileImport\ImportAthlete\ImportAthlete;
 use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
@@ -116,6 +117,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
             }
 
             if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {
+                $this->commandBus->dispatch(new ImportAthlete($output));
                 $this->appStatusChecker->ensureIsReadyForBuild();
 
                 $this->commandBus->dispatch(new RunBuild(

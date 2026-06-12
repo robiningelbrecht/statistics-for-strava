@@ -1,0 +1,5 @@
+general:
+  athlete:
+    firstName: 'John'
+    lastName: 'Doe'
+    birthday: '1989-08-14'

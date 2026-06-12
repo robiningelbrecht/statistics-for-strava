@@ -14,6 +14,10 @@ general:
   athlete:
     # Your birthday. Needed to calculate heart rate zones.
     birthday: 'YYYY-MM-DD'
+    firstName: 'John'
+    lastName: 'Doe'
+    # Your gender. 'M', 'F' or 'X'. Used to determine activity training load
+    gender: 'M'
     # The formula used to calculate your max heart rate. The default is Fox (220 - age).
     # Allowed values: arena, astrand, fox, gellish, nes, tanaka (https://pmc.ncbi.nlm.nih.gov/articles/PMC7523886/table/t2-ijes-13-7-1242/)
     # Or you can set a fixed number for any given date range.  

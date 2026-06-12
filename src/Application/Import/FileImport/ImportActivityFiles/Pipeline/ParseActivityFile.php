@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\FileImport\Pipeline;
+namespace App\Application\Import\FileImport\ImportActivityFiles\Pipeline;
 
 use App\Domain\Import\DuplicateActivityScanner;
 use App\Domain\Import\FileParser\ActivityFileParsers;

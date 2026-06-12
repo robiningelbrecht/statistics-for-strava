@@ -1,0 +1,8 @@
+[
+    {
+        "commandName": "App\\Application\\Import\\FileImport\\ImportAthlete\\ImportAthlete",
+        "payload": {
+            "output": {}
+        }
+    }
+]

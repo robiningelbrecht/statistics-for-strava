@@ -1,6 +1,6 @@
 [
     {
-        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles",
+        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles\\ImportActivityFiles",
         "payload": {
             "output": {}
         }

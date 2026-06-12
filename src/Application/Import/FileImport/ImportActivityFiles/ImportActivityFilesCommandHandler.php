@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\FileImport;
+namespace App\Application\Import\FileImport\ImportActivityFiles;
 
-use App\Application\Import\FileImport\Pipeline\ActivityImportContext;
-use App\Application\Import\FileImport\Pipeline\ImportActivityFileStep;
-use App\Application\Import\FileImport\Pipeline\SkipActivityFileImport;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\ActivityImportContext;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\ImportActivityFileStep;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\SkipActivityFileImport;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\Lap\ActivityLapRepository;

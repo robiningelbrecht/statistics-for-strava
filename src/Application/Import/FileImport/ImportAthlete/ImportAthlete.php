@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\FileImport;
+namespace App\Application\Import\FileImport\ImportAthlete;
 
 use App\Infrastructure\CQRS\Command\DomainCommand;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final readonly class ImportActivityFiles extends DomainCommand
+final readonly class ImportAthlete extends DomainCommand
 {
     public function __construct(
         private OutputInterface $output,

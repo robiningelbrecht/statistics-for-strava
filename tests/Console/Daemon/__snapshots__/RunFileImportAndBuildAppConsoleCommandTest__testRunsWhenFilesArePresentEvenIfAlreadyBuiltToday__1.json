@@ -1,12 +1,18 @@
 [
     {
-        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles",
+        "commandName": "App\\Application\\Import\\FileImport\\ImportActivityFiles\\ImportActivityFiles",
         "payload": {
             "output": {}
         }
     },
     {
         "commandName": "App\\Application\\Import\\CalculateActivityMetrics\\CalculateActivityMetrics",
+        "payload": {
+            "output": {}
+        }
+    },
+    {
+        "commandName": "App\\Application\\Import\\FileImport\\ImportAthlete\\ImportAthlete",
         "payload": {
             "output": {}
         }

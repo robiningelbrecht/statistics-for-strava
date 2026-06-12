@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Application\Import\FileImport;
+namespace App\Tests\Application\Import\FileImport\ImportActivityFiles;
 
-use App\Application\Import\FileImport\ImportActivityFiles;
-use App\Application\Import\FileImport\ImportActivityFilesCommandHandler;
+use App\Application\Import\FileImport\ImportActivityFiles\ImportActivityFiles;
+use App\Application\Import\FileImport\ImportActivityFiles\ImportActivityFilesCommandHandler;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLapRepository;
@@ -13,6 +13,7 @@ use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Import\FileImportRepository;
 use App\Domain\Import\FileImportStatus;
+use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\ContainerTestCase;
 use App\Tests\SpyOutput;
@@ -117,7 +118,8 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
 
     private function fixture(string $name): string
     {
-        $contents = file_get_contents(dirname(__DIR__, 3).'/Domain/Import/FileParser/fixtures/'.$name);
+        $projectDir = $this->getContainer()->get(KernelProjectDir::class);
+        $contents = file_get_contents($projectDir.'/tests/Domain/Import/FileParser/fixtures/'.$name);
         if (false === $contents) {
             self::fail(sprintf('Could not read fixture "%s"', $name));
         }
