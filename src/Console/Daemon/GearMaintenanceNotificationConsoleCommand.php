@@ -8,11 +8,13 @@ use App\Application\AppUrl;
 use App\Domain\Gear\Maintenance\Task\Progress\MaintenanceTaskProgressCalculator;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: GearMaintenanceNotificationConsoleCommand::NAME, description: 'Send out gear maintenance notification')]
 final class GearMaintenanceNotificationConsoleCommand extends Command
 {

@@ -24,6 +24,7 @@ use App\Domain\Strava\Strava;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\Doctrine\Migrations\MigrationRunner;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\FileSystem\PermissionChecker;
 use App\Infrastructure\Logging\LoggableConsoleOutput;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
@@ -45,6 +46,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[WithMonologChannel('daemon')]
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: RunStravaImportAndBuildAppConsoleCommand::NAME, description: 'Run strava import')]
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {

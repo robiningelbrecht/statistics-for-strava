@@ -11,6 +11,7 @@ use App\Domain\Import\ImportMode;
 use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
+use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
@@ -22,6 +23,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[WithMutex(lockName: LockName::IMPORT_DATA_OR_BUILD_APP)]
+#[RequiresUpToDateDatabaseSchema]
 #[AsCommand(name: ProcessStravaWebhooksConsoleCommand::NAME, description: 'Process webhooks')]
 final class ProcessStravaWebhooksConsoleCommand extends Command
 {
