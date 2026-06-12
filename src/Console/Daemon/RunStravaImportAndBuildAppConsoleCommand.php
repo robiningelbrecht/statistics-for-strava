@@ -17,6 +17,7 @@ use App\Application\Import\StravaImport\LinkCustomGearToActivities\LinkCustomGea
 use App\Application\Import\StravaImport\ProcessRawActivityData\ProcessRawActivityData;
 use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityIds;
+use App\Domain\Import\ImportMode;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Domain\Strava\RateLimit\StravaRateLimits;
 use App\Domain\Strava\Strava;
@@ -48,6 +49,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class RunStravaImportAndBuildAppConsoleCommand extends Command
 {
     public const string NAME = 'app:cron:run-strava-import';
+    public const string RESTRICT_TO_ACTIVITY_IDS_ARGUMENT = 'restrictToActivityIds';
     public const string SKIP_IMPORT_OPTION = 'skipImport';
     public const string SKIP_BUILD_OPTION = 'skipBuild';
 
@@ -61,13 +63,14 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         private readonly PermissionChecker $fileSystemPermissionChecker,
         private readonly Connection $connection,
         private readonly AppUrl $appUrl,
+        private readonly ImportMode $importMode,
     ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->addArgument('restrictToActivityId', InputArgument::OPTIONAL);
+        $this->addArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT, InputArgument::OPTIONAL);
         $this->addOption(self::SKIP_IMPORT_OPTION, null, InputOption::VALUE_NONE);
         $this->addOption(self::SKIP_BUILD_OPTION, null, InputOption::VALUE_NONE);
     }
@@ -75,11 +78,21 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
+
+        if (!$this->importMode->isStravaApi()) {
+            $output->writeln('<comment>Cannot import files. IMPORT_MODE=files</comment>');
+
+            return Command::SUCCESS;
+        }
+
         $this->resourceUsage->startTimer();
 
         $restrictToActivityIds = null;
-        if ($restrictToActivityId = $input->getArgument('restrictToActivityId')) {
-            $restrictToActivityIds = ActivityIds::fromArray([ActivityId::fromUnprefixed($restrictToActivityId)]);
+        if (!empty($input->getArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT))) {
+            $restrictToActivityIds = ActivityIds::fromArray(array_map(
+                ActivityId::fromString(...),
+                explode(',', (string) $input->getArgument(self::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT))
+            ));
         }
 
         $this->migrationRunner->run($output);

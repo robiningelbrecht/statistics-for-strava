@@ -9,14 +9,26 @@ use Cron\CronExpression;
 readonly class ConfiguredCronActions implements \IteratorAggregate
 {
     private function __construct(
-        /** @var list<array{action: string, expression: string}> */
+        /** @var list<array{action: string, expression: string, enabled: bool}> */
         private array $config,
     ) {
     }
 
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->config);
+        $cronActions = [];
+        foreach ($this->config as $action) {
+            if (!$action['enabled']) {
+                continue;
+            }
+
+            $cronActions[] = CronAction::create(
+                id: $action['action'],
+                expression: new CronExpression($action['expression']),
+            );
+        }
+
+        return new \ArrayIterator($cronActions);
     }
 
     /**

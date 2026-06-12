@@ -9,6 +9,7 @@ use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Import\CalculateActivityMetrics\CalculateActivityMetrics;
 use App\Application\Import\FileImport\ImportActivityFiles;
 use App\Domain\Activity\ActivityIdRepository;
+use App\Domain\Import\ImportMode;
 use App\Domain\Import\WatchDirectory;
 use App\Domain\Integration\Notification\SendNotification\SendNotification;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -44,7 +45,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class RunFileImportAndBuildAppConsoleCommand extends Command
 {
     public const string NAME = 'app:cron:run-file-import';
-    public const string FORCE_OPTION = 'force';
 
     public function __construct(
         private readonly CommandBus $commandBus,
@@ -59,6 +59,7 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         private readonly PermissionChecker $fileSystemPermissionChecker,
         private readonly Connection $connection,
         private readonly LoggerInterface $logger,
+        private readonly ImportMode $importMode,
     ) {
         parent::__construct();
     }
@@ -67,12 +68,18 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
     {
         $this->addOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION, null, InputOption::VALUE_NONE);
         $this->addOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION, null, InputOption::VALUE_NONE);
-        $this->addOption(self::FORCE_OPTION, null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output = new SymfonyStyle($input, new LoggableConsoleOutput($output, $this->logger));
+
+        if (!$this->importMode->isFiles()) {
+            $output->writeln('<comment>Cannot import files. IMPORT_MODE=stravaApi</comment>');
+
+            return Command::SUCCESS;
+        }
+
         $skipImport = $input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_IMPORT_OPTION);
         if (!$skipImport) {
             $this->migrationRunner->run($output);
