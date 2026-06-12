@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Console\Webhook;
+namespace App\Tests\Console\Daemon;
 
 use App\Application\Import\RunStravaImportAndBuildAppCronAction;
-use App\Console\Webhook\ProcessWebhooksConsoleCommand;
+use App\Console\Daemon\ProcessStravaWebhooksConsoleCommand;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Tests\Console\ConsoleCommandTestCase;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
@@ -11,10 +11,10 @@ use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
+class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
-    private ProcessWebhooksConsoleCommand $processWebhooksConsoleCommand;
+    private ProcessStravaWebhooksConsoleCommand $processWebhooksConsoleCommand;
     private CommandBus $commandBus;
 
     public function testExecute(): void
@@ -33,7 +33,7 @@ class ProcessWebhooksConsoleCommandTest extends ConsoleCommandTestCase
     {
         parent::setUp();
 
-        $this->processWebhooksConsoleCommand = new ProcessWebhooksConsoleCommand(
+        $this->processWebhooksConsoleCommand = new ProcessStravaWebhooksConsoleCommand(
             $this->getContainer()->get(RunStravaImportAndBuildAppCronAction::class)
         );
     }

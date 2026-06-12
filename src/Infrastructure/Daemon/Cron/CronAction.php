@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Daemon\Cron;
 
+use App\Console\Daemon\AppUpdateAvailableNotificationCronAction;
+use App\Console\Daemon\GearMaintenanceNotificationConsoleCommand;
+use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
 use Cron\CronExpression;
 
 final readonly class CronAction
@@ -11,19 +14,16 @@ final readonly class CronAction
     private function __construct(
         private string $id,
         private CronExpression $expression,
-        private RunnableCronAction $runnable,
     ) {
     }
 
     public static function create(
         string $id,
         CronExpression $expression,
-        RunnableCronAction $runnable,
     ): self {
         return new self(
             id: $id,
             expression: $expression,
-            runnable: $runnable,
         );
     }
 
@@ -37,8 +37,13 @@ final readonly class CronAction
         return $this->expression;
     }
 
-    public function getRunnable(): RunnableCronAction
+    public function getCommand(): string
     {
-        return $this->runnable;
+        return match ($this->getId()) {
+            'importDataAndBuildApp' => sprintf('bin/console %s', RunStravaImportAndBuildAppConsoleCommand::NAME),
+            'gearMaintenanceNotification' => sprintf('bin/console %s', GearMaintenanceNotificationConsoleCommand::NAME),
+            'appUpdateAvailableNotification' => sprintf('bin/console %s', AppUpdateAvailableNotificationCronAction::NAME),
+            default => throw new \RuntimeException(sprintf('Unsupported Cron action: %s', $this->getId())),
+        };
     }
 }

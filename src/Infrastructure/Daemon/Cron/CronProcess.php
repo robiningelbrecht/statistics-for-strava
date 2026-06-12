@@ -17,15 +17,8 @@ final readonly class CronProcess
         private string $cronActionId,
         private Clock $clock,
         private OutputInterface $output,
-        private ?string $command = null,
+        private string $command,
     ) {
-    }
-
-    public function withCommand(string $command): self
-    {
-        return clone ($this, [
-            'command' => $command,
-        ]);
     }
 
     public function start(): void
@@ -36,7 +29,7 @@ final readonly class CronProcess
             $this->cronActionId
         ));
 
-        $process = new Process($this->command ?? 'bin/console app:cron:action '.$this->cronActionId);
+        $process = new Process($this->command);
         $process->start();
 
         $process->stdout?->on('data', function (string $chunk): void {

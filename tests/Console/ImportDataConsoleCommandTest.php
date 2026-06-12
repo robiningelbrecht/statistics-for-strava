@@ -3,7 +3,7 @@
 namespace App\Tests\Console;
 
 use App\Application\Import\RunFileImport\RunFileImport;
-use App\Console\ImportDataConsoleCommand;
+use App\Console\ImportDataAndBuildConsoleCommand;
 use App\Domain\Import\ImportMode;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\DomainCommand;
@@ -25,7 +25,7 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
 {
     use MatchesSnapshots;
 
-    private ImportDataConsoleCommand $importDataConsoleCommand;
+    private ImportDataAndBuildConsoleCommand $importDataConsoleCommand;
     private MockObject $commandBus;
     private ResourceUsage $resourceUsage;
     private MockObject $logger;
@@ -128,7 +128,7 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
         $this->logger->expects($this->atLeastOnce())->method('info');
         $this->migrationRunner->expects($this->once())->method('run');
 
-        $command = new ImportDataConsoleCommand(
+        $command = new ImportDataAndBuildConsoleCommand(
             $this->commandBus,
             new FixedResourceUsage(),
             $this->logger,
@@ -155,7 +155,7 @@ class ImportDataConsoleCommandTest extends ConsoleCommandTestCase
     {
         parent::setUp();
 
-        $this->importDataConsoleCommand = new ImportDataConsoleCommand(
+        $this->importDataConsoleCommand = new ImportDataAndBuildConsoleCommand(
             $this->commandBus = $this->createMock(CommandBus::class),
             $this->resourceUsage = new FixedResourceUsage(),
             $this->logger = $this->createMock(LoggerInterface::class),
