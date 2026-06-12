@@ -10,27 +10,11 @@
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
     <link href="/css/dist/tailwind.min.css?0025176c-5652-11ee-923d-02424dd627d5" rel="stylesheet">
 </head>
-<body class="bg-gray-50 h-screen flex justify-center items-center">
+<body class="min-h-screen bg-white text-gray-900 antialiased">
 <nav class="text-gray-900 bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100 group">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
-            <button type="button" id="toggle-sidebar-collapsed-state" aria-controls="drawer-navigation" class="p-1.5 mr-1.5 text-gray-600 rounded-md cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100">
-                <svg class="size-4.5" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                    <path d="M9 4v16"></path>
-                    <path class="origin-center [transform-box:fill-box] transition-transform duration-300 ease-in-out sidebar-collapsed:rotate-180" d="M16 8l-3 4 3 4"></path>
-                </svg>
-                <span class="sr-only">Toggle sidebar</span>
-            </button>
-            <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation" class="md:hidden mr-3 inline-flex items-center justify-center text-gray-600 cursor-pointer select-none">
-                <span aria-hidden="true" class="relative block w-3.5 h-5">
-                    <span class="absolute inset-x-0 top-1 h-0.5 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:top-1/2 drawer-open:-translate-y-1/2 drawer-open:rotate-45"></span>
-                    <span class="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:opacity-0"></span>
-                    <span class="absolute inset-x-0 bottom-1 h-0.5 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:bottom-1/2 drawer-open:translate-y-1/2 drawer-open:-rotate-45"></span>
-                </span>
-                <span class="sr-only">Toggle sidebar</span>
-            </button>
-            <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
+                        <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
                 <img src="/assets/images/logo.svg" class="rounded-full mr-3 h-8" alt="Logo">
                 <div class="flex gap-x-1 sm:text-lg font-extrabold whitespace-nowrap">
                     <div>Statistics for Strava</div>
@@ -68,28 +52,58 @@
             </div>
                     </div>
     </div>
-</nav><div>
-    <p class="text-2xl font-semibold pb-5">Looks like you still need to import your Strava data</p>
-
-    <dl class="text-gray-900 divide-y divide-gray-200">
-        <div class="flex flex-col pb-3">
-            <dt class="mb-1 text-gray-500 md:text-lg">Import Strava data</dt>
-            <dd class="font-semibold"><code>docker compose exec app bin/console app:strava:import-data</code></dd>
-        </div>
-        <div class="flex flex-col py-3">
-            <dt class="mb-1 text-gray-500 md:text-lg">Build static HTML files</dt>
-            <dd class="font-semibold"><code>docker compose exec app bin/console app:strava:build-files</code></dd>
-            <div class="mt-4 flex w-full p-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50" role="alert">
-                <svg class="shrink-0 inline size-4 me-3 mt-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewbox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    You can only build these files if at least one Strava activity has been imported
+</nav><section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <h2 class="text-2xl font-bold tracking-tight">Finish setup</h2>
+        <p class="mt-1 text-sm text-gray-500">Looks like you still need to import your Strava data.</p>
+        <div class="mt-8">
+            <div class="flex items-center gap-2.5">
+                <span class="grid size-6 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">1</span>
+                <h3 class="font-semibold">Import Strava data</h3>
+            </div>
+            <div class="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                <div class="flex items-center justify-between border-b border-gray-200 bg-gray-100/70 px-3 py-1.5">
+                    <div class="flex items-center gap-1.5">
+                        <span class="size-2.5 rounded-full bg-red-400"></span>
+                        <span class="size-2.5 rounded-full bg-yellow-400"></span>
+                        <span class="size-2.5 rounded-full bg-green-400"></span>
+                    </div>
+                    <span class="font-mono text-[11px] text-gray-400">terminal</span>
+                </div>
+                <div class="flex items-center gap-2 px-4 py-3 font-mono text-sm">
+                    <span class="select-none text-primary">&rsaquo;</span>
+                    <code class="flex-1 overflow-x-auto whitespace-nowrap text-gray-800">docker compose exec app bin/console app:data:import</code>
                 </div>
             </div>
         </div>
-    </dl>
-</div>
+        <div class="mt-6">
+            <div class="flex items-center gap-2.5">
+                <span class="grid size-6 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">2</span>
+                <h3 class="font-semibold">Build static HTML files</h3>
+            </div>
+            <div class="mt-3 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                <div class="flex items-center justify-between border-b border-gray-200 bg-gray-100/70 px-3 py-1.5">
+                    <div class="flex items-center gap-1.5">
+                        <span class="size-2.5 rounded-full bg-red-400"></span>
+                        <span class="size-2.5 rounded-full bg-yellow-400"></span>
+                        <span class="size-2.5 rounded-full bg-green-400"></span>
+                    </div>
+                    <span class="font-mono text-[11px] text-gray-400">terminal</span>
+                </div>
+                <div class="flex items-center gap-2 px-4 py-3 font-mono text-sm">
+                    <span class="select-none text-primary">&rsaquo;</span>
+                    <code class="flex-1 overflow-x-auto whitespace-nowrap text-gray-800">docker compose exec app bin/console app:data:build</code>
+                </div>
+            </div>
+            <p class="mt-2.5 flex items-start gap-2 text-xs text-gray-500">
+                <svg class="mt-px size-3.5 shrink-0 text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path></svg>
+                Requires at least one imported activity before it will run.
+            </p>
+        </div>
+        <div class="mt-10 bg-gray-50/50 px-4 py-3 text-sm text-gray-500">
+            Refresh this page after you've run the commands.
+        </div>
+    </div>
+</section>
 </body>
 </html>

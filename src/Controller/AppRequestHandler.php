@@ -37,6 +37,6 @@ final readonly class AppRequestHandler
             return new RedirectResponse('/strava-oauth', Response::HTTP_FOUND);
         }
 
-        return new Response($this->twig->render('html/setup.html.twig'), Response::HTTP_OK);
+        return new Response($this->twig->render('html/finish-setup.html.twig'), Response::HTTP_OK);
     }
 }

@@ -49,7 +49,7 @@ final readonly class StravaOAuthRequestHandler
         if ($e instanceof InsufficientStravaAccessTokenScopes) {
             // The user probably used the refresh token displayed on Strava's API settings page.
             // Even though the docs state explicitly that this will not work, users still do this and "report issues".
-            return new Response($this->twig->render('html/oauth/insufficient-scopes.html.twig', [
+            return new Response($this->twig->render('html/strava-oauth/insufficient-scopes.html.twig', [
                 'stravaClientId' => $this->stravaClientId,
                 'returnUrl' => $request->getSchemeAndHttpHost().'/strava-oauth',
             ]), Response::HTTP_OK);
@@ -70,7 +70,7 @@ final readonly class StravaOAuthRequestHandler
 
                     $refreshToken = Json::decode($response->getBody()->getContents())['refresh_token'];
 
-                    return new Response($this->twig->render('html/oauth/refresh-token.html.twig', [
+                    return new Response($this->twig->render('html/strava-oauth/refresh-token.html.twig', [
                         'refreshToken' => $refreshToken,
                         'url' => $request->getSchemeAndHttpHost(),
                     ]), Response::HTTP_OK);
@@ -82,7 +82,7 @@ final readonly class StravaOAuthRequestHandler
                 }
             }
 
-            return new Response($this->twig->render('html/oauth/start-authorization.html.twig', [
+            return new Response($this->twig->render('html/strava-oauth/start-authorization.html.twig', [
                 'stravaClientId' => $this->stravaClientId,
                 'returnUrl' => $request->getSchemeAndHttpHost().'/strava-oauth',
                 'error' => $error ?? null,
@@ -90,7 +90,7 @@ final readonly class StravaOAuthRequestHandler
         }
 
         // Any other exception is unexpected.
-        return new Response($this->twig->render('html/oauth/error-page.html.twig', [
+        return new Response($this->twig->render('html/strava-oauth/error-page.html.twig', [
             'error' => $e->getMessage(),
         ]), Response::HTTP_OK);
     }
