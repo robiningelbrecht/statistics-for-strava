@@ -2,13 +2,16 @@
 
 namespace App\Tests\Application\Build\RunBuild;
 
+use App\Application\AppIsNotReady;
+use App\Application\AppStatusChecker;
 use App\Application\Build\RunBuild\RunBuild;
 use App\Application\Build\RunBuild\RunBuildCommandHandler;
 use App\Application\Import\StravaImport\ImportGear\GearImportStatus;
 use App\Domain\Activity\ActivityId;
-use App\Domain\Activity\ActivityIdRepository;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Athlete\Athlete;
+use App\Domain\Athlete\AthleteRepository;
 use App\Domain\Gear\GearId;
 use App\Domain\Gear\ImportedGear\ImportedGearRepository;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
@@ -74,14 +77,12 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
         $this->assertStringContainsString('[WARNING] Some of your gear hasn’t been imported yet', $output);
     }
 
-    public function testHandleWhenStravaImportIsNotCompleted(): void
+    public function testHandleWhenNoActivitiesHaveBeenImported(): void
     {
-        $output = new SpyOutput();
+        $this->expectExceptionObject(AppIsNotReady::becauseNoActivitiesHaveBeenImportedYet());
         $this->buildAppCommandHandler->handle(new RunBuild(
-            output: new SymfonyStyle(new StringInput('input'), $output),
+            output: new SymfonyStyle(new StringInput('input'), new SpyOutput()),
         ));
-
-        $this->assertMatchesTextSnapshot($output);
     }
 
     #[\Override]
@@ -89,9 +90,16 @@ class RunBuildCommandHandlerTest extends ContainerTestCase
     {
         parent::setUp();
 
+        $this->getContainer()->get(AthleteRepository::class)->save(Athlete::create([
+            'id' => 100,
+            'birthDate' => '1989-08-14',
+            'firstname' => 'Robin',
+            'lastname' => 'Ingelbrecht',
+        ]));
+
         $this->buildAppCommandHandler = new RunBuildCommandHandler(
             commandBus: $this->commandBus = new SpyCommandBus(),
-            activityIdRepository: $this->getContainer()->get(ActivityIdRepository::class),
+            appStatusChecker: $this->getContainer()->get(AppStatusChecker::class),
             gearImportStatus: $this->getContainer()->get(GearImportStatus::class),
             clock: PausedClock::on(SerializableDateTime::fromString('2023-10-17 16:15:04')),
         );

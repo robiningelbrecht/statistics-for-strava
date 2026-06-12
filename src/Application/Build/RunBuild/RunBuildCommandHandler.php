@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Build\RunBuild;
 
+use App\Application\AppStatusChecker;
 use App\Application\Build\BuildActivitiesHtml\BuildActivitiesHtml;
 use App\Application\Build\BuildBadgeSvg\BuildBadgeSvg;
 use App\Application\Build\BuildBestEffortsHtml\BuildBestEffortsHtml;
@@ -25,7 +26,6 @@ use App\Application\Build\BuildSegmentsHtml\BuildSegmentsHtml;
 use App\Application\Build\ConfigureAppColors\ConfigureAppColors;
 use App\Application\Build\ConfigureAppLocale\ConfigureAppLocale;
 use App\Application\Import\StravaImport\ImportGear\GearImportStatus;
-use App\Domain\Activity\ActivityIdRepository;
 use App\Infrastructure\Console\ProgressBar;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\CQRS\Command\Command;
@@ -36,7 +36,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
 {
     public function __construct(
         private CommandBus $commandBus,
-        private ActivityIdRepository $activityIdRepository,
+        private AppStatusChecker $appStatusChecker,
         private GearImportStatus $gearImportStatus,
         private Clock $clock,
     ) {
@@ -47,11 +47,7 @@ final readonly class RunBuildCommandHandler implements CommandHandler
         assert($command instanceof RunBuild);
 
         $output = $command->getOutput();
-        if ($this->activityIdRepository->count() <= 0) {
-            $output->writeln('<error>Wait until at least one activity has been imported before building the app</error>');
-
-            return;
-        }
+        $this->appStatusChecker->ensureIsReadyForBuild();
 
         if (!$this->gearImportStatus->isComplete()) {
             $output->block('[WARNING] Some of your gear hasn’t been imported yet. This is most likely due to Strava API rate limits being reached. As a result, your gear statistics may currently be incomplete.
