@@ -12,7 +12,8 @@ use App\Domain\Strava\Webhook\WebhookAspectType;
 use App\Domain\Strava\Webhook\WebhookEventRepository;
 use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\Mutex;
-use Symfony\Component\Console\Application;use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -75,7 +76,7 @@ final class ProcessStravaWebhooksConsoleCommand extends Command
 
         $input = new ArrayInput([
             'command' => RunStravaImportAndBuildAppConsoleCommand::NAME,
-            'restrictToActivityIds' => $createOrUpdateActivityIds,
+            RunStravaImportAndBuildAppConsoleCommand::RESTRICT_TO_ACTIVITY_IDS_ARGUMENT => implode(',', array_map(strval(...), $createOrUpdateActivityIds->toArray())),
         ]);
         $input->setInteractive(false);
 

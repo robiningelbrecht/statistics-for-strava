@@ -7,6 +7,7 @@ namespace App\Infrastructure\Daemon\Cron;
 use App\Console\Daemon\AppUpdateAvailableNotificationCronAction;
 use App\Console\Daemon\GearMaintenanceNotificationConsoleCommand;
 use App\Console\Daemon\RunStravaImportAndBuildAppConsoleCommand;
+use App\Domain\Import\ImportMode;
 use Cron\CronExpression;
 
 final readonly class CronAction
@@ -45,5 +46,10 @@ final readonly class CronAction
             'appUpdateAvailableNotification' => sprintf('bin/console %s', AppUpdateAvailableNotificationCronAction::NAME),
             default => throw new \RuntimeException(sprintf('Unsupported Cron action: %s', $this->getId())),
         };
+    }
+
+    public function supportsImportMode(ImportMode $importMode): bool
+    {
+        return !('importDataAndBuildApp' === $this->getId() && $importMode->isFiles());
     }
 }

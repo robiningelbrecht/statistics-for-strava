@@ -47,8 +47,13 @@ final class SystemDaemon implements Daemon
     public function configureCron(): void
     {
         $actions = [];
+        $processedCronAction = [];
         /** @var CronAction $cronAction */
         foreach ($this->configuredCronActions as $cronAction) {
+            if (!$cronAction->supportsImportMode($this->importMode)) {
+                continue;
+            }
+            $processedCronAction[] = $cronAction;
             $actions[] = new Action(
                 key: $cronAction->getId(),
                 mutexTtl: 1200,
@@ -124,7 +129,7 @@ final class SystemDaemon implements Daemon
         $this->getConsoleOutput()->writeln([
             ...array_map(
                 fn (CronAction $action): string => \sprintf('<info> - %s: %s</info>', $action->getId(), $action->getExpression()),
-                iterator_to_array($this->configuredCronActions)
+                $processedCronAction
             ),
             ...$extraConfiguredCronActionsOutput,
         ]);
