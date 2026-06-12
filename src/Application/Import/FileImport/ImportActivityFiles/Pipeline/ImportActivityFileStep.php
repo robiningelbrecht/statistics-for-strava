@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Import\FileImport\Pipeline;
+namespace App\Application\Import\FileImport\ImportActivityFiles\Pipeline;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Tests\Application\Import\FileImport\Pipeline;
+namespace App\Tests\Application\Import\FileImport\ImportActivityFiles\Pipeline;
 
-use App\Application\Import\FileImport\Pipeline\ActivityImportContext;
-use App\Application\Import\FileImport\Pipeline\AnalyzeRouteGeography;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\ActivityImportContext;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\AnalyzeRouteGeography;
 use App\Domain\Activity\Route\RouteGeography;
 use App\Domain\Activity\Route\RouteGeographyAnalyzer;
 use App\Domain\Activity\SportType\SportType;

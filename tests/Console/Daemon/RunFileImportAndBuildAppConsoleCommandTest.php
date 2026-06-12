@@ -126,7 +126,7 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute(['command' => $command->getName()]);
 
-        $this->assertEmpty($this->commandBus->getDispatchedCommands());
+        $this->assertMatchesJsonSnapshot(Json::encode($this->commandBus->getDispatchedCommands()));
         $this->assertStringContainsString(
             'Wait until at least one activity has been imported before building the app',
             $commandTester->getDisplay(),
