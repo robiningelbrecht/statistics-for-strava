@@ -1,4 +1,4 @@
-'# completed': '# completed'
+'# completed': '# abgeschlossen'
 '42-day fitness trend': '42-tägiger Fitness-Trend'
 '7-day fatigue level': '7-tägiges Ermüdungsniveau'
 '< 1.5: Good variety in training': '< 1.5: Gute Abwechslung im Training'
@@ -47,14 +47,14 @@ Best: Beste
 Cadence: Trittfrequenz
 Cal.: Cal.
 Calories: Kalorien
-'Calories burned': 'Kalorien verbrannt'
-'Calories burnt': 'Calories burnt'
+'Calories burned': 'Verbrannte Kalorien'
+'Calories burnt': 'Verbrannte Kalorien'
 Canoeing: Kanufahren
 'Carbon saved': 'Kohlendioxid gespart'
 'Challenge consistency': Herausforderungskonstanz
 Challenges: Herausforderungen
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Langfristige Trainingsbelastung (Fitness) - 42 Tage exponentiell gewichteter Durchschnitt deiner täglichen Trainingsbelastung. Stellt die langfristige Trainingsentwicklung dar.'
-'Clear all filters': 'Clear all filters'
+'Clear all filters': 'Alle Filter entfernen'
 'Clear chat': 'Chat löschen'
 'Close modal': 'Modalen Dialog schließen'
 Commutes: Pendeln
@@ -62,8 +62,8 @@ Commutes: Pendeln
 Compare: Vergleich
 'Compare to': 'Vergleich zu'
 'Completed {threshold} activities': '{threshold} Aktivitäten abgeschlossen'
-Components: Components
-'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Congrats! You achieved {numberOfPRs} PRs in this activity.'
+Components: Komponenten
+'Congrats! You achieved {numberOfPRs} PRs in this activity.': 'Glückwunsch! Du hast {numberOfPRs} PRs in der Aktivität.'
 'Consider reducing load': 'Belastungsreduzierung in Erwägung ziehen'
 Consistency: Konstanz
 Country: Land
@@ -75,7 +75,7 @@ Crossfit: Crossfit
 Cycling: Radfahren
 'Daily TRIMP': 'Täglicher TRIMP'
 'Daily activities': 'Tägliche Aktivitäten'
-Dance: Dance
+Dance: Tanzen
 'Dark mode': 'Dark mode'
 Dashboard: Dashboard
 Date: Datum
@@ -91,7 +91,7 @@ Dist.: Dist.
 Distance: Distanz
 'Distance & Elevation': 'Distanz & Höhenmeter'
 'Distance breakdown': Distanzaufschlüsselung
-'Distance distribution': 'Distance distribution'
+'Distance distribution': 'Distanzverteilung
 'Distance in {unit}': 'Distanz in {unit}'
 'Distance over time per gear': 'Distanz über Zeit pro Ausrüstung'
 'Distance per month per gear': 'Distanz pro Monat pro Ausrüstung'
@@ -100,17 +100,17 @@ Duration: Dauer
 'E-Bike Rides': E-Bike-Radfahrten
 'E-Mountain Bike Rides': E-Mountainbike-Fahrten
 Eddington: Eddington
-'Eddington number': 'Eddington number'
+'Eddington number': 'Eddington Zahl'
 'Eddington over time': 'Eddington over time'
 'Effort vs heart rate': 'Anstrengung vs Herzfrequenz'
-'Elapsed time': 'Elapsed time'
+'Elapsed time': 'verstrichene Zeit'
 Elev: Anstieg
 Elev.: Elev.
 Elevation: Höhenmeter
 'Elevation in {unit}': 'Höhenmeter in {unit}'
 Elliptical: Crosstrainer
-Energy: Energy
-'Energy burned across your activities': 'Energy burned across your activities'
+Energy: Energie
+'Energy burned across your activities': 'Während der Aktivitäten verbrannte Energie'
 'Enter fullscreen mode': 'Vollbildmodus aktivieren'
 Evening: Abend
 'Excludes commutes': 'Pendler ausschließen'
@@ -203,7 +203,7 @@ Loading...: Lädt...
 'Long run': 'Langer Lauf'
 'Longest activity': 'Längste Aktivität'
 'Longest activity (h)': 'Längste Aktivität (h)'
-'Longest day': 'Longest day'
+'Longest day': 'Längster Tag'
 'Longest distance': 'weiteste Distanz'
 'Longest streaks': 'Längste Serie'
 Low: Niedrig
@@ -233,12 +233,12 @@ Morning: Morgen
 'Most recent milestones': 'Neueste Meilensteine'
 'Mountain Bike Rides': Mountainbike-Fahrten
 'Moving time': Bewegungszeit
-'Moving time by sport': 'Moving time by sport'
-'Moving time in hours': 'Moving time in hours'
+'Moving time by sport': 'Bewegungszeit nach Sportart'
+'Moving time in hours': 'Bewegungszeit in Stunden'
 Name: Name
 Neutral: Neutral
 'New personal best for': 'Neue persönliche Bestleistung für'
-'Next milestone': 'Next milestone'
+'Next milestone': 'Nächster Meilenstein'
 Night: Nacht
 'No activities': 'Keine Aktivitäten'
 'No data available': 'Keine Daten verfügbar'
@@ -264,7 +264,7 @@ Over-fatigued: Übermüdet
 'Overall weekly training stress': 'Gesamte wöchentliche Trainingsbelastung'
 'PB badges': 'PB Abzeichen'
 'PET bottles produced': 'PET Flaschen hergestellt'
-Pace: Pace
+Pace: Tempo
 Padel: Padel
 'Peak fresh': Topfit
 'Peak power outputs': Spitzenleistungen
@@ -275,14 +275,14 @@ Photos: Fotos
 'Physical Therapy': 'Physical Therapy'
 'Pickle Ball': Pickleball
 Pilates: Pilates
-'Pizza slices': 'Pizza slices'
+'Pizza slices': 'Pizzastücke'
 'Please address these issues': 'Bitte behebe diese Probleme'
 'Polarised training (last 30 days)': 'Polarized-Training (letzte 30 Tage)'
 Power: Leistung
 'Powered by an estimated {caloriesBurned} calories, or roughly {numberOfPizzaSlices} slices of pizza 🍕.': 'Dabei wurden geschätzte {caloriesBurned} Kalorien verbraucht, was ungefähr {numberOfPizzaSlices} Pizzastücken entspricht 🍕.'
 'Prev year': Vorjahr
 Previous: Vorherige
-'Purchase price': 'Purchase price'
+'Purchase price': 'Kaufpreis'
 Race: Wettkampf
 'Racing Score': Wettkampfpunktzahl
 'Racquet & Paddle Sports': 'Schläger- & Paddelsportarten'
@@ -443,7 +443,7 @@ Tennis: Tennis
 "That's the length of the Great Wall of China": 'Das entspricht der Länge der chinesischen Mauer'
 "That's three quarters of the way around the Earth": 'Das ist dreiviertel des Erdumfanges'
 "That's {number} days of at least {distance}": 'Das sind {number} Tage mit mindestens {distance}'
-"That's {percentage}% of all countries 🌍": "That's {percentage}% of all countries 🌍"
+"That's {percentage}% of all countries 🌍": "Das sind {percentage}% aller Länder 🌍"
 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.': 'The Eddington number in the context of cycling or running is defined as the maximum number E such that the athlete has covered at least E km on at least E days.'
 'These badges are dynamically created. You can use them in any &lt;img&gt; tag': 'Diese Abzeichen sind dynamisch erstellt. Du kannst sie in allen &lt;img&gt; Tags verwenden.'
 Thinking...: Denke...
@@ -454,7 +454,7 @@ Thinking...: Denke...
 Thu: Do
 Thu.: Thu.
 Time: Zeit
-'Time in zone': 'Time in zone'
+'Time in zone': 'Zeit in Zone'
 'Times completed': 'Male abgeschlossen'
 Title: Title
 'To enable it, configure {configFile} and rebuild the files for the changes to take effect': 'Um es zu aktivieren, passe {configFile} an und builde die Dateien erneut, damit die Änderungen wirksam werden'
@@ -464,7 +464,7 @@ Title: Title
 'Total elevation per month': 'Gesamthöhenmeter pro Monat'
 'Total hours spent per gear': 'Gesamtstunden pro Ausrüstung'
 'Total hours spent per sport type': 'Gesamtstunden pro Sportart'
-'Total moving time per month': 'Total moving time per month'
+'Total moving time per month': 'Gesamte Bewegungszeit pro Monat'
 'Trail Runs': Trail-Läufe
 'Training 4–5 days every week scores higher than doing everything in one or two days.': '4-5 Tage Training pro Woche erzielen einen höheren Wert als alles an einem oder zwei Tagen zu erledigen.'
 'Training Impulse - Training load metric that accounts for intensity and duration.': 'Trainingsimpuls - Kennzahl für die Trainingsbelastung, die Intensität und Dauer berücksichtigt.'
@@ -508,7 +508,7 @@ Wheelchair: Rollstuhl
 Workout: Training
 'Workout assistant': Trainingsassistent
 'Workout type': Trainingseinheitstyp
-World: World
+World: Welt
 Year: Jahr
 Yearly: Jährlich
 'Yearly stats': 'Jährliche Statistiken'
@@ -540,11 +540,11 @@ bpm: bpm
 challenges: challenges
 clear: löschen
 compare: vergleiche
-countries: countries
+countries: Länder
 day(s): Tag(e)
 days: Tage
 'days needed for next Eddington': 'Tage für die nächste Eddington-Zahl benötigt'
-'days to reach {n}': 'days to reach {n}'
+'days to reach {n}': 'Tage bis zum Erreichen {n}'
 history: Verlauf
 hours: Stunden
 hrs: h
@@ -573,9 +573,9 @@ workouts: Trainingseinheiten
 '{numberOfActivities} activities': '{numberOfActivities} Aktivitäten'
 '{numberOfActivities} activities in {year}': '{numberOfActivities} Aktivitäten im {year}'
 '{numberOfMonths} months': '{numberOfMonths} Monate'
-'{numberOfResults} photos': '{numberOfResults} photos'
-'{numberOfResults} results': '{numberOfResults} results'
-'{numberOfResults} routes': '{numberOfResults} routes'
+'{numberOfResults} photos': '{numberOfResults} Bilder'
+'{numberOfResults} results': '{numberOfResults} Ergebnise'
+'{numberOfResults} routes': '{numberOfResults} Routen'
 '{numberOfWeeks} weeks': '{numberOfWeeks} Wochen'
 '{threshold} hours using {gearName}': '{threshold} Stunden mit {gearName} aufgezeichnet'
 '{threshold} total distance using {gearName}': '{threshold} Gesamtdistianz mit {gearName} aufgezeichnet'
