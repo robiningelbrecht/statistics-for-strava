@@ -1,0 +1,61 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ appName }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ appName }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+{% include 'html/navigation/top-nav-bar.html.twig' %}
+<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-green-700">
+                <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+                Authorization successful
+            </span>
+        <h2 class="mt-4 text-2xl font-bold tracking-tight">You're connected 🎉</h2>
+        <p class="mt-1 text-sm text-gray-500">One last step though...</p>
+        <ol class="mt-6 space-y-4">
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">1</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Copy your refresh token</p>
+                    <div class="mt-2 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                        <div class="flex items-center justify-between border-b border-gray-200 bg-gray-100/70 px-3 py-1.5">
+                            <span class="font-mono text-[11px] text-gray-400">STRAVA_REFRESH_TOKEN</span>
+                        </div>
+                        <div class="px-4 py-3 font-mono text-sm">
+                            <code class="block overflow-x-auto whitespace-nowrap text-gray-800">{{ refreshToken }}</code>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">2</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Override <code class="font-mono text-xs">STRAVA_REFRESH_TOKEN</code> in your <code class="font-mono text-xs">.env</code> file</p>
+                    <p class="mt-0.5 text-sm text-gray-500">Paste the value above, replacing the existing token.</p>
+                </div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">3</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Restart your container, then continue</p>
+                    <a href="{{ url }}" class="mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+                        Open the app
+                        <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>
+</body>
+</html>
+{% endautoescape %}

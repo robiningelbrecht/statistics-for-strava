@@ -1,0 +1,49 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ appName }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ appName }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+{% include 'html/navigation/top-nav-bar.html.twig' %}
+<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <h2 class="mt-4 text-2xl font-bold tracking-tight">Your refresh token is missing a scope</h2>
+        <p class="mt-1 text-sm text-gray-500">
+            Your token doesn't include the required <code class="font-mono text-xs text-gray-700">activity:read_all</code> scope. This usually happens when you use the token shown on Strava's API settings page. As noted in
+            <a class="font-medium text-primary hover:underline" href="https://docs.getsfs.app/#/getting-started/installation?id=env">the docs</a>, that one won't work.
+        </p>
+        <div class="mt-6 rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">To restart authorization</p>
+            <ol class="mt-3 space-y-3">
+                <li class="flex items-start gap-3 text-sm">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-md bg-white text-xs font-bold text-primary shadow-sm ring-1 ring-gray-200">1</span>
+                    <span class="text-gray-600">Replace the token in <code class="font-mono text-xs">.env</code> with <code class="font-mono text-xs">YOUR_REFRESH_TOKEN_OBTAINED_AFTER_AUTH_FLOW</code></span>
+                </li>
+                <li class="flex items-start gap-3 text-sm">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-md bg-white text-xs font-bold text-primary shadow-sm ring-1 ring-gray-200">2</span>
+                    <span class="text-gray-600">Restart your container</span>
+                </li>
+                <li class="flex items-start gap-3 text-sm">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-md bg-white text-xs font-bold text-primary shadow-sm ring-1 ring-gray-200">3</span>
+                    <span class="text-gray-600">Click below to begin the authorization flow again</span>
+                </li>
+            </ol>
+        </div>
+        <a href="http://www.strava.com/oauth/authorize?client_id={{ stravaClientId }}&response_type=code&redirect_uri={{ returnUrl }}&approval_prompt=force&scope=activity:read_all"
+           class="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-sm transition hover:brightness-95">
+            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+            Restart Strava authorization
+        </a>
+    </div>
+</section>
+</body>
+</html>
+{% endautoescape %}
