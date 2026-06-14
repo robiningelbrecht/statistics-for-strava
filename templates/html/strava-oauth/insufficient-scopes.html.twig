@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
     <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
 </head>
-<body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+<body class="min-h-screen bg-white text-gray-900 antialiased">
 {% include 'html/navigation/top-nav-bar.html.twig' %}
 <section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
     <div class="mx-auto w-full max-w-xl">
@@ -38,8 +38,9 @@
             </ol>
         </div>
         <a href="http://www.strava.com/oauth/authorize?client_id={{ stravaClientId }}&response_type=code&redirect_uri={{ returnUrl }}&approval_prompt=force&scope=activity:read_all"
-           class="flex mx-auto w-50 mt-6 transition hover:brightness-95">
-            <img src="{{ relativeUrl(asset('assets/images/strava/strava-oauth.svg')) }}"  alt="Start Strava authorization flow"/>
+           class="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-sm transition hover:brightness-95">
+            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
+            Restart Strava authorization
         </a>
     </div>
 </section>
