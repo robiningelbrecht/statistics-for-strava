@@ -10,27 +10,11 @@
     <link rel="icon" type="image/x-icon" href="/assets/images/logo.svg">
     <link href="/css/dist/tailwind.min.css?0025176c-5652-11ee-923d-02424dd627d5" rel="stylesheet">
 </head>
-<body class="bg-gray-50 h-screen flex justify-center items-center">
+<body class="min-h-screen bg-white text-gray-900 antialiased">
 <nav class="text-gray-900 bg-white border-b border-gray-200 px-4 py-2.5 fixed left-0 right-0 top-0 z-1100 group">
     <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
-            <button type="button" id="toggle-sidebar-collapsed-state" aria-controls="drawer-navigation" class="p-1.5 mr-1.5 text-gray-600 rounded-md cursor-pointer hidden md:block hover:text-gray-900 hover:bg-gray-100">
-                <svg class="size-4.5" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="4" width="18" height="16" rx="2"></rect>
-                    <path d="M9 4v16"></path>
-                    <path class="origin-center [transform-box:fill-box] transition-transform duration-300 ease-in-out sidebar-collapsed:rotate-180" d="M16 8l-3 4 3 4"></path>
-                </svg>
-                <span class="sr-only">Toggle sidebar</span>
-            </button>
-            <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation" class="md:hidden mr-3 inline-flex items-center justify-center text-gray-600 cursor-pointer select-none">
-                <span aria-hidden="true" class="relative block w-3.5 h-5">
-                    <span class="absolute inset-x-0 top-1 h-0.5 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:top-1/2 drawer-open:-translate-y-1/2 drawer-open:rotate-45"></span>
-                    <span class="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:opacity-0"></span>
-                    <span class="absolute inset-x-0 bottom-1 h-0.5 rounded-full bg-current transition-all duration-300 ease-in-out drawer-open:bottom-1/2 drawer-open:translate-y-1/2 drawer-open:-rotate-45"></span>
-                </span>
-                <span class="sr-only">Toggle sidebar</span>
-            </button>
-            <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
+                        <a href="#" data-router-navigate="/dashboard" class="flex items-center justify-between mr-4">
                 <img src="/assets/images/logo.svg" class="rounded-full mr-3 h-8" alt="Logo">
                 <div class="flex gap-x-1 sm:text-lg font-extrabold whitespace-nowrap">
                     <div>Statistics for Strava</div>
@@ -68,11 +52,48 @@
             </div>
                     </div>
     </div>
-</nav><div class="flex flex-col items-center p-4 text-center">
-    <p class="text-2xl font-semibold">Authorization successful &#127881;!</p>
-    <p class="text-2xl font-semibold pb-5">Copy/paste the refresh token and override `STRAVA_REFRESH_TOKEN` in your `.env` file.</p>
-    <p class="text-gray-500 mb-4">After restarting your container, navigate to http://:</p>
-    <code>the-token</code>
-</div>
+</nav><section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-green-700">
+                <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>
+                Authorization successful
+            </span>
+        <h2 class="mt-4 text-2xl font-bold tracking-tight">You're connected &#127881;</h2>
+        <p class="mt-1 text-sm text-gray-500">One last step though...</p>
+        <ol class="mt-6 space-y-4">
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">1</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Copy your refresh token</p>
+                    <div class="mt-2 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                        <div class="flex items-center justify-between border-b border-gray-200 bg-gray-100/70 px-3 py-1.5">
+                            <span class="font-mono text-[11px] text-gray-400">STRAVA_REFRESH_TOKEN</span>
+                        </div>
+                        <div class="px-4 py-3 font-mono text-sm">
+                            <code class="block overflow-x-auto whitespace-nowrap text-gray-800">the-token</code>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">2</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Override <code class="font-mono text-xs">STRAVA_REFRESH_TOKEN</code> in your <code class="font-mono text-xs">.env</code> file</p>
+                    <p class="mt-0.5 text-sm text-gray-500">Paste the value above, replacing the existing token.</p>
+                </div>
+            </li>
+            <li class="flex items-start gap-3">
+                <span class="grid size-6 shrink-0 place-items-center rounded-md bg-orange-100 text-xs font-bold text-primary">3</span>
+                <div class="flex-1">
+                    <p class="text-sm font-medium">Restart your container, then continue</p>
+                    <a href="http://:" class="mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+                        Open the app
+                        <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+            </li>
+        </ol>
+    </div>
+</section>
 </body>
 </html>

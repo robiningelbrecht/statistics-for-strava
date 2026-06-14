@@ -1,0 +1,31 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ appName }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ appName }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+{% include 'html/navigation/top-nav-bar.html.twig' %}
+<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <h2 class="mt-4 text-2xl font-bold tracking-tight">Hmmm, something went wrong</h2>
+        <p class="mt-1 text-sm text-gray-500">We hit a snag while talking to Strava. The details are below.</p>
+        <div class="mt-6 overflow-hidden rounded-xl border border-red-200 bg-red-50">
+            <div class="border-b border-red-200 bg-red-100/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-red-700">Error details</div>
+            <p class="px-4 py-3 font-mono text-sm text-red-800">{{ error }}</p>
+        </div>
+        <p class="mt-4 text-sm text-gray-500">
+            Please check the <a class="font-medium text-primary hover:underline" href="https://docs.getsfs.app/#/troubleshooting/strava-authorization">troubleshooting guide</a> for help resolving this.
+        </p>
+    </div>
+</section>
+</body>
+</html>
+{% endautoescape %}
