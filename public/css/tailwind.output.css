@@ -3078,6 +3078,9 @@
   .px-1 {
     padding-inline: var(--spacing);
   }
+  .px-1\.5 {
+    padding-inline: calc(var(--spacing) * 1.5);
+  }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
@@ -3292,6 +3295,9 @@
   }
   .text-\[11px\] {
     font-size: 11px;
+  }
+  .text-\[13px\] {
+    font-size: 13px;
   }
   .text-xxs {
     font-size: var(--text-xxs);
