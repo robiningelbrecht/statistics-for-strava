@@ -1,3 +1,36 @@
+# [v4.8.8](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.8) - 2026-06-14
+
+## Improvements
+* Moved database migrations away from the codebase to the Docker entrypoint
+* Redesigned onboarding flow
+* Updated German translations
+* Updated Portuguese translations
+
+## Bug fixes
+* Fixed a bug where filters on the photos page was not persisted between page loads
+
+## Technical details
+* ISSUE #2142: Introduce an isolated service to detect duplicate activities before importing by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2143
+* ISSUE #2141: Move the app away from Strava branding by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2144
+* ISSUE #2133: Add new Activity file import pipeline by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2145
+* ISSUE #2146: Add periodic file imports to the daemon container by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2147
+* ISSUE #2152: Rename database, but fallback to existing strava.db file by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2153
+* ISSUE #2151: Only render link to Strava activity if activity got imported through Strava API by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2154
+* ISSUE #2156: Filters on the photos page are not persisted to localStorage by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2157
+* ISSUE #2149: Remove references to kudo's and comments by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2158
+* ISSUE #2160: Improve import flow and get rid of unnecessary cron complexity by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2162
+* ISSUE #2161: Improve file parser tests by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2163
+* ISSUE #2155: Move database migrations to docker entrypoint by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2159
+* ISSUE #2164: Import athlete from file config by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2165
+* ISSUE #2150: Restyle onboarding flow by @robiningelbrecht in https://github.com/robiningelbrecht/statistics-for-strava/pull/2166
+* Update German translations in intl-icu file by @effectpears in https://github.com/robiningelbrecht/statistics-for-strava/pull/2170
+* Update messages+intl-icu.pt_BR.yaml by @gustavobim in https://github.com/robiningelbrecht/statistics-for-strava/pull/2168
+
+## New Contributors
+* @gustavobim made their first contribution in https://github.com/robiningelbrecht/statistics-for-strava/pull/2168
+
+**Full Changelog**: https://github.com/robiningelbrecht/statistics-for-strava/compare/v4.8.7...v4.8.8
+
 # [v4.8.7](https://github.com/robiningelbrecht/statistics-for-strava/releases/tag/v4.8.7) - 2026-06-08
 
 ## Bug fixes
