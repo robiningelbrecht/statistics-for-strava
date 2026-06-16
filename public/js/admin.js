@@ -1,4 +1,7 @@
 import Sidebar from "./components/sidebar";
+import {initDrawers} from "flowbite";
+
+initDrawers();
 
 const sidebar = new Sidebar();
 sidebar.init();
