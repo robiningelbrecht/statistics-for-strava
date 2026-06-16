@@ -31,7 +31,6 @@ use App\Infrastructure\Mutex\LockIsAlreadyAcquired;
 use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
-use Doctrine\DBAL\Connection;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -60,7 +59,6 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
         private readonly LoggerInterface $logger,
         private readonly Mutex $mutex,
         private readonly AppStatusChecker $appStatusChecker,
-        private readonly Connection $connection,
         private readonly AppUrl $appUrl,
         private readonly ImportMode $importMode,
     ) {
@@ -132,9 +130,6 @@ final class RunStravaImportAndBuildAppConsoleCommand extends Command
                         sprintf('daily read rate: %s/%s', $rateLimits->getDailyReadRateUsage(), $rateLimits->getDailyReadRateLimit()),
                     ]);
                 }
-
-                $this->connection->executeStatement('VACUUM');
-                $output->writeln('Database got vacuumed 🧹');
             }
             if (!$input->getOption(self::SKIP_BUILD_OPTION)) {
                 $this->appStatusChecker->ensureIsReadyForBuild();
