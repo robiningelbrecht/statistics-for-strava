@@ -28,7 +28,6 @@ use App\Infrastructure\Mutex\LockName;
 use App\Infrastructure\Mutex\Mutex;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\Time\ResourceUsage\ResourceUsage;
-use Doctrine\DBAL\Connection;
 use Monolog\Attribute\WithMonologChannel;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -55,7 +54,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
         private readonly AppUrl $appUrl,
         private readonly Clock $clock,
         private readonly KeyValueStore $keyValueStore,
-        private readonly Connection $connection,
         private readonly LoggerInterface $logger,
         private readonly ImportMode $importMode,
     ) {
@@ -111,9 +109,6 @@ final class RunFileImportAndBuildAppConsoleCommand extends Command
 
                 $this->commandBus->dispatch(new ImportActivityFiles($output));
                 $this->commandBus->dispatch(new CalculateActivityMetrics($output));
-
-                $this->connection->executeStatement('VACUUM');
-                $output->writeln('Database got vacuumed 🧹');
             }
 
             if (!$input->getOption(RunStravaImportAndBuildAppConsoleCommand::SKIP_BUILD_OPTION)) {

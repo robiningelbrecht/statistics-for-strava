@@ -25,7 +25,6 @@ use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
-use Doctrine\DBAL\Connection;
 use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\Console\Application;
@@ -152,9 +151,6 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
 
     private function buildStravaImportCommand(SpyCommandBus $commandBus): RunStravaImportAndBuildAppConsoleCommand
     {
-        $connection = $this->createStub(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
         return new RunStravaImportAndBuildAppConsoleCommand(
             commandBus: $commandBus,
             resourceUsage: new FixedResourceUsage(),
@@ -170,7 +166,6 @@ class ProcessStravaWebhooksConsoleCommandTest extends ConsoleCommandTestCase
                 $this->getContainer()->get(ActivityIdRepository::class),
                 new SuccessfulPermissionChecker(),
             ),
-            connection: $connection,
             appUrl: AppUrl::fromString('http://localhost'),
             importMode: ImportMode::STRAVA_API,
         );

@@ -30,7 +30,6 @@ use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\FileSystem\UnwritablePermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
-use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemOperator;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -294,9 +293,6 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
         ImportMode $importMode = ImportMode::FILES,
         LoggerInterface $logger = new NullLogger(),
     ): RunFileImportAndBuildAppConsoleCommand {
-        $connection = $this->createStub(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
         return new RunFileImportAndBuildAppConsoleCommand(
             commandBus: $commandBus,
             appStatusChecker: new AppStatusChecker(
@@ -314,7 +310,6 @@ class RunFileImportAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             clock: PausedClock::fromString(self::TODAY),
             keyValueStore: $this->keyValueStore,
-            connection: $connection,
             logger: $logger,
             importMode: $importMode,
         );
