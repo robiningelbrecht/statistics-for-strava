@@ -24,7 +24,6 @@ use App\Tests\Infrastructure\CQRS\Command\Bus\SpyCommandBus;
 use App\Tests\Infrastructure\FileSystem\SuccessfulPermissionChecker;
 use App\Tests\Infrastructure\Time\Clock\PausedClock;
 use App\Tests\Infrastructure\Time\ResourceUsage\FixedResourceUsage;
-use Doctrine\DBAL\Connection;
 use League\Flysystem\FilesystemOperator;
 use Psr\Log\NullLogger;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -124,9 +123,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     private function buildStravaImportCommand(): RunStravaImportAndBuildAppConsoleCommand
     {
-        $connection = $this->createStub(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
         return new RunStravaImportAndBuildAppConsoleCommand(
             commandBus: $this->spyCommandBus = new SpyCommandBus(),
             resourceUsage: new FixedResourceUsage(),
@@ -142,7 +138,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
                 $this->getContainer()->get(ActivityIdRepository::class),
                 new SuccessfulPermissionChecker(),
             ),
-            connection: $connection,
             appUrl: AppUrl::fromString('http://localhost'),
             importMode: ImportMode::STRAVA_API,
         );
@@ -150,9 +145,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
 
     private function buildFileImportCommand(): RunFileImportAndBuildAppConsoleCommand
     {
-        $connection = $this->createStub(Connection::class);
-        $connection->method('executeStatement')->willReturn(0);
-
         return new RunFileImportAndBuildAppConsoleCommand(
             commandBus: $this->spyCommandBus = new SpyCommandBus(),
             appStatusChecker: new AppStatusChecker(
@@ -170,7 +162,6 @@ class ImportDataAndBuildAppConsoleCommandTest extends ConsoleCommandTestCase
             appUrl: AppUrl::fromString('http://localhost'),
             clock: PausedClock::fromString(self::TODAY),
             keyValueStore: $this->getContainer()->get(KeyValueStore::class),
-            connection: $connection,
             logger: new NullLogger(),
             importMode: ImportMode::FILES,
         );
