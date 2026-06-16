@@ -1,54 +1,69 @@
-{% extends "html/admin/page.html.twig" %}
-{% block body %}
-<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
-    <div class="mx-auto w-full max-w-sm">
-        <img class="mx-auto h-12 w-auto" src="{{ relativeUrl('assets/images/logo.svg') }}" alt="{{ appName }}">
-        <h1 class="mt-6 text-center text-2xl font-bold tracking-tight">{{ appName }}</h1>
-        <p class="mt-1 text-center text-sm text-gray-500">{{ "Sign in to the admin area"|trans }}</p>
-        {% if error %}
-            <div class="mt-6 overflow-hidden rounded-xl border border-red-200 bg-red-100/60 text-red-700">
-                <p class="px-4 py-3 text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
-            </div>
-        {% endif %}
-        <form class="mt-6 space-y-4" method="post" action="{{ relativeUrl(path('admin_login')) }}">
-            <div>
-                <label for="username">{{ "Username"|trans }}</label>
-                <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+{% autoescape false %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>{{ appName }}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="theme-color" content="#F26822">
+        <meta name="mobile-web-app-title" content="{{ appName }}">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+        <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+    </head>
+    <body class="min-h-screen bg-gray-50 text-gray-900 antialiased admin">
+    <section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+        <div class="mx-auto w-full max-w-sm">
+            <img class="mx-auto h-12 w-auto" src="{{ relativeUrl('assets/images/logo.svg') }}" alt="{{ appName }}">
+            <h1 class="mt-6 text-center text-2xl font-bold tracking-tight">{{ appName }}</h1>
+            <p class="mt-1 text-center text-sm text-gray-500">{{ "Sign in to the admin area"|trans }}</p>
+            {% if error %}
+                <div class="mt-6 overflow-hidden rounded-xl border border-red-200 bg-red-100/60 text-red-700">
+                    <p class="px-4 py-3 text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+                </div>
+            {% endif %}
+            <form class="mt-6 space-y-4" method="post" action="{{ relativeUrl(path('admin_login')) }}">
+                <div>
+                    <label for="username">{{ "Username"|trans }}</label>
+                    <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
                     <span class="flex items-center self-stretch px-3 bg-gray-100 text-gray-500 border-r border-gray-300">
                         <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                         </svg>
                     </span>
-                    <input type="text" id="username" name="_username" autocomplete="username" required autofocus placeholder="{{ "Enter your username"|trans }}"
-                           class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                        <input type="text" id="username" name="_username" autocomplete="username" required autofocus placeholder="{{ "Enter your username"|trans }}"
+                               class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                    </div>
                 </div>
-            </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">{{ "Password"|trans }}</label>
-                <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                <div>
+                    <label for="password">{{ "Password"|trans }}</label>
+                    <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
                     <span class="flex items-center self-stretch px-3 bg-gray-100 text-gray-500 border-r border-gray-300">
                         <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/>
                         </svg>
                     </span>
-                    <input type="password" id="password" name="_password" autocomplete="current-password" required placeholder="{{ "Enter your password"|trans }}"
-                           class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                        <input type="password" id="password" name="_password" autocomplete="current-password" required placeholder="{{ "Enter your password"|trans }}"
+                               class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                    </div>
                 </div>
-            </div>
-            <label class="flex items-center gap-2 text-sm text-gray-700">
-                <input type="checkbox" name="_remember_me">
-                <span>{{ "Remember me for 7 days"|trans }}</span>
-            </label>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            <button type="submit" data-has-loading-state class="group w-full btn--primary">
-                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z"></path>
-                </svg>
-                <span class="label">{{ "Sign in"|trans }}</span>
-                <span class="label--loading">{{ "Signing in..."|trans }}</span>
-            </button>
-        </form>
-    </div>
-</section>
-{% endblock %}
+                <label class="flex items-center gap-2 text-sm text-gray-700">
+                    <input type="checkbox" name="_remember_me">
+                    <span>{{ "Remember me for 7 days"|trans }}</span>
+                </label>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <button type="submit" data-has-loading-state class="group w-full btn--primary">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z"></path>
+                    </svg>
+                    <span class="label">{{ "Sign in"|trans }}</span>
+                    <span class="label--loading">{{ "Signing in..."|trans }}</span>
+                </button>
+            </form>
+        </div>
+    </section>
+    <script src="{{ relativeUrl(asset('js/dist/admin.min.js')) }}" type="module"></script>
+    </body>
+    </html>
+{% endautoescape %}
