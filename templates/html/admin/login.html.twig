@@ -10,6 +10,9 @@
         <meta name="mobile-web-app-capable" content="yes">
         <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
         <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+        <script>
+            document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+        </script>
     </head>
     <body class="min-h-screen bg-gray-50 text-gray-900 antialiased admin">
     <section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
