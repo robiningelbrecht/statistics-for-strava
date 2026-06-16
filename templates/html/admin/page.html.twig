@@ -1,0 +1,19 @@
+{% autoescape false %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>{{ appName }}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="theme-color" content="#F26822">
+        <meta name="mobile-web-app-title" content="{{ appName }}">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+        <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+    </head>
+    <body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
+    {% block body %}
+    {% endblock body %}
+    </body>
+    </html>
+{% endautoescape %}

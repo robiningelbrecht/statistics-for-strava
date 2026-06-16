@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Strava;
 
-use App\Controller\StravaOAuthRequestHandler;
+use App\Controller\Strava\StravaOAuthRequestHandler;
 use App\Domain\Strava\InsufficientStravaAccessTokenScopes;
 use App\Domain\Strava\InvalidStravaAccessToken;
 use App\Domain\Strava\Strava;

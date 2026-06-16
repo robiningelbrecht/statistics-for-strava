@@ -1,0 +1,58 @@
+{% extends "html/admin/page.html.twig" %}
+{% block body %}
+<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-sm">
+        <img class="mx-auto h-12 w-auto" src="{{ relativeUrl('assets/images/logo.svg') }}" alt="{{ appName }}">
+        <h1 class="mt-6 text-center text-2xl font-bold tracking-tight">{{ appName }}</h1>
+        <p class="mt-1 text-center text-sm text-gray-500">Sign in to the admin area</p>
+        {% if error %}
+            <div class="mt-6 overflow-hidden rounded-xl border border-red-200 bg-red-100/60 text-red-700">
+                <p class="px-4 py-3 text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            </div>
+        {% endif %}
+        <form class="mt-6 space-y-4" method="post" action="{{ relativeUrl(path('admin_login')) }}">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                    <span class="flex items-center self-stretch px-3 bg-gray-100 text-gray-500 border-r border-gray-300">
+                        <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3 18a7 7 0 0 1 14 0H3Z"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" autocomplete="username" required autofocus placeholder="Enter your username"
+                           class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                </div>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="mt-1 flex items-center rounded-xl border border-gray-300 shadow-sm overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
+                    <span class="flex items-center self-stretch px-3 bg-gray-100 text-gray-500 border-r border-gray-300">
+                        <svg class="size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10V7a2 2 0 1 1 4 0v3m-6 0h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Z"/>
+                        </svg>
+                    </span>
+                    <input type="password" id="password" name="_password" autocomplete="current-password" required placeholder="Enter your password"
+                           class="block w-full border-0 px-3 py-2 bg-transparent focus:outline-none focus:ring-0">
+                </div>
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <button type="submit"
+                    class="group inline-flex w-full cursor-pointer items-center justify-center gap-2.5 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-sm transition hover:brightness-95 disabled:cursor-not-allowed disabled:brightness-95">
+                <svg class="hidden size-5 animate-spin group-[.is-loading]:block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z"></path>
+                </svg>
+                <span class="group-[.is-loading]:hidden">Sign in</span>
+                <span class="hidden group-[.is-loading]:inline">Signing in…</span>
+            </button>
+        </form>
+        <script>
+            document.querySelector('form').addEventListener('submit', function () {
+                var button = this.querySelector('button[type="submit"]');
+                button.classList.add('is-loading');
+                button.disabled = true;
+            });
+        </script>
+    </div>
+</section>
+{% endblock %}

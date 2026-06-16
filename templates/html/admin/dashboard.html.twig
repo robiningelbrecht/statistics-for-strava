@@ -1,0 +1,32 @@
+{% autoescape false %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ appName }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="theme-color" content="#F26822">
+    <meta name="mobile-web-app-title" content="{{ appName }}">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/x-icon" href="{{ relativeUrl('assets/images/logo.svg') }}">
+    <link href="{{ relativeUrl(asset('css/dist/tailwind.min.css')) }}" rel="stylesheet"/>
+</head>
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+<section class="flex min-h-screen flex-col justify-center px-6 py-12 sm:px-12">
+    <div class="mx-auto w-full max-w-xl">
+        <h2 class="mt-4 text-2xl font-bold tracking-tight">Admin area</h2>
+        <p class="mt-1 text-sm text-gray-500">
+            Signed in as <strong>{{ app.user.userIdentifier }}</strong>.
+        </p>
+        <form class="mt-6" method="post" action="{{ relativeUrl(path('admin_logout')) }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
+            <button type="submit"
+                    class="inline-flex items-center justify-center gap-2.5 rounded-xl border border-gray-300 px-5 py-3 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50">
+                Sign out
+            </button>
+        </form>
+    </div>
+</section>
+</body>
+</html>
+{% endautoescape %}

@@ -10,6 +10,8 @@ parameters:
     env(TZ): ''
     env(SECURED_IMAGE_ALLOWED_IPS): ''
     env(DATABASE_DIRECTORY): '%kernel.project_dir%/storage/database'
+    env(ADMIN_USERNAME): 'admin'
+    env(ADMIN_PASSWORD_HASH): ''
 
 services:
     # default configuration for services in *this* file
@@ -89,6 +91,14 @@ services:
     App\Infrastructure\ValueObject\String\AllowedIpAddresses:
         factory: [ null, 'fromString' ]
         arguments: ['%env(string:SECURED_IMAGE_ALLOWED_IPS)%']
+
+    App\Infrastructure\Security\AdminUserName:
+        factory: [ null, 'fromString' ]
+        arguments: ['%env(string:ADMIN_USERNAME)%']
+
+    App\Infrastructure\Security\AdminPasswordHash:
+        factory: [ null, 'fromString' ]
+        arguments: ['%env(string:ADMIN_PASSWORD_HASH)%']
 
     App\Infrastructure\ValueObject\Measurement\UnitSystem:
         autoconfigure: false
