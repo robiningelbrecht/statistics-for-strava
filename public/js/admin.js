@@ -1,3 +1,8 @@
+import Sidebar from "./components/sidebar";
+
+const sidebar = new Sidebar();
+sidebar.init();
+
 document.addEventListener('submit', function (event) {
     const form = event.target;
     if (!(form instanceof HTMLFormElement)) {
