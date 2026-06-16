@@ -18,10 +18,11 @@ class ActivityTest extends TestCase
     public function testGetName(): void
     {
         $activity = ActivityBuilder::fromDefaults()
-            ->withName('Test Activity #hashtag')
+            ->withName('Zwift - Test Activity #hashtag')
             ->build();
 
         $this->assertEquals('Test Activity #hashtag', $activity->getName());
+        $this->assertEquals('Zwift - Test Activity #hashtag', $activity->getOriginalName());
 
         $activity = ActivityBuilder::fromDefaults()
             ->withName('Test Activity #hashtag #another-one')

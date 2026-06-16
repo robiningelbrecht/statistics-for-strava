@@ -57,6 +57,42 @@ class DbalActivityRepositoryTest extends ContainerTestCase
         );
     }
 
+    public function testFindWithEmptyNameItShouldFallBackToGeneratedName(): void
+    {
+        $activity = ActivityBuilder::fromDefaults()
+            ->withActivityId(ActivityId::fromUnprefixed(1))
+            ->withStartDateTime(SerializableDateTime::fromString('2023-10-10 14:00:34'))
+            ->withSportType(SportType::RIDE)
+            ->build();
+        $this->activityRepository->add(ActivityWithRawData::fromState(
+            $activity,
+            ['raw' => 'data']
+        ));
+
+        // Legacy activities can contain empty titles...
+        $this->getConnection()->executeStatement(
+            'UPDATE Activity SET name = :name WHERE activityId = :activityId',
+            [
+                'name' => '   ',
+                'activityId' => $activity->getId(),
+            ]
+        );
+
+        $persisted = $this->activityRepository->find($activity->getId());
+
+        $this->assertEquals(
+            'Afternoon Ride',
+            $persisted->getName()
+        );
+        $this->assertEquals(
+            ActivityName::from(
+                SerializableDateTime::fromString('2023-10-10 14:00:34'),
+                SportType::RIDE
+            ),
+            ActivityName::fromString($persisted->getName())
+        );
+    }
+
     public function testItShouldThrowWhenNotFound(): void
     {
         $this->expectExceptionObject(new EntityNotFound('Activity "activity-1" not found'));
