@@ -29,7 +29,7 @@
         }
 
         & input:where([type="radio"], [type="checkbox"]) {
-            @apply w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary/30 focus:ring-2;
+            @apply w-4 h-4 text-primary bg-gray-100 border-gray-300 focus:ring-primary/30 focus:ring-2 rounded;
         }
 
         & input:where([type="text"], [type="date"], [type="number"]) {

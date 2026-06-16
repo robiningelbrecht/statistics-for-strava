@@ -22,6 +22,10 @@ security:
                 check_path: admin_login
                 default_target_path: admin_dashboard
                 enable_csrf: true
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 7 days
+                path: /
             logout:
                 path: admin_logout
                 target: admin_login

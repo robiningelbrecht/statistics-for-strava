@@ -1,0 +1,33 @@
+@layer components {
+    body.admin {
+        label {
+            @apply block text-sm font-medium text-gray-700;
+        }
+
+        input:where([type="radio"], [type="checkbox"]) {
+            @apply size-4 rounded border-gray-300 text-primary focus:ring-primary/30;
+        }
+
+        button[type="submit"] {
+            @apply cursor-pointer inline-flex items-center justify-center gap-2.5 rounded-xl border border-gray-300 px-5 py-3 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:brightness-95;
+
+            &.btn--primary {
+                @apply border-0 bg-primary text-white hover:brightness-95;
+            }
+
+            &[data-has-loading-state] {
+                svg {
+                    @apply hidden size-5 animate-spin group-[.is-loading]:block;
+                }
+
+                span.label {
+                    @apply group-[.is-loading]:hidden;
+                }
+
+                span.label--loading {
+                    @apply hidden group-[.is-loading]:inline;
+                }
+            }
+        }
+    }
+}

@@ -31,7 +31,6 @@ final readonly class LoginLogoutRequestHandler
         }
 
         return new Response($this->twig->render('html/admin/login.html.twig', [
-            'lastUsername' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]));
     }

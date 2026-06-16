@@ -30,9 +30,12 @@ final readonly class BuildManifestCommandHandler implements CommandHandler
 
         $manifest = file_get_contents($this->kernelProjectDir.'/templates/manifest.json');
         assert(is_string($manifest));
-        $manifest = str_replace('[APP_NAME]', sprintf('%s | %s', AppName::LABEL, $athlete->getName()), $manifest);
-        $manifest = str_replace('[APP_HOST]', (string) $this->appUrl, $manifest);
-        $manifest = str_replace('[APP_BASE_PATH]', $this->appUrl->getBasePath() ?? '', $manifest);
+        $manifest = strtr($manifest, [
+            '[APP_NAME]' => sprintf('%s | %s', AppName::LABEL, $athlete->getName()),
+            '[APP_HOST]' => (string) $this->appUrl,
+            '[APP_SHORT_NAME]' => AppName::LABEL,
+            '[APP_BASE_PATH]' => $this->appUrl->getBasePath() ?? '',
+        ]);
 
         $this->buildStorage->write('manifest.json', $manifest);
     }
