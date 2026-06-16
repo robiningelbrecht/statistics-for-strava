@@ -4,25 +4,34 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
 
 #[AsController]
-final readonly class AdminSecurityController
+final readonly class LoginLogoutRequestHandler
 {
     public function __construct(
         private Environment $twig,
+        private Security $security,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
     #[Route(path: '/admin/login', name: 'admin_login', methods: ['GET', 'POST'], priority: 10)]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if (null !== $this->security->getUser()) {
+            return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+        }
+
         return new Response($this->twig->render('html/admin/login.html.twig', [
-            'last_username' => $authenticationUtils->getLastUsername(),
+            'lastUsername' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
         ]));
     }
