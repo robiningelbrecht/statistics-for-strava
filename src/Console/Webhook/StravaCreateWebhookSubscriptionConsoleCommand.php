@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Console\Webhook;
 
 use App\Application\AppUrl;
-use App\Controller\StravaWebhookRequestHandler;
+use App\Controller\Strava\StravaWebhookRequestHandler;
 use App\Domain\Strava\Strava;
 use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\Doctrine\Migrations\RequiresUpToDateDatabaseSchema;

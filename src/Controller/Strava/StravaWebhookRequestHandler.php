@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Strava;
 
 use App\Domain\Strava\Webhook\ProcessWebhookEvent\ProcessWebhookEvent;
 use App\Domain\Strava\Webhook\WebhookConfig;

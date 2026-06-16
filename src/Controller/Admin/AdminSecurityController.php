@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller\Admin;
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Twig\Environment;
+
+#[AsController]
+final readonly class AdminSecurityController
+{
+    public function __construct(
+        private Environment $twig,
+    ) {
+    }
+
+    #[Route(path: '/admin/login', name: 'admin_login', methods: ['GET', 'POST'], priority: 10)]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        return new Response($this->twig->render('html/admin/login.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+        ]));
+    }
+
+    #[Route(path: '/admin/logout', name: 'admin_logout', methods: ['POST'], priority: 10)]
+    public function logout(): never
+    {
+        throw new \LogicException('Intercepted by the logout key on the firewall.');
+    }
+}

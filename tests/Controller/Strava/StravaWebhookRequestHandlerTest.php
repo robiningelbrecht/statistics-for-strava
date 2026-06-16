@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\Controller;
+namespace App\Tests\Controller\Strava;
 
-use App\Controller\StravaWebhookRequestHandler;
+use App\Controller\Strava\StravaWebhookRequestHandler;
 use App\Domain\Strava\Webhook\WebhookConfig;
 use App\Infrastructure\CQRS\Command\Bus\CommandBus;
 use App\Infrastructure\Serialization\Json;
