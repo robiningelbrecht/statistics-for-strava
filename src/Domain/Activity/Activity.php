@@ -418,16 +418,17 @@ final class Activity implements SupportsAITooling
 
     public function getOriginalName(): string
     {
-        return trim(str_replace('Zwift - ', '', (string) $this->name));
+        return $this->name;
     }
 
     public function getName(): string
     {
+        $name = trim(str_replace('Zwift - ', '', $this->getOriginalName()));
         if ([] === $this->tags) {
-            return $this->getOriginalName();
+            return $name;
         }
 
-        return trim(str_replace($this->tags, '', $this->getOriginalName()));
+        return trim(str_replace($this->tags, '', $name));
     }
 
     public function getSanitizedName(): string
