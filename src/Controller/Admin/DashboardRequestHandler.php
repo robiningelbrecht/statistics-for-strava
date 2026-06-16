@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Twig\Environment;
 
 #[AsController]
-final readonly class AdminDashboardController
+final readonly class DashboardRequestHandler
 {
     public function __construct(
         private Environment $twig,
