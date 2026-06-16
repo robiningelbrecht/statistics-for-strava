@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Application\Import\FileImport\ImportActivityFiles\Pipeline;
 
-final class SkipActivityFileImport extends \RuntimeException
+final class SkipDuplicateActivity extends \RuntimeException
 {
 }

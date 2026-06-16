@@ -28,15 +28,19 @@ final readonly class ParseActivityFile implements ImportActivityFileStep
         );
 
         $context = $context->withFile($file);
-
-        if ($this->duplicateActivityScanner->isDuplicate($file)) {
-            throw new SkipActivityFileImport();
-        }
-
         $parsedFile = $this->activityFileParsers->parse($file);
 
+        $activity = $parsedFile->getActivity();
+        if ($this->duplicateActivityScanner->isDuplicate(
+            file: $file,
+            sportType: $activity->getSportType(),
+            startDateTime: $activity->getStartDate()
+        )) {
+            throw new SkipDuplicateActivity();
+        }
+
         return $context
-            ->withActivity($parsedFile->getActivity())
+            ->withActivity($activity)
             ->withStreams($parsedFile->getStreams())
             ->withLaps($parsedFile->getLaps());
     }

@@ -6,7 +6,7 @@ namespace App\Application\Import\FileImport\ImportActivityFiles;
 
 use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\ActivityImportContext;
 use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\ImportActivityFileStep;
-use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\SkipActivityFileImport;
+use App\Application\Import\FileImport\ImportActivityFiles\Pipeline\SkipDuplicateActivity;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ActivityWithRawData;
 use App\Domain\Activity\Lap\ActivityLapRepository;
@@ -75,7 +75,7 @@ final readonly class ImportActivityFilesCommandHandler implements CommandHandler
                 foreach ($this->steps as $step) {
                     $context = $step->process($context);
                 }
-            } catch (SkipActivityFileImport) {
+            } catch (SkipDuplicateActivity) {
                 $this->watchDirectory->deleteFile($filePath);
                 $output->writeln(sprintf('  => [%d/%d] Skipping "%s", file was already imported', $delta, $countTotalFilesInWatchDirectory, $filePath->getFilename()));
                 ++$countSkipped;
