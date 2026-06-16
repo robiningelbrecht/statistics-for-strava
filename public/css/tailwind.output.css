@@ -5594,8 +5594,9 @@ table.data-table {
         max-height: 100%;
       }
       > ul {
-        > li a {
+        > li :is(a, button) {
           display: flex;
+          cursor: pointer;
           align-items: center;
           column-gap: calc(var(--spacing) * 3);
           border-radius: var(--radius-lg);

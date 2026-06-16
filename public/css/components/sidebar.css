@@ -6,8 +6,8 @@
             @apply sidebar-collapsed:max-h-full max-h-[calc(100vh-114px)] overflow-y-auto py-5 px-3 h-full divide-y divide-gray-200;
 
             > ul {
-                > li a {
-                    @apply flex items-center gap-x-3 p-2 rounded-lg text-sm font-medium text-gray-900;
+                > li :is(a, button) {
+                    @apply cursor-pointer flex items-center gap-x-3 p-2 rounded-lg text-sm font-medium text-gray-900;
                     @apply hover:bg-primary-soft hover:text-primary aria-selected:bg-primary-soft aria-selected:text-primary;
                     @apply sidebar-collapsed:justify-center;
 
