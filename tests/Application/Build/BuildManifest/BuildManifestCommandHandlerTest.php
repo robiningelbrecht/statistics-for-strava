@@ -47,6 +47,16 @@ class BuildManifestCommandHandlerTest extends ContainerTestCase
             $manifestContents,
             'The manifest.json file should contain the [APP_NAME] placeholder.'
         );
+        $this->assertStringContainsString(
+            '[APP_SHORT_NAME]',
+            $manifestContents,
+            'The manifest.json file should contain the [APP_SHORT_NAME] placeholder.'
+        );
+        $this->assertStringContainsString(
+            '[APP_BASE_PATH]',
+            $manifestContents,
+            'The manifest.json file should contain the [APP_BASE_PATH] placeholder.'
+        );
     }
 
     #[\Override]

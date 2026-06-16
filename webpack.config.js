@@ -4,7 +4,8 @@ module.exports = {
     mode: 'production',
     context: __dirname,
     entry: {
-        'app.min': './public/js/app.js'
+        'app.min': './public/js/app.js',
+        'admin.min': './public/js/admin.js'
     },
     optimization: {
         minimize: true,

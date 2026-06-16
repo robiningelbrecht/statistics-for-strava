@@ -4,12 +4,13 @@
 @import "./components/dark-mode.css";
 @import "./components/data-table.css";
 @import "./components/filter-dropdown.css";
-@import "./components/tabs.css";
-@import "./components/popover.css";
-@import "./components/modal.css";
+@import "./components/form.css";
 @import "./components/leaflet.css";
-@import "./components/sidebar.css";
+@import "./components/modal.css";
+@import "./components/popover.css";
 @import "./components/scroll-to.css";
+@import "./components/sidebar.css";
+@import "./components/tabs.css";
 
 @source "../../templates/**/*.html.twig";
 @source "../../templates/**/*.svg";
