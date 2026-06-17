@@ -1,10 +1,11 @@
-import Sidebar from "./components/sidebar";
+import initSidebar from "./components/sidebar";
+import initPasswordToggle from "./components/password-toggle";
 import {initDrawers} from "flowbite";
 
 initDrawers();
 
-const sidebar = new Sidebar();
-sidebar.init();
+initSidebar();
+initPasswordToggle();
 
 document.addEventListener('submit', function (event) {
     const form = event.target;
