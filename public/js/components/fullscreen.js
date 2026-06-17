@@ -1,25 +1,23 @@
 import {eventBus, Events} from "../core/event-bus";
 
-export default class FullscreenManager {
-    init(rootNode) {
-        rootNode.querySelectorAll('[data-fullscreen-trigger]').forEach((el) => {
-            el.addEventListener('click', (e) => {
-                e.preventDefault();
+export default function initFullscreen(rootNode) {
+    rootNode.querySelectorAll('[data-fullscreen-trigger]').forEach((el) => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
 
-                if (document.fullscreenElement) {
-                    return;
-                }
+            if (document.fullscreenElement) {
+                return;
+            }
 
-                const fullScreenContent = el.closest('[data-fullscreen-content]');
-                fullScreenContent.requestFullscreen().then(() => {
-                    eventBus.emit(Events.FULLSCREEN_ENABLED);
-                });
-
-                fullScreenContent.addEventListener('fullscreenchange', () => {
-                    fullScreenContent.toggleAttribute('data-fullscreen-enabled', Boolean(document.fullscreenElement))
-                });
-
+            const fullScreenContent = el.closest('[data-fullscreen-content]');
+            fullScreenContent.requestFullscreen().then(() => {
+                eventBus.emit(Events.FULLSCREEN_ENABLED);
             });
+
+            fullScreenContent.addEventListener('fullscreenchange', () => {
+                fullScreenContent.toggleAttribute('data-fullscreen-enabled', Boolean(document.fullscreenElement))
+            });
+
         });
-    }
+    });
 }
