@@ -13,7 +13,9 @@ enum FeatureFlag: string
     public function isEnabled(): bool
     {
         $envVar = sprintf('FEATURE_ENABLE_%s', strtoupper($this->value));
-
-        return AppVersion::isAtLeastVersion5() || filter_var($_SERVER[$envVar] ?? false, FILTER_VALIDATE_BOOL);
+        if (AppVersion::isAtLeastVersion5()) {
+            return true;
+        }
+        return filter_var($_SERVER[$envVar] ?? false, FILTER_VALIDATE_BOOL);
     }
 }
