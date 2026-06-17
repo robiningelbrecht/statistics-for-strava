@@ -20,6 +20,8 @@ Activity: Tevékenység
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut edzésterhelés (Fáradtság) – a napi edzésterhelés 7 napos exponenciálisan súlyozott átlaga. A rövid távú fáradtságot mutatja.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Krónikus arány – az ATL és CTL aránya. Sérülésveszélyt jelöl.'
 'Adaptive & Inclusive Sports': 'Adaptív és inkluzív sportok'
+Admin: Admin
+'Admin area': 'Admin area'
 Afternoon: Délután
 All: Mind
 'All time': Összesített
@@ -34,6 +36,7 @@ Average: Average
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Túrasí
+'Back to app': 'Back to app'
 Badges: Kitűzők
 Badminton: Tollaslabda
 Bananas: Bananas
@@ -112,11 +115,14 @@ Elliptical: 'Elliptikus gép'
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Teljes képernyős mód'
+'Enter your password': 'Enter your password'
+'Enter your username': 'Enter your username'
 Evening: Este
 'Excludes commutes': 'Ingázások nélkül'
 'FTP history': 'FTP előzmények'
 Favourite: Kedvenc
 Feb: Feb
+'File upload': 'File upload'
 'Filter on KOM segments': 'Szűrés KOM szegmensekre'
 'Filter on country': 'Szűrés országra'
 'Filter on sport type': 'Szűrés sporttípusra'
@@ -266,6 +272,7 @@ Over-fatigued: Túlterhelve
 'PET bottles produced': 'Előállított PET palackok'
 Pace: Tempó
 Padel: Padel
+Password: Password
 'Peak fresh': Csúcsfriss
 'Peak power outputs': 'Csúcsteljesítmény értékek'
 'Per {unit}': 'Per {unit}'
@@ -299,11 +306,13 @@ Ranking: Ranglista
 'Recovery forecast': 'Regenerációs előrejelzés'
 'Reduced carbon emission by commuting': 'Csökkentett szén-dioxid kibocsátás ingázással'
 'Relative cost': 'Relatív költség'
+'Remember me for 7 days': 'Remember me for 7 days'
 'Rest Days': Pihenőnapok
 'Rest days': Pihenőnapok
 'Rest days in last 7 days': 'Pihenőnapok az utolsó 7 napban'
 'Rest days vs. active days': 'Pihenőnapok vs. aktív napok'
 'Retired gear': 'Visszavont felszerelés'
+'Return to app': 'Return to app'
 Rewind: Visszatekintő
 'Rewind comparisons are only available on larger screens.': 'A visszatekintő összehasonlítások csak nagyobb képernyőkön érhetők el.'
 Rides: 'Kerékpáros túrák'
@@ -322,7 +331,12 @@ Search: Keresés
 Segments: Szegmensek
 Sep: Szept
 'Show information': 'Információ megjelenítése'
+'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Megmutatja, hogyan fog a TSB (Forma) és az A:C arány idővel helyreállni, ha teljes pihenőnapokat tartasz.'
+'Sign in': 'Sign in'
+'Sign in to the admin area': 'Sign in to the admin area'
+'Sign out': 'Sign out'
+'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": 'Mióta {numberOfDaysAgo} napja, {startDate}-én elkezdem használni a Stravát, {totalDaysOfWorkingOut} aktív edzés- és kalandnapot rögzítettem.'
 Skateboard: Gördeszkázás
 Skating: Korcsolyázás
@@ -477,7 +491,9 @@ Tue: K
 Tue.: Tue.
 Unspecified: Meghatározatlan
 'Updated on': 'Frissítve:'
+Upload: Upload
 'User badge': 'Felhasználói kitűző'
+Username: Username
 'Velo Mobiles': Velomobil
 'Very high': 'Nagyon magas'
 'View all': 'Összes megtekintése'

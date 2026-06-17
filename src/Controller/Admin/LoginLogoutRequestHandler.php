@@ -28,7 +28,7 @@ final readonly class LoginLogoutRequestHandler
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->security->getUser() instanceof UserInterface) {
-            return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
+            return new RedirectResponse($this->urlGenerator->generate('admin_file_upload'));
         }
 
         return new Response($this->twig->render('html/admin/login.html.twig', [

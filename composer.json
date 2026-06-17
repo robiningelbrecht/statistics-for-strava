@@ -71,6 +71,9 @@
         "phpunit/phpunit": "^13",
         "rector/rector": "*",
         "spatie/phpunit-snapshot-assertions": "^5.1",
+        "symfony/browser-kit": "8.1.*",
+        "symfony/css-selector": "8.1.*",
+        "symfony/dom-crawler": "8.1.*",
         "symfony/phpunit-bridge": "8.1.*",
         "symfony/stopwatch": "8.1.*",
         "tomasvotruba/type-coverage": "^2.0"
