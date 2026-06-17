@@ -17,6 +17,6 @@ final readonly class AppVersion
 
     public static function adminFeatureFlagIsEnabled(): bool
     {
-        return in_array($_ENV['APP_ENV'], ['dev', 'test']) || 'v5.0.0' === self::getSemanticVersion();
+        return in_array($_SERVER['APP_ENV'], ['dev', 'test']) || 'v5.0.0' === self::getSemanticVersion();
     }
 }
