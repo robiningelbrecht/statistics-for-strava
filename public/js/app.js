@@ -7,15 +7,15 @@ import ChartManager from "./features/charts/chart-manager";
 import {registerEchartsCallbacks} from "./features/charts/echarts-callbacks";
 import ModalManager from "./components/modals";
 import PhotoWall from "./features/photos/photo-wall";
-import LeafletMapManager from "./features/maps/map-manager";
-import TabsManager from "./components/tabs";
+import initLeafletMaps from "./features/maps/map-manager";
+import initTabs from "./components/tabs";
 import LazyLoad from "../libraries/lazyload.min";
-import DataTableManager from "./features/data-table/data-table-manager";
-import FullscreenManager from "./components/fullscreen";
+import initDataTables from "./features/data-table/data-table-manager";
+import initFullscreen from "./components/fullscreen";
 import ScrollTo from "./components/scroll-to";
 import MilestoneFilter from "./features/milestones/milestone-filter";
 import DarkModeManager from "./components/dark-mode";
-import DropdownManager from "./components/dropdown";
+import initDropdowns from "./components/dropdown";
 import {initAccordions, initPopovers, initDrawers} from "flowbite";
 
 // Override webpack's compile-time publicPath so dynamic imports resolve under subpath deployments.
@@ -33,11 +33,6 @@ initDrawers();
 
 const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, modalManager);
-const leafletMapManager = new LeafletMapManager();
-const tabsManager = new TabsManager();
-const dropdownManager = new DropdownManager();
-const dataTableManager = new DataTableManager();
-const fullscreenManager = new FullscreenManager();
 const scrollTo = new ScrollTo();
 const darkModeManager = new DarkModeManager();
 const lazyLoad = new LazyLoad({
@@ -50,15 +45,15 @@ const lazyLoad = new LazyLoad({
 const initElements = (rootNode) => {
     lazyLoad.update();
 
-    tabsManager.init(rootNode);
-    dropdownManager.init(rootNode);
+    initTabs(rootNode);
+    initDropdowns(rootNode);
     initPopovers();
     initAccordions();
 
-    dataTableManager.init(rootNode);
+    initDataTables(rootNode);
     chartManager.init(rootNode, darkModeManager.isDarkModeEnabled());
-    leafletMapManager.init(rootNode);
-    fullscreenManager.init(rootNode);
+    initLeafletMaps(rootNode);
+    initFullscreen(rootNode);
     scrollTo.init(rootNode);
 }
 
