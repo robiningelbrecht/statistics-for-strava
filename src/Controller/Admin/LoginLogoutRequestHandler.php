@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
 
@@ -26,7 +27,7 @@ final readonly class LoginLogoutRequestHandler
     #[Route(path: '/admin/login', name: 'admin_login', methods: ['GET', 'POST'], priority: 10)]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if (null !== $this->security->getUser()) {
+        if ($this->security->getUser() instanceof UserInterface) {
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         }
 
