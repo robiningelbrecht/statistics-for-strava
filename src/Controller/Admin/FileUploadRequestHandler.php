@@ -21,6 +21,6 @@ final readonly class FileUploadRequestHandler
     #[Route(path: '/admin/upload', name: 'admin_file_upload', methods: ['GET'], priority: 10)]
     public function index(): Response
     {
-        return new Response($this->twig->render('html/admin/dashboard.html.twig'));
+        return new Response($this->twig->render('html/admin/file-upload.html.twig'));
     }
 }
