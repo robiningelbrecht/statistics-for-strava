@@ -77,9 +77,9 @@ class LoginLogoutRequestHandlerTest extends AdminWebTestCase
     public function testLogoutIsHandledByTheFirewall(): void
     {
         $handler = new LoginLogoutRequestHandler(
-            $this->createMock(Environment::class),
-            $this->createMock(Security::class),
-            $this->createMock(UrlGeneratorInterface::class),
+            $this->createStub(Environment::class),
+            $this->createStub(Security::class),
+            $this->createStub(UrlGeneratorInterface::class),
         );
 
         $this->expectExceptionObject(new \LogicException('Intercepted by the logout key on the firewall.'));
