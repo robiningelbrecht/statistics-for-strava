@@ -2,7 +2,7 @@ import {eventBus, Events} from "./core/event-bus";
 import {FilterStorage} from "./features/data-table/storage";
 import Router from "./core/router";
 import {updateGithubLatestRelease} from "./services/github";
-import Sidebar from "./components/sidebar";
+import initSidebar from "./components/sidebar";
 import ChartManager from "./features/charts/chart-manager";
 import {registerEchartsCallbacks} from "./features/charts/echarts-callbacks";
 import ModalManager from "./components/modals";
@@ -31,7 +31,6 @@ router.boot();
 registerEchartsCallbacks();
 initDrawers();
 
-const sidebar = new Sidebar();
 const modalManager = new ModalManager(router);
 const chartManager = new ChartManager(router, modalManager);
 const leafletMapManager = new LeafletMapManager();
@@ -63,7 +62,7 @@ const initElements = (rootNode) => {
     scrollTo.init(rootNode);
 }
 
-sidebar.init();
+initSidebar();
 modalManager.init();
 darkModeManager.attachEventListeners();
 
