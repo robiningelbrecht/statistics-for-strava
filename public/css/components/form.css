@@ -9,7 +9,7 @@
         }
 
         button[type="submit"] {
-            @apply cursor-pointer inline-flex items-center justify-center gap-2.5 rounded-xl border border-gray-300 px-5 py-3 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:brightness-95;
+            @apply cursor-pointer inline-flex items-center justify-center gap-2.5 rounded-xl border border-gray-300 px-5 py-3 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50;
 
             &.btn--primary {
                 @apply border-0 bg-primary text-white hover:brightness-95;
