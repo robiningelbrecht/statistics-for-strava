@@ -20,9 +20,7 @@
     <body class="min-h-screen bg-gray-50 text-gray-900 antialiased admin">
         <!-- NAVIGATION -->
         {% autoescape false %}
-            {% include 'html/navigation/top-nav-bar.html.twig' with {
-                'inAppContext': true
-            } %}
+            {% include 'html/admin/navigation/top-nav-bar.html.twig' %}
         {% endautoescape %}
         <!-- SIDEBAR -->
         <aside class="-translate-x-full md:translate-x-0" aria-label="Sidenav" id="drawer-navigation">
@@ -36,6 +34,8 @@
                             <span>{{ "Dashboard"|trans }}</span>
                         </a>
                     </li>
+                </ul>
+                <ul class="space-y-1 py-2">
                     <li>
                         <form method="post" action="{{ relativeUrl(path('admin_logout')) }}">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}">
