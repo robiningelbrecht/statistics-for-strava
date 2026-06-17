@@ -2,7 +2,11 @@
 
 namespace App\Tests\Controller\Admin;
 
+use App\Controller\Admin\LoginLogoutRequestHandler;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 class LoginLogoutRequestHandlerTest extends AdminWebTestCase
 {
@@ -66,8 +70,20 @@ class LoginLogoutRequestHandlerTest extends AdminWebTestCase
         $this->client->submit($crawler->filter('form[action$="/admin/logout"]')->form());
         $this->assertResponseRedirects('/admin/login');
 
-        // The session no longer holds an authenticated user, so protected pages bounce back to login.
         $this->client->request('GET', '/admin/upload');
         $this->assertResponseRedirects('/admin/login', Response::HTTP_FOUND);
+    }
+
+    public function testLogoutIsHandledByTheFirewall(): void
+    {
+        $handler = new LoginLogoutRequestHandler(
+            $this->createMock(Environment::class),
+            $this->createMock(Security::class),
+            $this->createMock(UrlGeneratorInterface::class),
+        );
+
+        $this->expectExceptionObject(new \LogicException('Intercepted by the logout key on the firewall.'));
+
+        $handler->logout();
     }
 }
