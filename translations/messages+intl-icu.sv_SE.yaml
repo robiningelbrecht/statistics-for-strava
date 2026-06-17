@@ -20,6 +20,8 @@ Activity: Aktivitet
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Kronisk Ratio - Ratio av ATL till CTL. Indikerar skaderisk.'
 'Adaptive & Inclusive Sports': 'Adaptiva & Inkluderande Sporter'
+Admin: Admin
+'Admin area': 'Admin area'
 Afternoon: Eftermiddag
 All: Alla
 'All time': 'Från start'
@@ -34,6 +36,7 @@ Average: Average
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': Utförsåkning
+'Back to app': 'Back to app'
 Badges: Badges
 Badminton: Badminton
 Bananas: Bananas
@@ -112,11 +115,14 @@ Elliptical: Elliptisk
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Enter fullscreen mode'
+'Enter your password': 'Enter your password'
+'Enter your username': 'Enter your username'
 Evening: Kväll
 'Excludes commutes': 'Uteslut pendling'
 'FTP history': 'FTP historik'
 Favourite: Favoriter
 Feb: Feb
+'File upload': 'File upload'
 'Filter on KOM segments': 'Filtrera på KOM segment'
 'Filter on country': 'Filtrera på land'
 'Filter on sport type': 'Filtrera på sport'
@@ -266,6 +272,7 @@ Over-fatigued: Over-fatigued
 'PET bottles produced': 'PET flaskor producerade'
 Pace: Tempo
 Padel: Padel
+Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': Toppeffekt
 'Per {unit}': 'Per {unit}'
@@ -299,11 +306,13 @@ Ranking: Rankning
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Minskade koldioxidutsläpp tack vare pendling'
 'Relative cost': 'Relativ kostnad'
+'Remember me for 7 days': 'Remember me for 7 days'
 'Rest Days': Vilodagar
 'Rest days': Vilodagar
 'Rest days in last 7 days': 'Vilodagar de senaste 7 dagarna'
 'Rest days vs. active days': 'Vilodagar kontra aktiva dagar'
 'Retired gear': 'Avställd utrustning'
+'Return to app': 'Return to app'
 Rewind: Tillbakablick
 'Rewind comparisons are only available on larger screens.': 'Tillbakablickar är endast tillgängliga på större skärmar.'
 Rides: Cykling
@@ -322,7 +331,12 @@ Search: Sök
 Segments: Segment
 Sep: Sep
 'Show information': 'Visa information'
+'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
+'Sign in': 'Sign in'
+'Sign in to the admin area': 'Sign in to the admin area'
+'Sign out': 'Sign out'
+'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skridskoåkning
@@ -477,7 +491,9 @@ Tue: Tis
 Tue.: Tue.
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
+Upload: Upload
 'User badge': Användarmärke
+Username: Username
 'Velo Mobiles': Velomobil
 'Very high': 'Väldigt hög'
 'View all': 'Visa alla'

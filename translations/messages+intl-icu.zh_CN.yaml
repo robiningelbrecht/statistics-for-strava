@@ -20,6 +20,8 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
+Admin: Admin
+'Admin area': 'Admin area'
 Afternoon: 下午
 All: All
 'All time': 所有时间
@@ -34,6 +36,7 @@ Average: Average
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 越野滑雪
+'Back to app': 'Back to app'
 Badges: Badges
 Badminton: 羽毛球
 Bananas: Bananas
@@ -112,11 +115,14 @@ Elliptical: 椭圆机
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Enter fullscreen mode'
+'Enter your password': 'Enter your password'
+'Enter your username': 'Enter your username'
 Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
 Favourite: 收藏夹
 Feb: 二月
+'File upload': 'File upload'
 'Filter on KOM segments': 筛选KOM路段
 'Filter on country': 按国家筛选
 'Filter on sport type': 按运动类型筛选
@@ -266,6 +272,7 @@ Over-fatigued: Over-fatigued
 'PET bottles produced': PET瓶量
 Pace: 步速
 Padel: Padel
+Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 峰值功率输出
 'Per {unit}': 'Per {unit}'
@@ -299,11 +306,13 @@ Ranking: Ranking
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 通勤减少的碳排放
 'Relative cost': 相对成本
+'Remember me for 7 days': 'Remember me for 7 days'
 'Rest Days': 休息日
 'Rest days': 休息日
 'Rest days in last 7 days': 最近7天的休息日
 'Rest days vs. active days': '休息日 训练如 对比'
 'Retired gear': 退役装备
+'Return to app': 'Return to app'
 Rewind: 回顾
 'Rewind comparisons are only available on larger screens.': 回顾对比仅适用于大屏幕。
 Rides: 骑行
@@ -322,7 +331,12 @@ Search: 搜索
 Segments: 路段
 Sep: 九月
 'Show information': 显示信息
+'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
+'Sign in': 'Sign in'
+'Sign in to the admin area': 'Sign in to the admin area'
+'Sign out': 'Sign out'
+'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": '从{startDate}算起，我已使用Strava {numberOfDaysAgo}多天​，我已经记录了{totalDaysOfWorkingOut}天的训练和冒险活动。'
 Skateboard: 滑板
 Skating: 滑冰
@@ -477,7 +491,9 @@ Tue: 周二
 Tue.: Tue.
 Unspecified: 未指定
 'Updated on': 更新于
+Upload: Upload
 'User badge': 用户徽章
+Username: Username
 'Velo Mobiles': 躺车
 'Very high': 非常高
 'View all': 查看全部

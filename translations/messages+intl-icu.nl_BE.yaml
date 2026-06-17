@@ -20,6 +20,8 @@ Activity: Activity
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.'
 'Adaptive & Inclusive Sports': 'Adaptive & Inclusive Sports'
+Admin: Admin
+'Admin area': 'Admin area'
 Afternoon: Namiddag
 All: All
 'All time': 'All time'
@@ -34,6 +36,7 @@ Average: Average
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 'Back Country Ski'
+'Back to app': 'Back to app'
 Badges: Badges
 Badminton: Badminton
 Bananas: Bananas
@@ -112,11 +115,14 @@ Elliptical: Elliptical
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Enter fullscreen mode'
+'Enter your password': 'Enter your password'
+'Enter your username': 'Enter your username'
 Evening: Avond
 'Excludes commutes': 'Excludes commutes'
 'FTP history': 'FTP historiek'
 Favourite: Favoriet
 Feb: Feb
+'File upload': 'File upload'
 'Filter on KOM segments': 'Filter on KOM segments'
 'Filter on country': 'Filter on country'
 'Filter on sport type': 'Filter on sport type'
@@ -266,6 +272,7 @@ Over-fatigued: Over-fatigued
 'PET bottles produced': 'PET bottles produced'
 Pace: Pace
 Padel: Padel
+Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Peak power outputs'
 'Per {unit}': 'Per {unit}'
@@ -299,11 +306,13 @@ Ranking: Ranking
 'Recovery forecast': 'Recovery forecast'
 'Reduced carbon emission by commuting': 'Reduced carbon emission by commuting'
 'Relative cost': 'Relative cost'
+'Remember me for 7 days': 'Remember me for 7 days'
 'Rest Days': 'Rest Days'
 'Rest days': 'Rest days'
 'Rest days in last 7 days': 'Rest days in last 7 days'
 'Rest days vs. active days': 'Rest days vs. active days'
 'Retired gear': 'Retired gear'
+'Return to app': 'Return to app'
 Rewind: Rewind
 'Rewind comparisons are only available on larger screens.': 'Rewind comparisons are only available on larger screens.'
 Rides: Ritten
@@ -322,7 +331,12 @@ Search: Zoeken
 Segments: Segmenten
 Sep: Sep
 'Show information': 'Informatie tonen'
+'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
+'Sign in': 'Sign in'
+'Sign in to the admin area': 'Sign in to the admin area'
+'Sign out': 'Sign out'
+'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
 Skateboard: Skateboard
 Skating: Skating
@@ -477,7 +491,9 @@ Tue: Di
 Tue.: Tue.
 Unspecified: Unspecified
 'Updated on': 'Bijgewerkt op'
+Upload: Upload
 'User badge': 'User badge'
+Username: Username
 'Velo Mobiles': 'Velo Mobiles'
 'Very high': 'Heel hoog'
 'View all': 'Bekijk alles'

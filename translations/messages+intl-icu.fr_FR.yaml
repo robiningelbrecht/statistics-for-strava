@@ -20,6 +20,8 @@ Activity: Activité
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': "Charge d'Entraînement Aiguë (Fatigue) - Moyenne pondérée exponentiellement sur 7 jours de votre charge d'entraînement quotidienne. Représente la fatigue à court terme."
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Ratio Aiguë:Chronique (A:C) - Rapport entre ATL et CTL. Indique le risque de blessure.'
 'Adaptive & Inclusive Sports': 'Sports adaptés et inclusifs'
+Admin: Admin
+'Admin area': 'Admin area'
 Afternoon: Après-midi
 All: Tous
 'All time': 'Depuis toujours'
@@ -34,6 +36,7 @@ Average: Average
 'Avg pace': 'Avg pace'
 'Avg speed': 'Avg speed'
 'Back Country Ski': 'Ski de randonnée'
+'Back to app': 'Back to app'
 Badges: Badges
 Badminton: Badminton
 Bananas: Bananas
@@ -112,11 +115,14 @@ Elliptical: Elliptique
 Energy: Energy
 'Energy burned across your activities': 'Energy burned across your activities'
 'Enter fullscreen mode': 'Mode plein-écran'
+'Enter your password': 'Enter your password'
+'Enter your username': 'Enter your username'
 Evening: Soirée
 'Excludes commutes': 'Trajets domicile-travail exclus'
 'FTP history': 'Historique FTP'
 Favourite: Favori
 Feb: Fév
+'File upload': 'File upload'
 'Filter on KOM segments': 'Filtrer sur les segments KOM'
 'Filter on country': 'Filtrer par pays'
 'Filter on sport type': 'Filtrer par type de sport'
@@ -266,6 +272,7 @@ Over-fatigued: Surentraîné
 'PET bottles produced': 'Bouteilles PET produites'
 Pace: Allure
 Padel: Padel
+Password: Password
 'Peak fresh': 'Peak fresh'
 'Peak power outputs': 'Puissances maximales'
 'Per {unit}': 'Per {unit}'
@@ -299,11 +306,13 @@ Ranking: Classement
 'Recovery forecast': 'Prévision de récupération'
 'Reduced carbon emission by commuting': 'Réduction des émissions de carbone grâce aux déplacements domicile-travail'
 'Relative cost': 'Coût relatif'
+'Remember me for 7 days': 'Remember me for 7 days'
 'Rest Days': 'Jours de repos'
 'Rest days': 'Jours de repos'
 'Rest days in last 7 days': 'Jours de repos des 7 derniers jours'
 'Rest days vs. active days': 'Jours de repos vs. jours actifs'
 'Retired gear': 'Équipement retiré du service'
+'Return to app': 'Return to app'
 Rewind: Bilan
 'Rewind comparisons are only available on larger screens.': 'Les comparaisons de récapitulatif ne sont disponibles que sur les grands écrans.'
 Rides: 'Sorties vélo'
@@ -322,7 +331,12 @@ Search: Rechercher
 Segments: Segments
 Sep: Sep
 'Show information': 'Afficher les informations'
+'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
+'Sign in': 'Sign in'
+'Sign in to the admin area': 'Sign in to the admin area'
+'Sign out': 'Sign out'
+'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Depuis que j'ai commencé à utiliser Strava il y a {numberOfDaysAgo} le {startDate}, j'ai enregistré {totalDaysOfWorkingOut} jours actifs d'entraînement et d'aventure."
 Skateboard: Skateboard
 Skating: Patinage
@@ -477,7 +491,9 @@ Tue: Mar
 Tue.: Tue.
 Unspecified: 'Non spécifié'
 'Updated on': 'Mis à jour le'
+Upload: Upload
 'User badge': "Badge d'utilisateur"
+Username: Username
 'Velo Mobiles': Vélomobiles
 'Very high': 'Très élevé'
 'View all': 'Voir tout'
