@@ -20,7 +20,7 @@ security:
             form_login:
                 login_path: admin_login
                 check_path: admin_login
-                default_target_path: admin_dashboard
+                default_target_path: admin_file_upload
                 enable_csrf: true
             remember_me:
                 secret: '%kernel.secret%'

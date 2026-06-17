@@ -16,6 +16,7 @@ enum FeatureFlag: string
         if (AppVersion::isAtLeastVersion5()) {
             return true;
         }
+
         return filter_var($_SERVER[$envVar] ?? false, FILTER_VALIDATE_BOOL);
     }
 }
