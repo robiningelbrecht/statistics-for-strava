@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http;
 
-use App\Application\AppVersion;
+use App\Infrastructure\Config\FeatureFlag;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,7 +18,7 @@ final readonly class AdminFeatureFlagRequestListener implements EventSubscriberI
             return;
         }
 
-        if (AppVersion::adminFeatureFlagIsEnabled()) {
+        if (FeatureFlag::ADMIN->isEnabled()) {
             return;
         }
 

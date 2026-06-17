@@ -14,9 +14,4 @@ final readonly class AppVersion
     {
         return sprintf('v%d.%d.%d', self::MAJOR, self::MINOR, self::PATCH);
     }
-
-    public static function adminFeatureFlagIsEnabled(): bool
-    {
-        return in_array($_SERVER['APP_ENV'], ['dev', 'test']) || 'v5.0.0' === self::getSemanticVersion();
-    }
 }

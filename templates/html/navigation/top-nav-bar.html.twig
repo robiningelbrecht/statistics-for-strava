@@ -143,7 +143,7 @@
                                 <div class="ms-auto peer peer-checked:after:border-buffer relative h-5 w-9 rounded-full bg-gray-200 peer-checked:bg-gray-100 peer-focus:outline-none after:absolute after:start-[2px] after:top-[2px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full"></div>
                             </label>
                         </li>
-                        {% if appVersion.adminFeatureFlagIsEnabled() %}
+                        {% if featureFlagIsEnabled('admin') %}
                             <li>
                                 <a href="{{ relativeUrl('admin') }}" class="inline-flex items-center w-full p-2 hover:bg-gray-50 rounded">
                                     <svg class="size-4 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
