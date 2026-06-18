@@ -1,21 +1,24 @@
 {% extends "html/admin/page.html.twig" %}
 {% block main %}
     {% autoescape false %}
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
-        <h3 class="text-lg font-semibold">
+    <div class="flex flex-col max-h-[calc(100vh-96px)] p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <h3 class="shrink-0 text-lg font-semibold">
             {{ "Upload activity files"|trans }}
         </h3>
         {% set codeOpen = '<code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">' %}
         {% set codeClose = '</code>' %}
-        <p class="mt-1 text-sm text-gray-500">
+        <p class="shrink-0 mt-1 text-sm text-gray-500">
             {{ "Add {fit}, {tcx} or {gpx} files. They are imported every few minutes."|trans({
                 '{fit}': codeOpen ~ '.fit' ~ codeClose,
                 '{tcx}': codeOpen ~ '.tcx' ~ codeClose,
                 '{gpx}': codeOpen ~ '.gpx' ~ codeClose
             }) }}
         </p>
-        <form id="upload-form" class="mt-8" data-supported-file-extensions='{{ supportedFileExtensions }}' novalidate>
-            <label id="dropzone" class="group relative flex flex-col items-center text-center gap-1.5 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 cursor-pointer transition-colors hover:border-primary hover:bg-primary-soft [&.is-dragging]:border-primary [&.is-dragging]:bg-primary-soft [&.is-dragging]:ring-4 [&.is-dragging]:ring-primary/10" for="file-input">
+        <form id="upload-form" class="flex flex-col min-h-0 mt-8" data-supported-file-extensions='{{ supportedFileExtensions }}' data-translations='{{ {
+            "filesReadyToUpload": "{count} files ready to upload"|trans,
+            "unsupportedFileType": "Unsupported file type"|trans,
+        }|json_encode }}' novalidate>
+            <label id="dropzone" class="group shrink-0 relative flex flex-col items-center text-center gap-1.5 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 cursor-pointer transition-colors hover:border-primary hover:bg-primary-soft [&.is-dragging]:border-primary [&.is-dragging]:bg-primary-soft [&.is-dragging]:ring-4 [&.is-dragging]:ring-primary/10" for="file-input">
                 <input id="file-input" class="sr-only" type="file" multiple accept=".fit,.tcx,.gpx"/>
                 <span class="grid place-items-center w-12 h-12 mb-1 rounded-full bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white in-[.is-dragging]:bg-primary in-[.is-dragging]:text-white" aria-hidden="true">
                        <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -37,20 +40,19 @@
                     <code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">.gpx</code>
                 </span>
             </label>
-            <div id="file-list-header" class="flex items-center justify-between gap-2 mt-4 text-xs font-medium text-gray-500" hidden>
+            <div id="file-list-header" class="shrink-0 flex items-center justify-between gap-2 mt-4 text-xs font-medium text-gray-500" hidden>
                 <span id="file-count"></span>
-                <span id="file-invalid" class="text-red-500" hidden></span>
             </div>
-            <ul id="file-list" class="list-none mt-2 mb-0 p-0 flex flex-col gap-2 max-h-72 overflow-y-auto overscroll-contain scrollbar-thin" hidden></ul>
-            <div class="flex flex-col gap-2 mt-5 sm:flex-row sm:items-center">
+            <ul id="file-list" class="list-none mt-2 mb-0 p-0 flex flex-col gap-2 min-h-0 overflow-y-auto overscroll-contain" hidden></ul>
+            <div class="shrink-0 flex flex-col gap-2 mt-5 sm:flex-row sm:items-center">
                 <button type="submit" id="upload-btn" class="group btn--primary" data-has-loading-state disabled>
                     <span class="label">{{ "Upload files"|trans }}</span>
                     <span class="label--loading">{{ "Uploading..."|trans }}</span>
                 </button>
-                <button type="button" id="clear-btn" class="hidden">{{ "Clear"|trans }}</button>
+                <button type="button" id="clear-btn" class="hidden btn--secondary">{{ "Clear"|trans }}</button>
             </div>
         </form>
-        <div class="mt-6 text-xs text-gray-500">
+        <div class="shrink-0 mt-6 text-xs text-gray-500">
             {{ "You can also copy files straight into the {watchFolder} folder."|trans({'{watchFolder}': codeOpen ~ 'watch' ~ codeClose}) }}
         </div>
     </div>

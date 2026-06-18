@@ -493,6 +493,7 @@ Title: Title
 Tue: Mar
 Tue.: Tue.
 Unspecified: 'Non spécifié'
+'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Mis à jour le'
 Upload: Upload
 'Upload activity files': 'Upload activity files'
@@ -589,6 +590,7 @@ total: total
 watts: watts
 weeks: semaines
 workouts: entraînements
+'{count} files ready to upload': '{count} files ready to upload'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} jours'
 '{days} consecutive days of activity': "{days} jours consécutifs d'activité"
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} heures'

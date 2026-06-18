@@ -493,6 +493,7 @@ Title: Title
 Tue: Di
 Tue.: Tue.
 Unspecified: Unspecified
+'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Bijgewerkt op'
 Upload: Upload
 'Upload activity files': 'Upload activity files'
@@ -589,6 +590,7 @@ total: total
 watts: watts
 weeks: weeks
 workouts: workouts
+'{count} files ready to upload': '{count} files ready to upload'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'

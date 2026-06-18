@@ -493,6 +493,7 @@ Title: Title
 Tue: Tis
 Tue.: Tue.
 Unspecified: Ospecificerad
+'Unsupported file type': 'Unsupported file type'
 'Updated on': Uppdaterades
 Upload: Upload
 'Upload activity files': 'Upload activity files'
@@ -589,6 +590,7 @@ total: totalt
 watts: watts
 weeks: veckor
 workouts: träningspass
+'{count} files ready to upload': '{count} files ready to upload'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} dagar'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} timmar'

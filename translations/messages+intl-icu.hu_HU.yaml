@@ -493,6 +493,7 @@ Title: Title
 Tue: K
 Tue.: Tue.
 Unspecified: Meghatározatlan
+'Unsupported file type': 'Unsupported file type'
 'Updated on': 'Frissítve:'
 Upload: Upload
 'Upload activity files': 'Upload activity files'
@@ -589,6 +590,7 @@ total: összesen
 watts: watts
 weeks: hetek
 workouts: edzések
+'{count} files ready to upload': '{count} files ready to upload'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} nap'
 '{days} consecutive days of activity': '{days} egymást követő aktív nap'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} óra'

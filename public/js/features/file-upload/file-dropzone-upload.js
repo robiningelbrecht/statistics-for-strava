@@ -10,11 +10,11 @@ export default class FileDropzoneUpload {
         this.list = rootNode.querySelector('#file-list');
         this.listHeader = rootNode.querySelector('#file-list-header');
         this.fileCount = rootNode.querySelector('#file-count');
-        this.fileInvalid = rootNode.querySelector('#file-invalid');
         this.uploadBtn = rootNode.querySelector('#upload-btn');
         this.clearBtn = rootNode.querySelector('#clear-btn');
         this.form = rootNode.querySelector('#upload-form');
-        this.supportedFileExtension = JSON.parse(this.form.getAttribute('data-supported-file-extensions'))
+        this.supportedFileExtension = JSON.parse(this.form.getAttribute('data-supported-file-extensions'));
+        this.translations = JSON.parse(this.form.getAttribute('data-translations'));
 
         this.files = [];
     }
@@ -75,16 +75,13 @@ export default class FileDropzoneUpload {
         this.list.innerHTML = '';
         const hasFiles = this.files.length > 0;
         const validCount = this.files.filter((f) => f.ok).length;
-        const invalidCount = this.files.length - validCount;
 
         this.list.hidden = !hasFiles;
         this.listHeader.hidden = !hasFiles;
         this.clearBtn.classList.toggle('hidden', !hasFiles);
         this.uploadBtn.disabled = validCount === 0;
 
-        this.fileCount.textContent = `${validCount} file${validCount === 1 ? '' : 's'} ready to upload`;
-        this.fileInvalid.hidden = invalidCount === 0;
-        this.fileInvalid.textContent = `${invalidCount} unsupported`;
+        this.fileCount.textContent = this.translations.filesReadyToUpload.replace('{count}', validCount);
 
         this.files.forEach((file, index) => {
             const li = document.createElement('li');
@@ -98,7 +95,7 @@ export default class FileDropzoneUpload {
                 </span>
                 <span class="body">
                     <span class="name">${file.name}</span>
-                    <span class="meta">${file.ok ? formatFileSize(file.size) : 'Unsupported file type'}</span>
+                    <span class="meta">${file.ok ? formatFileSize(file.size) : this.translations.unsupportedFileType}</span>
                 </span>
                 <button type="button" data-remove-file class="remove" data-index="${index}" aria-label="Remove">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
