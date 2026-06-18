@@ -57,6 +57,31 @@ export const fetchJson = async (url) => {
     return response.json();
 }
 
+export const dispatchCommand = async (commandName, payload = {}) => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (!csrfToken) {
+        throw new Error('csrf-token expected to be found');
+    }
+    const url = document.querySelector('meta[name="dispatch-command-url"]')?.getAttribute('content');
+    if (!url) {
+        throw new Error('dispatch-command-url expected to be found');
+    }
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+        },
+        body: JSON.stringify({commandName, payload}),
+    });
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error ?? `Failed to dispatch ${commandName}: ${response.status}`);
+    }
+}
+
 export const parents = (el, selector) => {
     const matched = [];
     let parent = el.parentElement;

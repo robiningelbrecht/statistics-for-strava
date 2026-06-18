@@ -3585,6 +3585,9 @@
   .opacity-0 {
     opacity: 0%;
   }
+  .opacity-60 {
+    opacity: 60%;
+  }
   .opacity-80 {
     opacity: 80%;
   }
@@ -3637,6 +3640,10 @@
   }
   .blur {
     --tw-blur: blur(8px);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .blur-\[1px\] {
+    --tw-blur: blur(1px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .filter {
@@ -5115,11 +5122,14 @@
     --color-gray-900: #F0F6FC;
     --color-black: #F0F6FC;
     --color-white: #202830;
-    --color-blue-600: #478be6;
     --color-primary-soft: color-mix(in srgb, #F26722 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       --color-primary-soft: color-mix(in oklch, var(--color-primary) 10%, transparent);
     }
+    --color-blue-50: #1e3a8a;
+    --color-blue-300: #1e40af;
+    --color-blue-600: #478be6;
+    --color-blue-800: #93c5fd;
     --color-green-100: #064E3B;
     --color-green-600: #34D399;
     --color-green-700: #6EE7B7;
