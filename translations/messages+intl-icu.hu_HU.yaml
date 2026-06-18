@@ -125,6 +125,7 @@ Evening: Este
 Favourite: Kedvenc
 Feb: Feb
 'File upload': 'File upload'
+'File upload is only available in file import mode': 'File upload is only available in file import mode'
 'Filter on KOM segments': 'Szűrés KOM szegmensekre'
 'Filter on country': 'Szűrés országra'
 'Filter on sport type': 'Szűrés sporttípusra'
@@ -537,6 +538,7 @@ Yearly: Éves
 'Yearly stats': 'Éves statisztikák'
 Yoga: Jóga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Személyes rekord kitűződ'
 'Your Strava badge': 'Strava kitűződ'
 'Your Zwift badge': 'Zwift kitűződ'
@@ -585,6 +587,7 @@ per: /
 'per hour': óránként
 'reached Eddington number {number}': '{number}-es Eddington-szám elérve'
 rpm: rpm
+'the docs': 'the docs'
 to: '-ig'
 total: összesen
 watts: watts

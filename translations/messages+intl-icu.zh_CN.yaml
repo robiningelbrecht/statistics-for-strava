@@ -125,6 +125,7 @@ Evening: 晚上
 Favourite: 收藏夹
 Feb: 二月
 'File upload': 'File upload'
+'File upload is only available in file import mode': 'File upload is only available in file import mode'
 'Filter on KOM segments': 筛选KOM路段
 'Filter on country': 按国家筛选
 'Filter on sport type': 按运动类型筛选
@@ -537,6 +538,7 @@ Yearly: Yearly
 'Yearly stats': 年度统计
 Yoga: 瑜伽
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
 'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
 'Your Zwift badge': Zwift徽章
@@ -585,6 +587,7 @@ per: per
 'per hour': 每小时
 'reached Eddington number {number}': 'reached Eddington number {number}'
 rpm: rpm
+'the docs': 'the docs'
 to: 至
 total: 总计
 watts: watts

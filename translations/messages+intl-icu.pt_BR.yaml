@@ -125,6 +125,7 @@ Evening: 'Fim da tarde'
 Favourite: Favorito
 Feb: Fev
 'File upload': 'File upload'
+'File upload is only available in file import mode': 'File upload is only available in file import mode'
 'Filter on KOM segments': 'Filtrar por segmentos KOM'
 'Filter on country': 'Filtrar por país'
 'Filter on sport type': 'Filtrar por tipo de esporte'
@@ -537,6 +538,7 @@ Yearly: Anual
 'Yearly stats': 'Estatísticas anuais'
 Yoga: Yoga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
+"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Seu emblema de RP'
 'Your Strava badge': 'Seu emblema do Strava'
 'Your Zwift badge': 'Seu emblema do Zwift'
@@ -585,6 +587,7 @@ per: por
 'per hour': 'por hora'
 'reached Eddington number {number}': 'alcançou o número de Eddington {number}'
 rpm: rpm
+'the docs': 'the docs'
 to: até
 total: total
 watts: watts

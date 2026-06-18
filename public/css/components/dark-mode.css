@@ -14,8 +14,12 @@
         --color-black: #F0F6FC;
         --color-white: #202830;
 
-        --color-blue-600: #478be6;
         --color-primary-soft: color-mix(in oklch, var(--color-primary) 10%, transparent);
+
+        --color-blue-50: #1e3a8a;
+        --color-blue-300: #1e40af;
+        --color-blue-600: #478be6;
+        --color-blue-800: #93c5fd;
 
         --color-green-100: #064E3B;
         --color-green-600: #34D399;
@@ -59,7 +63,7 @@
     }
 }
 
-@layer utilities{
+@layer utilities {
     .bg-gray-900\/50 {
         background-color: color-mix(in srgb, #000000 60%, transparent);
         @supports (color: color-mix(in lab, red, red)) {

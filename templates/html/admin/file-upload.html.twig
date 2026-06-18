@@ -1,6 +1,7 @@
 {% extends "html/admin/page.html.twig" %}
 {% block main %}
     {% autoescape false %}
+    {% set uploadDisabled = not importMode.isFiles() %}
     <div class="flex flex-col max-h-[calc(100vh-96px)] p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
         <h3 class="shrink-0 text-lg font-semibold">
             {{ "Upload activity files"|trans }}
@@ -14,7 +15,20 @@
                 '{gpx}': codeOpen ~ '.gpx' ~ codeClose
             }) }}
         </p>
-        <form id="upload-form" class="flex flex-col min-h-0 mt-8" data-supported-file-extensions='{{ supportedFileExtensions }}' data-translations='{{ {
+        {% if uploadDisabled %}
+            <div class="shrink-0 flex items-center p-4 mt-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50" role="alert">
+                <svg class="shrink-0 inline size-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">{{ "File upload is only available in file import mode"|trans }}.</span>
+                    {{ "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"|trans({'{importMode}': codeOpen ~ 'IMPORT_MODE=files' ~ codeClose}) }}.
+                    {{ "Detailed instructions are available in the documentation on"|trans }} <a href="https://docs.getsfs.app/#/getting-started/installation?id=env" class="font-semibold underline hover:no-underline">{{ "the docs"|trans }}</a>.
+                </div>
+            </div>
+        {% endif %}
+        <form id="upload-form" {{ uploadDisabled ? 'inert' : '' }} class="flex flex-col min-h-0 mt-8 {{ uploadDisabled ? 'opacity-60 blur-[1px] pointer-events-none select-none' : '' }}" data-supported-file-extensions='{{ supportedFileExtensions }}' data-translations='{{ {
             "filesReadyToUpload": "{count} files ready to upload"|trans,
             "unsupportedFileType": "Unsupported file type"|trans,
         }|json_encode }}' novalidate>
@@ -52,9 +66,11 @@
                 <button type="button" id="clear-btn" class="hidden btn--secondary">{{ "Clear"|trans }}</button>
             </div>
         </form>
-        <div class="shrink-0 mt-6 text-xs text-gray-500">
-            {{ "You can also copy files straight into the {watchFolder} folder."|trans({'{watchFolder}': codeOpen ~ 'watch' ~ codeClose}) }}
-        </div>
+        {% if not uploadDisabled %}
+            <div class="shrink-0 mt-6 text-xs text-gray-500">
+                {{ "You can also copy files straight into the {watchFolder} folder."|trans({'{watchFolder}': codeOpen ~ 'watch' ~ codeClose}) }}
+            </div>
+        {% endif %}
     </div>
     {% endautoescape %}
 {% endblock main %}
