@@ -1779,6 +1779,9 @@
   .max-h-65 {
     max-height: calc(var(--spacing) * 65);
   }
+  .max-h-68 {
+    max-height: calc(var(--spacing) * 68);
+  }
   .max-h-79 {
     max-height: calc(var(--spacing) * 79);
   }
@@ -1791,9 +1794,6 @@
   .max-h-125 {
     max-height: calc(var(--spacing) * 125);
   }
-  .max-h-\[calc\(100vh-96px\)\] {
-    max-height: calc(100vh - 96px);
-  }
   .max-h-\[calc\(100vh-165px\)\] {
     max-height: calc(100vh - 165px);
   }
@@ -1802,9 +1802,6 @@
   }
   .max-h-full {
     max-height: 100%;
-  }
-  .min-h-0 {
-    min-height: 0;
   }
   .min-h-40 {
     min-height: calc(var(--spacing) * 40);
@@ -4550,6 +4547,11 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  .lg\:grid-cols-3 {
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
   .lg\:grid-cols-4 {
     @media (width >= 64rem) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -4609,6 +4611,11 @@
   .xl\:grid-cols-12 {
     @media (width >= 80rem) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+  .\32 xl\:grid-cols-4 {
+    @media (width >= 96rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
   .rtl\:rotate-180 {
@@ -5264,9 +5271,23 @@ table.data-table {
       background-color: var(--color-white);
       padding-inline: calc(var(--spacing) * 3);
       padding-block: calc(var(--spacing) * 2.5);
+      transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+      transition-duration: var(--tw-duration, var(--default-transition-duration));
       &.is-invalid {
         border-color: var(--color-red-300);
         background-color: var(--color-red-50);
+      }
+      &.is-uploading {
+        border-color: color-mix(in srgb, #F26722 40%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          border-color: color-mix(in oklab, var(--color-primary) 40%, transparent);
+        }
+        background-color: var(--color-primary-soft);
+      }
+      &.is-uploaded {
+        border-color: var(--color-green-300);
+        background-color: var(--color-green-50);
       }
     }
     .icon {
@@ -5285,6 +5306,17 @@ table.data-table {
       .is-invalid & {
         background-color: var(--color-red-100);
         color: var(--color-red-500);
+      }
+      .is-uploading & {
+        background-color: color-mix(in srgb, #F26722 10%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
+        }
+        color: var(--color-primary);
+      }
+      .is-uploaded & {
+        background-color: var(--color-green-100);
+        color: var(--color-green-600);
       }
     }
     .body {
@@ -5308,6 +5340,12 @@ table.data-table {
         color: var(--color-gray-500);
         .is-invalid & {
           color: var(--color-red-500);
+        }
+        .is-uploading & {
+          color: var(--color-primary);
+        }
+        .is-uploaded & {
+          color: var(--color-green-600);
         }
       }
     }

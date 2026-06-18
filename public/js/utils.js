@@ -82,17 +82,14 @@ export const dispatchCommand = async (commandName, payload = {}) => {
     }
 }
 
-export const parents = (el, selector) => {
-    const matched = [];
-    let parent = el.parentElement;
-
-    while (parent) {
-        if (!selector || parent.matches(selector)) {
-            matched.push(parent);
-        }
-        parent = parent.parentElement;
-    }
-
-    return matched;
-}
+export const readFileAsBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+        const result = reader.result;
+        // result is a data URL like "data:...;base64,AAAA"; keep only the base64 part.
+        resolve(result.slice(result.indexOf(',') + 1));
+    };
+    reader.onerror = () => reject(reader.error ?? new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+});
 

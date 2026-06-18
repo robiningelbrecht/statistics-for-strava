@@ -6,6 +6,7 @@ use App\Domain\Import\ImportMode;
 use App\Infrastructure\Config\AppConfig;
 use App\Infrastructure\Config\PlatformEnvironment;
 use App\Infrastructure\DependencyInjection\AppExpressionLanguageProvider;
+use App\Infrastructure\DependencyInjection\CQRS\RegisterDeserializableCommandsPass;
 use App\Infrastructure\DependencyInjection\Mutex\AutowireWithMutexPass;
 use App\Infrastructure\DependencyInjection\Mutex\WithMutex;
 use App\Infrastructure\KeyValue\KeyValueStore;
@@ -32,6 +33,7 @@ class Kernel extends BaseKernel
         });
 
         $container->addCompilerPass(new AutowireWithMutexPass());
+        $container->addCompilerPass(new RegisterDeserializableCommandsPass());
         $container->addExpressionLanguageProvider(new AppExpressionLanguageProvider());
     }
 

@@ -498,7 +498,9 @@ Unspecified: 未指定
 'Updated on': 更新于
 Upload: Upload
 'Upload activity files': 'Upload activity files'
+'Upload failed': 'Upload failed'
 'Upload files': 'Upload files'
+Uploaded: Uploaded
 Uploading...: Uploading...
 'User badge': 用户徽章
 Username: Username
@@ -594,6 +596,7 @@ watts: watts
 weeks: 周
 workouts: 锻炼
 '{count} files ready to upload': '{count} files ready to upload'
+'{count} files uploaded': '{count} files uploaded'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'

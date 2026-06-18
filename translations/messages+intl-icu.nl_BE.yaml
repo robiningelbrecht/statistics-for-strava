@@ -498,7 +498,9 @@ Unspecified: Unspecified
 'Updated on': 'Bijgewerkt op'
 Upload: Upload
 'Upload activity files': 'Upload activity files'
+'Upload failed': 'Upload failed'
 'Upload files': 'Upload files'
+Uploaded: Uploaded
 Uploading...: Uploading...
 'User badge': 'User badge'
 Username: Username
@@ -594,6 +596,7 @@ watts: watts
 weeks: weeks
 workouts: workouts
 '{count} files ready to upload': '{count} files ready to upload'
+'{count} files uploaded': '{count} files uploaded'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged} days'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged} hours'

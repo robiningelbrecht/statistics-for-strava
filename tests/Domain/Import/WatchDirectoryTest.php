@@ -77,6 +77,13 @@ class WatchDirectoryTest extends TestCase
         );
     }
 
+    public function testWriteFile(): void
+    {
+        $this->watchDirectory->writeFile('ride.fit', 'raw-fit-bytes');
+
+        $this->assertSame('raw-fit-bytes', $this->filesystem->read('watch/ride.fit'));
+    }
+
     public function testDeleteFile(): void
     {
         $this->filesystem->write('watch/ride.fit', 'raw-fit-bytes');

@@ -1,10 +1,18 @@
 @layer components {
     body.admin {
         .file-drop-zone__item {
-            @apply flex items-center gap-3 px-3 py-2.5 border border-gray-200 rounded-xl bg-white;
+            @apply flex items-center gap-3 px-3 py-2.5 border border-gray-200 rounded-xl bg-white transition-colors;
 
             &.is-invalid {
                 @apply border-red-300 bg-red-50;
+            }
+
+            &.is-uploading {
+                @apply border-primary/40 bg-primary-soft;
+            }
+
+            &.is-uploaded {
+                @apply border-green-300 bg-green-50;
             }
         }
 
@@ -17,6 +25,14 @@
 
             .is-invalid & {
                 @apply bg-red-100 text-red-500;
+            }
+
+            .is-uploading & {
+                @apply bg-primary/10 text-primary;
+            }
+
+            .is-uploaded & {
+                @apply bg-green-100 text-green-600;
             }
         }
 
@@ -32,6 +48,14 @@
 
                 .is-invalid & {
                     @apply text-red-500;
+                }
+
+                .is-uploading & {
+                    @apply text-primary;
+                }
+
+                .is-uploaded & {
+                    @apply text-green-600;
                 }
             }
         }
