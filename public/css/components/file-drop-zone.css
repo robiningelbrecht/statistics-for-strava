@@ -23,16 +23,45 @@
                 @apply w-[1.1rem] h-[1.1rem];
             }
 
+            /* Show only the icon matching the item's state; default (pending) otherwise. */
+            & [data-icon] {
+                @apply hidden;
+            }
+            & [data-icon="default"] {
+                @apply block;
+            }
+
             .is-invalid & {
                 @apply bg-red-100 text-red-500;
+
+                & [data-icon] {
+                    @apply hidden;
+                }
+                & [data-icon="invalid"] {
+                    @apply block;
+                }
             }
 
             .is-uploading & {
                 @apply bg-primary/10 text-primary;
+
+                & [data-icon] {
+                    @apply hidden;
+                }
+                & [data-icon="uploading"] {
+                    @apply block;
+                }
             }
 
             .is-uploaded & {
                 @apply bg-green-100 text-green-600;
+
+                & [data-icon] {
+                    @apply hidden;
+                }
+                & [data-icon="uploaded"] {
+                    @apply block;
+                }
             }
         }
 

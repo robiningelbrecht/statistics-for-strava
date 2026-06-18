@@ -2,6 +2,13 @@ import {dispatchCommand, formatFileSize, readFileAsBase64} from "../../utils";
 
 const extensionOf = (name) => name.split('.').pop().toLowerCase();
 
+const Status = {
+    Pending: 'pending',
+    Uploading: 'uploading',
+    Uploaded: 'uploaded',
+    Error: 'error',
+};
+
 export default class FileDropzoneUpload {
     constructor(rootNode) {
         this.rootNode = rootNode;
@@ -13,6 +20,7 @@ export default class FileDropzoneUpload {
         this.uploadBtn = rootNode.querySelector('#upload-btn');
         this.clearBtn = rootNode.querySelector('#clear-btn');
         this.form = rootNode.querySelector('#upload-form');
+        this.itemTemplate = rootNode.querySelector('#file-item-template');
         this.supportedFileExtension = JSON.parse(this.form.getAttribute('data-supported-file-extensions'));
         this.translations = JSON.parse(this.form.getAttribute('data-translations'));
 
@@ -63,7 +71,7 @@ export default class FileDropzoneUpload {
                 name: file.name,
                 size: file.size,
                 ok: this.supportedFileExtension.includes(extensionOf(file.name)),
-                status: 'pending',
+                status: Status.Pending,
             });
         }
         this.render();
@@ -72,13 +80,13 @@ export default class FileDropzoneUpload {
     async upload(e) {
         e.preventDefault();
 
-        const pending = this.files.filter((f) => f.ok && f.status !== 'uploaded' && f.status !== 'uploading');
+        const pending = this.files.filter((f) => f.ok && f.status !== Status.Uploaded && f.status !== Status.Uploading);
         if (pending.length === 0) return;
 
         this.clearBtn.disabled = true;
 
         for (const item of pending) {
-            item.status = 'uploading';
+            item.status = Status.Uploading;
             item.error = null;
             this.render();
 
@@ -87,9 +95,9 @@ export default class FileDropzoneUpload {
                     filename: item.name,
                     content: await readFileAsBase64(item.file),
                 });
-                item.status = 'uploaded';
+                item.status = Status.Uploaded;
             } catch (err) {
-                item.status = 'error';
+                item.status = Status.Error;
                 item.error = err.message;
             }
 
@@ -104,9 +112,9 @@ export default class FileDropzoneUpload {
     render() {
         this.list.innerHTML = '';
         const hasFiles = this.files.length > 0;
-        const uploadableCount = this.files.filter((f) => f.ok && f.status !== 'uploaded' && f.status !== 'uploading').length;
-        const uploadedCount = this.files.filter((f) => f.status === 'uploaded').length;
-        const isUploading = this.files.some((f) => f.status === 'uploading');
+        const uploadableCount = this.files.filter((f) => f.ok && f.status !== Status.Uploaded && f.status !== Status.Uploading).length;
+        const uploadedCount = this.files.filter((f) => f.status === Status.Uploaded).length;
+        const isUploading = this.files.some((f) => f.status === Status.Uploading);
 
         this.list.hidden = !hasFiles;
         this.listHeader.hidden = !hasFiles;
@@ -120,51 +128,25 @@ export default class FileDropzoneUpload {
         }
 
         this.files.forEach((file, index) => {
-            const li = document.createElement('li');
-            const classNames = ['file-drop-zone__item'];
-            if (!file.ok || file.status === 'error') classNames.push('is-invalid');
-            if (file.status === 'uploading') classNames.push('is-uploading');
-            if (file.status === 'uploaded') classNames.push('is-uploaded');
-            li.className = classNames.join(' ');
-            li.innerHTML = `
-                <span class="icon" aria-hidden="true">${this.iconFor(file)}</span>
-                <span class="body">
-                    <span class="name">${file.name}</span>
-                    <span class="meta">${this.metaFor(file)}</span>
-                </span>
-                <button type="button" data-remove-file class="remove" data-index="${index}" aria-label="Remove">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
-                </button>`;
+            const li = this.itemTemplate.content.firstElementChild.cloneNode(true);
+            if (!file.ok || file.status === Status.Error) li.classList.add('is-invalid');
+            if (file.status === Status.Uploading) li.classList.add('is-uploading');
+            if (file.status === Status.Uploaded) li.classList.add('is-uploaded');
+            li.querySelector('.name').textContent = file.name;
+            li.querySelector('.meta').textContent = this.metaFor(file);
+            li.querySelector('[data-remove-file]').dataset.index = index;
             this.list.appendChild(li);
         });
-    }
-
-    iconFor(file) {
-        switch (file.ok ? file.status : 'invalid') {
-            case 'uploading':
-                return `<svg class="animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                    <path d="M21 12a9 9 0 1 1-6.219-8.56" opacity="0.9"/></svg>`;
-            case 'uploaded':
-                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 6L9 17l-5-5"/></svg>`;
-            case 'error':
-            case 'invalid':
-                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>`;
-            default:
-                return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>`;
-        }
     }
 
     metaFor(file) {
         if (!file.ok) return this.translations.unsupportedFileType;
         switch (file.status) {
-            case 'uploading':
+            case Status.Uploading:
                 return this.translations.uploading;
-            case 'uploaded':
+            case Status.Uploaded:
                 return this.translations.uploaded;
-            case 'error':
+            case Status.Error:
                 return file.error || this.translations.uploadFailed;
             default:
                 return formatFileSize(file.size);
