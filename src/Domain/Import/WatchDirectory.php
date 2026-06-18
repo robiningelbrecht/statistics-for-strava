@@ -46,6 +46,11 @@ final readonly class WatchDirectory
         return $this->defaultStorage->read(self::FOLDER_NAME.'/'.$filePath->getFilename());
     }
 
+    public function writeFile(string $filename, string $contents): void
+    {
+        $this->defaultStorage->write(self::FOLDER_NAME.'/'.$filename, $contents);
+    }
+
     public function deleteFile(Path $filePath): void
     {
         $this->defaultStorage->delete(self::FOLDER_NAME.'/'.$filePath->getFilename());

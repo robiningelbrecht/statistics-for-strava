@@ -8,6 +8,11 @@ use App\Infrastructure\Serialization\Json;
 
 final readonly class CommandDeserializer
 {
+    public function __construct(
+        private DeserializableCommandRegistry $registry,
+    ) {
+    }
+
     public function deserialize(string $json): DeserializableCommand
     {
         $decoded = Json::decode($json);
@@ -20,16 +25,8 @@ final readonly class CommandDeserializer
             throw CouldNotDeserializeCommand::invalidPayload();
         }
 
-        /** @var class-string $commandName */
-        $commandName = $decoded['commandName'];
-        if (!class_exists($commandName)) {
-            throw CouldNotDeserializeCommand::unknownCommand($commandName);
-        }
+        $commandClass = $this->registry->resolve($decoded['commandName']);
 
-        if (!is_a($commandName, DeserializableCommand::class, true)) {
-            throw CouldNotDeserializeCommand::notDeserializable($commandName);
-        }
-
-        return $commandName::fromPayload($decoded['payload']);
+        return $commandClass::fromPayload($decoded['payload']);
     }
 }

@@ -15,9 +15,4 @@ final class CouldNotDeserializeCommand extends \RuntimeException
     {
         return new self(sprintf('Could not deserialize command, "%s" is not a known command.', $commandName));
     }
-
-    public static function notDeserializable(string $commandName): self
-    {
-        return new self(sprintf('Could not deserialize command, "%s" is not allowed to be dispatched from a request.', $commandName));
-    }
 }
