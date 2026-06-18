@@ -19,7 +19,7 @@
         <div class="mx-auto w-full max-w-sm">
             <img class="mx-auto h-12 w-auto" src="{{ relativeUrl('assets/images/logo.svg') }}" alt="{{ appName }}">
             <h1 class="mt-6 text-center text-2xl font-bold tracking-tight">{{ appName }}</h1>
-            <p class="mt-1 text-center text-sm text-gray-500">{{ "Sign in to the admin area"|trans }}</p>
+            <p class="mt-1 text-center text-sm text-gray-500">{{ "Sign in to the admin panel"|trans }}</p>
             {% if error %}
                 <div class="mt-6 overflow-hidden rounded-xl border border-red-200 bg-red-100/60 text-red-700">
                     <p class="px-4 py-3 text-sm">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
@@ -65,11 +65,7 @@
                     <span>{{ "Remember me for 7 days"|trans }}</span>
                 </label>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                <button type="submit" data-has-loading-state class="group w-full btn--primary">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4Z"></path>
-                    </svg>
+                <button type="submit" data-has-loading-state class="group w-full btn--primary btn--large">
                     <span class="label">{{ "Sign in"|trans }}</span>
                     <span class="label--loading">{{ "Signing in..."|trans }}</span>
                 </button>

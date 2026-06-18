@@ -1,9 +1,58 @@
 {% extends "html/admin/page.html.twig" %}
 {% block main %}
-    <div class="mx-auto w-full max-w-xl">
-        <h2 class="mt-4 text-2xl font-bold tracking-tight">Admin area</h2>
+    {% autoescape false %}
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        <h3 class="text-lg font-semibold">
+            {{ "Upload activity files"|trans }}
+        </h3>
+        {% set codeOpen = '<code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">' %}
+        {% set codeClose = '</code>' %}
         <p class="mt-1 text-sm text-gray-500">
-            Signed in as <strong>{{ app.user.userIdentifier }}</strong>.
+            {{ "Add {fit}, {tcx} or {gpx} files. They are imported every few minutes."|trans({
+                '{fit}': codeOpen ~ '.fit' ~ codeClose,
+                '{tcx}': codeOpen ~ '.tcx' ~ codeClose,
+                '{gpx}': codeOpen ~ '.gpx' ~ codeClose
+            }) }}
         </p>
+        <form id="upload-form" class="mt-8" novalidate>
+            <label id="dropzone" class="group relative flex flex-col items-center text-center gap-1.5 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 cursor-pointer transition-colors hover:border-primary hover:bg-primary-soft [&.is-dragging]:border-primary [&.is-dragging]:bg-primary-soft [&.is-dragging]:ring-4 [&.is-dragging]:ring-primary/10" for="file-input">
+                <input id="file-input" class="sr-only" type="file" multiple accept=".fit,.tcx,.gpx"/>
+                <span class="grid place-items-center w-12 h-12 mb-1 rounded-full bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white in-[.is-dragging]:bg-primary in-[.is-dragging]:text-white" aria-hidden="true">
+                       <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01"/>
+                        </svg>
+                    </span>
+                <span class="text-gray-500 text-sm">
+                    {% set strongOpen = '<strong class="font-semibold text-gray-700">' %}
+                    {% set strongClose = '</strong>' %}
+                    {{ "{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files"|trans({
+                        '{strongOpen}': strongOpen,
+                        '{strongClose}': strongClose
+                    }) }}
+                </span>
+                <span class="mt-0.5 text-xs text-gray-400">
+                    {{ "Supported types"|trans }}:
+                    <code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">.fit</code>
+                    <code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">.tcx</code>
+                    <code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">.gpx</code>
+                </span>
+            </label>
+            <div id="file-list-header" class="flex items-center justify-between gap-2 mt-4 text-xs font-medium text-gray-500" hidden>
+                <span id="file-count"></span>
+                <span id="file-invalid" class="text-red-500" hidden></span>
+            </div>
+            <ul id="file-list" class="list-none mt-2 mb-0 p-0 flex flex-col gap-2 max-h-72 overflow-y-auto overscroll-contain scrollbar-thin" hidden></ul>
+            <div class="flex flex-col gap-2 mt-5 sm:flex-row sm:items-center">
+                <button type="submit" id="upload-btn" class="group btn--primary" data-has-loading-state disabled>
+                    <span class="label">{{ "Upload files"|trans }}</span>
+                    <span class="label--loading">{{ "Uploading..."|trans }}</span>
+                </button>
+                <button type="button" id="clear-btn" class="hidden">{{ "Clear"|trans }}</button>
+            </div>
+        </form>
+        <div class="mt-6 text-xs text-gray-500">
+            {{ "You can also copy files straight into the {watchFolder} folder."|trans({'{watchFolder}': codeOpen ~ 'watch' ~ codeClose}) }}
+        </div>
     </div>
+    {% endautoescape %}
 {% endblock main %}

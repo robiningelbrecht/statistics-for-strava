@@ -28,7 +28,6 @@ class FileUploadRequestHandlerTest extends AdminWebTestCase
         $crawler = $this->client->request('GET', $path);
 
         $this->assertResponseIsSuccessful();
-        $this->assertStringContainsString('Admin area', $crawler->filter('body')->text());
-        $this->assertStringContainsString(self::ADMIN_USERNAME, $crawler->filter('body')->text());
+        $this->assertStringContainsString('Upload activity files', $crawler->filter('body')->text());
     }
 }
