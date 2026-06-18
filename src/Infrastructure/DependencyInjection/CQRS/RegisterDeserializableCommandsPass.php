@@ -23,17 +23,20 @@ final class RegisterDeserializableCommandsPass implements CompilerPassInterface
         }
 
         $commandsById = [];
-        foreach ((new Finder())->files()->in($srcDir)->name('*.php') as $file) {
+        foreach (new Finder()->files()->in($srcDir)->name('*.php') as $file) {
             if (!str_contains($file->getContents(), 'AsDeserializableCommand')) {
                 continue;
             }
 
             $class = 'App\\'.str_replace(['/', '.php'], ['\\', ''], $file->getRelativePathname());
-            if (!class_exists($class) || !is_a($class, DeserializableCommand::class, true)) {
+            if (!class_exists($class)) {
+                continue;
+            }
+            if (!is_a($class, DeserializableCommand::class, true)) {
                 continue;
             }
 
-            $attributes = (new \ReflectionClass($class))->getAttributes(AsDeserializableCommand::class);
+            $attributes = new \ReflectionClass($class)->getAttributes(AsDeserializableCommand::class);
             if ([] === $attributes) {
                 continue;
             }
