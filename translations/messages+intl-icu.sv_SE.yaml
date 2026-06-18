@@ -20,8 +20,9 @@ Activity: Aktivitet
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut träningsbelastning (trötthet) – 7 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar kortvarig utmattning.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Kronisk Ratio - Ratio av ATL till CTL. Indikerar skaderisk.'
 'Adaptive & Inclusive Sports': 'Adaptiva & Inkluderande Sporter'
+'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
 Admin: Admin
-'Admin area': 'Admin area'
+'Admin panel': 'Admin panel'
 Afternoon: Eftermiddag
 All: Alla
 'All time': 'Från start'
@@ -57,6 +58,7 @@ Canoeing: Kanot
 'Challenge consistency': Utmaningsihållighet
 Challenges: Utmaningar
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Kronisk träningsbelastning (Träningsform) - 42 dagars exponentiellt viktat medelvärde av din dagliga träningsbelastning. Representerar långsiktig träningsanpassning.'
+Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
 'Close modal': 'Close modal'
@@ -334,7 +336,7 @@ Sep: Sep
 'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 'Sign in': 'Sign in'
-'Sign in to the admin area': 'Sign in to the admin area'
+'Sign in to the admin panel': 'Sign in to the admin panel'
 'Sign out': 'Sign out'
 'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
@@ -360,6 +362,7 @@ Status: Status
 Streaks: Serie
 Sun: Sön
 Sun.: Sun.
+'Supported types': 'Supported types'
 Surfing: Surfning
 Swim: Simmning
 'TSB (Form)': 'TSB (Form)'
@@ -492,6 +495,9 @@ Tue.: Tue.
 Unspecified: Ospecificerad
 'Updated on': Uppdaterades
 Upload: Upload
+'Upload activity files': 'Upload activity files'
+'Upload files': 'Upload files'
+Uploading...: Uploading...
 'User badge': Användarmärke
 Username: Username
 'Velo Mobiles': Velomobil
@@ -529,6 +535,7 @@ Year: År
 Yearly: Yearly
 'Yearly stats': Årsstatistik
 Yoga: Yoga
+'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
 'Your PB badge': 'Ditt PB märke'
 'Your Strava badge': 'Ditt strava märke'
 'Your Zwift badge': 'Ditt Zwift märke'
@@ -593,6 +600,7 @@ workouts: träningspass
 '{numberOfResults} results': '{numberOfResults} results'
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
 '{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'

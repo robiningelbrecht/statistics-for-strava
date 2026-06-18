@@ -20,8 +20,9 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
+'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
 Admin: Admin
-'Admin area': 'Admin area'
+'Admin panel': 'Admin panel'
 Afternoon: 下午
 All: All
 'All time': 所有时间
@@ -57,6 +58,7 @@ Canoeing: 划独木舟
 'Challenge consistency': 挑战一致性
 Challenges: 挑战
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': '长期训练负荷（体能）— 42天训练的负荷指数加权平均值。代表长期训练适应情况。'
+Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
 'Close modal': 关闭模态框
@@ -334,7 +336,7 @@ Sep: 九月
 'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 'Sign in': 'Sign in'
-'Sign in to the admin area': 'Sign in to the admin area'
+'Sign in to the admin panel': 'Sign in to the admin panel'
 'Sign out': 'Sign out'
 'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": '从{startDate}算起，我已使用Strava {numberOfDaysAgo}多天​，我已经记录了{totalDaysOfWorkingOut}天的训练和冒险活动。'
@@ -360,6 +362,7 @@ Status: Status
 Streaks: 连续记录
 Sun: 周日
 Sun.: Sun.
+'Supported types': 'Supported types'
 Surfing: 冲浪
 Swim: 游泳
 'TSB (Form)': 'TSB (状态)'
@@ -492,6 +495,9 @@ Tue.: Tue.
 Unspecified: 未指定
 'Updated on': 更新于
 Upload: Upload
+'Upload activity files': 'Upload activity files'
+'Upload files': 'Upload files'
+Uploading...: Uploading...
 'User badge': 用户徽章
 Username: Username
 'Velo Mobiles': 躺车
@@ -529,6 +535,7 @@ Year: 年
 Yearly: Yearly
 'Yearly stats': 年度统计
 Yoga: 瑜伽
+'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
 'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
 'Your Zwift badge': Zwift徽章
@@ -593,6 +600,7 @@ workouts: 锻炼
 '{numberOfResults} results': '{numberOfResults} results'
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
 '{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'

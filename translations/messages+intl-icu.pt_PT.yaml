@@ -20,8 +20,9 @@ Activity: Activity
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carga de treino aguda (Fadiga) - Média de 7-dias ponderada exponencial da carga de treino. Representa fadiga de curto prazo.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Rácio Agudo:Crónico - Rácio entre ATL e CTL. Indica risco de lesão.'
 'Adaptive & Inclusive Sports': 'Desportos Adaptativos e Inclusivos'
+'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
 Admin: Admin
-'Admin area': 'Admin area'
+'Admin panel': 'Admin panel'
 Afternoon: Tarde
 All: All
 'All time': 'Desde sempre'
@@ -57,6 +58,7 @@ Canoeing: Canoagem
 'Challenge consistency': 'Consistência nos desafios'
 Challenges: Desafios
 'Chronic Training Load (Fitness) - 42-day exponentially weighted average of your daily training load. Represents long-term training adaptation.': 'Carga de Treino Crónica (Forma) - média ponderada exponencial de 42-dias da carga diária de treino. Representa adaptação ao treino de longo prazo.'
+Clear: Clear
 'Clear all filters': 'Clear all filters'
 'Clear chat': 'Clear chat'
 'Close modal': 'Fechar modal'
@@ -334,7 +336,7 @@ Sep: Set
 'Show password': 'Show password'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 'Sign in': 'Sign in'
-'Sign in to the admin area': 'Sign in to the admin area'
+'Sign in to the admin panel': 'Sign in to the admin panel'
 'Sign out': 'Sign out'
 'Signing in...': 'Signing in...'
 "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure.": "Since I began using Strava {numberOfDaysAgo} ago on {startDate}, I've logged {totalDaysOfWorkingOut} active days of training and adventure."
@@ -360,6 +362,7 @@ Status: Status
 Streaks: Sequências
 Sun: Dom
 Sun.: Sun.
+'Supported types': 'Supported types'
 Surfing: Surf
 Swim: Natação
 'TSB (Form)': 'TSB (Forma)'
@@ -492,6 +495,9 @@ Tue.: Tue.
 Unspecified: 'Não especificado'
 'Updated on': 'Atualizado em'
 Upload: Upload
+'Upload activity files': 'Upload activity files'
+'Upload files': 'Upload files'
+Uploading...: Uploading...
 'User badge': 'User badge'
 Username: Username
 'Velo Mobiles': 'Velo Móveis'
@@ -529,6 +535,7 @@ Year: Ano
 Yearly: Yearly
 'Yearly stats': 'Yearly stats'
 Yoga: Yoga
+'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
 'Your PB badge': 'Medalha de Recordes'
 'Your Strava badge': 'O teu emblema do Strava'
 'Your Zwift badge': 'O teu emblema do Zwift'
@@ -593,6 +600,7 @@ workouts: treinos
 '{numberOfResults} results': '{numberOfResults} results'
 '{numberOfResults} routes': '{numberOfResults} routes'
 '{numberOfWeeks} weeks': '{numberOfWeeks} weeks'
+'{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files': '{strongOpen}Drag & drop{strongClose} or {strongOpen}browse{strongClose} to choose files'
 '{threshold} hours using {gearName}': '{threshold} hours using {gearName}'
 '{threshold} total distance using {gearName}': '{threshold} total distance using {gearName}'
 '{threshold} total elevation using {gearName}': '{threshold} total elevation using {gearName}'
