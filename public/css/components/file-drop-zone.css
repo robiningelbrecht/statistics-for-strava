@@ -1,0 +1,47 @@
+@layer components {
+    body.admin {
+        .file-drop-zone__item {
+            @apply flex items-center gap-3 px-3 py-2.5 border border-gray-200 rounded-xl bg-white;
+
+            &.is-invalid {
+                @apply border-red-300 bg-red-50;
+            }
+        }
+
+        .icon {
+            @apply grid place-items-center w-8 h-8 shrink-0 rounded-lg bg-gray-100 text-gray-500;
+
+            & svg {
+                @apply w-[1.1rem] h-[1.1rem];
+            }
+
+            .is-invalid & {
+                @apply bg-red-100 text-red-500;
+            }
+        }
+
+        .body {
+            @apply flex flex-col min-w-0 flex-1;
+
+            .name {
+                @apply text-sm font-medium text-gray-800 truncate;
+            }
+
+            .meta {
+                @apply text-xs text-gray-500;
+
+                .is-invalid & {
+                    @apply text-red-500;
+                }
+            }
+        }
+
+        .remove {
+            @apply grid place-items-center w-9 h-9 shrink-0 p-0 rounded-lg border-0 bg-transparent text-gray-400 shadow-none cursor-pointer transition-colors hover:bg-gray-100 hover:text-gray-900;
+
+            & svg {
+                @apply w-4 h-4;
+            }
+        }
+    }
+}

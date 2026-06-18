@@ -22,6 +22,7 @@ use App\Domain\Activity\WorldType;
 use App\Domain\Import\FileParser\Fit\FitManufacturer;
 use App\Domain\Import\FileParser\Fit\FitProduct;
 use App\Domain\Import\FileParser\Fit\FitSportType;
+use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\Process\ProcessFactory;
 use App\Infrastructure\Serialization\Json;
 use App\Infrastructure\Time\Clock\Clock;
@@ -51,9 +52,9 @@ final readonly class FitFileParser implements ActivityFileParser
     ) {
     }
 
-    public function supportedExtension(): string
+    public function supportedExtension(): SupportedFileExtension
     {
-        return 'fit';
+        return SupportedFileExtension::FIT;
     }
 
     public function parse(RawActivityFile $file): ParsedActivityFile

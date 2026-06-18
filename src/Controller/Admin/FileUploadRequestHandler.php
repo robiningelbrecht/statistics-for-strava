@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Domain\Import\SupportedFileExtension;
+use App\Infrastructure\Serialization\Json;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,6 +23,8 @@ final readonly class FileUploadRequestHandler
     #[Route(path: '/admin/upload', name: 'admin_file_upload', methods: ['GET'], priority: 10)]
     public function index(): Response
     {
-        return new Response($this->twig->render('html/admin/file-upload.html.twig'));
+        return new Response($this->twig->render('html/admin/file-upload.html.twig', [
+            'supportedFileExtensions' => Json::encode(SupportedFileExtension::cases()),
+        ]));
     }
 }

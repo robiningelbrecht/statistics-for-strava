@@ -41,6 +41,12 @@ export const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     return s.join(dec)
 }
 
+export const formatFileSize = (bytes) => {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
 export const fetchJson = async (url) => {
     const response = await fetch(url);
 

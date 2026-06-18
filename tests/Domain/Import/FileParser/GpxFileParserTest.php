@@ -8,6 +8,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\GpxFileParser;
 use App\Domain\Import\FileParser\RawActivityFile;
+use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\ValueObject\String\Path;
 use App\Infrastructure\ValueObject\Time\SerializableTimezone;
 use App\Tests\Domain\Activity\IncrementingActivityIdFactory;
@@ -20,7 +21,7 @@ class GpxFileParserTest extends ActivityFileParserTestCase
 
     public function testSupportedExtensions(): void
     {
-        $this->assertSame('gpx', $this->parser->supportedExtension());
+        $this->assertSame(SupportedFileExtension::GPX, $this->parser->supportedExtension());
     }
 
     public function testParse(): void

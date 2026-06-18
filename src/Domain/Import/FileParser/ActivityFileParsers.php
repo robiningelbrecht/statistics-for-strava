@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Import\FileParser;
 
+use App\Domain\Import\SupportedFileExtension;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 final readonly class ActivityFileParsers
@@ -25,7 +26,7 @@ final readonly class ActivityFileParsers
         }
 
         foreach ($this->parsers as $parser) {
-            if ($extension === $parser->supportedExtension()) {
+            if (SupportedFileExtension::tryFrom($extension) === $parser->supportedExtension()) {
                 return $parser->parse($file);
             }
         }

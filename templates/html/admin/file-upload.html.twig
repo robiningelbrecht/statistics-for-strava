@@ -14,7 +14,7 @@
                 '{gpx}': codeOpen ~ '.gpx' ~ codeClose
             }) }}
         </p>
-        <form id="upload-form" class="mt-8" novalidate>
+        <form id="upload-form" class="mt-8" data-supported-file-extensions='{{ supportedFileExtensions }}' novalidate>
             <label id="dropzone" class="group relative flex flex-col items-center text-center gap-1.5 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 cursor-pointer transition-colors hover:border-primary hover:bg-primary-soft [&.is-dragging]:border-primary [&.is-dragging]:bg-primary-soft [&.is-dragging]:ring-4 [&.is-dragging]:ring-primary/10" for="file-input">
                 <input id="file-input" class="sr-only" type="file" multiple accept=".fit,.tcx,.gpx"/>
                 <span class="grid place-items-center w-12 h-12 mb-1 rounded-full bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white in-[.is-dragging]:bg-primary in-[.is-dragging]:text-white" aria-hidden="true">

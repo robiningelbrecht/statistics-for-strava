@@ -8,6 +8,7 @@ use App\Domain\Activity\SportType\SportType;
 use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\FitFileParser;
 use App\Domain\Import\FileParser\RawActivityFile;
+use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\Process\ProcessFactory;
 use App\Infrastructure\Process\SymfonyProcessFactory;
 use App\Infrastructure\Serialization\Json;
@@ -28,7 +29,7 @@ class FitFileParserTest extends ActivityFileParserTestCase
 
     public function testSupportedExtensions(): void
     {
-        $this->assertSame('fit', $this->parser->supportedExtension());
+        $this->assertSame(SupportedFileExtension::FIT, $this->parser->supportedExtension());
     }
 
     public function testParse(): void
