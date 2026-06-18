@@ -62,6 +62,27 @@
                 <span id="file-count"></span>
             </div>
             <ul id="file-list" class="list-none mt-2 mb-0 p-0 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 max-h-68 overflow-y-auto overscroll-contain" hidden></ul>
+            <template id="file-item-template">
+                <li class="file-drop-zone__item">
+                    <span class="icon" aria-hidden="true">
+                        <svg data-icon="default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                        <svg data-icon="uploading" class="animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56" opacity="0.9"/></svg>
+                        <svg data-icon="uploaded" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6L9 17l-5-5"/></svg>
+                        <svg data-icon="invalid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                    </span>
+                    <span class="body">
+                        <span class="name"></span>
+                        <span class="meta"></span>
+                    </span>
+                    <button type="button" data-remove-file class="remove" aria-label="{{ "Remove"|trans }}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                    </button>
+                </li>
+            </template>
             <div class="flex flex-col gap-2 mt-5 sm:flex-row sm:items-center">
                 <button type="submit" id="upload-btn" class="group btn--primary" data-has-loading-state disabled>
                     <span class="label">{{ "Upload files"|trans }}</span>

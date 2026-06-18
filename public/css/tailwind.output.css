@@ -5303,9 +5303,21 @@ table.data-table {
         height: 1.1rem;
         width: 1.1rem;
       }
+      & [data-icon] {
+        display: none;
+      }
+      & [data-icon="default"] {
+        display: block;
+      }
       .is-invalid & {
         background-color: var(--color-red-100);
         color: var(--color-red-500);
+        & [data-icon] {
+          display: none;
+        }
+        & [data-icon="invalid"] {
+          display: block;
+        }
       }
       .is-uploading & {
         background-color: color-mix(in srgb, #F26722 10%, transparent);
@@ -5313,10 +5325,22 @@ table.data-table {
           background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
         }
         color: var(--color-primary);
+        & [data-icon] {
+          display: none;
+        }
+        & [data-icon="uploading"] {
+          display: block;
+        }
       }
       .is-uploaded & {
         background-color: var(--color-green-100);
         color: var(--color-green-600);
+        & [data-icon] {
+          display: none;
+        }
+        & [data-icon="uploaded"] {
+          display: block;
+        }
       }
     }
     .body {
