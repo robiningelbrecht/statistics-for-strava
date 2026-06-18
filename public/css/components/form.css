@@ -15,6 +15,9 @@
             &.btn--primary {
                 @apply border-0 bg-primary text-white hover:brightness-95;
             }
+            &.btn--secondary {
+                @apply border-0 bg-transparent font-medium text-gray-500 shadow-none hover:text-gray-700 hover:bg-gray-50;
+            }
             &.btn--large {
                 @apply px-5 py-3 text-base rounded-xl;
             }

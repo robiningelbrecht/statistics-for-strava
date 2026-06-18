@@ -493,6 +493,7 @@ Title: Title
 Tue: 周二
 Tue.: Tue.
 Unspecified: 未指定
+'Unsupported file type': 'Unsupported file type'
 'Updated on': 更新于
 Upload: Upload
 'Upload activity files': 'Upload activity files'
@@ -589,6 +590,7 @@ total: 总计
 watts: watts
 weeks: 周
 workouts: 锻炼
+'{count} files ready to upload': '{count} files ready to upload'
 '{daysSinceLastTagged} days': '{daysSinceLastTagged}天'
 '{days} consecutive days of activity': '{days} consecutive days of activity'
 '{hoursSinceLastTagged} hours': '{hoursSinceLastTagged}小时'

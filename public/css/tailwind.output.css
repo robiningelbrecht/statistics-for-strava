@@ -1597,27 +1597,6 @@
       height: var(--scrollbar-height, 16px);
     }
   }
-  .scrollbar-thin {
-    &::-webkit-scrollbar-track {
-      background-color: var(--scrollbar-track);
-      border-radius: var(--scrollbar-track-radius);
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--scrollbar-thumb);
-      border-radius: var(--scrollbar-thumb-radius);
-    }
-    &::-webkit-scrollbar-corner {
-      background-color: var(--scrollbar-corner);
-      border-radius: var(--scrollbar-corner-radius);
-    }
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
-    &::-webkit-scrollbar {
-      display: block;
-      width: 8px;
-      height: 8px;
-    }
-  }
   .datatable-pagination-list {
     .datatable-wrapper .datatable-bottom .datatable-pagination & {
       display: flex;
@@ -1800,9 +1779,6 @@
   .max-h-65 {
     max-height: calc(var(--spacing) * 65);
   }
-  .max-h-72 {
-    max-height: calc(var(--spacing) * 72);
-  }
   .max-h-79 {
     max-height: calc(var(--spacing) * 79);
   }
@@ -1815,6 +1791,9 @@
   .max-h-125 {
     max-height: calc(var(--spacing) * 125);
   }
+  .max-h-\[calc\(100vh-96px\)\] {
+    max-height: calc(100vh - 96px);
+  }
   .max-h-\[calc\(100vh-165px\)\] {
     max-height: calc(100vh - 165px);
   }
@@ -1823,6 +1802,9 @@
   }
   .max-h-full {
     max-height: 100%;
+  }
+  .min-h-0 {
+    min-height: 0;
   }
   .min-h-40 {
     min-height: calc(var(--spacing) * 40);
@@ -2213,9 +2195,6 @@
   }
   .resize {
     resize: both;
-  }
-  .scrollbar-thin {
-    scrollbar-width: thin;
   }
   .list-inside {
     list-style-position: inside;
@@ -5596,6 +5575,26 @@ table.data-table {
           @media (hover: hover) {
             --tw-brightness: brightness(95%);
             filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+          }
+        }
+      }
+      &.btn--secondary {
+        border-style: var(--tw-border-style);
+        border-width: 0px;
+        background-color: transparent;
+        --tw-font-weight: var(--font-weight-medium);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-gray-500);
+        --tw-shadow: 0 0 #0000;
+        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+        &:hover {
+          @media (hover: hover) {
+            background-color: var(--color-gray-50);
+          }
+        }
+        &:hover {
+          @media (hover: hover) {
+            color: var(--color-gray-700);
           }
         }
       }
