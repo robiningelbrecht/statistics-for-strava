@@ -19,6 +19,7 @@ use App\Domain\Activity\Stream\ActivityStream;
 use App\Domain\Activity\Stream\ActivityStreams;
 use App\Domain\Activity\Stream\StreamType;
 use App\Domain\Activity\WorldType;
+use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\Time\Clock\Clock;
 use App\Infrastructure\ValueObject\Geography\Coordinate;
 use App\Infrastructure\ValueObject\Geography\EncodedPolyline;
@@ -44,9 +45,9 @@ final readonly class TcxFileParser implements ActivityFileParser
     ) {
     }
 
-    public function supportedExtension(): string
+    public function supportedExtension(): SupportedFileExtension
     {
-        return 'tcx';
+        return SupportedFileExtension::TCX;
     }
 
     public function parse(RawActivityFile $file): ParsedActivityFile

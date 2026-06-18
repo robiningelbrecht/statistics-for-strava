@@ -30,7 +30,7 @@ final readonly class WatchDirectory
         return [] !== $this->listFiles()
             ->filter(fn (StorageAttributes $file): bool => in_array(
                 Path::fromString($file->path())->getExtension(),
-                ['fit', 'tcx', 'gpx'],
+                array_map(fn (SupportedFileExtension $ext) => $ext->value, SupportedFileExtension::cases()),
             ))
             ->toArray();
     }

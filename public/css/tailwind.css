@@ -3,6 +3,7 @@
 @import "./components/chat.css";
 @import "./components/dark-mode.css";
 @import "./components/data-table.css";
+@import "./components/file-drop-zone.css";
 @import "./components/filter-dropdown.css";
 @import "./components/form.css";
 @import "./components/leaflet.css";

@@ -10,6 +10,7 @@ use App\Domain\Import\FileParser\CouldNotParseActivityFile;
 use App\Domain\Import\FileParser\ParsedActivityFile;
 use App\Domain\Import\FileParser\RawActivityFile;
 use App\Domain\Import\FileParser\UnsupportedFileType;
+use App\Domain\Import\SupportedFileExtension;
 use App\Infrastructure\ValueObject\String\Path;
 use PHPUnit\Framework\TestCase;
 
@@ -55,9 +56,9 @@ class ActivityFileParsersTest extends TestCase
         parent::setUp();
 
         $this->registry = new ActivityFileParsers([
-            $this->createParser('fit'),
-            $this->createParser('tcx'),
-            $this->createParser('gpx'),
+            $this->createParser(SupportedFileExtension::FIT),
+            $this->createParser(SupportedFileExtension::TCX),
+            $this->createParser(SupportedFileExtension::GPX),
         ]);
     }
 
@@ -66,21 +67,21 @@ class ActivityFileParsersTest extends TestCase
         return RawActivityFile::from(Path::fromString($path), '');
     }
 
-    private function createParser(string $extension): ActivityFileParser
+    private function createParser(SupportedFileExtension $extension): ActivityFileParser
     {
         return new readonly class($extension) implements ActivityFileParser {
-            public function __construct(private string $extension)
+            public function __construct(private SupportedFileExtension $extension)
             {
             }
 
-            public function supportedExtension(): string
+            public function supportedExtension(): SupportedFileExtension
             {
                 return $this->extension;
             }
 
             public function parse(RawActivityFile $file): ParsedActivityFile
             {
-                throw new \LogicException('parsed-by-'.$this->extension);
+                throw new \LogicException('parsed-by-'.$this->extension->value);
             }
         };
     }
