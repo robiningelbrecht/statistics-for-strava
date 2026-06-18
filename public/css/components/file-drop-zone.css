@@ -23,7 +23,6 @@
                 @apply w-[1.1rem] h-[1.1rem];
             }
 
-            /* Show only the icon matching the item's state; default (pending) otherwise. */
             & [data-icon] {
                 @apply hidden;
             }
