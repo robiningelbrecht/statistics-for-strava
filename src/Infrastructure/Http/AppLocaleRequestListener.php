@@ -30,6 +30,9 @@ final readonly class AppLocaleRequestListener implements EventSubscriberInterfac
         Carbon::setLocale($this->locale->value);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::REQUEST => [['onKernelRequest', 14]]];

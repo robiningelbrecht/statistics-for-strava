@@ -60,7 +60,6 @@ class DetectCorruptedActivitiesConsoleCommand extends Command
 
         $progressIndicator = new ProgressIndicator(
             output: $output,
-            format: null,
             indicatorChangeInterval: 100,
             indicatorValues: ['⠏', '⠛', '⠹', '⢸', '⣰', '⣤', '⣆', '⡇']
         );
