@@ -125,6 +125,7 @@ Evening: Abend
 'FTP history': FTP-Verlauf
 Favourite: Favorit
 Feb: Feb
+'File imports': 'File imports'
 'File upload': 'File upload'
 'File upload is only available in file import mode': 'File upload is only available in file import mode'
 'Filter on KOM segments': 'Filter für KOM-Segmente'
@@ -182,6 +183,7 @@ History: Verlauf
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'Das Bild "{imgSrc}" wurde in deiner maintenance config Datei referenziert, aber es wurde nicht unter "storage/gear-maintenance" gefunden'
 Imperial: Imperial
+Imports: Imports
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": 'In dieser Zeit habe ich {totalDistance} zurückgelegt – das entspricht {numberOfTripsAroundTheWorld} Erdumrundungen 🌍 oder {numberOfTripsToTheMoonPercent}% des Weges zum Mond 🌕. Und ich habe {totalElevation} Höhenmeter überwunden, was {timesMountEverest} Mal dem Mount Everest entspricht 🏔. Insgesamt sind das {totalTimeRecorded} reine Bewegungszeit 🎉.'
 'Individual thresholds vary based on fitness level.': 'Individuelle Schwellenwerte variieren je nach Fitnesslevel.'
 'Inline Skate': Inlineskaten

@@ -125,6 +125,7 @@ Evening: Sera
 'FTP history': 'Storico FTP'
 Favourite: Preferito
 Feb: Feb
+'File imports': 'File imports'
 'File upload': 'File upload'
 'File upload is only available in file import mode': 'File upload is only available in file import mode'
 'Filter on KOM segments': 'Filtra sui segmenti KOM'
@@ -182,6 +183,7 @@ History: Cronologia
 Id: ID
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma non è stata trovata in "storage/gear-maintenance"'
 Imperial: Imperial
+Imports: Imports
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Le soglie individuali variano in base al livello di forma.'
 'Inline Skate': 'Pattinaggio in linea'
