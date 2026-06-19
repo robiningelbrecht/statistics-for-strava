@@ -2,8 +2,6 @@
 
 namespace App\Tests\Controller\Admin;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\User\InMemoryUser;
@@ -28,7 +26,6 @@ abstract class AdminWebTestCase extends WebTestCase
         );
 
         $this->client = static::createClient();
-        $this->createTestDatabase();
     }
 
     protected function adminUser(): InMemoryUser
@@ -38,16 +35,5 @@ abstract class AdminWebTestCase extends WebTestCase
             (string) $_SERVER['ADMIN_PASSWORD_HASH'],
             ['ROLE_ADMIN'],
         );
-    }
-
-    private function createTestDatabase(): void
-    {
-        /** @var EntityManagerInterface $entityManager */
-        $entityManager = $this->client->getContainer()->get(EntityManagerInterface::class);
-
-        $schemaTool = new SchemaTool($entityManager);
-        $classes = $entityManager->getMetadataFactory()->getAllMetadata();
-        $schemaTool->dropDatabase();
-        $schemaTool->createSchema($classes);
     }
 }
