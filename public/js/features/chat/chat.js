@@ -16,7 +16,7 @@ export default class Chat {
         this.commands = JSON.parse(this.chatWrapper.getAttribute('data-chat-commands') || '{}');
         this.autoCompleteJS = null;
 
-        const raw = window.statisticsForStrava?.appUrl?.basePath || '';
+        const raw = window.dreeve?.appUrl?.basePath || '';
         this.basePath = raw ? '/' + raw.replace(/^\/+|\/+$/g, '') : '';
     }
 
