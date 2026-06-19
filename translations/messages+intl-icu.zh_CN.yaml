@@ -90,6 +90,7 @@ Day: Day
 Dec: 十二月
 Density: Density
 'Detailed instructions are available in the documentation on': 详细说明
+'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: 详情
 Device: 设备
 Dist.: Dist.
@@ -310,6 +311,7 @@ Ranking: Ranking
 'Reduced carbon emission by commuting': 通勤减少的碳排放
 'Relative cost': 相对成本
 'Remember me for 7 days': 'Remember me for 7 days'
+Remove: Remove
 'Rest Days': 休息日
 'Rest days': 休息日
 'Rest days in last 7 days': 最近7天的休息日
@@ -540,7 +542,7 @@ Yearly: Yearly
 'Yearly stats': 年度统计
 Yoga: 瑜伽
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
-"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
+"You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': PB徽章
 'Your Strava badge': Strava徽章
 'Your Zwift badge': Zwift徽章
@@ -589,7 +591,6 @@ per: per
 'per hour': 每小时
 'reached Eddington number {number}': 'reached Eddington number {number}'
 rpm: rpm
-'the docs': 'the docs'
 to: 至
 total: 总计
 watts: watts

@@ -90,6 +90,7 @@ Day: Tag
 Dec: Dez
 Density: Dichte
 'Detailed instructions are available in the documentation on': 'Detaillierte Anweisungen findest du in'
+'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Details
 Device: Gerät
 Dist.: Dist.
@@ -310,6 +311,7 @@ Ranking: Rangliste
 'Reduced carbon emission by commuting': 'Reduzierter Kohlendioxidausstoß durch Pendler'
 'Relative cost': 'Relative Kosten'
 'Remember me for 7 days': 'Remember me for 7 days'
+Remove: Remove
 'Rest Days': Ruhetage
 'Rest days': Ruhetage
 'Rest days in last 7 days': 'Ruhetage in den letzten 7 Tagen'
@@ -540,7 +542,7 @@ Yearly: Jährlich
 'Yearly stats': 'Jährliche Statistiken'
 Yoga: Yoga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
-"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
+"You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Dein PB Abzeichen'
 'Your Strava badge': 'Dein Strava-Abzeichen'
 'Your Zwift badge': 'Dein Zwift-Abzeichen'
@@ -589,7 +591,6 @@ per: per
 'per hour': 'pro Stunde'
 'reached Eddington number {number}': 'erreichte Eddington Zahl {number}'
 rpm: rpm
-'the docs': 'the docs'
 to: mit
 total: gesamt
 watts: watts

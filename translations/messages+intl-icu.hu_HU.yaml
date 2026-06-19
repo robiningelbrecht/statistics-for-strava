@@ -90,6 +90,7 @@ Day: Nap
 Dec: Dec
 Density: Sűrűség
 'Detailed instructions are available in the documentation on': 'Részletes utasítások az alábbi dokumentációban találhatók:'
+'Detailed instructions are available in {linkOpen}the documentation{linkClose}.': 'Detailed instructions are available in {linkOpen}the documentation{linkClose}.'
 Details: Részletek
 Device: Eszköz
 Dist.: Dist.
@@ -310,6 +311,7 @@ Ranking: Ranglista
 'Reduced carbon emission by commuting': 'Csökkentett szén-dioxid kibocsátás ingázással'
 'Relative cost': 'Relatív költség'
 'Remember me for 7 days': 'Remember me for 7 days'
+Remove: Remove
 'Rest Days': Pihenőnapok
 'Rest days': Pihenőnapok
 'Rest days in last 7 days': 'Pihenőnapok az utolsó 7 napban'
@@ -540,7 +542,7 @@ Yearly: Éves
 'Yearly stats': 'Éves statisztikák'
 Yoga: Jóga
 'You can also copy files straight into the {watchFolder} folder.': 'You can also copy files straight into the {watchFolder} folder.'
-"You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} and rebuild to upload activity files directly, without depending on Strava's API"
+"You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API": "You're currently importing from the Strava API. Set {importMode} to upload activity files directly, without depending on Strava's API"
 'Your PB badge': 'Személyes rekord kitűződ'
 'Your Strava badge': 'Strava kitűződ'
 'Your Zwift badge': 'Zwift kitűződ'
@@ -589,7 +591,6 @@ per: /
 'per hour': óránként
 'reached Eddington number {number}': '{number}-es Eddington-szám elérve'
 rpm: rpm
-'the docs': 'the docs'
 to: '-ig'
 total: összesen
 watts: watts
