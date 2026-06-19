@@ -4,7 +4,7 @@ export default function initLeafletMaps(rootNode) {
             /* webpackChunkName: "leaflet" */ './leaflet-map'
             );
         const data = JSON.parse(mapNode.getAttribute('data-leaflet'));
-        const config = window.statisticsForStrava.leafletConfig;
+        const config = window.dreeve.leafletConfig;
         if (config.enableGreyScale) {
             mapNode.classList.add('enable-grey-scale');
         }

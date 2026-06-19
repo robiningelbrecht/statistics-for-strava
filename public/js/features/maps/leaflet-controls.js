@@ -9,7 +9,7 @@ const FlyToPlacesControl = L.Control.extend({
             const countryCode = place.countryCode.toLowerCase();
             const item = L.DomUtil.create('li', '', container);
 
-            item.innerHTML = '<img src="assets/images/flags/' + countryCode + '.svg" width="20" title="' + window.statisticsForStrava.countries[countryCode.toUpperCase()] + '" />'
+            item.innerHTML = '<img src="assets/images/flags/' + countryCode + '.svg" width="20" title="' + window.dreeve.countries[countryCode.toUpperCase()] + '" />'
             // Prevent click events propagation to map.
             L.DomEvent.disableClickPropagation(item);
             L.DomEvent.on(item, 'click', function () {

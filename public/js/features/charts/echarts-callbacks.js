@@ -7,10 +7,10 @@ export const resolveEchartsCallbacks = (obj) => {
         const value = obj[key];
         if (typeof value === 'string' && value.startsWith(CALLBACK_PREFIX)) {
             const callbackName = value.slice(CALLBACK_PREFIX.length);
-            if (callbackName in window.statisticsForStrava.callbacks) {
-                obj[key] = window.statisticsForStrava.callbacks[callbackName];
+            if (callbackName in window.dreeve.callbacks) {
+                obj[key] = window.dreeve.callbacks[callbackName];
             } else {
-                console.error(`ECharts callback "${callbackName}" not registered in window.statisticsForStrava.callbacks`);
+                console.error(`ECharts callback "${callbackName}" not registered in window.dreeve.callbacks`);
             }
         } else if (typeof value === 'object' && value !== null) {
             resolveEchartsCallbacks(value);
@@ -27,7 +27,7 @@ const formatSeconds = (secondsToFormat) => {
 };
 
 const formatPace = (seconds) => {
-    const paceSymbol = window.statisticsForStrava.unitSystem.paceSymbol;
+    const paceSymbol = window.dreeve.unitSystem.paceSymbol;
     const secondsToFormat = seconds;
     if (secondsToFormat < 60) {
         return `<strong>${secondsToFormat}s</strong>${paceSymbol}`;
@@ -50,7 +50,7 @@ const formatDuration = (seconds) => {
 };
 
 export const registerEchartsCallbacks = () => {
-    window.statisticsForStrava.callbacks = {
+    window.dreeve.callbacks = {
         formatSeconds,
         formatPace,
         formatDuration,
@@ -64,7 +64,7 @@ export const registerEchartsCallbacks = () => {
             if (!Array.isArray(params)) params = [params];
             return [...params].sort((a, b) => a.seriesIndex - b.seriesIndex).map(p => {
                 if (p.seriesName === '__pace') {
-                    return `${p.marker} ${window.statisticsForStrava.callbacks.formatPace(p.value)}`;
+                    return `${p.marker} ${window.dreeve.callbacks.formatPace(p.value)}`;
                 }
 
                 const extra = p.data?.extra !== undefined ? ` (${p.data.extra})` : '';
@@ -76,9 +76,9 @@ export const registerEchartsCallbacks = () => {
             const velocityIsPace = params.value[4];
             const velocityUnit = params.value[5];
             const velocity = velocityIsPace
-                ? window.statisticsForStrava.callbacks.formatSecondsTrimZero(params.value[1])
+                ? window.dreeve.callbacks.formatSecondsTrimZero(params.value[1])
                 : params.value[1];
-            const elapsed = window.statisticsForStrava.callbacks.formatSecondsTrimZero(params.value[2]);
+            const elapsed = window.dreeve.callbacks.formatSecondsTrimZero(params.value[2]);
             const date = params.value[3];
 
             return `${date}<br/>`
@@ -112,19 +112,19 @@ export const registerEchartsCallbacks = () => {
             if (value === undefined || value === null) {
                 return '-';
             }
-            const distanceSymbol = window.statisticsForStrava.unitSystem.distanceSymbol;
+            const distanceSymbol = window.dreeve.unitSystem.distanceSymbol;
             return `${value.toFixed(0)}${distanceSymbol}`;
         },
         formatElevation: (value) => {
             if (value === undefined || value === null) {
                 return '-';
             }
-            const elevationSymbol = window.statisticsForStrava.unitSystem.elevationSymbol;
+            const elevationSymbol = window.dreeve.unitSystem.elevationSymbol;
             return `${value.toFixed(0)}${elevationSymbol}`;
         },
         formatDateOnlyTooltip: (params) => {
             if (!Array.isArray(params)) params = [params];
-            const dateFormat = window.statisticsForStrava.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
+            const dateFormat = window.dreeve.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
             const date = echarts.time.format(params[0].axisValue, dateFormat, false);
             return date + params
                 .filter(p => p.data && p.data.length > 0)
@@ -136,7 +136,7 @@ export const registerEchartsCallbacks = () => {
                 return '-';
             }
 
-            const dateFormat = window.statisticsForStrava.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
+            const dateFormat = window.dreeve.unitSystem.name === 'metric' ? '{dd}-{MM}-{yyyy}' : '{MM}-{dd}-{yyyy}';
             const date = echarts.time.format(value.data[0], dateFormat, false);
             if ('movingTime' === value.seriesName) {
                 const secondsToFormat = value.data[1] * 60;

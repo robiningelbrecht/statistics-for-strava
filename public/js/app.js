@@ -19,7 +19,7 @@ import initDropdowns from "./components/dropdown";
 import {initAccordions, initPopovers, initDrawers} from "flowbite";
 
 // Override webpack's compile-time publicPath so dynamic imports resolve under subpath deployments.
-const sfsBasePath = window.statisticsForStrava?.appUrl?.basePath?.replace(/^\/+|\/+$/g, '');
+const sfsBasePath = window.dreeve?.appUrl?.basePath?.replace(/^\/+|\/+$/g, '');
 __webpack_public_path__ = '/' + (sfsBasePath ? sfsBasePath + '/' : '') + 'js/dist/';
 
 const $main = document.querySelector("main");
@@ -38,7 +38,7 @@ const darkModeManager = new DarkModeManager();
 const lazyLoad = new LazyLoad({
     thresholds: "50px",
     callback_error: (img) => {
-        img.setAttribute("src", window.statisticsForStrava.placeholderBrokenImage);
+        img.setAttribute("src", window.dreeve.placeholderBrokenImage);
     }
 });
 

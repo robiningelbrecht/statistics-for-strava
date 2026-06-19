@@ -72,7 +72,7 @@ export default class Router {
         this.registerNavItems(newNavItems);
 
         const fullPageName = page
-            .replace(window.statisticsForStrava.appUrl.basePath, '')
+            .replace(window.dreeve.appUrl.basePath, '')
             .replace(/^\/+/, '')
             .replaceAll('/', '-');
 
@@ -129,13 +129,13 @@ export default class Router {
 
     currentRoute() {
         const defaultRoute = '/dashboard';
-        if (window.statisticsForStrava.appUrl.basePath === '') {
+        if (window.dreeve.appUrl.basePath === '') {
             // App is not served from a subpath.
             return location.pathname.replace('/', '') ? location.pathname : defaultRoute;
         }
 
         // App is served from a subpath.
-        const base = '/' + window.statisticsForStrava.appUrl.basePath.replace(/^\/+|\/+$/g, '');
+        const base = '/' + window.dreeve.appUrl.basePath.replace(/^\/+|\/+$/g, '');
         const pathname = location.pathname.replace(/\/+$/, '');
 
         return pathname === base
