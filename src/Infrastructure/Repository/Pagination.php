@@ -7,17 +7,35 @@ namespace App\Infrastructure\Repository;
 final readonly class Pagination
 {
     private function __construct(
-        private int $offset = 0,
-        private int $limit = 10)
+        private int $offset,
+        private int $limit)
     {
         if ($this->limit < 1) {
             throw new \InvalidArgumentException('Invalid limit: '.$this->limit);
         }
+        if ($this->offset < 0) {
+            throw new \InvalidArgumentException('Invalid offset: '.$this->offset);
+        }
     }
 
-    public static function fromOffsetAndLimit(int $offset, int $limit): Pagination
+    public static function fromOffsetAndLimit(int $offset, int $limit): self
     {
-        return new self($offset, $limit);
+        return new self(
+            offset: $offset,
+            limit: $limit
+        );
+    }
+
+    public static function fromPageNumberAndSize(int $pageNumber, int $pageSize): self
+    {
+        if ($pageNumber <= 0) {
+            throw new \InvalidArgumentException(sprintf('page number (%s) should be > 0', $pageNumber));
+        }
+
+        return new self(
+            offset: ($pageNumber - 1) * $pageSize,
+            limit: $pageSize
+        );
     }
 
     public function getLimit(): int

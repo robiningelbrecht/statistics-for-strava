@@ -58,6 +58,6 @@ final readonly class Overview
 
     public function isEmpty(): bool
     {
-        return $this->items === [];
+        return [] === $this->items;
     }
 }
