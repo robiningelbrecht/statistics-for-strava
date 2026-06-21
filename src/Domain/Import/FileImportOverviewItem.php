@@ -12,39 +12,34 @@ use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 final readonly class FileImportOverviewItem implements Item
 {
     private function __construct(
-        private FileImportId $fileImportId,
         private string $originalFilename,
         private ImportSource $source,
         private FileImportStatus $status,
+        private SerializableDateTime $importedOn,
         private ?string $errorMessage,
         private ?ActivityId $activityId,
-        private SerializableDateTime $importedOn,
+        private ?string $activityName,
     ) {
     }
 
     public static function fromState(
-        FileImportId $fileImportId,
         string $originalFilename,
         ImportSource $source,
         FileImportStatus $status,
+        SerializableDateTime $importedOn,
         ?string $errorMessage,
         ?ActivityId $activityId,
-        SerializableDateTime $importedOn,
+        ?string $activityName,
     ): self {
         return new self(
-            fileImportId: $fileImportId,
             originalFilename: $originalFilename,
             source: $source,
             status: $status,
+            importedOn: $importedOn,
             errorMessage: $errorMessage,
             activityId: $activityId,
-            importedOn: $importedOn,
+            activityName: $activityName,
         );
-    }
-
-    public function getId(): FileImportId
-    {
-        return $this->fileImportId;
     }
 
     public function getOriginalFilename(): string
@@ -62,6 +57,11 @@ final readonly class FileImportOverviewItem implements Item
         return $this->status;
     }
 
+    public function isFailed(): bool
+    {
+        return FileImportStatus::FAILED === $this->status;
+    }
+
     public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
@@ -70,6 +70,11 @@ final readonly class FileImportOverviewItem implements Item
     public function getActivityId(): ?ActivityId
     {
         return $this->activityId;
+    }
+
+    public function getActivityName(): ?string
+    {
+        return $this->activityName;
     }
 
     public function getImportedOn(): SerializableDateTime

@@ -6,8 +6,10 @@ namespace App\Infrastructure\Repository;
 
 /**
  * @template T of Item
+ *
+ * @implements \IteratorAggregate<int, T>
  */
-final readonly class Overview
+final readonly class Overview implements \IteratorAggregate, \Countable
 {
     /**
      * @param list<T> $items
@@ -59,5 +61,15 @@ final readonly class Overview
     public function isEmpty(): bool
     {
         return [] === $this->items;
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->items);
+    }
+
+    public function count(): int
+    {
+        return count($this->items);
     }
 }

@@ -8,7 +8,8 @@
             @apply size-4 rounded border-gray-300 text-primary focus:ring-primary/30;
         }
 
-        button:where([type="submit"], [type="button"]) {
+        button:where([type="submit"], [type="button"]),
+        a:where([type="button"]){
             @apply rounded-lg px-4 py-2.5 text-sm;
             @apply cursor-pointer inline-flex items-center justify-center gap-2.5 border border-gray-300 font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50;
 

@@ -29,9 +29,16 @@ final readonly class FormatDateAndTimeTwigExtension
     }
 
     #[AsTwigFilter('formatTime')]
-    public function formatTime(SerializableDateTime $date): string
+    public function formatTime(SerializableDateTime $date, bool $includeSeconds = false): string
     {
         $timeFormat = $this->dateAndTimeFormat->getTimeFormat();
+
+        if ($includeSeconds) {
+            return match ($timeFormat) {
+                TimeFormat::TWENTY_FOUR => $date->format('H:i:s'),
+                TimeFormat::AM_PM => $date->format('h:i:s a'),
+            };
+        }
 
         return match ($timeFormat) {
             TimeFormat::TWENTY_FOUR => $date->format('H:i'),

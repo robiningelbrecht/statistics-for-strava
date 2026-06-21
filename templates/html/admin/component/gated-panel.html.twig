@@ -4,7 +4,7 @@
         <div class="opacity-60 blur-[2px] pointer-events-none select-none" inert>
             {% block content %}{% endblock %}
         </div>
-        <div class="absolute inset-0 z-10 flex items-center justify-center p-4 rounded-lg bg-white/55" role="alert">
+        <div class="absolute inset-0 z-10 flex items-center justify-center p-4 rounded-lg bg-white/55" role="alert" type="gated-panel">
             <div class="w-full max-w-xl p-6 text-center bg-white border border-gray-200 rounded-xl shadow-lg">
                 {% block lockIcon %}
                     <span class="grid place-items-center size-12 mx-auto mb-3 rounded-full bg-blue-50 text-blue-600" aria-hidden="true">

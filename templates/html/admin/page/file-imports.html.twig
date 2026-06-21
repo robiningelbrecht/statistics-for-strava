@@ -1,0 +1,103 @@
+{% extends "html/admin/page/template.html.twig" %}
+{% block main %}
+    {% autoescape false %}
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
+        {% embed 'html/admin/component/gated-panel.html.twig' with { 'locked': not importMode.isFiles() } %}
+            {% block lockTitle %}{% autoescape false %}{{ "File imports are only available in file import mode"|trans }}{% endautoescape %}{% endblock %}
+            {% block content %}{% autoescape false %}
+                <h3 class="text-lg font-semibold mb-4">
+                    {{ "File imports"|trans }}
+                </h3>
+                <div class="relative overflow-x-auto">
+                    <table class="data-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">
+                                {{ "Imported on"|trans }}
+                            </th>
+                            <th scope="col" class="narrow">
+                                {{ "Filename"|trans }}
+                            </th>
+                            <th scope="col">
+                                {{ "Source"|trans }}
+                            </th>
+                            <th scope="col">
+                                {{ "Activity"|trans }}
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for fileImport in overview %}
+                            {% set failed = fileImport.isFailed() %}
+                            <tr class="group/row {{ failed ? 'bg-red-50/60' : '' }}">
+                                <td class="narrow whitespace-nowrap">
+                                    <div class="flex items-center justify-center gap-2">
+                                        {% if failed %}
+                                            <span class="grid place-items-center size-7 shrink-0 rounded-lg bg-red-100 text-red-500"
+                                                  title="{{ fileImport.getErrorMessage() }}" aria-label="{{ "Failed"|trans }}">
+                                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                                            </span>
+                                        {% else %}
+                                            <span class="grid place-items-center size-7 shrink-0 rounded-lg bg-green-100 text-green-600"
+                                                  aria-label="{{ "Success"|trans }}">
+                                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M20 6L9 17l-5-5"/></svg>
+                                            </span>
+                                        {% endif %}
+                                        <span>
+                                            {{ fileImport.getImportedOn()|formatDate() }}
+                                            <span class="text-xs">{{ fileImport.getImportedOn()|formatTime(true) }}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="narrow whitespace-nowrap">
+                                    {{ fileImport.getOriginalFilename() }}
+                                </td>
+                                <td class="whitespace-nowrap">
+                                    {{ fileImport.getSource().label() }}
+                                </td>
+                                <td class="whitespace-nowrap">
+                                    {% set activityId = fileImport.getActivityId() %}
+                                    {% if activityId %}
+                                        <a class="font-medium text-blue-600 hover:underline" href="{{ relativeUrl('/activities#/activity/' ~ activityId ~ '.html') }}">
+                                            {{ fileImport.getActivityName() }}
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% if overview.isEmpty() %}
+                            <tr>
+                                <td colspan="4">
+                                    <div class="flex flex-col items-center justify-center gap-3 py-12 px-4 text-center">
+                                        <span class="grid place-items-center size-12 rounded-full bg-gray-100 text-gray-400" aria-hidden="true">
+                                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                                        </span>
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-sm font-medium text-gray-800">{{ "No files imported yet."|trans }}</span>
+                                            <span class="text-xs text-gray-500">{{ "Imported files will appear here once you upload them."|trans }}</span>
+                                        </div>
+                                        <a href="{{ relativeUrl('admin/upload') }}" type="button" class="btn--primary mt-1">
+                                            {{ "Upload files"|trans }}
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                {% include 'html/admin/component/pagination.html.twig' with {
+                    'total': overview.getTotal(),
+                    'pagination': overview.getPagination(),
+                } only %}
+            {% endautoescape %}{% endblock %}
+        {% endembed %}
+    </div>
+    {% endautoescape %}
+{% endblock main %}

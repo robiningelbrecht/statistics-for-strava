@@ -20,7 +20,7 @@ Activity: Attività
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Carico di Allenamento Acuto (Fatica) - media esponenziale a 7 giorni del tuo carico giornaliero. Rappresenta la fatica a breve termine.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Rapporto Acuto:Cronico - Rapporto tra ATL e CTL. Indica il rischio di infortuni.'
 'Adaptive & Inclusive Sports': 'Sport Adattati e Inclusivi'
-'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
+'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: Pomeriggio
@@ -123,11 +123,14 @@ Energy: Energy
 Evening: Sera
 'Excludes commutes': 'Esclude gli spostamenti casa-lavoro'
 'FTP history': 'Storico FTP'
+Failed: Failed
 Favourite: Preferito
 Feb: Feb
 'File imports': 'File imports'
+'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
 'File upload is only available in file import mode': 'File upload is only available in file import mode'
+Filename: Filename
 'Filter on KOM segments': 'Filtra sui segmenti KOM'
 'Filter on country': 'Filtra per paese'
 'Filter on sport type': 'Filtra per tipo di sport'
@@ -150,6 +153,10 @@ Gear: Attrezzatura
 'Gear stats': 'Statistiche attrezzatura'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Attrezzatura che non è stata usata negli ultimi tre mesi, è disabilitata di default.'
 'Gear that is retired is disabled by default.': "L'attrezzatura dismessa è disabilitata di default."
+'Go to first page': 'Go to first page'
+'Go to last page': 'Go to last page'
+'Go to next page': 'Go to next page'
+'Go to previous page': 'Go to previous page'
 Goal: Goal
 Golf: Golf
 'Good training variety': 'Buona varietà di allenamento'
@@ -183,7 +190,8 @@ History: Cronologia
 Id: ID
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'L''immagine "{imgSrc}" è referenziata nel tuo file di configurazione della manutenzione, ma non è stata trovata in "storage/gear-maintenance"'
 Imperial: Imperial
-Imports: Imports
+'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉."
 'Individual thresholds vary based on fitness level.': 'Le soglie individuali variano in base al livello di forma.'
 'Inline Skate': 'Pattinaggio in linea'
@@ -238,6 +246,7 @@ Mon.: Mon.
 Monotony: Monotonia
 Monthly: Monthly
 'Monthly stats': 'Statistiche mensili'
+'More pages': 'More pages'
 Morning: Mattina
 'Most elevation': 'Maggiore dislivello'
 'Most recent activities': 'Attività più recenti'
@@ -254,6 +263,7 @@ Neutral: Neutral
 Night: Notte
 'No activities': 'Nessuna attività'
 'No data available': 'Nessun dato disponibile'
+'No files imported yet.': 'No files imported yet.'
 'No milestones achieved yet': 'Nessun traguardo raggiunto finora'
 'No other options to compare with': "Nessun'altra opzione con cui confrontare"
 None: Nessuno
@@ -339,6 +349,7 @@ Segments: Segmenti
 Sep: Set
 'Show information': 'Mostra Informazione'
 'Show password': 'Show password'
+'Showing {first} - {last} of {total}': 'Showing {first} - {last} of {total}'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Mostra come il tuo TSB (Forma) e il rapporto A:C recupereranno nel tempo se fai giorni di riposo completo.'
 'Sign in': 'Sign in'
 'Sign in to the admin panel': 'Sign in to the admin panel'
@@ -352,6 +363,7 @@ Snowboard: Snowboard
 Snowshoe: Ciaspolate
 Soccer: Calcio
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Chi si allena regolarmente per 90 minuti otterrà un punteggio più alto rispetto a chi fa soprattutto sessioni brevi.'
+Source: Source
 Speed: Velocità
 Splits: Intertempi
 'Sport variety': 'Varietà sportiva'
@@ -365,6 +377,7 @@ Status: Status
 'Strava profile': 'Profilo Strava'
 'Streak started on {date}': 'Serie iniziata il {date}'
 Streaks: Serie
+Success: Success
 Sun: Dom
 Sun.: Sun.
 'Supported types': 'Supported types'

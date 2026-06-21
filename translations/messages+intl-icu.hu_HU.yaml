@@ -20,7 +20,7 @@ Activity: Tevékenység
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': 'Akut edzésterhelés (Fáradtság) – a napi edzésterhelés 7 napos exponenciálisan súlyozott átlaga. A rövid távú fáradtságot mutatja.'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': 'Akut:Krónikus arány – az ATL és CTL aránya. Sérülésveszélyt jelöl.'
 'Adaptive & Inclusive Sports': 'Adaptív és inkluzív sportok'
-'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
+'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: Délután
@@ -123,11 +123,14 @@ Energy: Energy
 Evening: Este
 'Excludes commutes': 'Ingázások nélkül'
 'FTP history': 'FTP előzmények'
+Failed: Failed
 Favourite: Kedvenc
 Feb: Feb
 'File imports': 'File imports'
+'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
 'File upload is only available in file import mode': 'File upload is only available in file import mode'
+Filename: Filename
 'Filter on KOM segments': 'Szűrés KOM szegmensekre'
 'Filter on country': 'Szűrés országra'
 'Filter on sport type': 'Szűrés sporttípusra'
@@ -150,6 +153,10 @@ Gear: Felszerelés
 'Gear stats': 'Felszerelés statisztikák'
 "Gear that hasn't been used in the last three months, is disabled by default.": 'Az elmúlt három hónapban nem használt felszerelés alapértelmezés szerint le van tiltva.'
 'Gear that is retired is disabled by default.': 'A visszavont felszerelés alapértelmezés szerint le van tiltva.'
+'Go to first page': 'Go to first page'
+'Go to last page': 'Go to last page'
+'Go to next page': 'Go to next page'
+'Go to previous page': 'Go to previous page'
 Goal: Cél
 Golf: Golf
 'Good training variety': 'Jó edzésváltozatosság'
@@ -183,7 +190,8 @@ History: Előzmények
 Id: Azonosító
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': 'A(z) „{imgSrc}" kép szerepel a karbantartási konfigurációs fájlban, de nem található a „storage/gear-maintenance" mappában'
 Imperial: Angolszász
-Imports: Imports
+'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": 'Ez idő alatt {totalDistance}-t tettem meg, ami {numberOfTripsAroundTheWorld} körülutazás a Föld körül, vagy {numberOfTripsToTheMoonPercent}% az úton a Hold felé, és {totalElevation} szintemelkedést győztem le, ami {timesMountEverest}-szer a Mount Everest magassága. Összesen {totalTimeRecorded} mozgásban töltött idő.'
 'Individual thresholds vary based on fitness level.': 'Az egyéni küszöbértékek a fitnesz szinttől függően változnak.'
 'Inline Skate': Görkorcsolya
@@ -238,6 +246,7 @@ Mon.: Mon.
 Monotony: Monotonitás
 Monthly: Havi
 'Monthly stats': 'Havi statisztikák'
+'More pages': 'More pages'
 Morning: Reggel
 'Most elevation': 'Legtöbb szintemelkedés'
 'Most recent activities': 'Legutóbbi tevékenységek'
@@ -254,6 +263,7 @@ Neutral: Semleges
 Night: Éjjel
 'No activities': 'Nincsenek tevékenységek'
 'No data available': 'Nincs elérhető adat'
+'No files imported yet.': 'No files imported yet.'
 'No milestones achieved yet': 'Még nincsenek elért mérföldkövek'
 'No other options to compare with': 'Nincs más összehasonlítási lehetőség'
 None: 'Egyik sem'
@@ -339,6 +349,7 @@ Segments: Szegmensek
 Sep: Szept
 'Show information': 'Információ megjelenítése'
 'Show password': 'Show password'
+'Showing {first} - {last} of {total}': 'Showing {first} - {last} of {total}'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Megmutatja, hogyan fog a TSB (Forma) és az A:C arány idővel helyreállni, ha teljes pihenőnapokat tartasz.'
 'Sign in': 'Sign in'
 'Sign in to the admin panel': 'Sign in to the admin panel'
@@ -352,6 +363,7 @@ Snowboard: Snowboard
 Snowshoe: Hótalp
 Soccer: Labdarúgás
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Aki rendszeresen 90 percet edz, magasabb pontszámot ér el, mint aki főleg rövid edzéseket végez.'
+Source: Source
 Speed: Sebesség
 Splits: Részidők
 'Sport variety': Sporttípus-változatosság
@@ -365,6 +377,7 @@ Status: Állapot
 'Strava profile': 'Strava profil'
 'Streak started on {date}': 'Sorozat kezdete: {date}'
 Streaks: Sorozatok
+Success: Success
 Sun: V
 Sun.: Sun.
 'Supported types': 'Supported types'
