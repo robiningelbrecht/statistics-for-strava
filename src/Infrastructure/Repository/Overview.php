@@ -9,7 +9,7 @@ namespace App\Infrastructure\Repository;
  *
  * @implements \IteratorAggregate<int, T>
  */
-final readonly class Overview implements \IteratorAggregate, \Countable
+final readonly class Overview implements \IteratorAggregate
 {
     /**
      * @param list<T> $items
@@ -66,10 +66,5 @@ final readonly class Overview implements \IteratorAggregate, \Countable
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->items);
-    }
-
-    public function count(): int
-    {
-        return count($this->items);
     }
 }

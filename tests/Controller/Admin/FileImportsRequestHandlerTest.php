@@ -4,6 +4,7 @@ namespace App\Tests\Controller\Admin;
 
 use App\Domain\Import\FileImportId;
 use App\Domain\Import\FileImportRepository;
+use App\Domain\Import\FileImportStatus;
 use App\Domain\Import\ImportMode;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\Domain\Import\FileImportBuilder;
@@ -60,6 +61,7 @@ class FileImportsRequestHandlerTest extends AdminWebTestCase
 
     public function testRendersTheTableWithoutPaginationForASinglePage(): void
     {
+        // seedFileImports() marks every second import as failed, so of these 3 the second one fails.
         $this->withImportMode(ImportMode::FILES);
         $this->seedFileImports(3);
         $this->client->loginUser($this->adminUser());
@@ -71,6 +73,12 @@ class FileImportsRequestHandlerTest extends AdminWebTestCase
         $this->assertStringContainsString('activity-1.fit', $crawler->filter('table.data-table')->text());
         $this->assertStringNotContainsString('No files imported yet.', $crawler->filter('body')->text());
         $this->assertCount(0, $crawler->filter('[aria-label="Go to next page"]'));
+
+        // The seeds contain a mix of statuses; the failed one surfaces its error message in a title.
+        $this->assertCount(2, $crawler->filter('table.data-table [aria-label="Success"]'));
+        $failed = $crawler->filter('table.data-table [aria-label="Failed"]');
+        $this->assertCount(1, $failed);
+        $this->assertSame('Could not parse activity-2.fit', $failed->attr('title'));
     }
 
     public function testRendersTheTableWithPaginationWhenResultsExceedASinglePage(): void
@@ -92,11 +100,15 @@ class FileImportsRequestHandlerTest extends AdminWebTestCase
         $fileImportRepository = static::getContainer()->get(FileImportRepository::class);
 
         for ($i = 1; $i <= $count; ++$i) {
+            $failed = 0 === $i % 2;
+
             $fileImportRepository->add(
                 FileImportBuilder::fromDefaults()
                     ->withFileImportId(FileImportId::fromUnprefixed((string) $i))
                     ->withOriginalFilename(sprintf('activity-%d.fit', $i))
                     ->withFileHash('hash-'.$i)
+                    ->withStatus($failed ? FileImportStatus::FAILED : FileImportStatus::SUCCESS)
+                    ->withErrorMessage($failed ? sprintf('Could not parse activity-%d.fit', $i) : null)
                     ->withImportedOn(SerializableDateTime::fromString(sprintf('2026-06-01 08:%02d:00', $i)))
                     ->build()
             );
