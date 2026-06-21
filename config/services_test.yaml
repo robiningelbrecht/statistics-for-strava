@@ -3,6 +3,11 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    # Default import mode for the test suite. Individual tests can override this by
+    # setting the IMPORT_MODE env var before the kernel boots (see e.g. FileUploadRequestHandlerTest).
+    env(IMPORT_MODE): 'stravaApi'
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -13,7 +18,7 @@ services:
     App\Domain\Import\ImportMode:
         autoconfigure: false
         factory: [ null, 'from' ]
-        arguments: ['stravaApi']
+        arguments: ['%env(string:IMPORT_MODE)%']
 
     App\Domain\Strava\Strava:
         class: App\Tests\Domain\Strava\SpyStrava

@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Import\ImportMode;
 use App\Kernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -15,6 +16,7 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 
 libxml_use_internal_errors(true);
 $_ENV['DAEMON_DEBUG'] = 1;
+$_SERVER['IMPORT_MODE'] = $_ENV['IMPORT_MODE'] = ImportMode::STRAVA_API->value;
 
 // Build the test database schema exactly once per test process. This runs
 // before DAMA's PHPUnit extension enables static connections, so the DDL is

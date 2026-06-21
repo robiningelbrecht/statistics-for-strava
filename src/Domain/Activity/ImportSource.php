@@ -10,4 +10,14 @@ enum ImportSource: string
     case FIT_FILE = 'fitFile';
     case TCX_FILE = 'tcxFile';
     case GPX_FILE = 'gpxFile';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::STRAVA_API => 'Strava API',
+            self::FIT_FILE => 'FIT File',
+            self::TCX_FILE => 'TCX File',
+            self::GPX_FILE => 'GPX File',
+        };
+    }
 }

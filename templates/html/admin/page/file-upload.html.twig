@@ -4,14 +4,14 @@
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-xs">
         {% set codeOpen = '<code class="font-mono text-[0.85em] bg-gray-100 text-gray-800 px-1.5 py-0.5 rounded">' %}
         {% set codeClose = '</code>' %}
-        {% embed 'html/admin/gated-panel.html.twig' with { 'locked': not importMode.isFiles() } %}
+        {% embed 'html/admin/component/gated-panel.html.twig' with { 'locked': not importMode.isFiles() } %}
             {% block lockTitle %}{% autoescape false %}{{ "File upload is only available in file import mode"|trans }}{% endautoescape %}{% endblock %}
             {% block content %}{% autoescape false %}
                 <h3 class="text-lg font-semibold">
                     {{ "Upload activity files"|trans }}
                 </h3>
                 <p class="mt-1 text-sm text-gray-500">
-                    {{ "Add {fit}, {tcx} or {gpx} files. They are imported every few minutes."|trans({
+                    {{ "Add {fit}, {tcx} or {gpx} files. They are processed every few minutes."|trans({
                         '{fit}': codeOpen ~ '.fit' ~ codeClose,
                         '{tcx}': codeOpen ~ '.tcx' ~ codeClose,
                         '{gpx}': codeOpen ~ '.gpx' ~ codeClose

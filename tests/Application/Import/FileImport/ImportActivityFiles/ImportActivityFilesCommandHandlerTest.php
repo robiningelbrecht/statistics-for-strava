@@ -6,13 +6,14 @@ namespace App\Tests\Application\Import\FileImport\ImportActivityFiles;
 
 use App\Application\Import\FileImport\ImportActivityFiles\ImportActivityFiles;
 use App\Application\Import\FileImport\ImportActivityFiles\ImportActivityFilesCommandHandler;
+use App\Domain\Activity\ActivityId;
 use App\Domain\Activity\ActivityRepository;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Activity\Lap\ActivityLapRepository;
 use App\Domain\Activity\Stream\ActivityStreamRepository;
 use App\Domain\Activity\Stream\StreamType;
-use App\Domain\Import\FileImportRepository;
 use App\Domain\Import\FileImportStatus;
+use App\Infrastructure\ValueObject\String\CompressedString;
 use App\Infrastructure\ValueObject\String\KernelProjectDir;
 use App\Tests\Console\ConsoleOutputSnapshotDriver;
 use App\Tests\ContainerTestCase;
@@ -34,15 +35,15 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $fileImports = $this->getContainer()->get(FileImportRepository::class)->findAll();
+        $fileImports = $this->getFileImports();
         $this->assertCount(1, $fileImports);
-        $fileImport = $fileImports->getFirst();
-        $this->assertSame(FileImportStatus::SUCCESS, $fileImport->getStatus());
-        $this->assertSame('ride.tcx', $fileImport->getOriginalFilename());
-        $this->assertSame($this->fixture('activity.tcx'), $fileImport->getFileContents());
+        $fileImport = $fileImports[0];
+        $this->assertSame(FileImportStatus::SUCCESS->value, $fileImport['status']);
+        $this->assertSame('ride.tcx', $fileImport['originalFilename']);
+        $this->assertSame($this->fixture('activity.tcx'), CompressedString::fromCompressed($fileImport['fileContents'])->uncompress());
 
-        $activityId = $fileImport->getActivityId();
-        $this->assertNotNull($activityId);
+        $this->assertNotNull($fileImport['activityId']);
+        $activityId = ActivityId::fromString($fileImport['activityId']);
         $activity = $this->getContainer()->get(ActivityRepository::class)->find($activityId);
 
         $this->assertSame(ImportSource::TCX_FILE, $activity->getImportSource());
@@ -71,7 +72,7 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $this->assertCount(1, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertCount(1, $this->getFileImports());
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
@@ -82,7 +83,7 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $this->assertCount(0, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertCount(0, $this->getFileImports());
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
 
@@ -93,11 +94,11 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $fileImports = $this->getContainer()->get(FileImportRepository::class)->findAll();
+        $fileImports = $this->getFileImports();
         $this->assertCount(1, $fileImports);
-        $this->assertSame(FileImportStatus::FAILED, $fileImports->getFirst()->getStatus());
-        $this->assertNull($fileImports->getFirst()->getActivityId());
-        $this->assertSame('this is not valid xml', $fileImports->getFirst()->getFileContents());
+        $this->assertSame(FileImportStatus::FAILED->value, $fileImports[0]['status']);
+        $this->assertNull($fileImports[0]['activityId']);
+        $this->assertSame('this is not valid xml', CompressedString::fromCompressed($fileImports[0]['fileContents'])->uncompress());
 
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
     }
@@ -107,8 +108,15 @@ class ImportActivityFilesCommandHandlerTest extends ContainerTestCase
         $output = new SpyOutput();
         $this->handler->handle(new ImportActivityFiles($output));
 
-        $this->assertCount(0, $this->getContainer()->get(FileImportRepository::class)->findAll());
+        $this->assertCount(0, $this->getFileImports());
         $this->assertMatchesSnapshot($output, new ConsoleOutputSnapshotDriver());
+    }
+
+    private function getFileImports(): array
+    {
+        return $this->getConnection()
+            ->executeQuery('SELECT * FROM FileImport ORDER BY importedOn ASC')
+            ->fetchAllAssociative();
     }
 
     private function dropInWatchFolder(string $filename, string $contents): void

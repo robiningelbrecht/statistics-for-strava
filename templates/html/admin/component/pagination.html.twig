@@ -1,0 +1,114 @@
+{% set limit = pagination.getLimit() %}
+{% set numberOfPages = max(1, (total / limit)|round(0, 'ceil')) %}
+{% if numberOfPages > 1 %}
+    {% set currentPage = pagination.getCurrentPage() %}
+    {% set firstRow = pagination.getOffset() + 1 %}
+    {% set lastRow = min(pagination.getOffset() + limit, total) %}
+
+    {% set routeName = app.request.attributes.get('_route') %}
+    {% set baseParams = app.request.attributes.get('_route_params')|merge(app.request.query.all) %}
+    {% set paginationParams = app.request.query.all('pagination') %}
+
+    {# Sliding window of at most 5 page numbers, centered on the current page. #}
+    {% set windowSize = 5 %}
+    {% set windowStart = max(1, currentPage - (windowSize // 2)) %}
+    {% set windowEnd = min(numberOfPages, windowStart + windowSize - 1) %}
+    {% set windowStart = max(1, windowEnd - windowSize + 1) %}
+
+    <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between gap-4 pt-4">
+        <span class="text-sm font-normal text-gray-500">
+            {{ "Showing {first} - {last} of {total}"|trans({
+                '{first}': '<span class="font-semibold text-gray-900">' ~ firstRow ~ '</span>',
+                '{last}': '<span class="font-semibold text-gray-900">' ~ lastRow ~ '</span>',
+                '{total}': '<span class="font-semibold text-gray-900">' ~ total ~ '</span>',
+            })|raw }}
+        </span>
+        {% set navEnabled = 'inline-flex items-center justify-center size-8 rounded-full text-gray-500 transition-colors hover:bg-primary-soft hover:text-primary' %}
+        {% set navDisabled = 'inline-flex items-center justify-center size-8 rounded-full text-gray-300 pointer-events-none' %}
+        <ul class="flex items-center gap-1 text-sm">
+            <li>
+                {% if currentPage > 1 %}
+                    <a href="{{ path(routeName, baseParams|merge({ 'pagination': paginationParams|merge({ 'page': 1 }) })) }}"
+                       aria-label="{{ "Go to first page"|trans }}" class="{{ navEnabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 18-6-6 6-6"/><path d="M7 6v12"/></svg>
+                    </a>
+                {% else %}
+                    <span aria-label="{{ "Go to first page"|trans }}" class="{{ navDisabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 18-6-6 6-6"/><path d="M7 6v12"/></svg>
+                    </span>
+                {% endif %}
+            </li>
+            <li>
+                {% if currentPage > 1 %}
+                    <a href="{{ path(routeName, baseParams|merge({ 'pagination': paginationParams|merge({ 'page': currentPage - 1 }) })) }}"
+                       aria-label="{{ "Go to previous page"|trans }}" class="{{ navEnabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                    </a>
+                {% else %}
+                    <span aria-label="{{ "Go to previous page"|trans }}" class="{{ navDisabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                    </span>
+                {% endif %}
+            </li>
+
+            {% if windowStart > 1 %}
+                <li>
+                    <span aria-hidden="true" class="inline-flex items-center justify-center size-8 text-gray-400">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                        <span class="sr-only">{{ "More pages"|trans }}</span>
+                    </span>
+                </li>
+            {% endif %}
+
+            {% for page in windowStart..windowEnd %}
+                <li>
+                    {% if page == currentPage %}
+                        <span aria-current="page"
+                              class="inline-flex items-center justify-center size-8 rounded-full bg-primary-soft text-primary">
+                                {{ page }}
+                            </span>
+                    {% else %}
+                        <a href="{{ path(routeName, baseParams|merge({ 'pagination': paginationParams|merge({ 'page': page }) })) }}"
+                           class="inline-flex items-center justify-center size-8 rounded-full text-gray-500 transition-colors hover:bg-primary-soft hover:text-primary">
+                            {{ page }}
+                        </a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            {% if windowEnd < numberOfPages %}
+                <li>
+                    <span aria-hidden="true" class="inline-flex items-center justify-center size-8 text-gray-400">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                        <span class="sr-only">{{ "More pages"|trans }}</span>
+                    </span>
+                </li>
+            {% endif %}
+
+            <li>
+                {% if currentPage < numberOfPages %}
+                    <a href="{{ path(routeName, baseParams|merge({ 'pagination': paginationParams|merge({ 'page': currentPage + 1 }) })) }}"
+                       aria-label="{{ "Go to next page"|trans }}" class="{{ navEnabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </a>
+                {% else %}
+                    <span aria-label="{{ "Go to next page"|trans }}" class="{{ navDisabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </span>
+                {% endif %}
+            </li>
+            <li>
+                {% if currentPage < numberOfPages %}
+                    <a href="{{ path(routeName, baseParams|merge({ 'pagination': paginationParams|merge({ 'page': numberOfPages }) })) }}"
+                       aria-label="{{ "Go to last page"|trans }}" class="{{ navEnabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 18 6-6-6-6"/><path d="M17 6v12"/></svg>
+                    </a>
+                {% else %}
+                    <span aria-label="{{ "Go to last page"|trans }}" class="{{ navDisabled }}">
+                        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 18 6-6-6-6"/><path d="M17 6v12"/></svg>
+                    </span>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+{% endif %}

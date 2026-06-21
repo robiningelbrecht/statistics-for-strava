@@ -20,7 +20,7 @@ Activity: 活动
 'Acute Training Load (Fatigue) - 7-day exponentially weighted average of your daily training load. Represents short-term fatigue.': '短期训练负荷（疲劳）– 7天每日训练负荷的指数加权平均值。代表短期疲劳。'
 'Acute:Chronic Ratio - Ratio of ATL to CTL. Indicates injury risk.': '短期/长期疲劳比率 – ATL与CTL的比值。表示受伤风险。'
 'Adaptive & Inclusive Sports': 适应性和包容性运动
-'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are imported every few minutes.'
+'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.': 'Add {fit}, {tcx} or {gpx} files. They are processed every few minutes.'
 Admin: Admin
 'Admin panel': 'Admin panel'
 Afternoon: 下午
@@ -123,11 +123,14 @@ Energy: Energy
 Evening: 晚上
 'Excludes commutes': 筛除通勤
 'FTP history': FTP历史
+Failed: Failed
 Favourite: 收藏夹
 Feb: 二月
 'File imports': 'File imports'
+'File imports are only available in file import mode': 'File imports are only available in file import mode'
 'File upload': 'File upload'
 'File upload is only available in file import mode': 'File upload is only available in file import mode'
+Filename: Filename
 'Filter on KOM segments': 筛选KOM路段
 'Filter on country': 按国家筛选
 'Filter on sport type': 按运动类型筛选
@@ -150,6 +153,10 @@ Gear: 装备
 'Gear stats': 装备统计
 "Gear that hasn't been used in the last three months, is disabled by default.": 过去三个月未使用的装备默认禁用。
 'Gear that is retired is disabled by default.': 退役的装备默认禁用。
+'Go to first page': 'Go to first page'
+'Go to last page': 'Go to last page'
+'Go to next page': 'Go to next page'
+'Go to previous page': 'Go to previous page'
 Goal: Goal
 Golf: 高尔夫
 'Good training variety': 良好的训练多样性
@@ -183,7 +190,8 @@ History: 历史
 Id: Id
 'Image "{imgSrc}" is referenced in your maintenance config file, but was not found in "storage/gear-maintenance"': '您的维护配置文件中引用了图像"{imgSrc}"，但在"storage/gear-maintenance"中未找到该图像。'
 Imperial: Imperial
-Imports: Imports
+'Imported files will appear here once you upload them.': 'Imported files will appear here once you upload them.'
+'Imported on': 'Imported on'
 "In that time, I’ve covered {totalDistance}, that's {numberOfTripsAroundTheWorld} trips around the world 🌍 or {numberOfTripsToTheMoonPercent}% of the way to the moon 🌕, and climbed an elevation of {totalElevation} which is {timesMountEverest} times Mount Everest 🏔. All up that's {totalTimeRecorded} of moving time 🎉.": '在那段时间里，我走了{totalDistance}，相当于环游世界{numberOfTripsAroundTheWorld}次🌍，或者说是到达月球的{numberOfTripsToTheMoonPercent}%🌕，并且攀登了{totalElevation}，相当于珠穆朗玛峰的{timesMountEverest}倍🏔。总而言之，我走了{totalTimeRecorded}的路🎉。'
 'Individual thresholds vary based on fitness level.': 个人阈值因体能水平而异。
 'Inline Skate': 直排轮滑
@@ -238,6 +246,7 @@ Mon.: Mon.
 Monotony: 单调性
 Monthly: Monthly
 'Monthly stats': 每月统计
+'More pages': 'More pages'
 Morning: 早晨
 'Most elevation': 'Most elevation'
 'Most recent activities': 最近的活动
@@ -254,6 +263,7 @@ Neutral: Neutral
 Night: 夜晚
 'No activities': 没有活动
 'No data available': 没有可用数据
+'No files imported yet.': 'No files imported yet.'
 'No milestones achieved yet': 'No milestones achieved yet'
 'No other options to compare with': 无可供比较的其他选项
 None: 无
@@ -339,6 +349,7 @@ Segments: 路段
 Sep: 九月
 'Show information': 显示信息
 'Show password': 'Show password'
+'Showing {first} - {last} of {total}': 'Showing {first} - {last} of {total}'
 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.': 'Shows how your TSB (Form) and A:C Ratio will recover over time if you take complete rest days.'
 'Sign in': 'Sign in'
 'Sign in to the admin panel': 'Sign in to the admin panel'
@@ -352,6 +363,7 @@ Snowboard: 单板滑雪
 Snowshoe: 雪鞋
 Soccer: 足球
 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.': 'Someone who regularly trains for 90 minutes will score higher than someone doing mostly short sessions.'
+Source: Source
 Speed: 速度
 Splits: 分段
 'Sport variety': 'Sport variety'
@@ -365,6 +377,7 @@ Status: Status
 'Strava profile': 'Strava profile'
 'Streak started on {date}': 'Streak started on {date}'
 Streaks: 连续记录
+Success: Success
 Sun: 周日
 Sun.: Sun.
 'Supported types': 'Supported types'

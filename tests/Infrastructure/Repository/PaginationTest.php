@@ -21,6 +21,15 @@ class PaginationTest extends TestCase
         );
     }
 
+    public function testGetCurrentPage(): void
+    {
+        $this->assertEquals(1, Pagination::fromOffsetAndLimit(0, 10)->getCurrentPage());
+        $this->assertEquals(2, Pagination::fromOffsetAndLimit(10, 10)->getCurrentPage());
+        $this->assertEquals(4, Pagination::fromOffsetAndLimit(75, 25)->getCurrentPage());
+        $this->assertEquals(1, Pagination::fromPageNumberAndSize(1, 25)->getCurrentPage());
+        $this->assertEquals(3, Pagination::fromPageNumberAndSize(3, 25)->getCurrentPage());
+    }
+
     public function testItShouldThrowWhenInvalidLimit(): void
     {
         $this->expectExceptionObject(new \InvalidArgumentException('Invalid limit: 0'));

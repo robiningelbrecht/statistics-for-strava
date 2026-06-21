@@ -48,6 +48,11 @@ final readonly class Pagination
         return $this->offset;
     }
 
+    public function getCurrentPage(): int
+    {
+        return intdiv($this->offset, $this->limit) + 1;
+    }
+
     public function next(): Pagination
     {
         return new self($this->offset + $this->limit, $this->limit);

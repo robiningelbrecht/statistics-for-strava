@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Domain\Import;
 
 use App\Domain\Activity\ActivityId;
+use App\Domain\Activity\ActivityRepository;
+use App\Domain\Activity\ActivityWithRawData;
+use App\Domain\Activity\DbalActivityRepository;
 use App\Domain\Activity\ImportSource;
 use App\Domain\Import\DbalFileImportOverviewRepository;
 use App\Domain\Import\DbalFileImportRepository;
@@ -16,15 +19,24 @@ use App\Domain\Import\FileImportStatus;
 use App\Infrastructure\Repository\Pagination;
 use App\Infrastructure\ValueObject\Time\SerializableDateTime;
 use App\Tests\ContainerTestCase;
+use App\Tests\Domain\Activity\ActivityBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 class DbalFileImportOverviewRepositoryTest extends ContainerTestCase
 {
     private FileImportOverviewRepository $fileImportOverviewRepository;
     private FileImportRepository $fileImportRepository;
+    private ActivityRepository $activityRepository;
 
     public function testFindMapsRowToOverviewItemWithoutFileContents(): void
     {
+        $this->activityRepository->add(ActivityWithRawData::fromState(
+            ActivityBuilder::fromDefaults()
+                ->withActivityId(ActivityId::fromUnprefixed('42'))
+                ->withName('Morning Run')
+                ->build(),
+            ['raw' => 'data'],
+        ));
         $this->fileImportRepository->add(
             FileImportBuilder::fromDefaults()
                 ->withFileImportId(FileImportId::fromUnprefixed('1'))
@@ -44,13 +56,13 @@ class DbalFileImportOverviewRepositoryTest extends ContainerTestCase
         $this->assertEquals(
             [
                 FileImportOverviewItem::fromState(
-                    fileImportId: FileImportId::fromUnprefixed('1'),
                     originalFilename: 'morning-run.fit',
                     source: ImportSource::GPX_FILE,
                     status: FileImportStatus::FAILED,
+                    importedOn: SerializableDateTime::fromString('2026-06-04 10:00:00'),
                     errorMessage: 'Could not parse file',
                     activityId: ActivityId::fromUnprefixed('42'),
-                    importedOn: SerializableDateTime::fromString('2026-06-04 10:00:00'),
+                    activityName: 'Morning Run',
                 ),
             ],
             $overview->getItems()
@@ -152,6 +164,9 @@ class DbalFileImportOverviewRepositoryTest extends ContainerTestCase
             $this->getConnection()
         );
         $this->fileImportOverviewRepository = new DbalFileImportOverviewRepository(
+            $this->getConnection()
+        );
+        $this->activityRepository = new DbalActivityRepository(
             $this->getConnection()
         );
     }

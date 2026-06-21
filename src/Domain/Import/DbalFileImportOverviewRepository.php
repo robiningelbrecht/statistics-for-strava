@@ -16,9 +16,10 @@ final readonly class DbalFileImportOverviewRepository extends DbalRepository imp
     public function find(Pagination $pagination): Overview
     {
         $results = $this->connection->createQueryBuilder()
-            ->select('fileImportId', 'originalFilename', 'source', 'status', 'errorMessage', 'activityId', 'importedOn')
-            ->from('FileImport')
-            ->orderBy('importedOn', 'DESC')
+            ->select('fi.fileImportId', 'fi.originalFilename', 'fi.source', 'fi.status', 'fi.errorMessage', 'fi.activityId', 'fi.importedOn', 'a.name AS activityName')
+            ->from('FileImport', 'fi')
+            ->leftJoin('fi', 'Activity', 'a', 'a.activityId = fi.activityId')
+            ->orderBy('fi.importedOn', 'DESC')
             ->setFirstResult($pagination->getOffset())
             ->setMaxResults($pagination->getLimit())
             ->executeQuery()
@@ -41,13 +42,13 @@ final readonly class DbalFileImportOverviewRepository extends DbalRepository imp
     private function hydrate(array $result): FileImportOverviewItem
     {
         return FileImportOverviewItem::fromState(
-            fileImportId: FileImportId::fromString($result['fileImportId']),
             originalFilename: $result['originalFilename'],
             source: ImportSource::from($result['source']),
             status: FileImportStatus::from($result['status']),
+            importedOn: SerializableDateTime::fromString($result['importedOn']),
             errorMessage: $result['errorMessage'],
             activityId: ActivityId::fromOptionalString($result['activityId']),
-            importedOn: SerializableDateTime::fromString($result['importedOn']),
+            activityName: $result['activityName'],
         );
     }
 }
