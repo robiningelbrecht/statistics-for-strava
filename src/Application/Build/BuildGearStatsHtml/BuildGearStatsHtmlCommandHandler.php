@@ -107,16 +107,16 @@ final readonly class BuildGearStatsHtmlCommandHandler implements CommandHandler
         $elevation = Meter::from($activitiesWithoutGear->sum(fn (Activity $activity): float => $activity->getElevation()->toFloat()));
         $totalCalories = (int) $activitiesWithoutGear->sum(fn (Activity $activity): ?int => $activity->getCalories());
 
-        return ImportedGear::create(
+        return ImportedGear::fromState(
             gearId: GearId::none(),
             distanceInMeter: $distanceInMeter,
             createdOn: SerializableDateTime::fromString('1970-01-01'),
             name: 'Unspecified',
             isRetired: false,
-        )
-            ->withMovingTime(Seconds::from($movingTimeInSeconds))
-            ->withElevation($elevation)
-            ->withNumberOfActivities($count)
-            ->withTotalCalories($totalCalories);
+            movingTime: Seconds::from($movingTimeInSeconds),
+            elevation: $elevation,
+            numberOfActivities: $count,
+            totalCalories: $totalCalories,
+        );
     }
 }

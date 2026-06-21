@@ -15,8 +15,8 @@ class ImportedGearTest extends TestCase
     {
         $gear = ImportedGearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(10000))
-            ->build()
-            ->withMovingTime(Seconds::from(3661));
+            ->withMovingTime(Seconds::from(3661))
+            ->build();
 
         $this->assertEquals('1h 1m', $gear->getMovingTimeFormatted());
     }
@@ -31,8 +31,8 @@ class ImportedGearTest extends TestCase
     public function testGetMovingTimeInHours(): void
     {
         $gear = ImportedGearBuilder::fromDefaults()
-            ->build()
-            ->withMovingTime(Seconds::from(7200));
+            ->withMovingTime(Seconds::from(7200))
+            ->build();
 
         $this->assertEquals(2.0, $gear->getMovingTimeInHours()->toFloat());
     }
@@ -41,8 +41,8 @@ class ImportedGearTest extends TestCase
     {
         $gear = ImportedGearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(30000))
-            ->build()
-            ->withNumberOfActivities(3);
+            ->withNumberOfActivities(3)
+            ->build();
 
         $this->assertEquals(Kilometer::from(10), $gear->getAverageDistance());
     }
@@ -60,8 +60,8 @@ class ImportedGearTest extends TestCase
     {
         $gear = ImportedGearBuilder::fromDefaults()
             ->withDistanceInMeter(Meter::from(10000))
-            ->build()
-            ->withMovingTime(Seconds::from(3600));
+            ->withMovingTime(Seconds::from(3600))
+            ->build();
 
         $this->assertEquals(KmPerHour::from(10), $gear->getAverageSpeed());
     }
@@ -78,8 +78,8 @@ class ImportedGearTest extends TestCase
     public function testGetRelativeCostPerHour(): void
     {
         $gear = ImportedGearBuilder::fromDefaults()
-            ->build()
             ->withMovingTime(Seconds::from(7200))
+            ->build()
             ->withPurchasePrice(Money::EUR(10000));
 
         $this->assertEquals(Money::EUR(5000), $gear->getRelativeCostPerHour());
@@ -97,8 +97,8 @@ class ImportedGearTest extends TestCase
     public function testGetRelativeCostPerHourWithoutPurchasePrice(): void
     {
         $gear = ImportedGearBuilder::fromDefaults()
-            ->build()
-            ->withMovingTime(Seconds::from(7200));
+            ->withMovingTime(Seconds::from(7200))
+            ->build();
 
         $this->assertNull($gear->getRelativeCostPerHour());
     }
@@ -106,8 +106,8 @@ class ImportedGearTest extends TestCase
     public function testGetRelativeCostPerWorkout(): void
     {
         $gear = ImportedGearBuilder::fromDefaults()
-            ->build()
             ->withNumberOfActivities(5)
+            ->build()
             ->withPurchasePrice(Money::EUR(10000));
 
         $this->assertEquals(Money::EUR(2000), $gear->getRelativeCostPerWorkout());
@@ -125,8 +125,8 @@ class ImportedGearTest extends TestCase
     public function testGetRelativeCostPerWorkoutWithoutPurchasePrice(): void
     {
         $gear = ImportedGearBuilder::fromDefaults()
-            ->build()
-            ->withNumberOfActivities(5);
+            ->withNumberOfActivities(5)
+            ->build();
 
         $this->assertNull($gear->getRelativeCostPerWorkout());
     }

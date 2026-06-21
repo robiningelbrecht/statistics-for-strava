@@ -13,8 +13,6 @@ use App\Domain\Gear\CustomGear\CustomGearConfig;
 use App\Domain\Gear\CustomGear\CustomGearRepository;
 use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
-use App\Infrastructure\ValueObject\Measurement\Length\Kilometer;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 
 final readonly class LinkCustomGearToActivitiesCommandHandler implements CommandHandler
 {
@@ -78,7 +76,6 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
 
         /** @var CustomGear $customGear */
         foreach ($customGears as $customGear) {
-            $customGear = $customGear->withDistance(Meter::zero());
             $activitiesTaggedWithCustomGear = $activitiesWithCustomGearTag[$customGear->getTag()] ?? [];
 
             /** @var Activity $activity */
@@ -87,11 +84,6 @@ final readonly class LinkCustomGearToActivitiesCommandHandler implements Command
 
                 // Link activity to custom gear.
                 $activity = $activity->withGear($customGear->getId());
-
-                // Keep track of the distance for the custom gear.
-                $customGear = $customGear->withDistance(Kilometer::from(
-                    $customGear->getDistance()->toFloat() + $activity->getDistance()->toFloat())->toMeter()
-                );
 
                 $this->activityRepository->update(ActivityWithRawData::fromState(
                     activity: $activity,
