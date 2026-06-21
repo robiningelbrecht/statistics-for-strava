@@ -31,8 +31,6 @@ interface Gear extends SupportsAITooling
 
     public function withIsRetired(bool $isRetired): self;
 
-    public function withDistance(Meter $distance): self;
-
     public function getCreatedOn(): SerializableDateTime;
 
     public function getImageSrc(): ?string;
@@ -41,19 +39,11 @@ interface Gear extends SupportsAITooling
 
     public function getMovingTime(): Seconds;
 
-    public function withMovingTime(Seconds $movingTime): self;
-
     public function getElevation(): Meter;
-
-    public function withElevation(Meter $elevation): self;
 
     public function getNumberOfActivities(): int;
 
-    public function withNumberOfActivities(int $numberOfActivities): self;
-
     public function getTotalCalories(): int;
-
-    public function withTotalCalories(int $totalCalories): self;
 
     public function getMovingTimeFormatted(): string;
 

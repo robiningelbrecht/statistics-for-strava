@@ -90,14 +90,31 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
 
         $this->assertEquals(
             Gears::fromArray([
-                $gearTwo->withFullTag(Tag::fromString('#sfs-2'))
+                CustomGearBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(2))
+                    ->withDistanceInMeter(Meter::from(40000))
                     ->withMovingTime(Seconds::from(14400))
                     ->withElevation(Meter::from(400))
                     ->withNumberOfActivities(2)
+                    ->build()
+                    ->withFullTag(Tag::fromString('#sfs-2'))
                     ->withActivityTypes(ActivityTypes::fromArray([ActivityType::RIDE])),
-                $gearOne->withFullTag(Tag::fromString('#sfs-1')),
-                $gearThree->withFullTag(Tag::fromString('#sfs-3')),
-                $gearFour->withFullTag(Tag::fromString('#sfs-4')),
+                CustomGearBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(1))
+                    ->withDistanceInMeter(Meter::zero())
+                    ->build()
+                    ->withFullTag(Tag::fromString('#sfs-1')),
+                CustomGearBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(3))
+                    ->withDistanceInMeter(Meter::zero())
+                    ->build()
+                    ->withFullTag(Tag::fromString('#sfs-3')),
+                CustomGearBuilder::fromDefaults()
+                    ->withGearId(GearId::fromUnprefixed(4))
+                    ->withDistanceInMeter(Meter::zero())
+                    ->withIsRetired(true)
+                    ->build()
+                    ->withFullTag(Tag::fromString('#sfs-4')),
             ]),
             $this->customGearRepository->findAll()
         );
@@ -107,16 +124,10 @@ class DbalCustomGearRepositoryTest extends ContainerTestCase
     {
         $gear = CustomGearBuilder::fromDefaults()
             ->withGearId(GearId::fromUnprefixed(1))
-            ->withDistanceInMeter(Meter::from(1000))
             ->build();
         $this->customGearRepository->save($gear);
 
-        $this->assertEquals(
-            1000,
-            $gear->getDistance()->toMeter()->toFloat()
-        );
-
-        $this->customGearRepository->save($gear->withDistance(Meter::from(30000)));
+        $this->customGearRepository->save($gear->withName('Updated gear')->withIsRetired(true));
 
         $this->assertMatchesJsonSnapshot(
             $this->getConnection()->executeQuery('SELECT * FROM GEAR')->fetchAllAssociative()

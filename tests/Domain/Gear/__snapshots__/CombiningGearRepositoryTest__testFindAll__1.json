@@ -2,7 +2,6 @@
     {
         "gearId": "gear-1",
         "createdOn": "2023-10-10 00:00:00",
-        "distanceInMeter": 1230,
         "name": "Existing gear",
         "isRetired": 0,
         "type": "imported"
@@ -10,7 +9,6 @@
     {
         "gearId": "gear-2",
         "createdOn": "2023-10-10 00:00:00",
-        "distanceInMeter": 10230,
         "name": "Existing gear",
         "isRetired": 0,
         "type": "custom"
@@ -18,7 +16,6 @@
     {
         "gearId": "gear-3",
         "createdOn": "2023-10-10 00:00:00",
-        "distanceInMeter": 230,
         "name": "Existing gear",
         "isRetired": 0,
         "type": "imported"
@@ -26,7 +23,6 @@
     {
         "gearId": "gear-4",
         "createdOn": "2023-10-10 00:00:00",
-        "distanceInMeter": 100230,
         "name": "Existing gear",
         "isRetired": 1,
         "type": "custom"

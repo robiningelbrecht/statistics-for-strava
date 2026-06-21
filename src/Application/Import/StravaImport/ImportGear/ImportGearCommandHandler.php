@@ -13,7 +13,6 @@ use App\Infrastructure\CQRS\Command\Command;
 use App\Infrastructure\CQRS\Command\CommandHandler;
 use App\Infrastructure\Exception\EntityNotFound;
 use App\Infrastructure\Time\Clock\Clock;
-use App\Infrastructure\ValueObject\Measurement\Length\Meter;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
@@ -81,12 +80,10 @@ final readonly class ImportGearCommandHandler implements CommandHandler
             try {
                 $gear = $this->importedGearRepository->find($gearId)
                     ->withName($stravaGear['name'])
-                    ->withDistance(Meter::from($stravaGear['distance']))
                     ->withIsRetired($stravaGear['retired'] ?? false);
             } catch (EntityNotFound) {
                 $gear = ImportedGear::create(
                     gearId: $gearId,
-                    distanceInMeter: Meter::from($stravaGear['distance']),
                     createdOn: $this->clock->getCurrentDateTimeImmutable(),
                     name: $stravaGear['name'],
                     isRetired: $stravaGear['retired'] ?? false

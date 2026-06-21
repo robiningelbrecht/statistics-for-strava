@@ -80,12 +80,14 @@ final readonly class DbalImportedGearRepository extends DbalRepository implement
     public function find(GearId $gearId): ImportedGear
     {
         $queryBuilder = $this->connection->createQueryBuilder();
-        $queryBuilder->select('*')
+        $queryBuilder->select('Gear.*', 'SUM(Activity.distance) AS totalDistance')
             ->from('Gear')
-            ->andWhere('gearId = :gearId')
+            ->leftJoin('Gear', 'Activity', 'Activity', 'Activity.gearId = Gear.gearId')
+            ->andWhere('Gear.gearId = :gearId')
             ->setParameter('gearId', $gearId)
-            ->andWhere('type = :type')
-            ->setParameter('type', GearType::IMPORTED->value);
+            ->andWhere('Gear.type = :type')
+            ->setParameter('type', GearType::IMPORTED->value)
+            ->groupBy('Gear.gearId');
 
         if (!$result = $queryBuilder->executeQuery()->fetchAssociative()) {
             throw new EntityNotFound(sprintf('Gear "%s" not found', $gearId));

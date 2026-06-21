@@ -19,13 +19,12 @@ trait ProvideGearRepositoryHelpers
 
     public function save(Gear $gear, GearType $gearType): void
     {
-        $sql = 'REPLACE INTO Gear (gearId, createdOn, distanceInMeter, name, isRetired, `type`)
-        VALUES (:gearId, :createdOn, :distanceInMeter, :name, :isRetired, :type)';
+        $sql = 'REPLACE INTO Gear (gearId, createdOn, name, isRetired, `type`)
+        VALUES (:gearId, :createdOn, :name, :isRetired, :type)';
 
         $this->getConnection()->executeStatement($sql, [
             'gearId' => $gear->getId(),
             'createdOn' => $gear->getCreatedOn(),
-            'distanceInMeter' => $gear->getDistance()->toMeter()->toInt(),
             'name' => $gear->getOriginalName(),
             'isRetired' => (int) $gear->isRetired(),
             'type' => $gearType->value,
@@ -52,6 +51,7 @@ trait ProvideGearRepositoryHelpers
     {
         $results = $this->getConnection()->executeQuery('
             SELECT Gear.*,
+                   SUM(Activity.distance) as totalDistance,
                    SUM(Activity.movingTimeInSeconds) as totalMovingTime,
                    SUM(Activity.elevation) as totalElevation,
                    SUM(Activity.calories) as totalCalories,
@@ -60,8 +60,8 @@ trait ProvideGearRepositoryHelpers
             FROM Gear
             '.($onlyUsedGear ? 'INNER' : 'LEFT').' JOIN Activity ON Activity.gearId = Gear.gearId
             WHERE Gear.type = :type
-            GROUP BY Gear.gearId, Gear.isRetired, Gear.distanceInMeter
-            ORDER BY Gear.isRetired ASC, Gear.distanceInMeter DESC;
+            GROUP BY Gear.gearId, Gear.isRetired
+            ORDER BY Gear.isRetired ASC, totalDistance DESC;
         ',
             [
                 'type' => $gearType->value,
@@ -82,29 +82,20 @@ trait ProvideGearRepositoryHelpers
         $gearType = GearType::from($result['type']);
         $args = [
             'gearId' => GearId::fromString($result['gearId']),
-            'distanceInMeter' => Meter::from($result['distanceInMeter']),
+            'distanceInMeter' => Meter::from((float) $result['totalDistance']),
             'createdOn' => SerializableDateTime::fromString($result['createdOn']),
             'name' => $result['name'],
             'isRetired' => (bool) $result['isRetired'],
+            'movingTime' => Seconds::from((float) ($result['totalMovingTime'] ?? 0)),
+            'elevation' => Meter::from((float) ($result['totalElevation'] ?? 0)),
+            'numberOfActivities' => (int) ($result['numberOfActivities'] ?? 0),
+            'totalCalories' => (int) ($result['totalCalories'] ?? 0),
         ];
 
         $gear = match ($gearType) {
             GearType::IMPORTED => ImportedGear::fromState(...$args),
             GearType::CUSTOM => CustomGear::fromState(...$args),
         };
-
-        if (!empty($result['totalMovingTime'])) {
-            $gear = $gear->withMovingTime(Seconds::from((float) $result['totalMovingTime']));
-        }
-        if (!empty($result['totalElevation'])) {
-            $gear = $gear->withElevation(Meter::from((float) $result['totalElevation']));
-        }
-        if (!empty($result['totalCalories'])) {
-            $gear = $gear->withTotalCalories((int) $result['totalCalories']);
-        }
-        if (!empty($result['numberOfActivities'])) {
-            $gear = $gear->withNumberOfActivities((int) $result['numberOfActivities']);
-        }
 
         $activityTypes = ActivityTypes::empty();
         if (!empty($result['activityTypes'])) {

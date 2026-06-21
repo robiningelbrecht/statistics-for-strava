@@ -31,7 +31,6 @@ class ImportedGear implements Gear
         private readonly GearId $gearId,
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly SerializableDateTime $createdOn,
-        #[ORM\Column(type: 'integer')]
         private readonly Meter $distanceInMeter,
         #[ORM\Column(type: 'string')]
         private readonly string $name,
@@ -49,7 +48,6 @@ class ImportedGear implements Gear
 
     public static function create(
         GearId $gearId,
-        Meter $distanceInMeter,
         SerializableDateTime $createdOn,
         string $name,
         bool $isRetired,
@@ -57,7 +55,7 @@ class ImportedGear implements Gear
         return new static(
             gearId: $gearId,
             createdOn: $createdOn,
-            distanceInMeter: $distanceInMeter,
+            distanceInMeter: Meter::zero(),
             name: $name,
             isRetired: $isRetired,
             imageSrc: null,
@@ -76,6 +74,10 @@ class ImportedGear implements Gear
         SerializableDateTime $createdOn,
         string $name,
         bool $isRetired,
+        Seconds $movingTime,
+        Meter $elevation,
+        int $numberOfActivities,
+        int $totalCalories,
     ): static {
         return new static(
             gearId: $gearId,
@@ -84,10 +86,10 @@ class ImportedGear implements Gear
             name: $name,
             isRetired: $isRetired,
             imageSrc: null,
-            movingTime: Seconds::zero(),
-            elevation: Meter::zero(),
-            numberOfActivities: 0,
-            totalCalories: 0,
+            movingTime: $movingTime,
+            elevation: $elevation,
+            numberOfActivities: $numberOfActivities,
+            totalCalories: $totalCalories,
             activityTypes: ActivityTypes::empty(),
             purchasePrice: null,
         );
@@ -125,23 +127,9 @@ class ImportedGear implements Gear
         return $this->movingTime;
     }
 
-    public function withMovingTime(Seconds $movingTime): static
-    {
-        return clone ($this, [
-            'movingTime' => $movingTime,
-        ]);
-    }
-
     public function getElevation(): Meter
     {
         return $this->elevation;
-    }
-
-    public function withElevation(Meter $elevation): static
-    {
-        return clone ($this, [
-            'elevation' => $elevation,
-        ]);
     }
 
     public function getNumberOfActivities(): int
@@ -149,23 +137,9 @@ class ImportedGear implements Gear
         return $this->numberOfActivities;
     }
 
-    public function withNumberOfActivities(int $numberOfActivities): static
-    {
-        return clone ($this, [
-            'numberOfActivities' => $numberOfActivities,
-        ]);
-    }
-
     public function getTotalCalories(): int
     {
         return $this->totalCalories;
-    }
-
-    public function withTotalCalories(int $totalCalories): static
-    {
-        return clone ($this, [
-            'totalCalories' => $totalCalories,
-        ]);
     }
 
     public function getMovingTimeFormatted(): string
@@ -225,13 +199,6 @@ class ImportedGear implements Gear
     {
         return clone ($this, [
             'isRetired' => $isRetired,
-        ]);
-    }
-
-    public function withDistance(Meter $distance): static
-    {
-        return clone ($this, [
-            'distanceInMeter' => $distance,
         ]);
     }
 
